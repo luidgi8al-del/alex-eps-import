@@ -58,6 +58,11 @@
   .placeholder .big { font-size: 17px; font-weight:700; color:var(--text); margin-bottom:8px; }
   .authWrap { display:flex; justify-content:center; padding-top: 60px; }
   .authCard { width:100%; max-width:360px; }
+  .subtabbar { display:flex; gap:6px; margin-bottom:14px; }
+  .subtabbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; margin-top:0; cursor:pointer; }
+  .subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
+  .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
+  .editRow td { vertical-align:middle; }
 </style>
 </head>
 <body>
@@ -114,51 +119,93 @@
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
-        <div class="card">
-          <h2>Nouvel import</h2>
-          <div class="row">
-            <div>
-              <label for="grade">Niveau</label>
-              <select id="grade">
-                <option value="SIXIEME">6e</option>
-                <option value="CINQUIEME">5e</option>
-                <option value="QUATRIEME">4e</option>
-                <option value="TROISIEME">3e</option>
-                <option value="SECONDE">2nde</option>
-                <option value="PREMIERE">1ere</option>
-                <option value="TERMINALE">Tle</option>
-              </select>
+        <div class="subtabbar">
+          <button class="subtabbtn" data-subtab="classes">Classes</button>
+          <button class="subtabbtn" data-subtab="newimport">Nouvel import classe</button>
+        </div>
+
+        <div id="subtab-classes">
+          <div id="importsList"></div>
+
+          <div id="editImportPanel" class="card" style="display:none">
+            <h2>Modifier la classe</h2>
+            <div class="row">
+              <div>
+                <label for="editGrade">Niveau</label>
+                <select id="editGrade">
+                  <option value="SIXIEME">6e</option>
+                  <option value="CINQUIEME">5e</option>
+                  <option value="QUATRIEME">4e</option>
+                  <option value="TROISIEME">3e</option>
+                  <option value="SECONDE">2nde</option>
+                  <option value="PREMIERE">1ere</option>
+                  <option value="TERMINALE">Tle</option>
+                </select>
+              </div>
+              <div>
+                <label for="editClassNumber">Numero de classe</label>
+                <select id="editClassNumber">
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label for="classNumber">Numero de classe</label>
-              <select id="classNumber">
-                <option>1</option><option>2</option><option>3</option><option>4</option>
-                <option>5</option><option>6</option><option>7</option><option>8</option>
-              </select>
-            </div>
-          </div>
-          <label for="schoolYear">Annee scolaire</label>
-          <input type="text" id="schoolYear" value="2026-2027">
-          <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
-          <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
-          <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement (en-tetes reconnus, ou par le contenu : Sexe si F/G, Niveau si 1 a 5, emails eleve/parents par domaine). "Nom Prenom" combine est aussi accepte.</label>
-          <input type="file" id="csvFile" accept=".csv,text/csv">
-          <div class="error" id="parseError"></div>
-          <div id="previewWrap" style="display:none">
-            <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS detectee — choisissez le niveau de chaque eleve ci-dessous.</div>
-            <table id="previewTable">
-              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
-              <tbody id="previewBody"></tbody>
+            <label for="editSchoolYear">Annee scolaire</label>
+            <input type="text" id="editSchoolYear">
+            <table style="margin-top:16px">
+              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th></th></tr></thead>
+              <tbody id="editStudentsBody"></tbody>
             </table>
-            <div class="muted" id="previewCount"></div>
-            <button id="sendBtn">Envoyer vers l'application</button>
-            <div class="ok" id="sendOk"></div>
-            <div class="error" id="sendError"></div>
+            <button id="saveEditBtn">Enregistrer</button>
+            <button class="secondary" id="closeEditBtn">Fermer</button>
+            <div class="error" id="editError"></div>
           </div>
         </div>
 
-        <h2 style="margin-top:24px">Imports en attente</h2>
-        <div id="importsList"></div>
+        <div id="subtab-newimport" style="display:none">
+          <div class="card">
+            <h2>Nouvel import</h2>
+            <div class="row">
+              <div>
+                <label for="grade">Niveau</label>
+                <select id="grade">
+                  <option value="SIXIEME">6e</option>
+                  <option value="CINQUIEME">5e</option>
+                  <option value="QUATRIEME">4e</option>
+                  <option value="TROISIEME">3e</option>
+                  <option value="SECONDE">2nde</option>
+                  <option value="PREMIERE">1ere</option>
+                  <option value="TERMINALE">Tle</option>
+                </select>
+              </div>
+              <div>
+                <label for="classNumber">Numero de classe</label>
+                <select id="classNumber">
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                </select>
+              </div>
+            </div>
+            <label for="schoolYear">Annee scolaire</label>
+            <input type="text" id="schoolYear" value="2026-2027">
+            <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
+            <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
+            <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement (en-tetes reconnus, ou par le contenu : Sexe si F/G, Niveau si 1 a 5, emails eleve/parents par domaine). "Nom Prenom" combine est aussi accepte.</label>
+            <input type="file" id="csvFile" accept=".csv,text/csv">
+            <div class="error" id="parseError"></div>
+            <div id="previewWrap" style="display:none">
+              <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS detectee — choisissez le niveau de chaque eleve ci-dessous.</div>
+              <table id="previewTable">
+                <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
+                <tbody id="previewBody"></tbody>
+              </table>
+              <div class="muted" id="previewCount"></div>
+              <button id="sendBtn">Envoyer vers l'application</button>
+              <div class="ok" id="sendOk"></div>
+              <div class="error" id="sendError"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -254,12 +301,28 @@
       document.querySelectorAll(".tabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
-      if (name === "classes") loadImports();
+      if (name === "classes") showSubtab("classes");
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
       const btn = e.target.closest(".tabbtn");
       if (btn) showTab(btn.dataset.tab);
+    });
+
+    // ---- Sous-onglets du module Classes : "Classes" (creees, modifiables) / "Nouvel import classe" ----
+    const SUBTAB_NAMES = ["classes", "newimport"];
+    function showSubtab(name) {
+      SUBTAB_NAMES.forEach(sub => {
+        document.getElementById("subtab-" + sub).style.display = sub === name ? "block" : "none";
+      });
+      document.querySelectorAll(".subtabbtn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.subtab === name);
+      });
+      if (name === "classes") loadImports();
+    }
+    document.querySelector(".subtabbar").addEventListener("click", (e) => {
+      const btn = e.target.closest(".subtabbtn");
+      if (btn) showSubtab(btn.dataset.subtab);
     });
 
     // ---- CSV parsing (memes regles que l'app Android) ----
@@ -537,18 +600,21 @@
           listEl.innerHTML = '<div class="muted">Aucun import pour le moment.</div>';
           return;
         }
-        const gradeLabels = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
         listEl.innerHTML = "";
         rows.forEach(r => {
           const div = document.createElement("div");
           div.className = "card";
-          const label = `${gradeLabels[r.grade] || r.grade}${r.class_number}`;
+          const label = `${GRADE_LABELS[r.grade] || r.grade}${r.class_number}`;
           div.innerHTML = `
             <div class="top">
               <div><strong>${label}</strong> · ${r.school_year} <span class="badge ${r.status}">${r.status === "pending" ? "en attente" : "importe"}</span></div>
-              <button class="danger" data-id="${r.id}">Supprimer</button>
+              <div>
+                <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
+                <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
+              </div>
             </div>`;
-          div.querySelector("button").addEventListener("click", () => deleteImport(r.id));
+          div.querySelector('[data-action="edit"]').addEventListener("click", () => openEditImport(r));
+          div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteImport(r.id));
           listEl.appendChild(div);
         });
       } catch (e) {
@@ -563,6 +629,107 @@
       });
       loadImports();
     }
+
+    // ---- Modifier une classe deja envoyee : metadonnees + liste de ses eleves ----
+    const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
+    let editImportId = null;
+    let editStudents = [];
+    let editStudentsToDelete = [];
+
+    function editStudentRowHtml(index, s) {
+      const sexOptions = ["FILLE", "GARCON", "NON_PRECISE"].map(v =>
+        `<option value="${v}"${v === s.sex ? " selected" : ""}>${v}</option>`
+      ).join("");
+      const levelOptions = LEVEL_OPTIONS.map(opt =>
+        `<option value="${opt.value}"${opt.value === s.eps_level ? " selected" : ""}>${opt.label}</option>`
+      ).join("");
+      return `
+        <tr class="editRow" data-index="${index}">
+          <td><input type="text" data-field="last_name" value="${s.last_name || ""}"></td>
+          <td><input type="text" data-field="first_name" value="${s.first_name || ""}"></td>
+          <td><select data-field="sex">${sexOptions}</select></td>
+          <td><select class="levelSelect" data-field="eps_level">${levelOptions}</select></td>
+          <td><input type="text" data-field="student_email" value="${s.student_email || ""}"></td>
+          <td><input type="text" data-field="parent_emails" value="${s.parent_emails || ""}"></td>
+          <td><button class="danger" data-action="removeRow" style="margin-top:0">Suppr.</button></td>
+        </tr>`;
+    }
+
+    function renderEditStudents() {
+      const body = document.getElementById("editStudentsBody");
+      body.innerHTML = editStudents.map((s, i) => editStudentRowHtml(i, s)).join("");
+      body.querySelectorAll('[data-action="removeRow"]').forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const index = parseInt(e.target.closest(".editRow").dataset.index, 10);
+          const removed = editStudents[index];
+          if (removed.id) editStudentsToDelete.push(removed.id);
+          editStudents.splice(index, 1);
+          renderEditStudents();
+        });
+      });
+    }
+
+    async function openEditImport(row) {
+      editImportId = row.id;
+      editStudentsToDelete = [];
+      document.getElementById("editGrade").value = row.grade;
+      document.getElementById("editClassNumber").value = row.class_number;
+      document.getElementById("editSchoolYear").value = row.school_year;
+      document.getElementById("editError").textContent = "";
+      document.getElementById("editImportPanel").style.display = "block";
+      document.getElementById("editStudentsBody").innerHTML = '<tr><td colspan="7" class="muted">Chargement...</td></tr>';
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/pending_students?import_id=eq.${row.id}&select=*&order=last_name.asc`, {
+        headers: authHeaders()
+      });
+      editStudents = res.ok ? await res.json() : [];
+      renderEditStudents();
+    }
+
+    document.getElementById("closeEditBtn").addEventListener("click", () => {
+      document.getElementById("editImportPanel").style.display = "none";
+    });
+
+    document.getElementById("saveEditBtn").addEventListener("click", async () => {
+      const errorEl = document.getElementById("editError");
+      errorEl.textContent = "";
+      document.querySelectorAll("#editStudentsBody .editRow").forEach(tr => {
+        const index = parseInt(tr.dataset.index, 10);
+        const student = editStudents[index];
+        tr.querySelectorAll("[data-field]").forEach(field => {
+          student[field.dataset.field] = field.value.trim() || null;
+        });
+      });
+      try {
+        const importRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${editImportId}`, {
+          method: "PATCH",
+          headers: authHeaders(),
+          body: JSON.stringify({
+            grade: document.getElementById("editGrade").value,
+            class_number: parseInt(document.getElementById("editClassNumber").value, 10),
+            school_year: document.getElementById("editSchoolYear").value.trim()
+          })
+        });
+        if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
+
+        for (const id of editStudentsToDelete) {
+          await fetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${id}`, { method: "DELETE", headers: authHeaders() });
+        }
+        for (const s of editStudents) {
+          await fetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${s.id}`, {
+            method: "PATCH",
+            headers: authHeaders(),
+            body: JSON.stringify({
+              last_name: s.last_name, first_name: s.first_name, sex: s.sex,
+              eps_level: s.eps_level, student_email: s.student_email, parent_emails: s.parent_emails
+            })
+          });
+        }
+        document.getElementById("editImportPanel").style.display = "none";
+        loadImports();
+      } catch (e) {
+        errorEl.textContent = e.message;
+      }
+    });
 
     // ---- Demarrage ----
     const domainField = document.getElementById("studentEmailDomain");
