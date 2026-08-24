@@ -103,49 +103,76 @@
       </div>
 
       <div id="tab-cours" class="tabpanel" style="display:none">
-        <div class="card">
-          <h2>Nouveau cycle</h2>
-          <div class="muted" style="margin-bottom:6px">
-            La classe est facultative : choisissez simplement un niveau pour preparer un cycle sans classe.
-          </div>
-          <div class="row">
-            <div>
-              <label for="cycleGrade">Niveau</label>
-              <select id="cycleGrade">
-                <option value="SIXIEME">6e</option>
-                <option value="CINQUIEME">5e</option>
-                <option value="QUATRIEME" selected>4e</option>
-                <option value="TROISIEME">3e</option>
-                <option value="SECONDE">2nde</option>
-                <option value="PREMIERE">1ere</option>
-                <option value="TERMINALE">Tle</option>
-              </select>
-            </div>
-            <div>
-              <label for="cycleApsa">APSA</label>
-              <select id="cycleApsa"></select>
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="cycleSessions">Nombre de seances</label>
-              <select id="cycleSessions">
-                <option>6</option><option>7</option><option selected>8</option><option>9</option>
-                <option>10</option><option>11</option><option>12</option>
-              </select>
-            </div>
-            <div>
-              <label for="cycleClass">Classe (facultatif)</label>
-              <select id="cycleClass"><option value="">Sans classe</option></select>
-            </div>
-          </div>
-          <div class="muted" id="cycleProgramme" style="margin-top:10px"></div>
-          <button id="createCycleBtn">Creer le cycle</button>
-          <div class="error" id="cycleError"></div>
+        <div class="subtabbar" id="coursSubtabs">
+          <button class="subtabbtn" data-coursTab="cycles">Cycles</button>
+          <button class="subtabbtn" data-coursTab="creer">Creer un cours</button>
         </div>
 
-        <h2 style="margin-top:24px">Mes cycles</h2>
-        <div id="cyclesList"></div>
+        <!-- Consultation : aucun enregistrement, on regarde ce que donne un cycle -->
+        <div id="coursTab-cycles">
+          <div class="card">
+            <h2>Regarder un cycle</h2>
+            <div class="muted" style="margin-bottom:6px">
+              Choisissez un niveau, une activite et un nombre de seances. Rien n'est enregistre.
+            </div>
+            <div class="row">
+              <div>
+                <label for="cycleGrade">Niveau</label>
+                <select id="cycleGrade">
+                  <option value="SIXIEME">6e</option>
+                  <option value="CINQUIEME">5e</option>
+                  <option value="QUATRIEME" selected>4e</option>
+                  <option value="TROISIEME">3e</option>
+                  <option value="SECONDE">2nde</option>
+                  <option value="PREMIERE">1ere</option>
+                  <option value="TERMINALE">Tle</option>
+                </select>
+              </div>
+              <div>
+                <label for="cycleApsa">Activite</label>
+                <select id="cycleApsa"></select>
+              </div>
+              <div>
+                <label for="cycleSessions">Seances</label>
+                <select id="cycleSessions">
+                  <option>6</option><option>7</option><option selected>8</option><option>9</option>
+                  <option>10</option><option>11</option><option>12</option>
+                </select>
+              </div>
+            </div>
+            <div class="muted" id="cycleProgramme" style="margin-top:10px"></div>
+          </div>
+          <div id="cyclePreview"></div>
+        </div>
+
+        <!-- Creation : rattachee a une classe deja enregistree -->
+        <div id="coursTab-creer" style="display:none">
+          <div class="card">
+            <h2>Creer un cours</h2>
+            <div class="muted" style="margin-bottom:6px">
+              Le cours est rattache a une de vos classes : c'est elle qui fournit l'effectif.
+            </div>
+            <label for="coursClass">Classe</label>
+            <select id="coursClass"></select>
+            <div class="row">
+              <div>
+                <label for="coursApsa">Activite</label>
+                <select id="coursApsa"></select>
+              </div>
+              <div>
+                <label for="coursSessions">Seances</label>
+                <select id="coursSessions">
+                  <option>6</option><option>7</option><option selected>8</option><option>9</option>
+                  <option>10</option><option>11</option><option>12</option>
+                </select>
+              </div>
+            </div>
+            <button id="createCoursBtn">Creer le cours</button>
+            <div class="error" id="coursError"></div>
+          </div>
+          <h2 style="margin-top:24px">Mes cours</h2>
+          <div id="cyclesList"></div>
+        </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
         <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
@@ -857,48 +884,122 @@
       return "Programme EPS lycee - arrete du 17 janvier 2019";
     }
 
+    // Progression annoncee pour les APSA dont le contenu detaille est en cours de redaction.
+    // Miroir de CycleBlueprintRegistry cote application.
+    const DETAILED_CYCLES = {
+      "QUATRIEME|Escalade": {
+        champ: "CA2 - Adapter ses deplacements a des environnements varies",
+        titles: [
+          "Reprendre en securite et se situer",
+          "S'equiper et assurer en autonomie",
+          "Se deplacer efficacement",
+          "Utiliser les jambes, economiser les bras",
+          "Lire une voie et construire un projet",
+          "Choisir et realiser un itineraire adapte",
+          "Reinvestissement et preparation de l'evaluation",
+          "Situation finale et evaluation"
+        ],
+        written: 2
+      }
+    };
+
     let coursTabReady = false;
 
-    function refreshApsaOptions() {
-      const grade = document.getElementById("cycleGrade").value;
-      const select = document.getElementById("cycleApsa");
-      select.innerHTML = (PROGRAMMATION[grade] || [])
-        .map(a => `<option value="${a}">${a}</option>`).join("");
-      document.getElementById("cycleProgramme").textContent =
-        "Programme applicable : " + programmeFor(grade, document.getElementById("schoolYear").value || "2026-2027");
+    function showCoursTab(name) {
+      ["cycles", "creer"].forEach(t => {
+        document.getElementById("coursTab-" + t).style.display = t === name ? "block" : "none";
+      });
+      document.querySelectorAll("#coursSubtabs .subtabbtn").forEach(b => {
+        b.classList.toggle("active", b.dataset.courstab === name);
+      });
+      if (name === "creer") { refreshCoursClassOptions(); loadCycles(); }
+      else renderCyclePreview();
     }
 
-    async function refreshCycleClassOptions() {
-      const select = document.getElementById("cycleClass");
+    function apsaOptionsHtml(grade) {
+      return (PROGRAMMATION[grade] || []).map(a => `<option value="${a}">${a}</option>`).join("");
+    }
+
+    function renderCyclePreview() {
+      const grade = document.getElementById("cycleGrade").value;
+      const apsa = document.getElementById("cycleApsa").value;
+      const count = parseInt(document.getElementById("cycleSessions").value, 10);
+      const schoolYear = document.getElementById("schoolYear").value || "2026-2027";
+      document.getElementById("cycleProgramme").textContent = "Programme applicable : " + programmeFor(grade, schoolYear);
+
+      const detailed = DETAILED_CYCLES[`${grade}|${apsa}`];
+      const el = document.getElementById("cyclePreview");
+      if (!apsa) { el.innerHTML = '<div class="card muted">Aucune activite programmee pour ce niveau.</div>'; return; }
+
+      let rows = "";
+      for (let i = 1; i <= count; i++) {
+        const title = detailed ? (detailed.titles[i - 1] || `Seance ${i}`) : `Seance ${i}`;
+        const isWritten = detailed && i <= detailed.written;
+        rows += `<div class="card" style="margin-top:8px;${isWritten ? "" : "opacity:.6"}">
+          <strong>S${i}</strong> · ${title}
+          ${isWritten ? '<span class="badge off" style="margin-left:8px">Fiche complete</span>'
+                      : '<span class="badge" style="margin-left:8px">Fiche a venir</span>'}
+        </div>`;
+      }
+
+      el.innerHTML = `
+        <div class="card">
+          <h2 style="margin-bottom:4px">${apsa} — ${GRADE_LABELS[grade] || grade}</h2>
+          <div class="muted">${count} seances${detailed ? " · " + detailed.champ : ""}</div>
+          ${detailed ? "" : '<div class="muted" style="margin-top:8px">Contenu detaille pas encore ecrit pour cette activite a ce niveau.</div>'}
+        </div>
+        ${rows}`;
+    }
+
+    async function refreshCoursClassOptions() {
+      const select = document.getElementById("coursClass");
       try {
         const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
         const rows = res.ok ? await res.json() : [];
-        select.innerHTML = '<option value="">Sans classe</option>' +
-          rows.map(r => `<option value="${r.id}">${GRADE_LABELS[r.grade] || r.grade}${r.class_number}</option>`).join("");
+        select.innerHTML = rows.length
+          ? rows.map(r => `<option value="${r.id}" data-grade="${r.grade}">${GRADE_LABELS[r.grade] || r.grade}${r.class_number}</option>`).join("")
+          : '<option value="">Aucune classe enregistree</option>';
+        refreshCoursApsaOptions();
       } catch (e) {
-        select.innerHTML = '<option value="">Sans classe</option>';
+        select.innerHTML = '<option value="">Aucune classe enregistree</option>';
       }
+    }
+
+    function refreshCoursApsaOptions() {
+      const select = document.getElementById("coursClass");
+      const grade = select.selectedOptions[0]?.dataset.grade;
+      document.getElementById("coursApsa").innerHTML = grade ? apsaOptionsHtml(grade) : "";
     }
 
     function initCoursTab() {
       if (!coursTabReady) {
-        document.getElementById("cycleGrade").addEventListener("change", refreshApsaOptions);
-        document.getElementById("createCycleBtn").addEventListener("click", createCycle);
+        ["cycleGrade", "cycleApsa", "cycleSessions"].forEach(id =>
+          document.getElementById(id).addEventListener("change", () => {
+            if (id === "cycleGrade") document.getElementById("cycleApsa").innerHTML = apsaOptionsHtml(document.getElementById("cycleGrade").value);
+            renderCyclePreview();
+          }));
+        document.getElementById("coursClass").addEventListener("change", refreshCoursApsaOptions);
+        document.getElementById("createCoursBtn").addEventListener("click", createCours);
+        document.getElementById("coursSubtabs").addEventListener("click", e => {
+          const btn = e.target.closest(".subtabbtn");
+          if (btn) showCoursTab(btn.dataset.courstab);
+        });
         coursTabReady = true;
       }
-      refreshApsaOptions();
-      refreshCycleClassOptions();
-      loadCycles();
+      document.getElementById("cycleApsa").innerHTML = apsaOptionsHtml(document.getElementById("cycleGrade").value);
+      showCoursTab("cycles");
     }
 
-    async function createCycle() {
-      const errorEl = document.getElementById("cycleError");
+    async function createCours() {
+      const errorEl = document.getElementById("coursError");
       errorEl.textContent = "";
-      const grade = document.getElementById("cycleGrade").value;
-      const apsa = document.getElementById("cycleApsa").value;
-      const sessions = parseInt(document.getElementById("cycleSessions").value, 10);
-      const classId = document.getElementById("cycleClass").value || null;
-      if (!apsa) { errorEl.textContent = "Choisissez une APSA."; return; }
+      const classSelect = document.getElementById("coursClass");
+      const classId = classSelect.value;
+      const grade = classSelect.selectedOptions[0]?.dataset.grade;
+      const apsa = document.getElementById("coursApsa").value;
+      const sessions = parseInt(document.getElementById("coursSessions").value, 10);
+      if (!classId || !grade) { errorEl.textContent = "Creez d'abord une classe dans l'onglet Classes."; return; }
+      if (!apsa) { errorEl.textContent = "Choisissez une activite."; return; }
       try {
         const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, {
           method: "POST",
@@ -909,7 +1010,7 @@
             updated_at: new Date().toISOString(), deleted: false
           })
         });
-        if (!res.ok) throw new Error("Echec de creation du cycle.");
+        if (!res.ok) throw new Error("Echec de creation du cours.");
         loadCycles();
       } catch (e) {
         errorEl.textContent = e.message;
