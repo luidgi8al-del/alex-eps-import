@@ -5,60 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alex EPS Outils — Import de classe</title>
 <style>
-  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background:#0f1115; color:#e6edf3; margin:0; padding:20px; max-width: 720px; margin-left:auto; margin-right:auto; }
-  h1 { font-size: 20px; margin-bottom: 4px; }
-  h2 { font-size: 16px; margin-top: 28px; margin-bottom: 10px; }
-  .sub { color:#8b949e; font-size: 13px; margin-bottom: 20px; }
-  label { display:block; font-size: 13px; color:#8b949e; margin: 12px 0 4px; }
-  input, select { width:100%; box-sizing:border-box; background:#0f1115; color:#e6edf3; border:1px solid #21262d; border-radius:6px; padding:10px; font-size:14px; }
-  button { background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:6px; padding:10px 16px; font-size:14px; cursor:pointer; margin-top:14px; }
-  button:hover { background:#30363d; }
-  button.secondary { background:transparent; }
-  button.danger { background:transparent; border:1px solid #ff6b6b; color:#ff6b6b; }
+  :root {
+    --primary: #1B4332;
+    --primary-light: #2D6A4F;
+    --accent-container: #B7E4C7;
+    --accent-text: #04240F;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #14181A;
+    --text-secondary: #6B7280;
+    --border: #E5E7EB;
+    --danger: #B3261E;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; }
+  .header { background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:14px 24px; flex-wrap:wrap; gap:10px; }
+  .header .brand { font-weight:700; font-size:16px; white-space:nowrap; }
+  .tabbar { display:flex; gap:4px; overflow-x:auto; }
+  .tabbtn { background:none; border:none; color:rgba(255,255,255,0.75); padding:9px 16px; font-size:13px; font-weight:600; white-space:nowrap; border-radius:999px; cursor:pointer; }
+  .tabbtn:hover { color:#fff; }
+  .tabbtn.active { background:#fff; color:var(--primary); }
+  .headerRight { display:flex; align-items:center; gap:14px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin-top: 0; margin-bottom: 14px; color:var(--text); }
+  .sub { color:var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
+  label { display:block; font-size: 13px; color:var(--text-secondary); font-weight:600; margin: 12px 0 5px; }
+  input, select { width:100%; box-sizing:border-box; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:14px; }
+  input:focus, select:focus { outline:none; border-color:var(--primary-light); }
+  button { background:var(--primary); color:#fff; border:none; border-radius:8px; padding:11px 18px; font-size:14px; font-weight:600; cursor:pointer; margin-top:14px; }
+  button:hover { background:var(--primary-light); }
+  button.secondary { background:transparent; color:var(--primary); border:1px solid var(--border); }
+  button.secondary:hover { background:#F3F4F6; }
+  button.danger { background:transparent; border:1px solid var(--danger); color:var(--danger); margin-top:0; }
+  button.danger:hover { background:#FDEEED; }
   button:disabled { opacity:0.5; cursor:default; }
   table { width:100%; border-collapse: collapse; margin-top: 12px; }
-  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #21262d; font-size: 13px; }
-  th { color:#8b949e; font-weight: 500; font-size: 11px; text-transform: uppercase; }
-  .error { color:#ff6b6b; font-size: 13px; margin-top: 8px; }
-  .ok { color:#e6edf3; font-size: 13px; margin-top: 8px; }
-  .card { background:#161b22; border:1px solid #21262d; border-radius:8px; padding:16px; margin-top:14px; }
+  th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  .error { color:var(--danger); font-size: 13px; margin-top: 8px; }
+  .ok { color:var(--primary); font-weight:600; font-size: 13px; margin-top: 8px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
   .row { display:flex; gap:10px; }
   .row > * { flex:1; }
-  .muted { color:#5f5e5a; font-size:12px; }
-  .top { display:flex; justify-content:space-between; align-items:center; }
-  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; border:1px solid #30363d; color:#8b949e; }
-  .badge.imported { color:#e6edf3; }
-  .tabbar { display:flex; gap:4px; overflow-x:auto; margin: 16px 0 4px; border-bottom:1px solid #21262d; }
-  .tabbtn { background:none; border:none; color:#8b949e; padding:10px 14px; font-size:13px; white-space:nowrap; border-bottom:2px solid transparent; margin:0; border-radius:0; }
-  .tabbtn:hover { background:none; color:#e6edf3; }
-  .tabbtn.active { color:#e6edf3; border-bottom-color:#e6edf3; }
-  .tabpanel { padding-top: 8px; }
-  .placeholder { text-align:center; padding: 60px 20px; color:#8b949e; }
-  .placeholder .big { font-size: 15px; color:#e6edf3; margin-bottom:6px; }
+  .muted { color:var(--text-secondary); font-size:13px; }
+  .top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600; background:#F3F4F6; color:var(--text-secondary); }
+  .badge.imported { background:var(--accent-container); color:var(--accent-text); }
+  .tabpanel { padding-top: 4px; }
+  .placeholder { text-align:center; padding: 70px 20px; color:var(--text-secondary); }
+  .placeholder .big { font-size: 17px; font-weight:700; color:var(--text); margin-bottom:8px; }
+  .authWrap { display:flex; justify-content:center; padding-top: 60px; }
+  .authCard { width:100%; max-width:360px; }
 </style>
 </head>
 <body>
-  <div class="top">
-    <h1>Alex EPS Outils</h1>
-    <button class="secondary" id="logoutBtn" style="display:none">Se deconnecter</button>
-  </div>
-  <div class="sub">Import de classe depuis un fichier CSV.</div>
-
-  <!-- Ecran connexion -->
-  <div id="authView" class="card">
-    <h2 id="authTitle">Connexion</h2>
-    <label for="email">Email</label>
-    <input type="email" id="email" autocomplete="email">
-    <label for="password">Mot de passe</label>
-    <input type="password" id="password" autocomplete="current-password">
-    <button id="authSubmitBtn">Se connecter</button>
-    <button class="secondary" id="authToggleBtn">Pas encore de compte ? Creer un compte</button>
-    <div class="error" id="authError"></div>
-  </div>
-
-  <!-- Ecran principal (apres connexion) -->
-  <div id="mainView" style="display:none">
-    <div class="tabbar" id="tabbar">
+  <div class="header">
+    <div class="brand">Alex EPS Outils</div>
+    <div class="tabbar" id="tabbar" style="display:none">
       <button class="tabbtn" data-tab="cours">Cours</button>
       <button class="tabbtn" data-tab="outils">Outils</button>
       <button class="tabbtn" data-tab="programmation">Programmation</button>
@@ -66,70 +70,92 @@
       <button class="tabbtn" data-tab="equipement">Equipement</button>
       <button class="tabbtn" data-tab="classes">Classes</button>
     </div>
+    <div class="headerRight">
+      <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se deconnecter</button>
+    </div>
+  </div>
 
-    <div id="tab-home" class="tabpanel">
-      <div class="placeholder"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
+  <div class="container">
+    <!-- Ecran connexion -->
+    <div id="authView" class="authWrap">
+      <div class="card authCard">
+        <h2 id="authTitle">Connexion</h2>
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" autocomplete="current-password">
+        <button id="authSubmitBtn" style="width:100%">Se connecter</button>
+        <button class="secondary" id="authToggleBtn" style="width:100%">Pas encore de compte ? Creer un compte</button>
+        <div class="error" id="authError"></div>
+      </div>
     </div>
 
-    <div id="tab-cours" class="tabpanel" style="display:none">
-      <div class="placeholder"><div class="big">Cours</div>Bientot disponible sur le site. Retrouvez vos cycles et seances dans l'application.</div>
-    </div>
-    <div id="tab-outils" class="tabpanel" style="display:none">
-      <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
-    </div>
-    <div id="tab-programmation" class="tabpanel" style="display:none">
-      <div class="placeholder"><div class="big">Programmation</div>Bientot disponible sur le site. Programmes officiels et programmation annuelle restent dans l'application pour l'instant.</div>
-    </div>
-    <div id="tab-unss" class="tabpanel" style="display:none">
-      <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
-    </div>
-    <div id="tab-equipement" class="tabpanel" style="display:none">
-      <div class="placeholder"><div class="big">Equipement</div>Bientot disponible sur le site. Materiel et EPI escalade restent dans l'application pour l'instant.</div>
-    </div>
-
-    <div id="tab-classes" class="tabpanel" style="display:none">
-      <div class="card">
-        <h2>Nouvel import</h2>
-        <div class="row">
-          <div>
-            <label for="grade">Niveau</label>
-            <select id="grade">
-              <option value="SIXIEME">6e</option>
-              <option value="CINQUIEME">5e</option>
-              <option value="QUATRIEME">4e</option>
-              <option value="TROISIEME">3e</option>
-              <option value="SECONDE">2nde</option>
-              <option value="PREMIERE">1ere</option>
-              <option value="TERMINALE">Tle</option>
-            </select>
-          </div>
-          <div>
-            <label for="classNumber">Numero de classe</label>
-            <select id="classNumber">
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-              <option>5</option><option>6</option><option>7</option><option>8</option>
-            </select>
-          </div>
-        </div>
-        <label for="schoolYear">Annee scolaire</label>
-        <input type="text" id="schoolYear" value="2026-2027">
-        <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents)</label>
-        <input type="file" id="csvFile" accept=".csv,text/csv">
-        <div class="error" id="parseError"></div>
-        <div id="previewWrap" style="display:none">
-          <table id="previewTable">
-            <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
-            <tbody id="previewBody"></tbody>
-          </table>
-          <div class="muted" id="previewCount"></div>
-          <button id="sendBtn">Envoyer vers l'application</button>
-          <div class="ok" id="sendOk"></div>
-          <div class="error" id="sendError"></div>
-        </div>
+    <!-- Ecran principal (apres connexion) -->
+    <div id="mainView" style="display:none">
+      <div id="tab-home" class="tabpanel">
+        <div class="placeholder"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
       </div>
 
-      <h2>Imports en attente</h2>
-      <div id="importsList"></div>
+      <div id="tab-cours" class="tabpanel" style="display:none">
+        <div class="placeholder"><div class="big">Cours</div>Bientot disponible sur le site. Retrouvez vos cycles et seances dans l'application.</div>
+      </div>
+      <div id="tab-outils" class="tabpanel" style="display:none">
+        <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
+      </div>
+      <div id="tab-programmation" class="tabpanel" style="display:none">
+        <div class="placeholder"><div class="big">Programmation</div>Bientot disponible sur le site. Programmes officiels et programmation annuelle restent dans l'application pour l'instant.</div>
+      </div>
+      <div id="tab-unss" class="tabpanel" style="display:none">
+        <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
+      </div>
+      <div id="tab-equipement" class="tabpanel" style="display:none">
+        <div class="placeholder"><div class="big">Equipement</div>Bientot disponible sur le site. Materiel et EPI escalade restent dans l'application pour l'instant.</div>
+      </div>
+
+      <div id="tab-classes" class="tabpanel" style="display:none">
+        <div class="card">
+          <h2>Nouvel import</h2>
+          <div class="row">
+            <div>
+              <label for="grade">Niveau</label>
+              <select id="grade">
+                <option value="SIXIEME">6e</option>
+                <option value="CINQUIEME">5e</option>
+                <option value="QUATRIEME">4e</option>
+                <option value="TROISIEME">3e</option>
+                <option value="SECONDE">2nde</option>
+                <option value="PREMIERE">1ere</option>
+                <option value="TERMINALE">Tle</option>
+              </select>
+            </div>
+            <div>
+              <label for="classNumber">Numero de classe</label>
+              <select id="classNumber">
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+              </select>
+            </div>
+          </div>
+          <label for="schoolYear">Annee scolaire</label>
+          <input type="text" id="schoolYear" value="2026-2027">
+          <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents)</label>
+          <input type="file" id="csvFile" accept=".csv,text/csv">
+          <div class="error" id="parseError"></div>
+          <div id="previewWrap" style="display:none">
+            <table id="previewTable">
+              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
+              <tbody id="previewBody"></tbody>
+            </table>
+            <div class="muted" id="previewCount"></div>
+            <button id="sendBtn">Envoyer vers l'application</button>
+            <div class="ok" id="sendOk"></div>
+            <div class="error" id="sendError"></div>
+          </div>
+        </div>
+
+        <h2 style="margin-top:24px">Imports en attente</h2>
+        <div id="importsList"></div>
+      </div>
     </div>
   </div>
 
@@ -202,14 +228,16 @@
     });
 
     function showAuthView() {
-      document.getElementById("authView").style.display = "block";
+      document.getElementById("authView").style.display = "flex";
       document.getElementById("mainView").style.display = "none";
       document.getElementById("logoutBtn").style.display = "none";
+      document.getElementById("tabbar").style.display = "none";
     }
     function showMainView() {
       document.getElementById("authView").style.display = "none";
       document.getElementById("mainView").style.display = "block";
       document.getElementById("logoutBtn").style.display = "inline-block";
+      document.getElementById("tabbar").style.display = "flex";
       showTab("home");
     }
 
