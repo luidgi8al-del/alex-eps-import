@@ -138,7 +138,9 @@
           </div>
           <label for="schoolYear">Annee scolaire</label>
           <input type="text" id="schoolYear" value="2026-2027">
-          <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents — ou une seule colonne "Nom Prenom")</label>
+          <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
+          <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
+          <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement (en-tetes reconnus, ou par le contenu : Sexe si F/G, Niveau si 1 a 5, emails eleve/parents par domaine). "Nom Prenom" combine est aussi accepte.</label>
           <input type="file" id="csvFile" accept=".csv,text/csv">
           <div class="error" id="parseError"></div>
           <div id="previewWrap" style="display:none">
@@ -305,6 +307,26 @@
     }
     const COMBINED_NAME_ALIASES = ["nom prenom", "nom et prenom", "nom complet", "eleve", "nom eleve", "prenom nom", "nom prenom eleve"];
 
+    // ---- Detection par contenu (en complement des en-tetes), sur les colonnes non identifiees ----
+    function sexFromValue(v) {
+      const t = normalizeHeader(v);
+      if (["f", "fille", "femme", "feminin"].includes(t)) return "FILLE";
+      if (["g", "m", "garcon", "homme", "masculin"].includes(t)) return "GARCON";
+      return null;
+    }
+    function looksLikeSexColumn(values) {
+      const nonBlank = values.filter(v => v.trim());
+      return nonBlank.length > 0 && nonBlank.every(v => sexFromValue(v) !== null);
+    }
+    function looksLikeNiveauColumn(values) {
+      const nonBlank = values.filter(v => v.trim());
+      return nonBlank.length > 0 && nonBlank.every(v => /^[1-5]$/.test(v.trim()));
+    }
+    function emailDomain(v) {
+      const at = v.indexOf("@");
+      return at >= 0 ? v.slice(at + 1).trim().toLowerCase() : null;
+    }
+
     function parseCsv(text) {
       const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
       if (lines.length === 0) return [];
@@ -316,9 +338,56 @@
       const useCombined = (idx.nom < 0 || idx.prenom < 0) && combinedIndex >= 0;
       const hasHeader = (idx.nom >= 0 && idx.prenom >= 0) || useCombined;
       const dataLines = hasHeader ? lines.slice(1) : lines;
+      const dataRows = dataLines.map(l => parseCsvLine(l, delimiter));
+      const columnCount = Math.max(headerFields.length, ...dataRows.map(r => r.length), 0);
+      const columnValues = c => dataRows.map(r => r[c] || "");
+
+      // Passe de detection par contenu pour les colonnes pas encore identifiees par leur en-tete.
+      const claimed = new Set([idx.nom, idx.prenom, idx.sexe, idx.niveau, idx.emailEleve, idx.emailsParents, combinedIndex].filter(i => i >= 0));
+      if (idx.sexe < 0) {
+        for (let c = 0; c < columnCount; c++) {
+          if (!claimed.has(c) && looksLikeSexColumn(columnValues(c))) { idx.sexe = c; claimed.add(c); break; }
+        }
+      }
+      if (idx.niveau < 0) {
+        for (let c = 0; c < columnCount; c++) {
+          if (!claimed.has(c) && looksLikeNiveauColumn(columnValues(c))) { idx.niveau = c; claimed.add(c); break; }
+        }
+      }
+      if (idx.emailEleve < 0 || idx.emailsParents < 0) {
+        const domainField = document.getElementById("studentEmailDomain");
+        const domainOverride = domainField ? normalizeHeader(domainField.value).replace(/\s/g, "") : "";
+        const emailCols = [];
+        for (let c = 0; c < columnCount; c++) {
+          if (claimed.has(c)) continue;
+          const vals = columnValues(c).filter(v => v.trim());
+          if (vals.length > 0 && vals.every(v => v.includes("@"))) emailCols.push(c);
+        }
+        // La colonne "email eleve" est reconnue soit par le domaine indique, soit (a defaut)
+        // comme la colonne dont toutes les adresses partagent le meme domaine (mail d'etablissement),
+        // les mails parents etant eux repartis sur des domaines varies.
+        let studentCol = null;
+        for (const c of emailCols) {
+          const vals = columnValues(c).filter(v => v.trim());
+          if (domainOverride && vals.every(v => emailDomain(v) === domainOverride)) { studentCol = c; break; }
+        }
+        if (studentCol === null && !domainOverride) {
+          let bestCount = Infinity;
+          for (const c of emailCols) {
+            const vals = columnValues(c).filter(v => v.trim());
+            const domains = new Set(vals.map(emailDomain));
+            if (domains.size === 1 && domains.size < bestCount) { bestCount = domains.size; studentCol = c; }
+          }
+        }
+        if (idx.emailEleve < 0 && studentCol !== null) { idx.emailEleve = studentCol; claimed.add(studentCol); }
+        if (idx.emailsParents < 0) {
+          const remaining = emailCols.find(c => c !== studentCol && !claimed.has(c));
+          if (remaining !== undefined) { idx.emailsParents = remaining; claimed.add(remaining); }
+        }
+      }
+
       const students = [];
-      for (const line of dataLines) {
-        const f = parseCsvLine(line, delimiter);
+      for (const f of dataRows) {
         const get = i => (i >= 0 ? (f[i] || "") : "");
         let lastName, firstName;
         if (useCombined) {
@@ -332,7 +401,7 @@
         if (!lastName || !firstName) continue;
         students.push({
           last_name: lastName, first_name: firstName,
-          sex: get(idx.sexe).toUpperCase() || "NON_PRECISE",
+          sex: sexFromValue(get(idx.sexe)) || "NON_PRECISE",
           eps_level: get(idx.niveau) || "MOYEN",
           student_email: get(idx.emailEleve) || null,
           parent_emails: get(idx.emailsParents) || null
@@ -443,6 +512,10 @@
     }
 
     // ---- Demarrage ----
+    const domainField = document.getElementById("studentEmailDomain");
+    domainField.value = localStorage.getItem("alex_eps_student_domain") || "";
+    domainField.addEventListener("change", () => localStorage.setItem("alex_eps_student_domain", domainField.value.trim()));
+
     if (session) { showMainView(); } else { showAuthView(); }
   </script>
 </body>
