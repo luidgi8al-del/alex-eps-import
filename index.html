@@ -40,8 +40,7 @@
   button.danger { background:transparent; border:1px solid var(--danger); color:var(--danger); margin-top:0; }
   button.danger:hover { background:#FDEEED; }
   button:disabled { opacity:0.5; cursor:default; }
-  .pillbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:7px 14px; font-size:12px; font-weight:600; margin-top:0; }
-  .pillbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
+  .levelSelect { width:auto; padding:4px 6px; font-size:12px; }
   table { width:100%; border-collapse: collapse; margin-top: 12px; }
   th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 13px; }
   th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; }
@@ -146,10 +145,7 @@
           <input type="file" id="csvFile" accept=".csv,text/csv">
           <div class="error" id="parseError"></div>
           <div id="previewWrap" style="display:none">
-            <div id="niveauPicker" style="display:none">
-              <label style="margin-top:14px">Aucune colonne Niveau EPS detectee — choisissez le niveau a appliquer a toute la classe</label>
-              <div id="niveauPickerButtons" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px"></div>
-            </div>
+            <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS detectee — choisissez le niveau de chaque eleve ci-dessous.</div>
             <table id="previewTable">
               <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
               <tbody id="previewBody"></tbody>
@@ -443,34 +439,32 @@
       { value: "5", label: "5 - Tres bon" }
     ];
 
+    let niveauEditable = false;
+
+    function levelSelectHtml(index, currentValue) {
+      const options = LEVEL_OPTIONS.map(opt =>
+        `<option value="${opt.value}"${opt.value === currentValue ? " selected" : ""}>${opt.label}</option>`
+      ).join("");
+      return `<select class="levelSelect" data-index="${index}">${options}</select>`;
+    }
+
     function renderPreviewTable() {
       const body = document.getElementById("previewBody");
       body.innerHTML = "";
-      parsedStudents.forEach(s => {
+      parsedStudents.forEach((s, i) => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${s.eps_level}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
+        const niveauCell = niveauEditable ? levelSelectHtml(i, s.eps_level) : s.eps_level;
+        tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${niveauCell}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
         body.appendChild(tr);
       });
       document.getElementById("previewCount").textContent = `${parsedStudents.length} eleve(s) detecte(s).`;
     }
 
-    function applyNiveauToAll(value) {
-      parsedStudents.forEach(s => { s.eps_level = value; });
-      document.querySelectorAll("#niveauPickerButtons .pillbtn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.value === value);
-      });
-      renderPreviewTable();
-    }
-
-    const niveauPickerButtons = document.getElementById("niveauPickerButtons");
-    LEVEL_OPTIONS.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "pillbtn";
-      btn.dataset.value = opt.value;
-      btn.textContent = opt.label;
-      btn.addEventListener("click", () => applyNiveauToAll(opt.value));
-      niveauPickerButtons.appendChild(btn);
+    document.getElementById("previewBody").addEventListener("change", (e) => {
+      const select = e.target.closest(".levelSelect");
+      if (!select) return;
+      const index = parseInt(select.dataset.index, 10);
+      parsedStudents[index].eps_level = select.value;
     });
 
     document.getElementById("csvFile").addEventListener("change", async (e) => {
@@ -487,8 +481,9 @@
         return;
       }
       parsedStudents = students;
-      document.getElementById("niveauPicker").style.display = niveauDetected ? "none" : "block";
-      if (!niveauDetected) applyNiveauToAll("3");
+      niveauEditable = !niveauDetected;
+      if (niveauEditable) parsedStudents.forEach(s => { s.eps_level = "3"; });
+      document.getElementById("niveauHint").style.display = niveauEditable ? "block" : "none";
       renderPreviewTable();
       document.getElementById("previewWrap").style.display = "block";
     });
