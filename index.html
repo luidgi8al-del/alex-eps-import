@@ -103,7 +103,49 @@
       </div>
 
       <div id="tab-cours" class="tabpanel" style="display:none">
-        <div class="placeholder"><div class="big">Cours</div>Bientot disponible sur le site. Retrouvez vos cycles et seances dans l'application.</div>
+        <div class="card">
+          <h2>Nouveau cycle</h2>
+          <div class="muted" style="margin-bottom:6px">
+            La classe est facultative : choisissez simplement un niveau pour preparer un cycle sans classe.
+          </div>
+          <div class="row">
+            <div>
+              <label for="cycleGrade">Niveau</label>
+              <select id="cycleGrade">
+                <option value="SIXIEME">6e</option>
+                <option value="CINQUIEME">5e</option>
+                <option value="QUATRIEME" selected>4e</option>
+                <option value="TROISIEME">3e</option>
+                <option value="SECONDE">2nde</option>
+                <option value="PREMIERE">1ere</option>
+                <option value="TERMINALE">Tle</option>
+              </select>
+            </div>
+            <div>
+              <label for="cycleApsa">APSA</label>
+              <select id="cycleApsa"></select>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="cycleSessions">Nombre de seances</label>
+              <select id="cycleSessions">
+                <option>6</option><option>7</option><option selected>8</option><option>9</option>
+                <option>10</option><option>11</option><option>12</option>
+              </select>
+            </div>
+            <div>
+              <label for="cycleClass">Classe (facultatif)</label>
+              <select id="cycleClass"><option value="">Sans classe</option></select>
+            </div>
+          </div>
+          <div class="muted" id="cycleProgramme" style="margin-top:10px"></div>
+          <button id="createCycleBtn">Creer le cycle</button>
+          <div class="error" id="cycleError"></div>
+        </div>
+
+        <h2 style="margin-top:24px">Mes cycles</h2>
+        <div id="cyclesList"></div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
         <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
@@ -324,6 +366,7 @@
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
       if (name === "classes") showSubtab("classes");
+      if (name === "cours") initCoursTab();
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -785,6 +828,130 @@
         errorEl.textContent = e.message;
       }
     });
+
+    // ---- Onglet Cours : un cycle se prepare sans classe (seul le niveau est necessaire) ----
+
+    // Programmation locale de l'etablissement : memes listes que EtablissementProgrammation.kt.
+    const PROGRAMMATION = {
+      SIXIEME: ["Natation", "Athletisme - sprint / relais", "Escalade", "Gymnastique au sol", "Danse", "Rugby", "Basket-ball", "Tennis de table"],
+      CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte"],
+      QUATRIEME: ["Natation", "Escalade", "Acrosport", "Volley-ball"],
+      TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton"],
+      SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree"],
+      PREMIERE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree"],
+      TERMINALE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree"]
+    };
+
+    // Meme regle que ProgrammeResolver.kt : l'arrete du 22 avril 2026 ne s'applique a la 6e
+    // qu'a la rentree 2027. Prendre le texte le plus recent par defaut serait une erreur.
+    function programmeFor(grade, schoolYear) {
+      const startYear = parseInt(String(schoolYear).slice(0, 4), 10) || 0;
+      if (grade === "SIXIEME") {
+        return startYear >= 2027
+          ? "Programme EPS cycle 3 (2026) - arrete du 22 avril 2026"
+          : "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie (le programme 2026 ne s'applique a la 6e qu'a la rentree 2027)";
+      }
+      if (["CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade)) {
+        return "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie";
+      }
+      return "Programme EPS lycee - arrete du 17 janvier 2019";
+    }
+
+    let coursTabReady = false;
+
+    function refreshApsaOptions() {
+      const grade = document.getElementById("cycleGrade").value;
+      const select = document.getElementById("cycleApsa");
+      select.innerHTML = (PROGRAMMATION[grade] || [])
+        .map(a => `<option value="${a}">${a}</option>`).join("");
+      document.getElementById("cycleProgramme").textContent =
+        "Programme applicable : " + programmeFor(grade, document.getElementById("schoolYear").value || "2026-2027");
+    }
+
+    async function refreshCycleClassOptions() {
+      const select = document.getElementById("cycleClass");
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
+        const rows = res.ok ? await res.json() : [];
+        select.innerHTML = '<option value="">Sans classe</option>' +
+          rows.map(r => `<option value="${r.id}">${GRADE_LABELS[r.grade] || r.grade}${r.class_number}</option>`).join("");
+      } catch (e) {
+        select.innerHTML = '<option value="">Sans classe</option>';
+      }
+    }
+
+    function initCoursTab() {
+      if (!coursTabReady) {
+        document.getElementById("cycleGrade").addEventListener("change", refreshApsaOptions);
+        document.getElementById("createCycleBtn").addEventListener("click", createCycle);
+        coursTabReady = true;
+      }
+      refreshApsaOptions();
+      refreshCycleClassOptions();
+      loadCycles();
+    }
+
+    async function createCycle() {
+      const errorEl = document.getElementById("cycleError");
+      errorEl.textContent = "";
+      const grade = document.getElementById("cycleGrade").value;
+      const apsa = document.getElementById("cycleApsa").value;
+      const sessions = parseInt(document.getElementById("cycleSessions").value, 10);
+      const classId = document.getElementById("cycleClass").value || null;
+      if (!apsa) { errorEl.textContent = "Choisissez une APSA."; return; }
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, {
+          method: "POST",
+          body: JSON.stringify({
+            id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
+            grade, apsa_name: apsa, session_count: sessions,
+            school_year: document.getElementById("schoolYear").value || "2026-2027",
+            updated_at: new Date().toISOString(), deleted: false
+          })
+        });
+        if (!res.ok) throw new Error("Echec de creation du cycle.");
+        loadCycles();
+      } catch (e) {
+        errorEl.textContent = e.message;
+      }
+    }
+
+    async function loadCycles() {
+      const listEl = document.getElementById("cyclesList");
+      listEl.innerHTML = '<div class="muted">Chargement...</div>';
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&select=*&order=updated_at.desc`);
+        const rows = await res.json();
+        if (!res.ok) throw new Error("Impossible de charger les cycles.");
+        if (rows.length === 0) {
+          listEl.innerHTML = '<div class="muted">Aucun cycle pour le moment.</div>';
+          return;
+        }
+        listEl.innerHTML = "";
+        rows.forEach(r => {
+          const div = document.createElement("div");
+          div.className = "card";
+          const label = r.class_id ? "" : `<span class="badge">Sans classe</span>`;
+          div.innerHTML = `
+            <div class="top">
+              <div><strong>${r.apsa_name}</strong> · ${GRADE_LABELS[r.grade] || r.grade} · ${r.session_count} seances ${label}</div>
+              <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
+            </div>
+            <div class="muted" style="margin-top:6px">${programmeFor(r.grade, r.school_year)}</div>`;
+          div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteCycle(r.id));
+          listEl.appendChild(div);
+        });
+      } catch (e) {
+        listEl.innerHTML = `<div class="error">${e.message}</div>`;
+      }
+    }
+
+    async function deleteCycle(id) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      loadCycles();
+    }
 
     // ---- Demarrage ----
     const domainField = document.getElementById("studentEmailDomain");
