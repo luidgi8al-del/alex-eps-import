@@ -67,6 +67,10 @@
       <button class="tabbtn" data-tab="classes">Classes</button>
     </div>
 
+    <div id="tab-home" class="tabpanel">
+      <div class="placeholder"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
+    </div>
+
     <div id="tab-cours" class="tabpanel" style="display:none">
       <div class="placeholder"><div class="big">Cours</div>Bientot disponible sur le site. Retrouvez vos cycles et seances dans l'application.</div>
     </div>
@@ -206,11 +210,11 @@
       document.getElementById("authView").style.display = "none";
       document.getElementById("mainView").style.display = "block";
       document.getElementById("logoutBtn").style.display = "inline-block";
-      showTab("classes");
+      showTab("home");
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
-    const TAB_NAMES = ["cours", "outils", "programmation", "unss", "equipement", "classes"];
+    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes"];
     function showTab(name) {
       TAB_NAMES.forEach(tab => {
         document.getElementById("tab-" + tab).style.display = tab === name ? "block" : "none";
