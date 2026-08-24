@@ -40,6 +40,8 @@
   button.danger { background:transparent; border:1px solid var(--danger); color:var(--danger); margin-top:0; }
   button.danger:hover { background:#FDEEED; }
   button:disabled { opacity:0.5; cursor:default; }
+  .pillbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:7px 14px; font-size:12px; font-weight:600; margin-top:0; }
+  .pillbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
   table { width:100%; border-collapse: collapse; margin-top: 12px; }
   th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 13px; }
   th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; }
@@ -144,6 +146,10 @@
           <input type="file" id="csvFile" accept=".csv,text/csv">
           <div class="error" id="parseError"></div>
           <div id="previewWrap" style="display:none">
+            <div id="niveauPicker" style="display:none">
+              <label style="margin-top:14px">Aucune colonne Niveau EPS detectee — choisissez le niveau a appliquer a toute la classe</label>
+              <div id="niveauPickerButtons" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px"></div>
+            </div>
             <table id="previewTable">
               <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
               <tbody id="previewBody"></tbody>
@@ -326,18 +332,29 @@
       const at = v.indexOf("@");
       return at >= 0 ? v.slice(at + 1).trim().toLowerCase() : null;
     }
+    // Une colonne "ressemble" a un nom complet si chaque valeur contient au moins deux mots
+    // composes uniquement de lettres (accents, apostrophes, traits d'union tolérés).
+    function looksLikeNameColumn(values) {
+      const nonBlank = values.filter(v => v.trim());
+      if (nonBlank.length === 0) return false;
+      return nonBlank.every(v => {
+        const words = v.trim().split(/\s+/).filter(Boolean);
+        return words.length >= 2 && /^[A-Za-zÀ-ÿ'’\-\s]+$/.test(v.trim());
+      });
+    }
 
     function parseCsv(text) {
       const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
-      if (lines.length === 0) return [];
+      if (lines.length === 0) return { students: [], niveauDetected: false };
       const delimiter = detectDelimiter(lines[0]);
       const headerFields = parseCsvLine(lines[0], delimiter).map(normalizeHeader);
       const colIndex = key => headerFields.findIndex(h => HEADER_ALIASES[key].includes(h));
       const idx = { nom: colIndex("nom"), prenom: colIndex("prenom"), sexe: colIndex("sexe"), niveau: colIndex("niveau"), emailEleve: colIndex("emailEleve"), emailsParents: colIndex("emailsParents") };
-      const combinedIndex = headerFields.findIndex(h => COMBINED_NAME_ALIASES.includes(h));
-      const useCombined = (idx.nom < 0 || idx.prenom < 0) && combinedIndex >= 0;
-      const hasHeader = (idx.nom >= 0 && idx.prenom >= 0) || useCombined;
-      const dataLines = hasHeader ? lines.slice(1) : lines;
+      let combinedIndex = headerFields.findIndex(h => COMBINED_NAME_ALIASES.includes(h));
+      // La premiere ligne est un en-tete des qu'au moins une colonne a ete reconnue par son
+      // intitule — meme si, comme Nom/Prenom, elle reste elle-meme a identifier par son contenu.
+      const hasAnyRecognizedHeader = Object.values(idx).some(v => v >= 0) || combinedIndex >= 0;
+      const dataLines = hasAnyRecognizedHeader ? lines.slice(1) : lines;
       const dataRows = dataLines.map(l => parseCsvLine(l, delimiter));
       const columnCount = Math.max(headerFields.length, ...dataRows.map(r => r.length), 0);
       const columnValues = c => dataRows.map(r => r[c] || "");
@@ -354,6 +371,13 @@
           if (!claimed.has(c) && looksLikeNiveauColumn(columnValues(c))) { idx.niveau = c; claimed.add(c); break; }
         }
       }
+      if (idx.nom < 0 && idx.prenom < 0 && combinedIndex < 0) {
+        for (let c = 0; c < columnCount; c++) {
+          if (!claimed.has(c) && looksLikeNameColumn(columnValues(c))) { combinedIndex = c; claimed.add(c); break; }
+        }
+      }
+      const useCombined = (idx.nom < 0 || idx.prenom < 0) && combinedIndex >= 0;
+      const hasHeader = (idx.nom >= 0 && idx.prenom >= 0) || useCombined;
       if (idx.emailEleve < 0 || idx.emailsParents < 0) {
         const domainField = document.getElementById("studentEmailDomain");
         const domainOverride = domainField ? normalizeHeader(domainField.value).replace(/\s/g, "") : "";
@@ -402,13 +426,52 @@
         students.push({
           last_name: lastName, first_name: firstName,
           sex: sexFromValue(get(idx.sexe)) || "NON_PRECISE",
-          eps_level: get(idx.niveau) || "MOYEN",
+          eps_level: idx.niveau >= 0 ? (get(idx.niveau) || "MOYEN") : "MOYEN",
           student_email: get(idx.emailEleve) || null,
           parent_emails: get(idx.emailsParents) || null
         });
       }
-      return students;
+      return { students, niveauDetected: idx.niveau >= 0 };
     }
+
+    // Memes 5 niveaux que ceux geres partout ailleurs dans l'application (fiche eleve, etc).
+    const LEVEL_OPTIONS = [
+      { value: "1", label: "1 - Debutant" },
+      { value: "2", label: "2 - Fragile" },
+      { value: "3", label: "3 - Moyen" },
+      { value: "4", label: "4 - Bon" },
+      { value: "5", label: "5 - Tres bon" }
+    ];
+
+    function renderPreviewTable() {
+      const body = document.getElementById("previewBody");
+      body.innerHTML = "";
+      parsedStudents.forEach(s => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${s.eps_level}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
+        body.appendChild(tr);
+      });
+      document.getElementById("previewCount").textContent = `${parsedStudents.length} eleve(s) detecte(s).`;
+    }
+
+    function applyNiveauToAll(value) {
+      parsedStudents.forEach(s => { s.eps_level = value; });
+      document.querySelectorAll("#niveauPickerButtons .pillbtn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.value === value);
+      });
+      renderPreviewTable();
+    }
+
+    const niveauPickerButtons = document.getElementById("niveauPickerButtons");
+    LEVEL_OPTIONS.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "pillbtn";
+      btn.dataset.value = opt.value;
+      btn.textContent = opt.label;
+      btn.addEventListener("click", () => applyNiveauToAll(opt.value));
+      niveauPickerButtons.appendChild(btn);
+    });
 
     document.getElementById("csvFile").addEventListener("change", async (e) => {
       const file = e.target.files[0];
@@ -418,20 +481,15 @@
       document.getElementById("sendError").textContent = "";
       if (!file) return;
       const text = await file.text();
-      const students = parseCsv(text);
+      const { students, niveauDetected } = parseCsv(text);
       if (students.length === 0) {
         document.getElementById("parseError").textContent = "Aucun eleve reconnu dans ce fichier. Verifiez les colonnes.";
         return;
       }
       parsedStudents = students;
-      const body = document.getElementById("previewBody");
-      body.innerHTML = "";
-      students.forEach(s => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${s.eps_level}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
-        body.appendChild(tr);
-      });
-      document.getElementById("previewCount").textContent = `${students.length} eleve(s) detecte(s).`;
+      document.getElementById("niveauPicker").style.display = niveauDetected ? "none" : "block";
+      if (!niveauDetected) applyNiveauToAll("3");
+      renderPreviewTable();
       document.getElementById("previewWrap").style.display = "block";
     });
 
