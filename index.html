@@ -110,6 +110,7 @@
 
         <!-- Consultation : aucun enregistrement, on regarde ce que donne un cycle -->
         <div id="coursTab-cycles">
+          <div id="sessionSheet" class="card" style="display:none"></div>
           <div class="card">
             <h2>Regarder un cycle</h2>
             <div class="muted" style="margin-bottom:6px">
@@ -884,24 +885,23 @@
       return "Programme EPS lycee - arrete du 17 janvier 2019";
     }
 
-    // Progression annoncee pour les APSA dont le contenu detaille est en cours de redaction.
-    // Miroir de CycleBlueprintRegistry cote application.
+    // Contenus detailles disponibles, charges a la demande depuis content/. Miroir du registre
+    // cote application : tant qu'une APSA n'y figure pas, seule une progression generique existe.
     const DETAILED_CYCLES = {
-      "QUATRIEME|Escalade": {
-        champ: "CA2 - Adapter ses deplacements a des environnements varies",
-        titles: [
-          "Reprendre en securite et se situer",
-          "S'equiper et assurer en autonomie",
-          "Se deplacer efficacement",
-          "Utiliser les jambes, economiser les bras",
-          "Lire une voie et construire un projet",
-          "Choisir et realiser un itineraire adapte",
-          "Reinvestissement et preparation de l'evaluation",
-          "Situation finale et evaluation"
-        ],
-        written: 2
-      }
+      "QUATRIEME|Escalade": { file: "content/escalade-4e.json" }
     };
+    const cycleContentCache = {};
+
+    async function loadCycleContent(grade, apsa) {
+      const entry = DETAILED_CYCLES[`${grade}|${apsa}`];
+      if (!entry) return null;
+      if (!cycleContentCache[entry.file]) {
+        const res = await fetch(entry.file);
+        if (!res.ok) return null;
+        cycleContentCache[entry.file] = await res.json();
+      }
+      return cycleContentCache[entry.file];
+    }
 
     let coursTabReady = false;
 
@@ -920,35 +920,122 @@
       return (PROGRAMMATION[grade] || []).map(a => `<option value="${a}">${a}</option>`).join("");
     }
 
-    function renderCyclePreview() {
+    async function renderCyclePreview() {
       const grade = document.getElementById("cycleGrade").value;
       const apsa = document.getElementById("cycleApsa").value;
       const count = parseInt(document.getElementById("cycleSessions").value, 10);
       const schoolYear = document.getElementById("schoolYear").value || "2026-2027";
       document.getElementById("cycleProgramme").textContent = "Programme applicable : " + programmeFor(grade, schoolYear);
+      document.getElementById("sessionSheet").style.display = "none";
 
-      const detailed = DETAILED_CYCLES[`${grade}|${apsa}`];
       const el = document.getElementById("cyclePreview");
       if (!apsa) { el.innerHTML = '<div class="card muted">Aucune activite programmee pour ce niveau.</div>'; return; }
 
+      const content = await loadCycleContent(grade, apsa);
+
       let rows = "";
       for (let i = 1; i <= count; i++) {
-        const title = detailed ? (detailed.titles[i - 1] || `Seance ${i}`) : `Seance ${i}`;
-        const isWritten = detailed && i <= detailed.written;
-        rows += `<div class="card" style="margin-top:8px;${isWritten ? "" : "opacity:.6"}">
-          <strong>S${i}</strong> · ${title}
-          ${isWritten ? '<span class="badge off" style="margin-left:8px">Fiche complete</span>'
-                      : '<span class="badge" style="margin-left:8px">Fiche a venir</span>'}
+        const written = content?.sessions.find(s => s.number === i);
+        const title = written?.theme || content?.plannedTitles?.[i - 1] || `Seance ${i}`;
+        rows += `<div class="card sessionCard" data-n="${i}" style="margin-top:8px;${written ? "cursor:pointer" : "opacity:.6"}">
+          <div class="top">
+            <div><strong>S${i}</strong> · ${title}</div>
+            ${written ? '<span class="badge off">Voir la seance</span>'
+                      : '<span class="badge">Fiche a venir</span>'}
+          </div>
         </div>`;
       }
 
       el.innerHTML = `
         <div class="card">
           <h2 style="margin-bottom:4px">${apsa} — ${GRADE_LABELS[grade] || grade}</h2>
-          <div class="muted">${count} seances${detailed ? " · " + detailed.champ : ""}</div>
-          ${detailed ? "" : '<div class="muted" style="margin-top:8px">Contenu detaille pas encore ecrit pour cette activite a ce niveau.</div>'}
+          <div class="muted">${count} seances${content ? " · " + content.champApprentissage : ""}</div>
+          ${content ? "" : '<div class="muted" style="margin-top:8px">Contenu detaille pas encore ecrit pour cette activite a ce niveau.</div>'}
         </div>
         ${rows}`;
+
+      el.querySelectorAll(".sessionCard").forEach(card => {
+        const n = parseInt(card.dataset.n, 10);
+        const written = content?.sessions.find(s => s.number === n);
+        if (written) card.addEventListener("click", () => showSessionSheet(content, written));
+      });
+    }
+
+    // ---- Fiche de seance (mode preparation) ----
+    const li = a => `<ul class="tight" style="margin:2px 0 0;padding-left:18px">${a.map(x => `<li>${x}</li>`).join("")}</ul>`;
+    const block = (k, html) => `<div style="margin-top:10px"><div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.06em">${k}</div>${html}</div>`;
+
+    function situationHtml(s, studentCount) {
+      return `
+        <div class="card" style="margin-top:12px">
+          <div class="top">
+            <strong>${s.title}</strong>
+            <span class="badge ${s.role === "NOYAU" ? "off" : ""}">${s.role} · ${s.dur} min</span>
+          </div>
+          <div style="margin-top:6px">${s.objective}</div>
+          ${block("But pour l'eleve", `<em>« ${s.studentGoal} »</em>`)}
+          ${block("Organisation", s.organization)}
+          ${block("Consignes", li(s.instructions))}
+          ${block("Criteres de reussite", li(s.success))}
+          ${block("Criteres de realisation", li(s.execution))}
+          ${block("Ce que je regarde", li(s.watch))}
+          ${block("Erreurs frequentes", li(s.errors))}
+          ${block("Ce que je dis", li(s.feedback.map(f => `<em>« ${f} »</em>`)))}
+          ${block("Variables +", li(s.plus))}
+          ${block("Variables −", li(s.minus))}
+          ${block("Differenciation", li([
+            `<strong>Facilitee</strong> — ${s.diff.facilitee}`,
+            `<strong>Normale</strong> — ${s.diff.normale}`,
+            `<strong>Complexifiee</strong> — ${s.diff.complexifiee}`
+          ]))}
+          <div style="margin-top:10px;padding:8px 10px;border-left:3px solid var(--danger);background:#FDEEED;border-radius:0 4px 4px 0">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">Securite</div>
+            ${li(s.safety)}
+          </div>
+        </div>`;
+    }
+
+    function showSessionSheet(content, s) {
+      const el = document.getElementById("sessionSheet");
+      const studentCount = 28;
+      el.innerHTML = `
+        <div class="top">
+          <h2 style="margin:0">S${s.number} — ${s.theme}</h2>
+          <button class="secondary" id="closeSheetBtn" style="margin-top:0">Fermer</button>
+        </div>
+        <div style="margin-top:8px">${s.mainObjective}</div>
+        ${block("Objectifs secondaires", li(s.secondaryObjectives))}
+        ${block("Lien avec la seance precedente", s.linkToPrevious)}
+        ${block("A acquerir avant la seance suivante", s.prerequisiteForNext)}
+
+        <h2 style="margin-top:18px">A preparer avant le cours — installation ${s.setup.installationMinutes} min</h2>
+        ${block(`Materiel pour ${studentCount} eleves`, li(s.setup.material))}
+        ${block("Mise en place", li(s.setup.instructions))}
+        ${block("Schema", `<pre style="white-space:pre-wrap;font-size:12px;margin:2px 0 0">${s.setup.sketch}</pre>`)}
+
+        <h2 style="margin-top:18px">Echauffement — ${s.warmup.steps.reduce((a, b) => a + b.dur, 0)} min</h2>
+        <div class="muted">${s.warmup.rationale}</div>
+        ${s.warmup.steps.map(w => block(`${w.dur} min · ${w.title}`, li(w.details))).join("")}
+
+        <h2 style="margin-top:18px">Situations</h2>
+        ${s.situations.map(x => situationHtml(x, studentCount)).join("")}
+
+        <h2 style="margin-top:18px">Bilan — ${s.closing.dur} min</h2>
+        ${block("Questions", li(s.closing.questions))}
+        ${block("A retenir", s.closing.key)}
+        ${block("Roles sociaux", li(s.socialRoles))}
+
+        <div style="margin-top:14px;padding:8px 10px;border-left:3px solid var(--danger);background:#FDEEED;border-radius:0 4px 4px 0">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">A verifier avec le protocole de l'etablissement</div>
+          ${li(content.protocoleLocal)}
+        </div>
+
+        ${block("Sources pedagogiques", li(content.sources.map(x =>
+          `<span class="badge ${x.type === "Officiel" ? "off" : ""}">${x.type}</span> <a href="${x.url}" target="_blank" rel="noopener">${x.title}</a> — ${x.org}, consulte le ${x.consulted}`
+        )))}`;
+      el.style.display = "block";
+      document.getElementById("closeSheetBtn").addEventListener("click", () => { el.style.display = "none"; });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     async function refreshCoursClassOptions() {

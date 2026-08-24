@@ -1,0 +1,449 @@
+{
+  "apsa": "Escalade",
+  "grade": "QUATRIEME",
+  "champApprentissage": "CA2 - Adapter ses deplacements a des environnements varies",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie",
+  "attendus": [
+    "Reussir un deplacement planifie dans un milieu naturel amenage ou artificiellement recree plus ou moins connu.",
+    "Gerer ses ressources pour realiser en totalite un parcours securise.",
+    "Assurer la securite de son camarade.",
+    "Respecter et faire respecter les regles de securite."
+  ],
+  "plannedTitles": [
+    "Reprendre en securite et se situer",
+    "S'equiper et assurer en autonomie",
+    "Se deplacer efficacement",
+    "Utiliser les jambes, economiser les bras",
+    "Lire une voie et construire un projet",
+    "Choisir et realiser un itineraire adapte",
+    "Reinvestissement et preparation de l'evaluation",
+    "Situation finale et evaluation"
+  ],
+  "sources": [
+    { "type": "Officiel", "title": "Attendus de fin de cycle 4 pour le CA2", "org": "Eduscol", "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsattfincycca2nd567451pdf-78315.pdf", "consulted": "2026-08-25" },
+    { "type": "Officiel", "title": "Ressources d'accompagnement EPS cycle 4", "org": "Eduscol", "url": "https://eduscol.education.fr/304/education-physique-et-sportive-cycle-4", "consulted": "2026-08-25" },
+    { "type": "Academique", "title": "Protocole de securite en escalade pour l'EPS", "org": "Academie de Dijon", "url": "https://eps.wp.ac-dijon.fr/wp-content/uploads/sites/20/2024/12/protocole_escalade.pdf", "consulted": "2026-08-25" },
+    { "type": "Academique", "title": "Protocoles de securite en APPN - escalade", "org": "Academie de Versailles", "url": "https://eps.ac-versailles.fr/IMG/pdf/appn_protocole_escalade_janvier_2023.pdf", "consulted": "2026-08-25" }
+  ],
+  "protocoleLocal": [
+    "Hauteur de la SAE, zone d'assurage et conformite des tapis (NF P 90311, 40 cm joints et scratches en bloc).",
+    "Nombre de cordees simultanees autorise et taux d'encadrement applicable.",
+    "Controle et tracabilite des EPI avant le cycle.",
+    "Type de systeme d'assurage utilise dans l'etablissement et notice correspondante.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Reprendre en securite et se situer",
+      "mainObjective": "Reactiver le protocole de securite en moulinette et situer le niveau de grimpe de chaque eleve.",
+      "secondaryObjectives": [
+        "Reconstruire l'equipement autonome (baudrier, noeud de huit double).",
+        "Reactiver l'assurage en 5 temps sous controle du contre-assureur.",
+        "Constituer les groupes de besoin a partir de comportements observes."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : s'appuie sur le cycle escalade de 6e, sans presupposer que les acquis de securite sont restes stables.",
+      "prerequisiteForNext": "Chaque eleve sait s'equiper seul, realiser son noeud de huit double et tenir le poste d'assureur avec contre-assureur.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          "28 baudriers (un par eleve, tailles verifiees)",
+          "10 systemes d'assurage + mousquetons a vis (un par cordee de 3)",
+          "10 cordes en place sur les voies",
+          "10 fiches d'observation diagnostique",
+          "6 plots de delimitation de la zone d'assurage",
+          "6 etiquettes de cotation des voies (3 niveaux minimum)",
+          "1 trousse de secours"
+        ],
+        "instructions": [
+          "Verifier la SAE : prises serrees, cordes en place, tapis joints et scratches.",
+          "Delimiter au sol la zone d'assurage le long du mur avec les plots : on n'en sort pas.",
+          "Preparer une zone d'equipement a l'ecart du mur, ou les eleves mettent leur baudrier.",
+          "Etiqueter les voies en trois niveaux de difficulte pour permettre le choix.",
+          "Reserver un espace bloc/traversee separe, sans passage ni stationnement.",
+          "Sortir la trousse de secours et verifier son emplacement."
+        ],
+        "sketch": "MUR : voies 1-2 faciles | voies 3-4 moyennes | voies 5-6 difficiles\nBande de tapis le long du mur = zone d'assurage (plots au sol)\nA 3 m en retrait : zone d'equipement | A l'oppose : espace traversee/bloc"
+      },
+      "warmup": {
+        "rationale": "Prepare les appuis de pieds et les prises de mains sollicites des la premiere voie, et remet les eleves en confiance sur le contact avec le mur avant toute grimpe en hauteur.",
+        "steps": [
+          { "dur": 3, "title": "Mise en train generale", "details": ["Course souple dans la salle, changements de direction au signal.", "Deplacements varies : pas chasses, montees de genoux, talons-fesses."] },
+          { "dur": 4, "title": "Mobilisation articulaire ciblee", "details": ["Doigts et poignets : ouverture/fermeture, cercles lents.", "Epaules et coudes : cercles avant/arriere, bras tendus puis flechis.", "Hanches et chevilles : cercles, fentes avant, montees sur pointes."] },
+          { "dur": 5, "title": "Traversee basse pieds-mains", "details": ["Traversee du mur a hauteur d'epaule maximum, pieds toujours en contact.", "Consigne : poser les pieds sans bruit, regarder ses pieds avant de les poser.", "Aller-retour, puis un tour avec la contrainte 'une seule main sur le mur a la fois'."] }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Atelier securite : s'equiper, s'encorder, assurer",
+          "objective": "Reconstruire les trois gestes qui conditionnent l'acces au mur : baudrier, noeud de huit double, assurage en 5 temps.",
+          "organization": "Trois ateliers en rotation toutes les 7 minutes, cordees de 3 constituees des le depart (grimpeur / assureur / contre-assureur). Le professeur circule et valide atelier par atelier.",
+          "studentGoal": "Etre capable de m'equiper seul et de faire valider mon noeud et mon assurage.",
+          "instructions": [
+            "Atelier 1 - baudrier : je l'ajuste au-dessus des hanches, serre, sans vrille, vetements rentres.",
+            "Atelier 2 - noeud : noeud de huit double sur le pontet, noeud d'arret, ensemble compacte.",
+            "Atelier 3 - assurage : les 5 temps a vide, la main sous le systeme ne lache jamais la corde.",
+            "Dans chaque atelier, mon partenaire verifie avant moi : on se verifie toujours mutuellement.",
+            "J'appelle le professeur seulement quand la cordee s'estime prete."
+          ],
+          "success": [
+            "Baudrier valide du premier coup par le professeur sur 2 essais consecutifs.",
+            "Noeud de huit double realise seul en moins de 2 minutes, avec noeud d'arret.",
+            "10 cycles d'assurage en 5 temps enchaines sans lacher le brin sous le systeme."
+          ],
+          "execution": [
+            "Baudrier : sangles a plat, boucle rebouclee si le modele l'exige.",
+            "Noeud : suivre le brin sur tout le trajet du huit, serrer les quatre brins.",
+            "Assurage : main forte toujours sous le systeme, coudes pres du corps."
+          ],
+          "watch": [
+            "La main sous le systeme lache-t-elle la corde pendant la manoeuvre ?",
+            "Le noeud est-il fixe sur le pontet et compacte ?",
+            "La verification mutuelle a-t-elle vraiment lieu, ou est-elle mimee ?"
+          ],
+          "errors": [
+            "Baudrier serre en dessous des hanches, ou vrille d'une sangle.",
+            "Noeud non termine, noeuds trop eloignes, noeud non fixe sur le pontet.",
+            "Assureur qui lache le brin de corde sous le systeme d'assurage.",
+            "Verification mutuelle expediee pour aller grimper plus vite."
+          ],
+          "feedback": [
+            "Montre-moi ou passe la corde : suis-la avec le doigt du pontet jusqu'au bout.",
+            "Ta main sous le systeme, c'est le frein. Si elle part, la corde file.",
+            "Ton camarade te confie sa securite : qu'est-ce que tu viens de verifier exactement ?"
+          ],
+          "plus": ["Realiser le noeud les yeux fermes puis le faire valider.", "Assurer en 5 temps avec une charge suspendue a la corde."],
+          "minus": ["Fiche photo du noeud etape par etape a disposition de l'atelier.", "Assurage a vide, corde sans charge, en verbalisant les 5 temps a voix haute."],
+          "diff": {
+            "facilitee": "Eleve qui a oublie le noeud : reprise guidee pas a pas avec support photo, validation gestuelle avant toute corde chargee.",
+            "normale": "Rotation classique sur les trois ateliers avec verification mutuelle.",
+            "complexifiee": "Eleve deja sur : devient referent de son atelier, verifie ses camarades avant le passage du professeur."
+          },
+          "safety": [
+            "Baudrier serre et ajuste au-dessus des hanches, aucune vrille, vetements rentres.",
+            "Noeud de huit double, fixe sur le pontet et proche, avec noeud d'arret, ensemble compacte.",
+            "Corde passee dans le systeme selon la notice, mousqueton ferme et visse, systeme sur le pontet."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 15,
+          "title": "Traversee economique en bloc",
+          "objective": "Faire sentir l'economie d'effort par les appuis de pieds, a faible hauteur et sans corde.",
+          "organization": "Deux groupes en alternance sur la traversee : un groupe grimpe, l'autre observe depuis l'arriere de la zone de tapis. Passage en decale pour ne jamais se croiser sur le mur.",
+          "studentGoal": "Traverser le mur en utilisant le moins de prises de mains possible.",
+          "instructions": [
+            "Je traverse a hauteur d'epaule maximum, jamais plus haut.",
+            "Je compte le nombre de prises de mains que j'utilise : l'objectif est de le reduire.",
+            "Je ne stationne jamais sous un camarade : je m'assois derriere la zone de tapis.",
+            "Si je descends, je pose les deux pieds, jambes flechies."
+          ],
+          "success": [
+            "Traversee complete avec au maximum 8 prises de mains utilisees.",
+            "Aucun pied pose au sol pendant la traversee.",
+            "Reception amortie, jambes flechies, a chaque descente."
+          ],
+          "execution": [
+            "Chercher la prise de pied avant la prise de main.",
+            "Pousser sur la jambe pour monter, plutot que tirer sur le bras.",
+            "Garder les bras tendus entre deux mouvements."
+          ],
+          "watch": [
+            "Le nombre de prises de mains diminue-t-il entre le premier et le dernier passage ?",
+            "Les eleves respectent-ils la hauteur maximale et la zone de reception ?"
+          ],
+          "errors": [
+            "Traversee trop haute par jeu ou par defi entre eleves.",
+            "Enchainement de tractions rapides sur les bras sans chercher d'appuis de pieds.",
+            "Camarades assis ou debout dans la zone de reception."
+          ],
+          "feedback": [
+            "Combien de prises de mains cette fois ? Essaie d'en enlever deux.",
+            "Tes pieds d'abord. Ta main ne sert qu'a t'equilibrer.",
+            "Tu es trop haut : epaules au niveau de la ligne, pas au-dessus."
+          ],
+          "plus": ["Traversee avec un nombre de prises de mains impose et annonce a l'avance.", "Traversee en marquant un arret de 3 secondes tous les trois mouvements."],
+          "minus": ["Traversee sur une portion courte du mur, toutes prises autorisees.", "Traversee avec les prises de pieds signalees par un ruban de couleur."],
+          "diff": {
+            "facilitee": "Portion reduite du mur, toutes les prises autorisees, objectif : ne pas poser le pied au sol.",
+            "normale": "Traversee complete, comptage des prises de mains.",
+            "complexifiee": "Traversee avec prises de mains limitees a 5, ou traversee en sens inverse."
+          },
+          "safety": [
+            "Ne jamais stationner ni s'asseoir sous un grimpeur : on s'assoit derriere la zone de tapis.",
+            "Aucun objet au sol dans la zone de reception.",
+            "Reception controlee et amortie : jambes ecartees et flechies.",
+            "Parade obligatoire des que le bloc cree un desequilibre avec risque de mauvaise chute."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 20,
+          "title": "Situation de reference diagnostique : trois voies au choix",
+          "objective": "Observer le niveau de grimpe initial et le rapport au risque de chaque eleve pour constituer les groupes de besoin.",
+          "organization": "Cordees de 3 en rotation grimpeur / assureur / contre-assureur. Chaque eleve grimpe une voie de son choix parmi les trois niveaux. Le troisieme eleve observe et remplit la fiche.",
+          "studentGoal": "Choisir une voie a ma portee, la monter jusqu'en haut, et redescendre en confiance.",
+          "instructions": [
+            "Je choisis une voie parmi les trois niveaux affiches : je dois pouvoir la finir.",
+            "Protocole complet avant chaque depart : verification mutuelle, puis feu vert du professeur.",
+            "Arrive en haut, je previens mon assureur, je m'assois dans le baudrier et je me laisse descendre.",
+            "Observateur : tu notes les arrets, les prises de pieds utilisees et la position du bassin."
+          ],
+          "success": [
+            "Voie terminee jusqu'a la derniere prise sans reprise de corde tendue.",
+            "Moins de 3 arrets prolonges (plus de 10 secondes) dans la voie.",
+            "Descente en confiance : bassin assis, jambes tendues, pieds en appui sur le mur."
+          ],
+          "execution": [
+            "Regarder la voie avant de partir et reperer les 2 ou 3 premieres prises de pieds.",
+            "Poser le pied puis transferer le poids avant de lacher une main.",
+            "Garder les bras tendus quand on cherche : on se repose sur le squelette, pas sur les muscles."
+          ],
+          "watch": [
+            "L'eleve grimpe-t-il aux bras (bras flechis en permanence) ou utilise-t-il ses jambes ?",
+            "Le regard va-t-il vers les pieds, ou reste-t-il colle aux mains ?",
+            "Comportement au moment de la descente : lachage, crispation, ou confiance ?"
+          ],
+          "errors": [
+            "Traction sur les bras avec les pieds qui restent bas.",
+            "Bassin colle au mur, empechant de voir les prises de pieds.",
+            "Refus de se laisser aller dans le baudrier a la descente.",
+            "Assureur qui laisse la corde trop molle pendant l'observation."
+          ],
+          "feedback": [
+            "Regarde tes pieds : ou peux-tu monter le pied droit avant de tirer sur les bras ?",
+            "Ecarte le bassin du mur, tu verras tes appuis.",
+            "Tu es tenu. Assieds-toi dans le baudrier, ton assureur te tient."
+          ],
+          "plus": ["Deuxieme passage en annoncant a l'avance le nombre de prises de pieds que l'on va utiliser.", "Voie du niveau superieur pour verifier ou se situe la limite."],
+          "minus": ["Voie la plus facile, avec un arret possible a mi-hauteur.", "Objectif reduit a la moitie de la voie, avec descente des le repere atteint."],
+          "diff": {
+            "facilitee": "Eleve apprehensif : voie facile, montee jusqu'a un repere intermediaire visible, descente immediate. On valide le fait d'etre monte et redescendu, pas la hauteur.",
+            "normale": "Choix libre parmi les trois niveaux, voie terminee.",
+            "complexifiee": "Voie difficile avec consigne d'economie : terminer la voie en marquant 3 arrets bras tendus."
+          },
+          "safety": [
+            "Regle d'or n1 : verification mutuelle. Le grimpeur verifie l'assureur, l'assureur verifie le grimpeur.",
+            "Regle d'or n2 : feu vert du professeur. On l'appelle seulement quand on s'estime pret a grimper.",
+            "Controle professeur : baudrier serre et encordement au pontet, systeme d'assurage au pontet et mousqueton visse, contre-assureur pret corde a deux mains.",
+            "Verification visuelle ET par le toucher avant d'autoriser le depart."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les deux verifications a faire avant chaque depart en voie ?",
+          "Qu'est-ce qui vous a fatigue le plus aujourd'hui : les bras ou les jambes ? A votre avis, pourquoi ?"
+        ],
+        "key": "On ne grimpe jamais sans verification mutuelle puis feu vert du professeur. Et on grimpe avec les jambes : les bras servent surtout a s'equilibrer."
+      },
+      "socialRoles": [
+        "Assureur : tient la corde en 5 temps, ne lache jamais le brin sous le systeme.",
+        "Contre-assureur : corde tenue a deux mains, vigilance constante (obligatoire des la S1).",
+        "Observateur : remplit la fiche diagnostique de son camarade grimpeur."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "S'equiper et assurer en autonomie",
+      "mainObjective": "Assurer un camarade en moulinette de facon fiable, avec un contre-assureur, en communiquant clairement.",
+      "secondaryObjectives": [
+        "Automatiser l'equipement et l'encordement pour gagner du temps sur la grimpe.",
+        "Construire un vocabulaire de communication grimpeur/assureur precis et audible.",
+        "Reagir correctement a une chute prevue puis a un arret surprise."
+      ],
+      "linkToPrevious": "S1 a montre qui maitrise l'equipement et qui doit le reconstruire. Les cordees sont reconstituees en tenant compte des gabarits observes.",
+      "prerequisiteForNext": "Chaque eleve assure sans relance du professeur, garde la corde tendue et sait bloquer une chute annoncee.",
+      "setup": {
+        "installationMinutes": 6,
+        "material": [
+          "28 baudriers (un par eleve, tailles verifiees)",
+          "10 systemes d'assurage + mousquetons a vis (un par cordee de 3)",
+          "10 cordes en place sur les voies",
+          "10 fiches memo 'assurage en 5 temps'",
+          "6 plots de delimitation de la zone d'assurage",
+          "4 rubans de marquage de hauteur (chute annoncee a mi-voie)",
+          "1 trousse de secours"
+        ],
+        "instructions": [
+          "Reconstituer les cordees de 3 en limitant les ecarts de gabarit entre grimpeur et assureur.",
+          "Marquer sur 4 voies un repere de hauteur (ruban) qui declenchera la chute annoncee.",
+          "Verifier le nombre de cordees simultanees au regard du protocole local.",
+          "Afficher la fiche memo des 5 temps au pied de chaque voie."
+        ],
+        "sketch": "4 voies actives maximum, une cordee de 3 par voie.\nRuban de couleur a mi-voie = point de chute annoncee.\nZone d'assurage delimitee au sol, professeur en retrait pour voir toutes les cordees."
+      },
+      "warmup": {
+        "rationale": "Sollicite la prehension et le gainage utilises par l'assureur pour bloquer, et remet en place la communication de cordee avant de la mettre en jeu en situation reelle.",
+        "steps": [
+          { "dur": 3, "title": "Mise en train", "details": ["Course souple, puis deplacements lateraux face au mur.", "Au signal : arret gaine, jambes flechies, comme pour encaisser une traction."] },
+          { "dur": 3, "title": "Mains, avant-bras, gainage", "details": ["Ouverture/fermeture des mains, rotations de poignets.", "Tirage a deux sur une corde, pieds ancres, dos droit : sentir le blocage.", "Gainage ventral 2 x 20 secondes."] },
+          { "dur": 6, "title": "Traversee + annonces de cordee", "details": ["Traversee basse en binome, hauteur d'epaule maximum.", "Le partenaire au sol annonce : 'Pret ?' / 'Pret.' / 'Je pars.'", "Introduire les annonces reelles : 'Sec', 'Du mou', 'Je descends'."] }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Assurage en charge avec contre-assureur",
+          "objective": "Assurer un grimpeur reel en gardant la corde tendue et sans jamais lacher le brin sous le systeme.",
+          "organization": "Cordees de 3, rotation a chaque voie terminee. Le grimpeur monte au tiers de la voie seulement : l'enjeu est l'assurage, pas la performance de grimpe.",
+          "studentGoal": "Assurer mon camarade en gardant toujours la corde tendue, sans lacher la corde sous le systeme.",
+          "instructions": [
+            "Protocole complet avant chaque depart : verification mutuelle, puis feu vert du professeur.",
+            "Grimpeur : tu montes jusqu'au tiers de la voie, tu redescends. Ce n'est pas une course.",
+            "Assureur : tu avales le mou en 5 temps, ta main sous le systeme ne bouge jamais.",
+            "Contre-assureur : corde tenue a deux mains, tu regardes le grimpeur, pas la salle.",
+            "On s'annonce a voix haute : 'Pret ?' - 'Pret.' - 'Je pars.'"
+          ],
+          "success": [
+            "Aucune boucle de corde au sol pendant toute la montee.",
+            "La main sous le systeme reste en contact avec la corde sur 100 % du passage.",
+            "3 montees consecutives assurees sans intervention verbale du professeur."
+          ],
+          "execution": [
+            "Se placer pres du mur, dans l'axe de la voie, jambes legerement flechies.",
+            "Avaler le mou des que le grimpeur monte, sans tirer sur son baudrier.",
+            "Enchainer les 5 temps sans jamais croiser les mains au-dessus du systeme."
+          ],
+          "watch": [
+            "La tension de la corde : molle, boucle au sol ?",
+            "La main sous le systeme lache-t-elle, meme brievement ?",
+            "La distance de l'assureur au mur et sa position dans l'axe de chute.",
+            "Le contre-assureur est-il reellement attentif ?"
+          ],
+          "errors": [
+            "Assureur trop eloigne du mur.",
+            "Assureur qui lache le brin de corde sous le systeme d'assurage.",
+            "Corde laissee trop molle, distendue.",
+            "Contre-assureur qui discute ou regarde ailleurs."
+          ],
+          "feedback": [
+            "Regarde ta corde : il y a du mou. Ton camarade tomberait de combien ?",
+            "Ta main sous le systeme, c'est le frein. Elle ne quitte jamais la corde.",
+            "Rapproche-toi du mur, tu es tire vers l'avant s'il tombe.",
+            "Contre-assureur : tu tiens la vie de ton camarade a deux mains. Ou regardes-tu ?"
+          ],
+          "plus": ["Le grimpeur monte plus haut, obligeant a gerer davantage de corde.", "Assurer un grimpeur plus lourd que soi (vigilance accrue du professeur)."],
+          "minus": ["Grimpeur qui monte tres bas et lentement, en annoncant chaque mouvement.", "Professeur en doublure directe derriere l'assureur."],
+          "diff": {
+            "facilitee": "Assureur fragile : montees tres basses, contre-assureur experimente, professeur a cote.",
+            "normale": "Rotation classique, montee au tiers de la voie.",
+            "complexifiee": "Assure sans relance verbale et corrige lui-meme le mou ; peut passer contre-assureur referent."
+          },
+          "safety": [
+            "Regle d'or n1 : verification mutuelle. Le grimpeur verifie l'assureur, l'assureur verifie le grimpeur.",
+            "Regle d'or n2 : feu vert du professeur. On l'appelle seulement quand on s'estime pret a grimper.",
+            "Controle professeur : baudrier serre et encordement au pontet, systeme d'assurage au pontet et mousqueton visse, contre-assureur pret corde a deux mains.",
+            "Verification visuelle ET par le toucher avant d'autoriser le depart."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Chrono equipement : gagner du temps sans perdre en securite",
+          "objective": "Automatiser l'equipement et l'encordement pour liberer du temps de grimpe sur les seances suivantes.",
+          "organization": "Par cordee, hors du mur, dans la zone d'equipement. Deux manches chronometrees, avec verification obligatoire du professeur entre les deux.",
+          "studentGoal": "M'equiper et m'encorder correctement, de plus en plus vite, sans jamais rater une verification.",
+          "instructions": [
+            "Au top, je mets mon baudrier et je realise mon noeud de huit double.",
+            "Je m'arrete au moment ou ma cordee s'estime prete : c'est la que le chrono s'arrete.",
+            "Le professeur verifie : toute erreur annule le temps de la manche.",
+            "On compare la manche 1 et la manche 2."
+          ],
+          "success": [
+            "Equipement + noeud valides sans erreur en moins de 3 minutes.",
+            "Temps de la manche 2 inferieur a celui de la manche 1, sans erreur de verification."
+          ],
+          "execution": [
+            "Enfiler le baudrier assis ou appuye pour eviter les vrilles de sangles.",
+            "Realiser le huit puis le repasser en suivant le brin avant de serrer.",
+            "Verifier son partenaire avant d'appeler le professeur."
+          ],
+          "watch": ["La vitesse degrade-t-elle la qualite du noeud ou du serrage ?", "La verification mutuelle est-elle maintenue malgre le chrono ?"],
+          "errors": ["Noeud d'arret oublie sous la pression du chrono.", "Verification mutuelle sautee pour gagner quelques secondes.", "Vetements laisses hors de la ceinture."],
+          "feedback": ["Erreur : ton temps ne compte pas. La vitesse ne sert a rien si le noeud est faux.", "Tu as verifie ton camarade ? Montre-moi ce que tu as regarde."],
+          "plus": ["Equipement chronometre puis controle en croise par une autre cordee avant le professeur."],
+          "minus": ["Manche sans chronometre, avec support photo, objectif de qualite uniquement."],
+          "diff": {
+            "facilitee": "Sans chronometre : reussir seul, le temps n'est pas mesure.",
+            "normale": "Deux manches chronometrees avec validation.",
+            "complexifiee": "Devient verificateur d'une autre cordee avant le passage du professeur."
+          },
+          "safety": [
+            "Baudrier serre et ajuste au-dessus des hanches, aucune vrille, vetements rentres.",
+            "Noeud de huit double sur le pontet, noeud d'arret, ensemble compacte.",
+            "Le chronometre ne doit jamais justifier de raccourcir une verification : toute erreur annule la manche."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Chute annoncee puis arret surprise",
+          "objective": "Eprouver le blocage reel de la corde, d'abord annonce, puis sans prevenir, pour construire la confiance de cordee.",
+          "organization": "Une cordee par voie. Deux temps : d'abord toutes les chutes sont annoncees ; ensuite, et seulement si l'assureur a ete fiable, le grimpeur peut s'arreter sans prevenir au repere.",
+          "studentGoal": "Me laisser tenir par mon assureur, et bloquer proprement quand c'est mon tour d'assurer.",
+          "instructions": [
+            "Temps 1 : au ruban, le grimpeur annonce 'Je lache' puis se laisse asseoir dans le baudrier.",
+            "Temps 2 : le grimpeur peut lacher au ruban sans annoncer. Jamais plus haut que le ruban.",
+            "Assureur : des que la corde se charge, tu bloques vers le bas avec la main sous le systeme.",
+            "Contre-assureur : tu accompagnes le blocage, corde a deux mains."
+          ],
+          "success": [
+            "Chute annoncee bloquee avec moins de 30 cm de glissement de corde.",
+            "Arret surprise bloque sans que la main sous le systeme quitte la corde.",
+            "Le grimpeur accepte de se suspendre dans le baudrier sans se rattraper au mur."
+          ],
+          "execution": [
+            "Anticiper : garder la corde tendue avant meme le lachage.",
+            "Bloquer par une action vers le bas, pas en tirant vers le haut.",
+            "Grimpeur : s'asseoir dans le baudrier, jambes semi-flechies face au mur."
+          ],
+          "watch": [
+            "Le blocage se fait-il vers le bas ou par reflexe vers le haut ?",
+            "Le grimpeur se rattrape-t-il au mur au lieu de se laisser tenir ?",
+            "L'assureur anticipe-t-il ou subit-il la charge ?"
+          ],
+          "errors": [
+            "Assureur qui leve la main au-dessus du systeme au moment de la charge : le freinage disparait.",
+            "Grimpeur qui s'agrippe au mur et empeche la mise en tension.",
+            "Assureur surpris par la difference de gabarit et arrache du sol."
+          ],
+          "feedback": [
+            "Bloque vers le bas. Vers le haut, tu n'as plus de frein.",
+            "Lache le mur, tu es tenu. Regarde ton assureur.",
+            "Tu es plus leger que lui : rapproche-toi du mur et gaine-toi avant qu'il lache."
+          ],
+          "plus": ["Arret surprise a un moment libre entre le depart et le ruban.", "Rotation immediate des roles apres chaque chute."],
+          "minus": ["Chute annoncee uniquement, tres bas dans la voie, corde deja tendue.", "Le professeur tient la corde en doublure pendant le premier essai."],
+          "diff": {
+            "facilitee": "Chute annoncee a faible hauteur, corde pre-tendue, professeur en doublure. On valide la mise en tension, pas la hauteur.",
+            "normale": "Chute annoncee au ruban, puis arret surprise si la cordee est fiable.",
+            "complexifiee": "Arret surprise a hauteur libre sous le ruban, avec analyse du temps de reaction par le contre-assureur."
+          },
+          "safety": [
+            "Aucun lachage au-dessus du repere materialise.",
+            "Le passage au temps 2 (arret surprise) est autorise cordee par cordee par le professeur, jamais collectivement.",
+            "Verifier les differences de gabarit avant d'autoriser une chute : rapprocher l'assureur du mur si besoin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui a change dans votre facon d'assurer entre le debut et la fin de la seance ?",
+          "Qu'est-ce qui vous a permis de faire confiance a votre assureur au moment de lacher ?"
+        ],
+        "key": "Un bon assureur, c'est une corde tendue, une main qui ne lache jamais sous le systeme, et un regard qui ne quitte pas le grimpeur."
+      },
+      "socialRoles": [
+        "Assureur : responsable de la tension de la corde et du blocage.",
+        "Contre-assureur : corde a deux mains, obligatoire, vigilance continue.",
+        "Verificateur de cordee : controle son partenaire avant l'appel au professeur."
+      ]
+    }
+  ]
+}
