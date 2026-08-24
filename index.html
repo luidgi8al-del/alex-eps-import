@@ -138,7 +138,7 @@
           </div>
           <label for="schoolYear">Annee scolaire</label>
           <input type="text" id="schoolYear" value="2026-2027">
-          <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents)</label>
+          <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents — ou une seule colonne "Nom Prenom")</label>
           <input type="file" id="csvFile" accept=".csv,text/csv">
           <div class="error" id="parseError"></div>
           <div id="previewWrap" style="display:none">
@@ -288,6 +288,23 @@
       fields.push(current.trim());
       return fields;
     }
+    // Coupe "NOM Prenom" (ou "Prenom NOM") en {last, first}. Repere le(s) mot(s) tout en
+    // MAJUSCULES comme le nom de famille (convention francaise courante, ex: exports Pronote).
+    // Si aucune casse ne se distingue, retombe sur la convention "Prenom Nom".
+    function splitFullName(raw) {
+      const words = raw.trim().split(/\s+/).filter(Boolean);
+      if (words.length === 0) return { last: "", first: "" };
+      if (words.length === 1) return { last: words[0], first: "" };
+      const isUpper = w => w === w.toUpperCase() && w !== w.toLowerCase();
+      const upperWords = words.filter(isUpper);
+      const lowerWords = words.filter(w => !isUpper(w));
+      if (upperWords.length > 0 && lowerWords.length > 0) {
+        return { last: upperWords.join(" "), first: lowerWords.join(" ") };
+      }
+      return { first: words[0], last: words.slice(1).join(" ") };
+    }
+    const COMBINED_NAME_ALIASES = ["nom prenom", "nom et prenom", "nom complet", "eleve", "nom eleve", "prenom nom", "nom prenom eleve"];
+
     function parseCsv(text) {
       const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
       if (lines.length === 0) return [];
@@ -295,14 +312,23 @@
       const headerFields = parseCsvLine(lines[0], delimiter).map(normalizeHeader);
       const colIndex = key => headerFields.findIndex(h => HEADER_ALIASES[key].includes(h));
       const idx = { nom: colIndex("nom"), prenom: colIndex("prenom"), sexe: colIndex("sexe"), niveau: colIndex("niveau"), emailEleve: colIndex("emailEleve"), emailsParents: colIndex("emailsParents") };
-      const hasHeader = idx.nom >= 0 && idx.prenom >= 0;
+      const combinedIndex = headerFields.findIndex(h => COMBINED_NAME_ALIASES.includes(h));
+      const useCombined = (idx.nom < 0 || idx.prenom < 0) && combinedIndex >= 0;
+      const hasHeader = (idx.nom >= 0 && idx.prenom >= 0) || useCombined;
       const dataLines = hasHeader ? lines.slice(1) : lines;
       const students = [];
       for (const line of dataLines) {
         const f = parseCsvLine(line, delimiter);
         const get = i => (i >= 0 ? (f[i] || "") : "");
-        const lastName = hasHeader ? get(idx.nom) : (f[1] || "");
-        const firstName = hasHeader ? get(idx.prenom) : (f[0] || "");
+        let lastName, firstName;
+        if (useCombined) {
+          const split = splitFullName(get(combinedIndex));
+          lastName = split.last; firstName = split.first;
+        } else if (hasHeader) {
+          lastName = get(idx.nom); firstName = get(idx.prenom);
+        } else {
+          lastName = f[1] || ""; firstName = f[0] || "";
+        }
         if (!lastName || !firstName) continue;
         students.push({
           last_name: lastName, first_name: firstName,
