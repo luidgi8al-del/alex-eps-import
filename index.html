@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex EPS Outils — Import de classe</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background:#0f1115; color:#e6edf3; margin:0; padding:20px; max-width: 720px; margin-left:auto; margin-right:auto; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  h2 { font-size: 16px; margin-top: 28px; margin-bottom: 10px; }
+  .sub { color:#8b949e; font-size: 13px; margin-bottom: 20px; }
+  label { display:block; font-size: 13px; color:#8b949e; margin: 12px 0 4px; }
+  input, select { width:100%; box-sizing:border-box; background:#161b22; color:#e6edf3; border:1px solid #30363d; border-radius:6px; padding:10px; font-size:14px; }
+  button { background:#2d6a4f; color:#fff; border:none; border-radius:6px; padding:11px 16px; font-size:14px; cursor:pointer; margin-top:14px; }
+  button:hover { background:#1b4332; }
+  button.secondary { background:transparent; border:1px solid #30363d; color:#e6edf3; }
+  button.danger { background:transparent; border:1px solid #a32d2d; color:#ff8080; }
+  button:disabled { opacity:0.5; cursor:default; }
+  table { width:100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  th { color:#8b949e; font-weight: 500; font-size: 11px; text-transform: uppercase; }
+  .error { color:#ff8080; font-size: 13px; margin-top: 8px; }
+  .ok { color:#95d5b2; font-size: 13px; margin-top: 8px; }
+  .card { background:#161b22; border:1px solid #21262d; border-radius:8px; padding:16px; margin-top:14px; }
+  .row { display:flex; gap:10px; }
+  .row > * { flex:1; }
+  .muted { color:#5f5e5a; font-size:12px; }
+  .top { display:flex; justify-content:space-between; align-items:center; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; }
+  .badge.pending { background:#3a2f00; color:#e0b34d; }
+  .badge.imported { background:#0f2f22; color:#95d5b2; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>Alex EPS Outils</h1>
+    <button class="secondary" id="logoutBtn" style="display:none">Se deconnecter</button>
+  </div>
+  <div class="sub">Import de classe depuis un fichier CSV.</div>
+
+  <!-- Ecran connexion -->
+  <div id="authView" class="card">
+    <h2 id="authTitle">Connexion</h2>
+    <label for="email">Email</label>
+    <input type="email" id="email" autocomplete="email">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" autocomplete="current-password">
+    <button id="authSubmitBtn">Se connecter</button>
+    <button class="secondary" id="authToggleBtn">Pas encore de compte ? Creer un compte</button>
+    <div class="error" id="authError"></div>
+  </div>
+
+  <!-- Ecran principal (apres connexion) -->
+  <div id="mainView" style="display:none">
+    <div class="card">
+      <h2>Nouvel import</h2>
+      <div class="row">
+        <div>
+          <label for="grade">Niveau</label>
+          <select id="grade">
+            <option value="SIXIEME">6e</option>
+            <option value="CINQUIEME">5e</option>
+            <option value="QUATRIEME">4e</option>
+            <option value="TROISIEME">3e</option>
+            <option value="SECONDE">2nde</option>
+            <option value="PREMIERE">1ere</option>
+            <option value="TERMINALE">Tle</option>
+          </select>
+        </div>
+        <div>
+          <label for="classNumber">Numero de classe</label>
+          <select id="classNumber">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </div>
+      </div>
+      <label for="schoolYear">Annee scolaire</label>
+      <input type="text" id="schoolYear" value="2026-2027">
+      <label for="csvFile">Fichier CSV (colonnes : Nom, Prenom, Sexe, Niveau EPS, Email eleve, Emails parents)</label>
+      <input type="file" id="csvFile" accept=".csv,text/csv">
+      <div class="error" id="parseError"></div>
+      <div id="previewWrap" style="display:none">
+        <table id="previewTable">
+          <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+        <div class="muted" id="previewCount"></div>
+        <button id="sendBtn">Envoyer vers l'application</button>
+        <div class="ok" id="sendOk"></div>
+        <div class="error" id="sendError"></div>
+      </div>
+    </div>
+
+    <h2>Imports en attente</h2>
+    <div id="importsList"></div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "REPLACE_WITH_SUPABASE_URL";
+    const SUPABASE_KEY = "REPLACE_WITH_SUPABASE_ANON_KEY";
+
+    let session = JSON.parse(localStorage.getItem("alex_eps_session") || "null");
+    let parsedStudents = [];
+
+    function saveSession(s) {
+      session = s;
+      localStorage.setItem("alex_eps_session", JSON.stringify(s));
+    }
+    function clearSession() {
+      session = null;
+      localStorage.removeItem("alex_eps_session");
+    }
+
+    function authHeaders() {
+      return {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + (session ? session.access_token : SUPABASE_KEY),
+        "Content-Type": "application/json"
+      };
+    }
+
+    // ---- Auth ----
+    let isSignup = false;
+    document.getElementById("authToggleBtn").addEventListener("click", () => {
+      isSignup = !isSignup;
+      document.getElementById("authTitle").textContent = isSignup ? "Creer un compte" : "Connexion";
+      document.getElementById("authSubmitBtn").textContent = isSignup ? "Creer le compte" : "Se connecter";
+      document.getElementById("authToggleBtn").textContent = isSignup ? "Deja un compte ? Se connecter" : "Pas encore de compte ? Creer un compte";
+      document.getElementById("authError").textContent = "";
+    });
+
+    document.getElementById("authSubmitBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const errorEl = document.getElementById("authError");
+      errorEl.textContent = "";
+      if (!email || password.length < 6) {
+        errorEl.textContent = "Email requis, mot de passe d'au moins 6 caracteres.";
+        return;
+      }
+      const path = isSignup ? "/auth/v1/signup" : "/auth/v1/token?grant_type=password";
+      try {
+        const res = await fetch(SUPABASE_URL + path, {
+          method: "POST",
+          headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error_description || data.msg || "Echec de l'authentification.");
+        if (!data.access_token) {
+          errorEl.textContent = isSignup ? "Compte cree. Verifiez vos emails si une confirmation est requise, puis connectez-vous." : "Reponse inattendue du serveur.";
+          return;
+        }
+        saveSession({ access_token: data.access_token, user_id: data.user.id, email: data.user.email });
+        showMainView();
+      } catch (e) {
+        errorEl.textContent = e.message;
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      clearSession();
+      showAuthView();
+    });
+
+    function showAuthView() {
+      document.getElementById("authView").style.display = "block";
+      document.getElementById("mainView").style.display = "none";
+      document.getElementById("logoutBtn").style.display = "none";
+    }
+    function showMainView() {
+      document.getElementById("authView").style.display = "none";
+      document.getElementById("mainView").style.display = "block";
+      document.getElementById("logoutBtn").style.display = "inline-block";
+      loadImports();
+    }
+
+    // ---- CSV parsing (memes regles que l'app Android) ----
+    function normalizeHeader(v) {
+      return v.trim().toLowerCase().replace(/é/g, "e").replace(/è/g, "e").replace(/ê/g, "e").replace(/à/g, "a").replace(/î/g, "i");
+    }
+    const HEADER_ALIASES = {
+      nom: ["nom", "nom de famille", "lastname", "last name"],
+      prenom: ["prenom", "firstname", "first name"],
+      sexe: ["sexe", "sex", "genre"],
+      niveau: ["niveau eps", "niveau", "niveaueps", "level"],
+      emailEleve: ["email eleve", "emails eleve", "mail eleve", "email eleve(s)", "email"],
+      emailsParents: ["emails parents", "email parents", "email parent", "emails parent", "mail parents", "mails parents"]
+    };
+    function detectDelimiter(line) {
+      const semi = (line.match(/;/g) || []).length;
+      const comma = (line.match(/,/g) || []).length;
+      return semi > comma ? ";" : ",";
+    }
+    function parseCsvLine(line, delimiter) {
+      const fields = [];
+      let current = "", inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (inQuotes && c === '"' && line[i + 1] === '"') { current += '"'; i++; }
+        else if (c === '"') { inQuotes = !inQuotes; }
+        else if (c === delimiter && !inQuotes) { fields.push(current.trim()); current = ""; }
+        else { current += c; }
+      }
+      fields.push(current.trim());
+      return fields;
+    }
+    function parseCsv(text) {
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+      if (lines.length === 0) return [];
+      const delimiter = detectDelimiter(lines[0]);
+      const headerFields = parseCsvLine(lines[0], delimiter).map(normalizeHeader);
+      const colIndex = key => headerFields.findIndex(h => HEADER_ALIASES[key].includes(h));
+      const idx = { nom: colIndex("nom"), prenom: colIndex("prenom"), sexe: colIndex("sexe"), niveau: colIndex("niveau"), emailEleve: colIndex("emailEleve"), emailsParents: colIndex("emailsParents") };
+      const hasHeader = idx.nom >= 0 && idx.prenom >= 0;
+      const dataLines = hasHeader ? lines.slice(1) : lines;
+      const students = [];
+      for (const line of dataLines) {
+        const f = parseCsvLine(line, delimiter);
+        const get = i => (i >= 0 ? (f[i] || "") : "");
+        const lastName = hasHeader ? get(idx.nom) : (f[1] || "");
+        const firstName = hasHeader ? get(idx.prenom) : (f[0] || "");
+        if (!lastName || !firstName) continue;
+        students.push({
+          last_name: lastName, first_name: firstName,
+          sex: get(idx.sexe).toUpperCase() || "NON_PRECISE",
+          eps_level: get(idx.niveau) || "MOYEN",
+          student_email: get(idx.emailEleve) || null,
+          parent_emails: get(idx.emailsParents) || null
+        });
+      }
+      return students;
+    }
+
+    document.getElementById("csvFile").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      document.getElementById("parseError").textContent = "";
+      document.getElementById("previewWrap").style.display = "none";
+      document.getElementById("sendOk").textContent = "";
+      document.getElementById("sendError").textContent = "";
+      if (!file) return;
+      const text = await file.text();
+      const students = parseCsv(text);
+      if (students.length === 0) {
+        document.getElementById("parseError").textContent = "Aucun eleve reconnu dans ce fichier. Verifiez les colonnes.";
+        return;
+      }
+      parsedStudents = students;
+      const body = document.getElementById("previewBody");
+      body.innerHTML = "";
+      students.forEach(s => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${s.eps_level}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
+        body.appendChild(tr);
+      });
+      document.getElementById("previewCount").textContent = `${students.length} eleve(s) detecte(s).`;
+      document.getElementById("previewWrap").style.display = "block";
+    });
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const sendError = document.getElementById("sendError");
+      const sendOk = document.getElementById("sendOk");
+      sendError.textContent = ""; sendOk.textContent = "";
+      const grade = document.getElementById("grade").value;
+      const classNumber = parseInt(document.getElementById("classNumber").value, 10);
+      const schoolYear = document.getElementById("schoolYear").value.trim();
+      if (!schoolYear) { sendError.textContent = "Annee scolaire requise."; return; }
+      try {
+        const importRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports`, {
+          method: "POST",
+          headers: { ...authHeaders(), "Prefer": "return=representation" },
+          body: JSON.stringify({ user_id: session.user_id, grade, class_number: classNumber, school_year: schoolYear })
+        });
+        const importRows = await importRes.json();
+        if (!importRes.ok) throw new Error(importRows.message || "Echec de creation de l'import.");
+        const importId = importRows[0].id;
+
+        const studentsPayload = parsedStudents.map(s => ({ ...s, import_id: importId, user_id: session.user_id }));
+        const studentsRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_students`, {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify(studentsPayload)
+        });
+        if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+
+        sendOk.textContent = "Envoye. Ouvrez l'application et allez dans Classes > Importer depuis le web.";
+        document.getElementById("csvFile").value = "";
+        document.getElementById("previewWrap").style.display = "none";
+        loadImports();
+      } catch (e) {
+        sendError.textContent = e.message;
+      }
+    });
+
+    // ---- Liste des imports en attente ----
+    async function loadImports() {
+      const listEl = document.getElementById("importsList");
+      listEl.innerHTML = '<div class="muted">Chargement...</div>';
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?select=*&order=created_at.desc`, {
+          headers: authHeaders()
+        });
+        const rows = await res.json();
+        if (!res.ok) throw new Error("Impossible de charger les imports.");
+        if (rows.length === 0) {
+          listEl.innerHTML = '<div class="muted">Aucun import pour le moment.</div>';
+          return;
+        }
+        const gradeLabels = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
+        listEl.innerHTML = "";
+        rows.forEach(r => {
+          const div = document.createElement("div");
+          div.className = "card";
+          const label = `${gradeLabels[r.grade] || r.grade}${r.class_number}`;
+          div.innerHTML = `
+            <div class="top">
+              <div><strong>${label}</strong> · ${r.school_year} <span class="badge ${r.status}">${r.status === "pending" ? "en attente" : "importe"}</span></div>
+              <button class="danger" data-id="${r.id}">Supprimer</button>
+            </div>`;
+          div.querySelector("button").addEventListener("click", () => deleteImport(r.id));
+          listEl.appendChild(div);
+        });
+      } catch (e) {
+        listEl.innerHTML = `<div class="error">${e.message}</div>`;
+      }
+    }
+
+    async function deleteImport(id) {
+      await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${id}`, {
+        method: "DELETE",
+        headers: authHeaders()
+      });
+      loadImports();
+    }
+
+    // ---- Demarrage ----
+    if (session) { showMainView(); } else { showAuthView(); }
+  </script>
+</body>
+</html>
