@@ -1,0 +1,511 @@
+{
+  "apsa": "Escalade",
+  "grades": ["SIXIEME"],
+  "champApprentissage": "CA2 - Adapter ses deplacements a des environnements varies",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "Realiser, seul ou a plusieurs, un parcours dans plusieurs environnements inhabituels, en milieu naturel amenage ou artificiel.",
+    "Connaitre et respecter les regles de securite qui s'appliquent a chaque environnement.",
+    "Securiser et maitriser un deplacement dans un environnement inhabituel peu anxiogene.",
+    "Anticiper un deplacement en lisant le milieu."
+  ],
+  "targetCompetence": "Passer d'un deplacement spontane reactif, couteux en temps et en energie, a un deplacement choisi a partir d'indices pertinents, en respectant scrupuleusement les regles de securite active et passive.",
+  "cycleObjectives": [
+    "Se sentir en securite sur la structure et connaitre les regles qui s'y appliquent.",
+    "Grimper en s'appuyant sur les jambes plutot qu'en tirant sur les bras.",
+    "Choisir un itineraire adapte parmi plusieurs proposes et le mener a son terme.",
+    "Tenir un role au sol (parade, observation, contre-assurage) avec serieux."
+  ],
+  "plannedTitles": [
+    "Decouvrir le mur et les regles de securite",
+    "Grimper avec les jambes",
+    "S'equiper et etre assure",
+    "Se deplacer sans s'arreter",
+    "Choisir son itineraire",
+    "Decouvrir le role au sol",
+    "Reinvestissement et preparation de l'evaluation",
+    "Parcours final et evaluation"
+  ],
+  "sources": [
+    { "type": "Officiel", "title": "Champ d'apprentissage 2 - explicitation des attendus de fin de cycle 3", "org": "Eduscol", "url": "https://eduscol.education.fr/document/16660/download", "consulted": "2026-08-25" },
+    { "type": "Officiel", "title": "Ressources pour le cycle 3 - education physique et sportive", "org": "Eduscol", "url": "https://eduscol.education.fr/259/education-physique-et-sportive-cycle-3", "consulted": "2026-08-25" },
+    { "type": "Academique", "title": "Protocole de securite en escalade pour l'EPS", "org": "Academie de Dijon", "url": "https://eps.wp.ac-dijon.fr/wp-content/uploads/sites/20/2024/12/protocole_escalade.pdf", "consulted": "2026-08-25" },
+    { "type": "Academique", "title": "Protocoles de securite en APPN - escalade", "org": "Academie de Versailles", "url": "https://eps.ac-versailles.fr/IMG/pdf/appn_protocole_escalade_janvier_2023.pdf", "consulted": "2026-08-25" }
+  ],
+  "protocoleLocal": [
+    "Verification du protocole de securite escalade de l'etablissement avant la premiere seance.",
+    "Hauteur de la SAE, zone d'assurage et conformite des tapis (norme NF P 90311, 40 cm joints et scratches pour le bloc).",
+    "Regles locales concernant l'assurage par des eleves de 6e : selon le protocole, l'assurage peut etre reserve a l'enseignant ou a un adulte.",
+    "Nombre de cordees simultanees autorise et taux d'encadrement applicable.",
+    "Controle et tracabilite des EPI (baudriers, cordes, mousquetons) avant le cycle.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - apprehension",
+      "observed": "Refuse de decoller du sol ou reste tres bas. Se crispe, regarde vers le bas, cherche le contact avec le mur.",
+      "need": "Construire la confiance a faible hauteur avant toute montee en voie."
+    },
+    {
+      "label": "Profil 2 - grimpe aux bras",
+      "observed": "Monte vite au debut en tirant sur les bras, puis s'epuise et redescend.",
+      "need": "Decouvrir l'appui de pied et le transfert de poids."
+    },
+    {
+      "label": "Profil 3 - grimpe mais ne regarde pas",
+      "observed": "Monte correctement mais au hasard, sans choisir ses prises, et se bloque des que l'itineraire se complique.",
+      "need": "Regarder la voie avant de partir et choisir ses appuis."
+    },
+    {
+      "label": "Profil securite - role au sol neglige",
+      "observed": "Bavarde ou s'eloigne quand il tient un role au sol, indifferemment de son niveau de grimpe.",
+      "need": "Comprendre que le role au sol engage la securite d'un camarade."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Parcours de deux itineraires choisis par l'eleve parmi trois proposes, plus la tenue d'un role au sol pendant le passage d'un camarade.",
+    "criteria": [
+      "Les deux itineraires choisis sont realises jusqu'au repere annonce.",
+      "L'eleve monte en poussant sur les jambes : au moins trois appuis de pieds nets par itineraire.",
+      "L'eleve annonce son itineraire avant de partir et le suit.",
+      "Le role au sol est tenu sans rappel : attention constante, position correcte.",
+      "Les regles de securite du mur sont respectees pendant toute la seance."
+    ],
+    "referential": "Attendus de fin de cycle 3 du CA2, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir le mur et les regles de securite",
+      "mainObjective": "Prendre contact avec la structure a faible hauteur et s'approprier les regles de securite du mur.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Se deplacer lateralement sur le mur sans apprehension.",
+        "Connaitre les trois regles du bloc : ne pas stationner dessous, ne pas depasser la hauteur, receptionner jambes flechies.",
+        "Observer le rapport de chaque eleve a la hauteur, pour constituer les groupes."
+      ],
+      "linkToPrevious": "Premiere seance du cycle et souvent premier contact avec une SAE : on ne presuppose aucune experience.",
+      "prerequisiteForNext": "Chaque eleve se deplace en traversee sans apprehension et connait les regles du bloc.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          { "label": "tapis de reception", "fixed": 6, "note": "joints et scratches, norme NF P 90311" },
+          { "label": "plots de delimitation", "fixed": 8 },
+          { "label": "rubans de couleur pour marquer des prises", "fixed": 20 },
+          { "label": "fiches d'observation", "per": 0.5, "min": 2, "note": "une pour deux eleves" },
+          { "label": "trousse de secours", "fixed": 1 }
+        ],
+        "instructions": [
+          "Verifier la structure : prises serrees, tapis joints et scratches, sol degage.",
+          "Materialiser au sol, avec les plots, la limite au-dela de laquelle on ne stationne pas.",
+          "Tendre un ruban ou tracer un repere a hauteur d'epaule : c'est la limite de hauteur en traversee.",
+          "Prevoir deux zones de traversee distinctes pour faire tourner la classe sans attente.",
+          "Sortir la trousse de secours et verifier son emplacement."
+        ],
+        "sketch": "Deux zones de traversee cote a cote, chacune avec sa bande de tapis.\nRuban a hauteur d'epaule = limite haute.\nPlots au sol = limite d'approche : on s'assoit derriere."
+      },
+      "warmup": {
+        "rationale": "Met en confiance par le contact progressif avec le mur, ce qui est l'enjeu principal d'une premiere seance en 6e, et prepare mains et chevilles.",
+        "steps": [
+          { "dur": 3, "title": "Mise en train", "details": ["Course souple dans la salle, changements de direction au signal.", "Deplacements varies : pas chasses, talons-fesses."] },
+          { "dur": 4, "title": "Mobilisation", "details": ["Doigts et poignets : ouverture/fermeture, cercles.", "Epaules, hanches, chevilles : cercles lents.", "Montees sur pointes de pieds, 2 series de 10."] },
+          { "dur": 5, "title": "Premier contact avec le mur", "details": ["Poser les deux mains sur le mur et se deplacer lateralement, pieds au sol.", "Puis monter un pied sur une prise basse, redescendre.", "Enfin, les deux pieds sur des prises basses, quelques secondes."] }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Traversee decouverte",
+          "objective": "Se deplacer sur le mur a faible hauteur en decouvrant les sensations d'equilibre et de prehension.",
+          "material": [
+            { "label": "tapis de reception", "fixed": 6 },
+            { "label": "rubans de couleur", "fixed": 20 }
+          ],
+          "organization": "Deux zones de traversee, la classe en deux groupes. Dans chaque groupe, un eleve traverse, les autres attendent assis derriere la limite au sol. Passage en continu, sans se croiser sur le mur.",
+          "studentGoal": "Traverser le mur d'un bout a l'autre sans poser le pied au sol.",
+          "instructions": [
+            "Je traverse sous le ruban : jamais plus haut que mes epaules.",
+            "Je ne pose pas le pied au sol pendant la traversee.",
+            "Quand ce n'est pas mon tour, je m'assois derriere les plots.",
+            "Pour descendre : je pose les deux pieds, jambes flechies."
+          ],
+          "success": [
+            "Traversee complete sans poser le pied au sol.",
+            "Aucun depassement de la hauteur d'epaule.",
+            "Reception jambes flechies a chaque descente."
+          ],
+          "execution": [
+            "Garder les bras tendus : on tient au squelette, pas au muscle.",
+            "Deplacer un seul membre a la fois.",
+            "Regarder la prise avant de la saisir ou de poser le pied dessus."
+          ],
+          "watch": [
+            "Qui reste crispe, colle au mur, sans oser se deplacer ?",
+            "Qui depasse la hauteur autorisee par jeu ?",
+            "Qui utilise ses pieds, qui se tracte uniquement sur les bras ?"
+          ],
+          "errors": [
+            "Monter trop haut, par defi entre camarades.",
+            "Rester assis sous le mur au lieu de reculer derriere les plots.",
+            "Se deplacer par a-coups, en bougeant deux membres a la fois."
+          ],
+          "feedback": [
+            "Un seul membre a la fois : main, puis pied, puis l'autre main.",
+            "Tes epaules doivent rester sous le ruban.",
+            "Recule derriere les plots quand ce n'est pas ton tour."
+          ],
+          "plus": ["Traverser sans utiliser les prises marquees d'un ruban.", "Traverser en marquant un arret de 3 secondes au milieu."],
+          "minus": ["Traverser une portion courte, avec le droit de poser un pied une fois.", "Traverser en gardant une main du professeur en contact."],
+          "diff": {
+            "facilitee": "Portion courte du mur, tres bas, avec le droit de poser un pied. On valide le fait de se deplacer, pas la distance.",
+            "normale": "Traversee complete sans poser le pied.",
+            "complexifiee": "Traversee complete avec des prises interdites, ou avec un arret impose."
+          },
+          "safety": [
+            "Ne jamais stationner ni s'asseoir sous un grimpeur : on s'assoit derriere les plots.",
+            "Aucun objet au sol dans la zone de reception (sacs, gourdes, vetements).",
+            "Hauteur d'epaule maximum, sous le ruban.",
+            "Reception controlee et amortie : jambes ecartees et flechies."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Jeu des couleurs",
+          "objective": "Faire chercher des appuis precis en donnant un but ludique, sans que l'eleve pense a la hauteur.",
+          "material": [
+            { "label": "rubans de couleur", "fixed": 20 },
+            { "label": "tapis de reception", "fixed": 6 }
+          ],
+          "organization": "Par deux sur la zone de traversee. Le partenaire au sol annonce une couleur, le grimpeur doit poser une main ou un pied sur une prise de cette couleur.",
+          "studentGoal": "Attraper la couleur annoncee par mon camarade sans descendre du mur.",
+          "instructions": [
+            "Mon partenaire annonce une couleur, je pose une main ou un pied dessus.",
+            "Je reste sous la hauteur d'epaule.",
+            "On change de role au bout de trois couleurs.",
+            "Si je descends, je pose les deux pieds, jambes flechies."
+          ],
+          "success": [
+            "3 couleurs atteintes de suite sans descendre.",
+            "Aucun depassement de hauteur.",
+            "Le partenaire au sol reste attentif et annonce clairement."
+          ],
+          "execution": [
+            "Chercher la prise du regard avant de bouger.",
+            "Rapprocher les pieds avant d'aller chercher loin avec la main.",
+            "Garder trois appuis en contact quand on va chercher le quatrieme."
+          ],
+          "watch": [
+            "L'eleve cherche-t-il du regard avant de bouger ?",
+            "Le partenaire au sol joue-t-il son role serieusement ?"
+          ],
+          "errors": [
+            "Se jeter sur la prise sans l'avoir regardee.",
+            "Lacher deux appuis en meme temps.",
+            "Annoncer des couleurs impossibles pour pieger son camarade."
+          ],
+          "feedback": [
+            "Regarde d'abord ou elle est, ensuite tu bouges.",
+            "Garde trois appuis : tu n'en bouges qu'un a la fois.",
+            "Annonce une couleur qu'il peut atteindre, tu n'es pas la pour le piegeur."
+          ],
+          "plus": ["Annoncer la couleur et le membre imposé (main droite, pied gauche)."],
+          "minus": ["Annoncer une couleur tres proche du grimpeur."],
+          "diff": {
+            "facilitee": "Couleurs annoncees tres proches, grimpeur tres bas.",
+            "normale": "Trois couleurs enchainees.",
+            "complexifiee": "Couleur plus membre impose, ou cinq couleurs enchainees."
+          },
+          "safety": [
+            "Ne jamais stationner sous un grimpeur.",
+            "Hauteur d'epaule maximum.",
+            "Reception jambes flechies.",
+            "Le partenaire au sol reste attentif : c'est lui qui voit si le grimpeur monte trop haut."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Parcours de traversee",
+          "objective": "Enchainer un parcours complet en respectant les regles, et observer le niveau initial de chacun.",
+          "material": [
+            { "label": "rubans de couleur", "fixed": 20 },
+            { "label": "fiches d'observation", "per": 0.5, "min": 2 }
+          ],
+          "organization": "Un parcours materialise sur toute la largeur du mur, a faible hauteur. Passage un par un, le partenaire observe et remplit la fiche.",
+          "studentGoal": "Faire le parcours en entier, en respectant toutes les regles du mur.",
+          "instructions": [
+            "Je suis le parcours marque, du depart a l'arrivee.",
+            "Je respecte la hauteur et je ne pose pas le pied au sol.",
+            "Observateur : tu notes si ton camarade a pose un pied, s'il est monte trop haut, et s'il a utilise ses jambes.",
+            "On change de role a la fin du parcours."
+          ],
+          "success": [
+            "Parcours termine sans poser le pied au sol.",
+            "Aucun depassement de hauteur.",
+            "Fiche d'observation remplie par le partenaire."
+          ],
+          "execution": [
+            "Regarder deux prises devant soi.",
+            "Pousser sur les jambes pour avancer.",
+            "Garder les bras tendus entre deux mouvements."
+          ],
+          "watch": [
+            "Qui termine le parcours, qui abandonne, et pourquoi ?",
+            "L'utilisation des jambes progresse-t-elle depuis le debut de la seance ?",
+            "Les regles du mur sont-elles acquises en fin de seance ?"
+          ],
+          "errors": [
+            "Abandonner des le premier passage difficile.",
+            "Oublier les regles quand on est concentre sur le parcours.",
+            "Remplir la fiche sans regarder."
+          ],
+          "feedback": [
+            "Tu es bloque : regarde ou tu peux monter ton pied.",
+            "Souffle, prends ton temps, tu es tout en bas.",
+            "Observateur, tu regardes ton camarade, pas la salle."
+          ],
+          "plus": ["Parcours avec des prises interdites.", "Parcours chronometre."],
+          "minus": ["Parcours reduit a une moitie du mur.", "Parcours avec toutes les prises autorisees."],
+          "diff": {
+            "facilitee": "Demi-parcours, toutes prises autorisees, accompagnement verbal du professeur.",
+            "normale": "Parcours complet marque.",
+            "complexifiee": "Parcours complet avec prises interdites ou en sens inverse."
+          },
+          "safety": [
+            "Ne jamais stationner sous un grimpeur.",
+            "Hauteur d'epaule maximum.",
+            "Reception jambes flechies.",
+            "Un seul grimpeur a la fois par zone."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les trois regles a respecter sur ce mur ?",
+          "Qu'est-ce qui vous a le plus fatigue : les bras ou les jambes ?"
+        ],
+        "key": "Sur le mur : on ne reste jamais sous un grimpeur, on ne depasse pas la hauteur d'epaule, et on receptionne jambes flechies."
+      },
+      "socialRoles": [
+        "Observateur : remplit la fiche de son camarade.",
+        "Annonceur : donne les couleurs dans le jeu, et surveille la hauteur de son camarade."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Grimper avec les jambes",
+      "mainObjective": "Decouvrir que ce sont les jambes qui font monter, et que les bras servent surtout a s'equilibrer.",
+      "secondaryObjectives": [
+        "Poser le pied avec precision, sans bruit.",
+        "Enchainer pied puis main, dans cet ordre.",
+        "Sentir la difference de fatigue entre grimper aux bras et grimper aux jambes."
+      ],
+      "linkToPrevious": "S1 a leve l'apprehension et installe les regles. On peut maintenant travailler la facon de grimper.",
+      "prerequisiteForNext": "L'eleve cherche son appui de pied avant de bouger la main.",
+      "setup": {
+        "installationMinutes": 6,
+        "material": [
+          { "label": "tapis de reception", "fixed": 6, "note": "joints et scratches" },
+          { "label": "plots de delimitation", "fixed": 8 },
+          { "label": "rubans de couleur pour marquer les pieds", "fixed": 24 },
+          { "label": "trousse de secours", "fixed": 1 }
+        ],
+        "instructions": [
+          "Marquer sur une zone de traversee un itineraire de pieds impose avec les rubans.",
+          "Laisser la seconde zone libre, sans marquage.",
+          "Verifier la limite de hauteur et la zone de reception.",
+          "Preparer un espace au calme pour l'exercice de comparaison bras/jambes."
+        ],
+        "sketch": "Zone 1 : itineraire de pieds marque (rubans).\nZone 2 : libre.\nRuban a hauteur d'epaule = limite haute. Plots = limite d'approche."
+      },
+      "warmup": {
+        "rationale": "Fait sentir immediatement la difference de cout entre les bras et les jambes, ce qui est le message central de la seance.",
+        "steps": [
+          { "dur": 3, "title": "Mise en train", "details": ["Course souple, changements de direction.", "Mobilisation doigts, epaules, hanches, chevilles."] },
+          { "dur": 4, "title": "Bras contre jambes", "details": ["Suspension bras tendus a une prise basse, 10 secondes.", "Puis position accroupie sur deux prises de pieds, mains posees sans tirer, 30 secondes.", "Question a la classe : lequel fatigue le plus vite ?"] },
+          { "dur": 5, "title": "Pose de pied silencieuse", "details": ["Traversee basse : poser chaque pied sans faire de bruit.", "Le partenaire ecoute et signale chaque pose bruyante.", "Consigne : regarder la prise jusqu'a ce que le pied soit dessus."] }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Itineraire de pieds impose",
+          "objective": "Obliger a chercher l'appui de pied avant la prise de main, pour construire la montee par les jambes.",
+          "material": [
+            { "label": "rubans de couleur", "fixed": 24 },
+            { "label": "tapis de reception", "fixed": 6 }
+          ],
+          "organization": "Sur la zone marquee, passage un par un. Le partenaire compte les pieds poses hors itineraire. Rotation apres chaque traversee.",
+          "studentGoal": "Traverser en ne posant mes pieds que sur les prises marquees.",
+          "instructions": [
+            "Mes pieds ne vont que sur les prises marquees d'un ruban.",
+            "Mes mains sont libres : je prends ce que je veux.",
+            "Je regarde la prise de pied avant de poser dessus.",
+            "Observateur : tu comptes les pieds poses ailleurs que sur les rubans."
+          ],
+          "success": [
+            "Traversee complete avec au maximum 2 pieds hors itineraire.",
+            "Aucun pied pose au sol.",
+            "Progression visible entre le premier et le dernier passage."
+          ],
+          "execution": [
+            "Chercher l'appui de pied, le regarder, poser dessus, puis avancer la main.",
+            "Monter le pied haut plutot que tirer sur les bras.",
+            "Garder les bras tendus quand on cherche."
+          ],
+          "watch": [
+            "L'eleve cherche-t-il ses pieds avant ses mains ?",
+            "Le regard descend-il vers les pieds ?",
+            "Les bras restent-ils tendus, ou sont-ils toujours flechis ?"
+          ],
+          "errors": [
+            "Avancer les mains d'abord, puis remonter les pieds en catastrophe.",
+            "Pieds qui restent bas, bras en traction permanente.",
+            "Poser le pied au juger, sans regarder."
+          ],
+          "feedback": [
+            "Ou est ton prochain pied ? Regarde-le avant de bouger ta main.",
+            "Pied d'abord, main ensuite. Toujours dans cet ordre.",
+            "Tes bras sont plies : tends-les, tu te reposeras."
+          ],
+          "plus": ["Reduire le nombre de prises de pieds marquees.", "Interdire aussi certaines prises de mains."],
+          "minus": ["Marquer beaucoup de prises de pieds.", "Autoriser deux pieds hors itineraire."],
+          "diff": {
+            "facilitee": "Portion courte, prises de pieds nombreuses et grosses.",
+            "normale": "Traversee complete sur itineraire impose.",
+            "complexifiee": "Prises de pieds espacees, ou consigne de ne pas s'arreter."
+          },
+          "safety": [
+            "Ne jamais stationner sous un grimpeur.",
+            "Hauteur d'epaule maximum.",
+            "Reception jambes flechies.",
+            "Un seul grimpeur a la fois par zone."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Mains sur les grosses prises seulement",
+          "objective": "Rendre impossible la traction permanente, en limitant volontairement les prises de mains disponibles.",
+          "material": [
+            { "label": "rubans de couleur", "fixed": 24 },
+            { "label": "tapis de reception", "fixed": 6 }
+          ],
+          "organization": "Sur la zone libre. Le professeur designe les 5 ou 6 grosses prises autorisees pour les mains. Passage un par un.",
+          "studentGoal": "Traverser en n'utilisant que les grosses prises pour mes mains.",
+          "instructions": [
+            "Mes mains ne vont que sur les grosses prises designees.",
+            "Mes pieds vont ou je veux.",
+            "Comme les mains sont rares, ce sont mes jambes qui doivent me deplacer.",
+            "Hauteur d'epaule maximum."
+          ],
+          "success": [
+            "Traversee complete en n'utilisant que les prises de mains autorisees.",
+            "Au moins deux deplacements de pieds entre deux prises de mains.",
+            "Aucun pied pose au sol."
+          ],
+          "execution": [
+            "Deplacer les deux pieds avant de changer de main.",
+            "Se rapprocher de la prochaine prise de main avec les jambes.",
+            "Garder le bassin proche du mur."
+          ],
+          "watch": [
+            "Les pieds bougent-ils davantage que dans la situation precedente ?",
+            "L'eleve comprend-il que c'est la jambe qui rapproche le corps ?"
+          ],
+          "errors": [
+            "Essayer de sauter d'une grosse prise a l'autre.",
+            "Rester bloque sans penser a deplacer les pieds.",
+            "Utiliser des prises de mains non autorisees."
+          ],
+          "feedback": [
+            "Tu ne peux pas atteindre ? Alors monte tes pieds d'abord.",
+            "Deux pieds, puis une main. Compte-le a voix haute.",
+            "Cette prise n'est pas autorisee pour les mains."
+          ],
+          "plus": ["Reduire a 4 prises de mains autorisees."],
+          "minus": ["Autoriser 8 prises de mains."],
+          "diff": {
+            "facilitee": "8 prises de mains autorisees, portion courte.",
+            "normale": "5 ou 6 prises de mains autorisees, traversee complete.",
+            "complexifiee": "4 prises de mains autorisees."
+          },
+          "safety": [
+            "Aucun saut d'une prise a l'autre : tous les mouvements sont controles.",
+            "Ne jamais stationner sous un grimpeur.",
+            "Hauteur d'epaule maximum, reception jambes flechies."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Traversee libre economique",
+          "objective": "Transferer la montee par les jambes sur une traversee sans contrainte, en mesurant l'economie obtenue.",
+          "material": [
+            { "label": "tapis de reception", "fixed": 6 }
+          ],
+          "organization": "Par deux sur les deux zones. Le partenaire compte les prises de mains utilisees. Deux passages chacun.",
+          "studentGoal": "Traverser en utilisant le moins de prises de mains possible.",
+          "instructions": [
+            "Je traverse comme je veux, mais mon partenaire compte mes prises de mains.",
+            "Deuxieme passage : j'essaie d'en utiliser moins.",
+            "Je garde la regle : pied d'abord, main ensuite.",
+            "Hauteur d'epaule maximum."
+          ],
+          "success": [
+            "Traversee complete avec au maximum 8 prises de mains.",
+            "Score du second passage inferieur ou egal au premier.",
+            "Aucun pied pose au sol."
+          ],
+          "execution": [
+            "Deplacer plusieurs fois les pieds pour une seule prise de main.",
+            "Allonger les mouvements plutot que multiplier les petites prises.",
+            "Garder les bras tendus entre deux mouvements."
+          ],
+          "watch": [
+            "Le nombre de prises de mains baisse-t-il entre les deux passages ?",
+            "La regle pied-puis-main est-elle appliquee spontanement ?"
+          ],
+          "errors": [
+            "Se jeter sur les prises pour reduire le compte.",
+            "Oublier les pieds en se concentrant sur les mains.",
+            "Compter approximativement."
+          ],
+          "feedback": [
+            "Combien cette fois ? Essaie d'en enlever deux.",
+            "Bouge tes pieds deux fois avant de bouger ta main.",
+            "Controle tes mouvements, ne te jette pas."
+          ],
+          "plus": ["Imposer un maximum de prises de mains a ne pas depasser."],
+          "minus": ["Portion courte, comptage sans objectif chiffre."],
+          "diff": {
+            "facilitee": "Portion courte, objectif de ne pas poser le pied au sol.",
+            "normale": "Traversee complete avec comptage.",
+            "complexifiee": "Maximum de prises impose, ou traversee en sens inverse."
+          },
+          "safety": [
+            "Aucun mouvement non controle malgre le comptage.",
+            "Ne jamais stationner sous un grimpeur.",
+            "Hauteur d'epaule maximum, reception jambes flechies."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui vous fait monter : les bras ou les jambes ?",
+          "Qu'avez-vous change entre votre premiere et votre derniere traversee ?"
+        ],
+        "key": "Ce sont les jambes qui font monter. Les bras servent surtout a garder l'equilibre, et ils se reposent quand ils sont tendus."
+      },
+      "socialRoles": [
+        "Compteur : compte les prises de mains ou les pieds hors itineraire.",
+        "Surveillant de hauteur : signale a son camarade s'il depasse la limite."
+      ]
+    }
+  ]
+}
