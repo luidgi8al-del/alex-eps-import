@@ -234,6 +234,25 @@
       };
     }
 
+    // Quand le token de connexion a expire, Supabase repond 401 (souvent "JWT expired") : on
+    // deconnecte proprement et on montre l'ecran de connexion plutot que de laisser un message
+    // d'erreur brut du serveur, qui ne dit pas a l'utilisateur qu'il faut se reconnecter.
+    function sessionExpired() {
+      clearSession();
+      showAuthView();
+      document.getElementById("authError").textContent = "Votre session a expire. Reconnectez-vous pour continuer.";
+    }
+
+    /** fetch() avec les en-tetes d'auth, qui redirige vers la connexion si le token a expire. */
+    async function apiFetch(url, options = {}) {
+      const res = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
+      if (res.status === 401) {
+        sessionExpired();
+        throw new Error("Session expiree.");
+      }
+      return res;
+    }
+
     // ---- Auth ----
     let isSignup = false;
     document.getElementById("authToggleBtn").addEventListener("click", () => {
@@ -560,9 +579,9 @@
       const schoolYear = document.getElementById("schoolYear").value.trim();
       if (!schoolYear) { sendError.textContent = "Annee scolaire requise."; return; }
       try {
-        const importRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports`, {
+        const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports`, {
           method: "POST",
-          headers: { ...authHeaders(), "Prefer": "return=representation" },
+          headers: { "Prefer": "return=representation" },
           body: JSON.stringify({ user_id: session.user_id, grade, class_number: classNumber, school_year: schoolYear })
         });
         const importRows = await importRes.json();
@@ -570,9 +589,8 @@
         const importId = importRows[0].id;
 
         const studentsPayload = parsedStudents.map(s => ({ ...s, import_id: importId, user_id: session.user_id }));
-        const studentsRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_students`, {
+        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students`, {
           method: "POST",
-          headers: authHeaders(),
           body: JSON.stringify(studentsPayload)
         });
         if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
@@ -591,9 +609,7 @@
       const listEl = document.getElementById("importsList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?select=*&order=created_at.desc`, {
-          headers: authHeaders()
-        });
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?select=*&order=created_at.desc`);
         const rows = await res.json();
         if (!res.ok) throw new Error("Impossible de charger les imports.");
         if (rows.length === 0) {
@@ -623,10 +639,7 @@
     }
 
     async function deleteImport(id) {
-      await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${id}`, {
-        method: "DELETE",
-        headers: authHeaders()
-      });
+      await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${id}`, { method: "DELETE" });
       loadImports();
     }
 
@@ -678,9 +691,7 @@
       document.getElementById("editError").textContent = "";
       document.getElementById("editImportPanel").style.display = "block";
       document.getElementById("editStudentsBody").innerHTML = '<tr><td colspan="7" class="muted">Chargement...</td></tr>';
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/pending_students?import_id=eq.${row.id}&select=*&order=last_name.asc`, {
-        headers: authHeaders()
-      });
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?import_id=eq.${row.id}&select=*&order=last_name.asc`);
       editStudents = res.ok ? await res.json() : [];
       renderEditStudents();
     }
@@ -700,9 +711,8 @@
         });
       });
       try {
-        const importRes = await fetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${editImportId}`, {
+        const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${editImportId}`, {
           method: "PATCH",
-          headers: authHeaders(),
           body: JSON.stringify({
             grade: document.getElementById("editGrade").value,
             class_number: parseInt(document.getElementById("editClassNumber").value, 10),
@@ -712,12 +722,11 @@
         if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
 
         for (const id of editStudentsToDelete) {
-          await fetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${id}`, { method: "DELETE", headers: authHeaders() });
+          await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${id}`, { method: "DELETE" });
         }
         for (const s of editStudents) {
-          await fetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${s.id}`, {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${s.id}`, {
             method: "PATCH",
-            headers: authHeaders(),
             body: JSON.stringify({
               last_name: s.last_name, first_name: s.first_name, sex: s.sex,
               eps_level: s.eps_level, student_email: s.student_email, parent_emails: s.parent_emails
