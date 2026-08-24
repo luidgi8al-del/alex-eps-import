@@ -119,9 +119,12 @@
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
-        <div class="subtabbar">
-          <button class="subtabbtn" data-subtab="classes">Classes</button>
-          <button class="subtabbtn" data-subtab="newimport">Nouvel import classe</button>
+        <div class="subtabbar" style="justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:6px;">
+            <button class="subtabbtn" data-subtab="classes">Classes</button>
+            <button class="subtabbtn" data-subtab="newimport">Nouvel import classe</button>
+          </div>
+          <button class="secondary" id="syncBtn" style="margin-top:0">Synchroniser</button>
         </div>
 
         <div id="subtab-classes">
@@ -342,6 +345,12 @@
     document.querySelector(".subtabbar").addEventListener("click", (e) => {
       const btn = e.target.closest(".subtabbtn");
       if (btn) showSubtab(btn.dataset.subtab);
+    });
+    document.getElementById("syncBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("syncBtn");
+      btn.disabled = true; btn.textContent = "Synchronisation...";
+      await loadImports();
+      btn.disabled = false; btn.textContent = "Synchroniser";
     });
 
     // ---- CSV parsing (memes regles que l'app Android) ----
@@ -570,6 +579,14 @@
       document.getElementById("previewWrap").style.display = "block";
     });
 
+    // Coupe la cellule "Emails parents" (une ou deux adresses) en 2 colonnes distinctes, comme
+    // cote app (StudentCsv.kt / splitParentEmails) : les tables classes/students sont un vrai
+    // miroir du modele de donnees de l'application, pas juste un CSV brut.
+    function splitParentEmailsField(value) {
+      const parts = (value || "").split(/[;, ]/).map(v => v.trim()).filter(Boolean);
+      return [parts[0] || null, parts[1] || null];
+    }
+
     document.getElementById("sendBtn").addEventListener("click", async () => {
       const sendError = document.getElementById("sendError");
       const sendOk = document.getElementById("sendOk");
@@ -579,41 +596,56 @@
       const schoolYear = document.getElementById("schoolYear").value.trim();
       if (!schoolYear) { sendError.textContent = "Annee scolaire requise."; return; }
       try {
-        const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports`, {
+        const classId = crypto.randomUUID();
+        const now = new Date().toISOString();
+        const classRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, {
           method: "POST",
-          headers: { "Prefer": "return=representation" },
-          body: JSON.stringify({ user_id: session.user_id, grade, class_number: classNumber, school_year: schoolYear })
+          body: JSON.stringify({
+            id: classId, user_id: session.user_id, grade, class_number: classNumber,
+            school_year: schoolYear, name: `${GRADE_LABELS[grade] || grade}${classNumber}`,
+            updated_at: now, deleted: false
+          })
         });
-        const importRows = await importRes.json();
-        if (!importRes.ok) throw new Error(importRows.message || "Echec de creation de l'import.");
-        const importId = importRows[0].id;
+        if (!classRes.ok) throw new Error("Echec de creation de la classe.");
 
-        const studentsPayload = parsedStudents.map(s => ({ ...s, import_id: importId, user_id: session.user_id }));
-        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students`, {
-          method: "POST",
-          body: JSON.stringify(studentsPayload)
-        });
-        if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+        if (parsedStudents.length > 0) {
+          const studentsPayload = parsedStudents.map(s => {
+            const [parent1, parent2] = splitParentEmailsField(s.parent_emails);
+            return {
+              id: crypto.randomUUID(), class_id: classId, user_id: session.user_id,
+              last_name: s.last_name, first_name: s.first_name, sex: s.sex, eps_level: s.eps_level,
+              student_email: s.student_email || null, parent1_email: parent1, parent2_email: parent2,
+              updated_at: now, deleted: false
+            };
+          });
+          const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+            method: "POST",
+            body: JSON.stringify(studentsPayload)
+          });
+          if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+        }
 
-        sendOk.textContent = "Envoye. Ouvrez l'application et allez dans Classes > Importer depuis le web.";
+        sendOk.textContent = "Enregistre. Synchronisez l'application (bouton Synchroniser) pour la recuperer.";
         document.getElementById("csvFile").value = "";
         document.getElementById("previewWrap").style.display = "none";
-        loadImports();
+        showSubtab("classes");
       } catch (e) {
         sendError.textContent = e.message;
       }
     });
 
-    // ---- Liste des imports en attente ----
+    // ---- Liste des classes creees/envoyees ----
+    const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
+
     async function loadImports() {
       const listEl = document.getElementById("importsList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
       try {
-        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?select=*&order=created_at.desc`);
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
         const rows = await res.json();
-        if (!res.ok) throw new Error("Impossible de charger les imports.");
+        if (!res.ok) throw new Error("Impossible de charger les classes.");
         if (rows.length === 0) {
-          listEl.innerHTML = '<div class="muted">Aucun import pour le moment.</div>';
+          listEl.innerHTML = '<div class="muted">Aucune classe pour le moment.</div>';
           return;
         }
         listEl.innerHTML = "";
@@ -623,7 +655,7 @@
           const label = `${GRADE_LABELS[r.grade] || r.grade}${r.class_number}`;
           div.innerHTML = `
             <div class="top">
-              <div><strong>${label}</strong> · ${r.school_year} <span class="badge ${r.status}">${r.status === "pending" ? "en attente" : "importe"}</span></div>
+              <div><strong>${label}</strong> · ${r.school_year}</div>
               <div>
                 <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
                 <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
@@ -638,13 +670,21 @@
       }
     }
 
+    // Suppression douce (tombstone), pas un DELETE SQL : sinon la suppression ne se propagerait
+    // jamais vers l'application au prochain Synchroniser, qui verrait juste une ligne disparue
+    // (indiscernable d'une ligne jamais recuperee) au lieu d'une suppression explicite a repercuter.
     async function deleteImport(id) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${id}`, { method: "DELETE" });
+      const now = new Date().toISOString();
+      await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
+      });
+      await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
+      });
       loadImports();
     }
 
     // ---- Modifier une classe deja envoyee : metadonnees + liste de ses eleves ----
-    const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
     let editImportId = null;
     let editStudents = [];
     let editStudentsToDelete = [];
@@ -663,7 +703,7 @@
           <td><select data-field="sex">${sexOptions}</select></td>
           <td><select class="levelSelect" data-field="eps_level">${levelOptions}</select></td>
           <td><input type="text" data-field="student_email" value="${s.student_email || ""}"></td>
-          <td><input type="text" data-field="parent_emails" value="${s.parent_emails || ""}"></td>
+          <td><input type="text" data-field="parent1_email" placeholder="Parent 1" value="${s.parent1_email || ""}"></td>
           <td><button class="danger" data-action="removeRow" style="margin-top:0">Suppr.</button></td>
         </tr>`;
     }
@@ -691,7 +731,7 @@
       document.getElementById("editError").textContent = "";
       document.getElementById("editImportPanel").style.display = "block";
       document.getElementById("editStudentsBody").innerHTML = '<tr><td colspan="7" class="muted">Chargement...</td></tr>';
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?import_id=eq.${row.id}&select=*&order=last_name.asc`);
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${row.id}&deleted=eq.false&select=*&order=last_name.asc`);
       editStudents = res.ok ? await res.json() : [];
       renderEditStudents();
     }
@@ -710,26 +750,32 @@
           student[field.dataset.field] = field.value.trim() || null;
         });
       });
+      const now = new Date().toISOString();
       try {
-        const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/pending_class_imports?id=eq.${editImportId}`, {
+        const grade = document.getElementById("editGrade").value;
+        const classNumber = parseInt(document.getElementById("editClassNumber").value, 10);
+        const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${editImportId}`, {
           method: "PATCH",
           body: JSON.stringify({
-            grade: document.getElementById("editGrade").value,
-            class_number: parseInt(document.getElementById("editClassNumber").value, 10),
-            school_year: document.getElementById("editSchoolYear").value.trim()
+            grade, class_number: classNumber,
+            school_year: document.getElementById("editSchoolYear").value.trim(),
+            name: `${GRADE_LABELS[grade] || grade}${classNumber}`, updated_at: now
           })
         });
         if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
 
         for (const id of editStudentsToDelete) {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${id}`, { method: "DELETE" });
+          await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${id}`, {
+            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
+          });
         }
         for (const s of editStudents) {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/pending_students?id=eq.${s.id}`, {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${s.id}`, {
             method: "PATCH",
             body: JSON.stringify({
               last_name: s.last_name, first_name: s.first_name, sex: s.sex,
-              eps_level: s.eps_level, student_email: s.student_email, parent_emails: s.parent_emails
+              eps_level: s.eps_level, student_email: s.student_email,
+              parent1_email: s.parent1_email, updated_at: now
             })
           });
         }
