@@ -20,6 +20,10 @@ create index if not exists idx_cycles_class_id on cycles(class_id);
 
 alter table cycles enable row level security;
 
+drop policy if exists "select own cycles" on cycles;
+drop policy if exists "insert own cycles" on cycles;
+drop policy if exists "update own cycles" on cycles;
+drop policy if exists "delete own cycles" on cycles;
 create policy "select own cycles" on cycles for select using (auth.uid() = user_id);
 create policy "insert own cycles" on cycles for insert with check (auth.uid() = user_id);
 create policy "update own cycles" on cycles for update using (auth.uid() = user_id);
