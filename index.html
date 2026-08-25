@@ -244,11 +244,11 @@
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
-        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">UNSS</div>Groupes, appel et suivi restent dans l'application. Le repertoire des eleves se gere ici.</div>
-
         <div class="subtabbar" id="unssSubtabs">
           <button class="subtabbtn" data-unsstab="all">Eleve LVH</button>
           <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
+          <button class="subtabbtn" data-unsstab="groups">Groupe</button>
+          <button class="subtabbtn" data-unsstab="appel">Appel</button>
         </div>
 
         <div id="unssList"></div>
@@ -2231,8 +2231,12 @@
       return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
     }
 
-    let unssMode = "all"; // "all" | "licensed"
+let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     let unssStudents = [];
+    let unssGroups = [];
+    let unssAppelGroupId = null;
+    let unssAppelMembers = [];
+    let unssAppelPresence = {};
     let unssTabReady = false;
 
     async function initUnssTab() {
@@ -2244,6 +2248,7 @@
         unssTabReady = true;
       }
       await loadUnssStudents();
+      await loadUnssGroups();
       renderUnssTab();
     }
 
@@ -2259,7 +2264,14 @@
       unssStudents = res.ok ? await res.json() : [];
     }
 
+    async function loadUnssGroups() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc`);
+      unssGroups = res.ok ? await res.json() : [];
+    }
+
     function renderUnssTab() {
+      if (unssMode === "groups") { renderUnssGroupsTab(); return; }
+      if (unssMode === "appel") { renderUnssAppelTab(); return; }
       const wrap = document.getElementById("unssList");
       const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
       let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
@@ -2472,6 +2484,224 @@
         panel.style.display = "none";
         await loadUnssStudents();
         renderUnssTab();
+      });
+    }
+
+    // ---- UNSS > Groupe : liste des groupes, detail (membres + historique des seances) ----
+
+    function renderUnssGroupsTab() {
+      const wrap = document.getElementById("unssList");
+      let html = `<div style="display:flex; justify-content:flex-end; margin-bottom:10px"><button id="unssNewGroupBtn" style="margin-top:0">Nouveau groupe</button></div>`;
+      if (unssGroups.length === 0) {
+        html += `<div class="muted">Aucun groupe UNSS. Touchez "Nouveau groupe" pour en creer un (ex : Escalade, mercredi 13h-15h).</div>`;
+      } else {
+        unssGroups.forEach(g => {
+          const schedule = [g.day_of_week, g.start_time, g.end_time].filter(Boolean).join(" · ");
+          html += `<div class="card unssPick" data-group="${g.id}" style="margin-top:8px">
+            <strong>${g.activity_name}</strong>
+            <div class="muted">${schedule}${g.responsible_teacher ? " · Responsable : " + g.responsible_teacher : ""}</div>
+          </div>`;
+        });
+      }
+      wrap.innerHTML = html;
+      document.getElementById("unssNewGroupBtn").addEventListener("click", () => openUnssGroupEditPanel(null));
+      wrap.querySelectorAll("[data-group]").forEach(el => {
+        el.addEventListener("click", () => openUnssGroupDetailPanel(unssGroups.find(g => g.id === el.dataset.group)));
+      });
+    }
+
+    function openUnssGroupEditPanel(group) {
+      const panel = document.getElementById("unssPanel");
+      panel.innerHTML = `
+        <h2>${group ? "Modifier le groupe" : "Nouveau groupe UNSS"}</h2>
+        <label for="unssGroupActivity">Activite (ex : Escalade)</label>
+        <input type="text" id="unssGroupActivity" value="${group ? group.activity_name : ""}">
+        <label for="unssGroupDay">Jour</label>
+        <input type="text" id="unssGroupDay" value="${group ? group.day_of_week : ""}">
+        <label for="unssGroupStart">Heure de debut</label>
+        <input type="text" id="unssGroupStart" value="${group ? group.start_time : ""}">
+        <label for="unssGroupEnd">Heure de fin</label>
+        <input type="text" id="unssGroupEnd" value="${group ? group.end_time : ""}">
+        <label for="unssGroupResp">Professeur responsable</label>
+        <input type="text" id="unssGroupResp" value="${group ? group.responsible_teacher : ""}">
+        <button id="unssGroupSaveBtn">${group ? "Enregistrer" : "Creer"}</button>
+        <button class="secondary" id="unssGroupCancelBtn">Annuler</button>`;
+      panel.style.display = "block";
+      document.getElementById("unssGroupCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("unssGroupSaveBtn").addEventListener("click", async () => {
+        const activityName = document.getElementById("unssGroupActivity").value.trim();
+        if (!activityName) return;
+        const body = {
+          activity_name: activityName,
+          day_of_week: document.getElementById("unssGroupDay").value.trim(),
+          start_time: document.getElementById("unssGroupStart").value.trim(),
+          end_time: document.getElementById("unssGroupEnd").value.trim(),
+          responsible_teacher: document.getElementById("unssGroupResp").value.trim(),
+          updated_at: new Date().toISOString()
+        };
+        if (group) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, { method: "PATCH", body: JSON.stringify(body) });
+        } else {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups`, {
+            method: "POST",
+            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, active: true, deleted: false, ...body })
+          });
+        }
+        panel.style.display = "none";
+        await loadUnssGroups();
+        renderUnssTab();
+      });
+    }
+
+    async function openUnssGroupDetailPanel(group) {
+      const panel = document.getElementById("unssPanel");
+      panel.innerHTML = `<h2>${group.activity_name}</h2><div class="muted">Chargement...</div>`;
+      panel.style.display = "block";
+
+      const [membershipsRes, sessionsRes] = await Promise.all([
+        apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${group.id}&deleted=eq.false&select=*`),
+        apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions?group_id=eq.${group.id}&select=*&order=date_epoch_millis.desc`)
+      ]);
+      const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
+      const sessions = sessionsRes.ok ? await sessionsRes.json() : [];
+      const studentIds = memberships.map(m => m.student_id);
+      let members = [];
+      if (studentIds.length > 0) {
+        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+        members = studentsRes.ok ? await studentsRes.json() : [];
+      }
+
+      const schedule = [group.day_of_week, group.start_time, group.end_time].filter(Boolean).join(" · ");
+      panel.innerHTML = `
+        <h2>${group.activity_name}</h2>
+        <div class="muted">${schedule}${group.responsible_teacher ? " · Responsable : " + group.responsible_teacher : ""}</div>
+        <h2 style="margin-top:16px; font-size:15px">Membres (${members.length})</h2>
+        <div id="unssMembersList"></div>
+        <button class="secondary" id="unssAddMemberBtn" style="margin-top:8px">+ Ajouter un membre</button>
+        <h2 style="margin-top:16px; font-size:15px">Historique des seances (${sessions.length})</h2>
+        <div class="muted">${sessions.length === 0 ? "Aucune seance." : sessions.map(s => new Date(s.date_epoch_millis).toLocaleDateString("fr-FR") + (s.label ? " — " + s.label : "")).join("<br>")}</div>
+        <button id="unssGroupCloseBtn" style="margin-top:14px">Fermer</button>
+        <button class="danger" id="unssGroupDeleteBtn">Supprimer le groupe</button>`;
+
+      const membersListEl = document.getElementById("unssMembersList");
+      membersListEl.innerHTML = members.length === 0
+        ? `<div class="muted">Aucun membre. Ajoutez-en un.</div>`
+        : members.map(s => `<div class="unssCard" style="padding:6px 0">
+            <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
+            <button class="danger" data-remove-member="${s.id}" style="margin-top:0">Retirer</button>
+          </div>`).join("");
+      membersListEl.querySelectorAll("[data-remove-member]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const membership = memberships.find(m => m.student_id === btn.dataset.removeMember);
+          if (membership) {
+            await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?id=eq.${membership.id}`, {
+              method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+            });
+          }
+          openUnssGroupDetailPanel(group);
+        });
+      });
+      document.getElementById("unssAddMemberBtn").addEventListener("click", () => openUnssAddMemberPanel(group, members.map(m => m.id)));
+      document.getElementById("unssGroupCloseBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("unssGroupDeleteBtn").addEventListener("click", async () => {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, {
+          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+        });
+        panel.style.display = "none";
+        await loadUnssGroups();
+        renderUnssTab();
+      });
+    }
+
+    async function openUnssAddMemberPanel(group, excludeIds) {
+      const panel = document.getElementById("unssPanel");
+      panel.innerHTML = `<h2>Ajouter un membre</h2><div class="muted">Chargement...</div>`;
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&select=*&order=last_name.asc`);
+      const students = res.ok ? await res.json() : [];
+      const candidates = students.filter(s => !excludeIds.includes(s.id));
+      panel.innerHTML = `<h2>Ajouter un membre</h2>` +
+        (candidates.length === 0
+          ? `<div class="muted">Tous les eleves importes (module Classes) sont deja membres.</div>`
+          : candidates.map(s => `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`).join("")
+        ) +
+        `<button class="secondary" id="unssAddMemberCancel" style="margin-top:14px">Fermer</button>`;
+      panel.querySelectorAll("[data-add-member]").forEach(el => {
+        el.addEventListener("click", async () => {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships`, {
+            method: "POST",
+            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id, student_id: el.dataset.addMember, deleted: false })
+          });
+          openUnssGroupDetailPanel(group);
+        });
+      });
+      document.getElementById("unssAddMemberCancel").addEventListener("click", () => openUnssGroupDetailPanel(group));
+    }
+
+    // ---- UNSS > Appel : choisir un groupe, cocher present/absent, enregistrer une seance ----
+
+    function renderUnssAppelTab() {
+      const wrap = document.getElementById("unssList");
+      let html = `<label for="unssAppelGroupSelect">Groupe</label>
+        <select id="unssAppelGroupSelect">
+          <option value="">Choisir...</option>
+          ${unssGroups.map(g => `<option value="${g.id}"${g.id === unssAppelGroupId ? " selected" : ""}>${g.activity_name}</option>`).join("")}
+        </select>
+        <div id="unssAppelBody" style="margin-top:14px"></div>`;
+      wrap.innerHTML = html;
+      document.getElementById("unssAppelGroupSelect").addEventListener("change", async (e) => {
+        unssAppelGroupId = e.target.value || null;
+        await loadUnssAppelMembers();
+        renderUnssAppelBody();
+      });
+      if (unssAppelGroupId) renderUnssAppelBody();
+    }
+
+    async function loadUnssAppelMembers() {
+      unssAppelMembers = [];
+      unssAppelPresence = {};
+      if (!unssAppelGroupId) return;
+      const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${unssAppelGroupId}&deleted=eq.false&select=*`);
+      const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
+      const studentIds = memberships.map(m => m.student_id);
+      if (studentIds.length === 0) return;
+      const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+      unssAppelMembers = studentsRes.ok ? await studentsRes.json() : [];
+      unssAppelMembers.forEach(s => { unssAppelPresence[s.id] = true; });
+    }
+
+    function renderUnssAppelBody() {
+      const body = document.getElementById("unssAppelBody");
+      if (!unssAppelGroupId) { body.innerHTML = ""; return; }
+      if (unssAppelMembers.length === 0) {
+        body.innerHTML = `<div class="muted">Ce groupe n'a aucun membre. Ajoutez-en depuis l'onglet Groupe.</div>`;
+        return;
+      }
+      const todayLabel = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+      body.innerHTML = `<div class="muted" style="margin-bottom:10px">Appel du ${todayLabel}</div>` +
+        unssAppelMembers.map(s => `
+          <div class="unssCard" style="padding:8px 0">
+            <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
+            <div>
+              <button data-present="${s.id}" style="margin-top:0; ${unssAppelPresence[s.id] ? "" : "background:var(--surface); color:var(--text); border:1px solid var(--border)"}">Present</button>
+              <button data-absent="${s.id}" class="${unssAppelPresence[s.id] ? "secondary" : "danger"}" style="margin-top:0">Absent</button>
+            </div>
+          </div>`).join("") +
+        `<button id="unssAppelSaveBtn" style="margin-top:14px; width:100%">Enregistrer l'appel</button>
+         <div class="ok" id="unssAppelOk"></div>`;
+      body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(); }));
+      body.querySelectorAll("[data-absent]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.absent] = false; renderUnssAppelBody(); }));
+      document.getElementById("unssAppelSaveBtn").addEventListener("click", async () => {
+        const sessionId = crypto.randomUUID();
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions`, {
+          method: "POST",
+          body: JSON.stringify({ id: sessionId, user_id: session.user_id, group_id: unssAppelGroupId, date_epoch_millis: Date.now(), label: "" })
+        });
+        const rows = unssAppelMembers.map(s => ({
+          id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
+          student_id: s.id, present: !!unssAppelPresence[s.id]
+        }));
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance`, { method: "POST", body: JSON.stringify(rows) });
+        document.getElementById("unssAppelOk").textContent = "Appel enregistre.";
       });
     }
 
