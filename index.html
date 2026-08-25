@@ -63,6 +63,21 @@
   .subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
   .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
   .editRow td { vertical-align:middle; }
+  .accType { cursor:pointer; }
+  .accType.expanded { background:var(--accent-container); color:var(--accent-text); }
+  .accBody { padding:8px 0 4px 12px; }
+  .gradeChip { display:inline-block; background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:13px; margin:0 6px 6px 0; cursor:pointer; }
+  .gradeChip.active { background:var(--secondary-container, var(--accent-container)); border-color:var(--accent-container); }
+  .scoreTable { width:100%; border-collapse:collapse; margin-top:10px; }
+  .scoreTable th, .scoreTable td { border:1px solid var(--border); padding:6px 8px; font-size:13px; text-align:center; }
+  .scoreTable th:first-child, .scoreTable td:first-child { text-align:left; min-width:150px; }
+  .scoreTable input.scoreInput { width:64px; text-align:center; padding:4px; margin:0; }
+  .scoreTable td.incomplete { color:var(--text-secondary); }
+  @media print {
+    .header, .subtabbar, .card button, .no-print, #tabbar { display:none !important; }
+    body, .container { background:#fff !important; }
+    .card { box-shadow:none !important; border:none !important; }
+  }
 </style>
 </head>
 <body>
@@ -173,6 +188,8 @@
           </div>
           <h2 style="margin-top:24px">Mes cours</h2>
           <div id="cyclesList"></div>
+
+          <div id="evaluationPanel" style="display:none; margin-top:16px"></div>
         </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
@@ -1124,10 +1141,15 @@
           div.innerHTML = `
             <div class="top">
               <div><strong>${r.apsa_name}</strong> · ${GRADE_LABELS[r.grade] || r.grade} · ${r.session_count} seances ${label}</div>
-              <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
+              <div>
+                <button class="secondary" data-action="evaluations" style="margin-top:0" ${r.class_id ? "" : "disabled title='Aucune classe rattachee'"}>Evaluations</button>
+                <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
+              </div>
             </div>
             <div class="muted" style="margin-top:6px">${programmeFor(r.grade, r.school_year)}</div>`;
           div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteCycle(r.id));
+          const evalBtn = div.querySelector('[data-action="evaluations"]');
+          if (r.class_id) evalBtn.addEventListener("click", () => openEvaluationPanel(r));
           listEl.appendChild(div);
         });
       } catch (e) {
@@ -1140,6 +1162,288 @@
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
       });
       loadCycles();
+    }
+
+    // ---- Evaluations d'un cours (accordeon ponctuelle/finale + tableau de notes) ----
+    const EVAL_TYPES = [
+      { value: "PONCTUELLE", label: "Evaluation ponctuelle en cours de cycle" },
+      { value: "FINALE", label: "Evaluation finale" }
+    ];
+    let evalCourse = null;       // le cours (cycle) courant
+    let evalStudents = [];       // eleves de la classe rattachee
+    let evalList = [];           // evaluations du cycle
+    let evalExpandedType = null;
+    let evalOpenedId = null;
+    let evalCriteria = [];
+    let evalScores = {};         // "criterionId|studentId" -> {id, points}
+
+    async function openEvaluationPanel(cycleRow) {
+      evalCourse = cycleRow;
+      evalExpandedType = null;
+      evalOpenedId = null;
+      const panel = document.getElementById("evaluationPanel");
+      panel.style.display = "block";
+      panel.innerHTML = '<div class="muted">Chargement...</div>';
+      const [studentsRes, evalsRes] = await Promise.all([
+        apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${cycleRow.class_id}&deleted=eq.false&select=*&order=last_name.asc`),
+        apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?cycle_id=eq.${cycleRow.id}&deleted=eq.false&select=*&order=date_epoch_millis.asc`)
+      ]);
+      evalStudents = studentsRes.ok ? await studentsRes.json() : [];
+      evalList = evalsRes.ok ? await evalsRes.json() : [];
+      renderEvaluationPanel();
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderEvaluationPanel() {
+      const panel = document.getElementById("evaluationPanel");
+      const label = `${GRADE_LABELS[evalCourse.grade] || evalCourse.grade}${evalCourse.class_number || ""}`;
+      let html = `<div class="card">
+        <div class="top">
+          <h2 style="margin:0">Evaluations — ${evalCourse.apsa_name} (${label})</h2>
+          <button class="secondary no-print" id="closeEvalBtn" style="margin-top:0">Fermer</button>
+        </div>`;
+      EVAL_TYPES.forEach(t => {
+        const count = evalList.filter(e => e.type === t.value).length;
+        const expanded = evalExpandedType === t.value;
+        html += `<div class="card accType ${expanded ? "expanded" : ""}" data-type="${t.value}" style="margin-top:10px">
+          <div class="top"><strong>${t.label}</strong><span class="muted">${count ? count + " grille(s)" : "Aucune grille"}</span></div>
+        </div>`;
+        if (expanded) {
+          html += `<div class="accBody">`;
+          evalList.filter(e => e.type === t.value).forEach(ev => {
+            html += `<div class="card" style="margin:4px 0; ${evalOpenedId === ev.id ? "border-color:var(--primary)" : ""}">
+              <div class="top">
+                <span data-open-eval="${ev.id}" style="cursor:pointer; font-weight:600">${ev.label}</span>
+                <button class="danger" data-delete-eval="${ev.id}" style="margin-top:0">Supprimer</button>
+              </div>
+            </div>`;
+          });
+          html += `<div class="row" style="margin-top:8px">
+            <input type="text" id="newEvalLabel" placeholder="Intitule (ex : Assurage mi-cycle)">
+            <button class="secondary" id="newEvalBtn" data-type="${t.value}" style="margin-top:0">+ Nouvelle grille</button>
+          </div></div>`;
+        }
+      });
+      html += `</div><div id="evalTableWrap"></div>`;
+      panel.innerHTML = html;
+
+      document.getElementById("closeEvalBtn").addEventListener("click", () => {
+        panel.style.display = "none"; panel.innerHTML = "";
+      });
+      panel.querySelectorAll(".accType").forEach(el => {
+        el.addEventListener("click", () => {
+          const type = el.dataset.type;
+          evalExpandedType = evalExpandedType === type ? null : type;
+          renderEvaluationPanel();
+        });
+      });
+      panel.querySelectorAll("[data-open-eval]").forEach(el => {
+        el.addEventListener("click", (e) => { e.stopPropagation(); openEvaluationTable(el.dataset.openEval); });
+      });
+      panel.querySelectorAll("[data-delete-eval]").forEach(el => {
+        el.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?id=eq.${el.dataset.deleteEval}`, {
+            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+          });
+          if (evalOpenedId === el.dataset.deleteEval) { evalOpenedId = null; document.getElementById("evalTableWrap").innerHTML = ""; }
+          evalList = evalList.filter(e => e.id !== el.dataset.deleteEval);
+          renderEvaluationPanel();
+        });
+      });
+      const newBtn = document.getElementById("newEvalBtn");
+      if (newBtn) newBtn.addEventListener("click", () => createEvaluation(newBtn.dataset.type));
+      if (evalOpenedId) openEvaluationTable(evalOpenedId);
+    }
+
+    async function createEvaluation(type) {
+      const labelInput = document.getElementById("newEvalLabel");
+      const label = labelInput.value.trim() || EVAL_TYPES.find(t => t.value === type).label;
+      const id = crypto.randomUUID();
+      const now = new Date().toISOString();
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, {
+        method: "POST", headers: { "Prefer": "return=representation" },
+        body: JSON.stringify({
+          id, user_id: session.user_id, cycle_id: evalCourse.id, type, label,
+          date_epoch_millis: Date.now(), updated_at: now, deleted: false
+        })
+      });
+      if (!res.ok) return;
+      const rows = await res.json();
+      evalList.push(rows[0]);
+      // Deux criteres par defaut, pour arriver sur un tableau deja utilisable.
+      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
+        method: "POST",
+        body: JSON.stringify([
+          { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Assurage", max_points: 5, order_index: 0, updated_at: now, deleted: false },
+          { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Technique", max_points: 10, order_index: 1, updated_at: now, deleted: false }
+        ])
+      });
+      evalOpenedId = id;
+      renderEvaluationPanel();
+    }
+
+    async function openEvaluationTable(evaluationId) {
+      evalOpenedId = evaluationId;
+      const wrap = document.getElementById("evalTableWrap");
+      wrap.innerHTML = '<div class="muted">Chargement...</div>';
+      const [critRes, scoreRes] = await Promise.all([
+        apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?evaluation_id=eq.${evaluationId}&deleted=eq.false&select=*&order=order_index.asc`),
+        apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?select=*`)
+      ]);
+      evalCriteria = critRes.ok ? await critRes.json() : [];
+      const allScores = scoreRes.ok ? await scoreRes.json() : [];
+      const critIds = new Set(evalCriteria.map(c => c.id));
+      evalScores = {};
+      allScores.filter(s => critIds.has(s.criterion_id)).forEach(s => {
+        evalScores[`${s.criterion_id}|${s.student_id}`] = s;
+      });
+      renderEvaluationTable();
+    }
+
+    function evalTotalMax() { return evalCriteria.reduce((a, c) => a + c.max_points, 0); }
+    function evalTotalFor(studentId) {
+      return evalCriteria.reduce((a, c) => a + (evalScores[`${c.id}|${studentId}`]?.points ?? 0), 0);
+    }
+    function evalIsComplete(studentId) {
+      return evalCriteria.length > 0 && evalCriteria.every(c => evalScores[`${c.id}|${studentId}`]?.points != null);
+    }
+
+    function renderEvaluationTable() {
+      const wrap = document.getElementById("evalTableWrap");
+      const evaluation = evalList.find(e => e.id === evalOpenedId);
+      let html = `<div class="card">
+        <div class="top">
+          <h2 style="margin:0">${evaluation.label}</h2>
+          <div class="no-print">
+            <button class="secondary" id="addCritBtn" style="margin-top:0">+ Critere</button>
+            <button class="secondary" id="exportCsvBtn" style="margin-top:0">Exporter Excel</button>
+            <button class="secondary" id="printPdfBtn" style="margin-top:0">Imprimer / PDF</button>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:4px">Le total additionne toutes les colonnes. Une case vide = pas encore evalue.</div>
+        <div style="overflow-x:auto"><table class="scoreTable"><thead><tr><th>Eleve</th>`;
+      evalCriteria.forEach(c => { html += `<th>${c.label}<br><span class="muted">/${c.max_points}</span> <span class="no-print" data-edit-crit="${c.id}" style="cursor:pointer">✎</span></th>`; });
+      html += `<th>Total<br><span class="muted">/${evalTotalMax()}</span></th></tr></thead><tbody>`;
+      evalStudents.forEach(s => {
+        html += `<tr><td>${s.last_name.toUpperCase()} ${s.first_name}</td>`;
+        evalCriteria.forEach(c => {
+          const current = evalScores[`${c.id}|${s.id}`]?.points;
+          html += `<td><input class="scoreInput" type="text" inputmode="decimal" data-crit="${c.id}" data-student="${s.id}" data-max="${c.max_points}" value="${current ?? ""}"></td>`;
+        });
+        const complete = evalIsComplete(s.id);
+        html += `<td class="${complete ? "" : "incomplete"}">${formatScoreWeb(evalTotalFor(s.id))}${complete ? "" : " *"}</td></tr>`;
+      });
+      html += `</tbody></table></div></div>`;
+      wrap.innerHTML = html;
+
+      wrap.querySelectorAll(".scoreInput").forEach(input => {
+        input.addEventListener("change", () => setScore(input));
+      });
+      wrap.querySelectorAll("[data-edit-crit]").forEach(el => {
+        el.addEventListener("click", () => editCriterion(el.dataset.editCrit));
+      });
+      document.getElementById("addCritBtn").addEventListener("click", addCriterion);
+      document.getElementById("exportCsvBtn").addEventListener("click", exportEvaluationCsv);
+      document.getElementById("printPdfBtn").addEventListener("click", () => window.print());
+    }
+
+    function formatScoreWeb(value) {
+      return (value % 1 === 0) ? String(value) : String(value).replace(".", ",");
+    }
+
+    async function setScore(input) {
+      const raw = input.value.trim().replace(",", ".");
+      const criterionId = input.dataset.crit, studentId = input.dataset.student, max = parseFloat(input.dataset.max);
+      const key = `${criterionId}|${studentId}`;
+      if (raw === "") {
+        const existing = evalScores[key];
+        if (existing) await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, { method: "DELETE" });
+        delete evalScores[key];
+      } else {
+        const value = parseFloat(raw);
+        if (isNaN(value) || value > max) { input.value = evalScores[key]?.points ?? ""; return; }
+        const existing = evalScores[key];
+        if (existing) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
+            method: "PATCH", body: JSON.stringify({ points: value, updated_at: new Date().toISOString() })
+          });
+          existing.points = value;
+        } else {
+          const id = crypto.randomUUID();
+          await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores`, {
+            method: "POST",
+            body: JSON.stringify({ id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, updated_at: new Date().toISOString() })
+          });
+          evalScores[key] = { id, points: value };
+        }
+      }
+      renderEvaluationTable();
+    }
+
+    async function addCriterion() {
+      const label = prompt("Nom du critere :");
+      if (!label) return;
+      const maxStr = prompt("Note sur combien ?", "10");
+      const max = parseInt(maxStr, 10);
+      if (!max || max <= 0) return;
+      const id = crypto.randomUUID();
+      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
+        method: "POST",
+        body: JSON.stringify({
+          id, user_id: session.user_id, evaluation_id: evalOpenedId, label, max_points: max,
+          order_index: evalCriteria.length, updated_at: new Date().toISOString(), deleted: false
+        })
+      });
+      openEvaluationTable(evalOpenedId);
+    }
+
+    async function editCriterion(criterionId) {
+      const criterion = evalCriteria.find(c => c.id === criterionId);
+      const label = prompt("Nom du critere :", criterion.label);
+      if (label === null) return;
+      if (label.trim() === "") {
+        if (confirm("Supprimer ce critere et toutes ses notes ?")) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
+            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+          });
+          openEvaluationTable(evalOpenedId);
+        }
+        return;
+      }
+      const maxStr = prompt("Note sur combien ?", criterion.max_points);
+      const max = parseInt(maxStr, 10);
+      if (!max || max <= 0) return;
+      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
+        method: "PATCH", body: JSON.stringify({ label, max_points: max, updated_at: new Date().toISOString() })
+      });
+      openEvaluationTable(evalOpenedId);
+    }
+
+    function exportEvaluationCsv() {
+      const evaluation = evalList.find(e => e.id === evalOpenedId);
+      const label = `${GRADE_LABELS[evalCourse.grade] || evalCourse.grade}${evalCourse.class_number || ""}`;
+      const lines = [];
+      lines.push(`${evaluation.label};${label};${evalCourse.apsa_name}`);
+      lines.push("");
+      const headers = ["Nom", "Prenom", ...evalCriteria.map(c => `${c.label} /${c.max_points}`), `Total /${evalTotalMax()}`];
+      lines.push(headers.join(";"));
+      evalStudents.forEach(s => {
+        const cells = [s.last_name, s.first_name,
+          ...evalCriteria.map(c => {
+            const points = evalScores[`${c.id}|${s.id}`]?.points;
+            return points == null ? "" : formatScoreWeb(points);
+          }),
+          formatScoreWeb(evalTotalFor(s.id))];
+        lines.push(cells.join(";"));
+      });
+      const csv = lines.join("\n");
+      const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = `${evaluation.label}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     // ---- Demarrage ----
