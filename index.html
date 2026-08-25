@@ -61,6 +61,22 @@
   .subtabbar { display:flex; gap:6px; margin-bottom:14px; }
   .subtabbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; margin-top:0; cursor:pointer; }
   .subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
+  .periodBar { display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; }
+  .periodChip { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; margin-top:0; cursor:pointer; white-space:nowrap; }
+  .periodChip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .pendingHint { background:#FFF4E5; border:1px solid #F5C875; color:#7A4D00; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:10px; }
+  .planningWrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+  .planningGrid { display:grid; grid-template-columns:40px repeat(6, minmax(90px, 1fr)); min-width:640px; }
+  .planningHeadCell { font-size:11px; font-weight:700; text-transform:uppercase; color:var(--text-secondary); text-align:center; padding:8px 2px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--surface); }
+  .planningHeadCell.today { color:var(--primary); background:var(--accent-container); }
+  .planningTimeCell { font-size:10px; color:var(--text-secondary); text-align:right; padding-right:4px; border-top:1px solid #F1F2F0; height:26px; box-sizing:border-box; }
+  .planningCell { border-top:1px solid #F1F2F0; border-left:1px solid #F1F2F0; height:26px; box-sizing:border-box; cursor:pointer; position:relative; }
+  .planningCell:hover { background:#F3F8F4; }
+  .planningCell.occupied { cursor:default; }
+  .planningDayCol.today { background:rgba(183,228,199,0.18); }
+  .planningBlock { position:absolute; left:2px; right:2px; border-radius:6px; background:var(--accent-container); color:var(--accent-text); border-left:3px solid var(--primary); padding:2px 6px; font-size:11px; line-height:1.25; overflow:hidden; cursor:pointer; }
+  .planningBlock .cl { font-weight:700; display:block; }
+  .planningBlock .ap { display:block; opacity:0.85; }
   .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
   .editRow td { vertical-align:middle; }
   .accType { cursor:pointer; }
@@ -196,7 +212,18 @@
         <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
-        <div class="placeholder"><div class="big">Programmation</div>Bientot disponible sur le site. Programmes officiels et programmation annuelle restent dans l'application pour l'instant.</div>
+        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Programmes officiels et programmation annuelle restent dans l'application. Le planning se gere ici.</div>
+
+        <div class="subtabbar" id="planningSubtabs">
+          <button class="subtabbtn" data-planningtab="global">Planning global</button>
+          <button class="subtabbtn" data-planningtab="periode">Par periode</button>
+        </div>
+
+        <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
+        <div id="planningPendingHint" class="pendingHint" style="display:none"></div>
+
+        <div id="planningGrid"></div>
+        <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
@@ -412,6 +439,7 @@
       });
       if (name === "classes") showSubtab("classes");
       if (name === "cours") initCoursTab();
+      if (name === "programmation") initPlanningTab();
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -1457,6 +1485,390 @@
       a.href = url; a.download = `${evaluation.label}.csv`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       URL.revokeObjectURL(url);
+    }
+
+    // ---- Onglet Programmation > Planning : structure hebdomadaire fixe des creneaux, puis
+    // activite enseignee sur chacun pour une periode donnee. Miroir de PlanningRepository.kt /
+    // PlanningViewModel.kt cote app (ClassScheduleSlotEntity + PeriodActivityEntity).
+    const PLANNING_DAYS = [
+      { key: "LUNDI", label: "Lun" }, { key: "MARDI", label: "Mar" }, { key: "MERCREDI", label: "Mer" },
+      { key: "JEUDI", label: "Jeu" }, { key: "VENDREDI", label: "Ven" }, { key: "SAMEDI", label: "Sam" }
+    ];
+    const PLANNING_START_HOUR = 8, PLANNING_END_HOUR = 18, PLANNING_SLOT_MIN = 30;
+    const PLANNING_ROWS = ((PLANNING_END_HOUR - PLANNING_START_HOUR) * 60) / PLANNING_SLOT_MIN;
+    const PLANNING_ROW_PX = 26;
+    const PLANNING_DURATIONS = [[60, "1h"], [90, "1h30"], [120, "2h"], [150, "2h30"]];
+    const TODAY_DAY_KEY = PLANNING_DAYS[(new Date().getDay() + 6) % 7]?.key || null; // getDay(): 0=dimanche
+
+    function planningPeriodCount(grade) {
+      if (grade === "PREMIERE") return 4;
+      if (grade === "TERMINALE") return 3;
+      return 5;
+    }
+    function planningWeeklySlotsNeeded(grade) {
+      return ["SIXIEME", "CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade) ? 2 : 1;
+    }
+    function planningLinksActivity(grade) {
+      return ["CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade);
+    }
+
+    let planningMode = "global"; // "global" | "periode"
+    let planningPeriod = 1;
+    let planningClasses = [];
+    let planningSlots = [];
+    let planningActivities = []; // pour planningPeriod courant
+    let planningPendingClass = null; // classe qui attend son 2e creneau (mode global)
+    let planningTabReady = false;
+
+    function planningStartMinutes(slot) {
+      const [h, m] = (slot.start_time || "08:00").split(":").map(n => parseInt(n, 10) || 0);
+      return h * 60 + m;
+    }
+    function planningMinutesLabel(minutes) {
+      const h = Math.floor(minutes / 60), m = minutes % 60;
+      return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, "0")}`;
+    }
+
+    async function initPlanningTab() {
+      if (!planningTabReady) {
+        document.getElementById("planningSubtabs").addEventListener("click", (e) => {
+          const btn = e.target.closest(".subtabbtn");
+          if (btn) showPlanningTab(btn.dataset.planningtab);
+        });
+        planningTabReady = true;
+      }
+      await loadPlanningClasses();
+      await loadPlanningSlots();
+      if (planningMode === "periode") await loadPlanningActivities();
+      renderPlanningTab();
+    }
+
+    function showPlanningTab(mode) {
+      planningMode = mode;
+      document.querySelectorAll("#planningSubtabs .subtabbtn").forEach(b => {
+        b.classList.toggle("active", b.dataset.planningtab === mode);
+      });
+      document.getElementById("planningPanel").style.display = "none";
+      if (mode === "periode") {
+        loadPlanningActivities().then(renderPlanningTab);
+      }
+      renderPlanningTab();
+    }
+
+    async function loadPlanningClasses() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
+      planningClasses = res.ok ? await res.json() : [];
+    }
+    async function loadPlanningSlots() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`);
+      planningSlots = res.ok ? await res.json() : [];
+    }
+    async function loadPlanningActivities() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&period_number=eq.${planningPeriod}&select=*`);
+      planningActivities = res.ok ? await res.json() : [];
+    }
+
+    function planningClassById(id) { return planningClasses.find(c => c.id === id); }
+    function planningClassLabel(c) { return c ? `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}` : "?"; }
+    function planningActivityForSlot(slotId) {
+      const a = planningActivities.find(x => x.slot_id === slotId);
+      return a ? a.apsa_name : null;
+    }
+
+    function renderPlanningTab() {
+      // Barre de periodes
+      const periodBar = document.getElementById("planningPeriodBar");
+      if (planningMode === "periode") {
+        const maxPeriod = planningClasses.length
+          ? Math.max(...planningClasses.map(c => planningPeriodCount(c.grade)))
+          : 5;
+        if (planningPeriod > maxPeriod) planningPeriod = maxPeriod;
+        periodBar.innerHTML = "";
+        for (let p = 1; p <= maxPeriod; p++) {
+          const chip = document.createElement("button");
+          chip.className = "periodChip" + (p === planningPeriod ? " active" : "");
+          chip.textContent = "Periode " + p;
+          chip.addEventListener("click", async () => {
+            planningPeriod = p;
+            await loadPlanningActivities();
+            document.getElementById("planningPanel").style.display = "none";
+            renderPlanningTab();
+          });
+          periodBar.appendChild(chip);
+        }
+        periodBar.style.display = "flex";
+      } else {
+        periodBar.style.display = "none";
+      }
+
+      // Bandeau "2e creneau en attente"
+      const hint = document.getElementById("planningPendingHint");
+      if (planningMode === "global" && planningPendingClass) {
+        hint.textContent = `${planningClassLabel(planningPendingClass)} a besoin d'un 2e creneau : touchez une autre case pour le placer.`;
+        hint.style.display = "block";
+      } else {
+        hint.style.display = "none";
+      }
+
+      renderPlanningGrid();
+    }
+
+    function renderPlanningGrid() {
+      const wrap = document.getElementById("planningGrid");
+      const gridHeight = PLANNING_ROWS * PLANNING_ROW_PX;
+
+      let html = `<div class="planningWrap"><div class="planningGrid">`;
+      html += `<div class="planningHeadCell"></div>`;
+      PLANNING_DAYS.forEach(d => {
+        html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}">${d.label}</div>`;
+      });
+
+      // Colonne des heures
+      html += `<div style="grid-column:1;">`;
+      for (let r = 0; r < PLANNING_ROWS; r++) {
+        const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
+        html += `<div class="planningTimeCell">${minutes % 60 === 0 ? planningMinutesLabel(minutes) : ""}</div>`;
+      }
+      html += `</div>`;
+
+      // Colonnes des jours : cases vides cliquables + blocs positionnes en absolu par-dessus
+      PLANNING_DAYS.forEach((d, dayIdx) => {
+        const daySlots = planningSlots.filter(s => s.day_of_week === d.key);
+        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
+        for (let r = 0; r < PLANNING_ROWS; r++) {
+          const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
+          const occupied = daySlots.some(s => minutes >= planningStartMinutes(s) && minutes < planningStartMinutes(s) + s.duration_minutes);
+          html += `<div class="planningCell${occupied ? " occupied" : ""}" data-day="${d.key}" data-minutes="${minutes}"></div>`;
+        }
+        daySlots.forEach(s => {
+          const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
+          const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
+          const cls = planningClassById(s.class_id);
+          const apsa = planningMode === "periode" ? (planningActivityForSlot(s.id) || "A definir") : null;
+          html += `<div class="planningBlock" style="top:${top}px; height:${height}px;" data-slot="${s.id}">
+            <span class="cl">${planningClassLabel(cls)}</span>${apsa ? `<span class="ap">${apsa}</span>` : ""}
+          </div>`;
+        });
+        html += `</div>`;
+      });
+
+      html += `</div></div>`;
+      wrap.innerHTML = html;
+      wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
+
+      wrap.querySelectorAll(".planningCell:not(.occupied)").forEach(cell => {
+        cell.addEventListener("click", () => onPlanningEmptyCellClick(cell.dataset.day, parseInt(cell.dataset.minutes, 10)));
+      });
+      wrap.querySelectorAll(".planningBlock").forEach(block => {
+        block.addEventListener("click", (e) => {
+          e.stopPropagation();
+          onPlanningSlotClick(block.dataset.slot);
+        });
+      });
+    }
+
+    function onPlanningEmptyCellClick(day, minutes) {
+      if (planningMode !== "global") return;
+      if (planningPendingClass) {
+        openPlanningSecondSlotPanel(day, minutes);
+      } else {
+        openPlanningClassChoicePanel(day, minutes);
+      }
+    }
+
+    function onPlanningSlotClick(slotId) {
+      const slot = planningSlots.find(s => s.id === slotId);
+      if (!slot) return;
+      if (planningMode === "global") openPlanningEditSlotPanel(slot);
+      else openPlanningActivityPanel(slot);
+    }
+
+    function durationChipsHtml(name, selected) {
+      return PLANNING_DURATIONS.map(([min, label]) =>
+        `<button type="button" class="secondary durationChip" data-${name}="${min}" style="margin-top:0; ${min === selected ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${label}</button>`
+      ).join(" ");
+    }
+
+    function openPlanningClassChoicePanel(day, minutes) {
+      const panel = document.getElementById("planningPanel");
+      let selectedClassId = null;
+      let selectedDuration = 60;
+      panel.innerHTML = `
+        <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
+        <label for="planningClassSelect">Classe</label>
+        <select id="planningClassSelect">
+          <option value="">Choisir...</option>
+          ${planningClasses.map(c => `<option value="${c.id}">${planningClassLabel(c)}</option>`).join("")}
+        </select>
+        <label>Duree</label>
+        <div id="planningDurationChips">${durationChipsHtml("dur", selectedDuration)}</div>
+        <button id="planningConfirmBtn">Placer</button>
+        <button class="secondary" id="planningCancelBtn">Annuler</button>
+        <div class="error" id="planningPanelError"></div>`;
+      panel.style.display = "block";
+      panel.querySelectorAll("#planningDurationChips .durationChip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedDuration = parseInt(btn.dataset.dur, 10);
+          panel.querySelectorAll("#planningDurationChips .durationChip").forEach(b => b.style.cssText = "margin-top:0");
+          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+        });
+      });
+      document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
+        selectedClassId = document.getElementById("planningClassSelect").value;
+        if (!selectedClassId) {
+          document.getElementById("planningPanelError").textContent = "Choisissez une classe.";
+          return;
+        }
+        await planningCreateSlot(selectedClassId, day, minutes, selectedDuration);
+        panel.style.display = "none";
+      });
+    }
+
+    function openPlanningSecondSlotPanel(day, minutes) {
+      const panel = document.getElementById("planningPanel");
+      const classGroup = planningPendingClass;
+      let selectedDuration = 60;
+      panel.innerHTML = `
+        <h2>2e creneau de ${planningClassLabel(classGroup)}</h2>
+        <div class="muted">${planningClassLabel(classGroup)} a EPS deux fois par semaine. Ce creneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
+        <label>Duree</label>
+        <div id="planningDurationChips2">${durationChipsHtml("dur2", selectedDuration)}</div>
+        <button id="planningConfirmBtn2">Placer ce creneau</button>
+        <button class="secondary" id="planningCancelBtn2">Annuler</button>`;
+      panel.style.display = "block";
+      panel.querySelectorAll("#planningDurationChips2 .durationChip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedDuration = parseInt(btn.dataset.dur2, 10);
+          panel.querySelectorAll("#planningDurationChips2 .durationChip").forEach(b => b.style.cssText = "margin-top:0");
+          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+        });
+      });
+      document.getElementById("planningCancelBtn2").addEventListener("click", () => { planningPendingClass = null; panel.style.display = "none"; renderPlanningTab(); });
+      document.getElementById("planningConfirmBtn2").addEventListener("click", async () => {
+        await planningCreateSlot(classGroup.id, day, minutes, selectedDuration);
+        panel.style.display = "none";
+      });
+    }
+
+    function openPlanningEditSlotPanel(slot) {
+      const panel = document.getElementById("planningPanel");
+      const cl = planningClassById(slot.class_id);
+      let selectedDuration = slot.duration_minutes;
+      panel.innerHTML = `
+        <h2>${planningClassLabel(cl)} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
+        <label>Duree</label>
+        <div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
+        <button id="planningSaveBtn">Enregistrer</button>
+        <button class="danger" id="planningDeleteBtn">Supprimer</button>
+        <button class="secondary" id="planningCloseBtn">Fermer</button>`;
+      panel.style.display = "block";
+      panel.querySelectorAll("#planningDurationChips3 .durationChip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedDuration = parseInt(btn.dataset.dur3, 10);
+          panel.querySelectorAll("#planningDurationChips3 .durationChip").forEach(b => b.style.cssText = "margin-top:0");
+          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+        });
+      });
+      document.getElementById("planningCloseBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("planningSaveBtn").addEventListener("click", async () => {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
+          method: "PATCH", body: JSON.stringify({ duration_minutes: selectedDuration, updated_at: new Date().toISOString() })
+        });
+        panel.style.display = "none";
+        await loadPlanningSlots();
+        renderPlanningTab();
+      });
+      document.getElementById("planningDeleteBtn").addEventListener("click", async () => {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
+          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+        });
+        panel.style.display = "none";
+        await loadPlanningSlots();
+        renderPlanningTab();
+      });
+    }
+
+    function openPlanningActivityPanel(slot) {
+      const panel = document.getElementById("planningPanel");
+      const cl = planningClassById(slot.class_id);
+      const options = PROGRAMMATION[cl.grade] || [];
+      const hasLinkedSibling = planningLinksActivity(cl.grade) &&
+        planningSlots.some(s => s.id !== slot.id && s.class_id === slot.class_id);
+      let overrideOnly = false;
+      const currentApsa = planningActivityForSlot(slot.id);
+
+      function optionsHtml() {
+        return options.map(a => `<option value="${a}"${a === currentApsa ? " selected" : ""}>${a}</option>`).join("");
+      }
+
+      panel.innerHTML = `
+        <h2>${planningClassLabel(cl)} · Periode ${planningPeriod}</h2>
+        ${hasLinkedSibling ? `<div class="muted" id="planningLinkNote" style="margin-bottom:8px">S'applique aux 2 creneaux de la semaine.</div>` : ""}
+        <label for="planningApsaSelect">Activite</label>
+        <select id="planningApsaSelect">${optionsHtml()}</select>
+        ${hasLinkedSibling ? `<button type="button" class="secondary" id="planningOverrideBtn" style="margin-top:10px">Choisir une activite differente pour ce creneau</button>` : ""}
+        <button id="planningSaveActivityBtn">Enregistrer</button>
+        <button class="secondary" id="planningCloseActivityBtn">Fermer</button>`;
+      panel.style.display = "block";
+
+      if (hasLinkedSibling) {
+        document.getElementById("planningOverrideBtn").addEventListener("click", () => {
+          overrideOnly = true;
+          document.getElementById("planningLinkNote").textContent = `S'applique uniquement a ce creneau (${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}).`;
+          document.getElementById("planningOverrideBtn").style.display = "none";
+        });
+      }
+      document.getElementById("planningCloseActivityBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("planningSaveActivityBtn").addEventListener("click", async () => {
+        const apsaName = document.getElementById("planningApsaSelect").value;
+        if (!apsaName) return;
+        await planningSetActivity(cl, slot, apsaName, overrideOnly);
+        panel.style.display = "none";
+      });
+    }
+
+    async function planningCreateSlot(classId, day, startMinutes, durationMinutes) {
+      const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, "0")}:${String(startMinutes % 60).padStart(2, "0")}`;
+      await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots`, {
+        method: "POST",
+        body: JSON.stringify({
+          id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
+          day_of_week: day, start_time: startTime, duration_minutes: durationMinutes,
+          updated_at: new Date().toISOString(), deleted: false
+        })
+      });
+      await loadPlanningSlots();
+      const cl = planningClassById(classId);
+      const slotCount = planningSlots.filter(s => s.class_id === classId).length;
+      planningPendingClass = slotCount < planningWeeklySlotsNeeded(cl.grade) ? cl : null;
+      renderPlanningTab();
+    }
+
+    async function planningSetActivity(classGroup, slot, apsaName, onlyThisSlot) {
+      const applyToAll = !onlyThisSlot && planningLinksActivity(classGroup.grade);
+      const targetSlotIds = applyToAll
+        ? planningSlots.filter(s => s.class_id === classGroup.id).map(s => s.id)
+        : [slot.id];
+      for (const slotId of targetSlotIds) {
+        const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
+        if (existing) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${existing.id}`, {
+            method: "PATCH", body: JSON.stringify({ apsa_name: apsaName, updated_at: new Date().toISOString() })
+          });
+        } else {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, {
+            method: "POST",
+            body: JSON.stringify({
+              id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
+              period_number: planningPeriod, apsa_name: apsaName,
+              updated_at: new Date().toISOString(), deleted: false
+            })
+          });
+        }
+      }
+      await loadPlanningActivities();
+      renderPlanningTab();
     }
 
     // ---- Demarrage ----
