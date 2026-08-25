@@ -30,8 +30,15 @@ create table if not exists evaluation_scores (
   student_id text not null references students(id) on delete cascade,
   points numeric,
   updated_at timestamptz not null default now(),
+  -- Une case effacee est marquee "deleted", jamais supprimee : sinon la synchro avec l'app ne
+  -- peut pas distinguer "jamais notee" de "notee puis effacee", et ne propage pas l'effacement.
+  deleted boolean not null default false,
   unique (criterion_id, student_id)
 );
+
+-- Au cas ou la table evaluation_scores existait deja sans la colonne deleted (version anterieure
+-- de ce script) : l'ajoute sans echouer si elle est deja presente.
+alter table evaluation_scores add column if not exists deleted boolean not null default false;
 
 create index if not exists idx_evaluations_cycle_id on evaluations(cycle_id);
 create index if not exists idx_evaluation_criteria_evaluation_id on evaluation_criteria(evaluation_id);

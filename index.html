@@ -1294,6 +1294,8 @@
       evalCriteria = critRes.ok ? await critRes.json() : [];
       const allScores = scoreRes.ok ? await scoreRes.json() : [];
       const critIds = new Set(evalCriteria.map(c => c.id));
+      // On garde aussi les lignes effacees (deleted=true) : elles servent a retrouver l'id/la ligne
+      // existante quand on resaisit une note, plutot que d'en creer une nouvelle a chaque fois.
       evalScores = {};
       allScores.filter(s => critIds.has(s.criterion_id)).forEach(s => {
         evalScores[`${s.criterion_id}|${s.student_id}`] = s;
@@ -1301,12 +1303,15 @@
       renderEvaluationTable();
     }
 
+    /** Une ligne effacee (deleted=true) compte comme "pas de note", meme si la ligne existe encore. */
+    function scoreValue(row) { return row && !row.deleted ? row.points : null; }
+
     function evalTotalMax() { return evalCriteria.reduce((a, c) => a + c.max_points, 0); }
     function evalTotalFor(studentId) {
-      return evalCriteria.reduce((a, c) => a + (evalScores[`${c.id}|${studentId}`]?.points ?? 0), 0);
+      return evalCriteria.reduce((a, c) => a + (scoreValue(evalScores[`${c.id}|${studentId}`]) ?? 0), 0);
     }
     function evalIsComplete(studentId) {
-      return evalCriteria.length > 0 && evalCriteria.every(c => evalScores[`${c.id}|${studentId}`]?.points != null);
+      return evalCriteria.length > 0 && evalCriteria.every(c => scoreValue(evalScores[`${c.id}|${studentId}`]) != null);
     }
 
     function renderEvaluationTable() {
@@ -1328,7 +1333,7 @@
       evalStudents.forEach(s => {
         html += `<tr><td>${s.last_name.toUpperCase()} ${s.first_name}</td>`;
         evalCriteria.forEach(c => {
-          const current = evalScores[`${c.id}|${s.id}`]?.points;
+          const current = scoreValue(evalScores[`${c.id}|${s.id}`]);
           html += `<td><input class="scoreInput" type="text" inputmode="decimal" data-crit="${c.id}" data-student="${s.id}" data-max="${c.max_points}" value="${current ?? ""}"></td>`;
         });
         const complete = evalIsComplete(s.id);
@@ -1352,30 +1357,38 @@
       return (value % 1 === 0) ? String(value) : String(value).replace(".", ",");
     }
 
+    // Efface = soft-delete (deleted=true), jamais une suppression SQL : sinon la synchro avec
+    // l'application ne peut pas distinguer "jamais notee" de "notee puis effacee" et ne
+    // propage pas l'effacement. Reutilise aussi la ligne existante (meme id) quand elle existe,
+    // pour que resaisir une note ne cree pas une nouvelle ligne a chaque fois.
     async function setScore(input) {
       const raw = input.value.trim().replace(",", ".");
       const criterionId = input.dataset.crit, studentId = input.dataset.student, max = parseFloat(input.dataset.max);
       const key = `${criterionId}|${studentId}`;
+      const existing = evalScores[key];
+      const now = new Date().toISOString();
       if (raw === "") {
-        const existing = evalScores[key];
-        if (existing) await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, { method: "DELETE" });
-        delete evalScores[key];
-      } else {
-        const value = parseFloat(raw);
-        if (isNaN(value) || value > max) { input.value = evalScores[key]?.points ?? ""; return; }
-        const existing = evalScores[key];
         if (existing) {
           await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
-            method: "PATCH", body: JSON.stringify({ points: value, updated_at: new Date().toISOString() })
+            method: "PATCH", body: JSON.stringify({ points: null, deleted: true, updated_at: now })
           });
-          existing.points = value;
+          existing.points = null; existing.deleted = true;
+        }
+      } else {
+        const value = parseFloat(raw);
+        if (isNaN(value) || value > max) { input.value = scoreValue(existing) ?? ""; return; }
+        if (existing) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
+            method: "PATCH", body: JSON.stringify({ points: value, deleted: false, updated_at: now })
+          });
+          existing.points = value; existing.deleted = false;
         } else {
           const id = crypto.randomUUID();
           await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores`, {
             method: "POST",
-            body: JSON.stringify({ id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, updated_at: new Date().toISOString() })
+            body: JSON.stringify({ id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, deleted: false, updated_at: now })
           });
-          evalScores[key] = { id, points: value };
+          evalScores[key] = { id, points: value, deleted: false };
         }
       }
       renderEvaluationTable();
@@ -1431,7 +1444,7 @@
       evalStudents.forEach(s => {
         const cells = [s.last_name, s.first_name,
           ...evalCriteria.map(c => {
-            const points = evalScores[`${c.id}|${s.id}`]?.points;
+            const points = scoreValue(evalScores[`${c.id}|${s.id}`]);
             return points == null ? "" : formatScoreWeb(points);
           }),
           formatScoreWeb(evalTotalFor(s.id))];
