@@ -1689,6 +1689,7 @@
     let planningNewlyCreatedClasses = []; // classes creees automatiquement depuis Planning (rappel)
     let planningTabReady = false;
     let planningCommunitySlots = null; // null = pas encore charge ; sinon liste (Planning global EPS)
+    let planningCommunityActivities = [];
     let planningCommunityLoading = false;
     let planningCommunityError = null;
     let planningConflictOverrides = []; // paires (slot_id_a, slot_id_b) validees malgre le chevauchement
@@ -1704,6 +1705,11 @@
     }
 
     async function initPlanningTab() {
+      const personalTab = document.querySelector('[data-planningtab="global"]');
+      if (personalTab) {
+        const teacher = (session?.email || "Alex").split("@")[0];
+        personalTab.textContent = "Planning global " + teacher.charAt(0).toUpperCase() + teacher.slice(1);
+      }
       if (!planningTabReady) {
         document.getElementById("planningSubtabs").addEventListener("click", (e) => {
           const btn = e.target.closest(".subtabbtn");
@@ -1758,12 +1764,14 @@
       planningCommunityLoading = true;
       planningCommunityError = null;
       try {
-        const [slotsRes, overridesRes] = await Promise.all([
+        const [slotsRes, activitiesRes, overridesRes] = await Promise.all([
           apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name`),
           apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
         ]);
         if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
         planningCommunitySlots = await slotsRes.json();
+        planningCommunityActivities = activitiesRes.ok ? await activitiesRes.json() : [];
         planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
       } catch (e) {
         planningCommunityError = e.message;
@@ -1789,7 +1797,7 @@
     function renderPlanningTab() {
       // Barre de periodes
       const periodBar = document.getElementById("planningPeriodBar");
-      if (planningMode === "periode") {
+      if (planningMode === "periode" || planningMode === "eps") {
         const maxPeriod = planningClasses.length
           ? Math.max(...planningClasses.map(c => planningPeriodCount(c.grade)))
           : 5;
@@ -1801,7 +1809,7 @@
           chip.textContent = "Periode " + p;
           chip.addEventListener("click", async () => {
             planningPeriod = p;
-            await loadPlanningActivities();
+            if (planningMode === "periode") await loadPlanningActivities();
             document.getElementById("planningPanel").style.display = "none";
             renderPlanningTab();
           });
@@ -1960,13 +1968,21 @@
 
       PLANNING_DAYS.forEach((d, dayIdx) => {
         html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
-        slots.forEach((s, i) => {
+        const daySlots = slots.filter(s => s.day_of_week === d.key);
+        daySlots.forEach(s => {
           if (s.day_of_week !== d.key) return;
           const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
           const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
-          const conflict = conflictIdx.has(i);
-          html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px;">
+          const conflict = conflictIdx.has(slots.indexOf(s));
+          const overlapping = daySlots.filter(other => {
+            const a = planningStartMinutes(s), b = planningStartMinutes(other);
+            return a < b + other.duration_minutes && b < a + s.duration_minutes;
+          }).sort((a,b) => planningStartMinutes(a)-planningStartMinutes(b) || (a.teacher_label||"").localeCompare(b.teacher_label||"") || a.id.localeCompare(b.id));
+          const laneCount = Math.max(1, overlapping.length), laneIndex = Math.max(0, overlapping.findIndex(x => x.id === s.id));
+          const activity = planningCommunityActivities.find(a => a.slot_id === s.id && a.period_number === planningPeriod)?.apsa_name || "A definir";
+          html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${laneIndex * 100 / laneCount}% + 1px); right:auto; width:calc(${100 / laneCount}% - 2px);">
             <span class="cl">${s.class_label || "?"}</span>
+            <span class="ap">${activity}</span>
             <span class="tc">${s.teacher_label || "?"}</span>
             ${s.installation_name ? `<span class="ap">${s.installation_name}</span>` : ""}
           </div>`;
