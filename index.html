@@ -2083,18 +2083,18 @@
 
     /** "Aucune" + les installations enregistrees (module Equipement). */
     function installationChipsHtml(name, selectedName) {
-      const none = `<button type="button" class="secondary installationChip" data-${name}="" style="margin-top:0; ${!selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">Aucune</button>`;
+      const none = `<button type="button" class="secondary installationChip" data-${name}="" style="display:block; width:100%; text-align:left; margin-top:4px; ${!selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">Aucune</button>`;
       const chips = planningInstallations.map(inst =>
-        `<button type="button" class="secondary installationChip" data-${name}="${inst.name}" style="margin-top:0; ${inst.name === selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${inst.name}</button>`
-      ).join(" ");
-      return none + " " + chips;
+        `<button type="button" class="secondary installationChip" data-${name}="${inst.name}" style="display:block; width:100%; text-align:left; margin-top:4px; ${inst.name === selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${inst.name}</button>`
+      ).join("");
+      return none + chips;
     }
     function wireInstallationChips(panel, containerId, dataAttr, onSelect) {
       panel.querySelectorAll(`#${containerId} .installationChip`).forEach(btn => {
         btn.addEventListener("click", () => {
           onSelect(btn.dataset[dataAttr] || null);
-          panel.querySelectorAll(`#${containerId} .installationChip`).forEach(b => b.style.cssText = "margin-top:0");
-          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+          panel.querySelectorAll(`#${containerId} .installationChip`).forEach(b => b.style.cssText = "display:block; width:100%; text-align:left; margin-top:4px");
+          btn.style.cssText = "display:block; width:100%; text-align:left; margin-top:4px; background:var(--accent-container); border-color:var(--accent-container);";
         });
       });
     }
