@@ -1,0 +1,2569 @@
+{
+  "apsa": "Gymnastique au sol",
+  "grades": [
+    "SIXIEME"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "Realiser en petits groupes deux sequences : une a visee acrobatique destinee a etre jugee, une autre a visee artistique destinee a etre appreciee et a emouvoir.",
+    "Savoir filmer une prestation pour la revoir et la faire evoluer.",
+    "Respecter les prestations des autres et accepter de se produire devant les autres.",
+    "Assumer le role de juge et apprecier une prestation a partir de criteres simples."
+  ],
+  "targetCompetence": "Passer d'actions gymniques subies et desordonnees, ou l'eleve se laisse tomber, a des elements maitrises, choisis et enchaines, presentes devant un public avec un debut et une fin nets.",
+  "cycleObjectives": [
+    "Realiser des rotations avant et arriere en enroulant correctement le dos.",
+    "Construire l'alignement bras-tronc pour se renverser en securite.",
+    "Tenir un equilibre 3 secondes sans deplacement.",
+    "Enchainer 4 a 5 elements avec un debut et une fin immobiles.",
+    "Parer un camarade et juger une prestation avec des criteres simples."
+  ],
+  "plannedTitles": [
+    "Decouvrir les familles gymniques et se situer",
+    "Rouler en avant : l'enroulement du dos",
+    "Se renverser : de la ruade a l'ATR",
+    "Rouler en arriere",
+    "Evaluation de mi-cycle et choix des elements",
+    "Equilibres, sauts et liaisons",
+    "Construire et repeter son enchainement",
+    "Presentation de l'enchainement et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 - attendus de fin de cycle 3",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16702/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources pour le cycle 3 - education physique et sportive",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/259/education-physique-et-sportive-cycle-3",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Concevoir et realiser des actions a visees expressive, artistique et esthetique - activites gymniques cycle 3",
+      "org": "Academie de Nantes",
+      "url": "https://pedagogie.ac-nantes.fr/medias/fichier/activites-gymniques-c3-dsden68_1569855271159-pdf",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "La gymnastique au sol a l'ecole - dossier enseignants",
+      "org": "DSDEN de Meurthe-et-Moselle",
+      "url": "https://sites.ac-nancy-metz.fr/dsden54-gtd/eps54/sites/eps54/IMG/pdf/bm_pdf_gymnastique_au_sol_a_l_ecole_avec_ou_sans_materiel.pdf",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Nombre, etat et epaisseur des tapis disponibles : verifier avant la premiere seance.",
+    "Presence d'un tapis de reception epais pour le travail des renversements.",
+    "Regles de l'etablissement sur la parade par les eleves : certains elements exigent la parade d'un adulte.",
+    "Espacement entre les ateliers et degagement des murs et des poteaux.",
+    "Autorisation de captation video et modalites de conservation des images des eleves.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - apprehension du renversement",
+      "observed": "Refuse de mettre la tete en bas. Reste debout aux ateliers de renversement, ou s'arrete avant la bascule.",
+      "need": "Construire la confiance dans l'appui des bras, a faible amplitude et avec aide."
+    },
+    {
+      "label": "Profil 2 - roule en se laissant tomber",
+      "observed": "Realise la roulade mais en tombant sur le dos, tete posee de travers, sans enroulement.",
+      "need": "Apprendre a rentrer le menton et enrouler le dos vertebre par vertebre."
+    },
+    {
+      "label": "Profil 3 - realise mais ne tient rien",
+      "observed": "Enchaine les elements sans marquer ni le debut, ni la fin, ni les positions tenues.",
+      "need": "Construire l'immobilite : debut, fin et tenue des equilibres."
+    },
+    {
+      "label": "Profil 4 - a l'aise techniquement",
+      "observed": "Realise roulades et renversements sans difficulte, mais neglige la parade et le role de juge.",
+      "need": "S'engager dans les roles sociaux et rechercher la qualite d'execution plutot que la difficulte."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Presentation devant la classe d'un enchainement individuel de 4 a 5 elements issus d'au moins trois familles gymniques, avec un debut et une fin immobiles. Chaque eleve tient egalement le role de juge sur la prestation d'un camarade et celui de pareur.",
+    "criteria": [
+      "L'enchainement comporte au moins 4 elements issus d'au moins 3 familles differentes.",
+      "Le debut et la fin sont marques par une position immobile tenue 2 secondes.",
+      "Les elements sont maitrises : aucune chute, aucune reprise d'appui non prevue.",
+      "Les positions a tenir sont maintenues 3 secondes.",
+      "Le role de pareur est tenu avec serieux et au bon placement.",
+      "Le role de juge est tenu : la fiche est renseignee avec les criteres donnes."
+    ],
+    "referential": "Attendus de fin de cycle 3 du CA3, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir les familles gymniques et se situer",
+      "mainObjective": "Faire decouvrir les quatre familles gymniques par des ateliers, et reperer le niveau de depart de chaque eleve.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre les regles de securite du travail sur tapis.",
+        "Essayer au moins une fois chaque famille gymnique.",
+        "Reperer les eleves qui refusent le renversement."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : les acquis de l'ecole primaire sont tres heterogenes, on ne presuppose rien.",
+      "prerequisiteForNext": "Chaque eleve a essaye les quatre familles et connait les regles de securite sur tapis.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12,
+            "note": "joints, sans espace entre eux"
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 2
+          },
+          {
+            "label": "plan incline ou tremplin bas",
+            "fixed": 1
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de niveau",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve, conservee tout le cycle"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Disposer quatre ateliers, un par famille : rotation avant, rotation arriere, renversement, equilibre et saut.",
+          "Joindre les tapis sans laisser d'espace : un pied dans un interstice provoque une entorse.",
+          "Eloigner chaque atelier des murs et des poteaux d'au moins deux metres.",
+          "Placer le tapis epais a l'atelier renversement.",
+          "Poser les fiches de niveau et les stylos sur un banc, hors des zones d'evolution."
+        ],
+        "sketch": "4 ateliers en carre, un par famille gymnique.\nAtelier 3 (renversement) equipe du tapis epais.\nBanc des fiches au centre, hors zones d'evolution.\n2 m minimum entre chaque atelier et les murs."
+      },
+      "warmup": {
+        "rationale": "L'echauffement gymnique doit preparer specifiquement poignets, epaules et colonne vertebrale, tres sollicites par les appuis renverses et les rotations.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis, sans monter dessus.",
+              "Deplacements varies : pas chasses, talons-fesses, montees de genoux."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation specifique",
+            "details": [
+              "Poignets : appuis au sol, cercles, flexions et extensions. 30 secondes.",
+              "Epaules : cercles avant et arriere, moulinets.",
+              "Colonne : enroulement et deroulement debout, chat-chameau a quatre pattes."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action gymnique",
+            "details": [
+              "Deplacements a quatre pattes, en arriere, en crabe sur les tapis.",
+              "Position groupee et position tendue au sol, 5 fois chacune.",
+              "Premiers appuis des mains au sol avec les pieds qui poussent."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le circuit des quatre familles",
+          "objective": "Faire essayer a chacun les quatre familles gymniques pour situer son niveau de depart, famille par famille.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "plan incline ou tremplin bas",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Quatre ateliers, groupes de cinq a six eleves, rotation toutes les 5 minutes au signal. A chaque atelier, trois niveaux de difficulte affiches. Chacun coche le niveau atteint sur sa fiche.",
+          "studentGoal": "Essayer les quatre familles et noter a quel niveau je me situe dans chacune.",
+          "instructions": [
+            "Je passe un par un : jamais deux gymnastes en meme temps sur un tapis.",
+            "Je commence toujours par le niveau 1, meme si je pense savoir faire.",
+            "Je ne passe au niveau superieur que si le niveau precedent est reussi.",
+            "Je note mon niveau sur ma fiche a la fin de chaque atelier."
+          ],
+          "success": [
+            "Les quatre ateliers ont ete essayes.",
+            "La fiche de niveau est renseignee pour les quatre familles.",
+            "Aucun passage a deux gymnastes simultanement sur un tapis."
+          ],
+          "execution": [
+            "Poser les mains a plat, doigts ecartes, avant tout appui.",
+            "Rentrer le menton sur la poitrine dans les rotations avant.",
+            "Regarder ses mains dans les renversements."
+          ],
+          "watch": [
+            "Qui refuse categoriquement le renversement ?",
+            "Qui roule en tombant sur le dos, sans enrouler ?",
+            "Qui pose la tete au sol au lieu de la nuque dans la roulade ?",
+            "Qui est deja a l'aise et pourra viser des elements plus difficiles ?"
+          ],
+          "errors": [
+            "Poser le sommet du crane au sol dans la roulade avant.",
+            "Passer directement au niveau 3 sans valider les precedents.",
+            "S'elancer a deux sur le meme tapis."
+          ],
+          "feedback": [
+            "Menton contre la poitrine : c'est la nuque qui touche, pas la tete.",
+            "Niveau 1 d'abord : on valide, ensuite on monte.",
+            "Attends qu'il ait fini et qu'il soit sorti du tapis."
+          ],
+          "plus": [
+            "Ajouter un quatrieme niveau a chaque atelier.",
+            "Enchainer deux elements de familles differentes."
+          ],
+          "minus": [
+            "Realiser le niveau 1 avec l'aide du professeur.",
+            "Utiliser le plan incline pour faciliter la rotation."
+          ],
+          "diff": {
+            "facilitee": "Niveau 1 realise avec aide du professeur et plan incline pour les rotations.",
+            "normale": "Progression libre dans les trois niveaux affiches par atelier.",
+            "complexifiee": "Quatre niveaux par atelier, avec enchainement de deux elements."
+          },
+          "safety": [
+            "Un seul gymnaste a la fois par tapis, le suivant attend hors du tapis.",
+            "Tapis joints, sans interstice, verifies avant chaque rotation d'atelier.",
+            "Aucun element realise en dehors des tapis.",
+            "Deux metres minimum entre les ateliers, les murs et les poteaux.",
+            "Bijoux retires, cheveux attaches, pieds nus ou en chaussons.",
+            "Les elements renverses ne sont realises qu'avec la parade prevue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le corps qui tient : gainage et immobilite",
+          "objective": "Construire l'immobilite et le gainage, prealables a toute position tenue et a tout renversement.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par deux sur les tapis, un gymnaste un chronometreur. Trois positions a tenir : planche ventrale, position groupee, position tendue debout bras leves. 3 series.",
+          "studentGoal": "Tenir chaque position 5 secondes sans bouger du tout.",
+          "instructions": [
+            "Je tiens la position sans bouger, meme pas les doigts.",
+            "Mon partenaire compte a voix haute jusqu'a 5.",
+            "Si je bouge, on recommence le decompte.",
+            "On change de role a chaque serie."
+          ],
+          "success": [
+            "Les trois positions sont tenues 5 secondes sans mouvement.",
+            "Le corps reste aligne : pas de bassin qui s'affaisse.",
+            "Le chronometreur compte a voix haute et honnetement."
+          ],
+          "execution": [
+            "Serrer le ventre et les fessiers pour tenir l'alignement.",
+            "Regard fixe sur un point pour eviter les oscillations.",
+            "Respirer pendant la tenue, ne pas bloquer le souffle."
+          ],
+          "watch": [
+            "Le bassin s'affaisse-t-il en planche ventrale ?",
+            "Les eleves bloquent-ils leur respiration ?",
+            "L'immobilite est-elle reelle ou approximative ?"
+          ],
+          "errors": [
+            "Laisser le bassin tomber en planche ventrale.",
+            "Bloquer sa respiration et devoir arreter.",
+            "Compter trop vite pour aider son camarade."
+          ],
+          "feedback": [
+            "Serre le ventre, ton bassin descend.",
+            "Respire, ne bloque pas.",
+            "Compte au bon rythme : tu ne lui rends pas service."
+          ],
+          "plus": [
+            "Tenue portee a 10 secondes.",
+            "Planche ventrale avec un bras leve."
+          ],
+          "minus": [
+            "Tenue de 3 secondes.",
+            "Planche a genoux plutot que sur les pieds."
+          ],
+          "diff": {
+            "facilitee": "Tenue de 3 secondes, planche appuyee sur les genoux.",
+            "normale": "Tenue de 5 secondes dans les trois positions.",
+            "complexifiee": "Tenue de 10 secondes, planche ventrale avec un bras leve."
+          },
+          "safety": [
+            "Travail realise uniquement sur les tapis.",
+            "Espacement d'un metre entre chaque binome.",
+            "Arret immediat en cas de douleur au dos ou aux poignets."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Deux elements enchaines",
+          "objective": "Faire decouvrir la notion d'enchainement en reliant deux elements deja essayes, avec un debut et une fin.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur deux couloirs de tapis, chaque eleve compose et presente une suite de deux elements de son choix, avec une position de depart et une position d'arrivee immobiles.",
+          "studentGoal": "Presenter deux elements a la suite, avec un debut et une fin nets.",
+          "instructions": [
+            "Je choisis deux elements que je sais faire.",
+            "Je commence immobile, bras leves, et je termine immobile.",
+            "Je ne m'arrete pas entre les deux elements.",
+            "Les autres regardent en silence pendant le passage."
+          ],
+          "success": [
+            "Les deux elements sont realises a la suite, sans arret entre eux.",
+            "Le debut et la fin sont immobiles pendant 2 secondes.",
+            "Le public regarde en silence."
+          ],
+          "execution": [
+            "Marquer nettement la position de depart avant de commencer.",
+            "Enchainer sans temps mort ni pas parasites.",
+            "Terminer par une position tenue, regard vers le public."
+          ],
+          "watch": [
+            "Les eleves marquent-ils le debut et la fin, ou entrent-ils et sortent-ils sans transition ?",
+            "Le public respecte-t-il le passage des camarades ?"
+          ],
+          "errors": [
+            "Commencer a courir avant d'etre immobile.",
+            "S'arreter entre les deux elements pour reflechir.",
+            "Rire ou commenter le passage d'un camarade."
+          ],
+          "feedback": [
+            "Immobile d'abord, deux secondes, ensuite tu pars.",
+            "Enchaine : tu t'arretes entre les deux.",
+            "On regarde en silence, on applaudira a la fin."
+          ],
+          "plus": [
+            "Enchainer trois elements de familles differentes."
+          ],
+          "minus": [
+            "Enchainer deux elements de la meme famille.",
+            "Arret autorise entre les deux elements."
+          ],
+          "diff": {
+            "facilitee": "Deux elements de la meme famille, arret court autorise entre eux.",
+            "normale": "Deux elements enchaines avec debut et fin immobiles.",
+            "complexifiee": "Trois elements de familles differentes, enchaines sans arret."
+          },
+          "safety": [
+            "Un seul gymnaste par couloir de tapis.",
+            "Public assis hors des tapis, a distance.",
+            "Tapis verifies et joints avant chaque passage.",
+            "Aucun element renverse sans parade lors de cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle partie du corps doit toucher le tapis en premier dans une roulade avant ?",
+          "Quelles sont les regles a respecter pour travailler en securite sur les tapis ?"
+        ],
+        "key": "En gymnastique, on roule sur la nuque et jamais sur la tete, on passe un a la fois sur les tapis, et chaque element commence et finit par une position tenue."
+      },
+      "socialRoles": [
+        "Chronometreur : compte les secondes de tenue de son camarade.",
+        "Responsable materiel : verifie que les tapis sont joints avant chaque rotation.",
+        "Public : regarde les passages en silence et applaudit a la fin."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Rouler en avant : l'enroulement du dos",
+      "mainObjective": "Construire la roulade avant en enroulant le dos vertebre par vertebre, sans poser la tete au sol.",
+      "secondaryObjectives": [
+        "Rentrer le menton sur la poitrine avant la bascule.",
+        "Se relever sans appui des mains au sol.",
+        "Parer un camarade a la roulade."
+      ],
+      "linkToPrevious": "Le circuit initial a montre que la majorite des eleves se laissent tomber sur le dos : la rotation avant est la premiere famille a construire.",
+      "prerequisiteForNext": "Chaque eleve realise une roulade avant enroulee, sans poser la tete au sol.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "plan incline",
+            "fixed": 2,
+            "note": "facilite la mise en rotation"
+          },
+          {
+            "label": "ballons de mousse ou foulards",
+            "fixed": 10,
+            "note": "a coincer sous le menton"
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de niveau",
+            "per": 1.0,
+            "min": 20
+          }
+        ],
+        "instructions": [
+          "Constituer trois couloirs de tapis joints, longueur trois tapis.",
+          "Installer le plan incline sur un des couloirs, pour l'atelier facilite.",
+          "Preparer les ballons de mousse a coincer sous le menton.",
+          "Verifier l'absence d'interstice entre les tapis avant de commencer."
+        ],
+        "sketch": "3 couloirs de tapis joints, 3 tapis de long chacun.\nCouloir 1 avec plan incline (facilite).\nCouloir 2 a plat (normal). Couloir 3 avec depart accroupi sur banc (complexifie).\nFile d'attente hors tapis a l'entree de chaque couloir."
+      },
+      "warmup": {
+        "rationale": "Insiste sur la mobilite de la colonne et le renforcement de la nuque, directement engages dans la rotation avant.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis.",
+              "Deplacements a quatre pattes sur les tapis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation de la colonne",
+            "details": [
+              "Chat-chameau a quatre pattes, 10 repetitions.",
+              "Enroulement-deroulement debout, vertebre par vertebre.",
+              "Poignets et epaules."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Preparation a la rotation",
+            "details": [
+              "Position groupee assise, bascule arriere-avant en berceau, 10 fois.",
+              "Position groupee avec menton rentre, se balancer sans se deplier.",
+              "Se relever depuis la position groupee sans les mains, 5 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La roulade sans poser la tete",
+          "objective": "Realiser la roulade avant en posant la nuque et non la tete, grace au menton rentre.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "plan incline",
+              "fixed": 2
+            },
+            {
+              "label": "ballons de mousse ou foulards",
+              "fixed": 10
+            }
+          ],
+          "organization": "Trois couloirs de difficulte croissante, les eleves choisissent le leur. Un ballon de mousse coince sous le menton oblige a garder le menton rentre. Passage un par un, le suivant attend hors du tapis.",
+          "studentGoal": "Rouler en avant sans faire tomber le ballon coince sous mon menton.",
+          "instructions": [
+            "Je coince le ballon sous mon menton et je ne le lache pas.",
+            "Je pose les mains a plat, doigts ecartes, devant mes pieds.",
+            "Je pousse sur mes jambes et je roule sur ma nuque puis mon dos.",
+            "Je me releve en position groupee, sans poser les mains."
+          ],
+          "success": [
+            "Le ballon reste sous le menton pendant toute la roulade.",
+            "La tete ne touche jamais le tapis : c'est la nuque qui roule.",
+            "La roulade se termine sur les pieds, en equilibre."
+          ],
+          "execution": [
+            "Menton contre la poitrine, regard sur le ventre.",
+            "Mains a plat, doigts ecartes, bras qui flechissent pour amortir.",
+            "Corps groupe pendant toute la rotation, genoux vers la poitrine."
+          ],
+          "watch": [
+            "La tete est-elle posee au sol, ce qui est dangereux pour la nuque ?",
+            "Le corps se deplie-t-il pendant la rotation, ce qui bloque la roulade ?",
+            "L'eleve se laisse-t-il tomber sur le dos plutot que de rouler ?"
+          ],
+          "errors": [
+            "Poser le sommet du crane au sol : risque cervical.",
+            "Se deplier en cours de rotation et retomber a plat sur le dos.",
+            "Partir de trop haut sans grouper le corps."
+          ],
+          "feedback": [
+            "Regarde ton ventre : ton menton doit toucher ta poitrine.",
+            "Reste en boule tout le temps, genoux contre la poitrine.",
+            "Pousse sur tes jambes, ne te laisse pas tomber."
+          ],
+          "plus": [
+            "Roulade depuis une position accroupie sur un banc bas.",
+            "Roulade suivie d'un saut extension."
+          ],
+          "minus": [
+            "Roulade sur plan incline.",
+            "Roulade avec aide du professeur a la nuque."
+          ],
+          "diff": {
+            "facilitee": "Roulade sur plan incline avec aide du professeur soutenant la nuque.",
+            "normale": "Roulade a plat, menton rentre, relevee sans les mains.",
+            "complexifiee": "Roulade depart accroupi sur banc bas, suivie d'un saut extension."
+          },
+          "safety": [
+            "La tete ne doit jamais servir d'appui : arret immediat si un eleve pose le crane.",
+            "Un seul gymnaste par couloir, le suivant attend hors du tapis.",
+            "Tapis joints, verifies avant chaque serie.",
+            "Le pareur se place a genoux sur le cote, main pres de la nuque, sans gener.",
+            "Aucun eleve ne roule sur un tapis ou un camarade est encore present."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Se relever sans les mains",
+          "objective": "Construire la fin de la roulade : se redresser par le groupe et l'elan, sans reprise d'appui des mains.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "bancs suedois",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux sur les tapis. Depart assis groupe, bascule arriere puis retour avant pour se relever sans poser les mains. Le partenaire observe le passage des mains.",
+          "studentGoal": "Me relever de la position groupee sans poser les mains au sol.",
+          "instructions": [
+            "Je pars assis, genoux contre la poitrine, mains sur les tibias.",
+            "Je bascule en arriere puis je reviens vers l'avant avec elan.",
+            "Je pose mes pieds au plus pres de mes fesses et je me redresse.",
+            "Mon partenaire regarde si mes mains touchent le sol."
+          ],
+          "success": [
+            "Trois relevees sur quatre sans poser les mains.",
+            "Les pieds se posent pres des fesses.",
+            "Le corps reste groupe pendant la bascule."
+          ],
+          "execution": [
+            "Garder les genoux serres contre la poitrine.",
+            "Utiliser l'elan de la bascule arriere pour repartir vers l'avant.",
+            "Poser les pieds le plus pres possible du bassin."
+          ],
+          "watch": [
+            "Les eleves posent-ils les mains par reflexe ?",
+            "Les pieds se posent-ils trop loin, ce qui empeche le redressement ?"
+          ],
+          "errors": [
+            "Poser les mains au sol pour se pousser.",
+            "Se deplier pendant la bascule et perdre l'elan.",
+            "Poser les pieds trop loin du bassin."
+          ],
+          "feedback": [
+            "Mains sur les tibias, elles n'ont pas le droit de toucher le sol.",
+            "Rapproche tes pieds de tes fesses.",
+            "Reste en boule, tu perdras moins d'elan."
+          ],
+          "plus": [
+            "Se relever et enchainer un saut extension.",
+            "Se relever jambes tendues ecartees."
+          ],
+          "minus": [
+            "Se relever avec une legere aide du partenaire.",
+            "Depart assis sur un banc bas."
+          ],
+          "diff": {
+            "facilitee": "Depart assis sur un banc bas, aide legere du partenaire aux mains.",
+            "normale": "Relevee groupee sans les mains depuis le sol.",
+            "complexifiee": "Relevee sans les mains suivie d'un saut extension."
+          },
+          "safety": [
+            "Travail uniquement sur les tapis.",
+            "Espacement d'un metre entre binomes.",
+            "Le partenaire reste sur le cote, jamais derriere le gymnaste qui bascule."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Roulade dans un enchainement",
+          "objective": "Integrer la roulade dans une courte suite, avec debut, fin et un element supplementaire.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur deux couloirs, chaque eleve presente : position de depart immobile, roulade avant, puis un element de son choix, puis position finale immobile. Le pareur est designe a chaque passage.",
+          "studentGoal": "Presenter une roulade encadree par un debut et une fin nets, plus un element de mon choix.",
+          "instructions": [
+            "Je commence immobile, bras leves, 2 secondes.",
+            "Je fais ma roulade, puis mon element choisi, sans m'arreter entre les deux.",
+            "Je termine immobile, 2 secondes, regard vers le public.",
+            "Pareur : je me place a genoux sur le cote de la roulade."
+          ],
+          "success": [
+            "La roulade est enrouled, sans pose de tete.",
+            "Debut et fin immobiles pendant 2 secondes.",
+            "Aucun arret entre la roulade et l'element suivant."
+          ],
+          "execution": [
+            "Marquer nettement l'immobilite avant de commencer.",
+            "Enchainer sans pas parasites entre les elements.",
+            "Terminer en tenant la position, sans repartir immediatement."
+          ],
+          "watch": [
+            "La qualite de la roulade se degrade-t-elle une fois integree dans un enchainement ?",
+            "Les pareurs se placent-ils correctement ?"
+          ],
+          "errors": [
+            "Bacler la roulade parce qu'on pense a la suite.",
+            "Oublier le debut ou la fin immobile.",
+            "Parer debout et loin du gymnaste."
+          ],
+          "feedback": [
+            "Ta roulade d'abord, proprement : la suite viendra apres.",
+            "Deux secondes immobile avant de partir.",
+            "Pareur, a genoux et pres de lui, sinon tu ne sers a rien."
+          ],
+          "plus": [
+            "Ajouter un troisieme element.",
+            "Imposer un element d'une famille differente."
+          ],
+          "minus": [
+            "Presenter la roulade seule avec debut et fin.",
+            "Arret autorise entre les deux elements."
+          ],
+          "diff": {
+            "facilitee": "Roulade seule, encadree par un debut et une fin immobiles.",
+            "normale": "Roulade plus un element libre, enchaines.",
+            "complexifiee": "Roulade plus deux elements de familles differentes, enchaines."
+          },
+          "safety": [
+            "Un gymnaste par couloir, public assis hors des tapis.",
+            "Pareur designe et place avant chaque passage.",
+            "Tapis joints et verifies.",
+            "Aucun element renverse dans cette phase sans parade validee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi ne faut-il jamais poser la tete au sol dans une roulade ?",
+          "Qu'est-ce qui aide le plus a se relever sans les mains ?"
+        ],
+        "key": "La roulade avant se fait sur la nuque, menton contre la poitrine, corps groupe : c'est le groupe du corps qui permet de rouler et de se relever."
+      },
+      "socialRoles": [
+        "Pareur : se place a genoux pres de la nuque du gymnaste.",
+        "Observateur : verifie si les mains touchent le sol a la relevee.",
+        "Responsable materiel : verifie les tapis avant chaque serie."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Se renverser : de la ruade a l'ATR",
+      "mainObjective": "Construire l'appui renverse : accepter d'avoir la tete en bas et aligner bras, tronc et bassin au-dessus des mains.",
+      "secondaryObjectives": [
+        "Prendre appui sur les mains et pousser fort sur les jambes.",
+        "Construire l'alignement bras-tronc.",
+        "Parer un camarade a l'appui renverse."
+      ],
+      "linkToPrevious": "La rotation avant est acquise. Le renversement est la famille qui bloque le plus d'eleves : on l'aborde progressivement, de la ruade a l'ATR.",
+      "prerequisiteForNext": "Chaque eleve accepte le renversement, au moins sous forme de ruade, et connait la parade a l'ATR.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 2
+          },
+          {
+            "label": "espaliers ou mur degage",
+            "fixed": 1
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de niveau",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer trois ateliers : ruade sur tapis, ATR contre le mur, ATR avec parade a deux.",
+          "Degager totalement le mur utilise pour les ATR : aucun objet, aucun radiateur.",
+          "Placer le tapis epais devant le mur d'ATR.",
+          "Verifier que les tapis sont joints et couvrent toute la zone de chute possible.",
+          "Rappeler les regles de parade avant de commencer."
+        ],
+        "sketch": "Atelier 1 : ruade sur tapis a plat.\nAtelier 2 : ATR contre mur degage, tapis epais au sol.\nAtelier 3 : ATR avec deux pareurs, tapis epais.\nZone d'attente hors tapis a chaque atelier."
+      },
+      "warmup": {
+        "rationale": "Les poignets et les epaules supportent tout le poids du corps dans les renversements : leur echauffement conditionne la securite de la seance.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies autour des tapis.",
+              "Deplacements en crabe et a quatre pattes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation des appuis",
+            "details": [
+              "Poignets : appuis au sol paume, dos de main, cotes. 1 minute.",
+              "Epaules : cercles, moulinets, poussees contre le mur.",
+              "Gainage : planche ventrale 15 secondes, 2 fois."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Premiers appuis renverses",
+            "details": [
+              "Position de la brouette a deux, sur 5 metres.",
+              "Pieds sur un banc, mains au sol, tenir 5 secondes.",
+              "Petites ruades : pousser sur une jambe, l'autre monte."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "De la ruade a l'ATR contre le mur",
+          "objective": "Franchir progressivement l'appehension du renversement, de la ruade basse jusqu'a l'appui tendu renverse.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "espaliers ou mur degage",
+              "fixed": 1
+            }
+          ],
+          "organization": "Trois ateliers de difficulte croissante, chacun choisit son niveau et progresse a son rythme : ruade sur tapis, montee des pieds au mur en marchant, ATR contre le mur tenu 3 secondes.",
+          "studentGoal": "Monter mes pieds au-dessus de ma tete et tenir la position.",
+          "instructions": [
+            "Je pose mes mains a plat, doigts ecartes, ecartees de la largeur des epaules.",
+            "Je regarde mes mains pendant tout le renversement.",
+            "Je pousse fort sur ma jambe d'appel pour monter mon bassin.",
+            "Je redescends une jambe apres l'autre, jamais en me laissant tomber."
+          ],
+          "success": [
+            "Le bassin passe au-dessus des epaules.",
+            "La position est tenue au moins 3 secondes a l'atelier choisi.",
+            "La descente est controlee, jambe apres jambe."
+          ],
+          "execution": [
+            "Bras tendus, verrouilles, jamais flechis sous le poids.",
+            "Regard vers les mains pour garder l'alignement.",
+            "Corps gaine, ventre serre, jambes tendues et serrees."
+          ],
+          "watch": [
+            "Les bras flechissent-ils sous le poids, ce qui est le principal risque ?",
+            "L'eleve regarde-t-il ses mains ou devant lui ?",
+            "Le dos est-il creuse en banane ?"
+          ],
+          "errors": [
+            "Flechir les bras et s'effondrer sur la tete.",
+            "Creuser le dos au lieu d'aligner le corps.",
+            "Se laisser tomber en arriere depuis l'ATR."
+          ],
+          "feedback": [
+            "Bras tendus et verrouilles : ils ne plient jamais.",
+            "Regarde tes mains, pas devant toi.",
+            "Serre ton ventre : ton dos est creuse."
+          ],
+          "plus": [
+            "ATR tenu 5 secondes en s'ecartant du mur.",
+            "ATR avec deux pareurs, sans mur."
+          ],
+          "minus": [
+            "Ruade basse, un pied qui quitte le sol.",
+            "Pieds sur un banc, mains au sol, position tenue."
+          ],
+          "diff": {
+            "facilitee": "Ruade basse ou pieds sur banc, bassin au-dessus des epaules sans renversement complet.",
+            "normale": "Montee au mur en marchant, position tenue 3 secondes.",
+            "complexifiee": "ATR contre le mur tenu 5 secondes, ou ATR avec deux pareurs sans mur."
+          },
+          "safety": [
+            "Bras tendus obligatoires : arret immediat de l'atelier si un eleve flechit les bras sous le poids.",
+            "Tapis epais obligatoire sous toute zone de renversement.",
+            "Mur totalement degage : aucun objet, radiateur ou poignee a proximite.",
+            "Un seul gymnaste renverse a la fois par atelier.",
+            "Aucun ATR sans mur ni pareur : deux pareurs pour l'atelier 3.",
+            "Le pareur saisit le gymnaste au niveau des cuisses ou du bassin, jamais des chevilles seules."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Apprendre a parer",
+          "objective": "Former les eleves a la parade, condition de securite pour tous les elements renverses du cycle.",
+          "material": [
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            }
+          ],
+          "organization": "Par trois : un gymnaste, deux pareurs de chaque cote. Le gymnaste realise une ruade puis un debut d'ATR, les pareurs accompagnent la montee et la descente. Rotation toutes les trois tentatives.",
+          "studentGoal": "Accompagner mon camarade dans son renversement, sans le laisser tomber.",
+          "instructions": [
+            "Pareur : je me place a genoux, sur le cote, pres du gymnaste.",
+            "Je saisis sa cuisse et son bassin quand il monte, pas sa cheville.",
+            "Je l'accompagne a la descente, je ne le lache pas d'un coup.",
+            "Gymnaste : je previens avant de partir, je ne surprends jamais mon pareur."
+          ],
+          "success": [
+            "Le pareur est en place avant chaque depart.",
+            "La prise se fait a la cuisse et au bassin.",
+            "Aucune chute non accompagnee sur les trois tentatives."
+          ],
+          "execution": [
+            "Se placer a genoux, pres, jamais debout et loin.",
+            "Anticiper la montee plutot que de reagir apres.",
+            "Accompagner la descente jusqu'au sol."
+          ],
+          "watch": [
+            "Les pareurs sont-ils vraiment attentifs, ou discutent-ils ?",
+            "La prise est-elle au bassin ou aux chevilles ?",
+            "Le gymnaste previent-il avant de partir ?"
+          ],
+          "errors": [
+            "Parer debout et a distance : inefficace.",
+            "Saisir les chevilles, ce qui desequilibre le gymnaste.",
+            "Se detourner pendant que le camarade est renverse."
+          ],
+          "feedback": [
+            "A genoux et pres de lui, sinon tu ne peux rien faire.",
+            "Cuisse et bassin, jamais la cheville.",
+            "Tu paries : tu regardes ton camarade, pas la salle."
+          ],
+          "plus": [
+            "Parade a un seul pareur.",
+            "Parade sur ATR complet."
+          ],
+          "minus": [
+            "Parade sur ruade basse uniquement.",
+            "Parade assuree par le professeur avec un eleve en doublure."
+          ],
+          "diff": {
+            "facilitee": "Parade sur ruade basse, professeur present a chaque passage.",
+            "normale": "Parade a deux sur debut d'ATR.",
+            "complexifiee": "Parade a un seul pareur sur ATR complet."
+          },
+          "safety": [
+            "La parade s'apprend avant d'etre utilisee : aucun eleve ne pare sans avoir fait cet atelier.",
+            "Tapis epais obligatoire.",
+            "Le professeur supervise directement cet atelier.",
+            "Aucun renversement complet tant que la parade n'est pas maitrisee.",
+            "Le gymnaste annonce son depart a voix haute."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Renversement dans un enchainement",
+          "objective": "Integrer un element renverse, au niveau de chacun, dans une suite avec debut et fin.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur deux couloirs, chaque eleve presente : debut immobile, un element renverse a son niveau, une roulade avant, fin immobile. Deux pareurs designes a chaque passage.",
+          "studentGoal": "Placer mon renversement dans un enchainement, avec un debut et une fin nets.",
+          "instructions": [
+            "Je choisis le renversement que je maitrise : ruade, montee au mur ou ATR.",
+            "Je previens mes pareurs avant de partir.",
+            "J'enchaine renversement puis roulade sans arret.",
+            "Je termine immobile, 2 secondes."
+          ],
+          "success": [
+            "Le renversement choisi est realise et tenu.",
+            "L'enchainement se fait sans arret entre les deux elements.",
+            "Les pareurs sont en place a chaque passage."
+          ],
+          "execution": [
+            "Choisir un element maitrise plutot qu'un element impressionnant.",
+            "Garder les bras tendus dans le renversement.",
+            "Marquer nettement le debut et la fin."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils un niveau adapte, ou surestiment-ils ?",
+            "La parade est-elle systematique ?"
+          ],
+          "errors": [
+            "Tenter un ATR non maitrise pour impressionner.",
+            "Partir sans prevenir les pareurs.",
+            "Bacler le renversement pour enchainer plus vite."
+          ],
+          "feedback": [
+            "Choisis ce que tu maitrises : la note vient de la qualite, pas du risque.",
+            "Previens tes pareurs, c'est une regle.",
+            "Tiens ta position avant d'enchainer."
+          ],
+          "plus": [
+            "Ajouter un troisieme element apres la roulade."
+          ],
+          "minus": [
+            "Presenter le renversement seul avec debut et fin.",
+            "Arret autorise entre les deux elements."
+          ],
+          "diff": {
+            "facilitee": "Ruade seule, encadree par un debut et une fin immobiles.",
+            "normale": "Renversement plus roulade enchaines.",
+            "complexifiee": "Renversement, roulade et un troisieme element enchaines."
+          },
+          "safety": [
+            "Deux pareurs obligatoires pour tout element renverse.",
+            "Tapis epais sous la zone de renversement.",
+            "Un gymnaste par couloir, public assis hors des tapis.",
+            "Annonce obligatoire du depart au pareur.",
+            "Aucun element renverse tente au-dela du niveau valide sur la fiche."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que doivent faire les bras pendant un renversement, et pourquoi ?",
+          "Ou le pareur doit-il saisir son camarade ?"
+        ],
+        "key": "Dans un renversement, les bras restent tendus et le regard va vers les mains : c'est ce qui protege la nuque. Le pareur, lui, saisit toujours la cuisse et le bassin."
+      },
+      "socialRoles": [
+        "Pareur : accompagne la montee et la descente du renversement, role evalue.",
+        "Observateur d'alignement : verifie si les bras restent tendus.",
+        "Responsable securite : verifie le degagement du mur et l'etat des tapis."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Rouler en arriere",
+      "mainObjective": "Construire la roulade arriere en poussant sur les mains pour degager la nuque, mouvement le plus contre-intuitif du cycle.",
+      "secondaryObjectives": [
+        "Placer les mains pres des epaules, doigts vers les epaules.",
+        "Pousser sur les bras au passage de la nuque.",
+        "Enchainer roulade avant et roulade arriere."
+      ],
+      "linkToPrevious": "Les rotations avant et les renversements sont construits : la rotation arriere reutilise l'enroulement et la poussee des bras deja travailles.",
+      "prerequisiteForNext": "Chaque eleve realise une roulade arriere, avec plan incline si necessaire, sans blocage sur la nuque.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "plan incline",
+            "fixed": 2,
+            "note": "indispensable pour la roulade arriere en 6e"
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 1
+          },
+          {
+            "label": "fiches de niveau",
+            "per": 1.0,
+            "min": 20
+          }
+        ],
+        "instructions": [
+          "Installer deux plans inclines : la pente facilite considerablement la roulade arriere.",
+          "Constituer un troisieme couloir a plat pour les eleves les plus a l'aise.",
+          "Verifier que les plans inclines sont stables et bien fixes aux tapis.",
+          "Rappeler avant de commencer : les mains se posent pres des epaules."
+        ],
+        "sketch": "Couloirs 1 et 2 : plans inclines (pente descendante).\nCouloir 3 : a plat, pour les plus a l'aise.\nFile d'attente hors tapis a l'entree de chaque couloir."
+      },
+      "warmup": {
+        "rationale": "Insiste sur la souplesse de la nuque et la poussee des bras, les deux facteurs limitants de la roulade arriere.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements a quatre pattes.",
+              "Deplacements en crabe, ventre vers le haut."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Nuque : flexions douces avant-arriere, rotations lentes.",
+              "Poignets et epaules : cercles et appuis.",
+              "Colonne : chat-chameau, enroulement debout."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Preparation a la rotation arriere",
+            "details": [
+              "Berceau groupe : basculer en arriere et revenir, 10 fois.",
+              "Bascule arriere jusqu'aux epaules, mains posees pres des oreilles.",
+              "Poussee des bras au sol depuis la position sur les epaules, 5 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La roulade arriere sur plan incline",
+          "objective": "Realiser la roulade arriere complete en utilisant la pente, puis reduire progressivement l'aide.",
+          "material": [
+            {
+              "label": "plan incline",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            }
+          ],
+          "organization": "Deux couloirs avec plan incline, un couloir a plat. Passage un par un. Chacun commence sur le plan incline, puis essaie a plat quand la rotation passe.",
+          "studentGoal": "Rouler en arriere jusqu'a me retrouver sur mes pieds ou mes genoux.",
+          "instructions": [
+            "Je m'assois en boule, dos a la pente, menton rentre.",
+            "Je pose mes mains pres de mes oreilles, doigts vers mes epaules.",
+            "Je bascule en arriere et je pousse fort sur mes mains.",
+            "Je garde mes genoux contre ma poitrine pendant toute la rotation."
+          ],
+          "success": [
+            "La rotation arriere est complete, sans blocage sur la nuque.",
+            "Les mains poussent effectivement au passage de la nuque.",
+            "L'arrivee se fait sur les pieds ou les genoux, sans chute laterale."
+          ],
+          "execution": [
+            "Mains pres des oreilles, doigts orientes vers les epaules.",
+            "Menton rentre, corps groupe pendant toute la rotation.",
+            "Pousser franchement sur les bras au moment ou la nuque touche."
+          ],
+          "watch": [
+            "Les mains sont-elles posees dans le bon sens ?",
+            "L'eleve pousse-t-il sur ses bras, ou reste-t-il bloque sur la nuque ?",
+            "La rotation part-elle de travers ?"
+          ],
+          "errors": [
+            "Poser les mains a l'envers, doigts vers l'exterieur : la poussee devient impossible.",
+            "Se deplier en cours de rotation et bloquer sur la nuque.",
+            "Rouler de travers et sortir du tapis."
+          ],
+          "feedback": [
+            "Tes doigts regardent tes epaules, pas l'exterieur.",
+            "Pousse sur tes mains quand ta nuque touche : c'est ce qui te degage.",
+            "Reste en boule, genoux contre la poitrine."
+          ],
+          "plus": [
+            "Roulade arriere a plat, sans plan incline.",
+            "Roulade arriere avec arrivee jambes tendues ecartees."
+          ],
+          "minus": [
+            "Bascule arriere jusqu'aux epaules seulement, sans rotation complete.",
+            "Plan incline plus prononce."
+          ],
+          "diff": {
+            "facilitee": "Bascule arriere jusqu'aux epaules avec retour, ou rotation sur pente prononcee avec aide.",
+            "normale": "Roulade arriere complete sur plan incline.",
+            "complexifiee": "Roulade arriere a plat, arrivee sur les pieds."
+          },
+          "safety": [
+            "Les mains doivent imperativement etre posees avant que la nuque ne touche : verifier a chaque passage.",
+            "Un seul gymnaste par couloir.",
+            "Plans inclines stables et solidaires des tapis, verifies avant chaque serie.",
+            "Arret immediat pour tout eleve qui bloque sur la nuque sans pousser : revenir a l'exercice preparatoire.",
+            "Aucune roulade arriere realisee hors des tapis."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "La poussee des bras",
+          "objective": "Isoler le geste decisif de la roulade arriere : la poussee des mains qui degage la nuque.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par deux sur les tapis. Depart allonge sur le dos, jambes groupees ramenees au-dessus de la tete, mains posees pres des oreilles. L'eleve pousse sur ses bras pour soulever son bassin. Le partenaire observe le decollement des epaules.",
+          "studentGoal": "Soulever mes epaules du tapis en poussant sur mes mains.",
+          "instructions": [
+            "Je m'allonge sur le dos et je ramene mes genoux au-dessus de ma tete.",
+            "Je pose mes mains pres de mes oreilles, doigts vers mes epaules.",
+            "Je pousse pour decoller mes epaules du tapis.",
+            "Mon partenaire regarde si mes epaules se soulevent vraiment."
+          ],
+          "success": [
+            "Les epaules se decollent nettement du tapis.",
+            "Les mains restent posees dans le bon sens.",
+            "Cinq poussees efficaces sur huit tentatives."
+          ],
+          "execution": [
+            "Doigts orientes vers les epaules, coudes vers le haut.",
+            "Pousser en tendant les bras, pas en tirant.",
+            "Garder le corps groupe pendant la poussee."
+          ],
+          "watch": [
+            "Les epaules se decollent-elles reellement ?",
+            "Les coudes partent-ils vers l'exterieur, ce qui annule la poussee ?"
+          ],
+          "errors": [
+            "Coudes ecartes vers l'exterieur : aucune poussee possible.",
+            "Pousser avec les jambes plutot qu'avec les bras.",
+            "Mains trop loin des oreilles."
+          ],
+          "feedback": [
+            "Rapproche tes mains de tes oreilles.",
+            "Coudes vers le plafond, pas sur les cotes.",
+            "Ce sont tes bras qui poussent, pas tes jambes."
+          ],
+          "plus": [
+            "Enchainer la poussee avec le passage complet en roulade arriere."
+          ],
+          "minus": [
+            "Poussee avec aide du partenaire sous les hanches.",
+            "Travail sur plan incline."
+          ],
+          "diff": {
+            "facilitee": "Poussee avec aide du partenaire soutenant les hanches, sur plan incline.",
+            "normale": "Poussee autonome, epaules decollees du tapis.",
+            "complexifiee": "Poussee enchainee avec la rotation complete a plat."
+          },
+          "safety": [
+            "Travail uniquement sur tapis, jamais sur sol dur.",
+            "Le partenaire ne pousse jamais sur la nuque ni sur la tete.",
+            "Arret immediat en cas de douleur cervicale.",
+            "Espacement d'un metre entre binomes."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Avant-arriere enchainees",
+          "objective": "Enchainer les deux rotations, ce qui exige de se relever de la roulade avant en position de depart de la roulade arriere.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "plan incline",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur trois couloirs, chaque eleve presente : debut immobile, roulade avant, roulade arriere, fin immobile. Le plan incline reste disponible pour la rotation arriere.",
+          "studentGoal": "Enchainer une roulade avant et une roulade arriere sans m'arreter entre les deux.",
+          "instructions": [
+            "Je commence immobile, 2 secondes.",
+            "Je fais ma roulade avant, je me releve et je m'assois aussitot pour la roulade arriere.",
+            "Je ne marque pas d'arret entre les deux rotations.",
+            "Je termine immobile, 2 secondes."
+          ],
+          "success": [
+            "Les deux rotations sont realisees a la suite.",
+            "L'enchainement se fait sans arret ni pas parasites.",
+            "Debut et fin immobiles pendant 2 secondes."
+          ],
+          "execution": [
+            "Se relever de la roulade avant en gardant le corps groupe.",
+            "S'asseoir immediatement pour enclencher la rotation arriere.",
+            "Garder le menton rentre dans les deux rotations."
+          ],
+          "watch": [
+            "L'enchainement casse-t-il la qualite de l'une des deux rotations ?",
+            "Les eleves marquent-ils un temps d'arret pour se replacer ?"
+          ],
+          "errors": [
+            "S'arreter debout entre les deux rotations.",
+            "Bacler la roulade avant pour arriver plus vite a l'arriere.",
+            "Oublier de rentrer le menton dans la rotation arriere."
+          ],
+          "feedback": [
+            "Ne te releve pas completement : assieds-toi tout de suite.",
+            "Chaque rotation compte : ne baclez pas la premiere.",
+            "Menton rentre dans les deux sens."
+          ],
+          "plus": [
+            "Ajouter un renversement avant les deux rotations.",
+            "Enchainement realise a plat, sans plan incline."
+          ],
+          "minus": [
+            "Arret autorise entre les deux rotations.",
+            "Rotation arriere sur plan incline."
+          ],
+          "diff": {
+            "facilitee": "Arret autorise entre les deux rotations, arriere sur plan incline.",
+            "normale": "Avant et arriere enchainees, plan incline disponible.",
+            "complexifiee": "Renversement, avant et arriere enchaines, le tout a plat."
+          },
+          "safety": [
+            "Un gymnaste par couloir, public assis hors des tapis.",
+            "Plans inclines verifies et stables.",
+            "Tapis joints sur toute la longueur du couloir.",
+            "Aucun element renverse ajoute sans parade en place."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Dans quel sens doivent etre orientes les doigts pour la roulade arriere ?",
+          "Qu'est-ce qui permet a la nuque de passer sans blocage ?"
+        ],
+        "key": "La roulade arriere passe grace a la poussee des bras : mains pres des oreilles, doigts vers les epaules, et on pousse au moment ou la nuque touche."
+      },
+      "socialRoles": [
+        "Observateur de placement : verifie l'orientation des mains avant le depart.",
+        "Responsable materiel : verifie la stabilite des plans inclines.",
+        "Pareur : reste attentif sur les elements renverses ajoutes."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et choix des elements",
+      "mainObjective": "Faire le point sur les elements maitrises par chacun, et choisir les 4 a 5 elements qui composeront l'enchainement final.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau dans chaque famille gymnique.",
+        "Choisir des elements maitrises plutot qu'impressionnants.",
+        "Ecrire la composition de son enchainement."
+      ],
+      "linkToPrevious": "Les trois familles principales ont ete travaillees : rotations avant, arriere et renversements. On peut maintenant composer.",
+      "prerequisiteForNext": "Chaque eleve a ecrit la liste des 4 a 5 elements de son enchainement.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 2
+          },
+          {
+            "label": "plan incline",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de niveau",
+            "per": 1.0,
+            "min": 20,
+            "note": "les memes que depuis la seance 1"
+          },
+          {
+            "label": "fiches de composition",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "affiche du repertoire d'elements",
+            "fixed": 2
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Afficher au mur le repertoire des elements par famille, avec les trois niveaux de difficulte.",
+          "Ressortir les fiches de niveau renseignees depuis la seance 1.",
+          "Preparer les fiches de composition vierges.",
+          "Installer les trois ateliers d'evaluation : rotation avant, rotation arriere, renversement.",
+          "Prevoir un espace calme, hors tapis, pour la phase d'ecriture."
+        ],
+        "sketch": "3 ateliers d'evaluation, un par famille.\nAffichage du repertoire d'elements sur le mur.\nCoin ecriture avec bancs, hors des tapis."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et l'evaluation est l'occasion de le verifier.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul : course, deplacements varies.",
+              "Le professeur circule et corrige."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation specifique",
+            "details": [
+              "Poignets, epaules, colonne : menes par un eleve de chaque groupe.",
+              "Gainage : planche ventrale 15 secondes."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Revision des elements",
+            "details": [
+              "Deux roulades avant, deux roulades arriere.",
+              "Un renversement au niveau de chacun."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Evaluation par famille",
+          "objective": "Evaluer precisement le niveau atteint par chaque eleve dans les trois familles travaillees.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "plan incline",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Trois ateliers d'evaluation, rotation toutes les 7 minutes. A chaque atelier, l'eleve presente le niveau le plus eleve qu'il pense maitriser. Le professeur valide, un camarade pare.",
+          "studentGoal": "Montrer le meilleur niveau que je maitrise vraiment dans chaque famille.",
+          "instructions": [
+            "Je presente le niveau que je maitrise, pas celui que je vise.",
+            "J'ai droit a deux essais par famille.",
+            "Un element est valide s'il est realise sans chute et sans aide.",
+            "Pareur : je me place avant chaque passage renverse."
+          ],
+          "success": [
+            "Les trois familles ont ete evaluees.",
+            "Le niveau valide correspond a une realisation propre, sans aide.",
+            "La fiche est renseignee et signee par le professeur."
+          ],
+          "execution": [
+            "Marquer le debut et la fin de chaque presentation.",
+            "Realiser proprement plutot que difficilement.",
+            "Respecter les criteres d'execution vus depuis la seance 1."
+          ],
+          "watch": [
+            "Les eleves surestiment-ils leur niveau ?",
+            "La qualite d'execution tient-elle en situation d'evaluation ?",
+            "Les parades sont-elles systematiques ?"
+          ],
+          "errors": [
+            "Tenter un niveau trop eleve et chuter.",
+            "Negliger la qualite pour la difficulte.",
+            "Oublier de designer un pareur."
+          ],
+          "feedback": [
+            "Reste au niveau que tu reussis a chaque fois.",
+            "Propre et tenu vaut mieux que difficile et rate.",
+            "Ton pareur d'abord, ensuite tu pars."
+          ],
+          "plus": [
+            "Presenter un niveau 4 pour les eleves les plus a l'aise."
+          ],
+          "minus": [
+            "Presenter le niveau 1 avec aide, evaluee comme progres."
+          ],
+          "diff": {
+            "facilitee": "Niveau 1 presente avec aide du professeur, valorise comme progres depuis la seance 1.",
+            "normale": "Presentation du niveau maitrise dans les trois familles.",
+            "complexifiee": "Presentation d'un niveau 4 dans au moins une famille."
+          },
+          "safety": [
+            "Parade obligatoire sur tout element renverse.",
+            "Un gymnaste a la fois par atelier.",
+            "Tapis epais a l'atelier renversement.",
+            "Deux essais maximum : au-dela, la fatigue augmente le risque.",
+            "Arret de l'essai des que la qualite se degrade dangereusement."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Composer son enchainement",
+          "objective": "Choisir 4 a 5 elements maitrises issus d'au moins trois familles, et les ordonner de facon coherente.",
+          "material": [
+            {
+              "label": "fiches de composition",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches de niveau",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "affiche du repertoire d'elements",
+              "fixed": 2
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Assis par deux, hors des tapis, devant l'affiche du repertoire. Chacun ecrit sa composition sur sa fiche, en s'appuyant sur ses niveaux valides.",
+          "studentGoal": "Ecrire la liste ordonnee des elements de mon enchainement.",
+          "instructions": [
+            "Je choisis 4 a 5 elements parmi ceux que j'ai valides.",
+            "Je prends des elements d'au moins trois familles differentes.",
+            "Je les ecris dans l'ordre ou je vais les presenter.",
+            "Je prevois une position de depart et une position d'arrivee."
+          ],
+          "success": [
+            "La composition comporte 4 a 5 elements.",
+            "Au moins trois familles sont representees.",
+            "Tous les elements choisis sont valides sur la fiche de niveau."
+          ],
+          "execution": [
+            "Verifier chaque element sur sa fiche de niveau avant de l'ecrire.",
+            "Ordonner pour que les liaisons soient possibles.",
+            "Ecrire aussi le debut et la fin."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils des elements non valides ?",
+            "Les enchainements sont-ils realisables, ou les liaisons impossibles ?"
+          ],
+          "errors": [
+            "Choisir un element jamais reussi, pour impressionner.",
+            "Prendre 4 elements de la meme famille.",
+            "Oublier la position de depart et d'arrivee."
+          ],
+          "feedback": [
+            "Cet element n'est pas valide sur ta fiche : choisis-en un autre.",
+            "Il te faut trois familles differentes.",
+            "Comment tu passes de celui-la a celui-ci ? Verifie que c'est possible."
+          ],
+          "plus": [
+            "Composer 6 elements avec une contrainte de sens de deplacement."
+          ],
+          "minus": [
+            "Choisir sa composition parmi trois enchainements types proposes."
+          ],
+          "diff": {
+            "facilitee": "Composition choisie parmi trois enchainements types affiches, adaptes au niveau 1.",
+            "normale": "Composition libre de 4 a 5 elements, 3 familles minimum.",
+            "complexifiee": "Composition de 6 elements avec contrainte de deplacement dans l'espace."
+          },
+          "safety": [
+            "Phase assise hors des tapis, aucun element realise pendant l'ecriture.",
+            "Materiel non utilise range ou stabilise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier essai de l'enchainement",
+          "objective": "Eprouver immediatement la composition ecrite, pour reperer les liaisons impossibles avant la seance suivante.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de composition",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur trois couloirs, chaque eleve essaie sa composition en entier, deux fois. Son binome lit la fiche et verifie que tous les elements y sont.",
+          "studentGoal": "Essayer ma composition en entier et reperer ce qui ne passe pas.",
+          "instructions": [
+            "Je realise ma composition dans l'ordre ecrit.",
+            "Mon binome suit sur ma fiche et coche ce que j'ai fait.",
+            "Si une liaison est impossible, je le note sur ma fiche.",
+            "Je designe mon pareur avant de partir."
+          ],
+          "success": [
+            "La composition est essayee en entier au moins une fois.",
+            "Les liaisons problematiques sont identifiees et notees.",
+            "Le binome a suivi et coche la fiche."
+          ],
+          "execution": [
+            "Respecter l'ordre ecrit, sans improviser.",
+            "Marquer le debut et la fin.",
+            "Noter immediatement ce qui ne passe pas."
+          ],
+          "watch": [
+            "Les compositions sont-elles realisables telles qu'ecrites ?",
+            "Quelles liaisons posent probleme au plus grand nombre ?"
+          ],
+          "errors": [
+            "Changer d'elements en cours de route sans le noter.",
+            "Abandonner des la premiere difficulte.",
+            "Ne pas designer de pareur."
+          ],
+          "feedback": [
+            "Note-le sur ta fiche, on corrigera la liaison la prochaine fois.",
+            "Suis ton ordre : c'est ce que tu as ecrit.",
+            "Ton pareur, avant de partir."
+          ],
+          "plus": [
+            "Essayer la composition en la presentant devant un petit groupe."
+          ],
+          "minus": [
+            "Essayer la composition par moities."
+          ],
+          "diff": {
+            "facilitee": "Composition essayee en deux moities, avec pause entre elles.",
+            "normale": "Composition essayee en entier, deux fois.",
+            "complexifiee": "Composition presentee en entier devant un petit groupe."
+          },
+          "safety": [
+            "Parade obligatoire sur les elements renverses.",
+            "Un gymnaste par couloir, binome hors du tapis.",
+            "Tapis joints et verifies avant la phase.",
+            "Aucun element non valide tente pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de familles differentes votre enchainement contient-il ?",
+          "Quelle liaison vous a pose probleme aujourd'hui ?"
+        ],
+        "key": "Un bon enchainement n'est pas le plus difficile : c'est celui compose d'elements qu'on reussit a chaque fois, relies sans arret."
+      },
+      "socialRoles": [
+        "Pareur : assure les elements renverses de son camarade.",
+        "Lecteur de fiche : suit la composition et coche les elements realises.",
+        "Responsable materiel : verifie tapis et plans inclines entre les ateliers."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Equilibres, sauts et liaisons",
+      "mainObjective": "Completer le repertoire par les equilibres et les sauts, et construire les liaisons qui relient les elements sans arret.",
+      "secondaryObjectives": [
+        "Tenir un equilibre 3 secondes sans deplacement.",
+        "Realiser un saut avec reception amortie et stabilisee.",
+        "Relier deux elements sans pas parasites."
+      ],
+      "linkToPrevious": "Les premiers essais d'enchainement ont montre que les liaisons sont le point faible : c'est ce qui casse la continuite.",
+      "prerequisiteForNext": "Chaque eleve relie ses elements sans arret et tient ses positions 3 secondes.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "plots bas",
+            "fixed": 8
+          },
+          {
+            "label": "chronometre",
+            "fixed": 4
+          },
+          {
+            "label": "fiches de composition",
+            "per": 1.0,
+            "min": 20
+          }
+        ],
+        "instructions": [
+          "Constituer un couloir long de six tapis joints pour le travail des liaisons.",
+          "Installer deux ateliers : equilibres et sauts.",
+          "Poser des plots bas comme reperes de deplacement dans le couloir.",
+          "Verifier la stabilite des bancs utilises pour les sauts."
+        ],
+        "sketch": "Couloir long de 6 tapis joints = travail des liaisons.\nAtelier equilibres sur 2 tapis.\nAtelier sauts avec banc bas et tapis de reception.\nReperes (plots) tous les 2 tapis dans le couloir."
+      },
+      "warmup": {
+        "rationale": "Prepare l'equilibration et les receptions, objets de la seance, en plus de l'echauffement gymnique habituel.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction.",
+              "Deplacements sur demi-pointes."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Chevilles : cercles, montees sur pointes, 15 repetitions.",
+              "Poignets, epaules, colonne.",
+              "Gainage : planche ventrale et laterale, 15 secondes chacune."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Equilibration",
+            "details": [
+              "Tenir sur un pied, yeux ouverts, 10 secondes par pied.",
+              "Tenir sur un pied en levant l'autre jambe a l'horizontale.",
+              "Sauts sur place avec reception amortie et stabilisee, 8 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Tenir 3 secondes",
+          "objective": "Construire l'immobilite dans les equilibres, critere central de l'evaluation finale.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par deux, un gymnaste un chronometreur. Trois equilibres proposes, de difficulte croissante : fente avant bras leves, equilibre sur un pied jambe libre tendue, planche faciale. Trois essais par equilibre.",
+          "studentGoal": "Tenir chaque equilibre 3 secondes sans bouger ni poser le pied.",
+          "instructions": [
+            "Je choisis l'equilibre a mon niveau et je le tiens 3 secondes.",
+            "Mon partenaire compte a voix haute : un, deux, trois.",
+            "Si je bouge ou je pose le pied, on recommence.",
+            "Je fixe un point devant moi pour ne pas osciller."
+          ],
+          "success": [
+            "Trois secondes tenues sans deplacement du pied d'appui.",
+            "Le corps reste gaine, sans oscillation marquee.",
+            "Le regard reste fixe sur un point."
+          ],
+          "execution": [
+            "Fixer un point immobile au sol ou au mur.",
+            "Serrer le ventre et les fessiers pour stabiliser le bassin.",
+            "Ecarter les bras pour equilibrer si necessaire."
+          ],
+          "watch": [
+            "Les eleves fixent-ils un point ou regardent-ils partout ?",
+            "Le corps est-il gaine ou l'eleve compense-t-il par des mouvements ?"
+          ],
+          "errors": [
+            "Regarder ses pieds, ce qui accentue le desequilibre.",
+            "Retenir sa respiration.",
+            "Compter trop vite pour aider son camarade."
+          ],
+          "feedback": [
+            "Fixe un point devant toi, pas tes pieds.",
+            "Serre le ventre, tu oscilles moins.",
+            "Compte au bon rythme, tu ne l'aides pas sinon."
+          ],
+          "plus": [
+            "Tenue portee a 5 secondes.",
+            "Equilibre les yeux fermes."
+          ],
+          "minus": [
+            "Tenue de 2 secondes.",
+            "Equilibre en fente, pied arriere au sol."
+          ],
+          "diff": {
+            "facilitee": "Fente avant bras leves, tenue 2 secondes, appui des deux pieds.",
+            "normale": "Equilibre sur un pied, jambe libre tendue, tenue 3 secondes.",
+            "complexifiee": "Planche faciale tenue 5 secondes, ou equilibre yeux fermes."
+          },
+          "safety": [
+            "Travail sur tapis, espacement d'un metre entre binomes.",
+            "Aucun equilibre sur banc ou sur element instable.",
+            "Arret immediat en cas de douleur articulaire."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Sauter et se stabiliser",
+          "objective": "Construire une reception amortie et immobile, condition d'une fin d'enchainement reussie.",
+          "material": [
+            {
+              "label": "bancs suedois",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            }
+          ],
+          "organization": "Deux ateliers de saut : saut extension au sol, et saut depuis un banc bas avec reception sur tapis. Passage un par un, le suivant attend hors du tapis.",
+          "studentGoal": "Sauter et me receptionner immobile, sans faire un pas.",
+          "instructions": [
+            "Je saute en montant les bras, corps tendu en l'air.",
+            "Je me receptionne les deux pieds en meme temps, genoux flechis.",
+            "Je me stabilise et je tiens 2 secondes sans bouger.",
+            "Si je fais un pas, je recommence."
+          ],
+          "success": [
+            "Reception sur les deux pieds simultanement.",
+            "Aucun pas de reequilibration apres la reception.",
+            "Immobilite tenue 2 secondes."
+          ],
+          "execution": [
+            "Flechir les genoux a la reception pour amortir.",
+            "Bras qui accompagnent puis se stabilisent.",
+            "Regard vers l'avant, pas vers le sol."
+          ],
+          "watch": [
+            "Les receptions sont-elles amorties ou brutales ?",
+            "Les eleves font-ils un pas de reequilibration systematique ?"
+          ],
+          "errors": [
+            "Se receptionner jambes tendues : reception brutale, risque articulaire.",
+            "Faire un ou deux pas apres la reception.",
+            "Regarder le sol, ce qui fait pencher vers l'avant."
+          ],
+          "feedback": [
+            "Flechis tes genoux en arrivant, tu amortis.",
+            "Deux pieds en meme temps, puis tu ne bouges plus.",
+            "Regarde devant toi, pas tes pieds."
+          ],
+          "plus": [
+            "Saut avec demi-tour, reception stabilisee.",
+            "Saut depuis un banc plus haut."
+          ],
+          "minus": [
+            "Saut extension au sol uniquement.",
+            "Reception avec un pas autorise."
+          ],
+          "diff": {
+            "facilitee": "Saut extension au sol, un pas de reequilibration tolere.",
+            "normale": "Saut depuis banc bas, reception immobile 2 secondes.",
+            "complexifiee": "Saut avec demi-tour, reception immobile 2 secondes."
+          },
+          "safety": [
+            "Tapis de reception epais obligatoire sous tout saut depuis un banc.",
+            "Bancs stables, verifies avant chaque serie.",
+            "Un seul sauteur a la fois, zone de reception degagee.",
+            "Hauteur de saut limitee : aucun saut depuis un plinth ou un espalier en 6e.",
+            "Reception genoux flechis imposee : arret si un eleve se receptionne jambes tendues."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Relier sans s'arreter",
+          "objective": "Construire les liaisons : passer d'un element au suivant sans arret ni pas parasites.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "plots bas",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de composition",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Sur le couloir long, chaque eleve realise sa composition en cherchant a supprimer tous les arrets. Son binome compte les arrets et les pas parasites.",
+          "studentGoal": "Realiser ma composition en supprimant tous les arrets entre les elements.",
+          "instructions": [
+            "Je realise ma composition dans l'ordre, sans m'arreter entre les elements.",
+            "Mon binome compte les arrets et les pas inutiles.",
+            "Je cherche a reduire ce nombre d'un essai a l'autre.",
+            "Je garde debut et fin immobiles : ce sont les seuls arrets autorises."
+          ],
+          "success": [
+            "Le nombre d'arrets diminue entre le premier et le dernier essai.",
+            "Debut et fin immobiles conserves.",
+            "Au moins un enchainement realise sans aucun arret intermediaire."
+          ],
+          "execution": [
+            "Anticiper le placement du prochain element pendant le precedent.",
+            "Utiliser la fin d'un element comme depart du suivant.",
+            "Supprimer les pas de replacement."
+          ],
+          "watch": [
+            "Les eleves anticipent-ils, ou se replacent-ils apres chaque element ?",
+            "Quelles liaisons restent impossibles et demandent de modifier la composition ?"
+          ],
+          "errors": [
+            "S'arreter pour reflechir a la suite.",
+            "Faire trois pas pour se replacer entre deux elements.",
+            "Perdre le debut et la fin immobiles en cherchant la continuite."
+          ],
+          "feedback": [
+            "Pense a l'element suivant pendant que tu fais celui-la.",
+            "Tu as fait quatre pas : ta fin d'element doit etre le depart du suivant.",
+            "Continuite oui, mais garde ton debut et ta fin."
+          ],
+          "plus": [
+            "Imposer un changement de direction dans l'enchainement.",
+            "Realiser l'enchainement sur un rythme donne."
+          ],
+          "minus": [
+            "Travailler les liaisons deux par deux seulement.",
+            "Un arret tolere au milieu."
+          ],
+          "diff": {
+            "facilitee": "Travail des liaisons deux elements par deux elements, un arret tolere.",
+            "normale": "Composition complete realisee sans arret intermediaire.",
+            "complexifiee": "Composition complete avec changement de direction impose."
+          },
+          "safety": [
+            "Un gymnaste par couloir, binome hors du tapis.",
+            "Parade en place pour les elements renverses.",
+            "Tapis joints sur toute la longueur du couloir.",
+            "Plots poses a plat, hors de la trajectoire de reception."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui aide le plus a tenir un equilibre 3 secondes ?",
+          "Comment relier deux elements sans faire de pas inutiles ?"
+        ],
+        "key": "La qualite d'un enchainement se voit dans les liaisons et les positions tenues : la fin d'un element doit etre le depart du suivant."
+      },
+      "socialRoles": [
+        "Chronometreur : compte les 3 secondes de tenue des equilibres.",
+        "Compteur d'arrets : releve les arrets et les pas parasites de son camarade.",
+        "Responsable materiel : verifie la stabilite des bancs avant les sauts."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Construire et repeter son enchainement",
+      "mainObjective": "Stabiliser l'enchainement complet par la repetition, et preparer les roles de juge et de pareur pour l'evaluation.",
+      "secondaryObjectives": [
+        "Repeter l'enchainement jusqu'a le realiser identique deux fois de suite.",
+        "S'entrainer a juger avec la grille de l'evaluation finale.",
+        "Corriger les elements qui restent fragiles."
+      ],
+      "linkToPrevious": "Les elements et les liaisons sont en place : il reste a stabiliser l'ensemble et a preparer les roles, pour que l'evaluation ne decouvre rien de nouveau.",
+      "prerequisiteForNext": "Chaque eleve realise son enchainement deux fois de suite a l'identique et sait utiliser la grille de jugement.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 2
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de composition",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "grilles de jugement d'entrainement",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2,
+            "note": "sous reserve de l'autorisation de captation"
+          }
+        ],
+        "instructions": [
+          "Constituer deux praticables de quatre tapis joints, pour les passages complets.",
+          "Preparer les grilles de jugement d'entrainement, identiques a celles de l'evaluation.",
+          "Verifier l'autorisation de captation video avant toute prise d'image.",
+          "Prevoir une zone public assise, hors des tapis, face aux praticables."
+        ],
+        "sketch": "2 praticables de 4 tapis joints.\nZone public assise face a chaque praticable, hors tapis.\nPoste de captation video sur le cote, si autorisee.\nBanc des grilles de jugement pres du public."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, suivi d'une revision element par element : l'enchainement complet ne doit jamais etre aborde a froid.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul, le professeur valide.",
+              "Course, deplacements varies, gainage."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation specifique",
+            "details": [
+              "Poignets, epaules, colonne, chevilles.",
+              "Planche ventrale et laterale, 15 secondes chacune."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Revision element par element",
+            "details": [
+              "Chaque eleve revise les elements de sa composition, un par un.",
+              "Deux repetitions par element, sans enchainer."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Repeter jusqu'a la stabilite",
+          "objective": "Realiser l'enchainement complet plusieurs fois, jusqu'a le reproduire identique deux fois de suite.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de composition",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Deux praticables, passages a tour de role. Chaque eleve realise son enchainement quatre a cinq fois, avec recuperation. Son binome coche sur la fiche les elements reussis a chaque passage.",
+          "studentGoal": "Realiser mon enchainement deux fois de suite exactement pareil.",
+          "instructions": [
+            "Je realise mon enchainement en entier, dans l'ordre ecrit.",
+            "Mon binome coche ce qui est reussi a chaque passage.",
+            "Entre deux passages, je corrige un seul point.",
+            "Je designe mon pareur avant chaque passage."
+          ],
+          "success": [
+            "L'enchainement est realise en entier au moins trois fois.",
+            "Deux passages consecutifs sont identiques.",
+            "Debut et fin immobiles a chaque passage."
+          ],
+          "execution": [
+            "Respecter l'ordre ecrit sans improviser.",
+            "Corriger un seul element a la fois entre deux passages.",
+            "Maintenir la qualite des liaisons malgre la fatigue."
+          ],
+          "watch": [
+            "La qualite se degrade-t-elle avec la fatigue ?",
+            "Les eleves corrigent-ils ou repetent-ils la meme erreur ?",
+            "Les compositions sont-elles stabilisees ?"
+          ],
+          "errors": [
+            "Changer d'elements a chaque passage.",
+            "Repeter sans corriger.",
+            "Enchainer trop de passages sans recuperation."
+          ],
+          "feedback": [
+            "Meme enchainement a chaque fois : c'est ce qui sera evalue.",
+            "Cette fois, concentre-toi uniquement sur ta fin immobile.",
+            "Repose-toi une minute : tu es fatigue, tu vas te faire mal."
+          ],
+          "plus": [
+            "Realiser l'enchainement devant le groupe classe.",
+            "Realiser l'enchainement filme, puis l'analyser."
+          ],
+          "minus": [
+            "Repeter par moities.",
+            "Reduire a trois elements."
+          ],
+          "diff": {
+            "facilitee": "Enchainement repete par moities, trois elements suffisent.",
+            "normale": "Enchainement complet repete quatre a cinq fois.",
+            "complexifiee": "Enchainement complet presente devant le groupe et filme pour analyse."
+          },
+          "safety": [
+            "Parade obligatoire sur les elements renverses, a chaque passage.",
+            "Recuperation imposee entre les passages : la fatigue est le premier facteur d'accident en gymnastique.",
+            "Un gymnaste par praticable, public assis hors des tapis.",
+            "Tapis joints et verifies entre chaque serie.",
+            "Arret de la repetition des qu'un eleve montre des signes de fatigue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "S'entrainer a juger",
+          "objective": "Former les eleves au role de juge avec la grille reelle de l'evaluation, pour qu'ils la maitrisent le jour de la presentation.",
+          "material": [
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "tablette ou telephone pour filmer",
+              "fixed": 2
+            }
+          ],
+          "organization": "Public assis face au praticable. Pendant les passages, chaque eleve du public renseigne une grille sur un gymnaste designe. Comparaison des grilles apres chaque passage.",
+          "studentGoal": "Renseigner une grille de jugement en m'appuyant sur les criteres, pas sur mes impressions.",
+          "instructions": [
+            "Je regarde le gymnaste qui m'est designe, en silence.",
+            "Je coche chaque critere : nombre d'elements, familles, debut et fin, tenue.",
+            "Je ne note pas selon si je l'aime bien ou non.",
+            "On compare nos grilles apres le passage."
+          ],
+          "success": [
+            "La grille est renseignee entierement.",
+            "Les jugements de deux juges sur un meme gymnaste sont proches.",
+            "Le jugement s'appuie sur les criteres, pas sur des impressions."
+          ],
+          "execution": [
+            "Compter les elements et les familles pendant le passage.",
+            "Verifier l'immobilite du debut et de la fin.",
+            "Chronometrer mentalement les positions tenues."
+          ],
+          "watch": [
+            "Les juges s'appuient-ils sur les criteres ?",
+            "Les ecarts entre juges sont-ils importants ?",
+            "Le public reste-t-il silencieux pendant les passages ?"
+          ],
+          "errors": [
+            "Noter selon l'affinite plutot que selon les criteres.",
+            "Regarder ailleurs pendant le passage puis remplir au hasard.",
+            "Commenter a voix haute pendant la prestation."
+          ],
+          "feedback": [
+            "Combien d'elements a-t-il fait ? C'est ca, ton premier critere.",
+            "Tu ne notes pas la personne, tu notes la prestation.",
+            "Silence pendant le passage : on applaudit a la fin."
+          ],
+          "plus": [
+            "Justifier oralement sa note devant le groupe.",
+            "Juger a partir de la video et comparer avec le jugement en direct."
+          ],
+          "minus": [
+            "Juger sur deux criteres seulement.",
+            "Juger a deux, avec mise en commun."
+          ],
+          "diff": {
+            "facilitee": "Jugement sur deux criteres seulement : nombre d'elements et debut-fin.",
+            "normale": "Grille complete renseignee individuellement.",
+            "complexifiee": "Grille complete plus justification orale devant le groupe."
+          },
+          "safety": [
+            "Public assis hors des tapis, a distance de la zone d'evolution.",
+            "Aucune circulation devant le praticable pendant un passage.",
+            "Captation video uniquement si l'autorisation a ete verifiee, images non diffusees hors du cadre pedagogique."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Passage general",
+          "objective": "Realiser une repetition generale dans les conditions exactes de l'evaluation, y compris le public et le jury.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Passages individuels devant la classe assise, avec deux juges eleves et un pareur designes pour chaque passage. Conditions identiques a celles de la seance 8.",
+          "studentGoal": "Presenter mon enchainement devant la classe, comme le jour de l'evaluation.",
+          "instructions": [
+            "Je me presente, j'annonce mon nom, je me place.",
+            "Je marque mon debut immobile, je realise mon enchainement, je marque ma fin.",
+            "Je salue le public a la fin.",
+            "Public : silence pendant le passage, applaudissements a la fin."
+          ],
+          "success": [
+            "Le passage est realise en entier devant le public.",
+            "Debut, fin et salut sont marques.",
+            "Le public respecte le silence puis applaudit."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Ne pas se laisser deconcentrer par le public.",
+            "Terminer par un salut, meme si le passage s'est mal passe."
+          ],
+          "watch": [
+            "Le passage devant public degrade-t-il la prestation ?",
+            "Les eleves timides osent-ils passer ?",
+            "Le climat de classe est-il respectueux ?"
+          ],
+          "errors": [
+            "Commencer avant d'etre pret, sous la pression du regard.",
+            "Abandonner en cours de passage apres une erreur.",
+            "Rire du passage d'un camarade."
+          ],
+          "feedback": [
+            "Prends ton temps, tu commences quand tu es pret.",
+            "Une erreur n'arrete pas l'enchainement : tu continues.",
+            "On respecte tous les passages : demain c'est ton tour."
+          ],
+          "plus": [
+            "Passage filme et analyse immediatement apres."
+          ],
+          "minus": [
+            "Passage devant un demi-groupe seulement.",
+            "Passage sans jury eleve."
+          ],
+          "diff": {
+            "facilitee": "Passage devant un demi-groupe, sans jury eleve, enchainement reduit.",
+            "normale": "Passage complet devant la classe avec deux juges eleves.",
+            "complexifiee": "Passage complet filme, analyse immediate avec la video."
+          },
+          "safety": [
+            "Pareur designe et en place avant chaque passage.",
+            "Public assis a distance, aucune circulation pendant un passage.",
+            "Tapis verifies avant le premier passage et entre les series.",
+            "Aucun element ajoute au dernier moment sans validation du professeur."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui a change dans votre enchainement entre le premier et le dernier passage ?",
+          "Qu'est-ce qui est le plus difficile quand on passe devant les autres ?"
+        ],
+        "key": "Un enchainement se construit par la repetition : c'est en le refaisant identique qu'il devient sur, et c'est ce qui permet de le presenter sereinement."
+      },
+      "socialRoles": [
+        "Juge : renseigne la grille sur un gymnaste designe.",
+        "Pareur : assure les elements renverses a chaque passage.",
+        "Public : garde le silence pendant les passages et applaudit a la fin."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Presentation de l'enchainement et evaluation",
+      "mainObjective": "Presenter devant la classe l'enchainement construit, et evaluer la prestation ainsi que les roles de juge et de pareur.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Accepter de se produire devant les autres.",
+        "Tenir le role de juge sur la prestation d'un camarade.",
+        "Respecter les prestations des autres."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait sa prestation, ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 2
+          },
+          {
+            "label": "bancs suedois",
+            "fixed": 2
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de composition conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour verifier la conformite"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Constituer un praticable principal de six tapis joints, bien visible du public.",
+          "Installer les bancs du public face au praticable, a deux metres au minimum.",
+          "Preparer les grilles d'evaluation nominatives et l'ordre de passage affiche.",
+          "Ressortir les fiches de composition de la seance 5.",
+          "Verifier une derniere fois l'etat et la jonction de tous les tapis."
+        ],
+        "sketch": "Praticable principal de 6 tapis joints.\nBancs du public face au praticable, a 2 m.\nTable du jury sur le cote, avec les grilles.\nOrdre de passage affiche a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves puis revision individuelle : aucune prestation evaluee ne doit etre abordee sans une preparation complete du corps.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul, le professeur valide.",
+              "Course, deplacements varies, gainage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation specifique complete",
+            "details": [
+              "Poignets, epaules, colonne, chevilles, nuque.",
+              "Gainage ventral et lateral.",
+              "Preparation des appuis : brouette, appuis renverses bas."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision individuelle",
+            "details": [
+              "Chaque eleve revise ses elements, un par un.",
+              "Un enchainement complet a allure moderee."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Presentation evaluee de l'enchainement",
+          "objective": "Evaluer la prestation gymnique de chaque eleve sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches de composition conservees",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Passages individuels sur le praticable, dans l'ordre affiche. Pour chaque passage : deux juges eleves, un pareur designe, le reste de la classe en public. Le professeur evalue et valide.",
+          "studentGoal": "Presenter mon enchainement complet devant la classe, avec un debut et une fin nets.",
+          "instructions": [
+            "J'annonce mon nom et je me place sur le praticable.",
+            "Je marque mon debut immobile 2 secondes.",
+            "Je realise mes 4 a 5 elements dans l'ordre, sans arret entre eux.",
+            "Je marque ma fin immobile 2 secondes et je salue."
+          ],
+          "success": [
+            "L'enchainement comporte au moins 4 elements issus d'au moins 3 familles.",
+            "Debut et fin immobiles tenus 2 secondes.",
+            "Les positions a tenir sont maintenues 3 secondes.",
+            "Aucune chute ni reprise d'appui non prevue.",
+            "Le passage correspond a la composition ecrite en seance 5."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Realiser proprement chaque element plutot que vite.",
+            "Maintenir les liaisons sans pas parasites.",
+            "Terminer par un salut, quelle que soit la reussite."
+          ],
+          "watch": [
+            "La prestation correspond-elle a la composition annoncee ?",
+            "Les eleves osent-ils passer devant les autres ?",
+            "Les juges eleves s'appuient-ils sur les criteres ?",
+            "Le public respecte-t-il chaque passage ?"
+          ],
+          "errors": [
+            "Ajouter au dernier moment un element non maitrise.",
+            "Abandonner apres une erreur au lieu de continuer.",
+            "Commenter ou rire pendant le passage d'un camarade."
+          ],
+          "feedback": [
+            "Ce que tu as prepare, rien de plus : c'est la qualite qui compte.",
+            "Une erreur ne stoppe pas l'enchainement, tu continues.",
+            "Silence pendant les passages : chacun aura son tour."
+          ],
+          "plus": [
+            "Enchainement de 6 elements avec changement de direction.",
+            "Presentation en duo synchronisee."
+          ],
+          "minus": [
+            "Enchainement de 3 elements.",
+            "Presentation devant un demi-groupe."
+          ],
+          "diff": {
+            "facilitee": "Enchainement de 3 elements de 2 familles, presente devant un demi-groupe, elements de niveau 1 valorises.",
+            "normale": "Enchainement de 4 a 5 elements, 3 familles minimum, devant la classe.",
+            "complexifiee": "Enchainement de 6 elements avec changement de direction, ou presentation en duo synchronisee."
+          },
+          "safety": [
+            "Pareur designe et en place avant chaque passage, sans exception.",
+            "Aucun element ajoute au dernier moment : seul ce qui a ete valide est presente.",
+            "Tapis verifies et joints avant le premier passage et entre les series.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Echauffement complet obligatoire avant tout passage evalue.",
+            "Arret du passage par le professeur si un element est tente hors du niveau valide."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Retour du jury",
+          "objective": "Faire expliciter aux juges eleves ce qu'ils ont observe, et confronter leur jugement a celui du professeur.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Apres chaque serie de passages, les deux juges eleves annoncent ce qu'ils ont note et le justifient. Le professeur complete ou rectifie devant le groupe.",
+          "studentGoal": "Expliquer ce que j'ai observe en m'appuyant sur les criteres.",
+          "instructions": [
+            "Juge : j'annonce ce que j'ai coche, critere par critere.",
+            "Je justifie par ce que j'ai vu, pas par une impression.",
+            "Le gymnaste ecoute sans contester.",
+            "Le professeur complete si un critere a ete mal apprecie."
+          ],
+          "success": [
+            "Chaque juge justifie son jugement par un fait observe.",
+            "Les ecarts entre juges eleves et professeur sont faibles.",
+            "Le gymnaste ecoute sans contester."
+          ],
+          "execution": [
+            "Nommer le critere avant de donner l'appreciation.",
+            "Citer un moment precis du passage.",
+            "Rester factuel et respectueux."
+          ],
+          "watch": [
+            "Les juges osent-ils annoncer un jugement severe ?",
+            "Les gymnastes acceptent-ils le retour de leurs camarades ?"
+          ],
+          "errors": [
+            "Surnoter systematiquement pour ne pas facher.",
+            "Juger la personne plutot que la prestation.",
+            "Contester bruyamment le jugement."
+          ],
+          "feedback": [
+            "Ce n'est pas etre mechant que de dire ce que tu as vu.",
+            "Quel critere exactement ? A quel moment ?",
+            "Tu ecoutes, tu pourras en parler apres calmement."
+          ],
+          "plus": [
+            "Le juge propose un conseil d'amelioration au gymnaste."
+          ],
+          "minus": [
+            "Le juge annonce seulement deux criteres."
+          ],
+          "diff": {
+            "facilitee": "Le juge annonce deux criteres, avec appui du professeur.",
+            "normale": "Le juge annonce et justifie la grille complete.",
+            "complexifiee": "Le juge annonce, justifie, et propose un conseil d'amelioration."
+          },
+          "safety": [
+            "Phase realisee hors des tapis, groupe assis.",
+            "Aucun passage en cours pendant les retours du jury."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant collectivement un materiel lourd et volumineux.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 2
+            },
+            {
+              "label": "bancs suedois",
+              "fixed": 2
+            }
+          ],
+          "organization": "Rangement collectif du materiel par equipes, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en gymnastique aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tapis se portent a deux minimum, jamais seul.",
+            "Chaque equipe range la zone qui lui est attribuee.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range, tapis empiles correctement.",
+            "Au moins un eleve par equipe s'exprime.",
+            "Aucun tapis porte seul."
+          ],
+          "execution": [
+            "Porter les tapis a deux, en pliant les jambes.",
+            "Empiler sans tirer sur le dos.",
+            "Formuler un acquis concret plutot qu'un ressenti."
+          ],
+          "watch": [
+            "Le rangement est-il partage ou laisse a quelques-uns ?",
+            "Les eleves identifient-ils des acquis precis ?"
+          ],
+          "errors": [
+            "Porter un tapis seul et se faire mal au dos.",
+            "Laisser le rangement a deux eleves.",
+            "Ne parler que de la note obtenue."
+          ],
+          "feedback": [
+            "A deux minimum, et tu plies les jambes.",
+            "Tout le monde range : c'est du materiel lourd.",
+            "Pas ta note : ce que tu sais faire maintenant."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis collectifs, les eleves valident."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit.",
+            "Empilement stable, hauteur limitee pour eviter les chutes de pile.",
+            "Aucun eleve ne circule sous une pile en cours de constitution.",
+            "Comptage du materiel avant de quitter la salle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en gymnastique aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Qu'est-ce qui fait la qualite d'un enchainement : la difficulte des elements, ou la facon de les realiser ?"
+        ],
+        "key": "En gymnastique, la qualite vaut plus que la difficulte : un enchainement reussi, c'est des elements maitrises, tenus, relies, et presentes avec un debut et une fin nets."
+      },
+      "socialRoles": [
+        "Juge : renseigne et justifie la grille d'evaluation d'un camarade, role evalue.",
+        "Pareur : assure les elements renverses, role evalue au meme titre que la prestation.",
+        "Public : respecte chaque passage par le silence et les applaudissements.",
+        "Responsable materiel : organise le rangement collectif des tapis en fin de cycle."
+      ]
+    }
+  ]
+}

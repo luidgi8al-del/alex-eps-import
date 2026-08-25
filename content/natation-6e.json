@@ -1,0 +1,2569 @@
+{
+  "apsa": "Natation",
+  "grades": [
+    "SIXIEME"
+  ],
+  "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Attestation scolaire du savoir-nager en securite (ASSN) definie par l'arrete du 28 fevrier 2022. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "Realiser des efforts et enchainer plusieurs actions motrices dans differentes familles pour aller plus vite, plus longtemps, plus haut, plus loin.",
+    "Mesurer et quantifier les performances, les enregistrer, les comparer et les traduire en representations graphiques.",
+    "Assumer les roles de chronometreur et d'observateur.",
+    "Valider l'attestation scolaire du savoir-nager en securite (ASSN) des que le niveau le permet."
+  ],
+  "targetCompetence": "Passer d'un deplacement vertical, tete hors de l'eau et bras qui rament, a un deplacement horizontal, tete immergee et jambes allongees, permettant de nager loin sans se fatiguer.",
+  "cycleObjectives": [
+    "Entrer dans l'eau et s'immerger sans apprehension.",
+    "Se deplacer en position horizontale, corps aligne, tete dans l'eau.",
+    "Souffler dans l'eau sans casser son deplacement.",
+    "Se deplacer sur le ventre et sur le dos, et tenir un surplace.",
+    "Enchainer le parcours du savoir-nager en securite sans reprise d'appui."
+  ],
+  "plannedTitles": [
+    "Test du savoir-nager et constitution des groupes",
+    "Entrer dans l'eau et s'immerger",
+    "Se deplacer allonge : la coulee",
+    "Respirer sans casser son deplacement",
+    "Test intermediaire et objectif personnel",
+    "Nager sur le dos et tenir un surplace",
+    "Enchainer le parcours complet",
+    "Passage de l'ASSN et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Attestation scolaire du savoir-nager en securite - arrete du 28 fevrier 2022",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/bo/22/Hebdo11/MENE2206497A.htm",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 1 - attendus de fin de cycle 3",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16630/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Enseignement de la natation scolaire - circulaire de reference",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://eduscol.education.fr/1017/la-natation-scolaire",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "L'enseignement de la natation - le savoir-nager",
+      "org": "DSDEN de la Meuse",
+      "url": "https://sites.ac-nancy-metz.fr/dsden55/wp-content/uploads/2022/03/l_enseignement_de_la_natation_-_le_savoir-nager.pdf",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Plan d'organisation de la surveillance et des secours (POSS) de la piscine : le lire avant la premiere seance.",
+    "Presence et positionnement du maitre nageur sauveteur : la surveillance ne peut jamais etre assuree par l'enseignant seul.",
+    "Taux d'encadrement applicable a la classe et repartition des adultes par bassin.",
+    "Profondeur reelle des bassins et emplacement de la ligne de changement de profondeur.",
+    "Materiel disponible : lignes d'eau, perches, frites, planches, obstacle flottant pour l'ASSN.",
+    "Eleves non-nageurs identifies en amont et places dans le bassin adapte.",
+    "Consignes locales sur les vestiaires, la douche et la circulation pieds nus."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - non-nageur",
+      "observed": "Reste au bord ou sur le petit bassin, refuse de lacher le mur, garde la tete hors de l'eau en permanence.",
+      "need": "Accepter l'immersion du visage et decouvrir que le corps flotte."
+    },
+    {
+      "label": "Profil 2 - nage vertical",
+      "observed": "Avance en position presque debout, tete relevee, jambes basses, bras qui rament. S'essouffle en 10 metres.",
+      "need": "Construire l'alignement horizontal et l'immersion de la tete."
+    },
+    {
+      "label": "Profil 3 - nage mais bloque sa respiration",
+      "observed": "Se deplace correctement sur 15 metres puis s'arrete pour respirer : il retient son souffle au lieu de souffler dans l'eau.",
+      "need": "Apprendre a expirer dans l'eau de facon continue."
+    },
+    {
+      "label": "Profil 4 - nageur a l'aise",
+      "observed": "Nage 25 metres sans difficulte, sur le ventre uniquement, ne sait pas se retourner ni tenir un surplace.",
+      "need": "Diversifier : dos, surplace, immersion, et viser l'efficacite."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Parcours de l'attestation scolaire du savoir-nager en securite, realise en continuite et sans reprise d'appui au bord : sauter en grande profondeur, revenir a la surface et s'immerger pour passer sous un obstacle flottant, nager 20 metres dont 10 sur le ventre et 10 sur le dos, realiser un surplace de 15 secondes, sortir de l'eau sans aide. Complete par un questionnaire sur les regles de securite en milieu aquatique.",
+    "criteria": [
+      "L'entree dans l'eau en grande profondeur est realisee sans hesitation prolongee.",
+      "Le passage sous l'obstacle flottant est realise en immersion complete.",
+      "Les 20 metres sont nages sans reprise d'appui, dont 10 metres sur le dos.",
+      "Le surplace de 15 secondes est tenu sans appui et sans panique.",
+      "La sortie de l'eau se fait sans aide.",
+      "Les regles de securite en milieu aquatique sont connues et enoncees."
+    ],
+    "referential": "Attestation scolaire du savoir-nager en securite (arrete du 28 fevrier 2022) et attendus de fin de cycle 3 du CA1, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Test du savoir-nager et constitution des groupes",
+      "mainObjective": "Situer chaque eleve par rapport aux exigences du savoir-nager pour constituer des groupes de besoin stables sur tout le cycle.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Reperer les eleves non-nageurs et les orienter vers le bassin adapte.",
+        "Connaitre les regles de securite de la piscine.",
+        "Accepter d'entrer dans l'eau et de mettre le visage dans l'eau."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : les acquis de l'ecole primaire sont tres heterogenes, on ne presuppose rien.",
+      "prerequisiteForNext": "Chaque eleve est affecte a un groupe de besoin et connait les regles de la piscine.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 3
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "frites",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve pour le groupe non-nageur"
+          },
+          {
+            "label": "planches",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches de test",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve, conservee tout le cycle"
+          },
+          {
+            "label": "chronometre",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Delimiter trois espaces de travail avec les lignes d'eau : non-nageurs, debutants, nageurs.",
+          "Verifier avec le maitre nageur la profondeur de chaque espace.",
+          "Poser les perches de securite au bord, accessibles immediatement.",
+          "Preparer les fiches nominatives de test sur une table hors zone humide.",
+          "Rappeler le circuit vestiaires-douche-bassin avant l'entree."
+        ],
+        "sketch": "Bassin divise en 3 espaces par lignes d'eau.\nEspace 1 (petite profondeur) = non-nageurs.\nEspace 2 = debutants. Espace 3 (grande profondeur) = nageurs.\nPerches au bord de chaque espace."
+      },
+      "warmup": {
+        "rationale": "En natation, l'echauffement se fait principalement dans l'eau : le corps doit s'adapter a la temperature et a la position horizontale avant tout effort.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Mobilisation des epaules : cercles avant et arriere.",
+              "Rotations des chevilles et des poignets.",
+              "Aucune course au bord du bassin : sol glissant."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree par l'echelle ou assis au bord, jamais en sautant sans consigne.",
+              "Se mouiller la nuque et le visage.",
+              "Marcher dans l'eau, bras dans l'eau, sur la largeur."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Familiarisation",
+            "details": [
+              "Souffler dans l'eau par la bouche, 5 fois.",
+              "Immerger le visage 3 secondes, 3 fois.",
+              "Deplacements libres dans son espace."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le parcours d'evaluation initiale",
+          "objective": "Faire realiser a chacun les quatre actions du savoir-nager pour situer precisement son niveau.",
+          "material": [
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de test",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "obstacle flottant",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par groupes de six, en petite profondeur d'abord. Quatre ateliers successifs : entrer dans l'eau, mettre la tete sous l'eau, se deplacer sur 10 metres, flotter 10 secondes. Le professeur note sur la fiche, le maitre nageur surveille.",
+          "studentGoal": "Essayer les quatre actions, meme si je n'y arrive pas encore, pour savoir ou j'en suis.",
+          "instructions": [
+            "Je fais les quatre essais dans l'ordre, un a la fois.",
+            "Si je ne peux pas faire un essai, je le dis : ce n'est pas grave.",
+            "Je reste dans mon espace, delimite par les lignes d'eau.",
+            "Je ne rentre jamais dans l'eau sans que l'adulte m'ait vu."
+          ],
+          "success": [
+            "Les quatre essais ont ete tentes ou explicitement declines.",
+            "La fiche de chaque eleve est renseignee.",
+            "Aucun eleve n'est entre dans l'eau sans autorisation."
+          ],
+          "execution": [
+            "Souffler par la bouche quand le visage est dans l'eau.",
+            "Allonger le corps a la surface plutot que de rester vertical.",
+            "Rester calme : le corps flotte tout seul en position allongee."
+          ],
+          "watch": [
+            "Qui refuse de mettre le visage dans l'eau ?",
+            "Qui se deplace en position verticale, tete hors de l'eau ?",
+            "Qui bloque sa respiration au lieu de souffler ?",
+            "Qui est deja a l'aise et pourra viser l'ASSN rapidement ?"
+          ],
+          "errors": [
+            "Bloquer sa respiration et remonter en panique.",
+            "S'accrocher au bord ou a un camarade.",
+            "Chercher a impressionner en sautant sans consigne."
+          ],
+          "feedback": [
+            "Souffle des que ton visage touche l'eau, ne bloque pas.",
+            "Allonge-toi, tu flotteras tout seul.",
+            "Tu as le droit de ne pas y arriver aujourd'hui : c'est ce qu'on va travailler."
+          ],
+          "plus": [
+            "Realiser le parcours en grande profondeur.",
+            "Enchainer les quatre actions sans arret."
+          ],
+          "minus": [
+            "Realiser chaque action avec une frite.",
+            "Rester a une profondeur ou l'eleve a pied."
+          ],
+          "diff": {
+            "facilitee": "Actions realisees avec une frite, a hauteur de poitrine, avec appui du bord possible.",
+            "normale": "Quatre actions realisees sans materiel en moyenne profondeur.",
+            "complexifiee": "Enchainement des quatre actions en grande profondeur, sans arret."
+          },
+          "safety": [
+            "Surveillance permanente du maitre nageur sauveteur : elle ne peut jamais etre deleguee a l'enseignant seul.",
+            "Aucun eleve n'entre dans l'eau sans autorisation explicite.",
+            "Perches de securite accessibles immediatement au bord de chaque espace.",
+            "Comptage des eleves a l'entree, a mi-seance et a la sortie du bassin.",
+            "Interdiction de courir au bord du bassin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le corps qui flotte",
+          "objective": "Faire decouvrir a chacun, y compris aux non-nageurs, que le corps flotte quand il s'allonge et se detend.",
+          "material": [
+            {
+              "label": "frites",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "planches",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, en petite profondeur. Un eleve s'allonge sur le dos, l'autre l'accompagne avec une main sous la nuque, puis retire progressivement son appui.",
+          "studentGoal": "Rester allonge a la surface sans que mon camarade me tienne.",
+          "instructions": [
+            "Je m'allonge sur le dos, oreilles dans l'eau, ventre vers le haut.",
+            "Mon camarade met une main sous ma nuque, puis l'enleve doucement.",
+            "Je respire calmement, je ne bloque pas ma respiration.",
+            "On change de role au bout de 3 essais."
+          ],
+          "success": [
+            "Flottaison dorsale tenue 5 secondes sans appui.",
+            "La respiration reste calme pendant la flottaison.",
+            "Le partenaire retire son appui progressivement, sans lacher brutalement."
+          ],
+          "execution": [
+            "Poser la tete en arriere, oreilles dans l'eau.",
+            "Ouvrir les bras et les jambes pour augmenter la surface.",
+            "Gonfler la poitrine et respirer doucement."
+          ],
+          "watch": [
+            "Qui garde la tete relevee et coule des lors ?",
+            "Qui se crispe et perd la flottaison ?",
+            "Les partenaires accompagnent-ils avec serieux ?"
+          ],
+          "errors": [
+            "Relever la tete pour regarder ses pieds : le bassin coule aussitot.",
+            "Bloquer sa respiration, ce qui rigidifie le corps.",
+            "Lacher brutalement son camarade."
+          ],
+          "feedback": [
+            "Laisse ta tete partir en arriere, tes oreilles dans l'eau.",
+            "Souffle doucement, ne bloque pas : tu es plus leger que tu ne crois.",
+            "Enleve ta main tout doucement, previens-le avant."
+          ],
+          "plus": [
+            "Flottaison dorsale puis ventrale enchainee.",
+            "Flottaison en grande profondeur."
+          ],
+          "minus": [
+            "Flottaison avec une frite sous les bras.",
+            "Flottaison avec appui permanent du partenaire."
+          ],
+          "diff": {
+            "facilitee": "Flottaison avec frite sous les bras et main du partenaire sous la nuque.",
+            "normale": "Flottaison dorsale libre 5 secondes.",
+            "complexifiee": "Enchainement flottaison dorsale puis ventrale, en moyenne profondeur."
+          },
+          "safety": [
+            "Un seul binome par couloir, espaces les uns des autres.",
+            "Le partenaire ne quitte jamais des yeux celui qui flotte.",
+            "Petite profondeur uniquement pour ce travail.",
+            "Surveillance du maitre nageur maintenue."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Traversee libre et affectation des groupes",
+          "objective": "Confirmer le classement par groupes de besoin par une derniere traversee libre, puis annoncer les groupes.",
+          "material": [
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "lignes d'eau",
+              "fixed": 3
+            },
+            {
+              "label": "fiches de test",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve traverse la largeur du bassin comme il le peut, avec ou sans materiel. Le professeur confirme l'affectation dans les trois groupes et l'annonce.",
+          "studentGoal": "Traverser la largeur du bassin de la maniere qui me convient aujourd'hui.",
+          "instructions": [
+            "Je traverse la largeur comme je sais faire.",
+            "Je peux prendre une frite si j'en ai besoin.",
+            "Je m'arrete au bord et j'attends la consigne.",
+            "J'ecoute mon groupe : il sera le meme pendant tout le cycle."
+          ],
+          "success": [
+            "La largeur est traversee, avec ou sans materiel.",
+            "Chaque eleve connait son groupe et son espace de travail.",
+            "Les fiches sont completees et rangees."
+          ],
+          "execution": [
+            "Allonger le corps plutot que de rester vertical.",
+            "Souffler dans l'eau quand le visage est immerge.",
+            "Avancer regulierement plutot que par a-coups."
+          ],
+          "watch": [
+            "La traversee confirme-t-elle le classement des ateliers ?",
+            "Les affectations sont-elles acceptees sans humiliation ?"
+          ],
+          "errors": [
+            "Vouloir traverser sans materiel alors qu'on ne le peut pas encore.",
+            "Se moquer d'un camarade qui utilise une frite.",
+            "Partir avant le signal."
+          ],
+          "feedback": [
+            "Prends une frite, ce n'est pas une punition : c'est un outil.",
+            "Chacun est dans le groupe ou il va progresser le plus.",
+            "On ne se moque de personne ici : tout le monde apprend."
+          ],
+          "plus": [
+            "Traverser en grande profondeur.",
+            "Traverser sans materiel en position allongee."
+          ],
+          "minus": [
+            "Traverser avec deux frites.",
+            "Traverser en longeant le bord."
+          ],
+          "diff": {
+            "facilitee": "Traversee avec deux frites, en longeant le bord, a hauteur de poitrine.",
+            "normale": "Traversee avec une frite ou sans materiel.",
+            "complexifiee": "Traversee sans materiel en grande profondeur."
+          },
+          "safety": [
+            "Un eleve a la fois par couloir de traversee.",
+            "Perches disponibles au bord.",
+            "Comptage des eleves avant la sortie du bassin.",
+            "Sortie de l'eau echelonnee, sans bousculade dans les echelles."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui fait qu'on flotte : bouger beaucoup, ou s'allonger et se detendre ?",
+          "Quelles sont les regles de securite a respecter dans cette piscine ?"
+        ],
+        "key": "Le corps flotte quand il s'allonge et se detend : nager, ce n'est pas lutter contre l'eau, c'est s'y installer."
+      },
+      "socialRoles": [
+        "Observateur de flottaison : accompagne son camarade et retire son appui progressivement.",
+        "Responsable materiel : sort et range frites et planches.",
+        "Compteur : verifie l'effectif du groupe a l'entree et a la sortie du bassin."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Entrer dans l'eau et s'immerger",
+      "mainObjective": "Entrer dans l'eau sans apprehension et accepter l'immersion complete de la tete, condition de tout deplacement efficace.",
+      "secondaryObjectives": [
+        "Entrer dans l'eau par des voies variees : echelle, assis, saut.",
+        "Ouvrir les yeux sous l'eau.",
+        "Souffler par la bouche et par le nez en immersion."
+      ],
+      "linkToPrevious": "Le test initial a montre que l'immersion de la tete est le principal blocage : c'est l'objet de cette seance.",
+      "prerequisiteForNext": "Chaque eleve accepte de mettre la tete sous l'eau et de souffler en immersion.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "cerceaux lestes",
+            "fixed": 8
+          },
+          {
+            "label": "anneaux ou objets lestes",
+            "fixed": 12
+          },
+          {
+            "label": "frites",
+            "per": 0.75,
+            "min": 15
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "lignes d'eau",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Immerger les cerceaux lestes a faible profondeur dans l'espace des debutants.",
+          "Disperser les objets lestes sur le fond en petite profondeur.",
+          "Verifier avec le maitre nageur la profondeur autorisee pour les sauts.",
+          "Poser les perches au bord de chaque espace."
+        ],
+        "sketch": "Espace 1 : objets lestes sur le fond (petite profondeur).\nEspace 2 : cerceaux immerges a franchir.\nEspace 3 : zone de saut en grande profondeur, un eleve a la fois."
+      },
+      "warmup": {
+        "rationale": "L'echauffement integre d'emblee des immersions courtes et progressives, pour que l'objet de la seance soit aborde sans dramatisation.",
+        "steps": [
+          {
+            "dur": 3,
+            "title": "Echauffement au bord",
+            "details": [
+              "Cercles d'epaules et de bras.",
+              "Mobilisation de la nuque, lentement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree par l'echelle, se mouiller la nuque et le visage.",
+              "Marcher dans l'eau en soufflant a la surface.",
+              "Immerger la bouche, puis le nez, puis les yeux."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Immersions courtes",
+            "details": [
+              "Immerger le visage 3 secondes en soufflant, 5 fois.",
+              "S'accroupir sous l'eau et se relever, 5 fois.",
+              "Ouvrir les yeux sous l'eau et compter les doigts du partenaire."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La peche aux objets",
+          "objective": "Faire accepter l'immersion complete en donnant un but concret a atteindre au fond de l'eau.",
+          "material": [
+            {
+              "label": "anneaux ou objets lestes",
+              "fixed": 12
+            },
+            {
+              "label": "cerceaux lestes",
+              "fixed": 8
+            }
+          ],
+          "organization": "En petite puis moyenne profondeur. Objets disperses sur le fond. Les eleves plongent les chercher, un par un, par vagues de six. Comptage des objets rapportes par equipe.",
+          "studentGoal": "Rapporter le plus d'objets possible du fond du bassin.",
+          "instructions": [
+            "Je souffle en descendant, je ne bloque jamais ma respiration.",
+            "J'ouvre les yeux sous l'eau pour voir l'objet.",
+            "Je remonte des que j'ai l'objet, je ne force pas.",
+            "Un eleve a la fois dans sa zone de plongee."
+          ],
+          "success": [
+            "Au moins trois objets rapportes par eleve.",
+            "L'immersion complete de la tete est realisee a chaque essai.",
+            "L'expiration est continue pendant la descente."
+          ],
+          "execution": [
+            "Souffler regulierement par la bouche et le nez en descendant.",
+            "Ouvrir les yeux : voir rassure et guide.",
+            "Descendre tete la premiere, fesses vers le haut."
+          ],
+          "watch": [
+            "Qui refuse encore l'immersion complete ?",
+            "Qui bloque sa respiration et remonte en urgence ?",
+            "Qui garde les yeux fermes et tatonne ?"
+          ],
+          "errors": [
+            "Bloquer sa respiration et remonter precipitamment.",
+            "Garder les yeux fermes et ne rien trouver.",
+            "Descendre pieds en premier, ce qui ne permet pas d'atteindre le fond."
+          ],
+          "feedback": [
+            "Souffle en descendant : des bulles doivent sortir.",
+            "Ouvre les yeux, tu verras ou est l'objet.",
+            "Tete en premier, comme si tu regardais tes pieds au plafond."
+          ],
+          "plus": [
+            "Rapporter deux objets en une seule immersion.",
+            "Plonger en moyenne profondeur."
+          ],
+          "minus": [
+            "Objets poses a mi-hauteur sur une marche.",
+            "Immersion jusqu'aux epaules seulement."
+          ],
+          "diff": {
+            "facilitee": "Objets a faible profondeur, immersion du visage suffisante, appui du bord autorise.",
+            "normale": "Objets sur le fond en petite profondeur, immersion complete.",
+            "complexifiee": "Deux objets par immersion en moyenne profondeur."
+          },
+          "safety": [
+            "Surveillance permanente du maitre nageur sauveteur.",
+            "Un seul eleve en immersion par zone delimitee.",
+            "Aucune apnee prolongee ni concours de duree sous l'eau.",
+            "Perches de securite accessibles immediatement.",
+            "Profondeur de plongee validee avec le maitre nageur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Franchir le cerceau",
+          "objective": "Enchainer immersion et deplacement horizontal sous l'eau, en passant a travers un cerceau immerge.",
+          "material": [
+            {
+              "label": "cerceaux lestes",
+              "fixed": 8
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Cerceaux immerges verticalement a 1 metre du bord, tenus par un camarade ou lestes. Les eleves passent au travers, un par un, puis remontent.",
+          "studentGoal": "Passer a travers le cerceau sans le toucher.",
+          "instructions": [
+            "Je m'immerge, je passe dans le cerceau, je remonte de l'autre cote.",
+            "Je souffle pendant tout le passage.",
+            "Je garde les yeux ouverts pour viser le cerceau.",
+            "Celui qui tient le cerceau ne le bouge pas."
+          ],
+          "success": [
+            "Trois passages sur quatre reussis sans toucher le cerceau.",
+            "Expiration continue pendant le passage.",
+            "Remontee calme, sans panique."
+          ],
+          "execution": [
+            "Se grouper puis s'allonger pour passer.",
+            "Regarder le cerceau pendant le passage.",
+            "Pousser sur le fond ou sur le mur pour se propulser."
+          ],
+          "watch": [
+            "L'eleve garde-t-il les yeux ouverts ?",
+            "Le passage est-il fluide ou heurte ?",
+            "L'expiration est-elle maintenue ?"
+          ],
+          "errors": [
+            "Fermer les yeux et rater le cerceau.",
+            "Bloquer la respiration et remonter avant le passage.",
+            "Passer en accrochant le cerceau des pieds."
+          ],
+          "feedback": [
+            "Regarde le cerceau, tu iras dedans.",
+            "Continue de souffler, meme sous l'eau.",
+            "Allonge-toi : tu passes plus facilement a plat."
+          ],
+          "plus": [
+            "Deux cerceaux successifs.",
+            "Cerceau place plus profond."
+          ],
+          "minus": [
+            "Cerceau a moitie hors de l'eau.",
+            "Passage avec appui sur le fond."
+          ],
+          "diff": {
+            "facilitee": "Cerceau a moitie emerge, passage avec appui au sol autorise.",
+            "normale": "Cerceau entierement immerge a faible profondeur.",
+            "complexifiee": "Deux cerceaux successifs, en moyenne profondeur."
+          },
+          "safety": [
+            "Un seul eleve engage par cerceau.",
+            "Cerceaux tenus fermement ou lestes, jamais flottants librement.",
+            "Petite profondeur pour les debutants.",
+            "Surveillance maitre nageur maintenue."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Entrees variees dans l'eau",
+          "objective": "Reinvestir l'acceptation de l'immersion en variant les modes d'entree, jusqu'au saut en grande profondeur pour les plus a l'aise.",
+          "material": [
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "lignes d'eau",
+              "fixed": 3
+            }
+          ],
+          "organization": "Trois ateliers selon les groupes : entree par l'echelle en s'immergeant, entree assis au bord en se laissant glisser, saut en grande profondeur avec remontee. Un eleve a la fois par atelier.",
+          "studentGoal": "Entrer dans l'eau de la maniere la plus engageante que je puisse faire aujourd'hui.",
+          "instructions": [
+            "Je choisis l'atelier de mon groupe, je n'en change pas seul.",
+            "Je saute uniquement quand l'adulte me le dit.",
+            "Apres l'entree, je remonte et je rejoins le bord.",
+            "Un seul eleve dans l'eau par atelier."
+          ],
+          "success": [
+            "L'entree est realisee sans hesitation prolongee.",
+            "La remontee est autonome.",
+            "Aucun saut n'a lieu sans autorisation."
+          ],
+          "execution": [
+            "Souffler des l'entree dans l'eau.",
+            "Se laisser remonter sans paniquer : le corps remonte seul.",
+            "Rejoindre le bord calmement en nageant ou en marchant."
+          ],
+          "watch": [
+            "Qui reste bloque au bord ?",
+            "Qui remonte en panique apres le saut ?",
+            "Qui saute sans attendre la consigne ?"
+          ],
+          "errors": [
+            "Sauter sans autorisation ou trop pres d'un camarade.",
+            "Se boucher le nez et perdre l'equilibre a l'entree.",
+            "Se raidir et couler au lieu de remonter."
+          ],
+          "feedback": [
+            "Attends mon signal : c'est une regle de securite.",
+            "Souffle en entrant, tu remonteras tout seul.",
+            "Tu n'es pas oblige de sauter aujourd'hui : entre par l'echelle."
+          ],
+          "plus": [
+            "Saut suivi d'une immersion pour toucher le fond.",
+            "Saut suivi d'un deplacement de 5 metres."
+          ],
+          "minus": [
+            "Entree assis au bord avec appui du professeur.",
+            "Entree par l'echelle uniquement."
+          ],
+          "diff": {
+            "facilitee": "Entree par l'echelle, immersion du visage seulement, appui du bord permanent.",
+            "normale": "Entree assis en se laissant glisser, immersion complete.",
+            "complexifiee": "Saut en grande profondeur suivi d'un deplacement de 5 metres."
+          },
+          "safety": [
+            "Saut uniquement en grande profondeur validee par le maitre nageur.",
+            "Un seul eleve dans la zone de saut, zone degagee avant chaque saut.",
+            "Aucun plongeon tete la premiere en 6e sans protocole specifique.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Comptage des eleves avant la sortie."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire de son souffle quand on met la tete sous l'eau ?",
+          "Qu'est-ce qui change quand on ouvre les yeux sous l'eau ?"
+        ],
+        "key": "Sous l'eau, on souffle et on ouvre les yeux : c'est ce qui permet de rester calme et de savoir ou on va."
+      },
+      "socialRoles": [
+        "Porteur de cerceau : tient le cerceau immobile pour son camarade.",
+        "Compteur d'objets : totalise les objets rapportes par son equipe.",
+        "Responsable materiel : immerge et recupere les objets lestes."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Se deplacer allonge : la coulee",
+      "mainObjective": "Construire l'alignement horizontal du corps et decouvrir la coulee, qui rend le deplacement economique.",
+      "secondaryObjectives": [
+        "Pousser au mur et glisser en position allongee.",
+        "Garder la tete dans l'eau, dans le prolongement du corps.",
+        "Ajouter un battement de jambes efficace."
+      ],
+      "linkToPrevious": "L'immersion est acceptee : on peut maintenant construire la position horizontale, impossible tant que la tete restait hors de l'eau.",
+      "prerequisiteForNext": "Chaque eleve realise une coulee ventrale de 3 metres, corps aligne, tete dans l'eau.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "planches",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "reperes flottants ou plots de bord",
+            "fixed": 10
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "lignes d'eau",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Placer des reperes au bord tous les 2 metres pour mesurer la longueur des coulees.",
+          "Preparer une planche par eleve pour le travail de battements.",
+          "Delimiter les couloirs par groupe de niveau.",
+          "Verifier que le mur de poussee est degage."
+        ],
+        "sketch": "Reperes au bord tous les 2 m = mesure de la coulee.\nUn couloir par groupe de niveau.\nMur de poussee degage a chaque extremite."
+      },
+      "warmup": {
+        "rationale": "Prepare les epaules et installe d'emblee la position allongee, objet de la seance, avant tout travail de propulsion.",
+        "steps": [
+          {
+            "dur": 3,
+            "title": "Echauffement au bord",
+            "details": [
+              "Cercles d'epaules, moulinets lents.",
+              "Etirement doux de la nuque."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree, immersion du visage, expiration.",
+              "Marcher en poussant l'eau avec les bras.",
+              "Cinq immersions completes avec expiration."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premieres glissees",
+            "details": [
+              "Pousser au mur et glisser sur 2 metres, bras le long du corps.",
+              "Meme chose bras tendus devant.",
+              "Comparer : quelle position glisse le plus loin ?"
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La coulee la plus longue",
+          "objective": "Construire l'alignement du corps en cherchant a glisser le plus loin possible apres une seule poussee.",
+          "material": [
+            {
+              "label": "reperes flottants ou plots de bord",
+              "fixed": 10
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur. Le nageur pousse au mur et glisse sans mouvement. L'observateur note la distance atteinte grace aux reperes. Six essais, puis rotation.",
+          "studentGoal": "Glisser le plus loin possible avec une seule poussee, sans bouger bras ni jambes.",
+          "instructions": [
+            "Je pousse fort au mur avec mes deux pieds.",
+            "Je tends les bras devant, une main sur l'autre, bras contre les oreilles.",
+            "Je mets la tete dans l'eau, je regarde le fond.",
+            "Je ne bouge plus jusqu'a l'arret : observateur, tu notes ou je m'arrete."
+          ],
+          "success": [
+            "Coulee de 3 metres au minimum.",
+            "Progression d'au moins un repere entre le premier et le dernier essai.",
+            "Tete restee dans l'eau pendant toute la coulee."
+          ],
+          "execution": [
+            "Bras tendus devant, serres contre les oreilles.",
+            "Tete dans l'eau, regard vers le fond.",
+            "Corps gaine, jambes serrees et tendues, pointes de pieds allongees."
+          ],
+          "watch": [
+            "La tete sort-elle de l'eau, ce qui fait couler les jambes ?",
+            "Les bras sont-ils tendus ou ecartes ?",
+            "La poussee au mur est-elle franche ?"
+          ],
+          "errors": [
+            "Relever la tete : le bassin coule immediatement.",
+            "Ecarter les bras, ce qui freine.",
+            "Commencer a nager au lieu de glisser."
+          ],
+          "feedback": [
+            "Cache tes oreilles avec tes bras.",
+            "Regarde le fond, pas devant toi.",
+            "Ne bouge pas : c'est la glisse qu'on mesure, pas la nage."
+          ],
+          "plus": [
+            "Coulee suivie de trois battements seulement.",
+            "Coulee depuis une position immergee plus profonde."
+          ],
+          "minus": [
+            "Coulee avec une frite sous les bras.",
+            "Coulee avec appui de depart plus proche de la surface."
+          ],
+          "diff": {
+            "facilitee": "Coulee avec frite sous les bras, objectif 2 metres, en petite profondeur.",
+            "normale": "Coulee libre, objectif 3 a 5 metres.",
+            "complexifiee": "Coulee de 5 metres puis trois battements pour prolonger."
+          },
+          "safety": [
+            "Un seul nageur par couloir a la fois.",
+            "Couloirs degages avant chaque depart.",
+            "Petite profondeur pour les groupes debutants.",
+            "Surveillance permanente du maitre nageur.",
+            "Aucune coulee en apnee prolongee."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Battements avec planche",
+          "objective": "Construire un battement propulsif partant des hanches, jambes tendues, sans casser l'alignement.",
+          "material": [
+            {
+              "label": "planches",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "En largeur de bassin, par vagues de six, une planche par eleve. Aller simple en battements, retour en marchant sur le cote.",
+          "studentGoal": "Traverser la largeur en battements, sans plier les genoux.",
+          "instructions": [
+            "Je tiens la planche a bout de bras devant moi.",
+            "Je bats des jambes en partant des hanches, jambes presque tendues.",
+            "Je mets le visage dans l'eau et je souffle, je releve la tete pour respirer.",
+            "Je reste dans mon couloir."
+          ],
+          "success": [
+            "Traversee complete de la largeur en battements.",
+            "Les jambes restent proches de la surface.",
+            "Le visage est immerge au moins la moitie du temps."
+          ],
+          "execution": [
+            "Battement partant de la hanche, genoux presque tendus.",
+            "Pointes de pieds allongees.",
+            "Amplitude reduite : les pieds restent dans l'eau."
+          ],
+          "watch": [
+            "Les genoux plient-ils comme pour pedaler ?",
+            "Les pieds sortent-ils largement de l'eau, ce qui est inefficace ?",
+            "La tete reste-t-elle relevee en permanence ?"
+          ],
+          "errors": [
+            "Pedaler avec les genoux plies.",
+            "Battre avec une trop grande amplitude.",
+            "Garder la tete hors de l'eau, ce qui fait couler les jambes."
+          ],
+          "feedback": [
+            "Tes jambes partent des hanches, pas des genoux.",
+            "Petits battements rapides, les pieds restent dans l'eau.",
+            "Mets ton visage dans l'eau : tes jambes remonteront."
+          ],
+          "plus": [
+            "Battements sans planche, bras tendus devant.",
+            "Battements sur le dos."
+          ],
+          "minus": [
+            "Battements en tenant le bord.",
+            "Battements avec frite sous les bras."
+          ],
+          "diff": {
+            "facilitee": "Battements en tenant le bord ou avec frite, sur place puis sur 5 metres.",
+            "normale": "Traversee de la largeur avec planche.",
+            "complexifiee": "Traversee sans planche, bras tendus devant, tete dans l'eau."
+          },
+          "safety": [
+            "Vagues de six maximum, couloirs separes.",
+            "Retour par le cote, jamais a contresens dans le couloir.",
+            "Petite profondeur pour les debutants.",
+            "Surveillance maitre nageur maintenue."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Coulee plus battements sur 10 metres",
+          "objective": "Enchainer poussee, coulee et battements pour parcourir la plus grande distance possible en un seul deplacement.",
+          "material": [
+            {
+              "label": "reperes flottants ou plots de bord",
+              "fixed": 10
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de suivi",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur qui note la distance. Depart pousse au mur, coulee puis battements, jusqu'a l'arret ou jusqu'a 10 metres. Quatre essais chacun.",
+          "studentGoal": "Parcourir 10 metres en enchainant ma coulee et mes battements.",
+          "instructions": [
+            "Je pousse au mur, je glisse, puis j'enchaine mes battements.",
+            "Je garde les bras tendus devant pendant tout le trajet.",
+            "Je souffle dans l'eau, je releve la tete seulement pour respirer.",
+            "Observateur : je note la distance atteinte a chaque essai."
+          ],
+          "success": [
+            "10 metres parcourus sans reprise d'appui, avec ou sans frite.",
+            "La position reste horizontale sur tout le trajet.",
+            "Progression visible entre le premier et le dernier essai."
+          ],
+          "execution": [
+            "Enchainer sans temps mort entre coulee et battements.",
+            "Garder la tete dans l'eau entre deux respirations.",
+            "Bras tendus, corps aligne."
+          ],
+          "watch": [
+            "La position horizontale tient-elle sur 10 metres ?",
+            "Le nageur se redresse-t-il pour respirer et casse-t-il tout ?"
+          ],
+          "errors": [
+            "Se redresser completement pour respirer.",
+            "Arreter les battements des que la respiration devient difficile.",
+            "Ecarter les bras pour se rassurer."
+          ],
+          "feedback": [
+            "Souffle dans l'eau : tu n'auras pas besoin de te redresser.",
+            "Bras tendus devant, tu glisses au lieu de freiner.",
+            "Regarde ta fiche : tu as gagne deux metres."
+          ],
+          "plus": [
+            "15 metres au lieu de 10.",
+            "Enchainer sans frite pour ceux qui l'utilisaient."
+          ],
+          "minus": [
+            "5 metres au lieu de 10.",
+            "Frite sous les bras autorisee."
+          ],
+          "diff": {
+            "facilitee": "5 metres avec frite sous les bras, en petite profondeur.",
+            "normale": "10 metres coulee plus battements, avec ou sans planche.",
+            "complexifiee": "15 metres sans materiel, tete dans l'eau."
+          },
+          "safety": [
+            "Un nageur par couloir a la fois.",
+            "Perches accessibles au bord.",
+            "Groupes places selon la profondeur adaptee.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'arrive-t-il aux jambes quand on releve la tete ?",
+          "Qu'est-ce qui fait glisser le plus loin : bouger beaucoup, ou etre bien aligne ?"
+        ],
+        "key": "Nager loin, c'est d'abord etre bien allonge : la tete dans l'eau et les bras tendus font remonter les jambes et font glisser le corps."
+      },
+      "socialRoles": [
+        "Observateur de coulee : note la distance atteinte par son camarade.",
+        "Responsable materiel : distribue et range planches et frites."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Respirer sans casser son deplacement",
+      "mainObjective": "Construire une respiration aquatique : expirer dans l'eau de facon continue et inspirer brievement sans se redresser.",
+      "secondaryObjectives": [
+        "Expirer completement par la bouche et le nez sous l'eau.",
+        "Tourner la tete sur le cote plutot que de la relever.",
+        "Nager 15 metres en respirant sans s'arreter."
+      ],
+      "linkToPrevious": "La position horizontale est acquise mais elle se casse a chaque respiration : c'est le point a traiter pour nager plus loin.",
+      "prerequisiteForNext": "Chaque eleve nage 15 metres en respirant sans reprise d'appui.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "planches",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "reperes flottants ou plots de bord",
+            "fixed": 10
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de suivi",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Placer les reperes tous les 5 metres pour mesurer les distances nagees.",
+          "Preparer une planche par eleve.",
+          "Delimiter les couloirs par groupe.",
+          "Verifier la disponibilite des perches au bord."
+        ],
+        "sketch": "Couloirs par groupe de niveau.\nReperes tous les 5 m le long du bord.\nZone de travail respiratoire pres du bord pour les debutants."
+      },
+      "warmup": {
+        "rationale": "Le travail respiratoire commence des l'echauffement : l'expiration aquatique se construit par la repetition, pas par l'explication.",
+        "steps": [
+          {
+            "dur": 3,
+            "title": "Echauffement au bord",
+            "details": [
+              "Cercles d'epaules et rotations du tronc.",
+              "Mobilisation de la nuque."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Expirations aquatiques",
+            "details": [
+              "En tenant le bord : inspirer, immerger le visage, souffler 3 secondes. 10 fois.",
+              "Souffler en faisant des bulles par le nez puis par la bouche.",
+              "Alterner immersion et inspiration sur un rythme regulier."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Deux largeurs en battements avec planche.",
+              "Une coulee par eleve pour retrouver l'alignement."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Souffler-tourner : la respiration laterale",
+          "objective": "Remplacer le redressement de la tete par une rotation laterale, qui preserve l'alignement du corps.",
+          "material": [
+            {
+              "label": "planches",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "reperes flottants ou plots de bord",
+              "fixed": 10
+            }
+          ],
+          "organization": "En largeur, planche tenue a bout de bras. L'eleve bat des jambes, visage dans l'eau, et tourne la tete sur le cote pour inspirer, sans la relever. Une joue reste dans l'eau.",
+          "studentGoal": "Respirer en tournant la tete, sans jamais la sortir vers l'avant.",
+          "instructions": [
+            "Je souffle dans l'eau tout le temps ou mon visage est immerge.",
+            "Pour respirer, je tourne la tete sur le cote, une joue reste dans l'eau.",
+            "Je ne releve jamais la tete vers l'avant.",
+            "Je remets le visage dans l'eau tout de suite apres avoir inspire."
+          ],
+          "success": [
+            "Cinq respirations laterales consecutives sans relever la tete.",
+            "L'expiration est continue entre deux inspirations.",
+            "La planche reste devant, les bras restent tendus."
+          ],
+          "execution": [
+            "Expirer par la bouche et le nez pendant toute l'immersion.",
+            "Tourner la tete, pas le buste entier.",
+            "Inspirer vite : une seule prise d'air, brieve."
+          ],
+          "watch": [
+            "La tete se releve-t-elle vers l'avant malgre la consigne ?",
+            "L'expiration est-elle continue ou l'eleve retient-il son souffle ?",
+            "L'eleve tourne-t-il tout le corps au lieu de la seule tete ?"
+          ],
+          "errors": [
+            "Relever la tete vers l'avant, ce qui fait couler les jambes.",
+            "Retenir son souffle et souffler d'un coup a la sortie.",
+            "Tourner tout le corps et perdre l'alignement."
+          ],
+          "feedback": [
+            "Une joue reste dans l'eau : tu tournes, tu ne leves pas.",
+            "Souffle en continu, des bulles doivent sortir sans arret.",
+            "Inspire vite et replonge le visage tout de suite."
+          ],
+          "plus": [
+            "Respiration laterale sans planche, bras tendus devant.",
+            "Respirer tous les trois mouvements de bras."
+          ],
+          "minus": [
+            "Travail en statique en tenant le bord.",
+            "Respiration frontale avec frite, en attendant."
+          ],
+          "diff": {
+            "facilitee": "Travail au bord, en statique : souffler-tourner-inspirer sur place, avec frite.",
+            "normale": "Respiration laterale avec planche, sur une largeur.",
+            "complexifiee": "Respiration laterale sans planche, bras tendus devant."
+          },
+          "safety": [
+            "Un eleve par couloir, vagues espacees.",
+            "Aucun exercice d'apnee prolongee ni d'hyperventilation.",
+            "Petite profondeur pour les debutants.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le rythme des trois temps",
+          "objective": "Installer un rythme respiratoire regulier, pour que la respiration devienne automatique et non un arret du deplacement.",
+          "material": [
+            {
+              "label": "planches",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En largeur, par vagues. Consigne rythmique annoncee : souffler sur trois battements, inspirer sur un. Le professeur compte a voix haute au bord.",
+          "studentGoal": "Garder le meme rythme de respiration sur toute la largeur.",
+          "instructions": [
+            "Je souffle pendant trois temps, j'inspire sur le quatrieme.",
+            "Je compte dans ma tete pour garder le rythme.",
+            "Je ne m'arrete pas au milieu de la largeur.",
+            "Si je perds le rythme, je le reprends sans m'arreter."
+          ],
+          "success": [
+            "Le rythme est tenu sur toute la largeur.",
+            "Aucune reprise d'appui au milieu.",
+            "L'expiration occupe bien trois temps sur quatre."
+          ],
+          "execution": [
+            "Expiration lente et continue, pas d'expiration explosive.",
+            "Inspiration breve, sur un seul temps.",
+            "Battements reguliers, sans acceleration au moment de respirer."
+          ],
+          "watch": [
+            "Le rythme est-il regulier ou anarchique ?",
+            "L'eleve accelere-t-il ses battements pour respirer ?"
+          ],
+          "errors": [
+            "Souffler tout d'un coup juste avant d'inspirer.",
+            "Multiplier les inspirations par inquietude.",
+            "S'arreter des que le rythme est perdu."
+          ],
+          "feedback": [
+            "Souffle doucement sur trois temps, pas d'un seul coup.",
+            "Une seule inspiration, pas trois.",
+            "Tu as perdu le compte : reprends sans t'arreter."
+          ],
+          "plus": [
+            "Respirer tous les cinq temps.",
+            "Rythme tenu sur deux largeurs."
+          ],
+          "minus": [
+            "Respirer tous les deux temps.",
+            "Travail sur une demi-largeur."
+          ],
+          "diff": {
+            "facilitee": "Respiration tous les deux temps, avec frite, sur une demi-largeur.",
+            "normale": "Rythme trois temps sur une largeur avec planche.",
+            "complexifiee": "Rythme cinq temps sur deux largeurs sans planche."
+          },
+          "safety": [
+            "Aucune contrainte d'apnee : l'eleve respire des qu'il en a besoin.",
+            "Vagues espacees, un eleve par couloir.",
+            "Surveillance maitre nageur maintenue.",
+            "Arret immediat si un eleve se sent mal."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "15 metres sans s'arreter",
+          "objective": "Verifier que la respiration construite permet effectivement de nager plus loin sans reprise d'appui.",
+          "material": [
+            {
+              "label": "reperes flottants ou plots de bord",
+              "fixed": 10
+            },
+            {
+              "label": "fiches de suivi",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur qui note la distance et le nombre d'arrets. Trois essais chacun, avec recuperation entre les essais.",
+          "studentGoal": "Nager 15 metres d'affilee sans poser le pied ni m'accrocher.",
+          "instructions": [
+            "Je nage jusqu'au repere des 15 metres sans m'arreter.",
+            "Je respire en tournant la tete, sans me redresser.",
+            "Si je m'arrete, mon observateur note ou.",
+            "Je recupere une minute entre chaque essai."
+          ],
+          "success": [
+            "15 metres nages sans reprise d'appui.",
+            "Moins d'arrets au troisieme essai qu'au premier.",
+            "La respiration reste laterale sur la majorite du parcours."
+          ],
+          "execution": [
+            "Garder la tete dans l'eau entre deux inspirations.",
+            "Maintenir les bras devant et le corps aligne.",
+            "Adopter un rythme regulier plutot que de partir vite."
+          ],
+          "watch": [
+            "La distance nagee augmente-t-elle par rapport a la seance 3 ?",
+            "La respiration tient-elle sur la distance, ou se degrade-t-elle ?"
+          ],
+          "errors": [
+            "Partir trop vite et s'epuiser en 8 metres.",
+            "Revenir au redressement de la tete des que la fatigue arrive.",
+            "S'accrocher a la ligne d'eau pour se reposer."
+          ],
+          "feedback": [
+            "Pars plus doucement, tu iras plus loin.",
+            "Ta tete se releve : reviens a la rotation laterale.",
+            "Regarde ta fiche : 8 metres la derniere fois, 14 aujourd'hui."
+          ],
+          "plus": [
+            "25 metres au lieu de 15.",
+            "Nager sans frite pour ceux qui l'utilisaient."
+          ],
+          "minus": [
+            "10 metres au lieu de 15.",
+            "Frite autorisee."
+          ],
+          "diff": {
+            "facilitee": "10 metres avec frite, en petite profondeur, arrets autorises comptes.",
+            "normale": "15 metres sans reprise d'appui.",
+            "complexifiee": "25 metres sans reprise d'appui, respiration laterale imposee."
+          },
+          "safety": [
+            "Un nageur par couloir, observateur au bord.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Recuperation obligatoire entre les essais.",
+            "Comptage des eleves avant la sortie."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Faut-il souffler dans l'eau ou garder son air ? Pourquoi ?",
+          "Que se passe-t-il quand on releve la tete vers l'avant pour respirer ?"
+        ],
+        "key": "On souffle en permanence dans l'eau et on tourne la tete sur le cote pour inspirer : c'est ce qui permet de nager loin sans s'arreter."
+      },
+      "socialRoles": [
+        "Observateur de distance : note les metres nages et le nombre d'arrets.",
+        "Donneur de rythme : compte a voix haute au bord pour son groupe."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Test intermediaire et objectif personnel",
+      "mainObjective": "Mesurer les acquis a mi-cycle sur les exigences de l'ASSN, et fixer a chaque eleve un objectif precis pour la fin du cycle.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer sa progression depuis le test initial.",
+        "Tenir le role d'observateur avec une fiche structuree.",
+        "Ecrire un objectif personnel verifiable."
+      ],
+      "linkToPrevious": "Immersion, alignement et respiration ont ete construits : on verifie ce qui est reellement disponible avant d'aborder le dos et le surplace.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau sur les exigences de l'ASSN et a formule un objectif.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "obstacle flottant",
+            "fixed": 1
+          },
+          {
+            "label": "chronometre",
+            "fixed": 4
+          },
+          {
+            "label": "fiches de test",
+            "per": 1.0,
+            "min": 20,
+            "note": "les memes qu'en seance 1, pour comparer"
+          },
+          {
+            "label": "stylos etanches ou planchettes",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Installer l'obstacle flottant dans le couloir de test, valide avec le maitre nageur.",
+          "Ressortir les fiches individuelles de la seance 1 pour permettre la comparaison.",
+          "Preparer une table hors zone humide pour l'ecriture des objectifs.",
+          "Repartir les chronometres entre les observateurs.",
+          "Verifier la profondeur du couloir de test."
+        ],
+        "sketch": "Un couloir de test avec obstacle flottant a 5 m du depart.\nCouloirs d'entrainement pour les groupes en attente.\nTable des fiches hors zone humide."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mais mene en partie par les eleves : savoir s'echauffer avant un effort fait partie des attendus, l'evaluation est l'occasion de le verifier.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul : epaules, nuque, chevilles.",
+              "Le professeur circule et corrige."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree, immersions et expirations.",
+              "Une largeur en battements avec planche."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action",
+            "details": [
+              "Deux coulees par eleve.",
+              "Une largeur nagee a allure moderee."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Test intermediaire sur les exigences de l'ASSN",
+          "objective": "Evaluer chaque eleve sur les cinq actions du parcours du savoir-nager, dans les conditions de l'evaluation finale.",
+          "material": [
+            {
+              "label": "obstacle flottant",
+              "fixed": 1
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de test",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            }
+          ],
+          "organization": "Passage individuel dans le couloir de test, un eleve a la fois, sous surveillance du maitre nageur. Les autres travaillent en autonomie dans leur couloir. Un observateur chronometre le surplace.",
+          "studentGoal": "Faire le plus loin possible dans le parcours du savoir-nager, pour savoir ce qu'il me reste a travailler.",
+          "instructions": [
+            "Je fais le parcours dans l'ordre : entrer, passer sous l'obstacle, nager, surplace, sortir.",
+            "Si je ne peux pas faire une etape, je passe a la suivante.",
+            "Je m'arrete des que je suis en difficulte : ce n'est pas un examen.",
+            "Observateur : je chronometre le surplace et je note chaque etape."
+          ],
+          "success": [
+            "Les cinq etapes ont ete tentees ou explicitement declinees.",
+            "Chaque fiche est renseignee etape par etape.",
+            "Progression visible par rapport a la fiche de la seance 1."
+          ],
+          "execution": [
+            "Souffler en permanence quand le visage est immerge.",
+            "Garder le corps aligne pendant les 20 metres.",
+            "Rester calme pendant le surplace : mouvements lents et amples."
+          ],
+          "watch": [
+            "Quelle etape bloque le plus d'eleves ?",
+            "Le passage sous l'obstacle est-il accepte ?",
+            "Le surplace declenche-t-il de la panique ?"
+          ],
+          "errors": [
+            "Se precipiter et enchainer sans respirer.",
+            "Renoncer avant d'avoir essaye.",
+            "Chronometrer approximativement en tant qu'observateur."
+          ],
+          "feedback": [
+            "Prends ton temps entre les etapes, respire.",
+            "Essaie au moins : tu t'arreteras si ca ne va pas.",
+            "Observateur, declenche au signal exact, pas avant."
+          ],
+          "plus": [
+            "Parcours complet en grande profondeur, sans arret entre les etapes."
+          ],
+          "minus": [
+            "Parcours realise etape par etape, avec pause entre chacune.",
+            "Etapes realisees en petite profondeur avec frite."
+          ],
+          "diff": {
+            "facilitee": "Etapes separees, en petite profondeur, frite autorisee, surplace ramene a 5 secondes.",
+            "normale": "Parcours en cinq etapes avec pauses courtes autorisees.",
+            "complexifiee": "Parcours complet enchaine en grande profondeur, conditions de l'ASSN."
+          },
+          "safety": [
+            "Surveillance rapprochee du maitre nageur pendant tout le test.",
+            "Un seul eleve dans le couloir de test.",
+            "Perche tenue par un adulte pendant le surplace en grande profondeur.",
+            "Arret immediat du test au moindre signe de detresse.",
+            "Aucun eleve non-nageur en grande profondeur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Lecture de la fiche a deux",
+          "objective": "Faire comprendre a chaque eleve, fiche en main, ce qui est acquis et ce qui bloque encore.",
+          "material": [
+            {
+              "label": "fiches de test",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos etanches ou planchettes",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Par deux, assis au bord, hors de l'eau. Chacun compare sa fiche de la seance 1 avec celle d'aujourd'hui, et identifie l'etape qui bloque.",
+          "studentGoal": "Reperer precisement l'etape du parcours qui me bloque encore.",
+          "instructions": [
+            "Je compare mes deux fiches, etape par etape.",
+            "Je repere ce qui a progresse et ce qui bloque encore.",
+            "J'en parle avec mon camarade : lui aussi a un point a travailler.",
+            "On ne se moque pas des difficultes de l'autre."
+          ],
+          "success": [
+            "Chaque eleve cite un progres depuis la seance 1.",
+            "Chaque eleve identifie l'etape qui le bloque.",
+            "L'echange se fait sans moquerie."
+          ],
+          "execution": [
+            "Comparer les deux fiches ligne a ligne.",
+            "Nommer l'etape precise, pas une impression generale.",
+            "Ecouter le point de son camarade."
+          ],
+          "watch": [
+            "Les eleves reconnaissent-ils leurs progres ?",
+            "L'ambiance reste-t-elle bienveillante entre niveaux differents ?"
+          ],
+          "errors": [
+            "Ne regarder que ce qui ne marche pas.",
+            "Comparer sa fiche a celle des autres plutot qu'a la sienne.",
+            "Se moquer d'un camarade non-nageur."
+          ],
+          "feedback": [
+            "Regarde d'abord ce que tu sais faire aujourd'hui et pas en seance 1.",
+            "Tu te compares a toi-meme, pas aux autres.",
+            "Ici on apprend, chacun a son rythme."
+          ],
+          "plus": [
+            "Formuler aussi le moyen concret de debloquer l'etape."
+          ],
+          "minus": [
+            "Comparaison guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee, etape bloquante designee par le professeur.",
+            "normale": "Comparaison autonome a deux.",
+            "complexifiee": "Comparaison plus formulation du moyen de progresser."
+          },
+          "safety": [
+            "Temps assis au bord, hors de l'eau, groupe rassemble et compte.",
+            "Aucun eleve seul dans l'eau pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Mon objectif pour l'ASSN",
+          "objective": "Transformer le bilan en un objectif personnel simple, cible sur l'etape bloquante, verifiable a la seance 8.",
+          "material": [
+            {
+              "label": "fiches de test",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chacun ecrit son objectif au dos de sa fiche, puis retourne a l'eau pour un premier essai cible sur cette etape, dans son groupe.",
+          "studentGoal": "Ecrire mon objectif, puis l'essayer tout de suite dans l'eau.",
+          "instructions": [
+            "J'ecris un objectif precis sur l'etape qui me bloque.",
+            "Je retourne a l'eau et je m'entraine sur cette etape.",
+            "Je garde ma fiche : on la ressortira a la seance 8.",
+            "Je reste dans mon couloir et dans mon groupe."
+          ],
+          "success": [
+            "L'objectif est ecrit, precis et verifiable.",
+            "Un premier essai cible a ete realise dans l'eau.",
+            "L'objectif porte sur une etape reelle du parcours."
+          ],
+          "execution": [
+            "Formuler avec un verbe d'action et une quantite.",
+            "Choisir l'etape la plus bloquante, pas la plus facile.",
+            "S'entrainer specifiquement, pas nager au hasard."
+          ],
+          "watch": [
+            "Les objectifs sont-ils realistes et cibles ?",
+            "Le temps d'entrainement est-il utilise sur l'etape choisie ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux nager.",
+            "Choisir une etape deja acquise.",
+            "Nager au hasard au lieu de travailler l'etape."
+          ],
+          "feedback": [
+            "Precise : combien de metres, combien de secondes ?",
+            "Cette etape, tu la reussis deja : choisis celle qui bloque.",
+            "Travaille ton surplace, pas tes longueurs."
+          ],
+          "plus": [
+            "Objectif plus moyen d'y parvenir rediges."
+          ],
+          "minus": [
+            "Objectif choisi dans une liste affichee."
+          ],
+          "diff": {
+            "facilitee": "Objectif choisi parmi cinq propositions affichees au bord.",
+            "normale": "Objectif redige librement et valide par le professeur.",
+            "complexifiee": "Objectif et moyen d'y parvenir rediges, avec echeance."
+          },
+          "safety": [
+            "Retour a l'eau uniquement dans le couloir du groupe.",
+            "Surveillance maitre nageur maintenue pendant la phase d'entrainement.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle etape du parcours vous bloque encore, et pourquoi ?",
+          "Qu'avez-vous progresse depuis la premiere seance ?"
+        ],
+        "key": "A mi-cycle, chacun sait exactement quelle etape du savoir-nager il doit travailler : les trois dernieres seances servent a la debloquer."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure le surplace de son camarade au signal exact.",
+        "Observateur evaluateur : renseigne la fiche etape par etape.",
+        "Responsable materiel : installe et retire l'obstacle flottant."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Nager sur le dos et tenir un surplace",
+      "mainObjective": "Diversifier les positions : se deplacer sur le dos et tenir un surplace, deux exigences de l'ASSN encore peu travaillees.",
+      "secondaryObjectives": [
+        "Nager 10 metres sur le dos, corps aligne.",
+        "Passer du ventre au dos sans reprise d'appui.",
+        "Tenir un surplace de 15 secondes sans panique."
+      ],
+      "linkToPrevious": "Le test de mi-cycle a montre que le dos et le surplace sont les etapes les plus bloquantes du parcours ASSN.",
+      "prerequisiteForNext": "Chaque eleve nage 10 metres sur le dos et tient 10 secondes de surplace.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "frites",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "planches",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometre",
+            "fixed": 4
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "lignes d'eau",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Delimiter une zone de surplace en profondeur adaptee a chaque groupe.",
+          "Preparer une frite par eleve pour le travail dorsal des debutants.",
+          "Repartir les chronometres entre les binomes.",
+          "Verifier avec le maitre nageur la zone de surplace en grande profondeur."
+        ],
+        "sketch": "Couloirs de nage dorsale par groupe.\nZone de surplace delimitee, profondeur adaptee par groupe.\nPerche tenue par un adulte au bord de la zone profonde."
+      },
+      "warmup": {
+        "rationale": "Prepare la nuque et les epaules, tres sollicitees en position dorsale, et installe progressivement le renversement du corps.",
+        "steps": [
+          {
+            "dur": 3,
+            "title": "Echauffement au bord",
+            "details": [
+              "Mobilisation lente de la nuque, avant-arriere et rotations.",
+              "Cercles d'epaules, moulinets arriere."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree, immersions et expirations.",
+              "Une largeur en battements ventraux avec planche."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premieres flottaisons dorsales",
+            "details": [
+              "Flottaison dorsale au bord, 5 secondes, 3 fois.",
+              "Flottaison dorsale avec frite sous la nuque.",
+              "Battements dorsaux sur 5 metres avec frite."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "10 metres sur le dos",
+          "objective": "Construire un deplacement dorsal aligne, avec la tete posee dans l'eau et le bassin en surface.",
+          "material": [
+            {
+              "label": "frites",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "planches",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En largeur, par vagues de six, couloirs separes. Progression : frite sous la nuque, puis frite sous les bras, puis sans materiel.",
+          "studentGoal": "Traverser 10 metres sur le dos sans poser le pied.",
+          "instructions": [
+            "Je pose ma tete en arriere, oreilles dans l'eau, regard vers le plafond.",
+            "Je pousse mon ventre vers le haut.",
+            "Je bats des jambes en partant des hanches, genoux presque tendus.",
+            "Je respire librement : mon visage est hors de l'eau."
+          ],
+          "success": [
+            "10 metres parcourus sur le dos sans reprise d'appui.",
+            "Le visage reste hors de l'eau pendant tout le trajet.",
+            "Le bassin reste proche de la surface."
+          ],
+          "execution": [
+            "Tete posee en arriere, oreilles immergees.",
+            "Ventre pousse vers le haut, hanches en surface.",
+            "Battements de faible amplitude, partant des hanches."
+          ],
+          "watch": [
+            "L'eleve releve-t-il la tete pour regarder devant, ce qui le fait couler ?",
+            "Le bassin coule-t-il en position assise ?",
+            "L'eleve panique-t-il quand l'eau passe sur son visage ?"
+          ],
+          "errors": [
+            "Relever la tete pour se reperer : le bassin coule aussitot.",
+            "Se mettre en position assise, jambes trop basses.",
+            "Se crisper des que l'eau touche le visage."
+          ],
+          "feedback": [
+            "Pose ta tete, regarde le plafond, pas tes pieds.",
+            "Pousse ton ventre vers le haut : tu remontes.",
+            "L'eau sur ton visage ne te fera rien : respire normalement."
+          ],
+          "plus": [
+            "Ajouter les bras : nage dorsale complete.",
+            "20 metres au lieu de 10."
+          ],
+          "minus": [
+            "Frite sous la nuque et sous les bras.",
+            "5 metres au lieu de 10."
+          ],
+          "diff": {
+            "facilitee": "5 metres avec frite sous la nuque, en petite profondeur.",
+            "normale": "10 metres sur le dos, avec ou sans frite sous les bras.",
+            "complexifiee": "20 metres en nage dorsale complete, bras et jambes."
+          },
+          "safety": [
+            "Un eleve par couloir : en position dorsale, on ne voit pas devant soi.",
+            "Reperes annonces a voix haute au bord pour prevenir de l'approche du mur.",
+            "Petite profondeur pour les debutants.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le surplace de 15 secondes",
+          "objective": "Tenir une position verticale stable en grande profondeur, sans appui et sans panique.",
+          "material": [
+            {
+              "label": "frites",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            },
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux dans la zone de surplace, profondeur adaptee au groupe. Un eleve tient le surplace, l'autre chronometre au bord. Progression : avec frite, puis sans. Une perche tenue par un adulte en grande profondeur.",
+          "studentGoal": "Tenir 15 secondes sans toucher le fond ni le bord.",
+          "instructions": [
+            "Je fais des mouvements lents et larges avec les bras, comme si je lissais l'eau.",
+            "Je pedale doucement avec les jambes, sans a-coups.",
+            "Je garde la tete droite et je respire calmement.",
+            "Chronometreur : je compte a voix haute toutes les 5 secondes."
+          ],
+          "success": [
+            "Surplace tenu 15 secondes sans appui.",
+            "La respiration reste reguliere pendant tout le surplace.",
+            "Aucun signe de panique."
+          ],
+          "execution": [
+            "Mouvements de bras horizontaux, lents et amples.",
+            "Jambes qui pedalent doucement, sans battre frenetiquement.",
+            "Menton hors de l'eau, corps a la verticale et detendu."
+          ],
+          "watch": [
+            "L'eleve s'agite-t-il, ce qui l'epuise et le fait couler ?",
+            "La respiration reste-t-elle calme ?",
+            "L'eleve cherche-t-il un appui du pied ou du bord ?"
+          ],
+          "errors": [
+            "S'agiter frenetiquement et couler par epuisement.",
+            "Bloquer sa respiration.",
+            "Chercher le bord des les premieres secondes."
+          ],
+          "feedback": [
+            "Ralentis : plus tu t'agites, plus tu coules.",
+            "Respire normalement, tu as le menton hors de l'eau.",
+            "Grands mouvements lents, comme si tu lissais la surface."
+          ],
+          "plus": [
+            "30 secondes de surplace.",
+            "Surplace avec les mains hors de l'eau."
+          ],
+          "minus": [
+            "Surplace avec frite sous les bras.",
+            "Surplace en profondeur ou l'eleve a pied."
+          ],
+          "diff": {
+            "facilitee": "Surplace de 5 secondes avec frite, dans une profondeur ou l'eleve a pied.",
+            "normale": "Surplace de 15 secondes sans materiel, profondeur moyenne.",
+            "complexifiee": "Surplace de 30 secondes en grande profondeur, mains hors de l'eau."
+          },
+          "safety": [
+            "Perche tenue par un adulte au bord de la zone profonde, en permanence.",
+            "Deux eleves maximum simultanement dans la zone de surplace.",
+            "Le chronometreur ne quitte jamais des yeux son camarade.",
+            "Arret immediat au moindre signe de detresse.",
+            "Surveillance rapprochee du maitre nageur sur cette situation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ventre-dos-surplace enchaines",
+          "objective": "Enchainer les trois positions sans reprise d'appui, comme l'exige le parcours de l'ASSN.",
+          "material": [
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            },
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur. Parcours : 10 metres sur le ventre, retournement, 10 metres sur le dos, puis 10 secondes de surplace. Trois essais chacun.",
+          "studentGoal": "Passer du ventre au dos puis au surplace sans jamais poser le pied.",
+          "instructions": [
+            "Je nage 10 metres sur le ventre, puis je me retourne sur le dos.",
+            "Je ne pose ni le pied ni la main pendant le retournement.",
+            "J'enchaine 10 metres de dos, puis je me redresse en surplace.",
+            "Observateur : je note s'il y a eu une reprise d'appui."
+          ],
+          "success": [
+            "L'enchainement complet est realise sans reprise d'appui.",
+            "Le retournement se fait en moins de trois secondes.",
+            "Le surplace final est tenu 10 secondes."
+          ],
+          "execution": [
+            "Se retourner en roulant sur le cote, sans s'arreter.",
+            "Reprendre les battements immediatement apres le retournement.",
+            "Passer a la verticale progressivement pour le surplace."
+          ],
+          "watch": [
+            "Le retournement provoque-t-il un arret complet ?",
+            "L'eleve cherche-t-il un appui au moment de changer de position ?"
+          ],
+          "errors": [
+            "S'arreter completement pour se retourner.",
+            "Poser le pied entre deux positions.",
+            "Se precipiter et boire la tasse au retournement."
+          ],
+          "feedback": [
+            "Roule sur le cote sans t'arreter, comme une bille.",
+            "Reprends tes battements tout de suite apres.",
+            "Redresse-toi doucement, ne te jette pas a la verticale."
+          ],
+          "plus": [
+            "Enchainer aussi l'immersion sous l'obstacle en debut de parcours.",
+            "Surplace porte a 15 secondes."
+          ],
+          "minus": [
+            "Pause autorisee entre les positions.",
+            "Distances reduites a 5 metres."
+          ],
+          "diff": {
+            "facilitee": "5 metres par position avec pause autorisee, frite disponible, petite profondeur.",
+            "normale": "10 metres ventre, 10 metres dos, 10 secondes de surplace enchaines.",
+            "complexifiee": "Parcours complet incluant le passage sous l'obstacle, surplace 15 secondes."
+          },
+          "safety": [
+            "Un nageur par couloir, observateur au bord sans le quitter des yeux.",
+            "Perche tenue par un adulte pres de la zone de surplace.",
+            "Profondeur adaptee a chaque groupe.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire de sa tete pour ne pas couler quand on nage sur le dos ?",
+          "Pourquoi s'agiter fait-il couler pendant un surplace ?"
+        ],
+        "key": "Sur le dos comme en surplace, c'est le calme qui fait flotter : tete posee, mouvements lents et amples, respiration reguliere."
+      },
+      "socialRoles": [
+        "Chronometreur de surplace : compte a voix haute et surveille son camarade.",
+        "Annonceur de mur : previent le nageur dorsal de l'approche du bord.",
+        "Responsable materiel : distribue et range frites et planches."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Enchainer le parcours complet",
+      "mainObjective": "Enchainer les cinq etapes du parcours du savoir-nager en continuite, pour aborder l'evaluation sans decouvrir l'enchainement le jour meme.",
+      "secondaryObjectives": [
+        "Realiser le passage sous l'obstacle flottant.",
+        "Gerer son effort sur l'ensemble du parcours.",
+        "Connaitre les regles de securite en milieu aquatique."
+      ],
+      "linkToPrevious": "Toutes les etapes ont ete travaillees separement : il reste a les enchainer sans reprise d'appui, ce qui est l'exigence de l'ASSN.",
+      "prerequisiteForNext": "Chaque eleve a realise au moins une fois le parcours complet, avec ou sans amenagement.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "obstacle flottant",
+            "fixed": 2
+          },
+          {
+            "label": "chronometre",
+            "fixed": 4
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches de suivi",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des regles de securite aquatique",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer deux couloirs de parcours complet, avec obstacle flottant a 5 metres du depart.",
+          "Valider avec le maitre nageur les profondeurs de chaque couloir.",
+          "Afficher au bord les cinq etapes du parcours, dans l'ordre.",
+          "Afficher les regles de securite en milieu aquatique pour le questionnaire.",
+          "Positionner un adulte avec une perche pres de la zone de surplace."
+        ],
+        "sketch": "Deux couloirs de parcours complet.\nObstacle flottant a 5 m du depart de chaque couloir.\nAffichage des 5 etapes au bord.\nAdulte avec perche pres de la zone de surplace."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet et progressif : le parcours enchaine cinq efforts differents, le corps doit y etre prepare pour eviter tout incident.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord autonome",
+            "details": [
+              "Epaules, nuque, chevilles, menes par les eleves.",
+              "Le professeur verifie et corrige."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree, immersions completes et expirations.",
+              "Une largeur en battements ventraux."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision des etapes",
+            "details": [
+              "Une coulee et 10 metres sur le ventre.",
+              "10 metres sur le dos.",
+              "5 secondes de surplace."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le parcours complet",
+          "objective": "Realiser l'enchainement integral des cinq etapes, avec les amenagements necessaires selon le groupe.",
+          "material": [
+            {
+              "label": "obstacle flottant",
+              "fixed": 2
+            },
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de suivi",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur au bord. Passage individuel dans un des deux couloirs. Trois passages par eleve, avec recuperation. Le maitre nageur surveille les deux couloirs.",
+          "studentGoal": "Enchainer les cinq etapes sans poser le pied ni m'accrocher.",
+          "instructions": [
+            "J'entre dans l'eau, je passe sous l'obstacle, je nage 10 metres ventre puis 10 metres dos.",
+            "Je fais 15 secondes de surplace, puis je sors sans aide.",
+            "Je ne m'accroche ni au bord ni a la ligne d'eau.",
+            "Observateur : je note l'etape ou mon camarade s'arrete, s'il s'arrete."
+          ],
+          "success": [
+            "Le parcours est enchaine sans reprise d'appui.",
+            "Le passage sous l'obstacle est realise en immersion complete.",
+            "Le surplace est tenu au moins 10 secondes.",
+            "La sortie de l'eau se fait sans aide."
+          ],
+          "execution": [
+            "Souffler en permanence en immersion.",
+            "Enchainer sans temps mort entre les etapes.",
+            "Gerer son allure : partir lentement pour tenir tout le parcours."
+          ],
+          "watch": [
+            "Quelle etape reste bloquante pour qui ?",
+            "L'enchainement provoque-t-il une fatigue excessive ?",
+            "Le passage sous l'obstacle est-il redoute ?"
+          ],
+          "errors": [
+            "Partir trop vite et s'epuiser avant le surplace.",
+            "S'accrocher a la ligne d'eau entre deux etapes.",
+            "Contourner l'obstacle au lieu de passer dessous."
+          ],
+          "feedback": [
+            "Pars doucement : le surplace arrive a la fin.",
+            "Ne t'accroche pas, tu peux te reposer en flottant sur le dos.",
+            "Souffle en passant sous l'obstacle, tu passeras plus facilement."
+          ],
+          "plus": [
+            "Parcours realise deux fois de suite.",
+            "Parcours chronometre."
+          ],
+          "minus": [
+            "Parcours en deux parties, avec pause au milieu.",
+            "Distances reduites, frite autorisee."
+          ],
+          "diff": {
+            "facilitee": "Parcours en deux parties avec pause, distances reduites de moitie, frite autorisee, petite profondeur.",
+            "normale": "Parcours complet enchaine, distances reglementaires.",
+            "complexifiee": "Parcours complet enchaine deux fois, ou chronometre."
+          },
+          "safety": [
+            "Un seul eleve par couloir de parcours.",
+            "Adulte avec perche present pres de la zone de surplace en permanence.",
+            "Surveillance rapprochee du maitre nageur sur les deux couloirs.",
+            "Recuperation obligatoire entre les passages.",
+            "Arret immediat du parcours au moindre signe de fatigue anormale.",
+            "Aucun eleve non-nageur en grande profondeur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Atelier de l'etape bloquante",
+          "objective": "Faire travailler a chacun, en temps protege, la seule etape qui l'empeche de valider le parcours.",
+          "material": [
+            {
+              "label": "obstacle flottant",
+              "fixed": 2
+            },
+            {
+              "label": "frites",
+              "per": 0.75,
+              "min": 15
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            }
+          ],
+          "organization": "Trois ateliers ouverts simultanement : passage sous obstacle, nage dorsale, surplace. Chaque eleve rejoint l'atelier correspondant a son objectif de mi-cycle.",
+          "studentGoal": "Progresser sur l'etape precise que j'ai choisie a la seance 5.",
+          "instructions": [
+            "Je rejoins l'atelier de mon objectif, pas celui de mes camarades.",
+            "Je repete l'etape plusieurs fois, en cherchant a l'ameliorer.",
+            "Je demande au professeur ce qui bloque si je n'y arrive pas.",
+            "Je reste dans la profondeur adaptee a mon groupe."
+          ],
+          "success": [
+            "Au moins cinq repetitions realisees sur l'atelier choisi.",
+            "Progression constatee entre le debut et la fin de l'atelier.",
+            "L'eleve sait dire ce qui a change."
+          ],
+          "execution": [
+            "Repeter avec une intention precise, pas mecaniquement.",
+            "Utiliser les reperes donnes en seances 2, 3 et 6.",
+            "Demander un retour plutot que repeter une erreur."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils vraiment leur atelier bloquant ?",
+            "Les repetitions sont-elles intentionnelles ?"
+          ],
+          "errors": [
+            "Choisir l'atelier ou l'on est deja a l'aise.",
+            "Repeter sans corriger.",
+            "Changer d'atelier en permanence."
+          ],
+          "feedback": [
+            "Ton objectif, c'etait le surplace : reste ici.",
+            "Cette fois, essaie en soufflant tout le temps.",
+            "Tu as tenu 12 secondes, c'est 5 de plus que tout a l'heure."
+          ],
+          "plus": [
+            "Enchainer son etape bloquante avec la suivante."
+          ],
+          "minus": [
+            "Travailler l'etape avec materiel d'aide."
+          ],
+          "diff": {
+            "facilitee": "Etape travaillee avec frite en petite profondeur, exigence reduite.",
+            "normale": "Etape repetee dans les conditions de l'ASSN.",
+            "complexifiee": "Etape enchainee avec celle qui la suit dans le parcours."
+          },
+          "safety": [
+            "Chaque atelier place dans une profondeur adaptee a son groupe.",
+            "Surveillance maitre nageur repartie sur les trois ateliers.",
+            "Perches accessibles a chaque atelier.",
+            "Effectif limite par atelier pour garder la visibilite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Les regles de securite en milieu aquatique",
+          "objective": "Construire le volet connaissances de l'ASSN : savoir identifier les dangers et les conduites a tenir en milieu aquatique.",
+          "material": [
+            {
+              "label": "affiche des regles de securite aquatique",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de suivi",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Classe rassemblee au bord, hors de l'eau, en demi-cercle devant l'affiche. Questions posees par le professeur, reponses argumentees par les eleves.",
+          "studentGoal": "Savoir dire ce qu'il faut faire et ne pas faire au bord de l'eau.",
+          "instructions": [
+            "J'ecoute les questions et je reponds en levant la main.",
+            "Je justifie ma reponse, je ne dis pas seulement oui ou non.",
+            "Je retiens les trois regles essentielles affichees.",
+            "Je note les reponses sur ma fiche."
+          ],
+          "success": [
+            "L'eleve cite au moins trois regles de securite aquatique.",
+            "L'eleve sait dire qui alerter et comment.",
+            "L'eleve distingue baignade surveillee et non surveillee."
+          ],
+          "execution": [
+            "Justifier chaque reponse par une raison concrete.",
+            "Distinguer les milieux : piscine, mer, plan d'eau.",
+            "Retenir les gestes d'alerte plutot que de sauvetage."
+          ],
+          "watch": [
+            "Les eleves connaissent-ils la conduite a tenir face a une personne en difficulte ?",
+            "Confondent-ils alerter et se jeter a l'eau ?"
+          ],
+          "errors": [
+            "Penser qu'il faut plonger pour aider quelqu'un en difficulte.",
+            "Ignorer la difference entre zone surveillee et non surveillee.",
+            "Reciter sans comprendre."
+          ],
+          "feedback": [
+            "On alerte d'abord, on ne se jette jamais a l'eau.",
+            "Pourquoi ne pas se baigner hors des zones surveillees ?",
+            "Explique ta reponse : pourquoi c'est dangereux ?"
+          ],
+          "plus": [
+            "Etudier un cas concret : que faire si un camarade est en difficulte ?"
+          ],
+          "minus": [
+            "Reponses a choisir parmi trois propositions affichees."
+          ],
+          "diff": {
+            "facilitee": "Questions a choix multiples appuyees sur l'affiche.",
+            "normale": "Questions ouvertes avec justification.",
+            "complexifiee": "Etude de cas : conduite a tenir face a une personne en difficulte."
+          },
+          "safety": [
+            "Phase realisee hors de l'eau, groupe rassemble et compte.",
+            "Aucun eleve dans l'eau pendant cette phase.",
+            "Eleves assis, a distance du bord glissant."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle etape du parcours vous parait la plus difficile aujourd'hui ?",
+          "Que faut-il faire si on voit quelqu'un en difficulte dans l'eau ?"
+        ],
+        "key": "Le savoir-nager, ce n'est pas seulement nager vite : c'est enchainer, se reposer en flottant, et connaitre les regles qui evitent l'accident."
+      },
+      "socialRoles": [
+        "Observateur de parcours : note l'etape ou son camarade s'arrete.",
+        "Chronometreur de surplace.",
+        "Responsable materiel : installe et retire les obstacles flottants."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Passage de l'ASSN et evaluation",
+      "mainObjective": "Evaluer le parcours du savoir-nager en securite dans les conditions reglementaires, et delivrer l'attestation aux eleves qui le valident.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Verifier l'objectif personnel fixe a la seance 5.",
+        "Tenir le role de chronometreur et d'observateur.",
+        "Repartir avec une perspective claire pour ceux qui n'ont pas encore valide."
+      ],
+      "linkToPrevious": "Le parcours a ete enchaine en seance 7 : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait s'il a valide l'ASSN et ce qu'il lui reste a travailler sinon.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "obstacle flottant",
+            "fixed": 2
+          },
+          {
+            "label": "chronometre",
+            "fixed": 4
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "grilles d'evaluation ASSN",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Installer les deux couloirs d'evaluation avec obstacle flottant, conformes au parcours reglementaire.",
+          "Valider l'organisation et les profondeurs avec le maitre nageur avant le debut.",
+          "Preparer les grilles nominatives et ressortir les fiches de mi-cycle.",
+          "Prevoir un couloir d'entrainement pour les eleves en attente.",
+          "Positionner un adulte avec perche pres de la zone de surplace pendant toute l'evaluation."
+        ],
+        "sketch": "Deux couloirs d'evaluation ASSN avec obstacle a 5 m.\nUn couloir d'entrainement libre pour les eleves en attente.\nTable des grilles hors zone humide.\nAdulte avec perche pres de la zone de surplace."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, puis revision rapide de chaque etape : l'evaluation ne doit pas etre abordee a froid.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement au bord autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul, le professeur valide.",
+              "Epaules, nuque, chevilles."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Entree et adaptation",
+            "details": [
+              "Entree, immersions completes, expirations.",
+              "Une largeur souple sur le ventre."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision des cinq etapes",
+            "details": [
+              "Un passage sous obstacle.",
+              "10 metres ventre et 10 metres dos.",
+              "5 secondes de surplace."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Passage evalue de l'ASSN",
+          "objective": "Evaluer le parcours complet du savoir-nager en securite dans les conditions reglementaires.",
+          "material": [
+            {
+              "label": "obstacle flottant",
+              "fixed": 2
+            },
+            {
+              "label": "chronometre",
+              "fixed": 4
+            },
+            {
+              "label": "perches de securite",
+              "fixed": 2
+            },
+            {
+              "label": "grilles d'evaluation ASSN",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Passage individuel dans un couloir d'evaluation, un eleve a la fois par couloir. Le professeur evalue, un eleve chronometre le surplace. Les autres s'entrainent dans le couloir libre sous surveillance.",
+          "studentGoal": "Realiser le parcours complet en continuite, sans reprise d'appui.",
+          "instructions": [
+            "Je saute en grande profondeur, je reviens a la surface.",
+            "Je m'immerge pour passer sous l'obstacle flottant.",
+            "Je nage 20 metres : 10 sur le ventre puis 10 sur le dos.",
+            "Je tiens un surplace de 15 secondes, puis je sors de l'eau sans aide."
+          ],
+          "success": [
+            "L'entree en grande profondeur est realisee.",
+            "Le passage sous l'obstacle est realise en immersion complete.",
+            "Les 20 metres sont nages sans reprise d'appui, dont 10 sur le dos.",
+            "Le surplace de 15 secondes est tenu.",
+            "La sortie de l'eau se fait sans aide."
+          ],
+          "execution": [
+            "Souffler en permanence en immersion.",
+            "Garder le corps aligne, tete dans l'eau sur le ventre.",
+            "Rester calme et lent pendant le surplace.",
+            "Gerer son allure sur l'ensemble du parcours."
+          ],
+          "watch": [
+            "Le parcours est-il enchaine sans reprise d'appui ?",
+            "Le surplace est-il tenu sans panique ?",
+            "Les eleves en attente sont-ils bien surveilles ?"
+          ],
+          "errors": [
+            "S'accrocher a la ligne d'eau entre deux etapes.",
+            "Partir trop vite et manquer d'energie au surplace.",
+            "Contourner l'obstacle."
+          ],
+          "feedback": [
+            "Tu peux te reposer en flottant sur le dos, pas en t'accrochant.",
+            "Souffle en passant sous l'obstacle.",
+            "Ralentis ton surplace, tu t'epuises."
+          ],
+          "plus": [
+            "Parcours enchaine sans aucune pause entre les etapes.",
+            "Surplace porte a 20 secondes."
+          ],
+          "minus": [
+            "Parcours amenage sur une partie des etapes, pour valoriser les progres.",
+            "Evaluation du parcours en profondeur moyenne."
+          ],
+          "diff": {
+            "facilitee": "Parcours amenage : distances reduites, frite autorisee, surplace de 5 secondes. L'ASSN n'est pas validee mais les progres sont evalues.",
+            "normale": "Parcours reglementaire complet de l'ASSN.",
+            "complexifiee": "Parcours reglementaire enchaine sans aucune pause, surplace de 20 secondes."
+          },
+          "safety": [
+            "Surveillance rapprochee et permanente du maitre nageur sauveteur pendant toute l'evaluation.",
+            "Un seul eleve par couloir d'evaluation.",
+            "Adulte avec perche present pres de la zone de surplace en permanence.",
+            "Arret immediat du passage au moindre signe de detresse : aucune evaluation ne justifie un risque.",
+            "Aucun eleve non-nageur en grande profondeur : parcours amenage en profondeur adaptee.",
+            "Comptage des eleves a l'entree, a mi-seance et a la sortie du bassin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon objectif est-il atteint ?",
+          "objective": "Faire verifier a chaque eleve, fiche en main, l'objectif fixe a la seance 5, quel que soit le resultat de l'ASSN.",
+          "material": [
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation ASSN",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux, assis au bord, hors de l'eau. Chacun compare son objectif de mi-cycle avec sa grille du jour.",
+          "studentGoal": "Dire si j'ai atteint mon objectif, en m'appuyant sur ce qui a ete observe.",
+          "instructions": [
+            "Je relis l'objectif que j'avais ecrit a la seance 5.",
+            "Je regarde ce que dit ma grille d'aujourd'hui sur cette etape.",
+            "Je dis a mon camarade si c'est atteint, en partie, ou pas encore.",
+            "Je note ce qu'il me reste a travailler."
+          ],
+          "success": [
+            "La comparaison est faite et formulee.",
+            "L'eleve s'appuie sur un element de sa grille.",
+            "L'eleve identifie ce qu'il lui reste a travailler."
+          ],
+          "execution": [
+            "Citer l'etape precise, pas une impression.",
+            "Distinguer ce qui est acquis de ce qui reste a faire.",
+            "Ecouter le bilan de son camarade."
+          ],
+          "watch": [
+            "Les eleves qui n'ont pas valide l'ASSN reconnaissent-ils leurs progres ?",
+            "Le bilan reste-t-il bienveillant entre eleves de niveaux differents ?"
+          ],
+          "errors": [
+            "Ne retenir que l'echec de validation.",
+            "Comparer sa grille a celle des autres.",
+            "Se moquer d'un camarade qui n'a pas valide."
+          ],
+          "feedback": [
+            "Tu ne valides pas encore, mais tu nages 20 metres de plus qu'en septembre.",
+            "Tu te compares a toi-meme, pas au voisin.",
+            "Il te reste le surplace : c'est precis, c'est travaillable."
+          ],
+          "plus": [
+            "Formuler l'objectif suivant pour poursuivre hors du cycle."
+          ],
+          "minus": [
+            "Comparaison guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee, bilan a choisir parmi trois formulations.",
+            "normale": "Comparaison autonome a deux.",
+            "complexifiee": "Bilan redige plus objectif suivant formule."
+          },
+          "safety": [
+            "Phase realisee hors de l'eau, assis au bord, groupe compte.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et suites du cycle",
+          "objective": "Cloturer le cycle en valorisant les progres de tous et en indiquant les suites pour ceux qui n'ont pas valide l'ASSN.",
+          "material": [
+            {
+              "label": "grilles d'evaluation ASSN",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "frites",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Classe rassemblee au bord apres le rangement du materiel, en demi-cercle, hors de l'eau.",
+          "studentGoal": "Savoir ce que j'ai acquis et ce que je peux faire pour continuer a progresser.",
+          "instructions": [
+            "Chaque groupe range son materiel avant de s'asseoir.",
+            "Chacun peut dire une chose apprise pendant le cycle.",
+            "J'ecoute les informations sur la suite : dispositifs de soutien, creneaux, ASSN ulterieure.",
+            "Je recupere ma fiche et ma grille."
+          ],
+          "success": [
+            "Le materiel est range et compte.",
+            "Au moins un eleve par groupe s'exprime.",
+            "Les eleves non-valides connaissent la suite proposee."
+          ],
+          "execution": [
+            "Formuler un acquis concret.",
+            "Ecouter sans commenter le bilan des autres.",
+            "Verifier qu'on repart avec ses documents."
+          ],
+          "watch": [
+            "Les eleves non-valides repartent-ils avec une perspective claire ?",
+            "Le climat reste-t-il valorisant pour tous ?"
+          ],
+          "errors": [
+            "Reduire le cycle a la validation ou non de l'ASSN.",
+            "Laisser le rangement a quelques eleves.",
+            "Partir sans sa fiche."
+          ],
+          "feedback": [
+            "L'ASSN viendra : regarde ce que tu sais faire aujourd'hui.",
+            "Tout le monde range, pas seulement les responsables.",
+            "Prends ta fiche, elle te servira l'annee prochaine."
+          ],
+          "plus": [
+            "Chaque eleve formule le prochain objectif hors temps scolaire."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis collectifs, les eleves valident."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite hors temps scolaire."
+          },
+          "safety": [
+            "Phase hors de l'eau, groupe rassemble et compte avant de rejoindre les vestiaires.",
+            "Comptage final des eleves avant de quitter la zone bassin.",
+            "Materiel range et compte, obstacles flottants retires du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire dans l'eau aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Que faut-il faire quand on se sent fatigue au milieu d'un bassin ?"
+        ],
+        "key": "Savoir nager en securite, c'est savoir se deplacer, se retourner, se reposer en flottant, et connaitre les regles qui evitent l'accident."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure le surplace pendant l'evaluation, role evalue au meme titre que la nage.",
+        "Observateur : renseigne la grille d'un camarade etape par etape.",
+        "Responsable materiel : installe et retire obstacles, frites et planches en fin de cycle."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2540 @@
+{
+  "apsa": "Basket-ball",
+  "grades": [
+    "SIXIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "En situation amenagee ou a effectif reduit, s'organiser tactiquement pour gagner le duel ou le match en identifiant les situations favorables de marque.",
+    "Maintenir un engagement moteur efficace sur tout le temps de jeu prevu.",
+    "Respecter les partenaires, les adversaires et l'arbitre.",
+    "Assurer differents roles sociaux (joueur, arbitre, observateur) inherents a l'activite et a l'organisation de la classe.",
+    "Accepter le resultat de la rencontre et etre capable de le commenter."
+  ],
+  "targetCompetence": "Passer d'un jeu en grappe, ou tous les eleves suivent le ballon, a un jeu ou le porteur trouve une solution parce que ses partenaires se sont ecartes et proposes : occuper l'espace pour progresser vers la cible.",
+  "cycleObjectives": [
+    "Conserver le ballon en respectant les regles de marcher et de reprise de dribble.",
+    "Choisir entre passer et dribbler selon la position des partenaires et des adversaires.",
+    "Se demarquer pour offrir une solution au porteur du ballon.",
+    "Tirer pres du panier dans une position favorable plutot que de loin en desespoir de cause.",
+    "Tenir les roles d'arbitre et d'observateur avec serieux."
+  ],
+  "plannedTitles": [
+    "Decouvrir le jeu et se situer",
+    "Conserver le ballon : dribble et arret legal",
+    "Passer et recevoir en mouvement",
+    "Se demarquer pour aider le porteur",
+    "Match evalue de mi-cycle",
+    "Marquer depuis une position favorable",
+    "Defendre et recuperer le ballon",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - attendus de fin de cycle 3",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16714/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources pour le cycle 3 - education physique et sportive",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/259/education-physique-et-sportive-cycle-3",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Situations de reference en basket-ball scolaire",
+      "org": "Academie de Normandie",
+      "url": "https://eps.ac-normandie.fr/IMG/pdf/situations_de_reference_basket_2019.pdf",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "D'une situation de reference a des situations d'apprentissage au basket - niveau 6e",
+      "org": "Academie d'Orleans-Tours",
+      "url": "http://eps.tice.ac-orleans-tours.fr/php5/pedagogie/dupre_situation_de_reference_a_situations_dapprentissage_basket_eleves_de_6.pdf",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Nombre de paniers disponibles et hauteur reglable : verifier avant de prevoir le nombre d'ateliers.",
+    "Etat du sol (glissance) et degagement autour des terrains.",
+    "Nombre de ballons disponibles pour la classe : conditionne le travail par deux ou par trois.",
+    "Eleves dispenses : prevoir les roles d'arbitre, d'observateur et de responsable du score.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - joue en grappe",
+      "observed": "Court vers le ballon quel que soit le contexte. Se retrouve toujours au milieu du groupe, colle au porteur.",
+      "need": "Comprendre qu'il faut s'ecarter pour etre utile, et non se rapprocher du ballon."
+    },
+    {
+      "label": "Profil 2 - garde le ballon",
+      "observed": "Recupere le ballon et part seul en dribble jusqu'a le perdre. Ne regarde pas ses partenaires.",
+      "need": "Lever la tete en dribblant et decouvrir que la passe va plus vite que la course."
+    },
+    {
+      "label": "Profil 3 - evite le ballon",
+      "observed": "Se place loin du jeu, ne demande jamais le ballon, le repasse immediatement quand il le recoit.",
+      "need": "Reussir des actions simples dans un espace protege pour oser prendre le ballon."
+    },
+    {
+      "label": "Profil 4 - joue mais tire de partout",
+      "observed": "A l'aise techniquement, tire des qu'il touche le ballon, y compris de tres loin.",
+      "need": "Identifier ce qu'est une position favorable de tir et accepter de passer a mieux place."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en 3 contre 3 sur demi-terrain, matchs de 6 minutes, chaque eleve jouant au moins deux matchs et tenant une fois le role d'arbitre et une fois celui d'observateur.",
+    "criteria": [
+      "L'eleve conserve le ballon sans faute de marcher ni de reprise de dribble sur la majorite de ses possessions.",
+      "L'eleve se demarque : il propose une solution au porteur en s'ecartant, plusieurs fois par match.",
+      "L'eleve choisit de passer quand un partenaire est mieux place que lui.",
+      "Les tirs sont pris dans une zone favorable, pres du panier.",
+      "Les roles d'arbitre et d'observateur sont tenus sans rappel, et le resultat du match est accepte."
+    ],
+    "referential": "Attendus de fin de cycle 3 du CA4, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir le jeu et se situer",
+      "mainObjective": "Entrer dans l'activite par le jeu reel et observer le comportement de chaque eleve pour constituer des groupes de besoin.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre les trois regles de base : marcher, reprise de dribble, non-contact.",
+        "Marquer au moins une fois dans un match a effectif reduit.",
+        "Reperer qui joue en grappe, qui garde le ballon, qui evite le ballon."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : on ne presuppose aucune experience du basket, seulement l'habitude de jouer a des jeux de ballon a l'ecole.",
+      "prerequisiteForNext": "Chaque eleve a joue, connait les trois regles de base et a ete observe au moins une fois.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "ballons de basket taille 5",
+            "per": 0.34,
+            "min": 6,
+            "note": "un ballon pour trois eleves"
+          },
+          {
+            "label": "chasubles de deux couleurs",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 16
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.34,
+            "min": 4,
+            "note": "une pour trois eleves"
+          },
+          {
+            "label": "sifflet",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Delimiter deux demi-terrains avec les plots, chacun avec un panier.",
+          "Verifier la hauteur des paniers : la plus basse possible en 6e, pour que marquer reste accessible.",
+          "Preparer les chasubles par paquets de trois, deja tries par couleur.",
+          "Poser les fiches d'observation et un stylo sur un banc, hors de la zone de jeu.",
+          "Degager la peripherie des terrains : sacs et vetements contre le mur."
+        ],
+        "sketch": "Deux demi-terrains cote a cote, un panier chacun.\nPlots aux quatre coins de chaque demi-terrain.\nBanc des observateurs sur le cote, hors du terrain."
+      },
+      "warmup": {
+        "rationale": "Un echauffement balle en main met tout de suite les eleves dans l'activite et permet de voir, des les premieres minutes, qui manipule le ballon avec aisance.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple sur le terrain, changement de direction au signal.",
+              "Deplacements varies : pas chasses, course arriere, talons-fesses."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets et doigts : cercles, ouverture et fermeture.",
+              "Epaules, hanches, chevilles : cercles lents.",
+              "Montees sur pointes de pieds, 2 series de 10."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Familiarisation avec le ballon",
+            "details": [
+              "Dribble sur place, main droite puis main gauche.",
+              "Dribble en marchant dans tout l'espace, sans se percuter.",
+              "Passes a deux a 3 metres, ballon a hauteur de poitrine."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Match decouverte 3 contre 3",
+          "objective": "Jouer un vrai match a effectif reduit pour observer le comportement spontane de chaque eleve.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "Deux demi-terrains, equipes de trois. Matchs de 4 minutes, puis rotation : l'equipe qui sort devient observatrice et remplit la fiche de l'equipe suivante.",
+          "studentGoal": "Marquer plus de paniers que l'equipe adverse en respectant les trois regles.",
+          "instructions": [
+            "Je ne cours pas avec le ballon dans les mains : je dribble ou je passe.",
+            "Quand j'ai arrete de dribbler, je ne redribble pas : je passe ou je tire.",
+            "Je ne touche pas l'adversaire : pas de contact, pas de ballon arrache.",
+            "Quand je suis observateur, je regarde un seul joueur et je remplis sa ligne."
+          ],
+          "success": [
+            "L'equipe marque au moins un panier sur le match.",
+            "Chaque joueur touche le ballon au moins trois fois.",
+            "Aucun contact volontaire sur l'adversaire."
+          ],
+          "execution": [
+            "Lever la tete quand on dribble, pour voir ou sont les autres.",
+            "S'arreter sur deux appuis avant de passer ou de tirer.",
+            "Passer a hauteur de poitrine, bras tendus vers la cible."
+          ],
+          "watch": [
+            "Qui court systematiquement vers le ballon ?",
+            "Qui garde le ballon sans jamais lever la tete ?",
+            "Qui reste a l'ecart et ne demande jamais le ballon ?",
+            "Qui tire de tres loin des qu'il touche le ballon ?"
+          ],
+          "errors": [
+            "Se regrouper a six autour du ballon : le jeu en grappe.",
+            "Courir avec le ballon sans dribbler.",
+            "Arracher le ballon des mains de l'adversaire."
+          ],
+          "feedback": [
+            "Ecarte-toi du ballon : tu seras plus utile la-bas qu'ici.",
+            "Leve la tete, regarde qui est libre.",
+            "Le ballon se prend en interceptant, pas en tirant dessus."
+          ],
+          "plus": [
+            "Imposer trois passes avant de pouvoir tirer.",
+            "Jouer sur un terrain plus large."
+          ],
+          "minus": [
+            "Autoriser deux pas apres l'arret du dribble.",
+            "Jouer en surnombre : 3 contre 2."
+          ],
+          "diff": {
+            "facilitee": "3 contre 2, avec le droit de faire deux pas apres le dribble. On valide le fait de participer et de marquer.",
+            "normale": "3 contre 3, regles de marcher et de reprise appliquees avec bienveillance.",
+            "complexifiee": "3 contre 3 avec obligation de trois passes avant le tir."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire : pas de ballon arrache, pas de poussee.",
+            "Sacs et gourdes hors du terrain, contre le mur.",
+            "Un seul match par demi-terrain, les autres eleves assis sur le banc.",
+            "Lacets attaches et bijoux retires avant de jouer."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "L'horloge : passe ou dribble ?",
+          "objective": "Faire decouvrir par la mesure que la passe va plus vite que le dribble, ce qui fonde tout le cycle.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 4
+            },
+            {
+              "label": "plots",
+              "fixed": 8
+            },
+            {
+              "label": "chronometre",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par groupes de quatre. Deux plots distants de 15 metres. Premier essai : un eleve fait l'aller-retour en dribblant. Deuxieme essai : quatre eleves espaces se passent le ballon sur la meme distance. On chronometre les deux.",
+          "studentGoal": "Faire parcourir la distance au ballon le plus vite possible.",
+          "instructions": [
+            "Premier essai : je dribble seul jusqu'au plot et je reviens, on me chronometre.",
+            "Deuxieme essai : on se place en ligne et on se passe le ballon jusqu'au bout, on chronometre.",
+            "On compare les deux temps et on note lequel est le plus rapide.",
+            "Je ne bouge pas quand je recois : je passe tout de suite."
+          ],
+          "success": [
+            "Le temps de la chaine de passes est inferieur a celui du dribble.",
+            "Aucune passe perdue sur la sequence chronometree.",
+            "Le groupe sait dire lequel des deux est le plus rapide."
+          ],
+          "execution": [
+            "Passer a hauteur de poitrine, sans cloche.",
+            "Tendre les mains vers le ballon pour le recevoir.",
+            "Passer des la reception, sans temps d'arret."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils le resultat, ou attribuent-ils l'ecart au hasard ?",
+            "Les passes sont-elles precises ou perdues en route ?"
+          ],
+          "errors": [
+            "Faire rebondir la passe systematiquement, ce qui la ralentit.",
+            "Attendre le ballon les bras le long du corps.",
+            "Courir avec le ballon au lieu de le passer immediatement."
+          ],
+          "feedback": [
+            "La passe part directement de la poitrine, elle ne fait pas le tour.",
+            "Tends les mains vers le ballon avant qu'il n'arrive.",
+            "Regarde le chrono : le ballon va plus vite que toi."
+          ],
+          "plus": [
+            "Ajouter un adversaire passif sur la trajectoire.",
+            "Imposer une passe a rebond interdite."
+          ],
+          "minus": [
+            "Reduire la distance a 10 metres.",
+            "Autoriser un pas apres la reception."
+          ],
+          "diff": {
+            "facilitee": "Distance de 10 metres, trois joueurs, passes rapprochees.",
+            "normale": "15 metres, quatre joueurs.",
+            "complexifiee": "15 metres avec un defenseur passif a contourner par la passe."
+          },
+          "safety": [
+            "Groupes espaces d'au moins 3 metres les uns des autres.",
+            "Ne pas passer vers un camarade qui ne regarde pas.",
+            "Zone de course degagee de tout materiel."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match retour avec la regle des trois passes",
+          "objective": "Remettre les eleves en match en les obligeant a utiliser la passe qu'ils viennent de decouvrir comme plus rapide.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "Memes equipes qu'au premier match, memes demi-terrains. Matchs de 4 minutes avec une regle ajoutee : trois passes obligatoires avant de pouvoir tirer.",
+          "studentGoal": "Marquer apres avoir fait circuler le ballon dans mon equipe.",
+          "instructions": [
+            "Mon equipe doit faire trois passes avant de pouvoir tirer.",
+            "Je compte les passes a voix haute avec mon equipe.",
+            "Si je tire avant les trois passes, le ballon va a l'adversaire.",
+            "Observateur : je compte les passes reussies de mon joueur."
+          ],
+          "success": [
+            "L'equipe reussit au moins une sequence de trois passes suivie d'un tir.",
+            "Chaque joueur touche le ballon dans la sequence.",
+            "Le nombre de ballons perdus diminue par rapport au premier match."
+          ],
+          "execution": [
+            "S'ecarter apres avoir passe, pour redevenir disponible.",
+            "Lever la tete avant de dribbler.",
+            "Recevoir en mouvement, mains prete devant la poitrine."
+          ],
+          "watch": [
+            "Le jeu s'ecarte-t-il, ou la grappe se reforme-t-elle malgre la regle ?",
+            "Les eleves discretement en retrait commencent-ils a recevoir le ballon ?"
+          ],
+          "errors": [
+            "Faire trois passes au meme camarade tout proche pour valider la regle.",
+            "Rester colle au porteur pour recevoir facilement.",
+            "Oublier de compter et tirer trop tot."
+          ],
+          "feedback": [
+            "Trois passes, oui, mais a trois joueurs differents.",
+            "Recule de trois metres : ta passe sera plus utile.",
+            "Tu as compte ? Annonce a voix haute."
+          ],
+          "plus": [
+            "Imposer trois passes a trois joueurs differents.",
+            "Interdire de repasser au joueur qui vient de vous passer le ballon."
+          ],
+          "minus": [
+            "Deux passes suffisent.",
+            "Jouer en surnombre pour faciliter les passes."
+          ],
+          "diff": {
+            "facilitee": "Deux passes suffisent, jeu en 3 contre 2.",
+            "normale": "Trois passes avant le tir.",
+            "complexifiee": "Trois passes a trois joueurs differents, sans passe retour."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire.",
+            "Terrain degage, un seul match par demi-terrain.",
+            "Les eleves qui attendent restent assis sur le banc."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui va le plus vite : le ballon qui passe de main en main, ou le joueur qui dribble ?",
+          "Quelles sont les trois regles a respecter pour garder le ballon ?"
+        ],
+        "key": "Au basket, la passe va plus vite que la course : on avance vers le panier en faisant circuler le ballon, pas en dribblant seul."
+      },
+      "socialRoles": [
+        "Observateur : suit un joueur et remplit sa ligne sur la fiche.",
+        "Responsable du score : annonce le score a la fin de chaque match.",
+        "Responsable materiel : sort et range les ballons et les chasubles."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Conserver le ballon : dribble et arret legal",
+      "mainObjective": "Conserver le ballon sous la pression d'un adversaire en respectant les regles de marcher et de reprise de dribble.",
+      "secondaryObjectives": [
+        "Dribbler en levant la tete.",
+        "S'arreter sur deux appuis equilibres apres le dribble.",
+        "Proteger le ballon en interposant son corps."
+      ],
+      "linkToPrevious": "En seance 1, beaucoup de ballons ont ete perdus sur des marchers ou des reprises de dribble : on traite maintenant cette cause directement.",
+      "prerequisiteForNext": "Chaque eleve conserve le ballon sur un aller simple sous une pression legere, sans faute de marcher.",
+      "setup": {
+        "installationMinutes": 7,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "per": 0.5,
+            "min": 8,
+            "note": "un ballon pour deux eleves"
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "sifflet",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Delimiter un couloir de dribble de 15 metres avec deux rangees de plots.",
+          "Preparer une zone de 10 metres sur 10 pour l'epervier.",
+          "Sortir un ballon pour deux eleves et les aligner au bord du couloir.",
+          "Rappeler l'emplacement du banc pour les eleves en attente."
+        ],
+        "sketch": "Couloir de dribble de 15 m entre deux rangees de plots.\nA cote, un carre de 10 m x 10 m pour l'epervier.\nDemi-terrain avec panier libre pour la troisieme situation."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les appuis et les changements de direction, qui sont l'objet de la seance, et remet la main sur le ballon.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, accelerations courtes au signal.",
+              "Pas chasses, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Chevilles et genoux : cercles, flexions.",
+              "Poignets et doigts.",
+              "Fentes avant en marchant sur 10 metres."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Dribble en deplacement",
+            "details": [
+              "Dribble en marchant, main droite puis gauche.",
+              "Dribble avec arret au signal, sur deux appuis.",
+              "Dribble en regardant le professeur qui montre un nombre de doigts."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Le couloir des defenseurs",
+          "objective": "Traverser un couloir en dribblant malgre la presence de defenseurs, en levant la tete pour les eviter.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "per": 0.5,
+              "min": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 20
+            },
+            {
+              "label": "chasubles",
+              "fixed": 6
+            }
+          ],
+          "organization": "Couloir de 15 metres. Trois defenseurs en chasuble a l'interieur, qui se deplacent lateralement sans sortir de leur zone. Les autres traversent en dribblant, un par un, toutes les 5 secondes.",
+          "studentGoal": "Traverser le couloir en gardant mon ballon, sans me le faire toucher.",
+          "instructions": [
+            "Je traverse en dribblant, je ne prends jamais le ballon a deux mains.",
+            "Le defenseur touche le ballon, il ne me touche pas moi.",
+            "Si je perds le ballon, je le recupere et je continue.",
+            "Defenseur : je reste dans ma zone, je me deplace de cote."
+          ],
+          "success": [
+            "Trois traversees sur quatre reussies avec le ballon.",
+            "Aucune reprise de dribble sur la traversee.",
+            "Le regard se leve au moins une fois par traversee."
+          ],
+          "execution": [
+            "Pousser le ballon devant soi plutot que de le taper vers le bas.",
+            "Dribbler bas quand un defenseur approche.",
+            "Changer de main pour mettre son corps entre le ballon et le defenseur."
+          ],
+          "watch": [
+            "L'eleve regarde-t-il son ballon en permanence ?",
+            "Change-t-il de main, ou dribble-t-il toujours de la meme ?",
+            "Prend-il le ballon a deux mains des qu'il est gene ?"
+          ],
+          "errors": [
+            "Regarder le ballon et percuter le defenseur.",
+            "Prendre le ballon a deux mains puis redribbler.",
+            "Taper le ballon trop fort, qui rebondit trop haut."
+          ],
+          "feedback": [
+            "Regarde devant : ton ballon reviendra tout seul dans ta main.",
+            "Change de main : mets ton corps entre le ballon et lui.",
+            "Dribble plus bas quand il est pres de toi."
+          ],
+          "plus": [
+            "Ajouter un quatrieme defenseur.",
+            "Imposer un changement de main obligatoire par traversee."
+          ],
+          "minus": [
+            "Defenseurs bras dans le dos.",
+            "Elargir le couloir."
+          ],
+          "diff": {
+            "facilitee": "Couloir large, deux defenseurs seulement, bras dans le dos.",
+            "normale": "Trois defenseurs actifs dans leur zone.",
+            "complexifiee": "Quatre defenseurs, changement de main impose."
+          },
+          "safety": [
+            "Le defenseur joue le ballon, jamais le corps.",
+            "Un seul dribbleur engage a la fois dans le couloir.",
+            "Espace degage de part et d'autre du couloir."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "L'epervier dribbleur",
+          "objective": "Conserver son dribble dans un espace de plus en plus dense, sous une pression permanente.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "per": 0.75,
+              "min": 10
+            },
+            {
+              "label": "plots",
+              "fixed": 8
+            },
+            {
+              "label": "chasubles",
+              "fixed": 2
+            }
+          ],
+          "organization": "Carre de 10 metres sur 10. Tous les eleves dribblent a l'interieur. Deux epperviers en chasuble, sans ballon, essaient de sortir les ballons du carre. Un eleve touche devient eprvier a son tour.",
+          "studentGoal": "Garder mon ballon dans le carre le plus longtemps possible.",
+          "instructions": [
+            "Je dribble sans sortir du carre.",
+            "Si mon ballon sort, je deviens epervier.",
+            "Epervier : je touche le ballon, pas le joueur.",
+            "Je leve la tete pour voir arriver les eperviers."
+          ],
+          "success": [
+            "Rester dribbleur pendant au moins 45 secondes.",
+            "Aucun contact avec un camarade pendant le jeu.",
+            "Le dribble se poursuit meme quand l'espace se reduit."
+          ],
+          "execution": [
+            "Dribbler main opposee a l'epervier le plus proche.",
+            "Baisser le dribble quand la densite augmente.",
+            "Utiliser tout l'espace, ne pas rester dans un coin."
+          ],
+          "watch": [
+            "Les eleves anticipent-ils l'arrivee des eperviers ?",
+            "Se refugient-ils dans un coin plutot que d'occuper l'espace ?"
+          ],
+          "errors": [
+            "Se bloquer dans un coin, dos au jeu.",
+            "Attraper le ballon a deux mains pour le proteger.",
+            "Bousculer un camarade en fuyant."
+          ],
+          "feedback": [
+            "Occupe le milieu : dans le coin, tu es piege.",
+            "Ton dribble continue, ne le bloque pas.",
+            "Regarde autour de toi, pas ton ballon."
+          ],
+          "plus": [
+            "Reduire le carre progressivement.",
+            "Trois eperviers."
+          ],
+          "minus": [
+            "Agrandir le carre.",
+            "Un seul epervier."
+          ],
+          "diff": {
+            "facilitee": "Carre plus grand, un seul epervier, ballon repris immediatement apres une sortie.",
+            "normale": "Carre de 10 m, deux eperviers.",
+            "complexifiee": "Carre reduit a 8 m, trois eperviers."
+          },
+          "safety": [
+            "Toucher le ballon, jamais le joueur.",
+            "Regarder autour de soi pour eviter les percussions.",
+            "Arret immediat au coup de sifflet."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Match 3 contre 3 sans faute",
+          "objective": "Reinvestir la conservation du ballon en match, avec un decompte explicite des fautes de marcher et de reprise.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "Deux demi-terrains, matchs de 5 minutes en 3 contre 3. Un observateur par equipe compte les fautes de marcher et de reprise de dribble.",
+          "studentGoal": "Jouer tout le match avec moins de deux fautes de conservation pour mon equipe.",
+          "instructions": [
+            "Je m'arrete sur deux appuis avant de passer ou de tirer.",
+            "Une fois arrete, je ne redribble pas.",
+            "Observateur : je compte les marchers et les reprises de mon equipe.",
+            "A la fin, on compare avec le match de la seance 1."
+          ],
+          "success": [
+            "Moins de deux fautes de conservation par equipe sur le match.",
+            "Chaque joueur conserve le ballon au moins une fois sous pression.",
+            "Le score de fautes est annonce et compare a la seance precedente."
+          ],
+          "execution": [
+            "Arret sur deux appuis simultanes, genoux flechis.",
+            "Ballon protege par le corps quand un adversaire approche.",
+            "Tete levee avant de decider passe ou dribble."
+          ],
+          "watch": [
+            "Les arrets sont-ils equilibres ou les eleves partent-ils en avant ?",
+            "Le nombre de fautes diminue-t-il vraiment ?"
+          ],
+          "errors": [
+            "Faire un pas supplementaire apres l'arret.",
+            "Reprendre le dribble sous la pression.",
+            "Se precipiter au lieu de s'arreter."
+          ],
+          "feedback": [
+            "Arrete-toi sur tes deux pieds en meme temps.",
+            "Tu as arrete ton dribble : maintenant tu passes ou tu tires.",
+            "Prends une seconde : tu as le temps."
+          ],
+          "plus": [
+            "Toute faute de conservation donne le ballon a l'adversaire.",
+            "Ajouter la regle des trois passes."
+          ],
+          "minus": [
+            "Les fautes sont comptees mais le jeu continue.",
+            "Autoriser un pas supplementaire apres l'arret."
+          ],
+          "diff": {
+            "facilitee": "Fautes comptees sans sanction, un pas tolere apres l'arret.",
+            "normale": "Fautes comptees, ballon rendu a l'adversaire.",
+            "complexifiee": "Fautes sanctionnees plus regle des trois passes."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire.",
+            "Un seul match par demi-terrain.",
+            "Eleves en attente assis sur le banc."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de fautes votre equipe a-t-elle faites aujourd'hui, contre la seance derniere ?",
+          "Qu'est-ce qui vous a le plus aide a garder le ballon ?"
+        ],
+        "key": "On garde le ballon en dribblant tete levee, en s'arretant sur deux pieds, et en mettant son corps entre le ballon et l'adversaire."
+      },
+      "socialRoles": [
+        "Compteur de fautes : releve les marchers et reprises de son equipe.",
+        "Responsable materiel : distribue et recupere les ballons."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Passer et recevoir en mouvement",
+      "mainObjective": "Passer a un partenaire en mouvement et recevoir le ballon sans s'arreter, pour faire progresser le ballon vers la cible.",
+      "secondaryObjectives": [
+        "Choisir entre passe directe et passe a rebond selon la position du defenseur.",
+        "Demander le ballon par le regard et par les mains.",
+        "Enchainer reception et action sans temps mort."
+      ],
+      "linkToPrevious": "Les eleves conservent mieux le ballon : on peut maintenant travailler sa circulation entre partenaires.",
+      "prerequisiteForNext": "Chaque eleve reussit une passe a un partenaire en mouvement et recoit le ballon sans le perdre.",
+      "setup": {
+        "installationMinutes": 7,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "per": 0.5,
+            "min": 8
+          },
+          {
+            "label": "plots",
+            "fixed": 20
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 6
+          }
+        ],
+        "instructions": [
+          "Tracer deux couloirs de montee de balle de 20 metres avec les plots.",
+          "Disposer six cerceaux comme zones de reception dans la zone de jeu reduit.",
+          "Preparer un ballon pour deux eleves.",
+          "Verifier que les deux paniers sont accessibles."
+        ],
+        "sketch": "Deux couloirs de 20 m pour la montee de balle en mouvement.\nZone centrale avec 6 cerceaux = cibles de reception.\nDemi-terrain avec panier pour le jeu reduit."
+      },
+      "warmup": {
+        "rationale": "Centre sur les mains et les epaules, sollicitees par les passes, et introduit d'emblee la passe en mouvement.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de rythme.",
+              "Montees de genoux et talons-fesses."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Cercles d'epaules avant et arriere.",
+              "Poignets, doigts, coudes.",
+              "Rotations du tronc en marchant."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Passes a deux sur place, 3 metres puis 6 metres.",
+              "Passes a rebond en alternance avec les passes directes.",
+              "Passes en marchant cote a cote sur la largeur du terrain."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Montee de balle a deux",
+          "objective": "Faire progresser le ballon sur toute la longueur du terrain par des passes, sans jamais dribbler.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "per": 0.5,
+              "min": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par deux, dans un couloir de 20 metres. Les deux eleves avancent cote a cote, espaces de 4 a 5 metres, et se passent le ballon sans dribbler. Un passage toutes les 10 secondes.",
+          "studentGoal": "Aller d'un bout a l'autre du couloir sans dribbler et sans perdre le ballon.",
+          "instructions": [
+            "Je n'ai pas le droit de dribbler : je passe ou je m'arrete.",
+            "Je passe devant mon partenaire, la ou il va, pas la ou il est.",
+            "Je recois en tendant les mains, en continuant d'avancer.",
+            "Si le ballon tombe, on repart du point de chute."
+          ],
+          "success": [
+            "Traversee complete sans perte de ballon.",
+            "Au moins quatre passes echangees sur la longueur.",
+            "Aucun arret complet des deux joueurs."
+          ],
+          "execution": [
+            "Passer devant le partenaire, a hauteur de poitrine.",
+            "Tendre les mains vers le ballon avant qu'il n'arrive.",
+            "Garder 4 a 5 metres d'ecart : ni colles, ni trop loin."
+          ],
+          "watch": [
+            "Les eleves passent-ils sur le partenaire ou devant lui ?",
+            "Restent-ils espaces ou se rapprochent-ils progressivement ?",
+            "La course s'arrete-t-elle a chaque reception ?"
+          ],
+          "errors": [
+            "Passer derriere le partenaire, qui doit s'arreter.",
+            "Se rapprocher jusqu'a se toucher.",
+            "Attendre le ballon a l'arret."
+          ],
+          "feedback": [
+            "Passe devant lui, la ou il sera.",
+            "Reste large : quatre bons metres entre vous.",
+            "Continue de courir en recevant."
+          ],
+          "plus": [
+            "Ajouter un defenseur passif au milieu du couloir.",
+            "Imposer six passes minimum."
+          ],
+          "minus": [
+            "Autoriser un dribble par traversee.",
+            "Reduire la distance a 12 metres."
+          ],
+          "diff": {
+            "facilitee": "12 metres, un dribble autorise, ecart libre.",
+            "normale": "20 metres sans dribble, ecart de 4 a 5 metres.",
+            "complexifiee": "20 metres avec un defenseur a contourner."
+          },
+          "safety": [
+            "Un seul binome engage a la fois dans le couloir.",
+            "Ne pas passer vers un camarade qui ne regarde pas.",
+            "Couloirs espaces l'un de l'autre."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Les cerceaux a atteindre",
+          "objective": "Choisir le type de passe adapte selon la position du defenseur, en visant une cible materialisee.",
+          "material": [
+            {
+              "label": "cerceaux",
+              "fixed": 6
+            },
+            {
+              "label": "ballons de basket",
+              "fixed": 6
+            },
+            {
+              "label": "chasubles",
+              "fixed": 6
+            }
+          ],
+          "organization": "Groupes de trois : un passeur, un receveur dans un cerceau a 6 metres, un defenseur entre les deux, bras leves ou baisses selon la consigne. Rotation toutes les trois passes.",
+          "studentGoal": "Faire parvenir le ballon a mon partenaire dans son cerceau malgre le defenseur.",
+          "instructions": [
+            "Defenseur bras leves : je passe a rebond, sous ses bras.",
+            "Defenseur bras baisses : je passe directement, au-dessus.",
+            "Receveur : je reste dans mon cerceau et je tends les mains.",
+            "On tourne au bout de trois passes."
+          ],
+          "success": [
+            "Quatre passes reussies sur cinq.",
+            "Le type de passe correspond a la position du defenseur.",
+            "Le receveur controle le ballon sans sortir du cerceau."
+          ],
+          "execution": [
+            "Passe a rebond : viser le sol aux deux tiers de la distance.",
+            "Passe directe : bras tendus, ballon a hauteur de poitrine.",
+            "Regarder la cible avant de passer."
+          ],
+          "watch": [
+            "L'eleve adapte-t-il sa passe, ou fait-il toujours la meme ?",
+            "La passe a rebond est-elle trop courte ou trop longue ?"
+          ],
+          "errors": [
+            "Faire toujours la meme passe quelle que soit la defense.",
+            "Passe a rebond qui rebondit juste devant le receveur.",
+            "Annoncer sa passe par le regard trop longtemps a l'avance."
+          ],
+          "feedback": [
+            "Il a les bras en l'air : passe dessous, au sol.",
+            "Ton rebond doit tomber aux deux tiers, pas a ses pieds.",
+            "Regarde ta cible, puis passe."
+          ],
+          "plus": [
+            "Le defenseur devient actif et peut intercepter.",
+            "Le receveur change de cerceau avant la passe."
+          ],
+          "minus": [
+            "Defenseur immobile et passif.",
+            "Reduire la distance a 4 metres."
+          ],
+          "diff": {
+            "facilitee": "4 metres, defenseur immobile bras baisses.",
+            "normale": "6 metres, defenseur qui leve ou baisse les bras.",
+            "complexifiee": "6 metres, defenseur actif, receveur mobile entre deux cerceaux."
+          },
+          "safety": [
+            "Le defenseur ne touche pas le passeur.",
+            "Groupes espaces d'au moins 3 metres.",
+            "Ballon a hauteur de poitrine, jamais vers le visage."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Jeu reduit 3 contre 3 sans dribble",
+          "objective": "Faire circuler le ballon en match sans pouvoir dribbler, ce qui oblige a passer et a se deplacer.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "Deux demi-terrains, 3 contre 3, matchs de 5 minutes. Regle unique : le dribble est interdit, on ne peut que passer. Un pivot est autorise.",
+          "studentGoal": "Marquer en faisant circuler le ballon uniquement par des passes.",
+          "instructions": [
+            "Je ne dribble pas : je passe, ou je pivote sur un pied.",
+            "Quand je n'ai pas le ballon, je bouge pour offrir une solution.",
+            "Observateur : je compte les passes reussies de mon equipe.",
+            "Si je dribble, le ballon va a l'adversaire."
+          ],
+          "success": [
+            "L'equipe enchaine au moins cinq passes sur une possession.",
+            "Au moins un panier marque apres une circulation de balle.",
+            "Chaque joueur touche le ballon a chaque possession longue."
+          ],
+          "execution": [
+            "Passer et se deplacer immediatement apres.",
+            "Se placer dans un espace libre, pas derriere un adversaire.",
+            "Recevoir mains tendues, prete a repasser."
+          ],
+          "watch": [
+            "Les eleves bougent-ils apres avoir passe, ou restent-ils immobiles ?",
+            "Le jeu s'etale-t-il ou reste-t-il concentre ?"
+          ],
+          "errors": [
+            "Rester immobile apres avoir passe.",
+            "Se placer juste derriere un adversaire.",
+            "Garder le ballon longtemps faute de solution."
+          ],
+          "feedback": [
+            "Tu as passe : maintenant tu bouges.",
+            "Place-toi ou il peut te voir.",
+            "Personne ne bouge, personne ne recoit."
+          ],
+          "plus": [
+            "Interdire la passe retour au joueur qui vient de passer.",
+            "Limiter a 3 secondes la possession individuelle."
+          ],
+          "minus": [
+            "Autoriser un dribble par possession.",
+            "Jouer en surnombre 3 contre 2."
+          ],
+          "diff": {
+            "facilitee": "Un dribble autorise par possession, jeu en surnombre.",
+            "normale": "Aucun dribble, pivot autorise.",
+            "complexifiee": "Aucun dribble, pas de passe retour, 3 secondes maximum."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire.",
+            "Un seul match par demi-terrain.",
+            "Passes a hauteur de poitrine."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quand faut-il passer a rebond plutot que directement ?",
+          "Qu'est-ce qui est le plus difficile : passer, ou se placer pour recevoir ?"
+        ],
+        "key": "Une bonne passe part devant le partenaire, et le receveur doit deja etre en mouvement : la passe se prepare a deux."
+      },
+      "socialRoles": [
+        "Compteur de passes : releve les passes reussies de son equipe.",
+        "Responsable des cerceaux : installe et range les cibles de reception."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Se demarquer pour aider le porteur",
+      "mainObjective": "Sortir de la grappe : se deplacer dans un espace libre pour offrir une solution de passe au porteur du ballon.",
+      "secondaryObjectives": [
+        "Reconnaitre un espace libre et s'y rendre.",
+        "Demander le ballon par le regard et la main.",
+        "Comprendre que le joueur sans ballon est utile."
+      ],
+      "linkToPrevious": "La seance 3 a montre que sans deplacement des non-porteurs, la passe est impossible : c'est le coeur de cette seance.",
+      "prerequisiteForNext": "Chaque eleve se demarque au moins deux fois par match et recoit le ballon en mouvement.",
+      "setup": {
+        "installationMinutes": 7,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "fixed": 6
+          },
+          {
+            "label": "plots",
+            "fixed": 24
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.34,
+            "min": 4
+          }
+        ],
+        "instructions": [
+          "Delimiter deux carres de 8 metres pour le jeu des quatre coins.",
+          "Materialiser deux zones de marque avec des plots au fond du demi-terrain.",
+          "Preparer les chasubles en trois couleurs si possible.",
+          "Poser les fiches d'observation avec les stylos sur le banc."
+        ],
+        "sketch": "Deux carres de 8 m avec un plot a chaque coin (zones de demarquage).\nDemi-terrain avec deux zones de marque materialisees au fond.\nBanc des observateurs sur le cote."
+      },
+      "warmup": {
+        "rationale": "Prepare les demarrages et les changements de direction, qui sont les actions motrices du demarquage.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course avec accelerations sur 5 metres au signal.",
+              "Demi-tours et changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Fentes laterales.",
+              "Epaules et poignets."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Demarrages",
+            "details": [
+              "Depart arrete puis sprint sur 5 metres, 4 repetitions.",
+              "Depart en pas chasses puis changement de direction.",
+              "Course avec appel de balle : lever la main en sprintant."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Les quatre coins",
+          "objective": "Comprendre concretement ce qu'est un espace libre en devant toujours occuper un coin inoccupe.",
+          "material": [
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "ballons de basket",
+              "fixed": 4
+            },
+            {
+              "label": "chasubles",
+              "fixed": 8
+            }
+          ],
+          "organization": "Carre de 8 metres, un plot a chaque coin. Trois attaquants avec un ballon, deux defenseurs. Les attaquants doivent toujours avoir un joueur dans un coin libre pour recevoir. Rotation toutes les 3 minutes.",
+          "studentGoal": "Recevoir le ballon dans un coin ou aucun defenseur ne peut m'atteindre.",
+          "instructions": [
+            "Quand je n'ai pas le ballon, je vais dans un coin libre.",
+            "Je leve la main pour demander le ballon.",
+            "Je ne reste jamais dans le meme coin qu'un partenaire.",
+            "Si un defenseur me suit, je change de coin."
+          ],
+          "success": [
+            "Cinq receptions consecutives dans un coin libre.",
+            "Aucun coin occupe par deux attaquants en meme temps.",
+            "Chaque attaquant recoit au moins deux fois par sequence."
+          ],
+          "execution": [
+            "Partir vite vers le coin des que le partenaire a le ballon.",
+            "Lever la main du cote oppose au defenseur.",
+            "Regarder le porteur en se deplacant."
+          ],
+          "watch": [
+            "Les eleves attendent-ils dans leur coin ou se deplacent-ils ?",
+            "Deux attaquants occupent-ils souvent le meme espace ?",
+            "L'appel de balle est-il visible ?"
+          ],
+          "errors": [
+            "Rester statique dans un coin en attendant.",
+            "Se diriger vers le coin ou est deja un partenaire.",
+            "Ne pas signaler sa disponibilite."
+          ],
+          "feedback": [
+            "Ce coin est pris : va dans l'autre.",
+            "Leve la main, il ne peut pas deviner.",
+            "Bouge des qu'il a le ballon, pas apres."
+          ],
+          "plus": [
+            "Ajouter un troisieme defenseur.",
+            "Interdire de rester plus de 3 secondes dans un coin."
+          ],
+          "minus": [
+            "Un seul defenseur.",
+            "Agrandir le carre a 10 metres."
+          ],
+          "diff": {
+            "facilitee": "Carre de 10 m, un seul defenseur passif.",
+            "normale": "Carre de 8 m, deux defenseurs actifs.",
+            "complexifiee": "Trois defenseurs, 3 secondes maximum par coin."
+          },
+          "safety": [
+            "Le defenseur joue le ballon, pas le corps.",
+            "Carres espaces d'au moins 4 metres.",
+            "Regarder autour de soi en changeant de coin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Deux contre un vers la cible",
+          "objective": "Exploiter le surnombre : le non-porteur se demarque, le porteur choisit entre avancer et passer.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 4
+            },
+            {
+              "label": "plots",
+              "fixed": 8
+            },
+            {
+              "label": "chasubles",
+              "fixed": 4
+            }
+          ],
+          "organization": "Sur un demi-terrain, deux attaquants partent du milieu contre un defenseur place devant le panier. Depart toutes les 20 secondes. Le defenseur devient attaquant a la fin de son action.",
+          "studentGoal": "Marquer a deux contre un en choisissant le bon moment pour passer.",
+          "instructions": [
+            "Si le defenseur vient sur moi, je passe a mon partenaire libre.",
+            "S'il reste sur mon partenaire, j'avance et je tire.",
+            "Non-porteur : je cours a hauteur du porteur, pas derriere lui.",
+            "On tire toujours pres du panier."
+          ],
+          "success": [
+            "Trois reussites sur quatre tentatives.",
+            "La decision passe ou tir correspond au choix du defenseur.",
+            "Le tir est pris a moins de 3 metres du panier."
+          ],
+          "execution": [
+            "Le non-porteur reste large, pas colle au porteur.",
+            "Le porteur regarde le defenseur, pas le ballon.",
+            "Passer au dernier moment, quand le defenseur s'engage."
+          ],
+          "watch": [
+            "Le porteur regarde-t-il le defenseur avant de decider ?",
+            "Le non-porteur reste-t-il a hauteur ou traine-t-il derriere ?"
+          ],
+          "errors": [
+            "Passer systematiquement sans regarder le defenseur.",
+            "Garder le ballon jusqu'au bout meme quand le defenseur s'engage.",
+            "Courir derriere le porteur au lieu d'etre a sa hauteur."
+          ],
+          "feedback": [
+            "Regarde-le : s'il vient sur toi, tu passes.",
+            "Reste a sa hauteur, sinon tu ne sers a rien.",
+            "Il t'a laisse : avance et tire."
+          ],
+          "plus": [
+            "Deux defenseurs pour trois attaquants.",
+            "Limiter a deux dribbles."
+          ],
+          "minus": [
+            "Defenseur passif, bras dans le dos.",
+            "Depart plus proche du panier."
+          ],
+          "diff": {
+            "facilitee": "Defenseur passif, depart a 6 metres du panier.",
+            "normale": "Defenseur actif, depart au milieu du demi-terrain.",
+            "complexifiee": "Trois contre deux, deux dribbles maximum."
+          },
+          "safety": [
+            "Pas de contact : le defenseur joue le ballon.",
+            "Un seul groupe engage a la fois.",
+            "Zone sous le panier degagee."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Match avec bonus demarquage",
+          "objective": "Valoriser explicitement le demarquage en match, pour qu'il devienne un comportement recherche et non subi.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "3 contre 3 sur deux demi-terrains, matchs de 5 minutes. Un panier marque apres une passe a un joueur demarque dans une zone de marque compte double.",
+          "studentGoal": "Marquer des paniers a deux points en jouant avec les joueurs demarques.",
+          "instructions": [
+            "Un panier apres passe a un joueur demarque compte double.",
+            "Je me demarque en allant dans une zone libre, pas vers le ballon.",
+            "Observateur : je compte les demarquages de mon joueur.",
+            "Je leve la main quand je suis demarque."
+          ],
+          "success": [
+            "Au moins un panier a deux points par equipe.",
+            "Chaque joueur se demarque au moins deux fois dans le match.",
+            "Le jeu occupe la largeur du terrain."
+          ],
+          "execution": [
+            "Partir dans l'espace libre au moment ou le partenaire recoit.",
+            "Signaler sa disponibilite par la main.",
+            "Ne pas rester derriere un adversaire."
+          ],
+          "watch": [
+            "La grappe se defait-elle par rapport a la seance 1 ?",
+            "Les eleves discrets recoivent-ils davantage ?"
+          ],
+          "errors": [
+            "Se demarquer trop loin, hors de portee de passe.",
+            "Revenir vers le porteur au lieu de s'ecarter.",
+            "Se demarquer sans regarder le porteur."
+          ],
+          "feedback": [
+            "Ecarte-toi, mais reste a portee de passe.",
+            "Regarde-le pendant que tu bouges.",
+            "Bravo : tu t'es demarque, c'est pour ca que la passe est passee."
+          ],
+          "plus": [
+            "Seuls les paniers apres demarquage comptent.",
+            "Ajouter la regle des trois passes."
+          ],
+          "minus": [
+            "Tous les paniers comptent, le bonus s'ajoute.",
+            "Jouer en surnombre."
+          ],
+          "diff": {
+            "facilitee": "Surnombre 3 contre 2, bonus explique et rappele a chaque possession.",
+            "normale": "3 contre 3 avec bonus au demarquage.",
+            "complexifiee": "Seuls les paniers issus d'un demarquage comptent."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire.",
+            "Zones de marque materialisees et degagees.",
+            "Un seul match par demi-terrain."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il aller quand un partenaire a le ballon : vers lui, ou ailleurs ?",
+          "Comment faire savoir a son partenaire qu'on est libre ?"
+        ],
+        "key": "Le joueur sans ballon est aussi important que le porteur : c'est en s'ecartant vers un espace libre qu'il rend la passe possible."
+      },
+      "socialRoles": [
+        "Observateur du demarquage : compte les fois ou son joueur se rend disponible.",
+        "Arbitre debutant : signale les marchers avec l'aide du professeur."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Match evalue de mi-cycle",
+      "mainObjective": "Faire le point a mi-parcours : mesurer les acquis en situation de match et fixer a chaque eleve un objectif personnel pour la suite.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau de jeu par rapport au debut du cycle.",
+        "Tenir le role d'observateur avec une fiche structuree.",
+        "Ecrire un objectif personnel pour les trois dernieres seances."
+      ],
+      "linkToPrevious": "Les quatre premieres seances ont traite la conservation, la passe et le demarquage : on verifie ce qui est reellement transfere en match.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau et a formule un objectif precis pour la fin du cycle.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "fixed": 2
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve"
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          }
+        ],
+        "instructions": [
+          "Preparer les fiches nominatives par equipe, avec les criteres deja imprimes.",
+          "Afficher au mur les quatre criteres observes, en grand.",
+          "Constituer des equipes de niveau homogene pour que chacun puisse jouer.",
+          "Prevoir un espace calme pour l'ecriture de l'objectif personnel."
+        ],
+        "sketch": "Deux demi-terrains de match.\nAffichage mural des criteres a l'entree du gymnase.\nCoin ecriture avec les fiches sur le banc."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mais court, mene en partie par les eleves : ils doivent commencer a savoir s'echauffer seuls, ce qui est un attendu du cycle.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train autonome",
+            "details": [
+              "Course souple : un eleve mene, les autres suivent.",
+              "Deplacements varies choisis par le meneur."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Articulations sollicitees au basket : chevilles, genoux, epaules, poignets.",
+              "Deux exercices proposes par les eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action avec ballon",
+            "details": [
+              "Dribble et passes a deux.",
+              "Trois tirs pres du panier par eleve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Matchs evalues 3 contre 3",
+          "objective": "Observer chaque eleve en match reel sur les quatre criteres travailles depuis le debut du cycle.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Matchs de 6 minutes en 3 contre 3 sur deux demi-terrains. Chaque eleve joue deux matchs et observe un camarade pendant un troisieme. Le professeur observe une equipe par match.",
+          "studentGoal": "Montrer en match ce que j'ai appris : garder le ballon, passer, me demarquer.",
+          "instructions": [
+            "Je joue normalement, les regles sont celles des seances precedentes.",
+            "Observateur : je remplis la fiche de mon camarade, critere par critere.",
+            "Je ne conteste pas les decisions de l'arbitre.",
+            "A la fin, je lis ma fiche avec mon observateur."
+          ],
+          "success": [
+            "Moins de deux fautes de conservation sur le match.",
+            "Au moins deux demarquages reperes par l'observateur.",
+            "Au moins une passe a un partenaire mieux place.",
+            "Aucune contestation de l'arbitrage."
+          ],
+          "execution": [
+            "Dribbler tete levee, s'arreter sur deux appuis.",
+            "S'ecarter des que le partenaire recoit.",
+            "Tirer pres du panier."
+          ],
+          "watch": [
+            "Quels acquis tiennent sous la pression du match ?",
+            "Quels eleves ont progresse depuis la seance 1 ?",
+            "Les observateurs remplissent-ils serieusement ?"
+          ],
+          "errors": [
+            "Retomber dans le jeu en grappe sous la pression.",
+            "Observer sans regarder, en cochant au hasard.",
+            "Contester une decision."
+          ],
+          "feedback": [
+            "Rappelle-toi les quatre coins : ecarte-toi.",
+            "Observateur, regarde ton joueur, pas le ballon.",
+            "Le match est fini, on en parle apres."
+          ],
+          "plus": [
+            "Arbitrage tenu entierement par un eleve."
+          ],
+          "minus": [
+            "Matchs plus courts de 4 minutes.",
+            "Equipes de niveau tres homogene."
+          ],
+          "diff": {
+            "facilitee": "Match de 4 minutes, equipe homogene, criteres rappeles pendant le jeu.",
+            "normale": "Match de 6 minutes, quatre criteres observes.",
+            "complexifiee": "Match de 6 minutes avec arbitrage integralement tenu par les eleves."
+          },
+          "safety": [
+            "Aucun contact avec l'adversaire.",
+            "Un seul match par demi-terrain.",
+            "Eleves en attente assis sur le banc, hors du terrain."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lecture de la fiche a deux",
+          "objective": "Faire lire et comprendre a chaque eleve ce qui a ete observe de son jeu, avant d'en tirer un objectif.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, joueur et observateur assis a l'ecart des terrains. L'observateur explique ce qu'il a note, le joueur pose des questions.",
+          "studentGoal": "Comprendre precisement ce que mon camarade a observe de mon jeu.",
+          "instructions": [
+            "Observateur : je dis ce que j'ai vu, avec des exemples precis.",
+            "Joueur : j'ecoute et je demande des precisions.",
+            "On cherche ensemble un point fort et un point a ameliorer.",
+            "On ne discute pas la note, on discute ce qui a ete vu."
+          ],
+          "success": [
+            "Chaque eleve sait citer un point fort de son jeu.",
+            "Chaque eleve sait citer un point precis a ameliorer.",
+            "L'echange se fait sans conflit."
+          ],
+          "execution": [
+            "Donner un exemple concret plutot qu'un jugement general.",
+            "Parler du jeu, pas de la personne.",
+            "Ecouter jusqu'au bout avant de repondre."
+          ],
+          "watch": [
+            "Les retours sont-ils precis ou generaux ?",
+            "Les eleves acceptent-ils le retour d'un camarade ?"
+          ],
+          "errors": [
+            "Dire simplement bien ou nul, sans exemple.",
+            "Contester au lieu d'ecouter.",
+            "Remplir la fiche apres coup au lieu de pendant le match."
+          ],
+          "feedback": [
+            "Donne-lui un exemple : a quel moment tu l'as vu ?",
+            "On parle de ce qu'il a fait, pas de lui.",
+            "Ecoute d'abord, tu repondras apres."
+          ],
+          "plus": [
+            "Comparer avec la fiche d'observation de la seance 1."
+          ],
+          "minus": [
+            "Le professeur mene l'echange avec le binome."
+          ],
+          "diff": {
+            "facilitee": "Echange guide par le professeur, criteres relus a voix haute.",
+            "normale": "Echange autonome a deux.",
+            "complexifiee": "Echange a deux avec comparaison chiffree seance 1 / seance 5."
+          },
+          "safety": [
+            "Temps calme a l'ecart des terrains, aucun jeu en cours a proximite.",
+            "Ballons ranges pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Mon objectif pour la fin du cycle",
+          "objective": "Transformer le bilan en un objectif personnel simple et verifiable pour les trois dernieres seances.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement, assis, chacun ecrit son objectif au dos de sa fiche. Le professeur passe valider ou reformuler.",
+          "studentGoal": "Ecrire un objectif que je pourrai verifier a la derniere seance.",
+          "instructions": [
+            "J'ecris un seul objectif, precis et verifiable.",
+            "J'evite les objectifs vagues comme mieux jouer.",
+            "Je choisis parmi les quatre criteres celui ou je suis le moins bon.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'objectif est ecrit et lisible.",
+            "L'objectif porte sur un critere precis du cycle.",
+            "L'objectif est verifiable en match."
+          ],
+          "execution": [
+            "Formuler avec un verbe d'action et un nombre.",
+            "Relier l'objectif a ce que l'observateur a note.",
+            "Ecrire en une seule phrase."
+          ],
+          "watch": [
+            "Les objectifs sont-ils realistes et mesurables ?",
+            "Correspondent-ils vraiment au point faible observe ?"
+          ],
+          "errors": [
+            "Objectif trop vague : etre meilleur.",
+            "Objectif deja atteint, pour se rassurer.",
+            "Recopier l'objectif du voisin."
+          ],
+          "feedback": [
+            "Ajoute un nombre : combien de fois par match ?",
+            "C'est deja acquis pour toi : vise plus haut.",
+            "Choisis le critere ou ta fiche est la moins bonne."
+          ],
+          "plus": [
+            "Ecrire aussi le moyen concret d'y arriver."
+          ],
+          "minus": [
+            "Choisir un objectif dans une liste proposee."
+          ],
+          "diff": {
+            "facilitee": "Objectif choisi dans une liste de quatre propositions ecrites au tableau.",
+            "normale": "Objectif redige librement, valide par le professeur.",
+            "complexifiee": "Objectif et moyen d'y parvenir rediges."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des terrains.",
+            "Materiel range avant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre objectif pour les trois dernieres seances ?",
+          "Sur quel critere la classe a-t-elle le plus progresse depuis la seance 1 ?"
+        ],
+        "key": "A mi-cycle, chacun sait ce qu'il sait faire et ce qu'il lui reste a travailler : les trois dernieres seances servent a atteindre cet objectif."
+      },
+      "socialRoles": [
+        "Observateur evaluateur : remplit la fiche d'un camarade pendant un match complet.",
+        "Arbitre : tient le sifflet sur un match avec l'appui du professeur.",
+        "Responsable des fiches : distribue et recupere les fiches nominatives."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Marquer depuis une position favorable",
+      "mainObjective": "Identifier une position favorable de tir et s'y rendre, plutot que de tirer de loin des qu'on touche le ballon.",
+      "secondaryObjectives": [
+        "Tirer pres du panier avec une technique stable.",
+        "Renoncer a un tir difficile pour passer a mieux place.",
+        "Enchainer reception, appui et tir."
+      ],
+      "linkToPrevious": "Les eleves font maintenant circuler le ballon et se demarquent : il reste a conclure ces actions par un tir choisi.",
+      "prerequisiteForNext": "Chaque eleve identifie la zone favorable et y prend ses tirs en match.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "per": 0.5,
+            "min": 8
+          },
+          {
+            "label": "plots",
+            "fixed": 20
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 8
+          },
+          {
+            "label": "craie ou rubans de marquage",
+            "fixed": 1
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Materialiser au sol, avec les plots ou la craie, la zone favorable : un demi-cercle a 3 metres du panier.",
+          "Poser des cerceaux comme reperes de tir a l'interieur de la zone.",
+          "Preparer deux ateliers de tir, un par panier.",
+          "Verifier que les ballons rebondissent correctement."
+        ],
+        "sketch": "Demi-cercle de plots a 3 m du panier = zone favorable.\nCerceaux places dans la zone : reperes de tir.\nDeux ateliers, un par panier."
+      },
+      "warmup": {
+        "rationale": "Prepare les epaules et les poignets, tres sollicites par les tirs, et remet les eleves dans le geste avant le travail specifique.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, montees de genoux.",
+              "Deplacements lateraux."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules : cercles avant et arriere.",
+              "Poignets et doigts : flexions, extensions.",
+              "Chevilles et genoux : flexions."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Tirs progressifs",
+            "details": [
+              "Tirs a 1 metre du panier, 5 essais.",
+              "Tirs a 2 metres, 5 essais.",
+              "Tirs a 3 metres, 5 essais : on observe ou la reussite chute."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "La zone qui rapporte",
+          "objective": "Faire decouvrir par le comptage que la reussite au tir chute avec la distance, et donc qu'il existe une zone favorable.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "per": 0.5,
+              "min": 8
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, un tireur un compteur. Trois zones marquees : 1 metre, 3 metres, 6 metres. Chaque eleve fait 6 tirs par zone. On note les reussites, puis on compare.",
+          "studentGoal": "Trouver a quelle distance je marque le plus souvent.",
+          "instructions": [
+            "Je fais 6 tirs dans chaque zone, mon partenaire compte.",
+            "Je note mes reussites sur ma fiche, zone par zone.",
+            "Je regarde ensuite dans quelle zone je suis le meilleur.",
+            "Compteur : je compte a voix haute et je rends le ballon."
+          ],
+          "success": [
+            "Les 18 tirs sont realises et comptes.",
+            "L'eleve identifie sa meilleure zone.",
+            "La reussite est plus forte pres du panier qu'a 6 metres."
+          ],
+          "execution": [
+            "Pieds face au panier, genoux flechis.",
+            "Ballon arme au-dessus de l'epaule, coude sous le ballon.",
+            "Finir le geste : poignet casse vers le panier."
+          ],
+          "watch": [
+            "Les eleves tirent-ils a bras casse ou lancent-ils a deux mains depuis la poitrine ?",
+            "Comprennent-ils le lien entre distance et reussite ?"
+          ],
+          "errors": [
+            "Tirer en poussant le ballon depuis la poitrine.",
+            "Tirer sans flechir les jambes.",
+            "Vouloir absolument tirer de loin pour impressionner."
+          ],
+          "feedback": [
+            "Flechis les jambes : la force vient des jambes, pas des bras.",
+            "Coude sous le ballon, pas sur le cote.",
+            "Regarde ta fiche : de pres, tu marques deux fois plus."
+          ],
+          "plus": [
+            "Ajouter une zone a 4,50 metres.",
+            "Tirer apres un dribble."
+          ],
+          "minus": [
+            "Rapprocher les zones : 1 m, 2 m, 4 m.",
+            "Abaisser le panier."
+          ],
+          "diff": {
+            "facilitee": "Zones a 1 m, 2 m et 4 m, panier abaisse si reglable.",
+            "normale": "Zones a 1 m, 3 m et 6 m.",
+            "complexifiee": "Memes zones mais tir apres un dribble et un arret."
+          },
+          "safety": [
+            "Un seul tireur par panier a la fois.",
+            "Le compteur reste sur le cote, jamais sous le panier.",
+            "Recuperer les ballons perdus sans traverser l'atelier voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Recevoir et tirer",
+          "objective": "Enchainer une reception, un arret equilibre et un tir dans la zone favorable, comme en match.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 6
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 6
+            },
+            {
+              "label": "plots",
+              "fixed": 8
+            }
+          ],
+          "organization": "Groupes de trois : un passeur, un tireur qui part en course vers un cerceau dans la zone favorable, un recuperateur de ballon. Rotation toutes les trois actions.",
+          "studentGoal": "Recevoir en mouvement, m'arreter dans la zone, et tirer sans temps mort.",
+          "instructions": [
+            "Je pars en course, je recois la passe dans le cerceau.",
+            "Je m'arrete sur deux appuis, face au panier.",
+            "Je tire tout de suite, sans redribbler.",
+            "Recuperateur : je renvoie le ballon au passeur."
+          ],
+          "success": [
+            "Quatre enchainements reussis sur six, sans faute de marcher.",
+            "Le tir est pris depuis la zone favorable.",
+            "Au moins deux paniers marques sur six essais."
+          ],
+          "execution": [
+            "S'arreter les deux pieds en meme temps, epaules face au panier.",
+            "Armer le ballon des la reception.",
+            "Flechir les jambes avant de tirer."
+          ],
+          "watch": [
+            "L'arret est-il equilibre, ou l'eleve continue-t-il d'avancer ?",
+            "Le tir part-il tout de suite, ou apres hesitation ?"
+          ],
+          "errors": [
+            "Redribbler apres la reception.",
+            "S'arreter dos au panier et devoir se retourner.",
+            "Tirer sans avoir stabilise ses appuis."
+          ],
+          "feedback": [
+            "Arrete-toi face au panier, pas de cote.",
+            "Le ballon est deja arme quand tu le recois.",
+            "Deux pieds en meme temps, puis tu tires."
+          ],
+          "plus": [
+            "Ajouter un defenseur passif pres du cerceau.",
+            "Tirer en course sans marquer d'arret."
+          ],
+          "minus": [
+            "Recevoir a l'arret dans le cerceau.",
+            "Rapprocher le cerceau du panier."
+          ],
+          "diff": {
+            "facilitee": "Reception a l'arret dans un cerceau a 2 metres du panier.",
+            "normale": "Reception en mouvement, arret, tir depuis la zone favorable.",
+            "complexifiee": "Reception en mouvement avec un defenseur passif."
+          },
+          "safety": [
+            "Un seul groupe par panier.",
+            "Le recuperateur reste hors de l'axe du tir.",
+            "Ballons ramasses immediatement, jamais laisses au sol sous le panier."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Match zone favorable",
+          "objective": "Faire du choix de tir une decision consciente en match : ne compter que les tirs pris dans la zone.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "3 contre 3, matchs de 5 minutes. Seuls les paniers marques depuis la zone favorable comptent. Les tirs de loin ne rapportent rien.",
+          "studentGoal": "Amener le ballon jusqu'a la zone favorable avant de tirer.",
+          "instructions": [
+            "Seuls les tirs pris dans la zone comptent des points.",
+            "Si je suis trop loin, je passe a un partenaire mieux place.",
+            "Observateur : je compte les tirs pris dans la zone et hors zone.",
+            "Je ne conteste pas la decision de l'arbitre sur la zone."
+          ],
+          "success": [
+            "Plus de la moitie des tirs de l'equipe sont pris dans la zone.",
+            "Au moins un panier marque par equipe.",
+            "Au moins une passe faite a un partenaire mieux place."
+          ],
+          "execution": [
+            "Regarder ou sont les partenaires avant de tirer.",
+            "Passer plutot que forcer un tir difficile.",
+            "Attaquer la zone en dribblant quand elle est libre."
+          ],
+          "watch": [
+            "Les eleves renoncent-ils aux tirs de loin ?",
+            "Le ballon progresse-t-il jusqu'a la zone ?"
+          ],
+          "errors": [
+            "Tirer de loin par habitude malgre la regle.",
+            "Se precipiter dans la zone sans regarder la defense.",
+            "Rester tous groupes dans la zone."
+          ],
+          "feedback": [
+            "Tu es trop loin : donne-la a celui qui est dans la zone.",
+            "Regarde avant de tirer : quelqu'un est mieux place.",
+            "Bonne decision, tu as passe au lieu de forcer."
+          ],
+          "plus": [
+            "Reduire la zone favorable a 2 metres.",
+            "Ajouter la regle des trois passes."
+          ],
+          "minus": [
+            "Agrandir la zone a 4 metres.",
+            "Compter les tirs hors zone pour un point."
+          ],
+          "diff": {
+            "facilitee": "Zone elargie a 4 m, tirs hors zone valant 1 point.",
+            "normale": "Zone a 3 m, seuls les tirs en zone comptent.",
+            "complexifiee": "Zone reduite a 2 m et trois passes obligatoires."
+          },
+          "safety": [
+            "Aucun contact dans la zone, qui devient dense.",
+            "Un seul match par demi-terrain.",
+            "Plots de la zone poses a plat pour ne pas faire trebucher."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "A quelle distance marquez-vous le plus souvent, d'apres vos fiches ?",
+          "Qu'est-ce qui est le plus utile pour l'equipe : tirer de loin, ou passer a quelqu'un de bien place ?"
+        ],
+        "key": "Un bon tir n'est pas un tir spectaculaire : c'est un tir pris pres du panier, dans une position ou on marque souvent."
+      },
+      "socialRoles": [
+        "Compteur de tirs : releve les tirs en zone et hors zone.",
+        "Recuperateur de ballons : securise l'atelier en ramassant les ballons.",
+        "Arbitre de zone : indique si le tir a ete pris dans la zone."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Defendre et recuperer le ballon",
+      "mainObjective": "Genez la progression du porteur et recuperer le ballon sans faire faute, pour que le jeu ne soit plus a sens unique.",
+      "secondaryObjectives": [
+        "Se placer entre le porteur et le panier.",
+        "Recuperer le ballon en interceptant plutot qu'en arrachant.",
+        "Revenir defendre apres avoir perdu le ballon."
+      ],
+      "linkToPrevious": "Le cycle a jusqu'ici traite l'attaque : sans defense organisee, les matchs restent desequilibres et les acquis d'attaque ne sont pas eprouves.",
+      "prerequisiteForNext": "Chaque eleve se place correctement en defense et recupere au moins un ballon sans faute.",
+      "setup": {
+        "installationMinutes": 7,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "fixed": 6
+          },
+          {
+            "label": "plots",
+            "fixed": 20
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.34,
+            "min": 4
+          }
+        ],
+        "instructions": [
+          "Delimiter deux couloirs de 8 metres de large pour le un contre un.",
+          "Marquer une ligne d'arrivee que le porteur doit franchir.",
+          "Preparer les chasubles pour distinguer clairement attaque et defense.",
+          "Rappeler par affichage la regle du non-contact."
+        ],
+        "sketch": "Deux couloirs de 8 m de large avec ligne d'arrivee au fond.\nDemi-terrain libre pour le jeu reduit.\nAffichage non-contact a l'entree."
+      },
+      "warmup": {
+        "rationale": "Prepare les deplacements lateraux et les flexions de jambes, qui sont la position de base du defenseur.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction.",
+              "Pas chasses sur la largeur du terrain."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Chevilles, genoux, hanches : flexions et cercles.",
+              "Fentes laterales, 8 de chaque cote."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Position du defenseur",
+            "details": [
+              "Position de base : genoux flechis, bras ecartes, sur 20 secondes.",
+              "Deplacements lateraux en position basse, aller-retour.",
+              "Miroir a deux : suivre les deplacements de son partenaire."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Le un contre un du couloir",
+          "objective": "Empecher un porteur de franchir une ligne, en se placant correctement et sans contact.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 6
+            },
+            {
+              "label": "plots",
+              "fixed": 20
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Couloirs de 8 metres de large, 10 metres de long. Un attaquant part avec le ballon, un defenseur doit l'empecher d'atteindre la ligne. Rotation apres chaque passage.",
+          "studentGoal": "Empecher mon adversaire d'atteindre la ligne, sans le toucher.",
+          "instructions": [
+            "Defenseur : je me place entre lui et la ligne.",
+            "Je recule en pas chasses, je ne croise pas les pieds.",
+            "Je ne touche pas l'attaquant : je joue le ballon.",
+            "Attaquant : je change de direction pour le prendre de vitesse."
+          ],
+          "success": [
+            "Le defenseur empeche le passage une fois sur deux.",
+            "Aucun contact sur les cinq passages.",
+            "Le defenseur reste toujours face a l'attaquant."
+          ],
+          "execution": [
+            "Genoux flechis, centre de gravite bas.",
+            "Bras ecartes pour occuper de l'espace.",
+            "Regarder le ventre de l'attaquant, pas le ballon."
+          ],
+          "watch": [
+            "Le defenseur croise-t-il les pieds en reculant ?",
+            "Se fait-il prendre par la premiere feinte ?",
+            "Y a-t-il des contacts ?"
+          ],
+          "errors": [
+            "Se jeter sur le ballon et se faire eliminer.",
+            "Croiser les pieds et perdre l'equilibre.",
+            "Retenir l'attaquant par le bras ou le maillot."
+          ],
+          "feedback": [
+            "Reste sur tes appuis, ne te jette pas.",
+            "Pas chasses : tes pieds ne se croisent jamais.",
+            "Regarde son ventre : le ballon ment, pas le corps."
+          ],
+          "plus": [
+            "Retrecir le couloir a 5 metres.",
+            "Le defenseur part un metre en retard."
+          ],
+          "minus": [
+            "Elargir le couloir a 10 metres.",
+            "Limiter l'attaquant a deux dribbles."
+          ],
+          "diff": {
+            "facilitee": "Couloir large, attaquant limite a deux dribbles.",
+            "normale": "Couloir de 8 m, jeu libre.",
+            "complexifiee": "Couloir de 5 m, defenseur partant en retard."
+          },
+          "safety": [
+            "Non-contact strict : aucune main sur l'adversaire.",
+            "Un seul duel par couloir a la fois.",
+            "Ligne d'arrivee a 2 metres du mur au minimum."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Interception dans le carre",
+          "objective": "Recuperer le ballon en lisant la trajectoire de la passe, plutot qu'en attaquant le porteur.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 4
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "fixed": 8
+            }
+          ],
+          "organization": "Carre de 8 metres, quatre attaquants sur les cotes qui se passent le ballon, deux defenseurs au centre qui tentent d'intercepter. Le defenseur qui intercepte echange avec le passeur.",
+          "studentGoal": "Intercepter le ballon en me placant sur la trajectoire de la passe.",
+          "instructions": [
+            "Defenseur : je regarde les yeux et les epaules du porteur.",
+            "Je me place entre le porteur et le partenaire le plus proche.",
+            "J'intercepte le ballon, je ne touche pas les joueurs.",
+            "Si j'intercepte, je prends la place du passeur."
+          ],
+          "success": [
+            "Au moins deux interceptions par defenseur en trois minutes.",
+            "Aucun contact avec les attaquants.",
+            "Le defenseur se deplace en permanence."
+          ],
+          "execution": [
+            "Anticiper la passe plutot que de reagir apres.",
+            "Bras tendu du cote de la passe probable.",
+            "Rester en mouvement, jamais a l'arret."
+          ],
+          "watch": [
+            "Le defenseur anticipe-t-il ou court-il apres le ballon ?",
+            "Reste-t-il au centre sans bouger ?"
+          ],
+          "errors": [
+            "Rester immobile au centre du carre.",
+            "Foncer sur le porteur en laissant la passe libre.",
+            "Bousculer un attaquant en tentant l'interception."
+          ],
+          "feedback": [
+            "Regarde ses epaules : elles disent ou part la passe.",
+            "Place-toi sur la ligne de passe, pas sur lui.",
+            "Bouge en permanence, tu es trop previsible."
+          ],
+          "plus": [
+            "Reduire le carre a 6 metres.",
+            "Un seul defenseur pour quatre attaquants."
+          ],
+          "minus": [
+            "Agrandir le carre a 10 metres.",
+            "Trois defenseurs."
+          ],
+          "diff": {
+            "facilitee": "Carre de 10 m, trois defenseurs, passes obligatoirement directes.",
+            "normale": "Carre de 8 m, deux defenseurs.",
+            "complexifiee": "Carre de 6 m, un seul defenseur, passes libres."
+          },
+          "safety": [
+            "Interception du ballon uniquement, jamais de contact.",
+            "Carres espaces d'au moins 4 metres.",
+            "Passes a hauteur de poitrine."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 16,
+          "title": "Match avec bonus defensif",
+          "objective": "Valoriser la recuperation de balle en match, pour que la defense devienne un comportement actif et non subi.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "3 contre 3, matchs de 5 minutes. Chaque ballon recupere proprement (interception ou rebond) rapporte un point a l'equipe, en plus des paniers.",
+          "studentGoal": "Recuperer des ballons pour mon equipe sans commettre de faute.",
+          "instructions": [
+            "Chaque ballon intercepte rapporte un point a mon equipe.",
+            "Une faute de contact annule le point et rend le ballon.",
+            "Quand mon equipe perd le ballon, je reviens defendre tout de suite.",
+            "Observateur : je compte les recuperations et les fautes."
+          ],
+          "success": [
+            "Au moins deux recuperations propres par equipe.",
+            "Moins de deux fautes de contact par equipe.",
+            "Le repli defensif se fait sans rappel du professeur."
+          ],
+          "execution": [
+            "Se placer entre son adversaire et le panier.",
+            "Revenir en courant des la perte du ballon.",
+            "Jouer le ballon, jamais le corps."
+          ],
+          "watch": [
+            "Les eleves reviennent-ils defendre, ou restent-ils en attaque ?",
+            "La recherche du bonus genere-t-elle des fautes ?"
+          ],
+          "errors": [
+            "Rester devant en esperant une passe longue.",
+            "Arracher le ballon pour gagner le bonus.",
+            "Defendre en regardant seulement le ballon."
+          ],
+          "feedback": [
+            "Ballon perdu : tu redescends immediatement.",
+            "Interception, pas arrachage : sinon le point est annule.",
+            "Place-toi entre lui et le panier."
+          ],
+          "plus": [
+            "La recuperation vaut deux points.",
+            "Interdire la defense a moins d'un metre du porteur."
+          ],
+          "minus": [
+            "Seules les interceptions comptent, pas les rebonds.",
+            "Jouer en surnombre defensif."
+          ],
+          "diff": {
+            "facilitee": "Surnombre defensif 3 contre 2, bonus explique a chaque possession.",
+            "normale": "3 contre 3, bonus a chaque recuperation propre.",
+            "complexifiee": "Recuperation valant deux points, defense a distance imposee."
+          },
+          "safety": [
+            "Non-contact strict, faute sanctionnee immediatement.",
+            "Un seul match par demi-terrain.",
+            "Rappel de la regle avant chaque match."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il se placer pour empecher un adversaire d'avancer vers le panier ?",
+          "Comment recuperer un ballon sans faire faute ?"
+        ],
+        "key": "Bien defendre, c'est se placer entre l'adversaire et le panier, rester sur ses appuis, et jouer le ballon : jamais le corps."
+      },
+      "socialRoles": [
+        "Compteur de recuperations : releve interceptions et fautes.",
+        "Arbitre : signale les contacts, avec l'appui du professeur."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer en situation de match les acquis du cycle, et permettre a chaque eleve de verifier l'objectif fixe a mi-cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Tenir le role d'arbitre sur un match complet.",
+        "Tenir le role d'observateur avec la grille d'evaluation.",
+        "Accepter le resultat de la rencontre et savoir le commenter."
+      ],
+      "linkToPrevious": "Toutes les composantes du jeu ont ete travaillees : conservation, passe, demarquage, tir, defense. Le tournoi les remet ensemble.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait ce qu'il a acquis et ce qu'il pourrait travailler en poursuivant le basket.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "ballons de basket",
+            "fixed": 2
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "sifflets",
+            "fixed": 2
+          },
+          {
+            "label": "plots",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Afficher le tableau du tournoi et l'ordre des matchs a l'entree.",
+          "Preparer les grilles d'evaluation nominatives par equipe.",
+          "Ressortir les fiches de mi-cycle avec l'objectif de chaque eleve.",
+          "Delimiter clairement les zones favorables sur les deux demi-terrains.",
+          "Prevoir deux sifflets pour les arbitres eleves."
+        ],
+        "sketch": "Deux demi-terrains avec zone favorable marquee.\nTableau du tournoi affiche a l'entree.\nTable des observateurs avec grilles et fiches de mi-cycle."
+      },
+      "warmup": {
+        "rationale": "Echauffement mene par les eleves eux-memes : savoir s'echauffer avant un effort fait partie des attendus, et l'evaluation est le moment de le verifier.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque equipe s'echauffe seule pendant 5 minutes.",
+              "Le professeur circule et corrige."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Articulations du basket, menees par un eleve de chaque equipe."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action avec ballon",
+            "details": [
+              "Passes a deux et tirs dans la zone favorable.",
+              "Cinq tirs par eleve avant le premier match."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue 3 contre 3",
+          "objective": "Evaluer chaque eleve sur les cinq criteres du cycle, en match reel et sur plusieurs rencontres.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 2
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "sifflets",
+              "fixed": 2
+            }
+          ],
+          "organization": "Tournoi en 3 contre 3, matchs de 6 minutes, chaque equipe jouant trois matchs. Sur chaque match : deux equipes jouent, une arbitre, une observe avec les grilles. Le professeur evalue une equipe par match.",
+          "studentGoal": "Montrer tout ce que j'ai appris pendant le cycle, dans les trois roles : joueur, arbitre, observateur.",
+          "instructions": [
+            "Je joue mes trois matchs en respectant toutes les regles vues.",
+            "Quand j'arbitre, je siffle les marchers, les reprises et les contacts.",
+            "Quand j'observe, je remplis la grille de mon camarade.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Conservation du ballon sans faute sur la majorite des possessions.",
+            "Au moins deux demarquages reperes par match.",
+            "Les tirs sont pris dans la zone favorable.",
+            "Les roles d'arbitre et d'observateur sont tenus sans rappel."
+          ],
+          "execution": [
+            "Dribbler tete levee et s'arreter sur deux appuis.",
+            "S'ecarter des que le partenaire recoit le ballon.",
+            "Passer a un partenaire mieux place plutot que forcer.",
+            "Revenir defendre des la perte du ballon."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils sous la pression du tournoi ?",
+            "Les arbitres osent-ils siffler ?",
+            "Les resultats sont-ils acceptes sans conflit ?"
+          ],
+          "errors": [
+            "Retomber en grappe dans les moments serres.",
+            "Refuser d'arbitrer ou siffler au hasard.",
+            "Contester une decision d'arbitre."
+          ],
+          "feedback": [
+            "Ecarte-toi : souviens-toi des quatre coins.",
+            "Arbitre, tu as le sifflet : c'est toi qui decides.",
+            "Le match est joue, on en parle apres."
+          ],
+          "plus": [
+            "Arbitrage integralement autonome, sans intervention du professeur.",
+            "Tenue du score par les eleves."
+          ],
+          "minus": [
+            "Matchs de 4 minutes.",
+            "Arbitrage assiste par le professeur en permanence."
+          ],
+          "diff": {
+            "facilitee": "Matchs de 4 minutes, arbitrage assiste, criteres rappeles avant chaque match.",
+            "normale": "Matchs de 6 minutes, arbitrage eleve avec appui ponctuel.",
+            "complexifiee": "Matchs de 6 minutes, arbitrage et score entierement autonomes."
+          },
+          "safety": [
+            "Non-contact strict, rappele avant chaque match.",
+            "Un seul match par demi-terrain.",
+            "Eleves en attente assis, hors des terrains.",
+            "Arret immediat du jeu au coup de sifflet du professeur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon objectif est-il atteint ?",
+          "objective": "Faire verifier a chaque eleve, fiche en main, l'objectif qu'il s'etait fixe a la seance 5.",
+          "material": [
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement puis par deux, assis a l'ecart. Chacun compare son objectif de mi-cycle avec sa grille d'aujourd'hui, et ecrit une phrase de bilan.",
+          "studentGoal": "Dire si j'ai atteint mon objectif, et sur quoi je m'appuie pour l'affirmer.",
+          "instructions": [
+            "Je relis l'objectif que j'avais ecrit a la seance 5.",
+            "Je regarde ce que dit ma grille d'aujourd'hui sur ce point.",
+            "J'ecris une phrase : atteint, en partie, ou pas encore, et pourquoi.",
+            "Je le dis a mon camarade, qui me donne son avis."
+          ],
+          "success": [
+            "La comparaison est faite et ecrite.",
+            "L'eleve s'appuie sur un element observe, pas sur une impression.",
+            "L'echange a deux a lieu."
+          ],
+          "execution": [
+            "Citer un fait precis du tournoi.",
+            "Distinguer ce qui est atteint de ce qui reste a faire.",
+            "Ecrire une phrase complete."
+          ],
+          "watch": [
+            "Les eleves s'appuient-ils sur des faits ou sur un ressenti ?",
+            "Reconnaissent-ils leurs progres ?"
+          ],
+          "errors": [
+            "Repondre oui ou non sans justification.",
+            "Ne pas retrouver son objectif de mi-cycle.",
+            "Se devaloriser malgre des progres visibles."
+          ],
+          "feedback": [
+            "Sur quelle action precise tu t'appuies pour dire ca ?",
+            "Ta grille dit le contraire : regarde cette ligne.",
+            "Tu as progresse, meme si l'objectif n'est pas totalement atteint."
+          ],
+          "plus": [
+            "Ecrire aussi l'objectif suivant si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur relit l'objectif avec l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee par le professeur, reponse a choisir parmi trois formulations.",
+            "normale": "Comparaison autonome et phrase de bilan redigee.",
+            "complexifiee": "Bilan redige plus objectif suivant formule."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des terrains.",
+            "Aucun match en cours a proximite pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant collectivement ce que la classe a appris, et en rangeant le materiel ensemble.",
+          "material": [
+            {
+              "label": "ballons de basket",
+              "fixed": 8
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Classe assise en demi-cercle apres le rangement du materiel, mene par les responsables materiel de chaque equipe.",
+          "studentGoal": "Dire ce que je sais faire au basket aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Chaque equipe range son materiel avant de s'asseoir.",
+            "Chacun peut dire une chose apprise pendant le cycle.",
+            "On ecoute celui qui parle sans le couper.",
+            "On termine par les resultats du tournoi et les felicitations."
+          ],
+          "success": [
+            "Le materiel est range et compte.",
+            "Au moins un eleve par equipe s'exprime.",
+            "Les resultats sont annonces et acceptes."
+          ],
+          "execution": [
+            "Formuler un acquis concret plutot qu'un ressenti general.",
+            "Parler assez fort pour etre entendu du groupe.",
+            "Ecouter sans commenter."
+          ],
+          "watch": [
+            "Les eleves identifient-ils des acquis precis ?",
+            "Le rangement est-il pris en charge par tous ?"
+          ],
+          "errors": [
+            "Ne parler que du resultat du tournoi.",
+            "Laisser le rangement a deux eleves.",
+            "Couper la parole."
+          ],
+          "feedback": [
+            "Pas le score : ce que tu sais faire maintenant.",
+            "Tout le monde range, pas seulement les responsables.",
+            "Laisse-le finir, tu parleras apres."
+          ],
+          "plus": [
+            "Chaque equipe designe le joueur le plus utile collectivement, avec justification."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur propose des acquis, les eleves disent s'ils s'y reconnaissent.",
+            "normale": "Chacun formule librement un acquis.",
+            "complexifiee": "Acquis formule plus designation argumentee du joueur le plus utile."
+          },
+          "safety": [
+            "Materiel range avant de s'asseoir : aucun ballon au sol dans le demi-cercle.",
+            "Comptage des ballons et des chasubles avant de quitter la salle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire au basket aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Qu'est-ce qui est le plus important pour gagner un match : bien dribbler, ou bien jouer ensemble ?"
+        ],
+        "key": "Le basket se joue a plusieurs : on garde le ballon, on se demarque pour aider le porteur, on tire de pres, et on defend en revenant tous ensemble."
+      },
+      "socialRoles": [
+        "Arbitre : tient un match complet au sifflet, decision evaluee au meme titre que le jeu.",
+        "Observateur evaluateur : renseigne la grille finale d'un camarade.",
+        "Responsable materiel : rassemble et compte ballons et chasubles en fin de cycle."
+      ]
+    }
+  ]
+}
