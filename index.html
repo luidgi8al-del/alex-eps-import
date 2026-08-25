@@ -1766,7 +1766,7 @@
       try {
         const [slotsRes, activitiesRes, overridesRes] = await Promise.all([
           apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
-          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`),
           apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
         ]);
         if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
@@ -1979,12 +1979,13 @@
             return a < b + other.duration_minutes && b < a + s.duration_minutes;
           }).sort((a,b) => planningStartMinutes(a)-planningStartMinutes(b) || (a.teacher_label||"").localeCompare(b.teacher_label||"") || a.id.localeCompare(b.id));
           const laneCount = Math.max(1, overlapping.length), laneIndex = Math.max(0, overlapping.findIndex(x => x.id === s.id));
-          const activity = planningCommunityActivities.find(a => a.slot_id === s.id && a.period_number === planningPeriod)?.apsa_name || "A definir";
+          const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && a.period_number === planningPeriod);
+          const activity = periodInfo?.apsa_name || "A definir";
           html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${laneIndex * 100 / laneCount}% + 1px); right:auto; width:calc(${100 / laneCount}% - 2px);">
             <span class="cl">${s.class_label || "?"}</span>
             <span class="ap">${activity}</span>
             <span class="tc">${s.teacher_label || "?"}</span>
-            ${s.installation_name ? `<span class="ap">${s.installation_name}</span>` : ""}
+            ${(periodInfo?.installation_name || s.installation_name) ? `<span class="ap">${periodInfo?.installation_name || s.installation_name}</span>` : ""}
           </div>`;
         });
         html += `</div>`;
@@ -2098,6 +2099,35 @@
       });
     }
 
+    function periodPlannerHtml(grade, plans, openStep, prefix) {
+      if (!grade) return "";
+      let html = "";
+      for (let p = 1; p <= planningPeriodCount(grade); p++) {
+        const activityStep = 3 + (p - 1) * 2, installationStep = activityStep + 1;
+        const plan = plans[p] || {};
+        html += `<details ${openStep === activityStep ? "open" : ""}><summary><strong>Periode ${p} · Activite</strong>${plan.activity ? ` — ${plan.activity}` : " — A definir"}</summary>
+          <div class="periodActivityChoices" data-period="${p}" style="margin-top:8px">${(PROGRAMMATION[grade] || []).map(a => `<button type="button" class="secondary durationChip" data-period-activity="${p}" data-activity="${a}" style="margin-top:0">${a}</button>`).join(" ")}</div></details>
+          <details ${openStep === installationStep ? "open" : ""}><summary><strong>Periode ${p} · Installation</strong> — ${plan.installation || "Aucune"}</summary>
+          <div id="${prefix}Installation${p}" style="margin-top:8px">${installationChipsHtml(`${prefix}inst${p}`, plan.installation || null)}</div></details>`;
+      }
+      return html;
+    }
+
+    function wirePeriodPlanner(panel, grade, plans, prefix, onChange) {
+      panel.querySelectorAll("[data-period-activity]").forEach(btn => btn.addEventListener("click", () => {
+        const p = parseInt(btn.dataset.periodActivity, 10);
+        plans[p] = { ...(plans[p] || {}), activity: btn.dataset.activity };
+        onChange(3 + (p - 1) * 2 + 1);
+      }));
+      if (!grade) return;
+      for (let p = 1; p <= planningPeriodCount(grade); p++) {
+        wireInstallationChips(panel, `${prefix}Installation${p}`, `${prefix}inst${p}`, name => {
+          plans[p] = { ...(plans[p] || {}), installation: name };
+          onChange(p < planningPeriodCount(grade) ? 3 + p * 2 : -1);
+        });
+      }
+    }
+
     /** Ne relie/cree jamais depuis une liste de classes existantes : on choisit niveau+numero
      * (ex : 6e2), et findOrCreatePlanningClass se charge de relier ou creer automatiquement
      * (meme principe que l'app, section Planning). */
@@ -2106,43 +2136,42 @@
       let selectedGrade = null;
       let selectedNumber = null;
       let selectedDuration = 60;
-      let selectedInstallation = null;
+      let periodPlans = {};
+      let openStep = 0;
 
       function render() {
         panel.innerHTML = `
           <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
-          <label>Niveau</label>
-          <div id="planningGradeChips">${Object.keys(GRADE_LABELS).map(g =>
+          <details id="planningGradeStep" ${openStep === 0 ? "open" : ""}><summary><strong>Niveau</strong>${selectedGrade ? ` — ${GRADE_LABELS[selectedGrade]}` : ""}</summary>
+          <div id="planningGradeChips" style="margin-top:8px">${Object.keys(GRADE_LABELS).map(g =>
             `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
-          ).join(" ")}</div>
+          ).join(" ")}</div></details>
           ${selectedGrade ? `
-            <label>Numero de classe</label>
-            <div id="planningNumberChips">${[1,2,3,4,5,6,7,8].map(n =>
+            <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>Numero de classe</strong>${selectedNumber ? ` — ${selectedNumber}` : ""}</summary>
+            <div id="planningNumberChips" style="margin-top:8px">${[1,2,3,4,5,6,7,8].map(n =>
               `<button type="button" class="secondary durationChip" data-num="${n}" style="margin-top:0; ${n === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${n}</button>`
-            ).join(" ")}</div>` : ""}
-          <label>Duree</label>
-          <div id="planningDurationChips">${durationChipsHtml("dur", selectedDuration)}</div>
-          <label>Installation</label>
-          <div id="planningInstallationChips">${installationChipsHtml("inst", selectedInstallation)}</div>
-          <button id="planningConfirmBtn">Placer</button>
+            ).join(" ")}</div></details>` : ""}
+          <details id="planningDurationStep" ${openStep === 2 ? "open" : ""}><summary><strong>Duree</strong> — ${PLANNING_DURATIONS.find(x => x[0] === selectedDuration)?.[1] || ""}</summary>
+          <div id="planningDurationChips" style="margin-top:8px">${durationChipsHtml("dur", selectedDuration)}</div></details>
+          ${periodPlannerHtml(selectedGrade, periodPlans, openStep, "new")}
+          <button id="planningConfirmBtn">Valider</button>
           <button class="secondary" id="planningCancelBtn">Annuler</button>
           <div class="error" id="planningPanelError"></div>`;
         panel.querySelectorAll("#planningGradeChips [data-grade]").forEach(btn => {
-          btn.addEventListener("click", () => { selectedGrade = btn.dataset.grade; selectedNumber = null; render(); });
+          btn.addEventListener("click", () => { selectedGrade = btn.dataset.grade; selectedNumber = null; periodPlans = {}; openStep = 1; render(); });
         });
         if (selectedGrade) {
           panel.querySelectorAll("#planningNumberChips [data-num]").forEach(btn => {
-            btn.addEventListener("click", () => { selectedNumber = parseInt(btn.dataset.num, 10); render(); });
+            btn.addEventListener("click", () => { selectedNumber = parseInt(btn.dataset.num, 10); openStep = 2; render(); });
           });
         }
         panel.querySelectorAll("#planningDurationChips .durationChip").forEach(btn => {
           btn.addEventListener("click", () => {
             selectedDuration = parseInt(btn.dataset.dur, 10);
-            panel.querySelectorAll("#planningDurationChips .durationChip").forEach(b => b.style.cssText = "margin-top:0");
-            btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+            openStep = 3; render();
           });
         });
-        wireInstallationChips(panel, "planningInstallationChips", "inst", (name) => { selectedInstallation = name; });
+        wirePeriodPlanner(panel, selectedGrade, periodPlans, "new", next => { openStep = next; render(); });
         document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
         document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
           if (!selectedGrade || !selectedNumber) {
@@ -2150,7 +2179,7 @@
             return;
           }
           const classId = await planningFindOrCreateClass(selectedGrade, selectedNumber);
-          await planningCreateSlot(classId, day, minutes, selectedDuration, selectedInstallation);
+          await planningCreateSlot(classId, day, minutes, selectedDuration, null, periodPlans);
           panel.style.display = "none";
         });
       }
@@ -2205,40 +2234,44 @@
       });
     }
 
-    function openPlanningEditSlotPanel(slot) {
+    async function openPlanningEditSlotPanel(slot) {
       const panel = document.getElementById("planningPanel");
       const cl = planningClassById(slot.class_id);
       let selectedDuration = slot.duration_minutes;
-      let selectedInstallation = slot.installation_name || null;
-      panel.innerHTML = `
-        <h2>${planningClassLabel(cl)} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
-        <label>Duree</label>
-        <div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
-        <label>Installation</label>
-        <div id="planningInstallationChips3">${installationChipsHtml("inst3", selectedInstallation)}</div>
-        <button id="planningSaveBtn">Enregistrer</button>
-        <button class="danger" id="planningDeleteBtn">Supprimer</button>
-        <button class="secondary" id="planningCloseBtn">Fermer</button>`;
-      panel.style.display = "block";
-      panel.querySelectorAll("#planningDurationChips3 .durationChip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          selectedDuration = parseInt(btn.dataset.dur3, 10);
-          panel.querySelectorAll("#planningDurationChips3 .durationChip").forEach(b => b.style.cssText = "margin-top:0");
-          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
-        });
-      });
-      wireInstallationChips(panel, "planningInstallationChips3", "inst3", (name) => { selectedInstallation = name; });
-      document.getElementById("planningCloseBtn").addEventListener("click", () => panel.style.display = "none");
-      document.getElementById("planningSaveBtn").addEventListener("click", async () => {
+      let openStep = -1;
+      const activitiesRes = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?slot_id=eq.${slot.id}&deleted=eq.false&select=*`);
+      const rows = activitiesRes.ok ? await activitiesRes.json() : [];
+      const plans = Object.fromEntries(rows.map(r => [r.period_number, { id:r.id, activity:r.apsa_name, installation:r.installation_name || null }]));
+      function renderEdit() {
+        panel.innerHTML = `
+          <h2>${planningClassLabel(cl)} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
+          <label>Duree</label><div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
+          ${periodPlannerHtml(cl.grade, plans, openStep, "edit")}
+          <button id="planningSaveBtn">Enregistrer</button>
+          <button class="danger" id="planningDeleteBtn">Supprimer</button>
+          <button class="secondary" id="planningCloseBtn">Fermer</button>`;
+        panel.style.display = "block";
+        panel.querySelectorAll("#planningDurationChips3 .durationChip").forEach(btn => btn.addEventListener("click", () => {
+          selectedDuration = parseInt(btn.dataset.dur3, 10); renderEdit();
+        }));
+        wirePeriodPlanner(panel, cl.grade, plans, "edit", next => { openStep = next; renderEdit(); });
+        document.getElementById("planningCloseBtn").addEventListener("click", () => panel.style.display = "none");
+        document.getElementById("planningSaveBtn").addEventListener("click", async () => {
         const cl2 = planningClassById(slot.class_id);
         await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
           method: "PATCH",
           body: JSON.stringify({
-            duration_minutes: selectedDuration, installation_name: selectedInstallation,
+            duration_minutes: selectedDuration,
             class_label: planningClassLabel(cl2), teacher_label: planningTeacherLabel(),
             updated_at: new Date().toISOString()
           })
         });
+        for (const [period, plan] of Object.entries(plans)) {
+          if (!plan.activity) continue;
+          const body = { apsa_name:plan.activity, installation_name:plan.installation || null, updated_at:new Date().toISOString(), deleted:false };
+          if (plan.id) await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${plan.id}`, { method:"PATCH", body:JSON.stringify(body) });
+          else await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, { method:"POST", body:JSON.stringify({ ...body, id:crypto.randomUUID(), user_id:session.user_id, slot_id:slot.id, period_number:parseInt(period,10) }) });
+        }
         panel.style.display = "none";
         await loadPlanningSlots();
         renderPlanningTab();
@@ -2251,6 +2284,8 @@
         await loadPlanningSlots();
         renderPlanningTab();
       });
+      }
+      renderEdit();
     }
 
     function openPlanningActivityPanel(slot) {
@@ -2302,19 +2337,27 @@
     /** Libelle affiche aux collegues dans Planning global EPS : l'email, faute de nom stocke cote web. */
     function planningTeacherLabel() { return session.email || "?"; }
 
-    async function planningCreateSlot(classId, day, startMinutes, durationMinutes, installationName) {
+    async function planningCreateSlot(classId, day, startMinutes, durationMinutes, installationName, periodPlans = {}) {
       const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, "0")}:${String(startMinutes % 60).padStart(2, "0")}`;
       const cl = planningClassById(classId);
+      const newSlotId = crypto.randomUUID();
       await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots`, {
         method: "POST",
         body: JSON.stringify({
-          id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
+          id: newSlotId, user_id: session.user_id, class_id: classId,
           day_of_week: day, start_time: startTime, duration_minutes: durationMinutes,
           installation_name: installationName || null,
           class_label: planningClassLabel(cl), teacher_label: planningTeacherLabel(),
           updated_at: new Date().toISOString(), deleted: false
         })
       });
+      for (const [period, plan] of Object.entries(periodPlans)) {
+        if (!plan.activity) continue;
+        await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, {
+          method: "POST",
+          body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, slot_id: newSlotId, period_number: parseInt(period, 10), apsa_name: plan.activity, installation_name: plan.installation || null, updated_at: new Date().toISOString(), deleted: false })
+        });
+      }
       await loadPlanningSlots();
       const slotCount = planningSlots.filter(s => s.class_id === classId).length;
       planningPendingClass = slotCount < planningWeeklySlotsNeeded(cl.grade) ? cl : null;
