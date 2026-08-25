@@ -2130,7 +2130,8 @@
         <select id="planningApsaSelect">${optionsHtml()}</select>
         ${hasLinkedSibling ? `<button type="button" class="secondary" id="planningOverrideBtn" style="margin-top:10px">Choisir une activite differente pour ce creneau</button>` : ""}
         <button id="planningSaveActivityBtn">Enregistrer</button>
-        <button class="secondary" id="planningCloseActivityBtn">Fermer</button>`;
+        <button class="secondary" id="planningCloseActivityBtn">Fermer</button>
+        ${currentApsa ? `<button class="danger" id="planningClearActivityBtn">Effacer</button>` : ""}`;
       panel.style.display = "block";
 
       if (hasLinkedSibling) {
@@ -2147,6 +2148,12 @@
         await planningSetActivity(cl, slot, apsaName, overrideOnly);
         panel.style.display = "none";
       });
+      if (currentApsa) {
+        document.getElementById("planningClearActivityBtn").addEventListener("click", async () => {
+          await planningClearActivity(cl, slot, overrideOnly);
+          panel.style.display = "none";
+        });
+      }
     }
 
     /** Libelle affiche aux collegues dans Planning global EPS : l'email, faute de nom stocke cote web. */
@@ -2190,6 +2197,23 @@
               period_number: planningPeriod, apsa_name: apsaName,
               updated_at: new Date().toISOString(), deleted: false
             })
+          });
+        }
+      }
+      await loadPlanningActivities();
+      renderPlanningTab();
+    }
+
+    async function planningClearActivity(classGroup, slot, onlyThisSlot) {
+      const applyToAll = !onlyThisSlot && planningLinksActivity(classGroup.grade);
+      const targetSlotIds = applyToAll
+        ? planningSlots.filter(s => s.class_id === classGroup.id).map(s => s.id)
+        : [slot.id];
+      for (const slotId of targetSlotIds) {
+        const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
+        if (existing) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${existing.id}`, {
+            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
           });
         }
       }
@@ -2631,7 +2655,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         <button class="secondary" id="unssAddMemberBtn" style="margin-top:8px">+ Ajouter un membre</button>
         <h2 style="margin-top:16px; font-size:15px">Historique des seances (${sessions.length})</h2>
         <div class="muted">${sessions.length === 0 ? "Aucune seance." : sessions.map(s => new Date(s.date_epoch_millis).toLocaleDateString("fr-FR") + (s.label ? " — " + s.label : "")).join("<br>")}</div>
-        <button id="unssGroupCloseBtn" style="margin-top:14px">Fermer</button>
+        <button id="unssGroupEditBtn" style="margin-top:14px">Modifier</button>
+        <button class="secondary" id="unssGroupCloseBtn">Fermer</button>
         <button class="danger" id="unssGroupDeleteBtn">Supprimer le groupe</button>`;
 
       const membersListEl = document.getElementById("unssMembersList");
@@ -2653,6 +2678,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         });
       });
       document.getElementById("unssAddMemberBtn").addEventListener("click", () => openUnssAddMemberPanel(group, members.map(m => m.id)));
+      document.getElementById("unssGroupEditBtn").addEventListener("click", () => openUnssGroupEditPanel(group));
       document.getElementById("unssGroupCloseBtn").addEventListener("click", () => panel.style.display = "none");
       document.getElementById("unssGroupDeleteBtn").addEventListener("click", async () => {
         await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, {
