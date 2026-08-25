@@ -80,6 +80,12 @@
   .planningBlock.conflict { background:#FBE2E1; border-left-color:var(--danger); color:#5C1410; }
   .planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
   .durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
+  /* Superposition (modale) : box-shadow demesuree = fond assombri plein ecran sans element supplementaire. */
+  #planningPanel {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 1000; width: calc(100% - 40px); max-width: 480px; max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 0 0 9999px rgba(20,24,26,0.55), 0 20px 50px rgba(0,0,0,0.3);
+  }
   .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
   .editRow td { vertical-align:middle; }
   .accType { cursor:pointer; }
