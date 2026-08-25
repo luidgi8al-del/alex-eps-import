@@ -49,16 +49,30 @@ alter table evaluations enable row level security;
 alter table evaluation_criteria enable row level security;
 alter table evaluation_scores enable row level security;
 
+-- drop/create plutot que "if not exists" (non supporte par CREATE POLICY) : rend le script
+-- rejouable sans erreur si tu l'as deja execute une fois.
+drop policy if exists "select own evaluations" on evaluations;
+drop policy if exists "insert own evaluations" on evaluations;
+drop policy if exists "update own evaluations" on evaluations;
+drop policy if exists "delete own evaluations" on evaluations;
 create policy "select own evaluations" on evaluations for select using (auth.uid() = user_id);
 create policy "insert own evaluations" on evaluations for insert with check (auth.uid() = user_id);
 create policy "update own evaluations" on evaluations for update using (auth.uid() = user_id);
 create policy "delete own evaluations" on evaluations for delete using (auth.uid() = user_id);
 
+drop policy if exists "select own criteria" on evaluation_criteria;
+drop policy if exists "insert own criteria" on evaluation_criteria;
+drop policy if exists "update own criteria" on evaluation_criteria;
+drop policy if exists "delete own criteria" on evaluation_criteria;
 create policy "select own criteria" on evaluation_criteria for select using (auth.uid() = user_id);
 create policy "insert own criteria" on evaluation_criteria for insert with check (auth.uid() = user_id);
 create policy "update own criteria" on evaluation_criteria for update using (auth.uid() = user_id);
 create policy "delete own criteria" on evaluation_criteria for delete using (auth.uid() = user_id);
 
+drop policy if exists "select own scores" on evaluation_scores;
+drop policy if exists "insert own scores" on evaluation_scores;
+drop policy if exists "update own scores" on evaluation_scores;
+drop policy if exists "delete own scores" on evaluation_scores;
 create policy "select own scores" on evaluation_scores for select using (auth.uid() = user_id);
 create policy "insert own scores" on evaluation_scores for insert with check (auth.uid() = user_id);
 create policy "update own scores" on evaluation_scores for update using (auth.uid() = user_id);
