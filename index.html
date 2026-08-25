@@ -26,7 +26,7 @@
   .tabbtn:hover { color:#fff; }
   .tabbtn.active { background:#fff; color:var(--primary); }
   .headerRight { display:flex; align-items:center; gap:14px; }
-  .container { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 24px 32px 60px; }
   h1 { font-size: 20px; margin: 0 0 4px; }
   h2 { font-size: 16px; margin-top: 0; margin-bottom: 14px; color:var(--text); }
   .sub { color:var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
@@ -77,6 +77,9 @@
   .planningBlock { position:absolute; left:2px; right:2px; border-radius:6px; background:var(--accent-container); color:var(--accent-text); border-left:3px solid var(--primary); padding:2px 6px; font-size:11px; line-height:1.25; overflow:hidden; cursor:pointer; }
   .planningBlock .cl { font-weight:700; display:block; }
   .planningBlock .ap { display:block; opacity:0.85; }
+  .planningBlock.conflict { background:#FBE2E1; border-left-color:var(--danger); color:#5C1410; }
+  .planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
+  .durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
   .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
   .editRow td { vertical-align:middle; }
   .accType { cursor:pointer; }
@@ -215,12 +218,14 @@
         <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Programmes officiels et programmation annuelle restent dans l'application. Le planning se gere ici.</div>
 
         <div class="subtabbar" id="planningSubtabs">
-          <button class="subtabbtn" data-planningtab="global">Planning global</button>
+          <button class="subtabbtn" data-planningtab="global">Planning global Alex</button>
+          <button class="subtabbtn" data-planningtab="eps">Planning global EPS</button>
           <button class="subtabbtn" data-planningtab="periode">Par periode</button>
         </div>
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
         <div id="planningPendingHint" class="pendingHint" style="display:none"></div>
+        <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px">Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</div>
 
         <div id="planningGrid"></div>
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
@@ -229,7 +234,18 @@
         <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
       </div>
       <div id="tab-equipement" class="tabpanel" style="display:none">
-        <div class="placeholder"><div class="big">Equipement</div>Bientot disponible sur le site. Materiel et EPI escalade restent dans l'application pour l'instant.</div>
+        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Equipement</div>Materiel et EPI escalade restent dans l'application. Les installations sportives se gerent ici (utilisees par le Planning).</div>
+        <h2>Installations sportives</h2>
+        <div class="muted" style="margin-bottom:10px">Gymnase, plateau exterieur, piscine, dojo... proposees quand vous posez un creneau dans Programmation.</div>
+        <div class="row">
+          <div>
+            <label for="installationName">Nouvelle installation</label>
+            <input type="text" id="installationName" placeholder="Ex : Gymnase">
+          </div>
+        </div>
+        <button id="addInstallationBtn">Ajouter</button>
+        <div class="error" id="installationError"></div>
+        <div id="installationsList" style="margin-top:16px"></div>
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
@@ -440,6 +456,7 @@
       if (name === "classes") showSubtab("classes");
       if (name === "cours") initCoursTab();
       if (name === "programmation") initPlanningTab();
+      if (name === "equipement") initInstallationsTab();
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -1512,13 +1529,17 @@
       return ["CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade);
     }
 
-    let planningMode = "global"; // "global" | "periode"
+    let planningMode = "global"; // "global" | "eps" | "periode"
     let planningPeriod = 1;
     let planningClasses = [];
     let planningSlots = [];
     let planningActivities = []; // pour planningPeriod courant
+    let planningInstallations = []; // installations de l'enseignant (module Equipement)
     let planningPendingClass = null; // classe qui attend son 2e creneau (mode global)
     let planningTabReady = false;
+    let planningCommunitySlots = null; // null = pas encore charge ; sinon liste (Planning global EPS)
+    let planningCommunityLoading = false;
+    let planningCommunityError = null;
 
     function planningStartMinutes(slot) {
       const [h, m] = (slot.start_time || "08:00").split(":").map(n => parseInt(n, 10) || 0);
@@ -1539,7 +1560,9 @@
       }
       await loadPlanningClasses();
       await loadPlanningSlots();
+      await loadPlanningInstallations();
       if (planningMode === "periode") await loadPlanningActivities();
+      if (planningMode === "eps") await loadPlanningCommunity();
       renderPlanningTab();
     }
 
@@ -1551,6 +1574,11 @@
       document.getElementById("planningPanel").style.display = "none";
       if (mode === "periode") {
         loadPlanningActivities().then(renderPlanningTab);
+        return;
+      }
+      if (mode === "eps") {
+        loadPlanningCommunity().then(renderPlanningTab);
+        return;
       }
       renderPlanningTab();
     }
@@ -1560,12 +1588,31 @@
       planningClasses = res.ok ? await res.json() : [];
     }
     async function loadPlanningSlots() {
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`);
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
       planningSlots = res.ok ? await res.json() : [];
     }
     async function loadPlanningActivities() {
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&period_number=eq.${planningPeriod}&select=*`);
       planningActivities = res.ok ? await res.json() : [];
+    }
+    async function loadPlanningInstallations() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
+      planningInstallations = res.ok ? await res.json() : [];
+    }
+    /** Planning global EPS : creneaux de TOUS les comptes (RLS ouverte en lecture sur cette table). */
+    async function loadPlanningCommunity() {
+      planningCommunityLoading = true;
+      planningCommunityError = null;
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`);
+        if (!res.ok) throw new Error("Impossible de charger le planning partage.");
+        planningCommunitySlots = await res.json();
+      } catch (e) {
+        planningCommunityError = e.message;
+        planningCommunitySlots = [];
+      } finally {
+        planningCommunityLoading = false;
+      }
     }
 
     function planningClassById(id) { return planningClasses.find(c => c.id === id); }
@@ -1609,8 +1656,10 @@
       } else {
         hint.style.display = "none";
       }
+      document.getElementById("planningEpsHint").style.display = planningMode === "eps" ? "block" : "none";
 
-      renderPlanningGrid();
+      if (planningMode === "eps") renderPlanningEpsGrid();
+      else renderPlanningGrid();
     }
 
     function renderPlanningGrid() {
@@ -1645,8 +1694,9 @@
           const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
           const cls = planningClassById(s.class_id);
           const apsa = planningMode === "periode" ? (planningActivityForSlot(s.id) || "A definir") : null;
+          const installationLine = (planningMode === "global" && s.installation_name) ? `<span class="ap">${s.installation_name}</span>` : "";
           html += `<div class="planningBlock" style="top:${top}px; height:${height}px;" data-slot="${s.id}">
-            <span class="cl">${planningClassLabel(cls)}</span>${apsa ? `<span class="ap">${apsa}</span>` : ""}
+            <span class="cl">${planningClassLabel(cls)}</span>${apsa ? `<span class="ap">${apsa}</span>` : ""}${installationLine}
           </div>`;
         });
         html += `</div>`;
@@ -1665,6 +1715,82 @@
           onPlanningSlotClick(block.dataset.slot);
         });
       });
+    }
+
+    /** Reperes (jour, index dans le sous-tableau du jour) des creneaux qui partagent la meme
+     * installation (comparaison insensible a la casse/aux espaces) avec chevauchement horaire,
+     * pour des comptes differents (un meme prof peut legitimement enchainer 2 creneaux au meme endroit). */
+    function computeCommunityConflicts(slots) {
+      const conflicts = new Set();
+      const byDay = {};
+      slots.forEach((s, i) => { (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i }); });
+      Object.values(byDay).forEach(dayEntries => {
+        const byInstallation = {};
+        dayEntries.forEach(entry => {
+          const name = (entry.s.installation_name || "").trim().toLowerCase();
+          if (!name) return;
+          (byInstallation[name] = byInstallation[name] || []).push(entry);
+        });
+        Object.values(byInstallation).forEach(group => {
+          for (let a = 0; a < group.length; a++) {
+            for (let b = a + 1; b < group.length; b++) {
+              const A = group[a].s, B = group[b].s;
+              if (A.user_id === B.user_id) continue;
+              const startA = planningStartMinutes(A), endA = startA + A.duration_minutes;
+              const startB = planningStartMinutes(B), endB = startB + B.duration_minutes;
+              if (startA < endB && startB < endA) { conflicts.add(group[a].i); conflicts.add(group[b].i); }
+            }
+          }
+        });
+      });
+      return conflicts;
+    }
+
+    function renderPlanningEpsGrid() {
+      const wrap = document.getElementById("planningGrid");
+      if (planningCommunityLoading) {
+        wrap.innerHTML = '<div class="muted" style="padding:30px">Chargement du planning partage...</div>';
+        return;
+      }
+      if (planningCommunityError) {
+        wrap.innerHTML = `<div class="error" style="padding:20px">${planningCommunityError} <button class="secondary" id="planningEpsRetry" style="margin-top:8px">Reessayer</button></div>`;
+        document.getElementById("planningEpsRetry").addEventListener("click", async () => { await loadPlanningCommunity(); renderPlanningTab(); });
+        return;
+      }
+      const slots = planningCommunitySlots || [];
+      const conflictIdx = computeCommunityConflicts(slots);
+      const gridHeight = PLANNING_ROWS * PLANNING_ROW_PX;
+
+      let html = `<div class="planningWrap"><div class="planningGrid">`;
+      html += `<div class="planningHeadCell"></div>`;
+      PLANNING_DAYS.forEach(d => { html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}">${d.label}</div>`; });
+
+      html += `<div style="grid-column:1;">`;
+      for (let r = 0; r < PLANNING_ROWS; r++) {
+        const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
+        html += `<div class="planningTimeCell">${minutes % 60 === 0 ? planningMinutesLabel(minutes) : ""}</div>`;
+      }
+      html += `</div>`;
+
+      PLANNING_DAYS.forEach((d, dayIdx) => {
+        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
+        slots.forEach((s, i) => {
+          if (s.day_of_week !== d.key) return;
+          const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
+          const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
+          const conflict = conflictIdx.has(i);
+          html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px;">
+            <span class="cl">${s.class_label || "?"}</span>
+            <span class="tc">${s.teacher_label || "?"}</span>
+            ${s.installation_name ? `<span class="ap">${s.installation_name}</span>` : ""}
+          </div>`;
+        });
+        html += `</div>`;
+      });
+
+      html += `</div></div>`;
+      wrap.innerHTML = html;
+      wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
     }
 
     function onPlanningEmptyCellClick(day, minutes) {
@@ -1689,10 +1815,29 @@
       ).join(" ");
     }
 
+    /** "Aucune" + les installations enregistrees (module Equipement). */
+    function installationChipsHtml(name, selectedName) {
+      const none = `<button type="button" class="secondary installationChip" data-${name}="" style="margin-top:0; ${!selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">Aucune</button>`;
+      const chips = planningInstallations.map(inst =>
+        `<button type="button" class="secondary installationChip" data-${name}="${inst.name}" style="margin-top:0; ${inst.name === selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${inst.name}</button>`
+      ).join(" ");
+      return none + " " + chips;
+    }
+    function wireInstallationChips(panel, containerId, dataAttr, onSelect) {
+      panel.querySelectorAll(`#${containerId} .installationChip`).forEach(btn => {
+        btn.addEventListener("click", () => {
+          onSelect(btn.dataset[dataAttr] || null);
+          panel.querySelectorAll(`#${containerId} .installationChip`).forEach(b => b.style.cssText = "margin-top:0");
+          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+        });
+      });
+    }
+
     function openPlanningClassChoicePanel(day, minutes) {
       const panel = document.getElementById("planningPanel");
       let selectedClassId = null;
       let selectedDuration = 60;
+      let selectedInstallation = null;
       panel.innerHTML = `
         <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
         <label for="planningClassSelect">Classe</label>
@@ -1702,6 +1847,8 @@
         </select>
         <label>Duree</label>
         <div id="planningDurationChips">${durationChipsHtml("dur", selectedDuration)}</div>
+        <label>Installation</label>
+        <div id="planningInstallationChips">${installationChipsHtml("inst", selectedInstallation)}</div>
         <button id="planningConfirmBtn">Placer</button>
         <button class="secondary" id="planningCancelBtn">Annuler</button>
         <div class="error" id="planningPanelError"></div>`;
@@ -1713,6 +1860,7 @@
           btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
         });
       });
+      wireInstallationChips(panel, "planningInstallationChips", "inst", (name) => { selectedInstallation = name; });
       document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
       document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
         selectedClassId = document.getElementById("planningClassSelect").value;
@@ -1720,7 +1868,7 @@
           document.getElementById("planningPanelError").textContent = "Choisissez une classe.";
           return;
         }
-        await planningCreateSlot(selectedClassId, day, minutes, selectedDuration);
+        await planningCreateSlot(selectedClassId, day, minutes, selectedDuration, selectedInstallation);
         panel.style.display = "none";
       });
     }
@@ -1729,11 +1877,14 @@
       const panel = document.getElementById("planningPanel");
       const classGroup = planningPendingClass;
       let selectedDuration = 60;
+      let selectedInstallation = null;
       panel.innerHTML = `
         <h2>2e creneau de ${planningClassLabel(classGroup)}</h2>
         <div class="muted">${planningClassLabel(classGroup)} a EPS deux fois par semaine. Ce creneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
         <label>Duree</label>
         <div id="planningDurationChips2">${durationChipsHtml("dur2", selectedDuration)}</div>
+        <label>Installation</label>
+        <div id="planningInstallationChips2">${installationChipsHtml("inst2", selectedInstallation)}</div>
         <button id="planningConfirmBtn2">Placer ce creneau</button>
         <button class="secondary" id="planningCancelBtn2">Annuler</button>`;
       panel.style.display = "block";
@@ -1744,9 +1895,10 @@
           btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
         });
       });
+      wireInstallationChips(panel, "planningInstallationChips2", "inst2", (name) => { selectedInstallation = name; });
       document.getElementById("planningCancelBtn2").addEventListener("click", () => { planningPendingClass = null; panel.style.display = "none"; renderPlanningTab(); });
       document.getElementById("planningConfirmBtn2").addEventListener("click", async () => {
-        await planningCreateSlot(classGroup.id, day, minutes, selectedDuration);
+        await planningCreateSlot(classGroup.id, day, minutes, selectedDuration, selectedInstallation);
         panel.style.display = "none";
       });
     }
@@ -1755,10 +1907,13 @@
       const panel = document.getElementById("planningPanel");
       const cl = planningClassById(slot.class_id);
       let selectedDuration = slot.duration_minutes;
+      let selectedInstallation = slot.installation_name || null;
       panel.innerHTML = `
         <h2>${planningClassLabel(cl)} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
         <label>Duree</label>
         <div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
+        <label>Installation</label>
+        <div id="planningInstallationChips3">${installationChipsHtml("inst3", selectedInstallation)}</div>
         <button id="planningSaveBtn">Enregistrer</button>
         <button class="danger" id="planningDeleteBtn">Supprimer</button>
         <button class="secondary" id="planningCloseBtn">Fermer</button>`;
@@ -1770,10 +1925,17 @@
           btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
         });
       });
+      wireInstallationChips(panel, "planningInstallationChips3", "inst3", (name) => { selectedInstallation = name; });
       document.getElementById("planningCloseBtn").addEventListener("click", () => panel.style.display = "none");
       document.getElementById("planningSaveBtn").addEventListener("click", async () => {
+        const cl2 = planningClassById(slot.class_id);
         await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
-          method: "PATCH", body: JSON.stringify({ duration_minutes: selectedDuration, updated_at: new Date().toISOString() })
+          method: "PATCH",
+          body: JSON.stringify({
+            duration_minutes: selectedDuration, installation_name: selectedInstallation,
+            class_label: planningClassLabel(cl2), teacher_label: planningTeacherLabel(),
+            updated_at: new Date().toISOString()
+          })
         });
         panel.style.display = "none";
         await loadPlanningSlots();
@@ -1828,18 +1990,23 @@
       });
     }
 
-    async function planningCreateSlot(classId, day, startMinutes, durationMinutes) {
+    /** Libelle affiche aux collegues dans Planning global EPS : l'email, faute de nom stocke cote web. */
+    function planningTeacherLabel() { return session.email || "?"; }
+
+    async function planningCreateSlot(classId, day, startMinutes, durationMinutes, installationName) {
       const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, "0")}:${String(startMinutes % 60).padStart(2, "0")}`;
+      const cl = planningClassById(classId);
       await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots`, {
         method: "POST",
         body: JSON.stringify({
           id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
           day_of_week: day, start_time: startTime, duration_minutes: durationMinutes,
+          installation_name: installationName || null,
+          class_label: planningClassLabel(cl), teacher_label: planningTeacherLabel(),
           updated_at: new Date().toISOString(), deleted: false
         })
       });
       await loadPlanningSlots();
-      const cl = planningClassById(classId);
       const slotCount = planningSlots.filter(s => s.class_id === classId).length;
       planningPendingClass = slotCount < planningWeeklySlotsNeeded(cl.grade) ? cl : null;
       renderPlanningTab();
@@ -1869,6 +2036,59 @@
       }
       await loadPlanningActivities();
       renderPlanningTab();
+    }
+
+    // ---- Onglet Equipement > Installations sportives ----
+    let installationsTabReady = false;
+
+    function initInstallationsTab() {
+      if (!installationsTabReady) {
+        document.getElementById("addInstallationBtn").addEventListener("click", createInstallation);
+        installationsTabReady = true;
+      }
+      loadInstallationsList();
+    }
+
+    async function createInstallation() {
+      const input = document.getElementById("installationName");
+      const errorEl = document.getElementById("installationError");
+      errorEl.textContent = "";
+      const name = input.value.trim();
+      if (!name) { errorEl.textContent = "Donnez un nom a l'installation."; return; }
+      await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations`, {
+        method: "POST",
+        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, name, updated_at: new Date().toISOString(), deleted: false })
+      });
+      input.value = "";
+      await loadInstallationsList();
+      await loadPlanningInstallations();
+    }
+
+    async function deleteInstallation(id) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      await loadInstallationsList();
+      await loadPlanningInstallations();
+    }
+
+    async function loadInstallationsList() {
+      const listEl = document.getElementById("installationsList");
+      listEl.innerHTML = '<div class="muted">Chargement...</div>';
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
+      const rows = res.ok ? await res.json() : [];
+      if (rows.length === 0) {
+        listEl.innerHTML = '<div class="muted">Aucune installation pour le moment.</div>';
+        return;
+      }
+      listEl.innerHTML = "";
+      rows.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `<div class="top"><div>${r.name}</div><button class="danger" data-action="delete" style="margin-top:0">Supprimer</button></div>`;
+        div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteInstallation(r.id));
+        listEl.appendChild(div);
+      });
     }
 
     // ---- Demarrage ----
