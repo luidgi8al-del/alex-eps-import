@@ -81,7 +81,7 @@
   .planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
   .durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
   /* Superposition (modale) : box-shadow demesuree = fond assombri plein ecran sans element supplementaire. */
-  #planningPanel, #unssPanel {
+  #planningPanel, #unssPanel, #institutionPanel {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     z-index: 1000; width: calc(100% - 40px); max-width: 480px; max-height: 85vh; overflow-y: auto;
     box-shadow: 0 0 0 9999px rgba(20,24,26,0.55), 0 20px 50px rgba(0,0,0,0.3);
@@ -142,8 +142,13 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
-        <div class="placeholder"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
+        <div class="card" id="institutionCard">
+          <h2>Etablissement</h2>
+          <div id="institutionStatus" class="muted">Chargement...</div>
+        </div>
+        <div class="placeholder" style="margin-top:16px"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
       </div>
+      <div id="institutionPanel" class="card" style="display:none"></div>
 
       <div id="tab-cours" class="tabpanel" style="display:none">
         <div class="subtabbar" id="coursSubtabs">
@@ -441,6 +446,7 @@
           return;
         }
         saveSession({ access_token: data.access_token, user_id: data.user.id, email: data.user.email });
+        justSignedUp = isSignup;
         showMainView();
       } catch (e) {
         errorEl.textContent = e.message;
@@ -464,6 +470,127 @@
       document.getElementById("logoutBtn").style.display = "inline-block";
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
+      loadInstitution();
+    }
+
+    // ---- Etablissement : rattachement par code (n'importe qui peut creer un etablissement en
+    // choisissant son propre code ; les collegues rejoignent en saisissant ce meme code). ----
+    let justSignedUp = false;
+    let currentInstitution = null;
+
+    async function loadInstitution() {
+      const statusEl = document.getElementById("institutionStatus");
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user_id}&select=institution_id,institutions(name,code)`);
+      const rows = res.ok ? await res.json() : [];
+      currentInstitution = rows[0]?.institutions || null;
+      renderInstitutionCard();
+      if (justSignedUp) {
+        justSignedUp = false;
+        if (!currentInstitution) openInstitutionPrompt();
+      }
+    }
+
+    function renderInstitutionCard() {
+      const statusEl = document.getElementById("institutionStatus");
+      if (currentInstitution) {
+        statusEl.innerHTML = `Rattache a <strong>${currentInstitution.name}</strong> (code ${currentInstitution.code}).
+          <button class="secondary" id="institutionLeaveBtn" style="margin-top:10px">Quitter cet etablissement</button>`;
+        document.getElementById("institutionLeaveBtn").addEventListener("click", async () => {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/leave_institution`, { method: "POST", body: JSON.stringify({}) });
+          currentInstitution = null;
+          renderInstitutionCard();
+        });
+      } else {
+        statusEl.innerHTML = `Non rattache. Le Planning et la Programmation annuelle ne se partagent qu'entre collegues du meme etablissement.
+          <button id="institutionLinkBtn" style="margin-top:10px">Se rattacher a un etablissement</button>`;
+        document.getElementById("institutionLinkBtn").addEventListener("click", openInstitutionChooser);
+      }
+    }
+
+    function openInstitutionPrompt() {
+      const panel = document.getElementById("institutionPanel");
+      panel.innerHTML = `
+        <h2>Rattacher ce compte a un etablissement ?</h2>
+        <div class="muted" style="margin-bottom:10px">Cela permet de partager le Planning et la Programmation annuelle avec vos collegues du meme etablissement, et seulement eux.</div>
+        <button id="institutionPromptYesBtn">Oui</button>
+        <button class="secondary" id="institutionPromptNoBtn">Non merci</button>`;
+      panel.style.display = "block";
+      document.getElementById("institutionPromptYesBtn").addEventListener("click", openInstitutionChooser);
+      document.getElementById("institutionPromptNoBtn").addEventListener("click", () => panel.style.display = "none");
+    }
+
+    function openInstitutionChooser() {
+      const panel = document.getElementById("institutionPanel");
+      panel.innerHTML = `
+        <h2>Etablissement</h2>
+        <button id="institutionCreateBtn">Creer un nouvel etablissement</button>
+        <button id="institutionJoinBtn">Rejoindre avec un code</button>
+        <button class="secondary" id="institutionCancelBtn">Annuler</button>`;
+      panel.style.display = "block";
+      document.getElementById("institutionCreateBtn").addEventListener("click", openInstitutionCreateForm);
+      document.getElementById("institutionJoinBtn").addEventListener("click", openInstitutionJoinForm);
+      document.getElementById("institutionCancelBtn").addEventListener("click", () => panel.style.display = "none");
+    }
+
+    function openInstitutionCreateForm() {
+      const panel = document.getElementById("institutionPanel");
+      panel.innerHTML = `
+        <h2>Creer un etablissement</h2>
+        <label for="institutionName">Nom (ex : Lycee Victor Hugo)</label>
+        <input type="text" id="institutionName">
+        <label for="institutionCode">Code (au choix, a partager avec vos collegues)</label>
+        <input type="text" id="institutionCode" placeholder="Ex : 32320">
+        <button id="institutionCreateSubmitBtn">Creer</button>
+        <button class="secondary" id="institutionCreateCancelBtn">Annuler</button>
+        <div class="error" id="institutionCreateError"></div>`;
+      panel.style.display = "block";
+      document.getElementById("institutionCreateCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("institutionCreateSubmitBtn").addEventListener("click", async () => {
+        const name = document.getElementById("institutionName").value.trim();
+        const code = document.getElementById("institutionCode").value.trim();
+        const errorEl = document.getElementById("institutionCreateError");
+        errorEl.textContent = "";
+        if (!name || !code) { errorEl.textContent = "Nom et code requis."; return; }
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/create_institution`, {
+          method: "POST", body: JSON.stringify({ p_name: name, p_code: code })
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          errorEl.textContent = (data.message || "").includes("duplicate") ? "Ce code est deja utilise par un autre etablissement." : (data.message || "Erreur lors de la creation.");
+          return;
+        }
+        panel.style.display = "none";
+        await loadInstitution();
+      });
+    }
+
+    function openInstitutionJoinForm() {
+      const panel = document.getElementById("institutionPanel");
+      panel.innerHTML = `
+        <h2>Rejoindre un etablissement</h2>
+        <label for="institutionJoinCode">Code fourni par un collegue</label>
+        <input type="text" id="institutionJoinCode">
+        <button id="institutionJoinSubmitBtn">Rejoindre</button>
+        <button class="secondary" id="institutionJoinCancelBtn">Annuler</button>
+        <div class="error" id="institutionJoinError"></div>`;
+      panel.style.display = "block";
+      document.getElementById("institutionJoinCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("institutionJoinSubmitBtn").addEventListener("click", async () => {
+        const code = document.getElementById("institutionJoinCode").value.trim();
+        const errorEl = document.getElementById("institutionJoinError");
+        errorEl.textContent = "";
+        if (!code) { errorEl.textContent = "Code requis."; return; }
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/join_institution_by_code`, {
+          method: "POST", body: JSON.stringify({ p_code: code })
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          errorEl.textContent = data.message || "Code introuvable.";
+          return;
+        }
+        panel.style.display = "none";
+        await loadInstitution();
+      });
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
