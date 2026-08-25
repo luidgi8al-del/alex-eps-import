@@ -2138,10 +2138,13 @@
       let selectedDuration = 60;
       let periodPlans = {};
       let openStep = 0;
+      let selectedStartMinutes = minutes;
+      let showStartTimes = false;
 
       function render() {
         panel.innerHTML = `
-          <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
+          <h2>Nouveau creneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
+          ${showStartTimes ? `<div id="planningStartTimeList" style="max-height:260px; overflow-y:auto">${Array.from({length:PLANNING_ROWS}, (_,i) => PLANNING_START_HOUR * 60 + i * PLANNING_SLOT_MIN).map(value => `<button type="button" class="secondary planningStartOption" data-start="${value}" style="display:block;width:100%;text-align:left;margin-top:4px">${planningMinutesLabel(value)}</button>`).join("")}</div>` : ""}
           <details id="planningGradeStep" ${openStep === 0 ? "open" : ""}><summary><strong>Niveau</strong>${selectedGrade ? ` — ${GRADE_LABELS[selectedGrade]}` : ""}</summary>
           <div id="planningGradeChips" style="margin-top:8px">${Object.keys(GRADE_LABELS).map(g =>
             `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
@@ -2171,6 +2174,10 @@
             openStep = 3; render();
           });
         });
+        document.getElementById("planningStartTimeBtn").addEventListener("click", () => { showStartTimes = !showStartTimes; render(); });
+        panel.querySelectorAll(".planningStartOption").forEach(btn => btn.addEventListener("click", () => {
+          selectedStartMinutes = parseInt(btn.dataset.start, 10); showStartTimes = false; render();
+        }));
         wirePeriodPlanner(panel, selectedGrade, periodPlans, "new", next => { openStep = next; render(); });
         document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
         document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
@@ -2179,7 +2186,7 @@
             return;
           }
           const classId = await planningFindOrCreateClass(selectedGrade, selectedNumber);
-          await planningCreateSlot(classId, day, minutes, selectedDuration, null, periodPlans);
+          await planningCreateSlot(classId, day, selectedStartMinutes, selectedDuration, null, periodPlans);
           panel.style.display = "none";
         });
       }
