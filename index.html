@@ -234,6 +234,7 @@
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
         <div id="planningPendingHint" class="pendingHint" style="display:none"></div>
+        <div id="planningNewClassHint" class="pendingHint" style="display:none; align-items:center; justify-content:space-between; gap:10px"></div>
         <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px; align-items:center; justify-content:space-between; gap:10px" >
           <span>Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</span>
           <button class="secondary" id="planningAnalyzeBtn" style="margin-top:0; white-space:nowrap">Analyser</button>
@@ -1558,6 +1559,7 @@
     let planningActivities = []; // pour planningPeriod courant
     let planningInstallations = []; // installations de l'enseignant (module Equipement)
     let planningPendingClass = null; // classe qui attend son 2e creneau (mode global)
+    let planningNewlyCreatedClasses = []; // classes creees automatiquement depuis Planning (rappel)
     let planningTabReady = false;
     let planningCommunitySlots = null; // null = pas encore charge ; sinon liste (Planning global EPS)
     let planningCommunityLoading = false;
@@ -1691,6 +1693,18 @@
       } else {
         hint.style.display = "none";
       }
+      const newClassHint = document.getElementById("planningNewClassHint");
+      if (planningMode === "global" && planningNewlyCreatedClasses.length > 0) {
+        newClassHint.innerHTML = `<span>Nouvelle(s) classe(s) creee(s) automatiquement : ${planningNewlyCreatedClasses.map(planningClassLabel).join(", ")}. Rendez-vous dans Classes pour les completer (importer les eleves).</span><button class="secondary" id="planningNewClassOk" style="margin-top:0">OK</button>`;
+        newClassHint.style.display = "flex";
+        document.getElementById("planningNewClassOk").addEventListener("click", () => {
+          planningNewlyCreatedClasses = [];
+          renderPlanningTab();
+        });
+      } else {
+        newClassHint.style.display = "none";
+      }
+
       document.getElementById("planningEpsHint").style.display = planningMode === "eps" ? "flex" : "none";
       if (planningMode !== "eps") document.getElementById("planningAnalysisPanel").style.display = "none";
 
@@ -1941,44 +1955,81 @@
       });
     }
 
+    /** Ne relie/cree jamais depuis une liste de classes existantes : on choisit niveau+numero
+     * (ex : 6e2), et findOrCreatePlanningClass se charge de relier ou creer automatiquement
+     * (meme principe que l'app, section Planning). */
     function openPlanningClassChoicePanel(day, minutes) {
       const panel = document.getElementById("planningPanel");
-      let selectedClassId = null;
+      let selectedGrade = null;
+      let selectedNumber = null;
       let selectedDuration = 60;
       let selectedInstallation = null;
-      panel.innerHTML = `
-        <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
-        <label for="planningClassSelect">Classe</label>
-        <select id="planningClassSelect">
-          <option value="">Choisir...</option>
-          ${planningClasses.map(c => `<option value="${c.id}">${planningClassLabel(c)}</option>`).join("")}
-        </select>
-        <label>Duree</label>
-        <div id="planningDurationChips">${durationChipsHtml("dur", selectedDuration)}</div>
-        <label>Installation</label>
-        <div id="planningInstallationChips">${installationChipsHtml("inst", selectedInstallation)}</div>
-        <button id="planningConfirmBtn">Placer</button>
-        <button class="secondary" id="planningCancelBtn">Annuler</button>
-        <div class="error" id="planningPanelError"></div>`;
-      panel.style.display = "block";
-      panel.querySelectorAll("#planningDurationChips .durationChip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          selectedDuration = parseInt(btn.dataset.dur, 10);
-          panel.querySelectorAll("#planningDurationChips .durationChip").forEach(b => b.style.cssText = "margin-top:0");
-          btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+
+      function render() {
+        panel.innerHTML = `
+          <h2>Nouveau creneau — ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}</h2>
+          <label>Niveau</label>
+          <div id="planningGradeChips">${Object.keys(GRADE_LABELS).map(g =>
+            `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
+          ).join(" ")}</div>
+          ${selectedGrade ? `
+            <label>Numero de classe</label>
+            <div id="planningNumberChips">${[1,2,3,4,5,6,7,8].map(n =>
+              `<button type="button" class="secondary durationChip" data-num="${n}" style="margin-top:0; ${n === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${n}</button>`
+            ).join(" ")}</div>` : ""}
+          <label>Duree</label>
+          <div id="planningDurationChips">${durationChipsHtml("dur", selectedDuration)}</div>
+          <label>Installation</label>
+          <div id="planningInstallationChips">${installationChipsHtml("inst", selectedInstallation)}</div>
+          <button id="planningConfirmBtn">Placer</button>
+          <button class="secondary" id="planningCancelBtn">Annuler</button>
+          <div class="error" id="planningPanelError"></div>`;
+        panel.querySelectorAll("#planningGradeChips [data-grade]").forEach(btn => {
+          btn.addEventListener("click", () => { selectedGrade = btn.dataset.grade; selectedNumber = null; render(); });
         });
-      });
-      wireInstallationChips(panel, "planningInstallationChips", "inst", (name) => { selectedInstallation = name; });
-      document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
-      document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
-        selectedClassId = document.getElementById("planningClassSelect").value;
-        if (!selectedClassId) {
-          document.getElementById("planningPanelError").textContent = "Choisissez une classe.";
-          return;
+        if (selectedGrade) {
+          panel.querySelectorAll("#planningNumberChips [data-num]").forEach(btn => {
+            btn.addEventListener("click", () => { selectedNumber = parseInt(btn.dataset.num, 10); render(); });
+          });
         }
-        await planningCreateSlot(selectedClassId, day, minutes, selectedDuration, selectedInstallation);
-        panel.style.display = "none";
-      });
+        panel.querySelectorAll("#planningDurationChips .durationChip").forEach(btn => {
+          btn.addEventListener("click", () => {
+            selectedDuration = parseInt(btn.dataset.dur, 10);
+            panel.querySelectorAll("#planningDurationChips .durationChip").forEach(b => b.style.cssText = "margin-top:0");
+            btn.style.cssText = "margin-top:0; background:var(--accent-container); border-color:var(--accent-container);";
+          });
+        });
+        wireInstallationChips(panel, "planningInstallationChips", "inst", (name) => { selectedInstallation = name; });
+        document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
+        document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
+          if (!selectedGrade || !selectedNumber) {
+            document.getElementById("planningPanelError").textContent = "Choisissez un niveau et un numero de classe.";
+            return;
+          }
+          const classId = await planningFindOrCreateClass(selectedGrade, selectedNumber);
+          await planningCreateSlot(classId, day, minutes, selectedDuration, selectedInstallation);
+          panel.style.display = "none";
+        });
+      }
+      render();
+      panel.style.display = "block";
+    }
+
+    /** Relie a la classe existante (meme niveau+numero+annee) si elle existe, sinon la cree vide
+     * et la signale dans planningNewlyCreatedClasses (rappel affiche par renderPlanningTab). */
+    async function planningFindOrCreateClass(grade, classNumber) {
+      const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
+      const existing = planningClasses.find(c => c.grade === grade && c.class_number === classNumber && c.school_year === schoolYear);
+      if (existing) return existing.id;
+      const newClass = {
+        id: crypto.randomUUID(), user_id: session.user_id, grade, class_number: classNumber,
+        school_year: schoolYear, name: `${GRADE_LABELS[grade]}${classNumber}`,
+        updated_at: new Date().toISOString(), deleted: false
+      };
+      await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, { method: "POST", body: JSON.stringify(newClass) });
+      await loadPlanningClasses();
+      planningNewlyCreatedClasses = [...planningNewlyCreatedClasses, newClass];
+      return newClass.id;
     }
 
     function openPlanningSecondSlotPanel(day, minutes) {
