@@ -81,11 +81,14 @@
   .planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
   .durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
   /* Superposition (modale) : box-shadow demesuree = fond assombri plein ecran sans element supplementaire. */
-  #planningPanel {
+  #planningPanel, #unssPanel {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     z-index: 1000; width: calc(100% - 40px); max-width: 480px; max-height: 85vh; overflow-y: auto;
     box-shadow: 0 0 0 9999px rgba(20,24,26,0.55), 0 20px 50px rgba(0,0,0,0.3);
   }
+  .unssCard { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .unssPick { cursor:pointer; }
+  .unssPick:hover { background:#F3F8F4; }
   .editRow input, .editRow select { padding:6px 8px; font-size:12px; }
   .editRow td { vertical-align:middle; }
   .accType { cursor:pointer; }
@@ -241,7 +244,15 @@
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
-        <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
+        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">UNSS</div>Groupes, appel et suivi restent dans l'application. Le repertoire des eleves se gere ici.</div>
+
+        <div class="subtabbar" id="unssSubtabs">
+          <button class="subtabbtn" data-unsstab="all">Eleve LVH</button>
+          <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
+        </div>
+
+        <div id="unssList"></div>
+        <div id="unssPanel" class="card" style="display:none; margin-top:14px"></div>
       </div>
       <div id="tab-equipement" class="tabpanel" style="display:none">
         <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Equipement</div>Materiel et EPI escalade restent dans l'application. Les installations sportives se gerent ici (utilisees par le Planning).</div>
@@ -467,6 +478,7 @@
       if (name === "cours") initCoursTab();
       if (name === "programmation") initPlanningTab();
       if (name === "equipement") initInstallationsTab();
+      if (name === "unss") initUnssTab();
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -2184,6 +2196,282 @@
         div.innerHTML = `<div class="top"><div>${r.name}</div><button class="danger" data-action="delete" style="margin-top:0">Supprimer</button></div>`;
         div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteInstallation(r.id));
         listEl.appendChild(div);
+      });
+    }
+
+    // ---- Onglet UNSS : repertoire "Eleve LVH" (general) / "Licencies AS" (categorie, voeux,
+    // taille maillot). Prive au compte (pas de partage entre collegues, contrairement a
+    // Planning/Programmation) : synchronise juste avec l'app via le meme compte.
+    const UNSS_CATEGORIES = [
+      { value: "BENJAMIN", label: "Benjamin" }, { value: "MINIME", label: "Minime" },
+      { value: "CADET", label: "Cadet" }, { value: "JUNIOR", label: "Junior" }
+    ];
+
+    function computeUnssCategory(birthDateEpochMillis, schoolYear) {
+      if (!birthDateEpochMillis) return "MINIME";
+      const birthYear = new Date(birthDateEpochMillis).getFullYear();
+      const startYear = parseInt(String(schoolYear || "").slice(0, 4), 10) || new Date().getFullYear();
+      const age = startYear - birthYear;
+      if (age <= 12) return "BENJAMIN";
+      if (age <= 14) return "MINIME";
+      if (age <= 16) return "CADET";
+      return "JUNIOR";
+    }
+    function unssCategoryLabel(value) { return (UNSS_CATEGORIES.find(c => c.value === value) || {}).label || value; }
+
+    function parseFrDate(value) {
+      const m = (value || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!m) return null;
+      const d = new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+      return isNaN(d.getTime()) ? null : d.getTime();
+    }
+    function formatFrDate(epochMillis) {
+      if (!epochMillis) return "";
+      const d = new Date(epochMillis);
+      return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+    }
+
+    let unssMode = "all"; // "all" | "licensed"
+    let unssStudents = [];
+    let unssTabReady = false;
+
+    async function initUnssTab() {
+      if (!unssTabReady) {
+        document.getElementById("unssSubtabs").addEventListener("click", (e) => {
+          const btn = e.target.closest(".subtabbtn");
+          if (btn) showUnssTab(btn.dataset.unsstab);
+        });
+        unssTabReady = true;
+      }
+      await loadUnssStudents();
+      renderUnssTab();
+    }
+
+    function showUnssTab(mode) {
+      unssMode = mode;
+      document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
+      document.getElementById("unssPanel").style.display = "none";
+      renderUnssTab();
+    }
+
+    async function loadUnssStudents() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc,first_name.asc`);
+      unssStudents = res.ok ? await res.json() : [];
+    }
+
+    function renderUnssTab() {
+      const wrap = document.getElementById("unssList");
+      const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
+      let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
+      html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
+      html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
+      html += `</div>`;
+
+      if (rows.length === 0) {
+        html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve du repertoire Eleve LVH." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
+      } else {
+        rows.forEach(s => {
+          const wishes = [s.wish1, s.wish2, s.wish3].filter(Boolean).join(", ");
+          html += `<div class="card unssCard" data-edit="${s.id}">
+            <div>
+              <div><strong>${s.last_name} ${s.first_name}</strong></div>
+              <div class="muted">${[unssCategoryLabel(s.category), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
+              ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
+              ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
+            </div>
+            <button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>
+          </div>`;
+        });
+      }
+      wrap.innerHTML = html;
+
+      document.getElementById("unssAddBtn").addEventListener("click", () => {
+        if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
+      });
+      document.getElementById("unssImportBtn").addEventListener("click", () => unssFileInput().click());
+      wrap.querySelectorAll("[data-edit]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          if (e.target.closest("[data-delete]")) return;
+          const student = unssStudents.find(s => s.id === el.dataset.edit);
+          if (student) openUnssStudentPanel(student, student.licensed);
+        });
+      });
+      wrap.querySelectorAll("[data-delete]").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${btn.dataset.delete}`, {
+            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+          });
+          await loadUnssStudents();
+          renderUnssTab();
+        });
+      });
+    }
+
+    let unssHiddenFileInput = null;
+    function unssFileInput() {
+      if (unssHiddenFileInput) return unssHiddenFileInput;
+      const input = document.createElement("input");
+      input.type = "file"; input.accept = ".csv,text/csv"; input.style.display = "none";
+      input.addEventListener("change", async () => {
+        const file = input.files[0];
+        if (!file) return;
+        const text = await file.text();
+        await importUnssCsv(text, unssMode === "licensed");
+        input.value = "";
+      });
+      document.body.appendChild(input);
+      unssHiddenFileInput = input;
+      return input;
+    }
+
+    /** Meme principe que le CSV Planning : intitules reconnus dans n'importe quel ordre. */
+    async function importUnssCsv(csv, markLicensed) {
+      const lines = csv.split(/\r?\n/).filter(l => l.trim().length > 0);
+      if (lines.length === 0) return;
+      const delimiter = (lines[0].split(";").length > lines[0].split(",").length) ? ";" : ",";
+      const norm = (v) => v.trim().toLowerCase().replace(/é|è|ê/g, "e").replace(/à/g, "a").replace(/î/g, "i");
+      const ALIASES = {
+        nom: ["nom", "nom de famille", "lastname", "last name"],
+        prenom: ["prenom", "firstname", "first name"],
+        naissance: ["date de naissance", "date naissance", "naissance", "ddn", "ne le", "nee le"],
+        voeu1: ["voeu 1", "activite voeu 1", "activite 1", "voeu1"],
+        voeu2: ["voeu 2", "activite voeu 2", "activite 2", "voeu2"],
+        voeu3: ["voeu 3", "activite voeu 3", "activite 3", "voeu3"],
+        emailEleve: ["email eleve", "mail eleve", "email"],
+        emailParent: ["email parent", "mail parent", "emails parent", "emails parents"]
+      };
+      const header = lines[0].split(delimiter).map(norm);
+      const idx = (key) => header.findIndex(h => ALIASES[key].includes(h));
+      const iNom = idx("nom"), iPrenom = idx("prenom"), iNaissance = idx("naissance");
+      const iVoeu1 = idx("voeu1"), iVoeu2 = idx("voeu2"), iVoeu3 = idx("voeu3");
+      const iEmailEleve = idx("emailEleve"), iEmailParent = idx("emailParent");
+      const hasHeader = iNom >= 0 || iPrenom >= 0;
+      const dataLines = hasHeader ? lines.slice(1) : lines;
+      const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
+
+      let count = 0;
+      for (const line of dataLines) {
+        const fields = line.split(delimiter).map(f => f.trim());
+        const lastName = hasHeader ? (fields[iNom] || "") : (fields[0] || "");
+        const firstName = hasHeader ? (fields[iPrenom] || "") : (fields[1] || "");
+        if (!lastName || !firstName) continue;
+        const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+          method: "POST",
+          body: JSON.stringify({
+            id: crypto.randomUUID(), user_id: session.user_id,
+            last_name: lastName, first_name: firstName,
+            birth_date_epoch_millis: birthDate,
+            category: computeUnssCategory(birthDate, schoolYear),
+            licensed: markLicensed,
+            wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
+            wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
+            wish3: iVoeu3 >= 0 ? (fields[iVoeu3] || "") : "",
+            student_email: iEmailEleve >= 0 ? (fields[iEmailEleve] || null) : null,
+            parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null,
+            updated_at: new Date().toISOString(), deleted: false
+          })
+        });
+        count++;
+      }
+      await loadUnssStudents();
+      renderUnssTab();
+      alert(`${count} eleve(s) importe(s).`);
+    }
+
+    /** Etape 1 pour licencier : on coche l'eleve deja present dans le repertoire Eleve LVH. */
+    function openUnssPickPanel() {
+      const panel = document.getElementById("unssPanel");
+      const candidates = unssStudents.filter(s => !s.licensed);
+      panel.innerHTML = `<h2>Choisir un eleve a licencier</h2>` +
+        (candidates.length === 0
+          ? `<div class="muted">Tous les eleves du repertoire sont deja licencies, ou le repertoire Eleve LVH est vide. Importez-le d'abord dans cet onglet.</div>`
+          : candidates.map(s => `<div class="card unssPick" data-pick="${s.id}" style="margin-top:6px">${s.last_name} ${s.first_name}</div>`).join("")
+        ) +
+        `<button class="secondary" id="unssPickCancel" style="margin-top:14px">Annuler</button>`;
+      panel.style.display = "block";
+      panel.querySelectorAll("[data-pick]").forEach(el => {
+        el.addEventListener("click", () => {
+          const student = unssStudents.find(s => s.id === el.dataset.pick);
+          openUnssStudentPanel(student, true);
+        });
+      });
+      document.getElementById("unssPickCancel").addEventListener("click", () => panel.style.display = "none");
+    }
+
+    /** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
+    function openUnssStudentPanel(student, licensing) {
+      const panel = document.getElementById("unssPanel");
+      const isNew = !student;
+      const category = student ? student.category : "MINIME";
+      panel.innerHTML = `
+        <h2>${licensing ? "Licencier " + (student.first_name || "") : (isNew ? "Nouvel eleve" : "Modifier l'eleve")}</h2>
+        <label for="unssLastName">Nom</label>
+        <input type="text" id="unssLastName" value="${student ? student.last_name : ""}">
+        <label for="unssFirstName">Prenom</label>
+        <input type="text" id="unssFirstName" value="${student ? student.first_name : ""}">
+        <label for="unssBirth">Date de naissance (JJ/MM/AAAA)</label>
+        <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
+        <label for="unssCategory">Categorie</label>
+        <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${c.label}</option>`).join("")}</select>
+        ${licensing || (student && student.licensed) ? `
+          <label for="unssWish1">Voeu 1</label>
+          <input type="text" id="unssWish1" value="${student ? student.wish1 || "" : ""}">
+          <label for="unssWish2">Voeu 2</label>
+          <input type="text" id="unssWish2" value="${student ? student.wish2 || "" : ""}">
+          <label for="unssWish3">Voeu 3</label>
+          <input type="text" id="unssWish3" value="${student ? student.wish3 || "" : ""}">
+          <label for="unssJersey">Taille maillot</label>
+          <input type="text" id="unssJersey" value="${student ? student.jersey_size || "" : ""}">
+          <label for="unssEmailEleve">Email eleve</label>
+          <input type="text" id="unssEmailEleve" value="${student ? student.student_email || "" : ""}">
+          <label for="unssEmailParent">Email parent</label>
+          <input type="text" id="unssEmailParent" value="${student ? student.parent_email || "" : ""}">
+        ` : ""}
+        <button id="unssSaveBtn">Enregistrer</button>
+        <button class="secondary" id="unssCancelBtn">Annuler</button>
+        <div class="error" id="unssError"></div>`;
+      panel.style.display = "block";
+
+      document.getElementById("unssBirth").addEventListener("change", () => {
+        if (!isNew) return;
+        const birth = parseFrDate(document.getElementById("unssBirth").value);
+        const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
+        document.getElementById("unssCategory").value = computeUnssCategory(birth, schoolYear);
+      });
+      document.getElementById("unssCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("unssSaveBtn").addEventListener("click", async () => {
+        const lastName = document.getElementById("unssLastName").value.trim();
+        const firstName = document.getElementById("unssFirstName").value.trim();
+        if (!lastName || !firstName) { document.getElementById("unssError").textContent = "Nom et prenom obligatoires."; return; }
+        const birth = parseFrDate(document.getElementById("unssBirth").value);
+        const body = {
+          last_name: lastName, first_name: firstName, birth_date_epoch_millis: birth,
+          category: document.getElementById("unssCategory").value,
+          updated_at: new Date().toISOString()
+        };
+        const wishField = document.getElementById("unssWish1");
+        if (wishField) {
+          body.licensed = true;
+          body.wish1 = document.getElementById("unssWish1").value;
+          body.wish2 = document.getElementById("unssWish2").value;
+          body.wish3 = document.getElementById("unssWish3").value;
+          body.jersey_size = document.getElementById("unssJersey").value;
+          body.student_email = document.getElementById("unssEmailEleve").value || null;
+          body.parent_email = document.getElementById("unssEmailParent").value || null;
+        }
+        if (isNew) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+            method: "POST",
+            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body })
+          });
+        } else {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${student.id}`, { method: "PATCH", body: JSON.stringify(body) });
+        }
+        panel.style.display = "none";
+        await loadUnssStudents();
+        renderUnssTab();
       });
     }
 
