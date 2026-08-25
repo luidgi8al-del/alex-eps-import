@@ -231,10 +231,14 @@
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
         <div id="planningPendingHint" class="pendingHint" style="display:none"></div>
-        <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px">Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</div>
+        <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px; align-items:center; justify-content:space-between; gap:10px" >
+          <span>Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</span>
+          <button class="secondary" id="planningAnalyzeBtn" style="margin-top:0; white-space:nowrap">Analyser</button>
+        </div>
 
         <div id="planningGrid"></div>
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
+        <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="placeholder"><div class="big">UNSS</div>Bientot disponible sur le site. Groupes, appel et suivi restent dans l'application pour l'instant.</div>
@@ -1546,6 +1550,8 @@
     let planningCommunitySlots = null; // null = pas encore charge ; sinon liste (Planning global EPS)
     let planningCommunityLoading = false;
     let planningCommunityError = null;
+    let planningConflictOverrides = []; // paires (slot_id_a, slot_id_b) validees malgre le chevauchement
+    let planningAnalysisConflicts = null; // null = analyse pas encore lancee ; sinon liste courante
 
     function planningStartMinutes(slot) {
       const [h, m] = (slot.start_time || "08:00").split(":").map(n => parseInt(n, 10) || 0);
@@ -1562,6 +1568,7 @@
           const btn = e.target.closest(".subtabbtn");
           if (btn) showPlanningTab(btn.dataset.planningtab);
         });
+        document.getElementById("planningAnalyzeBtn").addEventListener("click", runPlanningAnalysis);
         planningTabReady = true;
       }
       await loadPlanningClasses();
@@ -1610,15 +1617,25 @@
       planningCommunityLoading = true;
       planningCommunityError = null;
       try {
-        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`);
-        if (!res.ok) throw new Error("Impossible de charger le planning partage.");
-        planningCommunitySlots = await res.json();
+        const [slotsRes, overridesRes] = await Promise.all([
+          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
+        ]);
+        if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
+        planningCommunitySlots = await slotsRes.json();
+        planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
       } catch (e) {
         planningCommunityError = e.message;
         planningCommunitySlots = [];
       } finally {
         planningCommunityLoading = false;
       }
+    }
+
+    function conflictPairKey(idA, idB) { return [idA, idB].sort(); }
+    function isConflictOverridden(idA, idB) {
+      const [a, b] = conflictPairKey(idA, idB);
+      return planningConflictOverrides.some(o => o.slot_id_a === a && o.slot_id_b === b);
     }
 
     function planningClassById(id) { return planningClasses.find(c => c.id === id); }
@@ -1662,7 +1679,8 @@
       } else {
         hint.style.display = "none";
       }
-      document.getElementById("planningEpsHint").style.display = planningMode === "eps" ? "block" : "none";
+      document.getElementById("planningEpsHint").style.display = planningMode === "eps" ? "flex" : "none";
+      if (planningMode !== "eps") document.getElementById("planningAnalysisPanel").style.display = "none";
 
       if (planningMode === "eps") renderPlanningEpsGrid();
       else renderPlanningGrid();
@@ -1723,11 +1741,12 @@
       });
     }
 
-    /** Reperes (jour, index dans le sous-tableau du jour) des creneaux qui partagent la meme
-     * installation (comparaison insensible a la casse/aux espaces) avec chevauchement horaire,
-     * pour des comptes differents (un meme prof peut legitimement enchainer 2 creneaux au meme endroit). */
-    function computeCommunityConflicts(slots) {
-      const conflicts = new Set();
+    /** Paires de creneaux qui partagent la meme installation (comparaison insensible a la
+     * casse/aux espaces) avec chevauchement horaire, pour des comptes differents (un meme prof
+     * peut legitimement enchainer 2 creneaux au meme endroit). Les paires deja validees via le
+     * bouton "Analyser" (installation_conflict_overrides) sont exclues. */
+    function findCommunityConflictPairs(slots) {
+      const pairs = [];
       const byDay = {};
       slots.forEach((s, i) => { (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i }); });
       Object.values(byDay).forEach(dayEntries => {
@@ -1744,11 +1763,19 @@
               if (A.user_id === B.user_id) continue;
               const startA = planningStartMinutes(A), endA = startA + A.duration_minutes;
               const startB = planningStartMinutes(B), endB = startB + B.duration_minutes;
-              if (startA < endB && startB < endA) { conflicts.add(group[a].i); conflicts.add(group[b].i); }
+              if (startA < endB && startB < endA && !isConflictOverridden(A.id, B.id)) {
+                pairs.push({ indexA: group[a].i, indexB: group[b].i, slotA: A, slotB: B });
+              }
             }
           }
         });
       });
+      return pairs;
+    }
+
+    function computeCommunityConflicts(slots) {
+      const conflicts = new Set();
+      findCommunityConflictPairs(slots).forEach(p => { conflicts.add(p.indexA); conflicts.add(p.indexB); });
       return conflicts;
     }
 
@@ -1797,6 +1824,69 @@
       html += `</div></div>`;
       wrap.innerHTML = html;
       wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
+    }
+
+    /** Bouton "Analyser" : relit le planning partage a jour, puis liste chaque chevauchement
+     * d'installation restant a traiter (deja exclus : les paires validees precedemment). */
+    async function runPlanningAnalysis() {
+      const btn = document.getElementById("planningAnalyzeBtn");
+      btn.disabled = true; btn.textContent = "Analyse...";
+      await loadPlanningCommunity();
+      btn.disabled = false; btn.textContent = "Analyser";
+      renderPlanningGrid_ifEps();
+      planningAnalysisConflicts = findCommunityConflictPairs(planningCommunitySlots || []);
+      renderPlanningAnalysisPanel();
+    }
+
+    function renderPlanningGrid_ifEps() {
+      if (planningMode === "eps") renderPlanningEpsGrid();
+    }
+
+    function planningSlotSummary(s) {
+      const day = PLANNING_DAYS.find(d => d.key === s.day_of_week);
+      const start = planningStartMinutes(s);
+      const end = start + s.duration_minutes;
+      return `${day ? day.label : s.day_of_week} ${planningMinutesLabel(start)}-${planningMinutesLabel(end)} · ${s.class_label || "?"} (${s.teacher_label || "?"})`;
+    }
+
+    function renderPlanningAnalysisPanel() {
+      const panel = document.getElementById("planningAnalysisPanel");
+      const conflicts = planningAnalysisConflicts;
+      if (conflicts === null) { panel.style.display = "none"; return; }
+      if (conflicts.length === 0) {
+        panel.innerHTML = `<h2>Analyse</h2><div class="ok">Aucun chevauchement d'installation a traiter.</div>`;
+        panel.style.display = "block";
+        return;
+      }
+      panel.innerHTML = `<h2>Analyse — ${conflicts.length} chevauchement(s) d'installation</h2>` +
+        conflicts.map((p, i) => `
+          <div class="card" style="margin-top:${i === 0 ? 0 : 10}px">
+            <div><strong>${p.slotA.installation_name}</strong></div>
+            <div class="muted" style="margin-top:4px">${planningSlotSummary(p.slotA)}</div>
+            <div class="muted">${planningSlotSummary(p.slotB)}</div>
+            <div style="margin-top:10px">
+              <button class="secondary" data-fix="${i}" style="margin-top:0">A corriger</button>
+              <button data-validate="${i}" style="margin-top:0">Valider quand meme</button>
+            </div>
+          </div>`).join("");
+      panel.style.display = "block";
+      panel.querySelectorAll("[data-fix]").forEach(b => b.addEventListener("click", () => {
+        planningAnalysisConflicts.splice(parseInt(b.dataset.fix, 10), 1);
+        renderPlanningAnalysisPanel();
+      }));
+      panel.querySelectorAll("[data-validate]").forEach(b => b.addEventListener("click", async () => {
+        const idx = parseInt(b.dataset.validate, 10);
+        const p = planningAnalysisConflicts[idx];
+        const [a, bId] = conflictPairKey(p.slotA.id, p.slotB.id);
+        await apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides`, {
+          method: "POST",
+          body: JSON.stringify({ id: crypto.randomUUID(), slot_id_a: a, slot_id_b: bId, created_by: session.user_id })
+        });
+        planningConflictOverrides.push({ slot_id_a: a, slot_id_b: bId });
+        planningAnalysisConflicts.splice(idx, 1);
+        renderPlanningAnalysisPanel();
+        renderPlanningGrid_ifEps();
+      }));
     }
 
     function onPlanningEmptyCellClick(day, minutes) {

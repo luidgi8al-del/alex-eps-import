@@ -86,3 +86,27 @@ create policy "select own installations" on sport_installations for select using
 create policy "insert own installations" on sport_installations for insert with check (auth.uid() = user_id);
 create policy "update own installations" on sport_installations for update using (auth.uid() = user_id);
 create policy "delete own installations" on sport_installations for delete using (auth.uid() = user_id);
+
+-- Bouton "Analyser" de Planning global EPS : une fois qu'un chevauchement d'installation entre
+-- deux comptes a ete regarde et juge acceptable ("Valider quand meme"), il ne doit plus
+-- reapparaitre a la prochaine analyse. slot_id_a/slot_id_b sont toujours ranges dans l'ordre
+-- alphabetique (peu importe qui valide) pour que la paire se reconnaisse quel que soit l'ordre.
+create table if not exists installation_conflict_overrides (
+  id text primary key,
+  slot_id_a text not null,
+  slot_id_b text not null,
+  created_by uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  unique (slot_id_a, slot_id_b)
+);
+
+create index if not exists idx_conflict_overrides_pair on installation_conflict_overrides(slot_id_a, slot_id_b);
+
+alter table installation_conflict_overrides enable row level security;
+
+drop policy if exists "select all conflict overrides" on installation_conflict_overrides;
+drop policy if exists "insert own conflict overrides" on installation_conflict_overrides;
+drop policy if exists "delete own conflict overrides" on installation_conflict_overrides;
+create policy "select all conflict overrides" on installation_conflict_overrides for select using (auth.role() = 'authenticated');
+create policy "insert own conflict overrides" on installation_conflict_overrides for insert with check (auth.uid() = created_by);
+create policy "delete own conflict overrides" on installation_conflict_overrides for delete using (auth.uid() = created_by);
