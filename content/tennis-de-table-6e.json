@@ -1,0 +1,2704 @@
+{
+  "apsa": "Tennis de table",
+  "grades": [
+    "SIXIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "En situation amenagee ou a effectif reduit, s'organiser tactiquement pour gagner le duel ou le match en identifiant les situations favorables de marque.",
+    "Maintenir un engagement moteur efficace sur tout le temps de jeu prevu.",
+    "Respecter les partenaires, les adversaires et l'arbitre.",
+    "Assurer differents roles sociaux (joueur, arbitre, observateur) inherents a l'activite et a l'organisation de la classe.",
+    "Accepter le resultat de la rencontre et etre capable de le commenter."
+  ],
+  "targetCompetence": "Passer d'un renvoi aleatoire, ou l'eleve subit la balle et frappe au hasard, a un jeu intentionnel : se replacer au centre, renvoyer en securite, puis choisir de placer la balle la ou l'adversaire n'est pas.",
+  "cycleObjectives": [
+    "Renvoyer la balle en securite sur la table, plusieurs fois de suite.",
+    "Se replacer au centre apres chaque frappe.",
+    "Servir reglementairement et de facon reguliere.",
+    "Placer la balle loin de l'adversaire pour marquer le point.",
+    "Tenir les roles d'arbitre et de marqueur de points avec rigueur."
+  ],
+  "plannedTitles": [
+    "Decouvrir la table et se situer",
+    "Renvoyer en securite : la balle reste sur la table",
+    "Se replacer apres chaque frappe",
+    "Le service et la mise en jeu",
+    "Match evalue de mi-cycle",
+    "Placer la balle : jouer loin de l'adversaire",
+    "Varier : longueur et cotes",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - attendus de fin de cycle 3",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16714/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources pour le cycle 3 - education physique et sportive",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/259/education-physique-et-sportive-cycle-3",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Tennis de table au college - niveau 1, situations d'apprentissage",
+      "org": "Academie de Lyon",
+      "url": "https://eps.enseigne.ac-lyon.fr/spip/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Le tennis de table scolaire - regles amenagees et progression",
+      "org": "Federation francaise de tennis de table",
+      "url": "https://www.fftt.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Nombre de tables disponibles : conditionne directement l'organisation et le temps de jeu reel par eleve.",
+    "Etat des raquettes et des balles : prevoir un stock de balles de rechange, elles se cassent et roulent partout.",
+    "Espace entre les tables : au moins 2 metres pour permettre le deplacement lateral sans collision.",
+    "Sol non glissant : le tennis de table se joue avec des appuis lateraux rapides.",
+    "Eleves dispenses : prevoir les roles d'arbitre, de marqueur et de ramasseur de balles.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - subit la balle",
+      "observed": "Reste immobile, bras tendu, et frappe au hasard quand la balle arrive pres de lui. Perd le point des le deuxieme echange.",
+      "need": "Construire le renvoi en securite et le deplacement vers la balle."
+    },
+    {
+      "label": "Profil 2 - frappe trop fort",
+      "observed": "Cherche a smasher chaque balle, envoie systematiquement dehors ou dans le filet. Ne fait jamais deux echanges de suite.",
+      "need": "Accepter de renvoyer en securite avant de chercher a marquer."
+    },
+    {
+      "label": "Profil 3 - reste sur le cote",
+      "observed": "Ne revient jamais au centre apres sa frappe, se fait donc systematiquement prendre du cote oppose.",
+      "need": "Construire le replacement au centre apres chaque frappe."
+    },
+    {
+      "label": "Profil 4 - a l'aise mais ne place pas",
+      "observed": "Echange bien et longtemps, mais renvoie toujours au meme endroit, sans chercher a mettre l'adversaire en difficulte.",
+      "need": "Passer de l'echange a l'intention : placer la balle la ou l'adversaire n'est pas."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en montante-descendante, matchs en 11 points avec service alterne tous les deux points. Chaque eleve joue au moins quatre matchs et tient une fois le role d'arbitre-marqueur.",
+    "criteria": [
+      "L'eleve realise des echanges de quatre frappes ou plus sur la majorite des points.",
+      "Le service est reglementaire et regulier : moins de deux services rates par match.",
+      "L'eleve se replace au centre apres ses frappes.",
+      "L'eleve cherche a placer la balle loin de l'adversaire plutot que de renvoyer au meme endroit.",
+      "Le score est tenu correctement et le role d'arbitre-marqueur est assume.",
+      "Le resultat est accepte et l'eleve sait le commenter."
+    ],
+    "referential": "Attendus de fin de cycle 3 du CA4, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir la table et se situer",
+      "mainObjective": "Entrer dans l'activite, decouvrir la raquette et la balle, et observer le niveau initial de chaque eleve.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Tenir la raquette correctement et controler la balle.",
+        "Realiser un premier echange sur la table.",
+        "Reperer qui subit, qui frappe trop fort, qui ne se replace pas."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : les niveaux sont tres heterogenes selon que les eleves ont ou non une table a la maison.",
+      "prerequisiteForNext": "Chaque eleve tient correctement sa raquette et a realise au moins un echange.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6,
+            "note": "adapter le dispositif au nombre reel disponible"
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30,
+            "note": "prevoir large : elles roulent et se cassent"
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Sortir et verifier les tables : filets tendus a la bonne hauteur, plateaux stables.",
+          "Laisser au moins 2 metres entre chaque table pour le deplacement lateral.",
+          "Preparer une raquette par eleve et un bac de balles par table.",
+          "Delimiter avec des plots les couloirs de circulation entre les tables.",
+          "Verifier que le sol n'est pas glissant."
+        ],
+        "sketch": "6 tables espacees de 2 m minimum.\nBac de balles a chaque table.\nCouloirs de circulation materialises par des plots.\nBanc des observateurs sur le cote."
+      },
+      "warmup": {
+        "rationale": "Prepare le poignet, l'epaule et les appuis lateraux, et familiarise avec le rebond de la balle qui est le probleme central des debutants.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple entre les tables, sans les toucher.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets : cercles, flexions, extensions.",
+              "Epaules et coudes : cercles.",
+              "Chevilles et genoux : flexions, montees sur pointes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Familiarisation avec la balle",
+            "details": [
+              "Faire rebondir la balle sur la raquette, sur place, 20 fois.",
+              "Meme chose en marchant.",
+              "Faire rebondir la balle au sol avec la raquette, puis la rattraper."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le premier echange",
+          "objective": "Realiser un premier echange sur la table et observer le comportement spontane de chacun.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Par deux ou trois par table, face a face. Consigne : cooperer pour faire durer l'echange le plus longtemps possible. On compte les frappes a voix haute. Rotation toutes les 5 minutes.",
+          "studentGoal": "Faire le plus grand nombre d'echanges possible avec mon partenaire.",
+          "instructions": [
+            "On coopere : le but est de faire durer l'echange, pas de gagner.",
+            "Je tiens ma raquette comme une poignee de main, index sur le revetement.",
+            "Je renvoie doucement, vers le milieu de la table adverse.",
+            "On compte les frappes a voix haute."
+          ],
+          "success": [
+            "Le binome atteint au moins quatre frappes consecutives.",
+            "Le comptage est fait a voix haute.",
+            "Les balles perdues sont ramassees immediatement."
+          ],
+          "execution": [
+            "Tenir la raquette sans crisper : prise poignee de main.",
+            "Frapper la balle apres son rebond, pas avant.",
+            "Renvoyer doucement, vers le centre de la table adverse."
+          ],
+          "watch": [
+            "Qui frappe trop fort et envoie systematiquement dehors ?",
+            "Qui reste immobile bras tendu au lieu d'aller vers la balle ?",
+            "Qui tient la raquette a pleine main, comme un marteau ?",
+            "Qui est deja a l'aise et pourra viser le placement ?"
+          ],
+          "errors": [
+            "Frapper trop fort pour impressionner.",
+            "Frapper la balle avant qu'elle ne rebondisse.",
+            "Tenir la raquette a pleine main, poignet bloque."
+          ],
+          "feedback": [
+            "Doucement : le but est de faire durer, pas de gagner.",
+            "Attends le rebond, puis tu frappes.",
+            "Poignee de main : ton index sur le revetement."
+          ],
+          "plus": [
+            "Compter les echanges et chercher a battre son record.",
+            "Echanger uniquement en coup droit."
+          ],
+          "minus": [
+            "Echanger avec la balle lancee a la main.",
+            "Jouer sur une demi-table."
+          ],
+          "diff": {
+            "facilitee": "Balle lancee a la main par le partenaire, jeu sur une demi-table, comptage a partir de deux frappes.",
+            "normale": "Echange libre en cooperation, objectif quatre frappes.",
+            "complexifiee": "Echange en coup droit uniquement, avec record a battre."
+          },
+          "safety": [
+            "2 metres minimum entre les tables : le deplacement lateral est rapide.",
+            "Balles ramassees immediatement : une balle au sol fait glisser.",
+            "Ne jamais courir apres une balle qui roule sous une table voisine pendant un echange.",
+            "Sacs et vetements contre le mur, hors des couloirs de circulation.",
+            "Verifier la stabilite des tables avant de commencer."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Maitriser la balle sur la raquette",
+          "objective": "Construire le controle de la balle et la sensation du contact, hors de la contrainte de la table.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            }
+          ],
+          "organization": "Individuellement dans l'espace libre, puis par deux. Quatre defis progressifs : jongler coup droit, jongler revers, alterner les deux faces, jongler en marchant.",
+          "studentGoal": "Faire rebondir la balle 20 fois de suite sans la faire tomber.",
+          "instructions": [
+            "Je fais rebondir la balle sur ma raquette, a hauteur de poitrine.",
+            "Je garde la raquette a plat, je ne frappe pas fort.",
+            "Je passe au defi suivant quand j'ai reussi 20 fois.",
+            "Je reste dans mon espace, je ne gene pas mes camarades."
+          ],
+          "success": [
+            "20 rebonds consecutifs en coup droit.",
+            "10 rebonds consecutifs en revers.",
+            "Le regard reste sur la balle pendant toute la serie."
+          ],
+          "execution": [
+            "Raquette a plat, parallele au sol.",
+            "Amortir avec le poignet plutot que frapper.",
+            "Regarder la balle, pas la raquette."
+          ],
+          "watch": [
+            "Les eleves frappent-ils ou amortissent-ils ?",
+            "La raquette reste-t-elle a plat ?",
+            "Le regard suit-il la balle ?"
+          ],
+          "errors": [
+            "Frapper vers le haut, la balle part trop haut et devient incontrolable.",
+            "Raquette inclinee : la balle part sur le cote.",
+            "Regarder ailleurs et perdre la balle."
+          ],
+          "feedback": [
+            "Amortis, ne frappe pas : la balle doit rester basse.",
+            "Ta raquette bien a plat, comme une assiette.",
+            "Ne quitte pas la balle des yeux."
+          ],
+          "plus": [
+            "Alterner coup droit et revers a chaque rebond.",
+            "Jongler en marchant ou en slalomant."
+          ],
+          "minus": [
+            "Faire rebondir la balle au sol avec la raquette.",
+            "Objectif reduit a 10 rebonds."
+          ],
+          "diff": {
+            "facilitee": "Faire rebondir la balle au sol plutot qu'en l'air, objectif 10 rebonds.",
+            "normale": "20 rebonds coup droit puis 10 en revers.",
+            "complexifiee": "Alternance des deux faces, ou jonglage en deplacement."
+          },
+          "safety": [
+            "Espacement suffisant entre eleves : la raquette se manie a bout de bras.",
+            "Ne pas jongler pres des tables ni des murs.",
+            "Balles au sol ramassees immediatement.",
+            "Ne jamais lancer une raquette."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Mini-matchs decouverte",
+          "objective": "Decouvrir l'opposition et le comptage des points, et observer le comportement en situation de match.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Matchs en 7 points, service a la main pour simplifier. Deux joueurs par table, un troisieme arbitre-marqueur si l'effectif l'impose. Rotation apres chaque match.",
+          "studentGoal": "Gagner mes points en faisant rebondir la balle sur la table adverse.",
+          "instructions": [
+            "Je sers en lancant la balle a la main, par-dessus le filet.",
+            "Je marque le point si la balle rebondit sur la table adverse et que l'adversaire ne la renvoie pas.",
+            "Arbitre : j'annonce le score a voix haute apres chaque point.",
+            "On se serre la main a la fin du match."
+          ],
+          "success": [
+            "Le match va a son terme, jusqu'a 7 points.",
+            "Le score est annonce apres chaque point.",
+            "Les joueurs se serrent la main a la fin."
+          ],
+          "execution": [
+            "Renvoyer en securite plutot que chercher a marquer d'emblee.",
+            "Attendre le rebond avant de frapper.",
+            "Annoncer clairement le score."
+          ],
+          "watch": [
+            "Qui cherche a smasher chaque balle ?",
+            "Qui reste immobile et subit ?",
+            "Le score est-il tenu correctement ?"
+          ],
+          "errors": [
+            "Chercher a marquer des la premiere balle.",
+            "Oublier le score ou le contester.",
+            "Frapper la balle avant le rebond."
+          ],
+          "feedback": [
+            "Renvoie d'abord : tu marqueras plus tard.",
+            "Annonce le score apres chaque point, c'est la regle.",
+            "Attends le rebond."
+          ],
+          "plus": [
+            "Matchs en 11 points avec service a la raquette.",
+            "Trois passes minimum avant de pouvoir marquer."
+          ],
+          "minus": [
+            "Matchs en 5 points.",
+            "Service par lancer avec un rebond dans son camp."
+          ],
+          "diff": {
+            "facilitee": "Match en 5 points, service a la main tres facilite, demi-table.",
+            "normale": "Match en 7 points, service a la main.",
+            "complexifiee": "Match en 11 points, service a la raquette, echange minimum impose."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "2 metres entre les tables.",
+            "Balles ramassees immediatement entre les points.",
+            "Ne pas traverser un couloir de jeu pendant un echange."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui est le plus difficile : renvoyer la balle, ou marquer le point ?",
+          "Comment tient-on correctement une raquette ?"
+        ],
+        "key": "Au tennis de table, on ne marque pas en frappant fort : on marque d'abord parce qu'on est capable de renvoyer la balle a chaque fois."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : annonce le score apres chaque point.",
+        "Ramasseur de balles : recupere les balles perdues entre les points.",
+        "Responsable materiel : sort et range raquettes et balles."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Renvoyer en securite : la balle reste sur la table",
+      "mainObjective": "Construire le renvoi en securite : faire durer l'echange, condition de tout jeu ulterieur.",
+      "secondaryObjectives": [
+        "Renvoyer avec une raquette legerement fermee, sans frapper fort.",
+        "Viser le milieu de la table adverse.",
+        "Atteindre dix echanges consecutifs."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les points se terminent en deux frappes : sans continuite d'echange, aucune tactique n'est possible.",
+      "prerequisiteForNext": "Chaque binome realise dix echanges consecutifs.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "cerceaux ou feuilles de couleur",
+            "fixed": 12,
+            "note": "cibles posees sur la table"
+          },
+          {
+            "label": "fiches de comptage",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Verifier tables et filets avant le debut.",
+          "Poser une cible au centre de chaque demi-table : cerceau ou feuille de couleur.",
+          "Preparer les fiches de comptage des echanges.",
+          "Verifier le stock de balles : prevoir large."
+        ],
+        "sketch": "6 tables, cible au centre de chaque demi-table.\nBac de balles a chaque table.\nFiches de comptage posees sur le bord.\n2 m entre chaque table."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement le poignet et installe d'emblee la recherche de continuite d'echange.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple entre les tables.",
+              "Pas chasses lateraux."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules.",
+              "Chevilles et genoux, flexions."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de balle",
+            "details": [
+              "Jonglage coup droit, 20 rebonds.",
+              "Echanges lents a la table, sans compter.",
+              "Echanges en cherchant le centre de la table adverse."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Dix echanges d'affilee",
+          "objective": "Construire la continuite d'echange par la cooperation, avec un objectif chiffre progressif.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux par table, en cooperation. Trois paliers a franchir : 4 echanges, 7 echanges, 10 echanges. On ne passe au palier suivant qu'apres avoir reussi deux fois le precedent.",
+          "studentGoal": "Atteindre dix echanges consecutifs avec mon partenaire.",
+          "instructions": [
+            "On coopere : on cherche a faire durer, pas a gagner.",
+            "Je renvoie vers le centre de la table adverse.",
+            "Je frappe doucement, raquette legerement fermee.",
+            "On note notre meilleur score sur la fiche."
+          ],
+          "success": [
+            "Le palier de dix echanges est atteint au moins une fois.",
+            "Les scores sont notes sur la fiche.",
+            "Progression visible entre le debut et la fin de la situation."
+          ],
+          "execution": [
+            "Raquette legerement fermee, pour eviter que la balle ne parte trop haut.",
+            "Frapper apres le rebond, au sommet de la trajectoire.",
+            "Viser le centre de la table adverse, pas les cotes."
+          ],
+          "watch": [
+            "Les eleves frappent-ils encore trop fort ?",
+            "La raquette est-elle ouverte, ce qui envoie la balle dehors ?",
+            "La cooperation est-elle reelle, ou l'un cherche-t-il a piéger l'autre ?"
+          ],
+          "errors": [
+            "Accelerer des que l'echange dure, et casser le compte.",
+            "Raquette trop ouverte : la balle part en cloche et sort.",
+            "Renvoyer volontairement une balle difficile."
+          ],
+          "feedback": [
+            "Ferme un peu ta raquette, ta balle part trop haut.",
+            "Ne va pas plus vite parce que ca marche : garde le meme rythme.",
+            "Vous cooperez : envoie-lui une balle qu'il peut jouer."
+          ],
+          "plus": [
+            "Objectif de 15 ou 20 echanges.",
+            "Echanges en visant la cible centrale a chaque fois."
+          ],
+          "minus": [
+            "Objectif de 4 echanges.",
+            "Echanges sur une demi-table, ou balle lancee a la main."
+          ],
+          "diff": {
+            "facilitee": "Jeu sur demi-table, balle lancee a la main pour demarrer, objectif 4 echanges.",
+            "normale": "Paliers 4, 7 puis 10 echanges en cooperation.",
+            "complexifiee": "Objectif 15 a 20 echanges, en visant la cible centrale."
+          },
+          "safety": [
+            "2 metres entre les tables.",
+            "Balles ramassees immediatement : une balle au sol fait glisser.",
+            "Ne pas traverser un couloir de jeu pendant un echange.",
+            "Ne jamais lancer une raquette, meme par jeu."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Viser la cible",
+          "objective": "Ajouter la precision au renvoi : la balle ne se contente pas de passer, elle va ou on veut.",
+          "material": [
+            {
+              "label": "cerceaux ou feuilles de couleur",
+              "fixed": 12
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par deux, une cible posee au centre de chaque demi-table. Chaque balle qui rebondit dans la cible rapporte un point au binome. Objectif commun : 10 points en 3 minutes.",
+          "studentGoal": "Faire rebondir mes balles dans la cible de mon partenaire.",
+          "instructions": [
+            "On coopere toujours : on veut marquer ensemble.",
+            "Chaque balle qui rebondit dans la cible rapporte un point.",
+            "Je vise avant de frapper, je ne frappe pas au hasard.",
+            "On compte a voix haute."
+          ],
+          "success": [
+            "Le binome atteint 10 points en 3 minutes.",
+            "L'eleve regarde la cible avant de frapper.",
+            "Le comptage est fait honnetement."
+          ],
+          "execution": [
+            "Orienter la raquette vers la cible au moment du contact.",
+            "Regarder la cible entre deux frappes, pas seulement la balle.",
+            "Garder un rythme regulier plutot que frapper fort."
+          ],
+          "watch": [
+            "Les eleves visent-ils, ou renvoient-ils au hasard ?",
+            "La precision se fait-elle au detriment de la continuite ?"
+          ],
+          "errors": [
+            "Frapper fort pour atteindre la cible, et sortir de la table.",
+            "Renvoyer sans regarder la cible.",
+            "Compter des points non marques."
+          ],
+          "feedback": [
+            "Regarde ou tu veux l'envoyer avant de frapper.",
+            "Pas plus fort : c'est l'orientation de ta raquette qui compte.",
+            "On compte ce qu'on marque vraiment."
+          ],
+          "plus": [
+            "Deux cibles, une de chaque cote de la table.",
+            "Cible reduite en taille."
+          ],
+          "minus": [
+            "Cible agrandie a toute la demi-table.",
+            "Balle lancee a la main."
+          ],
+          "diff": {
+            "facilitee": "Cible tres large couvrant la moitie de la demi-table, balle lancee a la main.",
+            "normale": "Cible centrale, objectif 10 points en 3 minutes.",
+            "complexifiee": "Deux cibles laterales, de taille reduite."
+          },
+          "safety": [
+            "Cibles posees a plat sur la table, jamais en relief qui ferait devier la balle.",
+            "Balles ramassees entre les series.",
+            "2 metres entre les tables."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec echange minimum",
+          "objective": "Reinvestir la continuite en opposition : le point ne compte qu'apres quatre frappes.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Matchs en 7 points. Regle ajoutee : un point ne compte que si l'echange a compte au moins quatre frappes. En dessous, le point est rejoue.",
+          "studentGoal": "Gagner mes points apres des echanges d'au moins quatre frappes.",
+          "instructions": [
+            "Un point ne compte qu'apres quatre frappes minimum.",
+            "En dessous de quatre frappes, on rejoue le point.",
+            "Je renvoie en securite au debut de l'echange.",
+            "Arbitre : je compte les frappes a voix haute."
+          ],
+          "success": [
+            "La majorite des points sont valides, donc atteignent quatre frappes.",
+            "Le comptage des frappes est fait a voix haute.",
+            "Le match va a son terme."
+          ],
+          "execution": [
+            "Renvoyer en securite sur les premieres frappes.",
+            "Accelerer seulement apres la quatrieme frappe.",
+            "Viser le centre au debut de l'echange."
+          ],
+          "watch": [
+            "Les eleves acceptent-ils de differer leur attaque ?",
+            "Le nombre de points rejoues diminue-t-il au fil du match ?"
+          ],
+          "errors": [
+            "Attaquer des la deuxieme frappe, et devoir rejouer.",
+            "Oublier de compter les frappes.",
+            "Se decourager quand le point est rejoue."
+          ],
+          "feedback": [
+            "Quatre frappes d'abord : tu attaqueras apres.",
+            "Comptez a voix haute, sinon vous ne saurez pas.",
+            "Rejoue : ce n'est pas grave, c'est le principe."
+          ],
+          "plus": [
+            "Echange minimum porte a six frappes.",
+            "Match en 11 points."
+          ],
+          "minus": [
+            "Echange minimum de deux frappes.",
+            "Match en 5 points."
+          ],
+          "diff": {
+            "facilitee": "Echange minimum de deux frappes, match en 5 points.",
+            "normale": "Echange minimum de quatre frappes, match en 7 points.",
+            "complexifiee": "Echange minimum de six frappes, match en 11 points."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "Balles ramassees entre les points.",
+            "Couloirs de circulation degages."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien d'echanges avez-vous reussi a enchainer aujourd'hui ?",
+          "Que se passe-t-il quand on ouvre trop sa raquette ?"
+        ],
+        "key": "Renvoyer en securite, c'est la base : on ferme legerement la raquette, on vise le centre, et on frappe doucement. L'attaque viendra apres."
+      },
+      "socialRoles": [
+        "Compteur d'echanges : annonce le nombre de frappes a voix haute.",
+        "Ramasseur de balles : securise la zone entre les points.",
+        "Responsable materiel : installe et range les cibles."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Se replacer apres chaque frappe",
+      "mainObjective": "Construire le replacement au centre apres chaque frappe, qui conditionne la capacite a jouer le coup suivant.",
+      "secondaryObjectives": [
+        "Revenir au centre de la table apres chaque frappe.",
+        "Se deplacer en pas chasses, sans croiser les pieds.",
+        "Jouer en coup droit et en revers selon le cote."
+      ],
+      "linkToPrevious": "Les echanges durent maintenant, mais les eleves se font prendre a contre-pied des que la balle change de cote : le replacement est le verrou suivant.",
+      "prerequisiteForNext": "Chaque eleve revient au centre apres ses frappes et joue des deux cotes.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 18,
+            "note": "marquent la position centrale au sol"
+          },
+          {
+            "label": "fiches de comptage",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Poser un plot au sol derriere le centre de chaque demi-table : c'est la position de replacement.",
+          "Verifier l'espace lateral de chaque table : au moins 2 metres de chaque cote.",
+          "Preparer un bac de balles par table.",
+          "Verifier que le sol permet les appuis lateraux sans glisser."
+        ],
+        "sketch": "6 tables.\nUn plot au sol derriere le centre de chaque demi-table : position de replacement.\n2 m d'espace lateral de chaque cote.\nBac de balles a chaque table."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les appuis lateraux et les changements de direction, qui sont l'objet de la seance.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction.",
+              "Pas chasses lateraux sur la largeur de la salle."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et appuis",
+            "details": [
+              "Chevilles, genoux, hanches : flexions et cercles.",
+              "Poignets et epaules.",
+              "Fentes laterales, 8 de chaque cote."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Deplacements a la table",
+            "details": [
+              "Sans balle : se deplacer de gauche a droite en pas chasses, en revenant au centre.",
+              "Simuler un coup droit a droite, revenir au centre, un revers a gauche.",
+              "Repeter 10 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Toucher le plot entre chaque frappe",
+          "objective": "Rendre le replacement obligatoire et visible en imposant un repere au sol a rejoindre apres chaque frappe.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 18
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Par deux en cooperation. Un plot au sol derriere le centre. Apres chaque frappe, le joueur doit revenir poser un pied a cote du plot avant que la balle ne revienne. Le partenaire envoie alternativement a droite et a gauche.",
+          "studentGoal": "Revenir au plot central apres chacune de mes frappes.",
+          "instructions": [
+            "Apres chaque frappe, je reviens poser un pied pres du plot.",
+            "Mon partenaire envoie a droite, puis a gauche, alternativement.",
+            "Je me deplace en pas chasses, je ne croise jamais les pieds.",
+            "On compte les allers-retours reussis."
+          ],
+          "success": [
+            "Le retour au centre est effectue apres au moins huit frappes sur dix.",
+            "Les deplacements se font en pas chasses.",
+            "L'echange se poursuit malgre la contrainte."
+          ],
+          "execution": [
+            "Se deplacer en pas chasses, pieds jamais croises.",
+            "Revenir au centre immediatement apres la frappe, sans regarder sa balle.",
+            "Rester en position basse, genoux flechis."
+          ],
+          "watch": [
+            "Les eleves reviennent-ils au centre ou restent-ils du cote de leur derniere frappe ?",
+            "Croisent-ils les pieds en se deplacant ?",
+            "Restent-ils debout jambes tendues ?"
+          ],
+          "errors": [
+            "Rester du cote de sa derniere frappe et se faire prendre a contre-pied.",
+            "Croiser les pieds, ce qui bloque le deplacement suivant.",
+            "Regarder sa propre balle au lieu de se replacer."
+          ],
+          "feedback": [
+            "Reviens au plot : sinon il t'aura de l'autre cote.",
+            "Pas chasses : tes pieds ne se croisent jamais.",
+            "Ne regarde pas ta balle, replace-toi."
+          ],
+          "plus": [
+            "Envois aleatoires plutot qu'alternes.",
+            "Trois positions : droite, centre, gauche."
+          ],
+          "minus": [
+            "Envois alternes tres lents.",
+            "Replacement demande une frappe sur deux."
+          ],
+          "diff": {
+            "facilitee": "Envois lents et tres alternes, replacement demande une frappe sur deux.",
+            "normale": "Envois alternes reguliers, replacement systematique.",
+            "complexifiee": "Envois aleatoires sur trois positions."
+          },
+          "safety": [
+            "Plots poses a plat, jamais debout : risque de chute lors des deplacements lateraux.",
+            "2 metres d'espace lateral de chaque cote de la table.",
+            "Balles ramassees immediatement.",
+            "Sol verifie : les appuis lateraux sont rapides et exigent une bonne adherence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Coup droit et revers",
+          "objective": "Jouer des deux cotes selon la position de la balle, plutot que de contourner systematiquement pour jouer coup droit.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Par deux en cooperation. Le partenaire envoie deux balles a droite puis deux a gauche. Le joueur doit jouer coup droit a droite et revers a gauche, sans contourner. Series de 2 minutes, puis rotation.",
+          "studentGoal": "Jouer revers quand la balle vient a gauche, sans contourner.",
+          "instructions": [
+            "Balle a droite : je joue coup droit.",
+            "Balle a gauche : je joue revers, je ne contourne pas.",
+            "En revers, je place mon coude devant moi, raquette a plat.",
+            "Je reviens au centre entre chaque frappe."
+          ],
+          "success": [
+            "Le revers est joue sur au moins six balles sur dix a gauche.",
+            "Aucun contournement systematique.",
+            "L'echange se poursuit des deux cotes."
+          ],
+          "execution": [
+            "En revers : coude devant, avant-bras qui pousse vers l'avant.",
+            "Ne pas reculer pour jouer coup droit sur une balle a gauche.",
+            "Garder la raquette devant soi entre les frappes."
+          ],
+          "watch": [
+            "Les eleves contournent-ils pour eviter le revers ?",
+            "Le revers est-il joue avec le coude devant, ou en tapant de cote ?"
+          ],
+          "errors": [
+            "Contourner systematiquement pour jouer coup droit.",
+            "Jouer le revers bras tendu sur le cote.",
+            "Reculer au lieu de se deplacer lateralement."
+          ],
+          "feedback": [
+            "Ne contourne pas : joue revers, c'est plus rapide.",
+            "Ton coude devant toi, pas sur le cote.",
+            "Deplace-toi sur le cote, ne recule pas."
+          ],
+          "plus": [
+            "Alternance a chaque balle, sans regularite.",
+            "Trois balles revers d'affilee."
+          ],
+          "minus": [
+            "Uniquement des balles a gauche, pour installer le revers.",
+            "Balles lancees a la main."
+          ],
+          "diff": {
+            "facilitee": "Balles lancees a la main, uniquement a gauche, pour installer le geste du revers.",
+            "normale": "Deux balles a droite, deux a gauche, en alternance.",
+            "complexifiee": "Alternance aleatoire a chaque balle."
+          },
+          "safety": [
+            "Espace lateral degage de chaque cote.",
+            "Balles ramassees entre les series.",
+            "Ne pas jouer trop pres de la table voisine."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec zone de replacement",
+          "objective": "Reinvestir le replacement en opposition, avec une contrainte visible.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 18
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Matchs en 7 points. Un arbitre-observateur compte, pour chaque joueur, le nombre de fois ou il revient au plot central apres sa frappe. Le joueur avec le plus de replacements gagne un point bonus.",
+          "studentGoal": "Revenir au centre apres chaque frappe, meme en match.",
+          "instructions": [
+            "Je joue mon match normalement.",
+            "Apres chaque frappe, je reviens vers le plot central.",
+            "Observateur : je compte les replacements de chaque joueur.",
+            "Le joueur avec le plus de replacements gagne un point bonus."
+          ],
+          "success": [
+            "Au moins dix replacements comptes par match.",
+            "Le replacement tient malgre la pression du match.",
+            "Le comptage est fait honnetement."
+          ],
+          "execution": [
+            "Revenir au centre immediatement apres la frappe.",
+            "Se deplacer en pas chasses.",
+            "Rester en position basse, prete a repartir."
+          ],
+          "watch": [
+            "Le replacement resiste-t-il a la pression du match ?",
+            "Les eleves qui se replacent gagnent-ils plus de points ?"
+          ],
+          "errors": [
+            "Oublier le replacement des que le point devient serre.",
+            "Compter des replacements non effectues.",
+            "Rester fige apres une belle frappe pour la regarder."
+          ],
+          "feedback": [
+            "Reviens au centre, meme quand tu es en train de gagner.",
+            "Compte ce que tu vois vraiment.",
+            "Ne regarde pas ta balle : replace-toi."
+          ],
+          "plus": [
+            "Un point est perdu si le joueur ne se replace pas.",
+            "Match en 11 points."
+          ],
+          "minus": [
+            "Replacement compte sans bonus.",
+            "Match en 5 points."
+          ],
+          "diff": {
+            "facilitee": "Match en 5 points, replacement compte mais sans enjeu.",
+            "normale": "Match en 7 points, bonus au meilleur nombre de replacements.",
+            "complexifiee": "Match en 11 points, point perdu en cas de non-replacement."
+          },
+          "safety": [
+            "Plots a plat, jamais debout dans la zone de deplacement.",
+            "Un seul match par table.",
+            "Balles ramassees entre les points.",
+            "Espace lateral degage."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que se passe-t-il quand on ne revient pas au centre apres sa frappe ?",
+          "Pourquoi ne faut-il pas croiser les pieds en se deplacant ?"
+        ],
+        "key": "Apres chaque frappe, on revient au centre : c'est ce qui permet d'atteindre la balle suivante, des deux cotes."
+      },
+      "socialRoles": [
+        "Compteur de replacements : releve les retours au centre de chaque joueur.",
+        "Ramasseur de balles.",
+        "Responsable materiel : positionne les plots de replacement."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Le service et la mise en jeu",
+      "mainObjective": "Construire un service reglementaire et regulier, qui met en jeu sans offrir le point.",
+      "secondaryObjectives": [
+        "Servir en lancant la balle verticalement, paume ouverte.",
+        "Faire rebondir la balle dans son camp puis dans le camp adverse.",
+        "Servir de facon reguliere, sans faute."
+      ],
+      "linkToPrevious": "Les echanges durent et le replacement existe, mais de nombreux points sont perdus des le service : c'est un gisement de points immediat.",
+      "prerequisiteForNext": "Chaque eleve reussit huit services sur dix, reglementairement.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "cerceaux ou feuilles de couleur",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles du service",
+            "fixed": 1
+          },
+          {
+            "label": "fiches de comptage",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Afficher les trois regles du service : balle sur paume ouverte, lancer vertical, rebond dans les deux camps.",
+          "Poser des cibles dans les zones de service adverses.",
+          "Preparer un bac de balles bien garni par table : les services rates font perdre beaucoup de balles.",
+          "Verifier les filets et leur hauteur."
+        ],
+        "sketch": "6 tables avec cibles dans la zone de service adverse.\nAffiche des regles du service au mur.\nBac de balles garni a chaque table.\nFiches de comptage sur le bord."
+      },
+      "warmup": {
+        "rationale": "Prepare le poignet et la coordination main-raquette, particulierement sollicitee dans le geste de service.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple entre les tables.",
+              "Pas chasses lateraux."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets : cercles et flexions.",
+              "Epaules, coudes, chevilles."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Coordination pour le service",
+            "details": [
+              "Lancer la balle verticalement de la paume ouverte et la rattraper, 10 fois.",
+              "Meme chose en la laissant rebondir une fois au sol.",
+              "Lancer et frapper doucement dans le vide, 10 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le service reglementaire",
+          "objective": "Construire le geste du service selon les trois regles fondamentales, avec un objectif de regularite.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "affiche des regles du service",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux par table. Chacun sert dix fois de suite, le partenaire compte les services reussis. Puis rotation. Trois series chacun.",
+          "studentGoal": "Reussir huit services sur dix, en respectant les trois regles.",
+          "instructions": [
+            "Je pose la balle sur ma paume ouverte, main a plat.",
+            "Je lance la balle vers le haut, au moins 16 centimetres.",
+            "Je frappe la balle apres le lancer : elle rebondit dans mon camp puis dans celui de l'adversaire.",
+            "Partenaire : je compte les services reussis."
+          ],
+          "success": [
+            "Huit services reussis sur dix a la troisieme serie.",
+            "La balle est bien posee sur la paume ouverte a chaque service.",
+            "Le comptage est fait honnetement."
+          ],
+          "execution": [
+            "Paume ouverte, doigts tendus : la balle ne doit pas etre tenue entre les doigts.",
+            "Lancer vertical, pas vers l'avant.",
+            "Frapper doucement : le service met en jeu, il ne cherche pas a marquer."
+          ],
+          "watch": [
+            "La balle est-elle lancee ou simplement lachee de la raquette ?",
+            "Le lancer est-il vertical ou vers l'avant ?",
+            "Les eleves cherchent-ils deja a servir fort ?"
+          ],
+          "errors": [
+            "Lacher la balle depuis la raquette sans la lancer.",
+            "Lancer la balle vers l'avant, ce qui est une faute.",
+            "Servir trop fort et rater systematiquement."
+          ],
+          "feedback": [
+            "Lance-la vraiment, main a plat : ne la lache pas de ta raquette.",
+            "Vers le haut, pas vers l'avant.",
+            "Doucement : le service, c'est pour mettre en jeu."
+          ],
+          "plus": [
+            "Servir dans une zone imposee.",
+            "Servir en variant la longueur : court puis long."
+          ],
+          "minus": [
+            "Servir en lancant la balle a la main, sans raquette.",
+            "Objectif de cinq services sur dix."
+          ],
+          "diff": {
+            "facilitee": "Service par lancer a la main par-dessus le filet, objectif 5 sur 10.",
+            "normale": "Service reglementaire, objectif 8 sur 10.",
+            "complexifiee": "Service reglementaire dans une zone imposee, avec variation de longueur."
+          },
+          "safety": [
+            "Balles ramassees regulierement : les services rates en envoient beaucoup au sol.",
+            "2 metres entre les tables.",
+            "Ne pas traverser un couloir de jeu pour recuperer une balle.",
+            "Ne jamais lancer une raquette."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Servir dans la cible",
+          "objective": "Ajouter la precision au service : servir la ou on veut, pas seulement sur la table.",
+          "material": [
+            {
+              "label": "cerceaux ou feuilles de couleur",
+              "fixed": 12
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            }
+          ],
+          "organization": "Deux cibles posees dans le camp adverse, une a droite et une a gauche. Chaque eleve sert dix fois en annoncant la cible visee avant de servir. Le partenaire compte les reussites.",
+          "studentGoal": "Servir dans la cible que j'ai annoncee.",
+          "instructions": [
+            "J'annonce ma cible a voix haute avant de servir : droite ou gauche.",
+            "Je sers en visant cette cible.",
+            "Le service reste reglementaire : paume ouverte, lancer vertical.",
+            "Partenaire : je compte les services dans la bonne cible."
+          ],
+          "success": [
+            "Cinq services sur dix atteignent la cible annoncee.",
+            "Tous les services restent reglementaires.",
+            "L'annonce est faite avant chaque service."
+          ],
+          "execution": [
+            "Orienter la raquette vers la cible au moment du contact.",
+            "Garder le meme geste, changer seulement l'orientation.",
+            "Ne pas frapper plus fort pour viser plus loin."
+          ],
+          "watch": [
+            "Les eleves changent-ils leur geste ou seulement l'orientation ?",
+            "La regularite se degrade-t-elle avec la contrainte de precision ?"
+          ],
+          "errors": [
+            "Frapper plus fort pour atteindre la cible eloignee.",
+            "Changer completement de geste selon la cible.",
+            "Annoncer apres avoir servi."
+          ],
+          "feedback": [
+            "Meme geste : c'est ta raquette qui s'oriente.",
+            "Pas plus fort, plus precis.",
+            "Annonce avant, pas apres."
+          ],
+          "plus": [
+            "Trois cibles : droite, centre, gauche.",
+            "Cible imposee par le partenaire."
+          ],
+          "minus": [
+            "Une seule cible, tres large.",
+            "Annonce non obligatoire."
+          ],
+          "diff": {
+            "facilitee": "Une seule cible tres large, sans annonce prealable.",
+            "normale": "Deux cibles annoncees avant le service.",
+            "complexifiee": "Trois cibles, imposees par le partenaire juste avant le service."
+          },
+          "safety": [
+            "Cibles posees a plat sur la table.",
+            "Balles ramassees regulierement.",
+            "Espace de circulation degage."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec service alterne",
+          "objective": "Reinvestir le service en match, avec la regle reelle de l'alternance tous les deux points.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Matchs en 11 points, service alterne tous les deux points. Un arbitre-marqueur compte les points et les services rates de chaque joueur.",
+          "studentGoal": "Servir sans faute pendant tout mon match.",
+          "instructions": [
+            "Le service change de joueur tous les deux points.",
+            "Un service rate donne le point a l'adversaire.",
+            "Arbitre : j'annonce le score et je rappelle qui doit servir.",
+            "Je compte aussi les services rates de chaque joueur."
+          ],
+          "success": [
+            "Moins de deux services rates par joueur sur le match.",
+            "L'alternance des services est respectee.",
+            "Le score est annonce apres chaque point."
+          ],
+          "execution": [
+            "Garder le geste travaille meme sous la pression.",
+            "Servir en securite plutot que chercher a marquer directement.",
+            "Annoncer le score avant de servir."
+          ],
+          "watch": [
+            "Le service tient-il sous la pression du match ?",
+            "L'alternance est-elle comprise et respectee ?"
+          ],
+          "errors": [
+            "Chercher a marquer directement sur le service et rater.",
+            "Oublier l'alternance et servir quatre fois de suite.",
+            "Servir sans annoncer le score."
+          ],
+          "feedback": [
+            "Un service en securite vaut mieux qu'un ace rate.",
+            "Deux points chacun : a lui de servir maintenant.",
+            "Annonce le score avant de servir."
+          ],
+          "plus": [
+            "Service dans une zone imposee par l'arbitre.",
+            "Match en 11 points avec deux manches gagnantes."
+          ],
+          "minus": [
+            "Service a la main autorise en cas de difficulte.",
+            "Match en 7 points."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points, service a la main autorise, alternance rappelee par l'arbitre.",
+            "normale": "Match en 11 points, service reglementaire alterne tous les deux points.",
+            "complexifiee": "Match en 11 points, zone de service imposee."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "Balles ramassees entre les points.",
+            "Couloirs de circulation degages.",
+            "Ne pas traverser une zone de jeu pendant un echange."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les trois regles du service ?",
+          "Vaut-il mieux servir fort et rater, ou servir doucement et mettre en jeu ?"
+        ],
+        "key": "Le service met la balle en jeu : il se lance paume ouverte, verticalement, et se frappe doucement. Un service rate, c'est un point offert."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : annonce le score et rappelle qui doit servir.",
+        "Compteur de services : releve les services reussis et rates.",
+        "Ramasseur de balles."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Match evalue de mi-cycle",
+      "mainObjective": "Faire le point a mi-parcours sur l'echange, le replacement et le service, et fixer a chacun un objectif personnel.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau de jeu par rapport au debut du cycle.",
+        "Tenir le role d'arbitre-marqueur avec rigueur.",
+        "Ecrire un objectif personnel pour les trois dernieres seances."
+      ],
+      "linkToPrevious": "Les quatre premieres seances ont traite l'echange, le replacement et le service : on verifie ce qui est transfere en match.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau et a formule un objectif precis.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Preparer les fiches nominatives avec les quatre criteres imprimes.",
+          "Afficher les criteres evalues, en grand, a l'entree de la salle.",
+          "Constituer des poules de niveau homogene, de quatre eleves par table si possible.",
+          "Prevoir un espace calme pour l'ecriture de l'objectif."
+        ],
+        "sketch": "6 tables organisees en poules de niveau.\nAffichage des criteres a l'entree.\nCoin ecriture avec bancs, hors zone de jeu.\nBac de balles a chaque table."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, l'evaluation est l'occasion de le verifier.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque poule s'echauffe seule : course, pas chasses.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules, chevilles.",
+              "Fentes laterales."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action",
+            "details": [
+              "Echanges lents en cooperation, 2 minutes.",
+              "Cinq services par eleve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Matchs evalues en poule",
+          "objective": "Observer chaque eleve en match reel sur les quatre criteres travailles depuis le debut du cycle.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Poules de quatre par table, chacun rencontre les trois autres en 11 points. Pendant chaque match, les deux joueurs au repos tiennent les roles d'arbitre-marqueur et d'observateur.",
+          "studentGoal": "Montrer en match ce que j'ai appris : echanger, me replacer, servir sans faute.",
+          "instructions": [
+            "Je joue mes trois matchs de poule en 11 points.",
+            "Quand je ne joue pas, j'arbitre ou j'observe.",
+            "Observateur : je remplis la fiche de mon camarade, critere par critere.",
+            "Je ne conteste pas les decisions de l'arbitre."
+          ],
+          "success": [
+            "Des echanges de quatre frappes ou plus sur la majorite des points.",
+            "Moins de deux services rates par match.",
+            "Le replacement au centre est visible.",
+            "Les roles d'arbitre et d'observateur sont tenus."
+          ],
+          "execution": [
+            "Renvoyer en securite au debut de l'echange.",
+            "Revenir au centre apres chaque frappe.",
+            "Servir doucement et reglementairement."
+          ],
+          "watch": [
+            "Quels acquis tiennent sous la pression du match ?",
+            "Qui a progresse depuis la seance 1 ?",
+            "Les arbitres tiennent-ils le score correctement ?"
+          ],
+          "errors": [
+            "Chercher a smasher des la deuxieme frappe.",
+            "Oublier le replacement sous la pression.",
+            "Contester le score."
+          ],
+          "feedback": [
+            "Renvoie d'abord, tu attaqueras apres.",
+            "Reviens au centre, meme en match.",
+            "Le score est celui de l'arbitre, on l'accepte."
+          ],
+          "plus": [
+            "Matchs en deux manches gagnantes.",
+            "Arbitrage entierement autonome."
+          ],
+          "minus": [
+            "Matchs en 7 points.",
+            "Poules de trois."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 7 points, poules de trois, service a la main autorise.",
+            "normale": "Matchs en 11 points, poules de quatre, service reglementaire.",
+            "complexifiee": "Matchs en deux manches gagnantes, arbitrage entierement autonome."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "Balles ramassees entre les points.",
+            "2 metres entre les tables, couloirs degages.",
+            "Ne pas traverser une zone de jeu pendant un echange."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Lecture de la fiche a deux",
+          "objective": "Faire comprendre a chaque eleve ce qui a ete observe de son jeu, avant d'en tirer un objectif.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, joueur et observateur assis a l'ecart des tables. L'observateur explique ce qu'il a note, le joueur pose des questions.",
+          "studentGoal": "Comprendre precisement ce que mon camarade a observe de mon jeu.",
+          "instructions": [
+            "Observateur : je dis ce que j'ai vu, avec des exemples precis.",
+            "Joueur : j'ecoute et je demande des precisions.",
+            "On cherche ensemble un point fort et un point a ameliorer.",
+            "On ne discute pas la note, on discute ce qui a ete vu."
+          ],
+          "success": [
+            "Chaque eleve cite un point fort de son jeu.",
+            "Chaque eleve cite un point precis a ameliorer.",
+            "L'echange se fait sans conflit."
+          ],
+          "execution": [
+            "Donner un exemple concret plutot qu'un jugement general.",
+            "Parler du jeu, pas de la personne.",
+            "Ecouter jusqu'au bout avant de repondre."
+          ],
+          "watch": [
+            "Les retours sont-ils precis ou generaux ?",
+            "Les eleves acceptent-ils le retour d'un camarade ?"
+          ],
+          "errors": [
+            "Dire simplement bien ou nul, sans exemple.",
+            "Contester au lieu d'ecouter.",
+            "Remplir la fiche apres coup."
+          ],
+          "feedback": [
+            "Donne-lui un exemple : a quel moment tu l'as vu ?",
+            "On parle de ce qu'il a fait, pas de lui.",
+            "Ecoute d'abord, tu repondras apres."
+          ],
+          "plus": [
+            "Comparer avec la fiche d'observation de la seance 1."
+          ],
+          "minus": [
+            "Le professeur mene l'echange avec le binome."
+          ],
+          "diff": {
+            "facilitee": "Echange guide par le professeur, criteres relus a voix haute.",
+            "normale": "Echange autonome a deux.",
+            "complexifiee": "Echange avec comparaison chiffree seance 1 / seance 5."
+          },
+          "safety": [
+            "Temps calme a l'ecart des tables, aucun match en cours a proximite.",
+            "Balles et raquettes posees pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Mon objectif pour la fin du cycle",
+          "objective": "Transformer le bilan en un objectif personnel simple et verifiable.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement, assis, chacun ecrit son objectif au dos de sa fiche. Le professeur passe valider ou reformuler.",
+          "studentGoal": "Ecrire un objectif que je pourrai verifier a la derniere seance.",
+          "instructions": [
+            "J'ecris un seul objectif, precis et verifiable.",
+            "J'evite les objectifs vagues comme mieux jouer.",
+            "Je choisis parmi les quatre criteres celui ou je suis le moins bon.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'objectif est ecrit et lisible.",
+            "L'objectif porte sur un critere precis du cycle.",
+            "L'objectif est verifiable en match."
+          ],
+          "execution": [
+            "Formuler avec un verbe d'action et un nombre.",
+            "Relier l'objectif a ce que l'observateur a note.",
+            "Ecrire en une seule phrase."
+          ],
+          "watch": [
+            "Les objectifs sont-ils realistes et mesurables ?",
+            "Correspondent-ils au point faible observe ?"
+          ],
+          "errors": [
+            "Objectif trop vague.",
+            "Objectif deja atteint.",
+            "Recopier l'objectif du voisin."
+          ],
+          "feedback": [
+            "Ajoute un nombre : combien de fois par match ?",
+            "C'est deja acquis : vise plus haut.",
+            "Choisis le critere ou ta fiche est la moins bonne."
+          ],
+          "plus": [
+            "Ecrire aussi le moyen concret d'y arriver."
+          ],
+          "minus": [
+            "Choisir un objectif dans une liste proposee."
+          ],
+          "diff": {
+            "facilitee": "Objectif choisi dans une liste de quatre propositions affichees.",
+            "normale": "Objectif redige librement, valide par le professeur.",
+            "complexifiee": "Objectif et moyen d'y parvenir rediges."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des tables.",
+            "Materiel pose avant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre objectif pour les trois dernieres seances ?",
+          "Sur quel critere la classe a-t-elle le plus progresse depuis la seance 1 ?"
+        ],
+        "key": "A mi-cycle, chacun sait ce qu'il sait faire et ce qu'il lui reste a travailler : les trois dernieres seances servent a atteindre cet objectif."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : tient le score d'un match complet.",
+        "Observateur evaluateur : remplit la fiche d'un camarade.",
+        "Responsable des fiches : distribue et recupere les fiches nominatives."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Placer la balle : jouer loin de l'adversaire",
+      "mainObjective": "Passer de l'echange a l'intention : choisir ou envoyer la balle pour mettre l'adversaire en difficulte.",
+      "secondaryObjectives": [
+        "Identifier la position de l'adversaire avant de frapper.",
+        "Envoyer la balle du cote oppose a l'adversaire.",
+        "Conserver la securite du renvoi tout en placant."
+      ],
+      "linkToPrevious": "Les eleves echangent, se replacent et servent. Il leur reste a jouer avec intention plutot que de renvoyer toujours au meme endroit.",
+      "prerequisiteForNext": "Chaque eleve regarde son adversaire avant de frapper et joue du cote oppose.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "cerceaux ou feuilles de couleur",
+            "fixed": 18
+          },
+          {
+            "label": "fiches de comptage",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Poser deux cibles laterales sur chaque demi-table : une a droite, une a gauche.",
+          "Verifier l'espace lateral : le jeu place fait beaucoup courir.",
+          "Preparer un bac de balles bien garni.",
+          "Verifier le sol pour les appuis lateraux rapides."
+        ],
+        "sketch": "6 tables avec 2 cibles laterales par demi-table.\n2 m d'espace lateral de chaque cote.\nBac de balles a chaque table.\nFiches de comptage sur le bord."
+      },
+      "warmup": {
+        "rationale": "Prepare les appuis lateraux, tres sollicites quand le jeu devient place, et reactive le replacement.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses lateraux.",
+              "Changements de direction rapides."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, epaules, chevilles, genoux.",
+              "Fentes laterales, 8 de chaque cote."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise avec replacement",
+            "details": [
+              "Echanges alternes droite-gauche, avec retour au centre.",
+              "Cinq services par eleve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Jouer ou il n'est pas",
+          "objective": "Construire l'intention tactique fondamentale : envoyer la balle du cote oppose a l'adversaire.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "cerceaux ou feuilles de couleur",
+              "fixed": 18
+            }
+          ],
+          "organization": "Par deux. Le partenaire se place volontairement d'un cote de la table et y reste. Le joueur doit envoyer sa balle du cote oppose. Series de 10 balles, puis rotation.",
+          "studentGoal": "Envoyer ma balle du cote ou mon adversaire n'est pas.",
+          "instructions": [
+            "Je regarde ou est mon adversaire avant de frapper.",
+            "J'envoie ma balle du cote oppose.",
+            "Mon partenaire reste volontairement d'un cote pour cette situation.",
+            "On compte les balles bien placees."
+          ],
+          "success": [
+            "Sept balles sur dix envoyees du cote oppose.",
+            "L'eleve regarde son adversaire avant de frapper.",
+            "Le renvoi reste sur la table malgre l'intention de placer."
+          ],
+          "execution": [
+            "Lever les yeux vers l'adversaire pendant que la balle arrive.",
+            "Orienter la raquette vers la zone visee au contact.",
+            "Ne pas frapper plus fort pour placer plus loin."
+          ],
+          "watch": [
+            "L'eleve regarde-t-il l'adversaire, ou uniquement la balle ?",
+            "La precision se fait-elle au detriment de la securite ?",
+            "L'eleve annonce-t-il son intention par son geste, trop tot ?"
+          ],
+          "errors": [
+            "Regarder uniquement la balle et renvoyer au hasard.",
+            "Frapper plus fort en croyant mieux placer.",
+            "Orienter la raquette trop tot, ce qui previent l'adversaire."
+          ],
+          "feedback": [
+            "Regarde-le pendant que la balle vient vers toi.",
+            "Pas plus fort : c'est ton orientation qui place la balle.",
+            "Oriente au dernier moment, sinon il devine."
+          ],
+          "plus": [
+            "L'adversaire se deplace, il faut lire sa position en temps reel.",
+            "Alterner court et long en plus du cote."
+          ],
+          "minus": [
+            "Adversaire immobile a une position fixe, tres marquee.",
+            "Balle lancee a la main."
+          ],
+          "diff": {
+            "facilitee": "Adversaire immobile a une position tres decalee, balle lancee a la main.",
+            "normale": "Adversaire fixe d'un cote, dix balles a placer du cote oppose.",
+            "complexifiee": "Adversaire mobile, avec variation court-long en plus du cote."
+          },
+          "safety": [
+            "2 metres d'espace lateral de chaque cote : le jeu place fait courir.",
+            "Balles ramassees regulierement.",
+            "Ne pas traverser un couloir de jeu.",
+            "Sol verifie pour les appuis lateraux."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Le jeu des deux cibles",
+          "objective": "Alterner les cotes de facon imprevisible, pour empecher l'adversaire d'anticiper.",
+          "material": [
+            {
+              "label": "cerceaux ou feuilles de couleur",
+              "fixed": 18
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            }
+          ],
+          "organization": "Deux cibles laterales sur chaque demi-table. Echange en cooperation ou chacun doit viser alternativement une cible puis l'autre, sans regularite previsible. Series de 3 minutes.",
+          "studentGoal": "Alterner mes cibles sans que mon partenaire puisse deviner.",
+          "instructions": [
+            "Je vise une cible, puis l'autre, mais pas toujours dans le meme ordre.",
+            "Mon partenaire doit se deplacer pour renvoyer.",
+            "On coopere : l'echange doit durer malgre les deplacements.",
+            "On compte les balles dans les cibles."
+          ],
+          "success": [
+            "Au moins six balles dans les cibles sur une serie.",
+            "L'echange dure malgre les deplacements.",
+            "L'alternance n'est pas previsible."
+          ],
+          "execution": [
+            "Varier l'ordre des cibles, sans schema regulier.",
+            "Se replacer au centre apres chaque frappe.",
+            "Garder un rythme regulier, ne pas accelerer."
+          ],
+          "watch": [
+            "L'alternance est-elle previsible : droite-gauche-droite systematiquement ?",
+            "Le replacement tient-il malgre les deplacements ?"
+          ],
+          "errors": [
+            "Alterner mecaniquement, ce qui rend le jeu previsible.",
+            "Oublier de se replacer entre deux frappes.",
+            "Accelerer et casser l'echange."
+          ],
+          "feedback": [
+            "Trop previsible : varie l'ordre.",
+            "Reviens au centre, sinon tu ne recupereras pas.",
+            "Meme rythme : le but est que ca dure."
+          ],
+          "plus": [
+            "Trois cibles : droite, centre, gauche.",
+            "Echange en opposition plutot qu'en cooperation."
+          ],
+          "minus": [
+            "Alternance imposee et annoncee.",
+            "Cibles tres larges."
+          ],
+          "diff": {
+            "facilitee": "Cibles tres larges, alternance annoncee a voix haute.",
+            "normale": "Deux cibles, alternance libre et imprevisible.",
+            "complexifiee": "Trois cibles, en opposition plutot qu'en cooperation."
+          },
+          "safety": [
+            "Cibles posees a plat sur la table.",
+            "Espace lateral degage de chaque cote.",
+            "Balles ramassees entre les series."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec bonus placement",
+          "objective": "Valoriser le placement en match : les points gagnes par une balle placee comptent double.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "fiches de comptage",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Matchs en 11 points. Un point gagne parce que l'adversaire n'a pas pu atteindre la balle compte double. L'arbitre juge et annonce.",
+          "studentGoal": "Gagner des points en placant la balle loin de mon adversaire.",
+          "instructions": [
+            "Un point gagne parce que l'adversaire n'a pas atteint la balle compte double.",
+            "Un point gagne parce qu'il a rate son renvoi compte simple.",
+            "Arbitre : je juge et j'annonce si le point compte double.",
+            "Je regarde mon adversaire avant chaque frappe."
+          ],
+          "success": [
+            "Au moins deux points doubles par match.",
+            "Le regard vers l'adversaire est visible avant les frappes.",
+            "Le score est tenu correctement."
+          ],
+          "execution": [
+            "Regarder l'adversaire pendant que la balle arrive.",
+            "Placer plutot que frapper fort.",
+            "Se replacer au centre apres chaque frappe."
+          ],
+          "watch": [
+            "Les eleves cherchent-ils a placer, ou reviennent-ils a la frappe forte ?",
+            "L'arbitre distingue-t-il les deux types de points ?"
+          ],
+          "errors": [
+            "Revenir a la frappe forte pour gagner vite.",
+            "Placer au detriment de la securite et sortir de la table.",
+            "Arbitre qui ne distingue pas les deux cas."
+          ],
+          "feedback": [
+            "Place-la, ne la frappe pas : c'est ca qui rapporte double.",
+            "Reste sur la table : une balle dehors ne rapporte rien.",
+            "Arbitre : a-t-il pu la toucher ou pas ?"
+          ],
+          "plus": [
+            "Seuls les points places comptent.",
+            "Match en deux manches gagnantes."
+          ],
+          "minus": [
+            "Bonus explique mais pas comptabilise.",
+            "Match en 7 points."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points, bonus explique sans comptabilisation stricte.",
+            "normale": "Match en 11 points, points places comptant double.",
+            "complexifiee": "Seuls les points gagnes par placement comptent."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "Espace lateral degage : le jeu place fait courir.",
+            "Balles ramassees entre les points.",
+            "Couloirs de circulation degages."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il regarder avant de frapper la balle ?",
+          "Vaut-il mieux frapper fort au centre, ou doucement sur le cote ?"
+        ],
+        "key": "On ne gagne pas en frappant fort : on gagne en envoyant la balle la ou l'adversaire n'est pas. Pour cela, il faut le regarder avant de frapper."
+      },
+      "socialRoles": [
+        "Arbitre-juge : distingue les points gagnes par placement et par faute adverse.",
+        "Compteur de cibles : releve les balles dans les cibles.",
+        "Ramasseur de balles."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Varier : longueur et cotes",
+      "mainObjective": "Enrichir le placement par la variation de longueur, et preparer les roles pour l'evaluation.",
+      "secondaryObjectives": [
+        "Jouer court puis long pour deplacer l'adversaire d'avant en arriere.",
+        "Combiner variation de cote et de longueur.",
+        "S'entrainer a arbitrer un match complet."
+      ],
+      "linkToPrevious": "Le placement lateral est acquis : il reste la profondeur, qui deplace l'adversaire d'avant en arriere et double les possibilites.",
+      "prerequisiteForNext": "Chaque eleve varie la longueur de ses balles et sait arbitrer un match complet.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "cerceaux ou feuilles de couleur",
+            "fixed": 24,
+            "note": "cibles courtes pres du filet et longues au fond"
+          },
+          {
+            "label": "grilles d'arbitrage d'entrainement",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Poser deux cibles par demi-table : une courte pres du filet, une longue au fond.",
+          "Preparer les grilles d'arbitrage identiques a celles de l'evaluation.",
+          "Verifier l'espace derriere les tables : le jeu long fait reculer les joueurs.",
+          "Preparer un bac de balles bien garni."
+        ],
+        "sketch": "6 tables avec 2 cibles par demi-table : une courte (pres du filet), une longue (au fond).\nEspace de recul de 2 m derriere chaque table.\nGrilles d'arbitrage sur le bord."
+      },
+      "warmup": {
+        "rationale": "Prepare les deplacements avant-arriere en plus des deplacements lateraux, ce qui est nouveau dans cette seance.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses lateraux.",
+              "Deplacements avant-arriere rapides."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, epaules, chevilles, genoux.",
+              "Fentes avant et laterales."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise avec deplacements",
+            "details": [
+              "Echanges avec balles courtes et longues alternees.",
+              "Se deplacer d'avant en arriere entre les frappes.",
+              "Cinq services par eleve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Court puis long",
+          "objective": "Construire la variation de longueur, qui deplace l'adversaire d'avant en arriere.",
+          "material": [
+            {
+              "label": "cerceaux ou feuilles de couleur",
+              "fixed": 24
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par deux, une cible courte pres du filet et une longue au fond de chaque demi-table. Le joueur alterne : une balle courte, une balle longue. Le partenaire se deplace pour renvoyer. Series de 3 minutes.",
+          "studentGoal": "Alterner balles courtes et balles longues pour faire bouger mon partenaire.",
+          "instructions": [
+            "J'envoie une balle courte, pres du filet, puis une balle longue, au fond.",
+            "Pour la courte, je frappe doucement et je pose la balle.",
+            "Pour la longue, je pousse la balle vers le fond de la table.",
+            "Mon partenaire se deplace d'avant en arriere pour renvoyer."
+          ],
+          "success": [
+            "Six balles sur dix atteignent la cible visee.",
+            "La difference de longueur est visible : le partenaire doit se deplacer.",
+            "L'echange se poursuit malgre la variation."
+          ],
+          "execution": [
+            "Pour la courte : amortir, raquette a peine inclinee, contact leger.",
+            "Pour la longue : accompagner la balle vers l'avant, geste plus ample.",
+            "Se replacer entre chaque frappe."
+          ],
+          "watch": [
+            "La difference court-long est-elle reelle, ou toutes les balles arrivent-elles au meme endroit ?",
+            "L'eleve utilise-t-il le meme geste pour les deux ?"
+          ],
+          "errors": [
+            "Toutes les balles a mi-table, sans difference reelle.",
+            "Frapper fort pour la longue, et sortir de la table.",
+            "Amortir trop la courte, qui ne franchit pas le filet."
+          ],
+          "feedback": [
+            "Ta courte doit rebondir juste apres le filet.",
+            "Pousse la longue, ne la frappe pas.",
+            "On doit voir ton partenaire avancer puis reculer."
+          ],
+          "plus": [
+            "Combiner longueur et cote : courte a droite, longue a gauche.",
+            "Alternance imprevisible."
+          ],
+          "minus": [
+            "Deux longueurs seulement, tres marquees.",
+            "Alternance annoncee a voix haute."
+          ],
+          "diff": {
+            "facilitee": "Alternance annoncee a voix haute, cibles tres larges.",
+            "normale": "Alternance court-long reguliere sur dix balles.",
+            "complexifiee": "Combinaison longueur et cote, alternance imprevisible."
+          },
+          "safety": [
+            "2 metres de recul derriere chaque table : le jeu long fait reculer.",
+            "Verifier qu'aucun obstacle ne se trouve derriere les joueurs.",
+            "Balles ramassees regulierement.",
+            "Espace lateral degage."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "S'entrainer a arbitrer",
+          "objective": "Former les eleves a l'arbitrage complet, pour qu'ils le maitrisent le jour de l'evaluation.",
+          "material": [
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Matchs en 11 points arbitres entierement par un eleve : score, alternance des services, jugement des balles limites. Un second eleve verifie et compare.",
+          "studentGoal": "Arbitrer un match complet sans erreur de score ni d'alternance.",
+          "instructions": [
+            "J'annonce le score a voix haute apres chaque point.",
+            "Je rappelle qui doit servir tous les deux points.",
+            "Je juge les balles limites : sur la ligne, la balle est bonne.",
+            "Le verificateur compare son comptage au mien a la fin."
+          ],
+          "success": [
+            "Le score final est identique entre arbitre et verificateur.",
+            "L'alternance des services est respectee tout le match.",
+            "L'arbitre annonce a voix haute apres chaque point."
+          ],
+          "execution": [
+            "Annoncer le score du serveur en premier.",
+            "Se placer sur le cote de la table, a hauteur du filet.",
+            "Trancher clairement, sans hesiter."
+          ],
+          "watch": [
+            "Les arbitres osent-ils trancher ?",
+            "L'alternance des services est-elle suivie ?",
+            "Les annonces sont-elles audibles ?"
+          ],
+          "errors": [
+            "Oublier d'annoncer le score.",
+            "Se laisser influencer par les joueurs.",
+            "Perdre le fil de l'alternance des services."
+          ],
+          "feedback": [
+            "Annonce apres chaque point, sinon tu perdras le fil.",
+            "C'est toi qui decides : tranche.",
+            "Deux points chacun : compte a voix haute."
+          ],
+          "plus": [
+            "Arbitrer deux matchs simultanes sur deux tables voisines."
+          ],
+          "minus": [
+            "Arbitrer a deux, en se repartissant score et services."
+          ],
+          "diff": {
+            "facilitee": "Arbitrage a deux : l'un compte les points, l'autre suit les services.",
+            "normale": "Arbitrage complet en autonomie, avec verificateur.",
+            "complexifiee": "Arbitrage de deux matchs voisins simultanement."
+          },
+          "safety": [
+            "Arbitre place sur le cote de la table, hors de la zone de jeu.",
+            "Ne pas se pencher au-dessus de la table pendant un echange.",
+            "Balles ramassees entre les points."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Montante-descendante d'entrainement",
+          "objective": "Realiser une repetition generale du format de l'evaluation finale.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Tables numerotees de 1 a 6. Matchs en 11 points. Le gagnant monte d'une table, le perdant descend. Trois tours. Arbitrage tenu par les eleves au repos.",
+          "studentGoal": "Monter le plus haut possible dans le classement des tables.",
+          "instructions": [
+            "Je joue un match en 11 points contre l'eleve de ma table.",
+            "Le gagnant monte d'une table, le perdant descend.",
+            "Quand je ne joue pas, j'arbitre le match voisin.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Les trois tours sont joues.",
+            "Les montees et descentes sont respectees.",
+            "Aucune contestation de resultat."
+          ],
+          "execution": [
+            "Appliquer le placement travaille : cote et longueur.",
+            "Servir en securite.",
+            "Se replacer au centre apres chaque frappe."
+          ],
+          "watch": [
+            "Le niveau des tables s'homogeneise-t-il au fil des tours ?",
+            "Les acquis tiennent-ils en situation de classement ?"
+          ],
+          "errors": [
+            "Contester le resultat pour ne pas descendre.",
+            "Revenir a la frappe forte sous la pression du classement.",
+            "Oublier d'arbitrer le match voisin."
+          ],
+          "feedback": [
+            "Le resultat est le resultat : tu remonteras au tour suivant.",
+            "Place la balle, ne la frappe pas plus fort.",
+            "Tu ne joues pas : va arbitrer."
+          ],
+          "plus": [
+            "Quatre tours au lieu de trois.",
+            "Matchs en deux manches gagnantes."
+          ],
+          "minus": [
+            "Matchs en 7 points.",
+            "Deux tours seulement."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 7 points, deux tours, arbitrage assiste.",
+            "normale": "Matchs en 11 points, trois tours, arbitrage eleve.",
+            "complexifiee": "Quatre tours, matchs en deux manches gagnantes."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "Circulation organisee entre les tours : montees d'un cote, descentes de l'autre.",
+            "Balles ramassees entre les points.",
+            "Espace lateral et arriere degage."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Comment fait-on une balle courte, et en quoi est-ce different d'une balle longue ?",
+          "Qu'est-ce qui est le plus difficile quand on arbitre ?"
+        ],
+        "key": "Varier la longueur double les possibilites : on ne deplace plus seulement l'adversaire de droite a gauche, mais aussi d'avant en arriere."
+      },
+      "socialRoles": [
+        "Arbitre : tient un match complet, score et alternance des services.",
+        "Verificateur : compare son comptage a celui de l'arbitre.",
+        "Ramasseur de balles."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer en situation de match les acquis du cycle, et permettre a chaque eleve de verifier son objectif de mi-cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Tenir le role d'arbitre-marqueur sur un match complet.",
+        "Verifier l'objectif personnel fixe a la seance 5.",
+        "Accepter le resultat de la rencontre et savoir le commenter."
+      ],
+      "linkToPrevious": "La montante-descendante de la seance 7 s'est deroulee dans le meme format : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait ce qu'il a acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "balles",
+            "per": 1.0,
+            "min": 30
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "affiche du tableau de montante-descendante",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Numeroter les tables de 1 a 6 et afficher le principe de la montante-descendante.",
+          "Preparer les grilles d'evaluation nominatives.",
+          "Ressortir les fiches de mi-cycle avec l'objectif de chaque eleve.",
+          "Verifier tables, filets et stock de balles.",
+          "Organiser la circulation entre les tables pour eviter les croisements."
+        ],
+        "sketch": "6 tables numerotees de 1 a 6.\nAffichage du tableau de montante-descendante a l'entree.\nTable des grilles sur le cote.\nCirculation organisee : montees d'un cote, descentes de l'autre."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : savoir s'echauffer est un attendu evalue, et les appuis lateraux rapides exigent une preparation.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul pendant 5 minutes.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules, chevilles, genoux.",
+              "Fentes laterales et avant."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Echanges en cooperation, 3 minutes.",
+              "Cinq services par eleve.",
+              "Deux series de placement court-long."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue en montante-descendante",
+          "objective": "Evaluer chaque eleve sur les six criteres du cycle, sur plusieurs matchs et contre des adversaires de niveau proche.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Montante-descendante sur six tables, matchs en 11 points, quatre tours. Le gagnant monte, le perdant descend. Les eleves au repos arbitrent et observent. Le professeur evalue table par table.",
+          "studentGoal": "Montrer tout ce que j'ai appris pendant le cycle, en jouant et en arbitrant.",
+          "instructions": [
+            "Je joue quatre matchs en 11 points, service alterne tous les deux points.",
+            "Le gagnant monte d'une table, le perdant descend.",
+            "Quand je ne joue pas, j'arbitre ou j'observe avec la grille.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Des echanges de quatre frappes ou plus sur la majorite des points.",
+            "Moins de deux services rates par match.",
+            "Le replacement au centre est visible apres les frappes.",
+            "L'eleve cherche a placer la balle loin de l'adversaire.",
+            "Le role d'arbitre-marqueur est tenu correctement."
+          ],
+          "execution": [
+            "Renvoyer en securite au debut de l'echange.",
+            "Regarder l'adversaire avant de frapper.",
+            "Varier cote et longueur.",
+            "Revenir au centre apres chaque frappe."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils sous la pression du classement ?",
+            "Les arbitres tiennent-ils le score correctement ?",
+            "Les resultats sont-ils acceptes sans conflit ?"
+          ],
+          "errors": [
+            "Revenir a la frappe forte pour gagner vite.",
+            "Oublier le replacement dans les points serres.",
+            "Contester le score ou refuser de descendre.",
+            "Arbitrer sans annoncer le score."
+          ],
+          "feedback": [
+            "Place la balle, ne la frappe pas plus fort.",
+            "Reviens au centre, meme a 10-10.",
+            "Le resultat est le resultat : on l'accepte.",
+            "Arbitre, annonce apres chaque point."
+          ],
+          "plus": [
+            "Matchs en deux manches gagnantes.",
+            "Arbitrage integralement autonome, sans verificateur."
+          ],
+          "minus": [
+            "Matchs en 7 points.",
+            "Service a la main autorise."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 7 points, service a la main autorise, arbitrage assiste. Les progres sont evalues autant que la performance.",
+            "normale": "Matchs en 11 points, service reglementaire alterne, arbitrage eleve.",
+            "complexifiee": "Matchs en deux manches gagnantes, arbitrage entierement autonome."
+          },
+          "safety": [
+            "Un seul match par table.",
+            "2 metres entre les tables, 2 metres de recul derriere chacune.",
+            "Balles ramassees entre les points : une balle au sol fait glisser.",
+            "Circulation organisee entre les tours pour eviter les croisements.",
+            "Ne jamais traverser une zone de jeu pendant un echange.",
+            "Ne jamais lancer une raquette, meme par depit.",
+            "Echauffement complet obligatoire avant le premier match."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon objectif est-il atteint ?",
+          "objective": "Faire verifier a chaque eleve, fiche en main, l'objectif qu'il s'etait fixe a la seance 5.",
+          "material": [
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement puis par deux, assis a l'ecart des tables. Chacun compare son objectif de mi-cycle avec sa grille d'aujourd'hui.",
+          "studentGoal": "Dire si j'ai atteint mon objectif, et sur quoi je m'appuie pour l'affirmer.",
+          "instructions": [
+            "Je relis l'objectif que j'avais ecrit a la seance 5.",
+            "Je regarde ce que dit ma grille d'aujourd'hui sur ce point.",
+            "J'ecris une phrase : atteint, en partie, ou pas encore, et pourquoi.",
+            "Je le dis a mon camarade, qui me donne son avis."
+          ],
+          "success": [
+            "La comparaison est faite et ecrite.",
+            "L'eleve s'appuie sur un element observe.",
+            "L'echange a deux a lieu."
+          ],
+          "execution": [
+            "Citer un fait precis du tournoi.",
+            "Distinguer ce qui est atteint de ce qui reste a faire.",
+            "Ecrire une phrase complete."
+          ],
+          "watch": [
+            "Les eleves s'appuient-ils sur des faits ou sur leur classement ?",
+            "Reconnaissent-ils leurs progres independamment du resultat ?"
+          ],
+          "errors": [
+            "Confondre objectif atteint et tournoi gagne.",
+            "Repondre oui ou non sans justification.",
+            "Se devaloriser malgre des progres visibles."
+          ],
+          "feedback": [
+            "Ton objectif, ce n'etait pas de gagner : regarde ce que tu voulais travailler.",
+            "Sur quelle action precise tu t'appuies ?",
+            "Tu as progresse, meme si tu es descendu de table."
+          ],
+          "plus": [
+            "Ecrire aussi l'objectif suivant si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur relit l'objectif avec l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee, reponse a choisir parmi trois formulations.",
+            "normale": "Comparaison autonome et phrase de bilan redigee.",
+            "complexifiee": "Bilan redige plus objectif suivant formule."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des tables.",
+            "Aucun match en cours a proximite pendant cette phase.",
+            "Raquettes et balles posees."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel ensemble.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "balles",
+              "per": 1.0,
+              "min": 30
+            }
+          ],
+          "organization": "Rangement collectif : repliage des tables, comptage des raquettes et des balles, puis classe assise en demi-cercle.",
+          "studentGoal": "Dire ce que je sais faire au tennis de table aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tables se replient a deux minimum, jamais seul.",
+            "On compte les raquettes et les balles avant de ranger.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucune table repliee par un seul eleve.",
+            "Au moins un eleve par table s'exprime."
+          ],
+          "execution": [
+            "Replier les tables a deux, en se coordonnant.",
+            "Compter le materiel avant de le ranger.",
+            "Formuler un acquis concret plutot qu'un ressenti."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves identifient-ils des acquis precis, au-dela du classement ?"
+          ],
+          "errors": [
+            "Replier une table seul : risque de pincement grave.",
+            "Ne parler que du classement final.",
+            "Laisser des balles au sol."
+          ],
+          "feedback": [
+            "A deux minimum pour la table : c'est lourd et ca pince.",
+            "Pas ton classement : ce que tu sais faire maintenant.",
+            "Ramassez toutes les balles, il en reste sous les tables."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur propose des acquis, les eleves disent s'ils s'y reconnaissent.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Repliage des tables a deux minimum : risque de pincement et de chute, ce sont des charges lourdes.",
+            "Verifier le verrouillage des tables repliees avant de les deplacer.",
+            "Ramasser toutes les balles, y compris sous les tables : une balle oubliee fait glisser.",
+            "Comptage du materiel avant de quitter la salle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire au tennis de table aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Qu'est-ce qui fait gagner un point : frapper fort, ou bien placer ?"
+        ],
+        "key": "Au tennis de table, on gagne d'abord parce qu'on renvoie a chaque fois, ensuite parce qu'on se replace, et enfin parce qu'on place la balle la ou l'adversaire n'est pas."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : tient le score et l'alternance des services, role evalue.",
+        "Observateur evaluateur : renseigne la grille finale d'un camarade.",
+        "Ramasseur de balles : securise la zone de jeu.",
+        "Responsable materiel : organise le repliage des tables et le comptage en fin de cycle."
+      ]
+    }
+  ]
+}
