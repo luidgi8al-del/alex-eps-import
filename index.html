@@ -280,7 +280,7 @@
         <div class="subtabbar" style="justify-content:space-between; align-items:center;">
           <div style="display:flex; gap:6px;">
             <button class="subtabbtn" data-subtab="classes">Classes</button>
-            <button class="subtabbtn" data-subtab="newimport">Nouvel import classe</button>
+            <button class="subtabbtn" data-subtab="newimport">Création classe</button>
           </div>
           <button class="secondary" id="syncBtn" style="margin-top:0">Synchroniser</button>
         </div>
@@ -325,7 +325,12 @@
 
         <div id="subtab-newimport" style="display:none">
           <div class="card">
-            <h2>Nouvel import</h2>
+            <h2>Création classe</h2>
+            <div class="row" style="margin-bottom:16px">
+              <button type="button" id="manualClassMode">Création manuelle</button>
+              <button type="button" class="secondary" id="fileClassMode">Importer via fichier</button>
+            </div>
+            <div id="classCreationForm" style="display:none">
             <div class="row">
               <div>
                 <label for="grade">Niveau</label>
@@ -349,11 +354,13 @@
             </div>
             <label for="schoolYear">Annee scolaire</label>
             <input type="text" id="schoolYear" value="2026-2027">
-            <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
-            <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
-            <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement (en-tetes reconnus, ou par le contenu : Sexe si F/G, Niveau si 1 a 5, emails eleve/parents par domaine). "Nom Prenom" combine est aussi accepte.</label>
-            <input type="file" id="csvFile" accept=".csv,text/csv">
-            <div class="error" id="parseError"></div>
+            <div id="fileImportFields" style="display:none">
+              <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
+              <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
+              <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement. "Nom Prenom" combine est aussi accepte.</label>
+              <input type="file" id="csvFile" accept=".csv,text/csv">
+              <div class="error" id="parseError"></div>
+            </div>
             <div id="previewWrap" style="display:none">
               <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS detectee — choisissez le niveau de chaque eleve ci-dessous.</div>
               <table id="previewTable">
@@ -366,6 +373,7 @@
             <div class="muted">Le fichier CSV est facultatif : vous pourrez ajouter les élèves plus tard.</div>
             <div class="ok" id="sendOk"></div>
             <div class="error" id="sendError"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -631,6 +639,22 @@
       const btn = e.target.closest(".subtabbtn");
       if (btn) showSubtab(btn.dataset.subtab);
     });
+    let classCreationMode = null;
+    function selectClassCreationMode(mode) {
+      classCreationMode = mode;
+      document.getElementById("classCreationForm").style.display = "block";
+      document.getElementById("fileImportFields").style.display = mode === "file" ? "block" : "none";
+      document.getElementById("manualClassMode").classList.toggle("secondary", mode !== "manual");
+      document.getElementById("fileClassMode").classList.toggle("secondary", mode !== "file");
+      document.getElementById("sendBtn").textContent = mode === "file" ? "Créer la classe et importer" : "Créer la classe";
+      if (mode === "manual") {
+        parsedStudents = [];
+        document.getElementById("csvFile").value = "";
+        document.getElementById("previewWrap").style.display = "none";
+      }
+    }
+    document.getElementById("manualClassMode").addEventListener("click", () => selectClassCreationMode("manual"));
+    document.getElementById("fileClassMode").addEventListener("click", () => selectClassCreationMode("file"));
     document.getElementById("syncBtn").addEventListener("click", async () => {
       const btn = document.getElementById("syncBtn");
       btn.disabled = true; btn.textContent = "Synchronisation...";
