@@ -1,0 +1,2859 @@
+{
+  "apsa": "Musculation",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA5 - Realiser et orienter son activite physique pour developper ses ressources et s'entretenir",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour obtenir les effets recherches selon son projet personnel, en faisant des choix de parametres d'entrainement coherents avec le theme retenu.",
+    "AFL2 : s'entrainer individuellement et collectivement pour developper ses ressources et s'entretenir, en regulant son entrainement a partir d'indicateurs.",
+    "AFL3 : cooperer pour faire progresser : observer, conseiller, parer et aider un camarade a reguler sa charge de travail.",
+    "Analyser sa pratique et en rendre compte dans un carnet d'entrainement."
+  ],
+  "targetCompetence": "Passer d'une seance construite pour une echeance a un entrainement conduit sur plusieurs semaines : un mobile personnel assume, une planification qui progresse, des regulations justifiees par des indicateurs, et un carnet qui rend compte de tout cela.",
+  "cycleObjectives": [
+    "Choisir un mobile personnel et le theme d'entrainement correspondant.",
+    "Planifier une progression sur l'ensemble du cycle, et non une seance isolee.",
+    "Reguler ses charges a partir d'indicateurs objectifs et subjectifs.",
+    "Choisir et assumer la repartition des points entre l'AFL2 et l'AFL3.",
+    "Rendre compte de son entrainement dans un carnet argumente."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, revalidation technique et evaluation diagnostique",
+    "Mobile, theme et planification du cycle",
+    "Determiner ses charges et construire sa premiere seance",
+    "Reguler : quand et pourquoi modifier sa charge",
+    "Evaluation de mi-cycle, choix AFL2 et AFL3, projet d'entrainement",
+    "Conduire sa seance en autonomie et aider un camarade",
+    "Repetition generale et carnet d'entrainement",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 5 au lycee - ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Musculation au cycle terminal - referentiel CCF et carnet d'entrainement",
+      "org": "Academie de Lyon",
+      "url": "https://eps.enseigne.ac-lyon.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner la musculation au cycle terminal - planification et regulation",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel d'evaluation de l'etablissement pour cette APSA : il precise les criteres de l'AFL1 et les modalites de l'AFL2 et de l'AFL3. Il prime sur ce qui est ecrit ici.",
+    "Reglement d'utilisation de la salle de musculation : le lire integralement avant la premiere seance.",
+    "Inventaire et etat du materiel : barres, disques, colliers de serrage, bancs, machines, cables, sangles.",
+    "Charges maximales autorisees et exercices interdits par le reglement local, notamment derriere la nuque.",
+    "Obligation de la parade pour chaque exercice a charge libre.",
+    "PAI et dispenses : pathologies rachidiennes, cardiaques, articulaires, hernies.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - pense la seance, pas le cycle",
+      "observed": "Refait la meme seance chaque semaine, sans progression prevue ni regulation.",
+      "need": "Planifier une progression sur l'ensemble du cycle."
+    },
+    {
+      "label": "Profil 2 - regule au feeling",
+      "observed": "Change ses charges chaque semaine selon son humeur, sans lien avec ses indicateurs.",
+      "need": "Reguler a partir d'indicateurs releves, et justifier chaque regulation."
+    },
+    {
+      "label": "Profil 3 - carnet vide",
+      "observed": "S'entraine correctement mais ne note rien, si bien qu'il ne peut rien analyser.",
+      "need": "Tenir un carnet en temps reel, support de l'AFL2."
+    },
+    {
+      "label": "Profil 4 - travaille seul a cote des autres",
+      "observed": "Pare quand on le lui demande, mais ne conseille jamais et ne regarde pas son partenaire.",
+      "need": "Assumer l'AFL3 : observer, conseiller, aider a reguler."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Epreuve du controle en cours de formation. L'AFL1 est evalue le jour de l'epreuve : realisation d'une seance personnelle de 45 minutes, annoncee et justifiee, avec entretien sur les choix de parametres. Les AFL2 et AFL3 sont evalues au fil du cycle, sur 8 points au total, avec une repartition choisie par l'eleve avant l'epreuve : 4 et 4, 6 et 2, ou 2 et 6.",
+    "criteria": [
+      "AFL1 : les parametres choisis, charges, series, repetitions et recuperations, sont coherents avec le theme d'entrainement annonce.",
+      "AFL1 : l'execution technique est sure sur l'ensemble de la seance, dos maintenu, respiration continue.",
+      "AFL1 : la seance annoncee est realisee integralement et les choix sont justifies lors de l'entretien.",
+      "AFL2 : le carnet retrace la planification, les regulations et leurs raisons sur tout le cycle.",
+      "AFL2 : les regulations sont justifiees par des indicateurs releves, non par une impression.",
+      "AFL3 : l'eleve observe, conseille et pare un camarade de facon utile et fiable."
+    ],
+    "referential": "Referentiel national d'evaluation du CA5 au baccalaureat, decline dans le referentiel de l'etablissement, avec les charges maximales et exercices autorises par le reglement de la salle."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, revalidation technique et evaluation diagnostique",
+      "mainObjective": "Reposer le cadre de securite, revalider les techniques et les pareurs, et situer chacun avant toute planification.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Reformuler les regles de la salle et les exercices interdits.",
+        "Revalider l'execution technique des exercices fondamentaux.",
+        "Revalider chaque pareur."
+      ],
+      "linkToPrevious": "Le cycle de seconde a construit la seance : mobile, charges, execution. Au cycle terminal, l'enjeu devient la conduite d'un entrainement sur plusieurs semaines, evalue au baccalaureat.",
+      "prerequisiteForNext": "Chaque eleve est revalide techniquement et comme pareur.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du reglement de la salle",
+            "fixed": 2
+          },
+          {
+            "label": "fiches techniques par exercice",
+            "fixed": 8
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire integralement le reglement de la salle et le referentiel d'evaluation de l'etablissement.",
+          "Afficher le referentiel : AFL1 le jour de l'epreuve, AFL2 et AFL3 au fil du cycle, repartition au choix.",
+          "Verifier l'etat du materiel : barres, disques, colliers, cables, sangles, bancs.",
+          "Afficher le reglement, les charges maximales et les exercices interdits.",
+          "Verifier les PAI et les dispenses avant de constituer les ateliers.",
+          "Degager les circulations : aucun disque ni haltere au sol."
+        ],
+        "sketch": "Ateliers repartis dans la salle, circulations degagees d'au moins 1 m.\nAffiches du reglement, des charges maximales et du referentiel a l'entree.\nFiche technique posee a chaque atelier.\nRateliers a disques et halteres a proximite immediate de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement general puis specifique par articulation : en musculation, l'echauffement conditionne directement le risque de lesion musculaire et tendineuse, et sa conduite fait partie de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement general",
+            "details": [
+              "Cinq a sept minutes de cardio leger : velo, rameur ou course souple.",
+              "Elevation progressive de la frequence cardiaque, sans essoufflement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Epaules : cercles, rotations internes et externes.",
+              "Coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements, rotations douces, chat-chameau."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Chaque exercice a vide, 15 repetitions.",
+              "Gainage ventral, dorsal et lateral, 25 secondes chacun.",
+              "Verification du placement du dos avant toute charge."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Revalidation technique et parade",
+          "objective": "Revalider l'execution technique de chaque eleve et son aptitude a parer, avant toute charge de travail.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "colliers de serrage",
+              "fixed": 16
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "fiches techniques par exercice",
+              "fixed": 8
+            }
+          ],
+          "organization": "Quatre ateliers, par trois : un executant, un pareur, un observateur avec la fiche technique. Le professeur valide chaque eleve sur l'execution et sur la parade. Rotation toutes les 6 minutes.",
+          "studentGoal": "Etre revalide sur l'execution technique et sur la parade.",
+          "instructions": [
+            "Je garde mon dos droit ou naturellement cambre, jamais arrondi sous charge.",
+            "J'expire a l'effort, je ne bloque jamais ma respiration.",
+            "Je realise l'amplitude complete, sans a-coup ni rebond.",
+            "Pareur : je reste en position, mains pretes, pendant toute la serie."
+          ],
+          "success": [
+            "L'execution est validee sur les quatre exercices.",
+            "La respiration est continue.",
+            "Le pareur reste en position pendant chaque serie.",
+            "Le professeur a valide chaque eleve."
+          ],
+          "execution": [
+            "Squat : pieds a largeur d'epaules, genoux dans l'axe, descente controlee.",
+            "Developpe couche : pieds au sol, dos plaque au banc, barre descendue lentement.",
+            "Tirage : dos gaine, tirage par les coudes, sans a-coup du tronc.",
+            "Parade : jambes flechies, mains a quelques centimetres de la barre."
+          ],
+          "watch": [
+            "Les dos s'arrondissent-ils sous la charge ?",
+            "Y a-t-il des blocages respiratoires ?",
+            "Les pareurs restent-ils en position ?",
+            "L'annee precedente a-t-elle laisse des approximations techniques ?"
+          ],
+          "errors": [
+            "Dos arrondi sous charge : lesion lombaire.",
+            "Blocage respiratoire : montee de tension, malaise possible.",
+            "Amplitude ecourtee pour mettre plus lourd.",
+            "Pareur qui s'eloigne pendant la serie."
+          ],
+          "feedback": [
+            "Ton dos s'arrondit : repose la barre et allege.",
+            "Expire quand tu pousses, ne bloque jamais.",
+            "Amplitude complete : moins lourd et bien fait.",
+            "Tu ne bouges pas de la pendant sa serie."
+          ],
+          "plus": [
+            "Validation sur deux exercices supplementaires.",
+            "Parade a charge moderee, sous supervision."
+          ],
+          "minus": [
+            "Validation a vide ou au poids du corps, deux ateliers."
+          ],
+          "diff": {
+            "facilitee": "Validation a vide ou au poids du corps, deux ateliers, supervision directe.",
+            "normale": "Quatre ateliers, validation de l'execution et de la parade.",
+            "complexifiee": "Validation sur six exercices, parade a charge moderee."
+          },
+          "safety": [
+            "Aucun eleve ne travaille avec charge avant que sa technique ait ete revalidee : la validation de l'annee precedente ne vaut pas revalidation.",
+            "Aucun eleve ne pare avant d'avoir ete revalide comme pareur.",
+            "Colliers de serrage obligatoires sur toute barre chargee, sans exception.",
+            "Dos maintenu : arret immediat de la serie si le dos s'arrondit sous charge.",
+            "Aucun blocage respiratoire : expirer a l'effort.",
+            "Aucun exercice derriere la nuque ni aucun exercice interdit par le reglement local.",
+            "Charges limitees a celles autorisees par le reglement de la salle.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Circulations degagees d'au moins un metre autour de chaque poste.",
+            "Consulter les PAI : pathologies rachidiennes, cardiaques, articulaires, hernies.",
+            "Echauffement complet obligatoire avant toute charge.",
+            "Le professeur supervise en permanence chaque atelier."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire le referentiel d'evaluation",
+          "objective": "Faire comprendre l'epreuve : ce qui est evalue le jour J et ce qui l'est au fil du cycle.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Lecture commentee du referentiel : AFL1 evalue le jour de l'epreuve sur 12 points, AFL2 et AFL3 evalues au fil du cycle sur 8 points, avec une repartition choisie par l'eleve.",
+          "studentGoal": "Savoir ce qui sera evalue, quand, et ce que je pourrai choisir.",
+          "instructions": [
+            "Je lis le referentiel et je note ce qui est evalue le jour de l'epreuve.",
+            "Je note ce qui est evalue au fil du cycle : mon carnet et mon role aupres des autres.",
+            "Je note les trois repartitions possibles entre l'AFL2 et l'AFL3.",
+            "Je note que je choisirai cette repartition a la seance 5."
+          ],
+          "success": [
+            "L'eleve distingue ce qui est evalue le jour J et au fil du cycle.",
+            "Les trois repartitions possibles sont notees.",
+            "Le role du carnet est compris."
+          ],
+          "execution": [
+            "Lire le referentiel de l'etablissement, pas un referentiel general.",
+            "Noter sur la premiere page du carnet.",
+            "Poser ses questions maintenant."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils que le carnet est evalue ?",
+            "Comprennent-ils qu'ils choisiront la repartition ?"
+          ],
+          "errors": [
+            "Croire que seule la seance finale compte.",
+            "Negliger le carnet des la premiere seance.",
+            "Ne pas noter les repartitions possibles."
+          ],
+          "feedback": [
+            "Ton carnet est evalue : commence-le aujourd'hui.",
+            "Huit points se jouent pendant tout le cycle, pas le jour J.",
+            "Tu choisiras ta repartition : reflechis-y des maintenant."
+          ],
+          "plus": [
+            "Formuler ce que chaque repartition impliquerait pour soi."
+          ],
+          "minus": [
+            "Lecture guidee du referentiel avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Lecture guidee du referentiel avec le professeur, points essentiels surlignes.",
+            "normale": "Lecture individuelle et prise de notes sur le carnet.",
+            "complexifiee": "Analyse de ce que chaque repartition impliquerait personnellement."
+          },
+          "safety": [
+            "Phase realisee assis, hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Aucune serie en cours a proximite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Circuit diagnostique et premieres notes",
+          "objective": "Situer chacun sur un circuit a charge legere et ouvrir le carnet d'entrainement.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Circuit de six exercices a charge legere, 12 repetitions chacun, une minute de recuperation. Chaque eleve note sur son carnet les charges utilisees et les sensations.",
+          "studentGoal": "Realiser le circuit et ouvrir mon carnet d'entrainement avec de vraies donnees.",
+          "instructions": [
+            "Je fais 12 repetitions par poste, a charge legere.",
+            "Je note la charge utilisee et ce que j'ai ressenti, poste par poste.",
+            "Je surveille ma technique surtout sur les dernieres repetitions.",
+            "Je range le materiel avant de changer de poste."
+          ],
+          "success": [
+            "Le circuit est realise en entier.",
+            "Le carnet est renseigne poste par poste.",
+            "La technique tient sur les dernieres repetitions."
+          ],
+          "execution": [
+            "Conserver le placement du dos jusqu'a la derniere repetition.",
+            "Noter immediatement apres chaque poste.",
+            "Ranger le materiel avant de changer de poste."
+          ],
+          "watch": [
+            "Les carnets sont-ils renseignes en direct ?",
+            "La technique se degrade-t-elle en fin de serie ?",
+            "Le materiel est-il range ?"
+          ],
+          "errors": [
+            "Remplir le carnet a la fin, de memoire.",
+            "Ajouter de la charge malgre la consigne.",
+            "Laisser les disques au sol en changeant de poste."
+          ],
+          "feedback": [
+            "Note tout de suite : ton carnet est evalue.",
+            "Charge legere aujourd'hui : c'est la technique qu'on regarde.",
+            "Tu ranges avant de partir."
+          ],
+          "plus": [
+            "Circuit repete deux fois, recuperation reduite."
+          ],
+          "minus": [
+            "Quatre postes, 8 repetitions au poids du corps."
+          ],
+          "diff": {
+            "facilitee": "Quatre postes, 8 repetitions au poids du corps, recuperation de deux minutes.",
+            "normale": "Circuit de six exercices a charge legere, carnet renseigne en direct.",
+            "complexifiee": "Circuit repete deux fois avec recuperation reduite."
+          },
+          "safety": [
+            "Charges volontairement legeres : cette seance evalue la technique, jamais la force.",
+            "Colliers de serrage obligatoires sur toute barre chargee.",
+            "Aucun disque ni haltere laisse au sol entre les postes.",
+            "Circulations degagees : les deplacements entre postes sont le moment ou les chutes surviennent.",
+            "Arret de la serie des que la technique se degrade.",
+            "Pareur revalide present sur tout exercice a charge libre au-dessus du corps.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui est evalue le jour de l'epreuve, et qu'est-ce qui l'est au fil du cycle ?",
+          "Que faut-il arreter immediatement quand le dos commence a s'arrondir ?"
+        ],
+        "key": "Huit points sur vingt se jouent pendant tout le cycle, dans le carnet et dans l'aide apportee aux autres : le carnet commence aujourd'hui. Et la technique precede toujours la charge."
+      },
+      "socialRoles": [
+        "Pareur : reste en position pendant toute la serie, role revalide a chaque cycle.",
+        "Observateur : coche la fiche technique et signale les degradations.",
+        "Responsable materiel : verifie que rien ne traine au sol entre les ateliers."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Mobile, theme et planification du cycle",
+      "mainObjective": "Construire une planification sur l'ensemble du cycle, et non une seance isolee.",
+      "secondaryObjectives": [
+        "Choisir un mobile personnel et le theme correspondant.",
+        "Planifier une progression sur six seances.",
+        "Distinguer planifier et improviser."
+      ],
+      "linkToPrevious": "La seconde a construit la seance. Au cycle terminal, la question devient : comment ces seances s'enchainent-elles pour produire un effet ?",
+      "prerequisiteForNext": "Chaque eleve a une planification ecrite pour tout le cycle.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des mobiles et themes",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de planification",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher les mobiles et les themes d'entrainement correspondants.",
+          "Preparer une fiche de planification couvrant les six seances restantes.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser la salle pour des seances individualisees simultanees.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Salle organisee en postes libres, circulations degagees.\nAffiche des mobiles et themes a l'entree.\nZone d'ecriture avec tables, hors des zones de travail.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : sa conduite fait partie de l'AFL1 et se prepare des la deuxieme seance.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio, cinq minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Epaules, coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements et rotations douces."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu, 15 repetitions.",
+              "Une serie a charge legere par exercice.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Planifier six seances",
+          "objective": "Construire une planification qui progresse, plutot qu'une seance repetee six fois.",
+          "material": [
+            {
+              "label": "affiche des mobiles et themes",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de planification",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis par groupes de quatre, hors des zones de travail. Chacun choisit son mobile, le theme correspondant, et planifie les six seances restantes : quels exercices, quelle evolution de charge, de volume ou de recuperation.",
+          "studentGoal": "Ecrire ce que je ferai a chacune des six seances, et comment cela progresse.",
+          "instructions": [
+            "Je choisis mon mobile et le theme correspondant.",
+            "Je planifie six seances : ce qui reste identique et ce qui evolue.",
+            "L'evolution porte sur un parametre a la fois : charge, volume ou recuperation.",
+            "Un camarade verifie que ma planification progresse reellement."
+          ],
+          "success": [
+            "La planification couvre les six seances.",
+            "Une progression est identifiable, portant sur un parametre.",
+            "Elle est coherente avec le theme choisi.",
+            "La verification croisee est faite."
+          ],
+          "execution": [
+            "Faire evoluer un seul parametre a la fois.",
+            "Prevoir une progression par petits paliers.",
+            "Verifier la coherence avec le theme."
+          ],
+          "watch": [
+            "Les planifications progressent-elles ou repetent-elles ?",
+            "L'evolution porte-t-elle sur un seul parametre ?",
+            "Les progressions sont-elles realistes ?"
+          ],
+          "errors": [
+            "Planifier six fois la meme seance.",
+            "Faire evoluer tous les parametres a la fois.",
+            "Prevoir une progression de charge irrealiste."
+          ],
+          "feedback": [
+            "Six fois la meme seance, ce n'est pas une planification.",
+            "Un parametre a la fois : sinon tu ne sauras pas ce qui produit l'effet.",
+            "Dix kilos en six seances : impossible et dangereux."
+          ],
+          "plus": [
+            "Planification avec alternance de deux themes."
+          ],
+          "minus": [
+            "Planification sur trois seances, a partir d'un modele."
+          ],
+          "diff": {
+            "facilitee": "Planification sur trois seances a partir d'un modele fourni, construite avec le professeur.",
+            "normale": "Planification des six seances avec une progression sur un parametre.",
+            "complexifiee": "Planification avec alternance de deux themes sur le cycle."
+          },
+          "safety": [
+            "Le professeur valide chaque planification avant sa mise en oeuvre : toute progression de charge jugee trop rapide est corrigee avant d'etre realisee.",
+            "Aucune charge planifiee ne depasse le plafond du reglement local.",
+            "Aucun exercice interdit par le reglement local ne figure sur une planification.",
+            "Les eleves porteurs d'une contre-indication planifient avec le professeur, en excluant les exercices concernes.",
+            "Phase d'ecriture assise hors des zones de travail."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Eprouver le theme choisi",
+          "objective": "Verifier immediatement que le theme choisi correspond a ce que l'eleve recherche.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise deux exercices dans le format de son theme, avec pareur. Il note charges, series, repetitions et sensations sur son carnet.",
+          "studentGoal": "Verifier que le format de mon theme me convient.",
+          "instructions": [
+            "Je travaille deux exercices dans le format de mon theme.",
+            "Je respecte les recuperations de ce format.",
+            "Je note charges, series, repetitions et sensations.",
+            "Si le format ne me convient pas, je le note et je le reverrai."
+          ],
+          "success": [
+            "Les deux exercices sont realises dans le bon format.",
+            "Les recuperations sont respectees.",
+            "Le carnet est renseigne."
+          ],
+          "execution": [
+            "Adapter la charge au nombre de repetitions vise.",
+            "Respecter integralement la recuperation du format.",
+            "Arreter avant la degradation technique."
+          ],
+          "watch": [
+            "Le format choisi est-il respecte ?",
+            "Les charges sont-elles adaptees ?",
+            "Les carnets sont-ils renseignes ?"
+          ],
+          "errors": [
+            "Choisir un theme et travailler dans un autre format.",
+            "Ecourter les recuperations du format lourd.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Tu as choisi l'endurance : allege et fais-en plus.",
+            "Trois minutes, pas une : sinon ce n'est plus le meme travail.",
+            "Note tout : sans carnet, tu ne pourras rien analyser."
+          ],
+          "plus": [
+            "Trois exercices dans le format choisi."
+          ],
+          "minus": [
+            "Un exercice, charge determinee avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul exercice, charge determinee avec le professeur.",
+            "normale": "Deux exercices dans le format du theme choisi.",
+            "complexifiee": "Trois exercices avec ajustement de charge en cours de seance."
+          },
+          "safety": [
+            "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps.",
+            "Colliers de serrage obligatoires.",
+            "Recuperations respectees integralement : une recuperation ecourtee sur charge elevee expose a l'echec technique.",
+            "Arret de la serie des que la technique se degrade.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ecrire la seance 3 en detail",
+          "objective": "Detailler la premiere seance de la planification, celle qui sera realisee la fois suivante.",
+          "material": [
+            {
+              "label": "fiches de planification",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun detaille la seance suivante : exercices dans l'ordre, charges prevues, series, repetitions, recuperations, duree estimee.",
+          "studentGoal": "Ecrire en detail la seance que je realiserai la prochaine fois.",
+          "instructions": [
+            "Je detaille la seance suivante, exercice par exercice.",
+            "Je place les exercices du plus global au plus localise.",
+            "Je verifie que ma seance tient dans le temps disponible.",
+            "Je note tout sur mon carnet."
+          ],
+          "success": [
+            "La seance est detaillee integralement.",
+            "L'ordre va du plus global au plus localise.",
+            "La duree estimee tient dans le temps disponible."
+          ],
+          "execution": [
+            "Placer les exercices globaux en debut de seance.",
+            "Ne pas enchainer deux exercices sur le meme groupe musculaire.",
+            "Estimer la duree en comptant les recuperations."
+          ],
+          "watch": [
+            "L'ordre est-il coherent ?",
+            "La duree est-elle estimee en comptant les recuperations ?",
+            "Les groupes musculaires sont-ils equilibres ?"
+          ],
+          "errors": [
+            "Commencer par les exercices les plus localises.",
+            "Oublier de compter les recuperations dans la duree.",
+            "Ne travailler qu'un seul groupe musculaire."
+          ],
+          "feedback": [
+            "Commence par le plus global : tu seras frais.",
+            "Compte tes recuperations : ta seance dure une heure et demie.",
+            "Tu ne fais que le haut du corps : equilibre."
+          ],
+          "plus": [
+            "Detailler les deux seances suivantes."
+          ],
+          "minus": [
+            "Seance detaillee a partir d'un modele a completer."
+          ],
+          "diff": {
+            "facilitee": "Seance detaillee a partir d'un modele a completer, avec le professeur.",
+            "normale": "Seance suivante detaillee integralement en autonomie.",
+            "complexifiee": "Deux seances suivantes detaillees."
+          },
+          "safety": [
+            "Le professeur valide chaque seance detaillee avant sa realisation.",
+            "Toute charge notee superieure au plafond du reglement local est ramenee a ce plafond.",
+            "Aucun exercice interdit par le reglement local ne figure sur une seance.",
+            "Phase d'ecriture assise hors des zones de travail."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui evolue dans votre planification, et sur quel parametre ?",
+          "Pourquoi ne fait-on evoluer qu'un seul parametre a la fois ?"
+        ],
+        "key": "Planifier, ce n'est pas repeter six fois la meme seance : c'est prevoir une progression. Et on fait evoluer un seul parametre a la fois, sinon on ne sait pas ce qui produit l'effet."
+      },
+      "socialRoles": [
+        "Pareur : securise les series de son camarade.",
+        "Verificateur : controle que la planification progresse reellement.",
+        "Chronometreur : fait respecter les temps de recuperation."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Determiner ses charges et construire sa premiere seance",
+      "mainObjective": "Determiner les charges de travail par un test securise et realiser la premiere seance de la planification.",
+      "secondaryObjectives": [
+        "Realiser un test de repetitions a charge sous-maximale.",
+        "En deduire les charges de chaque exercice.",
+        "Realiser la premiere seance planifiee."
+      ],
+      "linkToPrevious": "La planification existe, mais elle reste theorique tant que les charges ne sont pas determinees personnellement.",
+      "prerequisiteForNext": "Chaque eleve a des charges chiffrees et a realise sa premiere seance planifiee.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tableau de correspondance charges-repetitions",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le tableau de correspondance entre nombre de repetitions et pourcentage de charge.",
+          "Rappeler que le test se fait a charge sous-maximale, jamais a charge maximale.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser les postes pour que chaque test se fasse avec un pareur revalide.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Postes de test, un pareur revalide par poste.\nTableau de correspondance affiche a chaque poste.\nRateliers a disques a proximite immediate.\nCirculations degagees, zone de repos a l'ecart."
+      },
+      "warmup": {
+        "rationale": "Echauffement long et progressif avec montee en charge par paliers : un test de repetitions sur muscles insuffisamment prepares expose a la lesion.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Cinq a sept minutes de cardio leger.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Epaules, coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements et rotations douces.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Montee en charge progressive",
+            "details": [
+              "Serie a vide, 15 repetitions.",
+              "Serie a charge legere, 10 repetitions.",
+              "Serie a charge moyenne, 6 repetitions.",
+              "Trois minutes de recuperation avant le test."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Test de repetitions et calcul des charges",
+          "objective": "Determiner une charge de reference personnelle sans jamais passer par une charge maximale.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "colliers de serrage",
+              "fixed": 16
+            },
+            {
+              "label": "tableau de correspondance charges-repetitions",
+              "fixed": 4
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par trois : executant, pareur, secretaire. Sur trois exercices, chacun cherche la charge avec laquelle il realise entre 10 et 15 repetitions techniquement correctes. Trois essais maximum, trois minutes de recuperation entre chacun. Puis calcul des charges de travail.",
+          "studentGoal": "Trouver ma charge de reference et en deduire mes charges de travail.",
+          "instructions": [
+            "Je cherche la charge qui me permet 10 a 15 repetitions correctes, pas plus lourd.",
+            "J'arrete la serie des que ma technique se degrade, meme avant 10.",
+            "Trois essais maximum, trois minutes de recuperation entre chacun.",
+            "Je calcule ensuite mes charges de travail avec le tableau."
+          ],
+          "success": [
+            "Une charge de reference est trouvee sur les trois exercices.",
+            "Les series s'arretent a la degradation technique.",
+            "Les charges de travail sont calculees et notees au carnet."
+          ],
+          "execution": [
+            "Monter par petits paliers, jamais par bonds.",
+            "Compter les repetitions techniquement correctes seulement.",
+            "Respecter les trois minutes de recuperation."
+          ],
+          "watch": [
+            "Les eleves cherchent-ils la charge maximale malgre la consigne ?",
+            "Comptent-ils des repetitions techniquement fausses ?",
+            "Les recuperations sont-elles respectees ?",
+            "Les pareurs sont-ils en place ?"
+          ],
+          "errors": [
+            "Chercher la charge maximale : dangereux et hors consigne.",
+            "Compter des repetitions mal executees.",
+            "Enchainer les essais sans recuperer.",
+            "Copier la charge du camarade."
+          ],
+          "feedback": [
+            "On ne cherche pas le maximum : 10 a 15 correctes.",
+            "Ces trois-la ne comptent pas : ton dos etait rond.",
+            "Trois minutes, sinon ton test ne veut rien dire.",
+            "Sa charge, c'est la sienne : trouve la tienne."
+          ],
+          "plus": [
+            "Test sur quatre exercices avec calcul pour deux themes."
+          ],
+          "minus": [
+            "Test sur un exercice, paliers guides par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Test sur un seul exercice, paliers guides par le professeur, charges tres progressives.",
+            "normale": "Test sur trois exercices puis calcul des charges de travail.",
+            "complexifiee": "Test sur quatre exercices avec calcul pour deux themes differents."
+          },
+          "safety": [
+            "Aucun test a charge maximale : le test se fait toujours a charge sous-maximale, sur une fourchette de 10 a 15 repetitions. Chercher un maximum est proscrit.",
+            "Pareur revalide obligatoire sur chaque essai, sans exception.",
+            "Colliers de serrage obligatoires sur toute barre chargee.",
+            "Montee en charge par petits paliers : aucun bond de charge entre deux essais.",
+            "Arret immediat de la serie des que la technique se degrade.",
+            "Trois minutes de recuperation entre les essais, respectees integralement.",
+            "Echauffement complet avec montee en charge progressive obligatoire avant tout test.",
+            "Aucun blocage respiratoire.",
+            "Consulter les PAI : aucun test pour un eleve porteur d'une contre-indication.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Le professeur supervise directement chaque poste de test."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Realiser la premiere seance planifiee",
+          "objective": "Realiser la seance detaillee a la seance 2, avec les charges calculees.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise la premiere moitie de sa seance planifiee, avec les charges calculees, avec pareur. Il note tout sur son carnet.",
+          "studentGoal": "Realiser ma seance planifiee avec mes charges calculees.",
+          "instructions": [
+            "Je realise ma seance dans l'ordre planifie.",
+            "J'utilise les charges que je viens de calculer.",
+            "Je note charges, series, repetitions et sensations sur mon carnet.",
+            "Je note aussi les ecarts avec ce que j'avais prevu."
+          ],
+          "success": [
+            "La seance planifiee est realisee.",
+            "Les charges calculees sont utilisees.",
+            "Les ecarts avec le prevu sont notes."
+          ],
+          "execution": [
+            "Suivre l'ordre planifie, sans improviser.",
+            "Verifier que la charge calculee permet le format vise.",
+            "Noter immediatement apres chaque serie."
+          ],
+          "watch": [
+            "Les charges calculees sont-elles adaptees ?",
+            "Les eleves suivent-ils leur planification ?",
+            "Les carnets sont-ils renseignes en direct ?"
+          ],
+          "errors": [
+            "Improviser en abandonnant la planification.",
+            "Refuser d'alleger une charge trop lourde.",
+            "Remplir le carnet a la fin, de memoire."
+          ],
+          "feedback": [
+            "Ta seance est planifiee : suis-la ou note pourquoi tu t'en ecartes.",
+            "Tu n'atteins pas ton format : allege, ce n'est pas un echec.",
+            "Note tout de suite."
+          ],
+          "plus": [
+            "Seance complete realisee."
+          ],
+          "minus": [
+            "Deux exercices seulement, accompagnes."
+          ],
+          "diff": {
+            "facilitee": "Deux exercices seulement, accompagnes par le professeur.",
+            "normale": "Premiere moitie de la seance planifiee, avec les charges calculees.",
+            "complexifiee": "Seance planifiee realisee integralement."
+          },
+          "safety": [
+            "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps.",
+            "Colliers de serrage obligatoires.",
+            "Recuperation apres les series de test avant de commencer la seance : les tests fatiguent deja.",
+            "Arret de la serie des que la technique se degrade.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ajuster la planification",
+          "objective": "Ajuster la planification a partir des charges reellement determinees.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tableau de correspondance charges-repetitions",
+              "fixed": 4
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun ajuste sa planification a partir des charges reelles : progression prevue, paliers, duree des seances.",
+          "studentGoal": "Ajuster ma planification maintenant que je connais mes charges reelles.",
+          "instructions": [
+            "Je reporte mes charges reelles dans ma planification.",
+            "J'ajuste ma progression : les paliers doivent rester petits.",
+            "Je verifie que la duree de chaque seance tient.",
+            "Je note l'ajustement et sa raison."
+          ],
+          "success": [
+            "Les charges reelles sont reportees.",
+            "La progression est ajustee par petits paliers.",
+            "L'ajustement est note avec sa raison."
+          ],
+          "execution": [
+            "Reporter exercice par exercice.",
+            "Ajuster par le plus petit palier disponible.",
+            "Verifier la duree."
+          ],
+          "watch": [
+            "Les ajustements sont-ils realistes ?",
+            "Les paliers restent-ils petits ?",
+            "Les raisons sont-elles notees ?"
+          ],
+          "errors": [
+            "Maintenir une progression irrealiste.",
+            "Ajuster sans noter la raison.",
+            "Oublier de recalculer la duree."
+          ],
+          "feedback": [
+            "Cette progression n'est pas tenable : ajuste-la.",
+            "Note pourquoi tu ajustes : c'est ce qui est evalue dans ton carnet.",
+            "Recalcule ta duree."
+          ],
+          "plus": [
+            "Ajustement avec deux scenarios de progression."
+          ],
+          "minus": [
+            "Ajustement realise avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Ajustement realise avec le professeur.",
+            "normale": "Ajustement autonome de la planification avec raisons notees.",
+            "complexifiee": "Ajustement avec deux scenarios de progression prevus."
+          },
+          "safety": [
+            "Le professeur valide chaque planification ajustee.",
+            "Aucune charge ajustee ne depasse le plafond du reglement local.",
+            "Phase d'ecriture assise hors des zones de travail.",
+            "Materiel range pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi ne cherche-t-on jamais sa charge maximale ?",
+          "Que doit contenir votre carnet apres cette seance ?"
+        ],
+        "key": "Une charge se determine par un test a charge sous-maximale : le maximum n'apporte rien et expose beaucoup. Et le carnet contient les charges, mais aussi les raisons de chaque ajustement."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque essai du test.",
+        "Secretaire : note les charges et les repetitions correctes.",
+        "Verificateur : controle le calcul de charge de son camarade."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Reguler : quand et pourquoi modifier sa charge",
+      "mainObjective": "Construire la regulation : modifier sa charge a partir d'indicateurs, et justifier chaque modification.",
+      "secondaryObjectives": [
+        "Relever des indicateurs objectifs et subjectifs.",
+        "Appliquer une regle de regulation.",
+        "Justifier chaque regulation dans le carnet."
+      ],
+      "linkToPrevious": "La planification est ecrite et les charges determinees. Mais un plan ne survit pas au contact du reel : reguler est ce qui distingue un entrainement d'un programme applique aveuglement.",
+      "prerequisiteForNext": "Chaque eleve regule au moins une charge et justifie sa regulation.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          },
+          {
+            "label": "echelle de ressenti d'effort",
+            "fixed": 4,
+            "note": "echelle de 1 a 10 affichee a chaque poste"
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de regulation : quand alleger, quand augmenter, de combien.",
+          "Afficher une echelle de ressenti d'effort de 1 a 10 a chaque poste.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser la salle pour des seances individualisees simultanees.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Salle organisee en postes libres, circulations degagees.\nAffiche des criteres de regulation et echelle de ressenti a chaque poste.\nZone de notation des carnets a l'ecart.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, avec releve du ressenti des l'echauffement : les indicateurs se construisent avant la seance, pas seulement pendant.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio.",
+              "Releve du ressenti general avant de commencer."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Epaules, coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements et rotations douces."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu.",
+              "Une serie a charge legere, avec releve du ressenti.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Relever et reguler",
+          "objective": "Construire la regulation a partir d'indicateurs releves serie par serie.",
+          "material": [
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            },
+            {
+              "label": "echelle de ressenti d'effort",
+              "fixed": 4
+            },
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise sa seance planifiee. Apres chaque serie, il note deux indicateurs : le nombre de repetitions techniquement correctes et son ressenti de 1 a 10. Il applique ensuite la regle de regulation.",
+          "studentGoal": "Reguler mes charges a partir de ce que je releve, pas de ce que je ressens vaguement.",
+          "instructions": [
+            "Apres chaque serie, je note les repetitions correctes et mon ressenti de 1 a 10.",
+            "Si j'atteins facilement mon nombre de repetitions avec un ressenti bas, j'augmente d'un petit palier.",
+            "Si je n'atteins pas le nombre prevu, ou si mon ressenti depasse 8, j'allege.",
+            "Je note chaque regulation et sa raison."
+          ],
+          "success": [
+            "Les deux indicateurs sont releves apres chaque serie.",
+            "Au moins une regulation est appliquee selon la regle.",
+            "Chaque regulation est notee avec sa raison."
+          ],
+          "execution": [
+            "Noter immediatement apres la serie, pas a la fin.",
+            "Ajuster par le plus petit palier disponible.",
+            "Verifier l'effet de la regulation a la serie suivante."
+          ],
+          "watch": [
+            "Les indicateurs sont-ils releves en direct ?",
+            "Les regulations suivent-elles la regle ?",
+            "Les raisons sont-elles notees ?",
+            "Les eleves refusent-ils d'alleger ?"
+          ],
+          "errors": [
+            "Reguler au feeling, sans relever d'indicateur.",
+            "Refuser d'alleger malgre un ressenti eleve.",
+            "Augmenter par bonds importants.",
+            "Noter la regulation sans sa raison."
+          ],
+          "feedback": [
+            "Sur quel indicateur tu regules ? Note-le.",
+            "Ton ressenti est a 9 : allege, ce n'est pas un echec.",
+            "Le plus petit disque, pas cinq kilos d'un coup.",
+            "La raison compte autant que la regulation : c'est ce qui est evalue."
+          ],
+          "plus": [
+            "Trois indicateurs releves, dont la vitesse d'execution."
+          ],
+          "minus": [
+            "Un seul indicateur, regulation proposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul indicateur releve, regulation proposee par le professeur et notee par l'eleve.",
+            "normale": "Deux indicateurs releves serie par serie, regulation autonome justifiee.",
+            "complexifiee": "Trois indicateurs releves, dont la vitesse d'execution."
+          },
+          "safety": [
+            "Un ressenti eleve associe a une degradation technique impose d'alleger : cette regle prime sur la planification ecrite.",
+            "Augmentation par le plus petit palier disponible uniquement : un bond de charge est le mecanisme classique de la blessure.",
+            "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps.",
+            "Colliers de serrage obligatoires.",
+            "Arret immediat de la serie des que la technique se degrade.",
+            "Aucun blocage respiratoire.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Le professeur valide tout ajustement a la hausse.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Justifier une regulation",
+          "objective": "Construire la justification ecrite d'une regulation, attendue dans le carnet.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux, assis hors des zones de travail. Chacun redige la justification d'une regulation de sa seance, puis son partenaire verifie qu'elle s'appuie sur un indicateur.",
+          "studentGoal": "Ecrire une justification de regulation qui tient sur un indicateur, pas sur une impression.",
+          "instructions": [
+            "J'ecris : j'ai regule tel parametre, parce que tel indicateur montrait tel resultat.",
+            "Ma justification cite un chiffre : repetitions realisees ou ressenti.",
+            "Mon partenaire verifie qu'elle s'appuie sur un indicateur.",
+            "Je corrige si ma justification est une impression."
+          ],
+          "success": [
+            "La justification cite un indicateur chiffre.",
+            "Elle relie l'indicateur a la regulation.",
+            "Le partenaire l'a validee."
+          ],
+          "execution": [
+            "Citer l'indicateur avant la decision.",
+            "Ecrire court et precis.",
+            "Verifier la coherence avec la regle affichee."
+          ],
+          "watch": [
+            "Les justifications citent-elles des chiffres ?",
+            "Sont-elles coherentes avec la regle ?",
+            "Les partenaires verifient-ils reellement ?"
+          ],
+          "errors": [
+            "Justifier par une impression : c'etait trop dur.",
+            "Justifier apres coup, sans indicateur releve.",
+            "Valider la justification d'un camarade sans la lire."
+          ],
+          "feedback": [
+            "Trop dur, c'est une impression : quel chiffre ?",
+            "Tu n'as rien releve : tu ne peux rien justifier.",
+            "Lis-la vraiment : c'est son evaluation."
+          ],
+          "plus": [
+            "Justifier trois regulations differentes."
+          ],
+          "minus": [
+            "Justification a completer a partir d'un modele."
+          ],
+          "diff": {
+            "facilitee": "Justification a completer a partir d'un modele de phrase.",
+            "normale": "Justification redigee librement et verifiee par un partenaire.",
+            "complexifiee": "Trois regulations differentes justifiees."
+          },
+          "safety": [
+            "Phase realisee assise hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Toute douleur mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Aider un camarade a reguler",
+          "objective": "Construire l'AFL3 : aider un camarade a reguler sa charge a partir de ce qu'on observe.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            },
+            {
+              "label": "echelle de ressenti d'effort",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par deux. Chacun observe une serie de son camarade, releve un indicateur objectif, et lui propose une regulation argumentee.",
+          "studentGoal": "Proposer a mon camarade une regulation fondee sur ce que j'ai observe.",
+          "instructions": [
+            "J'observe sa serie et je compte ses repetitions techniquement correctes.",
+            "Je note a partir de quelle repetition sa technique se degrade.",
+            "Je lui propose une regulation en citant ce que j'ai observe.",
+            "Il note ma proposition s'il la retient."
+          ],
+          "success": [
+            "L'indicateur objectif est releve.",
+            "La regulation proposee est argumentee.",
+            "Elle est notee si elle est retenue."
+          ],
+          "execution": [
+            "Compter pendant la serie, pas apres.",
+            "Reperer le moment exact de la degradation.",
+            "Proposer sans imposer."
+          ],
+          "watch": [
+            "Les observations sont-elles chiffrees ?",
+            "Les propositions sont-elles argumentees ?",
+            "Les eleves conseillent-ils systematiquement d'augmenter ?"
+          ],
+          "errors": [
+            "Conseiller d'augmenter la charge sans raison.",
+            "Observer sans compter.",
+            "Refuser toute proposition par principe."
+          ],
+          "feedback": [
+            "Pourquoi plus lourd ? Argumente avec ce que tu as vu.",
+            "Compte pendant : tu ne retiendras rien apres.",
+            "Ecoute-le : il a vu ce que toi tu ne vois pas."
+          ],
+          "plus": [
+            "Observer trois series et proposer une regulation pour chacune."
+          ],
+          "minus": [
+            "Observer une serie et signaler seulement la degradation technique."
+          ],
+          "diff": {
+            "facilitee": "Observation d'une serie avec signalement de la degradation technique seulement.",
+            "normale": "Observation chiffree et proposition de regulation argumentee.",
+            "complexifiee": "Trois series observees avec une regulation proposee pour chacune."
+          },
+          "safety": [
+            "Aucun conseil d'eleve ne prevaut sur une regle de securite : un conseil d'augmenter la charge doit etre valide par le professeur.",
+            "L'observateur signale immediatement toute degradation technique dangereuse, sans attendre la fin de la serie.",
+            "L'observateur reste egalement pareur si l'exercice l'exige : observer ne dispense jamais de parer.",
+            "Phase realisee dans les zones de travail, circulations degagees.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quels indicateurs regulez-vous votre charge ?",
+          "Que doit contenir la justification d'une regulation dans votre carnet ?"
+        ],
+        "key": "Reguler au feeling ne s'evalue pas : une regulation se justifie par un indicateur chiffre. Et c'est cette justification, plus que la regulation elle-meme, qui est attendue dans le carnet."
+      },
+      "socialRoles": [
+        "Pareur : securise les series de son camarade.",
+        "Observateur : releve un indicateur objectif et propose une regulation.",
+        "Verificateur : controle que la justification s'appuie sur un indicateur."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle, choix AFL2 et AFL3, projet d'entrainement",
+      "mainObjective": "Situer chacun, faire choisir la repartition des points entre l'AFL2 et l'AFL3, et arreter le projet d'entrainement.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser une seance evaluee dans les conditions du jour J.",
+        "Choisir et justifier la repartition entre AFL2 et AFL3.",
+        "Arreter le projet d'entrainement pour la fin du cycle."
+      ],
+      "linkToPrevious": "Planification, charges et regulation ont ete construites : la seance evaluee montre ce qui en reste, et le moment est venu de choisir la repartition des points.",
+      "prerequisiteForNext": "Chaque eleve a choisi sa repartition et a un projet d'entrainement ecrit.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches d'observation nominatives.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser la salle pour des seances individualisees simultanees.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Salle organisee en postes libres, circulations degagees.\nAffichage du referentiel et des repartitions a l'entree.\nZone d'ecriture avec tables, hors des zones de travail.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite fait partie de l'AFL1 et sera observee le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio, cinq minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Epaules, coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements et rotations douces."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu.",
+              "Une serie a charge legere par exercice.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance evaluee dans les conditions du jour J",
+          "objective": "Evaluer la conduite de la seance et la coherence des parametres avec le theme annonce.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un annonce puis realise sa seance, l'autre pare, chronometre et renseigne la fiche. Le professeur observe et interroge brievement chaque eleve sur un choix de parametre.",
+          "studentGoal": "Realiser ma seance et savoir justifier chacun de mes choix de parametres.",
+          "instructions": [
+            "J'annonce ma seance : theme, exercices, charges, series, repetitions, recuperations.",
+            "Je la realise integralement.",
+            "Observateur : tu notes technique, charges, recuperations et rangement.",
+            "Je dois pouvoir justifier chaque choix quand on me le demande."
+          ],
+          "success": [
+            "La seance est realisee integralement.",
+            "Les parametres sont coherents avec le theme annonce.",
+            "L'eleve justifie ses choix quand il est interroge.",
+            "La technique reste sure sur toutes les series."
+          ],
+          "execution": [
+            "Suivre l'ordre annonce.",
+            "Arreter la serie a la degradation technique.",
+            "Justifier en citant le theme et les indicateurs."
+          ],
+          "watch": [
+            "Les parametres sont-ils coherents avec le theme ?",
+            "Les eleves savent-ils justifier leurs choix ?",
+            "La technique tient-elle sous evaluation ?",
+            "Les pareurs restent-ils en position ?"
+          ],
+          "errors": [
+            "Annoncer un theme et travailler dans un autre format.",
+            "Etre incapable de justifier un choix de recuperation.",
+            "Augmenter la charge le jour de l'evaluation.",
+            "Pareur qui s'eloigne pendant la serie."
+          ],
+          "feedback": [
+            "Ton theme dit endurance et tu fais six repetitions : c'est incoherent.",
+            "Pourquoi trois minutes de recuperation ? Justifie.",
+            "Tes charges calculees, pas plus lourd aujourd'hui.",
+            "Tu ne bouges pas de la pendant sa serie."
+          ],
+          "plus": [
+            "Seance de 45 minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de trois exercices a charges legeres, accompagnee."
+          ],
+          "diff": {
+            "facilitee": "Seance de trois exercices a charges legeres, accompagnee par le professeur, justification orale guidee.",
+            "normale": "Seance complete annoncee et realisee, avec justification d'un choix de parametre.",
+            "complexifiee": "Seance de 45 minutes avec entretien complet sur l'ensemble des choix."
+          },
+          "safety": [
+            "Aucune augmentation de charge le jour de l'evaluation : les charges sont celles determinees par le test et eprouvees en seance.",
+            "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps, en position pendant toute la serie.",
+            "Colliers de serrage obligatoires.",
+            "Arret immediat de la serie des que la technique se degrade : une repetition mal executee n'est pas comptee.",
+            "Aucun blocage respiratoire.",
+            "Aucun exercice interdit par le reglement local.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Echauffement complet obligatoire avant toute serie evaluee.",
+            "Consulter les PAI.",
+            "Le professeur supervise en permanence et peut arreter toute serie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Choisir sa repartition AFL2 et AFL3",
+          "objective": "Faire choisir et justifier la repartition des huit points entre l'AFL2 et l'AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun choisit sa repartition entre l'AFL2 et l'AFL3, parmi les trois possibles, et la justifie par ecrit sur son carnet.",
+          "studentGoal": "Choisir la repartition qui correspond a mes points forts, et la justifier.",
+          "instructions": [
+            "Je relis ce que recouvrent l'AFL2 et l'AFL3.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mon role aupres des autres : est-ce la que je suis le plus utile ?",
+            "Je choisis une repartition et j'ecris pourquoi."
+          ],
+          "success": [
+            "La repartition est choisie parmi les trois possibles.",
+            "Elle est justifiee par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 1."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reel, pas d'une preference.",
+            "Choisir une repartition qui valorise ses points forts.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les choix s'appuient-ils sur ce que l'eleve fait reellement ?",
+            "Les justifications sont-elles argumentees ?",
+            "Certains choisissent-ils au hasard ?"
+          ],
+          "errors": [
+            "Choisir la meme repartition que son voisin.",
+            "Choisir sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort.",
+            "Tu ne conseilles jamais personne : le 2 et 6 serait risque.",
+            "Ce n'est pas le choix de ton voisin qui compte."
+          ],
+          "plus": [
+            "Justification comparant les trois repartitions possibles."
+          ],
+          "minus": [
+            "Choix guide par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Choix guide par le professeur a partir des observations du cycle.",
+            "normale": "Choix autonome parmi les trois repartitions, justifie par ecrit.",
+            "complexifiee": "Justification comparant explicitement les trois repartitions."
+          },
+          "safety": [
+            "Phase realisee assis, hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Aucune serie en cours a proximite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Arreter le projet d'entrainement",
+          "objective": "Arreter le projet pour les trois dernieres seances et ecrire un objectif personnel.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun arrete son projet : theme confirme ou modifie, exercices, charges visees, progression sur les trois seances restantes, et objectif personnel.",
+          "studentGoal": "Arreter mon projet pour les trois dernieres seances et ecrire mon objectif.",
+          "instructions": [
+            "Je confirme ou je modifie mon theme, en justifiant.",
+            "J'arrete mes exercices et mes charges visees.",
+            "J'indique la progression prevue sur les trois seances restantes.",
+            "J'ecris mon objectif personnel et je garde mon carnet."
+          ],
+          "success": [
+            "Le projet est arrete et ecrit.",
+            "La progression prevue est chiffree et progressive.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Partir des charges reellement utilisees.",
+            "Prevoir une progression par petits paliers.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les progressions sont-elles trop rapides ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Prevoir une augmentation de charge irrealiste.",
+            "Objectif vague : etre plus muscle.",
+            "Changer de theme sans le justifier."
+          ],
+          "feedback": [
+            "Cette progression n'est pas tenable en trois seances.",
+            "Precise : quel exercice, quelle charge, quel objectif ?",
+            "Si tu changes de theme, dis pourquoi : c'est evalue."
+          ],
+          "plus": [
+            "Projet avec deux scenarios selon l'evolution des indicateurs."
+          ],
+          "minus": [
+            "Projet ecrit avec le professeur, sur un modele."
+          ],
+          "diff": {
+            "facilitee": "Projet ecrit avec le professeur a partir d'un modele.",
+            "normale": "Projet arrete en autonomie pour les trois dernieres seances.",
+            "complexifiee": "Projet avec deux scenarios selon l'evolution des indicateurs."
+          },
+          "safety": [
+            "Le professeur valide chaque projet : toute progression jugee trop rapide est corrigee avant realisation.",
+            "Aucune charge projetee ne depasse le plafond du reglement local.",
+            "Phase d'ecriture assise hors des zones de travail.",
+            "Toute douleur mentionnee au carnet est signalee immediatement."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle repartition avez-vous choisie entre l'AFL2 et l'AFL3, et pourquoi ?",
+          "Quelle progression prevoyez-vous sur les trois dernieres seances ?"
+        ],
+        "key": "La repartition des points se choisit a partir de ce qu'on fait reellement : un carnet complet plaide pour l'AFL2, une aide constante aux autres pour l'AFL3. Ce choix s'argumente, il ne se copie pas."
+      },
+      "socialRoles": [
+        "Pareur : securise la seance evaluee de son camarade.",
+        "Observateur : renseigne la fiche d'evaluation.",
+        "Chronometreur : verifie le respect des recuperations."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Conduire sa seance en autonomie et aider un camarade",
+      "mainObjective": "Conduire la seance seul et assumer pleinement le role d'aide aupres d'un camarade.",
+      "secondaryObjectives": [
+        "Conduire la seance sans consigne exterieure.",
+        "Observer, conseiller et parer un camarade de facon utile.",
+        "Renseigner le carnet en temps reel."
+      ],
+      "linkToPrevious": "La repartition est choisie : chacun sait maintenant sur quoi se jouent ses huit points, et travaille en consequence.",
+      "prerequisiteForNext": "Chaque eleve conduit sa seance seul et a aide un camarade de facon utile.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation AFL3 : ce qu'un aidant doit relever et proposer.",
+          "Afficher les criteres de regulation.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser la salle pour des seances individualisees simultanees.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Salle organisee en postes libres, circulations degagees.\nAffiche des criteres de regulation a l'entree.\nFiches d'observation AFL3 disponibles a chaque poste.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : chaque eleve prepare les groupes musculaires de sa propre seance, ce qui fait partie de l'autonomie evaluee.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Toutes les articulations sollicitees par sa seance.",
+              "Colonne : enroulements et rotations douces."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu.",
+              "Une serie a charge legere par exercice.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance conduite en autonomie",
+          "objective": "Conduire seul sa seance, du debut a la fin, sans consigne exterieure.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un conduit sa seance seul, l'autre pare, chronometre et observe pour l'AFL3. Aucune consigne du professeur, sauf securite.",
+          "studentGoal": "Conduire ma seance du debut a la fin, sans qu'on me dise quoi faire.",
+          "instructions": [
+            "Je conduis ma seance seul, avec mon carnet.",
+            "Je gere mes charges, mes series et mes recuperations.",
+            "Je regule si necessaire et je note la raison.",
+            "Je renseigne mon carnet au fur et a mesure."
+          ],
+          "success": [
+            "La seance est conduite en entier sans consigne exterieure.",
+            "Les charges et recuperations prevues sont respectees ou regulees avec justification.",
+            "Le carnet est renseigne en temps reel."
+          ],
+          "execution": [
+            "Suivre son carnet, exercice par exercice.",
+            "Noter immediatement apres chaque serie.",
+            "Ranger apres chaque exercice."
+          ],
+          "watch": [
+            "Les eleves conduisent-ils reellement leur seance ?",
+            "Attendent-ils encore des consignes ?",
+            "Les carnets sont-ils renseignes en direct ?",
+            "Le materiel est-il range ?"
+          ],
+          "errors": [
+            "Attendre une consigne pour commencer chaque exercice.",
+            "Remplir son carnet a la fin, de memoire.",
+            "Improviser en abandonnant la planification.",
+            "Laisser les disques sur la barre en changeant de poste."
+          ],
+          "feedback": [
+            "C'est ta seance : tu n'as pas besoin de moi pour demarrer.",
+            "Note tout de suite, pas a la fin.",
+            "Regule si tu veux, mais note pourquoi.",
+            "Tu ranges avant de partir."
+          ],
+          "plus": [
+            "Seance de 45 minutes conduite integralement."
+          ],
+          "minus": [
+            "Seance conduite avec rappel des etapes par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Seance conduite avec rappel des etapes par le professeur, trois exercices.",
+            "normale": "Seance conduite seule, partenaire limite a la parade et a l'observation.",
+            "complexifiee": "Seance de 45 minutes conduite integralement en autonomie."
+          },
+          "safety": [
+            "L'autonomie porte sur la conduite de la seance, jamais sur la securite : le pareur reste obligatoire sur tout exercice a charge libre au-dessus du corps, et le professeur intervient toujours sur un point de securite.",
+            "Colliers de serrage obligatoires.",
+            "Arret immediat de la serie des que la technique se degrade.",
+            "Aucun blocage respiratoire.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Aucun exercice interdit par le reglement local.",
+            "Le professeur supervise en permanence, meme en phase d'autonomie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir le role d'aidant",
+          "objective": "Construire l'AFL3 : observer, parer et conseiller de facon reellement utile.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant la seance du camarade, l'aidant renseigne une fiche : repetitions correctes par serie, moment de degradation technique, respect des recuperations, et propose une regulation argumentee.",
+          "studentGoal": "Etre reellement utile a mon camarade : compter, signaler, proposer.",
+          "instructions": [
+            "Je compte ses repetitions techniquement correctes, serie par serie.",
+            "Je note a partir de quelle repetition sa technique se degrade.",
+            "Je verifie qu'il respecte ses recuperations.",
+            "Je lui propose une regulation en citant ce que j'ai observe."
+          ],
+          "success": [
+            "La fiche est renseignee serie par serie.",
+            "Le moment de degradation est identifie.",
+            "Une regulation argumentee est proposee.",
+            "La parade est assuree pendant tout le temps d'observation."
+          ],
+          "execution": [
+            "Compter pendant la serie, sans quitter la position de parade.",
+            "Signaler immediatement une degradation dangereuse.",
+            "Proposer apres la serie, pas pendant."
+          ],
+          "watch": [
+            "L'aidant reste-t-il en position de parade tout en observant ?",
+            "Les observations sont-elles chiffrees ?",
+            "Les propositions sont-elles argumentees ?"
+          ],
+          "errors": [
+            "Quitter la position de parade pour mieux observer.",
+            "Observer sans compter.",
+            "Encourager bruyamment sans donner d'information.",
+            "Proposer une augmentation de charge sans raison."
+          ],
+          "feedback": [
+            "Tu peux compter sans quitter ta position : la securite d'abord.",
+            "Des chiffres : combien de repetitions correctes ?",
+            "Allez n'est pas un conseil : dis-lui quoi ajuster.",
+            "Pourquoi plus lourd ? Argumente."
+          ],
+          "plus": [
+            "Observer et conseiller sur toute la seance du camarade."
+          ],
+          "minus": [
+            "Observer un seul critere : la degradation technique."
+          ],
+          "diff": {
+            "facilitee": "Observation d'un seul critere, la degradation technique, avec parade prioritaire.",
+            "normale": "Fiche AFL3 renseignee serie par serie avec proposition argumentee.",
+            "complexifiee": "Observation et conseil sur l'ensemble de la seance du camarade."
+          },
+          "safety": [
+            "Observer ne dispense jamais de parer : la position de parade prime sur la prise de notes, et la fiche se remplit entre les series.",
+            "L'aidant signale immediatement toute degradation technique dangereuse, sans attendre la fin de la serie.",
+            "Aucun conseil d'eleve ne prevaut sur une regle de securite : un conseil d'augmenter la charge doit etre valide par le professeur.",
+            "Colliers de serrage verifies par l'aidant avant chaque serie.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Croiser les carnets",
+          "objective": "Confronter ce que l'aidant a observe et ce que l'eleve a note, pour fiabiliser le carnet.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, assis hors des zones de travail. Chacun compare ce qu'il a note dans son carnet et ce que son aidant a observe, et corrige les ecarts.",
+          "studentGoal": "Verifier que ce que j'ai note correspond a ce qui s'est reellement passe.",
+          "instructions": [
+            "Je compare mon carnet et la fiche de mon aidant.",
+            "Je repere les ecarts : repetitions comptees, recuperations, ressenti.",
+            "Je corrige mon carnet si necessaire.",
+            "Je note ce que l'observation exterieure m'a appris."
+          ],
+          "success": [
+            "Les deux documents sont compares.",
+            "Les ecarts sont identifies et corriges.",
+            "L'apport de l'observation exterieure est note."
+          ],
+          "execution": [
+            "Comparer ligne par ligne.",
+            "Accepter la correction quand l'observation est plus fiable.",
+            "Noter l'apport, pas seulement la correction."
+          ],
+          "watch": [
+            "Les eleves surestiment-ils leurs repetitions correctes ?",
+            "Acceptent-ils la correction ?",
+            "L'apport est-il note ?"
+          ],
+          "errors": [
+            "Refuser la correction par principe.",
+            "Ne pas noter ce que l'observation a apporte.",
+            "Comparer sans corriger."
+          ],
+          "feedback": [
+            "Il a compte huit, tu en as note douze : qui a raison ?",
+            "Note ce que ca t'apprend : c'est ce qui est evalue.",
+            "Corrige ton carnet : un carnet faux ne sert a rien."
+          ],
+          "plus": [
+            "Comparaison sur plusieurs seances du carnet."
+          ],
+          "minus": [
+            "Comparaison sur un seul exercice, guidee."
+          ],
+          "diff": {
+            "facilitee": "Comparaison sur un seul exercice, guidee par le professeur.",
+            "normale": "Comparaison complete du carnet et de la fiche d'observation.",
+            "complexifiee": "Comparaison portant sur plusieurs seances du carnet."
+          },
+          "safety": [
+            "Phase realisee assise hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Toute douleur mentionnee au carnet ou observee est signalee immediatement au professeur."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qu'un aidant reellement utile fait, concretement ?",
+          "Sur quoi l'autonomie ne porte-t-elle jamais ?"
+        ],
+        "key": "Un aidant utile compte, signale et propose en citant ce qu'il a vu : encourager ne suffit pas. Et l'autonomie porte sur la conduite de la seance, jamais sur la securite."
+      },
+      "socialRoles": [
+        "Pareur : securise sans donner de consigne d'entrainement.",
+        "Aidant : observe, chiffre et propose une regulation argumentee.",
+        "Chronometreur : garantit les temps de recuperation."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et carnet d'entrainement",
+      "mainObjective": "Realiser la seance dans les conditions de l'epreuve et finaliser le carnet, support de l'AFL2.",
+      "secondaryObjectives": [
+        "Realiser la seance complete comme le jour de l'epreuve.",
+        "Preparer l'entretien de justification.",
+        "Finaliser le carnet d'entrainement."
+      ],
+      "linkToPrevious": "La seance est conduite en autonomie et l'aide est assumee : il reste a eprouver l'ensemble une fois dans les conditions de l'epreuve.",
+      "prerequisiteForNext": "Chaque eleve a realise sa seance complete et son carnet est a jour.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et le deroulement de l'epreuve, entretien compris.",
+          "Preparer les fiches d'observation identiques a celles du jour final.",
+          "Verifier l'etat du materiel et les colliers de serrage.",
+          "Organiser la salle comme le jour de l'epreuve.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Salle organisee comme le jour de l'epreuve.\nReferentiel et deroulement affiches a l'entree.\nZone de notation des carnets et d'entretien a l'ecart des postes.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, identique a celui du jour de l'epreuve : sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio, cinq minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Toutes les articulations sollicitees par sa seance.",
+              "Colonne : enroulements et rotations douces."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu.",
+              "Une serie a charge legere par exercice.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance complete a blanc",
+          "objective": "Realiser la seance dans les conditions exactes de l'epreuve, entretien compris.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, en alternance, comme le jour de l'epreuve : l'un annonce et realise sa seance, l'autre pare, chronometre et renseigne la fiche. Le professeur mene un entretien court avec chaque eleve.",
+          "studentGoal": "Realiser ma seance comme le jour de l'epreuve et justifier mes choix.",
+          "instructions": [
+            "J'annonce ma seance a mon observateur avant de commencer.",
+            "Je la realise integralement, avec mes charges et mes recuperations.",
+            "Je dois pouvoir justifier chaque choix de parametre.",
+            "Je range apres chaque exercice."
+          ],
+          "success": [
+            "La seance annoncee est realisee integralement.",
+            "Les choix sont justifies lors de l'entretien.",
+            "La technique reste sure.",
+            "Les recuperations sont respectees."
+          ],
+          "execution": [
+            "Annoncer la seance avant de commencer.",
+            "Suivre l'ordre annonce.",
+            "Justifier en citant le theme et les indicateurs.",
+            "Ranger apres chaque exercice."
+          ],
+          "watch": [
+            "La seance annoncee est-elle realisable dans le temps imparti ?",
+            "Les justifications sont-elles argumentees ?",
+            "La technique tient-elle sur la fin ?",
+            "Les pareurs restent-ils en position ?"
+          ],
+          "errors": [
+            "Annoncer une seance trop longue.",
+            "Justifier par une preference sans lien avec le theme.",
+            "Degrader la technique sur les derniers exercices.",
+            "Pareur qui se relache en fin de seance."
+          ],
+          "feedback": [
+            "Ta seance ne rentre pas : ajuste-la maintenant.",
+            "Justifie par ton theme et tes indicateurs, pas par ton envie.",
+            "Tes dernieres series sont mauvaises : allege ou reduis.",
+            "Fin de seance : c'est la qu'il faut etre le plus attentif."
+          ],
+          "plus": [
+            "Seance de 45 minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de trois exercices, accompagnee."
+          ],
+          "diff": {
+            "facilitee": "Seance de trois exercices a charges legeres, accompagnee, entretien guide.",
+            "normale": "Seance complete annoncee et realisee, avec entretien court.",
+            "complexifiee": "Seance de 45 minutes avec entretien complet sur tous les choix."
+          },
+          "safety": [
+            "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps, en position pendant toute la serie, y compris en fin de seance.",
+            "Colliers de serrage obligatoires.",
+            "Arret immediat de la serie des que la technique se degrade.",
+            "Aucun blocage respiratoire.",
+            "Aucun disque ni haltere laisse au sol.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Echauffement complet obligatoire.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Finaliser le carnet d'entrainement",
+          "objective": "Mettre le carnet a jour : il est le support de l'AFL2 et sera lu.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun met son carnet a jour : planification, seances realisees, regulations et leurs raisons, effets ressentis, bilan.",
+          "studentGoal": "Avoir un carnet complet et lisible, qui montre comment j'ai conduit mon entrainement.",
+          "instructions": [
+            "Je verifie que ma planification et toutes mes seances y figurent.",
+            "Je verifie que chaque regulation est accompagnee de sa raison.",
+            "J'ecris un bilan : ce que j'ai fait evoluer et pourquoi.",
+            "Je verifie que mon carnet est lisible pour quelqu'un d'autre."
+          ],
+          "success": [
+            "Toutes les seances figurent au carnet.",
+            "Chaque regulation est justifiee.",
+            "Un bilan est redige.",
+            "Le carnet est lisible."
+          ],
+          "execution": [
+            "Reprendre seance par seance.",
+            "Verifier que chaque regulation a sa raison.",
+            "Rediger un bilan argumente."
+          ],
+          "watch": [
+            "Les carnets sont-ils complets ?",
+            "Les regulations sont-elles justifiees ?",
+            "Le bilan est-il argumente ?"
+          ],
+          "errors": [
+            "Carnet rempli de memoire la veille.",
+            "Regulations notees sans raison.",
+            "Bilan resume a une phrase generale."
+          ],
+          "feedback": [
+            "Complete-le maintenant, pas le jour de l'epreuve.",
+            "Pourquoi as-tu regule ? Sans la raison, ca ne vaut rien.",
+            "Ton bilan doit dire ce que tu as fait evoluer, et pourquoi."
+          ],
+          "plus": [
+            "Bilan comparant les effets obtenus au mobile initial."
+          ],
+          "minus": [
+            "Carnet complete avec le professeur, sur un modele."
+          ],
+          "diff": {
+            "facilitee": "Carnet complete avec le professeur a partir d'un modele.",
+            "normale": "Carnet mis a jour en autonomie avec bilan redige.",
+            "complexifiee": "Bilan comparant les effets obtenus au mobile initial."
+          },
+          "safety": [
+            "Phase realisee assise hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Toute douleur mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Preparer l'entretien",
+          "objective": "Preparer la justification orale attendue le jour de l'epreuve.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun interroge son partenaire sur trois choix de sa seance : pourquoi ce theme, pourquoi cette charge, pourquoi cette recuperation. Puis inversion.",
+          "studentGoal": "Savoir justifier mes choix a l'oral, sans hesiter.",
+          "instructions": [
+            "Je pose a mon partenaire trois questions : pourquoi ce theme, cette charge, cette recuperation.",
+            "Il repond en citant son mobile et ses indicateurs.",
+            "Je lui dis si sa reponse est convaincante.",
+            "On inverse."
+          ],
+          "success": [
+            "Les trois questions sont posees et traitees.",
+            "Les reponses citent le mobile et les indicateurs.",
+            "Le partenaire evalue la clarte de la reponse."
+          ],
+          "execution": [
+            "Repondre en citant le theme puis l'indicateur.",
+            "Repondre court et precis.",
+            "Reprendre une reponse jugee peu claire."
+          ],
+          "watch": [
+            "Les reponses citent-elles des indicateurs ?",
+            "Les eleves savent-ils relier leurs choix a leur mobile ?",
+            "Les hesitations portent-elles sur un point precis ?"
+          ],
+          "errors": [
+            "Repondre parce que c'est comme ca.",
+            "Ne pas savoir relier une recuperation a un theme.",
+            "Valider une reponse floue par politesse."
+          ],
+          "feedback": [
+            "Parce que c'est comme ca ne repond a rien : quel theme, quel indicateur ?",
+            "Trois minutes de recuperation, c'est le theme force : dis-le.",
+            "Sa reponse n'etait pas claire : dis-le-lui."
+          ],
+          "plus": [
+            "Entretien complet sur l'ensemble de la seance."
+          ],
+          "minus": [
+            "Une seule question, avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Une seule question preparee avec l'aide du professeur.",
+            "normale": "Trois questions posees et traitees par deux.",
+            "complexifiee": "Entretien complet sur l'ensemble des choix de la seance."
+          },
+          "safety": [
+            "Phase realisee assise hors des zones de travail.",
+            "Materiel range pendant cette phase.",
+            "Aucune serie en cours a proximite."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre carnet montre-t-il pourquoi vous avez regule, ou seulement que vous avez regule ?",
+          "Comment justifie-t-on un choix de recuperation ?"
+        ],
+        "key": "Un carnet qui note les charges sans les raisons ne montre rien : c'est la justification qui fait la difference. Et une recuperation se justifie par le theme, pas par l'habitude."
+      },
+      "socialRoles": [
+        "Pareur : securise la seance de son camarade.",
+        "Observateur : renseigne la fiche comme le jour final.",
+        "Examinateur d'entrainement : interroge son partenaire sur ses choix."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve, apres avoir evalue les AFL2 et AFL3 au fil du cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser la seance annoncee integralement et justifier ses choix.",
+        "Parer et aider un camarade sur sa seance.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve dispose d'un carnet et sait conduire un entrainement adapte a un mobile.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "barres et disques",
+            "fixed": 8
+          },
+          {
+            "label": "colliers de serrage",
+            "fixed": 16
+          },
+          {
+            "label": "halteres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bancs",
+            "fixed": 6
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du reglement de la salle",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Relire le reglement de la salle et le referentiel d'evaluation avant la seance.",
+          "Verifier l'etat de tout le materiel : barres, disques, colliers, cables, sangles.",
+          "Afficher le reglement, le protocole de l'epreuve et les criteres.",
+          "Preparer les grilles nominatives et relever les carnets.",
+          "Verifier les PAI et les dispenses avant la premiere serie.",
+          "Verifier que chaque pareur figure sur la liste des pareurs revalides.",
+          "Degager les circulations : aucun disque ni haltere au sol."
+        ],
+        "sketch": "Salle organisee comme a la repetition generale.\nReglement, protocole et criteres affiches a l'entree.\nZone d'entretien et de depot des carnets, hors des zones de travail.\nRateliers a disques a proximite de chaque poste."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : aucune serie evaluee ne s'aborde sans echauffement general, articulaire et specifique, et sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome general",
+            "details": [
+              "Chaque eleve mene son echauffement cardio, cinq minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Epaules, coudes, poignets, hanches, genoux, chevilles.",
+              "Colonne : enroulements et rotations douces.",
+              "Toutes les articulations sollicitees par la seance."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique",
+            "details": [
+              "Une serie a vide par exercice prevu, 15 repetitions.",
+              "Une serie a charge legere par exercice.",
+              "Gainage complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Seance personnelle evaluee et entretien",
+          "objective": "Evaluer l'AFL1 : coherence des parametres, securite de l'execution et justification des choix.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, en alternance. Chacun annonce sa seance, la realise integralement, puis pare et aide son camarade sur la sienne. Le professeur observe et mene un entretien de justification avec chaque eleve.",
+          "studentGoal": "Realiser la seance que j'ai annoncee et justifier chacun de mes choix.",
+          "instructions": [
+            "J'annonce ma seance : theme, exercices, charges, series, repetitions, recuperations.",
+            "Je la realise integralement, dans l'ordre annonce.",
+            "Quand je pare, je reste en position pendant toute la serie.",
+            "Je justifie mes choix quand le professeur m'interroge."
+          ],
+          "success": [
+            "AFL1 : les parametres choisis sont coherents avec le theme annonce.",
+            "AFL1 : l'execution technique est sure sur l'ensemble de la seance.",
+            "AFL1 : la seance est realisee integralement et les choix sont justifies.",
+            "AFL3 : l'eleve pare et aide son camarade de facon fiable.",
+            "Le materiel est range apres chaque exercice."
+          ],
+          "execution": [
+            "Suivre l'ordre annonce, sans improviser.",
+            "Arreter la serie a la degradation technique.",
+            "Justifier en citant le theme et les indicateurs.",
+            "Rester en position de parade pendant toute la serie du camarade."
+          ],
+          "watch": [
+            "La technique tient-elle sous l'enjeu de l'epreuve ?",
+            "Les charges sont-elles augmentees pour impressionner ?",
+            "Les justifications sont-elles argumentees ?",
+            "Les pareurs restent-ils en position jusqu'a la fin ?"
+          ],
+          "errors": [
+            "Augmenter la charge le jour de l'epreuve.",
+            "Degrader la technique pour finir la serie annoncee.",
+            "Justifier par une preference sans lien avec le theme.",
+            "Pareur qui s'eloigne ou regarde ailleurs."
+          ],
+          "feedback": [
+            "Tes charges annoncees, pas plus lourd aujourd'hui.",
+            "Arrete la serie : une repetition fausse n'est pas comptee.",
+            "Justifie par ton theme et tes indicateurs.",
+            "Tu ne bouges pas de la pendant sa serie : c'est evalue."
+          ],
+          "plus": [
+            "Seance de 45 minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de trois exercices a charges legeres, accompagnee."
+          ],
+          "diff": {
+            "facilitee": "Seance de trois exercices a charges legeres, accompagnee, entretien guide. La securite de l'execution, la coherence des choix et le role d'aidant sont evalues autant que la charge.",
+            "normale": "Seance personnelle annoncee et realisee integralement, avec entretien de justification.",
+            "complexifiee": "Seance de 45 minutes avec entretien complet sur l'ensemble des choix."
+          },
+          "safety": [
+            "Le reglement de la salle prime sur tout : il est relu et rappele avant la premiere serie.",
+            "Aucune augmentation de charge le jour de l'epreuve : les charges sont celles determinees par le test et eprouvees en seance 7.",
+            "Seuls les eleves figurant sur la liste des pareurs revalides parent : aucune exception, quelle qu'en soit la consequence sur l'organisation.",
+            "Pareur en position pendant toute la serie, sans exception.",
+            "Colliers de serrage obligatoires sur toute barre chargee.",
+            "Arret immediat de la serie des que la technique se degrade : une repetition mal executee n'est pas comptee, et poursuivre expose a la lesion.",
+            "Dos maintenu : arret immediat si le dos s'arrondit sous charge.",
+            "Aucun blocage respiratoire : expirer a l'effort.",
+            "Aucun exercice derriere la nuque ni aucun exercice interdit par le reglement local.",
+            "Charges plafonnees par le reglement de la salle.",
+            "Aucun disque ni haltere laisse au sol : ranges apres chaque serie.",
+            "Circulations degagees d'au moins un metre autour de chaque poste.",
+            "Echauffement complet obligatoire avant toute serie evaluee.",
+            "PAI verifies avant la premiere serie : toute douleur articulaire signalee entraine l'arret de l'exercice concerne.",
+            "Le professeur supervise en permanence et peut arreter toute serie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan du carnet et de la repartition",
+          "objective": "Evaluer l'AFL2 a partir du carnet et faire le bilan de la repartition choisie.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis, hors des zones de travail. Chacun presente son carnet, en pointe deux regulations justifiees, et fait le bilan de la repartition choisie a la seance 5.",
+          "studentGoal": "Montrer, carnet en main, comment j'ai conduit et regule mon entrainement.",
+          "instructions": [
+            "Je presente deux regulations de mon carnet et je les justifie.",
+            "J'indique ce que mon entrainement a produit, et sur quels indicateurs.",
+            "Je relis mon objectif de la seance 5 et je dis s'il est atteint.",
+            "Je dis si la repartition que j'avais choisie etait la bonne."
+          ],
+          "success": [
+            "Deux regulations sont presentees et justifiees.",
+            "Les effets obtenus sont relies a des indicateurs.",
+            "L'objectif personnel est evalue.",
+            "La repartition choisie est commentee."
+          ],
+          "execution": [
+            "Citer l'indicateur avant la decision.",
+            "Relier les effets au mobile initial.",
+            "Reprendre son objectif de la seance 5."
+          ],
+          "watch": [
+            "Les carnets sont-ils reellement tenus sur tout le cycle ?",
+            "Les justifications s'appuient-elles sur des indicateurs ?",
+            "Les eleves evaluent-ils honnetement leur choix de repartition ?"
+          ],
+          "errors": [
+            "Presenter un carnet rempli la veille.",
+            "Justifier par une impression.",
+            "Ne pas savoir dire ce que l'entrainement a produit."
+          ],
+          "feedback": [
+            "Ton carnet est ecrit d'un seul trait : ca se voit.",
+            "Quel indicateur, exactement ?",
+            "Ressors ton objectif de la seance 5."
+          ],
+          "plus": [
+            "Bilan comparant les effets obtenus au mobile initial, avec chiffres."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire a completer.",
+            "normale": "Presentation de deux regulations justifiees et bilan de la repartition.",
+            "complexifiee": "Bilan chiffre comparant les effets obtenus au mobile initial."
+          },
+          "safety": [
+            "Toute douleur mentionnee dans le carnet est signalee immediatement au professeur.",
+            "Phase realisee assise hors des zones de travail.",
+            "Materiel range pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement de la salle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en remettant la salle en etat.",
+          "material": [
+            {
+              "label": "barres et disques",
+              "fixed": 8
+            },
+            {
+              "label": "halteres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "bancs",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Rangement collectif de la salle selon le reglement, puis classe assise pour le bilan.",
+          "studentGoal": "Remettre la salle en etat et dire ce que je saurai faire seul, plus tard.",
+          "instructions": [
+            "On decharge les barres et on range les disques au ratelier.",
+            "Les disques lourds se portent a deux, dos droit.",
+            "On signale tout materiel abime : collier, cable, sangle.",
+            "Une fois range, on s'assoit pour le bilan."
+          ],
+          "success": [
+            "La salle est integralement rangee.",
+            "Aucun disque ni haltere ne reste au sol.",
+            "Tout materiel abime est signale.",
+            "Au moins un eleve par binome s'exprime."
+          ],
+          "execution": [
+            "Decharger les barres avant de les ranger.",
+            "Porter les disques lourds a deux, jambes flechies.",
+            "Verifier le sol avant de partir."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les disques lourds sont-ils portes correctement ?",
+            "Les eleves citent-ils des acquis de methode ?"
+          ],
+          "errors": [
+            "Laisser une barre chargee sur un support.",
+            "Porter un disque lourd seul, dos rond.",
+            "Ne parler que des charges soulevees."
+          ],
+          "feedback": [
+            "Decharge la barre : personne ne doit la trouver chargee.",
+            "A deux, jambes flechies : ironique de se blesser en rangeant.",
+            "Pas seulement les kilos : planifier et reguler, c'est l'acquis."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il ferait s'il continuait seul en club."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus projet de poursuite autonome."
+          },
+          "safety": [
+            "Toutes les barres sont dechargees avant rangement : une barre laissee chargee sur un support est un risque pour le prochain utilisateur.",
+            "Disques lourds portes a deux, jambes flechies, dos droit.",
+            "Tout materiel abime signale et mis hors service : collier defectueux, cable effiloche, sangle usee.",
+            "Verification du sol avant de quitter la salle : aucun disque, aucun haltere.",
+            "Comptage du materiel selon le reglement de la salle.",
+            "Verification qu'aucun eleve ne presente de douleur avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous saurez faire seul, dans une salle, apres ce cycle ?",
+          "Pourquoi la technique passe-t-elle toujours avant la charge ?"
+        ],
+        "key": "Ce cycle ne visait pas une performance le jour de l'epreuve : il visait la capacite a conduire un entrainement, a le reguler et a en rendre compte. C'est ce qui reste utilisable une fois le lycee termine."
+      },
+      "socialRoles": [
+        "Pareur : securise la seance evaluee de son camarade, role evalue au titre de l'AFL3.",
+        "Aidant : observe, chiffre et propose une regulation, role evalue au titre de l'AFL3.",
+        "Chronometreur : verifie le respect des recuperations.",
+        "Responsable materiel : organise le rangement et signale le materiel abime."
+      ]
+    }
+  ]
+}

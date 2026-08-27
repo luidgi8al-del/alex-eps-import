@@ -1,0 +1,2813 @@
+{
+  "apsa": "Cirque",
+  "grades": [
+    "CINQUIEME"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Mobiliser les capacites expressives du corps pour imaginer, composer et interpreter une sequence artistique ou acrobatique.",
+    "Participer activement, au sein d'un groupe, a l'elaboration et a la formalisation d'un projet artistique.",
+    "Apprecier des prestations en utilisant differents supports d'observation et d'analyse.",
+    "S'engager devant les autres et respecter les prestations de chacun."
+  ],
+  "targetCompetence": "Passer d'une demonstration de tours, ou l'eleve enchaine des exploits techniques sans lien, a un numero construit : une intention, des specialites choisies, une relation entre les artistes, et un rapport assume au public.",
+  "cycleObjectives": [
+    "Maitriser au moins une famille circassienne : jonglage, equilibre sur objet ou acrobatie collective.",
+    "Construire un numero collectif avec un debut et une fin nets.",
+    "Assumer le rapport au public : regard, presence, gestion de l'echec.",
+    "Parer un camarade sur les figures acrobatiques.",
+    "Apprecier une prestation avec des criteres, en tant que spectateur."
+  ],
+  "plannedTitles": [
+    "Decouvrir les familles circassiennes",
+    "Le jonglage : maitriser les objets",
+    "Les equilibres : sur soi et sur objet",
+    "L'acrobatie collective et la parade",
+    "Evaluation de mi-cycle et choix du numero",
+    "Construire le numero : relation et intention",
+    "Repeter et assumer le public",
+    "Representation finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Les arts du cirque en EPS - enjeux de formation au cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16702/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Arts du cirque au college - securite et progression",
+      "org": "Academie de Creteil",
+      "url": "https://eps.ac-creteil.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner les arts du cirque en EPS - familles et progressions",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Materiel de cirque disponible : balles, massues, anneaux, assiettes chinoises, batons du diable, rouleaux americains, boules d'equilibre.",
+    "Etat et conformite du materiel d'equilibre sur objet : verifier avant chaque seance.",
+    "Tapis de reception disponibles en nombre suffisant pour les ateliers d'equilibre et d'acrobatie.",
+    "Hauteur sous plafond suffisante pour le jonglage a trois objets et les assiettes chinoises.",
+    "Regles de l'etablissement sur les portes acrobatiques : selon le protocole, ils peuvent etre limites aux pyramides basses.",
+    "Autorisation de captation video et modalites de conservation des images.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - refuse de se montrer",
+      "observed": "Manipule volontiers le materiel mais refuse de presenter devant les autres, ou tourne tout en plaisanterie.",
+      "need": "Entrer par la technique et le groupe, avant d'aborder le rapport au public."
+    },
+    {
+      "label": "Profil 2 - collectionne les tours",
+      "observed": "Enchaine les figures techniques sans lien ni intention, comme une demonstration, sans debut ni fin.",
+      "need": "Construire une intention et une composition, au-dela de la performance technique."
+    },
+    {
+      "label": "Profil 3 - abandonne a l'echec",
+      "observed": "Arrete tout des qu'un objet tombe, ramasse en s'excusant, sort du numero.",
+      "need": "Apprendre a integrer la chute d'objet dans le numero, sans rupture."
+    },
+    {
+      "label": "Profil 4 - technique mais isole",
+      "observed": "Maitrise bien une specialite mais travaille seul, sans s'inscrire dans le projet du groupe ni parer ses camarades.",
+      "need": "S'inscrire dans un projet collectif et assumer le role de pareur."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Representation devant la classe d'un numero collectif de 2 minutes environ, par groupes de trois a quatre. Le numero comporte au moins deux familles circassiennes differentes, un debut et une fin immobiles, et une relation construite entre les artistes. Chaque eleve tient egalement le role de pareur et celui de spectateur avec fiche d'appreciation.",
+    "criteria": [
+      "Le numero comporte au moins deux familles circassiennes differentes.",
+      "Le debut et la fin sont marques par une position immobile tenue 3 secondes.",
+      "Chaque artiste maitrise au moins une figure : elle est reussie lors de la representation.",
+      "Une relation entre les artistes est identifiable : ils ne juxtaposent pas des numeros individuels.",
+      "L'eleve assume le public : regard, presence, et poursuite du numero en cas de chute d'objet.",
+      "Les roles de pareur et de spectateur sont tenus avec serieux."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA3, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir les familles circassiennes",
+      "mainObjective": "Faire decouvrir les trois familles par des ateliers et reperer les appetences et le rapport de chacun a l'exposition.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Essayer les trois familles : jonglage, equilibre, acrobatie.",
+        "Connaitre les regles de securite et de manipulation du materiel.",
+        "Reperer qui refuse de se montrer et qui abandonne a l'echec."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : le cirque est souvent inconnu, l'entree se fait par la manipulation libre avant toute exigence de presentation.",
+      "prerequisiteForNext": "Chaque eleve a essaye les trois familles et connait les regles de manipulation.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60,
+            "note": "trois par eleve"
+          },
+          {
+            "label": "foulards de jonglage",
+            "per": 3.0,
+            "min": 60,
+            "note": "plus lents que les balles, facilitent l'entree"
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "batons du diable",
+            "fixed": 8
+          },
+          {
+            "label": "rouleaux americains ou boules d'equilibre",
+            "fixed": 4
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 10
+          },
+          {
+            "label": "fiches de decouverte",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve, conservee tout le cycle"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer trois ateliers distincts : jonglage, equilibre sur objet, acrobatie collective.",
+          "Placer les tapis sous les ateliers d'equilibre et d'acrobatie, joints sans interstice.",
+          "Verifier la hauteur sous plafond avant l'atelier jonglage.",
+          "Verifier l'etat du materiel d'equilibre : rouleaux, boules, assiettes.",
+          "Delimiter clairement les zones : le materiel de jonglage roule et fait chuter.",
+          "Preparer les fiches de decouverte sur un banc, hors des ateliers."
+        ],
+        "sketch": "Atelier 1 : jonglage, zone degagee, hauteur sous plafond verifiee.\nAtelier 2 : equilibre sur objet, tapis joints sous et autour.\nAtelier 3 : acrobatie collective, tapis joints.\nZones bien separees, banc des fiches au centre hors ateliers."
+      },
+      "warmup": {
+        "rationale": "Prepare les poignets, les epaules et les appuis, sollicites dans les trois familles, et installe la manipulation avant toute exigence.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des ateliers, sans y entrer.",
+              "Deplacements varies : pas chasses, quatre pattes, demi-pointes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets et doigts : cercles, ouverture et fermeture, 1 minute.",
+              "Epaules : cercles avant et arriere, moulinets.",
+              "Chevilles, genoux, hanches : flexions et cercles.",
+              "Gainage : planche ventrale 15 secondes, 2 fois."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiere manipulation",
+            "details": [
+              "Lancer et rattraper un foulard d'une main a l'autre, 20 fois.",
+              "Tenir en equilibre sur un pied, 15 secondes de chaque cote.",
+              "Deplacements a deux en contact, epaule contre epaule."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Le circuit des trois familles",
+          "objective": "Faire essayer les trois familles pour que chacun decouvre celle ou il a le plus d'appetence.",
+          "material": [
+            {
+              "label": "foulards de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "assiettes chinoises avec baguettes",
+              "fixed": 10
+            },
+            {
+              "label": "rouleaux americains ou boules d'equilibre",
+              "fixed": 4
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 10
+            },
+            {
+              "label": "fiches de decouverte",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Trois ateliers, groupes de six a sept eleves, rotation toutes les 7 minutes. A chaque atelier, trois defis de difficulte croissante affiches. Chacun note sur sa fiche le defi atteint.",
+          "studentGoal": "Essayer les trois familles et noter dans laquelle je me sens le plus a l'aise.",
+          "instructions": [
+            "Je commence toujours par le defi 1, meme si je pense savoir faire.",
+            "Je passe au defi suivant seulement quand le precedent est reussi.",
+            "Equilibre sur objet : je ne monte que sur les tapis, avec une aide.",
+            "Je note mon niveau sur ma fiche a la fin de chaque atelier."
+          ],
+          "success": [
+            "Les trois ateliers ont ete essayes.",
+            "La fiche est renseignee pour les trois familles.",
+            "Aucune montee sur objet d'equilibre sans aide ni tapis."
+          ],
+          "execution": [
+            "Jonglage : lancer a hauteur constante, regard en haut et non sur les mains.",
+            "Equilibre : regard fixe sur un point loin devant, pas sur les pieds.",
+            "Acrobatie : porteur solide, dos droit, jamais de charge sur le dos rond."
+          ],
+          "watch": [
+            "Qui abandonne des qu'un objet tombe ?",
+            "Qui refuse de rester a un atelier ou on le regarde ?",
+            "Qui monte sur un objet d'equilibre sans attendre l'aide ?",
+            "Les tapis restent-ils joints sous les ateliers ?"
+          ],
+          "errors": [
+            "Ramasser un objet tombe en s'excusant et arreter.",
+            "Monter seul sur un rouleau ou une boule.",
+            "Lancer les massues ou les balles vers un camarade."
+          ],
+          "feedback": [
+            "L'objet tombe, tu le ramasses et tu continues : c'est normal.",
+            "Jamais seul sur le rouleau : attends une aide.",
+            "Tu lances pour toi, jamais vers quelqu'un."
+          ],
+          "plus": [
+            "Un quatrieme defi par atelier.",
+            "Enchainer deux familles."
+          ],
+          "minus": [
+            "Jonglage aux foulards uniquement.",
+            "Equilibre limite a l'equilibre sur soi, sans objet."
+          ],
+          "diff": {
+            "facilitee": "Jonglage aux foulards, equilibre sur soi sans objet, acrobatie limitee aux figures a deux au sol.",
+            "normale": "Trois defis par atelier, progression libre a son rythme.",
+            "complexifiee": "Quatre defis par atelier, enchainement de deux familles."
+          },
+          "safety": [
+            "Aucune montee sur objet d'equilibre sans tapis et sans aide d'un camarade ou de l'enseignant.",
+            "Tapis joints, sans interstice, sous et autour des ateliers d'equilibre et d'acrobatie.",
+            "Zones d'ateliers nettement separees : le materiel de jonglage roule et provoque des chutes.",
+            "Objets tombes ramasses immediatement.",
+            "Ne jamais lancer un objet vers un camarade, meme par jeu.",
+            "Massues et batons du diable manipules a distance des autres : rayon d'un metre cinquante minimum.",
+            "Bijoux retires, cheveux attaches, lacets attaches.",
+            "Hauteur sous plafond verifiee avant le jonglage a trois objets."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "L'objet qui tombe",
+          "objective": "Traiter d'emblee la question centrale du cirque scolaire : que faire quand un objet tombe.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "foulards de jonglage",
+              "per": 3.0,
+              "min": 60
+            }
+          ],
+          "organization": "Individuellement, dans l'espace. Chacun manipule deux objets. Consigne : quand un objet tombe, on le ramasse en restant dans le personnage, sans s'excuser ni s'arreter. Le professeur fait volontairement tomber des objets pour provoquer la situation.",
+          "studentGoal": "Ramasser un objet tombe sans casser mon numero ni m'excuser.",
+          "instructions": [
+            "Quand mon objet tombe, je le ramasse sans m'arreter.",
+            "Je ne dis rien, je ne fais pas de grimace, je ne m'excuse pas.",
+            "Je peux integrer le ramassage dans mon mouvement : le rendre volontaire.",
+            "Je reprends immediatement ma manipulation."
+          ],
+          "success": [
+            "L'eleve ramasse sans s'excuser ni s'arreter, au moins trois fois de suite.",
+            "Le ramassage est integre au mouvement.",
+            "Aucune rupture visible dans la manipulation."
+          ],
+          "execution": [
+            "Ramasser en flechissant les jambes, dans le rythme.",
+            "Garder le regard et la posture du personnage.",
+            "Reprendre la manipulation sans temps mort."
+          ],
+          "watch": [
+            "Les eleves s'excusent-ils ou grimacent-ils ?",
+            "Le ramassage casse-t-il le rythme ?",
+            "Qui abandonne apres deux chutes ?"
+          ],
+          "errors": [
+            "S'excuser ou faire une grimace.",
+            "S'arreter completement pour ramasser.",
+            "Abandonner apres plusieurs chutes."
+          ],
+          "feedback": [
+            "Ne t'excuse pas : personne n'a rien vu si tu continues.",
+            "Ramasse dans le mouvement, ne casse pas ton rythme.",
+            "Ca tombe, c'est le cirque : tu continues."
+          ],
+          "plus": [
+            "Integrer le ramassage comme une figure du numero.",
+            "Manipulation a trois objets."
+          ],
+          "minus": [
+            "Manipulation d'un seul objet.",
+            "Foulards, qui tombent lentement."
+          ],
+          "diff": {
+            "facilitee": "Manipulation d'un seul foulard, tres lent, ramassage sans contrainte de rythme.",
+            "normale": "Deux objets, ramassage integre au mouvement sans excuse.",
+            "complexifiee": "Trois objets, ramassage transforme en figure du numero."
+          },
+          "safety": [
+            "Espacement de deux metres minimum entre eleves.",
+            "Objets tombes ramasses immediatement : une balle au sol fait chuter.",
+            "Ne jamais courir pour rattraper un objet qui roule vers un autre atelier.",
+            "Manipulation a distance des murs et des zones de passage."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premiere presentation collective",
+          "objective": "Presenter une premiere sequence courte en groupe, pour observer le rapport de chacun au public.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "foulards de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 10
+            },
+            {
+              "label": "fiches de decouverte",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Groupes de six. Chaque groupe entre dans l'espace, se fige 3 secondes, manipule librement pendant 30 secondes, puis se refige avant de sortir. Le reste de la classe est spectateur.",
+          "studentGoal": "Presenter une sequence courte avec mon groupe, avec un debut et une fin nets.",
+          "instructions": [
+            "On entre et on se fige tous ensemble, 3 secondes.",
+            "On manipule pendant 30 secondes, chacun a sa maniere.",
+            "On se refige tous ensemble, 3 secondes, avant de sortir.",
+            "Public : on regarde en silence et on applaudit a la fin."
+          ],
+          "success": [
+            "Le debut et la fin immobiles sont tenus 3 secondes par tout le groupe.",
+            "Le groupe entre et sort ensemble.",
+            "Le public regarde en silence."
+          ],
+          "execution": [
+            "Se figer completement : ni les mains, ni le regard.",
+            "Occuper l'espace, ne pas rester groupe au centre.",
+            "Continuer meme si un objet tombe."
+          ],
+          "watch": [
+            "Qui refuse de passer ou se cache derriere les autres ?",
+            "L'immobilite est-elle reelle ?",
+            "Le public respecte-t-il les passages ?"
+          ],
+          "errors": [
+            "Se cacher derriere les camarades.",
+            "Rire ou commenter pendant le passage d'un autre groupe.",
+            "S'arreter quand un objet tombe."
+          ],
+          "feedback": [
+            "Place-toi devant, on doit te voir.",
+            "Silence pendant le passage : demain c'est ton tour.",
+            "Ca tombe : tu ramasses et tu continues."
+          ],
+          "plus": [
+            "Groupes de trois.",
+            "Duree portee a 45 secondes."
+          ],
+          "minus": [
+            "Groupes de dix.",
+            "Duree reduite a 20 secondes."
+          ],
+          "diff": {
+            "facilitee": "Groupes de dix, 20 secondes, aucune exigence de placement.",
+            "normale": "Groupes de six, 30 secondes, debut et fin immobiles.",
+            "complexifiee": "Groupes de trois, 45 secondes, avec occupation imposee de l'espace."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum.",
+            "Espace degage de tout objet avant chaque passage.",
+            "Aucune figure acrobatique lors de cette premiere presentation.",
+            "Objets ramasses entre chaque groupe."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire quand un objet tombe pendant un numero ?",
+          "Dans quelle famille vous etes-vous senti le plus a l'aise ?"
+        ],
+        "key": "Au cirque, les objets tombent : ce qui distingue un artiste, c'est qu'il continue sans s'excuser. Une chute assumee ne se voit pas ; une chute commentee se voit toujours."
+      },
+      "socialRoles": [
+        "Aide a l'equilibre : accompagne son camarade sur les objets d'equilibre.",
+        "Spectateur : regarde les passages en silence et applaudit.",
+        "Responsable materiel : verifie l'etat du materiel et le range par famille."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Le jonglage : maitriser les objets",
+      "mainObjective": "Construire le jonglage a deux puis trois objets, avec une trajectoire reguliere et un regard adapte.",
+      "secondaryObjectives": [
+        "Lancer a hauteur constante, en croisant les trajectoires.",
+        "Regarder le sommet des trajectoires, pas les mains.",
+        "Enchainer un nombre croissant de lancers."
+      ],
+      "linkToPrevious": "La seance 1 a fait decouvrir les familles : on entre maintenant dans la construction technique, en commencant par la plus accessible.",
+      "prerequisiteForNext": "Chaque eleve realise au moins la cascade a deux objets, et vise trois objets.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "foulards de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "batons du diable",
+            "fixed": 8
+          },
+          {
+            "label": "affiche des trajectoires de la cascade",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de progression",
+            "per": 1.0,
+            "min": 20
+          }
+        ],
+        "instructions": [
+          "Afficher le schema des trajectoires croisees de la cascade, en grand.",
+          "Delimiter des zones individuelles de deux metres, pour eviter les collisions.",
+          "Verifier la hauteur sous plafond.",
+          "Preparer trois objets par eleve, foulards et balles.",
+          "Prevoir une zone separee pour les batons du diable, qui demandent plus d'espace."
+        ],
+        "sketch": "Zones individuelles de 2 m x 2 m pour le jonglage.\nZone separee et large pour les batons du diable.\nAffiche des trajectoires sur le mur, face aux eleves.\nBacs de materiel par famille, en peripherie."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les poignets, les epaules et la nuque, sollicitee par le regard vers le haut caracteristique du jonglage.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Bras en mouvement pendant le deplacement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets et doigts : cercles, flexions, 1 minute.",
+              "Epaules et coudes : cercles et moulinets.",
+              "Nuque : flexions douces avant-arriere, rotations lentes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en jonglage",
+            "details": [
+              "Un foulard : lancer et rattraper d'une main a l'autre, 20 fois.",
+              "Deux foulards : lancer simultane et croise, 20 fois.",
+              "Passage aux balles pour ceux qui maitrisent les foulards."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "La cascade a trois objets",
+          "objective": "Construire la cascade, figure de base du jonglage, par une progression du foulard vers la balle.",
+          "material": [
+            {
+              "label": "foulards de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "affiche des trajectoires de la cascade",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de progression",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Individuellement, dans sa zone. Progression en cinq paliers : un objet d'une main a l'autre, deux objets croises, deux objets plus un lancer, trois objets sur trois lancers, trois objets en continu. On passe au palier suivant apres cinq reussites.",
+          "studentGoal": "Enchainer trois lancers avec trois objets, en croisant les trajectoires.",
+          "instructions": [
+            "Je lance a hauteur constante, environ a hauteur de mes yeux.",
+            "Je croise mes trajectoires : ce qui part de la droite arrive a gauche.",
+            "Je regarde le sommet des trajectoires, jamais mes mains.",
+            "Je passe au palier suivant apres cinq reussites."
+          ],
+          "success": [
+            "Le palier des trois lancers avec trois objets est atteint.",
+            "Les trajectoires sont croisees et a hauteur constante.",
+            "Le regard reste en haut, pas sur les mains."
+          ],
+          "execution": [
+            "Lancer depuis l'interieur, rattraper a l'exterieur.",
+            "Hauteur constante : toutes les trajectoires au meme niveau.",
+            "Regard au sommet des trajectoires, vision peripherique pour les mains."
+          ],
+          "watch": [
+            "Les trajectoires sont-elles croisees ou paralleles ?",
+            "La hauteur est-elle constante ou anarchique ?",
+            "Les eleves regardent-ils leurs mains ?",
+            "Les objets partent-ils vers l'avant, obligeant a avancer ?"
+          ],
+          "errors": [
+            "Lancer en colonnes paralleles au lieu de croiser.",
+            "Lancer de plus en plus haut ou de plus en plus loin devant.",
+            "Regarder ses mains, ce qui empeche l'anticipation."
+          ],
+          "feedback": [
+            "Croise : ce qui part a droite arrive a gauche.",
+            "Tu avances : tes lancers partent devant, ramene-les au-dessus de toi.",
+            "Regarde en haut, tes mains savent faire."
+          ],
+          "plus": [
+            "Cascade en continu, dix lancers et plus.",
+            "Passage aux massues ou aux anneaux."
+          ],
+          "minus": [
+            "Jonglage aux foulards uniquement.",
+            "Palier a deux objets."
+          ],
+          "diff": {
+            "facilitee": "Jonglage aux foulards, palier a deux objets croises, sans exigence de continuite.",
+            "normale": "Progression jusqu'a trois objets et trois lancers, aux balles.",
+            "complexifiee": "Cascade en continu, ou passage aux massues et anneaux."
+          },
+          "safety": [
+            "Zones individuelles de deux metres : les objets partent dans toutes les directions.",
+            "Objets tombes ramasses immediatement : une balle au sol fait chuter.",
+            "Massues et anneaux reserves aux eleves maitrisant la cascade a trois balles, dans une zone dediee et espacee.",
+            "Hauteur sous plafond verifiee : ne jamais jongler sous un luminaire ou une structure.",
+            "Ne jamais lancer un objet vers un camarade.",
+            "Jonglage a distance des murs et des zones de passage."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Assiettes et batons",
+          "objective": "Decouvrir d'autres objets de manipulation, qui offrent une entree a ceux que la cascade met en echec.",
+          "material": [
+            {
+              "label": "assiettes chinoises avec baguettes",
+              "fixed": 10
+            },
+            {
+              "label": "batons du diable",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de progression",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Deux ateliers en rotation. Assiettes chinoises : faire tourner, transferer, marcher avec. Batons du diable : faire passer d'un cote a l'autre, faire des demi-tours. 7 minutes par atelier.",
+          "studentGoal": "Maitriser un objet autre que les balles, que je pourrai utiliser dans mon numero.",
+          "instructions": [
+            "Assiette : je lance la rotation avec un mouvement de poignet, puis je stabilise.",
+            "Baton du diable : je le maintiens en le renvoyant d'une baguette a l'autre.",
+            "Je reste dans ma zone : les batons du diable partent loin.",
+            "Je note sur ma fiche l'objet que je maitrise le mieux."
+          ],
+          "success": [
+            "L'assiette tourne stabilisee pendant 10 secondes.",
+            "Le baton du diable est renvoye cinq fois de suite.",
+            "L'eleve identifie un objet qu'il pourra utiliser dans son numero."
+          ],
+          "execution": [
+            "Assiette : rotation lancee par le poignet, baguette au centre.",
+            "Baton du diable : baguettes qui accompagnent, jamais qui frappent.",
+            "Regard sur l'objet, corps mobile sous lui."
+          ],
+          "watch": [
+            "Les batons du diable partent-ils vers d'autres eleves ?",
+            "Les assiettes sont-elles lancees en l'air, ce qui est interdit a ce stade ?",
+            "Les eleves en echec sur les balles trouvent-ils une entree ici ?"
+          ],
+          "errors": [
+            "Lancer l'assiette en l'air avant de maitriser la rotation.",
+            "Frapper le baton du diable au lieu de l'accompagner.",
+            "Sortir de sa zone et gener un camarade."
+          ],
+          "feedback": [
+            "Stabilise la rotation d'abord, tu la lanceras plus tard.",
+            "Accompagne le baton, ne le frappe pas.",
+            "Reste dans ta zone : ton baton part loin."
+          ],
+          "plus": [
+            "Assiette lancee et rattrapee.",
+            "Baton du diable avec demi-tour."
+          ],
+          "minus": [
+            "Assiette maintenue avec aide.",
+            "Baton du diable renvoye deux fois seulement."
+          ],
+          "diff": {
+            "facilitee": "Assiette maintenue avec l'aide d'un camarade, baton renvoye deux fois.",
+            "normale": "Assiette stabilisee 10 secondes, baton renvoye cinq fois.",
+            "complexifiee": "Assiette lancee et rattrapee, baton avec demi-tour."
+          },
+          "safety": [
+            "Batons du diable dans une zone dediee et largement espacee : ils partent loin et vite.",
+            "Rayon d'un metre cinquante minimum autour de chaque manipulateur de baton.",
+            "Assiettes chinoises non lancees en l'air tant que la rotation n'est pas stabilisee.",
+            "Baguettes tenues, jamais lancees.",
+            "Objets ramasses immediatement.",
+            "Verifier l'etat des baguettes avant usage : une baguette fendue peut blesser."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ma sequence de manipulation",
+          "objective": "Composer une premiere sequence courte avec l'objet choisi, avec debut et fin nets.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "assiettes chinoises avec baguettes",
+              "fixed": 10
+            },
+            {
+              "label": "batons du diable",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de progression",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux, chacun compose une sequence de 20 secondes avec l'objet de son choix, avec debut et fin immobiles. Presentation a son partenaire, puis a un autre binome.",
+          "studentGoal": "Composer une sequence de 20 secondes avec mon objet, reproductible.",
+          "instructions": [
+            "Je choisis l'objet que je maitrise le mieux.",
+            "Je compose une sequence de 20 secondes que je peux refaire pareil.",
+            "Je commence immobile et je termine immobile, 3 secondes.",
+            "Si mon objet tombe, je continue sans m'excuser."
+          ],
+          "success": [
+            "La sequence dure environ 20 secondes et est reproductible.",
+            "Debut et fin immobiles tenus 3 secondes.",
+            "L'eleve continue en cas de chute d'objet."
+          ],
+          "execution": [
+            "Choisir des figures qu'on reussit a chaque fois.",
+            "Memoriser l'ordre avant de presenter.",
+            "Marquer nettement l'immobilite initiale et finale."
+          ],
+          "watch": [
+            "Les sequences sont-elles memorisees ou improvisees ?",
+            "Les eleves choisissent-ils des figures maitrisees ?",
+            "La chute d'objet casse-t-elle encore la sequence ?"
+          ],
+          "errors": [
+            "Choisir une figure non maitrisee, pour impressionner.",
+            "Improviser differemment a chaque presentation.",
+            "S'arreter quand l'objet tombe."
+          ],
+          "feedback": [
+            "Prends ce que tu reussis a chaque fois.",
+            "Refais-la exactement pareil : c'est une composition.",
+            "L'objet tombe : tu ramasses et tu continues."
+          ],
+          "plus": [
+            "Sequence de 30 secondes avec deux objets differents.",
+            "Presentation devant un groupe de huit."
+          ],
+          "minus": [
+            "Sequence de 10 secondes.",
+            "Presentation au partenaire uniquement."
+          ],
+          "diff": {
+            "facilitee": "Sequence de 10 secondes avec un objet simple, montree au partenaire seul.",
+            "normale": "Sequence de 20 secondes avec debut et fin immobiles, montree a un autre binome.",
+            "complexifiee": "Sequence de 30 secondes avec deux objets, devant huit spectateurs."
+          },
+          "safety": [
+            "Espacement suffisant entre binomes pendant la composition.",
+            "Objets ramasses avant chaque presentation.",
+            "Zone de presentation degagee.",
+            "Batons du diable presentes dans la zone dediee uniquement."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il regarder quand on jongle, et pourquoi ?",
+          "Comment savoir si une figure est prete a etre presentee ?"
+        ],
+        "key": "On jongle en regardant le sommet des trajectoires, pas ses mains. Et une figure n'est prete que si on la reussit a chaque fois, pas une fois sur trois."
+      },
+      "socialRoles": [
+        "Spectateur : regarde la sequence de son camarade et dit ce qu'il a vu.",
+        "Responsable materiel : verifie l'etat des baguettes et range par famille.",
+        "Responsable securite : verifie que les zones restent degagees."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Les equilibres : sur soi et sur objet",
+      "mainObjective": "Construire l'equilibre, sur son propre corps puis sur un objet, avec un dispositif de securite systematique.",
+      "secondaryObjectives": [
+        "Tenir un equilibre corporel 5 secondes.",
+        "Monter et descendre d'un objet d'equilibre avec aide.",
+        "Aider un camarade a monter en securite."
+      ],
+      "linkToPrevious": "Le jonglage est engage : on aborde la deuxieme famille, qui exige un dispositif de securite plus lourd.",
+      "prerequisiteForNext": "Chaque eleve tient un equilibre corporel 5 secondes et sait aider un camarade sur objet.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 14,
+            "note": "joints, sous et autour des objets d'equilibre"
+          },
+          {
+            "label": "rouleaux americains ou boules d'equilibre",
+            "fixed": 4
+          },
+          {
+            "label": "poutres basses ou bancs suedois",
+            "fixed": 4
+          },
+          {
+            "label": "echasses basses",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches de progression",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Joindre les tapis sans interstice sous et autour de chaque objet d'equilibre, sur au moins deux metres.",
+          "Verifier l'etat de chaque objet d'equilibre : rouleaux, boules, echasses.",
+          "Installer quatre ateliers : equilibre corporel, poutre basse, rouleau ou boule, echasses.",
+          "Verifier 2 metres de degagement autour de chaque atelier, sans mur ni angle.",
+          "Rappeler avant de commencer : aucune montee sans aide."
+        ],
+        "sketch": "4 ateliers : equilibre corporel, poutre basse, rouleau/boule, echasses.\nTapis joints sous et autour de chaque objet, sur 2 m.\n2 m de degagement sans mur ni angle.\nAides designes a chaque atelier."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement l'equilibration, les chevilles et le gainage, qui conditionnent toute la seance.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements sur demi-pointes.",
+              "Deplacements lateraux et arriere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gainage",
+            "details": [
+              "Chevilles : cercles, montees sur pointes, 20 repetitions.",
+              "Genoux, hanches, epaules.",
+              "Gainage ventral et lateral, 20 secondes chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Equilibration progressive",
+            "details": [
+              "Tenir sur un pied, yeux ouverts, 15 secondes par pied.",
+              "Tenir sur un pied en levant l'autre jambe a l'horizontale.",
+              "Marcher sur une ligne au sol, pied devant pied, 10 metres."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le circuit des equilibres",
+          "objective": "Construire l'equilibre par une progression du sol vers l'objet, avec aide systematique.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 14
+            },
+            {
+              "label": "rouleaux americains ou boules d'equilibre",
+              "fixed": 4
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "echasses basses",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Quatre ateliers, groupes de cinq, rotation toutes les 5 minutes. A chaque atelier avec objet, un camarade designe tient le role d'aide. Progression a son rythme, trois niveaux affiches.",
+          "studentGoal": "Tenir en equilibre 5 secondes a chaque atelier, avec l'aide si necessaire.",
+          "instructions": [
+            "Je regarde un point fixe loin devant, jamais mes pieds.",
+            "Je monte toujours avec l'aide de mon camarade, jamais seul.",
+            "Je descends avant de perdre l'equilibre, pas apres.",
+            "Aide : je reste a cote, bras disponibles, je ne quitte pas mon camarade des yeux."
+          ],
+          "success": [
+            "Cinq secondes tenues au niveau atteint, aux quatre ateliers.",
+            "Aucune montee sans aide.",
+            "L'aide reste attentif pendant tout le passage de son camarade."
+          ],
+          "execution": [
+            "Regard fixe sur un point loin devant, a hauteur des yeux.",
+            "Bras ecartes pour equilibrer, corps gaine.",
+            "Descendre volontairement, en controle, avant de chuter."
+          ],
+          "watch": [
+            "Les eleves montent-ils sans attendre l'aide ?",
+            "Les aides sont-ils attentifs ou distraits ?",
+            "Les eleves regardent-ils leurs pieds ?",
+            "Les tapis restent-ils joints sous les objets ?"
+          ],
+          "errors": [
+            "Monter seul sur un objet d'equilibre : faute grave.",
+            "Regarder ses pieds, ce qui accentue le desequilibre.",
+            "L'aide qui discute ou se detourne."
+          ],
+          "feedback": [
+            "Jamais seul : attends ton aide.",
+            "Regarde loin devant, pas tes pieds.",
+            "Aide, tu ne le quittes pas des yeux : c'est ton role."
+          ],
+          "plus": [
+            "Tenue portee a 10 secondes.",
+            "Deplacement sur l'objet."
+          ],
+          "minus": [
+            "Equilibre corporel uniquement, sans objet.",
+            "Tenue de 3 secondes avec appui permanent de l'aide."
+          ],
+          "diff": {
+            "facilitee": "Equilibre corporel au sol et poutre tres basse, avec appui permanent de l'aide, 3 secondes.",
+            "normale": "Quatre ateliers, 5 secondes tenues, aide au montage et au demontage.",
+            "complexifiee": "10 secondes tenues, avec deplacement sur l'objet."
+          },
+          "safety": [
+            "Aucune montee sur un objet d'equilibre sans aide designe et present : regle absolue, arret immediat de l'atelier en cas de manquement.",
+            "Tapis joints, sans interstice, sous et autour de chaque objet sur au moins deux metres.",
+            "2 metres de degagement autour de chaque atelier, sans mur, poteau ni angle saillant.",
+            "L'aide reste a cote, bras disponibles, sans quitter son camarade des yeux.",
+            "Descente volontaire avant la perte d'equilibre : on ne cherche jamais a se rattraper sur un objet instable.",
+            "Etat du materiel verifie avant chaque seance : un rouleau fissure ou une echasse abimee est retiree.",
+            "Un seul eleve par objet a la fois.",
+            "Bijoux retires, cheveux attaches, chaussures adaptees ou pieds nus selon l'objet."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Apprendre a aider",
+          "objective": "Former les eleves au role d'aide, condition de securite de toute la famille equilibre.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 14
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "rouleaux americains ou boules d'equilibre",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par trois : un equilibriste, deux aides de chaque cote. Progression : aide avec contact permanent, puis contact leger, puis aide disponible sans contact. Rotation toutes les trois tentatives.",
+          "studentGoal": "Accompagner mon camarade sur l'objet, sans le lacher brutalement.",
+          "instructions": [
+            "Aide : je me place a cote, jamais devant ni derriere.",
+            "Je propose mon avant-bras ou mon epaule, jamais ma main seule.",
+            "Je relache progressivement le contact, je ne lache jamais d'un coup.",
+            "Equilibriste : je previens avant de monter et avant de descendre."
+          ],
+          "success": [
+            "L'aide est en place avant chaque montee.",
+            "Le relachement du contact est progressif.",
+            "Aucune chute non accompagnee sur les trois tentatives."
+          ],
+          "execution": [
+            "Se placer sur le cote, a portee immediate.",
+            "Offrir un appui solide : avant-bras ou epaule.",
+            "Relacher progressivement, en restant disponible."
+          ],
+          "watch": [
+            "Les aides sont-ils reellement attentifs ?",
+            "Lachent-ils brutalement ?",
+            "L'equilibriste previent-il avant de monter ?"
+          ],
+          "errors": [
+            "Lacher d'un coup, ce qui provoque la chute.",
+            "Se placer devant l'equilibriste, dans sa trajectoire de chute.",
+            "Se detourner pendant que le camarade est sur l'objet."
+          ],
+          "feedback": [
+            "Relache doucement, ne lache pas d'un coup.",
+            "Sur le cote, pas devant : il tombe vers l'avant.",
+            "Tu regardes ton camarade, pas la salle."
+          ],
+          "plus": [
+            "Aide a un seul, sur objet plus instable.",
+            "Aide sans contact, seulement disponible."
+          ],
+          "minus": [
+            "Aide a deux avec contact permanent.",
+            "Objet tres stable, poutre basse."
+          ],
+          "diff": {
+            "facilitee": "Deux aides avec contact permanent, sur poutre basse tres stable.",
+            "normale": "Deux aides, relachement progressif du contact.",
+            "complexifiee": "Un seul aide, disponible sans contact, sur objet instable."
+          },
+          "safety": [
+            "L'aide s'apprend avant d'etre utilise : aucun eleve n'aide sans avoir fait cet atelier.",
+            "Se placer sur le cote, jamais dans la trajectoire de chute.",
+            "Offrir l'avant-bras ou l'epaule : une main seule peut etre arrachee.",
+            "Relachement toujours progressif, jamais brutal.",
+            "Tapis joints obligatoires.",
+            "Le professeur supervise directement cet atelier.",
+            "Annonce obligatoire de l'equilibriste avant de monter et de descendre."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Equilibre dans une sequence",
+          "objective": "Integrer un equilibre dans une sequence courte, avec l'objet de manipulation deja choisi.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 14
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "fiches de progression",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux, chacun compose une sequence de 25 secondes combinant un equilibre et une manipulation. Un aide est designe pour la partie equilibre. Presentation a un autre binome.",
+          "studentGoal": "Combiner un equilibre et une manipulation dans une meme sequence.",
+          "instructions": [
+            "Je choisis un equilibre que je tiens a coup sur, et une manipulation.",
+            "Je designe mon aide avant de commencer.",
+            "Je commence et je termine immobile, 3 secondes.",
+            "Je ne combine jamais equilibre sur objet et jonglage a trois : trop risque a ce stade."
+          ],
+          "success": [
+            "La sequence combine les deux familles.",
+            "L'equilibre choisi est tenu a chaque essai.",
+            "L'aide est en place pendant toute la partie equilibre."
+          ],
+          "execution": [
+            "Choisir un equilibre maitrise, pas le plus spectaculaire.",
+            "Marquer une transition nette entre les deux familles.",
+            "Garder le regard haut pendant l'equilibre."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils des figures maitrisees ?",
+            "Les aides sont-ils systematiquement designes ?",
+            "Y a-t-il des combinaisons dangereuses ?"
+          ],
+          "errors": [
+            "Combiner equilibre sur objet instable et jonglage a trois objets.",
+            "Oublier de designer un aide.",
+            "Choisir un equilibre non maitrise."
+          ],
+          "feedback": [
+            "Pas les deux en meme temps : c'est trop risque.",
+            "Ton aide d'abord, ensuite tu montes.",
+            "Prends l'equilibre que tu tiens a chaque fois."
+          ],
+          "plus": [
+            "Sequence de 35 secondes avec transition travaillee."
+          ],
+          "minus": [
+            "Sequence a une seule famille.",
+            "Equilibre corporel au sol uniquement."
+          ],
+          "diff": {
+            "facilitee": "Sequence avec equilibre corporel au sol et manipulation simple, 15 secondes.",
+            "normale": "Sequence de 25 secondes combinant equilibre sur objet bas et manipulation.",
+            "complexifiee": "Sequence de 35 secondes avec transition travaillee entre les familles."
+          },
+          "safety": [
+            "Interdiction de combiner equilibre sur objet instable et jonglage a trois objets : les deux exigences d'attention sont incompatibles a ce niveau.",
+            "Aide designe et en place avant toute partie equilibre.",
+            "Tapis joints sous et autour des objets.",
+            "Objets de manipulation ramasses avant chaque passage sur objet d'equilibre.",
+            "Un seul eleve par objet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il regarder pour tenir en equilibre ?",
+          "Ou l'aide doit-il se placer, et pourquoi jamais devant ?"
+        ],
+        "key": "L'equilibre se tient par le regard, fixe et loin devant. Et on ne monte jamais seul sur un objet : l'aide est une condition, pas une option."
+      },
+      "socialRoles": [
+        "Aide a l'equilibre : accompagne la montee et la descente, role evalue.",
+        "Chronometreur : compte les secondes de tenue.",
+        "Responsable securite : verifie la jonction des tapis et l'etat du materiel."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "L'acrobatie collective et la parade",
+      "mainObjective": "Construire les figures acrobatiques collectives et la parade, dans un cadre de securite strict.",
+      "secondaryObjectives": [
+        "Realiser des pyramides a deux et trois, en respectant les regles de porte.",
+        "Tenir les roles de porteur, de voltigeur et de pareur.",
+        "Monter et demonter une figure en securite."
+      ],
+      "linkToPrevious": "Jonglage et equilibre sont engages : la troisieme famille est la plus exigeante en securite, elle vient donc apres la formation a l'aide.",
+      "prerequisiteForNext": "Chaque eleve realise une figure a deux ou trois, et sait parer.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 16,
+            "note": "joints, sur toute la zone d'acrobatie"
+          },
+          {
+            "label": "affiche des regles de porte",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de figures",
+            "per": 0.34,
+            "min": 6,
+            "note": "une par groupe de trois"
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Joindre les tapis sans interstice sur toute la zone d'acrobatie.",
+          "Afficher les regles de porte : appuis sur les zones solides, jamais sur le milieu du dos.",
+          "Constituer des groupes de trois avec des gabarits complementaires : porteur plus fort, voltigeur plus leger.",
+          "Verifier le protocole de l'etablissement sur les portes acrobatiques.",
+          "Verifier 2 metres de degagement autour de la zone.",
+          "Faire retirer bijoux, verifier ongles courts et cheveux attaches."
+        ],
+        "sketch": "Zone d'acrobatie couverte de tapis joints.\nGroupes de trois espaces les uns des autres.\nAffiches des regles de porte aux deux extremites.\n2 m de degagement sans mur ni angle."
+      },
+      "warmup": {
+        "rationale": "Prepare le gainage et les appuis, indispensables au porteur comme au voltigeur, et renforce la nuque et le dos.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements a quatre pattes sur les tapis.",
+              "Deplacements en crabe et en rampant."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles.",
+              "Nuque : flexions douces, renforcement isometrique.",
+              "Gainage ventral, dorsal et lateral, 20 secondes chacun.",
+              "Position quadrupedique tenue 20 secondes, dos plat."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiers appuis a deux",
+            "details": [
+              "A deux, dos a dos, se relever ensemble.",
+              "L'un a quatre pattes, l'autre pose les mains sur ses epaules et ses hanches.",
+              "Monter un genou puis redescendre, avec un pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Les figures a deux et trois",
+          "objective": "Construire les pyramides simples en respectant les zones d'appui et les roles.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "affiche des regles de porte",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de figures",
+              "per": 0.34,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de trois : un porteur, un voltigeur, un pareur. Trois figures proposees, de difficulte croissante. Montage, tenue 3 secondes, demontage. Rotation des roles apres chaque figure.",
+          "studentGoal": "Realiser une figure a trois, tenue 3 secondes, et la demonter en securite.",
+          "instructions": [
+            "Voltigeur : je monte sur les zones solides, jamais au milieu du dos.",
+            "Porteur : je garde le dos plat et gaine, jamais rond.",
+            "Pareur : je me place du cote de la chute probable, bras disponibles.",
+            "On monte lentement, on tient 3 secondes, on demonte dans l'ordre inverse."
+          ],
+          "success": [
+            "La figure est tenue 3 secondes, immobile.",
+            "Les appuis se font sur les zones solides uniquement.",
+            "Le demontage se fait dans l'ordre inverse du montage, sans saut."
+          ],
+          "execution": [
+            "Appuis sur les epaules, les hanches ou le bassin : jamais le milieu du dos ni la nuque.",
+            "Porteur : dos plat, gaine, appuis larges au sol.",
+            "Voltigeur : monter progressivement, sans sauter ni s'elancer."
+          ],
+          "watch": [
+            "Les appuis se font-ils sur les zones solides ?",
+            "Le porteur garde-t-il le dos plat ?",
+            "Le pareur est-il en place et attentif ?",
+            "Le demontage se fait-il en sautant ?"
+          ],
+          "errors": [
+            "Poser un appui au milieu du dos du porteur : risque lombaire grave.",
+            "Porteur au dos rond : risque lombaire.",
+            "Demonter en sautant depuis la figure."
+          ],
+          "feedback": [
+            "Jamais au milieu du dos : sur les epaules ou les hanches.",
+            "Porteur, dos plat et ventre serre.",
+            "On ne saute pas pour descendre : on demonte doucement."
+          ],
+          "plus": [
+            "Figures a quatre.",
+            "Tenue portee a 5 secondes."
+          ],
+          "minus": [
+            "Figures a deux au sol uniquement.",
+            "Tenue de 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Figures a deux au sol, sans porte, tenue 2 secondes.",
+            "normale": "Figures a trois avec porte basse, tenue 3 secondes.",
+            "complexifiee": "Figures a quatre, tenue 5 secondes."
+          },
+          "safety": [
+            "Appuis autorises uniquement sur les zones solides : epaules, hanches, bassin, cuisses. Jamais le milieu du dos, jamais la nuque, jamais les articulations.",
+            "Porteur toujours dos plat et gaine : arret immediat de la figure si le dos s'arrondit.",
+            "Pareur obligatoire pour toute figure comportant une porte, place du cote de la chute probable.",
+            "Montage et demontage lents et progressifs : aucun saut, aucun elan.",
+            "Demontage toujours dans l'ordre inverse du montage.",
+            "Tapis joints sur toute la zone, sans interstice.",
+            "Groupes constitues par gabarit : le porteur est toujours plus fort que le voltigeur.",
+            "Hauteur limitee au protocole de l'etablissement : en 5e, pas de pyramide au-dela de deux etages.",
+            "Bijoux retires, ongles courts, cheveux attaches.",
+            "Le professeur supervise directement l'atelier en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Le role de pareur",
+          "objective": "Former specifiquement a la parade des figures acrobatiques, condition de securite de toute la famille.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "affiche des regles de porte",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par trois. Le groupe realise une figure simple, le pareur s'exerce a se placer et a accompagner une chute simulee. Le professeur valide chaque pareur avant de l'autoriser sur les figures suivantes.",
+          "studentGoal": "Me placer au bon endroit et accompagner mon camarade s'il chute.",
+          "instructions": [
+            "Je me place du cote ou le voltigeur risque de tomber.",
+            "Je reste debout, jambes flechies, bras disponibles a hauteur du bassin.",
+            "Si il chute, je le saisis au bassin ou au tronc, jamais par un bras.",
+            "Je ne quitte jamais le voltigeur des yeux."
+          ],
+          "success": [
+            "Le pareur est en place avant chaque montage.",
+            "La prise se fait au bassin ou au tronc.",
+            "Le pareur ne quitte jamais le voltigeur des yeux."
+          ],
+          "execution": [
+            "Se placer a portee immediate, jambes flechies, pret a agir.",
+            "Anticiper la chute plutot que reagir apres.",
+            "Accompagner jusqu'au tapis, sans lacher."
+          ],
+          "watch": [
+            "Le pareur est-il attentif ou distrait ?",
+            "Se place-t-il du bon cote ?",
+            "Saisit-il au bras plutot qu'au tronc ?"
+          ],
+          "errors": [
+            "Parer debout et loin, sans etre a portee.",
+            "Saisir par un bras, ce qui peut luxer l'epaule.",
+            "Se detourner pendant le montage."
+          ],
+          "feedback": [
+            "Plus pres, jambes flechies : tu dois pouvoir agir tout de suite.",
+            "Au bassin ou au tronc, jamais par un bras.",
+            "Tu regardes ton voltigeur, pas la salle."
+          ],
+          "plus": [
+            "Parer une figure a trois etages.",
+            "Parer seul sur une figure a trois."
+          ],
+          "minus": [
+            "Deux pareurs pour une figure simple.",
+            "Parade sur figure au sol, sans porte."
+          ],
+          "diff": {
+            "facilitee": "Deux pareurs sur une figure au sol sans porte, avec appui permanent du professeur.",
+            "normale": "Un pareur sur figure a trois avec porte basse, valide par le professeur.",
+            "complexifiee": "Parade seule sur figure plus complexe, dans la limite du protocole."
+          },
+          "safety": [
+            "La parade s'apprend avant d'etre utilisee : aucun eleve ne pare sans avoir ete valide par le professeur sur cet atelier.",
+            "Prise au bassin ou au tronc uniquement : jamais par un bras, jamais par un vetement.",
+            "Pareur place du cote de la chute probable, a portee immediate.",
+            "Le pareur ne quitte jamais le voltigeur des yeux : arret immediat de la figure sinon.",
+            "Tapis joints obligatoires.",
+            "Le professeur supervise directement cet atelier et valide chaque pareur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Enchainer figure et manipulation",
+          "objective": "Integrer une figure acrobatique dans une sequence collective, avec les autres familles.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "fiches de figures",
+              "per": 0.34,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de trois. Chaque groupe compose une sequence de 30 secondes combinant une figure acrobatique tenue et une manipulation, avec debut et fin immobiles. Presentation a un autre groupe.",
+          "studentGoal": "Combiner une figure acrobatique et une manipulation dans une sequence de groupe.",
+          "instructions": [
+            "On choisit une figure qu'on reussit a chaque fois.",
+            "Le pareur est designe avant chaque essai.",
+            "On combine la figure et une manipulation, dans l'ordre qu'on veut.",
+            "On commence et on termine immobiles, 3 secondes."
+          ],
+          "success": [
+            "La sequence combine acrobatie et manipulation.",
+            "La figure est tenue 3 secondes.",
+            "Le pareur est en place a chaque essai."
+          ],
+          "execution": [
+            "Choisir une figure maitrisee plutot que spectaculaire.",
+            "Marquer une transition nette entre les deux familles.",
+            "Ne jamais manipuler pendant le montage d'une figure."
+          ],
+          "watch": [
+            "Les groupes choisissent-ils des figures maitrisees ?",
+            "Les pareurs sont-ils systematiquement designes ?",
+            "Y a-t-il manipulation pendant le montage ?"
+          ],
+          "errors": [
+            "Jongler pendant qu'un camarade monte une figure.",
+            "Oublier de designer un pareur.",
+            "Choisir une figure non maitrisee pour impressionner."
+          ],
+          "feedback": [
+            "Pas de jonglage pendant le montage : une chose a la fois.",
+            "Votre pareur d'abord, ensuite vous montez.",
+            "Prenez la figure que vous reussissez a chaque fois."
+          ],
+          "plus": [
+            "Sequence de 45 secondes avec deux figures."
+          ],
+          "minus": [
+            "Sequence a une seule famille.",
+            "Figure a deux au sol."
+          ],
+          "diff": {
+            "facilitee": "Sequence de 20 secondes avec figure a deux au sol et manipulation simple.",
+            "normale": "Sequence de 30 secondes combinant figure a trois et manipulation.",
+            "complexifiee": "Sequence de 45 secondes avec deux figures et transitions travaillees."
+          },
+          "safety": [
+            "Aucune manipulation d'objet pendant le montage ou le demontage d'une figure : l'attention doit etre entiere.",
+            "Pareur designe et en place avant chaque figure.",
+            "Objets de manipulation ranges hors de la zone pendant les figures.",
+            "Tapis joints, groupes espaces.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quelles parties du corps peut-on prendre appui, et lesquelles sont interdites ?",
+          "Ou le pareur doit-il se placer et comment doit-il saisir ?"
+        ],
+        "key": "En acrobatie collective, on prend appui sur les zones solides, jamais au milieu du dos. Le porteur garde le dos plat, et le pareur saisit au bassin, jamais par un bras."
+      },
+      "socialRoles": [
+        "Pareur : accompagne le voltigeur, role evalue au meme titre que la figure.",
+        "Porteur : assure la stabilite de la figure.",
+        "Responsable securite : verifie la jonction des tapis et les zones d'appui."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et choix du numero",
+      "mainObjective": "Faire le point sur les acquis techniques et constituer les groupes et l'intention du numero final.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau dans chaque famille.",
+        "Choisir les specialites qui composeront le numero.",
+        "Definir une intention et ecrire une premiere trame."
+      ],
+      "linkToPrevious": "Les trois familles ont ete travaillees : chacun sait ce qu'il maitrise, on peut composer un numero collectif.",
+      "prerequisiteForNext": "Chaque groupe a une intention, des specialites choisies et une premiere trame ecrite.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 16
+          },
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "rouleaux americains ou boules d'equilibre",
+            "fixed": 4
+          },
+          {
+            "label": "poutres basses ou bancs suedois",
+            "fixed": 4
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de creation par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des intentions possibles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer les trois ateliers d'evaluation, un par famille.",
+          "Afficher des propositions d'intention : le duo maladroit, les automates, la competition, le reve.",
+          "Preparer les fiches nominatives et les fiches de creation par groupe.",
+          "Constituer des groupes de trois a quatre en melangeant les specialites.",
+          "Prevoir un espace calme pour l'ecriture, hors des ateliers."
+        ],
+        "sketch": "3 ateliers d'evaluation, un par famille.\nAffiche des intentions possibles sur le mur.\nCoin ecriture avec bancs, hors des ateliers.\nTapis joints aux ateliers equilibre et acrobatie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et les trois familles exigent une preparation differente.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe mene son echauffement : course, deplacements varies.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, hanches.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision des trois familles",
+            "details": [
+              "Deux minutes de manipulation.",
+              "Un equilibre par eleve, avec aide.",
+              "Une figure a trois, avec pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Evaluation par famille",
+          "objective": "Evaluer precisement le niveau atteint par chaque eleve dans les trois familles.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "rouleaux americains ou boules d'equilibre",
+              "fixed": 4
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Trois ateliers d'evaluation, rotation toutes les 7 minutes. A chaque atelier, l'eleve presente le niveau le plus eleve qu'il maitrise. Le professeur valide, un camarade aide ou pare.",
+          "studentGoal": "Montrer le meilleur niveau que je maitrise vraiment dans chaque famille.",
+          "instructions": [
+            "Je presente le niveau que je maitrise, pas celui que je vise.",
+            "J'ai droit a deux essais par famille.",
+            "Une figure est validee si elle est reussie sans aide et sans chute.",
+            "Aide ou pareur : je me place avant chaque passage."
+          ],
+          "success": [
+            "Les trois familles ont ete evaluees.",
+            "Le niveau valide correspond a une realisation propre.",
+            "La fiche est renseignee et signee par le professeur."
+          ],
+          "execution": [
+            "Marquer le debut et la fin de chaque presentation.",
+            "Realiser proprement plutot que difficilement.",
+            "Respecter les criteres de securite dans les trois familles."
+          ],
+          "watch": [
+            "Les eleves surestiment-ils leur niveau ?",
+            "Les aides et pareurs sont-ils systematiques ?",
+            "Quelle famille est la plus faible pour la classe ?"
+          ],
+          "errors": [
+            "Tenter un niveau trop eleve et chuter.",
+            "Monter sur un objet sans aide.",
+            "Oublier de designer un pareur."
+          ],
+          "feedback": [
+            "Reste au niveau que tu reussis a chaque fois.",
+            "Ton aide d'abord, meme en evaluation.",
+            "Propre et tenu vaut mieux que difficile et rate."
+          ],
+          "plus": [
+            "Presenter un niveau superieur dans au moins une famille."
+          ],
+          "minus": [
+            "Presenter le niveau 1 avec aide, valorise comme progres."
+          ],
+          "diff": {
+            "facilitee": "Niveau 1 presente avec aide permanente, valorise comme progres depuis la seance 1.",
+            "normale": "Presentation du niveau maitrise dans les trois familles.",
+            "complexifiee": "Presentation d'un niveau superieur dans au moins une famille."
+          },
+          "safety": [
+            "Aide obligatoire pour tout equilibre sur objet, meme en evaluation.",
+            "Pareur obligatoire pour toute figure acrobatique.",
+            "Tapis joints aux ateliers equilibre et acrobatie.",
+            "Deux essais maximum : au-dela, la fatigue augmente le risque.",
+            "Arret de l'essai des que la qualite se degrade dangereusement.",
+            "Un eleve par objet, zones espacees.",
+            "Le professeur supervise les trois ateliers."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Choisir une intention",
+          "objective": "Donner au numero une intention, qui le distingue d'une simple demonstration de tours.",
+          "material": [
+            {
+              "label": "affiche des intentions possibles",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de creation par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "En groupes de trois a quatre, assis hors des ateliers. Chaque groupe choisit une intention et ecrit trois mots-cles, puis relie chaque mot a une specialite du groupe.",
+          "studentGoal": "Choisir une intention avec mon groupe et la relier a nos specialites.",
+          "instructions": [
+            "On choisit une intention parmi celles affichees, ou une autre validee.",
+            "On ecrit trois mots-cles lies a cette intention.",
+            "Pour chaque mot, on trouve laquelle de nos specialites peut le traduire.",
+            "On essaie tout de suite, on ne reste pas assis."
+          ],
+          "success": [
+            "L'intention est choisie et ecrite.",
+            "Trois mots-cles sont notes et relies a des specialites.",
+            "Les idees ont ete essayees dans l'espace."
+          ],
+          "execution": [
+            "Choisir une intention qui donne des images, pas une histoire compliquee.",
+            "Relier chaque mot a une specialite reellement maitrisee.",
+            "Essayer physiquement avant de valider."
+          ],
+          "watch": [
+            "Les groupes choisissent-ils une intention exploitable ?",
+            "Relient-ils l'intention a leurs specialites reelles ?",
+            "Passent-ils a l'essai ?"
+          ],
+          "errors": [
+            "Choisir une histoire trop compliquee a raconter.",
+            "Prevoir des specialites que personne ne maitrise.",
+            "Rester assis a discuter sans rien essayer."
+          ],
+          "feedback": [
+            "Pas une histoire compliquee : une intention simple qui donne des images.",
+            "Personne ne sait faire ca dans votre groupe : choisissez autre chose.",
+            "Levez-vous et essayez."
+          ],
+          "plus": [
+            "Relier l'intention a un rapport au public precis."
+          ],
+          "minus": [
+            "Intention imposee parmi deux propositions."
+          ],
+          "diff": {
+            "facilitee": "Intention imposee parmi deux propositions, deux mots-cles.",
+            "normale": "Intention choisie, trois mots-cles relies aux specialites.",
+            "complexifiee": "Intention plus rapport au public precis defini."
+          },
+          "safety": [
+            "Phase d'ecriture assise hors des ateliers.",
+            "Essais physiques dans la zone du groupe, apres verification du degagement.",
+            "Aide et pareur designes des le premier essai avec objet ou figure."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premiere trame du numero",
+          "objective": "Poser une premiere trame de numero et faire ecrire a chacun son objectif pour la fin du cycle.",
+          "material": [
+            {
+              "label": "fiches de creation par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            }
+          ],
+          "organization": "Chaque groupe essaie un enchainement de ses trois idees et note l'ordre. Puis chacun ecrit individuellement son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Poser l'ordre de notre numero et ecrire mon objectif personnel.",
+          "instructions": [
+            "On essaie nos trois idees a la suite et on choisit un ordre.",
+            "On note cet ordre et les specialites de chacun sur la fiche du groupe.",
+            "Puis j'ecris seul mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'ordre des idees est essaye et note.",
+            "Les specialites de chacun sont notees.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Essayer plusieurs ordres avant de choisir.",
+            "Formuler l'objectif avec un verbe d'action.",
+            "Choisir le critere ou l'on est le moins a l'aise."
+          ],
+          "watch": [
+            "Les objectifs sont-ils precis et realistes ?",
+            "Les trames sont-elles exploitables pour la suite ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux faire du cirque.",
+            "Noter un ordre sans l'avoir essaye.",
+            "Prevoir une specialite que personne ne maitrise."
+          ],
+          "feedback": [
+            "Precise : qu'est-ce que tu veux reussir exactement ?",
+            "Essayez-le avant de le noter.",
+            "Verifiez que chacun maitrise ce qui est prevu pour lui."
+          ],
+          "plus": [
+            "Noter aussi les transitions prevues entre les parties."
+          ],
+          "minus": [
+            "Objectif choisi dans une liste affichee."
+          ],
+          "diff": {
+            "facilitee": "Ordre propose par le professeur, objectif choisi dans une liste.",
+            "normale": "Ordre choisi par le groupe, objectif redige librement.",
+            "complexifiee": "Ordre et transitions notes, objectif et moyen d'y parvenir rediges."
+          },
+          "safety": [
+            "Phase d'ecriture assise, hors des zones d'evolution.",
+            "Aide et pareur designes pour tout essai avec objet ou figure.",
+            "Materiel range avant la phase d'ecriture."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle est l'intention de votre numero, et quelle specialite la traduit le mieux ?",
+          "Quel est votre objectif personnel pour les trois dernieres seances ?"
+        ],
+        "key": "Un numero n'est pas une suite de tours : c'est une intention qui donne du sens aux specialites, et qui fait qu'on regarde autre chose que la technique."
+      },
+      "socialRoles": [
+        "Aide et pareur : accompagnent les passages evalues de leurs camarades.",
+        "Secretaire de groupe : note l'intention, les mots-cles et l'ordre.",
+        "Responsable materiel : verifie l'etat du materiel entre les ateliers."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Construire le numero : relation et intention",
+      "mainObjective": "Construire la relation entre les artistes, pour que le numero ne soit pas une juxtaposition de solos.",
+      "secondaryObjectives": [
+        "Utiliser l'unisson, la cascade et le contraste entre artistes.",
+        "Construire les entrees, les sorties et les transitions.",
+        "Faire servir la technique a l'intention."
+      ],
+      "linkToPrevious": "Les trames existent mais chacun y fait son numero dans son coin : la relation entre artistes est le point faible.",
+      "prerequisiteForNext": "Chaque groupe utilise au moins deux procedes de relation dans son numero.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 16
+          },
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "poutres basses ou bancs suedois",
+            "fixed": 4
+          },
+          {
+            "label": "affiche des procedes de relation",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de creation par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les procedes de relation : unisson, cascade, contraste, question-reponse, passing.",
+          "Delimiter un espace scenique et un espace public, comme le jour de la representation.",
+          "Preparer des zones de travail par groupe, en peripherie.",
+          "Verifier la jonction des tapis aux zones acrobatiques."
+        ],
+        "sketch": "Espace scenique central avec coulisses identifiees.\nZones de travail par groupe en peripherie.\nAffiche des procedes de relation sur le mur.\nBancs du public face a la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des trois familles, suivi d'un travail de synchronisation qui prepare l'unisson.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Marche synchronisee en groupe, sur un tempo commun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, epaules, nuque, chevilles.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Synchronisation",
+            "details": [
+              "Manipulation a l'unisson par deux, sur un rythme commun.",
+              "Meme geste en cascade, decale de deux temps.",
+              "Comparer l'effet produit."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Les procedes de relation",
+          "objective": "Eprouver les procedes qui relient les artistes, appliques a une specialite commune.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "affiche des procedes de relation",
+              "fixed": 2
+            },
+            {
+              "label": "assiettes chinoises avec baguettes",
+              "fixed": 10
+            }
+          ],
+          "organization": "Par groupes de trois. Le groupe choisit une specialite commune et l'applique successivement en unisson, en cascade et en contraste. Environ 6 minutes par procede.",
+          "studentGoal": "Faire la meme specialite avec mon groupe, de trois manieres differentes.",
+          "instructions": [
+            "Unisson : on fait exactement la meme chose, en meme temps.",
+            "Cascade : on commence chacun a son tour, decale de deux temps.",
+            "Contraste : l'un fait tres lentement, les autres tres vite.",
+            "On compte ensemble a voix basse pour se synchroniser."
+          ],
+          "success": [
+            "L'unisson est synchronise, sans decalage visible.",
+            "La cascade garde un decalage regulier.",
+            "Le contraste est visible depuis le public."
+          ],
+          "execution": [
+            "Pour l'unisson : compter ensemble et regarder du coin de l'oeil.",
+            "Pour la cascade : le suivant part au signal du precedent.",
+            "Pour le contraste : exagerer la difference."
+          ],
+          "watch": [
+            "L'unisson est-il vraiment synchrone ?",
+            "La cascade se resorbe-t-elle ?",
+            "Le contraste est-il assez marque ?"
+          ],
+          "errors": [
+            "Unisson approximatif, chacun a son rythme.",
+            "Cascade qui se rattrape.",
+            "Contraste trop faible pour se voir."
+          ],
+          "feedback": [
+            "Comptez ensemble, vous n'etes pas sur le meme temps.",
+            "Garde ton decalage, ne le rattrape pas.",
+            "Exagere : ton lent doit etre beaucoup plus lent."
+          ],
+          "plus": [
+            "Passing a deux : echange d'objets entre artistes.",
+            "Combiner deux procedes."
+          ],
+          "minus": [
+            "Unisson seul, sur une specialite tres simple.",
+            "Comptage a voix haute."
+          ],
+          "diff": {
+            "facilitee": "Unisson seul sur une specialite tres simple, comptage a voix haute.",
+            "normale": "Les trois procedes sur une specialite commune.",
+            "complexifiee": "Passing entre artistes, ou combinaison de deux procedes."
+          },
+          "safety": [
+            "Passing d'objets uniquement entre eleves maitrisant la cascade a trois : les objets echanges partent dans toutes les directions.",
+            "Groupes espaces d'au moins trois metres.",
+            "Objets tombes ramasses immediatement.",
+            "Aucune figure acrobatique pendant les procedes de manipulation.",
+            "Zones de travail degagees et delimitees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Entrees, sorties et transitions",
+          "objective": "Construire ce qui relie les parties du numero : comment on arrive, comment on passe d'une specialite a l'autre.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe travaille son entree, ses transitions entre specialites, et sa sortie. Trois essais, puis choix. L'espace scenique est utilise a tour de role.",
+          "studentGoal": "Construire une entree, des transitions et une sortie qui font partie du numero.",
+          "instructions": [
+            "On choisit comment on entre : ensemble ou en cascade, par un cote ou plusieurs.",
+            "L'entree fait deja partie du numero : on ne marche pas normalement.",
+            "Entre deux specialites, on construit une transition, on ne s'arrete pas.",
+            "On construit aussi la sortie."
+          ],
+          "success": [
+            "L'entree et la sortie sont construites et reproductibles.",
+            "Les transitions entre specialites sont sans arret.",
+            "L'entree est dansee ou jouee, pas marchee."
+          ],
+          "execution": [
+            "Entrer deja dans l'intention du numero.",
+            "Preparer le materiel de la specialite suivante pendant la precedente.",
+            "Sortir sans casser l'ambiance."
+          ],
+          "watch": [
+            "Les entrees sont-elles construites ou les eleves arrivent-ils en marchant ?",
+            "Les transitions creent-elles des temps morts ?",
+            "Le materiel est-il prepare a l'avance ?"
+          ],
+          "errors": [
+            "Arriver en marchant en discutant.",
+            "S'arreter entre deux specialites pour aller chercher du materiel.",
+            "Sortir en courant des la fin."
+          ],
+          "feedback": [
+            "Votre entree fait partie du numero : elle se joue.",
+            "Preparez votre materiel avant, pas pendant.",
+            "Ne cassez pas la fin : sortez dans la meme energie."
+          ],
+          "plus": [
+            "Transition ou un artiste passe un objet a un autre.",
+            "Entree en cascade par deux cotes."
+          ],
+          "minus": [
+            "Entree groupee simple.",
+            "Materiel deja en place sur scene."
+          ],
+          "diff": {
+            "facilitee": "Materiel deja pose sur scene, entree groupee simple, transitions sans contrainte.",
+            "normale": "Entree et sortie construites, transitions sans arret.",
+            "complexifiee": "Transitions avec passage d'objets, entree en cascade par deux cotes."
+          },
+          "safety": [
+            "Materiel pose en peripherie de la scene, jamais dans la trajectoire des artistes.",
+            "Objets ramasses avant toute figure acrobatique.",
+            "Zones d'entree et de sortie degagees.",
+            "Un seul groupe dans l'espace scenique a la fois."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Filage du numero complet",
+          "objective": "Enchainer entree, specialites, transitions et sortie pour obtenir une premiere version complete.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de creation par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe file son numero complet deux fois. Un autre groupe observe et signale ce qui n'est pas lisible. Les pareurs et aides sont designes avant chaque filage.",
+          "studentGoal": "Enchainer notre numero du debut a la fin, sans nous arreter.",
+          "instructions": [
+            "On file le numero en entier, sans s'arreter meme en cas d'erreur.",
+            "Les pareurs et les aides sont designes avant de commencer.",
+            "Groupe observateur : vous notez ce que vous ne comprenez pas.",
+            "On refait une deuxieme fois en corrigeant un seul point."
+          ],
+          "success": [
+            "Le numero est file en entier, deux fois.",
+            "L'observateur identifie au moins un point a ameliorer.",
+            "Les pareurs et aides sont en place a chaque filage."
+          ],
+          "execution": [
+            "Ne pas s'arreter en cas de chute d'objet.",
+            "Corriger un seul point entre les deux filages.",
+            "Tenir les positions immobiles de debut et de fin."
+          ],
+          "watch": [
+            "Les numeros sont-ils lisibles pour un spectateur exterieur ?",
+            "Les pareurs sont-ils systematiquement en place ?",
+            "Les chutes d'objets cassent-elles encore le numero ?"
+          ],
+          "errors": [
+            "S'arreter et recommencer a chaque erreur.",
+            "Oublier de designer un pareur avant le filage.",
+            "Vouloir tout corriger d'un coup."
+          ],
+          "feedback": [
+            "Continuez : on file jusqu'au bout meme si ca tombe.",
+            "Vos pareurs avant de commencer, sans exception.",
+            "Un seul point a la fois."
+          ],
+          "plus": [
+            "Filage devant deux groupes observateurs.",
+            "Filage avec musique."
+          ],
+          "minus": [
+            "Filage par moities.",
+            "Filage sans entree ni sortie."
+          ],
+          "diff": {
+            "facilitee": "Filage de la partie centrale seule, sans entree ni sortie construites.",
+            "normale": "Filage complet entree-specialites-sortie, deux fois.",
+            "complexifiee": "Filage complet avec musique, devant deux groupes observateurs."
+          },
+          "safety": [
+            "Pareurs et aides designes et en place avant chaque filage : condition non negociable.",
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Tapis joints aux zones acrobatiques.",
+            "Objets ramasses entre les groupes.",
+            "Public assis hors de l'espace, a deux metres."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui distingue un numero de groupe d'une suite de numeros individuels ?",
+          "Pourquoi l'entree fait-elle deja partie du numero ?"
+        ],
+        "key": "Un numero collectif se reconnait a la relation entre les artistes : unisson, cascade, contraste ou passing. Sans cela, trois artistes cote a cote font trois numeros, pas un."
+      },
+      "socialRoles": [
+        "Groupe observateur : signale ce qui n'est pas lisible depuis le public.",
+        "Pareur et aide : securisent les parties acrobatique et equilibre.",
+        "Regisseur : gere la musique et le materiel du groupe."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repeter et assumer le public",
+      "mainObjective": "Stabiliser le numero par la repetition et construire le rapport au public.",
+      "secondaryObjectives": [
+        "Repeter jusqu'a realiser le numero identique deux fois.",
+        "Construire le regard et la presence face au public.",
+        "S'entrainer a apprecier une prestation avec des criteres."
+      ],
+      "linkToPrevious": "Les numeros existent en entier : il reste a les stabiliser et a travailler ce qui se joue avec le public, specificite du cirque.",
+      "prerequisiteForNext": "Chaque groupe realise son numero identique deux fois et chaque eleve sait utiliser la fiche d'appreciation.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 16
+          },
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "poutres basses ou bancs suedois",
+            "fixed": 4
+          },
+          {
+            "label": "fiches d'appreciation d'entrainement",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2,
+            "note": "sous reserve de l'autorisation de captation"
+          }
+        ],
+        "instructions": [
+          "Installer l'espace scenique et les bancs du public comme le jour de la representation.",
+          "Preparer les fiches d'appreciation identiques a celles de l'evaluation.",
+          "Verifier l'autorisation de captation video avant toute prise d'image.",
+          "Prevoir des zones de repetition separees pour chaque groupe.",
+          "Verifier la jonction des tapis."
+        ],
+        "sketch": "Espace scenique et bancs du public installes comme le jour J.\nZones de repetition par groupe en peripherie.\nPoste de captation sur le cote, si autorisee.\nBanc des fiches d'appreciation pres du public."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet des trois familles, suivi d'une revision par parties : le numero complet ne s'aborde jamais a froid.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, hanches.",
+              "Gainage complet, renforcement de la nuque."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses specialites une par une.",
+              "Revision de l'entree et de la position finale."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Repeter jusqu'a la stabilite",
+          "objective": "Realiser le numero complet plusieurs fois, jusqu'a le reproduire identique deux fois de suite.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "fiches d'appreciation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque groupe repete son numero quatre a cinq fois dans sa zone, avec un point de correction unique entre chaque filage. Les pareurs et aides sont designes a chaque tour.",
+          "studentGoal": "Realiser notre numero deux fois de suite exactement pareil.",
+          "instructions": [
+            "On file le numero en entier, dans l'ordre note sur la fiche.",
+            "Nos pareurs et aides sont en place a chaque filage.",
+            "Entre deux filages, on corrige un seul point.",
+            "On s'arrete quand on l'a fait deux fois identique."
+          ],
+          "success": [
+            "Le numero est file en entier au moins trois fois.",
+            "Deux filages consecutifs sont identiques.",
+            "Les pareurs et aides sont en place a chaque fois."
+          ],
+          "execution": [
+            "Respecter l'ordre note, sans improviser.",
+            "Corriger un seul element a la fois.",
+            "Maintenir la securite malgre la fatigue."
+          ],
+          "watch": [
+            "Le numero se stabilise-t-il ?",
+            "La fatigue degrade-t-elle la securite des figures ?",
+            "Les pareurs restent-ils attentifs au fil des repetitions ?"
+          ],
+          "errors": [
+            "Changer des parties a chaque filage.",
+            "Negliger la parade quand la figure devient familiere.",
+            "Enchainer trop de filages sans recuperation."
+          ],
+          "feedback": [
+            "Meme numero a chaque fois : c'est ce qui sera evalue.",
+            "Ton pareur, meme si la figure est facile pour toi maintenant.",
+            "Reposez-vous une minute : vous etes fatigues, c'est la que ca casse."
+          ],
+          "plus": [
+            "Filage devant un autre groupe.",
+            "Filage filme puis analyse."
+          ],
+          "minus": [
+            "Repetition par parties.",
+            "Numero raccourci."
+          ],
+          "diff": {
+            "facilitee": "Repetition par parties, numero raccourci a une minute.",
+            "normale": "Filages complets repetes quatre a cinq fois avec correction ciblee.",
+            "complexifiee": "Filage devant un autre groupe, filme et analyse."
+          },
+          "safety": [
+            "Pareurs et aides designes et en place a chaque filage, sans exception, y compris quand la figure devient familiere.",
+            "Recuperation imposee entre les filages : la fatigue est le premier facteur d'accident en acrobatie.",
+            "Tapis joints, verifies entre les series.",
+            "Objets ramasses avant chaque partie acrobatique.",
+            "Zones de repetition delimitees et espacees.",
+            "Le professeur supervise en permanence les parties acrobatique et equilibre."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Le rapport au public",
+          "objective": "Construire la presence face au public, specificite du cirque ou l'artiste s'adresse directement aux spectateurs.",
+          "material": [
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par groupes, dans l'espace scenique face a un public reduit. Trois consignes successives : regarder le public au debut et a la fin, saluer, et gerer une chute d'objet volontaire devant le public.",
+          "studentGoal": "Regarder le public et assumer ma presence, y compris quand un objet tombe.",
+          "instructions": [
+            "Au debut, je regarde le public avant de commencer.",
+            "A la fin, je regarde le public et je salue.",
+            "Si un objet tombe, je continue sans grimace ni excuse.",
+            "Je ne cherche pas le regard de mes copains dans le public."
+          ],
+          "success": [
+            "Le regard au public est fait au debut et a la fin.",
+            "Le salut est marque.",
+            "La chute d'objet ne provoque aucune rupture visible."
+          ],
+          "execution": [
+            "Regarder le public dans son ensemble, pas une personne.",
+            "Saluer nettement, sans precipitation.",
+            "Garder le personnage meme en cas d'incident."
+          ],
+          "watch": [
+            "Les eleves osent-ils regarder le public ?",
+            "Cherchent-ils le regard de leurs copains ?",
+            "La chute d'objet casse-t-elle encore le numero ?"
+          ],
+          "errors": [
+            "Regarder le sol pendant tout le numero.",
+            "Chercher ses copains dans le public et rire.",
+            "S'excuser ou grimacer quand un objet tombe."
+          ],
+          "feedback": [
+            "Regarde le public, pas le sol.",
+            "Ne cherche pas tes copains : tu es en representation.",
+            "Ca tombe, tu ramasses, tu continues : personne ne l'aura vu."
+          ],
+          "plus": [
+            "Jouer une adresse au public : un clin d'oeil, un geste.",
+            "Provoquer volontairement une chute et l'integrer."
+          ],
+          "minus": [
+            "Regard au public au salut final uniquement.",
+            "Public reduit a trois spectateurs."
+          ],
+          "diff": {
+            "facilitee": "Public de trois spectateurs, regard demande au salut final uniquement.",
+            "normale": "Regard au debut et a la fin, gestion de la chute d'objet.",
+            "complexifiee": "Adresse jouee au public, chute volontaire integree au numero."
+          },
+          "safety": [
+            "Public assis hors de l'espace scenique, a deux metres minimum.",
+            "Objets ramasses entre chaque passage.",
+            "Aucune figure acrobatique dans cette situation centree sur la presence.",
+            "Espace scenique degage."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Representation generale",
+          "objective": "Realiser une repetition generale dans les conditions exactes de l'evaluation, public et fiches compris.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "fiches d'appreciation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe presente son numero complet devant la classe assise, dans l'ordre prevu pour la seance 8. Deux spectateurs designes renseignent la fiche d'appreciation.",
+          "studentGoal": "Presenter notre numero devant la classe, comme le jour de l'evaluation.",
+          "instructions": [
+            "On annonce le titre ou l'intention de notre numero.",
+            "Nos pareurs et aides sont en place avant d'entrer.",
+            "On presente le numero en entier, sans s'arreter.",
+            "Public : silence pendant le passage, applaudissements a la fin."
+          ],
+          "success": [
+            "Le numero est presente en entier devant le public.",
+            "Debut, fin et salut sont marques.",
+            "Les pareurs et aides sont en place.",
+            "Le public respecte le silence puis applaudit."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Ne pas se laisser deconcentrer par le public.",
+            "Continuer en cas de chute d'objet."
+          ],
+          "watch": [
+            "Le passage devant public degrade-t-il le numero ?",
+            "Les pareurs restent-ils attentifs devant le public ?",
+            "Le climat de classe est-il respectueux ?"
+          ],
+          "errors": [
+            "Commencer avant d'etre prets.",
+            "Negliger la parade sous l'effet du trac.",
+            "Rire du passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Prenez votre temps, vous commencez quand vous etes prets.",
+            "Pareur, tu regardes ton camarade, pas le public.",
+            "On respecte tous les passages : le votre arrive."
+          ],
+          "plus": [
+            "Passage filme et analyse immediatement apres."
+          ],
+          "minus": [
+            "Passage devant un demi-groupe.",
+            "Passage sans fiche d'appreciation."
+          ],
+          "diff": {
+            "facilitee": "Passage devant un demi-groupe, sans fiche d'appreciation.",
+            "normale": "Passage complet devant la classe avec deux spectateurs evaluateurs.",
+            "complexifiee": "Passage filme et analyse immediatement avec la video."
+          },
+          "safety": [
+            "Pareurs et aides en place avant l'entree en scene : le trac ne dispense jamais de la parade.",
+            "Espace scenique degage, verifie avant chaque passage.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Tapis joints aux zones acrobatiques, verifies entre les groupes.",
+            "Objets ramasses entre chaque passage.",
+            "Aucune figure ajoutee au dernier moment sans validation du professeur."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui a change dans votre numero entre le premier et le dernier filage ?",
+          "Que faites-vous maintenant quand un objet tombe devant le public ?"
+        ],
+        "key": "Un numero se stabilise par la repetition, et le rapport au public s'apprend : regarder les spectateurs, saluer, et continuer quoi qu'il arrive."
+      },
+      "socialRoles": [
+        "Spectateur : renseigne la fiche d'appreciation d'un groupe designe.",
+        "Pareur et aide : securisent les parties acrobatique et equilibre.",
+        "Regisseur : gere la musique et le materiel du groupe."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Representation finale et evaluation",
+      "mainObjective": "Presenter le numero devant la classe et evaluer la prestation ainsi que les roles de pareur et de spectateur.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Assumer la representation devant le public.",
+        "Tenir le role de pareur et celui de spectateur.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La representation generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de reception",
+            "fixed": 16
+          },
+          {
+            "label": "balles de jonglage",
+            "per": 3.0,
+            "min": 60
+          },
+          {
+            "label": "assiettes chinoises avec baguettes",
+            "fixed": 10
+          },
+          {
+            "label": "batons du diable",
+            "fixed": 8
+          },
+          {
+            "label": "poutres basses ou bancs suedois",
+            "fixed": 4
+          },
+          {
+            "label": "rouleaux americains ou boules d'equilibre",
+            "fixed": 4
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer un espace scenique net et un espace public face a lui, a deux metres minimum.",
+          "Afficher l'ordre de passage a l'entree.",
+          "Preparer les grilles d'evaluation nominatives et ressortir les fiches de mi-cycle.",
+          "Verifier une derniere fois la jonction des tapis et l'etat de tout le materiel.",
+          "Preparer le materiel de chaque groupe en coulisses, dans l'ordre de passage.",
+          "Faire retirer bijoux, verifier ongles et cheveux."
+        ],
+        "sketch": "Espace scenique net, coulisses aux deux cotes avec le materiel prepare.\nBancs du public face a la scene, a 2 m.\nTapis joints aux zones acrobatiques et equilibre.\nOrdre de passage affiche a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves puis revision par parties : aucune prestation evaluee, particulierement acrobatique, ne s'aborde sans preparation complete.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation complete",
+            "details": [
+              "Poignets, doigts, epaules, nuque, chevilles, hanches.",
+              "Gainage ventral, dorsal et lateral.",
+              "Renforcement doux de la nuque avant les figures acrobatiques."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses specialites une par une.",
+              "Une figure acrobatique avec pareur, sans enchainer.",
+              "Revision de l'entree et de la position finale."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Representation evaluee du numero",
+          "objective": "Evaluer le numero collectif de chaque groupe sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "poutres basses ou bancs suedois",
+              "fixed": 4
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Passages par groupe dans l'ordre affiche. Pour chaque passage : les pareurs du groupe en place, deux spectateurs evaluateurs designes, le reste de la classe en public. Le professeur evalue chaque artiste au sein du groupe.",
+          "studentGoal": "Presenter notre numero en entier, en assumant le public et en securisant mes camarades.",
+          "instructions": [
+            "On annonce notre intention, nos pareurs se placent, puis on entre.",
+            "On tient notre debut immobile 3 secondes.",
+            "On presente le numero en entier, sans s'arreter meme si un objet tombe.",
+            "On tient la position finale 3 secondes, puis on salue."
+          ],
+          "success": [
+            "Le numero comporte au moins deux familles circassiennes.",
+            "Debut et fin immobiles tenus 3 secondes.",
+            "Chaque artiste reussit au moins une figure lors de la representation.",
+            "Une relation entre artistes est identifiable.",
+            "L'eleve assume le public et poursuit en cas de chute d'objet.",
+            "Le role de pareur est tenu avec serieux."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Regarder le public au debut et a la fin.",
+            "Continuer en cas de chute d'objet.",
+            "Pareur : rester attentif malgre le public."
+          ],
+          "watch": [
+            "Les numeros correspondent-ils aux fiches de creation ?",
+            "Les pareurs restent-ils attentifs devant le public ?",
+            "Les eleves reticents osent-ils passer ?",
+            "Les chutes d'objets sont-elles assumees ?"
+          ],
+          "errors": [
+            "Ajouter une figure non maitrisee au dernier moment.",
+            "Negliger la parade sous l'effet du trac.",
+            "S'excuser ou rire apres une chute d'objet.",
+            "Commenter le passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Ce que vous avez prepare, rien de plus.",
+            "Pareur, tu regardes ton camarade, pas le public.",
+            "Ca tombe : tu ramasses et tu continues.",
+            "Silence pendant les passages, chacun aura son tour."
+          ],
+          "plus": [
+            "Numero de 3 minutes avec trois familles.",
+            "Presentation avec musique et adresse au public."
+          ],
+          "minus": [
+            "Numero d'une minute avec une famille.",
+            "Presentation devant un demi-groupe."
+          ],
+          "diff": {
+            "facilitee": "Numero d'une minute avec une famille et une figure simple, devant un demi-groupe. L'engagement est evalue autant que la technique.",
+            "normale": "Numero de 2 minutes avec deux familles, devant la classe.",
+            "complexifiee": "Numero de 3 minutes avec trois familles, musique et adresse au public."
+          },
+          "safety": [
+            "Pareurs et aides designes et en place avant chaque entree en scene : le trac ne dispense jamais de la parade.",
+            "Aucune figure ajoutee au dernier moment : seul ce qui a ete valide est presente.",
+            "Appuis acrobatiques sur les zones solides uniquement, jamais au milieu du dos ni sur la nuque.",
+            "Aucune montee sur objet d'equilibre sans aide, meme en representation.",
+            "Tapis joints, verifies avant le premier passage et entre les groupes.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Objets ramasses entre chaque passage : un objet au sol fait chuter.",
+            "Echauffement complet obligatoire avant tout passage evalue.",
+            "Bijoux retires, ongles courts, cheveux attaches.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Appreciation des spectateurs",
+          "objective": "Faire expliciter aux spectateurs ce qu'ils ont apprecie, en s'appuyant sur des criteres et non sur des gouts.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Apres chaque serie de passages, les deux spectateurs evaluateurs annoncent ce qu'ils ont observe et le justifient. Le professeur complete. Puis chacun compare son objectif de mi-cycle a sa grille du jour.",
+          "studentGoal": "Dire ce que j'ai apprecie dans le numero, en citant un moment precis.",
+          "instructions": [
+            "Spectateur : j'annonce les familles et les procedes que j'ai reconnus.",
+            "Je cite un moment precis du numero pour justifier.",
+            "Le groupe qui a presente ecoute sans contester.",
+            "Ensuite, je relis mon objectif de mi-cycle et je dis s'il est atteint."
+          ],
+          "success": [
+            "Chaque spectateur cite un moment precis du numero.",
+            "Les procedes annonces correspondent a ceux utilises.",
+            "Chaque eleve se prononce sur son objectif personnel."
+          ],
+          "execution": [
+            "Nommer le critere avant de donner un exemple.",
+            "Citer un moment identifiable.",
+            "S'appuyer sur sa grille pour juger son objectif."
+          ],
+          "watch": [
+            "Les spectateurs s'appuient-ils sur les criteres ?",
+            "Les groupes acceptent-ils le retour de leurs camarades ?",
+            "Les eleves distinguent-ils progression et reussite technique ?"
+          ],
+          "errors": [
+            "Dire seulement que c'etait bien ou nul.",
+            "Juger les personnes plutot que le numero.",
+            "Confondre objectif atteint et numero reussi."
+          ],
+          "feedback": [
+            "Quel procede exactement, et a quel moment ?",
+            "Tu parles du numero, pas des artistes.",
+            "Ton objectif, ce n'etait pas que le numero soit parfait."
+          ],
+          "plus": [
+            "Le spectateur propose un conseil d'amelioration."
+          ],
+          "minus": [
+            "Le spectateur annonce un seul critere."
+          ],
+          "diff": {
+            "facilitee": "Un seul critere annonce, avec appui du professeur.",
+            "normale": "Procedes annonces et justifies, plus bilan de l'objectif personnel.",
+            "complexifiee": "Retour complet plus conseil d'amelioration argumente."
+          },
+          "safety": [
+            "Phase realisee hors de l'espace scenique, groupe assis.",
+            "Aucun passage en cours pendant les retours.",
+            "Materiel range ou stabilise pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel varie et fragile.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 16
+            },
+            {
+              "label": "balles de jonglage",
+              "per": 3.0,
+              "min": 60
+            },
+            {
+              "label": "assiettes chinoises avec baguettes",
+              "fixed": 10
+            },
+            {
+              "label": "batons du diable",
+              "fixed": 8
+            },
+            {
+              "label": "rouleaux americains ou boules d'equilibre",
+              "fixed": 4
+            }
+          ],
+          "organization": "Rangement collectif par familles de materiel, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire au cirque aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "On range le materiel par famille, en le comptant.",
+            "Les tapis se portent a deux minimum.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range, compte et trie par famille.",
+            "Aucun tapis porte seul.",
+            "Au moins un eleve par groupe s'exprime."
+          ],
+          "execution": [
+            "Compter le materiel par famille avant de ranger.",
+            "Porter les tapis a deux, jambes flechies.",
+            "Formuler un acquis concret plutot qu'un ressenti."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Le materiel fragile est-il range correctement ?",
+            "Les eleves reticents au depart reconnaissent-ils leur progression ?"
+          ],
+          "errors": [
+            "Porter un tapis seul.",
+            "Ranger les assiettes ou les baguettes en vrac : elles se cassent.",
+            "Ne parler que de la reussite technique."
+          ],
+          "feedback": [
+            "A deux pour les tapis, jambes flechies.",
+            "Les baguettes se rangent a plat, elles se fendent.",
+            "Souviens-toi de la seance 1 : tu ne voulais pas passer devant les autres."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit.",
+            "Materiel fragile range a plat : baguettes, assiettes, batons.",
+            "Comptage du materiel par famille avant de quitter la salle.",
+            "Verification qu'aucune balle ni objet ne reste au sol : c'est la premiere cause de chute.",
+            "Aucun eleve ne circule sous une pile de tapis en cours de constitution."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire au cirque aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Qu'est-ce qui fait la difference entre une demonstration de tours et un numero ?"
+        ],
+        "key": "Un numero de cirque, ce n'est pas une suite d'exploits : c'est une intention, des artistes en relation, et un rapport assume au public, y compris quand un objet tombe."
+      },
+      "socialRoles": [
+        "Pareur : securise les figures acrobatiques de son groupe, role evalue au meme titre que la prestation.",
+        "Aide a l'equilibre : accompagne les montees et descentes sur objet.",
+        "Spectateur evaluateur : renseigne et justifie la grille d'un groupe.",
+        "Responsable materiel : organise le rangement par famille et le comptage en fin de cycle."
+      ]
+    }
+  ]
+}

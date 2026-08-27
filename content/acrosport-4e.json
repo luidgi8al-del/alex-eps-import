@@ -1,0 +1,2726 @@
+{
+  "apsa": "Acrosport",
+  "grades": [
+    "QUATRIEME"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Mobiliser les capacites expressives du corps pour imaginer, composer et interpreter une sequence artistique ou acrobatique.",
+    "Participer activement, au sein d'un groupe, a l'elaboration et a la formalisation d'un projet artistique.",
+    "Apprecier des prestations en utilisant differents supports d'observation et d'analyse.",
+    "Assumer les roles de porteur, de voltigeur, de pareur et de juge."
+  ],
+  "targetCompetence": "Passer d'un empilement de corps subi, ou l'on monte n'importe comment sur n'importe qui, a une construction maitrisee : des appuis choisis, des montages et demontages controles, et un enchainement compose presente devant un public.",
+  "cycleObjectives": [
+    "Respecter les regles d'appui et de securite propres au porte acrobatique.",
+    "Tenir les roles de porteur, de voltigeur et de pareur.",
+    "Construire des pyramides statiques a deux, trois et quatre.",
+    "Relier les pyramides par des elements gymniques et des transitions.",
+    "Juger une prestation avec des criteres de difficulte et d'execution."
+  ],
+  "plannedTitles": [
+    "Entrer dans l'acrosport : les regles d'appui",
+    "Les pyramides a deux : porteur et voltigeur",
+    "Montage et demontage maitrises",
+    "Les pyramides a trois et quatre",
+    "Evaluation de mi-cycle et choix de l'enchainement",
+    "Relier les pyramides : transitions et elements gymniques",
+    "Repeter et preparer le jugement",
+    "Presentation finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Activites gymniques et acrobatiques - enjeux de formation",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16702/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Acrosport au college - securite, roles et repertoire de figures",
+      "org": "Academie de Creteil",
+      "url": "https://eps.ac-creteil.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner l'acrosport en EPS - montages, demontages et parade",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Protocole de securite acrosport de l'etablissement : le lire avant la premiere seance, notamment sur la hauteur de pyramide autorisee.",
+    "Nombre et etat des tapis : la surface doit couvrir toute la zone d'evolution, sans interstice.",
+    "Presence de tapis de reception epais pour les pyramides comportant une hauteur.",
+    "Hauteur maximale autorisee : en cycle 4, generalement limitee a deux etages.",
+    "Autorisation de captation video et modalites de conservation des images.",
+    "Eleves porteurs de pathologies rachidiennes ou articulaires : consulter les PAI avant le cycle.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - monte n'importe comment",
+      "observed": "Grimpe sur son camarade sans regarder ou il pose les pieds, souvent au milieu du dos, et redescend en sautant.",
+      "need": "Construire les zones d'appui autorisees et le demontage controle."
+    },
+    {
+      "label": "Profil 2 - porteur qui s'effondre",
+      "observed": "Prend la position de porteur dos rond, bras flechis, et cede des que le voltigeur monte.",
+      "need": "Construire la posture de porteur : dos plat, gainage, appuis larges."
+    },
+    {
+      "label": "Profil 3 - voltigeur qui a peur",
+      "observed": "Refuse de monter, ou monte puis redescend immediatement sans tenir la figure.",
+      "need": "Progresser par des pyramides tres basses, avec parade rapprochee, avant toute hauteur."
+    },
+    {
+      "label": "Profil 4 - technique mais neglige la parade",
+      "observed": "Realise les figures facilement mais se desinteresse quand il est pareur, et conteste les jugements.",
+      "need": "S'engager dans les roles sociaux, parade et jugement compris."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Presentation devant la classe d'un enchainement collectif par groupes de quatre, comportant au moins quatre pyramides tenues 3 secondes, reliees par des elements gymniques et des transitions, avec un debut et une fin immobiles. Chaque eleve tient egalement le role de pareur et celui de juge sur la prestation d'un autre groupe.",
+    "criteria": [
+      "L'enchainement comporte au moins quatre pyramides tenues 3 secondes.",
+      "Les appuis se font sur les zones autorisees : jamais le milieu du dos, jamais la nuque.",
+      "Les montages et demontages sont controles, sans saut ni chute.",
+      "Les pyramides sont reliees par des transitions et des elements gymniques, sans temps mort.",
+      "Le debut et la fin sont marques par une position immobile tenue 3 secondes.",
+      "Les roles de pareur et de juge sont tenus avec rigueur."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA3, a croiser avec le protocole de securite acrosport de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Entrer dans l'acrosport : les regles d'appui",
+      "mainObjective": "Poser le cadre de securite non negociable et faire construire les premieres figures a deux, tres basses.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre et savoir enoncer les zones d'appui autorisees et interdites.",
+        "Adopter les postures de porteur et de voltigeur.",
+        "Reperer qui monte sans regarder et qui refuse de monter."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : l'acrosport est l'APSA ou le cadre de securite doit etre pose avant toute pratique, car le corps d'un camarade sert de support.",
+      "prerequisiteForNext": "Chaque eleve connait les zones d'appui et a realise une figure a deux, au sol.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 16,
+            "note": "joints, sans interstice, sur toute la zone"
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 4
+          },
+          {
+            "label": "affiche des zones d'appui",
+            "fixed": 2,
+            "note": "silhouette avec zones vertes et rouges"
+          },
+          {
+            "label": "fiches de figures",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Joindre les tapis sans laisser le moindre interstice : un pied coince provoque une entorse.",
+          "Afficher, en grand et aux deux extremites, une silhouette indiquant les zones d'appui autorisees et interdites.",
+          "Constituer des binomes de gabarit complementaire : le porteur est toujours plus fort que le voltigeur.",
+          "Lire le protocole de securite acrosport de l'etablissement avant la seance.",
+          "Verifier 2 metres de degagement autour de la zone, sans mur ni angle saillant.",
+          "Faire retirer bijoux et montres, verifier ongles courts et cheveux attaches."
+        ],
+        "sketch": "Surface de tapis joints couvrant toute la zone.\nAffiches des zones d'appui aux deux extremites, visibles de partout.\nBinomes espaces d'au moins 2 m les uns des autres.\n2 m de degagement autour, sans mur ni angle."
+      },
+      "warmup": {
+        "rationale": "L'echauffement en acrosport prepare specifiquement le gainage, les poignets et le rachis, qui supportent le poids d'un camarade.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis, sans monter dessus.",
+              "Deplacements a quatre pattes, en crabe, en rampant sur les tapis."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets : appuis au sol, cercles, flexions. 1 minute.",
+              "Epaules, hanches, chevilles.",
+              "Nuque : flexions douces, jamais de cercles complets.",
+              "Gainage ventral, dorsal et lateral, 20 secondes chacun.",
+              "Position quadrupedique dos plat tenue 20 secondes, 3 fois."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiers appuis a deux",
+            "details": [
+              "Dos a dos assis, se relever ensemble en poussant.",
+              "L'un a quatre pattes dos plat, l'autre pose les mains sur ses epaules et ses hanches.",
+              "Monter un genou puis redescendre, avec un troisieme eleve en parade."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Les zones d'appui",
+          "objective": "Construire concretement, par la manipulation, ou l'on peut poser un appui et ou c'est interdit.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "affiche des zones d'appui",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de figures",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par trois : un porteur a quatre pattes, un voltigeur, un pareur. Le voltigeur pose successivement ses appuis sur differentes zones, le groupe identifie celles qui sont solides et celles qui ne le sont pas. Rotation des roles.",
+          "studentGoal": "Savoir ou je peux poser mes appuis sur le corps de mon camarade, et ou c'est interdit.",
+          "instructions": [
+            "Je pose mes appuis sur les epaules, les hanches, le bassin, les cuisses.",
+            "Je ne pose jamais d'appui au milieu du dos, ni sur la nuque, ni sur une articulation.",
+            "Porteur : je dis a voix haute si l'appui est confortable ou non.",
+            "Pareur : je reste a genoux a cote, pret a intervenir."
+          ],
+          "success": [
+            "Les appuis se font uniquement sur les zones autorisees.",
+            "Le porteur signale tout appui inconfortable et il est deplace immediatement.",
+            "Chaque eleve sait citer les zones interdites."
+          ],
+          "execution": [
+            "Poser l'appui progressivement, jamais d'un coup.",
+            "Porteur : dos plat, gaine, appuis larges au sol.",
+            "Voltigeur : repartir son poids, ne pas s'affaisser sur un seul point."
+          ],
+          "watch": [
+            "Y a-t-il des appuis au milieu du dos ?",
+            "Le porteur ose-t-il dire qu'un appui fait mal ?",
+            "Le dos du porteur reste-t-il plat ?",
+            "Les tapis restent-ils joints ?"
+          ],
+          "errors": [
+            "Poser un appui au milieu du dos : risque lombaire grave.",
+            "Porteur qui accepte un appui douloureux sans rien dire.",
+            "Poser tout son poids d'un coup."
+          ],
+          "feedback": [
+            "Jamais au milieu du dos : sur les epaules ou les hanches.",
+            "Porteur, dis-le si ca fait mal : c'est ton role.",
+            "Pose progressivement, ne te laisse pas tomber dessus."
+          ],
+          "plus": [
+            "Identifier les zones sur trois positions de porteur differentes."
+          ],
+          "minus": [
+            "Porteur a genoux uniquement, appuis des mains seulement."
+          ],
+          "diff": {
+            "facilitee": "Porteur a genoux, voltigeur qui pose seulement les mains, sans monter.",
+            "normale": "Porteur a quatre pattes, appuis des mains puis des pieds, avec pareur.",
+            "complexifiee": "Identification des zones sur trois positions de porteur : quadrupedie, assis, debout."
+          },
+          "safety": [
+            "Regles d'appui non negociables, affichees et rappelees avant chaque situation : appuis autorises sur les epaules, les hanches, le bassin et les cuisses ; jamais le milieu du dos, la nuque, la tete ni les articulations.",
+            "Le porteur peut interrompre a tout moment en disant stop : le voltigeur descend immediatement.",
+            "Binomes constitues par le professeur selon le gabarit : le porteur est toujours plus fort que le voltigeur.",
+            "Tapis joints sans interstice, verifies avant chaque situation.",
+            "Pareur present a chaque montage, meme au sol.",
+            "2 metres de degagement autour de la zone, sans mur ni angle saillant.",
+            "Bijoux et montres retires, ongles courts, cheveux attaches.",
+            "Le professeur supervise en permanence, sans exception."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "La posture du porteur",
+          "objective": "Construire la posture qui permet de supporter un camarade sans risque pour le rachis.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Par deux, en alternance. Trois positions de porteur travaillees : quadrupedie dos plat, position assise jambes flechies, position couchee sur le dos jambes flechies. Tenue de 10 secondes avec charge legere.",
+          "studentGoal": "Tenir la position de porteur 10 secondes, dos plat, sans ceder.",
+          "instructions": [
+            "Je garde le dos plat, jamais rond : je serre mon ventre.",
+            "Mes appuis au sol sont larges : mains ecartees de la largeur des epaules.",
+            "Mes bras sont tendus et verrouilles, jamais flechis.",
+            "Je previens si je ne peux plus tenir, avant de ceder."
+          ],
+          "success": [
+            "Les trois positions sont tenues 10 secondes, dos plat.",
+            "Les bras restent tendus.",
+            "Le porteur previent avant de ceder, jamais apres."
+          ],
+          "execution": [
+            "Dos plat, ventre serre, bassin dans l'axe.",
+            "Bras tendus et verrouilles, appuis larges.",
+            "Regard vers le sol, nuque dans l'axe du dos."
+          ],
+          "watch": [
+            "Le dos s'arrondit-il sous la charge ?",
+            "Les bras flechissent-ils ?",
+            "Le porteur previent-il avant de ceder ?"
+          ],
+          "errors": [
+            "Dos rond sous la charge : risque lombaire.",
+            "Bras flechis qui cedent brusquement.",
+            "Tenir jusqu'a l'effondrement sans prevenir."
+          ],
+          "feedback": [
+            "Dos plat, serre ton ventre : ton dos s'arrondit.",
+            "Bras tendus et verrouilles.",
+            "Previens avant de lacher, pas quand tu es deja par terre."
+          ],
+          "plus": [
+            "Tenue portee a 15 secondes.",
+            "Position de porteur debout, jambes flechies."
+          ],
+          "minus": [
+            "Tenue de 5 secondes.",
+            "Charge tres legere, appuis des mains seulement."
+          ],
+          "diff": {
+            "facilitee": "Tenue de 5 secondes avec appui des mains seulement du voltigeur.",
+            "normale": "Trois positions tenues 10 secondes avec charge legere.",
+            "complexifiee": "Tenue de 15 secondes, position debout jambes flechies incluse."
+          },
+          "safety": [
+            "Dos plat obligatoire : arret immediat de la situation si le dos d'un porteur s'arrondit sous la charge.",
+            "Le porteur previent avant de ceder : le voltigeur descend immediatement.",
+            "Bras tendus et verrouilles : des bras flechis cedent sans preavis.",
+            "Consulter les PAI : les eleves porteurs de pathologies rachidiennes ne tiennent pas le role de porteur.",
+            "Tapis joints, binomes espaces.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premieres figures a deux, au sol",
+          "objective": "Realiser les premieres pyramides tres basses, sans hauteur, pour observer le comportement de chacun.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "fiches de figures",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Par trois : porteur, voltigeur, pareur. Trois figures au sol proposees sur fiche, sans hauteur : planche sur porteur a quatre pattes, assise sur les cuisses, appui facial sur les jambes. Tenue 3 secondes, rotation des roles.",
+          "studentGoal": "Realiser trois figures a deux, tenues 3 secondes, sans jamais poser d'appui interdit.",
+          "instructions": [
+            "On choisit une figure sur la fiche et on la monte lentement.",
+            "On tient 3 secondes immobiles, le pareur compte a voix haute.",
+            "On demonte dans l'ordre inverse, sans sauter.",
+            "On tourne les roles apres chaque figure."
+          ],
+          "success": [
+            "Les trois figures sont tenues 3 secondes.",
+            "Aucun appui sur une zone interdite.",
+            "Le demontage se fait sans saut."
+          ],
+          "execution": [
+            "Monter progressivement, appui par appui.",
+            "Porteur : dos plat, bras tendus.",
+            "Demonter dans l'ordre inverse du montage."
+          ],
+          "watch": [
+            "Qui monte sans regarder ou il pose ses appuis ?",
+            "Qui refuse de monter ?",
+            "Les demontages se font-ils en sautant ?",
+            "Les pareurs sont-ils attentifs ?"
+          ],
+          "errors": [
+            "Monter d'un coup, sans regarder.",
+            "Demonter en sautant.",
+            "Pareur qui discute ou regarde ailleurs."
+          ],
+          "feedback": [
+            "Regarde ou tu poses ton pied avant de monter.",
+            "On ne saute pas pour descendre : on demonte.",
+            "Pareur, tu regardes ton voltigeur, pas la salle."
+          ],
+          "plus": [
+            "Figures avec une legere hauteur, porteur a genoux.",
+            "Tenue portee a 5 secondes."
+          ],
+          "minus": [
+            "Figures a deux au sol, sans aucune charge.",
+            "Tenue de 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Figures sans charge reelle, voltigeur en appui partiel au sol, tenue 2 secondes.",
+            "normale": "Trois figures au sol tenues 3 secondes, avec pareur.",
+            "complexifiee": "Figures avec legere hauteur, porteur a genoux, tenue 5 secondes."
+          },
+          "safety": [
+            "Aucune figure avec hauteur a cette premiere seance : uniquement des figures au sol.",
+            "Pareur obligatoire a chaque figure, meme au sol.",
+            "Montage et demontage progressifs : aucun saut, aucun elan.",
+            "Demontage toujours dans l'ordre inverse du montage.",
+            "Le porteur peut dire stop a tout moment : arret immediat.",
+            "Tapis joints et verifies.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quelles zones du corps peut-on poser un appui, et lesquelles sont interdites ?",
+          "Que doit faire un porteur qui ne peut plus tenir ?"
+        ],
+        "key": "En acrosport, on prend appui sur les zones solides : epaules, hanches, bassin, cuisses. Jamais le milieu du dos ni la nuque. Et le porteur previent avant de ceder, jamais apres."
+      },
+      "socialRoles": [
+        "Pareur : reste a genoux pres du voltigeur, pret a intervenir.",
+        "Chronometreur : compte les 3 secondes de tenue a voix haute.",
+        "Responsable securite : verifie la jonction des tapis entre les series."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Les pyramides a deux : porteur et voltigeur",
+      "mainObjective": "Construire un repertoire de pyramides a deux, avec une hauteur limitee, et maitriser les deux roles.",
+      "secondaryObjectives": [
+        "Realiser cinq pyramides a deux issues du repertoire.",
+        "Tenir alternativement les roles de porteur et de voltigeur.",
+        "Construire l'alignement et l'immobilite dans la figure."
+      ],
+      "linkToPrevious": "Les regles d'appui et la posture de porteur sont posees : on peut construire un repertoire de figures.",
+      "prerequisiteForNext": "Chaque eleve realise cinq pyramides a deux, dans les deux roles.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 4
+          },
+          {
+            "label": "repertoire de figures a deux",
+            "fixed": 8,
+            "note": "fiches plastifiees, une par groupe"
+          },
+          {
+            "label": "affiche des zones d'appui",
+            "fixed": 2
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches de progression",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Verifier la jonction des tapis et placer les tapis epais aux endroits avec hauteur.",
+          "Distribuer un repertoire de figures a deux par groupe, avec trois niveaux de difficulte.",
+          "Reconstituer les groupes de trois avec des gabarits complementaires.",
+          "Rappeler les regles d'appui et les faire enoncer par les eleves.",
+          "Verifier le degagement autour de la zone."
+        ],
+        "sketch": "Surface de tapis joints, tapis epais aux zones avec hauteur.\nGroupes de trois espaces d'au moins 2 m.\nRepertoire de figures affiche ou distribue a chaque groupe.\nAffiches des zones d'appui visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec insistance sur le gainage et les poignets, sollicites dans les deux roles.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies sur les tapis.",
+              "Deplacements a quatre pattes, dos plat."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles.",
+              "Nuque : flexions douces.",
+              "Gainage ventral, dorsal et lateral, 20 secondes chacun.",
+              "Quadrupedie dos plat, 20 secondes, 3 fois."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel des figures au sol",
+            "details": [
+              "Les trois figures de la seance 1, une fois chacune.",
+              "Verification des appuis et de la posture de porteur.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le repertoire de figures a deux",
+          "objective": "Construire un repertoire de pyramides a deux, de difficulte croissante, dans les deux roles.",
+          "material": [
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Groupes de trois, avec un repertoire de figures classees en trois niveaux. Le groupe realise les figures dans l'ordre, en tournant les roles. On ne passe au niveau suivant qu'apres avoir tenu les figures du niveau precedent 3 secondes.",
+          "studentGoal": "Realiser cinq pyramides a deux, tenues 3 secondes, dans les deux roles.",
+          "instructions": [
+            "On commence toujours par le niveau 1, meme si on pense savoir faire.",
+            "On monte lentement, on tient 3 secondes, on demonte dans l'ordre inverse.",
+            "Le pareur est en place avant chaque montage.",
+            "On tourne les roles : chacun est porteur et voltigeur."
+          ],
+          "success": [
+            "Cinq figures tenues 3 secondes chacune.",
+            "Chaque eleve a tenu les deux roles.",
+            "Aucun appui sur une zone interdite."
+          ],
+          "execution": [
+            "Porteur : dos plat, bras tendus, appuis larges.",
+            "Voltigeur : monter appui par appui, poids reparti.",
+            "Figure immobile : ni le regard, ni les mains ne bougent."
+          ],
+          "watch": [
+            "Les groupes brulent-ils les niveaux ?",
+            "Les porteurs gardent-ils le dos plat sur les figures avec hauteur ?",
+            "Les pareurs sont-ils systematiques ?",
+            "Y a-t-il des appuis interdits ?"
+          ],
+          "errors": [
+            "Passer directement au niveau 3 sans valider les precedents.",
+            "Porteur au dos rond des que la charge augmente.",
+            "Monter sans que le pareur soit en place."
+          ],
+          "feedback": [
+            "Niveau 1 d'abord : on valide, ensuite on monte.",
+            "Ton dos s'arrondit : redescends et reprends la posture.",
+            "Ton pareur d'abord, ensuite tu montes."
+          ],
+          "plus": [
+            "Figures de niveau 4, avec une hauteur plus importante.",
+            "Tenue portee a 5 secondes."
+          ],
+          "minus": [
+            "Figures de niveau 1 uniquement, sans hauteur.",
+            "Tenue de 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Figures de niveau 1 sans hauteur, tenue 2 secondes, roles fixes selon le gabarit.",
+            "normale": "Progression dans trois niveaux, cinq figures tenues 3 secondes, roles alternes.",
+            "complexifiee": "Figures de niveau 4 dans la limite du protocole, tenue 5 secondes."
+          },
+          "safety": [
+            "Hauteur limitee au protocole de l'etablissement : en cycle 4, generalement deux etages maximum.",
+            "Pareur obligatoire pour toute figure comportant une hauteur, place du cote de la chute probable.",
+            "Appuis sur les zones autorisees uniquement : jamais le milieu du dos ni la nuque.",
+            "Porteur dos plat et bras tendus : arret immediat si le dos s'arrondit.",
+            "Montage et demontage progressifs, dans l'ordre inverse, sans saut.",
+            "Le porteur peut dire stop a tout moment.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Groupes constitues par gabarit, roles alternes uniquement quand les gabarits le permettent.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir immobile 3 secondes",
+          "objective": "Construire l'immobilite dans la figure, critere central du jugement en acrosport.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches de progression",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par trois. Chaque figure choisie est tenue le plus longtemps possible, le pareur chronometre. Objectif : atteindre 5 secondes d'immobilite complete sur trois figures differentes.",
+          "studentGoal": "Tenir ma figure 5 secondes sans qu'aucune partie de mon corps ne bouge.",
+          "instructions": [
+            "Je tiens la figure sans bouger : ni les mains, ni le regard.",
+            "Je fixe un point pour ne pas osciller.",
+            "Pareur : je compte a voix haute et j'arrete si ca bouge trop.",
+            "Si la figure se degrade, on demonte avant qu'elle ne s'effondre."
+          ],
+          "success": [
+            "Trois figures tenues 5 secondes en immobilite complete.",
+            "Le demontage precede toujours l'effondrement.",
+            "Le pareur compte honnetement."
+          ],
+          "execution": [
+            "Gainer tout le corps, porteur comme voltigeur.",
+            "Fixer un point pour stabiliser.",
+            "Respirer pendant la tenue, ne pas bloquer."
+          ],
+          "watch": [
+            "L'immobilite est-elle reelle ou approximative ?",
+            "Les groupes demontent-ils avant l'effondrement ?",
+            "Les eleves bloquent-ils leur respiration ?"
+          ],
+          "errors": [
+            "Tenir jusqu'a l'effondrement.",
+            "Bloquer sa respiration et devoir demonter en urgence.",
+            "Compter trop vite pour aider son camarade."
+          ],
+          "feedback": [
+            "Demontez avant que ca tombe : c'est vous qui decidez.",
+            "Respire, ne bloque pas.",
+            "Compte au bon rythme, tu ne lui rends pas service."
+          ],
+          "plus": [
+            "Tenue portee a 8 secondes.",
+            "Tenue avec une variation de bras du voltigeur."
+          ],
+          "minus": [
+            "Tenue de 3 secondes.",
+            "Figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Tenue de 3 secondes sur figures sans hauteur.",
+            "normale": "Tenue de 5 secondes sur trois figures differentes.",
+            "complexifiee": "Tenue de 8 secondes, avec variation de bras du voltigeur."
+          },
+          "safety": [
+            "Demontage anticipe obligatoire : on demonte avant l'effondrement, jamais apres.",
+            "Le porteur previent des qu'il fatigue.",
+            "Pareur present et attentif pendant toute la tenue.",
+            "Aucune tenue prolongee au-dela de 8 secondes : la fatigue du porteur augmente le risque.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Deux figures enchainees",
+          "objective": "Enchainer deux pyramides sans temps mort, premiere approche de la composition.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de progression",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Groupes de trois. Chaque groupe choisit deux figures qu'il maitrise et les enchaine : montage, tenue 3 secondes, demontage, transition, montage de la seconde. Presentation a un autre groupe.",
+          "studentGoal": "Enchainer deux pyramides sans temps mort entre les deux.",
+          "instructions": [
+            "On choisit deux figures qu'on reussit a chaque fois.",
+            "On enchaine : premiere figure tenue, demontage, transition, seconde figure.",
+            "La transition fait partie de l'enchainement : on ne s'arrete pas.",
+            "On commence et on termine immobiles, 3 secondes."
+          ],
+          "success": [
+            "Les deux figures sont tenues 3 secondes chacune.",
+            "La transition se fait sans arret.",
+            "Debut et fin immobiles."
+          ],
+          "execution": [
+            "Preparer le placement de la seconde figure pendant le demontage de la premiere.",
+            "Demonter dans l'ordre inverse, sans precipitation.",
+            "Maintenir le pareur en place pendant tout l'enchainement."
+          ],
+          "watch": [
+            "Les transitions creent-elles des temps morts ?",
+            "Le demontage se precipite-t-il pour gagner du temps ?",
+            "Les pareurs restent-ils en place ?"
+          ],
+          "errors": [
+            "Precipiter le demontage pour enchainer plus vite.",
+            "S'arreter completement entre les deux figures.",
+            "Perdre le pareur pendant la transition."
+          ],
+          "feedback": [
+            "Ne precipite pas le demontage : la securite avant la fluidite.",
+            "Enchaine : ta transition fait partie de la prestation.",
+            "Pareur, tu restes avec eux pendant tout l'enchainement."
+          ],
+          "plus": [
+            "Trois figures enchainees.",
+            "Transition avec deplacement dans l'espace."
+          ],
+          "minus": [
+            "Deux figures avec arret autorise entre elles.",
+            "Figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Deux figures sans hauteur, arret autorise entre elles.",
+            "normale": "Deux figures enchainees sans temps mort, debut et fin immobiles.",
+            "complexifiee": "Trois figures enchainees, avec deplacement dans l'espace."
+          },
+          "safety": [
+            "La fluidite ne prime jamais sur la securite : le demontage reste progressif meme dans un enchainement.",
+            "Pareur en place pendant tout l'enchainement, y compris les transitions.",
+            "Tapis joints sur toute la zone de deplacement.",
+            "Un groupe par zone, groupes espaces.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire quand une figure commence a se degrader ?",
+          "Quelle posture doit tenir le porteur, et pourquoi ?"
+        ],
+        "key": "On demonte avant que la figure ne tombe : c'est le groupe qui decide, pas la gravite. Et le porteur tient dos plat, bras tendus, appuis larges."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque montage et chaque demontage.",
+        "Chronometreur : compte les secondes de tenue.",
+        "Responsable materiel : verifie la jonction des tapis entre les series."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Montage et demontage maitrises",
+      "mainObjective": "Construire des montages et demontages controles, qui sont le principal facteur de risque et un critere d'evaluation.",
+      "secondaryObjectives": [
+        "Monter progressivement, appui par appui.",
+        "Demonter dans l'ordre inverse, sans saut.",
+        "Parer efficacement pendant les phases de montage et de demontage."
+      ],
+      "linkToPrevious": "Le repertoire existe, mais les montages et demontages restent approximatifs : c'est la ou surviennent la quasi-totalite des incidents.",
+      "prerequisiteForNext": "Chaque groupe monte et demonte ses figures de facon controlee, sans saut.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 4
+          },
+          {
+            "label": "repertoire de figures a deux",
+            "fixed": 8
+          },
+          {
+            "label": "affiche des etapes de montage",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de progression",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les etapes du montage : placement du pareur, placement du porteur, montage appui par appui, tenue, demontage inverse.",
+          "Verifier la jonction des tapis et placer les tapis epais.",
+          "Reconstituer les groupes de trois.",
+          "Rappeler et faire enoncer les regles d'appui.",
+          "Verifier le degagement de 2 metres autour de la zone."
+        ],
+        "sketch": "Surface de tapis joints, tapis epais aux zones avec hauteur.\nAffiche des cinq etapes du montage aux deux extremites.\nGroupes de trois espaces.\n2 m de degagement sans mur ni angle."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec renforcement du gainage : un porteur fatigue ou mal gaine cede pendant le montage, moment le plus critique.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies sur les tapis.",
+              "Quadrupedie et deplacements en crabe."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage ventral, dorsal et lateral, 20 secondes chacun, 2 series.",
+              "Quadrupedie dos plat avec charge legere, 15 secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel des figures",
+            "details": [
+              "Trois figures du repertoire, montage et demontage lents.",
+              "Verification des appuis et de la posture du porteur.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Les cinq etapes du montage",
+          "objective": "Systematiser une procedure de montage et de demontage, identique pour toutes les figures.",
+          "material": [
+            {
+              "label": "affiche des etapes de montage",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 4
+            },
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            }
+          ],
+          "organization": "Groupes de trois. Chaque figure est montee en respectant explicitement les cinq etapes, annoncees a voix haute. Cinq figures, avec rotation des roles.",
+          "studentGoal": "Monter et demonter chaque figure en respectant les cinq etapes, a voix haute.",
+          "instructions": [
+            "Etape 1 : le pareur annonce qu'il est en place.",
+            "Etape 2 : le porteur prend sa position et annonce qu'il est pret.",
+            "Etape 3 : le voltigeur monte appui par appui, lentement.",
+            "Etape 4 : on tient 3 secondes. Etape 5 : on demonte dans l'ordre inverse."
+          ],
+          "success": [
+            "Les cinq etapes sont annoncees et respectees sur les cinq figures.",
+            "Aucun demontage en sautant.",
+            "Le pareur annonce systematiquement avant chaque montage."
+          ],
+          "execution": [
+            "Annoncer chaque etape a voix haute, sans se precipiter.",
+            "Monter appui par appui, en verifiant chaque placement.",
+            "Demonter exactement dans l'ordre inverse du montage."
+          ],
+          "watch": [
+            "Les etapes sont-elles annoncees ou escamotees ?",
+            "Le demontage suit-il vraiment l'ordre inverse ?",
+            "Y a-t-il des sauts au demontage ?"
+          ],
+          "errors": [
+            "Monter avant que le pareur ne soit en place.",
+            "Demonter en sautant depuis la figure.",
+            "Demonter dans un ordre quelconque."
+          ],
+          "feedback": [
+            "Ton pareur n'a pas annonce : attends.",
+            "On ne saute pas : tu redescends comme tu es monte.",
+            "Ordre inverse : le dernier appui pose est le premier retire."
+          ],
+          "plus": [
+            "Montage sans annonce verbale, sur signaux visuels.",
+            "Figures de niveau superieur."
+          ],
+          "minus": [
+            "Montage guide etape par etape par le professeur.",
+            "Figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Montage guide etape par etape par le professeur, sur figures sans hauteur.",
+            "normale": "Cinq etapes annoncees a voix haute, sur cinq figures.",
+            "complexifiee": "Montage coordonne sans annonce verbale, sur figures de niveau superieur."
+          },
+          "safety": [
+            "La procedure en cinq etapes est obligatoire pour toute figure : aucune figure ne se monte sans pareur annonce et porteur pret.",
+            "Demontage toujours dans l'ordre inverse du montage : c'est la regle qui evite la majorite des chutes.",
+            "Aucun saut au demontage, quelle que soit la hauteur.",
+            "Le porteur peut interrompre a tout moment.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Hauteur limitee au protocole de l'etablissement.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Parer pendant le montage",
+          "objective": "Former specifiquement a la parade pendant les phases de montage et de demontage, les plus risquees.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 4
+            },
+            {
+              "label": "affiche des etapes de montage",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par trois. Le pareur s'exerce a suivre le voltigeur pendant tout le montage, la tenue et le demontage. Le professeur simule des desequilibres pour eprouver la reactivite. Le professeur valide chaque pareur.",
+          "studentGoal": "Suivre mon voltigeur du debut a la fin, et le rattraper s'il se desequilibre.",
+          "instructions": [
+            "Je me place du cote ou le voltigeur risque de tomber.",
+            "Je suis son deplacement pendant tout le montage, je ne reste pas fige.",
+            "Si il se desequilibre, je le saisis au bassin ou au tronc, jamais par un bras.",
+            "Je reste jusqu'a ce qu'il ait les deux pieds au sol."
+          ],
+          "success": [
+            "Le pareur suit le voltigeur pendant les trois phases.",
+            "La prise se fait au bassin ou au tronc.",
+            "Le pareur ne quitte pas avant que le voltigeur soit au sol."
+          ],
+          "execution": [
+            "Se placer a portee immediate, jambes flechies.",
+            "Se deplacer avec le voltigeur pendant le montage.",
+            "Accompagner jusqu'au tapis en cas de chute."
+          ],
+          "watch": [
+            "Le pareur suit-il ou reste-t-il fige a sa position initiale ?",
+            "Quitte-t-il trop tot, avant la fin du demontage ?",
+            "Saisit-il au bras plutot qu'au tronc ?"
+          ],
+          "errors": [
+            "Rester fige pendant que le voltigeur se deplace.",
+            "Quitter des que la figure est tenue, alors que le demontage reste a faire.",
+            "Saisir par un bras : risque de luxation de l'epaule."
+          ],
+          "feedback": [
+            "Suis-le : il bouge, tu bouges.",
+            "Le demontage aussi est dangereux : reste jusqu'au bout.",
+            "Au bassin ou au tronc, jamais par un bras."
+          ],
+          "plus": [
+            "Parer une figure a trois.",
+            "Parer seul sur une figure avec hauteur."
+          ],
+          "minus": [
+            "Deux pareurs sur une figure sans hauteur.",
+            "Parade avec appui permanent."
+          ],
+          "diff": {
+            "facilitee": "Deux pareurs sur figure sans hauteur, avec appui permanent et supervision du professeur.",
+            "normale": "Un pareur suivant le voltigeur sur les trois phases, valide par le professeur.",
+            "complexifiee": "Parade seule sur figure avec hauteur, dans la limite du protocole."
+          },
+          "safety": [
+            "La parade s'apprend avant d'etre utilisee : aucun eleve ne pare sans avoir ete valide sur cet atelier.",
+            "Prise au bassin ou au tronc uniquement : jamais par un bras ni par un vetement.",
+            "Le pareur reste en place jusqu'a ce que le voltigeur ait les deux pieds au sol.",
+            "Le pareur ne quitte jamais le voltigeur des yeux.",
+            "Tapis epais obligatoires sous les figures avec hauteur.",
+            "Le professeur supervise directement cet atelier et valide chaque pareur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Enchainement de trois figures",
+          "objective": "Enchainer trois figures en respectant la procedure de montage sur chacune.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de progression",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Groupes de trois. Chaque groupe enchaine trois figures avec transitions, en respectant les cinq etapes sur chacune. Presentation a un autre groupe qui verifie le respect de la procedure.",
+          "studentGoal": "Enchainer trois figures en respectant la procedure de securite sur chacune.",
+          "instructions": [
+            "On enchaine trois figures avec transitions.",
+            "On respecte les cinq etapes sur chaque figure.",
+            "Groupe observateur : vous verifiez que la procedure est respectee.",
+            "On commence et on termine immobiles, 3 secondes."
+          ],
+          "success": [
+            "Les trois figures sont tenues 3 secondes.",
+            "La procedure est respectee sur les trois.",
+            "Les transitions se font sans temps mort excessif."
+          ],
+          "execution": [
+            "Anticiper le placement de la figure suivante.",
+            "Ne jamais escamoter une etape pour gagner du temps.",
+            "Maintenir le pareur pendant tout l'enchainement."
+          ],
+          "watch": [
+            "La procedure est-elle escamotee quand l'enchainement s'allonge ?",
+            "Les groupes observateurs reperent-ils les manquements ?"
+          ],
+          "errors": [
+            "Escamoter l'annonce du pareur pour aller plus vite.",
+            "Demonter dans le desordre en fin d'enchainement.",
+            "Observer sans rien relever."
+          ],
+          "feedback": [
+            "Tu as saute une etape : la vitesse ne passe pas avant la securite.",
+            "Ordre inverse, meme sur la troisieme figure.",
+            "Observateurs, dites-leur ce que vous avez vu."
+          ],
+          "plus": [
+            "Quatre figures enchainees.",
+            "Enchainement avec deplacement dans l'espace."
+          ],
+          "minus": [
+            "Deux figures enchainees.",
+            "Figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Deux figures sans hauteur, transitions avec arret autorise.",
+            "normale": "Trois figures enchainees avec procedure respectee.",
+            "complexifiee": "Quatre figures enchainees, avec deplacement dans l'espace."
+          },
+          "safety": [
+            "La procedure en cinq etapes s'applique a chaque figure de l'enchainement, sans exception.",
+            "Pareur en place pendant tout l'enchainement, transitions comprises.",
+            "Aucun raccourci de securite pour gagner en fluidite.",
+            "Tapis joints sur toute la zone de deplacement.",
+            "Un groupe par zone, groupes espaces.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Dans quel ordre demonte-t-on une figure, et pourquoi ?",
+          "Jusqu'a quel moment le pareur doit-il rester en place ?"
+        ],
+        "key": "On demonte exactement dans l'ordre inverse du montage, sans jamais sauter. Et le pareur reste jusqu'a ce que le voltigeur ait les deux pieds au sol."
+      },
+      "socialRoles": [
+        "Pareur : suit le voltigeur pendant montage, tenue et demontage.",
+        "Annonceur : verbalise les cinq etapes de la procedure.",
+        "Groupe observateur : verifie le respect de la procedure."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Les pyramides a trois et quatre",
+      "mainObjective": "Construire des pyramides collectives a trois et quatre, qui exigent une coordination et une repartition des roles.",
+      "secondaryObjectives": [
+        "Realiser des pyramides a trois avec deux porteurs.",
+        "Coordonner le montage a plusieurs.",
+        "Repartir les roles selon les gabarits."
+      ],
+      "linkToPrevious": "Les figures a deux et la procedure de montage sont maitrisees : on peut passer au collectif, qui exige de la coordination.",
+      "prerequisiteForNext": "Chaque groupe realise trois pyramides a trois ou quatre.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 18
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "repertoire de figures collectives",
+            "fixed": 6,
+            "note": "figures a trois et quatre, classees par niveau"
+          },
+          {
+            "label": "affiche des zones d'appui",
+            "fixed": 2
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches de progression",
+            "per": 0.25,
+            "min": 6
+          }
+        ],
+        "instructions": [
+          "Elargir la surface de tapis : les pyramides collectives occupent plus d'espace.",
+          "Placer les tapis epais autour de chaque zone de pyramide.",
+          "Distribuer un repertoire de figures collectives par groupe de quatre.",
+          "Constituer des groupes de quatre avec des gabarits complementaires.",
+          "Verifier le protocole local sur la hauteur autorisee.",
+          "Verifier 2 metres de degagement autour de chaque zone."
+        ],
+        "sketch": "Surface de tapis joints elargie, tapis epais autour de chaque zone.\nGroupes de quatre, une zone par groupe, espacees de 3 m.\nRepertoire de figures collectives par groupe.\nAffiches des zones d'appui visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet, avec insistance sur le gainage collectif : dans une pyramide a plusieurs, la defaillance d'un seul porteur fait tomber l'ensemble.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies sur les tapis.",
+              "Deplacements collectifs coordonnes a trois."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, 20 secondes par position, 2 series.",
+              "Quadrupedie dos plat a deux cote a cote, coordonnee."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel et coordination",
+            "details": [
+              "Deux figures a deux du repertoire, procedure complete.",
+              "Exercice de coordination : deux porteurs se placent en meme temps.",
+              "Verification des gabarits et des roles."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Les pyramides a trois",
+          "objective": "Construire les pyramides collectives : deux porteurs coordonnes, un voltigeur, un pareur.",
+          "material": [
+            {
+              "label": "repertoire de figures collectives",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Groupes de quatre : deux porteurs, un voltigeur, un pareur. Trois figures a trois proposees sur le repertoire, de difficulte croissante. Procedure en cinq etapes appliquee. Rotation des roles.",
+          "studentGoal": "Realiser une pyramide a trois, tenue 3 secondes, avec deux porteurs coordonnes.",
+          "instructions": [
+            "Les deux porteurs se placent et annoncent ensemble qu'ils sont prets.",
+            "Le voltigeur monte appui par appui, en repartissant son poids sur les deux porteurs.",
+            "On tient 3 secondes, puis on demonte dans l'ordre inverse.",
+            "Le pareur suit le voltigeur du debut a la fin."
+          ],
+          "success": [
+            "Trois pyramides a trois tenues 3 secondes.",
+            "Les deux porteurs sont coordonnes : ils se placent et cedent ensemble si besoin.",
+            "Aucun appui sur une zone interdite."
+          ],
+          "execution": [
+            "Porteurs : memes appuis, meme hauteur, dos plats.",
+            "Voltigeur : poids reparti egalement sur les deux porteurs.",
+            "Coordination verbale entre les deux porteurs."
+          ],
+          "watch": [
+            "Les deux porteurs sont-ils a la meme hauteur ?",
+            "Le poids est-il reparti ou concentre sur un seul ?",
+            "Un porteur cede-t-il seul, ce qui desequilibre tout ?",
+            "Le pareur suffit-il pour une figure a trois ?"
+          ],
+          "errors": [
+            "Porteurs a des hauteurs differentes : la figure est instable des le depart.",
+            "Voltigeur qui met tout son poids sur un seul porteur.",
+            "Un porteur qui cede sans prevenir l'autre."
+          ],
+          "feedback": [
+            "Meme hauteur tous les deux, sinon il ne peut pas monter droit.",
+            "Repartis ton poids : un pied sur chacun.",
+            "Si tu cedes, tu previens : vous etes deux."
+          ],
+          "plus": [
+            "Pyramides a quatre.",
+            "Deux pareurs pour une figure plus haute."
+          ],
+          "minus": [
+            "Pyramides a trois sans hauteur.",
+            "Tenue de 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Pyramides a trois sans hauteur, tous les appuis au sol, tenue 2 secondes.",
+            "normale": "Trois pyramides a trois avec hauteur limitee, tenue 3 secondes.",
+            "complexifiee": "Pyramides a quatre, avec deux pareurs, dans la limite du protocole."
+          },
+          "safety": [
+            "Hauteur strictement limitee au protocole de l'etablissement : en cycle 4, generalement deux etages maximum.",
+            "Deux pareurs obligatoires pour toute pyramide a quatre ou comportant une hauteur importante.",
+            "Coordination verbale obligatoire entre porteurs : si l'un cede, il previent, et le demontage est immediat.",
+            "Appuis sur les zones autorisees uniquement.",
+            "Porteurs dos plats, bras tendus : arret immediat sinon.",
+            "Procedure en cinq etapes appliquee a chaque figure.",
+            "Tapis joints, tapis epais autour de chaque zone.",
+            "Groupes constitues par gabarit : voltigeur toujours le plus leger.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Repartir les roles",
+          "objective": "Faire choisir au groupe la repartition des roles la plus sure et la plus efficace, selon les gabarits.",
+          "material": [
+            {
+              "label": "repertoire de figures collectives",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "fiches de progression",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de quatre. Le groupe teste une meme figure avec trois repartitions de roles differentes, et choisit la plus sure. On note la repartition retenue.",
+          "studentGoal": "Trouver la repartition des roles qui rend notre figure la plus sure.",
+          "instructions": [
+            "On teste la meme figure avec trois repartitions de roles differentes.",
+            "On regarde laquelle est la plus stable et la plus confortable.",
+            "Le voltigeur est toujours le plus leger, le porteur le plus solide.",
+            "On note la repartition retenue sur la fiche."
+          ],
+          "success": [
+            "Les trois repartitions sont testees.",
+            "La repartition retenue respecte la logique des gabarits.",
+            "La repartition est notee sur la fiche."
+          ],
+          "execution": [
+            "Tester chaque repartition avec la procedure complete.",
+            "Demander l'avis du porteur sur le confort.",
+            "Respecter la logique : le plus leger monte."
+          ],
+          "watch": [
+            "Les groupes respectent-ils la logique des gabarits ?",
+            "Un eleve est-il systematiquement porteur, sans jamais monter ?",
+            "Les avis des porteurs sont-ils ecoutes ?"
+          ],
+          "errors": [
+            "Faire monter le plus lourd sur le plus leger.",
+            "Imposer un role a un camarade sans son accord.",
+            "Ne jamais faire tourner les roles."
+          ],
+          "feedback": [
+            "Le plus leger monte : c'est une regle de securite, pas une preference.",
+            "Demande-lui si c'est confortable pour lui.",
+            "Faites tourner : chacun doit connaitre les deux roles."
+          ],
+          "plus": [
+            "Tester la meme figure a quatre.",
+            "Justifier la repartition par ecrit."
+          ],
+          "minus": [
+            "Repartition proposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Repartition proposee par le professeur selon les gabarits.",
+            "normale": "Trois repartitions testees, la plus sure retenue et notee.",
+            "complexifiee": "Repartition testee sur figure a quatre, avec justification ecrite."
+          },
+          "safety": [
+            "Le voltigeur est toujours nettement plus leger que les porteurs : cette regle ne se negocie pas, meme si un eleve souhaite monter.",
+            "Aucun eleve n'est contraint de tenir un role dans lequel il ne se sent pas en securite.",
+            "Procedure en cinq etapes appliquee a chaque test.",
+            "Pareur present a chaque test.",
+            "Le professeur valide chaque repartition avant qu'elle soit retenue."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Enchainement collectif",
+          "objective": "Enchainer une figure a deux et une figure a trois, premiere trame de l'enchainement final.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "repertoire de figures collectives",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de progression",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de quatre. Chaque groupe enchaine une figure a deux, une transition, et une figure a trois. Presentation a un autre groupe.",
+          "studentGoal": "Enchainer une figure a deux et une figure a trois, sans temps mort.",
+          "instructions": [
+            "On enchaine une figure a deux puis une figure a trois.",
+            "On respecte la procedure sur chacune.",
+            "La transition fait partie de l'enchainement.",
+            "On commence et on termine immobiles, 3 secondes."
+          ],
+          "success": [
+            "Les deux figures sont tenues 3 secondes.",
+            "La transition se fait sans temps mort excessif.",
+            "La procedure est respectee sur les deux figures."
+          ],
+          "execution": [
+            "Anticiper le placement de la figure collective pendant le demontage.",
+            "Coordonner le placement des deux porteurs.",
+            "Maintenir le pareur pendant tout l'enchainement."
+          ],
+          "watch": [
+            "Le passage de deux a trois cree-t-il un temps mort important ?",
+            "La procedure est-elle respectee sur la figure collective ?"
+          ],
+          "errors": [
+            "Long temps mort pendant le placement de la figure a trois.",
+            "Escamoter la procedure sur la seconde figure.",
+            "Perdre le pareur pendant la transition."
+          ],
+          "feedback": [
+            "Placez-vous pendant le demontage, pas apres.",
+            "La procedure aussi sur la deuxieme figure.",
+            "Pareur, tu restes avec eux tout du long."
+          ],
+          "plus": [
+            "Enchainer trois figures dont une a quatre."
+          ],
+          "minus": [
+            "Enchainer deux figures a deux.",
+            "Arret autorise entre les figures."
+          ],
+          "diff": {
+            "facilitee": "Deux figures a deux sans hauteur, arret autorise entre elles.",
+            "normale": "Une figure a deux et une figure a trois enchainees.",
+            "complexifiee": "Trois figures dont une a quatre, enchainees sans temps mort."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee a chaque figure de l'enchainement.",
+            "Pareur en place pendant tout l'enchainement, transitions comprises.",
+            "Deux pareurs pour les figures a quatre.",
+            "Tapis joints sur toute la zone.",
+            "Un groupe par zone, zones espacees.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi les deux porteurs doivent-ils etre a la meme hauteur ?",
+          "Qui doit etre voltigeur dans un groupe, et pourquoi ?"
+        ],
+        "key": "Dans une pyramide collective, les porteurs sont coordonnes : meme hauteur, memes appuis, et s'ils cedent, ils cedent ensemble en prevenant. Le voltigeur est toujours le plus leger."
+      },
+      "socialRoles": [
+        "Pareur : suit le voltigeur sur toute la figure collective.",
+        "Coordinateur des porteurs : synchronise le placement et les annonces.",
+        "Chronometreur : compte les secondes de tenue."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et choix de l'enchainement",
+      "mainObjective": "Faire le point sur les acquis et composer l'enchainement qui sera presente a l'evaluation finale.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau dans les roles de porteur, voltigeur et pareur.",
+        "Choisir les quatre pyramides de l'enchainement.",
+        "Ecrire un objectif personnel pour la fin du cycle."
+      ],
+      "linkToPrevious": "Le repertoire, la procedure et les figures collectives sont acquis : le groupe peut composer son enchainement.",
+      "prerequisiteForNext": "Chaque groupe a choisi ses quatre pyramides et chaque eleve a un objectif.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 18
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "repertoire de figures a deux",
+            "fixed": 8
+          },
+          {
+            "label": "repertoire de figures collectives",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de composition par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de composition par groupe.",
+          "Installer les zones d'evaluation, tapis joints et epais en place.",
+          "Prevoir un espace calme pour l'ecriture, hors des tapis.",
+          "Rappeler les regles d'appui et la procedure."
+        ],
+        "sketch": "Zones d'evaluation par groupe, tapis joints et epais.\nAffichage des criteres a l'entree.\nCoin ecriture avec bancs, hors des tapis.\nRepertoires distribues a chaque groupe."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et l'acrosport exige une preparation du gainage et du rachis.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, nuque, chevilles.",
+              "Gainage complet, deux series.",
+              "Quadrupedie dos plat avec charge legere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision du repertoire",
+            "details": [
+              "Deux figures a deux, procedure complete.",
+              "Une figure a trois, procedure complete.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Evaluation des figures et des roles",
+          "objective": "Evaluer le niveau de figures atteint et la qualite de la tenue des trois roles.",
+          "material": [
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            },
+            {
+              "label": "repertoire de figures collectives",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque groupe presente au professeur trois figures : une a deux, une a trois, et une de son choix. Chaque eleve doit avoir tenu le role de porteur, de voltigeur et de pareur au cours de la presentation.",
+          "studentGoal": "Montrer les figures que je maitrise, dans les trois roles.",
+          "instructions": [
+            "On presente trois figures : une a deux, une a trois, une au choix.",
+            "Chacun doit tenir les trois roles au cours de la presentation.",
+            "On applique la procedure en cinq etapes sur chaque figure.",
+            "Une figure est validee si elle est tenue 3 secondes sans manquement de securite."
+          ],
+          "success": [
+            "Les trois figures sont tenues 3 secondes.",
+            "Chaque eleve a tenu les trois roles.",
+            "La procedure est respectee sur les trois figures.",
+            "Aucun appui interdit."
+          ],
+          "execution": [
+            "Appliquer la procedure sans la precipiter.",
+            "Porteur : dos plat, bras tendus.",
+            "Pareur : suivre le voltigeur du debut a la fin."
+          ],
+          "watch": [
+            "Les groupes surestiment-ils leur niveau de figure ?",
+            "La procedure tient-elle en situation d'evaluation ?",
+            "Les pareurs sont-ils rigoureux ?"
+          ],
+          "errors": [
+            "Presenter une figure non maitrisee, pour impressionner.",
+            "Escamoter la procedure sous la pression.",
+            "Un eleve qui ne tient jamais le role de voltigeur."
+          ],
+          "feedback": [
+            "Presentez ce que vous reussissez a chaque fois.",
+            "La procedure aussi en evaluation, sans exception.",
+            "Toi, tu n'as pas encore ete voltigeur : c'est evalue aussi."
+          ],
+          "plus": [
+            "Presenter une figure a quatre.",
+            "Presenter les figures enchainees."
+          ],
+          "minus": [
+            "Deux figures presentees, sans hauteur.",
+            "Roles fixes selon les gabarits."
+          ],
+          "diff": {
+            "facilitee": "Deux figures sans hauteur, roles adaptes aux gabarits sans rotation imposee.",
+            "normale": "Trois figures dont une collective, les trois roles tenus.",
+            "complexifiee": "Figures enchainees, dont une a quatre."
+          },
+          "safety": [
+            "Procedure en cinq etapes obligatoire, y compris en evaluation.",
+            "Pareur present a chaque figure, deux pour les figures a quatre.",
+            "Hauteur limitee au protocole de l'etablissement.",
+            "Aucune figure presentee au-dela du niveau valide en seances precedentes.",
+            "Le voltigeur reste le plus leger : la rotation des roles s'arrete ou la securite l'impose.",
+            "Tapis joints, tapis epais en place.",
+            "Le professeur supervise et peut arreter toute presentation."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Composer l'enchainement",
+          "objective": "Choisir quatre pyramides maitrisees et les ordonner de facon coherente et sure.",
+          "material": [
+            {
+              "label": "fiches de composition par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "repertoire de figures a deux",
+              "fixed": 8
+            },
+            {
+              "label": "repertoire de figures collectives",
+              "fixed": 6
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par groupes de quatre, assis hors des tapis. Chaque groupe choisit quatre pyramides parmi celles validees et les ordonne, en notant les roles de chacun pour chaque figure.",
+          "studentGoal": "Choisir et ordonner les quatre pyramides de notre enchainement.",
+          "instructions": [
+            "On choisit quatre pyramides parmi celles qu'on a validees.",
+            "On varie : au moins une a deux et une a trois ou quatre.",
+            "On note l'ordre et les roles de chacun pour chaque figure.",
+            "On verifie que les transitions sont possibles."
+          ],
+          "success": [
+            "Quatre pyramides sont choisies et notees.",
+            "Les roles de chacun sont notes pour chaque figure.",
+            "Toutes les figures choisies ont ete validees en seance."
+          ],
+          "execution": [
+            "Verifier chaque figure sur la fiche de validation avant de la choisir.",
+            "Ordonner pour que les transitions soient courtes.",
+            "Repartir les roles equitablement."
+          ],
+          "watch": [
+            "Les groupes choisissent-ils des figures non validees ?",
+            "Un eleve est-il toujours porteur, sans jamais monter ?",
+            "Les transitions sont-elles realisables ?"
+          ],
+          "errors": [
+            "Choisir une figure jamais reussie.",
+            "Concentrer tous les roles de voltigeur sur un seul eleve.",
+            "Ordre impossible : deux figures avec le meme porteur consecutivement."
+          ],
+          "feedback": [
+            "Cette figure n'est pas validee : choisissez-en une autre.",
+            "Repartissez les roles : il ne peut pas etre porteur quatre fois.",
+            "Verifiez : vous n'aurez pas le temps de vous replacer."
+          ],
+          "plus": [
+            "Composer cinq pyramides avec contrainte de deplacement."
+          ],
+          "minus": [
+            "Trois pyramides, choisies dans une liste reduite."
+          ],
+          "diff": {
+            "facilitee": "Trois pyramides choisies dans une liste reduite de figures sans hauteur.",
+            "normale": "Quatre pyramides variees, roles notes pour chacune.",
+            "complexifiee": "Cinq pyramides avec contrainte de deplacement dans l'espace."
+          },
+          "safety": [
+            "Seules les figures validees en seance peuvent etre choisies : aucune figure nouvelle a ce stade.",
+            "La repartition des roles respecte la logique des gabarits, meme si elle est moins equitable.",
+            "Le professeur valide chaque composition avant qu'elle soit retenue.",
+            "Phase d'ecriture assise hors des tapis."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier essai et objectif personnel",
+          "objective": "Eprouver la composition et faire ecrire a chacun son objectif pour la fin du cycle.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "fiches de composition par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Chaque groupe essaie sa composition en entier, deux fois. Puis chacun ecrit individuellement son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Essayer notre enchainement en entier et ecrire mon objectif personnel.",
+          "instructions": [
+            "On essaie notre enchainement dans l'ordre note.",
+            "On note ce qui ne passe pas : transition, figure, role.",
+            "Puis j'ecris seul mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'enchainement est essaye en entier au moins une fois.",
+            "Les points problematiques sont notes.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Respecter la procedure sur chaque figure malgre l'enchainement.",
+            "Noter immediatement ce qui ne fonctionne pas.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les compositions sont-elles realisables ?",
+            "Les objectifs sont-ils precis et realistes ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux faire de l'acrosport.",
+            "Abandonner l'enchainement des la premiere difficulte.",
+            "Escamoter la procedure pour finir l'essai."
+          ],
+          "feedback": [
+            "Precise : qu'est-ce que tu veux reussir exactement ?",
+            "Notez ce qui bloque, on le corrigera.",
+            "La procedure, meme quand vous enchainez."
+          ],
+          "plus": [
+            "Noter aussi les transitions prevues entre les figures."
+          ],
+          "minus": [
+            "Essai par moities.",
+            "Objectif choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Essai par moities, objectif choisi dans une liste affichee.",
+            "normale": "Essai complet deux fois, objectif redige librement.",
+            "complexifiee": "Essai complet avec transitions notees, objectif et moyen rediges."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee sur chaque figure de l'essai.",
+            "Pareur en place pendant tout l'enchainement.",
+            "Phase d'ecriture assise hors des tapis, materiel range.",
+            "Le professeur supervise les essais en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont vos quatre pyramides, et qui tient quel role sur chacune ?",
+          "Quel est votre objectif personnel pour les trois dernieres seances ?"
+        ],
+        "key": "Un enchainement se compose avec des figures validees, pas avec des figures reves : on choisit ce qu'on reussit a chaque fois."
+      },
+      "socialRoles": [
+        "Pareur : securise les figures presentees en evaluation.",
+        "Secretaire de groupe : note la composition et les roles.",
+        "Responsable materiel : verifie tapis et repertoires entre les groupes."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Relier les pyramides : transitions et elements gymniques",
+      "mainObjective": "Construire ce qui relie les pyramides : transitions, deplacements et elements gymniques.",
+      "secondaryObjectives": [
+        "Realiser des elements gymniques simples entre les pyramides.",
+        "Construire des transitions sans temps mort.",
+        "Occuper l'espace scenique collectivement."
+      ],
+      "linkToPrevious": "Les pyramides sont choisies, mais l'enchainement reste une suite de figures sans lien : les transitions sont le point faible.",
+      "prerequisiteForNext": "Chaque groupe relie ses pyramides par des transitions et au moins deux elements gymniques.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 18
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des elements gymniques autorises",
+            "fixed": 2,
+            "note": "roulades, equilibres, sauts, tours"
+          },
+          {
+            "label": "fiches de composition par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les elements gymniques autorises, avec leur niveau de difficulte.",
+          "Delimiter un espace scenique et un espace public.",
+          "Verifier la jonction des tapis sur toute la zone de deplacement.",
+          "Preparer les zones de travail par groupe.",
+          "Verifier le degagement autour de l'espace scenique."
+        ],
+        "sketch": "Espace scenique central, tapis joints sur toute la surface.\nZones de travail par groupe en peripherie.\nAffiche des elements gymniques autorises sur le mur.\nBancs du public face a la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec preparation specifique aux elements gymniques : roulades et equilibres sollicitent la nuque et les poignets.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies sur les tapis.",
+              "Deplacements collectifs coordonnes."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles.",
+              "Nuque : flexions douces, renforcement isometrique.",
+              "Colonne : enroulement et deroulement, chat-chameau.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Elements gymniques de rappel",
+            "details": [
+              "Cinq roulades avant, menton rentre.",
+              "Trois equilibres tenus 3 secondes.",
+              "Trois sauts avec reception amortie."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Les elements gymniques de liaison",
+          "objective": "Construire un repertoire d'elements gymniques simples, utilisables pour relier les pyramides.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "affiche des elements gymniques autorises",
+              "fixed": 2
+            }
+          ],
+          "organization": "Quatre ateliers : roulades, equilibres, sauts, tours et deplacements. Rotation toutes les 5 minutes. Chaque eleve choisit deux elements qu'il maitrise pour l'enchainement.",
+          "studentGoal": "Maitriser deux elements gymniques que je pourrai utiliser entre les pyramides.",
+          "instructions": [
+            "Je passe aux quatre ateliers et j'essaie les elements proposes.",
+            "Roulade : menton rentre, je roule sur la nuque, jamais sur la tete.",
+            "Equilibre : je tiens 3 secondes, regard fixe.",
+            "Je choisis deux elements que je reussis a chaque fois."
+          ],
+          "success": [
+            "Les quatre ateliers ont ete essayes.",
+            "Deux elements sont choisis et maitrises.",
+            "Aucune roulade avec appui sur la tete."
+          ],
+          "execution": [
+            "Roulade : menton contre la poitrine, corps groupe.",
+            "Equilibre : regard fixe, corps gaine.",
+            "Saut : reception amortie, genoux flechis."
+          ],
+          "watch": [
+            "Les roulades se font-elles sur la nuque ou sur la tete ?",
+            "Les receptions de saut sont-elles amorties ?",
+            "Les eleves choisissent-ils des elements maitrises ?"
+          ],
+          "errors": [
+            "Poser la tete au sol dans la roulade : risque cervical.",
+            "Reception de saut jambes tendues.",
+            "Choisir un element non maitrise pour impressionner."
+          ],
+          "feedback": [
+            "Menton contre la poitrine : c'est la nuque qui touche.",
+            "Flechis les genoux en arrivant, tu amortis.",
+            "Prends ce que tu reussis a chaque fois."
+          ],
+          "plus": [
+            "Elements de difficulte superieure.",
+            "Enchainer deux elements gymniques."
+          ],
+          "minus": [
+            "Deux ateliers seulement.",
+            "Elements les plus simples uniquement."
+          ],
+          "diff": {
+            "facilitee": "Deux ateliers, elements les plus simples : roulade et equilibre sur un pied.",
+            "normale": "Quatre ateliers, deux elements choisis et maitrises.",
+            "complexifiee": "Elements de difficulte superieure, enchaines deux par deux."
+          },
+          "safety": [
+            "Roulade : menton rentre obligatoire, la tete ne touche jamais le tapis. Arret immediat sinon.",
+            "Reception de saut genoux flechis : aucune reception jambes tendues.",
+            "Un eleve a la fois par couloir de tapis.",
+            "Tapis joints, sans interstice.",
+            "Aucun element renverse type ATR sans parade validee.",
+            "Le professeur supervise les quatre ateliers."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Construire les transitions",
+          "objective": "Relier les pyramides sans temps mort, en integrant les elements gymniques et les deplacements.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "fiches de composition par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe travaille les trois transitions entre ses quatre pyramides. Consigne : chaque transition doit comporter un deplacement et au moins un element gymnique.",
+          "studentGoal": "Relier nos pyramides par des transitions qui font partie de l'enchainement.",
+          "instructions": [
+            "Chaque transition comporte un deplacement et un element gymnique.",
+            "On ne s'arrete pas entre le demontage et la figure suivante.",
+            "On se place pour la figure suivante pendant la transition.",
+            "On note les transitions choisies sur la fiche."
+          ],
+          "success": [
+            "Les trois transitions comportent un deplacement et un element gymnique.",
+            "Aucun temps mort superieur a 3 secondes.",
+            "Les transitions sont notees sur la fiche."
+          ],
+          "execution": [
+            "Anticiper le placement pendant la transition.",
+            "Realiser l'element gymnique pendant le deplacement des autres.",
+            "Ne jamais precipiter le demontage pour gagner du temps."
+          ],
+          "watch": [
+            "Les transitions creent-elles des temps morts ?",
+            "Le demontage est-il precipite pour enchainer ?",
+            "Les elements gymniques sont-ils integres ou juxtaposes ?"
+          ],
+          "errors": [
+            "Precipiter le demontage : la securite passe avant la fluidite.",
+            "Transition reduite a un deplacement en marchant.",
+            "Tous les eleves qui font le meme element en meme temps sans intention."
+          ],
+          "feedback": [
+            "Ne precipite pas le demontage : la fluidite ne prime jamais.",
+            "Ta transition, c'est un element gymnique, pas juste un deplacement.",
+            "Placez-vous pendant que les autres font leur element."
+          ],
+          "plus": [
+            "Transitions avec elements gymniques synchronises.",
+            "Transitions avec occupation de tout l'espace."
+          ],
+          "minus": [
+            "Transition reduite a un deplacement.",
+            "Arret de 3 secondes autorise."
+          ],
+          "diff": {
+            "facilitee": "Transition reduite a un deplacement, arret de 3 secondes autorise.",
+            "normale": "Trois transitions avec deplacement et element gymnique.",
+            "complexifiee": "Transitions avec elements synchronises et occupation complete de l'espace."
+          },
+          "safety": [
+            "La fluidite ne prime jamais sur la securite : le demontage reste progressif, y compris en transition.",
+            "Pareur en place avant chaque montage, y compris en fin de transition.",
+            "Tapis joints sur toute la zone de deplacement.",
+            "Aucun element gymnique realise pendant le montage d'une pyramide.",
+            "Un groupe par zone.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Filage de l'enchainement complet",
+          "objective": "Enchainer les quatre pyramides et les trois transitions pour obtenir une premiere version complete.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition par groupe",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe file son enchainement complet deux fois. Un autre groupe observe et signale les temps morts et les manquements a la procedure.",
+          "studentGoal": "Enchainer nos quatre pyramides et nos trois transitions du debut a la fin.",
+          "instructions": [
+            "On file l'enchainement en entier, sans s'arreter.",
+            "Les pareurs sont designes et en place avant chaque figure.",
+            "Groupe observateur : vous notez les temps morts et les manquements.",
+            "On refait une deuxieme fois en corrigeant un seul point."
+          ],
+          "success": [
+            "L'enchainement est file en entier, deux fois.",
+            "Les quatre pyramides sont tenues 3 secondes.",
+            "L'observateur identifie au moins un point a ameliorer."
+          ],
+          "execution": [
+            "Respecter la procedure sur chaque figure.",
+            "Corriger un seul point entre les deux filages.",
+            "Maintenir les pareurs pendant tout l'enchainement."
+          ],
+          "watch": [
+            "La procedure tient-elle sur un enchainement complet ?",
+            "Les pareurs restent-ils attentifs jusqu'a la fin ?",
+            "Les temps morts sont-ils reduits ?"
+          ],
+          "errors": [
+            "Escamoter la procedure sur les dernieres figures, par fatigue.",
+            "Pareur qui se relache en fin d'enchainement.",
+            "Vouloir tout corriger d'un coup."
+          ],
+          "feedback": [
+            "La quatrieme figure aussi merite la procedure complete.",
+            "Pareur, tu es aussi attentif a la fin qu'au debut.",
+            "Un seul point a la fois."
+          ],
+          "plus": [
+            "Filage avec musique.",
+            "Filage devant deux groupes observateurs."
+          ],
+          "minus": [
+            "Filage par moities.",
+            "Trois pyramides au lieu de quatre."
+          ],
+          "diff": {
+            "facilitee": "Filage par moities, trois pyramides, transitions simplifiees.",
+            "normale": "Filage complet quatre pyramides et trois transitions, deux fois.",
+            "complexifiee": "Filage complet avec musique, devant deux groupes observateurs."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee sur chaque figure, y compris en fin d'enchainement quand la fatigue s'installe.",
+            "Pareurs en place pendant tout le filage.",
+            "Recuperation entre les deux filages : la fatigue du porteur est le premier facteur de chute.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Un groupe dans l'espace a la fois, public hors des tapis.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que doit contenir une transition pour ne pas etre un simple deplacement ?",
+          "Pourquoi ne faut-il jamais precipiter un demontage pour gagner du temps ?"
+        ],
+        "key": "Les transitions font partie de la prestation : un deplacement et un element gymnique. Mais la fluidite ne prime jamais sur la securite du demontage."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque figure de l'enchainement.",
+        "Groupe observateur : signale temps morts et manquements a la procedure.",
+        "Secretaire de groupe : note les transitions choisies."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repeter et preparer le jugement",
+      "mainObjective": "Stabiliser l'enchainement par la repetition et former les eleves au role de juge.",
+      "secondaryObjectives": [
+        "Repeter jusqu'a realiser l'enchainement identique deux fois.",
+        "Juger une prestation avec des criteres de difficulte et d'execution.",
+        "Realiser une repetition generale devant public."
+      ],
+      "linkToPrevious": "Les enchainements existent en entier : il reste a les stabiliser et a preparer le role de juge, qui est evalue.",
+      "prerequisiteForNext": "Chaque groupe realise son enchainement identique deux fois et chaque eleve sait utiliser la grille de jugement.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 18
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "grilles de jugement d'entrainement",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de composition par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2,
+            "note": "sous reserve de l'autorisation de captation"
+          }
+        ],
+        "instructions": [
+          "Installer l'espace scenique et les bancs du public comme le jour de l'evaluation.",
+          "Preparer les grilles de jugement identiques a celles de l'evaluation.",
+          "Verifier l'autorisation de captation video avant toute prise d'image.",
+          "Prevoir des zones de repetition separees.",
+          "Verifier la jonction des tapis."
+        ],
+        "sketch": "Espace scenique et bancs du public installes comme le jour J.\nZones de repetition par groupe en peripherie.\nTable des grilles de jugement pres du public.\nPoste de captation sur le cote, si autorisee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet avec renforcement du gainage : la seance comporte de nombreuses repetitions, la fatigue du porteur doit etre anticipee.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, nuque, chevilles.",
+              "Gainage complet, deux series.",
+              "Quadrupedie dos plat avec charge legere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses pyramides une par une.",
+              "Revision des elements gymniques de transition.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Repeter jusqu'a la stabilite",
+          "objective": "Realiser l'enchainement complet plusieurs fois, jusqu'a le reproduire identique deux fois de suite.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition par groupe",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque groupe repete son enchainement quatre fois dans sa zone, avec un point de correction unique entre chaque filage et une recuperation imposee.",
+          "studentGoal": "Realiser notre enchainement deux fois de suite exactement pareil.",
+          "instructions": [
+            "On file l'enchainement en entier, dans l'ordre note.",
+            "Nos pareurs sont en place a chaque figure.",
+            "Entre deux filages, on corrige un seul point et on recupere une minute.",
+            "On s'arrete quand on l'a fait deux fois identique."
+          ],
+          "success": [
+            "L'enchainement est file en entier au moins trois fois.",
+            "Deux filages consecutifs sont identiques.",
+            "Les pareurs sont en place a chaque figure."
+          ],
+          "execution": [
+            "Respecter l'ordre note, sans improviser.",
+            "Corriger un seul element a la fois.",
+            "Maintenir la procedure malgre la fatigue."
+          ],
+          "watch": [
+            "La fatigue des porteurs degrade-t-elle la securite ?",
+            "La procedure est-elle escamotee au fil des repetitions ?",
+            "Les pareurs restent-ils attentifs ?"
+          ],
+          "errors": [
+            "Enchainer les filages sans recuperation.",
+            "Negliger la procedure quand la figure devient familiere.",
+            "Changer des figures a chaque filage."
+          ],
+          "feedback": [
+            "Recuperez une minute : vos porteurs sont fatigues.",
+            "La procedure, meme sur une figure que vous maitrisez.",
+            "Meme enchainement a chaque fois : c'est ce qui sera evalue."
+          ],
+          "plus": [
+            "Filage devant un autre groupe.",
+            "Filage filme puis analyse."
+          ],
+          "minus": [
+            "Repetition par parties.",
+            "Trois filages au lieu de quatre."
+          ],
+          "diff": {
+            "facilitee": "Repetition par parties, trois filages, enchainement raccourci.",
+            "normale": "Quatre filages complets avec correction ciblee et recuperation.",
+            "complexifiee": "Filage devant un autre groupe, filme et analyse."
+          },
+          "safety": [
+            "Recuperation d'une minute imposee entre chaque filage : la fatigue du porteur est le premier facteur d'accident en acrosport.",
+            "Procedure en cinq etapes appliquee a chaque figure, y compris quand elle devient familiere.",
+            "Pareurs en place a chaque figure, sans exception.",
+            "Arret des repetitions des qu'un porteur montre des signes de fatigue.",
+            "Tapis joints, verifies entre les series.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "S'entrainer a juger",
+          "objective": "Former les eleves au role de juge avec la grille reelle, distinguant difficulte et execution.",
+          "material": [
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "tablette ou telephone pour filmer",
+              "fixed": 2
+            }
+          ],
+          "organization": "Public assis face a l'espace scenique. Pendant les passages, chaque juge renseigne une grille sur un groupe designe : nombre de pyramides, tenue 3 secondes, qualite des montages et demontages, transitions.",
+          "studentGoal": "Renseigner une grille de jugement en distinguant la difficulte et l'execution.",
+          "instructions": [
+            "Je compte les pyramides et je verifie la tenue de 3 secondes.",
+            "Je note la qualite des montages et demontages : controles ou precipites.",
+            "Je note si les transitions comportent un element gymnique.",
+            "Je signale tout manquement a la securite."
+          ],
+          "success": [
+            "La grille est renseignee entierement.",
+            "Les jugements de deux juges sur un meme groupe sont proches.",
+            "Les manquements a la securite sont signales."
+          ],
+          "execution": [
+            "Compter pendant le passage, pas apres.",
+            "Chronometrer mentalement les tenues.",
+            "Distinguer une figure difficile mal executee d'une figure simple bien executee."
+          ],
+          "watch": [
+            "Les juges distinguent-ils difficulte et execution ?",
+            "Signalent-ils les manquements a la securite ?",
+            "Le public respecte-t-il le silence ?"
+          ],
+          "errors": [
+            "Noter selon l'affinite avec le groupe.",
+            "Valoriser la difficulte au detriment de l'execution.",
+            "Ne pas signaler un appui interdit."
+          ],
+          "feedback": [
+            "Tu notes la prestation, pas les personnes.",
+            "Une figure difficile mal tenue vaut moins qu'une figure simple bien tenue.",
+            "Tu as vu un appui interdit : tu dois le signaler."
+          ],
+          "plus": [
+            "Justifier oralement son jugement devant le groupe.",
+            "Juger a partir de la video et comparer."
+          ],
+          "minus": [
+            "Juger deux criteres seulement.",
+            "Juger a deux avec mise en commun."
+          ],
+          "diff": {
+            "facilitee": "Jugement sur deux criteres : nombre de pyramides et tenue de 3 secondes.",
+            "normale": "Grille complete renseignee individuellement.",
+            "complexifiee": "Grille complete plus justification orale devant le groupe."
+          },
+          "safety": [
+            "Public assis hors des tapis, a deux metres minimum.",
+            "Aucune circulation devant l'espace pendant un passage.",
+            "Le juge signale immediatement tout manquement a la securite au professeur.",
+            "Captation video uniquement si l'autorisation a ete verifiee, images non diffusees hors du cadre pedagogique."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Repetition generale",
+          "objective": "Realiser une repetition generale dans les conditions exactes de l'evaluation.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe presente son enchainement complet devant la classe assise, dans l'ordre prevu pour la seance 8. Deux juges eleves renseignent la grille.",
+          "studentGoal": "Presenter notre enchainement devant la classe, comme le jour de l'evaluation.",
+          "instructions": [
+            "Nos pareurs se placent avant d'entrer.",
+            "On marque notre debut immobile, 3 secondes.",
+            "On presente l'enchainement en entier, sans s'arreter.",
+            "On marque notre fin immobile, 3 secondes."
+          ],
+          "success": [
+            "L'enchainement est presente en entier.",
+            "Les quatre pyramides sont tenues 3 secondes.",
+            "Debut et fin immobiles marques.",
+            "Les pareurs sont en place a chaque figure."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Ne pas se laisser deconcentrer par le public.",
+            "Maintenir la procedure malgre le trac."
+          ],
+          "watch": [
+            "Le passage devant public degrade-t-il la procedure ?",
+            "Les pareurs restent-ils attentifs devant le public ?",
+            "Le climat de classe est-il respectueux ?"
+          ],
+          "errors": [
+            "Escamoter la procedure sous l'effet du trac.",
+            "Ajouter une figure au dernier moment.",
+            "Rire du passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Le trac ne dispense pas de la procedure.",
+            "Ce que vous avez prepare, rien de plus.",
+            "On respecte tous les passages."
+          ],
+          "plus": [
+            "Passage filme et analyse immediatement."
+          ],
+          "minus": [
+            "Passage devant un demi-groupe.",
+            "Passage sans juges eleves."
+          ],
+          "diff": {
+            "facilitee": "Passage devant un demi-groupe, sans juges eleves.",
+            "normale": "Passage complet devant la classe avec deux juges eleves.",
+            "complexifiee": "Passage filme et analyse immediatement avec la video."
+          },
+          "safety": [
+            "Pareurs en place avant l'entree en scene : le trac ne dispense jamais de la parade.",
+            "Aucune figure ajoutee au dernier moment.",
+            "Tapis joints et verifies avant chaque passage.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui compte le plus pour un juge : la difficulte ou l'execution ?",
+          "Pourquoi faut-il recuperer entre deux filages ?"
+        ],
+        "key": "Une figure simple bien tenue vaut mieux qu'une figure difficile ratee. Et on recupere entre les filages : un porteur fatigue est un porteur qui cede."
+      },
+      "socialRoles": [
+        "Juge : renseigne la grille sur un groupe designe.",
+        "Pareur : securise chaque figure de l'enchainement.",
+        "Public : garde le silence pendant les passages et applaudit a la fin."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Presentation finale et evaluation",
+      "mainObjective": "Presenter l'enchainement devant la classe et evaluer la prestation ainsi que les roles de pareur et de juge.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Assumer la presentation devant le public.",
+        "Tenir le role de pareur et celui de juge.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 18
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "fiches de composition par groupe",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des zones d'appui",
+            "fixed": 2
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer un espace scenique net et un espace public a deux metres minimum.",
+          "Afficher l'ordre de passage et les criteres a l'entree.",
+          "Preparer les grilles nominatives et ressortir les fiches de mi-cycle.",
+          "Verifier une derniere fois la jonction des tapis et la position des tapis epais.",
+          "Rappeler et faire enoncer les regles d'appui par les eleves.",
+          "Faire retirer bijoux et montres, verifier ongles et cheveux."
+        ],
+        "sketch": "Espace scenique net, tapis joints, tapis epais aux zones avec hauteur.\nBancs du public face a la scene, a 2 m.\nTable des grilles sur le cote.\nOrdre de passage et criteres affiches a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves puis revision par parties : aucune prestation acrobatique evaluee ne s'aborde sans preparation complete du gainage.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement complet",
+            "details": [
+              "Poignets, epaules, hanches, nuque, chevilles.",
+              "Gainage ventral, dorsal et lateral, deux series.",
+              "Quadrupedie dos plat avec charge legere, 15 secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses quatre pyramides une par une.",
+              "Revision des elements gymniques de transition.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Presentation evaluee de l'enchainement",
+          "objective": "Evaluer l'enchainement collectif de chaque groupe sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Passages par groupe dans l'ordre affiche. Pour chaque passage : les pareurs du groupe en place, deux juges eleves designes, le reste de la classe en public. Le professeur evalue chaque eleve au sein du groupe.",
+          "studentGoal": "Presenter notre enchainement en entier, en securisant mes camarades.",
+          "instructions": [
+            "Nos pareurs se placent, puis on entre.",
+            "On marque notre debut immobile, 3 secondes.",
+            "On presente les quatre pyramides et les trois transitions, sans s'arreter.",
+            "On marque notre fin immobile, 3 secondes."
+          ],
+          "success": [
+            "L'enchainement comporte au moins quatre pyramides tenues 3 secondes.",
+            "Les appuis se font sur les zones autorisees.",
+            "Les montages et demontages sont controles, sans saut ni chute.",
+            "Les transitions comportent un deplacement et un element gymnique.",
+            "Debut et fin immobiles tenus 3 secondes.",
+            "Le role de pareur est tenu avec rigueur."
+          ],
+          "execution": [
+            "Appliquer la procedure en cinq etapes sur chaque figure.",
+            "Porteur : dos plat, bras tendus.",
+            "Pareur : suivre le voltigeur du montage au demontage complet.",
+            "Continuer meme en cas d'imperfection."
+          ],
+          "watch": [
+            "Les enchainements correspondent-ils aux fiches de composition ?",
+            "La procedure tient-elle devant le public ?",
+            "Les pareurs restent-ils attentifs malgre le trac ?",
+            "Y a-t-il des appuis interdits ?"
+          ],
+          "errors": [
+            "Ajouter une figure non validee au dernier moment.",
+            "Escamoter la procedure sous l'effet du trac.",
+            "Demonter en sautant pour finir plus vite.",
+            "Commenter le passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Ce que vous avez prepare et valide, rien de plus.",
+            "La procedure, meme devant le public.",
+            "On ne saute pas pour descendre, meme a la fin.",
+            "Silence pendant les passages."
+          ],
+          "plus": [
+            "Enchainement de cinq pyramides avec musique.",
+            "Enchainement avec deplacement dans tout l'espace."
+          ],
+          "minus": [
+            "Trois pyramides sans hauteur.",
+            "Presentation devant un demi-groupe."
+          ],
+          "diff": {
+            "facilitee": "Trois pyramides sans hauteur, transitions simplifiees, devant un demi-groupe. La securite et l'engagement sont evalues autant que la difficulte.",
+            "normale": "Quatre pyramides tenues 3 secondes, trois transitions, devant la classe.",
+            "complexifiee": "Cinq pyramides avec musique et deplacement dans tout l'espace."
+          },
+          "safety": [
+            "Regles d'appui affichees, rappelees et enoncees par les eleves avant le premier passage : appuis sur epaules, hanches, bassin, cuisses ; jamais le milieu du dos, la nuque, la tete ni les articulations.",
+            "Pareurs designes et en place avant chaque entree en scene : le trac ne dispense jamais de la parade.",
+            "Deux pareurs pour toute figure a quatre ou comportant une hauteur importante.",
+            "Procedure en cinq etapes obligatoire sur chaque figure, y compris en evaluation.",
+            "Demontage dans l'ordre inverse, sans saut, quelle que soit la hauteur.",
+            "Aucune figure ajoutee au dernier moment : seul ce qui a ete valide est presente.",
+            "Hauteur limitee au protocole de l'etablissement.",
+            "Le porteur peut interrompre a tout moment en disant stop.",
+            "Tapis joints et verifies avant le premier passage et entre les groupes.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Echauffement complet obligatoire avant tout passage evalue.",
+            "Bijoux et montres retires, ongles courts, cheveux attaches.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Retour des juges",
+          "objective": "Faire expliciter aux juges ce qu'ils ont observe, en distinguant difficulte et execution.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Apres chaque serie de passages, les deux juges annoncent ce qu'ils ont observe et le justifient. Le professeur complete. Puis chacun compare son objectif de mi-cycle a sa grille du jour.",
+          "studentGoal": "Dire ce que j'ai observe, en distinguant la difficulte et l'execution.",
+          "instructions": [
+            "Juge : j'annonce le nombre de pyramides et la qualite des tenues.",
+            "Je cite un moment precis pour justifier.",
+            "Le groupe qui a presente ecoute sans contester.",
+            "Ensuite, je relis mon objectif de mi-cycle et je dis s'il est atteint."
+          ],
+          "success": [
+            "Chaque juge cite un moment precis de l'enchainement.",
+            "Difficulte et execution sont distinguees.",
+            "Chaque eleve se prononce sur son objectif personnel."
+          ],
+          "execution": [
+            "Nommer le critere avant de donner un exemple.",
+            "Citer un moment identifiable.",
+            "S'appuyer sur sa grille pour juger son objectif."
+          ],
+          "watch": [
+            "Les juges distinguent-ils difficulte et execution ?",
+            "Les groupes acceptent-ils le retour de leurs camarades ?"
+          ],
+          "errors": [
+            "Dire seulement que c'etait bien ou nul.",
+            "Valoriser la difficulte au detriment de l'execution.",
+            "Contester bruyamment le jugement."
+          ],
+          "feedback": [
+            "Quel critere exactement, et a quel moment ?",
+            "Leur figure etait plus simple mais mieux tenue : c'est ce qui compte.",
+            "Vous ecoutez, vous repondrez apres."
+          ],
+          "plus": [
+            "Le juge propose un conseil d'amelioration."
+          ],
+          "minus": [
+            "Le juge annonce un seul critere."
+          ],
+          "diff": {
+            "facilitee": "Un seul critere annonce, avec appui du professeur.",
+            "normale": "Criteres annonces et justifies, plus bilan de l'objectif personnel.",
+            "complexifiee": "Retour complet plus conseil d'amelioration argumente."
+          },
+          "safety": [
+            "Phase realisee hors des tapis, groupe assis.",
+            "Aucun passage en cours pendant les retours.",
+            "Aucune figure realisee pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel lourd.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 18
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rangement collectif des tapis par equipes, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en acrosport aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tapis se portent a deux minimum, jamais seul.",
+            "Chaque groupe range la zone qui lui est attribuee.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun tapis porte seul.",
+            "Au moins un eleve par groupe s'exprime."
+          ],
+          "execution": [
+            "Porter les tapis a deux, jambes flechies, dos droit.",
+            "Empiler sans tirer sur le dos.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves identifient-ils des acquis precis, securite comprise ?"
+          ],
+          "errors": [
+            "Porter un tapis seul et se faire mal au dos.",
+            "Ne parler que de la difficulte des figures.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "A deux minimum, jambes flechies : ironique de se blesser en rangeant.",
+            "Pas seulement les figures : la securite aussi, c'est un acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit : ce sont des charges lourdes et encombrantes.",
+            "Empilement stable, hauteur limitee.",
+            "Aucun eleve ne circule sous une pile en cours de constitution.",
+            "Comptage du materiel avant de quitter la salle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en acrosport aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi la procedure de montage ne se negocie-t-elle jamais, meme devant un public ?"
+        ],
+        "key": "En acrosport, le corps d'un camarade sert de support : les regles d'appui et la procedure de montage protegent celui qui porte comme celui qui monte. Elles ne se negocient a aucun moment."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque figure de l'enchainement, role evalue au meme titre que la prestation.",
+        "Juge : renseigne et justifie la grille d'un groupe, role evalue.",
+        "Public : respecte chaque passage par le silence et les applaudissements.",
+        "Responsable materiel : organise le rangement collectif des tapis en fin de cycle."
+      ]
+    }
+  ]
+}

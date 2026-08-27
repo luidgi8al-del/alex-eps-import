@@ -1,0 +1,2688 @@
+{
+  "apsa": "Volley-ball",
+  "grades": [
+    "CINQUIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Realiser des actions decisives en situation favorable afin de faire basculer le rapport de force en sa faveur ou en faveur de son equipe.",
+    "Adapter son engagement moteur en fonction de son etat physique et du rapport de force.",
+    "Etre solidaire de ses partenaires et respectueux de son ou de ses adversaires et de l'arbitre.",
+    "Observer et co-arbitrer.",
+    "Accepter le resultat de la rencontre et savoir l'analyser avec objectivite."
+  ],
+  "targetCompetence": "Passer d'un renvoi direct et subi, ou la balle repart des le premier contact, a une construction collective : receptionner vers un partenaire, organiser un deuxieme contact, puis attaquer dans l'espace libre adverse.",
+  "cycleObjectives": [
+    "Se deplacer sous la balle pour la recevoir en position d'equilibre.",
+    "Renvoyer en manchette et en passe haute selon la hauteur de la balle.",
+    "Construire un jeu en deux ou trois touches plutot qu'un renvoi direct.",
+    "Servir reglementairement et de facon reguliere.",
+    "Tenir les roles d'arbitre et de marqueur avec rigueur."
+  ],
+  "plannedTitles": [
+    "Decouvrir le jeu et se situer",
+    "Se deplacer sous la balle",
+    "La manchette : recevoir bas",
+    "La passe haute et le deuxieme contact",
+    "Match evalue de mi-cycle",
+    "Construire en trois touches",
+    "Servir et attaquer l'espace libre",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/cid99188/eps-cycle-4-conduire-et-maitriser-un-affrontement-collectif-ou-interindividuel.html",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources d'accompagnement du programme d'EPS au cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Volley-ball au college - situations de reference et d'apprentissage",
+      "org": "Academie de Nice",
+      "url": "https://www.pedagogie.ac-nice.fr/eps/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Le volley-ball scolaire - regles amenagees et progression",
+      "org": "Federation francaise de volley",
+      "url": "https://www.ffvb.org/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Hauteur des filets reglable : en 5e, abaisser a environ 2 metres pour permettre la construction du jeu.",
+    "Nombre de terrains disponibles : conditionne le temps de jeu reel par eleve.",
+    "Type de ballons : privilegier des ballons legers ou en mousse pour la phase d'apprentissage, moins douloureux en manchette.",
+    "Etat du sol et degagement autour des terrains : au moins 2 metres.",
+    "Eleves dispenses : prevoir les roles d'arbitre, de marqueur et d'observateur.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - renvoie directement",
+      "observed": "Renvoie la balle des le premier contact, systematiquement, sans regarder ses partenaires ni l'espace adverse.",
+      "need": "Decouvrir que le premier contact sert a construire, pas a renvoyer."
+    },
+    {
+      "label": "Profil 2 - subit la balle",
+      "observed": "Reste immobile et tend les bras quand la balle arrive pres de lui. Ne se deplace jamais pour aller sous la balle.",
+      "need": "Construire le deplacement sous la balle et la position d'attente."
+    },
+    {
+      "label": "Profil 3 - evite la balle",
+      "observed": "S'ecarte quand la balle vient vers lui, laisse tomber les balles a sa portee, souvent par crainte du contact.",
+      "need": "Retrouver la confiance avec des ballons legers et des trajectoires hautes et lentes."
+    },
+    {
+      "label": "Profil 4 - a l'aise mais joue seul",
+      "observed": "Maitrise techniquement, mais smashe des le premier contact ou monopolise le jeu sans utiliser ses partenaires.",
+      "need": "S'inscrire dans une construction collective et occuper un role dans l'organisation de l'equipe."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en 4 contre 4 sur terrain reduit, matchs en 15 points avec service alterne. Chaque eleve joue au moins trois matchs et tient une fois le role d'arbitre et une fois celui d'observateur.",
+    "criteria": [
+      "L'eleve se deplace sous la balle et la joue en position d'equilibre sur la majorite de ses interventions.",
+      "L'equipe construit en deux ou trois touches sur la majorite de ses possessions, plutot qu'un renvoi direct.",
+      "L'eleve choisit la manchette ou la passe haute selon la hauteur de la balle.",
+      "Le service est reglementaire et regulier : moins de trois services rates par match.",
+      "L'eleve cherche a envoyer la balle dans l'espace libre adverse.",
+      "Les roles d'arbitre et d'observateur sont tenus, et le resultat est accepte et analyse."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA4, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir le jeu et se situer",
+      "mainObjective": "Entrer dans l'activite par un jeu adapte et observer le rapport de chaque eleve a la balle et au collectif.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre les regles de base : trois touches maximum, pas deux fois de suite, balle qui ne doit pas tomber.",
+        "Realiser un premier echange par-dessus le filet.",
+        "Reperer qui renvoie directement, qui subit, qui evite la balle."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : le volley est une activite ou le ballon ne se tient pas, ce qui la rend difficile d'acces sans amenagement.",
+      "prerequisiteForNext": "Chaque eleve a joue, connait les regles de base et a ete observe.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3,
+            "note": "hauteur abaissee a environ 2 metres"
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.34,
+            "min": 8
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.34,
+            "min": 4
+          },
+          {
+            "label": "sifflet",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Monter les filets et regler la hauteur a environ 2 metres : c'est ce qui rend la construction possible en 5e.",
+          "Delimiter trois terrains reduits avec les plots, en laissant 2 metres de degagement autour.",
+          "Sortir des ballons legers ou en mousse : ils font moins mal en manchette et ralentissent le jeu.",
+          "Verifier la tension des filets et la stabilite des poteaux.",
+          "Preparer les fiches d'observation sur un banc, hors des terrains."
+        ],
+        "sketch": "3 terrains reduits avec filet a 2 m.\n2 m de degagement autour de chaque terrain.\nBanc des observateurs sur le cote.\nBallons legers en reserve pres de chaque terrain."
+      },
+      "warmup": {
+        "rationale": "Prepare les epaules, les poignets et les appuis, et familiarise avec une balle qui ne se tient pas : c'est la difficulte specifique du volley.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains, changements de direction.",
+              "Pas chasses lateraux, deplacements avant-arriere."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets et doigts : cercles, ouverture et fermeture.",
+              "Epaules : cercles avant et arriere, moulinets.",
+              "Chevilles et genoux : flexions, montees sur pointes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Familiarisation avec la balle",
+            "details": [
+              "Se lancer la balle et la rattraper au-dessus de la tete, 10 fois.",
+              "Faire rebondir la balle au sol et la rattraper en se placant dessous.",
+              "Par deux, se lancer la balle en cloche et la rattraper a deux mains."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le volley-lance : jouer avec les mains",
+          "objective": "Faire vivre le jeu collectif du volley en supprimant provisoirement la difficulte technique de la frappe.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "4 contre 4 sur terrain reduit. La balle se rattrape et se relance a deux mains, mais la regle des trois touches s'applique : trois eleves differents doivent la toucher avant le renvoi. Matchs de 5 minutes.",
+          "studentGoal": "Faire passer la balle par trois joueurs de mon equipe avant de la renvoyer.",
+          "instructions": [
+            "Je rattrape la balle a deux mains, je ne la frappe pas.",
+            "Je la relance immediatement a un partenaire : pas plus de 3 secondes en main.",
+            "Trois joueurs differents doivent la toucher avant le renvoi.",
+            "Je ne peux pas la toucher deux fois de suite."
+          ],
+          "success": [
+            "L'equipe realise au moins trois sequences completes de trois touches.",
+            "Chaque joueur touche la balle sur la majorite des possessions.",
+            "Aucune balle gardee plus de 3 secondes."
+          ],
+          "execution": [
+            "Se deplacer pour se placer sous la balle avant de la rattraper.",
+            "Relancer vers un partenaire libre, en cloche haute.",
+            "Se replacer apres avoir relance."
+          ],
+          "watch": [
+            "Qui reste immobile et attend que la balle vienne a lui ?",
+            "Qui monopolise le jeu ?",
+            "Qui s'ecarte quand la balle arrive ?",
+            "L'espace du terrain est-il occupe ou tous sont-ils groupes ?"
+          ],
+          "errors": [
+            "Rester statique en attendant la balle.",
+            "Garder la balle trop longtemps en main.",
+            "Se regrouper tous au meme endroit du terrain."
+          ],
+          "feedback": [
+            "Va sous la balle, ne l'attends pas.",
+            "Relance tout de suite : tu n'as que 3 secondes.",
+            "Repartissez-vous : vous etes tous au filet."
+          ],
+          "plus": [
+            "Reduire le temps en main a 2 secondes.",
+            "Passer au jeu frappe pour les eleves a l'aise."
+          ],
+          "minus": [
+            "Deux touches obligatoires au lieu de trois.",
+            "Temps en main porte a 5 secondes."
+          ],
+          "diff": {
+            "facilitee": "Deux touches obligatoires, 5 secondes en main, terrain reduit, filet plus bas.",
+            "normale": "Trois touches par trois joueurs differents, 3 secondes en main.",
+            "complexifiee": "Jeu frappe en manchette et passe haute, trois touches obligatoires."
+          },
+          "safety": [
+            "Filets bien tendus, poteaux stables et proteges si possible.",
+            "2 metres de degagement autour de chaque terrain.",
+            "Ballons legers ou mousse pour cette premiere seance.",
+            "Ne jamais passer sous le filet pendant le jeu.",
+            "Ballons ramasses immediatement : un ballon au sol fait chuter.",
+            "Bijoux retires, lacets attaches."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Se placer sous la balle",
+          "objective": "Construire le deplacement vers la balle et la position d'equilibre, prealable a toute technique.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par deux. L'un lance la balle en cloche a droite, a gauche ou devant. L'autre doit se deplacer pour se placer sous la balle et la rattraper les deux pieds au sol, en equilibre. Dix lancers puis rotation.",
+          "studentGoal": "Etre place sous la balle avant qu'elle n'arrive, les deux pieds au sol.",
+          "instructions": [
+            "Je pars des que mon partenaire lance, je ne l'attends pas.",
+            "Je me place sous la balle : elle doit tomber sur mon front si je ne bougeais pas.",
+            "Je la rattrape les deux pieds au sol, en equilibre, pas en sautant.",
+            "Lanceur : je lance en cloche haute, jamais fort."
+          ],
+          "success": [
+            "Huit rattrapages sur dix realises sous la balle, en equilibre.",
+            "Le deplacement commence des le lancer.",
+            "Aucun rattrapage bras tendus sur le cote."
+          ],
+          "execution": [
+            "Partir des le lancer, en pas chasses ou en course selon la distance.",
+            "Arriver avant la balle et se stabiliser.",
+            "Genoux flechis, position basse et equilibree."
+          ],
+          "watch": [
+            "Les eleves partent-ils des le lancer ou attendent-ils ?",
+            "Arrivent-ils sous la balle ou tendent-ils les bras sur le cote ?",
+            "La position est-elle equilibree ?"
+          ],
+          "errors": [
+            "Attendre que la balle arrive pour bouger.",
+            "Tendre les bras sur le cote au lieu de se deplacer.",
+            "Rattraper en sautant ou en desequilibre."
+          ],
+          "feedback": [
+            "Pars des qu'il lance, pas quand la balle arrive.",
+            "Sous la balle : elle doit tomber sur ton front.",
+            "Deux pieds au sol, genoux flechis."
+          ],
+          "plus": [
+            "Lancers plus tendus et plus varies.",
+            "Se replacer au centre entre chaque lancer."
+          ],
+          "minus": [
+            "Lancers tres hauts et proches.",
+            "Rattrapage autorise a une main."
+          ],
+          "diff": {
+            "facilitee": "Lancers tres hauts et proches, rattrapage libre.",
+            "normale": "Lancers varies, rattrapage sous la balle en equilibre.",
+            "complexifiee": "Lancers tendus, avec replacement au centre entre chaque."
+          },
+          "safety": [
+            "Binomes espaces d'au moins 3 metres.",
+            "Lancers en cloche uniquement, jamais tendus vers le visage.",
+            "Ballons ramasses entre les series.",
+            "Espace degage autour de chaque binome."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec deux touches obligatoires",
+          "objective": "Reinvestir le jeu collectif en introduisant la frappe, avec une contrainte de construction.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "4 contre 4, matchs de 5 minutes. La balle peut etre rattrapee au premier contact puis relancee, mais deux joueurs differents doivent la toucher avant le renvoi. Un observateur compte les sequences a deux touches.",
+          "studentGoal": "Ne jamais renvoyer la balle des le premier contact.",
+          "instructions": [
+            "Deux joueurs minimum doivent toucher la balle avant le renvoi.",
+            "Si je renvoie directement, le point va a l'adversaire.",
+            "Je me place sous la balle avant de la jouer.",
+            "Observateur : je compte les sequences a deux touches de mon equipe."
+          ],
+          "success": [
+            "Au moins cinq sequences a deux touches par match.",
+            "Le renvoi direct devient rare.",
+            "Chaque joueur touche la balle plusieurs fois par match."
+          ],
+          "execution": [
+            "Premier contact : envoyer la balle haut vers un partenaire, pas par-dessus le filet.",
+            "Se deplacer sous la balle avant chaque contact.",
+            "Se replacer apres avoir joue."
+          ],
+          "watch": [
+            "Le renvoi direct disparait-il ?",
+            "Les eleves envoient-ils le premier contact vers le haut ou vers le filet ?"
+          ],
+          "errors": [
+            "Renvoyer directement par reflexe.",
+            "Envoyer le premier contact trop bas ou trop loin.",
+            "Rester immobile en attendant la balle."
+          ],
+          "feedback": [
+            "Premier contact vers le haut, vers ton partenaire.",
+            "Deux touches minimum : c'est la regle du jour.",
+            "Va sous la balle avant de la jouer."
+          ],
+          "plus": [
+            "Trois touches obligatoires.",
+            "Jeu entierement frappe, sans rattrapage."
+          ],
+          "minus": [
+            "Rattrapage autorise a tous les contacts.",
+            "Terrain reduit et filet abaisse."
+          ],
+          "diff": {
+            "facilitee": "Rattrapage autorise a tous les contacts, deux touches, terrain tres reduit.",
+            "normale": "Rattrapage au premier contact puis relance, deux touches obligatoires.",
+            "complexifiee": "Jeu entierement frappe, trois touches obligatoires."
+          },
+          "safety": [
+            "Un seul match par terrain.",
+            "2 metres de degagement autour des terrains.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses immediatement entre les points.",
+            "Eleves en attente assis hors des terrains."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que se passe-t-il quand on renvoie la balle des le premier contact ?",
+          "Ou faut-il se placer par rapport a la balle pour bien la jouer ?"
+        ],
+        "key": "Au volley, le premier contact ne sert pas a renvoyer : il sert a donner une balle haute et facile a un partenaire, pour construire l'attaque."
+      },
+      "socialRoles": [
+        "Observateur : compte les sequences a deux touches de son equipe.",
+        "Marqueur : annonce le score apres chaque point.",
+        "Responsable materiel : sort les ballons et verifie la hauteur des filets."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Se deplacer sous la balle",
+      "mainObjective": "Construire le deplacement et la position d'attente, condition de toute frappe correcte.",
+      "secondaryObjectives": [
+        "Adopter la position d'attente : genoux flechis, appuis prets.",
+        "Se deplacer en pas chasses sans croiser les pieds.",
+        "Arriver sous la balle avant qu'elle ne descende."
+      ],
+      "linkToPrevious": "La seance 1 a montre que la majorite des balles sont perdues parce que l'eleve n'est pas place : le deplacement est le premier apprentissage.",
+      "prerequisiteForNext": "Chaque eleve se deplace sous la balle et arrive en position d'equilibre.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12,
+            "note": "materialisent les zones a atteindre"
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Disposer des cerceaux dans chaque demi-terrain, comme zones a atteindre.",
+          "Verifier la hauteur des filets et le degagement autour des terrains.",
+          "Preparer un ballon pour deux eleves.",
+          "Verifier que le sol n'est pas glissant : les deplacements lateraux sont rapides."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nCerceaux disposes dans chaque demi-terrain : zones a atteindre.\nZone de travail par deux en peripherie.\n2 m de degagement autour."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les appuis lateraux et les changements de direction, qui sont l'objet de la seance.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction au signal.",
+              "Pas chasses lateraux sur la largeur du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Chevilles, genoux, hanches : flexions et cercles.",
+              "Epaules, poignets, doigts.",
+              "Fentes laterales, 8 de chaque cote."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Position d'attente et deplacements",
+            "details": [
+              "Position d'attente : genoux flechis, mains devant, poids sur l'avant des pieds. 20 secondes.",
+              "Deplacements en pas chasses depuis la position d'attente, au signal.",
+              "Se placer sous une balle lancee par le professeur, sans la jouer."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le jeu des cerceaux",
+          "objective": "Construire le deplacement rapide vers un point precis, puis la stabilisation avant de jouer.",
+          "material": [
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par trois : un lanceur, un joueur, un observateur. Trois cerceaux disposes en triangle. Le lanceur annonce un cerceau et lance la balle dessus. Le joueur doit y etre, les deux pieds au sol, avant que la balle n'arrive. Dix lancers puis rotation.",
+          "studentGoal": "Etre dans le cerceau, stabilise, avant que la balle n'arrive.",
+          "instructions": [
+            "Je pars de la position d'attente au centre.",
+            "Des que le cerceau est annonce, je m'y deplace en pas chasses.",
+            "J'arrive et je me stabilise avant que la balle ne descende.",
+            "Je rattrape la balle a deux mains, dans le cerceau."
+          ],
+          "success": [
+            "Huit arrivees sur dix dans le cerceau avant la balle.",
+            "Les deux pieds sont au sol et stabilises a la reception.",
+            "Le retour au centre se fait apres chaque lancer."
+          ],
+          "execution": [
+            "Partir des l'annonce, sans attendre le lancer.",
+            "Se deplacer en pas chasses, sans croiser les pieds.",
+            "Arriver et flechir les genoux pour se stabiliser."
+          ],
+          "watch": [
+            "Les eleves partent-ils a l'annonce ou au lancer ?",
+            "Croisent-ils les pieds en se deplacant ?",
+            "Arrivent-ils stabilises ou en course ?"
+          ],
+          "errors": [
+            "Attendre le lancer pour partir.",
+            "Croiser les pieds, ce qui empeche de se stabiliser.",
+            "Arriver en courant et rattraper en desequilibre."
+          ],
+          "feedback": [
+            "Pars a l'annonce, tu auras le temps.",
+            "Pas chasses : tes pieds ne se croisent pas.",
+            "Arrive et arrete-toi, ensuite tu joues."
+          ],
+          "plus": [
+            "Quatre cerceaux, annonce au dernier moment.",
+            "Cerceau annonce apres le lancer."
+          ],
+          "minus": [
+            "Deux cerceaux proches.",
+            "Annonce longtemps a l'avance."
+          ],
+          "diff": {
+            "facilitee": "Deux cerceaux proches, annonce bien avant le lancer, balle tres haute.",
+            "normale": "Trois cerceaux en triangle, annonce au lancer.",
+            "complexifiee": "Quatre cerceaux, annonce apres le lancer de la balle."
+          },
+          "safety": [
+            "Groupes espaces d'au moins 3 metres.",
+            "Cerceaux poses a plat, jamais en relief.",
+            "Lancers en cloche, jamais tendus vers le visage.",
+            "Ballons ramasses entre les series.",
+            "Sol verifie : les deplacements lateraux sont rapides."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Se replacer au centre",
+          "objective": "Construire le retour a la position d'attente apres chaque intervention, condition pour jouer la balle suivante.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            }
+          ],
+          "organization": "Par deux, un plot marquant la position centrale. Le lanceur envoie la balle alternativement a droite, a gauche et devant. Apres chaque rattrapage, le joueur doit revenir toucher le plot central. Series de 2 minutes.",
+          "studentGoal": "Revenir au plot central apres chaque balle jouee.",
+          "instructions": [
+            "Apres chaque rattrapage, je reviens toucher le plot central.",
+            "Je reprends la position d'attente : genoux flechis, mains devant.",
+            "Je ne repars que depuis le centre.",
+            "Lanceur : je lance des que mon partenaire est revenu."
+          ],
+          "success": [
+            "Le retour au centre est effectue apres au moins huit balles sur dix.",
+            "La position d'attente est reprise a chaque retour.",
+            "Le rythme se maintient sur les deux minutes."
+          ],
+          "execution": [
+            "Revenir immediatement apres avoir joue, sans regarder la balle.",
+            "Reprendre la position d'attente, pas debout jambes tendues.",
+            "Se deplacer en pas chasses."
+          ],
+          "watch": [
+            "Les eleves reviennent-ils spontanement ou faut-il le rappeler ?",
+            "La position d'attente est-elle reprise ou restent-ils debout ?"
+          ],
+          "errors": [
+            "Rester la ou on a joue la balle.",
+            "Revenir debout, jambes tendues.",
+            "Regarder sa balle au lieu de se replacer."
+          ],
+          "feedback": [
+            "Reviens au centre, sinon tu ne prendras jamais la suivante.",
+            "Genoux flechis en attente, pas debout.",
+            "Ne regarde pas ta balle, replace-toi."
+          ],
+          "plus": [
+            "Lancers plus rapprochés dans le temps.",
+            "Quatre directions au lieu de trois."
+          ],
+          "minus": [
+            "Deux directions.",
+            "Temps de replacement plus long."
+          ],
+          "diff": {
+            "facilitee": "Deux directions, lancers espaces, temps de replacement long.",
+            "normale": "Trois directions, retour au centre systematique.",
+            "complexifiee": "Quatre directions, lancers rapprochés."
+          },
+          "safety": [
+            "Binomes espaces d'au moins 3 metres.",
+            "Plots poses a plat.",
+            "Lancers en cloche uniquement.",
+            "Ballons ramasses entre les series."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec zone de replacement",
+          "objective": "Reinvestir le deplacement et le replacement en situation de match.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "4 contre 4, matchs de 5 minutes. Deux touches obligatoires. Un observateur compte, pour un joueur designe, le nombre de fois ou il se deplace sous la balle et ou il se replace apres avoir joue.",
+          "studentGoal": "Me deplacer sous chaque balle et me replacer apres l'avoir jouee.",
+          "instructions": [
+            "Je me deplace sous la balle avant de la jouer.",
+            "Apres avoir joue, je me replace en position d'attente.",
+            "Deux touches minimum avant le renvoi.",
+            "Observateur : je compte les deplacements et les replacements de mon joueur."
+          ],
+          "success": [
+            "Au moins dix deplacements sous la balle comptes par match.",
+            "Le replacement suit la majorite des interventions.",
+            "Les sequences a deux touches se maintiennent."
+          ],
+          "execution": [
+            "Partir des que la trajectoire de la balle est lisible.",
+            "Se stabiliser avant de jouer.",
+            "Revenir en position d'attente apres chaque contact."
+          ],
+          "watch": [
+            "Le deplacement acquis en atelier tient-il en match ?",
+            "Les eleves restent-ils statiques quand la balle est loin ?"
+          ],
+          "errors": [
+            "Rester immobile quand la balle est pour un partenaire.",
+            "Jouer la balle en desequilibre.",
+            "Oublier le replacement des que le point devient serre."
+          ],
+          "feedback": [
+            "Bouge meme si ce n'est pas ta balle : tu couvres.",
+            "Stabilise-toi avant de jouer.",
+            "Replace-toi : la balle revient."
+          ],
+          "plus": [
+            "Trois touches obligatoires.",
+            "Terrain elargi."
+          ],
+          "minus": [
+            "Rattrapage autorise.",
+            "Terrain reduit."
+          ],
+          "diff": {
+            "facilitee": "Rattrapage autorise, terrain reduit, deux touches.",
+            "normale": "Jeu frappe ou rattrape au premier contact, deux touches, terrain normal.",
+            "complexifiee": "Jeu entierement frappe, trois touches, terrain elargi."
+          },
+          "safety": [
+            "Un seul match par terrain.",
+            "2 metres de degagement autour des terrains.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les points.",
+            "Eleves en attente hors des terrains."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il etre par rapport a la balle pour bien la jouer ?",
+          "Pourquoi faut-il revenir au centre apres avoir joue ?"
+        ],
+        "key": "Au volley, on joue bien la balle quand on est place dessous et stabilise : le deplacement precede toujours la technique."
+      },
+      "socialRoles": [
+        "Observateur de deplacement : compte les deplacements et replacements de son joueur.",
+        "Lanceur : envoie des balles regulieres et jouables.",
+        "Responsable materiel : installe cerceaux et plots."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "La manchette : recevoir bas",
+      "mainObjective": "Construire la manchette pour recevoir les balles basses et les renvoyer haut vers un partenaire.",
+      "secondaryObjectives": [
+        "Realiser le plateau de bras correct.",
+        "Jouer la balle sans mouvement de bras, par la poussee des jambes.",
+        "Envoyer la balle haut vers un partenaire."
+      ],
+      "linkToPrevious": "Les eleves se placent maintenant sous la balle, mais ne savent pas quoi en faire quand elle arrive bas : la manchette est la reponse.",
+      "prerequisiteForNext": "Chaque eleve realise cinq manchettes consecutives vers un partenaire.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "affiche du plateau de bras",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher un schema du plateau de bras : bras tendus, pouces joints, epaules vers l'avant.",
+          "Preparer des ballons legers : la manchette fait mal avec un ballon dur.",
+          "Verifier la hauteur des filets.",
+          "Disposer des cerceaux comme cibles hautes a atteindre."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nAffiche du plateau de bras au mur.\nZones de travail par deux en peripherie, avec cerceaux-cibles.\nBallons legers en reserve."
+      },
+      "warmup": {
+        "rationale": "Prepare les avant-bras et les epaules, directement sollicites par la manchette, et installe progressivement le geste.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses lateraux.",
+              "Deplacements avant-arriere."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, avant-bras, coudes : cercles et flexions.",
+              "Epaules : cercles et moulinets.",
+              "Chevilles et genoux : flexions profondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Construction du plateau",
+            "details": [
+              "Former le plateau de bras sans balle : bras tendus, pouces joints. 10 fois.",
+              "Le professeur pose la balle sur le plateau de chaque eleve pour verifier la surface.",
+              "Manchettes sur place, balle lancee par le partenaire tres pres."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La manchette vers le haut",
+          "objective": "Construire le geste de manchette : plateau stable, poussee des jambes, balle envoyee haut.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            },
+            {
+              "label": "affiche du plateau de bras",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par deux. Le lanceur envoie une balle en cloche basse, le joueur la renvoie en manchette le plus haut possible vers le lanceur. Progression : d'abord manchette sur place, puis avec un pas de deplacement. Dix balles puis rotation.",
+          "studentGoal": "Envoyer la balle haut et droit vers mon partenaire, en manchette.",
+          "instructions": [
+            "Je forme mon plateau : bras tendus, pouces joints, epaules vers l'avant.",
+            "Je flechis les jambes et je pousse : ce sont mes jambes qui envoient la balle, pas mes bras.",
+            "Je ne bouge pas mes bras : ils restent tendus et fixes.",
+            "Je vise haut, au-dessus de mon partenaire."
+          ],
+          "success": [
+            "Sept manchettes sur dix atteignent le partenaire.",
+            "La balle monte au moins a 2 metres de haut.",
+            "Les bras restent tendus et immobiles pendant la frappe."
+          ],
+          "execution": [
+            "Bras tendus, pouces joints, plateau oriente vers la cible.",
+            "Contact sur les avant-bras, jamais sur les poignets ni les mains.",
+            "Poussee des jambes de bas en haut, bras qui accompagnent sans frapper."
+          ],
+          "watch": [
+            "Les bras sont-ils tendus ou flechis ?",
+            "Le contact se fait-il sur les avant-bras ou sur les poignets ?",
+            "Les eleves frappent-ils avec les bras au lieu de pousser avec les jambes ?"
+          ],
+          "errors": [
+            "Flechir les bras au moment du contact.",
+            "Frapper la balle avec un mouvement de bras vers le haut.",
+            "Contact sur les poignets, douloureux et imprecis."
+          ],
+          "feedback": [
+            "Bras tendus, ils ne bougent pas : ce sont tes jambes qui poussent.",
+            "Contact sur tes avant-bras, pas sur tes poignets.",
+            "Flechis plus, puis pousse vers le haut."
+          ],
+          "plus": [
+            "Manchette apres un deplacement lateral.",
+            "Manchette dans un cerceau-cible eleve."
+          ],
+          "minus": [
+            "Manchette sur balle posee doucement.",
+            "Balle en mousse tres legere."
+          ],
+          "diff": {
+            "facilitee": "Balle en mousse, lancer tres doux et proche, manchette sur place.",
+            "normale": "Lancer en cloche basse, manchette avec un pas de deplacement.",
+            "complexifiee": "Manchette apres deplacement lateral, vers une cible haute imposee."
+          },
+          "safety": [
+            "Ballons legers ou mousse obligatoires pour l'apprentissage de la manchette.",
+            "Binomes espaces d'au moins 3 metres.",
+            "Lancers en cloche, jamais tendus vers le visage.",
+            "Arret en cas de douleur aux avant-bras : verifier le point de contact.",
+            "Ballons ramasses entre les series."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Manchettes en continu",
+          "objective": "Enchainer les manchettes en cooperation, ce qui exige de controler la hauteur et la direction.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par deux, a 4 metres. Les deux joueurs s'echangent la balle en manchette, en cooperation, en comptant les echanges. Trois paliers : 3, 5 puis 8 manchettes consecutives.",
+          "studentGoal": "Enchainer huit manchettes consecutives avec mon partenaire.",
+          "instructions": [
+            "On coopere : on cherche a faire durer, pas a piéger l'autre.",
+            "J'envoie la balle haut et vers mon partenaire.",
+            "Je me replace apres chaque manchette.",
+            "On compte a voix haute."
+          ],
+          "success": [
+            "Le palier de huit manchettes est atteint au moins une fois.",
+            "Les balles sont envoyees hautes, jouables.",
+            "Le comptage est fait a voix haute."
+          ],
+          "execution": [
+            "Envoyer haut : une balle haute laisse le temps de se placer.",
+            "Se replacer entre chaque manchette.",
+            "Garder les bras tendus a chaque contact."
+          ],
+          "watch": [
+            "Les balles sont-elles envoyees assez haut ?",
+            "Les eleves se replacent-ils entre les contacts ?",
+            "La technique se degrade-t-elle quand l'echange dure ?"
+          ],
+          "errors": [
+            "Envoyer des balles tendues et rapides, injouables.",
+            "Rester immobile apres sa manchette.",
+            "Flechir les bras quand l'echange s'accelere."
+          ],
+          "feedback": [
+            "Envoie plus haut : il aura le temps de se placer.",
+            "Replace-toi apres chaque manchette.",
+            "Tes bras plient : garde-les tendus."
+          ],
+          "plus": [
+            "Objectif de 15 manchettes.",
+            "Echanges a 6 metres de distance."
+          ],
+          "minus": [
+            "Objectif de 3 manchettes.",
+            "Un rattrapage autorise entre deux manchettes."
+          ],
+          "diff": {
+            "facilitee": "Objectif 3 manchettes, rattrapage autorise entre chaque, distance de 3 metres.",
+            "normale": "Paliers 3, 5 puis 8 manchettes consecutives a 4 metres.",
+            "complexifiee": "Objectif 15 manchettes a 6 metres de distance."
+          },
+          "safety": [
+            "Binomes espaces les uns des autres.",
+            "Ballons legers.",
+            "Ne pas envoyer de balle tendue vers le visage du partenaire.",
+            "Ballons ramasses entre les series."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec manchette imposee",
+          "objective": "Reinvestir la manchette en match : le premier contact se fait obligatoirement en manchette.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "4 contre 4, matchs de 5 minutes. Le premier contact apres le passage du filet se fait obligatoirement en manchette. Les contacts suivants sont libres. Deux touches minimum.",
+          "studentGoal": "Recevoir en manchette et envoyer la balle haut vers un partenaire.",
+          "instructions": [
+            "Le premier contact se fait en manchette, obligatoirement.",
+            "J'envoie ma manchette haut, vers le milieu de mon terrain.",
+            "Les contacts suivants sont libres.",
+            "Observateur : je compte les manchettes reussies de mon equipe."
+          ],
+          "success": [
+            "Au moins six manchettes reussies par equipe et par match.",
+            "Les manchettes sont envoyees hautes, vers l'interieur du terrain.",
+            "Les sequences a deux touches se maintiennent."
+          ],
+          "execution": [
+            "Se placer sous la balle avant de faire la manchette.",
+            "Envoyer haut vers le centre du terrain, pas vers le filet.",
+            "Se replacer apres la manchette."
+          ],
+          "watch": [
+            "La manchette tient-elle en match ?",
+            "Les balles sont-elles envoyees hautes ou directement par-dessus le filet ?"
+          ],
+          "errors": [
+            "Envoyer la manchette directement par-dessus le filet.",
+            "Faire la manchette bras flechis sous la pression.",
+            "Rester immobile et manchetter en desequilibre."
+          ],
+          "feedback": [
+            "Ta manchette va vers ton partenaire, pas par-dessus le filet.",
+            "Bras tendus, meme en match.",
+            "Place-toi d'abord, manchette ensuite."
+          ],
+          "plus": [
+            "Trois touches obligatoires, dont la premiere en manchette.",
+            "Jeu entierement frappe."
+          ],
+          "minus": [
+            "Manchette recommandee mais non obligatoire.",
+            "Rattrapage autorise sur les balles hautes."
+          ],
+          "diff": {
+            "facilitee": "Manchette recommandee, rattrapage autorise sur les balles difficiles, terrain reduit.",
+            "normale": "Premier contact en manchette obligatoire, deux touches minimum.",
+            "complexifiee": "Trois touches obligatoires dont la premiere en manchette, jeu entierement frappe."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Un seul match par terrain.",
+            "Ne jamais passer sous le filet.",
+            "2 metres de degagement autour des terrains.",
+            "Ballons ramasses entre les points."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui envoie la balle en manchette : les bras ou les jambes ?",
+          "Ou doit-on envoyer sa manchette : par-dessus le filet, ou vers un partenaire ?"
+        ],
+        "key": "La manchette se fait bras tendus et immobiles : ce sont les jambes qui poussent la balle vers le haut, vers un partenaire et non vers le filet."
+      },
+      "socialRoles": [
+        "Compteur de manchettes : releve les manchettes reussies de son equipe.",
+        "Lanceur : envoie des balles jouables et regulieres.",
+        "Responsable materiel : verifie la hauteur des filets et l'etat des ballons."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "La passe haute et le deuxieme contact",
+      "mainObjective": "Construire la passe haute a dix doigts pour organiser le deuxieme contact et preparer l'attaque.",
+      "secondaryObjectives": [
+        "Realiser la passe haute avec un placement de mains correct.",
+        "Choisir entre manchette et passe haute selon la hauteur de la balle.",
+        "Organiser le deuxieme contact vers un attaquant."
+      ],
+      "linkToPrevious": "La manchette permet de recevoir. Il faut maintenant un deuxieme contact qui organise l'attaque plutot que de renvoyer.",
+      "prerequisiteForNext": "Chaque eleve realise une passe haute correcte et choisit entre les deux techniques.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "affiche du placement des mains",
+            "fixed": 1
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher un schema du placement des mains : triangle pouces-index, mains au-dessus du front.",
+          "Preparer des ballons legers : la passe haute fait mal aux doigts avec un ballon dur.",
+          "Disposer des cerceaux au filet, comme zones de passe a atteindre.",
+          "Verifier la hauteur des filets."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nAffiche du placement des mains au mur.\nCerceau pres du filet dans chaque demi-terrain : zone de passe.\nZones de travail par deux en peripherie."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les doigts et les poignets, tres sollicites et vulnerables dans la passe haute.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses.",
+              "Deplacements varies autour des terrains."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation des doigts",
+            "details": [
+              "Doigts : ouverture et fermeture, ecartements, 1 minute.",
+              "Poignets : cercles et flexions.",
+              "Appuis doigts contre doigts, poussee legere, 10 secondes.",
+              "Epaules et coudes."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Construction du placement",
+            "details": [
+              "Former le triangle des mains au-dessus du front, sans balle. 10 fois.",
+              "Le professeur pose la balle dans les mains de chacun pour verifier le placement.",
+              "Auto-passes : se lancer la balle et la renvoyer en passe haute, sur place."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "La passe haute",
+          "objective": "Construire la passe haute a dix doigts, avec un placement de mains protecteur et efficace.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "affiche du placement des mains",
+              "fixed": 1
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            }
+          ],
+          "organization": "Par deux. Progression : auto-passes sur place, puis passes a deux a 3 metres, puis passes apres un pas de deplacement. Le lanceur envoie une balle haute en cloche.",
+          "studentGoal": "Renvoyer la balle haut avec mes dix doigts, sans la tenir.",
+          "instructions": [
+            "Je place mes mains au-dessus de mon front, en triangle, avant que la balle n'arrive.",
+            "Je touche la balle avec les dix doigts, jamais avec les paumes.",
+            "Je flechis les jambes et je pousse : la balle repart vers le haut.",
+            "Je ne tiens jamais la balle : le contact est bref."
+          ],
+          "success": [
+            "Sept passes sur dix atteignent le partenaire.",
+            "Les mains sont placees avant l'arrivee de la balle.",
+            "Le contact est bref, sans tenue de balle."
+          ],
+          "execution": [
+            "Mains en triangle au-dessus du front, coudes ecartes.",
+            "Contact sur les dix doigts, pouces vers le visage mais sans le toucher.",
+            "Poussee simultanee des jambes et des bras."
+          ],
+          "watch": [
+            "Les mains sont-elles placees a l'avance ou au dernier moment ?",
+            "Le contact se fait-il sur les doigts ou sur les paumes ?",
+            "Y a-t-il tenue de balle, ce qui est une faute ?",
+            "Risque de doigt retourne si le placement est mauvais."
+          ],
+          "errors": [
+            "Placer les mains trop tard : risque de doigt retourne.",
+            "Jouer avec les paumes, ce qui est imprecis.",
+            "Tenir la balle, ce qui est une faute et signale un mauvais timing."
+          ],
+          "feedback": [
+            "Tes mains sont pretes avant que la balle arrive.",
+            "Dix doigts, pas les paumes.",
+            "Contact bref : la balle rebondit, elle ne se pose pas."
+          ],
+          "plus": [
+            "Passe apres deplacement lateral.",
+            "Passe vers un cerceau-cible impose."
+          ],
+          "minus": [
+            "Auto-passes uniquement.",
+            "Balle en mousse, lancer tres doux."
+          ],
+          "diff": {
+            "facilitee": "Balle en mousse, auto-passes ou lancer tres doux et proche.",
+            "normale": "Passes a deux a 3 metres, avec un pas de deplacement.",
+            "complexifiee": "Passe apres deplacement lateral, vers un cerceau-cible."
+          },
+          "safety": [
+            "Ballons legers ou mousse obligatoires : la passe haute avec un ballon dur expose aux entorses de doigts.",
+            "Placement des mains verifie individuellement avant tout travail avec balle.",
+            "Aucune passe sur balle tendue ou rapide : uniquement des cloches hautes.",
+            "Arret immediat en cas de douleur aux doigts.",
+            "Binomes espaces d'au moins 3 metres.",
+            "Ongles courts, bagues retirees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Manchette ou passe haute ?",
+          "objective": "Construire le choix technique : la hauteur de la balle determine le geste a utiliser.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par trois : un lanceur, un joueur, un observateur. Le lanceur envoie alternativement des balles hautes et des balles basses, sans regularite. Le joueur doit choisir passe haute ou manchette. Dix balles puis rotation.",
+          "studentGoal": "Choisir la bonne technique selon la hauteur de la balle qui arrive.",
+          "instructions": [
+            "Balle au-dessus de mes epaules : passe haute.",
+            "Balle en dessous de mes epaules : manchette.",
+            "Je decide en me deplacant, pas au dernier moment.",
+            "Observateur : je note si le choix etait adapte."
+          ],
+          "success": [
+            "Huit choix adaptes sur dix.",
+            "Le geste est prepare avant l'arrivee de la balle.",
+            "La balle est renvoyee haut dans les deux cas."
+          ],
+          "execution": [
+            "Lire la trajectoire des le lancer.",
+            "Preparer le geste choisi pendant le deplacement.",
+            "Ne pas changer d'avis au dernier moment."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils, ou utilisent-ils toujours le meme geste ?",
+            "Le choix est-il fait a temps ?"
+          ],
+          "errors": [
+            "Utiliser la manchette pour tout, y compris les balles hautes.",
+            "Hesiter et changer de geste au dernier moment.",
+            "Faire une passe haute sur une balle trop basse, mains sous le visage."
+          ],
+          "feedback": [
+            "Celle-la etait haute : c'etait une passe.",
+            "Decide-toi en te deplacant, pas en arrivant.",
+            "Trop basse pour une passe : manchette."
+          ],
+          "plus": [
+            "Trois hauteurs, dont des balles intermediaires ambigues.",
+            "Lancers plus rapides."
+          ],
+          "minus": [
+            "Hauteurs tres contrastees et annoncees.",
+            "Deux balles hautes puis deux basses, en alternance reguliere."
+          ],
+          "diff": {
+            "facilitee": "Hauteurs tres contrastees, annoncees a voix haute par le lanceur.",
+            "normale": "Alternance imprevisible de balles hautes et basses.",
+            "complexifiee": "Trois hauteurs dont des balles ambigues, lancers plus rapides."
+          },
+          "safety": [
+            "Ballons legers.",
+            "Lancers en cloche, jamais tendus.",
+            "Groupes espaces d'au moins 3 metres.",
+            "Arret en cas de douleur aux doigts ou aux avant-bras."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec passeur designe",
+          "objective": "Organiser le deuxieme contact : un joueur designe recoit la deuxieme balle et la distribue.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            }
+          ],
+          "organization": "4 contre 4, matchs de 5 minutes. Un joueur de chaque equipe est designe passeur et se place pres du filet, dans un cerceau. Le premier contact doit lui etre adresse ; il fait la passe pour un attaquant.",
+          "studentGoal": "Envoyer ma reception au passeur, qui organise l'attaque.",
+          "instructions": [
+            "Premier contact : j'envoie la balle au passeur, dans son cerceau.",
+            "Passeur : je fais une passe haute vers un attaquant.",
+            "Troisieme contact : l'attaquant renvoie par-dessus le filet.",
+            "On change de passeur toutes les 2 minutes."
+          ],
+          "success": [
+            "Au moins quatre sequences completes reception-passe-attaque par match.",
+            "Le passeur reste dans sa zone.",
+            "Chaque joueur occupe le role de passeur."
+          ],
+          "execution": [
+            "Reception en manchette, envoyee haut vers le passeur.",
+            "Passeur : mains pretes avant l'arrivee de la balle.",
+            "Attaquant : se placer sous la passe avant de frapper."
+          ],
+          "watch": [
+            "Les receptions vont-elles vers le passeur ?",
+            "Le passeur reste-t-il a son poste ?",
+            "La sequence en trois contacts apparait-elle ?"
+          ],
+          "errors": [
+            "Renvoyer directement au lieu d'envoyer au passeur.",
+            "Le passeur quitte sa zone pour aller chercher la balle partout.",
+            "L'attaquant ne se place pas sous la passe."
+          ],
+          "feedback": [
+            "Ta reception va au passeur, pas par-dessus le filet.",
+            "Passeur, reste dans ta zone : c'est a eux de t'envoyer la balle.",
+            "Place-toi sous la passe avant de frapper."
+          ],
+          "plus": [
+            "Trois contacts obligatoires.",
+            "Passeur qui doit alterner ses attaquants."
+          ],
+          "minus": [
+            "Deux contacts suffisent.",
+            "Passeur autorise a rattraper la balle avant de la relancer."
+          ],
+          "diff": {
+            "facilitee": "Deux contacts, passeur autorise a rattraper puis relancer, terrain reduit.",
+            "normale": "Passeur designe, sequence reception-passe-attaque recherchee.",
+            "complexifiee": "Trois contacts obligatoires, passeur devant alterner ses attaquants."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Un seul match par terrain.",
+            "Passeur place a distance du filet : ne jamais jouer colle au filet.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les points."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quand utilise-t-on la passe haute plutot que la manchette ?",
+          "A quoi sert le deuxieme contact dans une equipe ?"
+        ],
+        "key": "La hauteur de la balle decide de la technique : haute au-dessus des epaules, passe a dix doigts ; basse, manchette. Le deuxieme contact sert a preparer l'attaque, jamais a renvoyer."
+      },
+      "socialRoles": [
+        "Observateur de choix technique : note si le geste choisi etait adapte.",
+        "Passeur : organise le deuxieme contact de son equipe.",
+        "Responsable materiel : verifie l'etat des ballons et la hauteur des filets."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Match evalue de mi-cycle",
+      "mainObjective": "Faire le point a mi-parcours sur le deplacement, les techniques et la construction collective, et fixer un objectif personnel.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau de jeu par rapport au debut du cycle.",
+        "Tenir le role d'observateur avec une fiche structuree.",
+        "Ecrire un objectif personnel pour les trois dernieres seances."
+      ],
+      "linkToPrevious": "Deplacement, manchette et passe haute ont ete construits : on verifie ce qui est reellement transfere en match.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau et a formule un objectif precis.",
+      "setup": {
+        "installationMinutes": 11,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "fixed": 4
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Preparer les fiches nominatives avec les quatre criteres imprimes.",
+          "Afficher les criteres evalues, en grand, a l'entree de la salle.",
+          "Constituer des equipes de niveau homogene.",
+          "Verifier la hauteur des filets et le degagement des terrains.",
+          "Prevoir un espace calme pour l'ecriture de l'objectif."
+        ],
+        "sketch": "3 terrains de match, filet a 2 m.\nAffichage des criteres a l'entree.\nCoin ecriture avec bancs, hors des terrains.\nBanc des observateurs sur le cote."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et les doigts doivent etre prepares avant toute passe.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque equipe s'echauffe seule : course, pas chasses.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Doigts, poignets, avant-bras, epaules.",
+              "Chevilles et genoux, flexions."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action",
+            "details": [
+              "Manchettes en cooperation par deux, 2 minutes.",
+              "Passes hautes en cooperation, 2 minutes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Matchs evalues 4 contre 4",
+          "objective": "Observer chaque eleve en match reel sur les quatre criteres travailles depuis le debut du cycle.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 4
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Matchs de 8 minutes en 4 contre 4. Chaque eleve joue deux matchs et observe un camarade pendant un troisieme. Le professeur observe une equipe par match.",
+          "studentGoal": "Montrer en match ce que j'ai appris : me placer, recevoir, construire.",
+          "instructions": [
+            "Je joue normalement, avec deux touches minimum.",
+            "Observateur : je remplis la fiche de mon camarade, critere par critere.",
+            "Je ne conteste pas les decisions de l'arbitre.",
+            "A la fin, je lis ma fiche avec mon observateur."
+          ],
+          "success": [
+            "L'eleve se deplace sous la balle sur la majorite de ses interventions.",
+            "L'equipe construit en deux touches sur la majorite des possessions.",
+            "Le choix manchette ou passe haute est adapte a la hauteur de balle.",
+            "Aucune contestation de l'arbitrage."
+          ],
+          "execution": [
+            "Se placer sous la balle avant de la jouer.",
+            "Envoyer le premier contact haut, vers un partenaire.",
+            "Se replacer apres chaque intervention."
+          ],
+          "watch": [
+            "Quels acquis tiennent sous la pression du match ?",
+            "Qui a progresse depuis la seance 1 ?",
+            "Le renvoi direct a-t-il disparu ?"
+          ],
+          "errors": [
+            "Retomber dans le renvoi direct sous la pression.",
+            "Observer sans regarder, en cochant au hasard.",
+            "Contester une decision."
+          ],
+          "feedback": [
+            "Premier contact vers ton partenaire, pas par-dessus le filet.",
+            "Observateur, regarde ton joueur, pas la balle.",
+            "Le match est fini, on en parle apres."
+          ],
+          "plus": [
+            "Trois touches obligatoires.",
+            "Arbitrage tenu entierement par un eleve."
+          ],
+          "minus": [
+            "Matchs de 6 minutes.",
+            "Rattrapage autorise sur les balles difficiles."
+          ],
+          "diff": {
+            "facilitee": "Matchs de 6 minutes, rattrapage autorise, terrain reduit, filet abaisse.",
+            "normale": "Matchs de 8 minutes, deux touches minimum, jeu frappe.",
+            "complexifiee": "Trois touches obligatoires, arbitrage entierement eleve."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Un seul match par terrain.",
+            "2 metres de degagement autour des terrains.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les points.",
+            "Eleves en attente assis hors des terrains."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Lecture de la fiche a deux",
+          "objective": "Faire comprendre a chaque eleve ce qui a ete observe de son jeu, avant d'en tirer un objectif.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, joueur et observateur assis a l'ecart des terrains. L'observateur explique ce qu'il a note, le joueur pose des questions.",
+          "studentGoal": "Comprendre precisement ce que mon camarade a observe de mon jeu.",
+          "instructions": [
+            "Observateur : je dis ce que j'ai vu, avec des exemples precis.",
+            "Joueur : j'ecoute et je demande des precisions.",
+            "On cherche ensemble un point fort et un point a ameliorer.",
+            "On ne discute pas la note, on discute ce qui a ete vu."
+          ],
+          "success": [
+            "Chaque eleve cite un point fort de son jeu.",
+            "Chaque eleve cite un point precis a ameliorer.",
+            "L'echange se fait sans conflit."
+          ],
+          "execution": [
+            "Donner un exemple concret plutot qu'un jugement general.",
+            "Parler du jeu, pas de la personne.",
+            "Ecouter jusqu'au bout avant de repondre."
+          ],
+          "watch": [
+            "Les retours sont-ils precis ou generaux ?",
+            "Les eleves acceptent-ils le retour d'un camarade ?"
+          ],
+          "errors": [
+            "Dire simplement bien ou nul, sans exemple.",
+            "Contester au lieu d'ecouter.",
+            "Remplir la fiche apres coup."
+          ],
+          "feedback": [
+            "Donne-lui un exemple : a quel moment tu l'as vu ?",
+            "On parle de ce qu'il a fait, pas de lui.",
+            "Ecoute d'abord, tu repondras apres."
+          ],
+          "plus": [
+            "Comparer avec la fiche d'observation de la seance 1."
+          ],
+          "minus": [
+            "Le professeur mene l'echange avec le binome."
+          ],
+          "diff": {
+            "facilitee": "Echange guide par le professeur, criteres relus a voix haute.",
+            "normale": "Echange autonome a deux.",
+            "complexifiee": "Echange avec comparaison chiffree seance 1 / seance 5."
+          },
+          "safety": [
+            "Temps calme a l'ecart des terrains, aucun match en cours a proximite.",
+            "Ballons ranges pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Mon objectif pour la fin du cycle",
+          "objective": "Transformer le bilan en un objectif personnel simple et verifiable.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement, assis, chacun ecrit son objectif au dos de sa fiche. Le professeur passe valider ou reformuler.",
+          "studentGoal": "Ecrire un objectif que je pourrai verifier a la derniere seance.",
+          "instructions": [
+            "J'ecris un seul objectif, precis et verifiable.",
+            "J'evite les objectifs vagues comme mieux jouer.",
+            "Je choisis parmi les quatre criteres celui ou je suis le moins bon.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'objectif est ecrit et lisible.",
+            "L'objectif porte sur un critere precis du cycle.",
+            "L'objectif est verifiable en match."
+          ],
+          "execution": [
+            "Formuler avec un verbe d'action et un nombre.",
+            "Relier l'objectif a ce que l'observateur a note.",
+            "Ecrire en une seule phrase."
+          ],
+          "watch": [
+            "Les objectifs sont-ils realistes et mesurables ?",
+            "Correspondent-ils au point faible observe ?"
+          ],
+          "errors": [
+            "Objectif trop vague.",
+            "Objectif deja atteint.",
+            "Recopier l'objectif du voisin."
+          ],
+          "feedback": [
+            "Ajoute un nombre : combien de fois par match ?",
+            "C'est deja acquis : vise plus haut.",
+            "Choisis le critere ou ta fiche est la moins bonne."
+          ],
+          "plus": [
+            "Ecrire aussi le moyen concret d'y arriver."
+          ],
+          "minus": [
+            "Choisir un objectif dans une liste proposee."
+          ],
+          "diff": {
+            "facilitee": "Objectif choisi dans une liste de quatre propositions affichees.",
+            "normale": "Objectif redige librement, valide par le professeur.",
+            "complexifiee": "Objectif et moyen d'y parvenir rediges."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des terrains.",
+            "Materiel range avant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre objectif pour les trois dernieres seances ?",
+          "Sur quel critere la classe a-t-elle le plus progresse depuis la seance 1 ?"
+        ],
+        "key": "A mi-cycle, chacun sait ce qu'il sait faire et ce qu'il lui reste a travailler : les trois dernieres seances servent a atteindre cet objectif."
+      },
+      "socialRoles": [
+        "Observateur evaluateur : remplit la fiche d'un camarade pendant un match complet.",
+        "Arbitre : tient le sifflet sur un match avec l'appui du professeur.",
+        "Responsable des fiches : distribue et recupere les fiches nominatives."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Construire en trois touches",
+      "mainObjective": "Systematiser la construction en trois contacts : reception, passe, attaque.",
+      "secondaryObjectives": [
+        "Enchainer les trois contacts sans perdre la balle.",
+        "Occuper les postes : receptionneur, passeur, attaquant.",
+        "Communiquer pour annoncer qui prend la balle."
+      ],
+      "linkToPrevious": "Les techniques sont en place et le passeur existe : il reste a systematiser la sequence complete en trois contacts.",
+      "prerequisiteForNext": "Chaque equipe realise plusieurs sequences completes en trois touches par match.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 20
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.34,
+            "min": 4
+          }
+        ],
+        "instructions": [
+          "Marquer les zones de poste avec les cerceaux : receptionneurs au fond, passeur au filet.",
+          "Verifier la hauteur des filets.",
+          "Preparer les fiches de comptage des sequences a trois touches.",
+          "Verifier le degagement autour des terrains."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nCerceau du passeur pres du filet, au centre.\nZones de reception marquees au fond du terrain.\nBanc des observateurs sur le cote."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec preparation des doigts, suivi d'une reprise des deux techniques avant de les enchainer.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses.",
+              "Deplacements avant-arriere."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Doigts, poignets, avant-bras, epaules.",
+              "Chevilles et genoux."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise des deux techniques",
+            "details": [
+              "Manchettes en cooperation par deux, 2 minutes.",
+              "Passes hautes en cooperation, 2 minutes.",
+              "Alternance manchette-passe selon la hauteur, 2 minutes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Reception, passe, attaque",
+          "objective": "Enchainer la sequence complete a trois joueurs, sans opposition, jusqu'a la rendre fluide.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            },
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            }
+          ],
+          "organization": "Par quatre : un lanceur de l'autre cote du filet, un receptionneur, un passeur dans son cerceau, un attaquant. Le lanceur envoie une balle haute, la sequence s'enchaine. Rotation toutes les quatre repetitions.",
+          "studentGoal": "Enchainer reception, passe et attaque sans perdre la balle.",
+          "instructions": [
+            "Receptionneur : je manchette la balle haut vers le passeur.",
+            "Passeur : je fais une passe haute vers l'attaquant.",
+            "Attaquant : je me place sous la passe et je renvoie par-dessus le filet.",
+            "On annonce a voix haute quand on prend la balle."
+          ],
+          "success": [
+            "Six sequences completes sur dix tentatives.",
+            "Chaque contact est envoye haut, jouable par le suivant.",
+            "L'annonce vocale est faite a chaque prise de balle."
+          ],
+          "execution": [
+            "Reception haute vers le passeur, pas tendue.",
+            "Passe haute qui laisse le temps a l'attaquant de se placer.",
+            "Attaquant qui se place sous la balle avant de frapper."
+          ],
+          "watch": [
+            "La reception va-t-elle vers le passeur ?",
+            "La passe est-elle assez haute pour etre attaquee ?",
+            "Les annonces vocales apparaissent-elles ?"
+          ],
+          "errors": [
+            "Reception tendue et basse, injouable pour le passeur.",
+            "Passe trop rapide ou trop pres du filet.",
+            "Attaquant qui frappe sans s'etre place."
+          ],
+          "feedback": [
+            "Envoie ta reception plus haut : il doit avoir le temps.",
+            "Ta passe est trop pres du filet, recule-la.",
+            "Place-toi sous la balle avant de frapper."
+          ],
+          "plus": [
+            "Ajouter un defenseur de l'autre cote.",
+            "Alterner deux attaquants."
+          ],
+          "minus": [
+            "Rattrapage autorise au premier contact.",
+            "Trois joueurs seulement, sans attaquant designe."
+          ],
+          "diff": {
+            "facilitee": "Rattrapage autorise a la reception, passeur autorise a rattraper, lancer tres haut.",
+            "normale": "Sequence complete frappee, quatre joueurs, rotation.",
+            "complexifiee": "Sequence avec un defenseur adverse, alternance de deux attaquants."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Attaquant qui ne frappe jamais colle au filet.",
+            "Ne jamais passer sous le filet.",
+            "Groupes espaces, un seul groupe par demi-terrain.",
+            "Ballons ramasses entre les series."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Annoncer et se repartir",
+          "objective": "Construire la communication : annoncer qui prend la balle pour eviter les collisions et les balles laissees.",
+          "material": [
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 20
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par trois dans un demi-terrain. Le professeur ou un lanceur envoie des balles entre les joueurs, dans les zones ambigues. Celui qui prend la balle doit l'annoncer a voix haute avant de la jouer.",
+          "studentGoal": "Annoncer a voix haute avant de prendre la balle.",
+          "instructions": [
+            "J'annonce a moi ! des que je decide de prendre la balle.",
+            "J'annonce avant de la jouer, pas pendant.",
+            "Si un partenaire a annonce, je le laisse et je me place en soutien.",
+            "Une balle non annoncee tombe : c'est le principe."
+          ],
+          "success": [
+            "Huit balles sur dix sont annoncees avant d'etre jouees.",
+            "Aucune collision entre joueurs.",
+            "Aucune balle laissee tomber faute d'annonce."
+          ],
+          "execution": [
+            "Annoncer fort et tot, des que la trajectoire est lisible.",
+            "Se placer en soutien quand un partenaire a annonce.",
+            "Ne pas annoncer puis se raviser."
+          ],
+          "watch": [
+            "Les annonces sont-elles faites, et assez tot ?",
+            "Y a-t-il des balles laissees entre deux joueurs ?",
+            "Y a-t-il des risques de collision ?"
+          ],
+          "errors": [
+            "Ne rien dire et se precipiter a deux sur la balle.",
+            "Annoncer trop tard, quand la balle est deja la.",
+            "Annoncer puis laisser tomber."
+          ],
+          "feedback": [
+            "Annonce fort et tot : lui aussi allait la prendre.",
+            "Tu as annonce : va au bout.",
+            "Il a annonce : laisse-la et place-toi derriere lui."
+          ],
+          "plus": [
+            "Quatre joueurs, zones plus ambigues.",
+            "Balles envoyees plus rapidement."
+          ],
+          "minus": [
+            "Zones de chacun clairement delimitees au sol.",
+            "Deux joueurs seulement."
+          ],
+          "diff": {
+            "facilitee": "Zones delimitees au sol, deux joueurs, balles clairement dans une zone.",
+            "normale": "Trois joueurs, balles dans les zones ambigues, annonce obligatoire.",
+            "complexifiee": "Quatre joueurs, balles rapides et tres ambigues."
+          },
+          "safety": [
+            "L'annonce est une regle de securite : elle evite les collisions.",
+            "Arret immediat du jeu si deux joueurs se precipitent sans annoncer.",
+            "Ballons legers.",
+            "Espace degage entre les groupes."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec bonus trois touches",
+          "objective": "Valoriser la construction complete en match : un point marque en trois touches compte double.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.34,
+              "min": 4
+            }
+          ],
+          "organization": "4 contre 4, matchs de 6 minutes. Un point marque au terme d'une sequence a trois touches compte double. Un observateur compte les sequences a trois touches.",
+          "studentGoal": "Marquer des points a deux en construisant en trois touches.",
+          "instructions": [
+            "Un point marque apres trois touches compte double.",
+            "J'annonce quand je prends la balle.",
+            "Je vise le passeur a la reception.",
+            "Observateur : je compte les sequences a trois touches de mon equipe."
+          ],
+          "success": [
+            "Au moins deux points a deux par equipe.",
+            "Les sequences a trois touches augmentent par rapport a la seance 4.",
+            "Les annonces sont systematiques."
+          ],
+          "execution": [
+            "Reception haute vers le passeur.",
+            "Passe haute qui laisse le temps a l'attaquant.",
+            "Annonce vocale a chaque prise de balle."
+          ],
+          "watch": [
+            "La construction en trois touches devient-elle un reflexe ?",
+            "Les eleves renoncent-ils au bonus quand la balle est difficile ?"
+          ],
+          "errors": [
+            "Forcer les trois touches sur une balle impossible et perdre le point.",
+            "Oublier d'annoncer sous la pression.",
+            "Renvoyer directement des que le point devient serre."
+          ],
+          "feedback": [
+            "Balle trop difficile : renvoie, ne force pas les trois touches.",
+            "Annonce, meme en match.",
+            "Vise le passeur, il est libre."
+          ],
+          "plus": [
+            "Seuls les points en trois touches comptent.",
+            "Rotation des postes imposee a chaque service."
+          ],
+          "minus": [
+            "Deux touches suffisent pour le bonus.",
+            "Rattrapage autorise a la reception."
+          ],
+          "diff": {
+            "facilitee": "Deux touches suffisent pour le bonus, rattrapage autorise a la reception.",
+            "normale": "Trois touches pour le bonus, jeu frappe.",
+            "complexifiee": "Seuls les points en trois touches comptent, rotation des postes imposee."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Annonce vocale obligatoire : c'est une regle de securite.",
+            "Un seul match par terrain.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les points."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi faut-il annoncer avant de prendre la balle ?",
+          "Quand faut-il renoncer aux trois touches et renvoyer directement ?"
+        ],
+        "key": "Construire en trois touches, c'est le jeu du volley : recevoir haut, faire passer, attaquer. Mais sur une balle impossible, renvoyer reste la bonne decision."
+      },
+      "socialRoles": [
+        "Compteur de sequences : releve les sequences a trois touches de son equipe.",
+        "Passeur : organise le deuxieme contact.",
+        "Arbitre : signale les fautes de touches et les portes."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Servir et attaquer l'espace libre",
+      "mainObjective": "Construire un service reglementaire et regulier, et apprendre a attaquer la ou l'adversaire n'est pas.",
+      "secondaryObjectives": [
+        "Servir par-dessus le filet de facon reguliere.",
+        "Identifier l'espace libre adverse avant de renvoyer.",
+        "Preparer les roles pour l'evaluation."
+      ],
+      "linkToPrevious": "La construction est en place. Il manque la mise en jeu, qui coute beaucoup de points, et l'intention offensive sur le troisieme contact.",
+      "prerequisiteForNext": "Chaque eleve reussit sept services sur dix et cherche l'espace libre en attaque.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 24
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "grilles d'arbitrage d'entrainement",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Marquer des zones cibles dans les demi-terrains adverses, avec des cerceaux ou des plots.",
+          "Preparer les grilles d'arbitrage identiques a celles de l'evaluation.",
+          "Verifier la hauteur des filets : un filet trop haut rend le service impossible en 5e.",
+          "Prevoir des ballons en nombre pour le travail du service."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nZones cibles marquees dans chaque demi-terrain adverse.\nLigne de service reculee ou avancee selon le niveau.\nGrilles d'arbitrage sur le banc."
+      },
+      "warmup": {
+        "rationale": "Prepare les epaules, tres sollicitees par le service, et reactive les deux techniques de contact.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, pas chasses.",
+              "Deplacements varies."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules : cercles, moulinets avant et arriere.",
+              "Doigts, poignets, avant-bras.",
+              "Chevilles et genoux."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise et preparation du service",
+            "details": [
+              "Manchettes et passes en cooperation, 3 minutes.",
+              "Geste du service a vide, sans balle, 10 fois.",
+              "Cinq services vers le filet, sans viser."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le service regulier",
+          "objective": "Construire un service qui passe le filet et reste dans le terrain, de facon reguliere.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 24
+            }
+          ],
+          "organization": "Par deux de part et d'autre du filet. Chacun sert dix fois, le partenaire compte et renvoie les ballons. Trois series. La ligne de service est adaptee au niveau : avancee pour les debutants.",
+          "studentGoal": "Reussir sept services sur dix, dans le terrain adverse.",
+          "instructions": [
+            "Je tiens la balle a plat sur ma main, bras tendu devant moi.",
+            "Je frappe la balle avec le talon de mon autre main, sans la lancer haut.",
+            "Je vise le milieu du terrain adverse.",
+            "Partenaire : je compte les services reussis."
+          ],
+          "success": [
+            "Sept services reussis sur dix a la troisieme serie.",
+            "Le geste est stable d'un service a l'autre.",
+            "Le comptage est fait honnetement."
+          ],
+          "execution": [
+            "Balle posee a plat sur la main, bras tendu, a hauteur de taille.",
+            "Frappe avec le talon de la main, bras tendu.",
+            "Transfert du poids du corps de l'arriere vers l'avant."
+          ],
+          "watch": [
+            "Le service passe-t-il le filet ?",
+            "Les eleves lancent-ils la balle trop haut avant de frapper ?",
+            "La frappe se fait-elle avec le talon de la main ou avec les doigts ?"
+          ],
+          "errors": [
+            "Lancer la balle trop haut, ce qui rend la frappe aleatoire.",
+            "Frapper avec les doigts, imprecis et douloureux.",
+            "Servir trop fort et envoyer systematiquement dehors."
+          ],
+          "feedback": [
+            "Ne lance pas la balle : elle reste sur ta main, tu la frappes.",
+            "Talon de la main, pas les doigts.",
+            "Moins fort, plus precis : vise le milieu."
+          ],
+          "plus": [
+            "Ligne de service reculee.",
+            "Service dans une zone imposee."
+          ],
+          "minus": [
+            "Ligne de service tres avancee, a 3 metres du filet.",
+            "Service a la cuillere, par en dessous."
+          ],
+          "diff": {
+            "facilitee": "Service a 3 metres du filet, geste a la cuillere par en dessous, ballon mousse.",
+            "normale": "Service depuis la ligne adaptee, frappe avec le talon de la main.",
+            "complexifiee": "Service depuis la ligne reglementaire, dans une zone imposee."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Servir uniquement quand le terrain adverse est degage et le partenaire pret.",
+            "Ne jamais servir vers un camarade qui ne regarde pas.",
+            "Ballons ramasses regulierement : le travail du service en envoie beaucoup au sol.",
+            "2 metres de degagement autour des terrains."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Attaquer l'espace libre",
+          "objective": "Construire l'intention offensive : envoyer le troisieme contact la ou l'adversaire n'est pas.",
+          "material": [
+            {
+              "label": "cerceaux",
+              "fixed": 12
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Trois attaquants d'un cote, deux defenseurs de l'autre qui se placent volontairement dans une moitie du terrain. L'attaquant doit envoyer le troisieme contact dans la moitie libre. Dix sequences puis rotation.",
+          "studentGoal": "Envoyer ma balle dans la partie du terrain ou il n'y a personne.",
+          "instructions": [
+            "Avant de renvoyer, je regarde ou sont les adversaires.",
+            "J'envoie la balle dans la zone libre.",
+            "Je ne frappe pas fort : je place.",
+            "Defenseurs : vous restez dans votre moitie pour cette situation."
+          ],
+          "success": [
+            "Sept balles sur dix envoyees dans la zone libre.",
+            "L'eleve regarde le terrain adverse avant de renvoyer.",
+            "La balle reste dans le terrain."
+          ],
+          "execution": [
+            "Lever les yeux vers le terrain adverse pendant la passe.",
+            "Orienter le corps et la frappe vers la zone visee.",
+            "Privilegier le placement a la puissance."
+          ],
+          "watch": [
+            "L'eleve regarde-t-il le terrain adverse, ou seulement la balle ?",
+            "Frappe-t-il fort au lieu de placer ?"
+          ],
+          "errors": [
+            "Frapper fort au centre, la ou les defenseurs sont.",
+            "Renvoyer sans regarder.",
+            "Envoyer dehors en voulant placer trop pres de la ligne."
+          ],
+          "feedback": [
+            "Regarde de l'autre cote pendant que la passe monte.",
+            "Place, ne frappe pas : ils sont tous a gauche.",
+            "Vise l'interieur du terrain, pas la ligne."
+          ],
+          "plus": [
+            "Defenseurs mobiles, qui se replacent.",
+            "Zone libre plus reduite."
+          ],
+          "minus": [
+            "Defenseurs immobiles dans un quart de terrain.",
+            "Zone libre tres large."
+          ],
+          "diff": {
+            "facilitee": "Defenseurs immobiles dans un quart de terrain, zone libre tres large.",
+            "normale": "Defenseurs fixes dans une moitie, zone libre a viser.",
+            "complexifiee": "Defenseurs mobiles qui se replacent, zone libre reduite."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Ne jamais frapper fort vers un adversaire proche du filet.",
+            "Un seul groupe par terrain.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les series."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec service alterne et arbitrage eleve",
+          "objective": "Repetition generale du format de l'evaluation, avec service reglementaire et arbitrage tenu par les eleves.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 3
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "4 contre 4, matchs en 15 points avec service alterne. L'arbitrage est tenu entierement par un eleve : score, fautes de touches, balles dedans ou dehors. Un second eleve verifie.",
+          "studentGoal": "Jouer un match complet en servant et en arbitrant comme le jour de l'evaluation.",
+          "instructions": [
+            "Le service change d'equipe a chaque point gagne par l'adversaire.",
+            "Arbitre : j'annonce le score et je siffle les fautes de touches.",
+            "Je juge les balles dedans ou dehors : sur la ligne, la balle est bonne.",
+            "Verificateur : je compare mon comptage a celui de l'arbitre."
+          ],
+          "success": [
+            "Le match va a son terme, jusqu'a 15 points.",
+            "Le score final est identique entre arbitre et verificateur.",
+            "Moins de trois services rates par eleve."
+          ],
+          "execution": [
+            "Servir en securite plutot que chercher a marquer directement.",
+            "Construire en deux ou trois touches.",
+            "Annoncer le score avant de servir."
+          ],
+          "watch": [
+            "Les services tiennent-ils en match ?",
+            "Les arbitres osent-ils siffler les fautes de touches ?",
+            "La construction se maintient-elle ?"
+          ],
+          "errors": [
+            "Servir fort et rater systematiquement.",
+            "Arbitre qui n'ose pas siffler les portes.",
+            "Renvoi direct des que le score se tend."
+          ],
+          "feedback": [
+            "Un service en securite vaut mieux qu'un service rate.",
+            "Arbitre, tu as le sifflet : siffle les portes.",
+            "Construis, meme a 14-14."
+          ],
+          "plus": [
+            "Matchs en deux sets gagnants.",
+            "Rotation des postes imposee a chaque service gagne."
+          ],
+          "minus": [
+            "Matchs en 11 points.",
+            "Service a la cuillere autorise."
+          ],
+          "diff": {
+            "facilitee": "Match en 11 points, service a la cuillere autorise, arbitrage assiste.",
+            "normale": "Match en 15 points, service alterne, arbitrage eleve avec verificateur.",
+            "complexifiee": "Deux sets gagnants, rotation des postes imposee."
+          },
+          "safety": [
+            "Ballons legers ou mousse.",
+            "Un seul match par terrain.",
+            "Servir uniquement quand le terrain adverse est pret.",
+            "Ne jamais passer sous le filet.",
+            "Ballons ramasses entre les points.",
+            "Arbitre place sur le cote, jamais dans le terrain."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Vaut-il mieux servir fort et rater, ou servir doucement et mettre en jeu ?",
+          "Que faut-il regarder avant de renvoyer la balle par-dessus le filet ?"
+        ],
+        "key": "Le service met la balle en jeu : un service rate est un point offert. Et on attaque la ou l'adversaire n'est pas, ce qui suppose de regarder avant de frapper."
+      },
+      "socialRoles": [
+        "Arbitre : tient le score et siffle les fautes de touches.",
+        "Verificateur : compare son comptage a celui de l'arbitre.",
+        "Compteur de services : releve les services reussis et rates."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer en situation de match les acquis du cycle, et permettre a chaque eleve de verifier son objectif de mi-cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Tenir le role d'arbitre sur un match complet.",
+        "Tenir le role d'observateur avec la grille d'evaluation.",
+        "Accepter le resultat de la rencontre et savoir l'analyser."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans le meme format : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait ce qu'il a acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "filets de volley",
+            "fixed": 3
+          },
+          {
+            "label": "ballons de volley legers ou mousse",
+            "fixed": 4
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 24
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "sifflets",
+            "fixed": 3
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le tableau du tournoi et l'ordre des matchs a l'entree.",
+          "Preparer les grilles d'evaluation nominatives par equipe.",
+          "Ressortir les fiches de mi-cycle avec l'objectif de chaque eleve.",
+          "Verifier la hauteur et la tension des filets, la stabilite des poteaux.",
+          "Verifier le degagement autour des terrains."
+        ],
+        "sketch": "3 terrains avec filet a 2 m.\nTableau du tournoi affiche a l'entree.\nTable des observateurs avec grilles et fiches de mi-cycle.\n2 m de degagement autour de chaque terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : savoir s'echauffer est un attendu evalue, et les doigts doivent etre prepares avant toute passe haute.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome par equipe",
+            "details": [
+              "Chaque equipe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation complete",
+            "details": [
+              "Doigts, poignets, avant-bras, epaules.",
+              "Chevilles, genoux, hanches."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Manchettes et passes en cooperation, 3 minutes.",
+              "Cinq services par eleve.",
+              "Une sequence reception-passe-attaque par equipe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue 4 contre 4",
+          "objective": "Evaluer chaque eleve sur les six criteres du cycle, en match reel et sur plusieurs rencontres.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 4
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "sifflets",
+              "fixed": 3
+            }
+          ],
+          "organization": "Tournoi en 4 contre 4, matchs en 15 points, chaque equipe jouant trois matchs. Sur chaque match : deux equipes jouent, une arbitre, une observe avec les grilles. Le professeur evalue une equipe par match.",
+          "studentGoal": "Montrer tout ce que j'ai appris pendant le cycle, dans les trois roles : joueur, arbitre, observateur.",
+          "instructions": [
+            "Je joue mes trois matchs en respectant toutes les regles vues.",
+            "Quand j'arbitre, je siffle les fautes de touches et je tiens le score.",
+            "Quand j'observe, je remplis la grille de mon camarade.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "L'eleve se deplace sous la balle sur la majorite de ses interventions.",
+            "L'equipe construit en deux ou trois touches sur la majorite des possessions.",
+            "Le choix manchette ou passe haute est adapte.",
+            "Moins de trois services rates par match.",
+            "Les roles d'arbitre et d'observateur sont tenus sans rappel."
+          ],
+          "execution": [
+            "Se placer sous la balle avant de la jouer.",
+            "Envoyer le premier contact haut vers un partenaire.",
+            "Annoncer a voix haute avant de prendre la balle.",
+            "Regarder le terrain adverse avant de renvoyer."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils sous la pression du tournoi ?",
+            "Les arbitres osent-ils siffler ?",
+            "Les resultats sont-ils acceptes sans conflit ?"
+          ],
+          "errors": [
+            "Retomber dans le renvoi direct dans les moments serres.",
+            "Oublier d'annoncer, avec risque de collision.",
+            "Refuser d'arbitrer ou siffler au hasard.",
+            "Contester une decision d'arbitre."
+          ],
+          "feedback": [
+            "Construis : premier contact vers ton partenaire.",
+            "Annonce : c'est une regle de securite.",
+            "Arbitre, tu as le sifflet : c'est toi qui decides.",
+            "Le match est joue, on en parle apres."
+          ],
+          "plus": [
+            "Trois touches obligatoires.",
+            "Arbitrage integralement autonome."
+          ],
+          "minus": [
+            "Matchs en 11 points.",
+            "Rattrapage autorise sur les balles difficiles."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 11 points, rattrapage autorise, filet abaisse, service a la cuillere. Les progres sont evalues autant que la performance.",
+            "normale": "Matchs en 15 points, jeu frappe, deux touches minimum, arbitrage eleve.",
+            "complexifiee": "Trois touches obligatoires, arbitrage entierement autonome."
+          },
+          "safety": [
+            "Ballons legers ou mousse pour toute la classe.",
+            "Filets tendus, poteaux stables et verifies avant le premier match.",
+            "2 metres de degagement autour de chaque terrain.",
+            "Ne jamais passer sous le filet, meme pour recuperer un ballon.",
+            "Annonce vocale obligatoire : elle evite les collisions entre partenaires.",
+            "Ballons ramasses immediatement entre les points : un ballon au sol fait chuter.",
+            "Echauffement complet obligatoire, doigts compris, avant tout match evalue.",
+            "Bijoux retires, ongles courts, lacets attaches."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon objectif est-il atteint ?",
+          "objective": "Faire verifier a chaque eleve, fiche en main, l'objectif qu'il s'etait fixe a la seance 5.",
+          "material": [
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement puis par deux, assis a l'ecart. Chacun compare son objectif de mi-cycle avec sa grille d'aujourd'hui, et ecrit une phrase de bilan.",
+          "studentGoal": "Dire si j'ai atteint mon objectif, et sur quoi je m'appuie pour l'affirmer.",
+          "instructions": [
+            "Je relis l'objectif que j'avais ecrit a la seance 5.",
+            "Je regarde ce que dit ma grille d'aujourd'hui sur ce point.",
+            "J'ecris une phrase : atteint, en partie, ou pas encore, et pourquoi.",
+            "Je le dis a mon camarade, qui me donne son avis."
+          ],
+          "success": [
+            "La comparaison est faite et ecrite.",
+            "L'eleve s'appuie sur un element observe.",
+            "L'echange a deux a lieu."
+          ],
+          "execution": [
+            "Citer un fait precis du tournoi.",
+            "Distinguer ce qui est atteint de ce qui reste a faire.",
+            "Ecrire une phrase complete."
+          ],
+          "watch": [
+            "Les eleves s'appuient-ils sur des faits ou sur le resultat du tournoi ?",
+            "Reconnaissent-ils leurs progres ?"
+          ],
+          "errors": [
+            "Confondre objectif atteint et tournoi gagne.",
+            "Repondre oui ou non sans justification.",
+            "Se devaloriser malgre des progres visibles."
+          ],
+          "feedback": [
+            "Ton objectif, ce n'etait pas de gagner le tournoi.",
+            "Sur quelle action precise tu t'appuies ?",
+            "Tu as progresse, meme si l'objectif n'est pas totalement atteint."
+          ],
+          "plus": [
+            "Ecrire aussi l'objectif suivant si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur relit l'objectif avec l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee, reponse a choisir parmi trois formulations.",
+            "normale": "Comparaison autonome et phrase de bilan redigee.",
+            "complexifiee": "Bilan redige plus objectif suivant formule."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des terrains.",
+            "Aucun match en cours a proximite pendant cette phase.",
+            "Ballons ranges."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel lourd et encombrant.",
+          "material": [
+            {
+              "label": "filets de volley",
+              "fixed": 3
+            },
+            {
+              "label": "ballons de volley legers ou mousse",
+              "fixed": 10
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 24
+            }
+          ],
+          "organization": "Rangement collectif : demontage des filets, comptage des ballons, puis classe assise en demi-cercle.",
+          "studentGoal": "Dire ce que je sais faire au volley aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les poteaux se portent a deux minimum : ils sont lourds.",
+            "On detend les filets avant de les decrocher.",
+            "On compte les ballons avant de ranger.",
+            "Une fois range, on s'assoit et chacun peut dire une chose apprise."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun poteau porte par un seul eleve.",
+            "Au moins un eleve par equipe s'exprime."
+          ],
+          "execution": [
+            "Detendre le filet avant de le decrocher.",
+            "Porter les poteaux a deux, jambes flechies.",
+            "Formuler un acquis concret plutot qu'un ressenti."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves identifient-ils des acquis precis ?"
+          ],
+          "errors": [
+            "Porter un poteau seul : risque de chute et d'ecrasement.",
+            "Decrocher un filet encore tendu : risque de fouettement.",
+            "Ne parler que du classement du tournoi."
+          ],
+          "feedback": [
+            "A deux pour les poteaux, jambes flechies.",
+            "Detends le filet d'abord, sinon il fouette.",
+            "Pas le classement : ce que tu sais faire maintenant."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Detendre systematiquement les filets avant de les decrocher : un filet tendu qui lache fouette violemment.",
+            "Poteaux portes a deux minimum, jambes flechies : ce sont des charges lourdes et instables.",
+            "Aucun eleve ne circule sous un filet en cours de demontage.",
+            "Comptage des ballons avant de quitter la salle : un ballon oublie au sol fait chuter.",
+            "Verification qu'aucun plot ne reste sur le sol."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire au volley aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi le premier contact ne doit-il jamais repartir directement par-dessus le filet ?"
+        ],
+        "key": "Le volley se construit : on se place sous la balle, on recoit haut vers un partenaire, on organise, puis on attaque la ou l'adversaire n'est pas."
+      },
+      "socialRoles": [
+        "Arbitre : tient un match complet, score et fautes de touches, role evalue.",
+        "Observateur evaluateur : renseigne la grille finale d'un camarade.",
+        "Responsable materiel : organise le demontage des filets et le comptage en fin de cycle."
+      ]
+    }
+  ]
+}

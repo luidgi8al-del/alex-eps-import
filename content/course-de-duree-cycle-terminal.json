@@ -1,0 +1,2730 @@
+{
+  "apsa": "Course de duree",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA5 - Realiser et orienter son activite physique pour developper ses ressources et s'entretenir",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour obtenir les effets recherches selon son projet personnel, en faisant des choix de parametres d'entrainement coherents avec le theme retenu.",
+    "AFL2 : s'entrainer individuellement et collectivement pour developper ses ressources et s'entretenir, en regulant son entrainement a partir d'indicateurs.",
+    "AFL3 : cooperer pour faire progresser : observer, chronometrer, conseiller et aider un camarade a reguler son effort.",
+    "Analyser sa pratique et en rendre compte dans un carnet d'entrainement."
+  ],
+  "targetCompetence": "Passer d'une seance de course reussie a un entrainement conduit sur plusieurs semaines : un mobile assume, des allures calculees et regulees a partir d'indicateurs, une planification qui progresse, et un carnet qui rend compte de tout cela.",
+  "cycleObjectives": [
+    "Choisir un mobile et le format de seance correspondant.",
+    "Determiner sa VMA et en deduire des allures fiables.",
+    "Planifier une progression sur l'ensemble du cycle.",
+    "Reguler son effort a partir d'indicateurs objectifs et subjectifs.",
+    "Choisir et assumer la repartition des points entre l'AFL2 et l'AFL3."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, test de VMA et evaluation diagnostique",
+    "Mobile, format et planification du cycle",
+    "Tenir ses allures : fiabiliser les reperes internes",
+    "Reguler : quand et pourquoi modifier son allure",
+    "Evaluation de mi-cycle, choix AFL2 et AFL3, projet d'entrainement",
+    "Conduire sa seance en autonomie et aider un camarade",
+    "Repetition generale et carnet d'entrainement",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Course de duree au cycle terminal - referentiel CCF et carnet d'entrainement",
+      "org": "Academie de Nantes",
+      "url": "https://www.pedagogie.ac-nantes.fr/education-physique-et-sportive/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner la course de duree au cycle terminal - planification et regulation",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel d'evaluation de l'etablissement pour cette APSA : il precise les criteres de l'AFL1 et les modalites de l'AFL2 et de l'AFL3.",
+    "Parcours retenu : piste, stade ou boucle exterieure, verifie avant chaque seance, hors circulation de vehicules.",
+    "Format du test de VMA retenu par l'etablissement.",
+    "Disponibilite de balises de distance et d'un signal sonore audible sur tout le parcours.",
+    "PAI et dispenses : asthme d'effort, pathologies cardiaques, allergies saisonnieres.",
+    "Conduite a tenir en cas de forte chaleur ou de pic de pollution : adaptation ou report.",
+    "Points d'eau accessibles et emplacement de la trousse de secours.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - pense la seance, pas le cycle",
+      "observed": "Refait la meme seance chaque semaine, sans progression prevue.",
+      "need": "Planifier une progression sur l'ensemble du cycle."
+    },
+    {
+      "label": "Profil 2 - regule au feeling",
+      "observed": "Change ses allures selon son humeur, sans lien avec ses indicateurs.",
+      "need": "Reguler a partir d'indicateurs releves, et justifier chaque regulation."
+    },
+    {
+      "label": "Profil 3 - carnet vide",
+      "observed": "Court correctement mais ne note rien, si bien qu'il ne peut rien analyser.",
+      "need": "Tenir un carnet en temps reel, support de l'AFL2."
+    },
+    {
+      "label": "Profil 4 - chronometreur passif",
+      "observed": "Chronometre mais ne dit rien, et ne surveille pas son camarade.",
+      "need": "Assumer l'AFL3 : observer, informer, conseiller, surveiller."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Epreuve du controle en cours de formation. L'AFL1 est evalue le jour de l'epreuve : realisation d'une seance personnelle de 30 a 40 minutes de course, annoncee et justifiee, avec entretien sur les choix de parametres. Les AFL2 et AFL3 sont evalues au fil du cycle, sur 8 points au total, avec une repartition choisie par l'eleve avant l'epreuve : 4 et 4, 6 et 2, ou 2 et 6.",
+    "criteria": [
+      "AFL1 : le format, les allures et les recuperations annonces sont coherents avec le theme d'entrainement retenu.",
+      "AFL1 : les allures annoncees sont tenues, avec moins de dix pour cent d'ecart sur chaque fraction.",
+      "AFL1 : la seance annoncee est realisee integralement et les choix sont justifies lors de l'entretien.",
+      "AFL2 : le carnet retrace la planification, les regulations et leurs raisons sur tout le cycle.",
+      "AFL2 : les regulations sont justifiees par des indicateurs releves, non par une impression.",
+      "AFL3 : l'eleve chronometre, observe, surveille et conseille un camarade de facon utile et fiable."
+    ],
+    "referential": "Referentiel national d'evaluation du CA5 au baccalaureat, decline dans le referentiel de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, test de VMA et evaluation diagnostique",
+      "mainObjective": "Poser le cadre de securite, mesurer la VMA de chacun et ouvrir le carnet d'entrainement.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Comprendre ce qui est evalue le jour J et au fil du cycle.",
+        "Realiser un test de VMA dans de bonnes conditions.",
+        "Ouvrir le carnet avec de vraies donnees."
+      ],
+      "linkToPrevious": "La seconde a construit la seance : mobile, allures, indicateurs. Au cycle terminal, l'enjeu devient la conduite d'un entrainement sur plusieurs semaines, evalue au baccalaureat.",
+      "prerequisiteForNext": "Chaque eleve connait sa VMA et a ouvert son carnet.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "signal sonore ou enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "tableau de correspondance VMA-allures",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher.",
+          "Baliser precisement selon le format de test retenu.",
+          "Verifier l'audibilite du signal sonore sur tout le parcours.",
+          "Verifier l'etat du parcours, hors circulation de vehicules.",
+          "Verifier les PAI et les dispenses : aucun test maximal pour un eleve porteur d'une contre-indication.",
+          "Verifier les conditions meteorologiques : chaleur, pollution.",
+          "Prevoir un point d'eau et la trousse de secours au bord du parcours."
+        ],
+        "sketch": "Parcours balise selon le format de test, sens unique.\nEnceinte placee pour etre audible sur tout le parcours.\nObservateurs a l'interieur, jamais sur le parcours.\nPoint d'eau, trousse de secours et zone de recuperation signales.\nAffiche du referentiel a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement long et progressif avant un test maximal : c'est la condition de securite la plus importante du cycle, et sa conduite fait partie de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple, en aisance respiratoire.",
+              "Verifier que chacun peut parler en courant."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Etirements actifs, sans temps de maintien long."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres, progressives.",
+              "Deux fractions de 30 secondes a allure soutenue.",
+              "Trois minutes de recuperation avant le test."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Test de VMA",
+          "objective": "Mesurer la vitesse maximale aerobie de chacun, dans des conditions securisees.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "signal sonore ou enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un realise le test, l'autre note le palier atteint et surveille son camarade. Test par paliers progressifs selon le format retenu par l'etablissement.",
+          "studentGoal": "Aller au bout de mes possibilites sur le test, et connaitre ma VMA.",
+          "instructions": [
+            "Je cale mon allure sur le signal, sans jamais partir en avance.",
+            "Je m'arrete quand je ne peux plus suivre le signal, pas avant.",
+            "Je marche trois minutes des que je m'arrete : je ne m'assois pas.",
+            "Observateur : tu notes mon dernier palier complet et tu me surveilles."
+          ],
+          "success": [
+            "Le test est mene jusqu'a l'arret volontaire.",
+            "Le dernier palier complet est note au carnet.",
+            "La VMA correspondante est relevee.",
+            "Le retour au calme est realise."
+          ],
+          "execution": [
+            "Se caler exactement sur le signal, sans avance.",
+            "Respirer amplement des les premiers paliers.",
+            "Marcher immediatement apres l'arret, jamais s'asseoir."
+          ],
+          "watch": [
+            "Les eleves partent-ils en avance sur le signal ?",
+            "S'arretent-ils trop tot ou trop tard ?",
+            "Quelqu'un presente-t-il des signes de detresse ?",
+            "Le retour au calme est-il fait ?"
+          ],
+          "errors": [
+            "Prendre de l'avance sur le signal et s'epuiser.",
+            "S'asseoir ou s'allonger immediatement apres l'arret.",
+            "Poursuivre malgre une gene respiratoire ou un vertige."
+          ],
+          "feedback": [
+            "Cale-toi sur le signal, ne le devance pas.",
+            "Marche, ne t'assois pas : ton coeur doit redescendre progressivement.",
+            "Tu as un vertige : tu t'arretes maintenant."
+          ],
+          "plus": [
+            "Test complet avec verification lors d'une seance ulterieure."
+          ],
+          "minus": [
+            "Test sous-maximal avec estimation de la VMA."
+          ],
+          "diff": {
+            "facilitee": "Test sous-maximal avec estimation de la VMA a partir de la distance parcourue, sans recherche de maximum.",
+            "normale": "Test par paliers mene jusqu'a l'arret volontaire.",
+            "complexifiee": "Test complet avec verification lors d'une seance ulterieure."
+          },
+          "safety": [
+            "Echauffement long et progressif obligatoire : un test maximal aborde sans montee progressive de l'intensite est la situation la plus a risque du cycle.",
+            "PAI verifies avant le test : aucun test maximal pour un eleve porteur d'une contre-indication cardiaque ou d'un asthme non equilibre.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige, des nausees ou une paleur.",
+            "Retour au calme obligatoire : marche de trois minutes minimum apres l'arret. Aucun eleve ne s'assoit ni ne s'allonge immediatement apres un effort maximal.",
+            "L'observateur surveille son camarade pendant tout le test et signale immediatement tout signe anormal.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Sens de course unique, aucun croisement.",
+            "Report ou adaptation du test en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible avant et apres le test.",
+            "Le professeur reste en vue de l'ensemble du parcours pendant tout le test."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire le referentiel et calculer ses allures",
+          "objective": "Comprendre l'epreuve et deduire de la VMA les allures de travail.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "tableau de correspondance VMA-allures",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Lecture commentee du referentiel, puis calcul individuel des allures a 60, 70, 80, 90 et 100 pour cent de VMA, traduites en metres par minute.",
+          "studentGoal": "Savoir ce qui sera evalue, et connaitre mes allures a chaque pourcentage.",
+          "instructions": [
+            "Je note ce qui est evalue le jour J et ce qui l'est au fil du cycle.",
+            "Je note les trois repartitions possibles entre l'AFL2 et l'AFL3.",
+            "Je calcule mes cinq allures et je les traduis en metres par minute.",
+            "Un camarade verifie mes calculs."
+          ],
+          "success": [
+            "L'eleve distingue ce qui est evalue le jour J et au fil du cycle.",
+            "Les cinq allures sont calculees et notees au carnet.",
+            "La verification croisee est faite."
+          ],
+          "execution": [
+            "Lire le referentiel de l'etablissement.",
+            "Utiliser le tableau ligne par ligne.",
+            "Verifier la coherence des valeurs entre elles."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils que le carnet est evalue ?",
+            "Les calculs sont-ils justes ?",
+            "Les valeurs sont-elles coherentes ?"
+          ],
+          "errors": [
+            "Croire que seule la seance finale compte.",
+            "Se tromper de ligne dans le tableau.",
+            "Confondre kilometres par heure et metres par minute."
+          ],
+          "feedback": [
+            "Huit points se jouent pendant tout le cycle : ton carnet commence aujourd'hui.",
+            "Verifie : ton 70 pour cent est plus rapide que ton 80.",
+            "Attention aux unites : des metres par minute."
+          ],
+          "plus": [
+            "Calcul des temps de passage aux plots pour chaque allure."
+          ],
+          "minus": [
+            "Allures lues dans un tableau pre-rempli, referentiel commente par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Allures lues dans un tableau pre-rempli, referentiel commente par le professeur.",
+            "normale": "Lecture du referentiel et calcul autonome des cinq allures.",
+            "complexifiee": "Calcul des temps de passage aux plots pour chaque allure."
+          },
+          "safety": [
+            "Phase realisee assis a l'ecart du parcours, apres un retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Une fraction a 80 pour cent",
+          "objective": "Eprouver une allure calculee et ouvrir le carnet avec des donnees reelles.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux fractions de trois minutes a 80 pour cent de VMA, avec deux minutes de recuperation. L'observateur verifie la distance parcourue chaque minute et l'eleve note tout sur son carnet.",
+          "studentGoal": "Courir trois minutes a mon allure de 80 pour cent, et noter ce que je constate.",
+          "instructions": [
+            "Je cours a mon allure de 80 pour cent, calculee tout a l'heure.",
+            "Je dois passer le meme nombre de plots chaque minute.",
+            "Observateur : tu m'annonces si je suis en avance ou en retard.",
+            "Je note mes ecarts et mes sensations sur mon carnet."
+          ],
+          "success": [
+            "Les deux fractions sont realisees.",
+            "L'ecart a l'allure visee est inferieur a dix pour cent.",
+            "Le carnet est renseigne."
+          ],
+          "execution": [
+            "Se caler des la premiere minute.",
+            "Ajuster par petits ecarts, sans a-coup.",
+            "Recuperer en marchant, jamais a l'arret."
+          ],
+          "watch": [
+            "Les allures calculees sont-elles tenables ?",
+            "Les eleves partent-ils trop vite ?",
+            "Les carnets sont-ils renseignes en direct ?"
+          ],
+          "errors": [
+            "Partir plus vite que l'allure calculee.",
+            "Recuperer a l'arret complet.",
+            "Remplir le carnet a la fin, de memoire."
+          ],
+          "feedback": [
+            "Tu es en avance : ralentis, ce n'est pas ton allure.",
+            "Marche pendant la recuperation.",
+            "Note tout de suite : ton carnet est evalue."
+          ],
+          "plus": [
+            "Trois fractions, ou fractions a 90 pour cent."
+          ],
+          "minus": [
+            "Une fraction de deux minutes a 70 pour cent."
+          ],
+          "diff": {
+            "facilitee": "Une fraction de deux minutes a 70 pour cent de VMA.",
+            "normale": "Deux fractions de trois minutes a 80 pour cent, carnet renseigne.",
+            "complexifiee": "Trois fractions, ou fractions a 90 pour cent de VMA."
+          },
+          "safety": [
+            "Effort realise apres recuperation complete du test de VMA : aucune fraction intense immediatement apres le test.",
+            "Consulter les PAI.",
+            "Tout eleve signalant une gene s'arrete immediatement.",
+            "Recuperation active en marchant, jamais a l'arret complet.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Retour au calme obligatoire en fin de seance.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui est evalue le jour de l'epreuve, et qu'est-ce qui l'est au fil du cycle ?",
+          "Pourquoi marche-t-on trois minutes apres un test maximal ?"
+        ],
+        "key": "Huit points sur vingt se jouent pendant tout le cycle, dans le carnet et dans l'aide apportee aux autres. Et apres un effort maximal, on marche : s'asseoir brutalement expose au malaise."
+      },
+      "socialRoles": [
+        "Observateur : note le palier atteint et surveille son camarade pendant le test.",
+        "Chronometreur : annonce les temps de passage.",
+        "Verificateur : controle les calculs d'allure de son camarade."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Mobile, format et planification du cycle",
+      "mainObjective": "Choisir un mobile et planifier une progression sur l'ensemble du cycle.",
+      "secondaryObjectives": [
+        "Choisir un mobile et le format de seance correspondant.",
+        "Planifier une progression sur six seances.",
+        "Distinguer planifier et improviser."
+      ],
+      "linkToPrevious": "La VMA et les allures sont connues. Reste a decider quoi en faire, et sur quelle duree.",
+      "prerequisiteForNext": "Chaque eleve a une planification ecrite pour tout le cycle.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des mobiles et formats",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de planification",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les mobiles et les formats de seance correspondants.",
+          "Preparer une fiche de planification couvrant les six seances restantes.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, sens unique.\nAffiche des mobiles et formats a l'entree du parcours.\nZone d'ecriture avec bancs, a l'ecart du parcours.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome progressif : sa conduite fait partie de l'AFL1 et se prepare des la deuxieme seance.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations de 80 metres.",
+              "Une minute a allure de travail.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Planifier six seances",
+          "objective": "Construire une planification qui progresse, plutot qu'une seance repetee six fois.",
+          "material": [
+            {
+              "label": "affiche des mobiles et formats",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de planification",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis par groupes de quatre, a l'ecart du parcours. Chacun choisit son mobile, le format correspondant, et planifie les six seances restantes : quelle evolution de duree, d'intensite ou de recuperation.",
+          "studentGoal": "Ecrire ce que je ferai a chacune des six seances, et comment cela progresse.",
+          "instructions": [
+            "Je choisis mon mobile et le format correspondant.",
+            "Je planifie six seances : ce qui reste identique et ce qui evolue.",
+            "L'evolution porte sur un parametre a la fois : duree, intensite ou recuperation.",
+            "Un camarade verifie que ma planification progresse reellement."
+          ],
+          "success": [
+            "La planification couvre les six seances.",
+            "Une progression est identifiable, portant sur un parametre.",
+            "Elle est coherente avec le mobile choisi.",
+            "La verification croisee est faite."
+          ],
+          "execution": [
+            "Faire evoluer un seul parametre a la fois.",
+            "Prevoir une progression par petits paliers.",
+            "Verifier la coherence avec le mobile."
+          ],
+          "watch": [
+            "Les planifications progressent-elles ou repetent-elles ?",
+            "L'evolution porte-t-elle sur un seul parametre ?",
+            "Les progressions sont-elles realistes ?"
+          ],
+          "errors": [
+            "Planifier six fois la meme seance.",
+            "Faire evoluer tous les parametres a la fois.",
+            "Prevoir une progression d'intensite irrealiste."
+          ],
+          "feedback": [
+            "Six fois la meme seance, ce n'est pas une planification.",
+            "Un parametre a la fois : sinon tu ne sauras pas ce qui produit l'effet.",
+            "Cinq pour cent de VMA en six seances : ce n'est pas realiste."
+          ],
+          "plus": [
+            "Planification avec alternance de deux formats."
+          ],
+          "minus": [
+            "Planification sur trois seances, a partir d'un modele."
+          ],
+          "diff": {
+            "facilitee": "Planification sur trois seances a partir d'un modele, construite avec le professeur.",
+            "normale": "Planification des six seances avec une progression sur un parametre.",
+            "complexifiee": "Planification avec alternance de deux formats sur le cycle."
+          },
+          "safety": [
+            "Le professeur valide chaque planification : toute progression d'intensite jugee trop rapide est corrigee avant realisation.",
+            "Les eleves porteurs d'une contre-indication planifient avec le professeur, en adaptant les intensites.",
+            "Aucune planification ne prevoit d'effort maximal repete a chaque seance.",
+            "Phase d'ecriture assise a l'ecart du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Eprouver le format choisi",
+          "objective": "Verifier immediatement que le format choisi correspond a ce que l'eleve recherche.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise dix minutes de travail dans le format correspondant a son mobile, avec un observateur qui verifie l'allure et surveille.",
+          "studentGoal": "Verifier que le format de mon mobile me convient.",
+          "instructions": [
+            "Je travaille dix minutes dans le format de mon mobile.",
+            "Je respecte l'allure et les recuperations de ce format.",
+            "Observateur : tu verifies mon allure chaque minute et tu me surveilles.",
+            "Je note ce que j'ai fait et ressenti sur mon carnet."
+          ],
+          "success": [
+            "Les dix minutes sont realisees dans le bon format.",
+            "L'allure est tenue a dix pour cent pres.",
+            "Le carnet est renseigne."
+          ],
+          "execution": [
+            "Se caler des la premiere minute.",
+            "Respecter les recuperations du format.",
+            "Noter immediatement."
+          ],
+          "watch": [
+            "Le format choisi est-il respecte ?",
+            "Les allures correspondent-elles au format ?",
+            "Les observateurs surveillent-ils leur camarade ?"
+          ],
+          "errors": [
+            "Choisir un format et courir dans un autre.",
+            "Allure inadaptee au format annonce.",
+            "Observer sans surveiller."
+          ],
+          "feedback": [
+            "Tu as choisi le continu : tu ne dois pas etre a bout de souffle.",
+            "Ton allure ne correspond pas a ton format.",
+            "Ton coureur d'abord : tu es aussi sa securite."
+          ],
+          "plus": [
+            "Quinze minutes dans le format choisi."
+          ],
+          "minus": [
+            "Six minutes, allure determinee avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Six minutes avec allure determinee avec le professeur.",
+            "normale": "Dix minutes dans le format correspondant a son mobile.",
+            "complexifiee": "Quinze minutes avec ajustement d'allure en cours."
+          },
+          "safety": [
+            "Consulter les PAI.",
+            "L'observateur surveille son camarade en permanence : c'est un role de securite autant que d'observation.",
+            "Tout eleve signalant une gene respiratoire, une douleur thoracique ou un vertige s'arrete immediatement.",
+            "Recuperations actives en marchant.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Detailler la seance 3",
+          "objective": "Detailler la premiere seance de la planification, celle qui sera realisee la fois suivante.",
+          "material": [
+            {
+              "label": "fiches de planification",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun detaille la seance suivante : echauffement, fractions, allures, durees, recuperations, retour au calme, duree totale.",
+          "studentGoal": "Ecrire en detail la seance que je realiserai la prochaine fois.",
+          "instructions": [
+            "Je detaille ma seance suivante, fraction par fraction.",
+            "J'indique l'allure de chaque fraction, en pourcentage et en metres par minute.",
+            "Je compte les recuperations dans la duree totale.",
+            "Je n'oublie ni l'echauffement ni le retour au calme."
+          ],
+          "success": [
+            "La seance est detaillee integralement.",
+            "Les allures sont exprimees en pourcentage et en metres par minute.",
+            "Echauffement et retour au calme figurent dans la seance.",
+            "La duree totale est estimee."
+          ],
+          "execution": [
+            "Detailler fraction par fraction.",
+            "Compter les recuperations dans la duree.",
+            "Verifier la coherence avec le mobile."
+          ],
+          "watch": [
+            "L'echauffement et le retour au calme sont-ils prevus ?",
+            "La duree est-elle estimee en comptant les recuperations ?",
+            "Les allures sont-elles exprimees en metres par minute ?"
+          ],
+          "errors": [
+            "Oublier l'echauffement dans la seance ecrite.",
+            "Oublier de compter les recuperations dans la duree.",
+            "Noter une allure sans unite."
+          ],
+          "feedback": [
+            "Ton echauffement fait partie de ta seance : ecris-le.",
+            "Compte tes recuperations : ta seance dure une heure.",
+            "Des metres par minute : sinon tu ne pourras pas la tenir."
+          ],
+          "plus": [
+            "Detailler les deux seances suivantes."
+          ],
+          "minus": [
+            "Seance detaillee a partir d'un modele a completer."
+          ],
+          "diff": {
+            "facilitee": "Seance detaillee a partir d'un modele a completer, avec le professeur.",
+            "normale": "Seance suivante detaillee integralement en autonomie.",
+            "complexifiee": "Deux seances suivantes detaillees."
+          },
+          "safety": [
+            "Le professeur valide chaque seance detaillee avant sa realisation.",
+            "Toute seance sans echauffement ni retour au calme est refusee : ce ne sont pas des options.",
+            "Phase d'ecriture assise a l'ecart du parcours.",
+            "Eleves couverts en cas de temps frais."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui evolue dans votre planification, et sur quel parametre ?",
+          "Pourquoi l'echauffement fait-il partie de la seance ecrite ?"
+        ],
+        "key": "Planifier, ce n'est pas repeter six fois la meme seance. Et l'echauffement et le retour au calme font partie de la seance : les oublier, c'est prendre un risque et perdre des points."
+      },
+      "socialRoles": [
+        "Observateur : verifie l'allure et surveille son camarade.",
+        "Verificateur : controle que la planification progresse reellement.",
+        "Chronometreur : annonce les debuts et fins de fractions."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Tenir ses allures : fiabiliser les reperes internes",
+      "mainObjective": "Fiabiliser la capacite a tenir une allure sans repere exterieur, condition de l'autonomie.",
+      "secondaryObjectives": [
+        "Tenir une allure annoncee sans annonce de temps.",
+        "Associer chaque allure a des indicateurs internes.",
+        "Realiser la premiere seance planifiee."
+      ],
+      "linkToPrevious": "La planification existe, mais elle ne vaut que si les allures prevues sont reellement tenues sans qu'on les rappelle.",
+      "prerequisiteForNext": "Chaque eleve tient une allure annoncee sans repere exterieur.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des indicateurs",
+            "fixed": 2,
+            "note": "frequence cardiaque, test de la parole, echelle de ressenti"
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les trois indicateurs : frequence cardiaque, test de la parole, echelle de ressenti de 1 a 10.",
+          "Baliser le parcours pour permettre le releve des distances par minute.",
+          "Verifier l'etat du parcours et les conditions meteorologiques.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, sens unique.\nAffiche des trois indicateurs a l'entree du parcours.\nObservateurs a l'interieur, jamais sur le parcours.\nPoint d'eau et zone de recuperation signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome progressif, avec prise de la frequence cardiaque de repos : les indicateurs se construisent des l'echauffement.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Prise de la frequence cardiaque de repos avant de commencer.",
+              "Sept minutes de course tres souple.",
+              "Nouvelle prise apres l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations de 80 metres.",
+              "Une minute a allure de travail.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Tenir une allure a l'aveugle",
+          "objective": "Fiabiliser la reproduction d'une allure sans information exterieure.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Trois fractions de cinq minutes a une allure annoncee. Premiere fraction avec annonces chaque minute, deuxieme avec une annonce a mi-parcours, troisieme sans aucune annonce. Ecart mesure a chaque fois.",
+          "studentGoal": "Tenir mon allure sans qu'on me dise si je suis en avance ou en retard.",
+          "instructions": [
+            "J'annonce l'allure que je vais tenir avant chaque fraction.",
+            "Fraction 1 : annonces chaque minute. Fraction 2 : une seule annonce.",
+            "Fraction 3 : aucune annonce, je me fie a mes reperes.",
+            "Je note mes trois ecarts sur mon carnet."
+          ],
+          "success": [
+            "Les trois fractions sont realisees.",
+            "L'ecart sur la troisieme fraction est inferieur a dix pour cent.",
+            "Les ecarts sont notes au carnet."
+          ],
+          "execution": [
+            "Se caler sur une foulee et une respiration stables.",
+            "Compter les plots par minute comme repere interne.",
+            "Ne pas accelerer en fin de fraction."
+          ],
+          "watch": [
+            "Les ecarts se reduisent-ils entre les fractions ?",
+            "Les eleves accelerent-ils en fin de fraction ?",
+            "S'appuient-ils sur des reperes internes ?"
+          ],
+          "errors": [
+            "Accelerer en fin de fraction pour rattraper.",
+            "Ne s'appuyer sur aucun repere.",
+            "Chercher a voir le chronometre."
+          ],
+          "feedback": [
+            "N'accelere pas a la fin : ce n'est plus la meme allure.",
+            "Compte tes plots : c'est ton repere interne.",
+            "Ne regarde pas : c'est justement l'exercice."
+          ],
+          "plus": [
+            "Fractions de huit minutes, deux allures a reproduire."
+          ],
+          "minus": [
+            "Fractions de trois minutes, annonces maintenues."
+          ],
+          "diff": {
+            "facilitee": "Fractions de trois minutes avec annonces maintenues sur les trois.",
+            "normale": "Trois fractions de cinq minutes, annonces progressivement supprimees.",
+            "complexifiee": "Fractions de huit minutes, deux allures differentes a reproduire."
+          },
+          "safety": [
+            "Consulter les PAI avant les fractions.",
+            "Tout eleve signalant une gene respiratoire, un vertige ou des nausees s'arrete immediatement.",
+            "Recuperations actives en marchant entre les fractions.",
+            "Aucun eleve ne quitte le parcours balise : courir a l'aveugle ne dispense jamais de rester visible.",
+            "L'observateur surveille son camarade en permanence.",
+            "Sens de course unique.",
+            "Point d'eau accessible entre les fractions.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Associer allure et indicateurs",
+          "objective": "Associer chaque allure a une frequence cardiaque, un test de la parole et un ressenti.",
+          "material": [
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            },
+            {
+              "label": "affiche des indicateurs",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Trois fractions de trois minutes a 60, 75 et 90 pour cent de VMA. Apres chacune : prise de la frequence cardiaque, test de la parole, note de ressenti de 1 a 10. Tableau rempli au carnet.",
+          "studentGoal": "Savoir a quelle frequence cardiaque et a quel ressenti correspond chacune de mes allures.",
+          "instructions": [
+            "Apres chaque fraction, je prends ma frequence cardiaque immediatement.",
+            "Je teste si je peux parler : phrase complete, quelques mots, ou rien.",
+            "Je note mon ressenti de 1 a 10.",
+            "Je remplis le tableau des trois indicateurs pour chaque allure."
+          ],
+          "success": [
+            "Les trois indicateurs sont releves pour les trois allures.",
+            "Les valeurs sont coherentes entre elles.",
+            "Le tableau est rempli au carnet."
+          ],
+          "execution": [
+            "Prendre la frequence cardiaque immediatement apres l'arret.",
+            "Tester la parole avec une phrase complete.",
+            "Noter le ressenti sans se comparer aux autres."
+          ],
+          "watch": [
+            "Les indicateurs sont-ils coherents entre eux ?",
+            "La frequence cardiaque est-elle prise a temps ?",
+            "Le ressenti est-il influence par le regard des autres ?"
+          ],
+          "errors": [
+            "Prendre la frequence cardiaque deux minutes apres l'arret.",
+            "Noter un ressenti faible par fierte.",
+            "Indicateurs incoherents sans s'en apercevoir."
+          ],
+          "feedback": [
+            "Tout de suite apres l'arret, sinon ca ne veut rien dire.",
+            "Note ce que tu ressens, pas ce que tu veux montrer.",
+            "Ton ressenti dit facile mais ton pouls dit le contraire."
+          ],
+          "plus": [
+            "Quatre allures avec calcul du pourcentage de frequence cardiaque maximale."
+          ],
+          "minus": [
+            "Deux allures, test de la parole seul."
+          ],
+          "diff": {
+            "facilitee": "Deux allures avec le test de la parole seul comme indicateur.",
+            "normale": "Trois allures avec trois indicateurs releves et tableau rempli.",
+            "complexifiee": "Quatre allures avec calcul du pourcentage de frequence cardiaque maximale."
+          },
+          "safety": [
+            "Consulter les PAI avant la fraction a 90 pour cent.",
+            "Le test de la parole est aussi un indicateur de securite : un eleve incapable de dire quelques mots a allure moderee est pris en charge.",
+            "Tout eleve signalant une gene s'arrete immediatement.",
+            "Recuperations actives entre les fractions.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Realiser la premiere seance planifiee",
+          "objective": "Realiser la seance detaillee a la seance 2, avec les allures fiabilisees.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise la premiere partie de sa seance planifiee, avec un observateur qui releve les distances et surveille. Tout est note au carnet.",
+          "studentGoal": "Realiser ma seance planifiee et noter les ecarts avec ce que j'avais prevu.",
+          "instructions": [
+            "Je realise ma seance dans l'ordre planifie.",
+            "Je tiens les allures prevues.",
+            "Je note les ecarts avec ce que j'avais prevu.",
+            "Observateur : tu releves les distances et tu me surveilles."
+          ],
+          "success": [
+            "La seance planifiee est realisee.",
+            "Les ecarts sont notes au carnet.",
+            "Les allures prevues sont tenues ou les ecarts sont expliques."
+          ],
+          "execution": [
+            "Suivre l'ordre planifie, sans improviser.",
+            "Noter immediatement apres chaque fraction.",
+            "Recuperer activement."
+          ],
+          "watch": [
+            "Les allures planifiees sont-elles tenables ?",
+            "Les eleves suivent-ils leur planification ?",
+            "Les carnets sont-ils renseignes en direct ?"
+          ],
+          "errors": [
+            "Improviser en abandonnant la planification.",
+            "Refuser de ralentir malgre les indicateurs.",
+            "Remplir le carnet a la fin."
+          ],
+          "feedback": [
+            "Ta seance est planifiee : suis-la ou note pourquoi tu t'en ecartes.",
+            "Ton ressenti est a 9 : ralentis, ce n'est pas un echec.",
+            "Note tout de suite."
+          ],
+          "plus": [
+            "Seance complete realisee."
+          ],
+          "minus": [
+            "Deux fractions seulement, accompagnees."
+          ],
+          "diff": {
+            "facilitee": "Deux fractions seulement, accompagnees par le professeur.",
+            "normale": "Premiere partie de la seance planifiee, ecarts notes.",
+            "complexifiee": "Seance planifiee realisee integralement."
+          },
+          "safety": [
+            "Recuperation apres les fractions d'indicateurs avant de commencer la seance.",
+            "Consulter les PAI.",
+            "Tout eleve signalant une gene s'arrete immediatement.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Recuperations actives en marchant.",
+            "Retour au calme obligatoire.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels reperes utilisez-vous pour tenir une allure sans chronometre ?",
+          "Que dit le test de la parole a 70 pour cent de VMA ?"
+        ],
+        "key": "Une allure se tient avec des reperes internes : la respiration, le ressenti, le nombre de plots par minute. Le chronometre confirme, il ne remplace pas les sensations."
+      },
+      "socialRoles": [
+        "Observateur : releve les distances, calcule les ecarts et surveille son camarade.",
+        "Chronometreur : annonce les debuts et fins de fractions.",
+        "Preneur d'indicateurs : aide au releve des frequences cardiaques."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Reguler : quand et pourquoi modifier son allure",
+      "mainObjective": "Construire la regulation : modifier son allure a partir d'indicateurs, et justifier chaque modification.",
+      "secondaryObjectives": [
+        "Relever des indicateurs objectifs et subjectifs pendant la seance.",
+        "Appliquer une regle de regulation.",
+        "Justifier chaque regulation dans le carnet."
+      ],
+      "linkToPrevious": "La planification est ecrite et les allures fiabilisees. Mais un plan ne survit pas au contact du reel : reguler est ce qui distingue un entrainement d'un programme applique aveuglement.",
+      "prerequisiteForNext": "Chaque eleve regule au moins une allure et justifie sa regulation.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          },
+          {
+            "label": "echelle de ressenti d'effort",
+            "fixed": 4
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de regulation : quand ralentir, quand accelerer, de combien.",
+          "Afficher l'echelle de ressenti d'effort de 1 a 10.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, sens unique.\nAffiche des criteres de regulation et echelle de ressenti a l'entree.\nZone de notation des carnets a l'ecart.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, avec releve du ressenti des l'echauffement : les indicateurs se construisent avant la seance.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement.",
+              "Releve du ressenti general avant de commencer."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations adaptees a l'intensite prevue.",
+              "Une fraction courte a allure de travail, avec releve du ressenti.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Relever et reguler",
+          "objective": "Construire la regulation a partir d'indicateurs releves fraction par fraction.",
+          "material": [
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            },
+            {
+              "label": "echelle de ressenti d'effort",
+              "fixed": 4
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque eleve realise sa seance planifiee. Apres chaque fraction, il note deux indicateurs : l'ecart a l'allure visee et son ressenti de 1 a 10. Il applique ensuite la regle de regulation.",
+          "studentGoal": "Reguler mon allure a partir de ce que je releve, pas de ce que je ressens vaguement.",
+          "instructions": [
+            "Apres chaque fraction, je note mon ecart a l'allure et mon ressenti.",
+            "Si l'allure est tenue avec un ressenti bas sur deux fractions, j'accelere de cinq pour cent.",
+            "Si mon ressenti depasse 8 ou si l'ecart depasse dix pour cent, je ralentis.",
+            "Je note chaque regulation et sa raison."
+          ],
+          "success": [
+            "Les deux indicateurs sont releves apres chaque fraction.",
+            "Au moins une regulation est appliquee selon la regle.",
+            "Chaque regulation est notee avec sa raison."
+          ],
+          "execution": [
+            "Noter immediatement apres la fraction.",
+            "Ajuster par paliers de cinq pour cent.",
+            "Verifier l'effet de la regulation a la fraction suivante."
+          ],
+          "watch": [
+            "Les indicateurs sont-ils releves en direct ?",
+            "Les regulations suivent-elles la regle ?",
+            "Les raisons sont-elles notees ?",
+            "Les eleves refusent-ils de ralentir ?"
+          ],
+          "errors": [
+            "Reguler au feeling, sans relever d'indicateur.",
+            "Refuser de ralentir malgre un ressenti eleve.",
+            "Accelerer par bonds importants.",
+            "Noter la regulation sans sa raison."
+          ],
+          "feedback": [
+            "Sur quel indicateur tu regules ? Note-le.",
+            "Ton ressenti est a 9 : ralentis, ce n'est pas un echec.",
+            "Cinq pour cent, pas quinze.",
+            "La raison compte autant que la regulation : c'est ce qui est evalue."
+          ],
+          "plus": [
+            "Trois indicateurs releves, dont la frequence cardiaque de recuperation."
+          ],
+          "minus": [
+            "Un seul indicateur, regulation proposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul indicateur releve, regulation proposee par le professeur et notee par l'eleve.",
+            "normale": "Deux indicateurs releves fraction par fraction, regulation autonome justifiee.",
+            "complexifiee": "Trois indicateurs releves, dont la frequence cardiaque de recuperation."
+          },
+          "safety": [
+            "Un ressenti eleve associe a une gene respiratoire impose de ralentir puis de s'arreter : cette regle prime sur la planification ecrite.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige ou des nausees.",
+            "Recuperations actives en marchant.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Le professeur valide toute regulation a la hausse.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Justifier une regulation",
+          "objective": "Construire la justification ecrite d'une regulation, attendue dans le carnet.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux, assis a l'ecart du parcours. Chacun redige la justification d'une regulation de sa seance, puis son partenaire verifie qu'elle s'appuie sur un indicateur chiffre.",
+          "studentGoal": "Ecrire une justification de regulation qui tient sur un indicateur, pas sur une impression.",
+          "instructions": [
+            "J'ecris : j'ai regule mon allure, parce que tel indicateur montrait tel resultat.",
+            "Ma justification cite un chiffre : ecart a l'allure, ressenti ou pouls.",
+            "Mon partenaire verifie qu'elle s'appuie sur un indicateur.",
+            "Je corrige si ma justification est une impression."
+          ],
+          "success": [
+            "La justification cite un indicateur chiffre.",
+            "Elle relie l'indicateur a la regulation.",
+            "Le partenaire l'a validee."
+          ],
+          "execution": [
+            "Citer l'indicateur avant la decision.",
+            "Ecrire court et precis.",
+            "Verifier la coherence avec la regle affichee."
+          ],
+          "watch": [
+            "Les justifications citent-elles des chiffres ?",
+            "Sont-elles coherentes avec la regle ?",
+            "Les partenaires verifient-ils reellement ?"
+          ],
+          "errors": [
+            "Justifier par une impression : c'etait trop dur.",
+            "Justifier apres coup, sans indicateur releve.",
+            "Valider la justification d'un camarade sans la lire."
+          ],
+          "feedback": [
+            "Trop dur, c'est une impression : quel chiffre ?",
+            "Tu n'as rien releve : tu ne peux rien justifier.",
+            "Lis-la vraiment : c'est son evaluation."
+          ],
+          "plus": [
+            "Justifier trois regulations differentes."
+          ],
+          "minus": [
+            "Justification a completer a partir d'un modele."
+          ],
+          "diff": {
+            "facilitee": "Justification a completer a partir d'un modele de phrase.",
+            "normale": "Justification redigee librement et verifiee par un partenaire.",
+            "complexifiee": "Trois regulations differentes justifiees."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Aider un camarade a reguler",
+          "objective": "Construire l'AFL3 : aider un camarade a reguler son effort a partir de ce qu'on observe.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun observe une fraction de son camarade, releve son ecart a l'allure visee, et lui propose une regulation argumentee.",
+          "studentGoal": "Proposer a mon camarade une regulation fondee sur ce que j'ai releve.",
+          "instructions": [
+            "Je releve sa distance chaque minute et je calcule son ecart.",
+            "Je note s'il ralentit progressivement ou s'il tient.",
+            "Je lui propose une regulation en citant ce que j'ai releve.",
+            "Il note ma proposition s'il la retient."
+          ],
+          "success": [
+            "L'ecart est releve et calcule.",
+            "La regulation proposee est argumentee.",
+            "Elle est notee si elle est retenue."
+          ],
+          "execution": [
+            "Relever chaque minute, pas seulement a la fin.",
+            "Reperer le moment ou l'allure decroche.",
+            "Proposer sans imposer."
+          ],
+          "watch": [
+            "Les observations sont-elles chiffrees ?",
+            "Les propositions sont-elles argumentees ?",
+            "Les eleves conseillent-ils systematiquement d'accelerer ?"
+          ],
+          "errors": [
+            "Conseiller d'accelerer sans raison.",
+            "Observer sans relever.",
+            "Refuser toute proposition par principe."
+          ],
+          "feedback": [
+            "Pourquoi plus vite ? Argumente avec ce que tu as releve.",
+            "Releve chaque minute : tu ne verras rien a la fin.",
+            "Ecoute-le : il voit ton decrochage avant toi."
+          ],
+          "plus": [
+            "Observer trois fractions et proposer une regulation pour chacune."
+          ],
+          "minus": [
+            "Observer une fraction et signaler seulement le decrochage."
+          ],
+          "diff": {
+            "facilitee": "Observation d'une fraction avec signalement du decrochage seulement.",
+            "normale": "Observation chiffree et proposition de regulation argumentee.",
+            "complexifiee": "Trois fractions observees avec une regulation proposee pour chacune."
+          },
+          "safety": [
+            "L'observateur surveille son camarade en permanence : c'est un role de securite avant d'etre un role d'observation.",
+            "Il signale immediatement tout signe anormal : paleur, gene respiratoire, desequilibre.",
+            "Aucun conseil d'eleve ne prevaut sur une regle de securite : un conseil d'accelerer doit etre valide par le professeur.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quels indicateurs regulez-vous votre allure ?",
+          "Que doit contenir la justification d'une regulation dans votre carnet ?"
+        ],
+        "key": "Reguler au feeling ne s'evalue pas : une regulation se justifie par un indicateur chiffre. Et c'est cette justification, plus que la regulation elle-meme, qui est attendue dans le carnet."
+      },
+      "socialRoles": [
+        "Observateur : releve les ecarts et surveille son camarade.",
+        "Conseiller : propose une regulation argumentee.",
+        "Verificateur : controle que la justification s'appuie sur un indicateur."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle, choix AFL2 et AFL3, projet d'entrainement",
+      "mainObjective": "Situer chacun, faire choisir la repartition des points entre l'AFL2 et l'AFL3, et arreter le projet d'entrainement.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser une seance evaluee dans les conditions du jour J.",
+        "Choisir et justifier la repartition entre AFL2 et AFL3.",
+        "Arreter le projet d'entrainement pour la fin du cycle."
+      ],
+      "linkToPrevious": "Planification, allures et regulation ont ete construites : la seance evaluee montre ce qui en reste, et le moment est venu de choisir la repartition des points.",
+      "prerequisiteForNext": "Chaque eleve a choisi sa repartition et a un projet d'entrainement ecrit.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches d'observation nominatives.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un espace d'ecriture a l'ecart du parcours."
+        ],
+        "sketch": "Parcours balise, sens unique.\nAffichage du referentiel et des repartitions a l'entree.\nZone d'ecriture avec bancs, a l'ecart du parcours.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite fait partie de l'AFL1 et sera observee le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations adaptees a l'intensite prevue.",
+              "Une fraction courte a allure de travail.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance evaluee dans les conditions du jour J",
+          "objective": "Evaluer la conduite de la seance et la coherence des parametres avec le theme annonce.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un annonce puis realise sa seance de vingt minutes, l'autre chronometre, releve et renseigne la fiche. Le professeur interroge brievement chaque eleve sur un choix de parametre.",
+          "studentGoal": "Realiser ma seance et savoir justifier chacun de mes choix.",
+          "instructions": [
+            "J'annonce ma seance : format, allures, durees, recuperations.",
+            "Je la realise integralement.",
+            "Observateur : tu releves les distances et tu calcules mes ecarts.",
+            "Je dois pouvoir justifier chaque choix quand on me le demande."
+          ],
+          "success": [
+            "La seance est realisee integralement.",
+            "Les ecarts aux allures annoncees sont inferieurs a dix pour cent.",
+            "Les parametres sont coherents avec le theme annonce.",
+            "L'eleve justifie ses choix quand il est interroge."
+          ],
+          "execution": [
+            "Se caler des la premiere minute de chaque fraction.",
+            "Respecter les recuperations.",
+            "Justifier en citant le theme et les indicateurs."
+          ],
+          "watch": [
+            "Les parametres sont-ils coherents avec le theme ?",
+            "Les eleves savent-ils justifier leurs choix ?",
+            "Les allures tiennent-elles sous evaluation ?",
+            "Les observateurs surveillent-ils leur camarade ?"
+          ],
+          "errors": [
+            "Annoncer un theme et courir dans un autre format.",
+            "Etre incapable de justifier un choix de recuperation.",
+            "Partir plus vite que l'allure annoncee.",
+            "Observer sans surveiller."
+          ],
+          "feedback": [
+            "Ton theme dit continu et tu fais des fractions courtes : c'est incoherent.",
+            "Pourquoi une minute de recuperation ? Justifie.",
+            "Ton allure annoncee, pas plus vite.",
+            "Ton coureur d'abord : tu es aussi sa securite."
+          ],
+          "plus": [
+            "Seance de trente minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de douze minutes a une seule allure, accompagnee."
+          ],
+          "diff": {
+            "facilitee": "Seance de douze minutes a une seule allure moderee, accompagnee, justification guidee.",
+            "normale": "Seance de vingt minutes annoncee et realisee, avec justification d'un choix.",
+            "complexifiee": "Seance de trente minutes avec entretien complet sur l'ensemble des choix."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant toute seance evaluee.",
+            "Consulter les PAI : asthme d'effort, pathologies cardiaques.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "L'observateur surveille son camarade pendant toute sa seance.",
+            "Recuperations actives en marchant, jamais a l'arret complet.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Choisir sa repartition AFL2 et AFL3",
+          "objective": "Faire choisir et justifier la repartition des huit points entre l'AFL2 et l'AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun choisit sa repartition entre l'AFL2 et l'AFL3, parmi les trois possibles, et la justifie par ecrit sur son carnet.",
+          "studentGoal": "Choisir la repartition qui correspond a mes points forts, et la justifier.",
+          "instructions": [
+            "Je relis ce que recouvrent l'AFL2 et l'AFL3.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mon role aupres des autres : chronometrage, surveillance, conseil.",
+            "Je choisis une repartition et j'ecris pourquoi."
+          ],
+          "success": [
+            "La repartition est choisie parmi les trois possibles.",
+            "Elle est justifiee par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reel.",
+            "Choisir une repartition qui valorise ses points forts.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les choix s'appuient-ils sur ce que l'eleve fait reellement ?",
+            "Les justifications sont-elles argumentees ?"
+          ],
+          "errors": [
+            "Choisir la meme repartition que son voisin.",
+            "Choisir sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort.",
+            "Tu ne conseilles jamais personne : le 2 et 6 serait risque.",
+            "Ce n'est pas le choix de ton voisin qui compte."
+          ],
+          "plus": [
+            "Justification comparant les trois repartitions possibles."
+          ],
+          "minus": [
+            "Choix guide par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Choix guide par le professeur a partir des observations du cycle.",
+            "normale": "Choix autonome parmi les trois repartitions, justifie par ecrit.",
+            "complexifiee": "Justification comparant explicitement les trois repartitions."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Arreter le projet d'entrainement",
+          "objective": "Arreter le projet pour les trois dernieres seances et ecrire un objectif personnel.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun arrete son projet : theme confirme ou modifie, format, allures visees, progression sur les trois seances restantes, et objectif personnel.",
+          "studentGoal": "Arreter mon projet pour les trois dernieres seances et ecrire mon objectif.",
+          "instructions": [
+            "Je confirme ou je modifie mon theme, en justifiant.",
+            "J'arrete mon format et mes allures visees.",
+            "J'indique la progression prevue sur les trois seances restantes.",
+            "J'ecris mon objectif personnel et je garde mon carnet."
+          ],
+          "success": [
+            "Le projet est arrete et ecrit.",
+            "La progression prevue est chiffree et progressive.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Partir des allures reellement tenues.",
+            "Prevoir une progression par petits paliers.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les progressions sont-elles trop rapides ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Prevoir une progression irrealiste.",
+            "Objectif vague : mieux courir.",
+            "Changer de theme sans le justifier."
+          ],
+          "feedback": [
+            "Cette progression n'est pas tenable en trois seances.",
+            "Precise : quelle allure, quelle duree, quel objectif ?",
+            "Si tu changes de theme, dis pourquoi : c'est evalue."
+          ],
+          "plus": [
+            "Projet avec deux scenarios selon l'evolution des indicateurs."
+          ],
+          "minus": [
+            "Projet ecrit avec le professeur, sur un modele."
+          ],
+          "diff": {
+            "facilitee": "Projet ecrit avec le professeur a partir d'un modele.",
+            "normale": "Projet arrete en autonomie pour les trois dernieres seances.",
+            "complexifiee": "Projet avec deux scenarios selon l'evolution des indicateurs."
+          },
+          "safety": [
+            "Le professeur valide chaque projet : toute progression jugee trop rapide est corrigee avant realisation.",
+            "Aucun projet ne prevoit d'effort maximal a chaque seance.",
+            "Phase d'ecriture assise a l'ecart du parcours.",
+            "Toute gene mentionnee au carnet est signalee immediatement."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle repartition avez-vous choisie entre l'AFL2 et l'AFL3, et pourquoi ?",
+          "Quelle progression prevoyez-vous sur les trois dernieres seances ?"
+        ],
+        "key": "La repartition des points se choisit a partir de ce qu'on fait reellement : un carnet complet plaide pour l'AFL2, une aide constante aux autres pour l'AFL3."
+      },
+      "socialRoles": [
+        "Observateur : releve les ecarts et surveille son camarade pendant la seance evaluee.",
+        "Chronometreur : annonce les debuts et fins de fractions.",
+        "Preneur d'indicateurs : aide au releve des frequences cardiaques."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Conduire sa seance en autonomie et aider un camarade",
+      "mainObjective": "Conduire la seance seul et assumer pleinement le role d'aide aupres d'un camarade.",
+      "secondaryObjectives": [
+        "Conduire la seance sans consigne exterieure.",
+        "Chronometrer, surveiller et conseiller un camarade.",
+        "Renseigner le carnet en temps reel."
+      ],
+      "linkToPrevious": "La repartition est choisie : chacun sait maintenant sur quoi se jouent ses huit points, et travaille en consequence.",
+      "prerequisiteForNext": "Chaque eleve conduit sa seance seul et a aide un camarade de facon utile.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation AFL3 : ce qu'un aidant doit relever et proposer.",
+          "Afficher les criteres de regulation.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, seances individualisees simultanees.\nAffiche des criteres de regulation a l'entree.\nFiches d'observation AFL3 disponibles.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : chaque eleve prepare l'intensite de sa propre seance, ce qui fait partie de l'autonomie evaluee.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement selon l'intensite de sa seance.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations adaptees a l'intensite prevue.",
+              "Une fraction courte a allure de travail.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance conduite en autonomie",
+          "objective": "Conduire seul sa seance, du debut a la fin, sans consigne exterieure.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un conduit sa seance seul, l'autre chronometre, releve et surveille. Aucune consigne du professeur, sauf securite.",
+          "studentGoal": "Conduire ma seance du debut a la fin, sans qu'on me dise quoi faire.",
+          "instructions": [
+            "Je conduis ma seance seul, avec mon carnet.",
+            "Je gere mes allures, mes durees et mes recuperations.",
+            "Je regule si necessaire et je note la raison.",
+            "Je renseigne mon carnet apres chaque fraction."
+          ],
+          "success": [
+            "La seance est conduite en entier sans consigne exterieure.",
+            "Les allures et recuperations prevues sont respectees ou regulees avec justification.",
+            "Le carnet est renseigne en temps reel."
+          ],
+          "execution": [
+            "Suivre son carnet, fraction par fraction.",
+            "Noter immediatement apres chaque fraction.",
+            "Recuperer activement."
+          ],
+          "watch": [
+            "Les eleves conduisent-ils reellement leur seance ?",
+            "Attendent-ils encore des consignes ?",
+            "Les carnets sont-ils renseignes en direct ?"
+          ],
+          "errors": [
+            "Attendre une consigne pour demarrer chaque fraction.",
+            "Remplir son carnet a la fin, de memoire.",
+            "Abandonner la planification en cours de route."
+          ],
+          "feedback": [
+            "C'est ta seance : tu n'as pas besoin de moi.",
+            "Note tout de suite, pas a la fin.",
+            "Regule si tu veux, mais note pourquoi."
+          ],
+          "plus": [
+            "Seance de trente minutes conduite integralement."
+          ],
+          "minus": [
+            "Seance conduite avec rappel des etapes par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Seance conduite avec rappel des etapes par le professeur.",
+            "normale": "Seance conduite seule, partenaire limite au chronometrage et a la surveillance.",
+            "complexifiee": "Seance de trente minutes conduite integralement en autonomie."
+          },
+          "safety": [
+            "L'autonomie porte sur la conduite de la seance, jamais sur la securite : le partenaire surveille en permanence et le professeur intervient toujours sur un point de securite.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "Aucun eleve ne quitte le parcours balise, meme en autonomie.",
+            "Recuperations actives en marchant.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir le role d'aidant",
+          "objective": "Construire l'AFL3 : chronometrer, surveiller et conseiller de facon reellement utile.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Pendant la seance du camarade, l'aidant renseigne une fiche : distance par minute, ecart a l'allure visee, respect des recuperations, et propose une regulation argumentee.",
+          "studentGoal": "Etre reellement utile a mon camarade : relever, informer, surveiller, proposer.",
+          "instructions": [
+            "Je releve sa distance chaque minute et je calcule son ecart.",
+            "Je l'informe de son ecart quand il passe devant moi.",
+            "Je verifie qu'il respecte ses recuperations.",
+            "Je le surveille en permanence et je signale tout signe anormal."
+          ],
+          "success": [
+            "La fiche est renseignee minute par minute.",
+            "L'information est transmise pendant la seance.",
+            "Une regulation argumentee est proposee.",
+            "La surveillance est constante."
+          ],
+          "execution": [
+            "Relever pendant, pas apres.",
+            "Informer en un mot, sans deconcentrer.",
+            "Surveiller en permanence."
+          ],
+          "watch": [
+            "L'aidant surveille-t-il reellement son camarade ?",
+            "Les observations sont-elles chiffrees ?",
+            "Les propositions sont-elles argumentees ?"
+          ],
+          "errors": [
+            "Chronometrer sans regarder son camarade.",
+            "Observer sans relever.",
+            "Encourager bruyamment sans donner d'information.",
+            "Proposer d'accelerer sans raison."
+          ],
+          "feedback": [
+            "Ton coureur d'abord : tu es sa securite.",
+            "Des chiffres : quel ecart, a quelle minute ?",
+            "Allez n'est pas une information : dis-lui son ecart.",
+            "Pourquoi plus vite ? Argumente."
+          ],
+          "plus": [
+            "Relever trois indicateurs et conseiller sur toute la seance."
+          ],
+          "minus": [
+            "Relever un seul indicateur : la distance par minute."
+          ],
+          "diff": {
+            "facilitee": "Relever un seul indicateur, la distance par minute, avec surveillance prioritaire.",
+            "normale": "Fiche AFL3 renseignee minute par minute avec proposition argumentee.",
+            "complexifiee": "Trois indicateurs releves et conseil sur l'ensemble de la seance."
+          },
+          "safety": [
+            "Surveiller prime sur relever : l'aidant ne quitte jamais son camarade des yeux, et la fiche se remplit sans cesser de regarder.",
+            "L'aidant signale immediatement tout signe anormal : paleur, gene respiratoire, desequilibre, arret brutal.",
+            "Aucun conseil d'eleve ne prevaut sur une regle de securite : un conseil d'accelerer doit etre valide par le professeur.",
+            "L'aidant se place a l'interieur du parcours, jamais sur le parcours lui-meme.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Croiser les carnets",
+          "objective": "Confronter ce que l'aidant a releve et ce que l'eleve a note, pour fiabiliser le carnet.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, assis a l'ecart du parcours. Chacun compare ce qu'il a note dans son carnet et ce que son aidant a releve, et corrige les ecarts.",
+          "studentGoal": "Verifier que ce que j'ai note correspond a ce qui s'est reellement passe.",
+          "instructions": [
+            "Je compare mon carnet et la fiche de mon aidant.",
+            "Je repere les ecarts : allures tenues, recuperations, ressenti.",
+            "Je corrige mon carnet si necessaire.",
+            "Je note ce que l'observation exterieure m'a appris."
+          ],
+          "success": [
+            "Les deux documents sont compares.",
+            "Les ecarts sont identifies et corriges.",
+            "L'apport de l'observation exterieure est note."
+          ],
+          "execution": [
+            "Comparer fraction par fraction.",
+            "Accepter la correction quand le releve est plus fiable.",
+            "Noter l'apport, pas seulement la correction."
+          ],
+          "watch": [
+            "Les eleves surestiment-ils leurs allures tenues ?",
+            "Acceptent-ils la correction ?",
+            "L'apport est-il note ?"
+          ],
+          "errors": [
+            "Refuser la correction par principe.",
+            "Ne pas noter ce que l'observation a apporte.",
+            "Comparer sans corriger."
+          ],
+          "feedback": [
+            "Il a releve un ecart de quinze pour cent, tu as note que tu tenais : qui a raison ?",
+            "Note ce que ca t'apprend : c'est ce qui est evalue.",
+            "Corrige ton carnet : un carnet faux ne sert a rien."
+          ],
+          "plus": [
+            "Comparaison sur plusieurs seances du carnet."
+          ],
+          "minus": [
+            "Comparaison sur une fraction, guidee."
+          ],
+          "diff": {
+            "facilitee": "Comparaison sur une seule fraction, guidee par le professeur.",
+            "normale": "Comparaison complete du carnet et de la fiche d'observation.",
+            "complexifiee": "Comparaison portant sur plusieurs seances du carnet."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet ou observee est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qu'un aidant reellement utile fait, concretement ?",
+          "Sur quoi l'autonomie ne porte-t-elle jamais ?"
+        ],
+        "key": "Un aidant utile releve, informe et surveille : encourager ne suffit pas, et surveiller passe avant tout le reste. Et l'autonomie porte sur la conduite de la seance, jamais sur la securite."
+      },
+      "socialRoles": [
+        "Aidant : releve, informe, surveille et propose une regulation argumentee.",
+        "Chronometreur : annonce les debuts et fins de fractions.",
+        "Verificateur : croise le carnet et la fiche d'observation."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et carnet d'entrainement",
+      "mainObjective": "Realiser la seance dans les conditions de l'epreuve et finaliser le carnet, support de l'AFL2.",
+      "secondaryObjectives": [
+        "Realiser la seance complete comme le jour de l'epreuve.",
+        "Preparer l'entretien de justification.",
+        "Finaliser le carnet d'entrainement."
+      ],
+      "linkToPrevious": "La seance est conduite en autonomie et l'aide est assumee : il reste a eprouver l'ensemble une fois dans les conditions de l'epreuve.",
+      "prerequisiteForNext": "Chaque eleve a realise sa seance complete et son carnet est a jour.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et le deroulement de l'epreuve, entretien compris.",
+          "Preparer les fiches d'observation identiques a celles du jour final.",
+          "Baliser le parcours exactement comme le jour de l'epreuve.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise comme le jour de l'epreuve.\nReferentiel et deroulement affiches a l'entree.\nZone de notation des carnets et d'entretien a l'ecart.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, identique a celui du jour de l'epreuve : sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois accelerations adaptees a l'intensite prevue.",
+              "Une fraction courte a allure de travail.",
+              "Deux minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Seance complete a blanc",
+          "objective": "Realiser la seance dans les conditions exactes de l'epreuve, entretien compris.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance, comme le jour de l'epreuve : l'un annonce et realise sa seance, l'autre chronometre, releve et renseigne la fiche. Le professeur mene un entretien court avec chaque eleve.",
+          "studentGoal": "Realiser ma seance comme le jour de l'epreuve et justifier mes choix.",
+          "instructions": [
+            "J'annonce ma seance a mon observateur avant de commencer.",
+            "Je la realise integralement, avec mes allures et mes recuperations.",
+            "Je dois pouvoir justifier chaque choix de parametre.",
+            "Je note mes ecarts a la fin."
+          ],
+          "success": [
+            "La seance annoncee est realisee integralement.",
+            "Les ecarts aux allures sont inferieurs a dix pour cent.",
+            "Les choix sont justifies lors de l'entretien.",
+            "Les recuperations sont respectees."
+          ],
+          "execution": [
+            "Annoncer la seance avant de commencer.",
+            "Se caler des la premiere minute de chaque fraction.",
+            "Justifier en citant le theme et les indicateurs."
+          ],
+          "watch": [
+            "La seance annoncee est-elle realisable ?",
+            "Les justifications sont-elles argumentees ?",
+            "Les allures tiennent-elles jusqu'a la fin ?"
+          ],
+          "errors": [
+            "Annoncer une seance trop ambitieuse.",
+            "Justifier par une preference sans lien avec le theme.",
+            "S'effondrer sur les dernieres fractions."
+          ],
+          "feedback": [
+            "Ajuste ton annonce maintenant, pas le jour de l'epreuve.",
+            "Justifie par ton theme et tes indicateurs.",
+            "Tes dernieres fractions s'effondrent : ton allure etait trop ambitieuse."
+          ],
+          "plus": [
+            "Seance de trente a quarante minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de quinze minutes a une seule allure, accompagnee."
+          ],
+          "diff": {
+            "facilitee": "Seance de quinze minutes a une seule allure moderee, accompagnee, entretien guide.",
+            "normale": "Seance complete annoncee et realisee, avec entretien court.",
+            "complexifiee": "Seance de trente a quarante minutes avec entretien complet."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant la seance.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "L'observateur surveille son camarade pendant toute sa seance.",
+            "Recuperations actives en marchant.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Finaliser le carnet d'entrainement",
+          "objective": "Mettre le carnet a jour : il est le support de l'AFL2 et sera lu.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun met son carnet a jour : planification, seances realisees, regulations et leurs raisons, effets ressentis, bilan.",
+          "studentGoal": "Avoir un carnet complet et lisible, qui montre comment j'ai conduit mon entrainement.",
+          "instructions": [
+            "Je verifie que ma planification et toutes mes seances y figurent.",
+            "Je verifie que chaque regulation est accompagnee de sa raison.",
+            "J'ecris un bilan : ce que j'ai fait evoluer et pourquoi.",
+            "Je verifie que mon carnet est lisible pour quelqu'un d'autre."
+          ],
+          "success": [
+            "Toutes les seances figurent au carnet.",
+            "Chaque regulation est justifiee.",
+            "Un bilan est redige.",
+            "Le carnet est lisible."
+          ],
+          "execution": [
+            "Reprendre seance par seance.",
+            "Verifier que chaque regulation a sa raison.",
+            "Rediger un bilan argumente."
+          ],
+          "watch": [
+            "Les carnets sont-ils complets ?",
+            "Les regulations sont-elles justifiees ?",
+            "Le bilan est-il argumente ?"
+          ],
+          "errors": [
+            "Carnet rempli de memoire la veille.",
+            "Regulations notees sans raison.",
+            "Bilan resume a une phrase generale."
+          ],
+          "feedback": [
+            "Complete-le maintenant, pas le jour de l'epreuve.",
+            "Pourquoi as-tu regule ? Sans la raison, ca ne vaut rien.",
+            "Ton bilan doit dire ce que tu as fait evoluer, et pourquoi."
+          ],
+          "plus": [
+            "Bilan comparant les effets obtenus au mobile initial."
+          ],
+          "minus": [
+            "Carnet complete avec le professeur, sur un modele."
+          ],
+          "diff": {
+            "facilitee": "Carnet complete avec le professeur a partir d'un modele.",
+            "normale": "Carnet mis a jour en autonomie avec bilan redige.",
+            "complexifiee": "Bilan comparant les effets obtenus au mobile initial."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Preparer l'entretien",
+          "objective": "Preparer la justification orale attendue le jour de l'epreuve.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun interroge son partenaire sur trois choix de sa seance : pourquoi ce format, pourquoi cette allure, pourquoi cette recuperation. Puis inversion.",
+          "studentGoal": "Savoir justifier mes choix a l'oral, sans hesiter.",
+          "instructions": [
+            "Je pose trois questions : pourquoi ce format, cette allure, cette recuperation.",
+            "Il repond en citant son mobile et ses indicateurs.",
+            "Je lui dis si sa reponse est convaincante.",
+            "On inverse."
+          ],
+          "success": [
+            "Les trois questions sont posees et traitees.",
+            "Les reponses citent le mobile et les indicateurs.",
+            "Le partenaire evalue la clarte de la reponse."
+          ],
+          "execution": [
+            "Repondre en citant le theme puis l'indicateur.",
+            "Repondre court et precis.",
+            "Reprendre une reponse jugee peu claire."
+          ],
+          "watch": [
+            "Les reponses citent-elles des indicateurs ?",
+            "Les eleves savent-ils relier leurs choix a leur mobile ?"
+          ],
+          "errors": [
+            "Repondre parce que c'est comme ca.",
+            "Ne pas savoir relier une recuperation a un format.",
+            "Valider une reponse floue par politesse."
+          ],
+          "feedback": [
+            "Parce que c'est comme ca ne repond a rien : quel theme, quel indicateur ?",
+            "Une minute de recuperation, c'est le format intermittent : dis-le.",
+            "Sa reponse n'etait pas claire : dis-le-lui."
+          ],
+          "plus": [
+            "Entretien complet sur l'ensemble de la seance."
+          ],
+          "minus": [
+            "Une seule question, avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Une seule question preparee avec l'aide du professeur.",
+            "normale": "Trois questions posees et traitees par deux.",
+            "complexifiee": "Entretien complet sur l'ensemble des choix de la seance."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre carnet montre-t-il pourquoi vous avez regule, ou seulement que vous avez regule ?",
+          "Comment justifie-t-on un choix de recuperation ?"
+        ],
+        "key": "Un carnet qui note les allures sans les raisons ne montre rien : c'est la justification qui fait la difference. Et une recuperation se justifie par le format, pas par l'habitude."
+      },
+      "socialRoles": [
+        "Observateur : releve les ecarts, surveille et renseigne la fiche.",
+        "Chronometreur : annonce les debuts et fins de fractions.",
+        "Examinateur d'entrainement : interroge son partenaire sur ses choix."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve, apres avoir evalue les AFL2 et AFL3 au fil du cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser la seance annoncee integralement et justifier ses choix.",
+        "Chronometrer, surveiller et conseiller un camarade.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve dispose d'un carnet et sait conduire un entrainement adapte a un mobile.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat du parcours et les conditions meteorologiques avant la premiere seance : reporter ou adapter en cas de forte chaleur ou de pic de pollution.",
+          "Afficher le referentiel, le protocole de l'epreuve et les criteres.",
+          "Preparer les grilles nominatives et relever les carnets.",
+          "Verifier les PAI et les dispenses avant le premier depart.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord du parcours."
+        ],
+        "sketch": "Parcours balise comme a la repetition generale, sens unique.\nReferentiel, protocole et criteres affiches a l'entree.\nZone d'entretien et de depot des carnets, a l'ecart du parcours.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : aucune seance evaluee ne s'aborde sans montee progressive de l'intensite, et sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Accelerations progressives",
+            "details": [
+              "Trois a quatre accelerations adaptees a l'intensite prevue.",
+              "Une fraction courte a allure de travail.",
+              "Deux minutes de recuperation avant le depart."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Seance personnelle evaluee et entretien",
+          "objective": "Evaluer l'AFL1 : coherence des parametres, tenue des allures et justification des choix.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par deux, en alternance. Chacun annonce sa seance, la realise integralement, puis chronometre, surveille et conseille son camarade sur la sienne. Le professeur observe et mene un entretien de justification.",
+          "studentGoal": "Realiser la seance que j'ai annoncee et justifier chacun de mes choix.",
+          "instructions": [
+            "J'annonce ma seance : theme, format, allures, durees, recuperations.",
+            "Je la realise integralement, dans l'ordre annonce.",
+            "Quand j'observe, je releve, j'informe et je surveille en permanence.",
+            "Je justifie mes choix quand le professeur m'interroge."
+          ],
+          "success": [
+            "AFL1 : le format, les allures et les recuperations sont coherents avec le theme retenu.",
+            "AFL1 : les allures annoncees sont tenues, avec moins de dix pour cent d'ecart.",
+            "AFL1 : la seance est realisee integralement et les choix sont justifies.",
+            "AFL3 : l'eleve chronometre, surveille et conseille de facon fiable."
+          ],
+          "execution": [
+            "Se caler des la premiere minute de chaque fraction.",
+            "Recuperer activement en marchant.",
+            "Ralentir plutot que s'arreter.",
+            "Surveiller son camarade en permanence quand on observe."
+          ],
+          "watch": [
+            "Les allures annoncees sont-elles tenues sous evaluation ?",
+            "Les eleves partent-ils trop vite sous l'effet de l'enjeu ?",
+            "Les justifications sont-elles argumentees ?",
+            "Les observateurs surveillent-ils leur camarade ?"
+          ],
+          "errors": [
+            "Partir plus vite que l'allure annoncee.",
+            "Ecourter les recuperations pour finir dans le temps.",
+            "Justifier par une preference sans lien avec le theme.",
+            "Observer sans surveiller."
+          ],
+          "feedback": [
+            "Ton allure annoncee, pas plus vite.",
+            "Tes recuperations font partie de ta seance.",
+            "Justifie par ton theme et tes indicateurs.",
+            "Ton coureur d'abord : tu es aussi sa securite."
+          ],
+          "plus": [
+            "Seance de quarante minutes avec entretien complet."
+          ],
+          "minus": [
+            "Seance de vingt minutes a une seule allure moderee."
+          ],
+          "diff": {
+            "facilitee": "Seance de vingt minutes a une seule allure moderee, avec alternance course et marche autorisee. La regularite, la justification et le role d'aidant sont evalues autant que la performance.",
+            "normale": "Seance personnelle de trente minutes annoncee et realisee, avec entretien.",
+            "complexifiee": "Seance de quarante minutes avec entretien complet sur tous les choix."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant toute seance evaluee : c'est la condition de securite la plus importante du cycle.",
+            "PAI verifies avant le premier depart : asthme d'effort, pathologies cardiaques, allergies saisonnieres.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige, des nausees ou une paleur.",
+            "L'observateur surveille son camarade pendant toute sa seance : c'est un role de securite autant que d'evaluation.",
+            "Aucun eleve ne quitte le parcours balise : un eleve en difficulte doit rester visible en permanence.",
+            "Recuperations actives en marchant, jamais a l'arret complet ni assis.",
+            "Retour au calme obligatoire apres la seance : marche de trois minutes minimum.",
+            "Sens de course unique, aucun croisement.",
+            "Report ou adaptation de la seance en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible avant, pendant et apres la seance.",
+            "Parcours verifie, hors circulation de vehicules.",
+            "Le professeur reste en vue de l'ensemble du parcours et peut arreter toute seance."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan du carnet et de la repartition",
+          "objective": "Evaluer l'AFL2 a partir du carnet et faire le bilan de la repartition choisie.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun presente son carnet, en pointe deux regulations justifiees, et fait le bilan de la repartition choisie a la seance 5.",
+          "studentGoal": "Montrer, carnet en main, comment j'ai conduit et regule mon entrainement.",
+          "instructions": [
+            "Je presente deux regulations de mon carnet et je les justifie.",
+            "J'indique ce que mon entrainement a produit, et sur quels indicateurs.",
+            "Je relis mon objectif de la seance 5 et je dis s'il est atteint.",
+            "Je dis si la repartition que j'avais choisie etait la bonne."
+          ],
+          "success": [
+            "Deux regulations sont presentees et justifiees.",
+            "Les effets obtenus sont relies a des indicateurs.",
+            "L'objectif personnel est evalue.",
+            "La repartition choisie est commentee."
+          ],
+          "execution": [
+            "Citer l'indicateur avant la decision.",
+            "Relier les effets au mobile initial.",
+            "Reprendre son objectif de la seance 5."
+          ],
+          "watch": [
+            "Les carnets sont-ils reellement tenus sur tout le cycle ?",
+            "Les justifications s'appuient-elles sur des indicateurs ?",
+            "Les eleves evaluent-ils honnetement leur choix de repartition ?"
+          ],
+          "errors": [
+            "Presenter un carnet rempli la veille.",
+            "Justifier par une impression.",
+            "Ne pas savoir dire ce que l'entrainement a produit."
+          ],
+          "feedback": [
+            "Ton carnet est ecrit d'un seul trait : ca se voit.",
+            "Quel indicateur, exactement ?",
+            "Ressors ton objectif de la seance 5."
+          ],
+          "plus": [
+            "Bilan chiffre comparant les effets obtenus au mobile initial."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire a completer.",
+            "normale": "Presentation de deux regulations justifiees et bilan de la repartition.",
+            "complexifiee": "Bilan chiffre comparant les effets obtenus au mobile initial."
+          },
+          "safety": [
+            "Toute gene mentionnee dans le carnet est signalee immediatement au professeur.",
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rangement collectif du balisage, puis classe assise pour le bilan.",
+          "studentGoal": "Dire ce que je saurai faire seul, plus tard, pour m'entrainer.",
+          "instructions": [
+            "On ramasse les plots en marchant, chacun sa portion de parcours.",
+            "On compte les chronometres et les cardiofrequencemetres.",
+            "Une fois range, on s'assoit pour le bilan.",
+            "Chacun peut dire ce qu'il saura faire seul."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage.",
+            "Au moins un eleve par binome s'exprime."
+          ],
+          "execution": [
+            "Ramasser en marchant, pas en courant.",
+            "Compter avant de quitter le parcours.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis de methode ?"
+          ],
+          "errors": [
+            "Ramasser en courant apres l'effort.",
+            "Ne parler que de la distance parcourue.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "En marchant : ton retour au calme n'est pas fini.",
+            "Pas seulement les kilometres : planifier et reguler, c'est l'acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il ferait s'il continuait seul."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus projet de poursuite autonome."
+          },
+          "safety": [
+            "Rangement realise en marchant : le retour au calme se poursuit pendant le rangement.",
+            "Comptage du materiel avant de quitter le parcours.",
+            "Verification qu'aucun eleve ne presente de gene avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous saurez faire seul, apres ce cycle, pour vous entrainer ?",
+          "Pourquoi une allure se calcule-t-elle au lieu de se copier ?"
+        ],
+        "key": "Ce cycle ne visait pas une performance le jour de l'epreuve : il visait la capacite a conduire un entrainement, a le reguler et a en rendre compte. C'est ce qui reste utilisable une fois le lycee termine."
+      },
+      "socialRoles": [
+        "Aidant : releve, informe, surveille et conseille, role evalue au titre de l'AFL3.",
+        "Chronometreur : annonce les debuts et fins de fractions.",
+        "Preneur d'indicateurs : aide au releve des frequences cardiaques.",
+        "Responsable materiel : organise le rangement du balisage."
+      ]
+    }
+  ]
+}

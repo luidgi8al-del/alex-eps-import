@@ -1,6 +1,9 @@
 {
   "apsa": "Escalade",
   "grade": "QUATRIEME",
+  "grades": [
+    "QUATRIEME"
+  ],
   "champApprentissage": "CA2 - Adapter ses deplacements a des environnements varies",
   "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie",
   "attendus": [
@@ -155,6 +158,40 @@
           "dur": 22,
           "title": "Atelier securite : s'equiper, s'encorder, assurer",
           "objective": "Reconstruire les trois gestes qui conditionnent l'acces au mur : baudrier, noeud de huit double, assurage en 5 temps.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'observation diagnostique",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux minimum"
+            }
+          ],
           "organization": "Trois ateliers en rotation toutes les 7 minutes, cordees de 3 constituees des le depart (grimpeur / assureur / contre-assureur). Le professeur circule et valide atelier par atelier.",
           "studentGoal": "Etre capable de m'equiper seul et de faire valider mon noeud et mon assurage.",
           "instructions": [
@@ -214,6 +251,40 @@
           "dur": 15,
           "title": "Traversee economique en bloc",
           "objective": "Faire sentir l'economie d'effort par les appuis de pieds, a faible hauteur et sans corde.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'observation diagnostique",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux minimum"
+            }
+          ],
           "organization": "Deux groupes en alternance sur la traversee : un groupe grimpe, l'autre observe depuis l'arriere de la zone de tapis. Passage en decale pour ne jamais se croiser sur le mur.",
           "studentGoal": "Traverser le mur en utilisant le moins de prises de mains possible.",
           "instructions": [
@@ -271,6 +342,40 @@
           "dur": 20,
           "title": "Situation de reference diagnostique : trois voies au choix",
           "objective": "Observer le niveau de grimpe initial et le rapport au risque de chaque eleve pour constituer les groupes de besoin.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'observation diagnostique",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux minimum"
+            }
+          ],
           "organization": "Cordees de 3 en rotation grimpeur / assureur / contre-assureur. Chaque eleve grimpe une voie de son choix parmi les trois niveaux. Le troisieme eleve observe et remplit la fiche.",
           "studentGoal": "Choisir une voie a ma portee, la monter jusqu'en haut, et redescendre en confiance.",
           "instructions": [
@@ -338,7 +443,8 @@
         "Assureur : tient la corde en 5 temps, ne lache jamais le brin sous le systeme.",
         "Contre-assureur : corde tenue a deux mains, vigilance constante (obligatoire des la S1).",
         "Observateur : remplit la fiche diagnostique de son camarade grimpeur."
-      ]
+      ],
+      "isDiagnostic": true
     },
     {
       "number": 2,
@@ -436,6 +542,40 @@
           "dur": 24,
           "title": "Assurage en charge avec contre-assureur",
           "objective": "Assurer un grimpeur reel en gardant la corde tendue et sans jamais lacher le brin sous le systeme.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches memo 'assurage en 5 temps'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "rubans de marquage de hauteur",
+              "fixed": 4,
+              "note": "chute annoncee a mi-voie"
+            }
+          ],
           "organization": "Cordees de 3, rotation a chaque voie terminee. Le grimpeur monte au tiers de la voie seulement : l'enjeu est l'assurage, pas la performance de grimpe.",
           "studentGoal": "Assurer mon camarade en gardant toujours la corde tendue, sans lacher la corde sous le systeme.",
           "instructions": [
@@ -498,6 +638,40 @@
           "dur": 12,
           "title": "Chrono equipement : gagner du temps sans perdre en securite",
           "objective": "Automatiser l'equipement et l'encordement pour liberer du temps de grimpe sur les seances suivantes.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches memo 'assurage en 5 temps'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "rubans de marquage de hauteur",
+              "fixed": 4,
+              "note": "chute annoncee a mi-voie"
+            }
+          ],
           "organization": "Par cordee, hors du mur, dans la zone d'equipement. Deux manches chronometrees, avec verification obligatoire du professeur entre les deux.",
           "studentGoal": "M'equiper et m'encorder correctement, de plus en plus vite, sans jamais rater une verification.",
           "instructions": [
@@ -550,6 +724,40 @@
           "dur": 16,
           "title": "Chute annoncee puis arret surprise",
           "objective": "Eprouver le blocage reel de la corde, d'abord annonce, puis sans prevenir, pour construire la confiance de cordee.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches memo 'assurage en 5 temps'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "rubans de marquage de hauteur",
+              "fixed": 4,
+              "note": "chute annoncee a mi-voie"
+            }
+          ],
           "organization": "Une cordee par voie. Deux temps : d'abord toutes les chutes sont annoncees ; ensuite, et seulement si l'assureur a ete fiable, le grimpeur peut s'arreter sans prevenir au repere.",
           "studentGoal": "Me laisser tenir par mon assureur, et bloquer proprement quand c'est mon tour d'assurer.",
           "instructions": [
@@ -706,6 +914,33 @@
           "dur": 24,
           "title": "Itineraire de pieds impose",
           "objective": "Construire la continuite du deplacement en obligeant a chercher l'appui de pied avant la prise de main.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "rubans de couleur pour marquer des prises de pieds",
+              "fixed": 20
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            }
+          ],
           "organization": "Cordees de 3 sur les voies marquees, rotation a chaque passage. L'observateur compte les arrets de plus de 5 secondes et les pieds poses hors itineraire.",
           "studentGoal": "Monter la voie en n'utilisant que les prises de pieds marquees, sans m'arreter.",
           "instructions": [
@@ -763,6 +998,33 @@
           "dur": 14,
           "title": "Traversee continue chronometree",
           "objective": "Eprouver la difference entre un deplacement saccade et un deplacement regulier, a faible hauteur.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "rubans de couleur pour marquer des prises de pieds",
+              "fixed": 20
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            }
+          ],
           "organization": "En binomes sur l'espace traversee, hauteur d'epaule maximum. Un grimpe, un chronometre et observe. Deux passages chacun.",
           "studentGoal": "Traverser sans jamais m'arreter, du debut a la fin.",
           "instructions": [
@@ -820,6 +1082,33 @@
           "dur": 16,
           "title": "Voie libre : je choisis mes pieds",
           "objective": "Transferer la recherche d'appuis de pieds sur une voie sans marquage, ou l'eleve decide seul.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "rubans de couleur pour marquer des prises de pieds",
+              "fixed": 20
+            },
+            {
+              "label": "plots de delimitation de la zone d'assurage",
+              "fixed": 6
+            }
+          ],
           "organization": "Cordees de 3 sur les voies libres. L'observateur note les 3 premieres prises de pieds utilisees par le grimpeur pour en discuter apres.",
           "studentGoal": "Monter une voie sans marquage en choisissant moi-meme mes appuis de pieds.",
           "instructions": [
@@ -984,6 +1273,41 @@
           "dur": 22,
           "title": "Trois repos obligatoires dans la voie",
           "objective": "Apprendre a s'arreter bras tendus pour recuperer, au lieu de monter en force jusqu'a l'epuisement.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux"
+            }
+          ],
           "organization": "Cordees de 3 sur voies de niveau moyen. L'observateur compte les arrets bras tendus et les arrets bras flechis.",
           "studentGoal": "Marquer trois vrais repos dans ma voie, bras tendus, en lachant une main a chaque fois.",
           "instructions": [
@@ -1042,6 +1366,41 @@
           "dur": 18,
           "title": "Evaluation de mi-cycle : voie au choix",
           "objective": "Verifier ou en est chaque eleve a mi-cycle, sur les memes criteres que l'evaluation finale.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux"
+            }
+          ],
           "organization": "Cordees de 3, chaque eleve choisit sa voie parmi les trois niveaux. Passage observe et note sur la fiche de mi-cycle par un camarade, puis restitution individuelle du professeur.",
           "studentGoal": "Montrer ce que je sais faire maintenant, et savoir ce qu'il me reste a travailler.",
           "instructions": [
@@ -1101,6 +1460,41 @@
           "dur": 12,
           "title": "Duel d'economie en traversee",
           "objective": "Rendre l'economie d'effort concrete et mesurable, a faible hauteur.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6,
+              "note": "3 niveaux"
+            }
+          ],
           "organization": "En binomes sur l'espace traversee. Chacun traverse a son tour, l'autre compte les prises de mains utilisees. Deux manches.",
           "studentGoal": "Traverser en utilisant moins de prises de mains que mon partenaire.",
           "instructions": [
@@ -1264,6 +1658,40 @@
           "dur": 24,
           "title": "Lire la voie depuis le sol, puis la grimper",
           "objective": "Construire un projet de deplacement avant de s'engager, et verifier sa pertinence en grimpant.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'projet de voie'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "prevu / realise"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6
+            }
+          ],
           "organization": "Cordees de 3. Temps 1 : lecture depuis la zone d'observation, remplissage de la colonne 'prevu'. Temps 2 : grimpe. Temps 3 : remplissage de la colonne 'realise'.",
           "studentGoal": "Annoncer avant de partir ou je vais me reposer et ou ca va etre dur, puis verifier si j'avais vu juste.",
           "instructions": [
@@ -1322,6 +1750,40 @@
           "dur": 14,
           "title": "Bloc a itineraire memorise",
           "objective": "Entrainer la memorisation d'un itineraire complet, sans corde, avec un feedback immediat.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'projet de voie'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "prevu / realise"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6
+            }
+          ],
           "organization": "Deux groupes en alternance sur l'espace bloc. Le professeur ou un eleve montre un bloc de 6 mouvements ; les autres l'observent puis le reproduisent.",
           "studentGoal": "Reproduire de memoire un enchainement de 6 mouvements sans me tromper.",
           "instructions": [
@@ -1379,6 +1841,40 @@
           "dur": 14,
           "title": "Voie inconnue : lire vite et s'engager",
           "objective": "Appliquer la lecture sur une voie non travaillee, pour preparer les conditions de l'evaluation finale.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'projet de voie'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "prevu / realise"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 6
+            }
+          ],
           "organization": "Cordees de 3 sur des voies non utilisees jusqu'ici dans la seance. Observation limitee a 45 secondes, puis engagement.",
           "studentGoal": "Lire une voie que je ne connais pas en moins d'une minute, et l'annoncer avant de partir.",
           "instructions": [
@@ -1543,6 +2039,41 @@
           "dur": 24,
           "title": "Je choisis, je justifie, je grimpe",
           "objective": "Ajuster son choix de voie a ses ressources reelles, et assumer ce choix devant sa cordee.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'choix et justification'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Cordees de 3 sur quatre niveaux de voies. Avant chaque passage, le grimpeur annonce sa voie et la raison de son choix ; l'observateur la note.",
           "studentGoal": "Choisir une voie que je peux finir aujourd'hui, et expliquer pourquoi je l'ai choisie.",
           "instructions": [
@@ -1601,6 +2132,41 @@
           "dur": 14,
           "title": "Parcours de deux voies enchainees",
           "objective": "Faire sentir la gestion des ressources sur la duree, quand une seule voie ne suffit plus a fatiguer.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'choix et justification'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Cordees de 3. Le grimpeur enchaine deux voies avec seulement le temps de redescendre entre les deux. Un seul passage par eleve.",
           "studentGoal": "Enchainer deux voies en gardant assez de ressources pour terminer la seconde.",
           "instructions": [
@@ -1658,6 +2224,41 @@
           "dur": 12,
           "title": "Conseil de cordee",
           "objective": "Verbaliser et confronter les choix, pour preparer l'analyse a posteriori attendue en fin de cycle.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "fiches 'choix et justification'",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Par cordees de 3, au pied du mur, fiches en main. Cinq minutes d'echange, puis restitution d'une minute par cordee devant le groupe.",
           "studentGoal": "Expliquer a ma cordee un choix que j'ai fait aujourd'hui, et ecouter le sien.",
           "instructions": [
@@ -1819,6 +2420,40 @@
           "dur": 24,
           "title": "Evaluation a blanc, dans les conditions du jour J",
           "objective": "Faire vivre le format complet de l'evaluation sans note, pour que chacun sache exactement ce qui sera observe.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "grilles d'evaluation",
+              "per": 1.0,
+              "note": "une par eleve"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Cordees de 3, format identique a S8 : deux voies choisies parmi quatre niveaux, annonce prealable, puis tenue du poste d'assureur. Chaque eleve est observe avec la grille par un camarade.",
           "studentGoal": "Faire une fois, en entier, ce qui sera demande la prochaine fois.",
           "instructions": [
@@ -1878,6 +2513,40 @@
           "dur": 12,
           "title": "Atelier de remediation cible",
           "objective": "Retravailler le point faible identifie par la grille, juste apres l'avoir constate.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "grilles d'evaluation",
+              "per": 1.0,
+              "note": "une par eleve"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Trois ateliers au choix selon le besoin repere : appuis de pieds, repos bras tendus, ou assurage. Les eleves rejoignent l'atelier correspondant a leur critere manque.",
           "studentGoal": "Retravailler precisement le critere que je n'ai pas valide.",
           "instructions": [
@@ -1932,6 +2601,40 @@
           "dur": 12,
           "title": "Je fixe mon projet pour l'evaluation",
           "objective": "Arreter par ecrit les voies et l'itineraire que l'on presentera en S8, en s'appuyant sur l'essai a blanc.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "grilles d'evaluation",
+              "per": 1.0,
+              "note": "une par eleve"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Par cordees, au pied du mur, grille et fiche en main. Chaque eleve ecrit son projet et le fait relire par sa cordee.",
           "studentGoal": "Ecrire quelles voies je grimperai la prochaine fois et pourquoi.",
           "instructions": [
@@ -2094,6 +2797,40 @@
           "dur": 30,
           "title": "Parcours de deux voies annoncees",
           "objective": "Evaluer la capacite a realiser un deplacement planifie et a gerer ses ressources sur un parcours complet.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "grilles d'evaluation renseignees du projet de S7",
+              "per": 1.0,
+              "note": "une par eleve"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Cordees de 3, ordre de passage affiche. Chaque eleve annonce son projet, grimpe ses deux voies, puis tient le poste d'assureur pour un camarade. Le professeur evalue, un camarade co-observe.",
           "studentGoal": "Realiser les deux voies que j'ai annoncees, en me reposant quand il faut.",
           "instructions": [
@@ -2155,6 +2892,40 @@
           "dur": 10,
           "title": "Analyse a posteriori",
           "objective": "Justifier ses choix apres l'action, competence explicitement attendue en fin de cycle 4 dans le CA2.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "note": "un par eleve, tailles verifiees"
+            },
+            {
+              "label": "systemes d'assurage + mousquetons a vis",
+              "per": 0.3333,
+              "min": 3,
+              "note": "un par cordee de 3"
+            },
+            {
+              "label": "cordes en place sur les voies",
+              "per": 0.3333,
+              "min": 3,
+              "note": "une par cordee de 3"
+            },
+            {
+              "label": "grilles d'evaluation renseignees du projet de S7",
+              "per": 1.0,
+              "note": "une par eleve"
+            },
+            {
+              "label": "crayons",
+              "per": 0.3333,
+              "min": 3
+            },
+            {
+              "label": "etiquettes de cotation des voies",
+              "fixed": 8,
+              "note": "4 niveaux"
+            }
+          ],
           "organization": "Par cordees, au calme, grilles en main. Chaque eleve confronte son projet ecrit en S7 a ce qu'il vient de realiser.",
           "studentGoal": "Expliquer ce que j'avais prevu, ce que j'ai fait, et pourquoi il y a un ecart.",
           "instructions": [

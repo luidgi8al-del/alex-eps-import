@@ -1,0 +1,2733 @@
+{
+  "apsa": "Athletisme - relais / sprint",
+  "grades": [
+    "CINQUIEME"
+  ],
+  "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Gerer son effort, faire des choix pour realiser la meilleure performance dans au moins deux familles athletiques.",
+    "S'engager dans un programme de preparation individuel ou collectif.",
+    "Planifier et realiser une epreuve combinee.",
+    "S'echauffer avant un effort.",
+    "Aider ses camarades et assumer differents roles sociaux."
+  ],
+  "targetCompetence": "Passer d'un relais ou le temoin s'arrete a chaque transmission, a un relais ou le temoin ne ralentit jamais : le relayeur part a sa marque, atteint sa vitesse, et recoit sans se retourner dans la zone.",
+  "cycleObjectives": [
+    "Determiner et ajuster sa marque de depart de relayeur.",
+    "Transmettre le temoin a pleine vitesse, dans la zone.",
+    "Construire l'ordre de l'equipe a partir des performances individuelles.",
+    "Annoncer et realiser un projet de performance collective.",
+    "Tenir les roles de chronometreur, de juge de zone et de starter."
+  ],
+  "plannedTitles": [
+    "Mesurer sa vitesse et se situer",
+    "La transmission a vitesse elevee",
+    "Trouver et ajuster sa marque",
+    "Construire l'equipe : ordre et marques",
+    "Evaluation de mi-cycle et projet d'equipe",
+    "Gagner du temps sur les transmissions",
+    "Repetition generale du projet",
+    "Rencontre finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 1 - cycle 4, le relais",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsrelaisnd565128pdf-78300.pdf",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources d'accompagnement du programme d'EPS au cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Relais vitesse - proposition de demarche d'enseignement",
+      "org": "Academie de Strasbourg",
+      "url": "https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/eps/ressources/CA1/Demarches_d_enseignement/Relais_vitesse_proposition_de_demarche.pdf",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Exemple de situation complexe en relais-vitesse",
+      "org": "Academie de Bordeaux",
+      "url": "https://ent2d.ac-bordeaux.fr/disciplines/eps/wp-content/uploads/sites/33/2017/08/Exemple-de-Situation-complexe-en-Relais-vitesse-Niveau-1_a520.pdf",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Longueur de ligne droite reellement disponible : conditionne les distances et la zone de transmission.",
+    "Etat de la piste ou du plateau : trous, gravillons, zones glissantes a reperer avant le cycle.",
+    "Nombre de chronometres et de temoins disponibles.",
+    "Meteo et exposition : hydratation et ombre a prevoir en debut d'annee scolaire.",
+    "Eleves dispenses : prevoir les roles de chronometreur, starter, juge de zone et secretaire.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - relais a l'arret",
+      "observed": "S'arrete ou se retourne completement pour recevoir le temoin, ce qui annule tout le gain de vitesse de l'equipe.",
+      "need": "Construire le depart anticipe a la marque et la reception sans se retourner."
+    },
+    {
+      "label": "Profil 2 - marque instable",
+      "observed": "Change de marque a chaque essai, part au jugé, se fait rattraper trop tot ou trop tard sans corriger.",
+      "need": "Comprendre la logique d'ajustement de la marque et la stabiliser."
+    },
+    {
+      "label": "Profil 3 - ralentit avant de donner",
+      "observed": "Court vite mais decelere dans les derniers metres pour etre sur de reussir la transmission.",
+      "need": "Maintenir sa vitesse jusqu'au bout : c'est au relayeur de s'ajuster, pas au donneur."
+    },
+    {
+      "label": "Profil 4 - rapide mais individualiste",
+      "observed": "Court vite, mais ne s'implique ni dans la construction de l'ordre de l'equipe ni dans les roles de mesure.",
+      "need": "S'inscrire dans un projet collectif et assumer les roles sociaux."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Rencontre par equipes de quatre : un 40 metres chronometre individuel, puis un relais 4 fois 40 metres avec transmissions en zone de 20 metres. L'equipe annonce avant la course le temps qu'elle vise. Chaque eleve tient egalement le role de chronometreur et celui de juge de zone.",
+    "criteria": [
+      "Le temps individuel sur 40 metres est ameliore par rapport a la mesure de la seance 1.",
+      "Le relayeur part a sa marque et ne se retourne jamais pendant sa course d'elan.",
+      "Les trois transmissions ont lieu dans la zone, sans arret ni deceleration marquee du donneur.",
+      "Le temps de l'equipe est inferieur d'au moins deux secondes a la somme des temps individuels.",
+      "L'ecart entre le temps annonce et le temps realise est inferieur a une seconde.",
+      "Les roles de chronometreur et de juge de zone sont tenus avec precision."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA1, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Mesurer sa vitesse et se situer",
+      "mainObjective": "Etablir la performance de reference de chaque eleve sur 40 metres et mesurer le cout actuel des transmissions.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Realiser deux courses de 40 metres chronometrees.",
+        "Mesurer le temps d'un relais a quatre sans technique.",
+        "Reperer qui s'arrete pour transmettre et qui se retourne."
+      ],
+      "linkToPrevious": "Premiere seance du cycle. En 5e, les eleves ont deja couru vite en 6e : l'enjeu se deplace vers la transmission, qui est le gisement de temps du relais.",
+      "prerequisiteForNext": "Chaque eleve a un temps de reference et l'equipe connait le cout de ses transmissions.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 30
+          },
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "fiches de performance",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve, conservee tout le cycle"
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "craie ou marquage au sol",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Mesurer et marquer quatre couloirs de 40 metres, plus 20 metres de degagement apres la ligne.",
+          "Marquer un parcours de relais 4 fois 40 metres avec trois zones de transmission de 20 metres.",
+          "Inspecter la surface : trous, gravillons, zones glissantes.",
+          "Placer les plots d'arrivee decales sur le cote des couloirs.",
+          "Preparer les fiches nominatives et verifier les chronometres."
+        ],
+        "sketch": "4 couloirs de 40 m paralleles, plots d'arrivee decales.\n20 m de degagement apres chaque ligne.\nParcours de relais 4 x 40 m avec 3 zones de 20 m.\nZone des chronometreurs a l'arrivee, hors couloirs."
+      },
+      "warmup": {
+        "rationale": "Le sprint sollicite les ischio-jambiers a haute intensite : sans echauffement long et progressif, le risque de lesion musculaire est reel des la premiere acceleration.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple continue 6 minutes, allure conversation.",
+              "Changements de direction au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches : cercles et flexions.",
+              "Epaules et bras : moulinets.",
+              "Fentes avant en marchant sur 15 metres."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Gammes et accelerations progressives",
+            "details": [
+              "Montees de genoux, talons-fesses, pas bondissants, jambes tendues : 20 metres chacun.",
+              "Quatre accelerations sur 30 metres, a 60, 70, 80 puis 90 pour cent.",
+              "Recuperation complete en marchant entre chaque acceleration."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le 40 metres de reference",
+          "objective": "Mesurer la performance individuelle qui servira de reference pour construire l'equipe et mesurer les progres.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Groupes de quatre : un coureur, un starter, un chronometreur, un secretaire. Rotation apres chaque course. Deux courses par eleve, avec au moins 4 minutes de recuperation entre les deux.",
+          "studentGoal": "Courir mes 40 metres le plus vite possible et noter mon temps.",
+          "instructions": [
+            "Je pars au signal du starter, en position de depart travaillee.",
+            "Je cours jusqu'aux plots et je continue au-dela.",
+            "Chronometreur : je declenche au signal, j'arrete quand la poitrine passe la ligne.",
+            "Secretaire : je note le temps sur la fiche du coureur."
+          ],
+          "success": [
+            "Deux courses realisees et chronometrees.",
+            "Les deux temps sont notes sur la fiche.",
+            "L'ecart entre les deux courses est inferieur a trois dixiemes."
+          ],
+          "execution": [
+            "Position de depart stable, poids sur la jambe avant.",
+            "Se projeter sur les premiers appuis, se redresser progressivement.",
+            "Continuer a courir plusieurs metres apres la ligne."
+          ],
+          "watch": [
+            "Qui ralentit avant la ligne ?",
+            "Les acquis de 6e sur le depart sont-ils conserves ?",
+            "Les chronometreurs declenchent-ils au bon moment ?"
+          ],
+          "errors": [
+            "Ralentir dans les cinq derniers metres.",
+            "Tourner la tete pour regarder les concurrents.",
+            "Arreter le chronometre au son du pied plutot qu'au passage de la poitrine."
+          ],
+          "feedback": [
+            "Cours au-dela des plots, ne t'arrete pas dessus.",
+            "Regarde devant toi, pas a cote.",
+            "Chronometreur, tu arretes quand sa poitrine passe."
+          ],
+          "plus": [
+            "Depart accroupi mains au sol.",
+            "Course en opposition directe."
+          ],
+          "minus": [
+            "Distance ramenee a 30 metres.",
+            "Une seule course chronometree."
+          ],
+          "diff": {
+            "facilitee": "30 metres, une seule course, depart debout libre.",
+            "normale": "40 metres, deux courses chronometrees.",
+            "complexifiee": "40 metres depart accroupi, en opposition directe."
+          },
+          "safety": [
+            "20 metres de degagement obligatoires apres la ligne d'arrivee.",
+            "Plots d'arrivee decales sur le cote, jamais dans la trajectoire.",
+            "Echauffement complet de 18 minutes obligatoire avant toute course maximale.",
+            "Un coureur par couloir, couloirs verifies avant chaque depart.",
+            "Recuperation de 4 minutes minimum entre deux sprints maximaux.",
+            "Hydratation disponible et rappelee.",
+            "Arret immediat en cas de douleur a l'arriere de la cuisse."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Le relais sans technique",
+          "objective": "Mesurer le cout des transmissions actuelles, pour donner un enjeu chiffre a tout le cycle.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Equipes de quatre. Relais 4 fois 40 metres, sans consigne technique : chacun fait comme il le sent. Deux manches chronometrees. On compare le temps de l'equipe a la somme des quatre temps individuels.",
+          "studentGoal": "Mesurer combien mon equipe perd de temps sur les transmissions.",
+          "instructions": [
+            "On court le relais comme on le sent, sans consigne particuliere.",
+            "On chronometre le temps total de l'equipe.",
+            "On additionne nos quatre temps individuels du 40 metres.",
+            "On compare : combien perd-on ou gagne-t-on ?"
+          ],
+          "success": [
+            "Les deux manches sont realisees sans temoin tombe.",
+            "Le temps de l'equipe et la somme des temps individuels sont notes.",
+            "L'equipe sait dire si elle a gagne ou perdu du temps."
+          ],
+          "execution": [
+            "Transmettre le temoin en main propre, sans le lancer.",
+            "Courir au-dela de la ligne apres avoir transmis.",
+            "Chronometrer avec precision."
+          ],
+          "watch": [
+            "Combien d'equipes perdent du temps par rapport a la somme individuelle ?",
+            "Qui s'arrete pour transmettre ?",
+            "Qui se retourne completement ?"
+          ],
+          "errors": [
+            "S'arreter completement pour transmettre.",
+            "Se retourner pour voir arriver le temoin.",
+            "Partir trop tot et devoir attendre."
+          ],
+          "feedback": [
+            "Regarde vos deux chiffres : vous avez perdu deux secondes.",
+            "Tu t'es arrete : c'est la que le temps se perd.",
+            "On verra comment gagner ce temps dans les prochaines seances."
+          ],
+          "plus": [
+            "Trois manches, avec recherche d'amelioration."
+          ],
+          "minus": [
+            "Relais a trois coureurs.",
+            "Distances ramenees a 30 metres."
+          ],
+          "diff": {
+            "facilitee": "Relais a trois, 30 metres par coureur, une seule manche.",
+            "normale": "Relais 4 fois 40 metres, deux manches, comparaison chiffree.",
+            "complexifiee": "Trois manches avec recherche d'amelioration entre chaque."
+          },
+          "safety": [
+            "Couloirs bien separes, une equipe par couloir.",
+            "20 metres de degagement apres la ligne d'arrivee.",
+            "Temoin tombe : ralentir avant de le ramasser, jamais de demi-tour brusque.",
+            "Recuperation entre les manches.",
+            "Hydratation disponible.",
+            "Zones de transmission degagees et verifiees."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Constituer les equipes",
+          "objective": "Former les equipes de quatre qui travailleront ensemble pendant tout le cycle, a partir des performances mesurees.",
+          "material": [
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            }
+          ],
+          "organization": "Le professeur constitue des equipes de quatre equilibrees a partir des temps individuels. Chaque equipe note ses quatre temps, calcule sa somme et essaie un premier ordre de course.",
+          "studentGoal": "Connaitre mon equipe, nos quatre temps, et notre somme de reference.",
+          "instructions": [
+            "Je note les quatre temps de mon equipe sur ma fiche.",
+            "On calcule la somme : c'est notre reference a battre.",
+            "On essaie un premier ordre de course, sans le figer.",
+            "On garde cette fiche : elle servira tout le cycle."
+          ],
+          "success": [
+            "Les quatre temps et la somme sont notes par chaque membre.",
+            "Un premier ordre est essaye.",
+            "L'equipe sait quel temps elle doit battre."
+          ],
+          "execution": [
+            "Verifier le calcul de la somme avec un camarade.",
+            "Essayer physiquement l'ordre plutot que d'en discuter assis.",
+            "Noter l'ordre essaye sur la fiche."
+          ],
+          "watch": [
+            "Les equipes sont-elles equilibrees entre elles ?",
+            "Les calculs sont-ils justes ?",
+            "Le climat d'equipe est-il constructif ?"
+          ],
+          "errors": [
+            "Se moquer du temps d'un camarade.",
+            "Discuter l'ordre sans l'essayer.",
+            "Se tromper dans l'addition."
+          ],
+          "feedback": [
+            "On ne se moque pas : chacun apporte son temps a l'equipe.",
+            "Essayez-le, vous verrez mieux qu'en discutant.",
+            "Verifiez votre addition."
+          ],
+          "plus": [
+            "Justifier l'ordre choisi par les caracteristiques de chacun."
+          ],
+          "minus": [
+            "Ordre propose par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Equipes et ordre proposes par le professeur, somme calculee avec aide.",
+            "normale": "Equipes constituees par le professeur, ordre essaye par l'equipe.",
+            "complexifiee": "Ordre argumente par les caracteristiques de chaque coureur."
+          },
+          "safety": [
+            "Phase de calcul assise, hors des couloirs de course.",
+            "Essai d'ordre a allure moderee, apres recuperation.",
+            "Hydratation pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre temps d'equipe est-il plus petit ou plus grand que vos quatre temps additionnes ?",
+          "A votre avis, ou se perd le temps dans un relais ?"
+        ],
+        "key": "Un relais bien fait est plus rapide que la somme des coureurs : tout le cycle consistera a gagner ce temps sur les transmissions, pas en courant plus vite."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure les courses individuelles et les relais.",
+        "Starter : donne les departs de facon claire et reguliere.",
+        "Secretaire : note les performances et calcule les sommes."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "La transmission a vitesse elevee",
+      "mainObjective": "Construire la transmission en mouvement : recevoir sans se retourner, sans ralentir, avec un code convenu.",
+      "secondaryObjectives": [
+        "Recevoir le temoin main tendue en arriere, sans regarder.",
+        "Utiliser un code verbal fiable entre donneur et receveur.",
+        "Transmettre a vitesse croissante, du trot au sprint."
+      ],
+      "linkToPrevious": "La seance 1 a chiffre le temps perdu aux transmissions : on attaque directement la cause, la transmission a l'arret.",
+      "prerequisiteForNext": "Chaque eleve transmet et recoit en courant, sans se retourner.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "temoins de relais",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 30
+          },
+          {
+            "label": "craie ou marquage au sol",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches de performance",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer deux zones de transmission de 20 metres, avec 25 metres d'elan avant.",
+          "Verifier l'etat de la surface sur toute la zone de course.",
+          "Preparer un temoin pour deux eleves.",
+          "Verifier l'acces au point d'eau."
+        ],
+        "sketch": "Zone d'elan de 25 m, puis zone de transmission de 20 m delimitee par des plots de couleur.\nDeux dispositifs paralleles, bien separes.\n20 m de degagement apres la zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement de sprint complet : la seance comporte des transmissions a vitesse elevee, qui sollicitent fortement les ischio-jambiers.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple 6 minutes, temoin en main.",
+              "Se passer le temoin en trottinant en groupe."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Gammes athletiques sur 20 metres.",
+              "Fentes et balanciers de jambe."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Accelerations progressives",
+            "details": [
+              "Quatre accelerations sur 30 metres, temoin en main, intensite croissante.",
+              "Recuperation complete en marchant entre chaque."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Transmettre en courant",
+          "objective": "Construire la transmission a l'aveugle a vitesse croissante, du trot jusqu'au sprint.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            }
+          ],
+          "organization": "Par deux, cote a cote a un metre. Progression en quatre paliers de vitesse : marche, trot, course moderee, sprint. On ne passe au palier suivant qu'apres cinq transmissions reussies au palier precedent.",
+          "studentGoal": "Recevoir le temoin en courant vite, sans jamais me retourner.",
+          "instructions": [
+            "Receveur : je tends mon bras en arriere, paume ouverte vers le haut, main stable.",
+            "Je regarde devant moi, jamais derriere : c'est la regle absolue.",
+            "Donneur : je dis le mot convenu, puis je pose le temoin fermement dans sa main.",
+            "Je ne lache le temoin que quand je sens qu'il le tient."
+          ],
+          "success": [
+            "Cinq transmissions reussies par palier avant de passer au suivant.",
+            "Le receveur ne se retourne jamais.",
+            "Le palier sprint est atteint par la majorite des binomes."
+          ],
+          "execution": [
+            "Bras du receveur tendu en arriere, stable, paume ouverte vers le haut.",
+            "Donneur qui pose le temoin de haut en bas, fermement.",
+            "Main du receveur qui se referme des le contact."
+          ],
+          "watch": [
+            "Le receveur se retourne-t-il malgre la consigne ?",
+            "La main du receveur bouge-t-elle, empechant le donneur de viser ?",
+            "Le donneur lache-t-il trop tot ?",
+            "Les binomes brulent-ils les paliers de vitesse ?"
+          ],
+          "errors": [
+            "Se retourner pour voir le temoin arriver.",
+            "Bouger la main, ce qui rend la transmission impossible.",
+            "Passer au sprint sans avoir reussi au trot."
+          ],
+          "feedback": [
+            "Regarde devant : ta main sait ou elle est.",
+            "Ne bouge plus ta main, c'est lui qui vise.",
+            "Cinq reussites d'abord, ensuite tu accelere."
+          ],
+          "plus": [
+            "Transmission sans code verbal, sur repere visuel seul.",
+            "Transmission a pleine vitesse d'emblee."
+          ],
+          "minus": [
+            "Transmission a l'arret puis en marchant.",
+            "Receveur autorise a jeter un coup d'oeil."
+          ],
+          "diff": {
+            "facilitee": "Transmission a l'arret puis en marchant, coup d'oeil autorise, sans progression vers le sprint.",
+            "normale": "Quatre paliers de vitesse, cinq reussites par palier, sans se retourner.",
+            "complexifiee": "Transmission a pleine vitesse sans code verbal, sur repere visuel."
+          },
+          "safety": [
+            "Coureurs cote a cote a un metre d'ecart : jamais l'un derriere l'autre.",
+            "Progression obligatoire par paliers de vitesse : aucun sprint d'emblee.",
+            "Zone de transmission parfaitement degagee et verifiee.",
+            "Temoin tombe : ralentir avant de le ramasser, jamais de demi-tour brusque.",
+            "20 metres de degagement apres la zone.",
+            "Echauffement complet obligatoire avant le palier sprint.",
+            "Recuperation entre les series a haute vitesse."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le code de transmission",
+          "objective": "Fiabiliser le signal entre donneur et receveur, condition d'une transmission a haute vitesse.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 20
+            }
+          ],
+          "organization": "Par deux. Le binome choisit son code verbal, puis teste sa fiabilite : dix transmissions en course moderee, avec bruit ambiant genere par les autres groupes.",
+          "studentGoal": "Trouver un code que mon partenaire entend et comprend a coup sur.",
+          "instructions": [
+            "On choisit un mot court, fort et distinct des autres bruits.",
+            "Le donneur crie le code au bon moment : ni trop tot, ni trop tard.",
+            "Le receveur tend la main au code, pas avant.",
+            "On teste dix fois et on ajuste si ca ne marche pas."
+          ],
+          "success": [
+            "Huit transmissions sur dix reussies au code.",
+            "Le code est entendu malgre le bruit ambiant.",
+            "Le receveur tend la main au bon moment."
+          ],
+          "execution": [
+            "Choisir un mot d'une syllabe, fort et distinct.",
+            "Donner le code a environ deux foulees de la transmission.",
+            "Tendre la main immediatement au code, sans anticiper."
+          ],
+          "watch": [
+            "Le code est-il audible ?",
+            "Est-il donne au bon moment ?",
+            "Le receveur tend-il la main trop tot, ce qui le ralentit ?"
+          ],
+          "errors": [
+            "Code trop long ou trop faible pour etre entendu.",
+            "Code donne trop tot : le receveur court bras tendu et ralentit.",
+            "Code donne trop tard : la transmission se fait dans la precipitation."
+          ],
+          "feedback": [
+            "Plus court et plus fort : il ne t'entend pas.",
+            "Trop tot : il court bras tendu depuis dix metres.",
+            "Tends ta main au code, pas avant."
+          ],
+          "plus": [
+            "Tester le code a pleine vitesse.",
+            "Code non verbal, sur repere visuel de distance."
+          ],
+          "minus": [
+            "Code donne par le professeur.",
+            "Test en marchant."
+          ],
+          "diff": {
+            "facilitee": "Code donne par le professeur, test en marchant, sans bruit ambiant.",
+            "normale": "Code choisi par le binome, teste en course moderee avec bruit ambiant.",
+            "complexifiee": "Code teste a pleine vitesse, ou remplace par un repere visuel."
+          },
+          "safety": [
+            "Coureurs cote a cote, jamais l'un derriere l'autre.",
+            "Un binome par couloir.",
+            "Zone degagee, degagement apres la zone de transmission.",
+            "Vitesse moderee dans cette situation, le sprint est reserve au noyau."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Relais a deux chronometre",
+          "objective": "Mesurer le gain obtenu par la transmission en mouvement par rapport a la seance 1.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux, relais de 2 fois 40 metres avec zone de transmission de 20 metres. Deux manches chronometrees. Comparaison avec la somme des temps individuels sur 40 metres.",
+          "studentGoal": "Faire un temps a deux inferieur a la somme de nos deux temps individuels.",
+          "instructions": [
+            "On court chacun 40 metres, avec transmission dans la zone.",
+            "On utilise notre code et on ne se retourne pas.",
+            "On compare notre temps a deux avec la somme de nos temps individuels.",
+            "On note les deux resultats sur nos fiches."
+          ],
+          "success": [
+            "Le temps du relais est inferieur a la somme des temps individuels.",
+            "Les transmissions ont lieu dans la zone.",
+            "Aucun temoin tombe sur les deux manches."
+          ],
+          "execution": [
+            "Receveur qui part au bon moment et accelere franchement.",
+            "Donneur qui maintient sa vitesse jusqu'a la transmission.",
+            "Transmission au code, sans se retourner."
+          ],
+          "watch": [
+            "Le gain est-il effectif par rapport a la seance 1 ?",
+            "Les eleves ralentissent-ils encore avant de transmettre ?"
+          ],
+          "errors": [
+            "Ralentir juste avant la transmission.",
+            "Partir trop tot et devoir attendre.",
+            "Se retourner sous la pression du chronometre."
+          ],
+          "feedback": [
+            "Ne ralentis pas : c'est a lui de te rattraper.",
+            "Regardez vos temps : vous avez gagne une seconde.",
+            "Ne te retourne pas, meme chronometre."
+          ],
+          "plus": [
+            "Relais a trois coureurs.",
+            "Zone reduite a 15 metres."
+          ],
+          "minus": [
+            "Distances ramenees a 30 metres.",
+            "Zone elargie a 25 metres."
+          ],
+          "diff": {
+            "facilitee": "2 fois 30 metres, zone de 25 metres, transmission en course moderee.",
+            "normale": "2 fois 40 metres, zone de 20 metres, transmission a vitesse elevee.",
+            "complexifiee": "3 fois 40 metres, zone reduite a 15 metres."
+          },
+          "safety": [
+            "Couloirs bien separes, un binome par couloir.",
+            "20 metres de degagement apres l'arrivee.",
+            "Recuperation entre les manches.",
+            "Temoin tombe : ralentir avant de le ramasser.",
+            "Hydratation disponible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi le receveur ne doit-il jamais se retourner ?",
+          "Quand faut-il donner le code : tot ou tard, et pourquoi ?"
+        ],
+        "key": "Le temoin ne doit jamais s'arreter : le receveur court deja quand il recoit, main tendue en arriere, sans regarder. C'est le donneur qui vient le chercher."
+      },
+      "socialRoles": [
+        "Juge de transmission : verifie que le receveur ne se retourne pas.",
+        "Chronometreur : mesure les relais a deux.",
+        "Secretaire : compare temps individuels et temps de relais."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Trouver et ajuster sa marque",
+      "mainObjective": "Determiner par essais successifs la marque de depart du relayeur, et comprendre la logique d'ajustement.",
+      "secondaryObjectives": [
+        "Determiner sa marque avec un donneur donne.",
+        "Ajuster la marque selon le resultat de l'essai.",
+        "Partir franchement, sans hesitation."
+      ],
+      "linkToPrevious": "La transmission technique est acquise, mais elle se fait encore trop lentement : le probleme est le moment du depart du relayeur.",
+      "prerequisiteForNext": "Chaque binome a determine une marque stable, notee sur la fiche.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "temoins de relais",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 36
+          },
+          {
+            "label": "craie ou marquage au sol",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches de performance",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer deux zones de transmission de 20 metres avec zone d'elan de 30 metres avant.",
+          "Placer des reperes numerotes au sol tous les metres sur les 12 metres precedant la zone.",
+          "Numeroter les reperes a la craie pour que les eleves memorisent leur marque.",
+          "Verifier le degagement complet des zones."
+        ],
+        "sketch": "Zone d'elan de 30 m pour le donneur.\nReperes numerotes de 1 a 12, tous les metres avant la zone.\nZone de transmission de 20 m.\nLe relayeur part quand le donneur atteint SA marque."
+      },
+      "warmup": {
+        "rationale": "Echauffement de sprint complet : la seance enchaine de nombreux departs lances a haute intensite, tres exigeants musculairement.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple 6 minutes, temoin en main.",
+              "Deplacements varies."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Gammes athletiques sur 20 metres.",
+              "Fentes et balanciers de jambe."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Departs lances progressifs",
+            "details": [
+              "Six departs progressifs sans temoin, sur 20 metres.",
+              "Trois accelerations sur 30 metres.",
+              "Recuperation complete entre chaque : la seance sollicite fortement les ischio-jambiers."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Trouver sa marque",
+          "objective": "Determiner par essais successifs la distance a laquelle le relayeur doit partir pour etre rattrape a pleine vitesse au milieu de la zone.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 36
+            },
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "craie ou marquage au sol",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux. Le relayeur choisit un repere de depart parmi ceux marques au sol. Il part quand le donneur atteint ce repere. Apres chaque essai, on ajuste d'un metre. Huit a dix essais, jusqu'a deux reussites consecutives.",
+          "studentGoal": "Trouver le repere qui me permet d'etre rattrape au milieu de la zone, a pleine vitesse.",
+          "instructions": [
+            "Je choisis un repere et je pars quand mon camarade l'atteint.",
+            "Je ne me retourne jamais : je pars et j'accelere a fond.",
+            "Rattrape trop tot : je recule ma marque d'un metre.",
+            "Rattrape trop tard ou hors zone : j'avance ma marque d'un metre."
+          ],
+          "success": [
+            "La transmission a lieu au milieu de la zone, deux essais consecutifs.",
+            "Le relayeur ne se retourne jamais.",
+            "La marque retenue est notee sur la fiche."
+          ],
+          "execution": [
+            "Partir franchement, sans hesitation, des que le donneur touche la marque.",
+            "Accelerer a fond des les premiers appuis.",
+            "Tendre la main en arriere seulement au code verbal."
+          ],
+          "watch": [
+            "Le relayeur part-il franchement ou hesite-t-il ?",
+            "Se retourne-t-il pour verifier ?",
+            "La logique d'ajustement est-elle comprise et appliquee ?",
+            "Signes de fatigue musculaire apres plusieurs departs lances."
+          ],
+          "errors": [
+            "Se retourner pour verifier ou en est le donneur.",
+            "Partir mollement puis accelerer trop tard.",
+            "Changer de marque de plusieurs metres a chaque essai, sans logique."
+          ],
+          "feedback": [
+            "Ne te retourne pas : ta marque est faite pour ca.",
+            "Pars a fond des qu'il touche ta marque.",
+            "Il t'a rattrape trop tot : recule ta marque d'un metre, pas de trois."
+          ],
+          "plus": [
+            "Marque a determiner avec deux donneurs differents.",
+            "Zone reduite a 15 metres."
+          ],
+          "minus": [
+            "Marque proposee par le professeur.",
+            "Zone elargie a 25 metres."
+          ],
+          "diff": {
+            "facilitee": "Marque proposee par le professeur, zone de 25 metres, allure moderee.",
+            "normale": "Marque determinee par essais successifs, zone de 20 metres.",
+            "complexifiee": "Marque determinee avec plusieurs donneurs, zone reduite a 15 metres."
+          },
+          "safety": [
+            "Coureurs dans le meme axe : le relayeur ne coupe jamais la trajectoire du donneur.",
+            "Un binome par couloir a la fois.",
+            "Reperes traces a la craie ou plots poses a plat, jamais debout dans la trajectoire.",
+            "Echauffement complet et departs progressifs obligatoires avant cette situation.",
+            "Recuperation imposee entre les essais : cette situation enchaine de nombreux departs a haute intensite, tres exigeants pour les ischio-jambiers.",
+            "Arret immediat pour tout eleve ressentant une douleur a l'arriere de la cuisse.",
+            "Hydratation disponible et rappelee."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Partir a fond sans se retourner",
+          "objective": "Renforcer la confiance du relayeur : accelerer a pleine vitesse sans jamais verifier derriere lui.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 20
+            },
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Par deux. Le relayeur part au code verbal du donneur situe derriere lui, et court 25 metres a fond sans se retourner une seule fois. L'observateur compte les regards en arriere.",
+          "studentGoal": "Courir 25 metres a fond sans regarder derriere moi une seule fois.",
+          "instructions": [
+            "Je pars au code de mon camarade, qui est derriere moi.",
+            "Je cours 25 metres a fond, regard droit devant.",
+            "Je ne me retourne jamais, meme si je n'entends rien.",
+            "Observateur : je compte les fois ou il tourne la tete."
+          ],
+          "success": [
+            "Aucun regard en arriere sur les 25 metres.",
+            "L'acceleration est franche des le depart.",
+            "Trois passages sur quatre sans retournement."
+          ],
+          "execution": [
+            "Regard fixe sur un point devant soi.",
+            "Acceleration franche et engagee des le premier appui.",
+            "Confiance dans le code verbal du donneur."
+          ],
+          "watch": [
+            "Le relayeur se retourne-t-il par reflexe ?",
+            "L'acceleration est-elle franche ou prudente ?"
+          ],
+          "errors": [
+            "Tourner la tete par inquietude.",
+            "Ralentir en cours de route par doute.",
+            "Partir prudemment au lieu d'accelerer."
+          ],
+          "feedback": [
+            "Regard devant, il te previendra.",
+            "Tu ralentis parce que tu doutes : fais-lui confiance.",
+            "Pars a fond : c'est a lui de te rattraper."
+          ],
+          "plus": [
+            "Distance portee a 35 metres.",
+            "Code remplace par un signal sonore unique."
+          ],
+          "minus": [
+            "Distance ramenee a 15 metres.",
+            "Un regard en arriere tolere."
+          ],
+          "diff": {
+            "facilitee": "15 metres, un regard tolere, allure moderee.",
+            "normale": "25 metres a fond, aucun regard en arriere.",
+            "complexifiee": "35 metres, signal sonore unique, aucun regard."
+          },
+          "safety": [
+            "Trajectoire rectiligne et parfaitement degagee : le coureur ne voit pas devant lui ce qui vient de l'arriere.",
+            "Un binome par couloir.",
+            "20 metres de ralentissement apres l'arrivee.",
+            "Code verbal clair et fort.",
+            "Recuperation entre les passages a pleine vitesse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Relais a deux avec marque",
+          "objective": "Verifier que la marque determinee ameliore effectivement le temps du relais a deux.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Relais de 2 fois 40 metres avec la marque determinee, deux manches chronometrees. Comparaison avec le temps du relais de la seance 2, sans marque.",
+          "studentGoal": "Battre notre temps de relais de la seance 2 grace a notre marque.",
+          "instructions": [
+            "On utilise la marque qu'on a determinee aujourd'hui.",
+            "On fait deux manches chronometrees.",
+            "On compare avec notre temps de la seance 2.",
+            "On note le resultat sur nos fiches."
+          ],
+          "success": [
+            "Le temps du relais est ameliore par rapport a la seance 2.",
+            "Les transmissions ont lieu dans la zone, a vitesse elevee.",
+            "Aucun temoin tombe."
+          ],
+          "execution": [
+            "Relayeur qui part franchement a la marque.",
+            "Donneur qui maintient sa vitesse jusqu'a la transmission.",
+            "Transmission au code, sans se retourner."
+          ],
+          "watch": [
+            "La marque fonctionne-t-elle en situation chronometree ?",
+            "Le gain est-il visible sur les temps ?"
+          ],
+          "errors": [
+            "Hesiter au moment de partir sous la pression du chrono.",
+            "Ralentir avant de transmettre.",
+            "Oublier sa marque et partir au jugé."
+          ],
+          "feedback": [
+            "Ta marque, tu l'as trouvee : fais-lui confiance.",
+            "Ne ralentis pas avant de donner.",
+            "Regarde : vous avez gagne six dixiemes."
+          ],
+          "plus": [
+            "Relais a quatre coureurs.",
+            "Zone reduite a 15 metres."
+          ],
+          "minus": [
+            "Distances ramenees a 30 metres.",
+            "Zone elargie."
+          ],
+          "diff": {
+            "facilitee": "2 fois 30 metres, zone de 25 metres, marque donnee.",
+            "normale": "2 fois 40 metres, zone de 20 metres, marque determinee.",
+            "complexifiee": "4 fois 40 metres, zone reduite a 15 metres."
+          },
+          "safety": [
+            "Couloirs separes, un binome par couloir.",
+            "20 metres de degagement apres l'arrivee.",
+            "Recuperation entre les manches.",
+            "Temoin tombe : ralentir avant de le ramasser.",
+            "Hydratation disponible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire de sa marque si on est rattrape trop tot ?",
+          "Pourquoi ajuste-t-on d'un metre et pas de trois ?"
+        ],
+        "key": "La marque se cherche par essais et s'ajuste d'un metre a la fois : c'est elle qui permet de partir au bon moment et d'etre rattrape a pleine vitesse."
+      },
+      "socialRoles": [
+        "Observateur de retournement : compte les regards en arriere du relayeur.",
+        "Juge de zone : verifie que la transmission a lieu dans la zone.",
+        "Chronometreur : mesure les temps de relais."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Construire l'equipe : ordre et marques",
+      "mainObjective": "Construire le relais a quatre : determiner l'ordre des coureurs et regler les trois marques de transmission.",
+      "secondaryObjectives": [
+        "Choisir l'ordre a partir des caracteristiques de chacun.",
+        "Regler les trois marques separement puis les assembler.",
+        "Comprendre que chaque marque depend du couple donneur-receveur."
+      ],
+      "linkToPrevious": "Les marques a deux sont trouvees : il reste a construire l'equipe de quatre, avec trois transmissions a coordonner.",
+      "prerequisiteForNext": "Chaque equipe a fixe son ordre et ses trois marques, notes sur la fiche.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "craie ou marquage au sol",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches d'equipe",
+            "fixed": 6,
+            "note": "une par equipe de quatre"
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer un parcours de 4 fois 40 metres avec trois zones de transmission de 20 metres.",
+          "Placer les reperes de marque numerotes avant chaque zone.",
+          "Preparer une fiche d'equipe pour noter l'ordre et les trois marques.",
+          "Verifier le degagement de tout le parcours avant de commencer."
+        ],
+        "sketch": "Parcours de 4 x 40 m, en ligne droite ou en boucle selon l'espace.\n3 zones de transmission de 20 m.\nReperes de marque numerotes avant chaque zone.\nDepart et arrivee identifies."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, suivi de rappels de transmission : la seance enchaine des efforts intenses en equipe.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque equipe s'echauffe seule, temoin en main.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Articulations du sprint.",
+              "Gammes athletiques sur 20 metres."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappels de transmission",
+            "details": [
+              "Transmissions en course moderee par deux, cinq repetitions.",
+              "Trois accelerations progressives sur 30 metres."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Regler les trois marques",
+          "objective": "Determiner l'ordre des coureurs et ajuster les trois marques, transmission par transmission.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "craie ou marquage au sol",
+              "fixed": 1
+            }
+          ],
+          "organization": "Equipes de quatre. Chaque equipe fixe son ordre, puis regle ses trois marques en travaillant chaque transmission separement, avant d'assembler le relais complet.",
+          "studentGoal": "Fixer l'ordre de mon equipe et les trois marques qui fonctionnent.",
+          "instructions": [
+            "On decide ensemble de l'ordre des quatre coureurs et on le justifie.",
+            "On travaille chaque transmission separement d'abord.",
+            "Chaque relayeur note sa marque sur la fiche d'equipe.",
+            "On n'assemble le relais complet que quand les trois marques fonctionnent."
+          ],
+          "success": [
+            "L'ordre de l'equipe est fixe, justifie et note.",
+            "Les trois marques sont determinees et notees.",
+            "Chaque transmission fonctionne deux fois de suite isolement."
+          ],
+          "execution": [
+            "Travailler transmission par transmission avant d'assembler.",
+            "Ajuster d'un metre a la fois.",
+            "Noter immediatement la marque qui fonctionne."
+          ],
+          "watch": [
+            "Les equipes travaillent-elles methodiquement ou assemblent-elles trop tot ?",
+            "Les decisions d'ordre sont-elles negociees ?",
+            "Les marques sont-elles notees ?",
+            "Signes de fatigue : la seance enchaine beaucoup de departs lances."
+          ],
+          "errors": [
+            "Vouloir faire le relais complet avant d'avoir regle les marques.",
+            "Changer l'ordre a chaque essai.",
+            "Imposer l'ordre sans ecouter l'equipe."
+          ],
+          "feedback": [
+            "Reglez chaque transmission, l'assemblage viendra apres.",
+            "Vous changez tout le temps : fixez un ordre et gardez-le.",
+            "Ecoutez-le, c'est son avis aussi."
+          ],
+          "plus": [
+            "Ordre argumente par les temps et les caracteristiques de chacun.",
+            "Zones reduites a 15 metres."
+          ],
+          "minus": [
+            "Ordre propose par le professeur.",
+            "Trois coureurs au lieu de quatre."
+          ],
+          "diff": {
+            "facilitee": "Equipe de trois, ordre propose par le professeur, zones elargies.",
+            "normale": "Equipe de quatre, ordre et trois marques determines par l'equipe.",
+            "complexifiee": "Ordre argumente par les performances, zones de 15 metres."
+          },
+          "safety": [
+            "Une equipe engagee a la fois sur chaque zone de transmission.",
+            "Zones degagees et bien visibles.",
+            "Echauffement complet obligatoire, la seance enchaine les efforts intenses.",
+            "Recuperation imposee entre les essais : ne pas enchainer plus de deux relais complets sans pause.",
+            "Reperes traces a la craie ou plots poses a plat.",
+            "Arret immediat pour tout eleve ressentant une douleur musculaire.",
+            "Hydratation disponible et rappelee."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Les trois transmissions enchainees",
+          "objective": "Verifier que les trois marques fonctionnent quand elles sont enchainees, ce qui n'est pas garanti isolement.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque equipe realise le relais complet a allure moderee, puis a allure rapide. On note les transmissions hors zone ou a l'arret, et on reajuste la marque concernee, une seule a la fois.",
+          "studentGoal": "Realiser les trois transmissions dans la zone, sans arret, sur un relais complet.",
+          "instructions": [
+            "On fait le relais complet a allure moderee d'abord.",
+            "On repere quelle transmission pose probleme.",
+            "On reajuste seulement la marque concernee, d'un metre.",
+            "Puis on refait a allure rapide."
+          ],
+          "success": [
+            "Les trois transmissions ont lieu dans la zone.",
+            "Aucun temoin tombe sur le relais complet.",
+            "Les marques problematiques sont identifiees et corrigees."
+          ],
+          "execution": [
+            "Chaque relayeur applique sa marque sans hesiter.",
+            "Le donneur maintient sa vitesse jusqu'a la transmission.",
+            "Corriger une seule marque a la fois."
+          ],
+          "watch": [
+            "Les marques tiennent-elles a vitesse reelle ?",
+            "La fatigue du dernier coureur modifie-t-elle la transmission ?"
+          ],
+          "errors": [
+            "Reajuster les trois marques en meme temps.",
+            "Passer directement a l'allure rapide sans verifier.",
+            "Se decourager apres un temoin tombe."
+          ],
+          "feedback": [
+            "Une marque a la fois : sinon vous ne saurez pas ce qui a marche.",
+            "Refaites-le doucement d'abord.",
+            "Un temoin tombe, ce n'est pas grave : on ajuste et on recommence."
+          ],
+          "plus": [
+            "Relais complet chronometre.",
+            "Zones reduites."
+          ],
+          "minus": [
+            "Deux transmissions au lieu de trois.",
+            "Allure moderee uniquement."
+          ],
+          "diff": {
+            "facilitee": "Relais a trois coureurs, deux transmissions, allure moderee.",
+            "normale": "Relais a quatre, trois transmissions, allure rapide.",
+            "complexifiee": "Relais a quatre chronometre, zones de 15 metres."
+          },
+          "safety": [
+            "Une equipe a la fois sur le parcours complet.",
+            "Zones degagees et surveillees.",
+            "Recuperation entre les relais complets.",
+            "Temoin tombe : ralentir avant de le ramasser.",
+            "Hydratation entre les essais."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier relais complet chronometre",
+          "objective": "Mesurer le temps de l'equipe avec ses marques, et le comparer a la somme des temps individuels.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            }
+          ],
+          "organization": "Deux relais complets chronometres par equipe, avec juges de zone eleves. Comparaison avec la somme des temps individuels de l'equipe et avec le relais de la seance 1.",
+          "studentGoal": "Faire un temps d'equipe nettement inferieur a la somme de nos quatre temps individuels.",
+          "instructions": [
+            "On fait deux relais complets chronometres.",
+            "Les juges de zone verifient les trois transmissions.",
+            "On compare avec la somme de nos temps individuels et avec la seance 1.",
+            "On note le meilleur temps sur la fiche d'equipe."
+          ],
+          "success": [
+            "Le temps de l'equipe est inferieur d'au moins une seconde a la somme des temps individuels.",
+            "Les trois transmissions sont validees par les juges.",
+            "Le temps est ameliore par rapport a la seance 1."
+          ],
+          "execution": [
+            "Appliquer les marques fixees, sans improviser.",
+            "Maintenir la vitesse jusqu'a chaque transmission.",
+            "Dernier coureur : courir au-dela de la ligne."
+          ],
+          "watch": [
+            "Le gain collectif est-il effectif ?",
+            "Les equipes comprennent-elles ce que mesure la comparaison ?"
+          ],
+          "errors": [
+            "Changer de marque au dernier moment.",
+            "Ralentir avant la transmission sous la pression.",
+            "Se reprocher mutuellement les erreurs."
+          ],
+          "feedback": [
+            "Gardez vos marques, elles fonctionnent.",
+            "Ne ralentis pas, c'est a lui de te rattraper.",
+            "On ne se reproche rien : on ajuste ensemble."
+          ],
+          "plus": [
+            "Confrontation directe entre deux equipes.",
+            "Zones reduites a 15 metres."
+          ],
+          "minus": [
+            "Un seul relais chronometre.",
+            "Equipes de trois."
+          ],
+          "diff": {
+            "facilitee": "Equipes de trois, une manche chronometree, zones elargies.",
+            "normale": "Equipes de quatre, deux manches chronometrees.",
+            "complexifiee": "Confrontation directe entre deux equipes, zones de 15 metres."
+          },
+          "safety": [
+            "Deux equipes maximum simultanement, dans des couloirs distincts.",
+            "20 metres de degagement apres la ligne d'arrivee.",
+            "Recuperation complete entre les deux manches.",
+            "Juges de zone places sur le cote, hors trajectoire.",
+            "Arret immediat en cas de douleur musculaire."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Comment avez-vous choisi l'ordre de votre equipe ?",
+          "Pourquoi une marque qui marche a deux ne marche-t-elle pas forcement dans le relais complet ?"
+        ],
+        "key": "Chaque marque depend du couple donneur-receveur : elle se regle transmission par transmission, puis se verifie dans l'enchainement complet."
+      },
+      "socialRoles": [
+        "Juge de zone : valide chacune des trois transmissions.",
+        "Chronometreur : mesure le temps de l'equipe.",
+        "Capitaine d'equipe : note l'ordre et les marques sur la fiche d'equipe."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et projet d'equipe",
+      "mainObjective": "Mesurer les acquis a mi-parcours et construire le projet de performance collective pour l'evaluation finale.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Verifier la performance individuelle et collective.",
+        "Tenir les roles de chronometreur et de juge de zone en evaluation.",
+        "Annoncer un temps d'equipe realiste pour la seance 8."
+      ],
+      "linkToPrevious": "Transmission, marques et construction d'equipe sont en place : on verifie et on transforme cela en un projet chiffre.",
+      "prerequisiteForNext": "Chaque equipe a un projet de temps ecrit et realiste.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "fiches de performance",
+            "per": 1.0,
+            "min": 20,
+            "note": "les memes depuis la seance 1"
+          },
+          {
+            "label": "fiches d'equipe",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres",
+            "fixed": 1
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer les couloirs de 40 metres et le parcours de relais complet.",
+          "Afficher les criteres evalues, en grand, a l'entree de la zone.",
+          "Ressortir les fiches de performance depuis la seance 1.",
+          "Repartir les chronometres et designer les juges de zone.",
+          "Prevoir un espace a l'ombre pour la phase d'ecriture."
+        ],
+        "sketch": "4 couloirs de 40 m pour le sprint evalue.\nParcours de relais 4 x 40 m avec 3 zones.\nAffichage des criteres a l'entree.\nCoin ecriture a l'ombre, hors des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : savoir s'echauffer avant un effort est un attendu du programme, et l'evaluation est le moment de le verifier.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque equipe s'echauffe seule : course souple 6 minutes.",
+              "Le professeur circule et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Articulations du sprint, menees par un eleve de chaque equipe.",
+              "Gammes athletiques sur 20 metres."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Accelerations progressives",
+            "details": [
+              "Quatre accelerations sur 30 metres, intensite croissante.",
+              "Deux transmissions de rappel par equipe.",
+              "Recuperation complete avant le premier passage evalue."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "40 metres et relais evalues",
+          "objective": "Evaluer la performance individuelle et la qualite des transmissions, dans les conditions de l'evaluation finale.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Deux temps : d'abord deux 40 metres chronometres individuels, puis un relais complet 4 fois 40 metres. Roles tenus par les eleves : chronometreur, starter, juge de zone, secretaire.",
+          "studentGoal": "Montrer ce que j'ai appris : courir vite et transmettre sans perdre de temps.",
+          "instructions": [
+            "Je cours mes deux 40 metres avec le depart et la fin travailles.",
+            "Puis mon equipe fait un relais complet avec nos marques.",
+            "Chronometreur et juge de zone : vos mesures comptent, soyez precis.",
+            "Je note tous mes resultats sur ma fiche."
+          ],
+          "success": [
+            "Le temps sur 40 metres est ameliore par rapport a la seance 1.",
+            "Le relayeur part a sa marque et ne se retourne pas.",
+            "Les trois transmissions ont lieu dans la zone.",
+            "Le temps de l'equipe est inferieur a la somme des temps individuels."
+          ],
+          "execution": [
+            "Position de depart stable puis projection.",
+            "Maintenir la vitesse jusqu'a la transmission.",
+            "Relayeur qui part franchement, main tendue au code."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils en situation d'evaluation ?",
+            "Quels eleves ont le plus progresse ?",
+            "Les roles de mesure sont-ils tenus serieusement ?"
+          ],
+          "errors": [
+            "Revenir aux anciens automatismes sous la pression.",
+            "Chronometrer approximativement.",
+            "Juger une transmission sans etre bien place."
+          ],
+          "feedback": [
+            "Reprends ta position de depart travaillee.",
+            "Chronometreur, au signal, pas au mouvement.",
+            "Juge, place-toi au niveau de la fin de zone."
+          ],
+          "plus": [
+            "Zones reduites a 15 metres.",
+            "Depart accroupi mains au sol."
+          ],
+          "minus": [
+            "Distances reduites a 30 metres.",
+            "Une seule course individuelle."
+          ],
+          "diff": {
+            "facilitee": "30 metres, une course individuelle, relais avec zones elargies.",
+            "normale": "Deux 40 metres plus un relais complet, zones de 20 metres.",
+            "complexifiee": "40 metres depart accroupi, relais avec zones de 15 metres."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant toute course evaluee.",
+            "20 metres de degagement apres la ligne d'arrivee.",
+            "Recuperation de 4 minutes entre deux sprints maximaux.",
+            "Un coureur par couloir, couloirs verifies avant chaque depart.",
+            "Arret immediat en cas de douleur musculaire : aucune evaluation ne justifie un risque.",
+            "Hydratation disponible et rappelee entre les series.",
+            "Temoin tombe : ralentir avant de le ramasser."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Analyser ses resultats",
+          "objective": "Faire analyser a chaque equipe l'ecart entre sa performance collective et la somme de ses performances individuelles.",
+          "material": [
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par equipe, assis a l'ombre. Chaque equipe compare son temps de relais a la somme de ses temps individuels et a ses resultats des seances 1 et 4.",
+          "studentGoal": "Savoir combien de temps mon equipe gagne grace aux transmissions.",
+          "instructions": [
+            "On calcule l'ecart entre notre temps de relais et notre somme individuelle.",
+            "On compare cet ecart a celui de la seance 1.",
+            "On identifie quelle transmission nous coute encore du temps.",
+            "On note tout sur la fiche d'equipe."
+          ],
+          "success": [
+            "L'ecart est calcule et compare a celui de la seance 1.",
+            "La transmission problematique est identifiee.",
+            "Les chiffres sont notes sur la fiche."
+          ],
+          "execution": [
+            "Calculer l'ecart en secondes.",
+            "Comparer aux seances precedentes.",
+            "Chercher la cause, pas seulement le constat."
+          ],
+          "watch": [
+            "Les equipes mesurent-elles leur progression collective ?",
+            "Identifient-elles correctement leur point faible ?"
+          ],
+          "errors": [
+            "Se contenter de constater sans chercher la cause.",
+            "Attribuer l'ecart a la chance.",
+            "Se reprocher mutuellement les erreurs."
+          ],
+          "feedback": [
+            "Vous gagniez zero seconde en seance 1, maintenant une et demie.",
+            "Quelle transmission vous coute ? Regardez vos notes.",
+            "On analyse ensemble, on n'accuse personne."
+          ],
+          "plus": [
+            "Calculer le gain par transmission."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee par le professeur, ecart calcule avec aide.",
+            "normale": "Analyse autonome de l'ecart et comparaison aux seances precedentes.",
+            "complexifiee": "Calcul du gain transmission par transmission."
+          },
+          "safety": [
+            "Phase assise a l'ombre, hors des couloirs de course.",
+            "Hydratation pendant cette phase de recuperation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Le projet de temps de l'equipe",
+          "objective": "Transformer l'analyse en un objectif collectif chiffre pour l'evaluation finale.",
+          "material": [
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de performance",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "affiche des criteres",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par equipe, assis. Chaque equipe ecrit le temps qu'elle vise a l'evaluation finale, en le justifiant par ses resultats du jour.",
+          "studentGoal": "Ecrire le temps que mon equipe vise a la derniere seance, et le justifier.",
+          "instructions": [
+            "On ecrit le temps qu'on vise a l'evaluation finale.",
+            "On le justifie : combien gagner sur quelle transmission ?",
+            "On evite les objectifs irrealistes : on part de notre temps du jour.",
+            "On garde la fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "Le temps vise est ecrit et chiffre.",
+            "Il est justifie par un gain identifie sur une transmission.",
+            "Il est realiste : gain de une a deux secondes maximum."
+          ],
+          "execution": [
+            "Partir du temps realise aujourd'hui.",
+            "Viser un gain realiste, pas un temps reve.",
+            "Identifier ou ce gain sera pris."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Sont-ils justifies par une analyse ?"
+          ],
+          "errors": [
+            "Viser un temps sans rapport avec la performance du jour.",
+            "Projet non chiffre : on va faire mieux.",
+            "Ne pas justifier ou le gain sera pris."
+          ],
+          "feedback": [
+            "Cinq secondes de gain en trois seances, c'est impossible : vise une seconde.",
+            "Chiffrez-le : quel temps exactement ?",
+            "Ou allez-vous prendre cette seconde ?"
+          ],
+          "plus": [
+            "Prevoir aussi le gain attendu sur chaque transmission."
+          ],
+          "minus": [
+            "Objectif propose par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Objectif propose par le professeur a partir du temps realise.",
+            "normale": "Temps vise chiffre et justifie par l'equipe.",
+            "complexifiee": "Temps vise plus gain attendu detaille par transmission."
+          },
+          "safety": [
+            "Phase d'ecriture assise a l'ombre, hors des couloirs.",
+            "Hydratation pendant cette phase.",
+            "Le professeur valide chaque projet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de temps votre equipe gagne-t-elle grace aux transmissions ?",
+          "Quel temps visez-vous a la derniere seance, et ou allez-vous le gagner ?"
+        ],
+        "key": "Le gain d'un relais se mesure : c'est l'ecart entre le temps de l'equipe et la somme des coureurs. Tout le cycle sert a creuser cet ecart."
+      },
+      "socialRoles": [
+        "Chronometreur evaluateur : mesure les temps officiels de la seance.",
+        "Juge de zone : valide ou invalide chaque transmission.",
+        "Secretaire d'equipe : calcule les ecarts et note le projet."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Gagner du temps sur les transmissions",
+      "mainObjective": "Optimiser les transmissions : reduire la deceleration du donneur et augmenter la vitesse du relayeur au moment du passage.",
+      "secondaryObjectives": [
+        "Maintenir la vitesse du donneur jusqu'au bout.",
+        "Transmettre le plus loin possible dans la zone.",
+        "Reduire la duree de contact avec le temoin."
+      ],
+      "linkToPrevious": "Les transmissions ont lieu dans la zone mais coutent encore du temps : il faut maintenant les optimiser.",
+      "prerequisiteForNext": "Chaque equipe reduit son temps de relais par rapport a la seance 4.",
+      "setup": {
+        "installationMinutes": 11,
+        "material": [
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "craie ou marquage au sol",
+            "fixed": 1
+          },
+          {
+            "label": "fiches d'equipe",
+            "fixed": 6
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer les zones de transmission en trois tiers, pour reperer ou la transmission a lieu.",
+          "Preparer le parcours de relais complet.",
+          "Verifier le degagement et l'etat de la surface.",
+          "Distribuer les fiches d'equipe de la seance 4."
+        ],
+        "sketch": "Zones de transmission de 20 m divisees en trois tiers marques.\nObjectif : transmettre dans le dernier tiers.\nParcours de relais complet.\nJuges de zone au bord."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : la seance comporte des transmissions a pleine vitesse, tres exigeantes musculairement.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque equipe s'echauffe seule, temoin en main.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Articulations du sprint.",
+              "Gammes athletiques et fentes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Accelerations et transmissions",
+            "details": [
+              "Quatre accelerations sur 30 metres.",
+              "Trois transmissions de rappel a vitesse croissante.",
+              "Recuperation complete entre chaque."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Transmettre dans le dernier tiers",
+          "objective": "Retarder la transmission dans la zone : plus elle est tardive, plus le relayeur est lance et plus l'equipe gagne du terrain.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "craie ou marquage au sol",
+              "fixed": 1
+            }
+          ],
+          "organization": "Zones divisees en trois tiers marques. Par deux, l'objectif est de transmettre dans le dernier tiers de la zone, sans en sortir. Huit essais avec ajustement de la marque, puis rotation.",
+          "studentGoal": "Transmettre dans le dernier tiers de la zone, sans en sortir.",
+          "instructions": [
+            "On vise le dernier tiers de la zone pour transmettre.",
+            "Si je transmets trop tot, le relayeur avance sa marque.",
+            "Si on sort de la zone, on recule la marque.",
+            "Donneur : je maintiens ma vitesse jusqu'au bout."
+          ],
+          "success": [
+            "Cinq transmissions sur huit dans le dernier tiers.",
+            "Aucune transmission hors zone.",
+            "Le donneur ne decelere pas avant la transmission."
+          ],
+          "execution": [
+            "Relayeur : partir franchement pour atteindre sa vitesse maximale.",
+            "Donneur : maintenir la vitesse, ne pas tendre le bras trop tot.",
+            "Transmission breve, sans temps de contact prolonge."
+          ],
+          "watch": [
+            "Le donneur decelere-t-il pour securiser la transmission ?",
+            "Les transmissions sont-elles trop precoces dans la zone ?",
+            "Les sorties de zone se multiplient-elles ?"
+          ],
+          "errors": [
+            "Le donneur qui ralentit pour etre sur de reussir.",
+            "Transmettre des l'entree de zone, par securite.",
+            "Sortir de la zone en voulant retarder."
+          ],
+          "feedback": [
+            "Ne ralentis pas : c'est le relayeur qui s'ajuste.",
+            "Trop tot : avance ta marque d'un metre.",
+            "Vous etes sortis : reculez d'un metre, pas de trois."
+          ],
+          "plus": [
+            "Zone reduite a 15 metres.",
+            "Transmission dans les cinq derniers metres."
+          ],
+          "minus": [
+            "Objectif : transmettre dans la zone, sans contrainte de tiers.",
+            "Zone elargie a 25 metres."
+          ],
+          "diff": {
+            "facilitee": "Objectif simple de transmettre dans la zone, zone de 25 metres.",
+            "normale": "Transmission dans le dernier tiers d'une zone de 20 metres.",
+            "complexifiee": "Zone de 15 metres, transmission dans les cinq derniers metres."
+          },
+          "safety": [
+            "Une transmission tardive augmente le risque de sortie de zone et de collision : un binome par couloir a la fois.",
+            "Coureurs cote a cote, jamais l'un derriere l'autre.",
+            "20 metres de degagement apres la zone.",
+            "Echauffement complet obligatoire avant les transmissions a pleine vitesse.",
+            "Recuperation entre les essais.",
+            "Arret immediat en cas de douleur musculaire.",
+            "Hydratation disponible."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le donneur qui ne ralentit pas",
+          "objective": "Traiter specifiquement la deceleration du donneur, principale perte de temps restante.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Le donneur court 40 metres et doit franchir une ligne placee 10 metres apres la zone de transmission, a pleine vitesse. Un observateur verifie qu'il ne decelere pas avant de transmettre.",
+          "studentGoal": "Continuer a courir vite jusqu'apres la transmission.",
+          "instructions": [
+            "Je transmets sans ralentir, et je continue a courir apres.",
+            "Je franchis la ligne placee 10 metres apres la zone.",
+            "Je ne tends le bras qu'au dernier moment.",
+            "Observateur : je note si le donneur ralentit avant de transmettre."
+          ],
+          "success": [
+            "Le donneur franchit la ligne des 10 metres apres la zone a vitesse elevee.",
+            "Aucune deceleration visible avant la transmission.",
+            "Le bras n'est tendu qu'au dernier moment."
+          ],
+          "execution": [
+            "Garder la frequence de foulee jusqu'a la transmission.",
+            "Tendre le bras au dernier moment, sans casser la course.",
+            "Continuer a courir plusieurs metres apres avoir donne."
+          ],
+          "watch": [
+            "Le donneur ralentit-il par securite ?",
+            "Tend-il le bras trop tot, ce qui casse sa course ?"
+          ],
+          "errors": [
+            "Ralentir pour securiser la transmission.",
+            "Tendre le bras dix metres avant, ce qui freine.",
+            "S'arreter juste apres avoir transmis."
+          ],
+          "feedback": [
+            "Ne ralentis pas : c'est a lui de s'ajuster a toi.",
+            "Ton bras au dernier moment, pas avant.",
+            "Continue de courir apres, ne t'arrete pas net."
+          ],
+          "plus": [
+            "Ligne portee a 15 metres apres la zone.",
+            "Chronometrage du donneur sur la totalite."
+          ],
+          "minus": [
+            "Ligne a 5 metres apres la zone.",
+            "Course a allure moderee."
+          ],
+          "diff": {
+            "facilitee": "Ligne a 5 metres apres la zone, course a allure moderee.",
+            "normale": "Ligne a 10 metres apres la zone, course a pleine vitesse.",
+            "complexifiee": "Ligne a 15 metres, avec chronometrage du donneur."
+          },
+          "safety": [
+            "20 metres de degagement au-dela de la ligne a franchir : la distance de ralentissement augmente avec la vitesse.",
+            "Un binome par couloir.",
+            "Couloirs verifies avant chaque passage.",
+            "Recuperation entre les passages a pleine vitesse.",
+            "Arret immediat en cas de douleur a l'arriere de la cuisse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Relais complet optimise",
+          "objective": "Mesurer le gain obtenu par l'optimisation des transmissions, par rapport a la seance 4.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            }
+          ],
+          "organization": "Deux relais complets chronometres, avec les marques ajustees pour transmettre dans le dernier tiers. Comparaison avec le temps de la seance 4.",
+          "studentGoal": "Battre notre temps de la seance 4 grace a des transmissions plus tardives.",
+          "instructions": [
+            "On applique nos marques ajustees pour transmettre tard dans la zone.",
+            "Les donneurs ne ralentissent pas.",
+            "On chronometre et on compare avec la seance 4.",
+            "On note le meilleur temps sur la fiche d'equipe."
+          ],
+          "success": [
+            "Le temps est ameliore par rapport a la seance 4.",
+            "Les trois transmissions ont lieu dans la zone, dans le dernier tiers si possible.",
+            "Aucun temoin tombe."
+          ],
+          "execution": [
+            "Appliquer les marques ajustees.",
+            "Maintenir la vitesse jusqu'a la transmission.",
+            "Transmission breve et franche."
+          ],
+          "watch": [
+            "L'optimisation produit-elle un gain mesurable ?",
+            "Le risque de sortie de zone augmente-t-il trop ?"
+          ],
+          "errors": [
+            "Vouloir transmettre trop tard et sortir de la zone.",
+            "Revenir a la securite en transmettant tot.",
+            "Changer de marque au dernier moment."
+          ],
+          "feedback": [
+            "Trop tard, vous etes sortis : reculez d'un metre.",
+            "Ne revenez pas a la securite : le gain est la.",
+            "Gardez vos marques ajustees."
+          ],
+          "plus": [
+            "Confrontation directe entre equipes.",
+            "Zones reduites a 15 metres."
+          ],
+          "minus": [
+            "Une seule manche chronometree.",
+            "Zones elargies."
+          ],
+          "diff": {
+            "facilitee": "Une manche, zones de 25 metres, transmission dans la zone sans contrainte de tiers.",
+            "normale": "Deux manches, transmission dans le dernier tiers d'une zone de 20 metres.",
+            "complexifiee": "Confrontation directe, zones de 15 metres."
+          },
+          "safety": [
+            "Deux equipes maximum simultanement, couloirs distincts.",
+            "20 metres de degagement apres l'arrivee.",
+            "Recuperation complete entre les manches.",
+            "Juges de zone hors trajectoire.",
+            "Temoin tombe : ralentir avant de le ramasser.",
+            "Hydratation entre les manches."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi vaut-il mieux transmettre tard dans la zone que tot ?",
+          "Qui doit s'ajuster : le donneur ou le relayeur ?"
+        ],
+        "key": "Plus la transmission est tardive dans la zone, plus le relayeur est lance : c'est le relayeur qui s'ajuste, jamais le donneur qui ralentit."
+      },
+      "socialRoles": [
+        "Juge de tiers : indique dans quel tiers de la zone la transmission a eu lieu.",
+        "Observateur de deceleration : verifie que le donneur ne ralentit pas.",
+        "Chronometreur : mesure les relais complets."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale du projet",
+      "mainObjective": "Realiser le projet d'equipe dans les conditions exactes de l'evaluation, et l'ajuster une derniere fois.",
+      "secondaryObjectives": [
+        "Realiser le relais complet dans le format de l'evaluation.",
+        "Verifier l'ecart entre le temps annonce et le temps realise.",
+        "Finaliser l'ordre et les marques."
+      ],
+      "linkToPrevious": "Les transmissions sont optimisees : il reste a eprouver le projet annonce a la seance 5 dans son format reel.",
+      "prerequisiteForNext": "Chaque equipe a realise son projet une fois et l'a valide ou ajuste.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "fiches d'equipe",
+            "fixed": 6
+          },
+          {
+            "label": "grilles d'observation d'entrainement",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "affiche des criteres",
+            "fixed": 1
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer le parcours exactement comme il le sera a la seance 8.",
+          "Preparer les grilles d'observation identiques a celles de l'evaluation.",
+          "Afficher les criteres d'evaluation.",
+          "Ressortir les projets de temps de la seance 5.",
+          "Verifier le degagement et l'etat de la surface."
+        ],
+        "sketch": "Parcours identique a celui de l'evaluation.\n4 couloirs de 40 m et parcours de relais 4 x 40 m.\nAffichage des criteres et des projets a l'entree.\nJuges de zone au bord de chaque zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, identique a celui de l'evaluation : la repetition generale porte aussi sur l'echauffement, qui est evalue.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque equipe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Articulations du sprint, gammes athletiques.",
+              "Fentes et balanciers de jambe."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Accelerations et transmissions",
+            "details": [
+              "Quatre accelerations sur 30 metres.",
+              "Trois transmissions de rappel par equipe.",
+              "Recuperation complete avant le premier passage."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Le projet complet",
+          "objective": "Realiser le relais dans les conditions de l'evaluation, avec annonce prealable du temps vise.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "grilles d'observation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque equipe annonce son temps vise, puis realise deux relais complets chronometres. Les autres equipes tiennent les roles de chronometreur, juge de zone et observateur.",
+          "studentGoal": "Realiser le temps que mon equipe a annonce.",
+          "instructions": [
+            "On annonce notre temps vise avant de courir.",
+            "On realise deux relais complets avec nos marques.",
+            "On compare le temps annonce et le temps realise.",
+            "Observateurs : vous notez les transmissions et les ecarts."
+          ],
+          "success": [
+            "L'ecart entre temps annonce et temps realise est inferieur a une seconde.",
+            "Les trois transmissions ont lieu dans la zone.",
+            "Le temps est ameliore par rapport a la seance 6."
+          ],
+          "execution": [
+            "Appliquer l'ordre et les marques fixes.",
+            "Maintenir la vitesse jusqu'a chaque transmission.",
+            "Dernier coureur : courir au-dela de la ligne."
+          ],
+          "watch": [
+            "Les projets annonces sont-ils realistes ?",
+            "Les equipes tiennent-elles leur temps ?",
+            "Les roles de mesure sont-ils tenus avec precision ?"
+          ],
+          "errors": [
+            "Annoncer un temps irrealiste.",
+            "Changer de marque sous la pression.",
+            "Se reprocher mutuellement un temoin tombe."
+          ],
+          "feedback": [
+            "Annoncez ce que vous pouvez tenir, pas ce que vous revez.",
+            "Gardez vos marques, elles fonctionnent.",
+            "Un temoin tombe, on ajuste, on n'accuse personne."
+          ],
+          "plus": [
+            "Confrontation directe entre deux equipes.",
+            "Zones reduites."
+          ],
+          "minus": [
+            "Une seule manche.",
+            "Distances reduites a 30 metres."
+          ],
+          "diff": {
+            "facilitee": "Une manche, 4 fois 30 metres, zones elargies.",
+            "normale": "Deux manches, 4 fois 40 metres, temps annonce a l'avance.",
+            "complexifiee": "Confrontation directe entre equipes, zones de 15 metres."
+          },
+          "safety": [
+            "Deux equipes maximum simultanement, couloirs distincts.",
+            "20 metres de degagement apres l'arrivee.",
+            "Echauffement complet obligatoire.",
+            "Recuperation complete entre les manches.",
+            "Juges de zone places hors trajectoire.",
+            "Arret immediat en cas de douleur musculaire.",
+            "Hydratation entre les manches."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Analyse transmission par transmission",
+          "objective": "Identifier precisement laquelle des trois transmissions coute encore du temps a l'equipe.",
+          "material": [
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "grilles d'observation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par equipe, avec les observateurs. Chaque observateur presente ce qu'il a note sur une transmission : position dans la zone, deceleration du donneur, retournement du relayeur.",
+          "studentGoal": "Savoir quelle transmission coute du temps a mon equipe, et pourquoi.",
+          "instructions": [
+            "Observateur : je dis ce que j'ai vu sur ma transmission.",
+            "L'equipe identifie la transmission la moins bonne.",
+            "On cherche la cause : marque, deceleration, retournement ?",
+            "On note la correction a faire sur la fiche d'equipe."
+          ],
+          "success": [
+            "Les trois transmissions sont analysees.",
+            "La transmission problematique est identifiee.",
+            "Une correction precise est notee."
+          ],
+          "execution": [
+            "S'appuyer sur ce qui a ete observe, pas sur une impression.",
+            "Chercher la cause, pas le coupable.",
+            "Noter une correction concrete."
+          ],
+          "watch": [
+            "Les analyses sont-elles factuelles ?",
+            "Le climat d'equipe reste-t-il constructif ?"
+          ],
+          "errors": [
+            "Designer un coupable plutot qu'une cause.",
+            "Rester dans le general sans identifier la transmission.",
+            "Ne pas noter la correction."
+          ],
+          "feedback": [
+            "On cherche une cause, pas un responsable.",
+            "Laquelle exactement : la premiere, la deuxieme ?",
+            "Notez-le, sinon vous l'oublierez."
+          ],
+          "plus": [
+            "Chiffrer le temps perdu sur chaque transmission."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee par le professeur, cause proposee parmi trois hypotheses.",
+            "normale": "Analyse autonome des trois transmissions par l'equipe.",
+            "complexifiee": "Chiffrage du temps perdu transmission par transmission."
+          },
+          "safety": [
+            "Phase assise a l'ombre, hors des couloirs.",
+            "Hydratation pendant cette phase de recuperation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Corriger et refaire",
+          "objective": "Appliquer immediatement la correction identifiee et verifier son effet.",
+          "material": [
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque equipe travaille specifiquement la transmission identifiee comme problematique, puis refait un relais complet chronometre. On compare avec le temps du debut de seance.",
+          "studentGoal": "Corriger notre transmission la plus faible et le verifier au chrono.",
+          "instructions": [
+            "On travaille cinq fois la transmission identifiee.",
+            "On ajuste la marque si c'est la cause.",
+            "Puis on refait un relais complet chronometre.",
+            "On compare avec notre temps du debut de seance."
+          ],
+          "success": [
+            "La transmission ciblee est travaillee au moins cinq fois.",
+            "Le temps final est ameliore par rapport au debut de seance.",
+            "Le projet definitif est arrete."
+          ],
+          "execution": [
+            "Cibler une seule transmission.",
+            "Ajuster d'un metre a la fois.",
+            "Verifier l'effet au chronometre."
+          ],
+          "watch": [
+            "La correction produit-elle un gain ?",
+            "Les equipes ciblent-elles bien une seule transmission ?"
+          ],
+          "errors": [
+            "Vouloir tout corriger d'un coup.",
+            "Ne pas verifier l'effet de la correction.",
+            "Se decourager si le gain est faible."
+          ],
+          "feedback": [
+            "Une seule transmission : sinon vous ne saurez pas ce qui a marche.",
+            "Refaites un relais complet pour verifier.",
+            "Trois dixiemes gagnes, c'est deja bien."
+          ],
+          "plus": [
+            "Travailler deux transmissions successivement."
+          ],
+          "minus": [
+            "Correction proposee par le professeur.",
+            "Pas de relais complet de verification."
+          ],
+          "diff": {
+            "facilitee": "Correction proposee par le professeur, verification sans relais complet.",
+            "normale": "Correction ciblee sur une transmission, verifiee par un relais chronometre.",
+            "complexifiee": "Deux transmissions travaillees successivement, avec verification."
+          },
+          "safety": [
+            "Recuperation complete avant le relais de verification.",
+            "Une equipe par couloir.",
+            "20 metres de degagement apres l'arrivee.",
+            "Arret immediat en cas de fatigue excessive : la seance est deja longue.",
+            "Hydratation systematique."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle transmission vous coutait du temps, et pourquoi ?",
+          "Votre temps annonce est-il toujours realiste pour la derniere seance ?"
+        ],
+        "key": "Un relais se regle transmission par transmission : on identifie la plus faible, on corrige une seule chose, et on verifie au chronometre."
+      },
+      "socialRoles": [
+        "Observateur de transmission : note position dans la zone, deceleration et retournement.",
+        "Juge de zone : valide chaque transmission.",
+        "Chronometreur : mesure les relais complets."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Rencontre finale et evaluation",
+      "mainObjective": "Evaluer la performance individuelle, la performance collective et le respect du projet annonce.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Verifier le projet de temps annonce a la seance 5.",
+        "Tenir les roles de chronometreur et de juge de zone.",
+        "Accepter le resultat et savoir l'analyser."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait transmettre a vitesse elevee et construire un projet collectif.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "temoins de relais",
+            "fixed": 8
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de performance conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "depuis la seance 1, pour mesurer la progression"
+          },
+          {
+            "label": "fiches d'equipe",
+            "fixed": 6,
+            "note": "avec le projet de temps annonce"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          },
+          {
+            "label": "point d'eau ou bouteilles",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer les couloirs de 40 metres et le parcours de relais complet.",
+          "Afficher l'ordre de passage, les criteres et les temps annonces par chaque equipe.",
+          "Preparer les grilles nominatives et ressortir les fiches depuis la seance 1.",
+          "Verifier l'etat du sol sur l'ensemble du dispositif.",
+          "Prevoir un point d'eau et une zone d'ombre pour la recuperation."
+        ],
+        "sketch": "4 couloirs de 40 m pour le sprint evalue.\nParcours de relais 4 x 40 m avec 3 zones de 20 m.\nAffichage ordre de passage, criteres et temps annonces.\nZone d'ombre et point d'eau pour la recuperation."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene entierement par les eleves : savoir s'echauffer avant un effort est un attendu evalue, et l'intensite maximale du jour l'exige.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome par equipe",
+            "details": [
+              "Chaque equipe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Gammes athletiques",
+            "details": [
+              "Montees de genoux, talons-fesses, pas bondissants, jambes tendues.",
+              "Fentes et balanciers de jambe."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Accelerations et transmissions",
+            "details": [
+              "Quatre accelerations sur 30 metres, intensite croissante.",
+              "Trois transmissions de rappel par equipe.",
+              "Recuperation complete avant le premier passage evalue."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Sprint et relais evalues",
+          "objective": "Evaluer la performance individuelle, la qualite des transmissions et le respect du projet annonce.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Deux temps. D'abord deux 40 metres chronometres par eleve. Puis chaque equipe annonce son temps vise et realise deux relais 4 fois 40 metres. Les eleves tiennent les roles de chronometreur, starter, juge de zone et secretaire.",
+          "studentGoal": "Realiser ma meilleure performance et le temps que mon equipe a annonce.",
+          "instructions": [
+            "Je cours mes deux 40 metres avec tout ce que j'ai appris.",
+            "Mon equipe annonce son temps vise avant de courir.",
+            "Quand je ne cours pas, je tiens mon role : chronometreur ou juge de zone.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Le temps sur 40 metres est ameliore par rapport a la seance 1.",
+            "Le relayeur part a sa marque et ne se retourne jamais.",
+            "Les trois transmissions ont lieu dans la zone, sans deceleration du donneur.",
+            "Le temps de l'equipe est inferieur d'au moins deux secondes a la somme des temps individuels.",
+            "L'ecart entre temps annonce et temps realise est inferieur a une seconde."
+          ],
+          "execution": [
+            "Position de depart stable puis projection.",
+            "Maintenir la vitesse jusqu'a la transmission.",
+            "Relayeur qui part franchement, main tendue au code.",
+            "Transmettre tard dans la zone."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils en situation de rencontre ?",
+            "Les roles de mesure sont-ils tenus avec rigueur ?",
+            "Les resultats sont-ils acceptes sans conflit ?",
+            "Signes de fatigue musculaire : la seance enchaine beaucoup d'efforts maximaux."
+          ],
+          "errors": [
+            "Revenir aux anciens automatismes sous la pression.",
+            "Chronometrer approximativement parce qu'on est concerne par le resultat.",
+            "Reprocher a un camarade un temoin tombe."
+          ],
+          "feedback": [
+            "Reprends ta position de depart travaillee.",
+            "Chronometreur, ta mesure compte pour ton camarade : sois precis.",
+            "On n'accuse personne : le relais est collectif."
+          ],
+          "plus": [
+            "Zones reduites a 15 metres.",
+            "Confrontation directe entre equipes."
+          ],
+          "minus": [
+            "Distances ramenees a 30 metres.",
+            "Relais a trois coureurs, zones elargies."
+          ],
+          "diff": {
+            "facilitee": "30 metres individuels, relais a trois avec zones de 25 metres. Les progres sont evalues plutot que la performance absolue.",
+            "normale": "Deux 40 metres plus relais 4 fois 40 metres, zones de 20 metres, temps annonce.",
+            "complexifiee": "Zones de 15 metres, confrontation directe entre equipes."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant tout passage evalue : aucune exception.",
+            "20 metres de degagement apres chaque ligne d'arrivee.",
+            "Recuperation de 4 minutes minimum entre deux efforts maximaux.",
+            "Un coureur par couloir, couloirs verifies avant chaque depart.",
+            "Coureurs cote a cote lors des transmissions, jamais l'un derriere l'autre.",
+            "Juges de zone places sur le cote, hors trajectoire.",
+            "Arret immediat en cas de douleur musculaire : aucune evaluation ne justifie un risque.",
+            "Hydratation disponible en permanence et rappelee entre les series.",
+            "Temoin tombe : ralentir avant de le ramasser, jamais de demi-tour brusque.",
+            "Surface inspectee avant le premier passage."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Le projet est-il tenu ?",
+          "objective": "Faire verifier a chaque equipe l'ecart entre le temps annonce et le temps realise, et l'analyser.",
+          "material": [
+            {
+              "label": "fiches d'equipe",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de performance conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par equipe, assis a l'ombre. Chaque equipe compare son temps annonce, son temps realise, et sa progression depuis la seance 1.",
+          "studentGoal": "Dire si notre projet etait juste, et de combien nous avons progresse.",
+          "instructions": [
+            "On compare le temps annonce et le temps realise.",
+            "On calcule notre progression depuis la seance 1.",
+            "On ecrit si notre projet etait juste, trop ambitieux ou trop prudent.",
+            "Chacun regarde aussi sa progression individuelle sur 40 metres."
+          ],
+          "success": [
+            "L'ecart annonce-realise est calcule.",
+            "La progression depuis la seance 1 est calculee.",
+            "L'equipe formule une conclusion argumentee."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres des fiches.",
+            "Distinguer performance et respect du projet.",
+            "Formuler une conclusion en une phrase."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils performance et projet tenu ?",
+            "Mesurent-ils leur progression collective ?"
+          ],
+          "errors": [
+            "Ne juger que le classement final.",
+            "Confondre bon projet et temps rapide.",
+            "Ne pas calculer la progression."
+          ],
+          "feedback": [
+            "Vous etes derniers, mais votre projet est tenu : c'est ca qui compte.",
+            "Regardez depuis la seance 1 : deux secondes gagnees.",
+            "Un projet tenu vaut mieux qu'un projet ambitieux et rate."
+          ],
+          "plus": [
+            "Calculer le gain obtenu sur les transmissions au cours du cycle."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee, conclusion a choisir parmi trois formulations.",
+            "normale": "Analyse autonome de l'ecart et de la progression.",
+            "complexifiee": "Calcul du gain obtenu sur les transmissions sur l'ensemble du cycle."
+          },
+          "safety": [
+            "Phase assise a l'ombre, hors des couloirs de course.",
+            "Hydratation systematique pendant cette phase.",
+            "Surveillance des eleves les plus fatigues."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et resultats",
+          "objective": "Cloturer le cycle en annoncant les resultats, en valorisant les progressions et en rangeant collectivement.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "temoins de relais",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Rangement collectif du materiel par equipes, puis classe assise a l'ombre pour le bilan et l'annonce des resultats.",
+          "studentGoal": "Savoir ce que j'ai progresse et accepter le resultat de la rencontre.",
+          "instructions": [
+            "Chaque equipe range la zone qui lui est attribuee.",
+            "On s'assoit ensuite a l'ombre pour le bilan.",
+            "On ecoute les resultats sans contester.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Les resultats sont annonces et acceptes.",
+            "Au moins un eleve par equipe s'exprime."
+          ],
+          "execution": [
+            "Ranger sa zone sans attendre qu'on le demande.",
+            "Formuler un acquis concret plutot qu'un ressenti.",
+            "Ecouter sans commenter les resultats des autres."
+          ],
+          "watch": [
+            "Les resultats sont-ils acceptes sans conflit ?",
+            "Les eleves valorisent-ils la progression autant que le classement ?"
+          ],
+          "errors": [
+            "Contester le classement ou les chronometrages.",
+            "Ne parler que du classement, pas des progres.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "Les temps sont ceux qui ont ete mesures : on les accepte.",
+            "Pas le classement : ce que tu sais faire maintenant.",
+            "Tout le monde range, chaque equipe a sa zone."
+          ],
+          "plus": [
+            "Chaque equipe analyse ce qui lui a fait gagner ou perdre du temps sur le cycle."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis collectifs, les eleves valident."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Analyse collective par equipe des gains obtenus sur le cycle."
+          },
+          "safety": [
+            "Rangement organise par zones pour eviter les croisements.",
+            "Comptage du materiel avant de quitter l'installation.",
+            "Hydratation et retour au calme a l'ombre.",
+            "Verification qu'aucun plot ni temoin ne reste sur la piste."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de temps votre equipe gagne-t-elle grace aux transmissions ?",
+          "Qu'est-ce qui fait qu'un relais va plus vite que quatre coureurs additionnes ?"
+        ],
+        "key": "Le relais se gagne sur les transmissions : le temoin ne ralentit jamais, le relayeur part a sa marque sans se retourner, et c'est lui qui s'ajuste, jamais le donneur."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure les temps officiels de la rencontre, role evalue.",
+        "Juge de zone : valide les transmissions, role evalue au meme titre que la course.",
+        "Starter : donne les departs de facon reguliere.",
+        "Secretaire : reporte les resultats et calcule les ecarts avec les temps annonces."
+      ]
+    }
+  ]
+}

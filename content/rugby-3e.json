@@ -1,0 +1,2826 @@
+{
+  "apsa": "Rugby",
+  "grades": [
+    "TROISIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Realiser des actions decisives en situation favorable afin de faire basculer le rapport de force.",
+    "Adapter son engagement moteur en fonction de son etat physique et du rapport de force.",
+    "S'organiser tactiquement pour gagner le match en identifiant les situations favorables de marque.",
+    "Respecter les partenaires, les adversaires et l'arbitre, et assumer les roles sociaux."
+  ],
+  "targetCompetence": "Passer d'un jeu ou le porteur isole subit le contact a un jeu ou l'equipe conserve le ballon : le porteur affronte debout et transmet ou libere, les soutiens arrivent avant l'adversaire, et le mouvement continue vers l'espace libre.",
+  "cycleObjectives": [
+    "Affronter le contact debout, en position solide, sans se jeter au sol.",
+    "Conserver et liberer le ballon apres contact.",
+    "Arriver en soutien avant l'adversaire, de part et d'autre du porteur.",
+    "Deplacer la defense pour creer un espace libre et l'exploiter.",
+    "Arbitrer une rencontre en appliquant les regles de securite."
+  ],
+  "plannedTitles": [
+    "Reprise et cadre de securite : le contact codifie",
+    "Affronter debout : le porteur qui reste sur ses appuis",
+    "Conserver et liberer : le ballon disponible apres contact",
+    "Le soutien : arriver avant l'adversaire",
+    "Match evalue de mi-cycle et projet de jeu",
+    "Deplacer la defense et exploiter l'espace libre",
+    "Enchainer les temps de jeu",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Sports collectifs de combat collectif - securite et enjeux de formation",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16702/download",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Rugby au college - progression du contact et regles de securite",
+      "org": "Academie de Bordeaux",
+      "url": "https://ent2d.ac-bordeaux.fr/disciplines/eps/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Federale",
+      "title": "Rugby scolaire et regles de securite - plaquage et jeu au sol",
+      "org": "Federation Francaise de Rugby",
+      "url": "https://www.ffr.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Federale",
+      "title": "Rugby en milieu scolaire - formes de pratique adaptees",
+      "org": "UNSS",
+      "url": "https://unss.org/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le rugby en college - de l'evitement a la conservation",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Forme de pratique retenue par l'etablissement : contact codifie ou jeu au toucher. Ce cycle est ecrit pour le contact codifie ; toutes les situations se declinent au toucher a deux mains si le protocole local l'impose.",
+    "Etat du terrain : verifier l'absence de trous, de pierres, de plots casses ou de bordures dures.",
+    "Distance entre la zone de jeu et tout obstacle dur : poteau, muret, grillage, banc.",
+    "Constitution des groupes par gabarit : imperatif absolu pour tout exercice de contact.",
+    "PAI et dispenses : aucun eleve porteur d'une contre-indication ne participe aux situations de contact.",
+    "Autorisation parentale ou reglement interieur relatif a la pratique du rugby.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - evite systematiquement le contact",
+      "observed": "Passe le ballon des qu'un adversaire s'approche, souvent en arriere et sans intention.",
+      "need": "Construire l'affrontement debout en securite, pour ne plus subir le contact."
+    },
+    {
+      "label": "Profil 2 - fonce tete baissee",
+      "observed": "Baisse la tete et s'encastre dans l'adversaire, ou se jette au sol des le contact.",
+      "need": "Construire une posture de contact sure : tete relevee, epaule en avant, appuis solides."
+    },
+    {
+      "label": "Profil 3 - garde le ballon au sol",
+      "observed": "Apres contact, reste couche sur le ballon et bloque le jeu.",
+      "need": "Construire la liberation immediate du ballon apres contact."
+    },
+    {
+      "label": "Profil 4 - ne suit pas le porteur",
+      "observed": "Reste ecarte pendant que son partenaire affronte seul le contact.",
+      "need": "Construire le soutien : arriver avant l'adversaire, aupres du porteur."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en 7 contre 7 sur terrain reduit, matchs de deux fois 6 minutes. Chaque eleve joue au moins trois matchs et tient le role d'arbitre ou d'observateur sur au moins un match. Observation de la conservation du ballon, du soutien et du respect des regles de securite.",
+    "criteria": [
+      "Le porteur affronte le contact debout, tete relevee, sans se jeter au sol.",
+      "Le ballon est conserve puis libere rapidement apres le contact.",
+      "Les soutiens arrivent aupres du porteur avant l'adversaire.",
+      "L'equipe deplace la defense et exploite l'espace libre.",
+      "Les regles de securite sont respectees sans exception.",
+      "Le role d'arbitre ou d'observateur est tenu avec rigueur."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA4, avec la forme de pratique et les regles de securite retenues par l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Reprise et cadre de securite : le contact codifie",
+      "mainObjective": "Poser le cadre de securite non negociable et observer le comportement de chacun face au contact.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre et savoir enoncer les regles de securite du contact.",
+        "Retrouver la passe en arriere et l'avancee vers l'en-but.",
+        "Reperer ceux qui evitent le contact et ceux qui foncent tete baissee."
+      ],
+      "linkToPrevious": "Le cycle de 6e a construit l'evitement et le jeu en soutien avec un contact tres limite. On repart du cadre de securite avant d'aller plus loin.",
+      "prerequisiteForNext": "Chaque eleve sait enoncer les regles de securite et a experimente un contact codifie.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "boucliers de contact",
+            "fixed": 6,
+            "note": "si disponibles dans l'etablissement"
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          },
+          {
+            "label": "sifflets",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Inspecter le terrain avant la seance : trous, pierres, plots casses, bordures dures.",
+          "Verifier au moins 5 metres entre la zone de jeu et tout obstacle dur.",
+          "Afficher en grand les regles de securite du contact, aux deux extremites.",
+          "Lire le protocole de l'etablissement et verifier la forme de pratique retenue.",
+          "Verifier les PAI et les dispenses avant de constituer les groupes.",
+          "Constituer les groupes par gabarit : imperatif pour tout contact."
+        ],
+        "sketch": "Terrain reduit delimite au plot, 5 m de degagement de tout obstacle dur.\nZone d'ateliers de contact separee, sur la partie la plus reguliere du terrain.\nAffiches des regles de securite aux deux extremites.\nBallons regroupes hors de la zone de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement long et complet : la nuque, les epaules et les chaines posterieures doivent etre preparees avant tout contact, meme codifie.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de direction.",
+              "Deplacements lateraux, arriere, accelerations progressives.",
+              "Passes en marchant puis en trottinant."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions et rotations douces, jamais de cercles complets.",
+              "Epaules, hanches, chevilles.",
+              "Gainage ventral, dorsal et lateral, 20 secondes chacun.",
+              "Position de contact tenue : jambes flechies, dos plat, tete relevee."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Contacts progressifs",
+            "details": [
+              "A genoux : poussees epaule contre epaule, sans elan.",
+              "Debout : poussees mains contre mains, appuis solides.",
+              "Ceinturages a l'arret, sans deplacement."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Les regles du contact",
+          "objective": "Construire concretement la posture de contact sure et faire enoncer les interdits.",
+          "material": [
+            {
+              "label": "affiche des regles de securite",
+              "fixed": 2
+            },
+            {
+              "label": "boucliers de contact",
+              "fixed": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Par groupes de gabarit homogene. Trois ateliers : poussee a genoux epaule contre epaule, contact debout contre bouclier tenu, ceinturage sous les epaules a l'arret. Rotation toutes les 6 minutes.",
+          "studentGoal": "Prendre et donner un contact en gardant la tete relevee et le dos plat.",
+          "instructions": [
+            "Je garde toujours la tete relevee : jamais de contact tete baissee.",
+            "Je prends le contact avec l'epaule, jamais avec la tete ni le bras seul.",
+            "Je ceinture sous les epaules, jamais au-dessus.",
+            "Je garde mes jambes flechies et mon dos plat."
+          ],
+          "success": [
+            "Aucun contact pris tete baissee.",
+            "Les ceinturages se font tous sous les epaules.",
+            "Chaque eleve sait citer les trois interdits."
+          ],
+          "execution": [
+            "Jambes flechies, appuis larges, dos plat.",
+            "Tete relevee, regard vers l'avant, jamais vers le sol.",
+            "Epaule en avant, bras qui enveloppe."
+          ],
+          "watch": [
+            "Y a-t-il des contacts pris tete baissee ?",
+            "Les ceinturages restent-ils sous les epaules ?",
+            "Les gabarits sont-ils reellement homogenes ?",
+            "Certains evitent-ils tout contact ?"
+          ],
+          "errors": [
+            "Baisser la tete au moment du contact : risque cervical grave.",
+            "Ceinturer au-dessus des epaules ou au cou.",
+            "Prendre le contact bras tendu, sans epaule."
+          ],
+          "feedback": [
+            "Tete relevee : je dois voir tes yeux au moment du contact.",
+            "Sous les epaules, jamais plus haut.",
+            "Ton epaule d'abord, pas ton bras."
+          ],
+          "plus": [
+            "Ceinturage avec un pas d'elan.",
+            "Contact contre bouclier en mouvement lent."
+          ],
+          "minus": [
+            "Contacts a genoux uniquement.",
+            "Poussees mains contre mains sans ceinturage."
+          ],
+          "diff": {
+            "facilitee": "Contacts a genoux et poussees mains contre mains, sans ceinturage ni deplacement.",
+            "normale": "Trois ateliers : poussee a genoux, contact bouclier, ceinturage a l'arret.",
+            "complexifiee": "Ceinturage avec un pas d'elan, contact bouclier en mouvement lent."
+          },
+          "safety": [
+            "Regles non negociables, affichees et enoncees par les eleves avant chaque situation : tete toujours relevee, ceinturage sous les epaules, jamais de contact au-dessus des epaules ni au cou.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Groupes constitues par gabarit : aucun contact entre eleves de gabarits nettement differents.",
+            "Aucun eleve porteur d'une contre-indication ne participe aux situations de contact.",
+            "Terrain inspecte avant la seance : ni trou, ni pierre, ni plot casse.",
+            "5 metres de degagement entre la zone de contact et tout obstacle dur.",
+            "Progressivite obligatoire : a genoux, puis a l'arret, puis en mouvement, jamais l'inverse.",
+            "Arret immediat au signal, sans exception.",
+            "Bijoux et montres retires, lacets attaches, protege-dents si le protocole local le prevoit.",
+            "Le professeur supervise directement chaque atelier de contact."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Reprise du jeu : avancer et passer en arriere",
+          "objective": "Retrouver la logique du jeu : avancer vers l'en-but, transmettre en arriere.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Par vagues de cinq, sur un couloir marque. L'equipe traverse le terrain en se passant le ballon en arriere, sans opposition, puis avec deux defenseurs passifs.",
+          "studentGoal": "Traverser le terrain sans que le ballon tombe et sans passe en avant.",
+          "instructions": [
+            "Le ballon se passe toujours en arriere, jamais en avant.",
+            "J'avance vers l'en-but avant de passer, je ne passe pas de cote.",
+            "Je passe a hauteur de poitrine, devant mon partenaire.",
+            "Je cours pour recevoir, je ne m'arrete pas."
+          ],
+          "success": [
+            "La traversee se fait sans passe en avant.",
+            "Le ballon ne tombe pas plus d'une fois par traversee.",
+            "Les receveurs sont en mouvement."
+          ],
+          "execution": [
+            "Avancer d'abord, passer ensuite.",
+            "Passer devant le partenaire, a hauteur de poitrine.",
+            "Recevoir en courant, mains prets."
+          ],
+          "watch": [
+            "Les passes partent-elles en avant ?",
+            "Les joueurs avancent-ils avant de passer ?",
+            "Le ballon tombe-t-il souvent ?"
+          ],
+          "errors": [
+            "Passer lateralement sans avoir avance.",
+            "Passer derriere le partenaire, qui doit s'arreter.",
+            "Attendre le ballon a l'arret."
+          ],
+          "feedback": [
+            "Avance d'abord, tu passeras apres.",
+            "Devant lui, pas dans son dos.",
+            "Cours pour recevoir, ne t'arrete pas."
+          ],
+          "plus": [
+            "Deux defenseurs actifs au toucher.",
+            "Couloir retreci."
+          ],
+          "minus": [
+            "Sans defenseur, en marchant.",
+            "Couloir elargi."
+          ],
+          "diff": {
+            "facilitee": "Traversee en marchant, sans defenseur, couloir elargi.",
+            "normale": "Traversee en courant avec deux defenseurs passifs.",
+            "complexifiee": "Deux defenseurs actifs au toucher, couloir retreci."
+          },
+          "safety": [
+            "Aucun contact dans cette situation : defenseurs passifs ou au toucher a deux mains.",
+            "Couloirs delimites au plot, groupes espaces.",
+            "Ballons non utilises regroupes hors de la zone.",
+            "Terrain verifie avant la situation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match d'observation au contact codifie",
+          "objective": "Observer le comportement reel de chacun face au contact en situation de match.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "sifflets",
+              "fixed": 3
+            }
+          ],
+          "organization": "Matchs en 7 contre 7 sur terrain reduit, 6 minutes. Contact limite au ceinturage sous les epaules qui immobilise le porteur : celui-ci doit alors passer ou poser le ballon. Le professeur arbitre.",
+          "studentGoal": "Jouer un match en respectant strictement les regles du contact.",
+          "instructions": [
+            "Le ceinturage se fait sous les epaules, jamais plus haut.",
+            "Porteur ceinture et immobilise : je passe ou je pose le ballon.",
+            "Tete relevee au contact, toujours.",
+            "Toute faute de securite arrete le jeu immediatement."
+          ],
+          "success": [
+            "Aucune faute de securite au cours du match.",
+            "Les porteurs ceintures liberent le ballon.",
+            "Le match se joue sans interruption pour blessure."
+          ],
+          "execution": [
+            "Affronter debout, jambes flechies.",
+            "Ceinturer sous les epaules, en enveloppant.",
+            "Liberer le ballon des l'immobilisation."
+          ],
+          "watch": [
+            "Qui evite systematiquement le contact ?",
+            "Qui fonce tete baissee ?",
+            "Qui garde le ballon au sol ?",
+            "Les soutiens arrivent-ils ?"
+          ],
+          "errors": [
+            "Se jeter au sol des qu'un adversaire approche.",
+            "Foncer tete baissee.",
+            "Rester couche sur le ballon."
+          ],
+          "feedback": [
+            "Reste debout, tu es plus fort sur tes appuis.",
+            "Tete relevee : sinon j'arrete le jeu.",
+            "Ballon libere tout de suite : tu bloques le jeu."
+          ],
+          "plus": [
+            "Matchs de 8 minutes.",
+            "Ceinturage avec deplacement autorise."
+          ],
+          "minus": [
+            "Jeu au toucher a deux mains.",
+            "Matchs de 4 minutes."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, sans aucun contact, matchs de 4 minutes.",
+            "normale": "Contact limite au ceinturage immobilisant, matchs de 6 minutes.",
+            "complexifiee": "Ceinturage avec deplacement autorise, matchs de 8 minutes."
+          },
+          "safety": [
+            "Ceinturage sous les epaules uniquement : tout contact au-dessus des epaules arrete immediatement le jeu.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere sur un joueur qui ne voit pas venir.",
+            "Le porteur ceinture et immobilise libere le ballon : aucun joueur ne reste au sol sur le ballon.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Equipes constituees par gabarit.",
+            "Arret immediat du jeu au coup de sifflet, sans exception.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Le professeur arbitre lui-meme cette premiere seance de match."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont les trois interdits absolus du contact ?",
+          "Que doit faire un porteur ceinture et immobilise ?"
+        ],
+        "key": "Tete relevee, ceinturage sous les epaules, jamais de contact au-dessus des epaules : ces trois regles ne se negocient a aucun moment du cycle. Et un porteur immobilise libere immediatement le ballon."
+      },
+      "socialRoles": [
+        "Arbitre assistant : signale les fautes de securite au professeur.",
+        "Observateur : note les comportements face au contact.",
+        "Responsable materiel : verifie le terrain et les plots entre les matchs."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Affronter debout : le porteur qui reste sur ses appuis",
+      "mainObjective": "Construire un porteur qui affronte le contact debout, sur ses appuis, au lieu de le subir ou de l'eviter.",
+      "secondaryObjectives": [
+        "Adopter une position de contact solide : jambes flechies, epaule en avant.",
+        "Continuer a avancer apres le premier contact.",
+        "Proteger le ballon du cote oppose a l'adversaire."
+      ],
+      "linkToPrevious": "Le cadre de securite est pose. On construit maintenant ce qui protege reellement le joueur : une posture solide au contact.",
+      "prerequisiteForNext": "Chaque eleve affronte un contact debout sans se jeter au sol ni baisser la tete.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "boucliers de contact",
+            "fixed": 8
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Inspecter le terrain et choisir la zone la plus reguliere pour les ateliers de contact.",
+          "Verifier l'etat des boucliers : aucune mousse tassee ou dechiree.",
+          "Reconstituer les groupes par gabarit.",
+          "Rappeler et faire enoncer les regles de securite.",
+          "Verifier 5 metres de degagement de tout obstacle dur."
+        ],
+        "sketch": "Zone d'ateliers de contact sur la partie la plus reguliere du terrain.\nCouloirs marques au plot, groupes de gabarit homogene.\nBoucliers repartis par atelier.\nAffiches des regles de securite visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec renforcement du gainage et preparation de la nuque, indispensables avant tout travail de contact.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction, accelerations.",
+              "Passes en mouvement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions et rotations douces.",
+              "Epaules, hanches, chevilles.",
+              "Gainage complet, 20 secondes par position.",
+              "Position de contact tenue 15 secondes, 3 fois."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Contacts progressifs",
+            "details": [
+              "Poussees a genoux epaule contre epaule.",
+              "Poussees debout mains contre mains.",
+              "Contacts contre bouclier a l'arret, sans elan."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Rester debout au contact",
+          "objective": "Construire la posture qui permet d'absorber le contact sans tomber ni reculer.",
+          "material": [
+            {
+              "label": "boucliers de contact",
+              "fixed": 8
+            },
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            }
+          ],
+          "organization": "Par trois de gabarit homogene : un porteur avec ballon, un tenant un bouclier, un observateur. Le porteur avance sur trois metres et prend le contact contre le bouclier, en restant debout et en continuant a pousser trois secondes. Dix repetitions puis rotation.",
+          "studentGoal": "Prendre le contact debout et continuer a avancer trois secondes.",
+          "instructions": [
+            "Je flechis mes jambes deux pas avant le contact.",
+            "Je prends le contact avec l'epaule, tete relevee sur le cote.",
+            "Je continue a pousser avec mes jambes trois secondes.",
+            "Je garde le ballon du cote oppose au contact."
+          ],
+          "success": [
+            "Huit contacts sur dix pris debout, sans tomber.",
+            "La tete reste relevee a chaque contact.",
+            "Le porteur avance encore apres le contact."
+          ],
+          "execution": [
+            "Jambes flechies avant le contact, appuis larges.",
+            "Epaule en avant, tete sur le cote et relevee.",
+            "Poussee continue des jambes apres l'impact."
+          ],
+          "watch": [
+            "Les tetes restent-elles relevees ?",
+            "Les porteurs flechissent-ils avant le contact ?",
+            "Se jettent-ils au sol des l'impact ?",
+            "L'elan est-il raisonnable ?"
+          ],
+          "errors": [
+            "Baisser la tete au moment de l'impact : risque cervical grave.",
+            "Arriver jambes tendues et rebondir.",
+            "Se laisser tomber immediatement au sol."
+          ],
+          "feedback": [
+            "Tete relevee et sur le cote : je dois voir ton visage.",
+            "Flechis avant, pas pendant.",
+            "Continue a pousser : tu abandonnes trop tot."
+          ],
+          "plus": [
+            "Bouclier qui avance lentement vers le porteur.",
+            "Deux boucliers successifs."
+          ],
+          "minus": [
+            "Contact a l'arret, sans course d'elan.",
+            "Bouclier tenu par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Contact a l'arret sans elan, bouclier tenu fermement par le professeur.",
+            "normale": "Course de trois metres, contact debout, poussee de trois secondes.",
+            "complexifiee": "Bouclier avancant lentement, ou deux boucliers successifs."
+          },
+          "safety": [
+            "Tete relevee et placee sur le cote au moment du contact : arret immediat de la situation pour tout eleve qui baisse la tete.",
+            "Course d'elan limitee a trois metres : aucun contact lance a pleine vitesse.",
+            "Le tenant de bouclier reste sur ses appuis, jambes flechies, et ne charge jamais.",
+            "Boucliers verifies : aucune mousse tassee ou dechiree.",
+            "Groupes de gabarit homogene, sans exception.",
+            "Zone de contact sur la partie la plus reguliere du terrain, degagee de tout obstacle.",
+            "Aucun eleve porteur d'une contre-indication ne participe.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Proteger le ballon",
+          "objective": "Construire le placement du ballon du cote oppose au contact, condition de la conservation.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "boucliers de contact",
+              "fixed": 8
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Par deux de gabarit homogene. Le porteur avance, un defenseur approche par un cote annonce. Le porteur doit placer le ballon du cote oppose avant le contact. Dix repetitions par cote, puis inversion.",
+          "studentGoal": "Avoir le ballon du cote oppose a l'adversaire au moment du contact.",
+          "instructions": [
+            "Je regarde de quel cote arrive l'adversaire.",
+            "Je place le ballon de l'autre cote, contre mon corps.",
+            "Je presente l'epaule du cote de l'adversaire.",
+            "Je garde mes deux mains sur le ballon."
+          ],
+          "success": [
+            "Le ballon est du cote oppose dans huit cas sur dix.",
+            "Aucun ballon perdu au contact.",
+            "L'epaule presentee est la bonne."
+          ],
+          "execution": [
+            "Regarder l'adversaire avant le contact.",
+            "Transferer le ballon en courant, sans le lever.",
+            "Serrer le ballon contre le corps, deux mains."
+          ],
+          "watch": [
+            "Le ballon change-t-il de cote ?",
+            "Les eleves regardent-ils l'adversaire arriver ?",
+            "Le ballon est-il tenu a une main ?"
+          ],
+          "errors": [
+            "Garder le ballon du cote de l'adversaire : ballon perdu.",
+            "Tenir le ballon a une main, loin du corps.",
+            "Lever le ballon en le transferant, ce qui le rend saisissable."
+          ],
+          "feedback": [
+            "Il arrive a droite : ton ballon passe a gauche.",
+            "Deux mains, contre ton corps.",
+            "Ne le leve pas, passe-le devant toi."
+          ],
+          "plus": [
+            "Cote d'arrivee non annonce.",
+            "Deux defenseurs successifs."
+          ],
+          "minus": [
+            "Cote annonce et defenseur en marchant.",
+            "Sans contact, au toucher."
+          ],
+          "diff": {
+            "facilitee": "Defenseur au toucher a deux mains, en marchant, cote annonce a l'avance.",
+            "normale": "Defenseur au ceinturage, cote annonce avant l'action.",
+            "complexifiee": "Cote non annonce, deux defenseurs successifs."
+          },
+          "safety": [
+            "Ceinturage sous les epaules uniquement.",
+            "Defenseur approchant en trottinant, jamais en sprint.",
+            "Groupes de gabarit homogene.",
+            "Aucun contact par-derriere : le defenseur arrive toujours dans le champ de vision du porteur.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec bonus avancee",
+          "objective": "Reinvestir l'affrontement debout en match, avec un bareme qui valorise l'avancee apres contact.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            }
+          ],
+          "organization": "Matchs en 7 contre 7, 6 minutes. Regle amenagee : un point bonus chaque fois qu'un porteur ceinture avance encore d'un metre avant de liberer le ballon.",
+          "studentGoal": "Avancer encore apres avoir ete ceinture.",
+          "instructions": [
+            "Ceinture, je continue a pousser avant de liberer.",
+            "Je reste debout, tete relevee.",
+            "Je place le ballon du cote oppose avant le contact.",
+            "Toute faute de securite arrete le jeu."
+          ],
+          "success": [
+            "Des avancees apres contact sont comptabilisees.",
+            "Aucune faute de securite.",
+            "Les porteurs restent debout."
+          ],
+          "execution": [
+            "Flechir avant le contact.",
+            "Pousser avec les jambes apres l'impact.",
+            "Liberer le ballon une fois immobilise."
+          ],
+          "watch": [
+            "Les porteurs restent-ils debout en match ?",
+            "Les tetes restent-elles relevees sous pression ?",
+            "Les ballons sont-ils proteges ?"
+          ],
+          "errors": [
+            "Se jeter au sol des le contact.",
+            "Baisser la tete quand le rythme monte.",
+            "Garder le ballon du mauvais cote."
+          ],
+          "feedback": [
+            "Reste debout : tu abandonnes ton avancee.",
+            "Tete relevee, sinon j'arrete.",
+            "Ton ballon du cote oppose."
+          ],
+          "plus": [
+            "Matchs de 8 minutes.",
+            "Deux points bonus pour deux metres gagnes."
+          ],
+          "minus": [
+            "Jeu au toucher a deux mains.",
+            "Matchs de 4 minutes."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, matchs de 4 minutes, terrain elargi.",
+            "normale": "Matchs de 6 minutes avec bonus avancee apres ceinturage.",
+            "complexifiee": "Matchs de 8 minutes avec bonus double pour deux metres gagnes."
+          },
+          "safety": [
+            "Ceinturage sous les epaules uniquement, arret immediat sinon.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Le porteur immobilise libere le ballon sans delai.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Equipes constituees par gabarit.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat au coup de sifflet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi vaut-il mieux affronter le contact debout que se jeter au sol ?",
+          "De quel cote doit se trouver le ballon au moment du contact ?"
+        ],
+        "key": "Debout et flechi, on absorbe le contact et on avance encore. Au sol, on subit et on bloque le jeu. Et le ballon se place toujours du cote oppose a l'adversaire."
+      },
+      "socialRoles": [
+        "Tenant de bouclier : stabilise le bouclier sans charger.",
+        "Observateur : verifie la position de la tete a chaque contact.",
+        "Arbitre assistant : signale les fautes de securite."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Conserver et liberer : le ballon disponible apres contact",
+      "mainObjective": "Construire la conservation du ballon apres contact : le porteur qui tombe libere immediatement un ballon jouable.",
+      "secondaryObjectives": [
+        "Tomber en securite en protegeant le ballon.",
+        "Orienter le ballon vers ses partenaires en le liberant.",
+        "Se relever immediatement apres la liberation."
+      ],
+      "linkToPrevious": "Le porteur reste debout plus longtemps, mais il finit par etre immobilise. C'est ce moment qui decide de la conservation du ballon.",
+      "prerequisiteForNext": "Chaque eleve libere un ballon jouable apres contact et se releve aussitot.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "boucliers de contact",
+            "fixed": 8
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 4,
+            "note": "si la seance se deroule en salle ou sur sol dur"
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Choisir la zone de terrain la plus souple pour les chutes.",
+          "Si la seance se deroule sur sol dur, installer des tapis pour les ateliers de chute.",
+          "Inspecter le terrain : aucun caillou ni objet dur dans la zone de chute.",
+          "Reconstituer les groupes par gabarit.",
+          "Rappeler et faire enoncer les regles de securite."
+        ],
+        "sketch": "Zone de chute sur la partie la plus souple du terrain, ou tapis si sol dur.\nCouloirs marques au plot pour les ateliers.\nGroupes de gabarit homogene, espaces.\nAffiches des regles de securite visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec preparation specifique des appuis manuels et du gainage : les chutes controlees sollicitent poignets, epaules et tronc.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, changements de direction.",
+              "Deplacements au sol : quadrupedie, rampes, releves."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, poignets, hanches, chevilles.",
+              "Gainage complet, 20 secondes par position.",
+              "Passages debout-sol-debout, 10 repetitions."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Chutes progressives",
+            "details": [
+              "Depuis la position accroupie : rouler sur le cote, 5 fois.",
+              "Depuis la position a genoux : chute laterale amortie, 5 fois.",
+              "Depuis debout, tres lentement : chute laterale amortie, 5 fois."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Tomber, liberer, se relever",
+          "objective": "Construire l'enchainement complet apres contact : chute controlee, liberation orientee, releve immediat.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "boucliers de contact",
+              "fixed": 8
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 4
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            }
+          ],
+          "organization": "Par trois de gabarit homogene. Le porteur prend un contact contre bouclier, puis tombe volontairement sur le cote, oriente le ballon vers l'arriere et se releve. Un partenaire ramasse le ballon. Dix repetitions puis rotation.",
+          "studentGoal": "Tomber sur le cote, poser le ballon vers mes partenaires, et me relever tout de suite.",
+          "instructions": [
+            "Je tombe sur le cote, jamais sur le ventre ni sur le dos.",
+            "J'amortis avec l'epaule et la hanche, pas avec le coude ni le poignet.",
+            "Je pose le ballon a deux mains vers mes partenaires, bras tendus.",
+            "Je me releve immediatement, je ne reste pas au sol."
+          ],
+          "success": [
+            "Huit chutes sur dix se font sur le cote.",
+            "Le ballon est pose oriente vers les partenaires.",
+            "Le releve est immediat, sans temps mort."
+          ],
+          "execution": [
+            "Chute laterale, epaule et hanche au sol.",
+            "Ballon presente a deux mains, bras tendus vers l'arriere.",
+            "Releve par appui sur le cote oppose au ballon."
+          ],
+          "watch": [
+            "Les chutes se font-elles sur le cote ?",
+            "Le ballon est-il pose ou garde sous le corps ?",
+            "Le releve est-il immediat ?",
+            "Y a-t-il des receptions sur le poignet tendu ?"
+          ],
+          "errors": [
+            "Tomber sur le ventre en gardant le ballon dessous.",
+            "Amortir avec le poignet tendu : fracture frequente.",
+            "Rester au sol apres la liberation."
+          ],
+          "feedback": [
+            "Sur le cote, pas a plat ventre.",
+            "Ne tends pas ton bras : c'est l'epaule qui amortit.",
+            "Pose et releve-toi : tu bloques le jeu."
+          ],
+          "plus": [
+            "Chute apres contact avec un partenaire au ceinturage.",
+            "Liberation avec un soutien qui recupere en mouvement."
+          ],
+          "minus": [
+            "Chute depuis la position a genoux.",
+            "Sans contact prealable."
+          ],
+          "diff": {
+            "facilitee": "Chute depuis la position a genoux, sans contact prealable, sur tapis.",
+            "normale": "Contact contre bouclier, chute laterale, liberation orientee, releve.",
+            "complexifiee": "Contact au ceinturage avec un partenaire, liberation vers un soutien en mouvement."
+          },
+          "safety": [
+            "Chute laterale obligatoire : jamais sur le ventre en gardant le ballon sous soi, jamais sur le dos.",
+            "Amortissement par l'epaule et la hanche : jamais de reception sur le poignet ou le coude tendu.",
+            "Progressivite obligatoire : accroupi, puis a genoux, puis debout lentement.",
+            "Zone de chute sur sol souple, ou sur tapis si le sol est dur : verifier l'absence de cailloux.",
+            "Aucun joueur ne plonge sur un joueur au sol : la liberation se fait sans opposition dans cet atelier.",
+            "Le porteur au sol se releve immediatement : personne ne reste au sol.",
+            "Groupes de gabarit homogene.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le ballon disponible en une seconde",
+          "objective": "Reduire le delai entre la mise au sol et la disponibilite du ballon pour les partenaires.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Par quatre : un porteur, un ceintureur, deux soutiens. Le porteur est mis au sol, un soutien chronometre le delai avant que le ballon soit jouable. Objectif : moins de deux secondes. Dix repetitions puis rotation.",
+          "studentGoal": "Rendre le ballon jouable en moins de deux secondes apres ma chute.",
+          "instructions": [
+            "Des que je touche le sol, je pose le ballon vers mes partenaires.",
+            "Je ne cherche pas a me retourner d'abord : je pose, puis je bouge.",
+            "Soutien : tu ramasses le ballon des qu'il est pose.",
+            "Chronometreur : tu comptes a voix haute."
+          ],
+          "success": [
+            "Huit liberations sur dix se font en moins de deux secondes.",
+            "Le ballon est toujours oriente vers les partenaires.",
+            "Le porteur se releve apres avoir pose."
+          ],
+          "execution": [
+            "Poser des le contact avec le sol, sans delai.",
+            "Bras tendus vers l'arriere, ballon a deux mains.",
+            "Se relever en degageant la zone."
+          ],
+          "watch": [
+            "Le delai se reduit-il ?",
+            "Le ballon est-il oriente vers les partenaires ou perdu ?",
+            "Les porteurs restent-ils couches ?"
+          ],
+          "errors": [
+            "Se retourner d'abord et poser ensuite : trop lent.",
+            "Poser le ballon sur le cote adverse.",
+            "Rester couche apres la pose."
+          ],
+          "feedback": [
+            "Pose d'abord, tu bougeras apres.",
+            "Vers tes partenaires, pas vers eux.",
+            "Debout : tu genes tes propres soutiens."
+          ],
+          "plus": [
+            "Un adversaire qui conteste le ballon apres la pose.",
+            "Objectif d'une seconde."
+          ],
+          "minus": [
+            "Mise au sol volontaire sans ceinturage.",
+            "Objectif de trois secondes."
+          ],
+          "diff": {
+            "facilitee": "Mise au sol volontaire sans ceinturage, objectif de trois secondes.",
+            "normale": "Ceinturage et mise au sol, liberation en moins de deux secondes.",
+            "complexifiee": "Un adversaire conteste le ballon apres la pose, objectif d'une seconde."
+          },
+          "safety": [
+            "Ceinturage sous les epaules, accompagnement au sol, jamais de projection.",
+            "Aucun joueur ne plonge sur le porteur au sol : le ballon se ramasse debout.",
+            "Le porteur se releve immediatement apres avoir pose.",
+            "Aucun contact sur un joueur deja au sol.",
+            "Groupes de gabarit homogene.",
+            "Zone de chute sur sol souple, verifiee.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec conservation valorisee",
+          "objective": "Reinvestir la conservation en match : compter les ballons conserves apres contact.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            }
+          ],
+          "organization": "Matchs en 7 contre 7, 6 minutes. Un observateur compte les contacts suivis d'une conservation du ballon par l'equipe. Un point bonus par tranche de trois conservations.",
+          "studentGoal": "Garder le ballon dans mon equipe apres chaque contact.",
+          "instructions": [
+            "Apres contact, je pose le ballon vers mes partenaires et je me releve.",
+            "Les soutiens ramassent debout, jamais en plongeant.",
+            "Observateur : tu comptes les ballons conserves apres contact.",
+            "Toute faute de securite arrete le jeu."
+          ],
+          "success": [
+            "La majorite des contacts se soldent par une conservation.",
+            "Aucun joueur ne reste au sol sur le ballon.",
+            "Aucune faute de securite."
+          ],
+          "execution": [
+            "Poser des la mise au sol.",
+            "Se relever immediatement.",
+            "Ramasser debout, en avancant."
+          ],
+          "watch": [
+            "Les ballons sont-ils conserves ou perdus ?",
+            "Les joueurs restent-ils au sol ?",
+            "Les soutiens plongent-ils sur le ballon ?"
+          ],
+          "errors": [
+            "Rester couche sur le ballon : jeu bloque.",
+            "Plonger sur le ballon au sol.",
+            "Poser le ballon vers l'adversaire."
+          ],
+          "feedback": [
+            "Pose et leve-toi : tu bloques ton equipe.",
+            "On ramasse debout, jamais en plongeant.",
+            "Vers les tiens, pas vers eux."
+          ],
+          "plus": [
+            "Matchs de 8 minutes.",
+            "Bonus double pour cinq conservations consecutives."
+          ],
+          "minus": [
+            "Jeu au toucher a deux mains.",
+            "Matchs de 4 minutes."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains avec pose du ballon au sol, matchs de 4 minutes.",
+            "normale": "Matchs de 6 minutes avec comptage des conservations apres contact.",
+            "complexifiee": "Matchs de 8 minutes avec bonus double sur conservations consecutives."
+          },
+          "safety": [
+            "Aucun joueur ne plonge sur un joueur au sol ni sur un ballon au sol : le ramassage se fait debout.",
+            "Le porteur au sol libere immediatement et se releve : personne ne reste au sol.",
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Equipes constituees par gabarit.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat au coup de sifflet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que doit faire un porteur des qu'il touche le sol ?",
+          "Comment recupere-t-on un ballon au sol sans danger ?"
+        ],
+        "key": "Au sol, on pose le ballon vers ses partenaires et on se releve : rester couche sur le ballon bloque le jeu et met en danger. Et on ramasse toujours debout, jamais en plongeant."
+      },
+      "socialRoles": [
+        "Chronometreur : compte le delai de liberation du ballon.",
+        "Observateur : compte les ballons conserves apres contact.",
+        "Arbitre assistant : signale les joueurs qui restent au sol."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Le soutien : arriver avant l'adversaire",
+      "mainObjective": "Construire le soutien : des partenaires qui arrivent aupres du porteur avant les adversaires.",
+      "secondaryObjectives": [
+        "Suivre le porteur au lieu de rester ecarte.",
+        "Se placer de part et d'autre du porteur.",
+        "Recuperer le ballon en avancant."
+      ],
+      "linkToPrevious": "Le ballon est libere proprement, mais souvent personne n'est la pour le recuperer : la conservation depend du soutien.",
+      "prerequisiteForNext": "Chaque equipe amene deux soutiens sur le porteur avant l'arrivee des adversaires.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "boucliers de contact",
+            "fixed": 8
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "sifflets",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Marquer des couloirs et des zones de contact au plot.",
+          "Inspecter le terrain et choisir les zones les plus regulieres.",
+          "Reconstituer les groupes par gabarit.",
+          "Rappeler et faire enoncer les regles de securite.",
+          "Verifier 5 metres de degagement de tout obstacle dur."
+        ],
+        "sketch": "Couloirs de 15 m marques au plot, zone de contact au milieu.\nGroupes de gabarit homogene, espaces.\nBallons regroupes hors des couloirs.\nAffiches des regles de securite visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec accent sur les demarrages et les changements de direction, sur lesquels repose la vitesse d'arrivee des soutiens.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, accelerations progressives sur 10 metres.",
+              "Changements de direction sur signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, chevilles.",
+              "Gainage complet.",
+              "Position de contact tenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Rappel contact et liberation",
+            "details": [
+              "Cinq contacts contre bouclier, debout.",
+              "Cinq chutes laterales avec liberation orientee.",
+              "Cinq ramassages debout en avancant."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Deux soutiens avant l'adversaire",
+          "objective": "Construire l'arrivee rapide et bien placee de deux soutiens sur le porteur mis au sol.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "boucliers de contact",
+              "fixed": 8
+            }
+          ],
+          "organization": "Cinq attaquants contre trois defenseurs sur un couloir. Le porteur est ceinture au milieu du couloir. Les soutiens doivent arriver a deux avant que les defenseurs ne contestent. Dix repetitions puis rotation.",
+          "studentGoal": "Arriver a deux aupres de mon porteur avant les adversaires.",
+          "instructions": [
+            "Je suis mon porteur, je ne reste pas ecarte.",
+            "J'arrive de part et d'autre de lui, jamais tous du meme cote.",
+            "J'arrive debout, jambes flechies, et je ramasse en avancant.",
+            "Je ne plonge jamais sur le ballon ni sur un joueur au sol."
+          ],
+          "success": [
+            "Deux soutiens arrivent avant les defenseurs dans huit cas sur dix.",
+            "Les soutiens se placent de part et d'autre.",
+            "Le ballon repart en avancant."
+          ],
+          "execution": [
+            "Suivre le porteur a deux metres, prets a intervenir.",
+            "Arriver debout, jambes flechies.",
+            "Ramasser en avancant, jamais a l'arret."
+          ],
+          "watch": [
+            "Les soutiens suivent-ils ou restent-ils ecartes ?",
+            "Arrivent-ils tous du meme cote ?",
+            "Plongent-ils sur le ballon ?"
+          ],
+          "errors": [
+            "Rester ecarte en attendant la passe.",
+            "Arriver tous du meme cote, laissant l'autre libre.",
+            "Plonger sur le ballon au sol."
+          ],
+          "feedback": [
+            "Suis-le : il ne peut pas gagner seul.",
+            "Un de chaque cote, pas tous a gauche.",
+            "Debout, en avancant : on ne plonge jamais."
+          ],
+          "plus": [
+            "Quatre defenseurs.",
+            "Deux contacts successifs dans la meme action."
+          ],
+          "minus": [
+            "Deux defenseurs passifs.",
+            "Contact au toucher."
+          ],
+          "diff": {
+            "facilitee": "Deux defenseurs passifs, contact au toucher a deux mains, couloir elargi.",
+            "normale": "Cinq contre trois, ceinturage au milieu du couloir, deux soutiens exiges.",
+            "complexifiee": "Quatre defenseurs, deux contacts successifs dans la meme action."
+          },
+          "safety": [
+            "Aucun soutien ne plonge sur le ballon ni sur un joueur au sol : le ramassage se fait debout.",
+            "Aucun contact entre soutiens et defenseurs au-dessus des epaules.",
+            "Le porteur au sol libere et se releve immediatement.",
+            "Ceinturage sous les epaules uniquement.",
+            "Groupes de gabarit homogene.",
+            "Zone de contact sur la partie la plus reguliere du terrain.",
+            "Arret immediat au coup de sifflet.",
+            "Le professeur supervise directement cette situation."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Suivre le porteur",
+          "objective": "Construire l'habitude de suivre le porteur au lieu d'attendre a distance.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Par trois : un porteur, deux soutiens. Le porteur traverse le couloir en changeant de direction librement, les soutiens doivent rester a moins de trois metres, un de chaque cote. Le professeur arrete l'action pour verifier les distances.",
+          "studentGoal": "Rester a moins de trois metres de mon porteur, quel que soit son parcours.",
+          "instructions": [
+            "Je reste a moins de trois metres du porteur.",
+            "Je me place legerement en arriere, jamais devant lui.",
+            "Un soutien a droite, un a gauche.",
+            "Sur arret du professeur, je m'immobilise pour verifier ma distance."
+          ],
+          "success": [
+            "Les deux soutiens sont a moins de trois metres a chaque arret.",
+            "Ils sont repartis de part et d'autre.",
+            "Aucun soutien ne se trouve devant le porteur."
+          ],
+          "execution": [
+            "Suivre le porteur, legerement en arriere.",
+            "Anticiper ses changements de direction.",
+            "Se repartir sans se concerter a voix haute."
+          ],
+          "watch": [
+            "Les distances sont-elles tenues ?",
+            "Les soutiens se retrouvent-ils du meme cote ?",
+            "Passent-ils devant le porteur, en position de hors-jeu ?"
+          ],
+          "errors": [
+            "Rester loin en attendant la passe.",
+            "Se placer devant le porteur.",
+            "Suivre tous les deux du meme cote."
+          ],
+          "feedback": [
+            "Trois metres maximum : la tu es hors du coup.",
+            "Derriere lui, jamais devant.",
+            "Separez-vous : un de chaque cote."
+          ],
+          "plus": [
+            "Porteur qui accelere et change vite de direction.",
+            "Trois soutiens a repartir."
+          ],
+          "minus": [
+            "Porteur qui trottine en ligne droite.",
+            "Distance portee a cinq metres."
+          ],
+          "diff": {
+            "facilitee": "Porteur trottinant en ligne droite, distance portee a cinq metres.",
+            "normale": "Porteur changeant de direction, deux soutiens a moins de trois metres.",
+            "complexifiee": "Porteur rapide avec changements brusques, trois soutiens a repartir."
+          },
+          "safety": [
+            "Aucun contact dans cette situation : uniquement du placement et de la course.",
+            "Couloirs delimites, groupes espaces pour eviter les collisions entre groupes.",
+            "Arret immediat au signal du professeur.",
+            "Terrain verifie avant la situation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec soutien exige",
+          "objective": "Reinvestir le soutien en match, avec une regle qui le rend indispensable.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Matchs en 7 contre 7, 6 minutes. Regle amenagee : le ballon libere apres contact n'est jouable que si deux partenaires sont arrives aupres du porteur ; sinon l'adversaire recupere.",
+          "studentGoal": "Amener deux soutiens sur chaque contact de mon equipe.",
+          "instructions": [
+            "Des qu'un partenaire est ceinture, je viens a lui.",
+            "Il faut deux soutiens pour que le ballon soit jouable.",
+            "J'arrive debout, de son cote libre, et je ramasse en avancant.",
+            "Toute faute de securite arrete le jeu."
+          ],
+          "success": [
+            "Deux soutiens arrivent sur la majorite des contacts.",
+            "Les ballons sont conserves.",
+            "Aucune faute de securite."
+          ],
+          "execution": [
+            "Suivre le porteur en permanence.",
+            "Arriver debout, de part et d'autre.",
+            "Repartir en avancant."
+          ],
+          "watch": [
+            "Les soutiens arrivent-ils en match ?",
+            "Restent-ils ecartes en attendant la passe ?",
+            "Le ballon est-il conserve ?"
+          ],
+          "errors": [
+            "Rester ecarte en attendant.",
+            "Arriver seul, sans le second soutien.",
+            "Plonger sur le ballon."
+          ],
+          "feedback": [
+            "Il est seul : viens l'aider.",
+            "A deux, sinon vous perdez le ballon.",
+            "Debout, on ne plonge jamais."
+          ],
+          "plus": [
+            "Trois soutiens exiges.",
+            "Matchs de 8 minutes."
+          ],
+          "minus": [
+            "Un seul soutien exige.",
+            "Jeu au toucher a deux mains."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, un seul soutien exige, matchs de 4 minutes.",
+            "normale": "Matchs de 6 minutes avec deux soutiens exiges pour rendre le ballon jouable.",
+            "complexifiee": "Trois soutiens exiges, matchs de 8 minutes."
+          },
+          "safety": [
+            "Aucun joueur ne plonge sur un joueur au sol ni sur un ballon au sol.",
+            "Le porteur au sol libere et se releve immediatement.",
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Equipes constituees par gabarit.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat au coup de sifflet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou doivent se placer les deux soutiens par rapport au porteur ?",
+          "Pourquoi un porteur seul perd-il presque toujours le ballon ?"
+        ],
+        "key": "Un porteur seul finit toujours par perdre le ballon. La conservation, c'est deux soutiens qui arrivent debout, de part et d'autre, avant les adversaires."
+      },
+      "socialRoles": [
+        "Observateur : compte les contacts avec deux soutiens arrives a temps.",
+        "Arbitre assistant : signale les joueurs qui plongent ou restent au sol.",
+        "Capitaine : rappelle a son equipe de suivre le porteur."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Match evalue de mi-cycle et projet de jeu",
+      "mainObjective": "Situer chaque equipe dans sa conservation du ballon et lui faire choisir un projet de jeu.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Mesurer la proportion de contacts suivis d'une conservation.",
+        "Choisir un projet de jeu collectif.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Contact, liberation et soutien ont ete construits separement : le match evalue montre ce qui en reste en situation reelle.",
+      "prerequisiteForNext": "Chaque equipe a un projet de jeu et chaque eleve un objectif personnel.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet par equipe",
+            "fixed": 4
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "sifflets",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de projet par equipe.",
+          "Inspecter le terrain et verifier les degagements.",
+          "Prevoir un espace pour l'ecriture, hors de la zone de jeu.",
+          "Reconstituer les equipes par gabarit equilibre."
+        ],
+        "sketch": "Terrain reduit delimite au plot, ordre des matchs affiche.\nAffichage des criteres a l'entree.\nZone d'ecriture avec bancs, hors du terrain.\nBallons regroupes hors de la zone de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et la seance comporte des contacts evalues.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque equipe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, chevilles.",
+              "Gainage complet.",
+              "Position de contact tenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Rappel contact et soutien",
+            "details": [
+              "Cinq contacts contre bouclier ou entre partenaires, debout.",
+              "Cinq liberations orientees avec releve.",
+              "Trois courses de soutien a deux."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Matchs evalues avec observation chiffree",
+          "objective": "Mesurer objectivement la conservation du ballon et la qualite du soutien.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            }
+          ],
+          "organization": "Matchs en 7 contre 7 de 6 minutes, une equipe observe. Les observateurs notent : nombre de contacts, nombre de conservations, nombre de contacts avec deux soutiens arrives a temps.",
+          "studentGoal": "Jouer un match complet et connaitre le nombre de ballons conserves par mon equipe.",
+          "instructions": [
+            "On joue le match avec les regles habituelles.",
+            "Observateurs : contacts, conservations, soutiens arrives a temps.",
+            "On tourne apres chaque match.",
+            "Chacun garde sa fiche pour la seance 8."
+          ],
+          "success": [
+            "Chaque equipe a joue au moins deux matchs.",
+            "Les fiches sont renseignees.",
+            "Chaque equipe connait sa proportion de conservations."
+          ],
+          "execution": [
+            "Affronter debout, tete relevee.",
+            "Liberer immediatement au sol.",
+            "Suivre le porteur en permanence."
+          ],
+          "watch": [
+            "La conservation tient-elle sous evaluation ?",
+            "Les soutiens arrivent-ils encore ?",
+            "Les regles de securite sont-elles respectees ?",
+            "Les observateurs notent-ils honnetement ?"
+          ],
+          "errors": [
+            "Revenir a un jeu individuel sous la pression.",
+            "Rester au sol sur le ballon.",
+            "Observation approximative."
+          ],
+          "feedback": [
+            "Il est seul : tes soutiens ou sont-ils ?",
+            "Pose et releve-toi.",
+            "Note ce que tu vois, pas ce qui arrange."
+          ],
+          "plus": [
+            "Matchs de 8 minutes.",
+            "Observation du nombre de temps de jeu enchaines."
+          ],
+          "minus": [
+            "Matchs de 4 minutes.",
+            "Jeu au toucher a deux mains."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, matchs de 4 minutes, terrain elargi.",
+            "normale": "Matchs de 6 minutes avec observation chiffree complete.",
+            "complexifiee": "Matchs de 8 minutes avec observation des temps de jeu enchaines."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les matchs evalues.",
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Le porteur au sol libere et se releve immediatement.",
+            "Equipes constituees par gabarit equilibre.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat au coup de sifflet."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Choisir un projet de jeu",
+          "objective": "Faire choisir a chaque equipe une organisation collective a stabiliser pour la fin du cycle.",
+          "material": [
+            {
+              "label": "fiches de projet par equipe",
+              "fixed": 4
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par equipes, assises hors du terrain. A partir des chiffres releves, chaque equipe choisit son projet : qui suit le porteur en priorite, comment on avance, ou on cherche a marquer.",
+          "studentGoal": "Ecrire notre projet de jeu : qui suit qui, et ou on cherche a avancer.",
+          "instructions": [
+            "On regarde nos chiffres : contacts, conservations, soutiens.",
+            "On decide qui suit le porteur en priorite.",
+            "On decide ou on cherche a avancer : au centre ou sur les cotes.",
+            "On note tout sur la fiche d'equipe."
+          ],
+          "success": [
+            "Le projet est ecrit et nomme les roles.",
+            "Il s'appuie sur les chiffres releves.",
+            "Il est realiste au vu du niveau de l'equipe."
+          ],
+          "execution": [
+            "Partir des chiffres, pas des impressions.",
+            "Choisir des roles tenables par chacun.",
+            "Formuler en une phrase par point."
+          ],
+          "watch": [
+            "Les projets s'appuient-ils sur les observations ?",
+            "Les roles sont-ils distribues equitablement ?",
+            "Un eleve est-il ecarte du jeu par le projet ?"
+          ],
+          "errors": [
+            "Projet fonde sur les impressions.",
+            "Confier tout le jeu a un seul joueur.",
+            "Projet intenable au vu du niveau."
+          ],
+          "feedback": [
+            "Regardez vos chiffres avant de decider.",
+            "Il ne peut pas porter tous les ballons.",
+            "Choisissez ce que vous pouvez tenir."
+          ],
+          "plus": [
+            "Prevoir une organisation differente selon l'adversaire."
+          ],
+          "minus": [
+            "Projet choisi dans une liste de trois organisations."
+          ],
+          "diff": {
+            "facilitee": "Projet choisi dans une liste de trois organisations proposees.",
+            "normale": "Projet redige librement a partir des chiffres releves.",
+            "complexifiee": "Projet avec organisation alternative selon l'adversaire."
+          },
+          "safety": [
+            "Phase realisee assise hors de la zone de jeu.",
+            "Ballons regroupes pendant l'ecriture.",
+            "Aucun match en cours a proximite de la zone d'ecriture."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Essai du projet et objectif personnel",
+          "objective": "Eprouver immediatement le projet et faire ecrire a chacun son objectif.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "fiches de projet par equipe",
+              "fixed": 4
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs courts de 4 minutes, chaque equipe applique son projet. Puis chacun ecrit son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Essayer notre projet en match et ecrire mon objectif personnel.",
+          "instructions": [
+            "On applique le projet ecrit, meme si c'est moins efficace au debut.",
+            "On note ce qui ne fonctionne pas.",
+            "Puis j'ecris seul mon objectif personnel.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Le projet est applique sur un match complet.",
+            "Les difficultes sont notees.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Tenir les roles definis, meme sous pression.",
+            "Noter immediatement ce qui bloque.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils tenables ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Abandonner le projet au premier essai encaisse.",
+            "Objectif vague : mieux jouer au rugby.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Tenez votre projet, meme si ca coince.",
+            "Precise : qu'est-ce que tu veux reussir ?",
+            "Notez ce qui bloque, on le travaillera."
+          ],
+          "plus": [
+            "Deux matchs avec ajustement entre les deux."
+          ],
+          "minus": [
+            "Un seul match court.",
+            "Objectif choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Un seul match court au toucher, objectif choisi dans une liste affichee.",
+            "normale": "Match d'essai complet, objectif redige librement.",
+            "complexifiee": "Deux matchs avec ajustement du projet entre les deux."
+          },
+          "safety": [
+            "Regles de securite du contact inchangees pendant les essais.",
+            "Ballons regroupes pendant la phase d'ecriture, assise hors du terrain.",
+            "Equipes constituees par gabarit.",
+            "Arret immediat au coup de sifflet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur dix contacts, combien de fois votre equipe garde-t-elle le ballon ?",
+          "Quel est votre projet de jeu pour les trois dernieres seances ?"
+        ],
+        "key": "Un projet de jeu se fonde sur ce qu'on observe : les chiffres releves disent ou l'equipe perd ses ballons, et donc ce qu'il faut travailler."
+      },
+      "socialRoles": [
+        "Observateur : renseigne la fiche chiffree d'un match.",
+        "Arbitre assistant : signale les fautes de securite.",
+        "Secretaire d'equipe : note le projet de jeu."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Deplacer la defense et exploiter l'espace libre",
+      "mainObjective": "Construire le jeu deploye : fixer la defense d'un cote pour creer un espace libre de l'autre.",
+      "secondaryObjectives": [
+        "Fixer un defenseur avant de transmettre.",
+        "Identifier le cote ou la defense est en surnombre.",
+        "Transmettre vite vers l'espace libre."
+      ],
+      "linkToPrevious": "La conservation est acquise : l'equipe garde le ballon mais avance peu. Il faut maintenant deplacer la defense pour creer des espaces.",
+      "prerequisiteForNext": "Chaque equipe fixe la defense d'un cote et exploite l'espace de l'autre.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 50,
+            "note": "couloirs et zones de decision"
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "sifflets",
+            "fixed": 3
+          }
+        ],
+        "instructions": [
+          "Marquer des couloirs larges avec des zones laterales distinctes.",
+          "Inspecter le terrain avant la seance.",
+          "Reconstituer les equipes par gabarit equilibre.",
+          "Rappeler et faire enoncer les regles de securite.",
+          "Verifier 5 metres de degagement de tout obstacle dur."
+        ],
+        "sketch": "Terrain large marque au plot, zones laterales distinctes.\nCouloirs de surnombre marques pour les ateliers.\nBallons regroupes hors de la zone de jeu.\nAffiches des regles de securite visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec passes en mouvement : le jeu deploye repose sur la qualite et la vitesse des transmissions.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, accelerations.",
+              "Passes en mouvement par vagues de cinq."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, chevilles.",
+              "Gainage complet.",
+              "Position de contact tenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Passes et fixations",
+            "details": [
+              "Passes a deux mains en courant, dix par joueur.",
+              "Fixation d'un plot puis passe, dix repetitions.",
+              "Trois traversees en vague de cinq."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Fixer puis transmettre",
+          "objective": "Construire la fixation : attirer le defenseur sur soi avant de transmettre.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Trois attaquants contre deux defenseurs sur un couloir. Le porteur doit avancer vers un defenseur jusqu'a l'obliger a s'engager, puis transmettre au partenaire libre. Dix repetitions puis rotation.",
+          "studentGoal": "Obliger le defenseur a venir sur moi avant de passer.",
+          "instructions": [
+            "J'avance droit sur le defenseur, je ne passe pas tout de suite.",
+            "J'attends qu'il s'engage vers moi, puis je transmets.",
+            "Je passe devant mon partenaire, a hauteur de poitrine.",
+            "Je passe en arriere, jamais en avant."
+          ],
+          "success": [
+            "Le defenseur s'engage avant la passe dans huit cas sur dix.",
+            "La passe part en arriere, devant le partenaire.",
+            "Le surnombre aboutit a un essai dans la majorite des cas."
+          ],
+          "execution": [
+            "Avancer droit sur le defenseur, ballon a deux mains.",
+            "Attendre l'engagement, puis passer sans ralentir.",
+            "Passer devant le partenaire, a hauteur de poitrine."
+          ],
+          "watch": [
+            "Les porteurs passent-ils trop tot ?",
+            "Ralentissent-ils avant de passer ?",
+            "Les passes partent-elles en avant ?"
+          ],
+          "errors": [
+            "Passer avant que le defenseur ne s'engage : il glisse sur le suivant.",
+            "Ralentir avant de passer, ce qui annule le surnombre.",
+            "Passer en avant."
+          ],
+          "feedback": [
+            "Trop tot : il n'est pas venu sur toi.",
+            "Ne ralentis pas, sinon il a le temps.",
+            "En arriere, devant lui, a hauteur de poitrine."
+          ],
+          "plus": [
+            "Quatre contre trois.",
+            "Defenseurs qui montent vite."
+          ],
+          "minus": [
+            "Deux contre un.",
+            "Defenseurs qui avancent en marchant."
+          ],
+          "diff": {
+            "facilitee": "Deux contre un, defenseurs avancant en marchant, couloir elargi.",
+            "normale": "Trois contre deux, fixation puis transmission.",
+            "complexifiee": "Quatre contre trois, defenseurs montant vite."
+          },
+          "safety": [
+            "Contact limite au toucher a deux mains dans cet atelier : la fixation se travaille sans percussion.",
+            "Aucun contact par-derriere.",
+            "Couloirs delimites, groupes espaces.",
+            "Terrain verifie avant la situation.",
+            "Arret immediat au coup de sifflet."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire le surnombre",
+          "objective": "Construire la lecture du desequilibre : identifier le cote ou la defense est en infériorite.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            },
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Six attaquants contre cinq defenseurs, repartis de facon volontairement desequilibree. Le porteur doit annoncer a voix haute de quel cote se trouve le surnombre avant de lancer le jeu.",
+          "studentGoal": "Dire de quel cote nous sommes en surnombre avant de jouer.",
+          "instructions": [
+            "Avant de lancer le jeu, je compte : combien d'eux, combien de nous, de chaque cote.",
+            "J'annonce a voix haute : surnombre a droite ou a gauche.",
+            "On joue de ce cote-la.",
+            "Si la defense se replace, on change de cote."
+          ],
+          "success": [
+            "Le surnombre est correctement identifie huit fois sur dix.",
+            "L'annonce est faite avant le lancement du jeu.",
+            "L'equipe joue reellement du cote annonce."
+          ],
+          "execution": [
+            "Lever la tete et compter avant de jouer.",
+            "Annoncer clairement et fort.",
+            "Transmettre rapidement vers le cote choisi."
+          ],
+          "watch": [
+            "Les eleves comptent-ils reellement ?",
+            "Jouent-ils du cote annonce ?",
+            "S'adaptent-ils quand la defense se replace ?"
+          ],
+          "errors": [
+            "Jouer sans regarder la repartition adverse.",
+            "Annoncer un cote et jouer l'autre.",
+            "Insister d'un cote ou la defense s'est replacee."
+          ],
+          "feedback": [
+            "Compte avant de jouer : lève la tête.",
+            "Tu as dit a droite : joue a droite.",
+            "Ils se sont replaces : change de cote."
+          ],
+          "plus": [
+            "Repartition defensive changeante entre chaque lancement."
+          ],
+          "minus": [
+            "Surnombre tres marque et visible.",
+            "Annonce faite par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Surnombre tres marque, annonce faite par le professeur, defense statique.",
+            "normale": "Six contre cinq desequilibres, annonce faite par le porteur.",
+            "complexifiee": "Repartition defensive changeant entre chaque lancement de jeu."
+          },
+          "safety": [
+            "Contact limite au toucher a deux mains dans cet atelier.",
+            "Aucun contact par-derriere.",
+            "Zone de jeu delimitee, groupes espaces.",
+            "Terrain verifie avant la situation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match avec essai en zone laterale valorise",
+          "objective": "Reinvestir le jeu deploye en match, avec un bareme qui valorise l'exploitation des cotes.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Matchs en 7 contre 7, 6 minutes. Un essai marque dans une zone laterale compte double. Un observateur note les changements de cote dans le jeu.",
+          "studentGoal": "Marquer sur les cotes en deplacant d'abord la defense.",
+          "instructions": [
+            "Un essai dans une zone laterale compte double.",
+            "Je fixe avant de transmettre.",
+            "Je regarde de quel cote ils sont le moins nombreux.",
+            "Toute faute de securite arrete le jeu."
+          ],
+          "success": [
+            "Des essais sont marques dans les zones laterales.",
+            "Les changements de cote apparaissent dans le jeu.",
+            "La conservation est maintenue."
+          ],
+          "execution": [
+            "Fixer avant de transmettre.",
+            "Transmettre vite vers le cote libre.",
+            "Maintenir le soutien sur chaque contact."
+          ],
+          "watch": [
+            "Le jeu se deploie-t-il ou reste-t-il au centre ?",
+            "Les fixations sont-elles reelles ?",
+            "La conservation tient-elle ?"
+          ],
+          "errors": [
+            "Jouer systematiquement au centre, dans la defense.",
+            "Passer sans avoir fixe.",
+            "Perdre le soutien en cherchant les cotes."
+          ],
+          "feedback": [
+            "Vous jouez tous au milieu : les cotes sont vides.",
+            "Fixe d'abord, sinon ta passe ne sert a rien.",
+            "Les soutiens suivent, meme quand vous ecartez."
+          ],
+          "plus": [
+            "Essai triple dans le coin.",
+            "Matchs de 8 minutes."
+          ],
+          "minus": [
+            "Jeu au toucher a deux mains.",
+            "Terrain elargi."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, terrain elargi, matchs de 4 minutes.",
+            "normale": "Matchs de 6 minutes avec essai double en zone laterale.",
+            "complexifiee": "Essai triple dans le coin, matchs de 8 minutes."
+          },
+          "safety": [
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere : le jeu sur les cotes multiplie les courses de poursuite, donc les contacts dans le dos.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Le porteur au sol libere et se releve immediatement.",
+            "Equipes constituees par gabarit.",
+            "Zones laterales delimitees a 5 m minimum de tout obstacle dur.",
+            "Arret immediat au coup de sifflet."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que doit faire un porteur avant de transmettre ?",
+          "Comment sait-on de quel cote se trouve l'espace libre ?"
+        ],
+        "key": "Une passe sans fixation ne sert a rien : le defenseur glisse simplement sur le suivant. On avance sur lui, il s'engage, et alors seulement on transmet."
+      },
+      "socialRoles": [
+        "Observateur : compte les changements de cote et les essais lateraux.",
+        "Annonceur : identifie le cote du surnombre a voix haute.",
+        "Arbitre assistant : signale les fautes de securite."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Enchainer les temps de jeu",
+      "mainObjective": "Enchainer plusieurs temps de jeu sans perdre le ballon et preparer le role d'arbitre.",
+      "secondaryObjectives": [
+        "Enchainer trois temps de jeu consecutifs.",
+        "Arbitrer une rencontre en appliquant les regles de securite.",
+        "Jouer une rencontre dans les conditions du tournoi final."
+      ],
+      "linkToPrevious": "Chaque element est construit : il reste a les enchainer sur plusieurs temps de jeu et a preparer les roles evalues au tournoi.",
+      "prerequisiteForNext": "Chaque equipe enchaine trois temps de jeu et chaque eleve sait arbitrer.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 50
+          },
+          {
+            "label": "feuilles de match vierges",
+            "fixed": 10
+          },
+          {
+            "label": "affiche des regles et de l'arbitrage",
+            "fixed": 2
+          },
+          {
+            "label": "sifflets",
+            "fixed": 4
+          },
+          {
+            "label": "fiches de projet par equipe",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les regles retenues et les priorites d'arbitrage, securite en tete.",
+          "Preparer des feuilles de match identiques a celles du tournoi.",
+          "Installer le terrain comme le jour du tournoi.",
+          "Inspecter le terrain et verifier les degagements.",
+          "Ressortir les fiches de projet des equipes."
+        ],
+        "sketch": "Terrain installe comme le jour du tournoi.\nTable de marque sur le cote, hors de la zone de jeu.\nAffiche des regles et priorites d'arbitrage a l'entree.\nBallons regroupes hors de la zone de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet avant une seance dense en contacts : nuque, gainage et appuis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque equipe mene son echauffement complet.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, chevilles.",
+              "Gainage complet, deux series.",
+              "Position de contact tenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Rappel des acquis",
+            "details": [
+              "Cinq contacts debout avec liberation.",
+              "Trois courses de soutien a deux.",
+              "Trois fixations suivies de transmission."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Trois temps de jeu consecutifs",
+          "objective": "Enchainer trois contacts successifs sans perdre le ballon ni ralentir le jeu.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            },
+            {
+              "label": "fiches de projet par equipe",
+              "fixed": 4
+            }
+          ],
+          "organization": "Sept attaquants contre cinq defenseurs sur un demi-terrain. L'equipe doit enchainer trois temps de jeu avant de pouvoir marquer. Dix lancements puis inversion.",
+          "studentGoal": "Enchainer trois temps de jeu sans perdre le ballon.",
+          "instructions": [
+            "Il faut trois temps de jeu avant de pouvoir marquer.",
+            "A chaque contact : je libere vite, deux soutiens arrivent.",
+            "On repart en avancant, on ne s'arrete pas.",
+            "On applique notre projet de jeu."
+          ],
+          "success": [
+            "Six lancements sur dix aboutissent a trois temps de jeu.",
+            "Les soutiens arrivent a chaque contact.",
+            "Le ballon repart en avancant."
+          ],
+          "execution": [
+            "Liberer sans delai a chaque contact.",
+            "Suivre le porteur en permanence.",
+            "Repartir en avancant, jamais a l'arret."
+          ],
+          "watch": [
+            "Le jeu ralentit-il apres le deuxieme temps ?",
+            "Les soutiens tiennent-ils sur trois temps ?",
+            "La fatigue degrade-t-elle la securite ?"
+          ],
+          "errors": [
+            "Ralentir apres le premier contact.",
+            "Soutiens qui n'arrivent plus au troisieme temps.",
+            "Repartir a l'arret, sans avancer."
+          ],
+          "feedback": [
+            "Ne vous arretez pas : le troisieme temps aussi.",
+            "Tes soutiens sont a la traine : suis-le.",
+            "Repars en avancant, pas debout sur place."
+          ],
+          "plus": [
+            "Cinq temps de jeu exiges.",
+            "Six defenseurs."
+          ],
+          "minus": [
+            "Deux temps de jeu exiges.",
+            "Jeu au toucher a deux mains."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, deux temps de jeu exiges, quatre defenseurs.",
+            "normale": "Trois temps de jeu exiges contre cinq defenseurs.",
+            "complexifiee": "Cinq temps de jeu exiges contre six defenseurs."
+          },
+          "safety": [
+            "Recuperation imposee entre les series : la fatigue est le premier facteur de faute de securite au contact.",
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Le porteur au sol libere et se releve immediatement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Groupes de gabarit homogene.",
+            "Terrain verifie, degagements respectes.",
+            "Arret immediat au coup de sifflet."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Arbitrer : la securite d'abord",
+          "objective": "Former au role d'arbitre, dont la premiere fonction en rugby scolaire est de faire respecter la securite.",
+          "material": [
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 10
+            },
+            {
+              "label": "affiche des regles et de l'arbitrage",
+              "fixed": 2
+            },
+            {
+              "label": "sifflets",
+              "fixed": 4
+            }
+          ],
+          "organization": "Pendant les rencontres, chaque eleve arbitre au moins une periode courte, aux cotes du professeur qui reste responsable. Le professeur valide chaque arbitre.",
+          "studentGoal": "Arbitrer une periode en sifflant d'abord les fautes de securite.",
+          "instructions": [
+            "Ma priorite est la securite : contact au-dessus des epaules, joueur au sol, plongeon.",
+            "Je siffle immediatement et j'arrete le jeu.",
+            "Ensuite seulement je siffle les passes en avant et les en-avant.",
+            "Je reste hors de la zone de jeu."
+          ],
+          "success": [
+            "Toutes les fautes de securite observees sont sifflees.",
+            "L'arret du jeu est immediat.",
+            "L'arbitre reste hors de la zone de jeu."
+          ],
+          "execution": [
+            "Se placer sur le cote, vue degagee sur le porteur.",
+            "Siffler franchement, puis annoncer la faute.",
+            "Rappeler la regle a l'auteur de la faute."
+          ],
+          "watch": [
+            "Les arbitres sifflent-ils les fautes de securite ?",
+            "Osent-ils siffler contre leurs camarades ?",
+            "Les joueurs contestent-ils ?"
+          ],
+          "errors": [
+            "Laisser passer un contact au-dessus des epaules.",
+            "Ne pas oser siffler contre ses camarades.",
+            "Contester bruyamment une decision."
+          ],
+          "feedback": [
+            "Tu as vu le contact haut : tu arretes tout de suite.",
+            "La securite passe avant l'amitie.",
+            "On accepte la decision de l'arbitre."
+          ],
+          "plus": [
+            "Arbitrer une periode complete seul, sous supervision.",
+            "Arbitrer et tenir la feuille."
+          ],
+          "minus": [
+            "Arbitrer a deux.",
+            "Siffler uniquement les fautes de securite."
+          ],
+          "diff": {
+            "facilitee": "Arbitrage a deux, uniquement les fautes de securite, aide du professeur.",
+            "normale": "Arbitrage d'une periode courte aux cotes du professeur.",
+            "complexifiee": "Arbitrage d'une periode complete avec feuille de match tenue."
+          },
+          "safety": [
+            "Le professeur reste responsable de l'arbitrage : l'arbitre eleve l'assiste et ne se substitue jamais a lui sur les fautes de securite.",
+            "L'arbitre arrete immediatement le jeu sur tout contact au-dessus des epaules, tout joueur reste au sol, tout plongeon.",
+            "L'arbitre se place hors de la zone de jeu.",
+            "Tout joueur blessé fait arreter le jeu sans delai."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Rencontre generale",
+          "objective": "Jouer une rencontre complete dans les conditions exactes du tournoi final.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 10
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            }
+          ],
+          "organization": "Rencontres de deux fois 6 minutes, arbitrees par un eleve aux cotes du professeur, dans les conditions du tournoi.",
+          "studentGoal": "Jouer une rencontre complete en appliquant notre projet.",
+          "instructions": [
+            "On joue deux fois 6 minutes, comme au tournoi.",
+            "L'arbitre eleve assiste le professeur : on accepte ses decisions.",
+            "On applique notre projet de jeu.",
+            "Toute faute de securite arrete le jeu."
+          ],
+          "success": [
+            "La rencontre se joue en entier.",
+            "Le projet est applique.",
+            "Aucune faute de securite."
+          ],
+          "execution": [
+            "Tenir les roles du projet jusqu'au bout.",
+            "Maintenir le soutien malgre la fatigue.",
+            "Liberer vite a chaque contact."
+          ],
+          "watch": [
+            "Le projet tient-il sur une rencontre complete ?",
+            "La fatigue degrade-t-elle la securite ?",
+            "Les arbitrages eleves sont-ils respectes ?"
+          ],
+          "errors": [
+            "Abandonner le projet en fin de rencontre.",
+            "Relacher la posture de contact avec la fatigue.",
+            "Contester l'arbitre eleve."
+          ],
+          "feedback": [
+            "Votre projet, jusqu'au bout.",
+            "Tete relevee, meme fatigues : c'est la que ca arrive.",
+            "L'arbitre a decide : on continue."
+          ],
+          "plus": [
+            "Rencontre de deux fois 8 minutes."
+          ],
+          "minus": [
+            "Rencontre de deux fois 4 minutes.",
+            "Jeu au toucher a deux mains."
+          ],
+          "diff": {
+            "facilitee": "Rencontre de deux fois 4 minutes au toucher a deux mains, terrain elargi.",
+            "normale": "Rencontre de deux fois 6 minutes, arbitree par un eleve assiste du professeur.",
+            "complexifiee": "Rencontre de deux fois 8 minutes."
+          },
+          "safety": [
+            "Mi-temps et recuperation imposees : la fatigue est le premier facteur de faute de securite.",
+            "Ceinturage sous les epaules uniquement.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere.",
+            "Aucun joueur ne plonge sur un joueur au sol.",
+            "Equipes constituees par gabarit.",
+            "Terrain verifie, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat au coup de sifflet, sans exception."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou votre enchainement casse-t-il le plus souvent : au premier, au deuxieme ou au troisieme temps ?",
+          "Quelles fautes un arbitre doit-il siffler en priorite ?"
+        ],
+        "key": "L'enchainement casse presque toujours au moment ou les soutiens n'arrivent plus. Et l'arbitre siffle d'abord la securite : contact haut, joueur au sol, plongeon."
+      },
+      "socialRoles": [
+        "Arbitre : assiste le professeur et siffle les fautes de securite.",
+        "Marqueur : tient la feuille de match.",
+        "Capitaine : rappelle le projet de jeu entre les temps de jeu."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer la conservation du ballon, le soutien et le respect des regles de securite au cours d'un tournoi.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer au moins trois matchs du tournoi.",
+        "Tenir le role d'arbitre ou d'observateur sur au moins un match.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "Les rencontres de la seance 7 se sont deroulees dans les conditions du tournoi : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "ballons de rugby",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 14
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 50
+          },
+          {
+            "label": "feuilles de match vierges",
+            "fixed": 12
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "affiche du tableau du tournoi",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          },
+          {
+            "label": "sifflets",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Inspecter integralement le terrain avant le premier match.",
+          "Afficher le tableau du tournoi, les criteres d'evaluation et les regles de securite.",
+          "Preparer les grilles nominatives et ressortir les fiches de mi-cycle.",
+          "Constituer les equipes par gabarit equilibre.",
+          "Verifier les PAI et les dispenses avant le premier match.",
+          "Faire retirer bijoux et montres, verifier lacets et protege-dents si prevus."
+        ],
+        "sketch": "Terrain reduit, tableau du tournoi et criteres affiches a l'entree.\nRegles de securite affichees aux deux extremites.\nTable de marque et zone de repos hors du terrain.\nBallons regroupes hors de la zone de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : aucun match de rugby evalue ne s'aborde sans preparation de la nuque, du gainage et des appuis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque equipe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement complet",
+            "details": [
+              "Nuque : flexions et rotations douces.",
+              "Epaules, hanches, chevilles.",
+              "Gainage complet, deux series.",
+              "Position de contact tenue 15 secondes, 3 fois."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Contacts progressifs et rappel",
+            "details": [
+              "Poussees a genoux, puis debout.",
+              "Cinq contacts debout avec liberation.",
+              "Trois courses de soutien a deux."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue",
+          "objective": "Evaluer chaque equipe et chaque joueur sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            }
+          ],
+          "organization": "Tournoi en 7 contre 7, matchs de deux fois 6 minutes selon le tableau affiche. Chaque equipe joue au moins trois matchs. Ceux qui ne jouent pas arbitrent, marquent et observent. Le professeur arbitre et evalue.",
+          "studentGoal": "Jouer nos matchs en appliquant notre projet, et arbitrer quand c'est notre tour.",
+          "instructions": [
+            "On joue selon le tableau affiche.",
+            "On applique notre projet de jeu.",
+            "Quand on ne joue pas, on arbitre, on marque ou on observe.",
+            "Toute faute de securite arrete le jeu immediatement."
+          ],
+          "success": [
+            "Le porteur affronte le contact debout, tete relevee, sans se jeter au sol.",
+            "Le ballon est conserve puis libere rapidement apres le contact.",
+            "Les soutiens arrivent aupres du porteur avant l'adversaire.",
+            "L'equipe deplace la defense et exploite l'espace libre.",
+            "Les regles de securite sont respectees sans exception.",
+            "Le role d'arbitre ou d'observateur est tenu avec rigueur."
+          ],
+          "execution": [
+            "Flechir avant le contact, tete relevee.",
+            "Liberer sans delai et se relever.",
+            "Suivre le porteur en permanence.",
+            "Fixer avant de transmettre."
+          ],
+          "watch": [
+            "Le projet tient-il en tournoi ?",
+            "La securite tient-elle malgre l'enjeu et la fatigue ?",
+            "Les soutiens arrivent-ils encore au troisieme match ?",
+            "Les arbitrages eleves sont-ils respectes ?"
+          ],
+          "errors": [
+            "Relacher la posture de contact avec la fatigue.",
+            "Rester au sol sur le ballon pour gagner du temps.",
+            "Abandonner le projet apres un match perdu.",
+            "Contester l'arbitre eleve."
+          ],
+          "feedback": [
+            "Tete relevee, meme fatigues.",
+            "Pose et releve-toi : c'est la regle, pas une option.",
+            "Votre projet ne devient pas mauvais parce que vous avez perdu.",
+            "L'arbitre a decide : on continue."
+          ],
+          "plus": [
+            "Matchs de deux fois 8 minutes.",
+            "Trois temps de jeu exiges avant de pouvoir marquer."
+          ],
+          "minus": [
+            "Jeu au toucher a deux mains.",
+            "Matchs de deux fois 4 minutes, terrain elargi."
+          ],
+          "diff": {
+            "facilitee": "Jeu au toucher a deux mains, matchs de deux fois 4 minutes, terrain elargi. L'engagement, la securite et les roles sociaux sont evalues autant que la performance.",
+            "normale": "Tournoi en 7 contre 7, matchs de deux fois 6 minutes, un role d'arbitrage par eleve.",
+            "complexifiee": "Matchs de deux fois 8 minutes avec trois temps de jeu exiges avant de marquer."
+          },
+          "safety": [
+            "Regles de securite affichees, rappelees et enoncees par les eleves avant le premier match : tete toujours relevee, ceinturage sous les epaules, jamais de contact au-dessus des epaules ni au cou.",
+            "Aucun plaquage cathedrale, aucun soulevement, aucun contact par-derriere sur un joueur qui ne voit pas venir.",
+            "Aucun joueur ne plonge sur un joueur au sol ni sur un ballon au sol : le ramassage se fait debout.",
+            "Le porteur au sol libere immediatement et se releve : personne ne reste au sol.",
+            "Equipes constituees par gabarit equilibre, sans exception.",
+            "Aucun eleve porteur d'une contre-indication ne participe aux situations de contact.",
+            "Echauffement complet obligatoire avant le premier match.",
+            "Recuperation imposee entre deux matchs consecutifs pour une meme equipe : la fatigue est le premier facteur d'accident.",
+            "Terrain integralement inspecte avant le premier match, 5 m de degagement de tout obstacle dur.",
+            "Arret immediat du jeu au coup de sifflet, sans exception, et sur tout joueur blesse.",
+            "Bijoux et montres retires, lacets attaches, protege-dents si le protocole local le prevoit.",
+            "Le professeur arbitre lui-meme et peut arreter tout match presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Retour des observateurs et bilan personnel",
+          "objective": "Faire expliciter les observations chiffrees et comparer a la fiche de mi-cycle.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Apres chaque serie de matchs, les observateurs annoncent leurs chiffres. Puis chacun compare sa grille du jour a sa fiche de la seance 5 et se prononce sur son objectif.",
+          "studentGoal": "Comparer mes chiffres du jour a ceux de la mi-cycle et dire si mon objectif est atteint.",
+          "instructions": [
+            "Observateur : j'annonce le nombre de contacts et de conservations.",
+            "Je cite une action precise pour illustrer.",
+            "L'equipe concernee ecoute sans contester.",
+            "Ensuite, je relis mon objectif et je dis s'il est atteint."
+          ],
+          "success": [
+            "Chaque observateur annonce des chiffres precis.",
+            "Chaque eleve compare ses deux fiches.",
+            "Chacun se prononce sur son objectif."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres notes.",
+            "Citer une action identifiable.",
+            "Comparer les deux fiches ligne a ligne."
+          ],
+          "watch": [
+            "Les observations sont-elles chiffrees ?",
+            "Les eleves reperent-ils leurs progres ?"
+          ],
+          "errors": [
+            "Dire seulement que c'etait bien ou nul.",
+            "Ne regarder que le resultat des matchs.",
+            "Contester les chiffres releves."
+          ],
+          "feedback": [
+            "Combien exactement, sur combien de contacts ?",
+            "Regarde ta fiche de mi-cycle : qu'est-ce qui a change ?",
+            "Vous ecoutez, vous repondrez apres."
+          ],
+          "plus": [
+            "Formuler ce qu'il faudrait travailler ensuite."
+          ],
+          "minus": [
+            "Le professeur annonce les chiffres, la classe commente."
+          ],
+          "diff": {
+            "facilitee": "Le professeur annonce les chiffres, chacun dit s'il s'y reconnait.",
+            "normale": "Observateurs annoncant leurs chiffres, comparaison des deux fiches.",
+            "complexifiee": "Comparaison complete plus formulation de la suite a travailler."
+          },
+          "safety": [
+            "Phase realisee assise hors de la zone de jeu.",
+            "Ballons regroupes pendant cette phase.",
+            "Aucun match en cours a proximite de la zone de retour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis, securite comprise, et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 50
+            },
+            {
+              "label": "ballons de rugby",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 14
+            }
+          ],
+          "organization": "Rangement collectif des plots, ballons et chasubles par equipes, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en rugby aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Chaque equipe range la zone qui lui est attribuee.",
+            "On compte les plots, les ballons et les chasubles.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage.",
+            "Au moins un eleve par equipe s'exprime."
+          ],
+          "execution": [
+            "Ramasser les plots en parcourant sa zone.",
+            "Compter avant de quitter le terrain.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis de securite ?"
+          ],
+          "errors": [
+            "Laisser le rangement a quelques eleves.",
+            "Ne parler que des essais marques.",
+            "Oublier des plots sur le terrain."
+          ],
+          "feedback": [
+            "Tout le monde range.",
+            "Pas seulement les essais : la securite aussi, c'est un acquis.",
+            "Comptez avant de partir."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Aucun contact pendant la phase de rangement.",
+            "Plots ramasses en marchant, jamais en courant.",
+            "Materiel compte avant de quitter le terrain.",
+            "Verification qu'aucun eleve ne presente de douleur avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en rugby aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Quelles regles de securite ne se negocient jamais, meme en tournoi ?"
+        ],
+        "key": "En debut de cycle, le porteur subissait le contact seul. Maintenant il l'affronte debout, libere vite, et deux soutiens arrivent. Et les trois regles de securite tiennent du premier au dernier match : tete relevee, ceinturage sous les epaules, jamais de contact au-dessus des epaules."
+      },
+      "socialRoles": [
+        "Arbitre : assiste le professeur et siffle les fautes de securite, role evalue.",
+        "Marqueur : tient la feuille de match, role evalue.",
+        "Observateur : releve les contacts et les conservations.",
+        "Responsable materiel : organise le rangement collectif et le comptage."
+      ]
+    }
+  ]
+}

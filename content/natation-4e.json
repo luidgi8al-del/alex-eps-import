@@ -1,0 +1,2724 @@
+{
+  "apsa": "Natation",
+  "grades": [
+    "QUATRIEME"
+  ],
+  "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Gerer son effort, faire des choix pour realiser la meilleure performance dans au moins deux styles de nages.",
+    "S'engager dans un programme de preparation individuel ou collectif.",
+    "Planifier et realiser une epreuve.",
+    "S'echauffer avant un effort.",
+    "Aider ses camarades et assumer differents roles sociaux."
+  ],
+  "targetCompetence": "Passer d'une nage subie, ou l'eleve avance en depensant beaucoup pour peu de distance, a une nage economique et pilotee : allonger sa nage, respirer sans casser son alignement, et tenir une allure annoncee sur une distance donnee.",
+  "cycleObjectives": [
+    "Reduire son nombre de coups de bras sur une distance donnee.",
+    "Respirer sans casser l'alignement du corps.",
+    "Nager efficacement dans deux styles de nages differents.",
+    "Gagner du temps sur les coulees et les virages.",
+    "Construire et realiser un projet de nage annonce a l'avance."
+  ],
+  "plannedTitles": [
+    "Mesurer sa nage et se situer",
+    "Allonger sa nage : l'efficacite des appuis",
+    "Respirer sans casser l'alignement",
+    "La deuxieme nage : le dos",
+    "Test evalue de mi-cycle et projet de nage",
+    "Coulees et virages : gagner aux extremites",
+    "Repetition generale du projet",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 1 - cycle 4, enjeux de formation",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsenjappca1nd565120pdf-78285.pdf",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources d'accompagnement du programme d'EPS au cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Enseignement de la natation scolaire - circulaire de reference",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://eduscol.education.fr/1017/la-natation-scolaire",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Natation de vitesse en EPS - indice de nage et efficacite propulsive",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Plan d'organisation de la surveillance et des secours (POSS) de la piscine : le lire avant la premiere seance.",
+    "Presence et positionnement du maitre nageur sauveteur : la surveillance ne peut jamais etre assuree par l'enseignant seul.",
+    "Taux d'encadrement applicable a la classe.",
+    "Longueur exacte du bassin : toutes les mesures de nage en dependent.",
+    "Profondeur des bassins et reglementation locale sur les departs plonges.",
+    "Eleves n'ayant pas valide l'ASSN : identifier avant le cycle et adapter le parcours propose.",
+    "Materiel disponible : planches, pull-buoys, plaquettes, lignes d'eau, chronometres etanches.",
+    "Consignes locales sur les vestiaires, la douche et la circulation pieds nus."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - nage courte et couteuse",
+      "observed": "Multiplie les coups de bras, agite beaucoup l'eau, avance peu et s'epuise en 25 metres.",
+      "need": "Allonger sa nage : moins de coups de bras pour la meme distance."
+    },
+    {
+      "label": "Profil 2 - respiration qui casse tout",
+      "observed": "Nage correctement entre deux respirations, mais releve la tete et se redresse a chaque prise d'air.",
+      "need": "Construire une respiration laterale qui preserve l'alignement."
+    },
+    {
+      "label": "Profil 3 - une seule nage",
+      "observed": "Nage correctement en crawl ou en brasse, mais est en difficulte des qu'on change de style, notamment sur le dos.",
+      "need": "Construire une deuxieme nage utilisable en performance."
+    },
+    {
+      "label": "Profil 4 - nage bien mais sans projet",
+      "observed": "Nage vite et longtemps, mais part toujours a fond et ne sait pas annoncer a l'avance ce qu'il va realiser.",
+      "need": "Passer de la performance spontanee au projet annonce et tenu."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Epreuve en deux parties. D'abord un 50 metres chronometre dans la nage principale, avec annonce prealable du temps vise. Ensuite un 100 metres en deux nages differentes, 50 metres chacune, avec annonce du temps vise. L'eleve est evalue sur la performance et sur l'ecart entre l'annonce et la realisation. Chaque eleve tient egalement le role de chronometreur et d'observateur pour un camarade.",
+    "criteria": [
+      "Le temps sur 50 metres est ameliore par rapport a la mesure de la seance 1.",
+      "L'indice de nage est ameliore : moins de coups de bras pour la meme distance.",
+      "La respiration se fait sans redressement de la tete ni rupture de l'alignement.",
+      "Les deux nages sont realisees sans arret ni reprise d'appui.",
+      "L'ecart entre le temps annonce et le temps realise est inferieur a trois secondes sur chaque partie.",
+      "Les roles de chronometreur et d'observateur sont tenus avec precision."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA1, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Mesurer sa nage et se situer",
+      "mainObjective": "Etablir les references individuelles de chaque eleve : temps, distance et nombre de coups de bras, qui serviront tout le cycle.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Mesurer son temps sur 50 metres.",
+        "Compter ses coups de bras sur une longueur.",
+        "Reperer les eleves dont la nage est courte et couteuse."
+      ],
+      "linkToPrevious": "Premiere seance du cycle. En 4e, l'ASSN est generalement acquise : l'enjeu se deplace vers l'efficacite et la performance.",
+      "prerequisiteForNext": "Chaque eleve dispose de son temps sur 50 metres et de son nombre de coups de bras par longueur.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "planches",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "pull-buoys",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20,
+            "note": "une par eleve, conservee tout le cycle"
+          },
+          {
+            "label": "stylos et supports rigides",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier la longueur exacte du bassin : toutes les mesures en dependent.",
+          "Delimiter les couloirs avec les lignes d'eau, un par groupe de niveau.",
+          "Identifier avant la seance les eleves n'ayant pas valide l'ASSN, pour adapter leur parcours.",
+          "Preparer les fiches nominatives sur une table hors zone humide.",
+          "Poser les perches de securite au bord, accessibles immediatement.",
+          "Verifier le fonctionnement des chronometres etanches."
+        ],
+        "sketch": "Bassin divise en couloirs par lignes d'eau, un par groupe de niveau.\nChronometreurs au bord de chaque couloir.\nTable des fiches hors zone humide.\nPerches accessibles au bord."
+      },
+      "warmup": {
+        "rationale": "En natation, l'echauffement se fait dans l'eau et doit etre progressif : le corps doit s'adapter a la temperature avant tout effort de vitesse.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Mobilisation des epaules : cercles avant et arriere, moulinets.",
+              "Rotations des chevilles, des poignets, de la nuque.",
+              "Aucune course au bord du bassin : sol glissant."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "200 metres nage libre a allure tres souple.",
+              "Deux longueurs en battements avec planche.",
+              "Deux longueurs en traction avec pull-buoy."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action progressive",
+            "details": [
+              "Quatre longueurs a allure croissante : 60, 70, 80 puis 90 pour cent.",
+              "Recuperation de 30 secondes entre chaque.",
+              "Verification des sensations avant les mesures."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Le 50 metres de reference",
+          "objective": "Mesurer la performance de reference de chaque eleve dans sa nage principale.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par groupes de quatre, un nageur, un chronometreur, un compteur de coups de bras, un secretaire. Deux 50 metres par eleve, avec au moins 4 minutes de recuperation. Rotation des roles.",
+          "studentGoal": "Nager mes 50 metres le plus vite possible et noter mon temps.",
+          "instructions": [
+            "Je choisis ma nage principale : crawl ou brasse.",
+            "Je pars dans l'eau, main au mur : pas de depart plonge a cette seance.",
+            "Je nage 50 metres sans m'arreter au virage.",
+            "Chronometreur : je declenche au signal, j'arrete quand la main touche le mur."
+          ],
+          "success": [
+            "Deux 50 metres realises et chronometres.",
+            "Les deux temps sont notes sur la fiche.",
+            "L'ecart entre les deux nages est inferieur a cinq secondes."
+          ],
+          "execution": [
+            "Partir a allure elevee mais tenable sur 50 metres.",
+            "Ne pas s'arreter au virage.",
+            "Toucher le mur a l'arrivee, main tendue."
+          ],
+          "watch": [
+            "Qui part a fond et s'arrete a mi-parcours ?",
+            "Qui se redresse a chaque respiration ?",
+            "Qui multiplie les coups de bras sans avancer ?",
+            "Signes d'essoufflement anormal ou de malaise."
+          ],
+          "errors": [
+            "Partir a fond sur les 25 premiers metres et marcher ensuite.",
+            "S'arreter au mur au virage.",
+            "Arreter le chronometre avant le contact au mur."
+          ],
+          "feedback": [
+            "Pars fort mais tiens les 50 : ce n'est pas un 25.",
+            "Ne t'arrete pas au virage, enchaine.",
+            "Chronometreur, tu arretes quand sa main touche."
+          ],
+          "plus": [
+            "Depart plonge, si le protocole local l'autorise.",
+            "100 metres au lieu de 50."
+          ],
+          "minus": [
+            "25 metres au lieu de 50.",
+            "Materiel d'aide autorise."
+          ],
+          "diff": {
+            "facilitee": "25 metres chronometres, pull-buoy autorise, depart dans l'eau avec appui.",
+            "normale": "Deux 50 metres chronometres, depart dans l'eau.",
+            "complexifiee": "100 metres chronometre, ou depart plonge si le protocole l'autorise."
+          },
+          "safety": [
+            "Surveillance permanente du maitre nageur sauveteur : elle ne peut jamais etre deleguee a l'enseignant seul.",
+            "Un nageur par couloir a la fois.",
+            "Perches de securite accessibles immediatement au bord.",
+            "Aucun depart plonge sans validation du protocole local et de la profondeur.",
+            "Recuperation de 4 minutes minimum entre deux efforts maximaux.",
+            "Arret immediat en cas de malaise, de paleur ou d'essoufflement anormal.",
+            "Comptage des eleves a l'entree, a mi-seance et a la sortie du bassin.",
+            "Interdiction de courir au bord du bassin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Compter ses coups de bras",
+          "objective": "Introduire l'indicateur central du cycle : le nombre de coups de bras par longueur, mesure de l'efficacite.",
+          "material": [
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par deux. Chacun nage une longueur a allure moderee pendant que son partenaire compte ses coups de bras depuis le bord. Trois longueurs chacun, puis rotation.",
+          "studentGoal": "Connaitre le nombre de coups de bras qu'il me faut pour une longueur.",
+          "instructions": [
+            "Je nage une longueur a allure moderee, sans chercher a aller vite.",
+            "Mon partenaire compte mes coups de bras depuis le bord.",
+            "On compte un coup de bras a chaque fois qu'une main entre dans l'eau.",
+            "On note le resultat des trois longueurs sur la fiche."
+          ],
+          "success": [
+            "Les trois longueurs sont comptees et notees.",
+            "L'ecart entre les trois comptages est inferieur a trois coups de bras.",
+            "L'eleve sait dire combien de coups de bras il lui faut."
+          ],
+          "execution": [
+            "Nager a allure reguliere, sans acceleration.",
+            "Compter chaque entree de main dans l'eau.",
+            "Suivre son nageur depuis le bord, sans le perdre de vue."
+          ],
+          "watch": [
+            "Les comptages sont-ils fiables ?",
+            "Les eleves comprennent-ils ce que mesure cet indicateur ?",
+            "Qui a un nombre de coups de bras tres eleve ?"
+          ],
+          "errors": [
+            "Accelerer pendant le comptage, ce qui fausse la mesure.",
+            "Compter les cycles complets au lieu de chaque bras.",
+            "Perdre son nageur de vue et compter approximativement."
+          ],
+          "feedback": [
+            "Allure reguliere : on mesure ton efficacite, pas ta vitesse.",
+            "Un coup de bras a chaque main qui entre.",
+            "Suis-le du regard, ne compte pas au hasard."
+          ],
+          "plus": [
+            "Compter les coups de bras et le temps simultanement.",
+            "Calculer l'indice de nage."
+          ],
+          "minus": [
+            "Compter sur une demi-longueur.",
+            "Comptage fait par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comptage sur une demi-longueur, effectue par le professeur.",
+            "normale": "Comptage sur trois longueurs completes par le partenaire.",
+            "complexifiee": "Comptage et chronometrage simultanes, calcul de l'indice de nage."
+          },
+          "safety": [
+            "Un nageur par couloir.",
+            "Le compteur reste au bord, jamais dans l'eau du couloir.",
+            "Surveillance du maitre nageur maintenue.",
+            "Ne pas courir au bord pour suivre son nageur : marcher."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Le defi de la longueur economique",
+          "objective": "Faire eprouver immediatement qu'on peut parcourir la meme distance avec moins de coups de bras.",
+          "material": [
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux. Chacun nage quatre longueurs en cherchant a reduire son nombre de coups de bras a chaque fois. Le partenaire compte et annonce le resultat apres chaque longueur.",
+          "studentGoal": "Faire une longueur avec le moins de coups de bras possible.",
+          "instructions": [
+            "Je nage une longueur en cherchant a reduire mes coups de bras.",
+            "Je m'allonge apres chaque coup de bras, je ne me precipite pas.",
+            "Mon partenaire m'annonce mon nombre apres chaque longueur.",
+            "Je cherche a descendre de deux coups de bras sur les quatre longueurs."
+          ],
+          "success": [
+            "Le nombre de coups de bras diminue d'au moins deux entre la premiere et la derniere longueur.",
+            "Les quatre longueurs sont nagees sans arret.",
+            "L'eleve identifie ce qui lui a permis de reduire."
+          ],
+          "execution": [
+            "Marquer un temps de glisse apres chaque coup de bras.",
+            "Tendre le bras loin devant avant de tirer.",
+            "Garder le corps aligne pour reduire les freins."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils qu'il faut s'allonger, pas ralentir ?",
+            "La reduction est-elle obtenue par la glisse ou par un arret ?"
+          ],
+          "errors": [
+            "S'arreter completement entre deux coups de bras.",
+            "Nager tres lentement au lieu de s'allonger.",
+            "Compter faux pour afficher un meilleur resultat."
+          ],
+          "feedback": [
+            "Allonge-toi, ne t'arrete pas : ce n'est pas la meme chose.",
+            "Tends ton bras loin devant avant de tirer.",
+            "On compte ce qu'on voit, pas ce qu'on voudrait."
+          ],
+          "plus": [
+            "Reduire de quatre coups de bras.",
+            "Reduire les coups de bras sans augmenter le temps."
+          ],
+          "minus": [
+            "Reduire d'un seul coup de bras.",
+            "Travail sur une demi-longueur."
+          ],
+          "diff": {
+            "facilitee": "Travail sur une demi-longueur, objectif de reduction d'un coup de bras.",
+            "normale": "Quatre longueurs, objectif de reduction de deux coups de bras.",
+            "complexifiee": "Reduction de quatre coups de bras sans augmenter le temps de la longueur."
+          },
+          "safety": [
+            "Un nageur par couloir, depart espace.",
+            "Perches accessibles.",
+            "Surveillance permanente du maitre nageur.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que mesure le nombre de coups de bras par longueur ?",
+          "Comment avez-vous reussi a en faire moins ?"
+        ],
+        "key": "Nager efficacement, ce n'est pas nager plus fort : c'est parcourir la meme distance avec moins de coups de bras, en s'allongeant apres chaque appui."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure les temps de nage.",
+        "Compteur : releve le nombre de coups de bras.",
+        "Secretaire : note les performances sur les fiches individuelles."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Allonger sa nage : l'efficacite des appuis",
+      "mainObjective": "Construire un appui efficace : prendre appui sur l'eau plutot que la brasser, pour avancer davantage a chaque coup de bras.",
+      "secondaryObjectives": [
+        "Placer sa main et son avant-bras pour prendre appui.",
+        "Tendre le bras loin devant avant de tirer.",
+        "Reduire durablement son nombre de coups de bras."
+      ],
+      "linkToPrevious": "La seance 1 a montre que beaucoup d'eleves multiplient les coups de bras sans avancer : l'efficacite de l'appui est la cause a traiter.",
+      "prerequisiteForNext": "Chaque eleve reduit son nombre de coups de bras d'au moins deux par longueur.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "pull-buoys",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "plaquettes",
+            "per": 0.5,
+            "min": 12,
+            "note": "petite taille : les grandes exposent l'epaule"
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Delimiter les couloirs par niveau.",
+          "Preparer un pull-buoy par eleve pour isoler le travail des bras.",
+          "Verifier la taille des plaquettes : les grandes surchargent l'epaule chez l'adolescent.",
+          "Distribuer les fiches de la seance 1."
+        ],
+        "sketch": "Couloirs par groupe de niveau.\nBacs de pull-buoys et plaquettes au bord de chaque couloir.\nCompteurs au bord.\nPerches accessibles."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les epaules, tres sollicitees par le travail d'appui, et installe progressivement la recherche d'allongement.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Epaules : cercles avant et arriere, moulinets, elastique si disponible.",
+              "Poignets, coudes, nuque."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "200 metres nage libre souple.",
+              "Deux longueurs en battements avec planche.",
+              "Deux longueurs en cherchant a s'allonger."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Educatifs de placement",
+            "details": [
+              "Nage rattrapee : une main attend l'autre devant, deux longueurs.",
+              "Nage en poing ferme, deux longueurs : on sent l'appui de l'avant-bras.",
+              "Retour a la nage normale : la main parait immense."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Prendre appui, ne pas brasser l'eau",
+          "objective": "Construire l'appui : main et avant-bras orientes vers l'arriere, coude haut, pour pousser l'eau vers les pieds.",
+          "material": [
+            {
+              "label": "pull-buoys",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Series de deux longueurs avec pull-buoy, qui isole le travail des bras. Trois educatifs successifs : nage rattrapee, nage en poing ferme, nage avec temps d'arret devant. Comptage des coups de bras a chaque serie.",
+          "studentGoal": "Pousser l'eau vers mes pieds a chaque coup de bras, au lieu de la brasser.",
+          "instructions": [
+            "Je tends mon bras loin devant avant de commencer a tirer.",
+            "Je garde mon coude haut : c'est mon avant-bras qui pousse, pas seulement ma main.",
+            "Je pousse l'eau vers mes pieds, jamais vers le bas ni sur le cote.",
+            "Je compte mes coups de bras a chaque longueur."
+          ],
+          "success": [
+            "Le nombre de coups de bras diminue d'au moins deux par rapport a la seance 1.",
+            "Le bras est tendu loin devant avant la traction.",
+            "Le coude reste haut pendant la traction."
+          ],
+          "execution": [
+            "Entree de main dans le prolongement de l'epaule, bras qui s'allonge.",
+            "Coude haut, avant-bras vertical : la surface d'appui est main plus avant-bras.",
+            "Poussee jusqu'a la cuisse, sans raccourcir le mouvement."
+          ],
+          "watch": [
+            "Le coude tombe-t-il, ce qui reduit la surface d'appui ?",
+            "Le bras est-il tendu devant, ou la traction commence-t-elle trop tot ?",
+            "La poussee va-t-elle jusqu'au bout ?"
+          ],
+          "errors": [
+            "Coude bas : la main pousse l'eau vers le bas au lieu de vers l'arriere.",
+            "Commencer a tirer des l'entree de la main.",
+            "Raccourcir la poussee, sortir la main a hauteur du ventre."
+          ],
+          "feedback": [
+            "Coude haut : ton avant-bras doit etre vertical.",
+            "Allonge d'abord, tu tires ensuite.",
+            "Pousse jusqu'a ta cuisse, ne t'arrete pas au ventre."
+          ],
+          "plus": [
+            "Travail avec plaquettes de petite taille.",
+            "Nage complete sans pull-buoy, en conservant les reperes."
+          ],
+          "minus": [
+            "Travail sur une demi-longueur.",
+            "Educatifs realises avec appui du bord."
+          ],
+          "diff": {
+            "facilitee": "Educatifs sur demi-longueur, avec pull-buoy et appui du bord entre chaque.",
+            "normale": "Trois educatifs sur deux longueurs chacun, avec pull-buoy.",
+            "complexifiee": "Travail avec plaquettes de petite taille, puis nage complete sans materiel."
+          },
+          "safety": [
+            "Plaquettes de petite taille uniquement : les grandes surchargent l'epaule de l'adolescent et exposent aux tendinopathies.",
+            "Volume de travail avec plaquettes limite : deux a quatre longueurs maximum.",
+            "Arret immediat en cas de douleur a l'epaule.",
+            "Un nageur par couloir, departs espaces.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord.",
+            "Comptage des eleves avant la sortie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "L'indice de nage",
+          "objective": "Introduire l'indicateur qui combine vitesse et efficacite, et qui servira de reference pour le projet.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par trois : un nageur, un chronometreur, un compteur. Chaque eleve nage deux longueurs a allure de course. On releve simultanement le temps et le nombre de coups de bras.",
+          "studentGoal": "Connaitre mon temps et mes coups de bras sur une meme longueur.",
+          "instructions": [
+            "Je nage une longueur a allure de course.",
+            "Chronometreur : je releve le temps.",
+            "Compteur : je releve les coups de bras.",
+            "On note les deux ensemble : c'est ce couple qui mesure mon efficacite."
+          ],
+          "success": [
+            "Le temps et le nombre de coups de bras sont releves sur les deux longueurs.",
+            "Les deux mesures sont notees ensemble sur la fiche.",
+            "L'eleve comprend qu'il faut ameliorer les deux, pas un seul."
+          ],
+          "execution": [
+            "Nager a allure de course, pas a allure d'educatif.",
+            "Relever les deux mesures simultanement.",
+            "Noter les deux valeurs cote a cote."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils que reduire les coups de bras en ralentissant ne sert a rien ?",
+            "Les mesures sont-elles fiables ?"
+          ],
+          "errors": [
+            "Ralentir pour reduire les coups de bras, en degradant le temps.",
+            "Nager vite en multipliant les coups de bras.",
+            "Ne noter qu'une des deux valeurs."
+          ],
+          "feedback": [
+            "Tu as moins de coups de bras mais dix secondes de plus : ce n'est pas un progres.",
+            "Les deux ensemble : vite ET efficace.",
+            "Note les deux, sinon ca ne veut rien dire."
+          ],
+          "plus": [
+            "Calculer l'indice de nage : distance divisee par le nombre de coups de bras.",
+            "Comparer son indice sur deux nages differentes."
+          ],
+          "minus": [
+            "Relever le temps seul, puis les coups de bras seuls."
+          ],
+          "diff": {
+            "facilitee": "Relever le temps sur une longueur, puis les coups de bras sur une autre, separement.",
+            "normale": "Releve simultane du temps et des coups de bras sur deux longueurs.",
+            "complexifiee": "Calcul de l'indice de nage et comparaison entre deux nages."
+          },
+          "safety": [
+            "Un nageur par couloir.",
+            "Recuperation entre les deux longueurs a allure de course.",
+            "Chronometreur et compteur au bord, jamais dans le couloir.",
+            "Surveillance du maitre nageur maintenue."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "50 metres avec contrainte de coups de bras",
+          "objective": "Reinvestir l'efficacite en situation de performance : nager vite tout en respectant un plafond de coups de bras.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve nage un 50 metres avec un plafond de coups de bras fixe : son nombre de la seance 1 moins deux par longueur. On chronometre et on compte.",
+          "studentGoal": "Nager mes 50 metres avec deux coups de bras de moins par longueur.",
+          "instructions": [
+            "Je nage 50 metres en respectant mon plafond de coups de bras.",
+            "Si je depasse, mon partenaire me le dit a l'arrivee.",
+            "Je cherche a ne pas perdre de temps malgre la contrainte.",
+            "On note le temps et le nombre de coups de bras."
+          ],
+          "success": [
+            "Le plafond de coups de bras est respecte sur les deux longueurs.",
+            "Le temps n'est pas degrade de plus de trois secondes par rapport a la seance 1.",
+            "Les deux mesures sont notees."
+          ],
+          "execution": [
+            "S'allonger apres chaque appui pour tenir le plafond.",
+            "Pousser jusqu'au bout du mouvement.",
+            "Garder une frequence reguliere plutot que d'alterner."
+          ],
+          "watch": [
+            "Le plafond est-il tenu ?",
+            "Le temps se degrade-t-il fortement ?",
+            "Les eleves s'arretent-ils entre deux appuis pour tenir le plafond ?"
+          ],
+          "errors": [
+            "Ralentir excessivement pour tenir le plafond.",
+            "Abandonner le plafond des la deuxieme longueur.",
+            "S'arreter entre deux appuis, ce qui n'est pas de la glisse."
+          ],
+          "feedback": [
+            "Allonge, ne ralentis pas : ce n'est pas la meme chose.",
+            "Tiens ton plafond sur les deux longueurs.",
+            "Pousse jusqu'au bout : c'est ca qui te fait avancer."
+          ],
+          "plus": [
+            "Plafond reduit de quatre coups de bras.",
+            "100 metres avec plafond."
+          ],
+          "minus": [
+            "Plafond reduit d'un seul coup de bras.",
+            "25 metres au lieu de 50."
+          ],
+          "diff": {
+            "facilitee": "25 metres avec plafond reduit d'un coup de bras.",
+            "normale": "50 metres avec plafond reduit de deux coups de bras par longueur.",
+            "complexifiee": "100 metres avec plafond reduit de quatre coups de bras."
+          },
+          "safety": [
+            "Un nageur par couloir, departs espaces.",
+            "Recuperation avant l'effort chronometre.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Arret immediat en cas de malaise.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle partie du bras prend appui sur l'eau, en plus de la main ?",
+          "Pourquoi reduire ses coups de bras en ralentissant n'est-il pas un progres ?"
+        ],
+        "key": "On avance en prenant appui sur l'eau avec la main ET l'avant-bras, coude haut. Etre efficace, c'est aller aussi vite avec moins de coups de bras, pas aller moins vite."
+      },
+      "socialRoles": [
+        "Compteur de coups de bras : releve l'efficacite de son camarade.",
+        "Chronometreur : mesure les temps.",
+        "Responsable materiel : distribue et range pull-buoys et plaquettes."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Respirer sans casser l'alignement",
+      "mainObjective": "Construire une respiration qui ne detruit pas la position du corps, principale perte d'efficacite en nage ventrale.",
+      "secondaryObjectives": [
+        "Tourner la tete sans la relever.",
+        "Expirer completement dans l'eau.",
+        "Adopter un rythme respiratoire adapte a la distance."
+      ],
+      "linkToPrevious": "L'appui est plus efficace, mais chaque respiration casse encore l'alignement et annule le gain : c'est le verrou suivant.",
+      "prerequisiteForNext": "Chaque eleve respire en tournant la tete, sans redressement visible.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "planches",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "pull-buoys",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Delimiter les couloirs par niveau.",
+          "Preparer une planche par eleve pour les educatifs respiratoires.",
+          "Distribuer les fiches des seances precedentes.",
+          "Verifier l'acces aux perches."
+        ],
+        "sketch": "Couloirs par groupe de niveau.\nBacs de planches au bord de chaque couloir.\nObservateurs au bord, places au milieu du bassin pour voir la respiration.\nPerches accessibles."
+      },
+      "warmup": {
+        "rationale": "Installe d'emblee le travail respiratoire, en insistant sur l'expiration aquatique complete qui conditionne tout le reste.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Epaules, nuque, poignets.",
+              "Rotations douces de la nuque, sans cercles complets."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train et expirations",
+            "details": [
+              "200 metres souple.",
+              "Au bord : inspirer, immerger le visage, souffler 4 secondes. 10 fois.",
+              "Deux longueurs en soufflant en continu dans l'eau."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Educatifs respiratoires",
+            "details": [
+              "Battements avec planche, respiration laterale imposee, deux longueurs.",
+              "Nage rattrapee avec respiration d'un seul cote, deux longueurs.",
+              "Verification : une joue reste dans l'eau."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Tourner la tete, ne pas la lever",
+          "objective": "Construire la rotation de la tete sur l'axe du corps, qui preserve l'alignement pendant la prise d'air.",
+          "material": [
+            {
+              "label": "planches",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "pull-buoys",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Progression en trois etapes de quatre longueurs : battements avec planche et respiration laterale, nage rattrapee avec respiration imposee, nage complete. Un observateur au milieu du bassin verifie si la tete se releve.",
+          "studentGoal": "Prendre mon air en tournant la tete, sans jamais la relever.",
+          "instructions": [
+            "Je tourne la tete sur le cote : une joue reste dans l'eau.",
+            "Je ne releve jamais la tete vers l'avant.",
+            "Je souffle dans l'eau en continu entre deux inspirations.",
+            "Observateur : je me place au milieu du bassin et je regarde si la tete se releve."
+          ],
+          "success": [
+            "Aucune elevation de tete observee sur la derniere serie.",
+            "Une joue reste visible dans l'eau a chaque inspiration.",
+            "L'expiration est continue entre deux prises d'air."
+          ],
+          "execution": [
+            "Rotation de la tete solidaire de celle des epaules.",
+            "Une lunette reste dans l'eau pendant l'inspiration.",
+            "Expiration continue par la bouche et le nez pendant l'immersion."
+          ],
+          "watch": [
+            "La tete se releve-t-elle vers l'avant ?",
+            "L'eleve retient-il son souffle ?",
+            "La rotation entraine-t-elle tout le corps, ce qui casse l'alignement ?"
+          ],
+          "errors": [
+            "Relever la tete vers l'avant : les jambes coulent immediatement.",
+            "Retenir son souffle et souffler d'un coup a la sortie.",
+            "Rouler tout le corps au lieu de tourner la tete."
+          ],
+          "feedback": [
+            "Une joue dans l'eau : tu tournes, tu ne leves pas.",
+            "Souffle en continu, des bulles doivent sortir sans arret.",
+            "Ta tete tourne, ton corps reste aligne."
+          ],
+          "plus": [
+            "Respiration bilaterale, tous les trois coups de bras.",
+            "Respiration imposee tous les cinq coups de bras."
+          ],
+          "minus": [
+            "Respiration avec planche uniquement.",
+            "Respiration a chaque coup de bras."
+          ],
+          "diff": {
+            "facilitee": "Travail avec planche uniquement, respiration a chaque coup de bras, sur demi-longueur.",
+            "normale": "Progression en trois etapes jusqu'a la nage complete, respiration laterale.",
+            "complexifiee": "Respiration bilaterale tous les trois coups de bras, ou tous les cinq."
+          },
+          "safety": [
+            "Aucune contrainte d'apnee : l'eleve respire des qu'il en a besoin.",
+            "Aucun exercice d'hyperventilation, formellement proscrit en milieu aquatique.",
+            "Un nageur par couloir, departs espaces.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord.",
+            "Arret immediat en cas de sensation de vertige."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Choisir son rythme respiratoire",
+          "objective": "Adapter la frequence respiratoire a la distance et a l'intensite, plutot que de subir un rythme unique.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Trois series de deux longueurs a allure de course, avec trois rythmes imposes : respiration tous les deux, tous les trois, tous les quatre coups de bras. On releve le temps et les sensations.",
+          "studentGoal": "Trouver le rythme respiratoire qui me permet d'aller le plus vite sans m'asphyxier.",
+          "instructions": [
+            "Je nage deux longueurs avec le rythme impose.",
+            "Je note mon temps et si j'ai manque d'air.",
+            "On compare les trois rythmes a la fin.",
+            "Je retiens celui qui me convient pour une distance de 50 metres."
+          ],
+          "success": [
+            "Les trois rythmes sont essayes sur deux longueurs chacun.",
+            "Les temps et sensations sont notes.",
+            "L'eleve identifie le rythme qui lui convient."
+          ],
+          "execution": [
+            "Tenir le rythme impose sur toute la serie.",
+            "Expirer completement entre deux inspirations.",
+            "Comparer objectivement les temps."
+          ],
+          "watch": [
+            "Les eleves tiennent-ils le rythme impose ?",
+            "Certains s'asphyxient-ils sur le rythme le plus espace ?",
+            "Le rythme le plus espace est-il forcement le plus rapide ?"
+          ],
+          "errors": [
+            "Abandonner le rythme impose en cours de serie.",
+            "Choisir le rythme le plus espace par principe, en s'asphyxiant.",
+            "Ne pas noter les sensations."
+          ],
+          "feedback": [
+            "Tiens ton rythme jusqu'au bout de la serie.",
+            "Respirer moins n'est pas forcement nager plus vite : regarde ton temps.",
+            "Note ce que tu as ressenti, pas seulement ton temps."
+          ],
+          "plus": [
+            "Rythme respiratoire different selon la longueur : dense puis espace.",
+            "Comparer les rythmes sur 100 metres."
+          ],
+          "minus": [
+            "Deux rythmes seulement, tres contrastes.",
+            "Une longueur par rythme."
+          ],
+          "diff": {
+            "facilitee": "Deux rythmes contrastes sur une longueur chacun.",
+            "normale": "Trois rythmes sur deux longueurs chacun, avec releve du temps.",
+            "complexifiee": "Rythmes variables selon la longueur, comparaison sur 100 metres."
+          },
+          "safety": [
+            "Aucun rythme respiratoire impose au-dela de quatre coups de bras : au-dela, le risque d'hypoxie augmente.",
+            "Aucune apnee volontaire ni hyperventilation.",
+            "Arret immediat en cas de vertige, de picotements ou de vision troublee.",
+            "Un nageur par couloir.",
+            "Surveillance permanente du maitre nageur.",
+            "Recuperation entre chaque serie."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "50 metres avec respiration maitrisee",
+          "objective": "Mesurer le gain obtenu par une respiration qui preserve l'alignement.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve nage un 50 metres avec son rythme respiratoire choisi et sans relever la tete. Un observateur au milieu du bassin note les elevations de tete. On compare le temps a celui de la seance 1.",
+          "studentGoal": "Battre mon temps de la seance 1 grace a ma respiration.",
+          "instructions": [
+            "Je nage 50 metres avec mon rythme respiratoire choisi.",
+            "Je ne releve jamais la tete : une joue reste dans l'eau.",
+            "Observateur : je compte les elevations de tete.",
+            "On compare avec mon temps de la seance 1."
+          ],
+          "success": [
+            "Moins de deux elevations de tete sur les 50 metres.",
+            "Le temps est ameliore par rapport a la seance 1.",
+            "Le nombre de coups de bras ne remonte pas."
+          ],
+          "execution": [
+            "Maintenir la rotation de tete meme en fin de course.",
+            "Garder l'expiration continue.",
+            "Conserver l'allongement travaille en seance 2."
+          ],
+          "watch": [
+            "La respiration tient-elle a allure de course ?",
+            "Le gain est-il visible sur les temps ?",
+            "L'efficacite de la seance 2 est-elle conservee ?"
+          ],
+          "errors": [
+            "Relever la tete des que la fatigue arrive.",
+            "Perdre l'allongement en se concentrant sur la respiration.",
+            "Retenir son souffle sur la fin."
+          ],
+          "feedback": [
+            "Ta tete se releve sur les dix derniers metres : tiens la rotation.",
+            "N'oublie pas ton allongement : les deux ensemble.",
+            "Souffle jusqu'au bout, ne bloque pas."
+          ],
+          "plus": [
+            "100 metres avec respiration maitrisee.",
+            "50 metres avec plafond de coups de bras en plus."
+          ],
+          "minus": [
+            "25 metres.",
+            "Respiration a chaque coup de bras autorisee."
+          ],
+          "diff": {
+            "facilitee": "25 metres, respiration a chaque coup de bras autorisee, objectif limite a l'absence d'elevation.",
+            "normale": "50 metres avec rythme choisi et sans elevation de tete.",
+            "complexifiee": "100 metres, ou 50 metres avec plafond de coups de bras simultane."
+          },
+          "safety": [
+            "Un nageur par couloir, departs espaces.",
+            "Recuperation avant l'effort chronometre.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Arret immediat en cas de malaise ou d'essoufflement anormal.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que se passe-t-il aux jambes quand on releve la tete pour respirer ?",
+          "Le rythme respiratoire le plus espace est-il toujours le plus rapide ?"
+        ],
+        "key": "On respire en tournant la tete, une joue dans l'eau : relever la tete fait couler les jambes et annule tout le travail d'efficacite."
+      },
+      "socialRoles": [
+        "Observateur de respiration : compte les elevations de tete depuis le bord.",
+        "Chronometreur : mesure les temps.",
+        "Responsable materiel : distribue et range planches et pull-buoys."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "La deuxieme nage : le dos",
+      "mainObjective": "Construire une deuxieme nage utilisable en performance, le dos, qui repond a l'attendu des deux styles de nages.",
+      "secondaryObjectives": [
+        "Nager sur le dos avec un corps aligne et un bassin haut.",
+        "Construire le mouvement de bras alterne en dos.",
+        "Comparer son efficacite dans les deux nages."
+      ],
+      "linkToPrevious": "La nage principale est plus efficace : les attendus du cycle 4 exigent deux styles de nages, il faut donc en construire une seconde.",
+      "prerequisiteForNext": "Chaque eleve nage 50 metres en dos sans arret.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "planches",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "pull-buoys",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          },
+          {
+            "label": "reperes de fin de bassin",
+            "fixed": 4,
+            "note": "drapeaux ou marques visibles depuis la position dorsale"
+          }
+        ],
+        "instructions": [
+          "Installer des reperes visibles depuis la position dorsale, a 5 metres du mur.",
+          "Delimiter les couloirs par niveau.",
+          "Preparer une planche par eleve.",
+          "Rappeler avant de commencer : en dos, on ne voit pas ou on va."
+        ],
+        "sketch": "Couloirs par groupe de niveau.\nReperes visibles a 5 m de chaque mur, pour annoncer la fin du bassin en dos.\nAnnonceurs au bord pour prevenir les nageurs dorsaux.\nPerches accessibles."
+      },
+      "warmup": {
+        "rationale": "Prepare la nuque et les epaules, sollicitees differemment en dos, et installe progressivement le renversement de la position.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Nuque : flexions douces avant-arriere, rotations lentes.",
+              "Epaules : cercles complets avant et arriere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train et flottaison dorsale",
+            "details": [
+              "150 metres nage libre souple.",
+              "Flottaison dorsale au bord, 10 secondes, 3 fois.",
+              "Deux longueurs en battements dorsaux, bras le long du corps."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Educatifs dorsaux",
+            "details": [
+              "Battements dorsaux avec planche sur le ventre, deux longueurs.",
+              "Battements dorsaux bras tendus dans le prolongement, deux longueurs.",
+              "Un bras seul, l'autre le long du corps, une longueur de chaque cote."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Construire le dos crawle",
+          "objective": "Construire une nage dorsale efficace : corps aligne, bassin haut, bras alternes.",
+          "material": [
+            {
+              "label": "planches",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "reperes de fin de bassin",
+              "fixed": 4
+            }
+          ],
+          "organization": "Progression en quatre etapes de deux longueurs : battements seuls, un bras, bras alternes lents, nage complete. Un annonceur au bord previent chaque nageur a l'approche du mur.",
+          "studentGoal": "Nager sur le dos en gardant mon corps aligne et mon bassin haut.",
+          "instructions": [
+            "Je pose ma tete en arriere, oreilles dans l'eau, regard vers le plafond.",
+            "Je pousse mon ventre vers le haut : mon bassin ne doit pas couler.",
+            "Mes bras passent tendus au-dessus de moi, l'un apres l'autre.",
+            "Je compte mes coups de bras a partir du repere pour savoir quand le mur arrive."
+          ],
+          "success": [
+            "Deux longueurs nagees en dos complet, sans arret.",
+            "Le bassin reste proche de la surface.",
+            "Le nageur anticipe le mur grace au repere."
+          ],
+          "execution": [
+            "Tete posee, oreilles immergees, regard vers le plafond.",
+            "Ventre pousse vers le haut, bassin en surface.",
+            "Bras tendu qui entre dans l'eau dans l'axe de l'epaule, petit doigt en premier."
+          ],
+          "watch": [
+            "Le bassin coule-t-il, position assise ?",
+            "L'eleve releve-t-il la tete pour se reperer ?",
+            "Les bras passent-ils dans l'axe ou en travers ?",
+            "Les nageurs anticipent-ils le mur ?"
+          ],
+          "errors": [
+            "Position assise, bassin bas : le nageur pousse l'eau devant lui.",
+            "Relever la tete pour voir ou on va : le bassin coule aussitot.",
+            "Toucher le mur avec la tete faute d'anticipation."
+          ],
+          "feedback": [
+            "Pousse ton ventre vers le haut : tu es assis dans l'eau.",
+            "Regarde le plafond, pas tes pieds : le repere te previendra.",
+            "Bras tendu au-dessus de toi, dans l'axe de ton epaule."
+          ],
+          "plus": [
+            "Dos complet sur 100 metres.",
+            "Dos avec comptage de coups de bras."
+          ],
+          "minus": [
+            "Battements dorsaux avec planche uniquement.",
+            "Une longueur au lieu de deux."
+          ],
+          "diff": {
+            "facilitee": "Battements dorsaux avec planche et pull-buoy, une longueur par etape.",
+            "normale": "Progression en quatre etapes jusqu'au dos complet, deux longueurs chacune.",
+            "complexifiee": "Dos complet sur 100 metres, avec comptage des coups de bras."
+          },
+          "safety": [
+            "En dos, le nageur ne voit pas ou il va : un annonceur au bord previent a l'approche du mur, ou des reperes visibles sont installes a 5 metres.",
+            "Un nageur par couloir : les trajectoires en dos sont moins maitrisees.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord.",
+            "Arret immediat en cas de gene respiratoire liee a l'eau sur le visage.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Comparer ses deux nages",
+          "objective": "Mesurer son efficacite dans les deux nages, pour construire un projet adapte a chacune.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par trois. Chaque eleve nage 50 metres dans sa nage principale, puis 50 metres en dos, avec 4 minutes de recuperation. On releve temps et coups de bras dans les deux cas.",
+          "studentGoal": "Connaitre mon temps et mon efficacite dans mes deux nages.",
+          "instructions": [
+            "Je nage 50 metres dans ma nage principale.",
+            "Apres recuperation, je nage 50 metres en dos.",
+            "On releve le temps et les coups de bras dans les deux cas.",
+            "On compare : quel est l'ecart entre mes deux nages ?"
+          ],
+          "success": [
+            "Les deux 50 metres sont realises et mesures.",
+            "Temps et coups de bras notes pour les deux nages.",
+            "L'eleve sait dire quel est son ecart entre les deux."
+          ],
+          "execution": [
+            "Nager les deux a allure de course comparable.",
+            "Respecter la recuperation entre les deux.",
+            "Noter les quatre valeurs sur la fiche."
+          ],
+          "watch": [
+            "L'ecart entre les deux nages est-il tres important ?",
+            "Le dos est-il tenable sur 50 metres pour tous ?"
+          ],
+          "errors": [
+            "Nager le dos beaucoup plus lentement par prudence.",
+            "Ne pas respecter la recuperation entre les deux.",
+            "Ne noter que la nage principale."
+          ],
+          "feedback": [
+            "Nage ton dos a allure de course aussi, sinon on ne compare rien.",
+            "Recupere avant le deuxieme : sinon ton temps ne veut rien dire.",
+            "Note les quatre valeurs, tu en auras besoin pour ton projet."
+          ],
+          "plus": [
+            "Comparer trois nages.",
+            "Calculer l'indice de nage dans les deux."
+          ],
+          "minus": [
+            "25 metres dans chaque nage.",
+            "Comparaison des temps seuls."
+          ],
+          "diff": {
+            "facilitee": "25 metres dans chaque nage, comparaison des temps seuls.",
+            "normale": "50 metres dans chaque nage, temps et coups de bras releves.",
+            "complexifiee": "Trois nages comparees, avec calcul de l'indice de nage."
+          },
+          "safety": [
+            "Recuperation de 4 minutes obligatoire entre les deux efforts.",
+            "Un nageur par couloir, annonceur pour le dos.",
+            "Surveillance permanente du maitre nageur.",
+            "Arret immediat en cas de malaise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Le 100 metres deux nages",
+          "objective": "Enchainer les deux nages sur une meme epreuve, format de l'evaluation finale.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "reperes de fin de bassin",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve nage 100 metres : 50 metres dans sa nage principale, puis 50 metres en dos, sans arret entre les deux. On chronometre le total et les deux temps de passage.",
+          "studentGoal": "Enchainer mes deux nages sur 100 metres, sans m'arreter au changement.",
+          "instructions": [
+            "Je nage 50 metres dans ma nage principale.",
+            "Je change de nage au mur, sans m'arreter.",
+            "Je nage 50 metres en dos jusqu'a l'arrivee.",
+            "Chronometreur : je releve le temps a 50 metres et a 100 metres."
+          ],
+          "success": [
+            "Les 100 metres sont nages sans arret ni reprise d'appui.",
+            "Le changement de nage se fait au mur, sans pause.",
+            "Les deux temps de passage sont releves."
+          ],
+          "execution": [
+            "Gerer son allure : ne pas tout donner sur les 50 premiers metres.",
+            "Changer de nage rapidement au mur.",
+            "Conserver l'alignement dans les deux nages."
+          ],
+          "watch": [
+            "Le changement de nage provoque-t-il un arret ?",
+            "Les eleves partent-ils trop vite sur la premiere partie ?",
+            "Le dos tient-il apres 50 metres d'effort ?"
+          ],
+          "errors": [
+            "S'arreter au mur pour changer de nage.",
+            "Partir a fond et s'effondrer sur le dos.",
+            "Se reprendre au bord pendant la transition."
+          ],
+          "feedback": [
+            "Change au mur sans t'arreter : ca fait partie de l'epreuve.",
+            "Garde de la reserve : le dos arrive apres.",
+            "Ne t'accroche pas au bord, tu peux flotter sur le dos pour recuperer."
+          ],
+          "plus": [
+            "200 metres en quatre fois 50, deux nages alternees."
+          ],
+          "minus": [
+            "50 metres en deux fois 25.",
+            "Pause de 10 secondes autorisee au changement."
+          ],
+          "diff": {
+            "facilitee": "50 metres en deux fois 25, pause de 10 secondes autorisee au changement de nage.",
+            "normale": "100 metres en deux fois 50, sans arret au changement.",
+            "complexifiee": "200 metres en quatre fois 50, nages alternees."
+          },
+          "safety": [
+            "Un nageur par couloir, annonceur pour la partie dorsale.",
+            "Recuperation complete avant l'effort.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Arret immediat en cas d'essoufflement anormal ou de malaise.",
+            "Aucune contrainte d'apnee lors du changement de nage.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire de son bassin pour ne pas nager assis en dos ?",
+          "Comment savoir que le mur approche quand on nage sur le dos ?"
+        ],
+        "key": "En dos, le bassin doit rester haut et la tete posee : on ne se releve pas pour se reperer, on compte ses coups de bras a partir du repere."
+      },
+      "socialRoles": [
+        "Annonceur de mur : previent le nageur dorsal a l'approche du bord.",
+        "Chronometreur : releve les temps de passage.",
+        "Compteur : releve les coups de bras dans les deux nages."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Test evalue de mi-cycle et projet de nage",
+      "mainObjective": "Mesurer les acquis a mi-parcours et construire le projet de nage qui sera realise a l'evaluation finale.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Verifier la progression sur le 50 metres et l'indice de nage.",
+        "Tenir les roles de chronometreur et d'observateur en evaluation.",
+        "Ecrire un projet de temps chiffre pour les deux epreuves."
+      ],
+      "linkToPrevious": "Efficacite, respiration et deuxieme nage sont construites : l'eleve dispose de tout le necessaire pour concevoir son projet.",
+      "prerequisiteForNext": "Chaque eleve a un projet de nage ecrit, chiffre et realiste.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20,
+            "note": "les memes depuis la seance 1"
+          },
+          {
+            "label": "fiches de projet de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "stylos et supports rigides",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "reperes de fin de bassin",
+            "fixed": 4
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand, au bord du bassin.",
+          "Preparer les fiches de projet vierges.",
+          "Ressortir les fiches individuelles des seances precedentes.",
+          "Prevoir un espace hors zone humide pour la redaction du projet.",
+          "Verifier les chronometres et les perches."
+        ],
+        "sketch": "Couloirs de test par groupe de niveau.\nAffichage des criteres au bord.\nZone de redaction du projet hors zone humide.\nAnnonceurs et chronometreurs au bord."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer avant un effort est un attendu explicite, et l'evaluation est l'occasion de le verifier.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord autonome",
+            "details": [
+              "Chaque groupe s'echauffe seul : epaules, nuque, chevilles.",
+              "Le professeur circule et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "200 metres souple.",
+              "Deux longueurs en battements, deux en traction."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action progressive",
+            "details": [
+              "Quatre longueurs a allure croissante.",
+              "Deux longueurs en dos pour reactiver la deuxieme nage.",
+              "Recuperation complete avant le test."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Test evalue : 50 metres et 100 metres deux nages",
+          "objective": "Evaluer la performance et l'efficacite dans les conditions de l'evaluation finale.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "reperes de fin de bassin",
+              "fixed": 4
+            }
+          ],
+          "organization": "Deux epreuves separees par 6 minutes de recuperation : un 50 metres dans la nage principale, puis un 100 metres deux nages. Chronometreur, compteur et observateur tenus par les eleves.",
+          "studentGoal": "Montrer ce que j'ai appris : nager plus vite avec moins de coups de bras.",
+          "instructions": [
+            "Je nage mon 50 metres dans ma nage principale, a fond.",
+            "Apres recuperation, je nage le 100 metres deux nages.",
+            "Chronometreur et compteur : vos mesures comptent, soyez precis.",
+            "Observateur : je note les elevations de tete a la respiration."
+          ],
+          "success": [
+            "Le temps sur 50 metres est ameliore par rapport a la seance 1.",
+            "Le nombre de coups de bras est reduit par rapport a la seance 1.",
+            "Le 100 metres est nage sans arret ni reprise d'appui.",
+            "Moins de deux elevations de tete observees."
+          ],
+          "execution": [
+            "Conserver l'allongement et la respiration travailles.",
+            "Gerer son allure sur le 100 metres.",
+            "Changer de nage au mur sans s'arreter."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils en situation d'evaluation ?",
+            "Qui a le plus progresse depuis la seance 1 ?",
+            "Les roles de mesure sont-ils tenus serieusement ?",
+            "Signes de fatigue excessive entre les deux epreuves."
+          ],
+          "errors": [
+            "Revenir aux anciens automatismes sous la pression.",
+            "Multiplier les coups de bras pour aller plus vite.",
+            "Chronometrer ou compter approximativement."
+          ],
+          "feedback": [
+            "Garde ton allongement, meme chronometre.",
+            "Plus de coups de bras ne veut pas dire plus vite.",
+            "Compteur, suis-le du regard sur toute la longueur."
+          ],
+          "plus": [
+            "200 metres quatre nages pour les eleves les plus a l'aise.",
+            "Depart plonge si le protocole l'autorise."
+          ],
+          "minus": [
+            "25 metres et 50 metres deux nages.",
+            "Pause autorisee au changement de nage."
+          ],
+          "diff": {
+            "facilitee": "25 metres puis 50 metres en deux nages, avec pause autorisee au changement.",
+            "normale": "50 metres puis 100 metres deux nages, sans arret.",
+            "complexifiee": "50 metres depart plonge puis 200 metres en nages alternees."
+          },
+          "safety": [
+            "Surveillance permanente et rapprochee du maitre nageur pendant tout le test.",
+            "Un nageur par couloir, annonceur pour les parties dorsales.",
+            "Recuperation de 6 minutes obligatoire entre les deux epreuves.",
+            "Aucun depart plonge sans validation du protocole local et de la profondeur.",
+            "Arret immediat du test en cas de malaise, de paleur ou d'essoufflement anormal.",
+            "Perches accessibles au bord.",
+            "Comptage des eleves a l'entree, a mi-seance et a la sortie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Analyser sa progression",
+          "objective": "Faire analyser a chaque eleve sa progression chiffree depuis la seance 1, temps et efficacite.",
+          "material": [
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos et supports rigides",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, assis au bord hors de l'eau. Chacun compare ses mesures des seances 1, 2, 3 et 5, et identifie ce qui a le plus progresse.",
+          "studentGoal": "Savoir ce qui a le plus progresse : ma vitesse ou mon efficacite.",
+          "instructions": [
+            "Je compare mes temps et mes coups de bras sur les quatre seances.",
+            "Je repere ce qui a le plus progresse.",
+            "J'identifie ce qui bloque encore : efficacite, respiration, ou deuxieme nage.",
+            "J'en parle avec mon camarade."
+          ],
+          "success": [
+            "La comparaison est faite sur les deux indicateurs.",
+            "Le point fort et le point faible sont identifies.",
+            "L'echange a deux a lieu."
+          ],
+          "execution": [
+            "Comparer les chiffres, pas les impressions.",
+            "Distinguer progression de vitesse et progression d'efficacite.",
+            "Nommer une cause precise."
+          ],
+          "watch": [
+            "Les eleves s'appuient-ils sur les chiffres ?",
+            "Identifient-ils correctement leur point faible ?"
+          ],
+          "errors": [
+            "Ne regarder que le temps, sans l'efficacite.",
+            "Comparer ses temps a ceux des autres.",
+            "Conclure sans chiffres."
+          ],
+          "feedback": [
+            "Regarde aussi tes coups de bras, pas seulement ton temps.",
+            "Tu te compares a toi-meme, pas au voisin.",
+            "Combien exactement ? Regarde tes quatre lignes."
+          ],
+          "plus": [
+            "Calculer le pourcentage de progression sur les deux indicateurs."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee, le professeur pointe ce qui a progresse.",
+            "normale": "Analyse autonome a deux sur les quatre seances.",
+            "complexifiee": "Calcul du pourcentage de progression sur temps et efficacite."
+          },
+          "safety": [
+            "Phase assise au bord, hors de l'eau, apres recuperation complete.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase.",
+            "Eleves assis a distance du bord glissant."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ecrire son projet de nage",
+          "objective": "Construire le projet chiffre qui sera realise et evalue a la seance 8.",
+          "material": [
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos et supports rigides",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "affiche des criteres d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Individuellement, assis au bord. Chacun ecrit le temps qu'il vise sur les deux epreuves de l'evaluation finale, en le justifiant par ses resultats du jour.",
+          "studentGoal": "Ecrire les deux temps que je vise a l'evaluation, et les justifier.",
+          "instructions": [
+            "J'ecris le temps que je vise sur le 50 metres.",
+            "J'ecris le temps que je vise sur le 100 metres deux nages.",
+            "Je pars de mes temps d'aujourd'hui : je vise un gain realiste.",
+            "Je garde ma fiche : je la realiserai a la seance 8."
+          ],
+          "success": [
+            "Les deux temps vises sont ecrits et chiffres.",
+            "Ils sont justifies par les resultats du jour.",
+            "Le gain vise est realiste : quelques secondes, pas une transformation."
+          ],
+          "execution": [
+            "Partir du temps realise aujourd'hui.",
+            "Viser un gain de deux a cinq secondes selon l'epreuve.",
+            "Identifier ou ce gain sera pris."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les eleves justifient-ils leur annonce ?"
+          ],
+          "errors": [
+            "Viser un temps sans rapport avec la performance du jour.",
+            "Projet non chiffre.",
+            "Viser un gain irrealiste en trois seances."
+          ],
+          "feedback": [
+            "Dix secondes de gain en trois seances, c'est impossible : vise trois.",
+            "Chiffre-le : quel temps exactement ?",
+            "Ou vas-tu prendre ces secondes ?"
+          ],
+          "plus": [
+            "Prevoir aussi l'indice de nage vise."
+          ],
+          "minus": [
+            "Objectif propose par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Objectif propose par le professeur a partir des temps realises.",
+            "normale": "Deux temps vises chiffres et justifies.",
+            "complexifiee": "Temps vises plus indice de nage vise pour chaque epreuve."
+          },
+          "safety": [
+            "Phase d'ecriture assise au bord, hors de l'eau, apres recuperation.",
+            "Le professeur valide chaque projet.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui a le plus progresse chez vous : la vitesse ou l'efficacite ?",
+          "Quels temps visez-vous a la derniere seance, et ou allez-vous les gagner ?"
+        ],
+        "key": "Un projet de nage part des chiffres reels : on vise un gain de quelques secondes, en sachant precisement ou on va le prendre."
+      },
+      "socialRoles": [
+        "Chronometreur evaluateur : mesure les temps officiels de la seance.",
+        "Compteur : releve les coups de bras.",
+        "Observateur de respiration : note les elevations de tete."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Coulees et virages : gagner aux extremites",
+      "mainObjective": "Gagner du temps la ou il se perd le plus : les departs, les coulees et les virages.",
+      "secondaryObjectives": [
+        "Realiser une coulee longue et gainee apres chaque poussee.",
+        "Enchainer le virage sans temps mort.",
+        "Reduire le temps passe au mur."
+      ],
+      "linkToPrevious": "La nage est efficace, mais chaque extremite de bassin coute du temps : c'est le dernier gisement disponible.",
+      "prerequisiteForNext": "Chaque eleve realise une coulee de 5 metres et un virage sans arret au mur.",
+      "setup": {
+        "installationMinutes": 9,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "reperes de distance dans l'eau",
+            "fixed": 8,
+            "note": "marques a 3, 5 et 7 metres du mur"
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Placer des reperes visibles a 3, 5 et 7 metres de chaque mur, pour mesurer les coulees.",
+          "Delimiter les couloirs par niveau.",
+          "Verifier la profondeur pres des murs : les coulees se font en immersion.",
+          "Distribuer les fiches des seances precedentes."
+        ],
+        "sketch": "Couloirs par niveau.\nReperes a 3, 5 et 7 m de chaque mur, visibles depuis l'eau.\nObservateurs au bord pour mesurer les coulees.\nPerches accessibles."
+      },
+      "warmup": {
+        "rationale": "Prepare le gainage, essentiel a la coulee, et les appuis de poussee au mur.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Echauffement au bord",
+            "details": [
+              "Epaules, nuque, chevilles.",
+              "Gainage debout : ventre serre, 20 secondes, 2 fois."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "200 metres souple.",
+              "Deux longueurs en battements avec coulee marquee a chaque depart."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Coulees progressives",
+            "details": [
+              "Cinq poussees au mur, coulee gainee sans mouvement, jusqu'a l'arret.",
+              "Meme chose avec trois battements pour prolonger.",
+              "Reperer la distance atteinte a chaque essai."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "La coulee la plus longue",
+          "objective": "Construire une coulee gainee et alignee, qui prolonge la poussee sans depense energetique.",
+          "material": [
+            {
+              "label": "reperes de distance dans l'eau",
+              "fixed": 8
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Par deux, un nageur un observateur qui releve la distance atteinte. Progression : coulee sans mouvement, coulee avec battements, coulee suivie de la reprise de nage. Six essais par etape.",
+          "studentGoal": "Glisser le plus loin possible apres ma poussee au mur.",
+          "instructions": [
+            "Je pousse fort au mur avec mes deux pieds.",
+            "Je tends mes bras devant, une main sur l'autre, bras contre les oreilles.",
+            "Je serre mon ventre et mes fesses : mon corps est une fleche.",
+            "Je reprends ma nage avant de m'arreter completement, jamais apres."
+          ],
+          "success": [
+            "Coulee de 5 metres au minimum.",
+            "Progression d'au moins un metre entre le premier et le dernier essai.",
+            "La reprise de nage se fait avant l'arret complet."
+          ],
+          "execution": [
+            "Bras tendus devant, serres contre les oreilles, mains superposees.",
+            "Corps gaine, jambes serrees, pointes de pieds allongees.",
+            "Tete dans l'axe, regard vers le fond."
+          ],
+          "watch": [
+            "La coulee est-elle gainee ou le corps est-il relache ?",
+            "La tete est-elle dans l'axe ou relevee ?",
+            "La reprise de nage se fait-elle trop tard, apres l'arret ?"
+          ],
+          "errors": [
+            "Corps relache : la coulee s'arrete en deux metres.",
+            "Bras ecartes, ce qui freine.",
+            "Attendre l'arret complet pour reprendre la nage."
+          ],
+          "feedback": [
+            "Serre ton ventre : ton corps doit etre une fleche.",
+            "Cache tes oreilles avec tes bras.",
+            "Reprends ta nage avant de t'arreter, sinon tu perds tout."
+          ],
+          "plus": [
+            "Coulee de 7 metres.",
+            "Coulee avec ondulations."
+          ],
+          "minus": [
+            "Coulee de 3 metres.",
+            "Coulee avec appui du bord au depart."
+          ],
+          "diff": {
+            "facilitee": "Coulee de 3 metres, poussee depuis un appui du bord, sans immersion profonde.",
+            "normale": "Coulee de 5 metres, gainee, avec reprise de nage anticipee.",
+            "complexifiee": "Coulee de 7 metres, avec ondulations pour prolonger."
+          },
+          "safety": [
+            "Verifier la profondeur pres des murs avant tout travail de coulee immergee.",
+            "Aucune coulee en apnee prolongee : la reprise de nage se fait avant l'arret.",
+            "Un nageur par couloir, departs espaces.",
+            "Aucun exercice d'apnee ni d'hyperventilation.",
+            "Surveillance permanente du maitre nageur.",
+            "Perches accessibles au bord."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le virage sans temps mort",
+          "objective": "Reduire le temps passe au mur : arriver, pivoter, pousser sans pause.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "reperes de distance dans l'eau",
+              "fixed": 8
+            }
+          ],
+          "organization": "Par deux. Le nageur fait un aller-retour de 50 metres, le partenaire chronometre le temps passe entre le contact au mur et la reprise de nage. Six essais, avec recherche de reduction.",
+          "studentGoal": "Reduire le temps que je passe au mur a chaque virage.",
+          "instructions": [
+            "J'arrive au mur sans ralentir : je nage jusqu'au contact.",
+            "Je pivote et je pousse immediatement, sans pause.",
+            "J'enchaine avec ma coulee gainee.",
+            "Partenaire : je chronometre le temps entre le contact et la reprise de nage."
+          ],
+          "success": [
+            "Le temps au mur est reduit d'au moins une seconde entre le premier et le dernier essai.",
+            "Aucun ralentissement avant le mur.",
+            "La coulee suit immediatement la poussee."
+          ],
+          "execution": [
+            "Nager jusqu'au mur, sans ralentir dans les derniers metres.",
+            "Pivoter en groupant le corps, pieds au mur.",
+            "Pousser immediatement et enchainer la coulee."
+          ],
+          "watch": [
+            "Les eleves ralentissent-ils avant le mur ?",
+            "Y a-t-il une pause entre le contact et la poussee ?",
+            "La coulee est-elle conservee apres le virage ?"
+          ],
+          "errors": [
+            "Ralentir dans les cinq derniers metres avant le mur.",
+            "S'arreter au mur pour reprendre son souffle.",
+            "Pousser sans enchainer la coulee."
+          ],
+          "feedback": [
+            "Ne ralentis pas : nage jusqu'au contact.",
+            "Pivote et pousse tout de suite, pas de pause.",
+            "Ta coulee suit ta poussee, immediatement."
+          ],
+          "plus": [
+            "Virage culbute pour les eleves a l'aise, si le protocole l'autorise.",
+            "Enchainer quatre virages sur 100 metres."
+          ],
+          "minus": [
+            "Virage simple avec appui des deux mains.",
+            "Pause de 2 secondes toleree."
+          ],
+          "diff": {
+            "facilitee": "Virage simple avec appui des deux mains au mur, pause de 2 secondes toleree.",
+            "normale": "Virage pivote sans pause, enchaine avec la coulee.",
+            "complexifiee": "Virage culbute si le protocole et le niveau l'autorisent."
+          },
+          "safety": [
+            "Le virage culbute n'est aborde qu'avec les eleves a l'aise et si le protocole local l'autorise : il expose a la desorientation et au choc au mur.",
+            "Verifier la profondeur pres des murs.",
+            "Un nageur par couloir.",
+            "Ne jamais aborder le mur a pleine vitesse sans maitriser le repere de distance.",
+            "Surveillance permanente du maitre nageur.",
+            "Arret immediat en cas de choc au mur ou de desorientation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "100 metres avec extremites travaillees",
+          "objective": "Mesurer le gain obtenu sur les coulees et les virages, sur une distance qui en comporte plusieurs.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "reperes de distance dans l'eau",
+              "fixed": 8
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve nage 100 metres deux nages avec coulees et virages travailles. On compare le temps a celui de la seance 5.",
+          "studentGoal": "Battre mon temps de la seance 5 grace a mes coulees et mes virages.",
+          "instructions": [
+            "Je nage mes 100 metres deux nages.",
+            "Je soigne chaque coulee et chaque virage.",
+            "Je nage jusqu'au mur sans ralentir.",
+            "On compare avec mon temps de la seance 5."
+          ],
+          "success": [
+            "Le temps est ameliore par rapport a la seance 5.",
+            "Les coulees atteignent au moins 4 metres.",
+            "Aucune pause au mur."
+          ],
+          "execution": [
+            "Conserver l'allongement et la respiration travailles.",
+            "Soigner chaque extremite.",
+            "Gerer son allure sur les 100 metres."
+          ],
+          "watch": [
+            "Le gain est-il visible sur les temps ?",
+            "Les coulees tiennent-elles en fin de course ?"
+          ],
+          "errors": [
+            "Negliger les coulees en fin de course, par fatigue.",
+            "Ralentir avant chaque mur.",
+            "Perdre l'efficacite de nage en se concentrant sur les extremites."
+          ],
+          "feedback": [
+            "Ta derniere coulee est courte : tiens-la jusqu'au bout.",
+            "Nage jusqu'au mur, ne ralentis pas.",
+            "Garde ton allongement, les deux ensemble."
+          ],
+          "plus": [
+            "200 metres avec toutes les extremites soignees."
+          ],
+          "minus": [
+            "50 metres avec un seul virage."
+          ],
+          "diff": {
+            "facilitee": "50 metres avec un seul virage, coulee de 3 metres.",
+            "normale": "100 metres deux nages, coulees et virages travailles.",
+            "complexifiee": "200 metres avec toutes les extremites soignees."
+          },
+          "safety": [
+            "Un nageur par couloir, annonceur pour la partie dorsale.",
+            "Recuperation complete avant l'effort chronometre.",
+            "Perches accessibles, surveillance maitre nageur permanente.",
+            "Arret immediat en cas de malaise ou de choc au mur.",
+            "Comptage des eleves avant la sortie du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou perd-on le plus de temps sur un 100 metres : en nageant, ou aux murs ?",
+          "Que faut-il faire du corps pendant la coulee ?"
+        ],
+        "key": "Une coulee gainee prolonge la poussee gratuitement : on gagne plus de temps aux extremites qu'en nageant plus fort."
+      },
+      "socialRoles": [
+        "Mesureur de coulee : releve la distance atteinte par son camarade.",
+        "Chronometreur de virage : mesure le temps passe au mur.",
+        "Annonceur de mur : previent le nageur dorsal."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale du projet",
+      "mainObjective": "Realiser le projet dans les conditions exactes de l'evaluation, pour l'ajuster une derniere fois.",
+      "secondaryObjectives": [
+        "Enchainer les deux epreuves du format d'evaluation.",
+        "Verifier l'ecart entre le temps annonce et le temps realise.",
+        "Finaliser le projet de nage."
+      ],
+      "linkToPrevious": "Tous les leviers ont ete travailles : il reste a eprouver le projet dans son format reel avant l'evaluation.",
+      "prerequisiteForNext": "Chaque eleve a realise son projet une fois et l'a valide ou ajuste.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "fiches de projet de nage",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches d'observation d'entrainement",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "reperes de distance dans l'eau",
+            "fixed": 8
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer le dispositif exactement comme il le sera a la seance 8.",
+          "Preparer les fiches d'observation identiques a celles de l'evaluation.",
+          "Afficher les criteres et les temps annonces par chaque eleve.",
+          "Verifier chronometres, reperes et perches."
+        ],
+        "sketch": "Dispositif identique a celui de l'evaluation.\nCouloirs par groupe de niveau, reperes de coulee en place.\nAffichage des criteres et des temps annonces.\nChronometreurs et observateurs au bord."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, identique a celui de l'evaluation : la repetition generale porte aussi sur l'echauffement, qui est evalue.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement au bord puis dans l'eau.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "200 metres souple.",
+              "Deux longueurs en battements, deux en dos."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Quatre longueurs a allure croissante.",
+              "Trois coulees et deux virages de rappel.",
+              "Recuperation complete avant le premier passage."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Le projet complet",
+          "objective": "Realiser les deux epreuves dans les conditions de l'evaluation, avec annonce prealable des temps vises.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches d'observation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Chaque eleve annonce ses deux temps vises, puis realise le 50 metres et le 100 metres deux nages, separes de 6 minutes de recuperation. Les autres tiennent les roles de mesure.",
+          "studentGoal": "Realiser les temps que j'ai annonces sur les deux epreuves.",
+          "instructions": [
+            "J'annonce mes deux temps vises avant de nager.",
+            "Je realise le 50 metres, puis apres recuperation le 100 metres.",
+            "Je compare mes temps annonces et realises.",
+            "Observateurs : vous notez les coups de bras et les elevations de tete."
+          ],
+          "success": [
+            "L'ecart entre temps annonce et temps realise est inferieur a trois secondes sur chaque epreuve.",
+            "Les deux epreuves sont nagees sans arret.",
+            "Le nombre de coups de bras reste reduit."
+          ],
+          "execution": [
+            "Conserver tous les acquis : allongement, respiration, coulees, virages.",
+            "Gerer son allure sur le 100 metres.",
+            "Respecter la recuperation entre les deux epreuves."
+          ],
+          "watch": [
+            "Les projets annonces sont-ils realistes ?",
+            "Les eleves tiennent-ils leurs temps ?",
+            "Les acquis tiennent-ils sur les deux epreuves ?"
+          ],
+          "errors": [
+            "Annoncer un temps irrealiste.",
+            "Tout donner sur le 50 metres et s'effondrer sur le 100.",
+            "Negliger les coulees sous la pression du chronometre."
+          ],
+          "feedback": [
+            "Annonce ce que tu peux tenir, pas ce que tu reves.",
+            "Garde de la reserve : le 100 metres arrive apres.",
+            "Tes coulees, meme chronometre."
+          ],
+          "plus": [
+            "Depart plonge si le protocole l'autorise.",
+            "200 metres au lieu du 100."
+          ],
+          "minus": [
+            "25 metres et 50 metres deux nages.",
+            "Recuperation portee a 8 minutes."
+          ],
+          "diff": {
+            "facilitee": "25 metres puis 50 metres deux nages, recuperation de 8 minutes, pause autorisee au changement.",
+            "normale": "50 metres puis 100 metres deux nages, temps annonces a l'avance.",
+            "complexifiee": "Depart plonge si autorise, ou 200 metres en nages alternees."
+          },
+          "safety": [
+            "Surveillance permanente du maitre nageur.",
+            "Un nageur par couloir, annonceur pour les parties dorsales.",
+            "Recuperation de 6 minutes obligatoire entre les deux epreuves.",
+            "Aucun depart plonge sans validation du protocole et de la profondeur.",
+            "Arret immediat en cas de malaise ou d'essoufflement anormal.",
+            "Perches accessibles, comptage des eleves avant la sortie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Analyser l'ecart",
+          "objective": "Identifier precisement ou le projet a tenu et ou il a lache, pour l'ajuster une derniere fois.",
+          "material": [
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches d'observation d'entrainement",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos et supports rigides",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, nageur et observateur assis au bord. L'observateur presente ce qu'il a note, le nageur compare avec son projet.",
+          "studentGoal": "Savoir sur quelle epreuve mon projet a tenu et sur laquelle il a lache.",
+          "instructions": [
+            "Observateur : je donne les temps, les coups de bras et les elevations de tete.",
+            "Nageur : je compare avec mes temps annonces.",
+            "On identifie l'epreuve ou l'ecart est le plus grand.",
+            "On cherche pourquoi : allure, efficacite, extremites ?"
+          ],
+          "success": [
+            "Les ecarts sont calcules sur les deux epreuves.",
+            "L'epreuve problematique est identifiee.",
+            "Une explication est formulee."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres releves.",
+            "Chercher la cause, pas seulement le constat.",
+            "Ecouter l'analyse de son observateur."
+          ],
+          "watch": [
+            "Les eleves identifient-ils correctement leur point faible ?",
+            "Les explications sont-elles plausibles ?"
+          ],
+          "errors": [
+            "Se contenter de constater sans chercher la cause.",
+            "Attribuer l'ecart a la forme du jour.",
+            "Ignorer l'avis de l'observateur."
+          ],
+          "feedback": [
+            "Pourquoi le 100 a lache ? Regarde ton depart.",
+            "Ce n'est pas la forme : tu es parti trop vite.",
+            "Il t'a vu de l'exterieur, ecoute-le."
+          ],
+          "plus": [
+            "Comparer les coups de bras entre le debut et la fin de l'epreuve."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee, cause proposee parmi trois hypotheses.",
+            "normale": "Analyse autonome a deux des deux epreuves.",
+            "complexifiee": "Analyse plus comparaison de l'efficacite entre debut et fin d'epreuve."
+          },
+          "safety": [
+            "Phase assise au bord, hors de l'eau, apres recuperation complete.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Projet definitif",
+          "objective": "Arreter le projet definitif qui sera realise et evalue a la seance 8.",
+          "material": [
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos et supports rigides",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "affiche des criteres d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Individuellement, assis au bord. Chacun ecrit son projet definitif en tenant compte de l'analyse. Le professeur passe valider chaque projet.",
+          "studentGoal": "Ecrire les deux temps definitifs que je viserai a l'evaluation.",
+          "instructions": [
+            "J'ecris mes deux temps definitifs.",
+            "Je tiens compte de ce qui a lache aujourd'hui.",
+            "Je verifie que mon projet est tenable sur les deux epreuves.",
+            "Je fais valider mon projet par le professeur."
+          ],
+          "success": [
+            "Les deux temps definitifs sont ecrits et chiffres.",
+            "Ils tiennent compte de l'analyse de la repetition generale.",
+            "Ils sont valides par le professeur."
+          ],
+          "execution": [
+            "Ajuster surtout l'epreuve qui a pose probleme.",
+            "Rester prudent sur le 100 metres.",
+            "Verifier la coherence entre les deux annonces."
+          ],
+          "watch": [
+            "Les projets definitifs sont-ils plus realistes ?",
+            "Les eleves tiennent-ils compte de leur experience ?"
+          ],
+          "errors": [
+            "Reprendre le meme projet sans tenir compte de l'analyse.",
+            "Baisser excessivement par decouragement.",
+            "Oublier de faire valider."
+          ],
+          "feedback": [
+            "Tu as perdu six secondes sur ton annonce : ajuste-la.",
+            "Ne baisse pas trop : tu as tenu le 50.",
+            "Fais-le moi valider avant de sortir."
+          ],
+          "plus": [
+            "Prevoir une strategie d'allure pour le 100 metres."
+          ],
+          "minus": [
+            "Projet reconduit avec un seul ajustement propose."
+          ],
+          "diff": {
+            "facilitee": "Projet reconduit avec un ajustement propose par le professeur.",
+            "normale": "Projet definitif ajuste par l'eleve et valide.",
+            "complexifiee": "Projet definitif plus strategie d'allure detaillee pour le 100 metres."
+          },
+          "safety": [
+            "Phase d'ecriture assise au bord, hors de l'eau.",
+            "Validation obligatoire par le professeur.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quelle epreuve votre projet a-t-il lache, et pourquoi ?",
+          "Qu'avez-vous change dans votre projet definitif ?"
+        ],
+        "key": "Un projet se regle par l'experience : c'est en le realisant qu'on decouvre s'il etait juste, et on l'ajuste sur ce qu'on a mesure."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure les temps des deux epreuves.",
+        "Compteur : releve les coups de bras.",
+        "Observateur de respiration : note les elevations de tete."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer la performance, l'efficacite de nage et le respect du projet annonce.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Verifier le projet de nage annonce a la seance 5.",
+        "Tenir les roles de chronometreur et d'observateur.",
+        "Mesurer sa progression depuis la seance 1."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve nage efficacement dans deux styles et sait construire un projet de nage.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "chronometres etanches",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "lignes d'eau de separation",
+            "fixed": 4
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de projet de nage",
+            "per": 1.0,
+            "min": 20,
+            "note": "le projet definitif de la seance 7"
+          },
+          {
+            "label": "fiches individuelles de nage",
+            "per": 1.0,
+            "min": 20,
+            "note": "depuis la seance 1, pour mesurer la progression"
+          },
+          {
+            "label": "reperes de distance dans l'eau",
+            "fixed": 8
+          },
+          {
+            "label": "perches de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer le dispositif a l'identique de la seance 7.",
+          "Afficher l'ordre de passage, les criteres et les temps annonces.",
+          "Preparer les grilles nominatives et ressortir les fiches depuis la seance 1.",
+          "Verifier chronometres, reperes, perches et lignes d'eau.",
+          "Confirmer la presence et le positionnement du maitre nageur."
+        ],
+        "sketch": "Dispositif identique a la seance 7.\nCouloirs par groupe de niveau, reperes de coulee en place.\nAffichage ordre de passage, criteres et temps annonces.\nTable des grilles hors zone humide."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene entierement par les eleves : savoir s'echauffer avant un effort est un attendu evalue, et deux epreuves de vitesse l'exigent.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome au bord",
+            "details": [
+              "Chaque groupe mene son echauffement : epaules, nuque, chevilles.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mise en train dans l'eau",
+            "details": [
+              "300 metres souple, nage libre.",
+              "Deux longueurs en battements, deux en dos.",
+              "Deux longueurs en traction."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Quatre longueurs a allure croissante.",
+              "Trois coulees et deux virages de rappel.",
+              "Recuperation complete avant le premier passage evalue."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Epreuves evaluees",
+          "objective": "Evaluer la performance, l'efficacite et le respect du projet sur les deux epreuves.",
+          "material": [
+            {
+              "label": "chronometres etanches",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Deux epreuves separees de 8 minutes de recuperation : le 50 metres dans la nage principale, puis le 100 metres deux nages. Chaque eleve remet son projet avant de nager. Les autres tiennent les roles de mesure.",
+          "studentGoal": "Realiser mes deux epreuves aux temps que j'ai annonces.",
+          "instructions": [
+            "Je remets mon projet a mon observateur avant de nager.",
+            "Je realise le 50 metres dans ma nage principale.",
+            "Apres recuperation, je realise le 100 metres deux nages.",
+            "Chronometreur, compteur, observateur : vos mesures comptent."
+          ],
+          "success": [
+            "Le temps sur 50 metres est ameliore par rapport a la seance 1.",
+            "L'indice de nage est ameliore : moins de coups de bras pour la meme distance.",
+            "La respiration se fait sans redressement de la tete.",
+            "Les deux nages sont realisees sans arret ni reprise d'appui.",
+            "L'ecart entre temps annonce et realise est inferieur a trois secondes.",
+            "Les roles de mesure sont tenus avec precision."
+          ],
+          "execution": [
+            "Conserver tous les acquis : allongement, respiration, coulees, virages.",
+            "Gerer son allure sur le 100 metres.",
+            "Changer de nage au mur sans s'arreter."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils en situation d'evaluation ?",
+            "Les projets sont-ils tenus ?",
+            "Les roles de mesure sont-ils rigoureux ?",
+            "Signes de fatigue excessive entre les deux epreuves."
+          ],
+          "errors": [
+            "Revenir aux anciens automatismes sous la pression.",
+            "Tout donner sur le 50 et s'effondrer sur le 100.",
+            "Chronometrer ou compter approximativement."
+          ],
+          "feedback": [
+            "Garde ton allongement, meme evalue.",
+            "Reserve-toi : le 100 metres arrive apres.",
+            "Compteur, suis-le sur toute la longueur."
+          ],
+          "plus": [
+            "Depart plonge si le protocole l'autorise.",
+            "200 metres quatre nages."
+          ],
+          "minus": [
+            "25 metres et 50 metres deux nages.",
+            "Pause autorisee au changement de nage."
+          ],
+          "diff": {
+            "facilitee": "25 metres puis 50 metres deux nages, pause autorisee au changement, materiel d'aide accepte. Les progres sont evalues plutot que la performance absolue.",
+            "normale": "50 metres puis 100 metres deux nages, temps annonces a l'avance.",
+            "complexifiee": "Depart plonge si autorise, ou 200 metres quatre nages."
+          },
+          "safety": [
+            "Surveillance permanente et rapprochee du maitre nageur sauveteur pendant toute l'evaluation : elle ne peut jamais etre deleguee a l'enseignant seul.",
+            "Un nageur par couloir, annonceur pour les parties dorsales.",
+            "Echauffement complet obligatoire, 18 minutes, avant tout passage evalue.",
+            "Recuperation de 8 minutes obligatoire entre les deux epreuves.",
+            "Aucun depart plonge sans validation du protocole local et de la profondeur.",
+            "Aucune contrainte d'apnee, aucun exercice d'hyperventilation.",
+            "Arret immediat et definitif du passage en cas de malaise, paleur, vertige ou essoufflement anormal : aucune evaluation ne justifie un risque.",
+            "Perches de securite accessibles au bord en permanence.",
+            "Comptage des eleves a l'entree, entre les epreuves et a la sortie du bassin.",
+            "Interdiction de courir au bord du bassin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon projet est-il tenu ?",
+          "objective": "Faire verifier a chaque eleve l'ecart entre ses temps annonces et realises, et sa progression sur le cycle.",
+          "material": [
+            {
+              "label": "fiches de projet de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos et supports rigides",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, assis au bord hors de l'eau. Chacun compare ses temps annonces, ses temps realises, et sa progression depuis la seance 1.",
+          "studentGoal": "Dire si mon projet etait juste, et de combien j'ai progresse.",
+          "instructions": [
+            "Je compare mes temps annonces et mes temps realises.",
+            "Je calcule ma progression depuis la seance 1, en temps et en coups de bras.",
+            "J'ecris si mon projet etait juste, trop ambitieux ou trop prudent.",
+            "Je le dis a mon camarade."
+          ],
+          "success": [
+            "Les ecarts sont calcules sur les deux epreuves.",
+            "La progression depuis la seance 1 est calculee sur les deux indicateurs.",
+            "Une conclusion argumentee est formulee."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres des fiches.",
+            "Distinguer performance et respect du projet.",
+            "Formuler une conclusion en une phrase."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils performance et projet tenu ?",
+            "Mesurent-ils leur progression en efficacite, pas seulement en temps ?"
+          ],
+          "errors": [
+            "Ne juger que le temps final.",
+            "Confondre bon projet et temps rapide.",
+            "Oublier la progression en efficacite."
+          ],
+          "feedback": [
+            "Tu nages moins vite que lui, mais ton projet est tenu : c'est ca qui compte.",
+            "Regarde aussi tes coups de bras : quatre de moins qu'en seance 1.",
+            "Justifie : quelle epreuve, quel ecart ?"
+          ],
+          "plus": [
+            "Calculer le pourcentage de progression sur les deux indicateurs."
+          ],
+          "minus": [
+            "Analyse guidee, conclusion a choisir parmi trois formulations."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee, conclusion a choisir parmi trois formulations.",
+            "normale": "Analyse autonome des ecarts et de la progression.",
+            "complexifiee": "Analyse plus calcul du pourcentage de progression."
+          },
+          "safety": [
+            "Phase assise au bord, hors de l'eau, apres recuperation complete.",
+            "Aucun eleve dans l'eau sans surveillance pendant cette phase.",
+            "Eleves assis a distance du bord glissant."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en mesurant la progression collective et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "fiches individuelles de nage",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "planches",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "pull-buoys",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "lignes d'eau de separation",
+              "fixed": 4
+            }
+          ],
+          "organization": "Rangement collectif du materiel, puis classe rassemblee au bord, hors de l'eau, pour le bilan.",
+          "studentGoal": "Mesurer ce que j'ai progresse depuis la premiere seance.",
+          "instructions": [
+            "Chaque groupe range le materiel qui lui etait attribue.",
+            "On compte les planches et les pull-buoys avant de ranger.",
+            "Je compare ma nage de la seance 1 avec celle d'aujourd'hui.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est range et compte.",
+            "Chaque eleve compare ses deux mesures.",
+            "Au moins un eleve par groupe formule un acquis."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres des fiches.",
+            "Formuler un acquis concret.",
+            "Verifier qu'on repart avec ses documents."
+          ],
+          "watch": [
+            "Les eleves mesurent-ils leur progression en efficacite ?",
+            "Le rangement est-il partage ?"
+          ],
+          "errors": [
+            "Ne comparer que les temps.",
+            "Laisser le rangement a quelques eleves.",
+            "Partir sans ses fiches."
+          ],
+          "feedback": [
+            "Regarde aussi ton efficacite, pas seulement ton chrono.",
+            "Tout le monde range.",
+            "Prends tes fiches, elles te serviront."
+          ],
+          "plus": [
+            "Formuler un objectif de nage pour la pratique personnelle."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis collectifs, les eleves valident."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Comparaison personnelle et acquis formule.",
+            "complexifiee": "Comparaison plus objectif de pratique personnelle."
+          },
+          "safety": [
+            "Rangement effectue hors de l'eau, materiel egoutte avant stockage.",
+            "Comptage des eleves avant de quitter la zone bassin.",
+            "Verification qu'aucun eleve ne reste dans l'eau.",
+            "Circulation pieds nus au bord : marcher, ne jamais courir.",
+            "Lignes d'eau retirees par les adultes ou sous supervision directe."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "De combien avez-vous progresse depuis la premiere seance, en temps et en coups de bras ?",
+          "Qu'avez-vous appris qui vous servirait si vous nagiez seul, en dehors du cours ?"
+        ],
+        "key": "Nager efficacement, c'est aller aussi vite avec moins de coups de bras : on gagne en s'allongeant, en respirant sans se redresser, et en soignant les extremites."
+      },
+      "socialRoles": [
+        "Chronometreur : mesure les temps officiels, role evalue.",
+        "Compteur de coups de bras : releve l'efficacite, role evalue.",
+        "Observateur de respiration : note les elevations de tete.",
+        "Annonceur de mur : previent les nageurs dorsaux."
+      ]
+    }
+  ]
+}

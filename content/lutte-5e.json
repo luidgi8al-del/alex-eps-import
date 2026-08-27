@@ -1,0 +1,2708 @@
+{
+  "apsa": "Lutte",
+  "grades": [
+    "CINQUIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Realiser des actions decisives en situation favorable afin de faire basculer le rapport de force en sa faveur.",
+    "Adapter son engagement moteur en fonction de son etat physique et du rapport de force.",
+    "Etre solidaire de ses partenaires et respectueux de son ou de ses adversaires et de l'arbitre.",
+    "Observer et co-arbitrer.",
+    "Accepter le resultat de la rencontre et savoir l'analyser avec objectivite."
+  ],
+  "targetCompetence": "Passer d'un affrontement en force, ou l'eleve pousse au hasard en bloquant sa respiration, a un combat construit : desequilibrer l'adversaire en utilisant ses appuis et ses reactions, dans le respect absolu de son integrite physique.",
+  "cycleObjectives": [
+    "Respecter en toutes circonstances les regles d'or de securite du combat.",
+    "Chuter et faire chuter sans danger.",
+    "Amener l'adversaire au sol par un desequilibre, plutot que par la force.",
+    "Immobiliser un adversaire au sol et se degager d'une immobilisation.",
+    "Tenir les roles d'arbitre et d'observateur avec rigueur."
+  ],
+  "plannedTitles": [
+    "Entrer dans le combat : les regles d'or",
+    "Desequilibrer sans forcer",
+    "Amener au sol en securite",
+    "Immobiliser et se degager",
+    "Combats evalues de mi-cycle",
+    "Enchainer : de la saisie au controle",
+    "Preparer et arbitrer un combat",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/cid99188/eps-cycle-4-conduire-et-maitriser-un-affrontement-collectif-ou-interindividuel.html",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources d'accompagnement du programme d'EPS au cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Les activites de combat au college - securite et progression",
+      "org": "Academie de Creteil",
+      "url": "https://eps.ac-creteil.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "La lutte scolaire - regles amenagees, interdits et progression",
+      "org": "Federation francaise de lutte",
+      "url": "https://www.fflutte.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Surface de combat : tapis de lutte ou tapis de gymnastique joints, sans interstice, sur toute la zone d'evolution.",
+    "Degagement autour de la surface : au moins 2 metres sans mur, poteau ni angle saillant.",
+    "Protocole de securite des activites de combat de l'etablissement : le lire avant la premiere seance.",
+    "Constitution des binomes par gabarit : peser ou classer les eleves avant le cycle.",
+    "Eleves porteurs de lunettes, d'appareils dentaires ou de protheses : adapter ou dispenser selon le cas.",
+    "Eleves dispenses : prevoir les roles d'arbitre, de marqueur et d'observateur.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - refuse le contact",
+      "observed": "Se raidit, garde les bras tendus pour maintenir l'adversaire a distance, ou se laisse tomber immediatement.",
+      "need": "Apprivoiser le contact par des jeux de conquete, sans affrontement direct."
+    },
+    {
+      "label": "Profil 2 - tout en force",
+      "observed": "Pousse et tire de toutes ses forces, bloque sa respiration, s'epuise en trente secondes et devient dangereux par manque de controle.",
+      "need": "Decouvrir le desequilibre et l'utilisation des appuis plutot que la force brute."
+    },
+    {
+      "label": "Profil 3 - subit au sol",
+      "observed": "Une fois au sol, se met sur le ventre et attend que cela se termine, sans chercher a se degager.",
+      "need": "Construire les moyens de se retourner et de se degager."
+    },
+    {
+      "label": "Profil 4 - efficace mais brusque",
+      "observed": "Amene l'adversaire au sol facilement, mais sans controler la chute, et conteste les decisions de l'arbitre.",
+      "need": "Accompagner la chute de l'adversaire et respecter l'arbitrage."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en poules de niveau constituees par gabarit. Combats de 90 secondes, debut debout. Points : 1 pour un desequilibre amenant l'adversaire au sol, 2 pour une immobilisation de 3 secondes. Chaque eleve tient egalement le role d'arbitre et celui d'observateur.",
+    "criteria": [
+      "L'eleve respecte en permanence les regles d'or : aucune action interdite, aucun geste dangereux.",
+      "L'eleve amene l'adversaire au sol par un desequilibre, en accompagnant sa chute.",
+      "L'eleve immobilise un adversaire au sol ou se degage d'une immobilisation.",
+      "L'eleve adapte son engagement au rapport de force : il ne force pas en vain sur un adversaire plus fort.",
+      "Les roles d'arbitre et d'observateur sont tenus avec rigueur.",
+      "Le resultat est accepte et l'eleve sait l'analyser avec objectivite."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA4, a croiser avec le protocole de securite des activites de combat de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Entrer dans le combat : les regles d'or",
+      "mainObjective": "Poser le cadre de securite non negociable et faire entrer les eleves dans le corps a corps par des jeux de conquete.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre et savoir enoncer les regles d'or de securite.",
+        "Accepter le contact corporel dans un cadre codifie.",
+        "Reperer qui refuse le contact et qui joue la force."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : la lutte est l'APSA ou le cadre de securite doit etre pose avant toute pratique, sans exception.",
+      "prerequisiteForNext": "Chaque eleve connait les regles d'or et a accepte un premier corps a corps.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16,
+            "note": "joints, sans interstice, sur toute la zone"
+          },
+          {
+            "label": "chasubles de deux couleurs",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "foulards ou bandes",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Joindre les tapis sans laisser le moindre interstice : un pied coince provoque une entorse.",
+          "Delimiter des zones de combat de 3 metres sur 3 avec les plots, poses hors des tapis.",
+          "Verifier 2 metres de degagement autour de la surface : aucun mur, poteau ni angle saillant a proximite.",
+          "Afficher les regles d'or en grand, aux deux extremites de la salle.",
+          "Lire le protocole de securite des activites de combat de l'etablissement avant la seance.",
+          "Faire retirer bijoux, montres, lunettes ; verifier ongles courts et cheveux attaches."
+        ],
+        "sketch": "Surface de tapis joints couvrant toute la zone.\nZones de combat de 3 m x 3 m delimitees par des plots poses hors tapis.\n2 m de degagement autour, sans mur ni angle.\nAffiches des regles d'or aux deux extremites."
+      },
+      "warmup": {
+        "rationale": "L'echauffement en lutte prepare la nuque, le dos et les articulations sollicites au corps a corps, et installe progressivement le contact physique entre eleves.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis, sans monter dessus.",
+              "Deplacements a quatre pattes, en crabe, en rampant sur les tapis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions douces avant-arriere, rotations lentes. Jamais de cercles complets.",
+              "Epaules, coudes, poignets, hanches, chevilles.",
+              "Gainage : planche ventrale 15 secondes, 2 fois.",
+              "Renforcement doux de la nuque : appui tete contre main, 5 secondes de chaque cote."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiers contacts",
+            "details": [
+              "Par deux, paume contre paume, se pousser doucement sans bouger les pieds.",
+              "Dos a dos assis, se relever ensemble en poussant.",
+              "Se deplacer a quatre pattes en gardant un contact epaule contre epaule."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Les jeux de conquete",
+          "objective": "Faire entrer dans le corps a corps par des jeux a but simple, sans affrontement direct ni chute.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "foulards ou bandes",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            }
+          ],
+          "organization": "Binomes de gabarit comparable, constitues par le professeur. Trois jeux successifs de 4 minutes : conquete du foulard a la ceinture, sortie de zone en poussant, retournement d'un partenaire a quatre pattes. Rotation entre les jeux.",
+          "studentGoal": "Gagner le jeu en utilisant mes appuis, sans jamais faire mal a mon camarade.",
+          "instructions": [
+            "Je joue le foulard, la zone ou le retournement : jamais le corps de mon camarade.",
+            "Je m'arrete immediatement au signal ou si mon camarade dit stop.",
+            "Aucune action sur la tete, le cou, le visage ou les articulations.",
+            "Je reste dans ma zone, sur les tapis."
+          ],
+          "success": [
+            "Les trois jeux sont joues sans aucune action interdite.",
+            "Chaque eleve accepte le corps a corps.",
+            "Tout stop annonce est respecte immediatement."
+          ],
+          "execution": [
+            "Baisser le centre de gravite : genoux flechis, dos droit.",
+            "Utiliser ses appuis au sol plutot que la force des bras.",
+            "Respirer pendant l'effort, ne jamais bloquer sa respiration."
+          ],
+          "watch": [
+            "Qui refuse le contact et reste bras tendus ?",
+            "Qui joue uniquement la force en bloquant sa respiration ?",
+            "Qui approche dangereusement la tete ou le cou du partenaire ?",
+            "Les binomes sont-ils reellement equilibres en gabarit ?"
+          ],
+          "errors": [
+            "Saisir le cou, le visage ou les doigts.",
+            "Bloquer sa respiration et s'epuiser en quelques secondes.",
+            "Continuer apres un stop annonce."
+          ],
+          "feedback": [
+            "Le foulard, jamais le cou : c'est une regle d'or.",
+            "Respire : si tu bloques, tu seras epuise en 20 secondes.",
+            "Il a dit stop : tu laches immediatement."
+          ],
+          "plus": [
+            "Jeux enchaines sans pause entre eux.",
+            "Deux foulards a conquerir."
+          ],
+          "minus": [
+            "Jeux a genoux uniquement.",
+            "Duree reduite a 2 minutes par jeu."
+          ],
+          "diff": {
+            "facilitee": "Jeux realises a genoux uniquement, sequences de 2 minutes, binomes tres proches en gabarit.",
+            "normale": "Trois jeux de 4 minutes, debut debout ou a quatre pattes selon le jeu.",
+            "complexifiee": "Jeux enchaines, deux foulards a conquerir, adversaires de niveau proche."
+          },
+          "safety": [
+            "Regles d'or, non negociables et rappelees avant chaque situation : aucune action sur la tete, le cou, le visage, les cheveux, les doigts ni les articulations. Aucune torsion. Aucun coup, aucune projection non controlee.",
+            "Tout eleve qui dit stop est immediatement lache, sans discussion.",
+            "Binomes constitues par le professeur selon le gabarit : jamais de choix libre.",
+            "Tapis joints sans interstice, verifies avant chaque situation.",
+            "2 metres de degagement autour de la surface, sans mur ni angle saillant.",
+            "Bijoux, montres et lunettes retires ; ongles courts, cheveux attaches.",
+            "Aucun combat ne se poursuit hors des tapis : arret immediat en sortie de zone.",
+            "Le professeur supervise en permanence, sans exception."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Apprendre a chuter",
+          "objective": "Construire la chute arriere et laterale enroulee, prealable indispensable a tout amene au sol.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            }
+          ],
+          "organization": "Individuellement puis par deux sur les tapis. Progression : chute arriere depuis accroupi, chute arriere depuis debout, chute laterale. Chacun progresse a son rythme, le professeur valide chaque etape.",
+          "studentGoal": "Tomber en arriere et sur le cote sans que ma tete touche le tapis.",
+          "instructions": [
+            "Je rentre le menton sur ma poitrine : ma tete ne touche jamais le tapis.",
+            "Je m'arrondis le dos et je roule, je ne tombe pas a plat.",
+            "Je frappe le tapis avec mes bras a plat pour amortir, bras ecartes du corps.",
+            "Je me releve immediatement apres chaque chute."
+          ],
+          "success": [
+            "La tete ne touche jamais le tapis sur dix chutes.",
+            "Le dos est arrondi, la chute est amortie par les bras.",
+            "La relevee est immediate."
+          ],
+          "execution": [
+            "Menton rentre pendant toute la chute, regard sur le ventre.",
+            "Dos arrondi : on deroule les vertebres, on ne tombe pas a plat.",
+            "Bras a plat, ecartes a 45 degres du corps, paumes vers le tapis."
+          ],
+          "watch": [
+            "La tete touche-t-elle le tapis ?",
+            "Les eleves tendent-ils le bras en arriere pour se rattraper ?",
+            "Le dos est-il arrondi ou plat ?"
+          ],
+          "errors": [
+            "Laisser la tete partir en arriere : risque cervical grave.",
+            "Se rattraper sur une main posee en arriere : risque de fracture du poignet.",
+            "Tomber a plat sur le dos, sans amortir."
+          ],
+          "feedback": [
+            "Menton contre la poitrine, regarde ton ventre.",
+            "Ne pose jamais la main en arriere : tu frappes le tapis a plat.",
+            "Arrondis ton dos, tu dois rouler et pas t'ecraser."
+          ],
+          "plus": [
+            "Chute arriere depuis un desequilibre provoque par le partenaire.",
+            "Enchainer chute et relevee rapide."
+          ],
+          "minus": [
+            "Chute depuis la position assise.",
+            "Chute accompagnee par le partenaire qui retient."
+          ],
+          "diff": {
+            "facilitee": "Chute depuis assis, accompagnee par le partenaire qui soutient la nuque.",
+            "normale": "Chute arriere et laterale depuis accroupi puis debout.",
+            "complexifiee": "Chute provoquee par un desequilibre du partenaire, avec relevee immediate."
+          },
+          "safety": [
+            "La chute s'apprend avant tout amene au sol : aucune projection n'est autorisee tant que la chute n'est pas acquise.",
+            "Menton rentre obligatoire : arret immediat de la situation si une tete touche le tapis.",
+            "Jamais de main posee en arriere pour se rattraper : c'est le geste reflexe le plus dangereux.",
+            "Tapis joints et verifies avant chaque serie.",
+            "Un eleve par zone de chute, espacement suffisant entre eux.",
+            "Progression obligatoire : personne ne passe au debout sans maitriser la chute depuis accroupi.",
+            "Le professeur supervise directement cet atelier."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier combat au sol",
+          "objective": "Realiser un premier affrontement codifie, au sol uniquement, pour observer le comportement de chacun.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Combats de 60 secondes, debut a quatre pattes cote a cote, uniquement au sol : aucun combat debout a cette seance. But : retourner l'adversaire sur le dos. Un observateur par binome remplit la fiche.",
+          "studentGoal": "Retourner mon adversaire sur le dos, en respectant les regles d'or.",
+          "instructions": [
+            "On demarre a quatre pattes, cote a cote : le combat reste au sol.",
+            "Je gagne si je retourne mon adversaire sur le dos, epaules au tapis.",
+            "Aucune action sur la tete, le cou, le visage ou les articulations.",
+            "Je m'arrete immediatement au signal ou au stop de mon adversaire."
+          ],
+          "success": [
+            "Le combat se deroule sans aucune action interdite.",
+            "Les deux adversaires restent engages pendant les 60 secondes.",
+            "Tout stop est respecte immediatement."
+          ],
+          "execution": [
+            "Rester bas, en appui solide sur les quatre membres.",
+            "Chercher a desequilibrer lateralement plutot que de tirer en force.",
+            "Respirer regulierement pendant l'effort."
+          ],
+          "watch": [
+            "Qui reste passif et attend la fin ?",
+            "Qui utilise uniquement la force en bloquant sa respiration ?",
+            "Y a-t-il des actions vers la tete ou le cou ?",
+            "Les gabarits sont-ils reellement equilibres ?"
+          ],
+          "errors": [
+            "Se mettre sur le ventre et attendre passivement.",
+            "Tirer sur les vetements ou saisir les doigts.",
+            "Continuer apres le signal d'arret."
+          ],
+          "feedback": [
+            "Ne reste pas sur le ventre : cherche a te retourner.",
+            "Pas les doigts, pas le col : tu prends le corps.",
+            "Signal : vous vous arretez tout de suite."
+          ],
+          "plus": [
+            "Combats de 90 secondes.",
+            "Depart dos a dos assis."
+          ],
+          "minus": [
+            "Combats de 30 secondes.",
+            "But reduit : sortir l'adversaire de la zone."
+          ],
+          "diff": {
+            "facilitee": "Combats de 30 secondes, but simplifie : faire sortir l'adversaire de la zone, sans retournement.",
+            "normale": "Combats de 60 secondes au sol, retournement sur le dos.",
+            "complexifiee": "Combats de 90 secondes, depart dos a dos assis."
+          },
+          "safety": [
+            "Combat au sol uniquement a cette seance : aucune projection, aucun combat debout.",
+            "Regles d'or rappelees avant chaque combat.",
+            "Binomes de gabarit comparable, constitues par le professeur.",
+            "Arret immediat au signal ou au stop, sans discussion possible.",
+            "Un seul combat par zone, zones espacees.",
+            "Tapis joints et verifies.",
+            "Le professeur supervise l'ensemble des combats en permanence.",
+            "Arret immediat de tout combat qui s'envenime ou sort du cadre."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les actions absolument interdites en lutte ?",
+          "Que doit-on faire de sa tete quand on chute en arriere ?"
+        ],
+        "key": "En lutte, la securite passe avant la victoire : jamais la tete, le cou, le visage ni les articulations, et on lache immediatement des qu'un adversaire dit stop."
+      },
+      "socialRoles": [
+        "Observateur : remplit la fiche de son binome et signale toute action interdite.",
+        "Chronometreur : gere les temps de combat.",
+        "Responsable materiel : verifie que les tapis restent joints entre les combats."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Desequilibrer sans forcer",
+      "mainObjective": "Decouvrir que le desequilibre s'obtient en utilisant les appuis et les reactions de l'adversaire, non par la force.",
+      "secondaryObjectives": [
+        "Reperer les appuis de l'adversaire et les directions de desequilibre.",
+        "Utiliser la reaction de l'adversaire plutot que la contrer.",
+        "Garder une posture solide et basse."
+      ],
+      "linkToPrevious": "La seance 1 a montre que la majorite des eleves poussent en force et s'epuisent : le desequilibre est l'alternative technique.",
+      "prerequisiteForNext": "Chaque eleve desequilibre un adversaire sans utiliser uniquement la force.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Verifier la jonction des tapis avant toute pratique.",
+          "Delimiter des zones de 3 metres sur 3.",
+          "Rappeler les regles d'or et verifier qu'elles sont affichees et lisibles.",
+          "Reconstituer les binomes de gabarit comparable.",
+          "Faire retirer bijoux et lunettes, verifier ongles et cheveux."
+        ],
+        "sketch": "Surface de tapis joints.\nZones de 3 m x 3 m delimitees par des plots hors tapis.\nAffiches des regles d'or visibles.\n2 m de degagement autour."
+      },
+      "warmup": {
+        "rationale": "Prepare specifiquement les appuis et l'equilibration, objets de la seance, apres la preparation articulaire habituelle.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements a quatre pattes sur les tapis.",
+              "Deplacements lateraux en position basse."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions douces, rotations lentes.",
+              "Epaules, hanches, chevilles, poignets.",
+              "Gainage ventral et lateral, 15 secondes chacun."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Equilibration et appuis",
+            "details": [
+              "Position de garde : genoux flechis, dos droit, appuis larges. 20 secondes.",
+              "Deplacements en garde, sans croiser les pieds.",
+              "Rappel des chutes : cinq chutes arriere par eleve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le jeu des appuis",
+          "objective": "Decouvrir qu'un adversaire se desequilibre dans la direction ou son appui est faible, sans force.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            }
+          ],
+          "organization": "Par deux, face a face, mains sur les epaules du partenaire. Sans bouger les pieds, chacun essaie de faire perdre l'equilibre a l'autre : le premier qui bouge un pied a perdu. Series de 90 secondes, puis variantes.",
+          "studentGoal": "Faire bouger un pied a mon adversaire sans bouger les miens.",
+          "instructions": [
+            "On garde les mains sur les epaules, jamais sur le cou ni le visage.",
+            "Le premier qui deplace un pied a perdu.",
+            "Je peux tirer, pousser, relacher : je cherche le moment ou il est en desequilibre.",
+            "Je m'arrete au signal ou si mon partenaire dit stop."
+          ],
+          "success": [
+            "L'eleve gagne au moins deux echanges sur cinq.",
+            "Aucune action sur le cou, la tete ou le visage.",
+            "L'eleve varie ses actions : tirer, pousser, relacher."
+          ],
+          "execution": [
+            "Rester bas, genoux flechis, dos droit.",
+            "Alterner traction et poussee pour provoquer une reaction.",
+            "Agir au moment ou l'adversaire pousse ou tire, pour utiliser sa force."
+          ],
+          "watch": [
+            "Les eleves poussent-ils en continu, ou alternent-ils ?",
+            "Restent-ils bas ou se redressent-ils ?",
+            "Bloquent-ils leur respiration ?"
+          ],
+          "errors": [
+            "Pousser en continu de toutes ses forces, sans varier.",
+            "Se redresser, ce qui rend le desequilibre facile pour l'adversaire.",
+            "Saisir le cou ou le col."
+          ],
+          "feedback": [
+            "Alterne : tire, puis pousse quand il resiste.",
+            "Reste bas, genoux flechis : tu es plus stable.",
+            "Les epaules, pas le cou."
+          ],
+          "plus": [
+            "Un seul appui de main autorise.",
+            "Yeux fermes pour l'un des deux."
+          ],
+          "minus": [
+            "Position a genoux face a face.",
+            "Deux pas autorises avant de perdre."
+          ],
+          "diff": {
+            "facilitee": "Jeu a genoux face a face, deux deplacements de pied toleres avant de perdre.",
+            "normale": "Debout, mains sur les epaules, un pied deplace fait perdre.",
+            "complexifiee": "Un seul appui de main autorise, ou un partenaire les yeux fermes."
+          },
+          "safety": [
+            "Regles d'or rappelees : jamais le cou, la tete, le visage, les doigts ni les articulations.",
+            "Mains sur les epaules uniquement dans cette situation.",
+            "Binomes de gabarit comparable.",
+            "Arret immediat au stop ou au signal.",
+            "Tapis joints, zones espacees.",
+            "Aucun desequilibre volontairement violent : le but est de faire bouger un pied, pas de projeter.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Utiliser la reaction de l'adversaire",
+          "objective": "Construire le principe technique central : agir dans le sens de la force de l'adversaire plutot que contre elle.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, a genoux face a face, mains aux epaules. Consigne imposee : quand mon partenaire pousse, je tire dans le meme sens ; quand il tire, je pousse. Dix repetitions chacun, en alternance.",
+          "studentGoal": "Desequilibrer mon partenaire en allant dans le sens ou il pousse.",
+          "instructions": [
+            "Quand il pousse, je recule en le tirant : il tombe vers l'avant.",
+            "Quand il tire, j'avance en le poussant : il tombe vers l'arriere.",
+            "Je l'accompagne au sol, je ne le lache pas.",
+            "On alterne : dix fois chacun."
+          ],
+          "success": [
+            "Sept desequilibres reussis sur dix.",
+            "L'action va dans le sens de la force du partenaire.",
+            "La descente au sol est accompagnee, jamais brutale."
+          ],
+          "execution": [
+            "Sentir le sens de la poussee avant d'agir.",
+            "Agir immediatement, sans temps mort.",
+            "Accompagner le partenaire au sol en gardant le contact."
+          ],
+          "watch": [
+            "Les eleves resistent-ils encore par reflexe ?",
+            "L'accompagnement au sol est-il fait, ou lachent-ils ?",
+            "Le principe est-il compris ?"
+          ],
+          "errors": [
+            "Resister a la poussee au lieu de l'accompagner.",
+            "Lacher le partenaire au moment de la chute.",
+            "Agir trop tard, quand la poussee est terminee."
+          ],
+          "feedback": [
+            "Il pousse : ne resiste pas, tire-le dans le meme sens.",
+            "Ne le lache pas : tu l'accompagnes jusqu'au tapis.",
+            "Plus tot : agis pendant qu'il pousse."
+          ],
+          "plus": [
+            "Sans consigne imposee : lire la reaction et choisir.",
+            "Debout plutot qu'a genoux."
+          ],
+          "minus": [
+            "Poussee annoncee a voix haute par le partenaire.",
+            "Sans amenee au sol, simple desequilibre."
+          ],
+          "diff": {
+            "facilitee": "Poussee annoncee a voix haute, desequilibre sans amenee au sol, a genoux.",
+            "normale": "A genoux, alternance imposee poussee-traction, avec accompagnement au sol.",
+            "complexifiee": "Debout, sans consigne : l'eleve lit la reaction et choisit son action."
+          },
+          "safety": [
+            "Travail a genoux avant toute pratique debout : la hauteur de chute est reduite.",
+            "Accompagnement obligatoire de la chute : aucun lacher, aucune projection.",
+            "Chutes deja acquises en seance 1 : verifier avant de commencer.",
+            "Regles d'or rappelees.",
+            "Binomes de gabarit comparable.",
+            "Tapis joints, zones espacees.",
+            "Arret immediat au stop."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Combat a genoux",
+          "objective": "Reinvestir le desequilibre dans un combat codifie, a genoux pour limiter la hauteur de chute.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Combats de 60 secondes a genoux, face a face. But : amener l'adversaire sur le dos par un desequilibre. Un observateur note les desequilibres reussis et signale toute action interdite.",
+          "studentGoal": "Amener mon adversaire sur le dos en utilisant ses reactions.",
+          "instructions": [
+            "On combat a genoux : personne ne se releve.",
+            "Je gagne un point si j'amene mon adversaire sur le dos.",
+            "J'accompagne sa chute, je ne le projette jamais.",
+            "Observateur : je note les desequilibres et toute action interdite."
+          ],
+          "success": [
+            "Au moins un desequilibre reussi par combat.",
+            "Aucune action interdite signalee par l'observateur.",
+            "Les chutes sont accompagnees."
+          ],
+          "execution": [
+            "Rester bas et stable sur ses appuis.",
+            "Alterner traction et poussee pour provoquer une reaction.",
+            "Accompagner l'adversaire au sol."
+          ],
+          "watch": [
+            "Le desequilibre remplace-t-il la force brute ?",
+            "Les chutes sont-elles accompagnees ?",
+            "Les observateurs signalent-ils reellement les actions interdites ?"
+          ],
+          "errors": [
+            "Revenir a la force pure des que le combat se tend.",
+            "Lacher l'adversaire au moment de la chute.",
+            "Se relever malgre la consigne."
+          ],
+          "feedback": [
+            "Tu forces : utilise sa reaction.",
+            "Accompagne-le, ne le lache pas.",
+            "A genoux : personne ne se releve."
+          ],
+          "plus": [
+            "Combats de 90 secondes.",
+            "Depart debout pour les eleves les plus surs."
+          ],
+          "minus": [
+            "Combats de 30 secondes.",
+            "But limite au desequilibre, sans amenee sur le dos."
+          ],
+          "diff": {
+            "facilitee": "Combats de 30 secondes, but limite a faire poser une main au sol a l'adversaire.",
+            "normale": "Combats de 60 secondes a genoux, amenee sur le dos.",
+            "complexifiee": "Combats de 90 secondes, depart debout pour les eleves ayant valide les chutes."
+          },
+          "safety": [
+            "Combat a genoux : hauteur de chute limitee, adapte a cette etape du cycle.",
+            "Projection interdite : toute chute doit etre accompagnee.",
+            "Regles d'or rappelees avant chaque combat.",
+            "Binomes de gabarit comparable.",
+            "Arret immediat au signal ou au stop.",
+            "Un seul combat par zone, zones espacees, tapis joints.",
+            "Le professeur supervise l'ensemble des combats.",
+            "Arret de tout combat qui s'envenime."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire quand un adversaire pousse fort contre vous ?",
+          "Pourquoi rester bas rend-il plus difficile a desequilibrer ?"
+        ],
+        "key": "On ne desequilibre pas par la force mais par le sens : quand l'adversaire pousse, on l'accompagne, on ne le contre pas. Et plus on est bas, plus on est stable."
+      },
+      "socialRoles": [
+        "Observateur : note les desequilibres et signale toute action interdite.",
+        "Chronometreur : gere les temps de combat.",
+        "Responsable securite : verifie la jonction des tapis entre les series."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Amener au sol en securite",
+      "mainObjective": "Construire l'amenee au sol depuis la position debout, avec accompagnement obligatoire de la chute.",
+      "secondaryObjectives": [
+        "Saisir correctement l'adversaire : au corps, jamais aux articulations.",
+        "Amener au sol en accompagnant, jamais en projetant.",
+        "Chuter en securite quand on est amene au sol."
+      ],
+      "linkToPrevious": "Le desequilibre est acquis a genoux : on peut passer au debout, avec une exigence de securite renforcee car la hauteur de chute augmente.",
+      "prerequisiteForNext": "Chaque eleve amene un adversaire au sol en accompagnant sa chute, et chute correctement.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier scrupuleusement la jonction des tapis : le travail debout augmente les risques.",
+          "Elargir les zones de combat a 4 metres sur 4 pour le travail debout.",
+          "Verifier 2 metres de degagement autour, sans mur ni angle.",
+          "Reconstituer les binomes de gabarit comparable.",
+          "Rappeler et faire enoncer les regles d'or par les eleves avant de commencer."
+        ],
+        "sketch": "Surface de tapis joints, verifiee.\nZones elargies a 4 m x 4 m pour le travail debout.\n2 m de degagement sans mur ni angle.\nAffiches des regles d'or visibles depuis chaque zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement renforce avec rappel systematique des chutes : le travail debout ne s'aborde jamais sans avoir reverifie la chute.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies sur les tapis.",
+              "Deplacements en garde, position basse."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions douces et rotations lentes.",
+              "Epaules, hanches, chevilles, poignets.",
+              "Gainage ventral et lateral, renforcement de la nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Rappel obligatoire des chutes",
+            "details": [
+              "Dix chutes arriere par eleve, depuis accroupi puis debout.",
+              "Cinq chutes laterales de chaque cote.",
+              "Le professeur valide individuellement avant d'autoriser le travail debout."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "L'amenee au sol accompagnee",
+          "objective": "Construire l'amenee au sol depuis debout, avec accompagnement obligatoire, sur un partenaire non opposant.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, l'un execute, l'autre se laisse faire sans opposition. Progression : saisie au corps, desequilibre, descente accompagnee au sol. Cinq repetitions puis rotation. Le professeur valide chaque binome avant de passer a l'opposition legere.",
+          "studentGoal": "Amener mon partenaire au sol en l'accompagnant, sans le lacher.",
+          "instructions": [
+            "Je saisis au corps : ceinture, tronc, epaules. Jamais le cou ni les articulations.",
+            "Je flechis mes jambes et je descends mon centre de gravite.",
+            "Je desequilibre mon partenaire et je l'accompagne au sol.",
+            "Je ne lache jamais : je descends avec lui, en controlant."
+          ],
+          "success": [
+            "Cinq amenees au sol realisees avec accompagnement complet.",
+            "Aucun lacher, aucune projection.",
+            "Le partenaire chute correctement, menton rentre."
+          ],
+          "execution": [
+            "Saisie au corps, bras autour du tronc ou de la ceinture.",
+            "Jambes flechies, dos droit : la force vient des jambes.",
+            "Descendre avec le partenaire, en gardant le contact jusqu'au tapis."
+          ],
+          "watch": [
+            "Le partenaire est-il accompagne ou lache ?",
+            "La saisie est-elle au corps ou aux articulations ?",
+            "Le partenaire qui chute rentre-t-il le menton ?"
+          ],
+          "errors": [
+            "Lacher le partenaire au moment de la chute : faute grave.",
+            "Saisir le cou, le bras isole ou les doigts.",
+            "Soulever le partenaire, ce qui est interdit a ce niveau."
+          ],
+          "feedback": [
+            "Tu l'as lache : tu descends avec lui, toujours.",
+            "Au corps, pas au cou.",
+            "Ne le souleve pas : tu le desequilibres et tu l'accompagnes."
+          ],
+          "plus": [
+            "Partenaire en opposition legere.",
+            "Amenee au sol dans deux directions differentes."
+          ],
+          "minus": [
+            "Amenee au sol depuis a genoux.",
+            "Partenaire qui aide activement le mouvement."
+          ],
+          "diff": {
+            "facilitee": "Amenee au sol depuis a genoux, partenaire qui accompagne activement le mouvement.",
+            "normale": "Depuis debout, partenaire non opposant, accompagnement complet.",
+            "complexifiee": "Partenaire en opposition legere, amenee dans deux directions."
+          },
+          "safety": [
+            "Accompagnement obligatoire : lacher un adversaire pendant une amenee au sol est une faute grave, sanctionnee par l'exclusion immediate de la situation.",
+            "Aucun soulevement, aucune projection : interdits absolus a ce niveau.",
+            "Saisie au corps uniquement : jamais le cou, la tete, un bras isole, les doigts ni les articulations.",
+            "Chutes revalidees en echauffement avant tout travail debout : condition non negociable.",
+            "Binomes de gabarit comparable, constitues par le professeur.",
+            "Tapis joints, verifies avant chaque serie ; 2 metres de degagement sans mur ni angle.",
+            "Un seul binome par zone, zones elargies a 4 metres.",
+            "Le professeur supervise directement et valide chaque binome avant l'opposition.",
+            "Arret immediat au stop ou au signal."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Saisir et se degager de la saisie",
+          "objective": "Construire les saisies autorisees et les moyens de s'en liberer, prealable au combat debout.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, debout. L'un saisit au corps, l'autre cherche a se degager sans utiliser d'action interdite. Alternance toutes les 45 secondes. Trois series.",
+          "studentGoal": "Me liberer d'une saisie sans forcer et sans action interdite.",
+          "instructions": [
+            "Saisie au corps uniquement : ceinture, tronc, epaules.",
+            "Pour me degager, je baisse mon centre de gravite et je pivote.",
+            "Je ne tire jamais sur un doigt ni sur un bras isole.",
+            "On alterne les roles au signal."
+          ],
+          "success": [
+            "L'eleve se degage au moins deux fois sur trois series.",
+            "Aucune action interdite utilisee pour se degager.",
+            "Les saisies restent au corps."
+          ],
+          "execution": [
+            "Baisser le centre de gravite pour desserrer la saisie.",
+            "Pivoter plutot que tirer en ligne droite.",
+            "Utiliser ses appuis au sol pour creer de l'espace."
+          ],
+          "watch": [
+            "Les eleves tirent-ils sur les doigts pour se liberer ?",
+            "Les saisies restent-elles au corps ?",
+            "Le degagement se fait-il par la technique ou par la force ?"
+          ],
+          "errors": [
+            "Tirer sur les doigts de l'adversaire : action interdite et dangereuse.",
+            "Se debattre sans methode, en s'epuisant.",
+            "Saisir le cou pour se liberer."
+          ],
+          "feedback": [
+            "Jamais les doigts : baisse-toi et pivote.",
+            "Ne te debats pas : descends ton centre de gravite.",
+            "Au corps, meme pour te degager."
+          ],
+          "plus": [
+            "Saisie plus serree, degagement en moins de 10 secondes.",
+            "Enchainer degagement et contre-saisie."
+          ],
+          "minus": [
+            "Saisie tres legere.",
+            "Travail a genoux."
+          ],
+          "diff": {
+            "facilitee": "Saisie tres legere, travail a genoux, degagement sans contrainte de temps.",
+            "normale": "Saisie au corps debout, degagement par abaissement et pivot.",
+            "complexifiee": "Saisie serree, degagement chronometre puis contre-saisie."
+          },
+          "safety": [
+            "Interdiction absolue de saisir les doigts, un bras isole, le cou ou la tete, y compris pour se degager.",
+            "Aucune torsion d'articulation.",
+            "Arret immediat au stop.",
+            "Binomes de gabarit comparable.",
+            "Tapis joints, zones espacees.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Combat debout limite",
+          "objective": "Reinvestir l'amenee au sol dans un combat debout court, avec exigence de securite maximale.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Combats de 45 secondes, debut debout. Des que l'un des deux est amene au sol, le combat s'arrete et on repart debout. Un observateur signale toute action interdite ou tout lacher.",
+          "studentGoal": "Amener mon adversaire au sol en l'accompagnant, dans un combat reel.",
+          "instructions": [
+            "On commence debout, saisie au corps.",
+            "Des que l'un est au sol, on s'arrete et on repart debout.",
+            "J'accompagne toujours la chute de mon adversaire.",
+            "Observateur : je signale immediatement tout lacher ou action interdite."
+          ],
+          "success": [
+            "Au moins une amenee au sol par combat.",
+            "Aucun lacher ni action interdite signale.",
+            "Les deux adversaires chutent correctement."
+          ],
+          "execution": [
+            "Rester bas et stable en garde.",
+            "Desequilibrer avant de descendre.",
+            "Accompagner jusqu'au tapis."
+          ],
+          "watch": [
+            "Les amenees au sol sont-elles accompagnees en situation reelle ?",
+            "Le combat debout genere-t-il des actions dangereuses ?",
+            "Les chutes restent-elles correctes sous la pression ?"
+          ],
+          "errors": [
+            "Lacher l'adversaire quand le combat se tend.",
+            "Se precipiter et projeter sans controle.",
+            "Oublier de rentrer le menton en chutant."
+          ],
+          "feedback": [
+            "Tu l'as lache : c'est une faute grave, tu descends avec lui.",
+            "Pas de precipitation : desequilibre d'abord.",
+            "Menton rentre, meme en combat."
+          ],
+          "plus": [
+            "Combats de 60 secondes avec poursuite au sol."
+          ],
+          "minus": [
+            "Retour au combat a genoux.",
+            "Combats de 30 secondes."
+          ],
+          "diff": {
+            "facilitee": "Retour au combat a genoux pour les eleves dont la chute debout n'est pas validee.",
+            "normale": "Combats debout de 45 secondes, arret des l'amenee au sol.",
+            "complexifiee": "Combats de 60 secondes avec poursuite au sol apres l'amenee."
+          },
+          "safety": [
+            "Combat debout reserve aux eleves dont la chute a ete validee individuellement par le professeur : les autres restent au combat a genoux, sans penalite.",
+            "Accompagnement obligatoire : tout lacher entraine l'arret du combat.",
+            "Aucun soulevement, aucune projection.",
+            "Arret du combat des l'amenee au sol, pour limiter la duree d'engagement debout.",
+            "Binomes de gabarit comparable.",
+            "Zones elargies, tapis joints, 2 metres de degagement sans mur.",
+            "Le professeur supervise l'ensemble des combats en permanence.",
+            "Arret immediat de tout combat qui s'envenime ou sort du cadre."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que doit-on toujours faire quand on amene un adversaire au sol ?",
+          "Quelles saisies sont autorisees, et lesquelles ne le sont jamais ?"
+        ],
+        "key": "On n'amene jamais un adversaire au sol sans l'accompagner : lacher, c'est la faute la plus grave en lutte. Et on saisit au corps, jamais aux articulations ni au cou."
+      },
+      "socialRoles": [
+        "Observateur de securite : signale immediatement tout lacher ou action interdite.",
+        "Chronometreur : gere les temps de combat.",
+        "Responsable materiel : verifie la jonction des tapis entre les series."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Immobiliser et se degager",
+      "mainObjective": "Construire l'immobilisation au sol et les moyens de s'en liberer, qui donnent son sens au combat au sol.",
+      "secondaryObjectives": [
+        "Immobiliser un adversaire epaules au tapis pendant 3 secondes.",
+        "Se degager d'une immobilisation par le pont et la rotation.",
+        "Controler sans ecraser."
+      ],
+      "linkToPrevious": "L'amenee au sol est construite. Sans immobilisation, le combat n'a pas de conclusion, et sans degagement, l'eleve au sol reste passif.",
+      "prerequisiteForNext": "Chaque eleve immobilise 3 secondes et se degage au moins une fois.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Verifier la jonction des tapis.",
+          "Delimiter des zones de 3 metres sur 3 : le travail au sol demande moins d'espace.",
+          "Repartir les chronometres pour mesurer les immobilisations.",
+          "Reconstituer les binomes de gabarit comparable.",
+          "Rappeler les regles d'or, en insistant sur l'interdiction d'ecraser la cage thoracique."
+        ],
+        "sketch": "Surface de tapis joints.\nZones de 3 m x 3 m pour le travail au sol.\nChronometreurs au bord de chaque zone.\nAffiches des regles d'or visibles."
+      },
+      "warmup": {
+        "rationale": "Prepare le dos, la nuque et la sangle abdominale, tres sollicites dans les immobilisations et les degagements en pont.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Deplacements a quatre pattes, en rampant, en crabe sur les tapis.",
+              "Course souple autour des tapis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque : flexions douces, rotations lentes, renforcement isometrique doux.",
+              "Epaules, hanches, dos.",
+              "Gainage ventral, dorsal et lateral, 15 secondes chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Preparation au pont",
+            "details": [
+              "Allonge sur le dos, genoux flechis : soulever le bassin, appuis pieds et epaules. 10 fois.",
+              "Rotations du bassin d'un cote a l'autre, allonge sur le dos.",
+              "Passage du dos au ventre par rotation, 5 fois de chaque cote."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Immobiliser 3 secondes",
+          "objective": "Construire l'immobilisation efficace : controler l'adversaire epaules au tapis sans l'ecraser.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par trois : un qui immobilise, un immobilise, un chronometreur. L'adversaire au sol est d'abord passif, puis oppose une resistance legere. Cinq essais puis rotation.",
+          "studentGoal": "Garder mon adversaire epaules au tapis pendant 3 secondes.",
+          "instructions": [
+            "Je place mon poids sur son buste, en repartissant l'appui.",
+            "Je garde mes appuis larges au sol : pieds ecartes, en trepied.",
+            "Je ne pese jamais sur sa cage thoracique ni sur son cou.",
+            "Chronometreur : je compte a voix haute jusqu'a 3."
+          ],
+          "success": [
+            "Trois immobilisations de 3 secondes reussies sur cinq.",
+            "Les appuis de l'immobilisateur sont larges et stables.",
+            "Aucune pression sur la cage thoracique ni sur le cou."
+          ],
+          "execution": [
+            "Repartir son poids : la poitrine sur le buste, jamais tout le poids sur un point.",
+            "Ecarter largement ses appuis au sol pour ne pas etre retourne.",
+            "Rester mobile : suivre les mouvements de l'adversaire."
+          ],
+          "watch": [
+            "Y a-t-il pression sur la cage thoracique ou le cou ?",
+            "L'adversaire immobilise peut-il respirer normalement ?",
+            "Les appuis de l'immobilisateur sont-ils larges ?"
+          ],
+          "errors": [
+            "Peser sur la cage thoracique : l'adversaire ne peut plus respirer.",
+            "Appuyer sur le cou ou le visage.",
+            "Appuis serres, ce qui rend le retournement facile."
+          ],
+          "feedback": [
+            "Ton poids sur son buste, pas sur ses cotes : il doit respirer.",
+            "Jamais le cou, meme pour tenir.",
+            "Ecarte tes appuis, il va te retourner."
+          ],
+          "plus": [
+            "Immobilisation de 5 secondes.",
+            "Adversaire en opposition reelle."
+          ],
+          "minus": [
+            "Immobilisation de 2 secondes.",
+            "Adversaire totalement passif."
+          ],
+          "diff": {
+            "facilitee": "Immobilisation de 2 secondes sur un adversaire passif.",
+            "normale": "Immobilisation de 3 secondes avec resistance legere.",
+            "complexifiee": "Immobilisation de 5 secondes avec opposition reelle."
+          },
+          "safety": [
+            "Interdiction absolue de peser sur la cage thoracique : l'adversaire doit pouvoir respirer normalement a tout moment.",
+            "Aucune pression sur le cou, la gorge, le visage ni la tete.",
+            "Tout eleve immobilise qui dit stop ou frappe le tapis est libere immediatement.",
+            "Aucun etranglement, aucune cle articulaire : interdits absolus.",
+            "Binomes de gabarit comparable.",
+            "Tapis joints, zones espacees.",
+            "Le professeur supervise en permanence et verifie la repartition des appuis."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Se degager par le pont",
+          "objective": "Construire les moyens de se liberer d'une immobilisation, pour que l'eleve au sol ne reste jamais passif.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Par deux. L'un immobilise avec une pression legere, l'autre cherche a se degager par le pont et la rotation. Series de 45 secondes, puis rotation des roles.",
+          "studentGoal": "Me degager d'une immobilisation en faisant le pont et en pivotant.",
+          "instructions": [
+            "Je pousse sur mes pieds pour soulever mon bassin : c'est le pont.",
+            "Quand mon adversaire perd son equilibre, je pivote sur le cote.",
+            "Je passe du dos au ventre en tournant, pas en poussant en force.",
+            "Si je n'y arrive pas, je dis stop et on recommence."
+          ],
+          "success": [
+            "L'eleve se degage au moins deux fois sur trois series.",
+            "Le pont est realise en appui sur les pieds, jamais sur la tete.",
+            "Le degagement se fait par rotation, pas par force pure."
+          ],
+          "execution": [
+            "Pont en appui sur les pieds et les epaules, jamais sur la tete.",
+            "Creer du desequilibre par le pont, puis pivoter dans la foulee.",
+            "Continuer la rotation jusqu'a se retrouver sur le ventre."
+          ],
+          "watch": [
+            "Le pont se fait-il en appui sur la tete, ce qui est dangereux ?",
+            "Les eleves poussent-ils en force au lieu de pivoter ?",
+            "L'immobilisateur maintient-il une pression legere ?"
+          ],
+          "errors": [
+            "Faire le pont en appui sur la tete : risque cervical grave.",
+            "Pousser en force sans pivoter, ce qui epuise sans resultat.",
+            "L'immobilisateur qui pese trop, empechant tout apprentissage."
+          ],
+          "feedback": [
+            "Appuie sur tes pieds, jamais sur ta tete.",
+            "Souleve puis tourne : le pont seul ne suffit pas.",
+            "Toi, allege : il doit pouvoir apprendre a se degager."
+          ],
+          "plus": [
+            "Immobilisation plus ferme.",
+            "Degagement chronometre en moins de 15 secondes."
+          ],
+          "minus": [
+            "Immobilisation tres legere.",
+            "Degagement guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Immobilisation tres legere, degagement guide etape par etape.",
+            "normale": "Immobilisation legere, degagement par pont et rotation.",
+            "complexifiee": "Immobilisation ferme, degagement chronometre."
+          },
+          "safety": [
+            "Le pont se realise en appui sur les pieds et les epaules : jamais en appui sur la tete. Arret immediat si un eleve prend appui sur son crane.",
+            "L'immobilisateur maintient une pression legere : il n'a pas a gagner, il permet l'apprentissage.",
+            "Aucune pression sur la cage thoracique ni sur le cou.",
+            "Tout stop est respecte immediatement.",
+            "Binomes de gabarit comparable.",
+            "Le professeur supervise directement cet atelier, particulierement les appuis de nuque."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Combat au sol complet",
+          "objective": "Enchainer amenee au sol, immobilisation et degagement dans un combat au sol reel.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Combats de 90 secondes, debut a genoux. Points : 1 pour un retournement sur le dos, 2 pour une immobilisation de 3 secondes. Un observateur compte les points et signale les actions interdites.",
+          "studentGoal": "Marquer des points en retournant puis en immobilisant mon adversaire.",
+          "instructions": [
+            "Je marque 1 point si je retourne mon adversaire sur le dos.",
+            "Je marque 2 points si je l'immobilise 3 secondes.",
+            "Si je suis immobilise, je cherche a me degager par le pont.",
+            "Observateur : je compte les points et je signale toute action interdite."
+          ],
+          "success": [
+            "Au moins deux points marques par combat.",
+            "Chaque eleve tente au moins un degagement quand il est immobilise.",
+            "Aucune action interdite signalee."
+          ],
+          "execution": [
+            "Enchainer sans temps mort : retournement puis immobilisation.",
+            "Repartir son poids et elargir ses appuis en immobilisation.",
+            "Reagir immediatement quand on est immobilise, ne pas subir."
+          ],
+          "watch": [
+            "Les eleves au sol restent-ils passifs ou cherchent-ils a se degager ?",
+            "Les immobilisations respectent-elles la cage thoracique ?",
+            "Les observateurs comptent-ils correctement ?"
+          ],
+          "errors": [
+            "Se mettre sur le ventre et attendre la fin.",
+            "Peser sur la cage thoracique en immobilisant.",
+            "Contester le comptage de l'observateur."
+          ],
+          "feedback": [
+            "Ne subis pas : fais le pont et tourne.",
+            "Ton poids sur le buste, pas sur les cotes.",
+            "L'observateur compte, on accepte."
+          ],
+          "plus": [
+            "Combats de 2 minutes, debut debout.",
+            "Immobilisation portee a 5 secondes."
+          ],
+          "minus": [
+            "Combats de 60 secondes.",
+            "Immobilisation de 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Combats de 60 secondes, immobilisation de 2 secondes, adversaire de niveau tres proche.",
+            "normale": "Combats de 90 secondes a genoux, bareme 1 et 2 points.",
+            "complexifiee": "Combats de 2 minutes debut debout, immobilisation de 5 secondes."
+          },
+          "safety": [
+            "Interdits absolus rappeles avant chaque combat : aucun etranglement, aucune cle, aucune pression sur la cage thoracique, le cou ou le visage.",
+            "Tout stop ou frappe sur le tapis entraine la liberation immediate.",
+            "Binomes de gabarit comparable, poules constituees par le professeur.",
+            "Combat au sol uniquement : pas de projection debout dans cette situation.",
+            "Un seul combat par zone, tapis joints, zones espacees.",
+            "Le professeur supervise l'ensemble des combats en permanence.",
+            "Arret immediat de tout combat qui s'envenime."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou faut-il placer son poids pour immobiliser sans empecher l'adversaire de respirer ?",
+          "Que faut-il faire quand on est immobilise, plutot que d'attendre ?"
+        ],
+        "key": "Immobiliser, c'est controler sans ecraser : le poids se repartit sur le buste, jamais sur les cotes ni le cou. Et celui qui est au sol ne subit pas : il fait le pont et il tourne."
+      },
+      "socialRoles": [
+        "Chronometreur d'immobilisation : compte les 3 secondes a voix haute.",
+        "Observateur de securite : signale toute pression dangereuse ou action interdite.",
+        "Compteur de points : tient le score du combat."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Combats evalues de mi-cycle",
+      "mainObjective": "Faire le point a mi-parcours sur la securite, le desequilibre et le combat au sol, et fixer un objectif personnel.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Situer son niveau de combat par rapport au debut du cycle.",
+        "Tenir le role d'observateur avec une fiche structuree.",
+        "Ecrire un objectif personnel pour les trois dernieres seances."
+      ],
+      "linkToPrevious": "Regles d'or, desequilibre, amenee au sol et immobilisation ont ete construits : on verifie ce qui est reellement disponible en combat.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau et a formule un objectif precis.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche des criteres",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Preparer les fiches nominatives avec les quatre criteres imprimes.",
+          "Afficher les criteres evalues, en grand, a l'entree de la salle.",
+          "Constituer des poules de gabarit et de niveau homogenes.",
+          "Verifier la jonction des tapis et le degagement.",
+          "Prevoir un espace calme pour l'ecriture de l'objectif."
+        ],
+        "sketch": "Surface de tapis joints, zones de combat delimitees.\nAffichage des criteres et des regles d'or a l'entree.\nCoin ecriture hors des tapis.\nChronometreurs et observateurs au bord de chaque zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves, avec rappel obligatoire des chutes avant toute pratique evaluee.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe mene son echauffement : deplacements varies sur les tapis.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, dos, menes par un eleve de chaque groupe.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel des chutes et des acquis",
+            "details": [
+              "Dix chutes arriere et cinq laterales par eleve.",
+              "Deux desequilibres et une immobilisation par binome."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Combats evalues en poule",
+          "objective": "Observer chaque eleve en combat reel sur les quatre criteres travailles depuis le debut du cycle.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Poules de quatre par gabarit. Combats de 90 secondes, debut a genoux. Chacun rencontre les trois autres. Les deux eleves au repos tiennent les roles d'arbitre et d'observateur.",
+          "studentGoal": "Montrer en combat ce que j'ai appris : desequilibrer, amener au sol, immobiliser.",
+          "instructions": [
+            "Je combats mes trois adversaires de poule, 90 secondes chacun.",
+            "Quand je ne combats pas, j'arbitre ou j'observe.",
+            "Observateur : je remplis la fiche critere par critere.",
+            "Je ne conteste pas les decisions de l'arbitre."
+          ],
+          "success": [
+            "Aucune action interdite sur l'ensemble des combats.",
+            "Au moins un desequilibre reussi par combat.",
+            "L'eleve cherche a se degager quand il est au sol.",
+            "Le resultat est accepte sans contestation."
+          ],
+          "execution": [
+            "Rester bas et stable sur ses appuis.",
+            "Utiliser les reactions de l'adversaire.",
+            "Accompagner toute chute.",
+            "Reagir immediatement quand on est immobilise."
+          ],
+          "watch": [
+            "Les regles d'or tiennent-elles sous la pression de l'evaluation ?",
+            "Qui a progresse depuis la seance 1 ?",
+            "Les arbitres osent-ils arreter un combat ?"
+          ],
+          "errors": [
+            "Revenir a la force pure sous la pression.",
+            "Oublier d'accompagner la chute.",
+            "Contester une decision."
+          ],
+          "feedback": [
+            "Tu forces : souviens-toi d'utiliser sa reaction.",
+            "Accompagne : tu ne laches jamais.",
+            "Le combat est fini, on en parle apres."
+          ],
+          "plus": [
+            "Combats debout pour les eleves ayant valide les chutes.",
+            "Arbitrage entierement autonome."
+          ],
+          "minus": [
+            "Combats de 60 secondes.",
+            "Poules de trois."
+          ],
+          "diff": {
+            "facilitee": "Combats de 60 secondes a genoux, poules de trois, arbitrage assiste.",
+            "normale": "Combats de 90 secondes a genoux, poules de quatre.",
+            "complexifiee": "Combats debout pour les eleves ayant valide les chutes, arbitrage autonome."
+          },
+          "safety": [
+            "Regles d'or affichees et rappelees avant le premier combat.",
+            "Poules constituees par gabarit : aucun combat entre gabarits eloignes.",
+            "Combat debout reserve aux eleves dont la chute est validee : les autres combattent a genoux, sans penalite dans l'evaluation.",
+            "Tout stop ou frappe sur le tapis entraine l'arret immediat.",
+            "Aucun etranglement, aucune cle, aucune pression sur cage thoracique, cou ou visage.",
+            "Un seul combat par zone, tapis joints et verifies.",
+            "Le professeur supervise l'ensemble des combats en permanence.",
+            "Arret immediat et definitif de tout combat qui s'envenime."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Lecture de la fiche a deux",
+          "objective": "Faire comprendre a chaque eleve ce qui a ete observe de son combat, avant d'en tirer un objectif.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Par deux, combattant et observateur assis a l'ecart des tapis. L'observateur explique ce qu'il a note, le combattant pose des questions.",
+          "studentGoal": "Comprendre precisement ce que mon camarade a observe de mon combat.",
+          "instructions": [
+            "Observateur : je dis ce que j'ai vu, avec des exemples precis.",
+            "Combattant : j'ecoute et je demande des precisions.",
+            "On cherche ensemble un point fort et un point a ameliorer.",
+            "On ne discute pas le resultat, on discute ce qui a ete vu."
+          ],
+          "success": [
+            "Chaque eleve cite un point fort de son combat.",
+            "Chaque eleve cite un point precis a ameliorer.",
+            "L'echange se fait sans conflit."
+          ],
+          "execution": [
+            "Donner un exemple concret plutot qu'un jugement general.",
+            "Parler du combat, pas de la personne.",
+            "Ecouter jusqu'au bout avant de repondre."
+          ],
+          "watch": [
+            "Les retours sont-ils precis ou generaux ?",
+            "Les eleves acceptent-ils le retour d'un camarade ?"
+          ],
+          "errors": [
+            "Dire simplement bien ou nul, sans exemple.",
+            "Contester au lieu d'ecouter.",
+            "Remplir la fiche apres coup."
+          ],
+          "feedback": [
+            "Donne-lui un exemple : a quel moment tu l'as vu ?",
+            "On parle de ce qu'il a fait, pas de lui.",
+            "Ecoute d'abord, tu repondras apres."
+          ],
+          "plus": [
+            "Comparer avec la fiche d'observation de la seance 1."
+          ],
+          "minus": [
+            "Le professeur mene l'echange avec le binome."
+          ],
+          "diff": {
+            "facilitee": "Echange guide par le professeur, criteres relus a voix haute.",
+            "normale": "Echange autonome a deux.",
+            "complexifiee": "Echange avec comparaison chiffree seance 1 / seance 5."
+          },
+          "safety": [
+            "Temps calme a l'ecart des tapis, aucun combat en cours a proximite.",
+            "Aucun contact pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Mon objectif pour la fin du cycle",
+          "objective": "Transformer le bilan en un objectif personnel simple et verifiable.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement, assis, chacun ecrit son objectif au dos de sa fiche. Le professeur passe valider ou reformuler.",
+          "studentGoal": "Ecrire un objectif que je pourrai verifier a la derniere seance.",
+          "instructions": [
+            "J'ecris un seul objectif, precis et verifiable.",
+            "J'evite les objectifs vagues comme mieux lutter.",
+            "Je choisis parmi les quatre criteres celui ou je suis le moins bon.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "L'objectif est ecrit et lisible.",
+            "L'objectif porte sur un critere precis du cycle.",
+            "L'objectif est verifiable en combat."
+          ],
+          "execution": [
+            "Formuler avec un verbe d'action et un nombre.",
+            "Relier l'objectif a ce que l'observateur a note.",
+            "Ecrire en une seule phrase."
+          ],
+          "watch": [
+            "Les objectifs sont-ils realistes et mesurables ?",
+            "Correspondent-ils au point faible observe ?"
+          ],
+          "errors": [
+            "Objectif trop vague.",
+            "Objectif deja atteint.",
+            "Objectif centre sur gagner plutot que sur une competence."
+          ],
+          "feedback": [
+            "Ajoute un nombre : combien de fois par combat ?",
+            "Gagner n'est pas un objectif : qu'est-ce que tu veux savoir faire ?",
+            "Choisis le critere ou ta fiche est la moins bonne."
+          ],
+          "plus": [
+            "Ecrire aussi le moyen concret d'y arriver."
+          ],
+          "minus": [
+            "Choisir un objectif dans une liste proposee."
+          ],
+          "diff": {
+            "facilitee": "Objectif choisi dans une liste de quatre propositions affichees.",
+            "normale": "Objectif redige librement, valide par le professeur.",
+            "complexifiee": "Objectif et moyen d'y parvenir rediges."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des tapis.",
+            "Aucun combat en cours pendant cette phase."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre objectif pour les trois dernieres seances ?",
+          "Sur quel critere la classe a-t-elle le plus progresse depuis la seance 1 ?"
+        ],
+        "key": "A mi-cycle, chacun sait ce qu'il sait faire et ce qu'il lui reste a travailler : les trois dernieres seances servent a atteindre cet objectif."
+      },
+      "socialRoles": [
+        "Arbitre : dirige un combat complet, arrete au besoin.",
+        "Observateur evaluateur : remplit la fiche d'un camarade.",
+        "Chronometreur : gere les temps de combat et d'immobilisation."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Enchainer : de la saisie au controle",
+      "mainObjective": "Enchainer les actions sans temps mort : saisir, desequilibrer, amener au sol, immobiliser.",
+      "secondaryObjectives": [
+        "Enchainer deux actions sans rupture.",
+        "Reagir immediatement quand une action echoue.",
+        "Adapter son engagement au rapport de force."
+      ],
+      "linkToPrevious": "Les actions sont maitrisees isolement mais s'arretent des qu'une tentative echoue : il faut construire l'enchainement.",
+      "prerequisiteForNext": "Chaque eleve enchaine au moins deux actions dans un combat.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 10
+          }
+        ],
+        "instructions": [
+          "Verifier la jonction des tapis et le degagement.",
+          "Delimiter les zones de combat.",
+          "Reconstituer les binomes de gabarit comparable.",
+          "Rappeler les regles d'or.",
+          "Preparer les fiches de comptage des enchainements."
+        ],
+        "sketch": "Surface de tapis joints.\nZones de combat delimitees, une par binome.\nAffiches des regles d'or visibles.\nObservateurs au bord de chaque zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec rappel des chutes, suivi d'une reprise des actions apprises avant de les enchainer.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train",
+            "details": [
+              "Deplacements varies sur les tapis.",
+              "Deplacements en garde, position basse."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, dos.",
+              "Gainage complet, renforcement de la nuque."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel des acquis",
+            "details": [
+              "Dix chutes par eleve.",
+              "Trois desequilibres et deux immobilisations par binome, sans opposition."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Deux actions enchainees",
+          "objective": "Construire l'enchainement : quand une action echoue, en declencher immediatement une autre.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux. Le partenaire resiste dans une direction annoncee. L'executant tente une action, le partenaire la bloque, l'executant enchaine immediatement une action dans l'autre direction. Cinq repetitions puis rotation.",
+          "studentGoal": "Enchainer une deuxieme action des que la premiere est bloquee.",
+          "instructions": [
+            "Je tente une action, mon partenaire la bloque.",
+            "Des qu'elle est bloquee, j'enchaine immediatement dans l'autre sens.",
+            "Je n'insiste jamais sur une action bloquee : je change.",
+            "Partenaire : je bloque, mais je ne contre-attaque pas."
+          ],
+          "success": [
+            "Quatre enchainements reussis sur cinq.",
+            "Aucun temps mort entre les deux actions.",
+            "La deuxieme action va dans une direction differente de la premiere."
+          ],
+          "execution": [
+            "Sentir le blocage immediatement, sans insister.",
+            "Utiliser la resistance du partenaire comme moteur de la seconde action.",
+            "Enchainer sans reprendre sa position de depart."
+          ],
+          "watch": [
+            "Les eleves insistent-ils sur l'action bloquee ?",
+            "L'enchainement est-il immediat ou y a-t-il un temps mort ?",
+            "La seconde action exploite-t-elle la resistance ?"
+          ],
+          "errors": [
+            "Insister en force sur une action bloquee.",
+            "S'arreter et reprendre depuis le debut.",
+            "Enchainer dans la meme direction, donc a nouveau bloque."
+          ],
+          "feedback": [
+            "C'est bloque : change tout de suite, n'insiste pas.",
+            "Ne recommence pas a zero : enchaine depuis ou tu es.",
+            "Il resiste par la : va dans l'autre sens."
+          ],
+          "plus": [
+            "Trois actions enchainees.",
+            "Partenaire qui choisit sa direction de blocage sans l'annoncer."
+          ],
+          "minus": [
+            "Direction de blocage annoncee a voix haute.",
+            "Travail a genoux."
+          ],
+          "diff": {
+            "facilitee": "Travail a genoux, direction de blocage annoncee a voix haute, sans contrainte de temps.",
+            "normale": "Deux actions enchainees, blocage annonce avant la serie.",
+            "complexifiee": "Trois actions enchainees, blocage non annonce."
+          },
+          "safety": [
+            "Regles d'or rappelees.",
+            "Accompagnement obligatoire de toute chute.",
+            "Le partenaire bloque mais ne contre-attaque pas : la situation reste un apprentissage, pas un combat.",
+            "Binomes de gabarit comparable.",
+            "Tapis joints, zones espacees.",
+            "Arret immediat au stop.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Adapter son engagement",
+          "objective": "Construire la lecture du rapport de force : ne pas s'epuiser en force contre plus fort, changer de strategie.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            }
+          ],
+          "organization": "Combats de 60 secondes avec des adversaires volontairement de niveau ou de gabarit legerement different, sous supervision rapprochee. Consigne : trouver comment marquer sans forcer.",
+          "studentGoal": "Trouver une solution qui ne repose pas sur la force quand mon adversaire est plus fort.",
+          "instructions": [
+            "Si mon adversaire est plus fort, je ne cherche pas a le pousser.",
+            "J'utilise sa force : je l'accompagne quand il pousse.",
+            "Je reste bas et je preserve mon energie.",
+            "Je dis stop si je me sens en difficulte."
+          ],
+          "success": [
+            "L'eleve varie ses actions plutot que d'insister en force.",
+            "L'eleve tient les 60 secondes sans s'epuiser.",
+            "Aucune action interdite, aucun combat qui s'envenime."
+          ],
+          "execution": [
+            "Rester bas et economiser son energie.",
+            "Utiliser les mouvements de l'adversaire.",
+            "Respirer regulierement, ne jamais bloquer."
+          ],
+          "watch": [
+            "Les eleves s'epuisent-ils en force contre plus fort ?",
+            "Le rapport de force reste-t-il maitrise et sur ?",
+            "Y a-t-il des signes d'enervement ?"
+          ],
+          "errors": [
+            "Forcer en vain contre plus fort et s'epuiser.",
+            "S'enerver et durcir le combat.",
+            "Bloquer sa respiration."
+          ],
+          "feedback": [
+            "Il est plus fort : n'essaie pas de le pousser, accompagne-le.",
+            "Calme-toi, respire : tu t'epuises.",
+            "Reste bas, economise-toi."
+          ],
+          "plus": [
+            "Combats de 90 secondes."
+          ],
+          "minus": [
+            "Adversaires de gabarit strictement identique.",
+            "Combats de 30 secondes."
+          ],
+          "diff": {
+            "facilitee": "Adversaires de gabarit strictement identique, combats de 30 secondes.",
+            "normale": "Ecart de gabarit ou de niveau leger, combats de 60 secondes, supervision rapprochee.",
+            "complexifiee": "Combats de 90 secondes avec variation des adversaires."
+          },
+          "safety": [
+            "Ecart de gabarit strictement limite et valide par le professeur : jamais d'ecart important, meme pour cette situation.",
+            "Supervision rapprochee et permanente du professeur sur cette situation specifique.",
+            "Arret immediat au moindre signe d'enervement ou de perte de controle.",
+            "Tout stop est respecte immediatement.",
+            "Regles d'or rappelees avant chaque combat.",
+            "Aucun eleve n'est contraint d'affronter un adversaire avec lequel il ne se sent pas en securite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Combat complet avec enchainements",
+          "objective": "Reinvestir les enchainements dans un combat complet, avec valorisation des actions enchainees.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Combats de 90 secondes, debut a genoux ou debout selon la validation des chutes. Un point marque apres un enchainement de deux actions compte double. Un observateur compte les enchainements.",
+          "studentGoal": "Marquer des points en enchainant deux actions.",
+          "instructions": [
+            "Un point marque apres un enchainement de deux actions compte double.",
+            "Si mon action est bloquee, j'enchaine immediatement.",
+            "J'accompagne toute chute.",
+            "Observateur : je compte les enchainements et je signale toute action interdite."
+          ],
+          "success": [
+            "Au moins un enchainement reussi par combat.",
+            "Aucune action interdite signalee.",
+            "L'eleve n'insiste plus sur les actions bloquees."
+          ],
+          "execution": [
+            "Enchainer sans temps mort.",
+            "Accompagner toute chute.",
+            "Rester bas et economiser son energie."
+          ],
+          "watch": [
+            "Les enchainements apparaissent-ils en combat reel ?",
+            "Les eleves insistent-ils encore sur les actions bloquees ?"
+          ],
+          "errors": [
+            "Insister en force quand le combat se tend.",
+            "Oublier d'accompagner la chute.",
+            "Se decourager apres deux actions bloquees."
+          ],
+          "feedback": [
+            "Bloque : change, n'insiste pas.",
+            "Accompagne, toujours.",
+            "Deux echecs, ce n'est pas grave : enchaine encore."
+          ],
+          "plus": [
+            "Combats de 2 minutes.",
+            "Seuls les points issus d'enchainements comptent."
+          ],
+          "minus": [
+            "Combats de 60 secondes.",
+            "Enchainement valorise mais non comptabilise."
+          ],
+          "diff": {
+            "facilitee": "Combats de 60 secondes a genoux, enchainement valorise oralement sans bonus.",
+            "normale": "Combats de 90 secondes, bonus double pour les enchainements.",
+            "complexifiee": "Combats de 2 minutes, seuls les points issus d'enchainements comptent."
+          },
+          "safety": [
+            "Regles d'or rappelees avant chaque combat.",
+            "Combat debout reserve aux eleves dont la chute est validee.",
+            "Accompagnement obligatoire de toute chute.",
+            "Aucun etranglement, aucune cle, aucune pression sur cage thoracique, cou ou visage.",
+            "Binomes de gabarit comparable.",
+            "Un seul combat par zone, tapis joints.",
+            "Le professeur supervise en permanence, arret immediat de tout combat qui s'envenime."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il faire quand une action est bloquee par l'adversaire ?",
+          "Comment faire quand un adversaire est nettement plus fort que soi ?"
+        ],
+        "key": "En lutte, une action bloquee n'est pas un echec : c'est le point de depart de la suivante. Et contre plus fort, on n'oppose jamais la force : on utilise la sienne."
+      },
+      "socialRoles": [
+        "Compteur d'enchainements : releve les actions enchainees.",
+        "Observateur de securite : signale toute action interdite.",
+        "Chronometreur : gere les temps de combat."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Preparer et arbitrer un combat",
+      "mainObjective": "Former les eleves a l'arbitrage complet et realiser une repetition generale du tournoi final.",
+      "secondaryObjectives": [
+        "Connaitre le bareme et savoir compter les points.",
+        "Arreter un combat en cas de danger ou de sortie de zone.",
+        "Realiser un combat dans les conditions de l'evaluation."
+      ],
+      "linkToPrevious": "Les competences de combat sont en place : il reste a preparer les roles, dont l'arbitrage est le plus exigeant en lutte car il porte aussi la securite.",
+      "prerequisiteForNext": "Chaque eleve sait arbitrer un combat complet, y compris l'arret pour raison de securite.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "grilles d'arbitrage d'entrainement",
+            "per": 0.5,
+            "min": 10
+          },
+          {
+            "label": "affiche du bareme et des motifs d'arret",
+            "fixed": 2
+          },
+          {
+            "label": "plots de delimitation",
+            "fixed": 12
+          }
+        ],
+        "instructions": [
+          "Afficher le bareme des points et la liste des motifs d'arret d'un combat.",
+          "Preparer les grilles d'arbitrage identiques a celles de l'evaluation.",
+          "Installer les zones exactement comme elles le seront a la seance 8.",
+          "Verifier la jonction des tapis et le degagement.",
+          "Reconstituer les poules de gabarit."
+        ],
+        "sketch": "Zones de combat installees comme le jour de l'evaluation.\nAffichage du bareme et des motifs d'arret aux deux extremites.\nArbitre au bord de chaque zone, chronometreur a cote.\nTable des grilles hors des tapis."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, avec rappel obligatoire des chutes avant les combats de repetition generale.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, dos.",
+              "Gainage complet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Rappel des chutes et des acquis",
+            "details": [
+              "Dix chutes par eleve, validees par le professeur.",
+              "Deux enchainements par binome, sans opposition."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Apprendre a arbitrer",
+          "objective": "Former a l'arbitrage : compter les points, mais surtout savoir arreter un combat pour raison de securite.",
+          "material": [
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "affiche du bareme et des motifs d'arret",
+              "fixed": 2
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            }
+          ],
+          "organization": "Par quatre : deux combattants, un arbitre, un chronometreur. Combats de 90 secondes. L'arbitre annonce les points, arrete le combat en cas de sortie de zone, d'action interdite ou de danger. Rotation systematique.",
+          "studentGoal": "Arbitrer un combat complet, en comptant les points et en arretant si necessaire.",
+          "instructions": [
+            "J'annonce chaque point a voix haute : 1 pour un retournement, 2 pour une immobilisation.",
+            "J'arrete le combat si un lutteur sort de la zone.",
+            "J'arrete immediatement en cas d'action interdite ou de danger.",
+            "Je place mes combattants au centre avant de relancer."
+          ],
+          "success": [
+            "Les points sont annonces a voix haute a chaque action.",
+            "L'arbitre arrete le combat aux sorties de zone.",
+            "L'arbitre ose arreter en cas d'action interdite."
+          ],
+          "execution": [
+            "Se placer au bord de la zone, en vision directe.",
+            "Annoncer fort et clairement.",
+            "Arreter sans hesiter : la securite prime sur le combat."
+          ],
+          "watch": [
+            "Les arbitres osent-ils arreter un combat ?",
+            "Les points sont-ils comptes correctement ?",
+            "L'arbitre se place-t-il pour voir ?"
+          ],
+          "errors": [
+            "Hesiter a arreter un combat entre camarades.",
+            "Ne pas annoncer les points.",
+            "Se placer mal et ne rien voir."
+          ],
+          "feedback": [
+            "Tu es arbitre : arreter, c'est ton role, pas une trahison.",
+            "Annonce a voix haute apres chaque action.",
+            "Place-toi pour voir : bouge autour de la zone."
+          ],
+          "plus": [
+            "Arbitrer seul, sans chronometreur.",
+            "Justifier chaque decision oralement."
+          ],
+          "minus": [
+            "Arbitrer a deux, en se repartissant points et securite.",
+            "Arbitrage assiste par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Arbitrage a deux : l'un compte les points, l'autre surveille la securite, avec appui du professeur.",
+            "normale": "Arbitrage complet en autonomie, avec chronometreur.",
+            "complexifiee": "Arbitrage seul, avec justification orale de chaque decision."
+          },
+          "safety": [
+            "L'arbitre porte une responsabilite de securite : il doit arreter sans hesiter en cas d'action interdite, de sortie de zone ou de danger.",
+            "Le professeur reste superviseur final et peut arreter tout combat a tout moment.",
+            "Regles d'or et motifs d'arret affiches et rappeles.",
+            "Binomes de gabarit comparable.",
+            "Tapis joints, zones espacees, un combat par zone.",
+            "Tout stop entraine l'arret immediat."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Preparer son combat",
+          "objective": "Construire une intention avant le combat : quelle action tenter en priorite selon l'adversaire.",
+          "material": [
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            },
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Avant chaque combat, l'eleve annonce a son observateur l'action qu'il compte tenter en priorite. Apres le combat, l'observateur lui dit s'il l'a effectivement tentee. Trois combats de 60 secondes.",
+          "studentGoal": "Annoncer avant le combat ce que je vais tenter, et le faire.",
+          "instructions": [
+            "Avant le combat, j'annonce l'action que je vais tenter en priorite.",
+            "Je cherche a la placer pendant le combat.",
+            "Observateur : je note si l'action annoncee a ete tentee.",
+            "Apres, on regarde si le projet a ete tenu."
+          ],
+          "success": [
+            "L'action annoncee est tentee au moins deux fois par combat.",
+            "L'annonce est faite avant chaque combat.",
+            "L'eleve sait dire pourquoi son action a marche ou non."
+          ],
+          "execution": [
+            "Choisir une action qu'on maitrise.",
+            "Chercher le moment favorable plutot que de forcer.",
+            "Analyser apres coup pourquoi elle a fonctionne ou non."
+          ],
+          "watch": [
+            "Les eleves ont-ils une intention, ou combattent-ils au hasard ?",
+            "L'action annoncee est-elle adaptee a l'adversaire ?"
+          ],
+          "errors": [
+            "Annoncer une action qu'on ne maitrise pas.",
+            "Oublier son projet des le debut du combat.",
+            "Forcer l'action annoncee sans chercher le moment favorable."
+          ],
+          "feedback": [
+            "Annonce ce que tu sais faire, pas ce que tu voudrais.",
+            "Cherche le bon moment, ne force pas.",
+            "Tu l'avais annoncee : pourquoi tu ne l'as pas tentee ?"
+          ],
+          "plus": [
+            "Annoncer deux actions et une strategie d'enchainement."
+          ],
+          "minus": [
+            "Action proposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Action proposee par le professeur parmi celles maitrisees par l'eleve.",
+            "normale": "Action choisie et annoncee par l'eleve avant chaque combat.",
+            "complexifiee": "Deux actions annoncees avec strategie d'enchainement."
+          },
+          "safety": [
+            "Regles d'or rappelees avant chaque combat.",
+            "Aucune action annoncee ne peut etre une action interdite.",
+            "Binomes de gabarit comparable.",
+            "Arret immediat au stop.",
+            "Supervision permanente du professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Repetition generale",
+          "objective": "Realiser des combats dans les conditions exactes de l'evaluation, arbitrage eleve compris.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "grilles d'arbitrage d'entrainement",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Poules de quatre par gabarit. Combats de 90 secondes, format exact de l'evaluation. Arbitrage et chronometrage tenus par les eleves. Le professeur supervise et n'intervient qu'en cas de necessite.",
+          "studentGoal": "Combattre et arbitrer comme le jour de l'evaluation.",
+          "instructions": [
+            "Je combats mes adversaires de poule, 90 secondes chacun.",
+            "Quand je ne combats pas, j'arbitre ou je chronometre.",
+            "Je respecte les decisions de l'arbitre eleve.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Tous les combats se deroulent sans intervention du professeur.",
+            "Aucune action interdite.",
+            "Les resultats sont acceptes sans contestation."
+          ],
+          "execution": [
+            "Appliquer son projet de combat.",
+            "Enchainer quand une action est bloquee.",
+            "Accompagner toute chute."
+          ],
+          "watch": [
+            "Les arbitres eleves tiennent-ils leur role ?",
+            "Le climat reste-t-il respectueux ?",
+            "Les acquis tiennent-ils en conditions d'evaluation ?"
+          ],
+          "errors": [
+            "Contester une decision d'arbitre eleve.",
+            "Durcir le combat sous la pression du resultat.",
+            "Arbitre qui n'ose pas arreter."
+          ],
+          "feedback": [
+            "L'arbitre a decide : on accepte.",
+            "Calme : c'est une repetition, pas une finale.",
+            "Arbitre, arrete si c'est dangereux, c'est ton role."
+          ],
+          "plus": [
+            "Combats debout pour les eleves ayant valide les chutes."
+          ],
+          "minus": [
+            "Combats de 60 secondes.",
+            "Arbitrage assiste."
+          ],
+          "diff": {
+            "facilitee": "Combats de 60 secondes a genoux, arbitrage assiste par le professeur.",
+            "normale": "Combats de 90 secondes, arbitrage eleve autonome.",
+            "complexifiee": "Combats debout pour les eleves ayant valide les chutes."
+          },
+          "safety": [
+            "Le professeur reste superviseur final malgre l'arbitrage eleve : il peut arreter tout combat a tout moment.",
+            "Regles d'or affichees et rappelees avant le premier combat.",
+            "Poules constituees par gabarit.",
+            "Combat debout reserve aux eleves dont la chute est validee.",
+            "Aucun etranglement, aucune cle, aucune pression sur cage thoracique, cou ou visage.",
+            "Tout stop entraine l'arret immediat.",
+            "Un combat par zone, tapis joints et verifies."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Dans quels cas un arbitre doit-il arreter un combat ?",
+          "Qu'est-ce qui est le plus difficile quand on arbitre ses camarades ?"
+        ],
+        "key": "L'arbitre en lutte ne compte pas seulement les points : il garantit la securite. Arreter un combat n'est jamais une trahison, c'est le coeur du role."
+      },
+      "socialRoles": [
+        "Arbitre : dirige le combat, compte les points et arrete en cas de danger.",
+        "Chronometreur : gere le temps de combat et les immobilisations.",
+        "Observateur de projet : verifie si l'action annoncee a ete tentee."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer en situation de combat les acquis du cycle, et permettre a chaque eleve de verifier son objectif de mi-cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Tenir le role d'arbitre sur un combat complet.",
+        "Tenir le role d'observateur avec la grille d'evaluation.",
+        "Accepter le resultat et savoir l'analyser avec objectivite."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans le meme format : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait ce qu'il a acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de lutte ou tapis de gymnastique",
+            "fixed": 16
+          },
+          {
+            "label": "chasubles",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 5
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 20
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 20,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "affiche des regles d'or",
+            "fixed": 2
+          },
+          {
+            "label": "affiche du bareme",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le tableau des poules et l'ordre des combats a l'entree.",
+          "Preparer les grilles d'evaluation nominatives.",
+          "Ressortir les fiches de mi-cycle avec l'objectif de chaque eleve.",
+          "Verifier scrupuleusement la jonction des tapis et le degagement de 2 metres.",
+          "Constituer les poules par gabarit et faire enoncer les regles d'or par les eleves.",
+          "Faire retirer bijoux et lunettes, verifier ongles et cheveux."
+        ],
+        "sketch": "Surface de tapis joints, zones de combat delimitees.\nTableau des poules affiche a l'entree.\nAffiches des regles d'or et du bareme aux deux extremites.\nTable des grilles hors des tapis.\n2 m de degagement sans mur ni angle."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, avec revalidation obligatoire des chutes : aucun combat evalue ne s'aborde sans cette verification.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Nuque, epaules, hanches, dos.",
+              "Gainage complet, renforcement de la nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revalidation des chutes",
+            "details": [
+              "Dix chutes arriere et cinq laterales par eleve.",
+              "Le professeur valide individuellement avant d'autoriser le combat debout.",
+              "Deux enchainements par binome, sans opposition."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue en poules",
+          "objective": "Evaluer chaque eleve sur les six criteres du cycle, en combat reel et sur plusieurs rencontres.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 5
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            }
+          ],
+          "organization": "Poules de quatre constituees par gabarit. Combats de 90 secondes, chacun rencontrant les trois autres. Les deux eleves au repos tiennent les roles d'arbitre et d'observateur. Le professeur evalue et supervise.",
+          "studentGoal": "Montrer tout ce que j'ai appris pendant le cycle, dans les trois roles : combattant, arbitre, observateur.",
+          "instructions": [
+            "Je combats mes trois adversaires de poule, 90 secondes chacun.",
+            "Quand j'arbitre, je compte les points et j'arrete en cas de danger.",
+            "Quand j'observe, je remplis la grille de mon camarade.",
+            "J'accepte le resultat sans contester."
+          ],
+          "success": [
+            "Aucune action interdite sur l'ensemble des combats.",
+            "L'eleve amene l'adversaire au sol par un desequilibre, en accompagnant sa chute.",
+            "L'eleve immobilise ou se degage d'une immobilisation.",
+            "L'eleve adapte son engagement au rapport de force.",
+            "Les roles d'arbitre et d'observateur sont tenus avec rigueur."
+          ],
+          "execution": [
+            "Rester bas et stable sur ses appuis.",
+            "Utiliser les reactions de l'adversaire plutot que la force.",
+            "Enchainer quand une action est bloquee.",
+            "Accompagner toute chute jusqu'au tapis."
+          ],
+          "watch": [
+            "Les regles d'or tiennent-elles sous la pression du tournoi ?",
+            "Les chutes sont-elles toujours accompagnees ?",
+            "Les arbitres osent-ils arreter ?",
+            "Le climat reste-t-il respectueux ?"
+          ],
+          "errors": [
+            "Revenir a la force pure dans les combats serres.",
+            "Lacher l'adversaire au moment de la chute.",
+            "Durcir le combat sous la pression du resultat.",
+            "Contester une decision d'arbitre."
+          ],
+          "feedback": [
+            "Tu forces : utilise sa reaction.",
+            "Accompagne : lacher est une faute grave.",
+            "Calme-toi, c'est un combat scolaire.",
+            "L'arbitre a decide : on accepte."
+          ],
+          "plus": [
+            "Combats debout pour les eleves ayant valide les chutes.",
+            "Arbitrage integralement autonome."
+          ],
+          "minus": [
+            "Combats de 60 secondes.",
+            "Poules de trois, arbitrage assiste."
+          ],
+          "diff": {
+            "facilitee": "Combats de 60 secondes a genoux, poules de trois, arbitrage assiste. Les progres et le respect des regles sont evalues autant que l'efficacite.",
+            "normale": "Combats de 90 secondes, poules de quatre, arbitrage eleve.",
+            "complexifiee": "Combats debout pour les eleves dont la chute est validee, arbitrage autonome."
+          },
+          "safety": [
+            "Regles d'or affichees, rappelees et enoncees par les eleves avant le premier combat : aucune action sur la tete, le cou, le visage, les cheveux, les doigts ni les articulations ; aucune torsion, aucun etranglement, aucune cle, aucun coup, aucune projection non accompagnee.",
+            "Poules constituees strictement par gabarit : aucun combat entre gabarits eloignes.",
+            "Combat debout reserve aux eleves dont la chute a ete revalidee en echauffement : les autres combattent a genoux, sans aucune penalite dans l'evaluation.",
+            "Accompagnement obligatoire de toute chute : tout lacher entraine l'arret du combat et une sanction.",
+            "Tout stop, ou toute frappe sur le tapis, entraine la liberation immediate.",
+            "Aucune pression sur la cage thoracique : l'adversaire doit pouvoir respirer a tout moment.",
+            "Le professeur reste superviseur final et peut arreter tout combat instantanement, malgre l'arbitrage eleve.",
+            "Arret immediat et definitif de tout combat qui s'envenime : aucune evaluation ne justifie un risque.",
+            "Tapis joints et verifies avant le premier combat, 2 metres de degagement sans mur ni angle.",
+            "Bijoux, montres et lunettes retires ; ongles courts, cheveux attaches."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Mon objectif est-il atteint ?",
+          "objective": "Faire verifier a chaque eleve, fiche en main, l'objectif qu'il s'etait fixe a la seance 5.",
+          "material": [
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 20
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 10
+            }
+          ],
+          "organization": "Individuellement puis par deux, assis a l'ecart des tapis. Chacun compare son objectif de mi-cycle avec sa grille du jour et ecrit une phrase de bilan.",
+          "studentGoal": "Dire si j'ai atteint mon objectif, et sur quoi je m'appuie pour l'affirmer.",
+          "instructions": [
+            "Je relis l'objectif que j'avais ecrit a la seance 5.",
+            "Je regarde ce que dit ma grille d'aujourd'hui sur ce point.",
+            "J'ecris une phrase : atteint, en partie, ou pas encore, et pourquoi.",
+            "Je le dis a mon camarade, qui me donne son avis."
+          ],
+          "success": [
+            "La comparaison est faite et ecrite.",
+            "L'eleve s'appuie sur un element observe.",
+            "L'echange a deux a lieu."
+          ],
+          "execution": [
+            "Citer un fait precis du tournoi.",
+            "Distinguer ce qui est atteint de ce qui reste a faire.",
+            "Ecrire une phrase complete."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils progression et resultat du tournoi ?",
+            "Reconnaissent-ils leurs progres ?"
+          ],
+          "errors": [
+            "Confondre objectif atteint et combats gagnes.",
+            "Repondre oui ou non sans justification.",
+            "Se devaloriser malgre des progres visibles."
+          ],
+          "feedback": [
+            "Ton objectif, ce n'etait pas de gagner tes combats.",
+            "Sur quelle action precise tu t'appuies ?",
+            "Tu as progresse, meme si tu as perdu."
+          ],
+          "plus": [
+            "Ecrire aussi l'objectif suivant si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur relit l'objectif avec l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee, reponse a choisir parmi trois formulations.",
+            "normale": "Comparaison autonome et phrase de bilan redigee.",
+            "complexifiee": "Bilan redige plus objectif suivant formule."
+          },
+          "safety": [
+            "Temps calme assis, a l'ecart des tapis.",
+            "Aucun combat en cours a proximite pendant cette phase.",
+            "Aucun contact entre eleves pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel lourd.",
+          "material": [
+            {
+              "label": "tapis de lutte ou tapis de gymnastique",
+              "fixed": 16
+            },
+            {
+              "label": "chasubles",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Rangement collectif des tapis par equipes, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en lutte aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tapis se portent a deux minimum, jamais seul.",
+            "Chaque equipe range la zone qui lui est attribuee.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun tapis porte seul.",
+            "Au moins un eleve par poule s'exprime."
+          ],
+          "execution": [
+            "Porter les tapis a deux, jambes flechies, dos droit.",
+            "Empiler sans tirer sur le dos.",
+            "Formuler un acquis concret plutot qu'un ressenti."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves identifient-ils des acquis precis, au-dela du resultat ?",
+            "Les eleves qui craignaient le contact reconnaissent-ils leur progression ?"
+          ],
+          "errors": [
+            "Porter un tapis seul et se faire mal au dos.",
+            "Ne parler que du classement du tournoi.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "A deux minimum, jambes flechies.",
+            "Pas ton classement : ce que tu sais faire maintenant.",
+            "Souviens-toi de la seance 1 : tu ne voulais pas du contact."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit : ce sont des charges lourdes et encombrantes.",
+            "Empilement stable, hauteur limitee.",
+            "Aucun eleve ne circule sous une pile en cours de constitution.",
+            "Comptage du materiel avant de quitter la salle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en lutte aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi les regles d'or ne sont-elles jamais negociables, meme en tournoi ?"
+        ],
+        "key": "En lutte, on gagne par le desequilibre et le controle, jamais par la force ni la brutalite. Et les regles d'or protegent l'adversaire : elles ne se discutent a aucun moment."
+      },
+      "socialRoles": [
+        "Arbitre : dirige un combat complet, compte les points et garantit la securite, role evalue.",
+        "Observateur evaluateur : renseigne la grille finale d'un camarade.",
+        "Chronometreur : gere les temps de combat et d'immobilisation.",
+        "Responsable materiel : organise le rangement collectif des tapis en fin de cycle."
+      ]
+    }
+  ]
+}

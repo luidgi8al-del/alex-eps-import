@@ -1,0 +1,2723 @@
+{
+  "apsa": "3 x 500 m",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour realiser la meilleure performance possible sur les trois courses, en repartissant son effort et en gerant sa recuperation, sans repere de temps pendant la course.",
+    "AFL2 : s'entrainer individuellement et collectivement pour realiser une performance, en regulant son projet a partir d'indicateurs.",
+    "AFL3 : cooperer pour faire progresser, dans le role choisi en debut de sequence : chronometreur ou observateur.",
+    "Analyser sa prestation et en rendre compte pour reorienter son projet de performance."
+  ],
+  "targetCompetence": "Passer de trois courses subies, ou la premiere est brillante et la troisieme catastrophique, a une epreuve pensee comme un tout : trois temps annonces a l'avance, geres sans montre ni chronometre, une recuperation de 10 minutes reellement utilisee, et un ecart entre les trois courses reduit au minimum.",
+  "cycleObjectives": [
+    "Annoncer et tenir trois temps sur les trois 500 metres, sans montre ni chronometre pendant la course.",
+    "Reduire l'ecart entre la premiere et la troisieme course.",
+    "Utiliser les 10 minutes de recuperation apres C1 et C2 pour recuperer reellement.",
+    "Reguler son projet de temps a partir des courses realisees.",
+    "Choisir, en debut de sequence, un role entre chronometreur et observateur, et la repartition des points entre l'AFL2 et l'AFL3."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, evaluation diagnostique et referentiel",
+    "Determiner son temps de reference sur 500 metres",
+    "La recuperation : ce qui se joue entre les courses",
+    "Reduire l'ecart entre les trois courses",
+    "Epreuve evaluee de mi-cycle et ajustement du projet de temps",
+    "S'entrainer en autonomie et aider un camarade",
+    "Repetition generale et carnet d'entrainement",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Courses de demi-fond au cycle terminal - epreuves repetees et gestion de la recuperation",
+      "org": "Academie de Nantes",
+      "url": "https://www.pedagogie.ac-nantes.fr/education-physique-et-sportive/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le demi-fond au lycee - projet de temps et regulation",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : piste d'athletisme goudronnee de 250 metres, 4 couloirs.",
+    "Recuperation fixee a 10 minutes apres C1 et C2 : elle structure toute l'epreuve et ne se negocie pas.",
+    "Le candidat court sans montre ni chronometre. Seul un temps de passage aux 250 metres lui est communique par l'organisation, pour C1 et C2 uniquement : jamais pour C3.",
+    "La note de performance additionne la moyenne des trois temps (somme des trois courses divisee par trois) et l'indice technique, base sur l'ecart en secondes entre les trois courses.",
+    "L'AFL3 se choisit en debut de sequence, sur un seul role parmi deux : chronometreur ou observateur.",
+    "Balisage du parcours tous les 50 metres, etat du sol verifie, absence de circulation de vehicules.",
+    "PAI et dispenses : asthme d'effort, pathologies cardiaques, allergies saisonnieres.",
+    "Conduite a tenir en cas de forte chaleur ou de pic de pollution : adaptation ou report.",
+    "Points d'eau accessibles et emplacement de la trousse de secours.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - explose la premiere course",
+      "observed": "Court la premiere a fond, puis perd vingt secondes sur la troisieme.",
+      "need": "Annoncer trois temps tenables et accepter de brider la premiere."
+    },
+    {
+      "label": "Profil 2 - recuperation gaspillee",
+      "observed": "Passe la recuperation debout a discuter, et repart aussi essouffle qu'a l'arrivee.",
+      "need": "Construire une recuperation active et efficace."
+    },
+    {
+      "label": "Profil 3 - projet irrealiste",
+      "observed": "Annonce des temps qu'il n'a jamais realises, et echoue aux trois courses.",
+      "need": "Construire un projet de temps a partir de ses performances reelles."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas assume",
+      "observed": "A choisi chronometreur ou observateur en debut de sequence, mais chronometre sans rien dire ou observe sans rien noter d'exploitable.",
+      "need": "Assumer pleinement le seul role choisi, dans les criteres exacts du referentiel : precision, attention, implication."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Apres un echauffement optimise, le candidat realise trois courses de 500 metres (C1, C2, C3) avec 10 minutes de recuperation apres C1 et C2. Il court sans montre ni chronometre : un temps de passage lui est communique aux 250 metres, pour C1 et C2 seulement. L'AFL1 est note sur 12 points : la valeur de la performance (moyenne des trois temps) est reportee sur l'echelle etablissement, puis celle de l'efficacite technique (l'indice base sur l'ecart en secondes entre les trois courses). Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve en debut de sequence : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve choisit egalement en debut de sequence un seul role parmi deux : chronometreur ou observateur.",
+    "criteria": [
+      "AFL1 - performance : la moyenne des trois temps (somme des trois courses divisee par trois) est reportee sur l'echelle de l'etablissement.",
+      "AFL1 - efficacite technique : l'ecart en secondes entre les trois courses est faible, allures de course regulieres a tres regulieres.",
+      "AFL1 - le candidat gere ses trois courses sans montre ni chronometre, en s'appuyant sur le seul temps de passage aux 250 metres donne pour C1 et C2.",
+      "AFL2 : le carnet d'entrainement retrace le projet de temps, l'echauffement, la stabilite des performances, la regularite de la progression et l'assiduite sur la sequence.",
+      "AFL2 : les regulations sont justifiees par les temps realises, non par une impression, et l'eleve peut diriger un echauffement de groupe.",
+      "AFL3 : dans le role choisi, chronometreur (utilisation du chronometre, prise de performance, attention, placement, connaissance du reglement) ou observateur (fiabilite des relevés, attention, concentration, donnees qualitatives), l'eleve est attentif et implique du depart a l'arrivee de chaque course."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA1, Lycee Victor Hugo de Marrakech, epreuve 3 x 500 metres."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, evaluation diagnostique et referentiel",
+      "mainObjective": "Poser le cadre de securite, faire eprouver l'epreuve complete et comprendre ce qui sera evalue.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Comprendre ce qui est evalue le jour J et au fil du cycle.",
+        "Realiser les trois 500 metres sans preparation.",
+        "Ouvrir le carnet avec les trois temps reels."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : l'epreuve reunit trois courses que chacun sait courir isolement, mais dont l'enchainement est une experience nouvelle.",
+      "prerequisiteForNext": "Chaque eleve connait ses trois temps et l'ecart entre sa premiere et sa troisieme course.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30,
+            "note": "tous les 50 metres sur le parcours"
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : distances, recuperation, bareme.",
+          "Verifier l'etat du parcours : sol, obstacles, absence de circulation de vehicules.",
+          "Baliser tous les 50 metres pour permettre les temps de passage.",
+          "Verifier les PAI et les dispenses, notamment l'asthme d'effort.",
+          "Verifier les conditions meteorologiques : chaleur, pollution.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord du parcours."
+        ],
+        "sketch": "Parcours balise tous les 50 m, sens de course unique.\nZone de depart et d'arrivee identifiee, chronometreurs a l'arrivee.\nZone de recuperation active a l'ecart du parcours, avec point d'eau.\nAffiche du referentiel a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement long et progressif : trois courses intenses enchainees exigent une elevation prealable complete de la temperature musculaire, et sa conduite fait partie de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple, en aisance respiratoire.",
+              "Verifier que chacun peut parler en courant."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Etirements actifs, sans temps de maintien long."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres, progressives.",
+              "Deux fractions de 30 secondes a allure soutenue.",
+              "Trois minutes de recuperation avant la premiere course."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Trois 500 metres, sans preparation",
+          "objective": "Faire eprouver l'epreuve complete et mesurer l'ecart entre les trois courses.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance : l'un court les trois 500 metres avec le temps de recuperation de 10 minutes, l'autre chronometre, releve les temps de passage aux 250 metres et surveille.",
+          "studentGoal": "Courir les trois 500 metres et connaitre mes trois temps.",
+          "instructions": [
+            "Je cours les trois 500 metres, en gerant comme je le sens.",
+            "Je respecte le temps de recuperation entre chaque course.",
+            "Chronometreur : tu releves mes trois temps et mes passages aux 250 metres.",
+            "On note tout sur mon carnet a la fin."
+          ],
+          "success": [
+            "Les trois courses sont realisees en entier.",
+            "Les trois temps et les passages sont releves.",
+            "L'ecart entre la premiere et la troisieme est calcule."
+          ],
+          "execution": [
+            "Partir a une allure que l'on pense pouvoir reproduire trois fois.",
+            "Respirer amplement, sans bloquer.",
+            "Ralentir plutot que s'arreter."
+          ],
+          "watch": [
+            "Qui part nettement trop vite sur la premiere ?",
+            "Qui marche sur la troisieme ?",
+            "L'ecart entre la premiere et la troisieme est-il important ?",
+            "Quelqu'un montre-t-il des signes de detresse ?"
+          ],
+          "errors": [
+            "Courir la premiere a fond, comme un 500 metres isole.",
+            "S'asseoir pendant la recuperation.",
+            "S'arreter net sur la troisieme."
+          ],
+          "feedback": [
+            "Ta premiere est brillante et ta troisieme catastrophique : regarde l'ecart.",
+            "Marche pendant la recuperation, ne t'assois pas.",
+            "Ralentis plutot que de t'arreter."
+          ],
+          "plus": [
+            "Releve des temps de passage tous les 250 metres sur les trois courses."
+          ],
+          "minus": [
+            "Deux courses de 400 metres avec recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux courses de 400 metres avec recuperation allongee, alternance course et marche autorisee.",
+            "normale": "Trois 500 metres avec le temps de recuperation de 10 minutes, temps releves.",
+            "complexifiee": "Trois 500 metres avec temps de passage releves tous les 250 metres."
+          },
+          "safety": [
+            "Echauffement long et progressif obligatoire : trois courses intenses enchainees sans preparation exposent au malaise et a la lesion musculaire.",
+            "Consulter les PAI avant l'epreuve : asthme d'effort, pathologies cardiaques.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige, des nausees ou une paleur.",
+            "Aucun eleve ne s'assoit ni ne s'allonge immediatement apres une course : la recuperation se fait en marchant.",
+            "Le chronometreur surveille son camarade pendant toute sa course et signale tout signe anormal.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Sens de course unique, aucun croisement.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible entre les courses.",
+            "Retour au calme obligatoire apres la troisieme course.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire ses trois temps et le referentiel",
+          "objective": "Faire analyser la gestion de l'epreuve et comprendre ce qui sera evalue.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun calcule l'ecart entre ses trois temps, puis lit le referentiel : ce qui est evalue le jour J, ce qui l'est au fil du cycle. C'est aussi maintenant, en debut de sequence, que chacun choisit son role pour l'AFL3 (chronometreur ou observateur, un seul des deux) et sa repartition des points entre l'AFL2 et l'AFL3.",
+          "studentGoal": "Savoir ce qui sera evalue, choisir mon role et ma repartition, et connaitre mon ecart entre la premiere et la troisieme course.",
+          "instructions": [
+            "Je calcule l'ecart entre ma premiere et ma troisieme course.",
+            "Je note ce qui est evalue le jour de l'epreuve et au fil du cycle.",
+            "Je choisis mon role pour toute la sequence : chronometreur ou observateur, un seul des deux.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6) et je note les deux choix sur mon carnet.",
+            "J'ecris une phrase sur ma gestion : j'explose la premiere, je suis regulier, ou je progresse."
+          ],
+          "success": [
+            "L'ecart est calcule et note.",
+            "L'eleve distingue ce qui est evalue le jour J et au fil du cycle.",
+            "Le role et la repartition sont choisis et notes au carnet.",
+            "La phrase sur la gestion est ecrite."
+          ],
+          "execution": [
+            "Comparer les trois temps deux a deux.",
+            "Lire le referentiel de l'etablissement.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils que le carnet est evalue ?",
+            "Reconnaissent-ils un depart trop rapide ?"
+          ],
+          "errors": [
+            "Ne regarder que le meilleur des trois temps.",
+            "Croire que seule la performance du jour J compte.",
+            "Ne rien ecrire."
+          ],
+          "feedback": [
+            "Ton meilleur temps ne compte pas seul : c'est le total et l'ecart.",
+            "Huit points se jouent pendant tout le cycle : ton carnet commence aujourd'hui.",
+            "Ecris-le : on le relira a la fin du cycle."
+          ],
+          "plus": [
+            "Calculer l'ecart en pourcentage et le total des trois temps."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur a partir d'un tableau."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee par le professeur a partir d'un tableau, referentiel commente.",
+            "normale": "Calcul de l'ecart, lecture du referentiel et formulation ecrite.",
+            "complexifiee": "Calcul de l'ecart en pourcentage et du total des trois temps."
+          },
+          "safety": [
+            "Phase realisee assis a l'ecart du parcours, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Deux 300 metres a allure choisie",
+          "objective": "Refaire un effort court en appliquant immediatement le constat sur la gestion.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux courses de 300 metres, avec la recuperation de 10 minutes. Consigne : les deux temps doivent etre les plus proches possible.",
+          "studentGoal": "Courir deux 300 metres avec des temps quasiment identiques.",
+          "instructions": [
+            "Je cours deux 300 metres en cherchant a faire le meme temps.",
+            "Je pars volontairement moins vite que sur ma premiere course de tout a l'heure.",
+            "Je marche activement pendant la recuperation.",
+            "Chronometreur : tu releves les deux temps."
+          ],
+          "success": [
+            "Les deux courses sont realisees.",
+            "L'ecart entre les deux temps est faible.",
+            "La recuperation est active."
+          ],
+          "execution": [
+            "Partir volontairement en dessous de son envie.",
+            "Se caler sur une foulee reguliere.",
+            "Marcher activement pendant la recuperation."
+          ],
+          "watch": [
+            "Le depart est-il maitrise ?",
+            "Les deux temps sont-ils proches ?",
+            "La recuperation est-elle active ?"
+          ],
+          "errors": [
+            "Repartir trop vite malgre le constat.",
+            "Ralentir excessivement par prudence.",
+            "Rester debout immobile pendant la recuperation."
+          ],
+          "feedback": [
+            "Moins vite au depart : tu viens de constater ce que ca donne.",
+            "Trop lent maintenant : cherche le juste milieu.",
+            "Marche : ta recuperation sert a quelque chose."
+          ],
+          "plus": [
+            "Trois courses de 300 metres avec temps identiques."
+          ],
+          "minus": [
+            "Deux courses de 200 metres, recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux courses de 200 metres avec recuperation allongee.",
+            "normale": "Deux 300 metres avec des temps les plus proches possible.",
+            "complexifiee": "Trois 300 metres avec des temps identiques."
+          },
+          "safety": [
+            "Recuperation complete apres les trois 500 metres avant ces courses supplementaires.",
+            "Consulter les PAI.",
+            "Tout eleve signalant une gene s'arrete immediatement.",
+            "Aucun eleve ne s'assoit immediatement apres une course.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Retour au calme obligatoire en fin de seance.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel ecart avez-vous entre votre premiere et votre troisieme course ?",
+          "Qu'est-ce qui est evalue le jour de l'epreuve, et qu'est-ce qui l'est au fil du cycle ?"
+        ],
+        "key": "L'epreuve ne se gagne pas sur la premiere course : c'est le total des trois qui compte, et l'ecart entre elles dit tout de la gestion. Et huit points se jouent pendant tout le cycle."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps et surveille son camarade.",
+        "Observateur : releve les temps de passage.",
+        "Responsable securite : signale tout coureur en difficulte."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Determiner son temps de reference sur 500 metres",
+      "mainObjective": "Determiner un temps de reference realiste, base de tout le projet de performance.",
+      "secondaryObjectives": [
+        "Realiser un 500 metres de reference dans de bonnes conditions.",
+        "En deduire un temps tenable trois fois.",
+        "Ecrire un premier projet de trois temps."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les trois courses sont tres inegales. Il faut un temps de reference realiste, tenable trois fois, et non un record isole.",
+      "prerequisiteForNext": "Chaque eleve a un temps de reference et un premier projet de trois temps.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "tableau de projet de temps",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Baliser le parcours et verifier son etat.",
+          "Preparer un tableau permettant de passer d'un temps de reference a un projet de trois temps.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Organiser les departs par vagues pour permettre le chronometrage.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise tous les 50 m, sens unique.\nChronometreurs a l'arrivee et aux 250 metres.\nZone de recuperation active a l'ecart, avec point d'eau.\nTableau de projet affiche a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement long et progressif avant un effort de reference proche du maximal.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Deux fractions de 30 secondes a allure soutenue.",
+              "Trois minutes de recuperation avant la course de reference."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Le 500 metres de reference",
+          "objective": "Determiner un temps de reference fiable, avec releve des temps de passage.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance. Chacun realise un 500 metres a l'allure la plus rapide qu'il pense pouvoir tenir sur toute la distance. Temps de passage releves aux 250 metres. Un seul essai.",
+          "studentGoal": "Realiser un 500 metres regulier et connaitre mon temps de reference.",
+          "instructions": [
+            "Je cours un seul 500 metres, a l'allure la plus rapide que je peux tenir jusqu'au bout.",
+            "Je ne pars pas plus vite que ce que je peux tenir : le but est un temps regulier.",
+            "Chronometreur : tu releves mon passage aux 250 metres et mon temps final.",
+            "Je note mon temps sur mon carnet."
+          ],
+          "success": [
+            "Le 500 metres est realise sans ralentissement marque.",
+            "Les deux moities sont proches : moins de cinq secondes d'ecart.",
+            "Le temps est note au carnet."
+          ],
+          "execution": [
+            "Partir a une allure tenable, pas a fond.",
+            "Verifier son passage a mi-course.",
+            "Terminer sans effondrement."
+          ],
+          "watch": [
+            "La seconde moitie est-elle nettement plus lente ?",
+            "Les eleves partent-ils a fond ?",
+            "Quelqu'un montre-t-il des signes de detresse ?"
+          ],
+          "errors": [
+            "Partir a fond et s'effondrer sur la seconde moitie.",
+            "Courir trop prudemment et sous-estimer sa reference.",
+            "S'asseoir immediatement apres l'arrivee."
+          ],
+          "feedback": [
+            "Vingt secondes d'ecart entre tes deux moities : ton temps de reference n'est pas fiable.",
+            "Tu peux aller plus vite : ta course etait trop confortable.",
+            "Marche, ne t'assois pas."
+          ],
+          "plus": [
+            "Temps de passage releves tous les 100 metres."
+          ],
+          "minus": [
+            "400 metres de reference, avec allure guidee."
+          ],
+          "diff": {
+            "facilitee": "400 metres de reference avec allure guidee par le professeur.",
+            "normale": "500 metres de reference avec temps de passage aux 250 metres.",
+            "complexifiee": "500 metres avec temps de passage tous les 100 metres."
+          },
+          "safety": [
+            "Echauffement long et progressif obligatoire avant un effort proche du maximal.",
+            "Consulter les PAI : aucun effort proche du maximal pour un eleve porteur d'une contre-indication cardiaque ou d'un asthme non equilibre.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige, des nausees ou une paleur.",
+            "Aucun eleve ne s'assoit ni ne s'allonge immediatement apres la course : marche de trois minutes minimum.",
+            "Le chronometreur surveille son camarade pendant toute sa course.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Sens de course unique.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Du temps de reference au projet de trois temps",
+          "objective": "Deduire du temps de reference trois temps tenables sur l'epreuve complete.",
+          "material": [
+            {
+              "label": "tableau de projet de temps",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun deduit de son temps de reference trois temps pour l'epreuve : un temps tenable trois fois est necessairement plus lent que le temps de reference d'un seul 500 metres.",
+          "studentGoal": "Ecrire les trois temps que je vise sur l'epreuve complete.",
+          "instructions": [
+            "Je pars de mon temps de reference sur un seul 500 metres.",
+            "J'en deduis un temps tenable trois fois : il est necessairement plus lent.",
+            "J'ecris mes trois temps vises, et leur total.",
+            "Un camarade verifie que mon projet est realiste."
+          ],
+          "success": [
+            "Les trois temps sont ecrits, ainsi que le total.",
+            "Ils sont plus lents que le temps de reference.",
+            "La verification croisee est faite."
+          ],
+          "execution": [
+            "Partir du temps de reference reellement realise.",
+            "Prevoir des temps proches les uns des autres.",
+            "Additionner correctement."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les eleves visent-ils leur temps de reference sur les trois courses ?",
+            "Les trois temps sont-ils proches entre eux ?"
+          ],
+          "errors": [
+            "Viser son temps de reference sur les trois courses.",
+            "Prevoir une premiere course rapide et deux courses lentes.",
+            "Projet sans total calcule."
+          ],
+          "feedback": [
+            "Ton temps de reference sur les trois : tu vas exploser des la deuxieme.",
+            "Trois temps proches : c'est ce qui donne le meilleur total.",
+            "Calcule ton total : c'est lui qui compte."
+          ],
+          "plus": [
+            "Projet avec deux scenarios : conditions favorables et defavorables."
+          ],
+          "minus": [
+            "Projet deduit avec le professeur a partir d'un tableau."
+          ],
+          "diff": {
+            "facilitee": "Projet deduit avec le professeur a partir d'un tableau pre-rempli.",
+            "normale": "Trois temps deduits du temps de reference, total calcule.",
+            "complexifiee": "Projet avec deux scenarios selon les conditions."
+          },
+          "safety": [
+            "Le professeur valide chaque projet : un projet manifestement irrealiste est corrige avant d'etre tente.",
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Deux 500 metres au temps projete",
+          "objective": "Eprouver le projet sur deux courses, avant de l'eprouver sur trois.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux 500 metres au temps projete, avec la recuperation de 10 minutes. Le chronometreur annonce l'ecart au temps vise a l'arrivee de chaque course.",
+          "studentGoal": "Realiser deux 500 metres au temps que j'ai projete.",
+          "instructions": [
+            "Je cours mes deux 500 metres au temps que j'ai projete.",
+            "Ni plus vite ni plus lentement : c'est l'exercice.",
+            "Chronometreur : tu m'annonces mon ecart au temps vise.",
+            "Je note mes ecarts sur mon carnet."
+          ],
+          "success": [
+            "Les deux courses sont realisees.",
+            "L'ecart au temps projete est inferieur a cinq secondes sur chaque course.",
+            "Les ecarts sont notes."
+          ],
+          "execution": [
+            "Se caler des les premiers 100 metres.",
+            "Ne pas accelerer en fin de course pour rattraper.",
+            "Recuperer activement entre les deux."
+          ],
+          "watch": [
+            "Les temps projetes sont-ils tenables ?",
+            "Les eleves partent-ils encore trop vite ?",
+            "La recuperation est-elle active ?"
+          ],
+          "errors": [
+            "Courir plus vite que le temps projete parce qu'on se sent bien.",
+            "Accelerer en fin de course pour rattraper un retard.",
+            "Rester immobile pendant la recuperation."
+          ],
+          "feedback": [
+            "Tu es dix secondes plus rapide : ce n'est pas l'exercice.",
+            "N'accelere pas a la fin : tu paieras sur la course suivante.",
+            "Marche pendant ta recuperation."
+          ],
+          "plus": [
+            "Trois 500 metres au temps projete."
+          ],
+          "minus": [
+            "Un seul 500 metres au temps projete."
+          ],
+          "diff": {
+            "facilitee": "Un seul 500 metres au temps projete, avec annonces de passage.",
+            "normale": "Deux 500 metres au temps projete avec ecarts annonces.",
+            "complexifiee": "Trois 500 metres au temps projete."
+          },
+          "safety": [
+            "Recuperation complete apres le 500 metres de reference avant ces courses.",
+            "Consulter les PAI.",
+            "Tout eleve signalant une gene s'arrete immediatement.",
+            "Aucun eleve ne s'assoit immediatement apres une course.",
+            "Le chronometreur surveille son camarade pendant toute sa course.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Retour au calme obligatoire.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi un temps tenable trois fois est-il plus lent qu'un temps de reference ?",
+          "Quels sont vos trois temps projetes, et quel est votre total ?"
+        ],
+        "key": "Un projet de trois temps ne se deduit pas d'un record isole : il part de ce qu'on peut reproduire trois fois. Et c'est le total qui compte, pas la meilleure des trois courses."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps et annonce les ecarts.",
+        "Observateur : releve les temps de passage a mi-course.",
+        "Verificateur : controle le realisme du projet de son camarade."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "La recuperation : ce qui se joue entre les courses",
+      "mainObjective": "Construire une recuperation active et efficace, qui conditionne les deuxieme et troisieme courses.",
+      "secondaryObjectives": [
+        "Appliquer une procedure de recuperation entre les courses.",
+        "Mesurer l'effet de la recuperation sur la course suivante.",
+        "Utiliser la frequence cardiaque de recuperation comme indicateur."
+      ],
+      "linkToPrevious": "Le projet de temps existe, mais il s'effondre sur la troisieme course : ce qui se passe entre les courses decide autant que les courses elles-memes.",
+      "prerequisiteForNext": "Chaque eleve applique une procedure de recuperation et en mesure l'effet.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "affiche de la procedure de recuperation",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher la procedure de recuperation : marcher, respirer, boire, se replacer.",
+          "Baliser le parcours et delimiter une zone de recuperation active.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau dans la zone de recuperation.",
+          "Rappeler le temps de recuperation de 10 minutes."
+        ],
+        "sketch": "Parcours balise, sens unique.\nZone de recuperation active delimitee, avec point d'eau, a l'ecart du parcours.\nAffiche de la procedure de recuperation dans cette zone.\nChronometreurs a l'arrivee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome progressif : la seance comporte plusieurs courses intenses enchainees.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation avant la premiere course."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Deux recuperations comparees",
+          "objective": "Faire mesurer concretement l'effet d'une recuperation active par rapport a une recuperation passive.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux series de deux 500 metres, separees par quinze minutes de recuperation complete. Serie 1 : recuperation passive, debout immobile. Serie 2 : recuperation active selon la procedure. Comparaison des deuxiemes courses.",
+          "studentGoal": "Mesurer combien je gagne sur ma deuxieme course grace a une recuperation active.",
+          "instructions": [
+            "Serie 1 : entre les deux courses, je reste debout immobile.",
+            "Serie 2 : je marche, je respire amplement, je bois, je me replace avant la fin.",
+            "Je releve ma frequence cardiaque juste avant chaque depart.",
+            "Je compare mes deux deuxiemes courses."
+          ],
+          "success": [
+            "Les deux series sont realisees.",
+            "Les frequences cardiaques avant depart sont relevees.",
+            "La deuxieme course de la serie 2 est plus rapide que celle de la serie 1."
+          ],
+          "execution": [
+            "Marcher sans s'arreter pendant toute la recuperation active.",
+            "Respirer amplement, sans bloquer.",
+            "Se replacer trente secondes avant le depart."
+          ],
+          "watch": [
+            "La difference entre les deux recuperations est-elle percue ?",
+            "Les frequences cardiaques avant depart different-elles ?",
+            "La recuperation complete entre les series est-elle respectee ?"
+          ],
+          "errors": [
+            "Marcher aussi pendant la recuperation passive, ce qui annule la comparaison.",
+            "Ne pas boire pendant la recuperation active.",
+            "Repartir sans s'etre replace."
+          ],
+          "feedback": [
+            "Serie 1, tu ne bouges pas : c'est l'exercice, sinon on ne compare rien.",
+            "Bois pendant ta recuperation active.",
+            "Replace-toi avant : tu ne dois pas partir en retard."
+          ],
+          "plus": [
+            "Trois modalites de recuperation comparees."
+          ],
+          "minus": [
+            "Deux 400 metres par serie, recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux 400 metres par serie avec recuperation allongee.",
+            "normale": "Deux series de deux 500 metres, recuperations passive puis active comparees.",
+            "complexifiee": "Trois modalites de recuperation comparees sur trois series."
+          },
+          "safety": [
+            "La recuperation passive debout immobile est realisee sur une duree courte et sous surveillance : rester immobile apres un effort intense favorise le malaise, la modalite est donc encadree et limitee.",
+            "Aucun eleve ne s'assoit ni ne s'allonge apres une course.",
+            "Quinze minutes de recuperation complete entre les deux series : enchainer quatre courses intenses sans recuperation expose au malaise.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une gene respiratoire, une douleur thoracique, un vertige ou des nausees.",
+            "Le chronometreur surveille son camarade pendant toute sa course et pendant la recuperation passive.",
+            "Point d'eau accessible en permanence.",
+            "Report ou adaptation en cas de forte chaleur.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "La frequence cardiaque de recuperation",
+          "objective": "Construire l'usage de la frequence cardiaque comme indicateur de l'etat de recuperation.",
+          "material": [
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            },
+            {
+              "label": "affiche de la procedure de recuperation",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Apres une course, chacun releve sa frequence cardiaque a l'arrivee, puis a une minute, deux minutes et trois minutes. Il note la vitesse de descente et la compare a celle de ses camarades.",
+          "studentGoal": "Savoir a quelle vitesse mon pouls redescend apres une course.",
+          "instructions": [
+            "Je releve mon pouls des l'arrivee, puis a une, deux et trois minutes.",
+            "Je marche pendant tout ce temps, je ne m'arrete pas.",
+            "Je note les quatre valeurs sur mon carnet.",
+            "Je regarde a quelle vitesse mon pouls redescend."
+          ],
+          "success": [
+            "Les quatre valeurs sont relevees et notees.",
+            "L'eleve marche pendant tout le releve.",
+            "La vitesse de descente est identifiee."
+          ],
+          "execution": [
+            "Relever immediatement a l'arrivee, sans attendre.",
+            "Marcher pendant tout le releve.",
+            "Noter chaque valeur au moment ou elle est prise."
+          ],
+          "watch": [
+            "Les releves sont-ils faits aux bons moments ?",
+            "Les eleves marchent-ils pendant le releve ?",
+            "La vitesse de descente est-elle comprise comme un indicateur ?"
+          ],
+          "errors": [
+            "Relever le premier pouls deux minutes apres l'arrivee.",
+            "S'arreter de marcher pendant le releve.",
+            "Comparer sa valeur absolue a celle des autres plutot que sa vitesse de descente."
+          ],
+          "feedback": [
+            "Des l'arrivee, sinon ca ne veut rien dire.",
+            "Continue a marcher pendant que tu releves.",
+            "Ce n'est pas ta valeur qui compte, c'est la vitesse a laquelle elle redescend."
+          ],
+          "plus": [
+            "Releve sur cinq minutes avec calcul de l'ecart entre l'arrivee et trois minutes."
+          ],
+          "minus": [
+            "Releve a l'arrivee et a trois minutes seulement."
+          ],
+          "diff": {
+            "facilitee": "Releve a l'arrivee et a trois minutes seulement, avec aide.",
+            "normale": "Quatre releves : arrivee, une, deux et trois minutes.",
+            "complexifiee": "Releve sur cinq minutes avec calcul de l'ecart."
+          },
+          "safety": [
+            "Le releve se fait en marchant : aucun eleve ne s'arrete ni ne s'assoit pour relever son pouls.",
+            "Une frequence cardiaque qui ne redescend pas apres trois minutes est signalee au professeur.",
+            "Consulter les PAI.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de la zone de recuperation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Trois 500 metres avec recuperation appliquee",
+          "objective": "Realiser l'epreuve complete en appliquant la procedure de recuperation.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "affiche de la procedure de recuperation",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Trois 500 metres au temps projete, avec application stricte de la procedure de recuperation entre chaque course. Les trois temps sont releves et compares a ceux de la seance 1.",
+          "studentGoal": "Realiser les trois courses avec un ecart reduit, grace a ma recuperation.",
+          "instructions": [
+            "Je cours mes trois 500 metres au temps projete.",
+            "Entre chaque course, j'applique la procedure : marcher, respirer, boire, me replacer.",
+            "Chronometreur : tu releves mes trois temps.",
+            "Je compare mon ecart a celui de la seance 1."
+          ],
+          "success": [
+            "Les trois courses sont realisees.",
+            "La procedure de recuperation est appliquee entre chaque course.",
+            "L'ecart entre la premiere et la troisieme est reduit par rapport a la seance 1."
+          ],
+          "execution": [
+            "Appliquer la procedure integralement, sans l'ecourter.",
+            "Se replacer trente secondes avant le depart.",
+            "Tenir le temps projete sur les trois courses."
+          ],
+          "watch": [
+            "La procedure est-elle appliquee ou escamotee ?",
+            "L'ecart est-il reduit ?",
+            "Quelqu'un montre-t-il des signes de fatigue excessive ?"
+          ],
+          "errors": [
+            "Escamoter la procedure sur la deuxieme recuperation.",
+            "Repartir trop vite sur la premiere course malgre le projet.",
+            "S'asseoir pendant la recuperation."
+          ],
+          "feedback": [
+            "Ta procedure, entre chaque course : c'est la qu'elle sert le plus.",
+            "Ton temps projete, pas plus vite.",
+            "Debout et en marchant : c'est la regle."
+          ],
+          "plus": [
+            "Trois 500 metres avec recuperation raccourcie."
+          ],
+          "minus": [
+            "Deux 500 metres avec recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux 500 metres avec recuperation allongee et alternance autorisee.",
+            "normale": "Trois 500 metres au temps projete avec procedure de recuperation appliquee.",
+            "complexifiee": "Trois 500 metres avec recuperation raccourcie."
+          },
+          "safety": [
+            "Recuperation complete apres les situations precedentes avant d'aborder les trois courses.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une gene respiratoire, une douleur thoracique, un vertige ou des nausees.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses.",
+            "Le chronometreur surveille son camarade en permanence.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Point d'eau accessible entre les courses.",
+            "Retour au calme obligatoire apres la troisieme course.",
+            "Le professeur peut retirer un eleve de la serie s'il le juge trop fatigue."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que fait-on exactement pendant la recuperation entre deux courses ?",
+          "Que vous apprend la vitesse a laquelle votre pouls redescend ?"
+        ],
+        "key": "La recuperation n'est pas un temps mort : marcher, respirer, boire, se replacer fait gagner plusieurs secondes sur la course suivante. Et la vitesse de descente du pouls dit si l'on est reellement pret a repartir."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps et surveille son camarade.",
+        "Preneur d'indicateurs : aide au releve des frequences cardiaques.",
+        "Responsable recuperation : verifie que chacun marche et boit."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Reduire l'ecart entre les trois courses",
+      "mainObjective": "Reduire l'ecart entre la premiere et la troisieme course, ce qui ameliore le total.",
+      "secondaryObjectives": [
+        "Brider volontairement la premiere course.",
+        "Tenir le meme temps sur les trois courses.",
+        "Mesurer l'effet sur le total."
+      ],
+      "linkToPrevious": "La recuperation est construite. Reste la gestion des courses elles-memes : brider la premiere pour ne pas s'effondrer sur la troisieme.",
+      "prerequisiteForNext": "Chaque eleve reduit son ecart entre la premiere et la troisieme course.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de regulation du projet de temps : quand ralentir, quand accelerer.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Organiser les departs par vagues.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, sens unique.\nZone de recuperation active a l'ecart, avec point d'eau.\nAffiche des criteres de regulation a l'entree.\nChronometreurs a l'arrivee et aux 250 metres."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome progressif, indispensable avant trois courses intenses.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation avant la premiere course."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Trois courses au meme temps",
+          "objective": "Construire la regularite sur les trois courses, condition d'un bon total.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Trois 500 metres avec une consigne stricte : les trois temps doivent tenir dans un ecart de cinq secondes. Le chronometreur annonce l'ecart apres chaque course.",
+          "studentGoal": "Realiser mes trois courses avec moins de cinq secondes d'ecart entre elles.",
+          "instructions": [
+            "Je bride volontairement ma premiere course : c'est la cle.",
+            "Mes trois temps doivent tenir dans cinq secondes.",
+            "Chronometreur : tu m'annonces mon temps et mon ecart apres chaque course.",
+            "Je note mes trois temps et mon total."
+          ],
+          "success": [
+            "Les trois courses sont realisees.",
+            "L'ecart entre la plus rapide et la plus lente est inferieur a cinq secondes.",
+            "Le total est note et compare a celui des seances precedentes."
+          ],
+          "execution": [
+            "Partir volontairement en dessous de son envie sur la premiere.",
+            "Verifier son temps de passage a mi-course.",
+            "Ne pas chercher a rattraper sur la troisieme."
+          ],
+          "watch": [
+            "La premiere course est-elle bridee ?",
+            "L'ecart se resserre-t-il ?",
+            "Le total s'ameliore-t-il malgre une premiere course plus lente ?"
+          ],
+          "errors": [
+            "Courir la premiere a fond malgre la consigne.",
+            "Compenser en accelerant excessivement sur la troisieme.",
+            "Conclure qu'une premiere course plus lente degrade le total."
+          ],
+          "feedback": [
+            "Bride ta premiere : c'est elle qui decide de ta troisieme.",
+            "N'essaie pas de rattraper : tu vas t'effondrer.",
+            "Regarde ton total : il est meilleur avec une premiere plus lente."
+          ],
+          "plus": [
+            "Ecart exige inferieur a trois secondes."
+          ],
+          "minus": [
+            "Deux courses avec ecart de dix secondes tolere."
+          ],
+          "diff": {
+            "facilitee": "Deux courses avec un ecart de dix secondes tolere, recuperation allongee.",
+            "normale": "Trois courses avec un ecart inferieur a cinq secondes.",
+            "complexifiee": "Trois courses avec un ecart inferieur a trois secondes."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les trois courses.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses.",
+            "Le chronometreur surveille son camarade en permanence.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Recuperation du referentiel respectee integralement entre les courses.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reguler son projet de temps",
+          "objective": "Construire la regulation du projet a partir des temps realises.",
+          "material": [
+            {
+              "label": "affiche des criteres de regulation",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun compare ses trois temps a son projet et applique la regle : si les trois temps sont tenus avec un ecart faible, il vise plus vite ; s'il n'y arrive pas, il vise plus lentement.",
+          "studentGoal": "Ajuster mon projet de temps a partir de ce que j'ai realise.",
+          "instructions": [
+            "Je compare mes trois temps a mon projet.",
+            "Si je tiens les trois avec un ecart faible, je vise deux secondes plus vite.",
+            "Si je n'y arrive pas, je vise deux secondes plus lentement.",
+            "Je note l'ajustement et sa raison."
+          ],
+          "success": [
+            "Le projet est ajuste selon la regle.",
+            "L'ajustement est note avec sa raison.",
+            "Le nouveau total est calcule."
+          ],
+          "execution": [
+            "Comparer chaque temps au temps projete.",
+            "Ajuster par petits paliers de deux secondes.",
+            "Recalculer le total."
+          ],
+          "watch": [
+            "Les ajustements suivent-ils la regle ?",
+            "Les eleves refusent-ils de viser plus lentement ?",
+            "Les raisons sont-elles notees ?"
+          ],
+          "errors": [
+            "Refuser de viser plus lentement malgre trois echecs.",
+            "Ajuster par bonds de dix secondes.",
+            "Ajuster sans noter la raison."
+          ],
+          "feedback": [
+            "Tu n'as tenu aucun de tes trois temps : vise plus lentement.",
+            "Deux secondes, pas dix.",
+            "Note pourquoi tu ajustes : c'est ce qui est evalue dans ton carnet."
+          ],
+          "plus": [
+            "Ajustement avec deux scenarios selon la meteo."
+          ],
+          "minus": [
+            "Ajustement propose par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Ajustement propose par le professeur et note par l'eleve.",
+            "normale": "Ajustement autonome selon la regle, avec raison notee.",
+            "complexifiee": "Ajustement avec deux scenarios selon les conditions."
+          },
+          "safety": [
+            "Le professeur valide chaque ajustement a la hausse : un projet trop ambitieux conduit a un effort mal gere et augmente le risque de malaise.",
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Aider un camarade a gerer ses courses",
+          "objective": "Construire l'AFL3 : informer un camarade pendant sa course pour l'aider a tenir son temps.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Le chronometreur annonce a son camarade son temps de passage aux 250 metres et lui indique s'il est en avance ou en retard sur son projet.",
+          "studentGoal": "Aider mon camarade a tenir son temps en l'informant pendant sa course.",
+          "instructions": [
+            "Je connais le temps projete de mon camarade avant qu'il parte.",
+            "Je lui annonce son temps de passage aux 250 metres.",
+            "Je lui dis en un mot s'il est en avance ou en retard.",
+            "Je le surveille en permanence pendant toute sa course."
+          ],
+          "success": [
+            "Le temps de passage est annonce a chaque course.",
+            "L'information est utile : avance ou retard.",
+            "La surveillance est constante."
+          ],
+          "execution": [
+            "Connaitre le temps projete avant le depart.",
+            "Annoncer court et fort.",
+            "Surveiller en permanence."
+          ],
+          "watch": [
+            "Les annonces sont-elles faites au bon moment ?",
+            "Sont-elles utiles ou seulement des encouragements ?",
+            "Les chronometreurs surveillent-ils leur camarade ?"
+          ],
+          "errors": [
+            "Annoncer un temps sans dire l'ecart.",
+            "Crier des encouragements sans information.",
+            "Chronometrer sans regarder son camarade."
+          ],
+          "feedback": [
+            "Dis-lui son ecart, pas seulement son temps.",
+            "Allez n'est pas une information : trois secondes d'avance, c'en est une.",
+            "Ton coureur d'abord : tu es sa securite."
+          ],
+          "plus": [
+            "Annonces a deux points de passage."
+          ],
+          "minus": [
+            "Annonce du temps de passage seulement."
+          ],
+          "diff": {
+            "facilitee": "Annonce du temps de passage seulement, sans calcul d'ecart.",
+            "normale": "Annonce du temps de passage et de l'ecart au projet.",
+            "complexifiee": "Annonces a deux points de passage avec ecarts."
+          },
+          "safety": [
+            "Surveiller prime sur chronometrer : le chronometreur ne quitte jamais son camarade des yeux.",
+            "Il signale immediatement tout signe anormal : paleur, gene respiratoire, desequilibre.",
+            "Le chronometreur se place a l'interieur du parcours, jamais sur le parcours.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre total est-il meilleur avec une premiere course bridee ?",
+          "Que doit annoncer un chronometreur pour etre utile ?"
+        ],
+        "key": "Brider la premiere course ameliore le total : ce qu'on perd sur la premiere, on le regagne double sur la troisieme. Et un chronometreur utile annonce un ecart, pas un encouragement."
+      },
+      "socialRoles": [
+        "Chronometreur : annonce les temps de passage et les ecarts, et surveille.",
+        "Observateur : releve les trois temps et calcule l'ecart.",
+        "Verificateur : controle l'ajustement du projet de son camarade."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et ajustement du projet de temps",
+      "mainObjective": "Situer chacun dans les conditions du jour J et arreter un projet de temps ajuste.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser l'epreuve complete dans les conditions du jour J, sans montre.",
+        "Verifier que le role choisi en seance 1 est tenu.",
+        "Arreter le projet de trois temps."
+      ],
+      "linkToPrevious": "Temps de reference, recuperation et regularite ont ete construits, et le role ainsi que la repartition des points sont choisis depuis la seance 1 : l'epreuve evaluee montre ce que cela donne en conditions reelles.",
+      "prerequisiteForNext": "Chaque eleve a un projet de trois temps arrete et tient son role choisi.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches nominatives.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un espace d'ecriture a l'ecart du parcours."
+        ],
+        "sketch": "Parcours balise comme le jour de l'epreuve.\nAffichage du referentiel et des repartitions a l'entree.\nZone de recuperation active et zone d'ecriture, a l'ecart.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite fait partie de l'AFL1 et sera observee le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation avant la premiere course."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Epreuve evaluee avec temps annonces",
+          "objective": "Evaluer la capacite a annoncer et tenir trois temps sur l'epreuve complete.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance. Chacun annonce ses trois temps avant de partir, realise l'epreuve complete sans montre ni chronometre, et son camarade dans le role choisi (chronometreur ou observateur) l'assiste comme le jour de l'epreuve : un seul temps de passage communique aux 250 metres, pour C1 et C2 uniquement.",
+          "studentGoal": "Annoncer trois temps et les tenir sur l'epreuve complete, sans montre.",
+          "instructions": [
+            "J'annonce mes trois temps avant de partir.",
+            "Je cours sans montre ni chronometre.",
+            "Je realise les trois courses avec la recuperation de 10 minutes apres C1 et C2.",
+            "Chronometreur : tu m'annonces mon temps de passage aux 250 metres sur C1 et C2 seulement, jamais sur C3."
+          ],
+          "success": [
+            "Les trois courses sont realisees en entier, sans marche subie.",
+            "Les ecarts a l'annonce sont faibles.",
+            "L'ecart entre la premiere et la troisieme est reduit.",
+            "La fiche est renseignee."
+          ],
+          "execution": [
+            "Annoncer des temps realistes.",
+            "Brider la premiere course.",
+            "Appliquer la procedure de recuperation."
+          ],
+          "watch": [
+            "Les annonces sont-elles realistes ?",
+            "Les temps sont-ils tenus sous evaluation ?",
+            "La recuperation est-elle appliquee ?",
+            "Les chronometreurs surveillent-ils leur camarade ?"
+          ],
+          "errors": [
+            "Annoncer des temps ambitieux puis exploser.",
+            "Partir a fond sur la premiere sous l'effet de l'enjeu.",
+            "Escamoter la recuperation.",
+            "Observer sans surveiller."
+          ],
+          "feedback": [
+            "Annonce ce que tu peux tenir trois fois.",
+            "Ta premiere bridee : c'est ce qu'on a travaille.",
+            "Ta procedure de recuperation, meme en evaluation.",
+            "Ton coureur d'abord : tu es aussi sa securite."
+          ],
+          "plus": [
+            "Epreuve avec recuperation raccourcie."
+          ],
+          "minus": [
+            "Deux courses de 400 metres avec recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux courses de 400 metres avec recuperation allongee, alternance autorisee.",
+            "normale": "Trois 500 metres avec temps annonces et recuperation de 10 minutes.",
+            "complexifiee": "Trois 500 metres avec recuperation raccourcie."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant l'epreuve evaluee.",
+            "Consulter les PAI : asthme d'effort, pathologies cardiaques.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige, des nausees ou une paleur.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses ni apres la troisieme.",
+            "Le chronometreur surveille son camarade pendant toute sa course.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Sens de course unique.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible entre les courses.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier son role et sa repartition",
+          "objective": "Verifier que le role et la repartition choisis en seance 1 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun relit le role et la repartition choisis en seance 1, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mon role et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis le role et la repartition que j'ai choisis en seance 1.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mon role tenu depuis la seance 1 : suis-je utile a mon camarade ?",
+            "J'ecris si je confirme mon choix, et pourquoi."
+          ],
+          "success": [
+            "Le role et la repartition de la seance 1 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reel.",
+            "Comparer a ce qui avait ete choisi en seance 1.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de seance 1 ?",
+            "Les justifications sont-elles argumentees ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qu'on avait choisi en seance 1.",
+            "Confirmer sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort.",
+            "Tu chronometres sans jamais informer : verifie que ce role te convient.",
+            "Ce n'est pas le choix de ton voisin qui compte."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec l'autre repartition."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome du role et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Arreter le projet de trois temps",
+          "objective": "Arreter le projet definitif et ecrire un objectif personnel.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun arrete son projet de trois temps pour l'epreuve finale, calcule son total vise, et ecrit son objectif personnel.",
+          "studentGoal": "Arreter les trois temps que j'annoncerai a l'epreuve finale.",
+          "instructions": [
+            "Je pars de mes trois temps du jour.",
+            "J'arrete mes trois temps vises pour l'epreuve finale.",
+            "Je calcule mon total vise.",
+            "J'ecris mon objectif personnel et je garde mon carnet."
+          ],
+          "success": [
+            "Les trois temps vises sont ecrits.",
+            "Le total est calcule.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Partir des temps reellement realises.",
+            "Prevoir des temps proches les uns des autres.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les trois temps sont-ils proches entre eux ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Viser un temps jamais realise.",
+            "Prevoir une premiere course rapide et deux courses lentes.",
+            "Objectif vague : courir plus vite."
+          ],
+          "feedback": [
+            "Tu n'as jamais couru ce temps : ajuste.",
+            "Trois temps proches : c'est ce qui donne le meilleur total.",
+            "Precise : quel temps, quel total, quel ecart ?"
+          ],
+          "plus": [
+            "Projet avec deux scenarios selon les conditions."
+          ],
+          "minus": [
+            "Projet arrete avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Projet arrete avec le professeur a partir des temps du jour.",
+            "normale": "Projet de trois temps arrete en autonomie, total calcule.",
+            "complexifiee": "Projet avec deux scenarios selon les conditions."
+          },
+          "safety": [
+            "Le professeur valide chaque projet : un projet manifestement irrealiste conduit a un effort mal gere.",
+            "Phase realisee assise a l'ecart du parcours.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont vos trois temps vises, et quel est votre total ?",
+          "Quelle repartition avez-vous choisie entre l'AFL2 et l'AFL3, et pourquoi ?"
+        ],
+        "key": "Un projet de trois temps se fonde sur des temps reellement realises, et les trois doivent etre proches. Et la repartition des points se choisit a partir de ce qu'on fait vraiment."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps, annonce les ecarts et surveille.",
+        "Observateur : renseigne la fiche d'evaluation.",
+        "Responsable recuperation : verifie que chacun marche et boit entre les courses."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "S'entrainer en autonomie et tenir son role choisi",
+      "mainObjective": "Conduire sa preparation en autonomie et assumer pleinement le role choisi en seance 1, chronometreur ou observateur.",
+      "secondaryObjectives": [
+        "Conduire une seance de preparation sans consigne exterieure.",
+        "Exercer uniquement le role choisi en seance 1 : chronometrer ou observer, jamais les deux.",
+        "Renseigner le carnet en temps reel."
+      ],
+      "linkToPrevious": "Le role et la repartition sont choisis depuis la seance 1 : chacun sait sur quoi se jouent ses huit points, et travaille en consequence.",
+      "prerequisiteForNext": "Chaque eleve conduit sa seance seul et a tenu son role choisi de facon utile.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche des criteres de regulation",
+            "fixed": 2
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation AFL3 : ce que le chronometreur ou l'observateur doit relever.",
+          "Afficher les criteres de regulation du projet de temps.",
+          "Baliser le parcours et verifier son etat.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise, seances individualisees simultanees.\nAffiche des criteres de regulation a l'entree.\nFiches d'observation AFL3 disponibles.\nZone de recuperation active avec point d'eau."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : chaque eleve prepare l'intensite de sa propre seance, ce qui fait partie de l'autonomie evaluee.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement selon l'intensite de sa seance.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Seance de preparation conduite en autonomie",
+          "objective": "Conduire seul une seance de preparation adaptee a son projet de temps.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance. Chacun conduit sa seance : nombre de courses, distances, temps vises, recuperations, selon ce qu'il a besoin de travailler. Aucune consigne du professeur, sauf securite.",
+          "studentGoal": "Conduire seul une seance qui prepare mon projet de temps.",
+          "instructions": [
+            "Je choisis ce que je dois travailler : la regularite, la recuperation, ou la vitesse.",
+            "Je conduis ma seance seul, avec mon carnet.",
+            "Mon partenaire chronometre et surveille, il ne me dit pas quoi faire.",
+            "Je renseigne mon carnet apres chaque course."
+          ],
+          "success": [
+            "La seance est conduite en entier sans consigne exterieure.",
+            "Elle est coherente avec ce que l'eleve doit travailler.",
+            "Le carnet est renseigne en temps reel."
+          ],
+          "execution": [
+            "Choisir ce qui manque, pas ce qu'on aime faire.",
+            "Noter immediatement apres chaque course.",
+            "Recuperer activement."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils ce qui leur manque ?",
+            "Attendent-ils encore des consignes ?",
+            "Les carnets sont-ils renseignes en direct ?"
+          ],
+          "errors": [
+            "Refaire ce qu'on reussit deja.",
+            "Attendre une consigne pour demarrer.",
+            "Remplir son carnet a la fin, de memoire."
+          ],
+          "feedback": [
+            "Tu reussis deja ca : travaille ce qui te manque.",
+            "C'est ta seance : tu n'as pas besoin de moi.",
+            "Note tout de suite."
+          ],
+          "plus": [
+            "Seance conduite avec trois courses et regulation en cours."
+          ],
+          "minus": [
+            "Seance conduite avec rappel des etapes par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Seance conduite avec rappel des etapes par le professeur.",
+            "normale": "Seance conduite seule, partenaire limite au chronometrage et a la surveillance.",
+            "complexifiee": "Seance de trois courses avec regulation en cours de seance."
+          },
+          "safety": [
+            "L'autonomie porte sur la conduite de la seance, jamais sur la securite : le partenaire surveille en permanence et le professeur intervient toujours sur un point de securite.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses.",
+            "Aucun eleve ne quitte le parcours balise, meme en autonomie.",
+            "Recuperation du referentiel respectee entre les courses.",
+            "Point d'eau accessible.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir son role : chronometreur ou observateur",
+          "objective": "Construire l'AFL3 dans le seul role choisi en seance 1 : soit chronometreur, soit observateur, jamais les deux.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Pendant la seance du camarade, chacun tient exclusivement le role choisi en seance 1. Le chronometreur releve les temps de passage et les temps finaux et connait le reglement. L'observateur remplit une fiche de releve de donnees, quantitatives et qualitatives, sur la gestion des trois courses.",
+          "studentGoal": "Tenir mon role choisi, et seulement celui-la, du mieux possible.",
+          "instructions": [
+            "Chronometreur : je releve son temps de passage et son temps final a chaque course, je connais et fais respecter le reglement.",
+            "Observateur : je releve sur ma fiche des donnees chiffrees et qualitatives sur la regularite de ses trois courses.",
+            "Je reste concentre sur mon role du debut a la fin de la seance de mon camarade.",
+            "Je ne mele pas les deux roles : je ne chronometre pas si j'ai choisi observateur, et inversement."
+          ],
+          "success": [
+            "Le role tenu est bien celui choisi en seance 1, un seul des deux.",
+            "Chronometreur : les temps sont correctement pris et le reglement est connu.",
+            "Observateur : les releves sont fiables et exploitables, quantitativement et qualitativement.",
+            "La concentration est maintenue sur l'ensemble de la seance."
+          ],
+          "execution": [
+            "Se rappeler son role choisi avant de commencer.",
+            "Rester concentre sur ce seul role.",
+            "Noter immediatement, sans attendre la fin de la seance."
+          ],
+          "watch": [
+            "L'eleve reste-t-il dans son seul role choisi ?",
+            "Le chronometreur maitrise-t-il le chronometre et ses fonctions ?",
+            "L'observateur reste-t-il concentre et ses releves sont-ils exploitables ?"
+          ],
+          "errors": [
+            "Melanger chronometrage et observation.",
+            "Chronometrer sans regarder son camarade.",
+            "Remplir la fiche d'observation a la fin, de memoire.",
+            "Rester passif, depasse par les actions."
+          ],
+          "feedback": [
+            "Ton role est chronometreur : reste sur le chronometre, pas sur l'observation.",
+            "Ton role est observateur : note en direct, pas de memoire.",
+            "Connais le reglement, c'est ce qui est evalue en degre 4.",
+            "Tes releves doivent etre exploitables, pas seulement pris."
+          ],
+          "plus": [
+            "Chronometreur : place et connaissance complete du reglement, aide les autres a jouer leurs roles. Observateur : concentration optimale, releves entierement utilisables pour une progression."
+          ],
+          "minus": [
+            "Role tenu avec rappel regulier du professeur sur ce qu'il faut relever."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec rappel regulier du professeur sur ce qu'il faut relever.",
+            "normale": "Role tenu seul, avec fiche renseignee course par course.",
+            "complexifiee": "Chronometreur : connait et fait respecter le reglement. Observateur : releves quantitatifs et qualitatifs exploitables pour une progression."
+          },
+          "safety": [
+            "Le chronometreur reste a l'interieur du parcours, jamais sur le parcours.",
+            "Il signale immediatement tout signe anormal chez son camarade : paleur, gene respiratoire, desequilibre, arret brutal.",
+            "Aucun releve d'eleve ne prevaut sur une regle de securite.",
+            "Point d'eau accessible.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Croiser les carnets",
+          "objective": "Confronter ce que le camarade (chronometreur ou observateur) a releve et ce que l'eleve a note.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, assis a l'ecart du parcours. Chacun compare son carnet et la fiche tenue par son camarade (chronometreur ou observateur), et corrige les ecarts.",
+          "studentGoal": "Verifier que ce que j'ai note correspond a ce qui s'est reellement passe.",
+          "instructions": [
+            "Je compare mon carnet et la fiche tenue par mon camarade.",
+            "Je repere les ecarts : temps, ecarts au projet, recuperation.",
+            "Je corrige mon carnet si necessaire.",
+            "Je note ce que l'observation exterieure m'a appris."
+          ],
+          "success": [
+            "Les deux documents sont compares.",
+            "Les ecarts sont identifies et corriges.",
+            "L'apport de l'observation exterieure est note."
+          ],
+          "execution": [
+            "Comparer course par course.",
+            "Accepter la correction quand le releve est plus fiable.",
+            "Noter l'apport, pas seulement la correction."
+          ],
+          "watch": [
+            "Les eleves surestiment-ils leurs temps ?",
+            "Acceptent-ils la correction ?",
+            "L'apport est-il note ?"
+          ],
+          "errors": [
+            "Refuser la correction par principe.",
+            "Ne pas noter ce que l'observation a apporte.",
+            "Comparer sans corriger."
+          ],
+          "feedback": [
+            "Il a releve autre chose : qui a raison ?",
+            "Note ce que ca t'apprend : c'est ce qui est evalue.",
+            "Corrige ton carnet : un carnet faux ne sert a rien."
+          ],
+          "plus": [
+            "Comparaison sur plusieurs seances du carnet."
+          ],
+          "minus": [
+            "Comparaison sur une course, guidee."
+          ],
+          "diff": {
+            "facilitee": "Comparaison sur une seule course, guidee par le professeur.",
+            "normale": "Comparaison complete du carnet et de la fiche d'observation.",
+            "complexifiee": "Comparaison portant sur plusieurs seances du carnet."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet ou observee est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qu'un chronometreur, ou un observateur, reellement utile fait, concretement ?",
+          "Sur quoi l'autonomie ne porte-t-elle jamais ?"
+        ],
+        "key": "Le chronometreur maitrise le chronometre et le reglement, l'observateur produit des releves fiables et exploitables : melanger les deux roles n'est jamais evalue. Et l'autonomie porte sur la conduite de la seance, jamais sur la securite."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps de passage et finaux, connait et fait respecter le reglement.",
+        "Observateur : releve des donnees chiffrees et qualitatives sur la gestion des trois courses.",
+        "Verificateur : croise le carnet et la fiche tenue par le camarade."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et carnet d'entrainement",
+      "mainObjective": "Realiser l'epreuve dans les conditions du jour J et finaliser le carnet, support de l'AFL2.",
+      "secondaryObjectives": [
+        "Realiser l'epreuve complete comme le jour de l'epreuve.",
+        "Ajuster une derniere fois le projet de temps.",
+        "Finaliser le carnet d'entrainement."
+      ],
+      "linkToPrevious": "La preparation est conduite en autonomie et chacun tient son role choisi : il reste a eprouver l'ensemble une fois dans les conditions de l'epreuve.",
+      "prerequisiteForNext": "Chaque eleve a realise l'epreuve complete et son carnet est a jour.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et le deroulement de l'epreuve.",
+          "Preparer les fiches d'observation identiques a celles du jour final.",
+          "Baliser le parcours exactement comme le jour de l'epreuve.",
+          "Verifier les PAI, les dispenses et les conditions meteorologiques.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Parcours balise comme le jour de l'epreuve.\nReferentiel et deroulement affiches a l'entree.\nZone de recuperation active et zone de notation, a l'ecart.\nPoint d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, identique a celui du jour de l'epreuve : sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation avant la premiere course."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Epreuve complete a blanc",
+          "objective": "Realiser l'epreuve dans les conditions exactes du jour de l'epreuve.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance, comme le jour de l'epreuve : l'un annonce ses trois temps et realise l'epreuve sans montre ni chronometre, l'autre tient son role choisi (chronometreur ou observateur) et renseigne sa fiche.",
+          "studentGoal": "Realiser l'epreuve comme je la realiserai le jour de l'evaluation.",
+          "instructions": [
+            "J'annonce mes trois temps avant de partir.",
+            "Je cours sans montre ni chronometre.",
+            "Je realise les trois courses avec la recuperation de 10 minutes apres C1 et C2.",
+            "Chronometreur : tu m'annonces mon temps de passage aux 250 metres sur C1 et C2 seulement, jamais sur C3."
+          ],
+          "success": [
+            "Les trois courses sont realisees en entier.",
+            "Les ecarts a l'annonce sont faibles.",
+            "L'ecart entre la premiere et la troisieme est reduit.",
+            "La fiche est renseignee."
+          ],
+          "execution": [
+            "Annoncer des temps realistes.",
+            "Brider la premiere course.",
+            "Appliquer la procedure de recuperation."
+          ],
+          "watch": [
+            "Les annonces sont-elles realistes ?",
+            "L'ecart entre les courses est-il reduit ?",
+            "La recuperation est-elle appliquee ?"
+          ],
+          "errors": [
+            "Annoncer des temps ambitieux puis exploser.",
+            "Escamoter la recuperation.",
+            "S'arreter sur la troisieme course."
+          ],
+          "feedback": [
+            "Ajuste ton annonce maintenant, pas le jour de l'epreuve.",
+            "Ta procedure de recuperation, integralement.",
+            "Ralentis plutot que de t'arreter."
+          ],
+          "plus": [
+            "Epreuve avec recuperation raccourcie."
+          ],
+          "minus": [
+            "Deux courses de 400 metres avec recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux courses de 400 metres avec recuperation allongee, alternance autorisee.",
+            "normale": "Epreuve complete avec temps annonces et recuperation de 10 minutes.",
+            "complexifiee": "Epreuve complete avec recuperation raccourcie."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant l'epreuve.",
+            "Consulter les PAI.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire, un vertige ou des nausees.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses ni apres la troisieme.",
+            "Le camarade, chronometreur ou observateur, surveille en permanence celui qui court.",
+            "Aucun eleve ne quitte le parcours balise.",
+            "Report ou adaptation en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible entre les courses.",
+            "Retour au calme obligatoire.",
+            "Le professeur reste en vue de l'ensemble du parcours."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Finaliser le carnet d'entrainement",
+          "objective": "Mettre le carnet a jour : il est le support de l'AFL2 et sera lu.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun met son carnet a jour : projet initial, seances realisees, regulations et leurs raisons, bilan.",
+          "studentGoal": "Avoir un carnet complet et lisible, qui montre comment j'ai construit mon projet de temps.",
+          "instructions": [
+            "Je verifie que toutes mes seances et tous mes temps y figurent.",
+            "Je verifie que chaque ajustement de projet est accompagne de sa raison.",
+            "J'ecris un bilan : comment mon projet a evolue, et pourquoi.",
+            "Je verifie que mon carnet est lisible pour quelqu'un d'autre."
+          ],
+          "success": [
+            "Toutes les seances figurent au carnet.",
+            "Chaque ajustement est justifie.",
+            "Un bilan est redige.",
+            "Le carnet est lisible."
+          ],
+          "execution": [
+            "Reprendre seance par seance.",
+            "Verifier que chaque ajustement a sa raison.",
+            "Rediger un bilan argumente."
+          ],
+          "watch": [
+            "Les carnets sont-ils complets ?",
+            "Les ajustements sont-ils justifies ?",
+            "Le bilan est-il argumente ?"
+          ],
+          "errors": [
+            "Carnet rempli de memoire la veille.",
+            "Ajustements notes sans raison.",
+            "Bilan resume a une phrase generale."
+          ],
+          "feedback": [
+            "Complete-le maintenant, pas le jour de l'epreuve.",
+            "Pourquoi as-tu ajuste ton projet ? Sans la raison, ca ne vaut rien.",
+            "Ton bilan doit dire comment ton projet a evolue."
+          ],
+          "plus": [
+            "Bilan comparant le projet initial et le projet final, avec chiffres."
+          ],
+          "minus": [
+            "Carnet complete avec le professeur, sur un modele."
+          ],
+          "diff": {
+            "facilitee": "Carnet complete avec le professeur a partir d'un modele.",
+            "normale": "Carnet mis a jour en autonomie avec bilan redige.",
+            "complexifiee": "Bilan chiffre comparant le projet initial et le projet final."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ajustement final du projet de temps",
+          "objective": "Fixer definitivement les trois temps qui seront annonces a l'epreuve.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun ajuste definitivement ses trois temps a partir de la repetition generale, et note son point de vigilance.",
+          "studentGoal": "Fixer definitivement les trois temps que j'annoncerai a l'epreuve.",
+          "instructions": [
+            "Je compare ce que j'avais annonce et ce que j'ai realise aujourd'hui.",
+            "J'ajuste mes trois temps, a la hausse ou a la baisse.",
+            "Je note le point sur lequel je dois faire attention le jour J.",
+            "Je garde mon carnet."
+          ],
+          "success": [
+            "Les trois temps definitifs sont ecrits.",
+            "L'ajustement s'appuie sur la repetition generale.",
+            "Un point de vigilance est note."
+          ],
+          "execution": [
+            "Partir de ce qui s'est passe, pas de ce qu'on espere.",
+            "Ajuster de facon realiste.",
+            "Formuler le point de vigilance simplement."
+          ],
+          "watch": [
+            "Les ajustements sont-ils realistes ?",
+            "Les eleves identifient-ils leur point faible ?"
+          ],
+          "errors": [
+            "Maintenir un temps jamais realise.",
+            "Viser plus vite juste avant l'epreuve.",
+            "Ne pas identifier de point de vigilance."
+          ],
+          "feedback": [
+            "Tu n'as jamais couru ce temps : ajuste-le.",
+            "N'accelere pas ton projet la veille : c'est le meilleur moyen d'exploser.",
+            "Sur quoi dois-tu faire attention la semaine prochaine ?"
+          ],
+          "plus": [
+            "Ajustement avec un scenario alternatif selon la meteo."
+          ],
+          "minus": [
+            "Ajustement realise avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Ajustement realise avec le professeur.",
+            "normale": "Ajustement autonome des trois temps definitifs.",
+            "complexifiee": "Ajustement avec scenario alternatif selon les conditions."
+          },
+          "safety": [
+            "Aucun projet revu a la hausse sans validation du professeur : un projet trop ambitieux le jour J conduit a un effort mal gere.",
+            "Phase realisee assise a l'ecart du parcours.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont vos trois temps definitifs ?",
+          "Pourquoi n'accelere-t-on pas son projet la veille de l'epreuve ?"
+        ],
+        "key": "Un projet se fixe a partir de ce qu'on a realise a la repetition generale. L'accelerer la veille, c'est se garantir une troisieme course catastrophique."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps, annonce les ecarts et surveille.",
+        "Observateur : renseigne la fiche comme le jour final.",
+        "Responsable recuperation : verifie que chacun marche et boit entre les courses."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve, apres avoir evalue les AFL2 et AFL3 au fil du cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser les trois courses en tenant les temps annonces, sans montre ni chronometre.",
+        "Tenir le seul role choisi en seance 1, chronometreur ou observateur.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait construire et tenir un projet de performance sur une epreuve repetee.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 30
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "cardiofrequencemetres",
+            "fixed": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat du parcours et les conditions meteorologiques avant le premier depart : reporter ou adapter en cas de forte chaleur ou de pic de pollution.",
+          "Afficher le referentiel, l'ordre de passage et les criteres.",
+          "Preparer les grilles nominatives et relever les carnets.",
+          "Verifier les PAI et les dispenses avant le premier depart.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord du parcours."
+        ],
+        "sketch": "Parcours balise comme a la repetition generale, sens unique.\nReferentiel, ordre de passage et criteres affiches a l'entree.\nZone de recuperation active avec point d'eau, a l'ecart.\nTrousse de secours signalee, chronometreurs a l'arrivee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : trois courses intenses evaluees ne s'abordent jamais sans montee progressive de l'intensite, et sa conduite est evaluee au titre de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, epaules.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Montee progressive en intensite",
+            "details": [
+              "Quatre accelerations de 80 metres.",
+              "Une fraction de 30 secondes a allure de course.",
+              "Trois minutes de recuperation avant le premier depart."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Les trois 500 metres evalues",
+          "objective": "Evaluer l'AFL1 : realisation des trois courses, tenue des temps annonces et reduction de l'ecart.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par vagues, selon l'ordre affiche. Chacun annonce ses trois temps avant de partir, realise les trois courses sans montre ni chronometre avec la recuperation de 10 minutes apres C1 et C2, puis tient son role choisi en seance 1 (chronometreur ou observateur) sur la serie d'un camarade.",
+          "studentGoal": "Realiser mes trois courses en tenant les temps que j'ai annonces, et tenir mon role choisi pour mon camarade.",
+          "instructions": [
+            "J'annonce mes trois temps avant de partir.",
+            "Je cours sans montre ni chronometre.",
+            "Je realise les trois courses avec la recuperation de 10 minutes apres C1 et C2.",
+            "Chronometreur : j'annonce le temps de passage aux 250 metres sur C1 et C2 seulement, jamais sur C3. Observateur : je releve mes donnees en continu."
+          ],
+          "success": [
+            "AFL1 : les trois courses sont realisees en entier, sans marche subie.",
+            "AFL1 : la note de performance est la moyenne des trois temps (somme des trois courses divisee par trois).",
+            "AFL1 : l'indice technique est bon, c'est-a-dire l'ecart en secondes entre les trois courses est faible.",
+            "AFL3 : l'eleve tient fiablement son seul role choisi, chronometreur ou observateur."
+          ],
+          "execution": [
+            "Brider la premiere course.",
+            "Appliquer la recuperation de 10 minutes integralement apres C1 et C2.",
+            "Ralentir plutot que s'arreter.",
+            "Tenir son role choisi sans le melanger a l'autre."
+          ],
+          "watch": [
+            "Les temps annonces sont-ils tenus sous l'enjeu ?",
+            "Les eleves partent-ils trop vite sur la premiere ?",
+            "La recuperation de 10 minutes est-elle appliquee apres C1 et C2 ?",
+            "Chaque eleve tient-il uniquement le role choisi en seance 1 ?"
+          ],
+          "errors": [
+            "Partir a fond sur la premiere course sous l'effet de l'enjeu.",
+            "Escamoter la recuperation.",
+            "S'arreter sur la troisieme course.",
+            "Communiquer le temps de passage sur C3, ou melanger les deux roles."
+          ],
+          "feedback": [
+            "Ta premiere bridee : c'est tout le cycle qui le dit.",
+            "Ta recuperation de 10 minutes, meme aujourd'hui.",
+            "Ralentis, ne t'arrete pas.",
+            "Le temps de passage ne se donne jamais sur C3."
+          ],
+          "plus": [
+            "Epreuve avec recuperation raccourcie."
+          ],
+          "minus": [
+            "Deux courses de 400 metres avec recuperation allongee."
+          ],
+          "diff": {
+            "facilitee": "Deux courses de 400 metres avec recuperation allongee et alternance course-marche autorisee. La regularite, la gestion et le role choisi sont evalues autant que la performance.",
+            "normale": "Trois 500 metres avec temps annonces et recuperation de 10 minutes apres C1 et C2.",
+            "complexifiee": "Trois 500 metres avec recuperation raccourcie."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant le premier depart : trois courses intenses enchainees sans preparation exposent au malaise.",
+            "PAI verifies avant le premier depart : asthme d'effort, pathologies cardiaques, allergies saisonnieres.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur thoracique, une gene respiratoire inhabituelle, un vertige, des nausees ou une paleur.",
+            "Aucun eleve ne s'assoit ni ne s'allonge entre les courses ni immediatement apres la troisieme : la recuperation se fait en marchant.",
+            "Le camarade, chronometreur ou observateur, surveille en permanence celui qui court : c'est un role de securite autant que d'evaluation.",
+            "Une frequence cardiaque qui ne redescend pas avant le depart suivant est signalee au professeur, qui peut retirer l'eleve de la serie.",
+            "Aucun eleve ne quitte le parcours balise : un eleve en difficulte doit rester visible en permanence.",
+            "Sens de course unique, aucun croisement.",
+            "Report ou adaptation de l'epreuve en cas de forte chaleur ou de pic de pollution.",
+            "Point d'eau accessible avant, entre et apres les courses.",
+            "Retour au calme obligatoire apres la troisieme course : marche de trois minutes minimum.",
+            "Parcours verifie, hors circulation de vehicules.",
+            "Le professeur reste en vue de l'ensemble du parcours et peut arreter toute serie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan du carnet et de la repartition",
+          "objective": "Evaluer l'AFL2 a partir du carnet et faire le bilan de la repartition choisie.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du parcours. Chacun presente son carnet, pointe deux ajustements de projet justifies, et fait le bilan du role et de la repartition choisis en seance 1.",
+          "studentGoal": "Montrer, carnet en main, comment j'ai construit et ajuste mon projet de temps.",
+          "instructions": [
+            "Je presente deux ajustements de mon projet et je les justifie.",
+            "J'indique comment mon ecart entre les trois courses a evolue.",
+            "Je relis mon objectif de la seance 5 et je dis s'il est atteint.",
+            "Je dis si le role et la repartition que j'avais choisis en seance 1 etaient les bons."
+          ],
+          "success": [
+            "Deux ajustements sont presentes et justifies.",
+            "L'evolution de l'ecart est chiffree.",
+            "L'objectif personnel est evalue.",
+            "La repartition choisie est commentee."
+          ],
+          "execution": [
+            "Citer les temps avant de justifier.",
+            "Comparer l'ecart de la seance 1 a celui d'aujourd'hui.",
+            "Reprendre son objectif de la seance 5."
+          ],
+          "watch": [
+            "Les carnets sont-ils reellement tenus sur tout le cycle ?",
+            "Les justifications s'appuient-elles sur des temps ?",
+            "Les eleves evaluent-ils honnetement leur choix de repartition ?"
+          ],
+          "errors": [
+            "Presenter un carnet rempli la veille.",
+            "Justifier par une impression.",
+            "Ne regarder que le meilleur des trois temps."
+          ],
+          "feedback": [
+            "Ton carnet est ecrit d'un seul trait : ca se voit.",
+            "Quels temps, exactement ?",
+            "Regarde ton ecart, pas seulement ton meilleur temps."
+          ],
+          "plus": [
+            "Bilan chiffre comparant le projet initial et la realisation finale."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire a completer.",
+            "normale": "Presentation de deux ajustements justifies et bilan de la repartition.",
+            "complexifiee": "Bilan chiffre comparant le projet initial et la realisation finale."
+          },
+          "safety": [
+            "Toute gene mentionnee dans le carnet est signalee immediatement au professeur.",
+            "Phase realisee assise a l'ecart du parcours, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 30
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cardiofrequencemetres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rangement collectif du balisage, puis classe assise pour le bilan.",
+          "studentGoal": "Dire ce que j'ai appris sur la gestion d'un effort repete.",
+          "instructions": [
+            "On ramasse les plots en marchant, chacun sa portion de parcours.",
+            "On compte les chronometres et les cardiofrequencemetres.",
+            "Une fois range, on s'assoit pour le bilan.",
+            "Chacun peut dire ce qu'il a appris."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage.",
+            "Au moins un eleve par binome s'exprime."
+          ],
+          "execution": [
+            "Ramasser en marchant, pas en courant.",
+            "Compter avant de quitter le parcours.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis de gestion ?"
+          ],
+          "errors": [
+            "Ramasser en courant apres l'effort.",
+            "Ne parler que du meilleur temps.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "En marchant : ton retour au calme n'est pas fini.",
+            "Pas seulement ton meilleur temps : gerer trois courses, c'est l'acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour une autre epreuve repetee."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule et transfere a une autre epreuve repetee."
+          },
+          "safety": [
+            "Rangement realise en marchant : le retour au calme se poursuit pendant le rangement.",
+            "Comptage du materiel avant de quitter le parcours.",
+            "Verification qu'aucun eleve ne presente de gene avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre ecart entre la premiere et la troisieme course a-t-il diminue depuis la seance 1 ?",
+          "Que retenez-vous pour une autre epreuve ou l'effort se repete ?"
+        ],
+        "key": "En debut de cycle, la premiere course etait brillante et la troisieme catastrophique. Maintenant les trois sont proches, et le total est meilleur. Gerer un effort repete, c'est brider le debut et utiliser les recuperations."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps, annonce le passage aux 250 metres sur C1 et C2 seulement et surveille, role evalue au titre de l'AFL3.",
+        "Observateur : releve des donnees chiffrees et qualitatives sur la serie, role evalue au titre de l'AFL3.",
+        "Responsable recuperation : verifie que chacun marche et boit entre les courses.",
+        "Responsable materiel : organise le rangement du balisage."
+      ]
+    }
+  ]
+}

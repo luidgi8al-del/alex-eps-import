@@ -1,0 +1,2762 @@
+{
+  "apsa": "Acrosport",
+  "grades": [
+    "SECONDE"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme d'enseignement commun d'EPS pour la classe de seconde generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "S'engager pour composer et realiser un enchainement a visee artistique ou acrobatique destine a etre juge.",
+    "Se preparer et s'engager pour presenter devant un public une prestation maitrisee.",
+    "Assumer les roles de porteur, de voltigeur, de pareur, de chorégraphe et de juge.",
+    "Apprecier et analyser une prestation a partir de criteres partages."
+  ],
+  "targetCompetence": "Passer d'un enchainement qui aligne des pyramides a une composition qui tient un parti pris : un theme assume, des procedes de composition choisis, un risque maitrise et assume, et une prestation defendue devant un public qui la juge.",
+  "cycleObjectives": [
+    "Composer a partir d'un parti pris explicite, et non d'une suite de figures.",
+    "Utiliser des procedes de composition : unisson, cascade, contrepoint, niveaux, orientations.",
+    "Choisir un niveau de risque maitrise et l'assumer devant un public.",
+    "Repeter pour stabiliser une prestation identique d'une fois sur l'autre.",
+    "Juger une prestation avec des criteres partages, difficulte et execution distinguees."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, revalidation des parades et evaluation diagnostique",
+    "Le parti pris : ce que la composition raconte",
+    "Les procedes de composition : unisson, cascade, contrepoint",
+    "Niveaux, orientations et occupation de l'espace",
+    "Evaluation de mi-cycle et projet de composition",
+    "Le risque maitrise : choisir sa difficulte",
+    "Repetition generale et formation au jugement",
+    "Presentation finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classe de seconde generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 au lycee - ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Acrosport au lycee - composition, risque et jugement",
+      "org": "Academie de Creteil",
+      "url": "https://eps.ac-creteil.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner l'acrosport au lycee - du repertoire au parti pris de composition",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Protocole de securite acrosport de l'etablissement : le lire integralement avant la premiere seance, il prime sur tout ce qui est ecrit ici.",
+    "Hauteur de pyramide autorisee au lycee : la verifier, elle conditionne le repertoire disponible.",
+    "Nombre et etat des tapis : la surface doit couvrir toute la zone d'evolution, sans interstice.",
+    "Presence de tapis de reception epais sous toute figure comportant une hauteur.",
+    "Modalites de validation des pareurs : qui valide, et sur quelles figures.",
+    "Autorisation de captation video et modalites de conservation des images.",
+    "PAI et dispenses : pathologies rachidiennes, articulaires, cervicales.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - aligne des figures sans intention",
+      "observed": "Enchaine quatre pyramides correctes, sans lien entre elles ni intention d'ensemble.",
+      "need": "Construire un parti pris de composition qui organise l'enchainement."
+    },
+    {
+      "label": "Profil 2 - cherche le risque maximal",
+      "observed": "Veut la pyramide la plus haute possible, au detriment de la tenue et de la securite.",
+      "need": "Choisir un niveau de risque reellement maitrise, et l'assumer."
+    },
+    {
+      "label": "Profil 3 - prestation differente a chaque essai",
+      "observed": "Improvise les transitions, si bien que la prestation n'est jamais deux fois la meme.",
+      "need": "Stabiliser la composition par la repetition."
+    },
+    {
+      "label": "Profil 4 - juge complaisant",
+      "observed": "Note tout le monde pareil, ou note selon l'affinite plutot que selon les criteres.",
+      "need": "Juger a partir de criteres partages, en distinguant difficulte et execution."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Presentation devant la classe d'une composition collective par groupes de quatre a six, d'une duree de deux a trois minutes, comportant au moins cinq pyramides tenues 3 secondes, des elements gymniques de liaison, et au moins trois procedes de composition identifiables. Le parti pris est annonce avant la prestation. Chaque eleve tient egalement le role de pareur et celui de juge sur la prestation d'un autre groupe.",
+    "criteria": [
+      "Le parti pris annonce est lisible dans la composition.",
+      "Au moins trois procedes de composition sont identifiables.",
+      "La composition comporte au moins cinq pyramides tenues 3 secondes.",
+      "Les appuis, montages et demontages respectent les regles de securite sans exception.",
+      "Le niveau de risque choisi est maitrise : aucune figure ne s'effondre.",
+      "Le role de pareur et celui de juge sont tenus avec rigueur."
+    ],
+    "referential": "Attendus de fin de lycee du CA3, avec le protocole de securite acrosport et la hauteur autorisee par l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, revalidation des parades et evaluation diagnostique",
+      "mainObjective": "Reposer le cadre de securite, revalider les pareurs, et observer ce que produit chacun sans consigne de composition.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Reformuler les regles d'appui et de parade.",
+        "Revalider chaque pareur.",
+        "Observer ce que devient une composition sans parti pris."
+      ],
+      "linkToPrevious": "Le cycle de quatrieme a construit le repertoire, la procedure de montage et l'enchainement. Rien n'est acquis definitivement : les regles se reformulent et les pareurs se revalident.",
+      "prerequisiteForNext": "Chaque eleve est revalide comme pareur et a presente un enchainement sans consigne.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20,
+            "note": "joints, sans interstice, sur toute la zone"
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2,
+            "note": "zones d'appui, procedure de montage, parade"
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6
+          },
+          {
+            "label": "fiches de validation de pareur",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire integralement le protocole de securite acrosport de l'etablissement avant la seance.",
+          "Verifier la hauteur de pyramide autorisee au lycee et l'afficher.",
+          "Joindre les tapis sans laisser le moindre interstice sur toute la zone.",
+          "Placer les tapis epais aux emplacements des figures avec hauteur.",
+          "Afficher les regles d'appui, la procedure de montage et les regles de parade.",
+          "Verifier les PAI et les dispenses avant de constituer les groupes.",
+          "Constituer les groupes par gabarit complementaire."
+        ],
+        "sketch": "Surface de tapis joints couvrant toute la zone, tapis epais aux emplacements avec hauteur.\nAffiches des regles aux deux extremites, visibles de partout.\nGroupes espaces d'au moins 3 m les uns des autres.\n2 m de degagement autour, sans mur ni angle saillant."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet du gainage, des poignets et du rachis : ce sont les structures qui supportent le poids d'un camarade, et elles ne se preparent pas seules.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis, sans monter dessus.",
+              "Deplacements a quatre pattes, en crabe, en rampant."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets : appuis au sol, cercles, flexions, 2 minutes.",
+              "Epaules, hanches, chevilles.",
+              "Nuque : flexions douces, jamais de cercles complets.",
+              "Gainage ventral, dorsal et lateral, 25 secondes chacun, 2 series."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Contacts et appuis progressifs",
+            "details": [
+              "Position quadrupedique dos plat tenue 20 secondes, 3 fois.",
+              "Appuis des mains sur un partenaire a quatre pattes, sans monter.",
+              "Deux figures a deux, au sol, avec pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Revalidation des pareurs",
+          "objective": "Revalider individuellement chaque pareur avant toute figure comportant une hauteur.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "affiche des regles de securite",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de validation de pareur",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois de gabarit homogene. Le professeur valide chaque pareur sur trois epreuves : enonce des regles d'appui, parade d'un montage complet, intervention sur un desequilibre simule. Rotation des roles.",
+          "studentGoal": "Etre revalide comme pareur sur les trois epreuves.",
+          "instructions": [
+            "J'enonce les zones d'appui autorisees et les trois interdits.",
+            "Je me place du cote ou le voltigeur risque de tomber, et je le suis.",
+            "Je saisis au bassin ou au tronc, jamais par un bras.",
+            "Je reste jusqu'a ce qu'il ait les deux pieds au sol."
+          ],
+          "success": [
+            "Les regles d'appui sont enoncees sans erreur.",
+            "Le pareur suit le voltigeur sur les trois phases : montage, tenue, demontage.",
+            "L'intervention sur desequilibre se fait au bassin ou au tronc.",
+            "Le professeur a valide chaque pareur."
+          ],
+          "execution": [
+            "Se placer a portee immediate, jambes flechies.",
+            "Se deplacer avec le voltigeur pendant le montage.",
+            "Accompagner jusqu'au tapis en cas de chute."
+          ],
+          "watch": [
+            "Les regles sont-elles enoncees ou approximees ?",
+            "Le pareur suit-il ou reste-t-il fige ?",
+            "Quitte-t-il avant la fin du demontage ?",
+            "Saisit-il par un bras ?"
+          ],
+          "errors": [
+            "Enoncer les regles approximativement apres un an de pratique.",
+            "Rester fige pendant que le voltigeur se deplace.",
+            "Quitter des que la figure est tenue.",
+            "Saisir par un bras : risque de luxation de l'epaule."
+          ],
+          "feedback": [
+            "Enonce-les precisement : c'est la base de tout le cycle.",
+            "Il bouge, tu bouges.",
+            "Le demontage aussi est dangereux : reste jusqu'au bout.",
+            "Au bassin ou au tronc, jamais par un bras."
+          ],
+          "plus": [
+            "Parade d'une figure a quatre.",
+            "Parade seule sur une figure avec hauteur."
+          ],
+          "minus": [
+            "Deux pareurs sur une figure sans hauteur, avec appui permanent."
+          ],
+          "diff": {
+            "facilitee": "Deux pareurs sur figure sans hauteur, avec appui permanent et supervision directe.",
+            "normale": "Trois epreuves de revalidation, validees individuellement par le professeur.",
+            "complexifiee": "Parade seule d'une figure a quatre comportant une hauteur, sous supervision rapprochee."
+          },
+          "safety": [
+            "Aucun eleve ne pare une figure avec hauteur avant d'avoir ete revalide par le professeur : la validation de l'annee precedente ne vaut pas revalidation.",
+            "Regles d'appui non negociables, affichees et enoncees par les eleves : appuis autorises sur les epaules, les hanches, le bassin et les cuisses ; jamais le milieu du dos, la nuque, la tete ni les articulations.",
+            "Prise du pareur au bassin ou au tronc uniquement : jamais par un bras ni par un vetement.",
+            "Le pareur reste en place jusqu'a ce que le voltigeur ait les deux pieds au sol.",
+            "Groupes constitues par gabarit : le porteur est toujours plus fort que le voltigeur.",
+            "Tapis joints sans interstice, verifies avant chaque situation.",
+            "Hauteur limitee a celle autorisee par le protocole de l'etablissement.",
+            "Aucun eleve porteur d'une contre-indication rachidienne ou cervicale ne tient le role de porteur.",
+            "Bijoux et montres retires, ongles courts, cheveux attaches.",
+            "Le professeur supervise directement chaque validation."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reprise du repertoire",
+          "objective": "Retrouver les figures a deux et a trois maitrisees l'annee precedente.",
+          "material": [
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de quatre. Chaque groupe realise quatre figures du repertoire, deux a deux et deux a trois, en appliquant la procedure de montage complete. Tenue de 3 secondes.",
+          "studentGoal": "Realiser quatre figures du repertoire, tenues 3 secondes, avec la procedure complete.",
+          "instructions": [
+            "Procedure complete : pareur annonce, porteur pret, montage appui par appui, tenue, demontage inverse.",
+            "Je tiens 3 secondes immobiles, le pareur compte a voix haute.",
+            "Je demonte dans l'ordre inverse, sans sauter.",
+            "On tourne les roles apres chaque figure."
+          ],
+          "success": [
+            "Les quatre figures sont tenues 3 secondes.",
+            "La procedure est appliquee sur chacune.",
+            "Aucun appui sur une zone interdite."
+          ],
+          "execution": [
+            "Porteur : dos plat, bras tendus, appuis larges.",
+            "Voltigeur : monter appui par appui, poids reparti.",
+            "Demonter dans l'ordre inverse du montage."
+          ],
+          "watch": [
+            "La procedure est-elle escamotee parce que les figures sont connues ?",
+            "Les dos des porteurs restent-ils plats ?",
+            "Les demontages se font-ils sans saut ?"
+          ],
+          "errors": [
+            "Escamoter la procedure sur une figure familiere.",
+            "Dos rond sous la charge.",
+            "Demonter en sautant."
+          ],
+          "feedback": [
+            "Figure connue ou pas : la procedure, sans exception.",
+            "Ton dos s'arrondit : redescends et reprends la posture.",
+            "On ne saute pas pour descendre."
+          ],
+          "plus": [
+            "Deux figures a quatre ajoutees.",
+            "Tenue portee a 5 secondes."
+          ],
+          "minus": [
+            "Trois figures a deux, au sol, tenue 2 secondes."
+          ],
+          "diff": {
+            "facilitee": "Trois figures a deux sans hauteur, tenue 2 secondes, roles fixes selon le gabarit.",
+            "normale": "Quatre figures du repertoire, a deux et a trois, tenues 3 secondes.",
+            "complexifiee": "Six figures dont deux a quatre, tenues 5 secondes."
+          },
+          "safety": [
+            "Procedure en cinq etapes obligatoire pour chaque figure, y compris les plus familieres : l'habitude est le principal facteur de relachement.",
+            "Pareur valide present a chaque figure comportant une hauteur.",
+            "Demontage toujours dans l'ordre inverse du montage, sans saut.",
+            "Le porteur peut interrompre a tout moment en disant stop.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Hauteur limitee au protocole de l'etablissement.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Enchainement libre, sans consigne",
+          "objective": "Observer ce que produit un groupe sans consigne de composition, pour poser le probleme du cycle.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe compose librement un enchainement d'une minute avec quatre figures, sans autre consigne. Presentation aux autres groupes, qui notent ce qu'ils ont vu.",
+          "studentGoal": "Composer et presenter un enchainement d'une minute, comme on en a l'habitude.",
+          "instructions": [
+            "On compose librement un enchainement d'une minute, avec quatre figures.",
+            "On applique la procedure de securite sur chaque figure.",
+            "Groupe observateur : vous notez ce que vous avez vu, sans juger.",
+            "On commence et on termine immobiles, 3 secondes."
+          ],
+          "success": [
+            "L'enchainement d'une minute est presente.",
+            "Les quatre figures sont tenues 3 secondes.",
+            "Les observateurs decrivent ce qu'ils ont vu."
+          ],
+          "execution": [
+            "Appliquer la procedure sur chaque figure.",
+            "Maintenir les pareurs pendant tout l'enchainement.",
+            "Marquer le debut et la fin."
+          ],
+          "watch": [
+            "Les enchainements ont-ils une intention, ou alignent-ils des figures ?",
+            "Les transitions existent-elles ?",
+            "Les groupes se ressemblent-ils tous ?",
+            "La securite tient-elle en presentation ?"
+          ],
+          "errors": [
+            "Aligner quatre figures sans lien entre elles.",
+            "Transitions reduites a des deplacements en marchant.",
+            "Escamoter la procedure devant le public."
+          ],
+          "feedback": [
+            "Quatre figures a la suite : qu'est-ce qui les relie ?",
+            "Votre transition, c'est juste un deplacement.",
+            "La procedure, meme devant les autres."
+          ],
+          "plus": [
+            "Enchainement d'une minute trente avec cinq figures."
+          ],
+          "minus": [
+            "Enchainement de trente secondes avec trois figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Enchainement de trente secondes avec trois figures sans hauteur.",
+            "normale": "Enchainement d'une minute avec quatre figures, compose librement.",
+            "complexifiee": "Enchainement d'une minute trente avec cinq figures."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee sur chaque figure de l'enchainement.",
+            "Pareurs valides en place pendant tout l'enchainement, transitions comprises.",
+            "Aucune figure au-dela de la hauteur autorisee par le protocole.",
+            "Tapis joints sur toute la zone de deplacement, tapis epais sous les figures avec hauteur.",
+            "Un groupe dans l'espace a la fois, public hors des tapis a 2 m minimum.",
+            "Le professeur supervise en permanence et peut arreter toute presentation."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui reliait vos quatre figures les unes aux autres ?",
+          "Que doit faire un pareur, et jusqu'a quel moment ?"
+        ],
+        "key": "Aligner quatre figures correctes ne fait pas une composition : il manque une intention. Tout le cycle va servir a construire un parti pris et a le rendre lisible."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque montage, role revalide a chaque cycle.",
+        "Chronometreur : compte les 3 secondes de tenue.",
+        "Groupe observateur : decrit ce qu'il a vu, sans juger."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Le parti pris : ce que la composition raconte",
+      "mainObjective": "Construire un parti pris de composition, qui organise l'enchainement au lieu de le juxtaposer.",
+      "secondaryObjectives": [
+        "Choisir un parti pris parmi plusieurs propositions.",
+        "Rendre ce parti pris lisible pour un observateur.",
+        "Verifier la lisibilite en le faisant deviner."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les enchainements alignent des figures sans lien. Le parti pris est ce qui donne une unite a la composition.",
+      "prerequisiteForNext": "Chaque groupe a un parti pris que les observateurs devinent.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des partis pris",
+            "fixed": 2,
+            "note": "quelques propositions : la chute, la construction, le miroir, la lenteur"
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher plusieurs propositions de parti pris, formulees en une phrase chacune.",
+          "Verifier la jonction des tapis et la position des tapis epais.",
+          "Delimiter un espace scenique et un espace public.",
+          "Rappeler et faire enoncer les regles d'appui et la procedure.",
+          "Reconstituer les groupes de quatre a six, par gabarit complementaire."
+        ],
+        "sketch": "Espace scenique central, tapis joints sur toute la surface.\nZones de travail par groupe en peripherie.\nAffiche des partis pris a l'entree de l'espace.\nBancs du public face a la scene, a 2 m."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet du gainage et des poignets, avec un temps de mise en disponibilite corporelle : la composition suppose d'oser proposer devant les autres.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis.",
+              "Deplacements varies : quadrupedie, crabe, rampe."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles.",
+              "Nuque : flexions douces.",
+              "Gainage complet, 25 secondes par position."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mise en disponibilite",
+            "details": [
+              "Deplacements dans l'espace en occupant tous les volumes.",
+              "Arrets sur signal, dans une posture choisie.",
+              "Deux figures a deux, au sol, avec pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Choisir un parti pris et le rendre lisible",
+          "objective": "Construire un parti pris explicite et verifier qu'un observateur le percoit.",
+          "material": [
+            {
+              "label": "affiche des partis pris",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque groupe choisit un parti pris et compose une sequence de trente secondes avec deux figures qui le rende lisible. Presentation a un autre groupe, qui doit deviner le parti pris sans qu'on le lui dise.",
+          "studentGoal": "Composer une sequence dont un autre groupe devine le parti pris.",
+          "instructions": [
+            "On choisit un parti pris et on ne le dit a personne.",
+            "On compose trente secondes avec deux figures qui le rendent lisible.",
+            "Le groupe observateur propose ce qu'il a compris.",
+            "Si personne ne devine, on cherche ce qui manque."
+          ],
+          "success": [
+            "Le parti pris est choisi et note sur la fiche.",
+            "Le groupe observateur devine ou propose une interpretation proche.",
+            "La securite est respectee sur les deux figures."
+          ],
+          "execution": [
+            "Choisir un parti pris realisable avec le repertoire disponible.",
+            "Traduire le parti pris dans les postures, pas seulement dans les figures.",
+            "Marquer le debut et la fin."
+          ],
+          "watch": [
+            "Les partis pris sont-ils lisibles ?",
+            "Les groupes traduisent-ils leur intention corporellement ?",
+            "La securite reste-t-elle appliquee ?"
+          ],
+          "errors": [
+            "Choisir un parti pris et composer sans rapport avec lui.",
+            "Traduire l'intention par des mimiques plutot que par le corps.",
+            "Escamoter la procedure parce qu'on se concentre sur la composition."
+          ],
+          "feedback": [
+            "Personne n'a devine : qu'est-ce qui, dans vos corps, dit votre intention ?",
+            "Ce n'est pas ton visage qui raconte, c'est ton corps.",
+            "La procedure, meme quand vous cherchez."
+          ],
+          "plus": [
+            "Parti pris invente par le groupe, hors de la liste.",
+            "Sequence de quarante-cinq secondes avec trois figures."
+          ],
+          "minus": [
+            "Parti pris impose et tres contraste.",
+            "Sequence de quinze secondes avec une figure."
+          ],
+          "diff": {
+            "facilitee": "Parti pris impose et tres contraste, sequence de quinze secondes avec une figure.",
+            "normale": "Parti pris choisi dans la liste, sequence de trente secondes avec deux figures.",
+            "complexifiee": "Parti pris invente par le groupe, sequence de quarante-cinq secondes avec trois figures."
+          },
+          "safety": [
+            "La recherche de composition ne suspend jamais la procedure de montage : chaque essai de figure applique les cinq etapes.",
+            "Pareur valide present a chaque figure comportant une hauteur.",
+            "Regles d'appui inchangees : jamais le milieu du dos, la nuque ni la tete.",
+            "Groupes de gabarit complementaire.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Traduire une intention par le corps",
+          "objective": "Construire les moyens corporels de traduire une intention : vitesse, tension, orientation, regard.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "affiche des partis pris",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par groupes de quatre. Une meme figure simple est presentee de quatre facons : rapide et tendue, lente et relachee, avec regards vers le public, avec regards vers l'interieur du groupe. Comparaison de l'effet produit.",
+          "studentGoal": "Faire changer l'effet d'une meme figure en changeant ma vitesse, ma tension et mon regard.",
+          "instructions": [
+            "On monte la meme figure de quatre facons differentes.",
+            "On change seulement la vitesse, la tension, ou l'orientation du regard.",
+            "On regarde ce que ca change pour celui qui observe.",
+            "La procedure de montage reste identique dans les quatre cas."
+          ],
+          "success": [
+            "Les quatre versions sont realisees.",
+            "L'effet produit est different et nommable.",
+            "La procedure reste identique dans les quatre cas."
+          ],
+          "execution": [
+            "Changer un seul parametre a la fois.",
+            "Garder le montage lent et sur, meme dans la version rapide.",
+            "Orienter le regard volontairement."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils les quatre effets ?",
+            "La version rapide degrade-t-elle le montage ?",
+            "Le regard est-il utilise volontairement ?"
+          ],
+          "errors": [
+            "Accelerer le montage lui-meme dans la version rapide.",
+            "Ne changer que le visage, pas le corps.",
+            "Ne percevoir aucune difference entre les versions."
+          ],
+          "feedback": [
+            "Rapide, c'est la tenue et les transitions : jamais le montage.",
+            "Ton corps, pas ton visage.",
+            "Regarde la difference : c'est exactement ce qui fait une composition."
+          ],
+          "plus": [
+            "Six versions, avec variations de niveau et d'orientation."
+          ],
+          "minus": [
+            "Deux versions tres contrastees."
+          ],
+          "diff": {
+            "facilitee": "Deux versions tres contrastees : lente et relachee, puis tendue.",
+            "normale": "Quatre versions faisant varier vitesse, tension et regard.",
+            "complexifiee": "Six versions avec variations de niveau et d'orientation."
+          },
+          "safety": [
+            "La version rapide ne modifie jamais la vitesse du montage ni du demontage : seules la tenue et les transitions changent.",
+            "Pareur present a chaque version, sans exception.",
+            "Regles d'appui inchangees.",
+            "Tapis joints, groupes espaces.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Sequence d'une minute avec parti pris",
+          "objective": "Composer une sequence plus longue tenue par un parti pris unique.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe compose une minute avec trois figures, tenue par son parti pris. Presentation a la classe, qui propose ce qu'elle a percu.",
+          "studentGoal": "Tenir mon parti pris sur une minute entiere, pas seulement sur une figure.",
+          "instructions": [
+            "On compose une minute avec trois figures, toutes au service du parti pris.",
+            "Les transitions aussi doivent servir le parti pris.",
+            "On presente sans annoncer notre intention.",
+            "La classe propose ce qu'elle a percu."
+          ],
+          "success": [
+            "La sequence d'une minute est presentee.",
+            "Le parti pris est percu par la classe.",
+            "Les transitions servent l'intention."
+          ],
+          "execution": [
+            "Verifier que chaque figure sert le parti pris.",
+            "Traiter les transitions comme des moments de composition.",
+            "Marquer le debut et la fin."
+          ],
+          "watch": [
+            "Le parti pris tient-il sur une minute ?",
+            "Les transitions sont-elles composees ou subies ?",
+            "La securite tient-elle en presentation ?"
+          ],
+          "errors": [
+            "Un parti pris lisible sur la premiere figure seulement.",
+            "Transitions traitees comme des deplacements neutres.",
+            "Procedure escamotee devant le public."
+          ],
+          "feedback": [
+            "Votre intention disparait apres la premiere figure.",
+            "Vos transitions racontent autre chose que vos figures.",
+            "La procedure, meme devant la classe."
+          ],
+          "plus": [
+            "Une minute trente avec quatre figures."
+          ],
+          "minus": [
+            "Trente secondes avec deux figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Trente secondes avec deux figures sans hauteur, parti pris tres contraste.",
+            "normale": "Une minute avec trois figures au service du parti pris.",
+            "complexifiee": "Une minute trente avec quatre figures."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee sur chaque figure, y compris pendant la presentation.",
+            "Pareurs valides en place pendant toute la sequence, transitions comprises.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Tapis joints sur toute la zone, tapis epais sous les figures avec hauteur.",
+            "Un groupe dans l'espace a la fois, public hors des tapis a 2 m minimum.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui, dans votre corps, rend votre parti pris lisible ?",
+          "Que se passe-t-il quand les transitions ne servent pas l'intention ?"
+        ],
+        "key": "Un parti pris se lit dans les corps : vitesse, tension, orientation, regard. Et il tient sur toute la composition, transitions comprises, sinon il disparait apres la premiere figure."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque essai de figure.",
+        "Groupe observateur : propose ce qu'il a percu du parti pris.",
+        "Secretaire de groupe : note le parti pris choisi."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Les procedes de composition : unisson, cascade, contrepoint",
+      "mainObjective": "Construire les procedes de composition qui organisent le collectif dans le temps.",
+      "secondaryObjectives": [
+        "Realiser un unisson synchronise.",
+        "Realiser une cascade lisible.",
+        "Realiser un contrepoint entre deux sous-groupes."
+      ],
+      "linkToPrevious": "Le parti pris existe, mais le groupe fait tout en meme temps : les procedes de composition donnent au collectif une organisation temporelle.",
+      "prerequisiteForNext": "Chaque groupe realise les trois procedes de facon identifiable.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des procedes",
+            "fixed": 2,
+            "note": "unisson, cascade, contrepoint, avec schemas"
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          }
+        ],
+        "instructions": [
+          "Afficher les trois procedes avec un schema simple pour chacun.",
+          "Verifier la jonction des tapis et la position des tapis epais.",
+          "Delimiter l'espace scenique et l'espace public.",
+          "Rappeler et faire enoncer les regles d'appui et la procedure.",
+          "Reconstituer les groupes de quatre a six."
+        ],
+        "sketch": "Espace scenique central, tapis joints sur toute la surface.\nAffiche des trois procedes a l'entree, avec schemas.\nZones de travail par groupe en peripherie.\nBancs du public face a la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet, avec un temps de synchronisation collective : les procedes reposent sur une coordination du groupe.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis.",
+              "Deplacements collectifs synchronises sur un signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, 25 secondes par position."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Synchronisation collective",
+            "details": [
+              "Quatre eleves realisent le meme mouvement en meme temps, sans compter a voix haute.",
+              "Le meme mouvement en decalage, l'un apres l'autre.",
+              "Deux figures a deux, avec pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Trois procedes, trois ateliers",
+          "objective": "Construire les trois procedes de composition sur des figures simples.",
+          "material": [
+            {
+              "label": "affiche des procedes",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Trois ateliers, rotation toutes les 8 minutes. Unisson : deux duos montent la meme figure exactement en meme temps. Cascade : les duos montent l'un apres l'autre, a intervalle regulier. Contrepoint : un duo monte pendant que l'autre demonte.",
+          "studentGoal": "Realiser les trois procedes de facon assez nette pour qu'un observateur les reconnaisse.",
+          "instructions": [
+            "Unisson : on monte exactement en meme temps, sans compter a voix haute.",
+            "Cascade : on monte l'un apres l'autre, avec le meme intervalle a chaque fois.",
+            "Contrepoint : un duo monte pendant que l'autre demonte.",
+            "Dans les trois cas, la procedure de montage reste complete."
+          ],
+          "success": [
+            "Les trois procedes sont realises et reconnaissables.",
+            "L'unisson est synchronise a moins d'une demi-seconde.",
+            "La cascade a un intervalle regulier.",
+            "La procedure est appliquee dans les trois cas."
+          ],
+          "execution": [
+            "Unisson : se caler sur un repere visuel commun, pas sur un comptage.",
+            "Cascade : compter mentalement le meme intervalle.",
+            "Contrepoint : synchroniser le debut du montage et celui du demontage."
+          ],
+          "watch": [
+            "L'unisson est-il reellement synchrone ?",
+            "L'intervalle de la cascade est-il regulier ?",
+            "Le contrepoint est-il lisible ou confus ?",
+            "La procedure est-elle accéléree pour tenir le procede ?"
+          ],
+          "errors": [
+            "Compter a voix haute pour se synchroniser.",
+            "Cascade a intervalle irregulier, qui devient un desordre.",
+            "Accelerer le montage pour tenir le rythme du procede.",
+            "Contrepoint ou les deux duos font la meme chose en decale."
+          ],
+          "feedback": [
+            "Sans compter a voix haute : trouvez un repere visuel.",
+            "Meme intervalle a chaque fois, sinon on ne voit pas la cascade.",
+            "Le procede s'adapte a la procedure, jamais l'inverse.",
+            "Contrepoint : l'un monte, l'autre demonte, ce n'est pas un decalage."
+          ],
+          "plus": [
+            "Procedes realises a trois duos.",
+            "Enchainement des trois procedes sans arret."
+          ],
+          "minus": [
+            "Unisson seul, sur une figure sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Unisson seul sur une figure sans hauteur, avec comptage autorise.",
+            "normale": "Trois ateliers de procedes, sur figures simples, procedure complete.",
+            "complexifiee": "Procedes a trois duos, ou enchainement des trois sans arret."
+          },
+          "safety": [
+            "Le procede de composition ne modifie jamais la vitesse du montage ni du demontage : si le rythme voulu impose d'accelerer un montage, c'est le rythme qui change, pas la procedure.",
+            "Pareur valide present a chaque figure comportant une hauteur, pour chaque duo simultanement.",
+            "Deux duos en meme temps signifie deux pareurs : jamais un pareur pour deux figures.",
+            "Regles d'appui inchangees.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Duos espaces d'au moins 3 metres pour eviter les collisions en cascade.",
+            "Le professeur supervise les trois ateliers."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reconnaitre un procede",
+          "objective": "Former l'oeil : reconnaitre et nommer un procede depuis la position d'observateur.",
+          "material": [
+            {
+              "label": "affiche des procedes",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            }
+          ],
+          "organization": "Un groupe presente une sequence courte utilisant un procede, sans le nommer. Le groupe observateur identifie lequel. Trois passages par groupe.",
+          "studentGoal": "Nommer le procede utilise par un autre groupe, en le justifiant.",
+          "instructions": [
+            "J'observe la sequence sans savoir quel procede est utilise.",
+            "Je nomme le procede que je reconnais.",
+            "Je justifie : qu'est-ce qui me le fait dire ?",
+            "Si je ne reconnais rien, je le dis : c'est une information utile."
+          ],
+          "success": [
+            "Le procede est identifie dans deux cas sur trois.",
+            "L'identification est justifiee.",
+            "Les groupes non lisibles le savent."
+          ],
+          "execution": [
+            "Regarder l'organisation temporelle, pas les figures.",
+            "Nommer le procede avant de justifier.",
+            "Dire honnetement quand rien n'est lisible."
+          ],
+          "watch": [
+            "Les observateurs regardent-ils l'organisation ou les figures ?",
+            "Osent-ils dire qu'ils n'ont rien reconnu ?",
+            "Les justifications sont-elles precises ?"
+          ],
+          "errors": [
+            "Nommer un procede au hasard pour ne pas rester silencieux.",
+            "Regarder la difficulte des figures plutot que l'organisation.",
+            "Dire que c'etait bien sans nommer de procede."
+          ],
+          "feedback": [
+            "Qu'est-ce qui te le fait dire, precisement ?",
+            "Regarde quand ils montent, pas ce qu'ils montent.",
+            "Si ce n'est pas lisible, dis-le : ca les aide."
+          ],
+          "plus": [
+            "Identifier deux procedes combines dans une meme sequence."
+          ],
+          "minus": [
+            "Choisir entre deux procedes proposes."
+          ],
+          "diff": {
+            "facilitee": "Choix entre deux procedes proposes, avec l'aide du professeur.",
+            "normale": "Identification libre du procede parmi les trois, avec justification.",
+            "complexifiee": "Identification de deux procedes combines dans une meme sequence."
+          },
+          "safety": [
+            "Public assis hors des tapis, a deux metres minimum.",
+            "Aucune circulation devant l'espace pendant un passage.",
+            "Le procede presente ne comporte que des figures deja validees.",
+            "Pareurs en place pendant chaque presentation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Sequence avec deux procedes",
+          "objective": "Integrer deux procedes dans une sequence tenue par le parti pris.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe compose une minute integrant deux procedes au moins, au service de son parti pris. Presentation a un autre groupe, qui identifie les procedes.",
+          "studentGoal": "Composer une minute ou un autre groupe reconnait deux procedes.",
+          "instructions": [
+            "On integre au moins deux procedes dans notre minute.",
+            "Les procedes doivent servir notre parti pris, pas le contredire.",
+            "Groupe observateur : vous identifiez les procedes utilises.",
+            "On note les procedes retenus sur notre fiche."
+          ],
+          "success": [
+            "Deux procedes au moins sont integres et identifies.",
+            "Ils servent le parti pris.",
+            "La securite est respectee sur toute la sequence."
+          ],
+          "execution": [
+            "Choisir des procedes coherents avec le parti pris.",
+            "Placer les procedes aux moments forts de la composition.",
+            "Maintenir la procedure de montage."
+          ],
+          "watch": [
+            "Les procedes sont-ils identifies par les observateurs ?",
+            "Servent-ils le parti pris ou le contredisent-ils ?",
+            "La securite tient-elle avec la contrainte ?"
+          ],
+          "errors": [
+            "Plaquer un procede sans lien avec l'intention.",
+            "Procedes trop discrets pour etre identifies.",
+            "Accelerer les montages pour tenir le procede."
+          ],
+          "feedback": [
+            "Votre cascade ne dit rien de votre intention : pourquoi celle-la ?",
+            "Trop discret : personne ne l'a vu.",
+            "Le rythme s'adapte a la procedure, jamais l'inverse."
+          ],
+          "plus": [
+            "Trois procedes integres dans une minute trente."
+          ],
+          "minus": [
+            "Un procede integre dans trente secondes."
+          ],
+          "diff": {
+            "facilitee": "Un seul procede integre dans une sequence de trente secondes.",
+            "normale": "Deux procedes integres dans une minute, au service du parti pris.",
+            "complexifiee": "Trois procedes integres dans une minute trente."
+          },
+          "safety": [
+            "Un pareur valide par duo realisant une figure avec hauteur : les procedes simultanes multiplient les figures, donc les pareurs necessaires.",
+            "Le rythme du procede ne modifie jamais la vitesse des montages et des demontages.",
+            "Procedure en cinq etapes appliquee sur chaque figure.",
+            "Duos espaces d'au moins 3 metres.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels procedes avez-vous utilises, et pourquoi ceux-la ?",
+          "Que fait-on quand le rythme voulu obligerait a accelerer un montage ?"
+        ],
+        "key": "Les procedes organisent le collectif dans le temps : unisson, cascade, contrepoint. Et quand le rythme voulu exige d'accelerer un montage, c'est le rythme qui change : jamais la procedure."
+      },
+      "socialRoles": [
+        "Pareur : un par duo, present a chaque figure avec hauteur.",
+        "Groupe observateur : identifie et justifie les procedes utilises.",
+        "Secretaire de groupe : note les procedes retenus."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Niveaux, orientations et occupation de l'espace",
+      "mainObjective": "Construire l'usage de l'espace : niveaux, orientations, deplacements, pour donner du relief a la composition.",
+      "secondaryObjectives": [
+        "Utiliser trois niveaux : sol, intermediaire, haut.",
+        "Varier les orientations par rapport au public.",
+        "Occuper tout l'espace scenique."
+      ],
+      "linkToPrevious": "Les procedes organisent le temps. L'espace reste souvent inutilise : tout se passe au centre, face au public, a la meme hauteur.",
+      "prerequisiteForNext": "Chaque groupe utilise trois niveaux et occupe tout l'espace scenique.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12,
+            "note": "delimitation des zones de l'espace scenique"
+          },
+          {
+            "label": "affiche des niveaux et orientations",
+            "fixed": 2
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer au plot les zones de l'espace scenique : avant, centre, fond, cotes.",
+          "Afficher les trois niveaux et les orientations possibles.",
+          "Verifier la jonction des tapis sur toute la zone de deplacement.",
+          "Rappeler et faire enoncer les regles d'appui et la procedure.",
+          "Reconstituer les groupes."
+        ],
+        "sketch": "Espace scenique divise en zones marquees au plot : avant, centre, fond, cotes.\nTapis joints sur toute la surface, tapis epais aux zones avec hauteur.\nAffiche des niveaux et orientations a l'entree.\nBancs du public face a la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec exploration des niveaux : passer du sol au debout sollicite fortement les appuis manuels et le rachis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des tapis.",
+              "Deplacements en variant les niveaux : rampe, quadrupedie, debout."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, 25 secondes par position.",
+              "Passages sol-debout-sol, dix repetitions."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Exploration de l'espace",
+            "details": [
+              "Occuper toutes les zones marquees, en variant les niveaux.",
+              "Arrets sur signal dans une orientation choisie.",
+              "Deux figures a deux, avec pareur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Trois niveaux dans une meme sequence",
+          "objective": "Construire l'usage des trois niveaux, qui donne du relief a une composition.",
+          "material": [
+            {
+              "label": "affiche des niveaux et orientations",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "Chaque groupe compose une sequence de quarante-cinq secondes qui doit comporter les trois niveaux : au moins un moment entierement au sol, un a hauteur intermediaire, un avec la hauteur maximale autorisee.",
+          "studentGoal": "Composer une sequence qui passe par les trois niveaux, du sol a la hauteur autorisee.",
+          "instructions": [
+            "Notre sequence comporte un moment au sol, un intermediaire, un haut.",
+            "Le passage d'un niveau a l'autre fait partie de la composition.",
+            "La hauteur maximale reste celle autorisee par le protocole.",
+            "Procedure complete sur chaque figure."
+          ],
+          "success": [
+            "Les trois niveaux sont presents et identifiables.",
+            "Les passages entre niveaux sont composes.",
+            "La hauteur autorisee n'est jamais depassee."
+          ],
+          "execution": [
+            "Composer les passages entre niveaux, pas seulement les niveaux.",
+            "Utiliser le sol comme un niveau a part entiere.",
+            "Maintenir la procedure de montage a chaque figure."
+          ],
+          "watch": [
+            "Le sol est-il utilise comme un niveau, ou seulement traverse ?",
+            "La hauteur autorisee est-elle respectee ?",
+            "Les passages entre niveaux sont-ils composes ?"
+          ],
+          "errors": [
+            "Traiter le sol comme un simple passage.",
+            "Chercher a depasser la hauteur autorisee.",
+            "Passages entre niveaux subis, en marchant."
+          ],
+          "feedback": [
+            "Le sol est un niveau : composez-le aussi.",
+            "La hauteur autorisee est une limite, pas un objectif a contourner.",
+            "Vos passages sont des trous : composez-les."
+          ],
+          "plus": [
+            "Quatre niveaux distincts, incluant un niveau tres bas."
+          ],
+          "minus": [
+            "Deux niveaux : sol et intermediaire, sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Deux niveaux seulement, sol et intermediaire, sans figure avec hauteur.",
+            "normale": "Trois niveaux dans une sequence de quarante-cinq secondes.",
+            "complexifiee": "Quatre niveaux distincts, avec passages composes."
+          },
+          "safety": [
+            "La hauteur maximale autorisee par le protocole de l'etablissement est une limite absolue : aucune recherche de composition ne la remet en question.",
+            "Pareur valide present a chaque figure comportant une hauteur.",
+            "Procedure en cinq etapes appliquee a chaque figure.",
+            "Les passages entre niveaux se font en desescalade controlee, jamais en sautant depuis une figure.",
+            "Tapis joints sur toute la zone de deplacement, tapis epais sous les figures avec hauteur.",
+            "Groupes espaces d'au moins 3 metres.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Orientations et occupation",
+          "objective": "Construire la variation des orientations et l'occupation de tout l'espace scenique.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "affiche des niveaux et orientations",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            }
+          ],
+          "organization": "Chaque groupe realise une sequence de trente secondes en occupant obligatoirement les quatre zones marquees, avec au moins deux orientations differentes par rapport au public.",
+          "studentGoal": "Occuper les quatre zones de l'espace et varier les orientations.",
+          "instructions": [
+            "Notre sequence passe par les quatre zones marquees.",
+            "Au moins deux orientations differentes par rapport au public.",
+            "On ne reste jamais tous au centre, face au public.",
+            "Groupe observateur : vous verifiez les zones et les orientations."
+          ],
+          "success": [
+            "Les quatre zones sont occupees.",
+            "Deux orientations au moins sont utilisees.",
+            "Le groupe ne reste pas groupe au centre."
+          ],
+          "execution": [
+            "Se repartir dans l'espace plutot que se regrouper.",
+            "Choisir volontairement les orientations.",
+            "Utiliser le fond de scene, souvent oublie."
+          ],
+          "watch": [
+            "Les groupes restent-ils au centre ?",
+            "Les orientations sont-elles choisies ou subies ?",
+            "Le fond de scene est-il utilise ?"
+          ],
+          "errors": [
+            "Rester groupe au centre, face au public.",
+            "Tourner le dos au public sans intention.",
+            "Ne jamais utiliser le fond de scene."
+          ],
+          "feedback": [
+            "Vous etes tous au centre : votre espace fait trois metres carres.",
+            "Dos au public, c'est un choix : assumez-le ou changez.",
+            "Le fond de scene existe : servez-vous-en."
+          ],
+          "plus": [
+            "Quatre orientations, avec un moment ou les orientations divergent."
+          ],
+          "minus": [
+            "Deux zones, une orientation."
+          ],
+          "diff": {
+            "facilitee": "Deux zones et une seule orientation, avec repere au sol.",
+            "normale": "Quatre zones occupees, deux orientations differentes.",
+            "complexifiee": "Quatre orientations dont un moment de divergence entre les membres du groupe."
+          },
+          "safety": [
+            "Tapis joints sur toute la zone de deplacement : l'occupation de l'espace elargit la surface utilisee, elle doit etre entierement couverte.",
+            "2 metres de degagement autour de la zone, sans mur ni angle saillant.",
+            "Aucune figure avec hauteur realisee en bordure de tapis.",
+            "Pareur present a chaque figure avec hauteur, quelle que soit la zone.",
+            "Groupes espaces, un seul groupe dans l'espace scenique a la fois.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Sequence complete : parti pris, procedes, espace",
+          "objective": "Reunir parti pris, procedes et usage de l'espace dans une meme sequence.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe compose une minute trente reunissant son parti pris, deux procedes et les trois niveaux. Presentation a la classe.",
+          "studentGoal": "Reunir notre parti pris, deux procedes et les trois niveaux dans une meme sequence.",
+          "instructions": [
+            "On reunit tout : parti pris, deux procedes, trois niveaux.",
+            "On verifie que rien ne contredit notre intention.",
+            "On note notre composition sur la fiche.",
+            "Procedure complete sur chaque figure."
+          ],
+          "success": [
+            "Les trois elements sont presents et identifiables.",
+            "La composition reste coherente avec le parti pris.",
+            "La securite est respectee sur toute la sequence."
+          ],
+          "execution": [
+            "Verifier la coherence de l'ensemble.",
+            "Placer les procedes aux moments forts.",
+            "Maintenir la procedure malgre la complexite."
+          ],
+          "watch": [
+            "L'accumulation de contraintes fait-elle perdre le parti pris ?",
+            "La securite tient-elle quand la composition se complexifie ?",
+            "Les groupes notent-ils leur composition ?"
+          ],
+          "errors": [
+            "Empiler les contraintes et perdre l'intention.",
+            "Escamoter la procedure sous la complexite.",
+            "Ne rien noter et tout refaire la seance suivante."
+          ],
+          "feedback": [
+            "Vous avez tout mis, mais on ne comprend plus rien : simplifiez.",
+            "La complexite n'excuse jamais un raccourci de securite.",
+            "Notez : sinon vous repartirez de zero."
+          ],
+          "plus": [
+            "Trois procedes et quatre niveaux."
+          ],
+          "minus": [
+            "Parti pris et un procede, deux niveaux."
+          ],
+          "diff": {
+            "facilitee": "Parti pris avec un seul procede et deux niveaux, sur une minute.",
+            "normale": "Parti pris, deux procedes et trois niveaux sur une minute trente.",
+            "complexifiee": "Parti pris, trois procedes et quatre niveaux."
+          },
+          "safety": [
+            "La complexite de la composition n'autorise aucun raccourci : procedure en cinq etapes sur chaque figure, sans exception.",
+            "Pareurs valides en place pendant toute la sequence, transitions comprises.",
+            "Hauteur limitee au protocole de l'etablissement.",
+            "Tapis joints sur toute la zone, tapis epais sous les figures avec hauteur.",
+            "Un groupe dans l'espace a la fois, public hors des tapis a 2 m minimum.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels niveaux et quelles zones avez-vous utilises ?",
+          "Que se passe-t-il quand on empile toutes les contraintes ?"
+        ],
+        "key": "Le sol est un niveau, le fond de scene est un espace, et le dos au public est un choix. Mais empiler les contraintes fait perdre l'intention : mieux vaut trois choix assumes que six juxtaposes."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque figure, quelle que soit la zone.",
+        "Groupe observateur : verifie zones, niveaux et orientations.",
+        "Secretaire de groupe : note la composition sur la fiche."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et projet de composition",
+      "mainObjective": "Evaluer l'etat de la composition et faire arreter le projet presente a l'evaluation finale.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter la composition en l'etat.",
+        "Arreter le projet de composition finale.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Parti pris, procedes et espace ont ete construits separement : la presentation de mi-cycle montre ce que donne leur reunion.",
+      "prerequisiteForNext": "Chaque groupe a un projet de composition ecrit et chaque eleve un objectif.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de composition par groupe.",
+          "Verifier la jonction des tapis et la position des tapis epais.",
+          "Prevoir un espace d'ecriture hors des tapis.",
+          "Rappeler et faire enoncer les regles d'appui et la procedure."
+        ],
+        "sketch": "Espace scenique installe comme le jour de l'evaluation.\nAffichage des criteres a l'entree.\nCoin ecriture avec bancs, hors des tapis.\nBancs du public face a la scene, a 2 m."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et l'acrosport exige une preparation du gainage et du rachis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, deux series.",
+              "Quadrupedie dos plat avec charge legere."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision de la composition",
+            "details": [
+              "Chaque groupe revise ses figures une par une.",
+              "Revision des transitions.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Presentation evaluee de la composition",
+          "objective": "Evaluer l'etat de la composition sur les criteres de l'evaluation finale.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe presente sa composition d'une minute trente devant la classe, apres avoir annonce son parti pris. Deux juges eleves renseignent la fiche : parti pris lisible, procedes identifiables, figures tenues, securite.",
+          "studentGoal": "Presenter notre composition et savoir ce qui est lisible et ce qui ne l'est pas.",
+          "instructions": [
+            "On annonce notre parti pris avant de commencer.",
+            "On presente la composition en entier.",
+            "Juges : vous notez si le parti pris est lisible et quels procedes vous identifiez.",
+            "Procedure complete sur chaque figure."
+          ],
+          "success": [
+            "La composition est presentee en entier.",
+            "Le parti pris annonce est lisible pour les juges.",
+            "Les procedes sont identifies.",
+            "Aucun manquement a la securite."
+          ],
+          "execution": [
+            "Annoncer le parti pris clairement.",
+            "Maintenir l'intention du debut a la fin.",
+            "Appliquer la procedure malgre le trac."
+          ],
+          "watch": [
+            "Le parti pris annonce est-il celui qu'on percoit ?",
+            "La procedure tient-elle devant le public ?",
+            "Les pareurs restent-ils attentifs ?",
+            "Les juges osent-ils dire ce qu'ils n'ont pas vu ?"
+          ],
+          "errors": [
+            "Annoncer un parti pris et en presenter un autre.",
+            "Escamoter la procedure sous l'effet du trac.",
+            "Juges complaisants qui valident tout."
+          ],
+          "feedback": [
+            "Vous annoncez la chute et on voit une construction.",
+            "Le trac ne dispense jamais de la procedure.",
+            "Dis ce que tu as vu, pas ce qui arrange."
+          ],
+          "plus": [
+            "Composition de deux minutes avec trois procedes."
+          ],
+          "minus": [
+            "Composition d'une minute avec deux figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Composition d'une minute avec deux figures sans hauteur et un procede.",
+            "normale": "Composition d'une minute trente avec parti pris annonce et deux procedes.",
+            "complexifiee": "Composition de deux minutes avec trois procedes."
+          },
+          "safety": [
+            "Procedure en cinq etapes obligatoire, y compris en evaluation : le trac et l'enjeu n'y changent rien.",
+            "Pareurs valides en place pendant toute la presentation, transitions comprises.",
+            "Aucune figure au-dela de la hauteur autorisee par le protocole.",
+            "Aucune figure ajoutee au dernier moment.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Public assis hors des tapis a 2 m minimum, aucune circulation pendant un passage.",
+            "Echauffement complet obligatoire avant toute presentation evaluee.",
+            "Le professeur peut arreter toute presentation presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Arreter le projet de composition",
+          "objective": "Faire arreter le projet definitif a partir des retours des juges.",
+          "material": [
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par groupes, assis hors des tapis. A partir des retours des juges, chaque groupe arrete son projet : parti pris definitif, cinq figures, procedes, niveaux, duree.",
+          "studentGoal": "Arreter le projet que nous presenterons a l'evaluation finale.",
+          "instructions": [
+            "On repart des retours des juges : qu'est-ce qui n'etait pas lisible ?",
+            "On arrete notre parti pris definitif.",
+            "On choisit nos cinq figures, toutes validees en seance.",
+            "On note procedes, niveaux et duree sur la fiche."
+          ],
+          "success": [
+            "Le projet est ecrit avec parti pris, cinq figures, procedes et niveaux.",
+            "Toutes les figures choisies ont ete validees en seance.",
+            "Le projet tient compte des retours des juges."
+          ],
+          "execution": [
+            "Partir des retours, pas des impressions du groupe.",
+            "Choisir des figures reellement maitrisees.",
+            "Repartir les roles equitablement."
+          ],
+          "watch": [
+            "Les projets tiennent-ils compte des retours ?",
+            "Des figures non validees sont-elles choisies ?",
+            "Les roles sont-ils repartis equitablement ?"
+          ],
+          "errors": [
+            "Ignorer les retours des juges.",
+            "Choisir une figure jamais reussie parce qu'elle est spectaculaire.",
+            "Concentrer les roles de voltigeur sur un seul eleve."
+          ],
+          "feedback": [
+            "Les juges n'ont pas vu votre intention : c'est l'information la plus utile.",
+            "Cette figure n'est pas validee : elle ne peut pas figurer au projet.",
+            "Repartissez les roles : il ne peut pas monter cinq fois."
+          ],
+          "plus": [
+            "Projet a six figures avec trois procedes."
+          ],
+          "minus": [
+            "Projet a trois figures sans hauteur, choisies dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Projet a trois figures sans hauteur, choisies dans une liste reduite.",
+            "normale": "Projet a cinq figures avec procedes et niveaux notes.",
+            "complexifiee": "Projet a six figures avec trois procedes."
+          },
+          "safety": [
+            "Seules les figures validees en seance peuvent figurer au projet : aucune figure nouvelle a ce stade du cycle.",
+            "La repartition des roles respecte la logique des gabarits, meme si elle est moins equitable.",
+            "Le professeur valide chaque projet avant qu'il soit retenu.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Phase d'ecriture assise hors des tapis."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier essai du projet et objectif personnel",
+          "objective": "Eprouver le projet arrete et faire ecrire a chacun son objectif.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque groupe essaie son projet en entier, deux fois. Puis chacun ecrit son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Essayer notre projet en entier et ecrire mon objectif personnel.",
+          "instructions": [
+            "On essaie le projet dans l'ordre note.",
+            "On note ce qui ne passe pas : figure, transition, procede.",
+            "Puis j'ecris seul mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "Le projet est essaye en entier au moins une fois.",
+            "Les points problematiques sont notes.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Respecter la procedure sur chaque figure malgre l'enchainement.",
+            "Noter immediatement ce qui ne fonctionne pas.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realisables ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux faire de l'acrosport.",
+            "Abandonner l'essai a la premiere difficulte.",
+            "Escamoter la procedure pour finir l'essai."
+          ],
+          "feedback": [
+            "Precise : qu'est-ce que tu veux reussir exactement ?",
+            "Notez ce qui bloque, on le corrigera.",
+            "La procedure, meme quand vous enchainez."
+          ],
+          "plus": [
+            "Essai avec musique et transitions notees."
+          ],
+          "minus": [
+            "Essai par moities, objectif choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Essai par moities, objectif choisi dans une liste affichee.",
+            "normale": "Essai complet deux fois, objectif redige librement.",
+            "complexifiee": "Essai complet avec musique et transitions notees."
+          },
+          "safety": [
+            "Procedure en cinq etapes appliquee sur chaque figure de l'essai.",
+            "Pareurs valides en place pendant tout l'enchainement.",
+            "Recuperation entre les deux essais : la fatigue du porteur est le premier facteur de chute.",
+            "Phase d'ecriture assise hors des tapis, materiel range.",
+            "Le professeur supervise les essais en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Les juges ont-ils percu le parti pris que vous aviez annonce ?",
+          "Quelles sont vos cinq figures, et qui tient quel role sur chacune ?"
+        ],
+        "key": "Le retour le plus utile d'un juge n'est pas la note : c'est de savoir si l'intention annoncee a ete percue. Et une composition se batit avec des figures validees, jamais avec des figures revees."
+      },
+      "socialRoles": [
+        "Pareur : securise les figures presentees en evaluation.",
+        "Juge : renseigne la fiche sur le parti pris et les procedes.",
+        "Secretaire de groupe : note le projet definitif."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Le risque maitrise : choisir sa difficulte",
+      "mainObjective": "Construire un choix de difficulte reellement maitrise, assume devant un public.",
+      "secondaryObjectives": [
+        "Distinguer difficulte reussie et difficulte tentee.",
+        "Choisir un niveau de risque tenable a chaque essai.",
+        "Assumer ce choix devant la classe."
+      ],
+      "linkToPrevious": "Le projet est arrete, mais certains groupes ont choisi des figures qu'ils ne reussissent qu'une fois sur trois : le risque doit devenir maitrise.",
+      "prerequisiteForNext": "Chaque groupe presente des figures reussies a chaque essai.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "repertoire de figures",
+            "fixed": 6,
+            "note": "figures classees par niveau de difficulte"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le repertoire classe par niveau de difficulte.",
+          "Verifier la jonction des tapis et la position des tapis epais.",
+          "Rappeler la hauteur autorisee par le protocole.",
+          "Rappeler et faire enoncer les regles d'appui et la procedure.",
+          "Reconstituer les groupes."
+        ],
+        "sketch": "Espace scenique central, tapis joints, tapis epais aux zones avec hauteur.\nRepertoire classe par difficulte affiche a l'entree.\nZones de travail par groupe en peripherie.\nBancs du public face a la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet et progressif : la seance comporte des essais repetes de figures, la fatigue du porteur doit etre anticipee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, deux series.",
+              "Quadrupedie dos plat avec charge legere, 15 secondes."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision progressive",
+            "details": [
+              "Figures du projet, de la plus simple a la plus difficile.",
+              "Procedure complete sur chacune.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Trois essais sur trois",
+          "objective": "Construire le critere du risque maitrise : une figure retenue est une figure reussie trois fois sur trois.",
+          "material": [
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe teste ses cinq figures : chacune doit etre reussie trois fois sur trois, tenue 3 secondes. Une figure ratee une fois est retravaillee ou remplacee par une figure de niveau inferieur.",
+          "studentGoal": "Ne garder que des figures que nous reussissons trois fois sur trois.",
+          "instructions": [
+            "On teste chaque figure trois fois de suite.",
+            "Reussie signifie tenue 3 secondes, sans effondrement, sans appui interdit.",
+            "Une figure ratee une fois est retravaillee ou remplacee.",
+            "On recupere une minute entre les series."
+          ],
+          "success": [
+            "Chaque figure retenue est reussie trois fois sur trois.",
+            "Les figures non maitrisees sont remplacees.",
+            "La recuperation est respectee."
+          ],
+          "execution": [
+            "Tester dans les conditions reelles de la composition.",
+            "Accepter de remplacer une figure spectaculaire par une figure sure.",
+            "Recuperer entre les series."
+          ],
+          "watch": [
+            "Les groupes acceptent-ils de remplacer une figure ?",
+            "La fatigue degrade-t-elle les derniers essais ?",
+            "Les criteres de reussite sont-ils appliques honnetement ?"
+          ],
+          "errors": [
+            "Garder une figure reussie une fois sur trois.",
+            "Enchainer les essais sans recuperer.",
+            "Compter comme reussie une figure tenue une seconde."
+          ],
+          "feedback": [
+            "Une fois sur trois, c'est deux echecs devant la classe : remplacez-la.",
+            "Recuperez : vos porteurs sont fatigues, les essais ne valent plus rien.",
+            "Trois secondes tenues, pas une : c'est le critere."
+          ],
+          "plus": [
+            "Test sur cinq essais consecutifs."
+          ],
+          "minus": [
+            "Test sur deux essais, figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Test sur deux essais, figures sans hauteur, tenue 2 secondes.",
+            "normale": "Trois essais consecutifs reussis par figure, tenue 3 secondes.",
+            "complexifiee": "Cinq essais consecutifs reussis par figure."
+          },
+          "safety": [
+            "Recuperation d'une minute imposee entre les series : la fatigue du porteur est le premier facteur d'accident en acrosport, et les essais repetes l'accumulent.",
+            "Une figure ratee deux fois est retiree du projet, quelle que soit l'envie du groupe : le professeur tranche.",
+            "Procedure en cinq etapes appliquee a chaque essai, y compris au troisieme.",
+            "Pareur valide present a chaque essai.",
+            "Arret des essais des qu'un porteur montre des signes de fatigue.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Ce que vaut une figure simple bien tenue",
+          "objective": "Faire comparer l'effet d'une figure difficile mal tenue et d'une figure simple parfaitement tenue.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "repertoire de figures",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe presente deux versions d'un meme moment : une figure difficile tenue approximativement, puis une figure simple tenue parfaitement 5 secondes. Le groupe observateur dit laquelle produit le meilleur effet.",
+          "studentGoal": "Comparer l'effet d'une figure difficile mal tenue et d'une figure simple parfaitement tenue.",
+          "instructions": [
+            "Version 1 : la figure difficile, telle qu'on la reussit aujourd'hui.",
+            "Version 2 : une figure simple, tenue parfaitement 5 secondes.",
+            "Groupe observateur : vous dites laquelle produit le meilleur effet.",
+            "On note la version retenue."
+          ],
+          "success": [
+            "Les deux versions sont presentees.",
+            "L'observateur se prononce et justifie.",
+            "La version retenue est notee."
+          ],
+          "execution": [
+            "Presenter honnetement la version difficile, sans la surjouer.",
+            "Tenir la version simple parfaitement immobile.",
+            "Justifier le choix."
+          ],
+          "watch": [
+            "Les groupes reconnaissent-ils l'effet de la figure bien tenue ?",
+            "Choisissent-ils la difficulte par principe ?"
+          ],
+          "errors": [
+            "Choisir la version difficile malgre l'evidence.",
+            "Presenter la version simple sans exigence.",
+            "Confondre difficulte et qualite."
+          ],
+          "feedback": [
+            "Votre figure difficile a tremble : l'autre etait nette.",
+            "La version simple aussi doit etre parfaite, sinon la comparaison ne vaut rien.",
+            "Une figure simple bien tenue vaut mieux qu'une figure difficile ratee."
+          ],
+          "plus": [
+            "Comparaison sur trois versions de difficulte croissante."
+          ],
+          "minus": [
+            "Comparaison sur une figure imposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison sur une figure imposee, avec l'aide du professeur.",
+            "normale": "Deux versions comparees, effet juge par le groupe observateur.",
+            "complexifiee": "Trois versions de difficulte croissante comparees."
+          },
+          "safety": [
+            "La version difficile n'est presentee que si elle a deja ete realisee en securite : aucune figure jamais reussie n'est tentee pour cette comparaison.",
+            "Pareur valide present sur les deux versions.",
+            "Procedure en cinq etapes sur chaque essai.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Composition avec figures validees",
+          "objective": "Refaire la composition avec les figures reellement maitrisees, et mesurer ce que cela change.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe presente sa composition avec les figures validees au test des trois essais. Presentation a un autre groupe, qui compare avec la version de la seance 5.",
+          "studentGoal": "Presenter notre composition avec des figures que nous reussissons a coup sur.",
+          "instructions": [
+            "On presente avec les figures validees au test.",
+            "On note ce que le remplacement a change dans la composition.",
+            "Groupe observateur : vous comparez avec la version de la seance 5.",
+            "Procedure complete sur chaque figure."
+          ],
+          "success": [
+            "La composition est presentee avec des figures validees.",
+            "Aucune figure ne s'effondre.",
+            "L'effet produit est compare a la version precedente."
+          ],
+          "execution": [
+            "Verifier que les remplacements servent toujours le parti pris.",
+            "Tenir chaque figure 3 secondes.",
+            "Maintenir la procedure."
+          ],
+          "watch": [
+            "Les figures tiennent-elles toutes ?",
+            "Les remplacements ont-ils affaibli le parti pris ?",
+            "Les groupes percoivent-ils le gain de nettete ?"
+          ],
+          "errors": [
+            "Remplacer une figure sans verifier la coherence avec le parti pris.",
+            "Regretter les figures spectaculaires au point de degrader la presentation.",
+            "Escamoter la procedure."
+          ],
+          "feedback": [
+            "Votre remplacement contredit votre intention : cherchez une autre figure.",
+            "Regardez : plus rien ne tremble, c'est bien plus fort.",
+            "La procedure, toujours."
+          ],
+          "plus": [
+            "Composition presentee avec musique."
+          ],
+          "minus": [
+            "Composition presentee par moities."
+          ],
+          "diff": {
+            "facilitee": "Composition presentee par moities, avec figures sans hauteur.",
+            "normale": "Composition complete avec figures validees au test des trois essais.",
+            "complexifiee": "Composition complete presentee avec musique."
+          },
+          "safety": [
+            "Seules les figures validees au test des trois essais figurent dans la composition.",
+            "Procedure en cinq etapes appliquee sur chaque figure.",
+            "Pareurs valides en place pendant toute la presentation.",
+            "Recuperation avant la presentation, apres les series de test.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Tapis joints, tapis epais sous les figures avec hauteur.",
+            "Un groupe dans l'espace a la fois, public hors des tapis a 2 m minimum.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles figures avez-vous remplacees, et pourquoi ?",
+          "Qu'est-ce qui vaut le plus : une figure difficile ratee ou une figure simple parfaitement tenue ?"
+        ],
+        "key": "Une figure retenue est une figure reussie trois fois sur trois. Le risque maitrise, ce n'est pas le risque maximal : c'est celui qu'on assume a coup sur devant un public."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque essai, y compris les essais repetes.",
+        "Chronometreur : compte les 3 secondes et les temps de recuperation.",
+        "Groupe observateur : compare les versions et juge l'effet produit."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et formation au jugement",
+      "mainObjective": "Stabiliser la composition par la repetition et former les eleves au role de juge.",
+      "secondaryObjectives": [
+        "Realiser la composition identique deux fois de suite.",
+        "Juger une prestation avec la grille reelle.",
+        "Realiser une repetition generale devant public."
+      ],
+      "linkToPrevious": "Les compositions sont arretees et les figures validees : il reste a les stabiliser et a former les juges, dont le role est evalue.",
+      "prerequisiteForNext": "Chaque groupe realise sa composition identique deux fois et chaque eleve sait utiliser la grille.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "grilles de jugement d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2,
+            "note": "sous reserve de l'autorisation de captation"
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          }
+        ],
+        "instructions": [
+          "Installer l'espace scenique et les bancs du public comme le jour de l'evaluation.",
+          "Preparer les grilles de jugement identiques a celles de l'evaluation.",
+          "Verifier l'autorisation de captation video avant toute prise d'image.",
+          "Verifier la jonction des tapis et la position des tapis epais.",
+          "Prevoir des zones de repetition separees."
+        ],
+        "sketch": "Espace scenique et bancs du public installes comme le jour J.\nZones de repetition par groupe en peripherie.\nTable des grilles de jugement pres du public.\nPoste de captation sur le cote, si autorisee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet avec renforcement du gainage : la seance comporte de nombreuses repetitions, la fatigue du porteur doit etre anticipee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement",
+            "details": [
+              "Poignets, epaules, hanches, chevilles, nuque.",
+              "Gainage complet, deux series.",
+              "Quadrupedie dos plat avec charge legere."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses figures une par une.",
+              "Revision des transitions et des procedes.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Repeter jusqu'a la stabilite",
+          "objective": "Realiser la composition plusieurs fois jusqu'a la reproduire identique deux fois de suite.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe repete sa composition quatre fois dans sa zone, avec un point de correction unique entre chaque filage et une recuperation imposee.",
+          "studentGoal": "Realiser notre composition deux fois de suite exactement pareil.",
+          "instructions": [
+            "On file la composition en entier, dans l'ordre note.",
+            "Nos pareurs sont en place a chaque figure.",
+            "Entre deux filages, on corrige un seul point et on recupere une minute.",
+            "On s'arrete quand on l'a fait deux fois identique."
+          ],
+          "success": [
+            "La composition est filee en entier au moins trois fois.",
+            "Deux filages consecutifs sont identiques.",
+            "Les pareurs sont en place a chaque figure."
+          ],
+          "execution": [
+            "Respecter l'ordre note, sans improviser.",
+            "Corriger un seul element a la fois.",
+            "Maintenir la procedure malgre la fatigue."
+          ],
+          "watch": [
+            "La fatigue des porteurs degrade-t-elle la securite ?",
+            "La procedure est-elle escamotee au fil des repetitions ?",
+            "Les pareurs restent-ils attentifs ?"
+          ],
+          "errors": [
+            "Enchainer les filages sans recuperation.",
+            "Negliger la procedure quand la figure devient familiere.",
+            "Changer des elements a chaque filage."
+          ],
+          "feedback": [
+            "Recuperez une minute : vos porteurs sont fatigues.",
+            "La procedure, meme sur une figure que vous maitrisez.",
+            "Meme composition a chaque fois : c'est ce qui sera evalue."
+          ],
+          "plus": [
+            "Filage devant un autre groupe, ou filme puis analyse."
+          ],
+          "minus": [
+            "Repetition par parties, trois filages."
+          ],
+          "diff": {
+            "facilitee": "Repetition par parties, trois filages, composition raccourcie.",
+            "normale": "Quatre filages complets avec correction ciblee et recuperation.",
+            "complexifiee": "Filage devant un autre groupe, filme et analyse."
+          },
+          "safety": [
+            "Recuperation d'une minute imposee entre chaque filage : la fatigue du porteur est le premier facteur d'accident en acrosport.",
+            "Procedure en cinq etapes appliquee a chaque figure, y compris quand elle devient familiere.",
+            "Pareurs valides en place a chaque figure, sans exception.",
+            "Arret des repetitions des qu'un porteur montre des signes de fatigue.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Tapis joints, verifies entre les series.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "S'entrainer a juger",
+          "objective": "Former les eleves au role de juge avec la grille reelle, en distinguant difficulte et execution.",
+          "material": [
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tablette ou telephone pour filmer",
+              "fixed": 2
+            }
+          ],
+          "organization": "Public assis face a l'espace scenique. Pendant les passages, chaque juge renseigne une grille sur un groupe designe : lisibilite du parti pris, procedes identifies, figures tenues, qualite des montages et demontages.",
+          "studentGoal": "Renseigner une grille de jugement en distinguant la difficulte et l'execution.",
+          "instructions": [
+            "Je note si le parti pris annonce est lisible.",
+            "Je compte les procedes que j'identifie.",
+            "Je verifie la tenue de 3 secondes et la qualite des montages.",
+            "Je signale tout manquement a la securite."
+          ],
+          "success": [
+            "La grille est renseignee entierement.",
+            "Les jugements de deux juges sur un meme groupe sont proches.",
+            "Les manquements a la securite sont signales."
+          ],
+          "execution": [
+            "Compter pendant le passage, pas apres.",
+            "Chronometrer mentalement les tenues.",
+            "Distinguer une figure difficile mal executee d'une figure simple bien executee."
+          ],
+          "watch": [
+            "Les juges distinguent-ils difficulte et execution ?",
+            "Signalent-ils les manquements a la securite ?",
+            "Le public respecte-t-il le silence ?"
+          ],
+          "errors": [
+            "Noter selon l'affinite avec le groupe.",
+            "Valoriser la difficulte au detriment de l'execution.",
+            "Ne pas signaler un appui interdit."
+          ],
+          "feedback": [
+            "Tu notes la prestation, pas les personnes.",
+            "Une figure difficile mal tenue vaut moins qu'une figure simple bien tenue.",
+            "Tu as vu un appui interdit : tu dois le signaler."
+          ],
+          "plus": [
+            "Justifier oralement son jugement devant le groupe.",
+            "Juger a partir de la video et comparer."
+          ],
+          "minus": [
+            "Juger deux criteres seulement, a deux."
+          ],
+          "diff": {
+            "facilitee": "Jugement a deux sur deux criteres : figures tenues et securite.",
+            "normale": "Grille complete renseignee individuellement.",
+            "complexifiee": "Grille complete plus justification orale devant le groupe."
+          },
+          "safety": [
+            "Public assis hors des tapis, a deux metres minimum.",
+            "Aucune circulation devant l'espace pendant un passage.",
+            "Le juge signale immediatement tout manquement a la securite au professeur.",
+            "Captation video uniquement si l'autorisation a ete verifiee, images non diffusees hors du cadre pedagogique."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Repetition generale devant public",
+          "objective": "Realiser une repetition generale dans les conditions exactes de l'evaluation.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "grilles de jugement d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Chaque groupe presente sa composition complete devant la classe assise, dans l'ordre prevu pour la seance 8. Deux juges eleves renseignent la grille.",
+          "studentGoal": "Presenter notre composition devant la classe, comme le jour de l'evaluation.",
+          "instructions": [
+            "Nos pareurs se placent avant d'entrer.",
+            "On annonce notre parti pris, puis on marque notre debut immobile.",
+            "On presente la composition en entier, sans s'arreter.",
+            "On marque notre fin immobile, 3 secondes."
+          ],
+          "success": [
+            "La composition est presentee en entier.",
+            "Les cinq figures sont tenues 3 secondes.",
+            "Debut et fin immobiles marques.",
+            "Les pareurs sont en place a chaque figure."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Ne pas se laisser deconcentrer par le public.",
+            "Maintenir la procedure malgre le trac."
+          ],
+          "watch": [
+            "Le passage devant public degrade-t-il la procedure ?",
+            "Les pareurs restent-ils attentifs devant le public ?",
+            "Le climat de classe est-il respectueux ?"
+          ],
+          "errors": [
+            "Escamoter la procedure sous l'effet du trac.",
+            "Ajouter une figure au dernier moment.",
+            "Rire du passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Le trac ne dispense pas de la procedure.",
+            "Ce que vous avez prepare, rien de plus.",
+            "On respecte tous les passages."
+          ],
+          "plus": [
+            "Passage filme et analyse immediatement."
+          ],
+          "minus": [
+            "Passage devant un demi-groupe, sans juges eleves."
+          ],
+          "diff": {
+            "facilitee": "Passage devant un demi-groupe, sans juges eleves.",
+            "normale": "Passage complet devant la classe avec deux juges eleves.",
+            "complexifiee": "Passage filme et analyse immediatement avec la video."
+          },
+          "safety": [
+            "Pareurs valides en place avant l'entree en scene : le trac ne dispense jamais de la parade.",
+            "Aucune figure ajoutee au dernier moment.",
+            "Aucune figure au-dela de la hauteur autorisee.",
+            "Tapis joints et verifies avant chaque passage.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Recuperation entre la phase de repetition et le passage.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui compte le plus pour un juge : la difficulte ou l'execution ?",
+          "Pourquoi faut-il recuperer entre deux filages ?"
+        ],
+        "key": "Une figure simple bien tenue vaut mieux qu'une figure difficile ratee. Et on recupere entre les filages : un porteur fatigue est un porteur qui cede."
+      },
+      "socialRoles": [
+        "Juge : renseigne la grille sur un groupe designe.",
+        "Pareur : securise chaque figure de la composition.",
+        "Public : garde le silence pendant les passages et applaudit a la fin."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Presentation finale et evaluation",
+      "mainObjective": "Presenter la composition devant la classe et evaluer la prestation ainsi que les roles de pareur et de juge.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Assumer la presentation devant le public.",
+        "Tenir le role de pareur et celui de juge.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 20
+          },
+          {
+            "label": "tapis de reception epais",
+            "fixed": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des regles de securite",
+            "fixed": 2
+          },
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Relire le protocole de securite acrosport de l'etablissement avant la seance.",
+          "Installer un espace scenique net et un espace public a deux metres minimum.",
+          "Afficher l'ordre de passage, les criteres et les regles de securite.",
+          "Preparer les grilles nominatives et ressortir les fiches de mi-cycle.",
+          "Verifier une derniere fois la jonction des tapis et la position des tapis epais.",
+          "Verifier que chaque pareur figure sur la liste des pareurs valides.",
+          "Faire retirer bijoux et montres, verifier ongles et cheveux."
+        ],
+        "sketch": "Espace scenique net, tapis joints, tapis epais aux zones avec hauteur.\nBancs du public face a la scene, a 2 m.\nTable des grilles sur le cote.\nOrdre de passage, criteres et regles de securite affiches a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves puis revision par parties : aucune prestation acrobatique evaluee ne s'aborde sans preparation complete du gainage et du rachis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation et renforcement complet",
+            "details": [
+              "Poignets, epaules, hanches, chevilles.",
+              "Nuque : flexions douces, jamais de cercles complets.",
+              "Gainage ventral, dorsal et lateral, deux series.",
+              "Quadrupedie dos plat avec charge legere, 15 secondes."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise ses cinq figures une par une.",
+              "Revision des transitions et des procedes.",
+              "Pareur en place a chaque figure."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Presentation evaluee de la composition",
+          "objective": "Evaluer la composition de chaque groupe sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Passages par groupe dans l'ordre affiche. Pour chaque passage : le parti pris est annonce, les pareurs du groupe sont en place, deux juges eleves sont designes, le reste de la classe est public. Le professeur evalue chaque eleve au sein du groupe.",
+          "studentGoal": "Presenter notre composition en entier, en securisant mes camarades.",
+          "instructions": [
+            "On annonce notre parti pris avant d'entrer.",
+            "Nos pareurs se placent, puis on marque notre debut immobile 3 secondes.",
+            "On presente la composition en entier, sans s'arreter.",
+            "On marque notre fin immobile, 3 secondes."
+          ],
+          "success": [
+            "Le parti pris annonce est lisible dans la composition.",
+            "Au moins trois procedes de composition sont identifiables.",
+            "La composition comporte au moins cinq pyramides tenues 3 secondes.",
+            "Les appuis, montages et demontages respectent les regles de securite sans exception.",
+            "Le niveau de risque choisi est maitrise : aucune figure ne s'effondre.",
+            "Le role de pareur est tenu avec rigueur."
+          ],
+          "execution": [
+            "Appliquer la procedure en cinq etapes sur chaque figure.",
+            "Porteur : dos plat, bras tendus.",
+            "Pareur : suivre le voltigeur du montage au demontage complet.",
+            "Continuer meme en cas d'imperfection."
+          ],
+          "watch": [
+            "Les compositions correspondent-elles aux fiches ?",
+            "La procedure tient-elle devant le public ?",
+            "Les pareurs restent-ils attentifs malgre le trac ?",
+            "Y a-t-il des appuis interdits ?"
+          ],
+          "errors": [
+            "Ajouter une figure non validee au dernier moment.",
+            "Escamoter la procedure sous l'effet du trac.",
+            "Demonter en sautant pour finir plus vite.",
+            "Commenter le passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Ce que vous avez prepare et valide, rien de plus.",
+            "La procedure, meme devant le public.",
+            "On ne saute pas pour descendre, meme a la fin.",
+            "Silence pendant les passages."
+          ],
+          "plus": [
+            "Composition de trois minutes avec quatre procedes."
+          ],
+          "minus": [
+            "Composition d'une minute trente avec trois figures sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Composition d'une minute trente avec trois figures sans hauteur et un procede, devant un demi-groupe. La securite, l'engagement et les roles sociaux sont evalues autant que la difficulte.",
+            "normale": "Composition de deux a trois minutes avec cinq figures et trois procedes, devant la classe.",
+            "complexifiee": "Composition de trois minutes avec quatre procedes."
+          },
+          "safety": [
+            "Le protocole de securite acrosport de l'etablissement prime sur tout : il est relu et rappele avant le premier passage.",
+            "Regles d'appui affichees, rappelees et enoncees par les eleves avant le premier passage : appuis sur epaules, hanches, bassin, cuisses ; jamais le milieu du dos, la nuque, la tete ni les articulations.",
+            "Seuls les eleves figurant sur la liste des pareurs valides parent : aucune exception, quelle qu'en soit la consequence sur l'organisation.",
+            "Pareurs designes et en place avant chaque entree en scene : le trac ne dispense jamais de la parade.",
+            "Deux pareurs pour toute figure a quatre ou comportant une hauteur importante.",
+            "Procedure en cinq etapes obligatoire sur chaque figure, y compris en evaluation.",
+            "Demontage dans l'ordre inverse, sans saut, quelle que soit la hauteur.",
+            "Aucune figure ajoutee au dernier moment : seul ce qui a ete valide au test des trois essais est presente.",
+            "Hauteur strictement limitee au protocole de l'etablissement.",
+            "Le porteur peut interrompre a tout moment en disant stop.",
+            "Tapis joints et verifies avant le premier passage et entre les groupes.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Echauffement complet obligatoire avant tout passage evalue.",
+            "Bijoux et montres retires, ongles courts, cheveux attaches.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Retour des juges",
+          "objective": "Faire expliciter aux juges ce qu'ils ont observe, en distinguant difficulte et execution.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Apres chaque serie de passages, les deux juges annoncent ce qu'ils ont observe et le justifient. Le professeur complete. Puis chacun compare son objectif de mi-cycle a sa grille du jour.",
+          "studentGoal": "Dire ce que j'ai observe, en distinguant la difficulte et l'execution.",
+          "instructions": [
+            "Juge : j'annonce si le parti pris etait lisible et quels procedes j'ai identifies.",
+            "Je cite un moment precis pour justifier.",
+            "Le groupe qui a presente ecoute sans contester.",
+            "Ensuite, je relis mon objectif de mi-cycle et je dis s'il est atteint."
+          ],
+          "success": [
+            "Chaque juge cite un moment precis de la composition.",
+            "Difficulte et execution sont distinguees.",
+            "Chaque eleve se prononce sur son objectif personnel."
+          ],
+          "execution": [
+            "Nommer le critere avant de donner un exemple.",
+            "Citer un moment identifiable.",
+            "S'appuyer sur sa grille pour juger son objectif."
+          ],
+          "watch": [
+            "Les juges distinguent-ils difficulte et execution ?",
+            "Les groupes acceptent-ils le retour de leurs camarades ?"
+          ],
+          "errors": [
+            "Dire seulement que c'etait bien ou nul.",
+            "Valoriser la difficulte au detriment de l'execution.",
+            "Contester bruyamment le jugement."
+          ],
+          "feedback": [
+            "Quel critere exactement, et a quel moment ?",
+            "Leur composition etait plus simple mais bien plus nette : c'est ce qui compte.",
+            "Vous ecoutez, vous repondrez apres."
+          ],
+          "plus": [
+            "Le juge propose un conseil d'amelioration argumente."
+          ],
+          "minus": [
+            "Le juge annonce un seul critere, avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul critere annonce, avec appui du professeur.",
+            "normale": "Criteres annonces et justifies, plus bilan de l'objectif personnel.",
+            "complexifiee": "Retour complet plus conseil d'amelioration argumente."
+          },
+          "safety": [
+            "Phase realisee hors des tapis, groupe assis.",
+            "Aucun passage en cours pendant les retours.",
+            "Aucune figure realisee pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel lourd.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 20
+            },
+            {
+              "label": "tapis de reception epais",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rangement collectif des tapis par equipes, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en acrosport aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tapis se portent a deux minimum, jamais seul.",
+            "Chaque groupe range la zone qui lui est attribuee.",
+            "Une fois range, on s'assoit en demi-cercle.",
+            "Chacun peut dire une chose apprise pendant le cycle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun tapis porte seul.",
+            "Au moins un eleve par groupe s'exprime."
+          ],
+          "execution": [
+            "Porter les tapis a deux, jambes flechies, dos droit.",
+            "Empiler sans tirer sur le dos.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves identifient-ils des acquis de composition et de securite ?"
+          ],
+          "errors": [
+            "Porter un tapis seul et se faire mal au dos.",
+            "Ne parler que de la difficulte des figures.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "A deux minimum, jambes flechies : ironique de se blesser en rangeant.",
+            "Pas seulement les figures : composer et juger, ce sont des acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit : ce sont des charges lourdes et encombrantes.",
+            "Empilement stable, hauteur limitee.",
+            "Aucun eleve ne circule sous une pile en cours de constitution.",
+            "Comptage du materiel avant de quitter la salle.",
+            "Verification qu'aucun eleve ne presente de douleur avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en acrosport aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi la procedure de montage ne se negocie-t-elle jamais, meme devant un public ?"
+        ],
+        "key": "En debut de cycle, on alignait des figures. Maintenant on compose : un parti pris lisible, des procedes choisis, un risque maitrise. Et les regles de securite tiennent du premier essai au dernier passage : elles ne se negocient a aucun moment."
+      },
+      "socialRoles": [
+        "Pareur : securise chaque figure de la composition, role evalue au meme titre que la prestation.",
+        "Juge : renseigne et justifie la grille d'un groupe, role evalue.",
+        "Public : respecte chaque passage par le silence et les applaudissements.",
+        "Responsable materiel : organise le rangement collectif des tapis."
+      ]
+    }
+  ]
+}

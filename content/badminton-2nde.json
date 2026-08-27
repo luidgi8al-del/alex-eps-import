@@ -1,0 +1,2796 @@
+{
+  "apsa": "Badminton",
+  "grades": [
+    "SECONDE"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel pour gagner",
+  "programme": "Programme d'enseignement commun d'EPS pour la classe de seconde generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "S'engager pour gagner une rencontre en faisant des choix techniques et tactiques pertinents au regard de l'analyse du rapport de force.",
+    "Se preparer et s'entrainer pour progresser, en identifiant ses points forts et ses points faibles.",
+    "Respecter et faire respecter les regles, assumer les roles d'arbitre, de coach et d'observateur.",
+    "Analyser une rencontre a partir d'indicateurs pour reorienter son jeu."
+  ],
+  "targetCompetence": "Passer d'un jeu applique de la meme facon contre tout le monde a un jeu qui s'ajuste : reperer le point faible de l'adversaire des les premiers echanges, construire un plan pour l'exploiter, et le reviser entre les sets quand il ne fonctionne plus.",
+  "cycleObjectives": [
+    "Analyser un rapport de force a partir d'indicateurs releves en match.",
+    "Construire un plan de jeu adapte a un adversaire donne.",
+    "Reviser son plan entre deux sets quand il ne fonctionne pas.",
+    "Gerer son effort et sa lucidite sur une serie de matchs.",
+    "Tenir les roles d'arbitre, de coach et d'observateur."
+  ],
+  "plannedTitles": [
+    "Evaluation diagnostique : contre qui je gagne, contre qui je perds",
+    "Lire l'adversaire : reperer son point faible",
+    "Construire un plan de jeu contre un adversaire donne",
+    "Reviser son plan entre deux sets",
+    "Rencontres evaluees de mi-cycle et projet de joueur",
+    "Gerer son effort et sa lucidite sur une serie de matchs",
+    "Le role de coach : conseiller entre les points",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classe de seconde generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 au lycee - ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Badminton au lycee - analyse du rapport de force et projet de jeu",
+      "org": "Academie de Versailles",
+      "url": "https://eps.ac-versailles.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Federale",
+      "title": "Badminton scolaire - formats de rencontre et arbitrage",
+      "org": "Federation Francaise de Badminton",
+      "url": "https://www.ffbad.org/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le badminton au lycee - du plan de jeu a sa revision",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Nombre de terrains traces et de poteaux disponibles : conditionne le format du tournoi.",
+    "Etat des raquettes : toute raquette au cordage casse ou au manche fendu est retiree.",
+    "Nombre et etat des volants : un volant deplume fausse toutes les trajectoires et les analyses.",
+    "Degagement lateral et arriere entre deux terrains adjacents.",
+    "Format de rencontre retenu : sets, comptage, temps de repos entre les matchs.",
+    "PAI et dispenses, notamment pathologies de l'epaule et asthme d'effort.",
+    "Emplacement de la trousse de secours."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - joue pareil contre tout le monde",
+      "observed": "Applique exactement le meme jeu contre un adversaire faible et contre un adversaire fort.",
+      "need": "Construire l'analyse du rapport de force et l'adaptation du jeu."
+    },
+    {
+      "label": "Profil 2 - s'obstine dans un plan qui ne marche pas",
+      "observed": "Repete la meme tactique alors qu'elle lui coute des points depuis dix echanges.",
+      "need": "Construire la revision du plan a partir d'indicateurs."
+    },
+    {
+      "label": "Profil 3 - s'effondre au troisieme match",
+      "observed": "Joue bien les deux premiers matchs, puis multiplie les fautes par fatigue et perte de lucidite.",
+      "need": "Gerer son effort et sa recuperation sur une serie de rencontres."
+    },
+    {
+      "label": "Profil 4 - coach inutile",
+      "observed": "Encourage bruyamment mais ne donne aucune information exploitable a son camarade.",
+      "need": "Construire un conseil de coach fonde sur une observation chiffree."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en simple par poules de niveau, rencontres en deux sets gagnants de 11 points. Chaque eleve annonce son plan de jeu avant chaque rencontre et le revise entre les sets. Chacun tient egalement le role d'arbitre et celui de coach ou d'observateur sur au moins une rencontre.",
+    "criteria": [
+      "Le plan de jeu annonce est adapte a l'adversaire rencontre.",
+      "Le plan est mis en oeuvre de facon reconnaissable dans le jeu.",
+      "Le plan est revise entre les sets a partir de ce qui a ete observe.",
+      "Le niveau de jeu se maintient sur l'ensemble des rencontres.",
+      "Le role d'arbitre est tenu avec rigueur et impartialite.",
+      "Le conseil de coach s'appuie sur une observation chiffree."
+    ],
+    "referential": "Attendus de fin de lycee du CA4, avec le format de rencontre retenu par l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Evaluation diagnostique : contre qui je gagne, contre qui je perds",
+      "mainObjective": "Faire constater que le jeu ne s'adapte pas a l'adversaire, et poser le probleme du cycle.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Reprendre les frappes et le replacement.",
+        "Rencontrer trois adversaires de niveaux differents.",
+        "Constituer des poules de niveau."
+      ],
+      "linkToPrevious": "Le cycle de troisieme a construit le deplacement de l'adversaire et la conclusion. Au lycee, la question devient : contre qui cela fonctionne-t-il, et pourquoi ?",
+      "prerequisiteForNext": "Chaque eleve sait contre quel type d'adversaire il gagne et contre lequel il perd.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 20
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier chaque raquette avant distribution : cordage et manche.",
+          "Trier les volants : ecarter les volants deplumes, ils faussent les analyses.",
+          "Regler la hauteur des filets et verifier la stabilite des poteaux.",
+          "Laisser au moins 1,5 metre de degagement entre deux terrains.",
+          "Organiser une rotation permettant de rencontrer trois niveaux differents."
+        ],
+        "sketch": "Six terrains cote a cote, 1,5 m de degagement.\nRotation des adversaires affichee a l'entree.\nTubes de volants en bout de terrain, hors de la zone de jeu.\nZone d'observation avec bancs sur le cote."
+      },
+      "warmup": {
+        "rationale": "Echauffement centre sur l'epaule, le poignet et les appuis : le badminton associe des frappes hautes repetees et des demarrages courts dans toutes les directions.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de direction.",
+              "Fentes avant, pas chasses lateraux, deplacements arriere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules : cercles, rotations internes et externes.",
+              "Poignet et avant-bras raquette en main.",
+              "Chevilles, genoux, hanches."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres par deux, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq frappes descendantes progressives et cinq services."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Trois adversaires, trois niveaux",
+          "objective": "Faire constater que le meme jeu produit des resultats opposes selon l'adversaire.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Trois matchs courts en 11 points contre trois adversaires de niveaux differents, designes par le professeur. Un observateur note pour chaque match : score, trajectoires dominantes, et origine des points perdus.",
+          "studentGoal": "Jouer trois adversaires differents et savoir contre lequel mon jeu fonctionne.",
+          "instructions": [
+            "Je joue trois matchs en 11 points contre trois adversaires designes.",
+            "Je joue comme j'ai l'habitude de jouer, sans consigne particuliere.",
+            "Observateur : tu notes le score, mes trajectoires dominantes et d'ou viennent les points perdus.",
+            "Entre les matchs, je recupere deux minutes."
+          ],
+          "success": [
+            "Les trois matchs sont joues.",
+            "Les fiches d'observation sont renseignees pour les trois.",
+            "Chacun sait contre quel profil il gagne."
+          ],
+          "execution": [
+            "Se replacer au centre apres chaque frappe.",
+            "Annoncer le score avant chaque service.",
+            "Recuperer entre les matchs."
+          ],
+          "watch": [
+            "Le jeu change-t-il selon l'adversaire ?",
+            "Les eleves reperent-ils pourquoi ils perdent ?",
+            "Le replacement tient-il sur trois matchs ?",
+            "Y a-t-il des raquettes lancees ?"
+          ],
+          "errors": [
+            "Jouer exactement pareil contre les trois.",
+            "Ne pas regarder comment joue l'adversaire.",
+            "Lancer sa raquette apres un point perdu."
+          ],
+          "feedback": [
+            "Il ne joue pas comme le precedent : ton jeu doit changer.",
+            "Regarde ce qu'il fait, pas seulement le volant.",
+            "La raquette reste en main."
+          ],
+          "plus": [
+            "Quatre adversaires, matchs en 15 points."
+          ],
+          "minus": [
+            "Deux adversaires, matchs en 7 points, terrain en largeur."
+          ],
+          "diff": {
+            "facilitee": "Deux adversaires, matchs en 7 points, terrain en largeur, filet abaisse.",
+            "normale": "Trois matchs en 11 points contre trois niveaux differents.",
+            "complexifiee": "Quatre adversaires, matchs en 15 points."
+          },
+          "safety": [
+            "Degagement de 1,5 metre minimum entre terrains : une raquette en revers arriere atteint le terrain voisin.",
+            "Aucun joueur ne traverse un terrain en jeu pour recuperer un volant.",
+            "Volants ranges en tube hors de la zone de jeu : un volant au sol est une entorse de cheville.",
+            "Raquette tenue en main en permanence, jamais lancee ni frappee au sol.",
+            "Raquettes verifiees avant distribution.",
+            "Recuperation de deux minutes entre les matchs.",
+            "Consulter les PAI : pathologies de l'epaule, asthme d'effort.",
+            "Lacets attaches, bijoux retires."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire ses trois fiches",
+          "objective": "Faire analyser a chacun ce qui change et ce qui ne change pas dans son jeu selon l'adversaire.",
+          "material": [
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains, par groupes de quatre. Chacun compare ses trois fiches et identifie ce qui change dans son jeu selon l'adversaire, et ce qui reste identique.",
+          "studentGoal": "Reperer ce qui change et ce qui ne change pas dans mon jeu selon l'adversaire.",
+          "instructions": [
+            "Je compare mes trois fiches : trajectoires, points perdus, score.",
+            "Je repere ce qui reste identique dans les trois matchs.",
+            "J'ecris une phrase : mon jeu change ou ne change pas selon l'adversaire.",
+            "Je garde mes fiches pour tout le cycle."
+          ],
+          "success": [
+            "Les trois fiches sont comparees.",
+            "Les constantes du jeu sont identifiees.",
+            "La phrase est ecrite."
+          ],
+          "execution": [
+            "Comparer critere par critere.",
+            "Chercher les constantes avant les differences.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves reperent-ils que leur jeu ne change pas ?",
+            "Attribuent-ils leurs defaites au seul niveau adverse ?"
+          ],
+          "errors": [
+            "Conclure simplement qu'il etait plus fort.",
+            "Ne regarder que les scores.",
+            "Ne rien ecrire."
+          ],
+          "feedback": [
+            "Plus fort en quoi, exactement ?",
+            "Regarde tes trajectoires, pas seulement le score.",
+            "Ecris-le : on le relira a la fin du cycle."
+          ],
+          "plus": [
+            "Identifier une hypothese sur ce qu'il aurait fallu changer."
+          ],
+          "minus": [
+            "Comparaison guidee a partir d'un tableau."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee a partir d'un tableau a completer.",
+            "normale": "Comparaison individuelle des trois fiches et formulation ecrite.",
+            "complexifiee": "Comparaison plus hypothese sur ce qu'il aurait fallu changer."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains.",
+            "Raquettes posees a plat, volants ranges.",
+            "Aucun match en cours a proximite de la zone d'analyse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Revanche avec une consigne changee",
+          "objective": "Faire eprouver qu'un changement de jeu modifie le rapport de force.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            }
+          ],
+          "organization": "Revanche en 11 points contre l'adversaire contre lequel chacun a perdu, avec une seule consigne changee, choisie par le joueur : jouer plus long, plus court, ou plus vers un cote.",
+          "studentGoal": "Changer une seule chose dans mon jeu et voir si le rapport de force bouge.",
+          "instructions": [
+            "Je rejoue contre celui contre qui j'ai perdu.",
+            "Je change une seule chose dans mon jeu, et je l'annonce a l'observateur.",
+            "Je m'y tiens pendant tout le match.",
+            "Observateur : tu notes si le score evolue par rapport au premier match."
+          ],
+          "success": [
+            "Le changement annonce est reconnaissable dans le jeu.",
+            "Le match est joue en entier.",
+            "L'evolution du score est notee."
+          ],
+          "execution": [
+            "Choisir un changement lie a ce qu'on a observe.",
+            "S'y tenir meme quand le score est serre.",
+            "Se replacer apres chaque frappe."
+          ],
+          "watch": [
+            "Le changement est-il reellement applique ?",
+            "Les eleves reviennent-ils a leur jeu habituel sous pression ?",
+            "Le rapport de force evolue-t-il ?"
+          ],
+          "errors": [
+            "Annoncer un changement et jouer comme avant.",
+            "Changer trois choses a la fois.",
+            "Abandonner le changement des le premier point perdu."
+          ],
+          "feedback": [
+            "Tu joues exactement comme tout a l'heure.",
+            "Une seule chose : sinon tu ne sauras pas ce qui a marche.",
+            "Tiens-le jusqu'au bout du match."
+          ],
+          "plus": [
+            "Revanche en deux sets gagnants."
+          ],
+          "minus": [
+            "Revanche en 7 points, changement propose par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Revanche en 7 points, avec un changement propose par le professeur.",
+            "normale": "Revanche en 11 points avec un changement choisi et annonce.",
+            "complexifiee": "Revanche en deux sets gagnants avec changement maintenu."
+          },
+          "safety": [
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Degagement de 1,5 m entre terrains respecte.",
+            "Volants ranges hors de la zone de jeu.",
+            "Raquette tenue en main, jamais lancee.",
+            "Arret de l'echange si un volant roule sur le terrain.",
+            "Recuperation entre les matchs."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre jeu change-t-il selon l'adversaire ?",
+          "Qu'avez-vous change en revanche, et le score a-t-il bouge ?"
+        ],
+        "key": "Jouer pareil contre tout le monde, c'est laisser l'adversaire decider du rapport de force. Tout le cycle va servir a lire l'adversaire et a ajuster son jeu en consequence."
+      },
+      "socialRoles": [
+        "Observateur : note score, trajectoires dominantes et origine des points perdus.",
+        "Arbitre : annonce le score et tranche les volants limites.",
+        "Responsable materiel : trie les volants abimes."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Lire l'adversaire : reperer son point faible",
+      "mainObjective": "Construire la lecture de l'adversaire : identifier rapidement ou il est en difficulte.",
+      "secondaryObjectives": [
+        "Tester les quatre coins du terrain adverse.",
+        "Reperer le cote et la zone ou l'adversaire est le moins efficace.",
+        "Formuler ce point faible en une phrase."
+      ],
+      "linkToPrevious": "La seance 1 a montre que le jeu ne s'adapte pas. Pour l'adapter, il faut d'abord savoir a quoi : c'est la lecture de l'adversaire.",
+      "prerequisiteForNext": "Chaque eleve identifie le point faible d'un adversaire en quelques echanges.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 30,
+            "note": "quatre zones par demi-terrain"
+          },
+          {
+            "label": "fiches de lecture d'adversaire",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Marquer quatre zones par demi-terrain : avant droit, avant gauche, fond droit, fond gauche.",
+          "Preparer une fiche de lecture avec les quatre zones a renseigner.",
+          "Verifier les raquettes et trier les volants.",
+          "Verifier le degagement entre terrains et la stabilite des poteaux.",
+          "Constituer des binomes de niveau proche."
+        ],
+        "sketch": "Six terrains, quatre zones marquees au plot par demi-terrain.\nCentre du terrain marque.\nFiches de lecture posees en bout de terrain.\nTubes de volants hors de la zone de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des epaules et des appuis, la seance comportant de nombreux deplacements dans les quatre coins.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de direction.",
+              "Deplacements vers les quatre coins, retour au centre."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches.",
+              "Fentes avant progressives."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq frappes vers chaque coin."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Tester les quatre coins",
+          "objective": "Construire une procedure de lecture : envoyer dans les quatre zones et observer les reponses.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de lecture d'adversaire",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            }
+          ],
+          "organization": "Par trois : deux joueurs, un observateur. Le joueur A doit envoyer cinq volants dans chacune des quatre zones au cours du match. L'observateur note la qualite de la reponse adverse zone par zone. Match en 11 points.",
+          "studentGoal": "Envoyer dans les quatre zones et savoir dans laquelle mon adversaire est le plus en difficulte.",
+          "instructions": [
+            "Je dois toucher les quatre zones au cours du match, cinq fois chacune.",
+            "Observateur : tu notes, pour chaque zone, si la reponse est bonne, moyenne ou mauvaise.",
+            "A la fin, on compare : quelle zone pose le plus de problemes ?",
+            "Je me replace au centre apres chaque frappe."
+          ],
+          "success": [
+            "Les quatre zones sont touchees au moins cinq fois.",
+            "La fiche de lecture est renseignee pour les quatre zones.",
+            "La zone la plus faible est identifiee."
+          ],
+          "execution": [
+            "Varier volontairement, meme quand une zone marche bien.",
+            "Regarder la reponse adverse, pas seulement le volant.",
+            "Se replacer au centre entre chaque frappe."
+          ],
+          "watch": [
+            "Les quatre zones sont-elles reellement testees ?",
+            "Les eleves observent-ils la reponse adverse ?",
+            "Le replacement tient-il malgre la contrainte ?"
+          ],
+          "errors": [
+            "Ne tester que deux zones, celles ou l'on est a l'aise.",
+            "Regarder le volant sans regarder l'adversaire.",
+            "Abandonner la contrainte quand le score est serre."
+          ],
+          "feedback": [
+            "Tu n'as jamais joue son fond de coup droit : teste-le.",
+            "Regarde comment il repond, c'est l'information.",
+            "Tiens la contrainte : c'est elle qui t'apprend quelque chose."
+          ],
+          "plus": [
+            "Six zones a tester, dont les deux couloirs."
+          ],
+          "minus": [
+            "Deux zones a tester : avant et fond."
+          ],
+          "diff": {
+            "facilitee": "Deux zones a tester seulement, avant et fond, terrain en largeur.",
+            "normale": "Quatre zones testees cinq fois chacune, fiche renseignee.",
+            "complexifiee": "Six zones a tester, incluant les couloirs lateraux."
+          },
+          "safety": [
+            "Le jeu dans les quatre coins amplifie les deplacements : degagement de 1,5 m entre terrains verifie avant la situation.",
+            "Aucun joueur ne recule en courant sans regarder derriere lui : les chutes arriere sont l'accident classique du badminton.",
+            "Volants ranges en tube hors de la zone de jeu.",
+            "Raquette tenue en main en permanence.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Epaules echauffees avant les series de degages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Formuler le point faible",
+          "objective": "Passer de l'observation a une formulation exploitable en match.",
+          "material": [
+            {
+              "label": "fiches de lecture d'adversaire",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains, par trois. A partir des fiches, chacun formule en une phrase le point faible de l'adversaire qu'il vient de rencontrer, puis la confronte a l'avis de l'observateur.",
+          "studentGoal": "Dire en une phrase ou mon adversaire est en difficulte.",
+          "instructions": [
+            "Je formule en une phrase : il est en difficulte quand ...",
+            "Je m'appuie sur les chiffres de la fiche, pas sur une impression.",
+            "L'observateur dit s'il est d'accord.",
+            "Je note la formulation retenue."
+          ],
+          "success": [
+            "Le point faible est formule en une phrase precise.",
+            "Il s'appuie sur les chiffres de la fiche.",
+            "L'observateur est d'accord ou la formulation est revue."
+          ],
+          "execution": [
+            "Nommer la zone et le type de volant.",
+            "S'appuyer sur les chiffres releves.",
+            "Formuler court."
+          ],
+          "watch": [
+            "Les formulations sont-elles precises ?",
+            "S'appuient-elles sur les chiffres ?",
+            "Restent-elles polies et respectueuses ?"
+          ],
+          "errors": [
+            "Formulation vague : il est nul en revers.",
+            "Formulation fondee sur une impression.",
+            "Formulation moqueuse."
+          ],
+          "feedback": [
+            "Precise : quelle zone, quel type de volant ?",
+            "Regarde tes chiffres avant de conclure.",
+            "On analyse un jeu, on ne se moque de personne."
+          ],
+          "plus": [
+            "Formuler aussi le point fort de l'adversaire."
+          ],
+          "minus": [
+            "Formulation choisie dans une liste proposee."
+          ],
+          "diff": {
+            "facilitee": "Formulation choisie dans une liste de propositions affichees.",
+            "normale": "Formulation libre en une phrase, validee par l'observateur.",
+            "complexifiee": "Formulation du point faible et du point fort de l'adversaire."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains.",
+            "Raquettes posees a plat, volants ranges.",
+            "Le vocabulaire reste respectueux : l'analyse porte sur le jeu, jamais sur la personne."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Match en exploitant le point faible",
+          "objective": "Exploiter en match le point faible identifie, et verifier que le rapport de force change.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches de lecture d'adversaire",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Match en 11 points contre le meme adversaire. Le joueur cherche a exploiter le point faible identifie. L'observateur compte les points gagnes en jouant sur cette zone.",
+          "studentGoal": "Gagner des points en jouant sur le point faible que j'ai identifie.",
+          "instructions": [
+            "Je cherche a jouer sur la zone faible de mon adversaire.",
+            "Je ne joue pas que la : sinon il s'adapte tout de suite.",
+            "Observateur : tu comptes les points gagnes sur cette zone.",
+            "Je me replace au centre apres chaque frappe."
+          ],
+          "success": [
+            "Au moins un tiers des points gagnes viennent de cette zone.",
+            "Le joueur varie pour ne pas devenir previsible.",
+            "L'observation est renseignee."
+          ],
+          "execution": [
+            "Preparer la zone faible par une autre trajectoire.",
+            "Y revenir regulierement sans en abuser.",
+            "Se replacer au centre."
+          ],
+          "watch": [
+            "Le point faible est-il exploite ?",
+            "Le joueur devient-il previsible ?",
+            "L'adversaire s'adapte-t-il ?"
+          ],
+          "errors": [
+            "Jouer uniquement sur cette zone et devenir previsible.",
+            "Oublier le point faible des le premier point perdu.",
+            "Ne pas preparer la zone faible."
+          ],
+          "feedback": [
+            "Il t'attend maintenant : varie avant d'y revenir.",
+            "Tu as identifie sa faiblesse : sers-t'en.",
+            "Prepare-la : envoie-le a l'oppose d'abord."
+          ],
+          "plus": [
+            "Match en deux sets, avec adaptation quand l'adversaire s'ajuste."
+          ],
+          "minus": [
+            "Match en 7 points, zone faible rappelee par l'observateur."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points, zone faible rappelee a voix haute par l'observateur.",
+            "normale": "Match en 11 points avec exploitation du point faible identifie.",
+            "complexifiee": "Match en deux sets, avec reajustement quand l'adversaire s'adapte."
+          },
+          "safety": [
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Degagement entre terrains respecte.",
+            "Raquette tenue en main, jamais lancee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Comment fait-on pour reperer le point faible d'un adversaire ?",
+          "Pourquoi ne faut-il pas jouer uniquement sur ce point faible ?"
+        ],
+        "key": "On repere un point faible en testant les quatre zones et en observant les reponses. Mais jouer uniquement dessus rend previsible : il faut le preparer et y revenir."
+      },
+      "socialRoles": [
+        "Observateur : renseigne la fiche de lecture zone par zone.",
+        "Arbitre : annonce le score et verifie les services.",
+        "Analyste : valide la formulation du point faible."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Construire un plan de jeu contre un adversaire donne",
+      "mainObjective": "Construire un plan de jeu explicite, adapte a un adversaire identifie.",
+      "secondaryObjectives": [
+        "Formuler un plan en trois points.",
+        "Annoncer son plan avant le match.",
+        "Mettre en oeuvre le plan de facon reconnaissable."
+      ],
+      "linkToPrevious": "Le point faible est identifie, mais il ne suffit pas : il faut un plan qui organise le jeu autour de son exploitation.",
+      "prerequisiteForNext": "Chaque eleve annonce et applique un plan de jeu en trois points.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "fiches de plan de jeu",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du modele de plan",
+            "fixed": 2,
+            "note": "service, construction, conclusion"
+          }
+        ],
+        "instructions": [
+          "Afficher un modele de plan en trois points : au service, en construction, pour conclure.",
+          "Preparer une fiche de plan de jeu par eleve.",
+          "Verifier les raquettes et trier les volants.",
+          "Verifier le degagement entre terrains.",
+          "Organiser les rencontres pour que chacun retrouve un adversaire deja rencontre."
+        ],
+        "sketch": "Six terrains, adversaires affiches a l'entree.\nAffiche du modele de plan visible depuis les terrains.\nZone d'ecriture avec bancs, hors des terrains.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet, epaules et appuis, avant une seance de matchs.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de direction.",
+              "Fentes avant et deplacements arriere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Ecrire son plan en trois points",
+          "objective": "Formuler un plan de jeu explicite et exploitable contre un adversaire donne.",
+          "material": [
+            {
+              "label": "fiches de plan de jeu",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du modele de plan",
+              "fixed": 2
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains. Chacun ecrit son plan contre l'adversaire qu'il va rencontrer : ce qu'il fera au service, comment il construira, et comment il conclura. Verification croisee.",
+          "studentGoal": "Ecrire mon plan de jeu en trois points contre cet adversaire.",
+          "instructions": [
+            "Point 1 : ce que je fais au service, et sur son service.",
+            "Point 2 : comment je construis mes echanges contre lui.",
+            "Point 3 : sur quel volant je cherche a conclure.",
+            "Un camarade verifie que mon plan est realisable."
+          ],
+          "success": [
+            "Le plan comporte les trois points.",
+            "Il s'appuie sur le point faible identifie en seance 2.",
+            "Il est realisable au vu de son propre niveau.",
+            "La verification croisee est faite."
+          ],
+          "execution": [
+            "Partir de la lecture faite en seance 2.",
+            "Choisir des actions qu'on sait realiser.",
+            "Formuler court et precis."
+          ],
+          "watch": [
+            "Les plans s'appuient-ils sur la lecture de l'adversaire ?",
+            "Sont-ils realisables au vu du niveau du joueur ?",
+            "Sont-ils formules precisement ?"
+          ],
+          "errors": [
+            "Plan generique, valable contre n'importe qui.",
+            "Plan qui exige des frappes non maitrisees.",
+            "Plan vague : jouer mieux."
+          ],
+          "feedback": [
+            "Ce plan marcherait contre n'importe qui : adapte-le a lui.",
+            "Tu ne maitrises pas ce coup : choisis autre chose.",
+            "Precise : quel volant, vers quelle zone ?"
+          ],
+          "plus": [
+            "Plan comportant une variante si l'adversaire s'adapte."
+          ],
+          "minus": [
+            "Plan en un seul point, choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Plan en un seul point, choisi dans une liste de propositions affichees.",
+            "normale": "Plan en trois points ecrit en autonomie, verifie par un camarade.",
+            "complexifiee": "Plan en trois points avec variante prevue si l'adversaire s'adapte."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains.",
+            "Raquettes posees a plat, volants ranges.",
+            "Le plan ne comporte aucune action contraire aux regles ou dangereuse pour l'adversaire.",
+            "Aucun match en cours a proximite de la zone d'ecriture."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Match avec plan annonce",
+          "objective": "Mettre en oeuvre le plan de facon reconnaissable par un observateur.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches de plan de jeu",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Match en 11 points. Le joueur annonce son plan a l'observateur avant de commencer. L'observateur note, point par point, si le plan est applique.",
+          "studentGoal": "Jouer de facon que mon observateur reconnaisse mon plan sans que je le lui rappelle.",
+          "instructions": [
+            "J'annonce mon plan a l'observateur avant le match.",
+            "Je l'applique du premier au dernier point.",
+            "Observateur : tu notes si tu reconnais chacun des trois points.",
+            "Je me replace au centre apres chaque frappe."
+          ],
+          "success": [
+            "Les trois points du plan sont reconnaissables.",
+            "Le plan est maintenu jusqu'a la fin du match.",
+            "L'observation est renseignee."
+          ],
+          "execution": [
+            "Appliquer le plan des le premier service.",
+            "Y revenir apres chaque point perdu.",
+            "Se replacer au centre."
+          ],
+          "watch": [
+            "Le plan est-il reconnaissable ?",
+            "Est-il abandonne quand le score se tend ?",
+            "L'observateur est-il capable de le decrire ?"
+          ],
+          "errors": [
+            "Annoncer un plan et jouer autrement.",
+            "Abandonner le plan des le premier point perdu.",
+            "Observateur qui valide sans avoir rien vu."
+          ],
+          "feedback": [
+            "Ton observateur ne reconnait pas ton plan : applique-le.",
+            "Un point perdu ne rend pas ton plan mauvais.",
+            "Tu dois pouvoir decrire ce que tu as vu."
+          ],
+          "plus": [
+            "Match en deux sets avec plan maintenu."
+          ],
+          "minus": [
+            "Match en 7 points, plan rappele par l'observateur."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points, plan rappele a voix haute par l'observateur entre les points.",
+            "normale": "Match en 11 points avec plan annonce et reconnu par l'observateur.",
+            "complexifiee": "Match en deux sets avec plan maintenu sur l'ensemble."
+          },
+          "safety": [
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Degagement entre terrains respecte.",
+            "Raquette tenue en main, jamais lancee."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Plan contre un adversaire different",
+          "objective": "Verifier qu'un plan se construit pour un adversaire donne, et non une fois pour toutes.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches de plan de jeu",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Match en 11 points contre un adversaire different. Le joueur dispose de deux minutes d'echauffement contre lui pour lire son jeu, puis annonce un nouveau plan.",
+          "studentGoal": "Construire un plan different pour un adversaire different, en deux minutes d'observation.",
+          "instructions": [
+            "Pendant l'echauffement, je regarde comment il joue.",
+            "J'annonce un plan adapte a lui, pas celui du match precedent.",
+            "Je joue le match en appliquant ce nouveau plan.",
+            "Observateur : tu verifies que le plan est different et applique."
+          ],
+          "success": [
+            "Un plan different est formule.",
+            "Il s'appuie sur l'observation faite pendant l'echauffement.",
+            "Il est reconnaissable dans le match."
+          ],
+          "execution": [
+            "Utiliser l'echauffement comme phase d'observation.",
+            "Reperer une zone de difficulte des les premiers echanges.",
+            "Appliquer le plan des le premier point."
+          ],
+          "watch": [
+            "Les eleves observent-ils pendant l'echauffement ?",
+            "Le nouveau plan est-il reellement different ?",
+            "Est-il applique ?"
+          ],
+          "errors": [
+            "Reprendre exactement le meme plan.",
+            "Ne pas observer pendant l'echauffement.",
+            "Construire un plan sans lien avec cet adversaire."
+          ],
+          "feedback": [
+            "C'est le meme plan : il ne joue pourtant pas pareil.",
+            "L'echauffement, c'est deja de l'observation.",
+            "Qu'as-tu vu chez lui, concretement ?"
+          ],
+          "plus": [
+            "Deux adversaires successifs, deux plans differents."
+          ],
+          "minus": [
+            "Plan construit avec l'aide de l'observateur."
+          ],
+          "diff": {
+            "facilitee": "Plan construit avec l'aide de l'observateur, match en 7 points.",
+            "normale": "Plan different construit en deux minutes d'observation.",
+            "complexifiee": "Deux adversaires successifs avec deux plans distincts."
+          },
+          "safety": [
+            "Recuperation entre les matchs.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Volants ranges hors de la zone de jeu.",
+            "Degagement entre terrains respecte.",
+            "Raquette tenue en main, jamais lancee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que contient un plan de jeu en trois points ?",
+          "Pourquoi un plan ne se construit-il pas une fois pour toutes ?"
+        ],
+        "key": "Un plan dit ce qu'on fait au service, comment on construit et sur quoi on conclut. Et il se construit pour un adversaire donne : contre un autre joueur, il faut un autre plan."
+      },
+      "socialRoles": [
+        "Observateur : verifie que le plan annonce est reconnaissable.",
+        "Arbitre : annonce le score et verifie les services.",
+        "Verificateur : controle la faisabilite du plan ecrit."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Reviser son plan entre deux sets",
+      "mainObjective": "Construire la revision du plan : reconnaitre qu'il ne fonctionne pas et le modifier.",
+      "secondaryObjectives": [
+        "Identifier en cours de match que le plan ne fonctionne pas.",
+        "Modifier un seul element du plan entre deux sets.",
+        "Verifier l'effet de la modification."
+      ],
+      "linkToPrevious": "Les plans existent, mais ils sont maintenus meme quand ils echouent : reviser est la competence suivante.",
+      "prerequisiteForNext": "Chaque eleve revise son plan entre deux sets a partir d'une observation.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "fiches de plan de jeu",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation chiffree",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "fixed": 6
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation permettant de compter les points gagnes et perdus par zone.",
+          "Prevoir un temps de deux minutes entre les sets pour la revision.",
+          "Verifier les raquettes et trier les volants.",
+          "Verifier le degagement entre terrains.",
+          "Organiser des rencontres en deux sets gagnants."
+        ],
+        "sketch": "Six terrains, rencontres en deux sets affichees.\nZone de revision entre les sets, avec bancs, hors des terrains.\nObservateurs places sur le cote avec les fiches.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avant une seance de matchs longs, epaules et appuis compris.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple avec changements de direction.",
+              "Fentes avant et deplacements arriere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Deux sets, une revision",
+          "objective": "Construire la revision du plan entre deux sets, a partir de chiffres.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de plan de jeu",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rencontres en deux sets de 11 points. Entre les sets, deux minutes obligatoires : l'observateur donne ses chiffres, le joueur modifie un seul element de son plan et l'annonce.",
+          "studentGoal": "Modifier un element de mon plan entre les deux sets, a partir des chiffres.",
+          "instructions": [
+            "Set 1 : j'applique mon plan annonce.",
+            "Entre les sets : l'observateur me donne ses chiffres, j'ai deux minutes.",
+            "Je modifie un seul element de mon plan et je l'annonce.",
+            "Set 2 : j'applique le plan modifie."
+          ],
+          "success": [
+            "Le plan du set 1 est reconnaissable.",
+            "Une modification est annoncee entre les sets.",
+            "Elle s'appuie sur les chiffres de l'observateur.",
+            "Elle est appliquee au set 2."
+          ],
+          "execution": [
+            "Ecouter les chiffres avant de decider.",
+            "Modifier un seul element, pas tout le plan.",
+            "Recuperer physiquement pendant les deux minutes."
+          ],
+          "watch": [
+            "Les revisions s'appuient-elles sur les chiffres ?",
+            "Les eleves modifient-ils tout ou un element ?",
+            "La recuperation entre les sets est-elle utilisee ?"
+          ],
+          "errors": [
+            "Changer tout le plan et ne plus savoir ce qui marche.",
+            "Refuser de modifier alors que les chiffres sont clairs.",
+            "Passer les deux minutes a discuter sans recuperer."
+          ],
+          "feedback": [
+            "Un seul element : sinon tu ne sauras pas ce qui a change.",
+            "Tes chiffres disent que ca ne marche pas : modifie.",
+            "Bois et recupere aussi : le set 2 t'attend."
+          ],
+          "plus": [
+            "Trois sets avec deux revisions successives."
+          ],
+          "minus": [
+            "Deux sets courts, revision proposee par l'observateur."
+          ],
+          "diff": {
+            "facilitee": "Deux sets de 7 points, revision proposee par l'observateur.",
+            "normale": "Deux sets de 11 points avec une revision annoncee entre les deux.",
+            "complexifiee": "Trois sets avec deux revisions successives."
+          },
+          "safety": [
+            "Deux minutes de recuperation obligatoires entre les sets : elles servent autant a la revision qu'a la recuperation physique.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Degagement entre terrains respecte.",
+            "Raquette tenue en main, jamais lancee.",
+            "Consulter les PAI : les rencontres longues sollicitent davantage l'epaule."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Observer avec des chiffres",
+          "objective": "Former a l'observation chiffree, condition d'une revision fondee.",
+          "material": [
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Pendant les rencontres, chaque observateur renseigne une fiche chiffree : points gagnes et perdus, zones ou tombent les volants gagnants, fautes directes.",
+          "studentGoal": "Donner a mon camarade des chiffres, pas des impressions.",
+          "instructions": [
+            "Je compte les points gagnes et perdus, pas seulement le score.",
+            "Je note ou tombent les volants gagnants de chacun.",
+            "Je compte les fautes directes : filet et sorties.",
+            "Entre les sets, je donne mes chiffres, pas mon avis."
+          ],
+          "success": [
+            "La fiche est renseignee sur les trois indicateurs.",
+            "Les chiffres sont donnes entre les sets.",
+            "Le joueur peut s'en servir pour decider."
+          ],
+          "execution": [
+            "Compter pendant le jeu, pas apres.",
+            "Utiliser des batons plutot que de memoriser.",
+            "Annoncer les chiffres simplement."
+          ],
+          "watch": [
+            "Les observations sont-elles chiffrees ?",
+            "Les observateurs donnent-ils des avis a la place des chiffres ?",
+            "Les fiches sont-elles exploitables ?"
+          ],
+          "errors": [
+            "Donner un avis general au lieu de chiffres.",
+            "Compter de memoire a la fin du set.",
+            "Fiche illisible ou incomplete."
+          ],
+          "feedback": [
+            "Des chiffres : combien de fautes, dans quelle zone ?",
+            "Compte pendant, tu ne retiendras pas.",
+            "Il doit pouvoir decider avec ta fiche."
+          ],
+          "plus": [
+            "Observation de cinq indicateurs, dont les services."
+          ],
+          "minus": [
+            "Observation de deux indicateurs seulement."
+          ],
+          "diff": {
+            "facilitee": "Observation de deux indicateurs seulement : points gagnes et fautes directes.",
+            "normale": "Observation chiffree sur trois indicateurs.",
+            "complexifiee": "Observation de cinq indicateurs, services compris."
+          },
+          "safety": [
+            "Les observateurs se placent hors des terrains, jamais dans la zone de jeu ni dans le degagement lateral.",
+            "L'observateur interrompt le jeu s'il voit un volant rouler sur le terrain.",
+            "Raquettes posees a plat pendant l'observation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Verifier l'effet de la revision",
+          "objective": "Faire mesurer l'effet de la modification apportee entre les sets.",
+          "material": [
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de plan de jeu",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains, chaque joueur compare les chiffres du set 1 et du set 2 et conclut si sa revision a produit un effet.",
+          "studentGoal": "Savoir si la modification que j'ai faite a change quelque chose.",
+          "instructions": [
+            "Je compare les chiffres du set 1 et du set 2.",
+            "Je conclus : ma modification a marche, ou non.",
+            "Si elle n'a pas marche, je note ce que j'essaierais ensuite.",
+            "Je garde ma fiche pour la suite du cycle."
+          ],
+          "success": [
+            "Les chiffres des deux sets sont compares.",
+            "La conclusion s'appuie sur les chiffres.",
+            "Une piste est notee si la revision a echoue."
+          ],
+          "execution": [
+            "Comparer indicateur par indicateur.",
+            "Tenir compte du score, mais pas uniquement.",
+            "Formuler une conclusion claire."
+          ],
+          "watch": [
+            "Les conclusions s'appuient-elles sur les chiffres ?",
+            "Les eleves ne jugent-ils que par le score ?"
+          ],
+          "errors": [
+            "Conclure uniquement sur le resultat du set.",
+            "Attribuer le resultat au hasard.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Le score a peut-etre bouge pour une autre raison : regarde tes indicateurs.",
+            "Tes fautes ont diminue : c'est un effet reel.",
+            "Note ta piste pour la prochaine fois."
+          ],
+          "plus": [
+            "Comparaison sur trois sets."
+          ],
+          "minus": [
+            "Comparaison guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee par le professeur, sur un seul indicateur.",
+            "normale": "Comparaison individuelle des chiffres des deux sets.",
+            "complexifiee": "Comparaison sur trois sets avec deux revisions."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains.",
+            "Raquettes posees a plat, volants ranges.",
+            "Aucun match en cours a proximite de la zone d'analyse."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quoi vous appuyez-vous pour decider de modifier votre plan ?",
+          "Pourquoi ne modifie-t-on qu'un seul element a la fois ?"
+        ],
+        "key": "On revise a partir de chiffres, pas d'impressions. Et on modifie un seul element : sinon, on ne sait plus ce qui a produit le changement."
+      },
+      "socialRoles": [
+        "Observateur : renseigne la fiche chiffree et donne ses chiffres entre les sets.",
+        "Arbitre : annonce le score et gere les temps de repos.",
+        "Chronometreur : garantit les deux minutes entre les sets."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Rencontres evaluees de mi-cycle et projet de joueur",
+      "mainObjective": "Evaluer la capacite a analyser un rapport de force et faire construire un projet de joueur.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer des rencontres evaluees avec plan annonce et revise.",
+        "Construire un projet de joueur pour la fin du cycle.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Lecture, plan et revision ont ete construits separement : les rencontres evaluees montrent ce qui en reste en situation.",
+      "prerequisiteForNext": "Chaque eleve a un projet de joueur ecrit et un objectif personnel.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet de joueur",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de projet.",
+          "Constituer des poules de niveau homogene.",
+          "Verifier les raquettes et trier les volants.",
+          "Prevoir un espace d'ecriture hors des terrains."
+        ],
+        "sketch": "Six terrains, poules affichees a l'entree.\nAffichage des criteres a cote des poules.\nZone d'ecriture avec bancs, hors des terrains.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : savoir s'echauffer fait partie des attendus, et la seance comporte des rencontres evaluees.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches, fentes progressives."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Rencontres evaluees en deux sets",
+          "objective": "Evaluer la construction du plan, sa mise en oeuvre et sa revision.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux rencontres en deux sets de 11 points, contre deux adversaires de la poule. Plan annonce avant chaque rencontre, revision annoncee entre les sets. Un observateur chiffre par rencontre.",
+          "studentGoal": "Annoncer un plan adapte, l'appliquer, et le reviser entre les sets.",
+          "instructions": [
+            "J'annonce mon plan avant chaque rencontre.",
+            "Je l'applique au set 1.",
+            "Entre les sets, j'ecoute les chiffres et j'annonce une revision.",
+            "Observateur : tu notes le plan, son application et sa revision."
+          ],
+          "success": [
+            "Les plans sont annonces et adaptes a chaque adversaire.",
+            "Ils sont reconnaissables dans le jeu.",
+            "Une revision fondee est annoncee entre les sets.",
+            "Les fiches sont renseignees."
+          ],
+          "execution": [
+            "Observer l'adversaire pendant l'echauffement.",
+            "Appliquer le plan des le premier point.",
+            "Reviser a partir des chiffres, pas de l'impression."
+          ],
+          "watch": [
+            "Les plans sont-ils adaptes aux adversaires ?",
+            "Sont-ils maintenus sous evaluation ?",
+            "Les revisions sont-elles fondees ?",
+            "Les observations sont-elles honnetes ?"
+          ],
+          "errors": [
+            "Annoncer le meme plan contre les deux adversaires.",
+            "Abandonner le plan quand le score se tend.",
+            "Reviser au hasard.",
+            "Observation complaisante."
+          ],
+          "feedback": [
+            "Ils ne jouent pas pareil : ton plan non plus.",
+            "Un point perdu ne rend pas ton plan mauvais.",
+            "Sur quels chiffres tu revises ?",
+            "Note ce que tu vois, pas ce qui arrange."
+          ],
+          "plus": [
+            "Trois rencontres, sets en 15 points."
+          ],
+          "minus": [
+            "Une rencontre, sets en 7 points."
+          ],
+          "diff": {
+            "facilitee": "Une rencontre en deux sets de 7 points, plan en un seul point, terrain en largeur.",
+            "normale": "Deux rencontres en deux sets de 11 points, plan annonce et revise.",
+            "complexifiee": "Trois rencontres, sets en 15 points."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les rencontres evaluees.",
+            "Recuperation entre les rencontres : deux minutes minimum.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Degagement de 1,5 m entre terrains respecte.",
+            "Raquette tenue en main, jamais lancee, meme apres un point perdu.",
+            "Consulter les PAI : pathologies de l'epaule, asthme d'effort."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Ecrire son projet de joueur",
+          "objective": "Formaliser ce que chacun cherche a developper pour la fin du cycle.",
+          "material": [
+            {
+              "label": "fiches de projet de joueur",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains. Chacun ecrit son projet : ses points forts, son point faible principal, et ce qu'il va travailler dans les trois dernieres seances.",
+          "studentGoal": "Ecrire ce que je vais travailler dans les trois dernieres seances.",
+          "instructions": [
+            "Je relis mes fiches depuis la seance 1.",
+            "J'ecris mes deux points forts et mon point faible principal.",
+            "J'indique ce que je vais travailler en priorite.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Points forts et point faible sont identifies.",
+            "La priorite de travail est ecrite.",
+            "Le projet s'appuie sur les observations du cycle."
+          ],
+          "execution": [
+            "Reprendre les fiches des seances precedentes.",
+            "Chercher les constantes sur plusieurs matchs.",
+            "Formuler court et precis."
+          ],
+          "watch": [
+            "Les projets s'appuient-ils sur les observations ?",
+            "Les points faibles sont-ils reellement identifies ?"
+          ],
+          "errors": [
+            "Projet fonde sur une impression.",
+            "Points forts surevalues.",
+            "Projet trop vaste : tout travailler."
+          ],
+          "feedback": [
+            "Regarde tes fiches : que disent-elles vraiment ?",
+            "Une priorite, pas cinq.",
+            "Ecris-le : on le relira a la seance 8."
+          ],
+          "plus": [
+            "Projet comportant un objectif chiffre."
+          ],
+          "minus": [
+            "Projet choisi dans une liste de propositions."
+          ],
+          "diff": {
+            "facilitee": "Projet choisi dans une liste de propositions affichees.",
+            "normale": "Projet ecrit en autonomie a partir des fiches du cycle.",
+            "complexifiee": "Projet avec objectif chiffre sur un indicateur precis."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains.",
+            "Raquettes posees a plat, volants ranges.",
+            "Aucun match en cours a proximite de la zone d'ecriture."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Match d'application et objectif personnel",
+          "objective": "Eprouver immediatement la priorite de travail et ecrire l'objectif de fin de cycle.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches de projet de joueur",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Match court en 11 points, chacun se concentrant sur sa priorite de travail. Puis chacun ecrit son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Jouer un match en me concentrant sur ma priorite, puis ecrire mon objectif.",
+          "instructions": [
+            "Je joue en me concentrant sur ma priorite de travail.",
+            "Je note si j'y arrive ou non.",
+            "Puis j'ecris mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche."
+          ],
+          "success": [
+            "Le match est joue avec la priorite en tete.",
+            "Le constat est note.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Garder la priorite en tete a chaque point.",
+            "Noter immediatement apres le match.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "La priorite est-elle tenue en match ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Oublier sa priorite des le premier point.",
+            "Objectif vague : mieux jouer.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Ta priorite, tu l'as oubliee des le debut.",
+            "Precise : quoi exactement, dans quelle situation ?",
+            "Note ton constat, on le relira."
+          ],
+          "plus": [
+            "Deux matchs avec priorites differentes."
+          ],
+          "minus": [
+            "Match en 7 points, priorite rappelee par l'observateur."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points avec priorite rappelee par l'observateur.",
+            "normale": "Match en 11 points avec priorite tenue, objectif redige.",
+            "complexifiee": "Deux matchs avec deux priorites differentes."
+          },
+          "safety": [
+            "Recuperation avant le match d'application.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Volants ranges hors de la zone de jeu.",
+            "Raquette tenue en main, jamais lancee.",
+            "Phase d'ecriture realisee assise hors des terrains."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont vos deux points forts et votre point faible principal ?",
+          "Que travaillerez-vous en priorite dans les trois dernieres seances ?"
+        ],
+        "key": "Un projet de joueur s'appuie sur ce qui revient dans plusieurs matchs, pas sur le souvenir du dernier. Et il retient une priorite, pas cinq."
+      },
+      "socialRoles": [
+        "Observateur : renseigne la fiche chiffree des rencontres evaluees.",
+        "Arbitre : annonce le score et gere les temps de repos.",
+        "Analyste : aide son camarade a relire ses fiches."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Gerer son effort et sa lucidite sur une serie de matchs",
+      "mainObjective": "Construire la gestion de l'effort et de la lucidite sur plusieurs rencontres consecutives.",
+      "secondaryObjectives": [
+        "Maintenir son niveau de jeu sur trois matchs.",
+        "Utiliser les temps de repos pour recuperer reellement.",
+        "Reperer les signes de perte de lucidite."
+      ],
+      "linkToPrevious": "Les plans fonctionnent sur un match, mais s'effondrent au troisieme : la gestion de l'effort devient le facteur limitant.",
+      "prerequisiteForNext": "Chaque eleve maintient son niveau de jeu sur trois matchs consecutifs.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "fiches d'observation chiffree",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "chronometres",
+            "fixed": 6
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "affiche des signes de fatigue",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Afficher les signes de perte de lucidite : fautes directes en hausse, replacement abandonne, decisions precipitees.",
+          "Organiser trois matchs consecutifs par eleve, avec temps de repos identiques.",
+          "Prevoir un point d'eau accessible.",
+          "Verifier les raquettes et trier les volants.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Six terrains, serie de trois matchs affichee.\nZone de recuperation avec bancs et point d'eau, hors des terrains.\nAffiche des signes de fatigue a l'entree.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet avant une seance dense : trois matchs consecutifs sollicitent fortement l'epaule et les appuis.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches, fentes progressives."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Trois matchs consecutifs",
+          "objective": "Faire constater l'evolution du niveau de jeu au fil d'une serie de rencontres.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "chronometres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Trois matchs de 11 points contre trois adversaires, avec trois minutes de repos entre chacun. L'observateur compte les fautes directes match par match.",
+          "studentGoal": "Jouer aussi bien au troisieme match qu'au premier.",
+          "instructions": [
+            "Je joue trois matchs avec trois minutes de repos entre chacun.",
+            "Pendant le repos, je bois et je recupere : je ne reste pas debout a discuter.",
+            "Observateur : tu comptes mes fautes directes a chaque match.",
+            "A la fin, on regarde si mes fautes augmentent."
+          ],
+          "success": [
+            "Les trois matchs sont joues.",
+            "Le nombre de fautes directes n'augmente pas fortement.",
+            "Les temps de repos sont utilises pour recuperer."
+          ],
+          "execution": [
+            "S'asseoir et boire pendant les repos.",
+            "Maintenir le replacement au troisieme match.",
+            "Ralentir le jeu plutot que precipiter quand on fatigue."
+          ],
+          "watch": [
+            "Les fautes directes augmentent-elles ?",
+            "Le replacement est-il abandonne ?",
+            "Les temps de repos sont-ils utilises ?",
+            "Quelqu'un montre-t-il des signes d'epuisement ?"
+          ],
+          "errors": [
+            "Rester debout a discuter pendant les repos.",
+            "Ne pas boire.",
+            "Precipiter ses frappes quand la fatigue arrive.",
+            "Abandonner le replacement au troisieme match."
+          ],
+          "feedback": [
+            "Assieds-toi et bois : ton repos sert a quelque chose.",
+            "Tes fautes doublent : ralentis ton jeu.",
+            "Continue a te replacer, meme fatigue."
+          ],
+          "plus": [
+            "Quatre matchs, deux minutes de repos."
+          ],
+          "minus": [
+            "Deux matchs, cinq minutes de repos."
+          ],
+          "diff": {
+            "facilitee": "Deux matchs de 7 points avec cinq minutes de repos.",
+            "normale": "Trois matchs de 11 points avec trois minutes de repos.",
+            "complexifiee": "Quatre matchs avec deux minutes de repos."
+          },
+          "safety": [
+            "Trois minutes de repos obligatoires entre les matchs, assis et avec acces a l'eau : enchainer des rencontres sans recuperation est le mecanisme classique de la blessure de fin de seance.",
+            "Consulter les PAI : pathologies de l'epaule, asthme d'effort.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur d'epaule, une gene respiratoire ou un vertige.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi : la fatigue augmente le risque de chute arriere.",
+            "Volants ranges hors de la zone de jeu.",
+            "Raquette tenue en main, jamais lancee.",
+            "Le professeur peut retirer un joueur de la serie s'il le juge trop fatigue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reconnaitre les signes de fatigue",
+          "objective": "Construire la reconnaissance des signes de perte de lucidite, chez soi et chez l'autre.",
+          "material": [
+            {
+              "label": "affiche des signes de fatigue",
+              "fixed": 2
+            },
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis hors des terrains. Chacun compare ses chiffres match par match et identifie a quel moment son niveau a baisse et a quels signes.",
+          "studentGoal": "Reconnaitre a quels signes je vois que je fatigue.",
+          "instructions": [
+            "Je compare mes fautes directes match par match.",
+            "J'identifie a quel moment mon niveau a baisse.",
+            "Je repere les signes : fautes, replacement, decisions precipitees.",
+            "J'ecris ce que je ferai quand je reconnaitrai ces signes."
+          ],
+          "success": [
+            "Le moment de baisse est identifie.",
+            "Les signes associes sont nommes.",
+            "Une strategie est ecrite."
+          ],
+          "execution": [
+            "Comparer les chiffres, pas les impressions.",
+            "Nommer des signes observables.",
+            "Formuler une strategie simple : ralentir, allonger les echanges."
+          ],
+          "watch": [
+            "Les eleves reconnaissent-ils leur baisse de niveau ?",
+            "Les signes sont-ils observables ou vagues ?"
+          ],
+          "errors": [
+            "Nier la baisse de niveau.",
+            "Attribuer toutes les defaites a l'adversaire.",
+            "Strategie irrealiste : jouer plus fort."
+          ],
+          "feedback": [
+            "Tes fautes ont double : ce n'est pas le hasard.",
+            "Quel signe, concretement ?",
+            "Quand tu fatigues, allonge les echanges plutot que d'accelerer."
+          ],
+          "plus": [
+            "Identifier aussi les signes de fatigue chez l'adversaire."
+          ],
+          "minus": [
+            "Signes choisis dans la liste affichee."
+          ],
+          "diff": {
+            "facilitee": "Signes choisis dans la liste affichee, avec l'aide du professeur.",
+            "normale": "Identification individuelle du moment et des signes de baisse.",
+            "complexifiee": "Identification des signes de fatigue chez soi et chez l'adversaire."
+          },
+          "safety": [
+            "Tout signe de fatigue inhabituel, douleur ou malaise est signale immediatement au professeur : reconnaitre la fatigue est aussi une competence de securite.",
+            "Phase realisee assise hors des terrains, avec acces a l'eau.",
+            "Raquettes posees a plat, volants ranges."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Un quatrieme match, avec strategie de fatigue",
+          "objective": "Appliquer la strategie de gestion de la fatigue sur un match supplementaire.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Un match supplementaire de 11 points, apres cinq minutes de recuperation. Chaque joueur applique la strategie qu'il a ecrite. L'observateur compte a nouveau les fautes.",
+          "studentGoal": "Appliquer ma strategie de fatigue et limiter mes fautes sur ce dernier match.",
+          "instructions": [
+            "Cinq minutes de recuperation avant ce match : je bois et je m'assois.",
+            "J'applique la strategie que j'ai ecrite.",
+            "Observateur : tu comptes a nouveau mes fautes directes.",
+            "Si je sens que ca ne va plus, je le dis."
+          ],
+          "success": [
+            "Le match est joue.",
+            "Les fautes sont contenues par rapport au troisieme match.",
+            "La strategie est reconnaissable."
+          ],
+          "execution": [
+            "Recuperer reellement avant de commencer.",
+            "Allonger les echanges plutot que precipiter.",
+            "Maintenir le replacement."
+          ],
+          "watch": [
+            "La strategie est-elle appliquee ?",
+            "Les fautes sont-elles contenues ?",
+            "Quelqu'un est-il trop fatigue pour jouer ?"
+          ],
+          "errors": [
+            "Ne pas recuperer avant le match.",
+            "Accelerer le jeu par depit.",
+            "Continuer malgre une douleur."
+          ],
+          "feedback": [
+            "Recupere d'abord : tu joues dans cinq minutes.",
+            "Allonge, n'accelere pas.",
+            "Une douleur, tu me le dis : on arrete."
+          ],
+          "plus": [
+            "Deux matchs supplementaires."
+          ],
+          "minus": [
+            "Match en 7 points, ou observation sans jouer."
+          ],
+          "diff": {
+            "facilitee": "Match en 7 points, ou role d'observateur pour les eleves trop fatigues.",
+            "normale": "Un match supplementaire avec strategie de fatigue appliquee.",
+            "complexifiee": "Deux matchs supplementaires."
+          },
+          "safety": [
+            "Aucun eleve ne joue ce match supplementaire s'il presente des signes d'epuisement : le professeur lui confie un role d'observation.",
+            "Cinq minutes de recuperation obligatoires avant ce match, assis avec acces a l'eau.",
+            "Arret immediat et prise en charge pour toute douleur d'epaule, gene respiratoire ou vertige.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Le professeur peut arreter tout match."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "A quels signes reconnaissez-vous que vous fatiguez ?",
+          "Que faut-il faire de son jeu quand la fatigue arrive ?"
+        ],
+        "key": "La fatigue se lit dans les chiffres avant de se sentir : les fautes augmentent, le replacement disparait. Et quand elle arrive, on allonge les echanges au lieu de precipiter."
+      },
+      "socialRoles": [
+        "Observateur : compte les fautes directes match par match.",
+        "Arbitre : gere le score et les temps de repos.",
+        "Responsable recuperation : verifie que chacun boit et s'assoit pendant les repos."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Le role de coach : conseiller entre les points",
+      "mainObjective": "Construire le role de coach : donner a son camarade un conseil exploitable, fonde sur une observation.",
+      "secondaryObjectives": [
+        "Observer et conseiller entre les points et entre les sets.",
+        "Formuler un conseil court et exploitable.",
+        "Jouer une rencontre dans les conditions du tournoi final."
+      ],
+      "linkToPrevious": "Chacun sait analyser son propre jeu. Il reste a le faire pour un camarade, et a lui transmettre une information utilisable.",
+      "prerequisiteForNext": "Chaque eleve tient le role de coach et joue une rencontre au format final.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "fiches d'observation chiffree",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "feuilles de match vierges",
+            "fixed": 18
+          },
+          {
+            "label": "affiche des regles du coaching",
+            "fixed": 2,
+            "note": "quand parler, que dire, comment le dire"
+          },
+          {
+            "label": "chronometres",
+            "fixed": 6
+          }
+        ],
+        "instructions": [
+          "Afficher les regles du coaching : entre les points et entre les sets, jamais pendant l'echange.",
+          "Preparer des feuilles de match identiques a celles du tournoi.",
+          "Installer les terrains comme le jour du tournoi.",
+          "Verifier les raquettes et trier les volants.",
+          "Verifier le degagement entre terrains."
+        ],
+        "sketch": "Six terrains installes comme le jour du tournoi.\nPlace du coach marquee sur le cote de chaque terrain, hors du degagement.\nAffiche des regles du coaching a l'entree.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet avant une seance de rencontres au format final.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation",
+            "details": [
+              "Epaules, poignet, avant-bras.",
+              "Chevilles, genoux, hanches, fentes progressives."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Coacher une rencontre",
+          "objective": "Construire un conseil de coach court, fonde sur une observation, et donne au bon moment.",
+          "material": [
+            {
+              "label": "affiche des regles du coaching",
+              "fixed": 2
+            },
+            {
+              "label": "fiches d'observation chiffree",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            }
+          ],
+          "organization": "Rencontres en deux sets de 11 points. Chaque joueur a un coach designe, place sur le cote. Le coach observe, compte, et donne un conseil entre les points et entre les sets.",
+          "studentGoal": "Donner a mon joueur un conseil court qu'il peut appliquer tout de suite.",
+          "instructions": [
+            "Je parle entre les points et entre les sets, jamais pendant l'echange.",
+            "Mon conseil est court : une phrase, une seule chose a faire.",
+            "Il s'appuie sur ce que j'ai compte, pas sur une impression.",
+            "Je reste a ma place, hors du terrain et du degagement."
+          ],
+          "success": [
+            "Les conseils sont donnes aux bons moments.",
+            "Ils sont courts et exploitables.",
+            "Ils s'appuient sur des observations chiffrees.",
+            "Le coach reste a sa place."
+          ],
+          "execution": [
+            "Compter pendant les echanges, conseiller entre les points.",
+            "Une seule information a la fois.",
+            "Rester calme et audible."
+          ],
+          "watch": [
+            "Les conseils sont-ils exploitables ?",
+            "Sont-ils donnes pendant les echanges ?",
+            "Les coachs restent-ils hors du degagement ?",
+            "Les conseils se reduisent-ils a des encouragements ?"
+          ],
+          "errors": [
+            "Parler pendant l'echange et deconcentrer le joueur.",
+            "Donner trois conseils en meme temps.",
+            "Se contenter d'encouragements sans information.",
+            "Entrer dans le degagement du terrain."
+          ],
+          "feedback": [
+            "Entre les points, pas pendant : tu le deconcentres.",
+            "Une seule chose : il ne peut pas en appliquer trois.",
+            "Allez n'est pas un conseil : dis-lui quoi faire.",
+            "Reste a ta place, tu es dans sa zone de jeu."
+          ],
+          "plus": [
+            "Coacher deux joueurs successivement.",
+            "Coacher avec une fiche de cinq indicateurs."
+          ],
+          "minus": [
+            "Coacher entre les sets uniquement.",
+            "Conseil choisi dans une liste affichee."
+          ],
+          "diff": {
+            "facilitee": "Coaching entre les sets uniquement, conseil choisi dans une liste affichee.",
+            "normale": "Coaching entre les points et entre les sets, conseils fondes sur les chiffres.",
+            "complexifiee": "Coaching de deux joueurs successifs avec fiche de cinq indicateurs."
+          },
+          "safety": [
+            "Le coach se place hors du terrain et hors du degagement lateral : un coach dans la zone de degagement est percute par le joueur ou sa raquette.",
+            "Aucun conseil pendant l'echange : la deconcentration provoque des collisions avec le filet ou des chutes.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Volants ranges hors de la zone de jeu.",
+            "Raquette tenue en main, jamais lancee.",
+            "Recuperation entre les rencontres."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Arbitrer et tenir la feuille",
+          "objective": "Consolider le role d'arbitre, evalue au tournoi final.",
+          "material": [
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 18
+            },
+            {
+              "label": "affiche des regles du coaching",
+              "fixed": 2
+            },
+            {
+              "label": "chronometres",
+              "fixed": 6
+            }
+          ],
+          "organization": "Pendant les rencontres, chaque eleve arbitre au moins un set et tient une feuille de match sur un autre. Le professeur valide chaque arbitre.",
+          "studentGoal": "Arbitrer un set et tenir une feuille de match sans erreur.",
+          "instructions": [
+            "J'annonce le score avant chaque service.",
+            "Je verifie la reglementarite du service : sous la taille, pieds au sol.",
+            "Je gere les temps de repos entre les sets.",
+            "Je rappelle au coach de ne pas parler pendant les echanges."
+          ],
+          "success": [
+            "Le score est annonce avant chaque service.",
+            "Les services fautes sont signales.",
+            "Les temps de repos sont respectes.",
+            "La feuille est juste."
+          ],
+          "execution": [
+            "Se placer sur le cote, dans l'axe du filet.",
+            "Annoncer clairement et fermement.",
+            "Noter le point immediatement."
+          ],
+          "watch": [
+            "Les arbitres osent-ils signaler les fautes ?",
+            "Gerent-ils les temps de repos ?",
+            "Rappellent-ils les regles du coaching ?"
+          ],
+          "errors": [
+            "Ne pas oser siffler contre ses camarades.",
+            "Laisser le coach parler pendant les echanges.",
+            "Oublier de gerer les temps de repos."
+          ],
+          "feedback": [
+            "Tu as vu la faute : annonce-la.",
+            "Le coach parle pendant l'echange : rappelle-lui la regle.",
+            "Deux minutes entre les sets : c'est toi qui les gardes."
+          ],
+          "plus": [
+            "Arbitrer une rencontre complete et tenir la feuille simultanement."
+          ],
+          "minus": [
+            "Arbitrer a deux, annonce du score seulement."
+          ],
+          "diff": {
+            "facilitee": "Arbitrage a deux, avec annonce du score seulement.",
+            "normale": "Arbitrage seul d'un set, feuille tenue sur un autre.",
+            "complexifiee": "Arbitrage d'une rencontre complete avec feuille tenue simultanement."
+          },
+          "safety": [
+            "L'arbitre fait respecter la place du coach, hors du degagement lateral.",
+            "L'arbitre interrompt immediatement l'echange si un volant roule sur le terrain.",
+            "L'arbitre verifie que le relanceur est pret avant chaque service.",
+            "L'arbitre se place hors de la zone de jeu.",
+            "Toute raquette abimee signalee est retiree immediatement."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Rencontre au format du tournoi",
+          "objective": "Jouer une rencontre complete dans les conditions exactes du tournoi final.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 18
+            }
+          ],
+          "organization": "Rencontres en deux sets gagnants de 11 points, arbitrees et coachees par des eleves, dans les conditions du tournoi.",
+          "studentGoal": "Jouer une rencontre complete avec plan annonce, revision et coach.",
+          "instructions": [
+            "J'annonce mon plan avant la rencontre.",
+            "Je le revise entre les sets avec mon coach.",
+            "L'arbitre et le coach sont des eleves : j'accepte leurs decisions.",
+            "Je recupere pendant les temps de repos."
+          ],
+          "success": [
+            "La rencontre est jouee en entier.",
+            "Le plan est annonce et revise.",
+            "L'arbitrage eleve est accepte.",
+            "Les temps de repos sont utilises."
+          ],
+          "execution": [
+            "Appliquer le plan des le premier point.",
+            "Ecouter le coach entre les points.",
+            "Recuperer reellement entre les sets."
+          ],
+          "watch": [
+            "Le plan tient-il sur une rencontre complete ?",
+            "Les conseils du coach sont-ils utilises ?",
+            "Les arbitrages eleves sont-ils respectes ?"
+          ],
+          "errors": [
+            "Ignorer completement son coach.",
+            "Contester l'arbitre eleve.",
+            "Passer les temps de repos debout a discuter."
+          ],
+          "feedback": [
+            "Il t'a donne une information : sers-t'en.",
+            "C'est lui l'arbitre : on n'en discute pas.",
+            "Assieds-toi et bois pendant le repos."
+          ],
+          "plus": [
+            "Rencontre en trois sets gagnants."
+          ],
+          "minus": [
+            "Rencontre en un set, arbitrage par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Rencontre en un set de 11 points, arbitree par le professeur.",
+            "normale": "Rencontre en deux sets gagnants, arbitree et coachee par des eleves.",
+            "complexifiee": "Rencontre en trois sets gagnants."
+          },
+          "safety": [
+            "Recuperation obligatoire entre les sets, assis avec acces a l'eau.",
+            "Le coach reste hors du terrain et du degagement lateral.",
+            "Aucun joueur ne traverse un terrain en jeu.",
+            "Aucun recul en courant sans regarder derriere soi.",
+            "Volants ranges hors de la zone de jeu.",
+            "Raquette tenue en main, jamais lancee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "A quel moment un coach peut-il parler, et que doit-il dire ?",
+          "Ou se place un coach, et pourquoi ?"
+        ],
+        "key": "Un coach parle entre les points, une phrase, une seule chose a faire, fondee sur ce qu'il a compte. Et il se place hors du degagement : sinon il devient un obstacle dans la zone de jeu."
+      },
+      "socialRoles": [
+        "Coach : observe, compte et conseille entre les points.",
+        "Arbitre : annonce le score, verifie les services et fait respecter la place du coach.",
+        "Marqueur : tient la feuille de match."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer l'analyse du rapport de force, le plan de jeu, sa revision et les roles sociaux.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer les rencontres du tournoi avec plan annonce et revise.",
+        "Tenir le role d'arbitre et celui de coach ou d'observateur.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "Les rencontres de la seance 7 se sont deroulees dans les conditions du tournoi : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait analyser un rapport de force et construire un plan adapte.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "terrains de badminton traces",
+            "fixed": 6
+          },
+          {
+            "label": "poteaux et filets",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "per": 1.5,
+            "min": 40
+          },
+          {
+            "label": "feuilles de match vierges",
+            "fixed": 20
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "affiche du tableau du tournoi",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le tableau du tournoi, l'ordre des rencontres et les criteres d'evaluation.",
+          "Preparer les grilles nominatives et ressortir les fiches de projet.",
+          "Constituer les poules par niveau, a partir des observations du cycle.",
+          "Verifier chaque raquette et trier les volants avant la premiere rencontre.",
+          "Verifier les degagements et la stabilite des poteaux.",
+          "Verifier les PAI et les dispenses, prevoir un point d'eau accessible."
+        ],
+        "sketch": "Six terrains, tableau du tournoi et criteres affiches a l'entree.\nPlace du coach marquee sur le cote de chaque terrain, hors du degagement.\nZone de repos avec bancs et point d'eau, hors des terrains.\nTubes de volants en bout de terrain."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : aucune rencontre evaluee ne s'aborde sans preparation de l'epaule et des appuis, et sa conduite est evaluee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation complete",
+            "details": [
+              "Epaules : cercles, rotations internes et externes.",
+              "Poignet et avant-bras raquette en main.",
+              "Chevilles, genoux, hanches, fentes progressives."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise du volant",
+            "details": [
+              "Echanges libres, 2 minutes.",
+              "Dix degages, dix amortis.",
+              "Cinq services et cinq frappes descendantes."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Tournoi evalue",
+          "objective": "Evaluer chaque eleve sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "terrains de badminton traces",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "feuilles de match vierges",
+              "fixed": 20
+            }
+          ],
+          "organization": "Tournoi en simple par poules de niveau, rencontres en deux sets gagnants de 11 points. Plan annonce avant chaque rencontre, revision annoncee entre les sets. Chacun arbitre et coache au moins une rencontre. Le professeur evalue en circulant.",
+          "studentGoal": "Annoncer un plan adapte, l'appliquer, le reviser, et tenir mes roles.",
+          "instructions": [
+            "J'annonce mon plan avant chaque rencontre.",
+            "Je le revise entre les sets, avec les chiffres de mon coach.",
+            "Quand je ne joue pas, j'arbitre, je coache ou j'observe.",
+            "Je recupere pendant les temps de repos."
+          ],
+          "success": [
+            "Le plan de jeu annonce est adapte a l'adversaire rencontre.",
+            "Le plan est mis en oeuvre de facon reconnaissable dans le jeu.",
+            "Le plan est revise entre les sets a partir de ce qui a ete observe.",
+            "Le niveau de jeu se maintient sur l'ensemble des rencontres.",
+            "Le role d'arbitre est tenu avec rigueur et impartialite.",
+            "Le conseil de coach s'appuie sur une observation chiffree."
+          ],
+          "execution": [
+            "Observer l'adversaire pendant l'echauffement.",
+            "Appliquer le plan des le premier point.",
+            "Reviser a partir des chiffres.",
+            "Recuperer reellement entre les rencontres."
+          ],
+          "watch": [
+            "Les plans sont-ils adaptes a chaque adversaire ?",
+            "Tiennent-ils sous l'enjeu du tournoi ?",
+            "Le niveau se maintient-il sur la serie ?",
+            "Les arbitres sont-ils impartiaux ?"
+          ],
+          "errors": [
+            "Annoncer le meme plan contre tous les adversaires.",
+            "Abandonner le plan quand le score se tend.",
+            "Ne pas recuperer entre les rencontres.",
+            "Contester l'arbitre eleve ou lancer sa raquette."
+          ],
+          "feedback": [
+            "Chaque adversaire, son plan.",
+            "Un point perdu ne rend pas ton plan mauvais.",
+            "Assieds-toi et bois : tu rejoues dans cinq minutes.",
+            "La raquette reste en main, et l'arbitre a decide."
+          ],
+          "plus": [
+            "Rencontres en trois sets gagnants.",
+            "Plan ecrit remis a l'arbitre avant la rencontre."
+          ],
+          "minus": [
+            "Rencontres en un set de 11 points, terrain en largeur."
+          ],
+          "diff": {
+            "facilitee": "Rencontres en un set de 11 points, terrain en largeur, filet abaisse, plan en un seul point. L'analyse, l'engagement et les roles sociaux sont evalues autant que le resultat.",
+            "normale": "Tournoi en deux sets gagnants avec plan annonce et revise, un role d'arbitrage et un role de coach par eleve.",
+            "complexifiee": "Rencontres en trois sets gagnants, plan ecrit remis a l'arbitre avant la rencontre."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant la premiere rencontre.",
+            "Recuperation obligatoire entre deux rencontres consecutives pour un meme joueur : assis, avec acces a l'eau. La fatigue accumulee est le premier facteur de blessure d'un tournoi.",
+            "PAI verifies avant la premiere rencontre : pathologies de l'epaule, asthme d'effort.",
+            "Arret immediat et prise en charge pour toute douleur d'epaule, gene respiratoire ou vertige.",
+            "Le coach reste hors du terrain et du degagement lateral, et ne parle jamais pendant l'echange.",
+            "Aucun joueur ne traverse un terrain en jeu pour recuperer un volant : il attend la fin de l'echange.",
+            "Aucun recul en courant sans regarder derriere soi : les chutes arriere sont l'accident classique du badminton, et la fatigue les multiplie.",
+            "Degagement de 1,5 metre minimum entre terrains, verifie avant le tournoi.",
+            "Volants ranges en tube hors de la zone de jeu : un volant au sol est une entorse de cheville.",
+            "Raquette tenue en main en permanence, jamais lancee ni frappee au sol, meme apres un point perdu.",
+            "Chaque raquette verifiee avant la premiere rencontre : cordage et manche.",
+            "Le professeur peut arreter toute rencontre et retirer un joueur du tournoi s'il le juge trop fatigue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan des plans et du projet",
+          "objective": "Faire analyser l'ecart entre les plans annonces et ce qui a reellement fonctionne.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de projet conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis hors des terrains. Chacun compare ses plans annonces, leur efficacite reelle, et son projet de la seance 5.",
+          "studentGoal": "Dire quel plan a fonctionne, contre qui, et pourquoi.",
+          "instructions": [
+            "Je compare mes plans annonces et ce qu'ils ont donne.",
+            "J'identifie celui qui a le mieux fonctionne, et contre qui.",
+            "Je relis mon projet de la seance 5 et je dis s'il est atteint.",
+            "J'ecris ce que je travaillerais si le cycle continuait."
+          ],
+          "success": [
+            "Les plans sont compares a leurs effets.",
+            "Le plan le plus efficace est identifie avec son contexte.",
+            "L'objectif personnel est evalue."
+          ],
+          "execution": [
+            "S'appuyer sur les chiffres des observateurs.",
+            "Relier chaque plan a l'adversaire rencontre.",
+            "Formuler clairement."
+          ],
+          "watch": [
+            "Les analyses s'appuient-elles sur les chiffres ?",
+            "Les eleves relient-ils plan et adversaire ?"
+          ],
+          "errors": [
+            "Juger un plan uniquement sur le resultat de la rencontre.",
+            "Ne pas relier le plan a l'adversaire.",
+            "Oublier de relire son projet de la seance 5."
+          ],
+          "feedback": [
+            "Tu as perdu, mais ton plan a peut-etre bien fonctionne.",
+            "Contre qui exactement ce plan marchait-il ?",
+            "Ressors ta fiche de la seance 5."
+          ],
+          "plus": [
+            "Analyse comparee de tous les plans du cycle."
+          ],
+          "minus": [
+            "Analyse guidee par un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee par un questionnaire a completer.",
+            "normale": "Comparaison individuelle des plans et de leurs effets.",
+            "complexifiee": "Analyse comparee de l'ensemble des plans du cycle."
+          },
+          "safety": [
+            "Phase realisee assise hors des terrains, avec acces a l'eau.",
+            "Raquettes posees a plat, volants ranges.",
+            "Aucune rencontre en cours a proximite de la zone d'analyse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "poteaux et filets",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "per": 1.5,
+              "min": 40
+            }
+          ],
+          "organization": "Rangement collectif des poteaux, filets, raquettes et volants, puis classe assise pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "On detend les filets avant de demonter les poteaux.",
+            "Les poteaux se portent a deux minimum.",
+            "On compte les raquettes et on trie les volants abimes.",
+            "Une fois range, on s'assoit pour le bilan."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun poteau porte seul.",
+            "Au moins un eleve par poule s'exprime."
+          ],
+          "execution": [
+            "Detendre le filet avant tout demontage.",
+            "Porter les poteaux a deux, jambes flechies.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis d'analyse ?"
+          ],
+          "errors": [
+            "Demonter un poteau sans detendre le filet.",
+            "Porter un poteau seul.",
+            "Ne parler que des victoires."
+          ],
+          "feedback": [
+            "Detendez le filet d'abord : sinon le poteau part d'un coup.",
+            "A deux minimum, jambes flechies.",
+            "Pas seulement les victoires : analyser un adversaire, c'est l'acquis."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait s'il continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus projet de poursuite."
+          },
+          "safety": [
+            "Filet detendu obligatoirement avant tout demontage de poteau : un poteau sous tension bascule violemment.",
+            "Poteaux portes a deux minimum, jambes flechies, dos droit.",
+            "Raquettes comptees et rangees, celles qui sont abimees mises de cote.",
+            "Volants comptes et ranges avant de quitter la salle.",
+            "Verification qu'aucun eleve ne presente de douleur avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Que fait-on quand un plan de jeu ne fonctionne pas ?"
+        ],
+        "key": "En debut de cycle, on jouait pareil contre tout le monde. Maintenant on lit l'adversaire, on construit un plan pour lui, et on le revise a partir de chiffres quand il ne marche pas."
+      },
+      "socialRoles": [
+        "Arbitre : dirige une rencontre du tournoi, role evalue.",
+        "Coach : conseille son camarade a partir d'observations chiffrees, role evalue.",
+        "Marqueur : tient la feuille de match.",
+        "Responsable materiel : organise le rangement et le tri des volants."
+      ]
+    }
+  ]
+}

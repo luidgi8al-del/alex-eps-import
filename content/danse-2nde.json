@@ -1,0 +1,2650 @@
+{
+  "apsa": "Danse",
+  "grades": [
+    "SECONDE"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme d'enseignement commun d'EPS pour la classe de seconde generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "S'engager pour composer et interpreter une choregraphie collective destinee a etre vue et appreciee.",
+    "Se preparer et s'engager pour presenter devant un public une prestation maitrisee.",
+    "Assumer les roles de danseur, de choregraphe et de spectateur.",
+    "Apprecier et analyser une prestation a partir de criteres partages."
+  ],
+  "targetCompetence": "Passer d'une suite de mouvements executes a une choregraphie qui tient un propos : un inducteur assume, des procedes de composition choisis, un engagement corporel reel, et une interpretation defendue devant un public qui l'apprecie.",
+  "cycleObjectives": [
+    "Composer a partir d'un inducteur, et non d'une suite de pas.",
+    "Utiliser les parametres du mouvement : espace, temps, energie, relation.",
+    "Utiliser des procedes de composition : repetition, accumulation, unisson, cascade, contraste.",
+    "S'engager corporellement devant un public sans se refugier dans l'humour.",
+    "Apprecier une prestation avec des criteres partages, et non selon l'affinite."
+  ],
+  "plannedTitles": [
+    "Entrer en danse et evaluation diagnostique",
+    "Les parametres du mouvement : espace, temps, energie",
+    "L'inducteur : d'ou part la choregraphie",
+    "Les procedes de composition et la relation aux autres",
+    "Evaluation de mi-cycle et projet choregraphique",
+    "L'interpretation : s'engager sans se cacher",
+    "Repetition generale et formation du regard",
+    "Presentation finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classe de seconde generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 au lycee - ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Danse au lycee - inducteurs, procedes de composition et regard du spectateur",
+      "org": "Academie de Toulouse",
+      "url": "https://disciplines.ac-toulouse.fr/eps/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner la danse au lycee - de l'execution a l'interpretation",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Etat du sol de la salle : un sol glissant ou poussiereux interdit le travail pieds nus et les deplacements rapides.",
+    "Pratique pieds nus ou en chaussons : verifier la regle retenue par l'etablissement et l'etat du sol.",
+    "Degagement de la salle : aucun mobilier, aucun angle saillant a moins de deux metres de l'espace de danse.",
+    "Materiel de sonorisation disponible et volume sonore maximal admis.",
+    "Autorisation de captation video et modalites de conservation des images.",
+    "PAI et dispenses, notamment pathologies articulaires et rachidiennes.",
+    "Emplacement de la trousse de secours."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - se refugie dans l'humour",
+      "observed": "Transforme chaque proposition en plaisanterie des qu'un regard se pose sur lui.",
+      "need": "Construire un engagement corporel assume, protege par un cadre de classe respectueux."
+    },
+    {
+      "label": "Profil 2 - execute sans interpreter",
+      "observed": "Reproduit correctement les mouvements, mais sans intention ni variation d'energie.",
+      "need": "Construire l'interpretation : faire varier energie, regard et intention."
+    },
+    {
+      "label": "Profil 3 - compose une suite de pas",
+      "observed": "Enchaine des mouvements appris ailleurs, sans lien avec un propos.",
+      "need": "Partir d'un inducteur et composer a partir de lui."
+    },
+    {
+      "label": "Profil 4 - spectateur qui juge les personnes",
+      "observed": "Commente les camarades plutot que la prestation, ou rit pendant les passages.",
+      "need": "Construire un regard de spectateur fonde sur des criteres partages."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Presentation devant la classe d'une choregraphie collective par groupes de quatre a six, d'une duree de deux a trois minutes, construite a partir d'un inducteur annonce. Elle comporte au moins trois procedes de composition identifiables et des variations nettes des parametres du mouvement. Chaque eleve tient egalement le role de spectateur et renseigne une grille d'appreciation sur un autre groupe.",
+    "criteria": [
+      "L'inducteur annonce est lisible dans la choregraphie.",
+      "Au moins trois procedes de composition sont identifiables.",
+      "Les parametres du mouvement varient nettement : espace, temps, energie, relation.",
+      "L'engagement corporel est reel : aucun refuge dans l'humour ou l'approximation.",
+      "Le debut et la fin sont marques et tenus.",
+      "Le role de spectateur est tenu avec rigueur et respect."
+    ],
+    "referential": "Attendus de fin de lycee du CA3, avec les conditions materielles et le protocole retenus par l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Entrer en danse et evaluation diagnostique",
+      "mainObjective": "Poser le cadre de travail respectueux et observer ce que produit chacun sans consigne de composition.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Poser les regles du regard et de l'ecoute.",
+        "Retrouver une disponibilite corporelle.",
+        "Observer qui s'engage et qui se refugie dans l'humour."
+      ],
+      "linkToPrevious": "Le cycle de sixieme a construit la sortie de l'inhibition et la presentation devant un public. Au lycee, la question devient : que raconte ce que l'on danse ?",
+      "prerequisiteForNext": "Chaque eleve a danse devant les autres et le cadre de respect est pose.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12,
+            "note": "pour les phases au sol"
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12,
+            "note": "delimitation de l'espace scenique"
+          },
+          {
+            "label": "affiche des regles du groupe",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat du sol : propre, non glissant, sans echarde ni aspérite.",
+          "Degager la salle : aucun mobilier ni angle saillant a moins de deux metres de l'espace de danse.",
+          "Delimiter au plot un espace scenique et un espace public.",
+          "Afficher les regles du groupe : on ne se moque pas, on regarde, on applaudit.",
+          "Verifier les PAI et les dispenses.",
+          "Verifier le volume sonore admis dans l'etablissement."
+        ],
+        "sketch": "Espace scenique delimite au plot, degagement de 2 m tout autour.\nBancs du public sur un cote, face a la scene.\nEnceinte a distance de l'espace de danse, cables plaques au sol.\nAffiche des regles du groupe visible depuis la scene."
+      },
+      "warmup": {
+        "rationale": "Echauffement progressif et global : la danse mobilise l'ensemble des chaines musculaires et exige une disponibilite articulaire complete, notamment du rachis et des chevilles.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en route",
+            "details": [
+              "Marche dans tout l'espace, en variant les directions.",
+              "Course souple, arrets sur signal.",
+              "Prise de conscience du sol sous les pieds."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements vertebre par vertebre.",
+              "Epaules, coudes, poignets, nuque en flexions douces."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Deplacements en variant les niveaux : sol, intermediaire, debout.",
+              "Passages sol-debout-sol, dix repetitions.",
+              "Arrets en posture choisie sur signal."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Poser le cadre et oser danser",
+          "objective": "Poser explicitement les regles du regard, condition de tout engagement corporel.",
+          "material": [
+            {
+              "label": "affiche des regles du groupe",
+              "fixed": 2
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "En cercle puis par demi-groupes. Le groupe enonce les regles du regard. Puis un demi-groupe traverse l'espace en dansant pendant que l'autre regarde, en silence. Inversion. Trois traversees chacun.",
+          "studentGoal": "Traverser l'espace en dansant devant les autres, sans me cacher derriere une plaisanterie.",
+          "instructions": [
+            "On enonce ensemble les regles : on ne se moque pas, on regarde, on applaudit a la fin.",
+            "Je traverse l'espace en dansant, a ma facon.",
+            "Je ne commente pas, je ne ris pas pendant qu'un camarade traverse.",
+            "Spectateurs : vous regardez vraiment, sans commenter."
+          ],
+          "success": [
+            "Chaque eleve traverse l'espace trois fois.",
+            "Aucun commentaire ni rire pendant les traversees.",
+            "Les regles sont enoncees par les eleves."
+          ],
+          "execution": [
+            "Occuper toute la traversee, sans se depecher.",
+            "Regarder devant soi, pas ses pieds.",
+            "Assumer sa proposition jusqu'au bout."
+          ],
+          "watch": [
+            "Qui se refugie dans l'humour ?",
+            "Qui traverse en courant pour en finir ?",
+            "Le silence des spectateurs est-il tenu ?",
+            "Le cadre de respect est-il reel ou seulement enonce ?"
+          ],
+          "errors": [
+            "Traverser en courant pour abreger.",
+            "Transformer sa proposition en plaisanterie.",
+            "Commenter le passage d'un camarade."
+          ],
+          "feedback": [
+            "Prends ton temps : ce n'est pas une course.",
+            "Ta proposition est valable : assume-la.",
+            "On ne commente pas : c'est la regle du groupe."
+          ],
+          "plus": [
+            "Traversee avec une contrainte imposee : niveau, vitesse, direction."
+          ],
+          "minus": [
+            "Traversee a deux ou a trois, pour ne pas etre seul."
+          ],
+          "diff": {
+            "facilitee": "Traversee a deux ou a trois, avec une consigne simple imposee.",
+            "normale": "Trois traversees individuelles devant le demi-groupe.",
+            "complexifiee": "Traversee avec contrainte imposee de niveau, vitesse ou direction."
+          },
+          "safety": [
+            "Le cadre de respect est une condition de securite autant que de travail : aucune moquerie n'est toleree, et le professeur interrompt immediatement toute seance ou ce cadre n'est pas tenu.",
+            "Sol verifie avant la seance : propre, non glissant, sans echarde.",
+            "Degagement de deux metres autour de l'espace, sans mobilier ni angle saillant.",
+            "Cables de sonorisation plaques au sol, hors de la zone de deplacement.",
+            "Un seul demi-groupe en deplacement a la fois.",
+            "Bijoux retires, cheveux attaches.",
+            "Volume sonore limite a celui admis dans l'etablissement."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Retrouver une disponibilite",
+          "objective": "Retrouver des mouvements varies, hors des habitudes gestuelles de chacun.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Dans tout l'espace, guidage par consignes successives : bouger uniquement une partie du corps, changer de niveau, changer de vitesse, arreter net. Quatre series de deux minutes.",
+          "studentGoal": "Bouger autrement que d'habitude, en suivant les consignes.",
+          "instructions": [
+            "Je bouge uniquement la partie du corps annoncee.",
+            "Je change de niveau quand c'est demande : sol, intermediaire, debout.",
+            "Je change de vitesse sur signal.",
+            "Je m'arrete net et je tiens la posture trois secondes."
+          ],
+          "success": [
+            "Les quatre series sont realisees.",
+            "Les consignes sont suivies precisement.",
+            "Les arrets sont nets et tenus."
+          ],
+          "execution": [
+            "Isoler reellement la partie du corps demandee.",
+            "Passer au sol avec controle, sans se jeter.",
+            "Tenir l'arret sans bouger."
+          ],
+          "watch": [
+            "Les eleves isolent-ils reellement les parties du corps ?",
+            "Les passages au sol sont-ils controles ?",
+            "Les arrets sont-ils nets ?"
+          ],
+          "errors": [
+            "Bouger tout le corps quand une seule partie est demandee.",
+            "Se jeter au sol sans controle.",
+            "Bouger pendant les arrets."
+          ],
+          "feedback": [
+            "Seulement ton bras : le reste ne bouge pas.",
+            "Descends au sol, ne te jette pas.",
+            "Immobile : trois secondes completes."
+          ],
+          "plus": [
+            "Consignes combinees : deux parametres a la fois."
+          ],
+          "minus": [
+            "Deux series avec des consignes simples."
+          ],
+          "diff": {
+            "facilitee": "Deux series avec des consignes simples, guidage permanent.",
+            "normale": "Quatre series de deux minutes avec consignes successives.",
+            "complexifiee": "Consignes combinees, deux parametres a la fois."
+          },
+          "safety": [
+            "Passages au sol controles : aucun eleve ne se jette au sol, les descentes se font par appuis successifs.",
+            "Tapis de sol disponibles pour les phases au sol prolongees.",
+            "Sol verifie, propre et non glissant.",
+            "Distance entre les eleves : au moins deux metres pendant les deplacements.",
+            "Consulter les PAI : pathologies articulaires et rachidiennes.",
+            "Arret immediat pour tout eleve signalant une douleur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Sequence libre, sans consigne",
+          "objective": "Observer ce que produit un groupe sans consigne de composition, pour poser le probleme du cycle.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par groupes de quatre a six, composition libre de trente secondes, sans autre consigne. Presentation aux autres groupes, qui notent ce qu'ils ont vu, sans juger.",
+          "studentGoal": "Composer et presenter trente secondes, comme on en a l'habitude.",
+          "instructions": [
+            "On compose librement trente secondes.",
+            "On presente aux autres groupes.",
+            "Groupe observateur : vous notez ce que vous avez vu, sans juger.",
+            "On marque un debut et une fin."
+          ],
+          "success": [
+            "La sequence de trente secondes est presentee.",
+            "Le debut et la fin sont marques.",
+            "Les observateurs decrivent ce qu'ils ont vu."
+          ],
+          "execution": [
+            "Se mettre d'accord sur un debut et une fin.",
+            "Occuper l'espace disponible.",
+            "Assumer la presentation jusqu'au bout."
+          ],
+          "watch": [
+            "Les sequences ont-elles un propos, ou alignent-elles des mouvements ?",
+            "Les groupes font-ils tous la meme chose en meme temps ?",
+            "L'espace est-il utilise ?",
+            "Le cadre de respect tient-il pendant les passages ?"
+          ],
+          "errors": [
+            "Reproduire une choregraphie apprise ailleurs.",
+            "Faire tout en meme temps, face au public, au centre.",
+            "Rire pendant sa propre presentation."
+          ],
+          "feedback": [
+            "Ce n'est pas une choregraphie apprise qu'on cherche : c'est la votre.",
+            "Vous faites tout en meme temps : c'est une seule idee repetee.",
+            "Assume jusqu'au bout : le rire coupe ta proposition."
+          ],
+          "plus": [
+            "Sequence d'une minute."
+          ],
+          "minus": [
+            "Sequence de quinze secondes, a deux."
+          ],
+          "diff": {
+            "facilitee": "Sequence de quinze secondes composee a deux.",
+            "normale": "Sequence libre de trente secondes par groupes de quatre a six.",
+            "complexifiee": "Sequence libre d'une minute."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum.",
+            "Aucune circulation pendant un passage.",
+            "Sol verifie, degagement respecte.",
+            "Le cadre de respect est tenu pendant tous les passages : aucune moquerie.",
+            "Aucun porte ni contact acrobatique a ce stade du cycle."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui reliait vos mouvements les uns aux autres ?",
+          "Quelles sont les regles du groupe pendant les passages ?"
+        ],
+        "key": "Enchainer des mouvements ne fait pas une choregraphie : il manque un propos. Et rien ne se construit sans le cadre : on regarde, on ne se moque pas, on applaudit."
+      },
+      "socialRoles": [
+        "Spectateur : regarde en silence et applaudit a la fin.",
+        "Groupe observateur : decrit ce qu'il a vu, sans juger.",
+        "Responsable son : gere le volume et la mise en route de la musique."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Les parametres du mouvement : espace, temps, energie",
+      "mainObjective": "Construire les parametres du mouvement, materiau de base de toute composition.",
+      "secondaryObjectives": [
+        "Faire varier l'espace : niveaux, directions, amplitude.",
+        "Faire varier le temps : vitesse, rythme, arrets.",
+        "Faire varier l'energie : tension, relachement, fluidite, saccade."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les groupes alignent des mouvements. Les parametres sont ce qui permet de transformer un mouvement en plusieurs.",
+      "prerequisiteForNext": "Chaque eleve fait varier les trois parametres sur un meme mouvement.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des parametres",
+            "fixed": 2,
+            "note": "espace, temps, energie, avec exemples"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher les trois parametres avec des exemples concrets pour chacun.",
+          "Verifier l'etat du sol et le degagement de la salle.",
+          "Delimiter l'espace scenique et l'espace public.",
+          "Rappeler les regles du groupe.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Espace de danse delimite au plot, degagement de 2 m.\nAffiche des trois parametres a l'entree de l'espace.\nBancs du public sur un cote.\nEnceinte a distance, cables plaques au sol."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec exploration des amplitudes : la seance travaille precisement les variations d'amplitude et d'energie.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en route",
+            "details": [
+              "Marche dans tout l'espace, variations de direction.",
+              "Course souple, arrets sur signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Exploration des amplitudes",
+            "details": [
+              "Memes gestes en tres petit, puis en tres grand.",
+              "Memes gestes tres lents, puis tres rapides.",
+              "Passages au sol controles."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Un mouvement, huit versions",
+          "objective": "Construire les variations des trois parametres a partir d'un mouvement unique.",
+          "material": [
+            {
+              "label": "affiche des parametres",
+              "fixed": 2
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque eleve choisit un mouvement simple, puis en produit huit versions : tres petit, tres grand, tres lent, tres rapide, tres tendu, tres relache, au sol, en hauteur. Presentation a un partenaire.",
+          "studentGoal": "Transformer un seul mouvement en huit versions vraiment differentes.",
+          "instructions": [
+            "Je choisis un mouvement simple, que je peux repeter.",
+            "Je le transforme en changeant un seul parametre a la fois.",
+            "Les huit versions doivent etre nettement differentes, pas legerement.",
+            "Mon partenaire verifie qu'il reconnait bien huit versions."
+          ],
+          "success": [
+            "Les huit versions sont produites.",
+            "Elles sont nettement distinctes les unes des autres.",
+            "Le partenaire reconnait les huit."
+          ],
+          "execution": [
+            "Aller au bout de chaque variation : tres petit signifie minuscule.",
+            "Changer un seul parametre a la fois.",
+            "Garder le mouvement de depart reconnaissable."
+          ],
+          "watch": [
+            "Les variations sont-elles nettes ou timides ?",
+            "Le mouvement de depart reste-t-il reconnaissable ?",
+            "Les eleves osent-ils les versions extremes ?"
+          ],
+          "errors": [
+            "Variations trop timides pour etre percues.",
+            "Changer de mouvement plutot que de le transformer.",
+            "Eviter les versions extremes par gene."
+          ],
+          "feedback": [
+            "Plus petit encore : la, on ne voit pas la difference.",
+            "C'est un autre mouvement : reviens au tien et transforme-le.",
+            "Va jusqu'au bout de la variation : c'est la que ca devient interessant."
+          ],
+          "plus": [
+            "Douze versions, en combinant deux parametres."
+          ],
+          "minus": [
+            "Quatre versions, sur deux parametres."
+          ],
+          "diff": {
+            "facilitee": "Quatre versions sur deux parametres seulement, avec guidage.",
+            "normale": "Huit versions d'un meme mouvement, un parametre a la fois.",
+            "complexifiee": "Douze versions en combinant deux parametres."
+          },
+          "safety": [
+            "Les versions rapides et amples se realisent avec un degagement de deux metres autour de soi.",
+            "Passages au sol controles, sans se jeter : les tapis sont disponibles.",
+            "Sol verifie, propre et non glissant.",
+            "Consulter les PAI : les variations extremes d'amplitude sollicitent fortement les articulations.",
+            "Arret immediat pour tout eleve signalant une douleur.",
+            "Aucun eleve ne realise une version qui lui provoque une douleur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reconnaitre le parametre",
+          "objective": "Former l'oeil : identifier quel parametre a ete modifie dans une variation.",
+          "material": [
+            {
+              "label": "affiche des parametres",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par groupes de quatre. Un eleve presente deux versions d'un mouvement, le groupe identifie quel parametre a change. Trois passages chacun.",
+          "studentGoal": "Identifier quel parametre a change entre deux versions d'un mouvement.",
+          "instructions": [
+            "J'observe deux versions du meme mouvement.",
+            "Je nomme le parametre qui a change : espace, temps ou energie.",
+            "Je precise : plus grand, plus lent, plus tendu.",
+            "Si je ne vois pas de difference, je le dis."
+          ],
+          "success": [
+            "Le parametre est identifie dans deux cas sur trois.",
+            "La precision est apportee.",
+            "Les variations non lisibles sont signalees."
+          ],
+          "execution": [
+            "Regarder le mouvement entier, pas seulement les bras.",
+            "Nommer le parametre avant de preciser.",
+            "Etre honnete quand rien n'est visible."
+          ],
+          "watch": [
+            "Les observateurs distinguent-ils les trois parametres ?",
+            "Osent-ils dire qu'ils ne voient rien ?",
+            "Regardent-ils tout le corps ?"
+          ],
+          "errors": [
+            "Nommer un parametre au hasard.",
+            "Ne regarder que les bras.",
+            "Valider une variation invisible par politesse."
+          ],
+          "feedback": [
+            "Qu'est-ce qui a change, exactement ?",
+            "Regarde tout le corps, pas seulement ses mains.",
+            "Si tu ne vois rien, dis-le : ca l'aide."
+          ],
+          "plus": [
+            "Identifier deux parametres modifies simultanement."
+          ],
+          "minus": [
+            "Choisir entre deux parametres proposes."
+          ],
+          "diff": {
+            "facilitee": "Choix entre deux parametres proposes, avec l'aide du professeur.",
+            "normale": "Identification libre du parametre parmi les trois, avec precision.",
+            "complexifiee": "Identification de deux parametres modifies simultanement."
+          },
+          "safety": [
+            "Phase realisee en groupes espaces, hors de la zone de deplacement des autres.",
+            "Un seul eleve en mouvement par groupe a la fois.",
+            "Sol verifie, degagement respecte.",
+            "Le cadre de respect est tenu : aucune moquerie pendant les presentations."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Phrase de quatre mouvements variee",
+          "objective": "Composer une phrase courte et la faire varier par les parametres.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par groupes de quatre a six, composition d'une phrase de quatre mouvements, presentee deux fois : une version neutre, puis une version ou chaque mouvement subit une variation de parametre.",
+          "studentGoal": "Presenter la meme phrase deux fois, et faire percevoir la difference.",
+          "instructions": [
+            "On compose une phrase de quatre mouvements, apprise par tout le groupe.",
+            "Version 1 : neutre, tous pareil.",
+            "Version 2 : chaque mouvement subit une variation de parametre.",
+            "On note les variations retenues sur la fiche."
+          ],
+          "success": [
+            "La phrase est apprise par tout le groupe.",
+            "Les deux versions sont presentees.",
+            "La difference est percue par les observateurs.",
+            "Les variations sont notees."
+          ],
+          "execution": [
+            "Apprendre la phrase avant de la varier.",
+            "Choisir des variations nettes.",
+            "Synchroniser la phrase dans le groupe."
+          ],
+          "watch": [
+            "La phrase est-elle reellement apprise par tous ?",
+            "Les variations sont-elles percues ?",
+            "Le groupe est-il synchronise ?"
+          ],
+          "errors": [
+            "Varier avant d'avoir appris la phrase.",
+            "Variations trop timides.",
+            "Chacun sa phrase, sans mise en commun."
+          ],
+          "feedback": [
+            "Apprenez-la d'abord : sinon vous ne variez rien.",
+            "On ne voit pas la difference : allez plus loin.",
+            "C'est une phrase de groupe : elle doit etre la meme pour tous."
+          ],
+          "plus": [
+            "Phrase de six mouvements avec deux variations par mouvement."
+          ],
+          "minus": [
+            "Phrase de deux mouvements, une variation."
+          ],
+          "diff": {
+            "facilitee": "Phrase de deux mouvements avec une seule variation.",
+            "normale": "Phrase de quatre mouvements presentee en deux versions.",
+            "complexifiee": "Phrase de six mouvements avec deux variations par mouvement."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Degagement de deux metres autour de l'espace.",
+            "Passages au sol controles.",
+            "Sol verifie, propre et non glissant.",
+            "Le cadre de respect est tenu pendant tous les passages."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont les trois parametres du mouvement ?",
+          "Pourquoi une variation timide ne sert-elle a rien ?"
+        ],
+        "key": "Espace, temps, energie : un seul mouvement peut en produire huit. Mais une variation timide ne se voit pas : il faut aller au bout, c'est la que le mouvement devient interessant."
+      },
+      "socialRoles": [
+        "Observateur : identifie et nomme le parametre modifie.",
+        "Spectateur : regarde en silence, applaudit a la fin.",
+        "Secretaire de groupe : note les variations retenues."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "L'inducteur : d'ou part la choregraphie",
+      "mainObjective": "Construire la composition a partir d'un inducteur, plutot qu'a partir de mouvements deja connus.",
+      "secondaryObjectives": [
+        "Choisir un inducteur et le traduire en mouvements.",
+        "Rendre l'inducteur lisible pour un observateur.",
+        "Renoncer aux mouvements appris ailleurs."
+      ],
+      "linkToPrevious": "Les parametres fournissent le materiau. L'inducteur fournit la source : c'est de lui que naissent les mouvements, plutot que d'un repertoire deja connu.",
+      "prerequisiteForNext": "Chaque groupe a un inducteur que les observateurs percoivent.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "cartes d'inducteurs",
+            "fixed": 24,
+            "note": "mots, images, matieres, verbes d'action"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Preparer des cartes d'inducteurs varies : mots, images, matieres, verbes d'action.",
+          "Verifier l'etat du sol et le degagement de la salle.",
+          "Delimiter l'espace scenique et l'espace public.",
+          "Rappeler les regles du groupe.",
+          "Reconstituer les groupes de quatre a six."
+        ],
+        "sketch": "Espace de danse delimite au plot, degagement de 2 m.\nCartes d'inducteurs disposees sur une table a l'entree.\nBancs du public sur un cote.\nEnceinte a distance, cables plaques au sol."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec un temps d'improvisation guidee : la composition a partir d'un inducteur suppose d'oser produire sans modele.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en route",
+            "details": [
+              "Marche dans tout l'espace.",
+              "Course souple, arrets sur signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Improvisation guidee",
+            "details": [
+              "Bouger comme si l'air etait epais, puis leger.",
+              "Bouger comme si le sol etait brulant, puis collant.",
+              "Arrets en posture sur signal."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "De l'inducteur au mouvement",
+          "objective": "Construire des mouvements qui naissent de l'inducteur, et non d'un repertoire connu.",
+          "material": [
+            {
+              "label": "cartes d'inducteurs",
+              "fixed": 24
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque groupe tire un inducteur. Trois temps : improvisation individuelle a partir de l'inducteur, mise en commun des trouvailles, selection de six mouvements retenus.",
+          "studentGoal": "Trouver des mouvements qui viennent de l'inducteur, pas de ce que je sais deja faire.",
+          "instructions": [
+            "Temps 1 : j'improvise seul a partir de l'inducteur, sans juger ce que je trouve.",
+            "Temps 2 : on se montre nos trouvailles dans le groupe.",
+            "Temps 3 : on retient six mouvements, ceux qui parlent le mieux de l'inducteur.",
+            "On refuse les mouvements qui viennent d'ailleurs."
+          ],
+          "success": [
+            "Chaque eleve a improvise seul.",
+            "Six mouvements sont retenus.",
+            "Ils sont lies a l'inducteur, non importes d'un repertoire connu."
+          ],
+          "execution": [
+            "Improviser sans juger, dans le premier temps.",
+            "Montrer sans commenter, dans le deuxieme.",
+            "Choisir en fonction de l'inducteur, pas de la difficulte."
+          ],
+          "watch": [
+            "Les eleves osent-ils improviser ?",
+            "Les mouvements retenus viennent-ils de l'inducteur ?",
+            "Le groupe accueille-t-il les propositions de chacun ?"
+          ],
+          "errors": [
+            "Reproduire une choregraphie vue ailleurs.",
+            "Juger les propositions pendant l'improvisation.",
+            "Retenir uniquement les mouvements d'un seul eleve."
+          ],
+          "feedback": [
+            "Ca ne vient pas de votre inducteur : cherchez encore.",
+            "On ne juge pas pendant l'improvisation : on cherche.",
+            "Tout le monde a propose : retenez des mouvements de chacun."
+          ],
+          "plus": [
+            "Deux inducteurs a croiser."
+          ],
+          "minus": [
+            "Inducteur tres concret, trois mouvements retenus."
+          ],
+          "diff": {
+            "facilitee": "Inducteur tres concret, trois mouvements retenus, improvisation guidee.",
+            "normale": "Un inducteur, six mouvements retenus en trois temps.",
+            "complexifiee": "Deux inducteurs a croiser dans une meme recherche."
+          },
+          "safety": [
+            "Degagement de deux metres autour de chaque danseur pendant l'improvisation.",
+            "Passages au sol controles, tapis disponibles.",
+            "Aucun contact ni porte pendant l'improvisation individuelle.",
+            "Sol verifie, propre et non glissant.",
+            "Le cadre de respect protege l'improvisation : aucune moquerie, aucun commentaire.",
+            "Consulter les PAI, arret immediat pour toute douleur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Faire deviner l'inducteur",
+          "objective": "Verifier la lisibilite de l'inducteur en le faisant deviner par un autre groupe.",
+          "material": [
+            {
+              "label": "cartes d'inducteurs",
+              "fixed": 24
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque groupe presente une sequence de vingt secondes issue de son inducteur, sans le nommer. Le groupe observateur propose ce qu'il a percu.",
+          "studentGoal": "Composer vingt secondes dont un autre groupe devine l'inducteur.",
+          "instructions": [
+            "On presente vingt secondes issues de notre inducteur, sans le dire.",
+            "Le groupe observateur propose ce qu'il a compris.",
+            "Si personne ne devine, on cherche ce qui manque.",
+            "On ne mime pas : on danse."
+          ],
+          "success": [
+            "Le groupe observateur devine ou propose une interpretation proche.",
+            "La sequence danse plutot qu'elle ne mime.",
+            "Les points a clarifier sont identifies."
+          ],
+          "execution": [
+            "Traduire l'inducteur par le corps entier.",
+            "Eviter le mime illustratif.",
+            "Assumer la proposition jusqu'au bout."
+          ],
+          "watch": [
+            "Les groupes miment-ils plutot que de danser ?",
+            "L'inducteur est-il percu ?",
+            "Le cadre de respect tient-il ?"
+          ],
+          "errors": [
+            "Mimer l'inducteur de facon illustrative.",
+            "Presenter sans engagement, ce qui rend tout illisible.",
+            "Rire pendant sa propre presentation."
+          ],
+          "feedback": [
+            "Tu mimes : cherche ce que ca fait a ton corps, pas comment ca se represente.",
+            "Personne n'a devine : qu'est-ce qui, dans vos corps, en parle ?",
+            "Assume : ton rire annule ta proposition."
+          ],
+          "plus": [
+            "Inducteur abstrait, difficile a mimer."
+          ],
+          "minus": [
+            "Inducteur tres concret, sequence de dix secondes."
+          ],
+          "diff": {
+            "facilitee": "Inducteur tres concret, sequence de dix secondes.",
+            "normale": "Sequence de vingt secondes, inducteur a deviner.",
+            "complexifiee": "Inducteur abstrait, impossible a mimer."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum.",
+            "Aucun contact ni porte a ce stade du cycle.",
+            "Sol verifie, degagement respecte.",
+            "Le cadre de respect est tenu pendant tous les passages."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Phrase d'une minute issue de l'inducteur",
+          "objective": "Composer une phrase plus longue entierement issue de l'inducteur, en variant les parametres.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "Chaque groupe compose une minute a partir de ses six mouvements retenus, en faisant varier les parametres. Presentation a la classe, qui propose ce qu'elle a percu.",
+          "studentGoal": "Composer une minute entierement issue de notre inducteur.",
+          "instructions": [
+            "On compose une minute avec nos six mouvements.",
+            "On fait varier les parametres pour eviter la repetition monotone.",
+            "On presente sans annoncer notre inducteur.",
+            "La classe propose ce qu'elle a percu."
+          ],
+          "success": [
+            "La minute est composee a partir des six mouvements.",
+            "Les parametres varient.",
+            "L'inducteur est percu par la classe."
+          ],
+          "execution": [
+            "Utiliser les variations pour eviter la monotonie.",
+            "Marquer un debut et une fin.",
+            "Assumer la presentation."
+          ],
+          "watch": [
+            "L'inducteur tient-il sur une minute ?",
+            "Les variations evitent-elles la monotonie ?",
+            "L'engagement est-il maintenu jusqu'a la fin ?"
+          ],
+          "errors": [
+            "Repeter les six mouvements a l'identique jusqu'a la fin.",
+            "Ajouter des mouvements sans lien avec l'inducteur pour tenir la duree.",
+            "Se relacher sur la fin."
+          ],
+          "feedback": [
+            "Vous repetez a l'identique : variez vos parametres.",
+            "Ce mouvement-la ne vient pas de votre inducteur.",
+            "Votre fin s'effondre : tenez jusqu'au dernier instant."
+          ],
+          "plus": [
+            "Une minute trente avec huit mouvements."
+          ],
+          "minus": [
+            "Trente secondes avec quatre mouvements."
+          ],
+          "diff": {
+            "facilitee": "Trente secondes composees a partir de quatre mouvements.",
+            "normale": "Une minute a partir des six mouvements, avec variations.",
+            "complexifiee": "Une minute trente a partir de huit mouvements."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Degagement de deux metres, public a distance.",
+            "Passages au sol controles.",
+            "Aucun contact ni porte a ce stade du cycle.",
+            "Sol verifie, propre et non glissant.",
+            "Le cadre de respect est tenu pendant tous les passages."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "D'ou viennent les mouvements de votre choregraphie ?",
+          "Quelle difference y a-t-il entre mimer et danser un inducteur ?"
+        ],
+        "key": "Les mouvements naissent de l'inducteur, pas d'un repertoire deja connu. Et danser un inducteur, ce n'est pas le representer : c'est chercher ce qu'il fait au corps."
+      },
+      "socialRoles": [
+        "Groupe observateur : propose ce qu'il a percu de l'inducteur.",
+        "Spectateur : regarde en silence, applaudit a la fin.",
+        "Secretaire de groupe : note les six mouvements retenus."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Les procedes de composition et la relation aux autres",
+      "mainObjective": "Construire les procedes de composition qui organisent le groupe dans le temps et dans l'espace.",
+      "secondaryObjectives": [
+        "Utiliser la repetition, l'accumulation et le contraste.",
+        "Realiser un unisson et une cascade lisibles.",
+        "Construire une relation entre danseurs : ensemble, contre, autour."
+      ],
+      "linkToPrevious": "L'inducteur fournit le materiau, mais le groupe fait souvent tout en meme temps. Les procedes donnent au collectif une organisation.",
+      "prerequisiteForNext": "Chaque groupe utilise trois procedes de facon identifiable.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des procedes",
+            "fixed": 2,
+            "note": "repetition, accumulation, unisson, cascade, contraste"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher les cinq procedes avec un schema simple pour chacun.",
+          "Verifier l'etat du sol et le degagement de la salle.",
+          "Delimiter l'espace scenique et l'espace public.",
+          "Rappeler les regles du groupe.",
+          "Reconstituer les groupes."
+        ],
+        "sketch": "Espace de danse delimite au plot, degagement de 2 m.\nAffiche des cinq procedes a l'entree de l'espace.\nZones de travail par groupe en peripherie.\nBancs du public sur un cote."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec un temps de synchronisation collective : les procedes reposent sur une coordination du groupe.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en route",
+            "details": [
+              "Marche dans tout l'espace, variations de direction.",
+              "Deplacements collectifs synchronises sur signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Synchronisation collective",
+            "details": [
+              "Quatre eleves realisent le meme geste en meme temps, sans compter a voix haute.",
+              "Le meme geste en decalage regulier.",
+              "Arrets collectifs sur signal."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Cinq procedes sur une phrase",
+          "objective": "Construire les cinq procedes a partir d'une meme phrase courte.",
+          "material": [
+            {
+              "label": "affiche des procedes",
+              "fixed": 2
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "Chaque groupe prend une phrase de quatre mouvements issue de son inducteur et la traite successivement selon les cinq procedes : repetition, accumulation, unisson, cascade, contraste. Cinq minutes par procede.",
+          "studentGoal": "Traiter une meme phrase selon cinq procedes differents.",
+          "instructions": [
+            "Repetition : on repete la phrase trois fois, en variant un parametre a chaque fois.",
+            "Accumulation : on ajoute un mouvement a chaque reprise.",
+            "Unisson : tout le groupe exactement en meme temps, sans compter a voix haute.",
+            "Cascade : l'un apres l'autre, a intervalle regulier. Contraste : deux sous-groupes font l'inverse."
+          ],
+          "success": [
+            "Les cinq procedes sont realises.",
+            "L'unisson est synchrone a moins d'une demi-seconde.",
+            "La cascade a un intervalle regulier.",
+            "Le contraste est lisible."
+          ],
+          "execution": [
+            "Unisson : se caler sur un repere visuel commun, pas sur un comptage.",
+            "Cascade : compter mentalement le meme intervalle.",
+            "Contraste : opposer un parametre net, pas tout a la fois."
+          ],
+          "watch": [
+            "L'unisson est-il reellement synchrone ?",
+            "L'intervalle de la cascade est-il regulier ?",
+            "Le contraste est-il lisible ou confus ?"
+          ],
+          "errors": [
+            "Compter a voix haute pour se synchroniser.",
+            "Cascade a intervalle irregulier, qui devient un desordre.",
+            "Contraste ou tout s'oppose, donc rien ne se lit."
+          ],
+          "feedback": [
+            "Sans compter a voix haute : trouvez un repere visuel.",
+            "Meme intervalle a chaque fois, sinon on ne voit pas la cascade.",
+            "Opposez un seul parametre : la, on ne lit plus rien."
+          ],
+          "plus": [
+            "Procedes combines deux a deux."
+          ],
+          "minus": [
+            "Trois procedes seulement : repetition, unisson, cascade."
+          ],
+          "diff": {
+            "facilitee": "Trois procedes seulement, sur une phrase de deux mouvements.",
+            "normale": "Cinq procedes sur une phrase de quatre mouvements.",
+            "complexifiee": "Procedes combines deux a deux dans une meme sequence."
+          },
+          "safety": [
+            "La cascade et le contraste multiplient les deplacements simultanes : degagement de deux metres entre les danseurs.",
+            "Un seul groupe par zone de travail, zones espacees.",
+            "Passages au sol controles, tapis disponibles.",
+            "Aucun contact ni porte : les relations se construisent dans l'espace, pas par le contact.",
+            "Sol verifie, propre et non glissant.",
+            "Le cadre de respect est tenu."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "La relation entre danseurs",
+          "objective": "Construire la relation entre danseurs : ensemble, contre, autour, en miroir.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "affiche des procedes",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par deux puis par quatre. Quatre relations explorees : danser ensemble, danser en miroir, danser autour de l'autre, danser en opposition. Trois minutes par relation.",
+          "studentGoal": "Danser avec les autres de quatre facons differentes.",
+          "instructions": [
+            "Ensemble : nous faisons la meme chose, tournes vers le meme point.",
+            "Miroir : je fais l'inverse de mon partenaire, face a face.",
+            "Autour : je me deplace autour de lui pendant qu'il reste au centre.",
+            "Opposition : je fais le contraire de ce qu'il fait, en energie et en niveau."
+          ],
+          "success": [
+            "Les quatre relations sont explorees.",
+            "Elles sont distinctes et lisibles.",
+            "Aucun contact physique n'est necessaire."
+          ],
+          "execution": [
+            "Regarder son partenaire pour se caler.",
+            "Garder une distance de securite en relation autour.",
+            "Opposer un parametre net."
+          ],
+          "watch": [
+            "Les relations sont-elles distinctes ?",
+            "Les eleves regardent-ils leur partenaire ?",
+            "Les distances sont-elles respectees ?"
+          ],
+          "errors": [
+            "Faire la meme chose dans les quatre relations.",
+            "Ne pas regarder son partenaire.",
+            "Se rapprocher au point de se genez."
+          ],
+          "feedback": [
+            "En miroir, tu fais l'inverse : la tu fais pareil.",
+            "Regarde-le : c'est lui ton repere.",
+            "Garde ta distance : tu ne peux plus bouger."
+          ],
+          "plus": [
+            "Relations a quatre, avec deux sous-groupes en opposition."
+          ],
+          "minus": [
+            "Deux relations : ensemble et miroir."
+          ],
+          "diff": {
+            "facilitee": "Deux relations seulement, ensemble et miroir, par deux.",
+            "normale": "Quatre relations explorees, par deux puis par quatre.",
+            "complexifiee": "Relations a quatre avec deux sous-groupes en opposition."
+          },
+          "safety": [
+            "Distance minimale d'un metre entre partenaires, y compris dans la relation autour.",
+            "Aucun contact ni porte : ce cycle ne comporte pas de travail de portes.",
+            "Degagement de deux metres autour de chaque duo.",
+            "Passages au sol controles.",
+            "Sol verifie, propre et non glissant.",
+            "Le cadre de respect protege le travail en relation : aucune moquerie, aucun contact non souhaite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Sequence avec trois procedes",
+          "objective": "Integrer trois procedes et une relation dans une sequence issue de l'inducteur.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "Chaque groupe compose une minute integrant trois procedes et une relation, au service de son inducteur. Presentation a un autre groupe, qui identifie les procedes.",
+          "studentGoal": "Composer une minute ou un autre groupe reconnait trois procedes.",
+          "instructions": [
+            "On integre trois procedes et une relation dans notre minute.",
+            "Ils doivent servir notre inducteur, pas le contredire.",
+            "Groupe observateur : vous identifiez les procedes utilises.",
+            "On note les procedes retenus sur notre fiche."
+          ],
+          "success": [
+            "Trois procedes sont integres et identifies.",
+            "Une relation est lisible.",
+            "L'ensemble sert l'inducteur."
+          ],
+          "execution": [
+            "Choisir des procedes coherents avec l'inducteur.",
+            "Placer les procedes aux moments forts.",
+            "Marquer le debut et la fin."
+          ],
+          "watch": [
+            "Les procedes sont-ils identifies par les observateurs ?",
+            "Servent-ils l'inducteur ?",
+            "La relation est-elle lisible ?"
+          ],
+          "errors": [
+            "Plaquer un procede sans lien avec l'inducteur.",
+            "Procedes trop discrets pour etre identifies.",
+            "Relation invisible parce que les danseurs ne se regardent pas."
+          ],
+          "feedback": [
+            "Votre cascade ne dit rien de votre inducteur : pourquoi celle-la ?",
+            "Trop discret : personne ne l'a vu.",
+            "Regardez-vous : sinon la relation n'existe pas."
+          ],
+          "plus": [
+            "Quatre procedes et deux relations."
+          ],
+          "minus": [
+            "Un procede et une relation, sur trente secondes."
+          ],
+          "diff": {
+            "facilitee": "Un procede et une relation sur trente secondes.",
+            "normale": "Trois procedes et une relation sur une minute.",
+            "complexifiee": "Quatre procedes et deux relations sur une minute trente."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Distance minimale d'un metre entre danseurs.",
+            "Aucun contact ni porte.",
+            "Passages au sol controles.",
+            "Sol verifie, degagement respecte.",
+            "Le cadre de respect est tenu pendant tous les passages."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels procedes avez-vous utilises, et pourquoi ceux-la ?",
+          "Comment rend-on une relation lisible pour un spectateur ?"
+        ],
+        "key": "Les procedes organisent le groupe dans le temps : repetition, accumulation, unisson, cascade, contraste. Et une relation ne se lit que si les danseurs se regardent : sinon ils sont simplement cote a cote."
+      },
+      "socialRoles": [
+        "Groupe observateur : identifie et justifie les procedes utilises.",
+        "Spectateur : regarde en silence, applaudit a la fin.",
+        "Secretaire de groupe : note les procedes retenus."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et projet choregraphique",
+      "mainObjective": "Evaluer l'etat de la choregraphie et faire arreter le projet presente a l'evaluation finale.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter la choregraphie en l'etat.",
+        "Arreter le projet choregraphique.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Parametres, inducteur et procedes ont ete construits separement : la presentation de mi-cycle montre ce que donne leur reunion.",
+      "prerequisiteForNext": "Chaque groupe a un projet ecrit et chaque eleve un objectif personnel.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de composition par groupe.",
+          "Verifier l'etat du sol et le degagement de la salle.",
+          "Installer l'espace scenique et l'espace public.",
+          "Prevoir un espace d'ecriture hors de l'espace de danse."
+        ],
+        "sketch": "Espace scenique installe comme le jour de l'evaluation.\nAffichage des criteres a l'entree.\nCoin ecriture avec bancs, hors de l'espace de danse.\nBancs du public sur un cote, a 2 m."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et la danse exige une disponibilite articulaire complete.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision de la choregraphie",
+            "details": [
+              "Chaque groupe revise sa sequence par parties.",
+              "Verification des unissons et des cascades.",
+              "Marquage du debut et de la fin."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Presentation evaluee de la choregraphie",
+          "objective": "Evaluer l'etat de la choregraphie sur les criteres de l'evaluation finale.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque groupe presente sa sequence d'une minute devant la classe, apres avoir annonce son inducteur. Deux spectateurs designes renseignent la fiche : inducteur lisible, procedes identifies, variations de parametres, engagement.",
+          "studentGoal": "Presenter notre choregraphie et savoir ce qui est lisible et ce qui ne l'est pas.",
+          "instructions": [
+            "On annonce notre inducteur avant de commencer.",
+            "On presente la sequence en entier.",
+            "Spectateurs : vous notez si l'inducteur est lisible et quels procedes vous identifiez.",
+            "On marque un debut et une fin nets."
+          ],
+          "success": [
+            "La sequence est presentee en entier.",
+            "L'inducteur annonce est lisible pour les spectateurs.",
+            "Les procedes sont identifies.",
+            "Le debut et la fin sont marques."
+          ],
+          "execution": [
+            "Annoncer l'inducteur clairement.",
+            "Maintenir l'engagement du debut a la fin.",
+            "Tenir la posture finale trois secondes."
+          ],
+          "watch": [
+            "L'inducteur annonce est-il celui qu'on percoit ?",
+            "L'engagement tient-il devant la classe ?",
+            "Les spectateurs osent-ils dire ce qu'ils n'ont pas vu ?",
+            "Le cadre de respect tient-il ?"
+          ],
+          "errors": [
+            "Annoncer un inducteur et en presenter un autre.",
+            "Se relacher ou rire sous l'effet du trac.",
+            "Spectateurs complaisants qui valident tout."
+          ],
+          "feedback": [
+            "Vous annoncez la chute et on voit une course.",
+            "Ton rire annule ta proposition : assume-la.",
+            "Dis ce que tu as vu, pas ce qui arrange."
+          ],
+          "plus": [
+            "Sequence d'une minute trente avec quatre procedes."
+          ],
+          "minus": [
+            "Sequence de trente secondes avec un procede."
+          ],
+          "diff": {
+            "facilitee": "Sequence de trente secondes avec un procede, devant un demi-groupe.",
+            "normale": "Sequence d'une minute avec inducteur annonce et trois procedes.",
+            "complexifiee": "Sequence d'une minute trente avec quatre procedes."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum, aucune circulation pendant un passage.",
+            "Aucun contact ni porte.",
+            "Passages au sol controles.",
+            "Sol verifie, degagement respecte.",
+            "Echauffement complet obligatoire avant toute presentation evaluee.",
+            "Le cadre de respect est tenu : le professeur interrompt immediatement toute moquerie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Arreter le projet choregraphique",
+          "objective": "Faire arreter le projet definitif a partir des retours des spectateurs.",
+          "material": [
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par groupes, assis hors de l'espace de danse. A partir des retours, chaque groupe arrete son projet : inducteur definitif, structure, procedes, relations, duree.",
+          "studentGoal": "Arreter le projet que nous presenterons a l'evaluation finale.",
+          "instructions": [
+            "On repart des retours : qu'est-ce qui n'etait pas lisible ?",
+            "On arrete notre inducteur definitif.",
+            "On ecrit la structure : debut, moments forts, fin.",
+            "On note les procedes et les relations retenus."
+          ],
+          "success": [
+            "Le projet est ecrit avec inducteur, structure, procedes et relations.",
+            "Il tient compte des retours des spectateurs.",
+            "La duree visee est fixee."
+          ],
+          "execution": [
+            "Partir des retours, pas des impressions du groupe.",
+            "Structurer en trois temps au moins.",
+            "Repartir les moments entre tous les danseurs."
+          ],
+          "watch": [
+            "Les projets tiennent-ils compte des retours ?",
+            "La structure est-elle ecrite ?",
+            "Tous les danseurs ont-ils un moment ?"
+          ],
+          "errors": [
+            "Ignorer les retours des spectateurs.",
+            "Projet sans structure ecrite.",
+            "Concentrer tous les moments forts sur un seul danseur."
+          ],
+          "feedback": [
+            "Les spectateurs n'ont pas vu votre inducteur : c'est l'information la plus utile.",
+            "Ecrivez votre structure : sinon vous repartirez de zero.",
+            "Chacun doit exister dans la choregraphie."
+          ],
+          "plus": [
+            "Projet de trois minutes avec quatre procedes."
+          ],
+          "minus": [
+            "Projet d'une minute avec deux procedes, structure fournie."
+          ],
+          "diff": {
+            "facilitee": "Projet d'une minute avec deux procedes, structure fournie a completer.",
+            "normale": "Projet de deux a trois minutes avec structure, procedes et relations ecrits.",
+            "complexifiee": "Projet de trois minutes avec quatre procedes et deux relations."
+          },
+          "safety": [
+            "Le projet ne comporte aucun porte ni contact acrobatique : ce cycle n'en travaille pas, et improviser un porte non prepare est le principal risque de la danse scolaire.",
+            "Le professeur valide chaque projet avant qu'il soit retenu.",
+            "Phase d'ecriture assise hors de l'espace de danse.",
+            "Aucun groupe en mouvement a proximite de la zone d'ecriture."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier essai du projet et objectif personnel",
+          "objective": "Eprouver le projet arrete et faire ecrire a chacun son objectif.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque groupe essaie son projet en entier, deux fois. Puis chacun ecrit son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Essayer notre projet en entier et ecrire mon objectif personnel.",
+          "instructions": [
+            "On essaie le projet dans l'ordre ecrit.",
+            "On note ce qui ne fonctionne pas : transition, procede, moment creux.",
+            "Puis j'ecris seul mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche : on la ressortira a la seance 8."
+          ],
+          "success": [
+            "Le projet est essaye en entier au moins une fois.",
+            "Les points problematiques sont notes.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Respecter la structure ecrite.",
+            "Noter immediatement ce qui ne fonctionne pas.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realisables dans la duree visee ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux danser.",
+            "Abandonner l'essai a la premiere difficulte.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Precise : qu'est-ce que tu veux reussir exactement ?",
+            "Notez ce qui bloque, on le corrigera.",
+            "Allez jusqu'au bout de l'essai."
+          ],
+          "plus": [
+            "Essai avec musique et structure minutee."
+          ],
+          "minus": [
+            "Essai par moities, objectif choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Essai par moities, objectif choisi dans une liste affichee.",
+            "normale": "Essai complet deux fois, objectif redige librement.",
+            "complexifiee": "Essai complet avec musique et structure minutee."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois, zones de travail espacees.",
+            "Aucun contact ni porte.",
+            "Passages au sol controles.",
+            "Phase d'ecriture assise hors de l'espace de danse.",
+            "Sol verifie, degagement respecte."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Les spectateurs ont-ils percu l'inducteur que vous aviez annonce ?",
+          "Quelle est la structure de votre choregraphie : debut, moments forts, fin ?"
+        ],
+        "key": "Le retour le plus utile d'un spectateur n'est pas s'il a aime : c'est de savoir si l'inducteur annonce a ete percu. Et une choregraphie a une structure ecrite, sinon elle se redecouvre a chaque essai."
+      },
+      "socialRoles": [
+        "Spectateur : renseigne la fiche sur l'inducteur et les procedes.",
+        "Responsable son : gere la musique pendant les passages.",
+        "Secretaire de groupe : note le projet definitif."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "L'interpretation : s'engager sans se cacher",
+      "mainObjective": "Construire l'interpretation : passer de l'execution correcte a un engagement corporel reel.",
+      "secondaryObjectives": [
+        "Faire varier l'intention sur un meme mouvement.",
+        "Utiliser le regard comme element de composition.",
+        "Assumer sa proposition sans se refugier dans l'humour."
+      ],
+      "linkToPrevious": "La choregraphie est construite, mais souvent executee sans intention : c'est l'interpretation qui la rend vivante.",
+      "prerequisiteForNext": "Chaque eleve interprete son role avec une intention identifiable.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "affiche des regles du groupe",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2,
+            "note": "sous reserve de l'autorisation de captation"
+          }
+        ],
+        "instructions": [
+          "Verifier l'autorisation de captation video avant toute prise d'image.",
+          "Verifier l'etat du sol et le degagement de la salle.",
+          "Installer l'espace scenique et l'espace public.",
+          "Rappeler les regles du groupe : cette seance demande un engagement plus grand.",
+          "Reconstituer les groupes."
+        ],
+        "sketch": "Espace de danse delimite au plot, degagement de 2 m.\nBancs du public sur un cote, tres proches pour la situation de regard.\nPoste de captation sur le cote, si autorisee.\nAffiche des regles du groupe visible."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec un temps de mise en disponibilite emotionnelle : l'engagement corporel se prepare, il ne se decrete pas.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en route",
+            "details": [
+              "Marche dans tout l'espace, croisements de regards.",
+              "Course souple, arrets sur signal."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mise en disponibilite",
+            "details": [
+              "Marcher en soutenant le regard d'un camarade trois secondes.",
+              "Arrets en posture, regard fixe.",
+              "Passages au sol controles."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Un mouvement, quatre intentions",
+          "objective": "Construire l'interpretation en faisant varier l'intention sur un mouvement inchange.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "affiche des regles du groupe",
+              "fixed": 2
+            }
+          ],
+          "organization": "Chaque eleve prend un mouvement de sa choregraphie et le realise avec quatre intentions differentes, sans changer le mouvement lui-meme. Un partenaire dit ce qu'il percoit a chaque fois.",
+          "studentGoal": "Changer ce que raconte mon mouvement, sans changer le mouvement.",
+          "instructions": [
+            "Je garde exactement le meme mouvement dans les quatre versions.",
+            "Je change seulement mon intention, mon regard, ma tension interne.",
+            "Mon partenaire dit ce qu'il percoit, sans que je lui dise.",
+            "Si les quatre versions se ressemblent, je vais plus loin."
+          ],
+          "success": [
+            "Les quatre versions sont produites sans modifier le mouvement.",
+            "Le partenaire percoit des differences.",
+            "L'engagement est reel, sans refuge dans l'humour."
+          ],
+          "execution": [
+            "Garder le mouvement identique.",
+            "Faire porter le changement par le regard et la tension.",
+            "Assumer chaque version jusqu'au bout."
+          ],
+          "watch": [
+            "Les eleves modifient-ils le mouvement au lieu de l'intention ?",
+            "Le regard est-il utilise ?",
+            "Le refuge dans l'humour reapparait-il ?"
+          ],
+          "errors": [
+            "Changer le mouvement plutot que l'intention.",
+            "Se contenter d'une mimique du visage.",
+            "Rire pour desamorcer la situation."
+          ],
+          "feedback": [
+            "Meme mouvement : c'est ton intention qui change.",
+            "Ce n'est pas ton visage, c'est tout ton corps.",
+            "Le rire coupe ta proposition : assume-la."
+          ],
+          "plus": [
+            "Six intentions, dont deux tres proches a distinguer."
+          ],
+          "minus": [
+            "Deux intentions tres contrastees."
+          ],
+          "diff": {
+            "facilitee": "Deux intentions tres contrastees, avec guidage du professeur.",
+            "normale": "Quatre intentions sur un mouvement inchange.",
+            "complexifiee": "Six intentions dont deux proches, a distinguer."
+          },
+          "safety": [
+            "Le cadre de respect est une condition de securite de cette situation : l'engagement demande expose, et le professeur interrompt immediatement toute moquerie.",
+            "Aucun eleve n'est contraint de presenter une intention qui le met en difficulte.",
+            "Degagement de deux metres autour de chaque danseur.",
+            "Sol verifie, propre et non glissant.",
+            "Captation video uniquement si l'autorisation a ete verifiee, images non diffusees hors du cadre pedagogique."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Danser a un metre du public",
+          "objective": "Construire l'engagement en situation de proximite avec le regard du public.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "affiche des regles du groupe",
+              "fixed": 2
+            }
+          ],
+          "organization": "Le public est assis a un metre de l'espace. Chaque groupe presente vingt secondes de sa choregraphie dans cette configuration. Puis on recule le public a cinq metres et on compare.",
+          "studentGoal": "Danser a un metre du public sans me relacher ni rire.",
+          "instructions": [
+            "Le public est tout pres : je danse quand meme comme prevu.",
+            "Je ne cherche pas le regard des spectateurs pour faire rire.",
+            "Public : vous regardez en silence, encore plus attentivement.",
+            "Ensuite on recule et on compare la sensation."
+          ],
+          "success": [
+            "La sequence est presentee a un metre sans relachement.",
+            "Le cadre de respect est tenu par le public.",
+            "La comparaison entre les deux distances est verbalisee."
+          ],
+          "execution": [
+            "Fixer un point au-dessus du public si le regard direct est trop difficile.",
+            "Maintenir l'engagement du debut a la fin.",
+            "Tenir la posture finale."
+          ],
+          "watch": [
+            "La proximite provoque-t-elle un relachement ?",
+            "Les eleves cherchent-ils la complicite du public pour desamorcer ?",
+            "Le public tient-il le silence ?"
+          ],
+          "errors": [
+            "Chercher le rire du public.",
+            "Baisser le regard et executer mecaniquement.",
+            "Commenter le passage d'un camarade."
+          ],
+          "feedback": [
+            "Tu cherches leur rire : reviens a ta proposition.",
+            "Fixe un point au-dessus d'eux si c'est trop difficile.",
+            "Silence : c'est la regle, surtout a cette distance."
+          ],
+          "plus": [
+            "Public dispose en cercle autour du groupe."
+          ],
+          "minus": [
+            "Public a trois metres, presentation a deux groupes reunis."
+          ],
+          "diff": {
+            "facilitee": "Public a trois metres, deux groupes presentent en meme temps.",
+            "normale": "Public a un metre, puis a cinq metres, comparaison verbalisee.",
+            "complexifiee": "Public dispose en cercle autour du groupe."
+          },
+          "safety": [
+            "Public assis, immobile, hors de l'espace de danse : a un metre, un spectateur qui bouge devient un obstacle.",
+            "Aucun deplacement rapide vers le public dans cette configuration.",
+            "Le cadre de respect est tenu strictement : cette situation expose particulierement.",
+            "Aucun eleve n'est contraint de danser a un metre s'il refuse : il presente a distance normale.",
+            "Sol verifie, degagement respecte cote scene."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Choregraphie interpretee",
+          "objective": "Reprendre la choregraphie complete en y integrant les intentions travaillees.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            }
+          ],
+          "organization": "Chaque groupe reprend sa choregraphie en attribuant une intention a chaque moment. Presentation a un autre groupe, qui compare avec la version de la seance 5.",
+          "studentGoal": "Presenter notre choregraphie avec une intention a chaque moment.",
+          "instructions": [
+            "On attribue une intention a chaque moment de notre choregraphie.",
+            "On note ces intentions sur notre fiche.",
+            "On presente a un autre groupe.",
+            "Groupe observateur : vous comparez avec la version de la seance 5."
+          ],
+          "success": [
+            "Une intention est attribuee a chaque moment.",
+            "Les observateurs percoivent la difference avec la version precedente.",
+            "L'engagement est maintenu du debut a la fin."
+          ],
+          "execution": [
+            "Changer d'intention aux moments de rupture.",
+            "Utiliser le regard comme element de composition.",
+            "Tenir jusqu'a la posture finale."
+          ],
+          "watch": [
+            "Les intentions sont-elles percues ?",
+            "L'engagement tient-il sur toute la duree ?",
+            "Les groupes percoivent-ils le gain ?"
+          ],
+          "errors": [
+            "Attribuer une intention et ne pas la jouer.",
+            "Se relacher apres le premier tiers.",
+            "Revenir a une execution mecanique."
+          ],
+          "feedback": [
+            "Ton intention n'apparait pas : va plus loin.",
+            "Votre engagement s'eteint apres trente secondes.",
+            "Regardez la difference : c'est ce qui fait une interpretation."
+          ],
+          "plus": [
+            "Presentation filmee et analysee immediatement."
+          ],
+          "minus": [
+            "Intentions attribuees a deux moments seulement."
+          ],
+          "diff": {
+            "facilitee": "Intentions attribuees a deux moments seulement, avec aide du professeur.",
+            "normale": "Une intention par moment de la choregraphie, presentee a un autre groupe.",
+            "complexifiee": "Presentation filmee et analysee immediatement avec la video."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum.",
+            "Aucun contact ni porte.",
+            "Passages au sol controles.",
+            "Le cadre de respect est tenu pendant tous les passages.",
+            "Captation video uniquement si l'autorisation a ete verifiee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui change quand on change d'intention sans changer le mouvement ?",
+          "Que se passe-t-il quand on cherche le rire du public ?"
+        ],
+        "key": "Un meme mouvement raconte autre chose selon l'intention : c'est cela, interpreter. Et chercher le rire du public annule la proposition : le cadre du groupe existe pour rendre l'engagement possible."
+      },
+      "socialRoles": [
+        "Partenaire d'observation : dit ce qu'il percoit de l'intention.",
+        "Public : tient le silence, particulierement en situation de proximite.",
+        "Secretaire de groupe : note les intentions attribuees."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et formation du regard",
+      "mainObjective": "Stabiliser la choregraphie par la repetition et former les eleves au role de spectateur.",
+      "secondaryObjectives": [
+        "Realiser la choregraphie identique deux fois de suite.",
+        "Apprecier une prestation avec la grille reelle.",
+        "Realiser une repetition generale devant public."
+      ],
+      "linkToPrevious": "Les choregraphies existent et sont interpretees : il reste a les stabiliser et a former les spectateurs, dont le role est evalue.",
+      "prerequisiteForNext": "Chaque groupe realise sa choregraphie identique deux fois et chaque eleve sait utiliser la grille.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "grilles d'appreciation d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "tablette ou telephone pour filmer",
+            "fixed": 2
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          }
+        ],
+        "instructions": [
+          "Installer l'espace scenique et les bancs du public comme le jour de l'evaluation.",
+          "Preparer les grilles d'appreciation identiques a celles de l'evaluation.",
+          "Verifier l'autorisation de captation video.",
+          "Verifier l'etat du sol et le degagement.",
+          "Prevoir des zones de repetition separees."
+        ],
+        "sketch": "Espace scenique et bancs du public installes comme le jour J.\nZones de repetition par groupe en peripherie.\nTable des grilles d'appreciation pres du public.\nPoste de captation sur le cote, si autorisee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : la seance comporte de nombreuses repetitions, la fatigue et le refroidissement doivent etre anticipes.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements.",
+              "Epaules, coudes, poignets, nuque."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise sa choregraphie par parties.",
+              "Verification des unissons et des cascades.",
+              "Marquage du debut et de la fin."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Repeter jusqu'a la stabilite",
+          "objective": "Realiser la choregraphie plusieurs fois jusqu'a la reproduire identique deux fois de suite.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de composition",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe repete sa choregraphie quatre fois dans sa zone, avec un point de correction unique entre chaque filage et une recuperation imposee.",
+          "studentGoal": "Realiser notre choregraphie deux fois de suite exactement pareil.",
+          "instructions": [
+            "On file la choregraphie en entier, dans l'ordre ecrit.",
+            "Entre deux filages, on corrige un seul point et on recupere deux minutes.",
+            "On s'arrete quand on l'a faite deux fois identique.",
+            "On garde l'engagement sur tous les filages."
+          ],
+          "success": [
+            "La choregraphie est filee en entier au moins trois fois.",
+            "Deux filages consecutifs sont identiques.",
+            "L'engagement est maintenu sur tous les filages."
+          ],
+          "execution": [
+            "Respecter la structure ecrite, sans improviser.",
+            "Corriger un seul element a la fois.",
+            "Maintenir l'engagement malgre la repetition."
+          ],
+          "watch": [
+            "L'engagement se degrade-t-il au fil des filages ?",
+            "Les groupes improvisent-ils a chaque fois ?",
+            "La recuperation est-elle prise ?"
+          ],
+          "errors": [
+            "Enchainer les filages sans recuperation.",
+            "Marquer les mouvements au lieu de les danser.",
+            "Changer des elements a chaque filage."
+          ],
+          "feedback": [
+            "Recuperez deux minutes : vous marquez au lieu de danser.",
+            "Meme choregraphie a chaque fois : c'est ce qui sera evalue.",
+            "L'engagement aussi se repete : ne marquez pas."
+          ],
+          "plus": [
+            "Filage devant un autre groupe, ou filme puis analyse."
+          ],
+          "minus": [
+            "Repetition par parties, trois filages."
+          ],
+          "diff": {
+            "facilitee": "Repetition par parties, trois filages, choregraphie raccourcie.",
+            "normale": "Quatre filages complets avec correction ciblee et recuperation.",
+            "complexifiee": "Filage devant un autre groupe, filme et analyse."
+          },
+          "safety": [
+            "Recuperation de deux minutes imposee entre chaque filage : la fatigue degrade le controle des appuis et des passages au sol.",
+            "Eleves couverts pendant les temps de recuperation, pour eviter le refroidissement.",
+            "Zones de repetition espacees, un seul groupe par zone.",
+            "Passages au sol controles, tapis disponibles.",
+            "Aucun contact ni porte.",
+            "Sol verifie, propre et non glissant.",
+            "Arret immediat pour tout eleve signalant une douleur."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "S'entrainer a apprecier",
+          "objective": "Former les eleves au role de spectateur avec la grille reelle, en jugeant la prestation et non les personnes.",
+          "material": [
+            {
+              "label": "grilles d'appreciation d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tablette ou telephone pour filmer",
+              "fixed": 2
+            }
+          ],
+          "organization": "Public assis face a l'espace scenique. Pendant les passages, chaque spectateur renseigne une grille sur un groupe designe : lisibilite de l'inducteur, procedes identifies, variations de parametres, engagement.",
+          "studentGoal": "Renseigner une grille d'appreciation en jugeant la prestation, pas les personnes.",
+          "instructions": [
+            "Je note si l'inducteur annonce est lisible.",
+            "Je compte les procedes que j'identifie.",
+            "Je note si les parametres varient nettement.",
+            "Je juge la prestation, jamais la personne."
+          ],
+          "success": [
+            "La grille est renseignee entierement.",
+            "Les appreciations de deux spectateurs sur un meme groupe sont proches.",
+            "Le vocabulaire reste respectueux."
+          ],
+          "execution": [
+            "Observer pendant le passage, pas apres.",
+            "Nommer le critere avant de commenter.",
+            "Citer un moment precis."
+          ],
+          "watch": [
+            "Les spectateurs jugent-ils la prestation ou les personnes ?",
+            "Les appreciations sont-elles argumentees ?",
+            "Le silence est-il tenu ?"
+          ],
+          "errors": [
+            "Noter selon l'affinite avec le groupe.",
+            "Commenter le physique ou l'attitude d'un camarade.",
+            "Ecrire seulement que c'etait bien."
+          ],
+          "feedback": [
+            "Tu juges la prestation, pas la personne.",
+            "Quel critere exactement, et a quel moment ?",
+            "Bien ne dit rien : precise ce que tu as vu."
+          ],
+          "plus": [
+            "Justifier oralement son appreciation devant le groupe.",
+            "Apprecier a partir de la video et comparer."
+          ],
+          "minus": [
+            "Apprecier deux criteres seulement, a deux."
+          ],
+          "diff": {
+            "facilitee": "Appreciation a deux sur deux criteres : inducteur lisible et engagement.",
+            "normale": "Grille complete renseignee individuellement.",
+            "complexifiee": "Grille complete plus justification orale devant le groupe."
+          },
+          "safety": [
+            "Public assis hors de l'espace de danse, a deux metres minimum.",
+            "Aucune circulation devant l'espace pendant un passage.",
+            "Le cadre de respect est tenu strictement : aucun commentaire sur les personnes.",
+            "Captation video uniquement si l'autorisation a ete verifiee, images non diffusees hors du cadre pedagogique."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Repetition generale devant public",
+          "objective": "Realiser une repetition generale dans les conditions exactes de l'evaluation.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "grilles d'appreciation d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque groupe presente sa choregraphie complete devant la classe assise, dans l'ordre prevu pour la seance 8. Deux spectateurs designes renseignent la grille.",
+          "studentGoal": "Presenter notre choregraphie devant la classe, comme le jour de l'evaluation.",
+          "instructions": [
+            "On annonce notre inducteur avant d'entrer.",
+            "On marque notre debut immobile, trois secondes.",
+            "On presente la choregraphie en entier, sans s'arreter.",
+            "On marque notre fin immobile, trois secondes."
+          ],
+          "success": [
+            "La choregraphie est presentee en entier.",
+            "Debut et fin immobiles marques.",
+            "L'engagement est maintenu jusqu'a la fin.",
+            "Le cadre de respect est tenu par le public."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de commencer.",
+            "Ne pas se laisser deconcentrer par le public.",
+            "Tenir la posture finale."
+          ],
+          "watch": [
+            "Le passage devant public degrade-t-il l'engagement ?",
+            "Le climat de classe est-il respectueux ?",
+            "Les fins sont-elles tenues ?"
+          ],
+          "errors": [
+            "Se relacher ou rire sous l'effet du trac.",
+            "Sortir de scene avant d'avoir tenu la fin.",
+            "Rire du passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Le trac ne dispense pas de l'engagement.",
+            "Tenez votre fin : trois secondes completes.",
+            "On respecte tous les passages."
+          ],
+          "plus": [
+            "Passage filme et analyse immediatement."
+          ],
+          "minus": [
+            "Passage devant un demi-groupe, sans spectateurs designes."
+          ],
+          "diff": {
+            "facilitee": "Passage devant un demi-groupe, sans spectateurs designes.",
+            "normale": "Passage complet devant la classe avec deux spectateurs designes.",
+            "complexifiee": "Passage filme et analyse immediatement avec la video."
+          },
+          "safety": [
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis a deux metres minimum, aucune circulation pendant un passage.",
+            "Aucun contact ni porte.",
+            "Passages au sol controles.",
+            "Recuperation entre la phase de repetition et le passage.",
+            "Le cadre de respect est tenu : le professeur interrompt immediatement toute moquerie."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que juge-t-on quand on apprecie une prestation ?",
+          "Pourquoi faut-il recuperer entre deux filages ?"
+        ],
+        "key": "On apprecie une prestation a partir de criteres, jamais une personne. Et on recupere entre les filages : un danseur fatigue marque ses mouvements au lieu de les danser."
+      },
+      "socialRoles": [
+        "Spectateur : renseigne la grille sur un groupe designe.",
+        "Responsable son : gere la musique pendant les passages.",
+        "Public : garde le silence pendant les passages et applaudit a la fin."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Presentation finale et evaluation",
+      "mainObjective": "Presenter la choregraphie devant la classe et evaluer la prestation ainsi que le role de spectateur.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Assumer la presentation devant le public.",
+        "Tenir le role de spectateur.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les memes conditions : l'evaluation ne fait decouvrir aucune situation nouvelle.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "enceinte et source musicale",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de sol",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 12
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de mi-cycle conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles de la seance 5, pour comparer"
+          },
+          {
+            "label": "fiches de composition",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des regles du groupe",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat du sol et le degagement de la salle avant le premier passage.",
+          "Installer un espace scenique net et un espace public a deux metres minimum.",
+          "Afficher l'ordre de passage, les criteres et les regles du groupe.",
+          "Preparer les grilles nominatives et ressortir les fiches de mi-cycle.",
+          "Verifier les PAI et les dispenses.",
+          "Faire retirer bijoux et attacher les cheveux."
+        ],
+        "sketch": "Espace scenique net, delimite au plot, degagement de 2 m.\nBancs du public face a la scene, a 2 m.\nTable des grilles sur le cote.\nOrdre de passage, criteres et regles du groupe affiches a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves puis revision par parties : aucune prestation evaluee ne s'aborde sans preparation articulaire complete, et sa conduite est evaluee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Chevilles, genoux, hanches.",
+              "Colonne : enroulements et deroulements vertebre par vertebre.",
+              "Epaules, coudes, poignets, nuque en flexions douces."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Revision par parties",
+            "details": [
+              "Chaque groupe revise sa choregraphie par parties.",
+              "Verification des unissons et des cascades.",
+              "Marquage du debut et de la fin."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Presentation evaluee de la choregraphie",
+          "objective": "Evaluer la choregraphie de chaque groupe sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Passages par groupe dans l'ordre affiche. Pour chaque passage : l'inducteur est annonce, deux spectateurs sont designes, le reste de la classe est public. Le professeur evalue chaque eleve au sein du groupe.",
+          "studentGoal": "Presenter notre choregraphie en entier, en assumant mon interpretation.",
+          "instructions": [
+            "On annonce notre inducteur avant d'entrer.",
+            "On marque notre debut immobile, trois secondes.",
+            "On presente la choregraphie en entier, sans s'arreter.",
+            "On marque notre fin immobile, trois secondes."
+          ],
+          "success": [
+            "L'inducteur annonce est lisible dans la choregraphie.",
+            "Au moins trois procedes de composition sont identifiables.",
+            "Les parametres du mouvement varient nettement.",
+            "L'engagement corporel est reel, sans refuge dans l'humour.",
+            "Le debut et la fin sont marques et tenus.",
+            "Le role de spectateur est tenu avec rigueur et respect."
+          ],
+          "execution": [
+            "Maintenir l'engagement du debut a la fin.",
+            "Changer d'intention aux moments de rupture.",
+            "Tenir la posture finale trois secondes.",
+            "Continuer meme en cas d'imperfection."
+          ],
+          "watch": [
+            "Les choregraphies correspondent-elles aux fiches ?",
+            "L'engagement tient-il devant la classe ?",
+            "Le cadre de respect est-il tenu par le public ?",
+            "Les fins sont-elles tenues ?"
+          ],
+          "errors": [
+            "Se relacher ou rire sous l'effet du trac.",
+            "Sortir de scene avant d'avoir tenu la fin.",
+            "Changer la choregraphie au dernier moment.",
+            "Commenter le passage d'un autre groupe."
+          ],
+          "feedback": [
+            "Le trac ne dispense pas de l'engagement.",
+            "Tenez votre fin : trois secondes completes.",
+            "Ce que vous avez prepare, rien de plus.",
+            "Silence pendant les passages."
+          ],
+          "plus": [
+            "Choregraphie de trois minutes avec quatre procedes."
+          ],
+          "minus": [
+            "Choregraphie d'une minute avec deux procedes, devant un demi-groupe."
+          ],
+          "diff": {
+            "facilitee": "Choregraphie d'une minute avec deux procedes, presentee devant un demi-groupe. L'engagement, la lisibilite de l'inducteur et le role de spectateur sont evalues autant que la complexite.",
+            "normale": "Choregraphie de deux a trois minutes avec trois procedes, devant la classe.",
+            "complexifiee": "Choregraphie de trois minutes avec quatre procedes."
+          },
+          "safety": [
+            "Le cadre de respect est une condition de securite autant que d'evaluation : le professeur interrompt immediatement toute moquerie, et la seance ne se poursuit pas sans ce cadre.",
+            "Un seul groupe dans l'espace scenique a la fois.",
+            "Public assis hors de l'espace, a deux metres minimum, aucune circulation pendant un passage.",
+            "Aucun contact ni porte : ce cycle n'en travaille pas, et aucun porte improvise n'est admis en presentation.",
+            "Passages au sol controles, sans se jeter.",
+            "Sol verifie avant le premier passage : propre, non glissant, sans echarde.",
+            "Degagement de deux metres autour de l'espace, sans mobilier ni angle saillant.",
+            "Cables de sonorisation plaques au sol, hors de la zone de deplacement.",
+            "Echauffement complet obligatoire avant tout passage evalue.",
+            "Consulter les PAI, arret immediat pour tout eleve signalant une douleur.",
+            "Bijoux retires, cheveux attaches.",
+            "Volume sonore limite a celui admis dans l'etablissement.",
+            "Le professeur peut arreter tout passage presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Retour des spectateurs",
+          "objective": "Faire expliciter aux spectateurs ce qu'ils ont observe, a partir des criteres.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de mi-cycle conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Apres chaque serie de passages, les deux spectateurs annoncent ce qu'ils ont observe et le justifient. Le professeur complete. Puis chacun compare son objectif de mi-cycle a sa grille du jour.",
+          "studentGoal": "Dire ce que j'ai observe, en m'appuyant sur les criteres.",
+          "instructions": [
+            "Spectateur : j'annonce si l'inducteur etait lisible et quels procedes j'ai identifies.",
+            "Je cite un moment precis pour justifier.",
+            "Le groupe qui a presente ecoute sans contester.",
+            "Ensuite, je relis mon objectif de mi-cycle et je dis s'il est atteint."
+          ],
+          "success": [
+            "Chaque spectateur cite un moment precis.",
+            "Les criteres sont nommes.",
+            "Chaque eleve se prononce sur son objectif personnel."
+          ],
+          "execution": [
+            "Nommer le critere avant de donner un exemple.",
+            "Citer un moment identifiable.",
+            "S'appuyer sur sa grille pour juger son objectif."
+          ],
+          "watch": [
+            "Les retours portent-ils sur la prestation ou sur les personnes ?",
+            "Les groupes acceptent-ils le retour de leurs camarades ?"
+          ],
+          "errors": [
+            "Dire seulement que c'etait bien ou nul.",
+            "Commenter le physique ou l'attitude d'un camarade.",
+            "Contester bruyamment l'appreciation."
+          ],
+          "feedback": [
+            "Quel critere exactement, et a quel moment ?",
+            "On parle de la prestation, jamais de la personne.",
+            "Vous ecoutez, vous repondrez apres."
+          ],
+          "plus": [
+            "Le spectateur propose un conseil d'amelioration argumente."
+          ],
+          "minus": [
+            "Le spectateur annonce un seul critere, avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul critere annonce, avec appui du professeur.",
+            "normale": "Criteres annonces et justifies, plus bilan de l'objectif personnel.",
+            "complexifiee": "Retour complet plus conseil d'amelioration argumente."
+          },
+          "safety": [
+            "Phase realisee hors de l'espace de danse, groupe assis.",
+            "Aucun passage en cours pendant les retours.",
+            "Le cadre de respect est tenu strictement : aucun commentaire sur les personnes."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "tapis de sol",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 12
+            },
+            {
+              "label": "enceinte et source musicale",
+              "fixed": 1
+            }
+          ],
+          "organization": "Rangement collectif des tapis, plots et sonorisation, puis classe assise en demi-cercle pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en danse aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Les tapis se portent a deux minimum.",
+            "On enroule les cables sans les plier ni les tirer.",
+            "On compte les plots avant de partir.",
+            "Une fois range, on s'assoit en demi-cercle."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Les cables sont enroules proprement.",
+            "Au moins un eleve par groupe s'exprime."
+          ],
+          "execution": [
+            "Porter les tapis a deux, jambes flechies.",
+            "Enrouler les cables sans les tordre.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis de composition et d'engagement ?"
+          ],
+          "errors": [
+            "Porter un tapis seul.",
+            "Tirer sur les cables pour les debrancher.",
+            "Ne parler que de la difficulte des mouvements."
+          ],
+          "feedback": [
+            "A deux minimum, jambes flechies.",
+            "On debranche par la prise, jamais en tirant sur le cable.",
+            "Pas seulement les mouvements : composer et oser, ce sont des acquis."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tapis portes a deux minimum, jambes flechies, dos droit.",
+            "Cables debranches par la prise, jamais en tirant, et enroules sans torsion.",
+            "Materiel compte avant de quitter la salle.",
+            "Verification qu'aucun eleve ne presente de douleur avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en danse aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi le cadre de respect est-il la condition de tout le reste ?"
+        ],
+        "key": "En debut de cycle, on alignait des mouvements. Maintenant on part d'un inducteur, on compose avec des procedes, et on interprete. Et rien de tout cela n'aurait ete possible sans le cadre du groupe : on regarde, on ne se moque pas, on applaudit."
+      },
+      "socialRoles": [
+        "Spectateur : renseigne et justifie la grille d'appreciation d'un groupe, role evalue.",
+        "Responsable son : gere la musique pendant les passages.",
+        "Public : respecte chaque passage par le silence et les applaudissements.",
+        "Responsable materiel : organise le rangement collectif."
+      ]
+    }
+  ]
+}

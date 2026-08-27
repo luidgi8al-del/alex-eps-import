@@ -1,0 +1,2808 @@
+{
+  "apsa": "Aquathlon",
+  "grades": [
+    "TROISIEME"
+  ],
+  "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Gerer son effort, faire des choix pour realiser la meilleure performance dans au moins deux familles athletiques ou nautiques.",
+    "S'engager dans un programme de preparation individuel ou collectif.",
+    "Planifier et realiser une epreuve combinee.",
+    "S'echauffer avant un effort et assumer les roles sociaux lies a l'organisation de l'epreuve."
+  ],
+  "targetCompetence": "Passer de deux efforts subis l'un apres l'autre a une epreuve pensee comme un tout : une allure de nage tenable, une transition rapide, et une course geree malgre les jambes lourdes de la sortie de l'eau.",
+  "cycleObjectives": [
+    "Determiner et tenir une allure de nage tenable sur la distance de l'epreuve.",
+    "Realiser une transition rapide et organisee entre la nage et la course.",
+    "Gerer sa course apres la nage, malgre la sensation initiale.",
+    "Construire un projet de performance chiffre et le realiser.",
+    "Tenir les roles de chronometreur, de juge de transition et d'observateur."
+  ],
+  "plannedTitles": [
+    "Evaluation diagnostique : nager puis courir, sans preparation",
+    "L'allure de nage : trouver ce que je peux tenir",
+    "La transition : sortir de l'eau et partir vite",
+    "Courir apres avoir nage : gerer les premieres minutes",
+    "Epreuve evaluee de mi-cycle et projet de performance",
+    "Ajuster son allure de nage a son projet",
+    "Repetition generale de l'epreuve complete",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 1 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Natation scolaire - enseignement et securite",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Attestation du savoir-nager en securite - arrete du 28 fevrier 2022",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Aquathlon au college - organisation, securite et evaluation",
+      "org": "Academie de Rennes",
+      "url": "https://pedagogie.ac-rennes.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Federale",
+      "title": "Aquathlon scolaire - formats de pratique adaptes",
+      "org": "UNSS",
+      "url": "https://unss.org/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner les epreuves combinees en college - gestion de l'allure",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Plan d'organisation de la surveillance et des secours du bassin : le lire avant la premiere seance.",
+    "Presence obligatoire du maitre nageur sauveteur : la seance n'a pas lieu sans lui.",
+    "Profondeur du bassin, zones autorisees, sens de circulation dans les lignes d'eau.",
+    "Format de l'epreuve retenu par l'etablissement : distances de nage et de course, adaptees a l'installation.",
+    "Trajet et securisation du parcours de course : sol glissant en sortie de bassin, portes, escaliers, voie de circulation.",
+    "Aptitude a la natation : aucun eleve non nageur ne participe a l'epreuve combinee.",
+    "PAI et dispenses, notamment asthme, allergies au chlore, pathologies cardiaques.",
+    "Autorisation d'utiliser la zone exterieure pour la partie course, si le parcours sort de l'enceinte du bassin."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - part trop vite a la nage",
+      "observed": "Nage les premieres longueurs a fond, puis s'arrete au bout du bassin, essouffle.",
+      "need": "Construire une allure de nage tenable et la reconnaitre a ses sensations."
+    },
+    {
+      "label": "Profil 2 - transition interminable",
+      "observed": "Sort de l'eau, s'essuie, cherche ses affaires, discute : la transition dure plus d'une minute.",
+      "need": "Organiser sa transition a l'avance et l'automatiser."
+    },
+    {
+      "label": "Profil 3 - marche apres la sortie de l'eau",
+      "observed": "Part en courant, sent ses jambes lourdes au bout de vingt metres et se met a marcher.",
+      "need": "Apprendre a passer les premieres minutes de course a allure reduite plutot qu'a s'arreter."
+    },
+    {
+      "label": "Profil 4 - nageur a l'aise mais coureur en difficulte",
+      "observed": "Nage vite et facilement, mais perd tout son avantage sur la partie course.",
+      "need": "Equilibrer son projet : moderer la nage pour preserver la course."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Epreuve combinee individuelle au format retenu par l'etablissement, par exemple 100 metres nage puis 1000 metres course, avec transition chronometree. Chaque eleve annonce son temps cible avant l'epreuve. Chacun tient egalement le role de chronometreur ou de juge de transition sur une autre serie.",
+    "criteria": [
+      "L'epreuve est realisee en entier, sans arret sur la partie nage.",
+      "L'allure de nage annoncee est tenue, sans effondrement sur la fin.",
+      "La transition est realisee dans le temps annonce, sans desordre.",
+      "La course est geree : aucune marche subie apres la sortie de l'eau.",
+      "L'ecart entre le temps annonce et le temps realise est faible.",
+      "Le role de chronometreur ou de juge de transition est tenu avec rigueur."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA1, avec le format d'epreuve et les regles de securite retenus par l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Evaluation diagnostique : nager puis courir, sans preparation",
+      "mainObjective": "Faire eprouver l'epreuve combinee sans preparation, pour que chacun decouvre ou il perd du temps.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Poser le cadre de securite du bassin et du parcours de course.",
+        "Mesurer un temps de nage, de transition et de course.",
+        "Reperer ceux qui partent trop vite et ceux qui marchent apres l'eau."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : l'aquathlon reunit deux activites deja pratiquees, mais leur enchainement est une experience nouvelle.",
+      "prerequisiteForNext": "Chaque eleve connait ses trois temps : nage, transition, course.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 30,
+            "note": "balisage du parcours de course"
+          },
+          {
+            "label": "fiches de temps individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24,
+            "note": "apportes par les eleves, ranges en zone de transition"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur : sans lui, la seance n'a pas lieu.",
+          "Lire le plan d'organisation de la surveillance et des secours avant la seance.",
+          "Verifier la liste des eleves nageurs et les dispenses : aucun non nageur sur l'epreuve.",
+          "Baliser le parcours de course et reperer les zones glissantes en sortie de bassin.",
+          "Delimiter une zone de transition, hors du passage, avec les affaires rangees.",
+          "Compter les eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course."
+        ],
+        "sketch": "Bassin avec quatre lignes d'eau, sens de circulation affiche.\nZone de transition delimitee en bord de bassin, hors du passage, affaires rangees.\nParcours de course balise au plot, depart a la sortie de la zone de transition.\nChronometreurs places au bout du bassin et a l'arrivee."
+      },
+      "warmup": {
+        "rationale": "Echauffement en deux temps, hors de l'eau puis dans l'eau : l'entree dans l'eau froide sur un corps non prepare augmente le risque d'hydrocution et de crampe.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement a sec",
+            "details": [
+              "Mobilisation des epaules, du dos, des hanches et des chevilles.",
+              "Course souple sur place ou autour du bassin, en marchant si le sol est glissant.",
+              "Rotations de bras, mouvements de nage a sec."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive dans l'eau",
+            "details": [
+              "Mouiller la nuque et le torse avant d'entrer.",
+              "Entrer par l'echelle ou assis au bord, jamais en sautant.",
+              "Deux longueurs en nage souple."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mise en train nage",
+            "details": [
+              "Quatre longueurs en alternant crawl et brasse.",
+              "Deux longueurs avec respiration reguliere imposee.",
+              "Une longueur a allure d'epreuve, pour sentir."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Epreuve diagnostique chronometree",
+          "objective": "Faire realiser l'epreuve complete une premiere fois et mesurer les trois temps.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par series de six, un chronometreur par nageur. Epreuve reduite : la moitie du format final, par exemple 50 metres nage, transition, 500 metres course. Trois temps releves : nage, transition, course.",
+          "studentGoal": "Realiser l'epreuve en entier et connaitre mes trois temps.",
+          "instructions": [
+            "Je nage la distance annoncee sans m'arreter, a l'allure que je choisis.",
+            "Je sors par l'echelle, je ne cours jamais au bord du bassin.",
+            "Je passe par la zone de transition, puis je pars sur le parcours balise.",
+            "Chronometreur : tu releves les trois temps sur la fiche."
+          ],
+          "success": [
+            "L'epreuve est realisee en entier.",
+            "Les trois temps sont releves et notes.",
+            "Aucune course au bord du bassin."
+          ],
+          "execution": [
+            "Nage : respiration reguliere, allure choisie.",
+            "Sortie par l'echelle, marche jusqu'a la sortie de la zone glissante.",
+            "Depart en course une fois hors de la zone glissante."
+          ],
+          "watch": [
+            "Qui part trop vite a la nage et s'arrete ?",
+            "Combien de temps durent les transitions ?",
+            "Qui se met a marcher dans les premieres minutes de course ?",
+            "Quelqu'un court-il au bord du bassin ?"
+          ],
+          "errors": [
+            "Partir a fond sur les premieres longueurs.",
+            "Courir sur le sol mouille du bord de bassin.",
+            "Transition interminable, a chercher ses affaires."
+          ],
+          "feedback": [
+            "Tu es parti trop vite : tu t'arretes deja.",
+            "On marche au bord du bassin, sans exception.",
+            "Une minute de transition, c'est une minute perdue."
+          ],
+          "plus": [
+            "Format complet de l'epreuve.",
+            "Depart groupe."
+          ],
+          "minus": [
+            "Distance de nage reduite de moitie.",
+            "Course remplacee par une marche rapide."
+          ],
+          "diff": {
+            "facilitee": "Distance de nage reduite de moitie, brasse autorisee, partie course en marche rapide.",
+            "normale": "Format reduit de moitie, nage libre, course sur parcours balise.",
+            "complexifiee": "Format complet de l'epreuve avec depart groupe."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique : sans lui, aucune entree dans l'eau.",
+            "Aucun eleve non nageur ne participe a l'epreuve combinee.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course.",
+            "Aucune course au bord du bassin : le sol mouille est la premiere cause de chute grave en piscine.",
+            "Sortie par l'echelle ou l'escalier, jamais en se hissant sur le bord en courant.",
+            "Aucun plongeon depuis le bord sauf autorisation expresse du protocole local et profondeur suffisante.",
+            "Un chronometreur suit chaque nageur du regard pendant toute sa nage.",
+            "Tout eleve qui s'arrete ou signale un malaise sort immediatement de l'eau.",
+            "Consulter les PAI : asthme, allergies au chlore, pathologies cardiaques.",
+            "Parcours de course balise, hors circulation de vehicules."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire ses trois temps",
+          "objective": "Faire analyser a chacun ou il perd le plus de temps, avant de travailler quoi que ce soit.",
+          "material": [
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord, hors des zones de passage, chacun relit ses trois temps et identifie celui qu'il pense pouvoir ameliorer le plus.",
+          "studentGoal": "Identifier ou je perds le plus de temps : la nage, la transition ou la course.",
+          "instructions": [
+            "Je relis mes trois temps et je les compare a ceux du groupe.",
+            "J'identifie celui ou je perds le plus.",
+            "J'ecris une phrase : je pense perdre le plus de temps sur ...",
+            "Je garde ma fiche pour tout le cycle."
+          ],
+          "success": [
+            "Les trois temps sont notes sur la fiche.",
+            "Chacun a identifie son point faible principal.",
+            "La phrase est ecrite."
+          ],
+          "execution": [
+            "Comparer ses temps a ceux du groupe.",
+            "Rapporter la transition a la duree totale.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves sous-estiment-ils le temps de transition ?",
+            "Identifient-ils correctement leur point faible ?"
+          ],
+          "errors": [
+            "Ne regarder que le temps de nage.",
+            "Negliger la transition, jugee sans importance.",
+            "Conclure trop vite sans comparer."
+          ],
+          "feedback": [
+            "Ta transition dure plus qu'une longueur : ce n'est pas rien.",
+            "Compare avec le groupe avant de conclure.",
+            "Ecris-le, on le relira a la fin du cycle."
+          ],
+          "plus": [
+            "Calculer la part de la transition dans le temps total."
+          ],
+          "minus": [
+            "Point faible identifie avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Point faible identifie avec l'aide du professeur, a partir d'un tableau affiche.",
+            "normale": "Analyse individuelle des trois temps et formulation ecrite.",
+            "complexifiee": "Calcul de la part de chaque segment dans le temps total."
+          },
+          "safety": [
+            "Phase realisee assis hors des zones de passage et loin du bord.",
+            "Eleves seches et couverts pour eviter le refroidissement.",
+            "Comptage des eleves avant et apres cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Deuxieme transition a blanc",
+          "objective": "Refaire uniquement la transition, pour faire mesurer immediatement le temps qu'elle coute.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "serviettes et sacs personnels",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            }
+          ],
+          "organization": "Par deux. Chacun sort de l'eau, traverse la zone de transition et part en course sur cinquante metres. Le partenaire chronometre uniquement la transition. Trois essais chacun.",
+          "studentGoal": "Reduire mon temps de transition d'un essai a l'autre.",
+          "instructions": [
+            "Je sors par l'echelle et je marche jusqu'a la zone de transition.",
+            "Mes affaires sont deja pretes, dans l'ordre ou j'en ai besoin.",
+            "Je ne m'essuie pas completement : je mets mes chaussures et je pars.",
+            "Chronometreur : tu chronometres de la sortie de l'eau au depart en course."
+          ],
+          "success": [
+            "Le temps de transition diminue entre le premier et le troisieme essai.",
+            "Les affaires sont pretes avant l'essai.",
+            "Aucune course au bord du bassin."
+          ],
+          "execution": [
+            "Preparer ses affaires dans l'ordre avant l'essai.",
+            "Marcher vite au bord, courir seulement hors zone glissante.",
+            "Enfiler ses chaussures debout, en appui."
+          ],
+          "watch": [
+            "Les affaires sont-elles preparees ?",
+            "Les eleves s'essuient-ils inutilement ?",
+            "Quelqu'un court-il au bord du bassin ?"
+          ],
+          "errors": [
+            "Chercher ses affaires dans un sac ferme.",
+            "S'essuyer entierement avant de partir.",
+            "Courir sur le sol mouille."
+          ],
+          "feedback": [
+            "Prepare tes affaires avant, pas pendant.",
+            "Tu n'as pas besoin d'etre sec pour courir.",
+            "Au bord, on marche : c'est non negociable."
+          ],
+          "plus": [
+            "Transition chronometree avec objectif chiffre."
+          ],
+          "minus": [
+            "Transition sans chronometre, sur la procedure seule."
+          ],
+          "diff": {
+            "facilitee": "Transition realisee sans chronometre, en travaillant seulement l'ordre des gestes.",
+            "normale": "Trois transitions chronometrees avec recherche de reduction.",
+            "complexifiee": "Transition chronometree avec objectif chiffre annonce a l'avance."
+          },
+          "safety": [
+            "Aucune course au bord du bassin, meme chronometre : la performance ne justifie jamais de courir sur un sol mouille.",
+            "Sortie par l'echelle ou l'escalier.",
+            "Zone de transition hors du passage, sans obstacle au sol.",
+            "Presence du maitre nageur sauveteur pendant toute la phase aquatique.",
+            "Comptage des eleves a chaque sortie de l'eau."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Ou avez-vous perdu le plus de temps : la nage, la transition ou la course ?",
+          "Pourquoi ne court-on jamais au bord du bassin ?"
+        ],
+        "key": "L'aquathlon ne se gagne pas seulement dans l'eau : une transition d'une minute coute autant qu'une longueur de nage. Et au bord du bassin, on marche toujours."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les trois temps de son camarade.",
+        "Juge de transition : verifie le respect de la marche au bord du bassin.",
+        "Responsable de comptage : verifie les effectifs a chaque entree et sortie de l'eau."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "L'allure de nage : trouver ce que je peux tenir",
+      "mainObjective": "Construire une allure de nage tenable sur toute la distance, reconnaissable a des reperes concrets.",
+      "secondaryObjectives": [
+        "Nager plusieurs longueurs a la meme vitesse.",
+        "Associer une allure a des sensations et a une respiration.",
+        "Renoncer au depart rapide."
+      ],
+      "linkToPrevious": "La seance 1 a montre que la plupart partent trop vite et s'arretent. La premiere chose a construire est donc l'allure.",
+      "prerequisiteForNext": "Chaque eleve connait une allure de nage qu'il peut tenir sur la distance de l'epreuve.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 20
+          },
+          {
+            "label": "fiches de temps individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "planches",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Repartir les eleves par ligne d'eau selon leur vitesse, pour eviter les depassements.",
+          "Afficher le sens de circulation dans chaque ligne.",
+          "Verifier la liste des nageurs et les dispenses.",
+          "Preparer un tableau d'allures affiche au bord."
+        ],
+        "sketch": "Quatre lignes d'eau, une par groupe de vitesse, sens de circulation affiche.\nChronometreurs places au bout de chaque ligne.\nTableau des allures affiche au bord.\nZone de repos seche, hors du passage."
+      },
+      "warmup": {
+        "rationale": "Echauffement a sec puis dans l'eau : l'entree progressive limite le risque d'hydrocution et prepare les epaules aux series de nage.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement a sec",
+            "details": [
+              "Mobilisation des epaules, du dos et des hanches.",
+              "Mouvements de nage a sec, rotations de bras.",
+              "Marche active autour du bassin."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive dans l'eau",
+            "details": [
+              "Mouiller la nuque et le torse avant d'entrer.",
+              "Entrer par l'echelle.",
+              "Deux longueurs souples."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mise en train nage",
+            "details": [
+              "Quatre longueurs en alternant les nages.",
+              "Deux longueurs avec respiration reguliere imposee.",
+              "Deux longueurs a allure ressentie comme tenable."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Quatre longueurs a la meme vitesse",
+          "objective": "Construire la regularite d'allure, condition de toute gestion d'epreuve.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, l'un nage, l'autre chronometre chaque longueur. Objectif : quatre longueurs avec moins de trois secondes d'ecart entre elles. Trois series, avec deux minutes de recuperation.",
+          "studentGoal": "Nager quatre longueurs avec moins de trois secondes d'ecart entre chacune.",
+          "instructions": [
+            "Je choisis une allure que je pense pouvoir tenir quatre longueurs.",
+            "Je ne pars pas plus vite sur la premiere : c'est la que tout se joue.",
+            "Chronometreur : tu annonces mon temps a chaque longueur.",
+            "Entre les series, je recupere deux minutes."
+          ],
+          "success": [
+            "Moins de trois secondes d'ecart entre les quatre longueurs.",
+            "Aucun arret au milieu d'une serie.",
+            "L'allure est notee sur la fiche."
+          ],
+          "execution": [
+            "Respiration reguliere, imposee et non subie.",
+            "Meme nombre de coups de bras par longueur.",
+            "Virage ou demi-tour sans arret."
+          ],
+          "watch": [
+            "La premiere longueur est-elle nettement plus rapide ?",
+            "Les eleves s'arretent-ils au bout ?",
+            "La respiration reste-t-elle reguliere ?"
+          ],
+          "errors": [
+            "Partir a fond sur la premiere longueur.",
+            "S'arreter au bout du bassin entre deux longueurs.",
+            "Bloquer sa respiration."
+          ],
+          "feedback": [
+            "Ta premiere est cinq secondes plus rapide : voila pourquoi tu craques.",
+            "Ne t'arrete pas au bout, enchaine.",
+            "Respire a chaque cycle, ne bloque pas."
+          ],
+          "plus": [
+            "Six longueurs au lieu de quatre.",
+            "Ecart reduit a deux secondes."
+          ],
+          "minus": [
+            "Deux longueurs.",
+            "Brasse autorisee, ecart de cinq secondes."
+          ],
+          "diff": {
+            "facilitee": "Deux longueurs, brasse autorisee, ecart tolere de cinq secondes.",
+            "normale": "Quatre longueurs avec moins de trois secondes d'ecart, trois series.",
+            "complexifiee": "Six longueurs avec moins de deux secondes d'ecart."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur : sans lui, aucune entree dans l'eau.",
+            "Un chronometreur suit son nageur du regard pendant toute la serie et signale tout arret anormal.",
+            "Aucun eleve non nageur ne participe.",
+            "Repartition par vitesse dans les lignes, sens de circulation respecte : les depassements dans une ligne provoquent des chocs.",
+            "Recuperation de deux minutes entre les series : les series enchainees sans recuperation provoquent des crampes.",
+            "Aucune course au bord du bassin.",
+            "Comptage des eleves a chaque entree et sortie de l'eau.",
+            "Tout eleve signalant une crampe, un vertige ou un malaise sort immediatement de l'eau."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Reconnaitre son allure sans chronometre",
+          "objective": "Associer l'allure tenable a des reperes internes, utilisables le jour de l'epreuve.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Le nageur annonce l'allure qu'il va tenir, nage deux longueurs sans connaitre son temps, puis compare a son annonce. Trois essais.",
+          "studentGoal": "Retrouver mon allure sans regarder le chronometre.",
+          "instructions": [
+            "J'annonce le temps que je vais faire sur deux longueurs.",
+            "Je nage sans qu'on me dise mon temps.",
+            "Ensuite seulement, je compare a mon annonce.",
+            "Je note les sensations qui correspondent a cette allure."
+          ],
+          "success": [
+            "L'ecart entre l'annonce et le temps realise diminue sur les trois essais.",
+            "Les sensations associees sont notees.",
+            "Aucun arret pendant les essais."
+          ],
+          "execution": [
+            "Compter ses coups de bras par longueur.",
+            "Reperer sa respiration : facile, un peu dure, tres dure.",
+            "Ajuster d'un essai a l'autre."
+          ],
+          "watch": [
+            "Les ecarts se reduisent-ils ?",
+            "Les eleves reperent-ils des sensations utilisables ?",
+            "Certains cherchent-ils a regarder le chronometre ?"
+          ],
+          "errors": [
+            "Annoncer un temps ambitieux plutot que realiste.",
+            "Ne s'appuyer sur aucun repere.",
+            "Chercher a voir le chronometre."
+          ],
+          "feedback": [
+            "Annonce ce que tu peux tenir, pas ce que tu esperes.",
+            "Compte tes coups de bras : c'est ton meilleur repere.",
+            "Ne regarde pas : c'est justement l'exercice."
+          ],
+          "plus": [
+            "Quatre longueurs sans chronometre.",
+            "Deux allures differentes a retrouver."
+          ],
+          "minus": [
+            "Une longueur.",
+            "Annonce en trois categories : lent, moyen, rapide."
+          ],
+          "diff": {
+            "facilitee": "Une longueur, annonce en trois categories : lent, moyen, rapide.",
+            "normale": "Deux longueurs annoncees en temps, trois essais.",
+            "complexifiee": "Quatre longueurs, deux allures differentes a retrouver."
+          },
+          "safety": [
+            "Presence du maitre nageur sauveteur.",
+            "Un observateur suit son nageur du regard pendant tout l'essai.",
+            "Repartition par vitesse dans les lignes, sens de circulation respecte.",
+            "Comptage des eleves a chaque sortie de l'eau.",
+            "Recuperation entre les essais."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Distance d'epreuve a allure choisie",
+          "objective": "Nager la distance de l'epreuve a l'allure construite, sans arret.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve nage la distance de nage de l'epreuve, a l'allure qu'il a identifiee. Le partenaire chronometre chaque longueur et signale les ecarts.",
+          "studentGoal": "Nager la distance de l'epreuve sans m'arreter et sans ralentir sur la fin.",
+          "instructions": [
+            "Je nage la distance complete a mon allure.",
+            "Je ne pars pas plus vite sur les premieres longueurs.",
+            "Chronometreur : tu me signales si je ralentis.",
+            "Je note mon temps total sur ma fiche."
+          ],
+          "success": [
+            "La distance est nagee sans arret.",
+            "Les dernieres longueurs ne sont pas nettement plus lentes.",
+            "Le temps total est note."
+          ],
+          "execution": [
+            "Respiration reguliere du debut a la fin.",
+            "Meme nombre de coups de bras par longueur.",
+            "Ne pas accelerer sur la derniere longueur si l'allure n'est pas tenue."
+          ],
+          "watch": [
+            "Le depart est-il maitrise ?",
+            "Y a-t-il un effondrement sur la fin ?",
+            "Des eleves s'arretent-ils ?"
+          ],
+          "errors": [
+            "Repartir trop vite malgre le travail de la seance.",
+            "S'arreter au bout du bassin.",
+            "Ralentir fortement sur les deux dernieres longueurs."
+          ],
+          "feedback": [
+            "Tu es reparti trop vite : reviens a ton allure.",
+            "Enchaine, ne t'arrete pas au bout.",
+            "Ton allure etait trop ambitieuse : choisis plus tenable."
+          ],
+          "plus": [
+            "Distance majoree de moitie.",
+            "Objectif de temps annonce a l'avance."
+          ],
+          "minus": [
+            "Distance reduite de moitie.",
+            "Brasse autorisee, arrets tolerés."
+          ],
+          "diff": {
+            "facilitee": "Distance reduite de moitie, brasse autorisee, un arret tolere.",
+            "normale": "Distance de nage de l'epreuve, sans arret, a allure reguliere.",
+            "complexifiee": "Distance majoree de moitie avec objectif de temps annonce."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur.",
+            "Un chronometreur suit son nageur du regard pendant toute la distance.",
+            "Aucun eleve non nageur ne participe.",
+            "Repartition par vitesse dans les lignes, sens de circulation respecte.",
+            "Tout eleve signalant une crampe ou un malaise sort immediatement de l'eau.",
+            "Comptage des eleves a la sortie de l'eau.",
+            "Aucune course au bord du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "A quoi reconnaissez-vous votre allure tenable, sans chronometre ?",
+          "Que se passe-t-il quand on part trop vite sur la premiere longueur ?"
+        ],
+        "key": "Une allure tenable se reconnait a des reperes internes : le nombre de coups de bras et la respiration. Partir plus vite sur la premiere longueur coute toujours plus cher que ce que cela rapporte."
+      },
+      "socialRoles": [
+        "Chronometreur : annonce les temps intermediaires et signale les ecarts.",
+        "Observateur de securite : suit son nageur du regard en permanence.",
+        "Responsable de comptage : verifie les effectifs a chaque sortie de l'eau."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "La transition : sortir de l'eau et partir vite",
+      "mainObjective": "Construire une transition organisee et rapide, sans jamais courir au bord du bassin.",
+      "secondaryObjectives": [
+        "Preparer ses affaires dans l'ordre d'utilisation.",
+        "Automatiser la sequence de transition.",
+        "Reduire son temps de transition de moitie."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les transitions durent souvent plus d'une minute : c'est le gain de temps le plus facile du cycle.",
+      "prerequisiteForNext": "Chaque eleve realise une transition organisee en moins d'une minute.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 30
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche de la sequence de transition",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de temps individuelles",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Delimiter une zone de transition large, hors du passage, avec un emplacement par eleve.",
+          "Afficher la sequence de transition : sortir, marcher, chaussures, depart.",
+          "Reperer et signaler les zones glissantes entre le bassin et la zone de transition.",
+          "Baliser le parcours de course."
+        ],
+        "sketch": "Zone de transition delimitee, un emplacement par eleve, hors du passage.\nCheminement du bassin a la zone de transition balise, zones glissantes signalees.\nAffiche de la sequence de transition a l'entree de la zone.\nDepart du parcours de course a la sortie de la zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet a sec puis dans l'eau : la seance alterne entrees et sorties d'eau, le corps se refroidit vite entre les essais.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement a sec",
+            "details": [
+              "Mobilisation des epaules, hanches et chevilles.",
+              "Marche active, montees de genoux.",
+              "Mouvements de nage a sec."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque, entrer par l'echelle.",
+              "Quatre longueurs souples.",
+              "Deux longueurs a allure d'epreuve."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation a la course",
+            "details": [
+              "Sortie de l'eau, sechage rapide.",
+              "Trois minutes de course souple sur le parcours.",
+              "Montees de genoux et talons-fesses."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "La sequence de transition",
+          "objective": "Automatiser une sequence de gestes identique a chaque transition.",
+          "material": [
+            {
+              "label": "affiche de la sequence de transition",
+              "fixed": 2
+            },
+            {
+              "label": "serviettes et sacs personnels",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            }
+          ],
+          "organization": "Par deux. Cinq transitions chronometrees : sortie de l'eau apres deux longueurs, passage par la zone de transition, depart en course sur cinquante metres. Une minute de recuperation entre chaque.",
+          "studentGoal": "Realiser la meme sequence de transition a chaque essai, de plus en plus vite.",
+          "instructions": [
+            "Mes affaires sont pretes, dans l'ordre : chaussures dessus, le reste dessous.",
+            "Je sors par l'echelle et je marche jusqu'a ma zone.",
+            "Je ne m'essuie que le strict necessaire.",
+            "Je mets mes chaussures debout et je pars."
+          ],
+          "success": [
+            "La sequence est identique sur les cinq essais.",
+            "Le temps diminue entre le premier et le dernier essai.",
+            "Aucune course au bord du bassin."
+          ],
+          "execution": [
+            "Preparer ses affaires avant chaque essai.",
+            "Marcher vite au bord, sans courir.",
+            "Enfiler les chaussures en appui, sans s'asseoir."
+          ],
+          "watch": [
+            "Les affaires sont-elles pretes ?",
+            "Les eleves s'essuient-ils integralement ?",
+            "Quelqu'un court-il sur le sol mouille ?",
+            "La sequence est-elle stable ?"
+          ],
+          "errors": [
+            "Chercher ses affaires dans un sac ferme.",
+            "S'asseoir pour mettre ses chaussures.",
+            "Courir sur le sol mouille pour gagner du temps."
+          ],
+          "feedback": [
+            "Prepare tout avant : tu perds dix secondes a chercher.",
+            "Debout, en appui : assis tu perds du temps.",
+            "On marche au bord, la performance ne change rien a cette regle."
+          ],
+          "plus": [
+            "Transition apres quatre longueurs, sur fatigue.",
+            "Objectif chiffre annonce."
+          ],
+          "minus": [
+            "Transition apres une longueur.",
+            "Sans chronometre, sur la sequence seule."
+          ],
+          "diff": {
+            "facilitee": "Transition apres une longueur, sans chronometre, en travaillant l'ordre des gestes.",
+            "normale": "Cinq transitions chronometrees apres deux longueurs.",
+            "complexifiee": "Transitions apres quatre longueurs, avec objectif chiffre annonce."
+          },
+          "safety": [
+            "Aucune course au bord du bassin, meme chronometre : le sol mouille est la premiere cause de chute grave en piscine, et la recherche de performance ne modifie jamais cette regle.",
+            "Sortie par l'echelle ou l'escalier, jamais en se hissant sur le bord.",
+            "Zone de transition hors du passage, sans obstacle ni affaire au sol dans le cheminement.",
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique.",
+            "Comptage des eleves a chaque sortie de l'eau.",
+            "Eleves seches et couverts pendant les temps de recuperation, pour eviter le refroidissement.",
+            "Zones glissantes signalees et balisees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Organiser sa zone",
+          "objective": "Faire preparer materiellement la zone de transition, ce qui determine la moitie du temps gagne.",
+          "material": [
+            {
+              "label": "serviettes et sacs personnels",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche de la sequence de transition",
+              "fixed": 2
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            }
+          ],
+          "organization": "Chacun organise son emplacement dans la zone de transition, puis un camarade verifie a l'aide d'une liste : chaussures accessibles, sac ouvert, rien qui traine.",
+          "studentGoal": "Organiser mes affaires pour ne rien chercher pendant ma transition.",
+          "instructions": [
+            "Mes chaussures sont posees dessus, ouvertes, lacets desserres.",
+            "Ce dont j'ai besoin est accessible sans fouiller.",
+            "Rien ne traine par terre dans le cheminement.",
+            "Camarade : tu verifies avec la liste."
+          ],
+          "success": [
+            "Les chaussures sont accessibles et ouvertes.",
+            "Rien ne traine dans le cheminement.",
+            "La verification par le camarade est faite."
+          ],
+          "execution": [
+            "Poser les affaires dans l'ordre d'utilisation.",
+            "Desserrer les lacets avant l'essai.",
+            "Garder le cheminement libre."
+          ],
+          "watch": [
+            "Les zones sont-elles reellement organisees ?",
+            "Des affaires trainent-elles dans le passage ?",
+            "Les lacets sont-ils desserres ?"
+          ],
+          "errors": [
+            "Laisser ses affaires dans un sac ferme.",
+            "Laisser trainer une serviette dans le cheminement : risque de chute.",
+            "Lacets serres, impossibles a enfiler vite."
+          ],
+          "feedback": [
+            "Sac ouvert, chaussures dessus.",
+            "Ta serviette par terre, quelqu'un va glisser dessus.",
+            "Desserre tes lacets avant."
+          ],
+          "plus": [
+            "Organisation verifiee en temps limite."
+          ],
+          "minus": [
+            "Organisation guidee pas a pas par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Organisation guidee pas a pas par le professeur, avec modele affiche.",
+            "normale": "Organisation individuelle puis verification par un camarade.",
+            "complexifiee": "Organisation a realiser en temps limite, verifiee ensuite."
+          },
+          "safety": [
+            "Aucune affaire dans le cheminement : une serviette au sol sur un sol mouille provoque une chute.",
+            "Zone de transition hors du passage general.",
+            "Comptage des eleves pendant cette phase a sec.",
+            "Eleves seches et couverts."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Enchainement nage-transition-course",
+          "objective": "Enchainer les trois segments avec la transition automatisee.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 30
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par series de six. Enchainement reduit : quatre longueurs, transition, 400 metres de course. Les trois temps sont releves et compares a ceux de la seance 1.",
+          "studentGoal": "Refaire l'enchainement avec une transition deux fois plus courte qu'a la seance 1.",
+          "instructions": [
+            "Je nage a mon allure, sans partir trop vite.",
+            "Je fais ma sequence de transition, exactement comme travaillee.",
+            "Je pars en course une fois hors de la zone glissante.",
+            "Chronometreur : tu releves les trois temps."
+          ],
+          "success": [
+            "Le temps de transition est nettement inferieur a celui de la seance 1.",
+            "L'allure de nage est tenue.",
+            "Aucune course au bord du bassin."
+          ],
+          "execution": [
+            "Tenir l'allure de nage construite en seance 2.",
+            "Executer la sequence sans reflechir.",
+            "Partir en course a allure moderee."
+          ],
+          "watch": [
+            "La transition tient-elle en situation d'enchainement ?",
+            "L'allure de nage est-elle respectee ?",
+            "Le depart en course est-il trop rapide ?"
+          ],
+          "errors": [
+            "Improviser la transition sous l'effet de l'enchainement.",
+            "Repartir trop vite a la nage.",
+            "Partir en course a fond et devoir marcher."
+          ],
+          "feedback": [
+            "Ta sequence, exactement comme a l'atelier.",
+            "Ton allure de nage, pas plus vite.",
+            "Pars doucement en course : tes jambes sont lourdes."
+          ],
+          "plus": [
+            "Enchainement au format complet."
+          ],
+          "minus": [
+            "Deux longueurs et 200 metres de course.",
+            "Course en marche rapide."
+          ],
+          "diff": {
+            "facilitee": "Deux longueurs et 200 metres, partie course en marche rapide.",
+            "normale": "Quatre longueurs, transition, 400 metres de course.",
+            "complexifiee": "Enchainement au format complet de l'epreuve."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique.",
+            "Aucune course au bord du bassin.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course.",
+            "Parcours de course balise, hors circulation de vehicules.",
+            "Aucun eleve non nageur ne participe.",
+            "Tout eleve signalant un malaise s'arrete immediatement et est pris en charge.",
+            "Eleves seches et couverts apres l'epreuve."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle est votre sequence de transition, dans l'ordre ?",
+          "Pourquoi ne court-on jamais au bord du bassin, meme chronometre ?"
+        ],
+        "key": "Une transition se prepare avant l'epreuve, pas pendant : ce sont les affaires bien rangees qui font gagner les secondes. Et la performance ne justifie jamais de courir sur un sol mouille."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les trois temps.",
+        "Juge de transition : verifie la marche au bord et l'organisation de la zone.",
+        "Responsable de comptage : verifie les effectifs a chaque transition."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Courir apres avoir nage : gerer les premieres minutes",
+      "mainObjective": "Construire la gestion des premieres minutes de course, ou les jambes sont lourdes et l'allure difficile a trouver.",
+      "secondaryObjectives": [
+        "Partir en course a allure moderee et l'augmenter ensuite.",
+        "Reconnaitre la sensation de sortie d'eau et ne pas s'y arreter.",
+        "Tenir une allure de course reguliere."
+      ],
+      "linkToPrevious": "La transition est rapide, mais beaucoup se mettent a marcher dans les premieres minutes de course : c'est la difficulte propre a l'epreuve combinee.",
+      "prerequisiteForNext": "Chaque eleve court les premieres minutes apres l'eau sans marcher.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40,
+            "note": "reperes d'allure tous les 50 metres"
+          },
+          {
+            "label": "fiches de temps individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Baliser le parcours de course avec des reperes tous les cinquante metres.",
+          "Verifier l'etat du parcours : sol glissant, obstacles, circulation.",
+          "Preparer la zone de transition comme en seance 3.",
+          "Verifier les PAI, notamment l'asthme d'effort."
+        ],
+        "sketch": "Parcours de course balise avec reperes tous les 50 m.\nZone de transition organisee, un emplacement par eleve.\nChronometreurs places aux reperes.\nZone de repos seche, hors du passage."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des deux filieres : nage et course. Les premieres minutes de course apres l'eau sont d'autant plus difficiles que la course n'a pas ete preparee.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement a sec",
+            "details": [
+              "Mobilisation complete, epaules, hanches, chevilles.",
+              "Trois minutes de course souple, montees de genoux, talons-fesses."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque, entrer par l'echelle.",
+              "Quatre longueurs souples.",
+              "Deux longueurs a allure d'epreuve."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Premiere sortie a blanc",
+            "details": [
+              "Transition et 200 metres de course souple.",
+              "Prise de conscience de la sensation de jambes lourdes.",
+              "Retour au calme, sechage."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Les trois premieres minutes",
+          "objective": "Construire un depart de course modere, qui permet de ne pas s'arreter.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance. Deux longueurs de nage, transition, puis trois minutes de course avec consigne d'allure moderee sur la premiere minute, puis allure normale. L'observateur note si le coureur marche. Trois series.",
+          "studentGoal": "Courir trois minutes apres l'eau sans jamais marcher.",
+          "instructions": [
+            "Je pars en course nettement plus lentement que d'habitude.",
+            "Au bout d'une minute, j'augmente progressivement.",
+            "Je ne m'arrete pas, meme si mes jambes sont lourdes : c'est normal et ca passe.",
+            "Observateur : tu notes chaque passage en marche."
+          ],
+          "success": [
+            "Les trois minutes sont courues sans marcher, sur les trois series.",
+            "La premiere minute est nettement plus lente.",
+            "L'allure augmente ensuite."
+          ],
+          "execution": [
+            "Foulees courtes et rapides au depart.",
+            "Respiration ample des les premieres foulees.",
+            "Augmenter progressivement, sans a-coup."
+          ],
+          "watch": [
+            "Les eleves partent-ils trop vite malgre la consigne ?",
+            "Se mettent-ils a marcher ?",
+            "La sensation de jambes lourdes disparait-elle apres deux minutes ?"
+          ],
+          "errors": [
+            "Partir a allure normale : arret garanti.",
+            "S'arreter des la premiere sensation desagreable.",
+            "Bloquer sa respiration au depart."
+          ],
+          "feedback": [
+            "Plus lentement au depart : tu as tout le temps.",
+            "Ca passe au bout de deux minutes : continue.",
+            "Respire amplement des le depart."
+          ],
+          "plus": [
+            "Cinq minutes de course.",
+            "Quatre longueurs avant la course."
+          ],
+          "minus": [
+            "Deux minutes de course.",
+            "Alternance course et marche autorisee."
+          ],
+          "diff": {
+            "facilitee": "Deux minutes de course avec alternance course et marche autorisee apres une longueur.",
+            "normale": "Trois minutes de course apres deux longueurs, sans marcher, trois series.",
+            "complexifiee": "Cinq minutes de course apres quatre longueurs."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant la phase aquatique.",
+            "Aucune course au bord du bassin : la course ne commence qu'une fois hors de la zone glissante.",
+            "Parcours de course balise, hors circulation de vehicules, verifie avant la seance.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant chaque depart en course.",
+            "Consulter les PAI : l'asthme d'effort se declenche typiquement dans les premieres minutes d'une course apres l'eau.",
+            "Tout eleve signalant une gene respiratoire s'arrete immediatement et est pris en charge.",
+            "Eleves seches entre les series pour eviter le refroidissement.",
+            "Recuperation imposee entre les series."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Tenir une allure de course reguliere",
+          "objective": "Construire la regularite de l'allure de course, sur des reperes de distance.",
+          "material": [
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Course sur le parcours balise, avec un signal sonore toutes les trente secondes. Le coureur doit passer un plot a chaque signal. Six minutes.",
+          "studentGoal": "Passer un plot a chaque signal, du debut a la fin.",
+          "instructions": [
+            "Je choisis l'allure a laquelle je passe un plot par signal.",
+            "Je ne pars pas en avance sur le signal : c'est le piege.",
+            "Si je suis en retard deux fois de suite, je passe a une allure inferieure.",
+            "Je note l'allure tenue sur ma fiche."
+          ],
+          "success": [
+            "L'allure est tenue pendant les six minutes.",
+            "Moins de trois retards sur le signal.",
+            "L'allure tenue est notee."
+          ],
+          "execution": [
+            "Foulees regulieres, respiration ample.",
+            "Ajuster par petits ecarts, sans a-coup.",
+            "Accepter de descendre d'allure plutot que de s'arreter."
+          ],
+          "watch": [
+            "Les eleves partent-ils trop vite ?",
+            "Acceptent-ils de descendre d'allure ?",
+            "La respiration reste-t-elle reguliere ?"
+          ],
+          "errors": [
+            "Partir en avance sur le signal et s'epuiser.",
+            "S'arreter plutot que de ralentir.",
+            "Choisir une allure trop ambitieuse."
+          ],
+          "feedback": [
+            "Tu es en avance : cale-toi sur le signal.",
+            "Descends d'allure plutot que de t'arreter.",
+            "Choisis ce que tu peux tenir six minutes."
+          ],
+          "plus": [
+            "Neuf minutes.",
+            "Allure augmentee sur les deux dernieres minutes."
+          ],
+          "minus": [
+            "Trois minutes.",
+            "Allure la plus basse, marche rapide autorisee."
+          ],
+          "diff": {
+            "facilitee": "Trois minutes a l'allure la plus basse, marche rapide autorisee.",
+            "normale": "Six minutes avec un plot par signal de trente secondes.",
+            "complexifiee": "Neuf minutes avec allure augmentee sur les deux dernieres."
+          },
+          "safety": [
+            "Parcours balise et verifie, hors circulation de vehicules.",
+            "Sens de course unique, aucun croisement.",
+            "Consulter les PAI, asthme d'effort compris.",
+            "Tout eleve signalant une gene s'arrete et est pris en charge.",
+            "Comptage des eleves avant et apres la course."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Enchainement complet a allure choisie",
+          "objective": "Enchainer les trois segments en appliquant les allures construites.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches de temps individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par series de six : quatre longueurs, transition, 600 metres de course a allure choisie. Les trois temps sont releves.",
+          "studentGoal": "Enchainer les trois segments en tenant mes allures.",
+          "instructions": [
+            "Je nage a mon allure, je fais ma sequence de transition.",
+            "Je pars en course lentement la premiere minute.",
+            "J'augmente ensuite jusqu'a mon allure de course.",
+            "Chronometreur : tu releves les trois temps."
+          ],
+          "success": [
+            "L'enchainement est realise sans marcher.",
+            "Les trois temps sont releves.",
+            "L'allure de nage est tenue."
+          ],
+          "execution": [
+            "Tenir l'allure de nage construite.",
+            "Executer la sequence de transition sans improviser.",
+            "Depart de course modere puis progressif."
+          ],
+          "watch": [
+            "Les allures sont-elles tenues sur l'enchainement complet ?",
+            "Le depart de course reste-t-il modere ?",
+            "Quelqu'un se met-il a marcher ?"
+          ],
+          "errors": [
+            "Repartir trop vite a la nage.",
+            "Oublier le depart modere en course.",
+            "Marcher des les premieres foulees."
+          ],
+          "feedback": [
+            "Ton allure de nage, pas plus vite.",
+            "Doucement la premiere minute, ensuite tu accelereras.",
+            "Continue, ca passe : ne marche pas."
+          ],
+          "plus": [
+            "Format complet de l'epreuve."
+          ],
+          "minus": [
+            "Deux longueurs et 300 metres.",
+            "Alternance course et marche autorisee."
+          ],
+          "diff": {
+            "facilitee": "Deux longueurs et 300 metres, alternance course et marche autorisee.",
+            "normale": "Quatre longueurs, transition, 600 metres a allure choisie.",
+            "complexifiee": "Format complet de l'epreuve."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant la phase aquatique.",
+            "Aucune course au bord du bassin.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course.",
+            "Parcours de course balise et verifie.",
+            "Tout eleve signalant un malaise s'arrete immediatement et est pris en charge.",
+            "Eleves seches et couverts apres l'epreuve."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que ressent-on dans les premieres foulees apres la sortie de l'eau, et combien de temps cela dure-t-il ?",
+          "Que faut-il faire quand l'allure devient trop dure : s'arreter ou ralentir ?"
+        ],
+        "key": "Les jambes lourdes de la sortie de l'eau durent deux a trois minutes, puis cela passe. Il faut partir plus lentement que d'habitude, et ralentir plutot que s'arreter."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les temps intermediaires de course.",
+        "Observateur : note les passages en marche.",
+        "Responsable de comptage : verifie les effectifs a chaque transition."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et projet de performance",
+      "mainObjective": "Situer chacun dans les trois segments et lui faire construire un projet de performance chiffre.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser l'epreuve au format retenu et relever les trois temps.",
+        "Construire un projet de performance chiffre pour la fin du cycle.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Allure de nage, transition et depart de course ont ete construits separement : l'epreuve evaluee montre ce qui en reste sur l'enchainement complet.",
+      "prerequisiteForNext": "Chaque eleve a un projet chiffre pour l'epreuve finale.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Afficher les criteres de l'evaluation finale, en grand.",
+          "Preparer les fiches nominatives et les fiches de projet.",
+          "Baliser le parcours de course et verifier son etat.",
+          "Prevoir un espace au sec pour l'ecriture.",
+          "Verifier les PAI et les dispenses avant l'epreuve."
+        ],
+        "sketch": "Bassin avec lignes d'eau, ordre des series affiche.\nZone de transition organisee, un emplacement par eleve.\nParcours de course balise avec reperes.\nEspace d'ecriture au sec, hors du passage."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des deux filieres, mene en partie par les eleves : savoir s'echauffer avant un effort fait partie des attendus.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome a sec",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Mobilisation complete et course souple.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque, entrer par l'echelle.",
+              "Quatre longueurs souples.",
+              "Deux longueurs a allure d'epreuve."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation a la course",
+            "details": [
+              "Sortie, sechage rapide.",
+              "Trois minutes de course souple.",
+              "Montees de genoux, talons-fesses, accelerations progressives."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Epreuve evaluee au format retenu",
+          "objective": "Mesurer la performance sur l'epreuve complete et relever les trois temps.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par series, un chronometreur par concurrent. Epreuve au format retenu par l'etablissement. Trois temps releves : nage, transition, course, plus les temps intermediaires de nage.",
+          "studentGoal": "Realiser l'epreuve complete et connaitre mes trois temps.",
+          "instructions": [
+            "Je nage a mon allure, je ne pars pas trop vite.",
+            "Je fais ma sequence de transition.",
+            "Je pars en course lentement, puis j'augmente.",
+            "Chronometreur : tu releves les trois temps et les intermediaires de nage."
+          ],
+          "success": [
+            "L'epreuve est realisee en entier.",
+            "Les trois temps sont releves et notes.",
+            "Aucun arret sur la partie nage."
+          ],
+          "execution": [
+            "Tenir l'allure de nage construite.",
+            "Executer la sequence de transition.",
+            "Depart de course modere puis progressif."
+          ],
+          "watch": [
+            "Les allures tiennent-elles sous evaluation ?",
+            "Les transitions restent-elles organisees ?",
+            "Quelqu'un se met-il a marcher ?",
+            "Les chronometreurs suivent-ils leur nageur du regard ?"
+          ],
+          "errors": [
+            "Partir trop vite a la nage sous l'effet de l'enjeu.",
+            "Improviser la transition.",
+            "Partir a fond en course."
+          ],
+          "feedback": [
+            "Ton allure, meme en evaluation.",
+            "Ta sequence, exactement comme travaillee.",
+            "Doucement la premiere minute."
+          ],
+          "plus": [
+            "Format majore.",
+            "Temps cible annonce avant le depart."
+          ],
+          "minus": [
+            "Format reduit de moitie.",
+            "Brasse autorisee, partie course en marche rapide."
+          ],
+          "diff": {
+            "facilitee": "Format reduit de moitie, brasse autorisee, partie course en marche rapide.",
+            "normale": "Epreuve au format retenu par l'etablissement, trois temps releves.",
+            "complexifiee": "Format majore avec temps cible annonce avant le depart."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique : sans lui, aucune entree dans l'eau.",
+            "Aucun eleve non nageur ne participe a l'epreuve combinee.",
+            "Un chronometreur suit son nageur du regard pendant toute la nage et signale tout arret anormal.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course.",
+            "Aucune course au bord du bassin, meme en evaluation.",
+            "Sortie par l'echelle ou l'escalier.",
+            "Parcours de course balise et verifie, hors circulation de vehicules.",
+            "Echauffement complet obligatoire avant l'epreuve.",
+            "Consulter les PAI : asthme d'effort, allergies au chlore, pathologies cardiaques.",
+            "Tout eleve signalant un malaise s'arrete immediatement et est pris en charge.",
+            "Eleves seches et couverts apres l'epreuve."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Construire son projet chiffre",
+          "objective": "Faire construire a chacun un projet de performance realiste, segment par segment.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au sec, chacun ecrit son projet pour l'epreuve finale : temps vise sur la nage, sur la transition, sur la course, et temps total.",
+          "studentGoal": "Ecrire les trois temps que je vise pour l'epreuve finale.",
+          "instructions": [
+            "Je pars de mes trois temps du jour.",
+            "J'ecris le temps que je vise sur chaque segment.",
+            "Je vise un progres realiste, pas un exploit.",
+            "J'additionne : c'est mon temps cible total."
+          ],
+          "success": [
+            "Les trois temps vises sont ecrits.",
+            "Le total est calcule.",
+            "Le projet est realiste au vu des temps du jour."
+          ],
+          "execution": [
+            "Partir des temps mesures, pas des impressions.",
+            "Chercher le progres la ou il est le plus accessible.",
+            "Additionner correctement."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les eleves visent-ils le bon segment ?",
+            "Les additions sont-elles justes ?"
+          ],
+          "errors": [
+            "Viser un temps de nage irrealiste.",
+            "Negliger la transition, ou le gain est pourtant le plus facile.",
+            "Projet sans chiffres."
+          ],
+          "feedback": [
+            "Realiste : tu ne gagneras pas trente secondes en nage.",
+            "Ta transition dure encore 50 secondes : c'est la que tu gagnes.",
+            "Des chiffres, pas des intentions."
+          ],
+          "plus": [
+            "Prevoir une variante si la nage se passe mal."
+          ],
+          "minus": [
+            "Projet sur un seul segment, aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Projet sur un seul segment, construit avec l'aide du professeur.",
+            "normale": "Projet chiffre sur les trois segments, avec total calcule.",
+            "complexifiee": "Projet chiffre avec variante prevue si la nage se passe mal."
+          },
+          "safety": [
+            "Phase realisee assis au sec, hors des zones de passage.",
+            "Eleves seches et couverts pour eviter le refroidissement.",
+            "Comptage des eleves avant et apres cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Essai partiel du projet",
+          "objective": "Verifier immediatement la faisabilite d'un des temps vises.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chacun teste le segment sur lequel il vise le plus gros progres : soit deux longueurs a l'allure visee, soit une transition chronometree, soit deux minutes de course a l'allure visee.",
+          "studentGoal": "Verifier que le temps que j'ai vise est atteignable.",
+          "instructions": [
+            "Je teste le segment ou je vise le plus gros progres.",
+            "Je verifie si le temps vise est atteignable.",
+            "Si c'est trop dur, je corrige mon projet tout de suite.",
+            "Je note la correction sur ma fiche."
+          ],
+          "success": [
+            "Le segment vise est teste.",
+            "Le projet est corrige si necessaire.",
+            "La correction est notee."
+          ],
+          "execution": [
+            "Tester a l'allure exacte visee.",
+            "Accepter de corriger a la baisse.",
+            "Noter immediatement."
+          ],
+          "watch": [
+            "Les eleves acceptent-ils de corriger leur projet ?",
+            "Les temps vises sont-ils atteignables ?"
+          ],
+          "errors": [
+            "Refuser de corriger un projet manifestement irrealiste.",
+            "Tester a une allure differente de celle visee.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Tu n'y arrives pas : corrige, ce n'est pas un echec.",
+            "A l'allure visee, pas plus vite.",
+            "Note ta correction, sinon tu l'oublieras."
+          ],
+          "plus": [
+            "Tester deux segments."
+          ],
+          "minus": [
+            "Test guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Test guide par le professeur sur un segment choisi avec lui.",
+            "normale": "Test du segment ou le progres vise est le plus important.",
+            "complexifiee": "Test de deux segments avec ajustement du projet total."
+          },
+          "safety": [
+            "Presence du maitre nageur sauveteur pour tout test dans l'eau.",
+            "Aucune course au bord du bassin.",
+            "Comptage des eleves a chaque sortie de l'eau.",
+            "Eleves seches et couverts entre les tests.",
+            "Tout eleve signalant un malaise s'arrete immediatement."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quel segment allez-vous gagner le plus de temps ?",
+          "Quel est votre temps cible total pour l'epreuve finale ?"
+        ],
+        "key": "Un projet de performance se construit segment par segment, a partir de temps mesures. Et le gain le plus facile n'est presque jamais dans l'eau : il est dans la transition."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les trois temps et les intermediaires.",
+        "Juge de transition : chronometre et verifie la marche au bord.",
+        "Responsable de comptage : verifie les effectifs a chaque phase."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Ajuster son allure de nage a son projet",
+      "mainObjective": "Ajuster l'allure de nage pour preserver la course, en fonction du projet chiffre.",
+      "secondaryObjectives": [
+        "Comparer deux allures de nage et leur effet sur la course qui suit.",
+        "Choisir l'allure de nage qui optimise le temps total.",
+        "Confirmer ou corriger son projet."
+      ],
+      "linkToPrevious": "Le projet est chiffre, mais beaucoup nagent encore trop vite et le paient sur la course : c'est l'equilibre entre les deux segments qu'il faut trouver.",
+      "prerequisiteForNext": "Chaque eleve a determine l'allure de nage qui lui donne le meilleur temps total.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Preparer la zone de transition et baliser le parcours de course.",
+          "Repartir les eleves par ligne selon leur vitesse.",
+          "Prevoir une recuperation suffisante entre les deux essais comparatifs.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Lignes d'eau reparties par vitesse.\nZone de transition organisee.\nParcours de course balise avec reperes.\nZone de recuperation au sec entre les deux essais."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des deux filieres : la seance comporte deux enchainements a intensite soutenue.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome a sec",
+            "details": [
+              "Chaque groupe mene son echauffement.",
+              "Mobilisation complete et course souple.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque, entrer par l'echelle.",
+              "Quatre longueurs souples.",
+              "Deux longueurs a allure d'epreuve."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation a la course",
+            "details": [
+              "Sortie, sechage rapide.",
+              "Trois minutes de course souple.",
+              "Accelerations progressives."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Deux allures, deux resultats",
+          "objective": "Faire comparer concretement l'effet d'une nage rapide et d'une nage moderee sur le temps total.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Deux enchainements reduits separes de dix minutes de recuperation. Premier : nage rapide puis course. Second : nage moderee puis course. Les temps totaux sont compares.",
+          "studentGoal": "Savoir laquelle de mes deux allures de nage me donne le meilleur temps total.",
+          "instructions": [
+            "Premier essai : je nage nettement plus vite que mon allure, puis je cours.",
+            "Dix minutes de recuperation au sec, seche et couvert.",
+            "Second essai : je nage a mon allure moderee, puis je cours.",
+            "Je compare les deux temps totaux, pas seulement les temps de nage."
+          ],
+          "success": [
+            "Les deux essais sont realises.",
+            "Les temps totaux sont compares et notes.",
+            "Chacun sait quelle allure lui convient."
+          ],
+          "execution": [
+            "Respecter reellement les deux allures demandees.",
+            "Courir a la meme intention sur les deux essais.",
+            "Recuperer completement entre les deux."
+          ],
+          "watch": [
+            "Les deux allures de nage sont-elles reellement differentes ?",
+            "La course du premier essai est-elle degradee ?",
+            "La recuperation est-elle suffisante ?"
+          ],
+          "errors": [
+            "Nager a la meme allure sur les deux essais.",
+            "Ne comparer que les temps de nage.",
+            "Repartir sans recuperation suffisante."
+          ],
+          "feedback": [
+            "Tes deux allures sont identiques : l'exercice ne sert a rien.",
+            "Compare les totaux, pas la nage seule.",
+            "Recupere completement, sinon la comparaison est faussee."
+          ],
+          "plus": [
+            "Trois allures comparees."
+          ],
+          "minus": [
+            "Un seul essai, comparaison avec la seance 5.",
+            "Distances reduites."
+          ],
+          "diff": {
+            "facilitee": "Un seul essai a allure moderee, compare aux temps de la seance 5, distances reduites.",
+            "normale": "Deux enchainements a allures differentes, temps totaux compares.",
+            "complexifiee": "Trois allures comparees sur trois enchainements."
+          },
+          "safety": [
+            "Recuperation de dix minutes obligatoire entre les deux essais, au sec, seche et couvert : deux enchainements intenses rapproches sans recuperation exposent au malaise.",
+            "Presence obligatoire du maitre nageur sauveteur pendant les phases aquatiques.",
+            "Un chronometreur suit son nageur du regard pendant toute la nage.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant chaque depart en course.",
+            "Aucune course au bord du bassin.",
+            "Consulter les PAI, asthme d'effort compris.",
+            "Tout eleve signalant un malaise s'arrete immediatement et ne realise pas le second essai.",
+            "Parcours de course balise et verifie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Corriger son projet",
+          "objective": "Faire ajuster le projet chiffre a partir des resultats de la comparaison.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au sec, chacun compare les deux temps totaux et corrige son projet : allure de nage retenue, temps vises, total.",
+          "studentGoal": "Corriger mon projet a partir de ce que j'ai mesure aujourd'hui.",
+          "instructions": [
+            "Je compare mes deux temps totaux.",
+            "Je retiens l'allure de nage qui m'a donne le meilleur total.",
+            "Je corrige mes trois temps vises et mon total.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Le projet est corrige a partir des mesures.",
+            "L'allure de nage retenue est notee.",
+            "Le nouveau total est calcule."
+          ],
+          "execution": [
+            "Comparer les totaux, pas les segments isoles.",
+            "Accepter de corriger a la baisse.",
+            "Recalculer le total."
+          ],
+          "watch": [
+            "Les corrections s'appuient-elles sur les mesures ?",
+            "Les eleves acceptent-ils de moderer leur nage ?"
+          ],
+          "errors": [
+            "Garder l'allure rapide parce qu'elle flatte le temps de nage.",
+            "Ne pas recalculer le total.",
+            "Corriger sans regarder les chiffres."
+          ],
+          "feedback": [
+            "Ton temps de nage est meilleur, mais ton total est pire.",
+            "Recalcule ton total.",
+            "Regarde tes chiffres avant de decider."
+          ],
+          "plus": [
+            "Prevoir une variante en cas de mauvaise sensation."
+          ],
+          "minus": [
+            "Correction guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Correction guidee par le professeur a partir des deux totaux.",
+            "normale": "Correction individuelle du projet chiffre.",
+            "complexifiee": "Correction du projet avec variante prevue selon les sensations."
+          },
+          "safety": [
+            "Phase realisee assis au sec, eleves seches et couverts.",
+            "Comptage des eleves avant et apres cette phase.",
+            "Aucune activite en cours a proximite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Nage a l'allure retenue",
+          "objective": "Confirmer l'allure de nage retenue sur la distance complete de l'epreuve.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chacun nage la distance de nage de l'epreuve a l'allure retenue, avec temps intermediaires releves toutes les longueurs.",
+          "studentGoal": "Nager la distance complete a l'allure que j'ai retenue, sans ecart.",
+          "instructions": [
+            "Je nage a l'allure retenue, pas plus vite.",
+            "Chronometreur : tu m'annonces chaque longueur.",
+            "Je verifie que je tiens l'ecart annonce.",
+            "Je note mon temps sur ma fiche."
+          ],
+          "success": [
+            "L'allure retenue est tenue sur toute la distance.",
+            "Moins de trois secondes d'ecart entre les longueurs.",
+            "Le temps est note."
+          ],
+          "execution": [
+            "Meme nombre de coups de bras par longueur.",
+            "Respiration reguliere.",
+            "Ne pas accelerer sur la fin."
+          ],
+          "watch": [
+            "L'allure retenue est-elle tenue ?",
+            "Y a-t-il des accelerations en fin de distance ?",
+            "La respiration reste-t-elle reguliere ?"
+          ],
+          "errors": [
+            "Nager plus vite que l'allure retenue.",
+            "Accelerer sur la derniere longueur.",
+            "S'arreter au bout du bassin."
+          ],
+          "feedback": [
+            "Ton allure retenue, pas celle qui te fait plaisir.",
+            "N'accelere pas : tu paieras en course.",
+            "Enchaine, ne t'arrete pas."
+          ],
+          "plus": [
+            "Distance majoree.",
+            "Nage sans annonce de temps."
+          ],
+          "minus": [
+            "Distance reduite.",
+            "Brasse autorisee."
+          ],
+          "diff": {
+            "facilitee": "Distance reduite, brasse autorisee, un arret tolere.",
+            "normale": "Distance de l'epreuve a l'allure retenue, avec temps intermediaires.",
+            "complexifiee": "Distance majoree, nage sans annonce de temps."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur.",
+            "Un chronometreur suit son nageur du regard pendant toute la distance.",
+            "Repartition par vitesse dans les lignes, sens de circulation respecte.",
+            "Comptage des eleves a la sortie de l'eau.",
+            "Tout eleve signalant une crampe ou un malaise sort immediatement de l'eau.",
+            "Aucune course au bord du bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Nager plus vite vous a-t-il donne un meilleur temps total ?",
+          "Quelle allure de nage avez-vous retenue pour l'epreuve finale ?"
+        ],
+        "key": "En epreuve combinee, le meilleur temps de nage ne donne presque jamais le meilleur temps total : ce qu'on gagne dans l'eau, on le perd souvent double sur la course."
+      },
+      "socialRoles": [
+        "Chronometreur : annonce les temps intermediaires de nage.",
+        "Observateur de securite : suit son nageur du regard.",
+        "Responsable de comptage : verifie les effectifs a chaque phase."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale de l'epreuve complete",
+      "mainObjective": "Realiser l'epreuve complete dans les conditions exactes de l'evaluation et preparer les roles sociaux.",
+      "secondaryObjectives": [
+        "Realiser l'epreuve au format final, avec le projet annonce.",
+        "Tenir le role de chronometreur et de juge de transition.",
+        "Ajuster une derniere fois son projet."
+      ],
+      "linkToPrevious": "Le projet est stabilise : il reste a l'eprouver une fois en entier, dans les conditions du jour de l'evaluation.",
+      "prerequisiteForNext": "Chaque eleve a realise l'epreuve complete et sait tenir les roles evalues.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de chronometrage",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du protocole de l'epreuve",
+            "fixed": 2
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur.",
+          "Installer l'epreuve exactement comme le jour de l'evaluation.",
+          "Afficher le protocole de l'epreuve et l'ordre des series.",
+          "Preparer les fiches de chronometrage identiques a celles du jour final.",
+          "Baliser et verifier le parcours de course.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Bassin et zone de transition installes comme le jour de l'evaluation.\nParcours de course balise avec reperes et poste d'arrivee.\nProtocole de l'epreuve et ordre des series affiches.\nEspace de recuperation au sec, hors du passage."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, identique a celui du jour de l'evaluation : c'est aussi une repetition de l'echauffement.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Echauffement autonome a sec",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Le professeur observe et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque, entrer par l'echelle.",
+              "Quatre longueurs souples.",
+              "Deux longueurs a l'allure retenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation a la course",
+            "details": [
+              "Sortie, sechage rapide, verification de la zone de transition.",
+              "Trois minutes de course souple.",
+              "Accelerations progressives."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Epreuve complete a blanc",
+          "objective": "Realiser l'epreuve dans les conditions exactes de l'evaluation, avec projet annonce.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "fiches de chronometrage",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Series organisees comme le jour final. Chaque concurrent annonce ses trois temps cibles avant de partir. Un chronometreur et un juge de transition par concurrent.",
+          "studentGoal": "Realiser l'epreuve complete en respectant les temps que j'ai annonces.",
+          "instructions": [
+            "J'annonce mes trois temps cibles avant de partir.",
+            "Je nage a l'allure retenue, je ne pars pas trop vite.",
+            "Je fais ma sequence de transition.",
+            "Je pars en course lentement puis j'augmente."
+          ],
+          "success": [
+            "L'epreuve est realisee en entier.",
+            "Les ecarts avec les temps annonces sont faibles.",
+            "Aucun arret sur la partie nage.",
+            "Aucune course au bord du bassin."
+          ],
+          "execution": [
+            "Tenir l'allure de nage retenue.",
+            "Executer la sequence de transition sans improviser.",
+            "Depart de course modere puis progressif."
+          ],
+          "watch": [
+            "Les projets sont-ils realistes ?",
+            "Les allures tiennent-elles sur l'epreuve complete ?",
+            "Les chronometreurs et juges tiennent-ils leur role ?"
+          ],
+          "errors": [
+            "Annoncer un projet ambitieux puis exploser.",
+            "Improviser la transition.",
+            "Partir a fond en course."
+          ],
+          "feedback": [
+            "Annonce ce que tu peux tenir.",
+            "Ta sequence, comme travaillee.",
+            "Doucement la premiere minute de course."
+          ],
+          "plus": [
+            "Depart groupe, comme en competition."
+          ],
+          "minus": [
+            "Format reduit.",
+            "Partie course en marche rapide."
+          ],
+          "diff": {
+            "facilitee": "Format reduit, brasse autorisee, partie course en marche rapide.",
+            "normale": "Epreuve au format final avec projet annonce.",
+            "complexifiee": "Epreuve au format final avec depart groupe."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique.",
+            "Aucun eleve non nageur ne participe.",
+            "Un chronometreur suit son nageur du regard pendant toute la nage.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant le depart en course.",
+            "Aucune course au bord du bassin.",
+            "Parcours de course balise et verifie, hors circulation de vehicules.",
+            "Echauffement complet obligatoire avant l'epreuve.",
+            "Consulter les PAI, asthme d'effort compris.",
+            "Tout eleve signalant un malaise s'arrete immediatement et est pris en charge.",
+            "Eleves seches et couverts apres l'epreuve."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Chronometrer et juger la transition",
+          "objective": "Former aux roles evalues : chronometreur et juge de transition.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de chronometrage",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "affiche du protocole de l'epreuve",
+              "fixed": 2
+            }
+          ],
+          "organization": "Chaque eleve chronometre un concurrent sur une serie et juge la transition sur une autre. Le professeur valide chaque role.",
+          "studentGoal": "Chronometrer sans erreur et juger une transition selon le protocole.",
+          "instructions": [
+            "Chronometreur : je declenche au depart, je releve la sortie de l'eau, le depart en course et l'arrivee.",
+            "Je surveille mon nageur du regard pendant toute sa nage.",
+            "Juge de transition : je verifie que personne ne court au bord du bassin.",
+            "Je signale immediatement tout comportement dangereux au professeur."
+          ],
+          "success": [
+            "Les trois temps sont releves sans erreur.",
+            "Le chronometreur ne quitte pas son nageur des yeux.",
+            "Les courses au bord du bassin sont signalees."
+          ],
+          "execution": [
+            "Se placer au bon endroit avant le depart.",
+            "Declencher et arreter franchement.",
+            "Noter immediatement, sans attendre."
+          ],
+          "watch": [
+            "Les chronometreurs surveillent-ils leur nageur ?",
+            "Les juges signalent-ils les courses au bord ?",
+            "Les fiches sont-elles justes ?"
+          ],
+          "errors": [
+            "Discuter au lieu de surveiller son nageur.",
+            "Oublier de relever un temps intermediaire.",
+            "Ne pas signaler un camarade qui court au bord."
+          ],
+          "feedback": [
+            "Ton nageur d'abord : tu es aussi sa securite.",
+            "Note tout de suite, tu oublieras.",
+            "Tu dois le signaler, meme si c'est ton copain."
+          ],
+          "plus": [
+            "Chronometrer deux concurrents.",
+            "Tenir les deux roles sur la meme serie."
+          ],
+          "minus": [
+            "Chronometrer un seul temps.",
+            "Role tenu a deux."
+          ],
+          "diff": {
+            "facilitee": "Chronometrage d'un seul temps, role tenu a deux avec aide du professeur.",
+            "normale": "Chronometrage des trois temps et jugement d'une transition.",
+            "complexifiee": "Chronometrage de deux concurrents ou deux roles tenus simultanement."
+          },
+          "safety": [
+            "Le chronometreur est aussi un observateur de securite : il ne quitte pas son nageur des yeux et signale tout arret anormal.",
+            "Le juge de transition signale immediatement toute course au bord du bassin.",
+            "Les juges et chronometreurs se placent hors des zones de passage.",
+            "Le maitre nageur sauveteur reste le responsable de la surveillance : les roles eleves ne s'y substituent jamais."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ajustement final du projet",
+          "objective": "Ajuster une derniere fois le projet a partir de la repetition generale.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de chronometrage",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au sec, chacun compare ses temps du jour a ses temps annonces et ajuste son projet pour la seance 8.",
+          "studentGoal": "Fixer les trois temps que j'annoncerai le jour de l'evaluation.",
+          "instructions": [
+            "Je compare mes temps du jour a ceux que j'avais annonces.",
+            "J'ajuste mes trois temps cibles pour l'epreuve finale.",
+            "Je note aussi ce que je dois faire attention a ne pas rater.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Les trois temps cibles finaux sont ecrits.",
+            "L'ajustement s'appuie sur les temps du jour.",
+            "Un point de vigilance est note."
+          ],
+          "execution": [
+            "Comparer segment par segment.",
+            "Ajuster de facon realiste.",
+            "Formuler le point de vigilance simplement."
+          ],
+          "watch": [
+            "Les ajustements sont-ils realistes ?",
+            "Les eleves reperent-ils leur point faible ?"
+          ],
+          "errors": [
+            "Maintenir un projet manifestement hors d'atteinte.",
+            "Ajuster sans regarder les chiffres.",
+            "Ne pas identifier de point de vigilance."
+          ],
+          "feedback": [
+            "Tu as trente secondes d'ecart : ajuste.",
+            "Regarde tes chiffres du jour.",
+            "Sur quoi dois-tu faire attention le jour J ?"
+          ],
+          "plus": [
+            "Prevoir un plan B en cas de mauvaise nage."
+          ],
+          "minus": [
+            "Ajustement guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Ajustement guide par le professeur a partir des temps du jour.",
+            "normale": "Ajustement individuel des trois temps cibles.",
+            "complexifiee": "Ajustement avec plan B prevu en cas de mauvaise nage."
+          },
+          "safety": [
+            "Phase realisee assis au sec, eleves seches et couverts.",
+            "Comptage des eleves avant et apres cette phase.",
+            "Aucune activite en cours a proximite."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont les trois temps que vous annoncerez la semaine prochaine ?",
+          "Que doit surveiller un chronometreur, en plus du temps ?"
+        ],
+        "key": "Un projet annonce engage : il se fixe a partir de ce qu'on a mesure, pas de ce qu'on espere. Et un chronometreur surveille d'abord son nageur, ensuite son chronometre."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les trois temps et surveille son nageur.",
+        "Juge de transition : verifie le respect de la marche au bord.",
+        "Responsable de comptage : verifie les effectifs a chaque phase."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Realiser l'epreuve complete au format final et evaluer la performance, la gestion et les roles sociaux.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser l'epreuve en respectant le projet annonce.",
+        "Tenir le role de chronometreur ou de juge de transition.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'evaluation : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "lignes d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "plots de marquage",
+            "fixed": 40
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles des seances 5 et 7, pour comparer"
+          },
+          {
+            "label": "fiches de chronometrage",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du protocole de l'epreuve",
+            "fixed": 2
+          },
+          {
+            "label": "serviettes et sacs personnels",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la presence du maitre nageur sauveteur : sans lui, l'epreuve n'a pas lieu.",
+          "Relire le plan d'organisation de la surveillance et des secours.",
+          "Verifier la liste des nageurs, les PAI et les dispenses avant la premiere serie.",
+          "Afficher le protocole, l'ordre des series et les criteres d'evaluation.",
+          "Baliser et verifier integralement le parcours de course.",
+          "Preparer les grilles nominatives et ressortir les fiches de projet.",
+          "Organiser la zone de transition, un emplacement par eleve."
+        ],
+        "sketch": "Bassin et zone de transition installes comme a la repetition generale.\nParcours de course balise, poste d'arrivee identifie.\nProtocole, ordre des series et criteres affiches a l'entree.\nEspace de recuperation au sec, avec la trousse de secours."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des deux filieres, mene par les eleves : aucune epreuve combinee evaluee ne s'aborde sans preparation, et la conduite de l'echauffement est elle-meme evaluee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome a sec",
+            "details": [
+              "Chaque groupe mene son echauffement complet.",
+              "Mobilisation, course souple, accelerations progressives.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Entree progressive et nage",
+            "details": [
+              "Mouiller la nuque et le torse avant d'entrer.",
+              "Entrer par l'echelle, quatre longueurs souples.",
+              "Deux longueurs a l'allure retenue."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation a la course",
+            "details": [
+              "Sortie, sechage rapide, verification de la zone de transition.",
+              "Trois minutes de course souple.",
+              "Montees de genoux, talons-fesses, accelerations."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Epreuve finale chronometree",
+          "objective": "Evaluer la performance et la gestion de l'epreuve sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de chronometrage",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Series successives selon l'ordre affiche. Chaque concurrent annonce ses trois temps cibles avant de partir. Un chronometreur et un juge de transition eleves par concurrent, le professeur evalue.",
+          "studentGoal": "Realiser l'epreuve en respectant les temps que j'ai annonces.",
+          "instructions": [
+            "J'annonce mes trois temps cibles avant de partir.",
+            "Je nage a l'allure retenue, sans partir trop vite.",
+            "Je fais ma sequence de transition, en marchant au bord.",
+            "Je pars en course lentement puis j'augmente."
+          ],
+          "success": [
+            "L'epreuve est realisee en entier, sans arret sur la partie nage.",
+            "L'allure de nage annoncee est tenue, sans effondrement sur la fin.",
+            "La transition est realisee dans le temps annonce, sans desordre.",
+            "La course est geree : aucune marche subie apres la sortie de l'eau.",
+            "L'ecart entre le temps annonce et le temps realise est faible.",
+            "Le role de chronometreur ou de juge de transition est tenu avec rigueur."
+          ],
+          "execution": [
+            "Tenir l'allure de nage retenue du debut a la fin.",
+            "Executer la sequence de transition sans improviser.",
+            "Depart de course modere puis progressif.",
+            "Ralentir plutot que s'arreter."
+          ],
+          "watch": [
+            "Les projets annonces sont-ils tenus ?",
+            "Les allures resistent-elles a l'enjeu ?",
+            "Les transitions restent-elles organisees ?",
+            "Quelqu'un court-il au bord du bassin ?"
+          ],
+          "errors": [
+            "Partir trop vite a la nage sous l'effet de l'enjeu.",
+            "Improviser la transition.",
+            "Partir a fond en course et devoir marcher.",
+            "Courir au bord du bassin pour gagner du temps."
+          ],
+          "feedback": [
+            "Ton allure, meme le jour de l'evaluation.",
+            "Ta sequence, comme travaillee.",
+            "Doucement la premiere minute.",
+            "On marche au bord : la note ne change rien a cette regle."
+          ],
+          "plus": [
+            "Format majore.",
+            "Depart groupe."
+          ],
+          "minus": [
+            "Format reduit de moitie.",
+            "Brasse autorisee, partie course en marche rapide."
+          ],
+          "diff": {
+            "facilitee": "Format reduit de moitie, brasse autorisee, partie course en marche rapide. La gestion de l'allure, le respect du projet et les roles sociaux sont evalues autant que le chrono.",
+            "normale": "Epreuve au format retenu par l'etablissement, avec projet annonce.",
+            "complexifiee": "Format majore avec depart groupe."
+          },
+          "safety": [
+            "Presence obligatoire du maitre nageur sauveteur pendant toute la phase aquatique : sans lui, l'epreuve n'a pas lieu.",
+            "Aucun eleve non nageur ne participe a l'epreuve combinee.",
+            "Un chronometreur suit son nageur du regard pendant toute la nage et signale immediatement tout arret anormal.",
+            "Comptage des eleves avant l'entree dans l'eau, a la sortie, et avant chaque depart en course.",
+            "Aucune course au bord du bassin, en aucune circonstance : le sol mouille est la premiere cause de chute grave en piscine, et l'evaluation ne modifie jamais cette regle.",
+            "Sortie par l'echelle ou l'escalier, jamais en se hissant sur le bord.",
+            "Parcours de course integralement balise et verifie avant la premiere serie, hors circulation de vehicules.",
+            "Echauffement complet obligatoire avant toute serie evaluee.",
+            "PAI verifies avant la premiere serie : asthme d'effort, allergies au chlore, pathologies cardiaques.",
+            "Tout eleve signalant une gene respiratoire, un vertige ou un malaise s'arrete immediatement et est pris en charge.",
+            "Eleves seches et couverts des la fin de leur epreuve.",
+            "Le professeur peut arreter toute serie presentant un risque."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Comparer projet et realisation",
+          "objective": "Faire analyser a chacun l'ecart entre son projet annonce et sa realisation.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de projet conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis au sec, chacun compare ses temps realises a ses temps annonces, segment par segment, puis a ses temps de la seance 5.",
+          "studentGoal": "Dire sur quel segment j'ai le plus progresse depuis la mi-cycle.",
+          "instructions": [
+            "Je compare mes trois temps realises a mes trois temps annonces.",
+            "Je compare aussi a mes temps de la seance 5.",
+            "J'identifie le segment ou j'ai le plus progresse.",
+            "Je dis si mon objectif personnel est atteint."
+          ],
+          "success": [
+            "Les ecarts sont calcules segment par segment.",
+            "Le segment de plus grand progres est identifie.",
+            "Chacun se prononce sur son objectif."
+          ],
+          "execution": [
+            "Comparer segment par segment, pas seulement le total.",
+            "Reprendre la fiche de la seance 5.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves reperent-ils leurs progres reels ?",
+            "Negligent-ils encore le segment transition ?"
+          ],
+          "errors": [
+            "Ne regarder que le temps total.",
+            "Juger un ecart sans regarder les conditions.",
+            "Oublier de comparer a la seance 5."
+          ],
+          "feedback": [
+            "Segment par segment, pas seulement le total.",
+            "Ta transition a ete divisee par deux : c'est un progres reel.",
+            "Ressors ta fiche de la seance 5."
+          ],
+          "plus": [
+            "Formuler ce qu'il faudrait travailler ensuite."
+          ],
+          "minus": [
+            "Comparaison guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee par le professeur, segment par segment.",
+            "normale": "Comparaison individuelle des trois segments et des deux fiches.",
+            "complexifiee": "Comparaison complete plus formulation de la suite a travailler."
+          },
+          "safety": [
+            "Phase realisee assis au sec, eleves seches et couverts.",
+            "Comptage des eleves avant et apres cette phase.",
+            "Aucune serie en cours a proximite de la zone d'analyse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif du cycle",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "lignes d'eau",
+              "fixed": 4
+            },
+            {
+              "label": "plots de marquage",
+              "fixed": 40
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Rangement collectif du materiel selon le protocole du bassin, puis classe assise au sec pour le bilan.",
+          "studentGoal": "Dire ce que je sais faire en aquathlon aujourd'hui et que je ne savais pas faire il y a huit seances.",
+          "instructions": [
+            "Le rangement des lignes d'eau se fait selon le protocole du bassin.",
+            "On recupere les plots du parcours de course en marchant.",
+            "On compte les chronometres avant de partir.",
+            "Une fois range, on s'assoit au sec pour le bilan."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage.",
+            "Au moins un eleve par groupe s'exprime."
+          ],
+          "execution": [
+            "Suivre le protocole du bassin pour les lignes d'eau.",
+            "Marcher, jamais courir, au bord du bassin.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves marchent-ils au bord ?",
+            "Citent-ils des acquis de gestion, pas seulement de chrono ?"
+          ],
+          "errors": [
+            "Courir au bord du bassin pendant le rangement.",
+            "Ne parler que du temps final.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "On marche, meme pour ranger.",
+            "Pas seulement le chrono : gerer une allure, c'est un acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Aucune course au bord du bassin pendant le rangement.",
+            "Rangement des lignes d'eau selon le protocole du bassin, sous supervision.",
+            "Comptage final des eleves avant de quitter l'installation.",
+            "Verification qu'aucun eleve ne presente de gene avant de quitter la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en aquathlon aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi le meilleur temps de nage ne donne-t-il pas le meilleur temps total ?"
+        ],
+        "key": "En debut de cycle, on subissait deux efforts l'un apres l'autre. Maintenant l'epreuve se pense comme un tout : une allure de nage tenable, une transition preparee, et une course lancee doucement. Et au bord du bassin, on marche toujours."
+      },
+      "socialRoles": [
+        "Chronometreur : releve les trois temps et surveille son nageur, role evalue.",
+        "Juge de transition : verifie le respect de la marche au bord, role evalue.",
+        "Responsable de comptage : verifie les effectifs a chaque entree et sortie de l'eau.",
+        "Responsable materiel : organise le rangement selon le protocole du bassin."
+      ]
+    }
+  ]
+}

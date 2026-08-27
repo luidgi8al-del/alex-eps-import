@@ -1,0 +1,2913 @@
+{
+  "apsa": "Escalade",
+  "grades": [
+    "TROISIEME"
+  ],
+  "champApprentissage": "CA2 - Adapter ses deplacements a des environnements varies",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n°11 du 26 novembre 2015.",
+  "attendus": [
+    "Reussir un deplacement planifie dans un milieu plus ou moins connu.",
+    "Gerer ses ressources pour reussir et rester efficace dans un environnement incertain.",
+    "Assurer la securite de son camarade dans des situations d'engagement.",
+    "Respecter et faire respecter les regles de securite."
+  ],
+  "targetCompetence": "Passer d'une voie grimpee au coup par coup a un projet mene a son terme : choisir des voies a sa mesure, les lire depuis le sol, enchainer deux voies en gerant sa fatigue, et assurer un camarade en autonomie validee.",
+  "cycleObjectives": [
+    "Assurer en autonomie validee, avec contre-assurage, sur des voies engagees.",
+    "Lire une voie depuis le sol et annoncer son itineraire avant de grimper.",
+    "Enchainer deux voies sans repos long, en gerant sa fatigue.",
+    "Utiliser des methodes variees : adherence, opposition, croisements, repos actifs.",
+    "Construire un projet chiffre et le mener a son terme."
+  ],
+  "plannedTitles": [
+    "Reprise, verification des assurages et evaluation diagnostique",
+    "Lire la voie avant de grimper : annoncer son itineraire",
+    "Varier les methodes : adherence, opposition, croisements",
+    "Gerer sa fatigue : les repos actifs dans la voie",
+    "Evaluation de mi-cycle et projet de grimpe",
+    "Enchainer deux voies : la gestion de l'effort",
+    "Repetition generale du projet",
+    "Evaluation finale : le projet mene a son terme"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 2 - cycle 4, ressources d'accompagnement",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1657/education-physique-et-sportive-cycle-4",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Escalade en milieu scolaire - conditions de securite",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Escalade au college - progression, autonomie et securite",
+      "org": "Academie de Grenoble",
+      "url": "https://eps.web.ac-grenoble.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Federale",
+      "title": "Escalade scolaire - verifications mutuelles et gestion des SAE",
+      "org": "Federation Francaise de la Montagne et de l'Escalade",
+      "url": "https://www.ffme.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner l'escalade en college - de la voie a l'enchainement",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Protocole de securite escalade de l'etablissement : le lire integralement avant la premiere seance, il prime sur tout ce qui est ecrit ici.",
+    "Registre de verification de la SAE et des EPI : dates de controle des cordes, baudriers, mousquetons et points d'ancrage.",
+    "Nombre de voies disponibles, hauteur, et cotations affichees.",
+    "Forme de pratique autorisee : moulinette uniquement, ou tete selon le protocole local. Ce cycle est ecrit pour la moulinette.",
+    "Modalites de validation des assureurs : qui valide, avec quel test, et a quelle frequence.",
+    "Obligation ou non du contre-assurage, selon le protocole de l'etablissement.",
+    "Etat des tapis de reception et zones de degagement au pied des voies.",
+    "PAI et dispenses, notamment vertiges et pathologies articulaires.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - assureur distrait",
+      "observed": "Assure correctement au depart puis discute, regarde ailleurs, laisse du mou dans la corde.",
+      "need": "Reconstruire la vigilance permanente de l'assureur, condition de toute autonomie."
+    },
+    {
+      "label": "Profil 2 - grimpeur qui force aux bras",
+      "observed": "Tire sur les bras, ne regarde pas ses pieds, arrive au sommet en surpuissance et epuise.",
+      "need": "Construire l'economie : les pieds portent, les bras equilibrent."
+    },
+    {
+      "label": "Profil 3 - grimpeur qui n'anticipe pas",
+      "observed": "Se lance sans regarder la voie, se retrouve bloque a mi-hauteur et redescend.",
+      "need": "Construire la lecture de la voie depuis le sol."
+    },
+    {
+      "label": "Profil 4 - grimpeur qui abandonne au premier doute",
+      "observed": "Redescend des que la prise suivante n'est pas evidente, sans avoir essaye.",
+      "need": "Construire l'engagement raisonne et la gestion du doute dans la voie."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Chaque eleve annonce et realise un projet : deux voies enchainees avec un repos limite entre les deux, choisies parmi les cotations affichees, avec itineraire annonce depuis le sol avant de grimper. Chaque eleve assure egalement un camarade sur son projet et tient le role de contre-assureur ou d'observateur.",
+    "criteria": [
+      "L'assurage est conforme au protocole, du depart a la reception au sol.",
+      "L'itineraire annonce depuis le sol correspond a celui realise.",
+      "Les deux voies du projet sont enchainees dans le temps de repos annonce.",
+      "Les pieds portent le deplacement, les bras equilibrent.",
+      "Le grimpeur utilise des repos actifs plutot que de forcer en continu.",
+      "Le role d'assureur et celui de contre-assureur ou d'observateur sont tenus avec rigueur."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA2, avec le protocole de securite escalade et les cotations de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Reprise, verification des assurages et evaluation diagnostique",
+      "mainObjective": "Revalider tous les assureurs et observer le niveau de grimpe de chacun.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Revalider l'encordement, l'assurage et la descente.",
+        "Reperer les assureurs distraits.",
+        "Situer chacun dans les cotations disponibles."
+      ],
+      "linkToPrevious": "Les cycles de 6e et de 4e ont construit l'assurage et l'economie de mouvement. Rien n'est acquis definitivement : tout assureur est revalide avant la premiere grimpe.",
+      "prerequisiteForNext": "Chaque eleve est revalide comme assureur et connait la cotation ou il grimpe.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6,
+            "note": "une par voie ouverte"
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "affiche du protocole de securite",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de validation d'assureur",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de voies et cotations",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire integralement le protocole de securite escalade de l'etablissement avant la seance.",
+          "Verifier le registre des EPI : cordes, baudriers, mousquetons, points d'ancrage.",
+          "Inspecter visuellement chaque corde sur toute sa longueur avant utilisation.",
+          "Verifier la position des tapis au pied de chaque voie, sans interstice.",
+          "Afficher le protocole et la procedure de verification mutuelle, aux deux extremites.",
+          "Verifier les PAI et les dispenses avant de constituer les cordees."
+        ],
+        "sketch": "Six voies ouvertes, une corde par voie, tapis joints au pied de chacune.\nZone d'attente et de preparation a l'ecart des lignes de chute.\nAffiches du protocole et de la procedure de verification aux deux extremites.\nMateriel range par voie, verifie avant distribution."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec insistance sur les doigts, les avant-bras et les epaules : l'escalade sollicite intensement des articulations qui ne se preparent pas seules.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Deplacements a quatre pattes, en crabe."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts : flexions, extensions, ecartements, 2 minutes.",
+              "Poignets et avant-bras : rotations, appuis au mur.",
+              "Epaules : cercles, rotations internes et externes.",
+              "Hanches et chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Traversee d'echauffement",
+            "details": [
+              "Traversee en bloc a faible hauteur, pieds toujours sous les mains.",
+              "Deux allers-retours, sans forcer.",
+              "Descente controlee, jamais de saut."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Revalidation des assureurs",
+          "objective": "Revalider individuellement chaque assureur avant toute grimpe en hauteur.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "mousquetons a vis",
+              "fixed": 12
+            },
+            {
+              "label": "fiches de validation d'assureur",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois : grimpeur, assureur, contre-assureur. Le professeur valide chaque assureur individuellement sur trois epreuves : verification mutuelle, ravalement du mou, blocage sur chute annoncee puis surprise.",
+          "studentGoal": "Etre revalide comme assureur sur les trois epreuves.",
+          "instructions": [
+            "Verification mutuelle avant chaque depart : baudrier, noeud, systeme, mousqueton visse.",
+            "Je ravale le mou en permanence, sans jamais lacher la corde de la main freinatrice.",
+            "Sur chute, je bloque immediatement, main freinatrice vers le bas.",
+            "Le contre-assureur tient la corde en aval, en permanence."
+          ],
+          "success": [
+            "La verification mutuelle est complete et systematique.",
+            "Le mou est ravale en continu, sans corde molle.",
+            "Les deux chutes, annoncee et surprise, sont bloquees.",
+            "La main freinatrice ne quitte jamais la corde."
+          ],
+          "execution": [
+            "Se placer au pied de la voie, jambes flechies, corde tendue.",
+            "Ravaler par mouvements courts, sans lacher.",
+            "Bloquer main vers le bas, corps legerement en arriere."
+          ],
+          "watch": [
+            "La main freinatrice quitte-t-elle la corde ?",
+            "Le mou reste-t-il excessif ?",
+            "L'assureur regarde-t-il son grimpeur en permanence ?",
+            "Le contre-assureur est-il present et attentif ?"
+          ],
+          "errors": [
+            "Lacher la corde de la main freinatrice pendant le ravalement.",
+            "Laisser du mou et discuter.",
+            "Bloquer main vers le haut : le systeme ne freine pas."
+          ],
+          "feedback": [
+            "Ta main freinatrice ne quitte jamais la corde.",
+            "Trop de mou : tu ravales en continu.",
+            "Main vers le bas, sinon ca ne bloque pas."
+          ],
+          "plus": [
+            "Chute surprise depuis une hauteur superieure.",
+            "Assurage avec grimpeur plus lourd, sous supervision rapprochee."
+          ],
+          "minus": [
+            "Assurage avec contre-assureur en permanence et supervision directe.",
+            "Chutes annoncees uniquement."
+          ],
+          "diff": {
+            "facilitee": "Assurage systematiquement double, chutes annoncees uniquement, supervision directe du professeur.",
+            "normale": "Trois epreuves de revalidation : verification, ravalement, blocage annonce puis surprise.",
+            "complexifiee": "Chute surprise depuis une hauteur superieure, assurage d'un grimpeur plus lourd sous supervision rapprochee."
+          },
+          "safety": [
+            "Aucun eleve ne grimpe en hauteur avant que son assureur ait ete revalide par le professeur : la validation de l'annee precedente ne vaut pas revalidation.",
+            "Verification mutuelle obligatoire avant chaque depart : baudrier double, noeud d'encordement, systeme d'assurage, mousqueton visse.",
+            "La main freinatrice ne quitte jamais la corde, en aucune circonstance.",
+            "Contre-assureur present a chaque assurage, selon le protocole de l'etablissement.",
+            "Cordes inspectees visuellement sur toute leur longueur avant utilisation, registre EPI verifie.",
+            "Tapis joints au pied de chaque voie, sans interstice.",
+            "Aucune circulation sous un grimpeur : les lignes de chute restent degagees.",
+            "Cheveux attaches, bijoux retires, lacets attaches.",
+            "Aucun eleve porteur d'une contre-indication ne grimpe en hauteur.",
+            "Le professeur supervise en permanence et peut arreter toute cordee."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Traversee de reprise en bloc",
+          "objective": "Retrouver les sensations de grimpe et l'economie de mouvement, a faible hauteur.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de voies et cotations",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Traversee en bloc a faible hauteur, pieds toujours sous les mains. Consigne : traverser en gardant les bras tendus le plus souvent possible. Trois allers-retours par eleve.",
+          "studentGoal": "Traverser en gardant les bras tendus et en poussant sur les jambes.",
+          "instructions": [
+            "Je reste a hauteur de bloc : mes pieds ne montent jamais au-dessus du repere.",
+            "Je pousse sur mes jambes, je ne tire pas sur mes bras.",
+            "Je garde mes bras tendus autant que possible.",
+            "Je descends en marchant, jamais en sautant."
+          ],
+          "success": [
+            "Les trois allers-retours sont realises.",
+            "Les bras restent tendus la plupart du temps.",
+            "Aucun saut a la descente."
+          ],
+          "execution": [
+            "Regarder ses pieds avant de les poser.",
+            "Pousser sur la jambe, bras tendu.",
+            "Descendre en desescalade, sans sauter."
+          ],
+          "watch": [
+            "Les eleves tirent-ils sur les bras ?",
+            "Regardent-ils leurs pieds ?",
+            "Depassent-ils la hauteur de bloc ?"
+          ],
+          "errors": [
+            "Grimper aux bras, pieds qui pendent.",
+            "Depasser la hauteur autorisee en bloc.",
+            "Sauter pour descendre."
+          ],
+          "feedback": [
+            "Pousse sur tes jambes, tes bras servent a tenir l'equilibre.",
+            "Tu es trop haut : redescends au repere.",
+            "On desescalade, on ne saute pas."
+          ],
+          "plus": [
+            "Traversee avec prises de pieds imposees.",
+            "Traversee chronometree."
+          ],
+          "minus": [
+            "Un aller-retour.",
+            "Traversee sur la partie la plus facile."
+          ],
+          "diff": {
+            "facilitee": "Un aller-retour sur la partie la plus facile, avec toutes les prises autorisees.",
+            "normale": "Trois allers-retours en bloc, bras tendus recherches.",
+            "complexifiee": "Traversee avec prises de pieds imposees, ou chronometree."
+          },
+          "safety": [
+            "Hauteur de bloc strictement limitee : les pieds ne montent jamais au-dessus du repere affiche.",
+            "Tapis joints sous toute la traversee, sans interstice.",
+            "Descente en desescalade : aucun saut, meme a faible hauteur.",
+            "Un seul grimpeur par section de traversee, jamais deux qui se croisent.",
+            "Zone au pied degagee : aucun sac, aucune bouteille, aucun materiel au sol.",
+            "Doigts et avant-bras echauffes avant toute traversee."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Situation de reference diagnostique",
+          "objective": "Situer chaque eleve dans les cotations disponibles, avant toute progression.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de voies et cotations",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par cordees de trois. Chaque grimpeur choisit et grimpe deux voies parmi les cotations affichees. Le contre-assureur note la cotation reussie et le nombre de repos pris.",
+          "studentGoal": "Grimper deux voies et savoir dans quelle cotation je me situe.",
+          "instructions": [
+            "Je choisis deux voies que je pense pouvoir faire.",
+            "Verification mutuelle avant chaque depart, sans exception.",
+            "Je note la cotation reussie et combien de fois je me suis repose.",
+            "Je garde ma fiche pour tout le cycle."
+          ],
+          "success": [
+            "Deux voies sont grimpees.",
+            "Les cotations et les repos sont notes.",
+            "La verification mutuelle est faite avant chaque depart."
+          ],
+          "execution": [
+            "Verification mutuelle systematique.",
+            "Grimper en poussant sur les jambes.",
+            "Descendre en restant assis dans le baudrier, pieds contre le mur."
+          ],
+          "watch": [
+            "Les verifications mutuelles sont-elles reelles ou expediees ?",
+            "Les assureurs restent-ils attentifs pendant toute la voie ?",
+            "Qui grimpe uniquement aux bras ?",
+            "Qui abandonne au premier doute ?"
+          ],
+          "errors": [
+            "Verification expediee, sans regarder reellement.",
+            "Assureur distrait pendant la montee.",
+            "Grimper aux bras et arriver epuise."
+          ],
+          "feedback": [
+            "Verifie reellement : regarde le noeud et le mousqueton.",
+            "Ton grimpeur, pas la salle.",
+            "Tes jambes portent, tes bras equilibrent."
+          ],
+          "plus": [
+            "Trois voies de cotations croissantes.",
+            "Voie choisie sans essai prealable."
+          ],
+          "minus": [
+            "Une seule voie, dans la cotation la plus accessible.",
+            "Assurage double en permanence."
+          ],
+          "diff": {
+            "facilitee": "Une seule voie dans la cotation la plus accessible, assurage double en permanence.",
+            "normale": "Deux voies choisies parmi les cotations affichees.",
+            "complexifiee": "Trois voies de cotations croissantes, choisies sans essai prealable."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart : baudrier double, noeud, systeme, mousqueton visse.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole de l'etablissement.",
+            "Aucune circulation sous un grimpeur : les lignes de chute restent degagees.",
+            "Descente controlee : le grimpeur reste assis dans son baudrier, pieds contre le mur, et ne se laisse jamais descendre en chute libre.",
+            "Tapis joints au pied de chaque voie.",
+            "Cordes inspectees avant utilisation.",
+            "Le professeur supervise en permanence et peut arreter toute cordee."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que verifie-t-on exactement avant chaque depart ?",
+          "Que ne doit jamais faire la main freinatrice ?"
+        ],
+        "key": "La verification mutuelle se fait avant chaque depart, sans exception et sans habitude : baudrier, noeud, systeme, mousqueton. Et la main freinatrice ne quitte jamais la corde."
+      },
+      "socialRoles": [
+        "Assureur : assure son grimpeur, role revalide a chaque cycle.",
+        "Contre-assureur : tient la corde en aval en permanence.",
+        "Observateur : note les cotations reussies et les repos pris."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Lire la voie avant de grimper : annoncer son itineraire",
+      "mainObjective": "Construire la lecture depuis le sol : identifier l'itineraire avant de s'engager.",
+      "secondaryObjectives": [
+        "Reperer les prises de mains et de pieds depuis le sol.",
+        "Annoncer son itineraire avant de grimper.",
+        "Comparer l'itineraire annonce a l'itineraire realise."
+      ],
+      "linkToPrevious": "La seance 1 a montre que beaucoup se lancent sans regarder, se bloquent, et redescendent. La lecture depuis le sol est ce qui manque.",
+      "prerequisiteForNext": "Chaque eleve annonce un itineraire depuis le sol et le realise pour l'essentiel.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "fiches de lecture de voie",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du protocole de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes avant utilisation.",
+          "Verifier la position des tapis et le degagement au pied des voies.",
+          "Preparer des fiches de lecture avec un schema simplifie de chaque voie.",
+          "Reconstituer les cordees de trois, avec des assureurs revalides.",
+          "Rappeler et faire enoncer la procedure de verification mutuelle."
+        ],
+        "sketch": "Six voies ouvertes, tapis joints au pied de chacune.\nZone de lecture au sol, a distance des lignes de chute, avec les fiches.\nMateriel verifie et range par voie.\nAffiches du protocole visibles."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet des doigts, avant-bras et epaules, puis traversee de mise en route : la lecture ne dispense pas de preparer le corps.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Deplacements a quatre pattes."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras, 2 minutes.",
+              "Epaules : cercles et rotations.",
+              "Hanches et chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Traversee de mise en route",
+            "details": [
+              "Deux allers-retours en bloc, sans forcer.",
+              "Consigne : regarder ses pieds avant de les poser.",
+              "Descente en desescalade."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Annoncer avant de grimper",
+          "objective": "Construire la lecture depuis le sol et la verification de son exactitude.",
+          "material": [
+            {
+              "label": "fiches de lecture de voie",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par cordees de trois. Avant chaque voie, le grimpeur observe deux minutes depuis le sol et annonce son itineraire au contre-assureur, qui le note. Apres la grimpe, on compare. Deux voies par grimpeur.",
+          "studentGoal": "Annoncer mon itineraire depuis le sol et le realiser reellement.",
+          "instructions": [
+            "Je regarde la voie deux minutes depuis le sol, sans toucher le mur.",
+            "J'annonce mes prises de mains et mes prises de pieds principales.",
+            "Le contre-assureur note ce que j'ai annonce.",
+            "Apres la voie, on compare l'annonce et ce que j'ai fait."
+          ],
+          "success": [
+            "L'itineraire est annonce avant chaque depart.",
+            "Au moins la moitie des prises annoncees sont reellement utilisees.",
+            "La comparaison est faite apres chaque voie."
+          ],
+          "execution": [
+            "Observer depuis plusieurs positions au sol.",
+            "Reperer d'abord les pieds, ensuite les mains.",
+            "Annoncer les passages difficiles en particulier."
+          ],
+          "watch": [
+            "Les eleves observent-ils reellement avant de partir ?",
+            "Annoncent-ils des pieds ou seulement des mains ?",
+            "L'itineraire realise correspond-il ?"
+          ],
+          "errors": [
+            "Regarder trois secondes et partir.",
+            "N'annoncer que des prises de mains.",
+            "Improviser des le premier metre."
+          ],
+          "feedback": [
+            "Deux minutes : prends le temps de regarder.",
+            "Tes pieds aussi : c'est eux qui te portent.",
+            "Tu as annonce autre chose : qu'est-ce qui t'a fait changer ?"
+          ],
+          "plus": [
+            "Lecture d'une voie inconnue, ouverte le jour meme.",
+            "Annonce des methodes, pas seulement des prises."
+          ],
+          "minus": [
+            "Lecture guidee par le contre-assureur.",
+            "Annonce des trois premieres prises seulement."
+          ],
+          "diff": {
+            "facilitee": "Lecture guidee par le contre-assureur, annonce des trois premieres prises seulement.",
+            "normale": "Lecture de deux minutes et annonce complete de l'itineraire.",
+            "complexifiee": "Lecture d'une voie inconnue avec annonce des methodes utilisees."
+          },
+          "safety": [
+            "La zone de lecture au sol se situe a distance des lignes de chute : personne ne stationne sous un grimpeur pour observer une voie.",
+            "Verification mutuelle obligatoire avant chaque depart, meme apres une phase d'observation.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole de l'etablissement : il note l'annonce sans jamais quitter la corde.",
+            "Tapis joints au pied de chaque voie.",
+            "Cordes inspectees avant utilisation.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Memoriser une sequence",
+          "objective": "Construire la memorisation d'un enchainement de prises, condition de la lecture utile.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de lecture de voie",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En bloc, a faible hauteur. Le professeur ou un camarade montre une sequence de six mouvements. Le grimpeur l'observe une fois, puis la reproduit sans se tromper.",
+          "studentGoal": "Reproduire une sequence de six mouvements apres une seule observation.",
+          "instructions": [
+            "J'observe la sequence une seule fois, sans toucher le mur.",
+            "Je memorise l'ordre des prises, mains et pieds.",
+            "Je reproduis la sequence sans me tromper.",
+            "Je reste en hauteur de bloc."
+          ],
+          "success": [
+            "La sequence est reproduite avec au plus une erreur.",
+            "Les prises de pieds sont memorisees aussi.",
+            "La hauteur de bloc est respectee."
+          ],
+          "execution": [
+            "Se raconter la sequence a voix basse pendant l'observation.",
+            "Memoriser par groupes de deux mouvements.",
+            "Reproduire sans precipitation."
+          ],
+          "watch": [
+            "Les eleves memorisent-ils les pieds ?",
+            "Se precipitent-ils dans la reproduction ?",
+            "Depassent-ils la hauteur de bloc ?"
+          ],
+          "errors": [
+            "Ne memoriser que les mains.",
+            "Se lancer sans avoir memorise.",
+            "Monter au-dessus de la hauteur de bloc."
+          ],
+          "feedback": [
+            "Les pieds aussi : c'est la moitie de la sequence.",
+            "Raconte-la-toi avant de partir.",
+            "Redescends : tu es trop haut."
+          ],
+          "plus": [
+            "Sequence de huit mouvements.",
+            "Reproduction apres un delai d'une minute."
+          ],
+          "minus": [
+            "Sequence de quatre mouvements.",
+            "Deux observations autorisees."
+          ],
+          "diff": {
+            "facilitee": "Sequence de quatre mouvements, deux observations autorisees.",
+            "normale": "Sequence de six mouvements apres une seule observation.",
+            "complexifiee": "Sequence de huit mouvements, reproduite apres un delai d'une minute."
+          },
+          "safety": [
+            "Hauteur de bloc strictement limitee, pieds jamais au-dessus du repere.",
+            "Tapis joints sous toute la zone de bloc.",
+            "Descente en desescalade, aucun saut.",
+            "Un seul grimpeur par section.",
+            "Zone au pied degagee de tout materiel."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Voie annoncee, voie realisee",
+          "objective": "Reinvestir la lecture sur une voie plus exigeante, avec comparaison chiffree.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de lecture de voie",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque grimpeur choisit une voie d'une cotation superieure a celle de la seance 1, l'annonce depuis le sol, la grimpe, puis compare. Le contre-assureur compte les prises annoncees reellement utilisees.",
+          "studentGoal": "Annoncer et realiser un itineraire sur une voie plus dure que la semaine derniere.",
+          "instructions": [
+            "Je choisis une voie un peu plus dure que celles de la seance 1.",
+            "Je l'observe et j'annonce mon itineraire.",
+            "Verification mutuelle, puis je grimpe.",
+            "Contre-assureur : tu comptes les prises annoncees que j'utilise vraiment."
+          ],
+          "success": [
+            "La voie est tentee en entier.",
+            "Plus de la moitie des prises annoncees sont utilisees.",
+            "La comparaison est notee."
+          ],
+          "execution": [
+            "Observer depuis plusieurs positions.",
+            "Grimper en poussant sur les jambes.",
+            "Adapter si la lecture s'avere fausse, sans paniquer."
+          ],
+          "watch": [
+            "La lecture tient-elle sur une voie plus dure ?",
+            "Les eleves abandonnent-ils au premier ecart ?",
+            "Les assureurs restent-ils attentifs ?"
+          ],
+          "errors": [
+            "Abandonner des que la lecture s'avere fausse.",
+            "Annoncer un itineraire evident pour ne pas se tromper.",
+            "Assureur qui relache sa vigilance."
+          ],
+          "feedback": [
+            "Ta lecture etait fausse : adapte, ne redescends pas.",
+            "Annonce ce que tu penses vraiment, pas ce qui est sur.",
+            "Ton grimpeur, en permanence."
+          ],
+          "plus": [
+            "Deux voies annoncees et enchainees.",
+            "Voie ouverte le jour meme."
+          ],
+          "minus": [
+            "Voie de meme cotation qu'en seance 1.",
+            "Annonce des trois premieres prises."
+          ],
+          "diff": {
+            "facilitee": "Voie de meme cotation qu'en seance 1, annonce des trois premieres prises seulement.",
+            "normale": "Voie de cotation superieure, itineraire annonce et compare.",
+            "complexifiee": "Deux voies annoncees et enchainees, ou voie ouverte le jour meme."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole : compter les prises ne dispense jamais de tenir la corde.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Tapis joints, cordes inspectees.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que faut-il reperer en priorite quand on lit une voie depuis le sol ?",
+          "Que faire quand la lecture s'avere fausse en pleine voie ?"
+        ],
+        "key": "On lit d'abord les pieds : ce sont eux qui portent. Et quand la lecture s'avere fausse, on adapte depuis une position de repos, on ne redescend pas au premier ecart."
+      },
+      "socialRoles": [
+        "Assureur : assure sans jamais quitter son grimpeur des yeux.",
+        "Contre-assureur : tient la corde en aval et note l'itineraire annonce.",
+        "Observateur de lecture : compare l'annonce et la realisation."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Varier les methodes : adherence, opposition, croisements",
+      "mainObjective": "Elargir le repertoire de methodes, pour ne plus dependre de la seule force des bras.",
+      "secondaryObjectives": [
+        "Utiliser l'adherence des pieds sur des prises plates.",
+        "Utiliser l'opposition entre deux appuis.",
+        "Croiser les mains plutot que de multiplier les mouvements."
+      ],
+      "linkToPrevious": "La lecture est construite, mais beaucoup lisent un itineraire qu'ils ne savent grimper que d'une seule maniere : en tirant sur les bras.",
+      "prerequisiteForNext": "Chaque eleve utilise au moins deux methodes nouvelles dans une voie.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "affiche des methodes",
+            "fixed": 2,
+            "note": "adherence, opposition, croisement, lolotte"
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes.",
+          "Afficher les methodes travaillees avec un schema simple.",
+          "Identifier sur le mur les zones qui obligent a l'adherence et a l'opposition.",
+          "Verifier la position des tapis et le degagement au pied.",
+          "Reconstituer les cordees de trois."
+        ],
+        "sketch": "Six voies ouvertes, zones d'adherence et d'opposition reperees.\nZone de bloc pour les ateliers de methodes, tapis joints.\nAffiche des methodes aux deux extremites.\nMateriel verifie et range par voie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet, avec mobilisation des hanches et des chevilles particulierement sollicitees par l'opposition et les croisements.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Fentes, rotations de hanches."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras.",
+              "Epaules : cercles et rotations.",
+              "Hanches : rotations amples, ouvertures.",
+              "Chevilles : cercles et flexions."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Traversee de mise en route",
+            "details": [
+              "Deux allers-retours en bloc.",
+              "Consigne : essayer de poser les pieds a plat.",
+              "Descente en desescalade."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Trois ateliers de methodes",
+          "objective": "Construire trois methodes nouvelles, sur des passages choisis pour les rendre necessaires.",
+          "material": [
+            {
+              "label": "affiche des methodes",
+              "fixed": 2
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Trois ateliers en bloc, rotation toutes les 7 minutes. Adherence : progresser sur des prises plates en poussant sur la semelle. Opposition : progresser dans un diedre ou entre deux prises opposees. Croisement : traverser en croisant les mains.",
+          "studentGoal": "Reussir chaque atelier avec la methode demandee, pas avec la force.",
+          "instructions": [
+            "Adherence : je pose ma semelle a plat et je pousse, je ne cherche pas de prise.",
+            "Opposition : je pousse dans deux directions opposees en meme temps.",
+            "Croisement : je croise mes mains plutot que de faire deux mouvements.",
+            "Je reste en hauteur de bloc, je descends en desescalade."
+          ],
+          "success": [
+            "Chaque atelier est reussi avec la methode demandee.",
+            "Les bras restent tendus la plupart du temps.",
+            "La hauteur de bloc est respectee."
+          ],
+          "execution": [
+            "Adherence : semelle a plat, poids sur le pied, buste eloigne du mur.",
+            "Opposition : pousser simultanement, sans a-coup.",
+            "Croisement : passer la main devant ou derriere, sans se desequilibrer."
+          ],
+          "watch": [
+            "Les eleves contournent-ils la methode par la force ?",
+            "Posent-ils la semelle a plat en adherence ?",
+            "Restent-ils en hauteur de bloc ?"
+          ],
+          "errors": [
+            "Chercher une prise plutot que d'utiliser l'adherence.",
+            "Se coller au mur, ce qui fait glisser les pieds.",
+            "Se desequilibrer en croisant."
+          ],
+          "feedback": [
+            "Pas de prise ici : ta semelle a plat et tu pousses.",
+            "Eloigne ton buste : colle au mur, ton pied glisse.",
+            "Croise plus bas, tu te desequilibres moins."
+          ],
+          "plus": [
+            "Passages plus exigeants dans chaque methode.",
+            "Enchainer deux methodes dans un meme passage."
+          ],
+          "minus": [
+            "Passages tres faciles, avec prises de secours autorisees.",
+            "Deux ateliers seulement."
+          ],
+          "diff": {
+            "facilitee": "Deux ateliers sur des passages tres faciles, avec prises de secours autorisees.",
+            "normale": "Trois ateliers de methodes en bloc, rotation toutes les 7 minutes.",
+            "complexifiee": "Passages plus exigeants, deux methodes enchainees dans un meme passage."
+          },
+          "safety": [
+            "Hauteur de bloc strictement limitee : les pieds ne montent jamais au-dessus du repere affiche.",
+            "Tapis joints sous toute la zone de bloc, sans interstice.",
+            "Descente en desescalade : aucun saut, meme a faible hauteur, car l'adherence peut lacher sans prevenir.",
+            "Un seul grimpeur par atelier, jamais deux qui se croisent.",
+            "Zone au pied degagee de tout materiel.",
+            "Doigts, avant-bras et hanches echauffes avant les ateliers.",
+            "Le professeur supervise les trois ateliers."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Une voie, deux methodes imposees",
+          "objective": "Contraindre l'usage des methodes nouvelles en situation de voie.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par cordees de trois. Le grimpeur doit utiliser au moins deux des trois methodes dans la voie. Le contre-assureur note lesquelles il a reellement utilisees.",
+          "studentGoal": "Utiliser au moins deux methodes nouvelles dans ma voie.",
+          "instructions": [
+            "Avant de partir, je repere ou je pourrai utiliser chaque methode.",
+            "Je dois en utiliser au moins deux dans la voie.",
+            "Contre-assureur : tu notes celles que j'utilise vraiment.",
+            "Verification mutuelle avant chaque depart."
+          ],
+          "success": [
+            "Deux methodes au moins sont utilisees et identifiees.",
+            "La voie est grimpee en entier.",
+            "Les observations sont notees."
+          ],
+          "execution": [
+            "Reperer les passages adaptes depuis le sol.",
+            "Utiliser la methode meme si la force suffirait.",
+            "Rester bras tendus autant que possible."
+          ],
+          "watch": [
+            "Les methodes sont-elles reellement employees ?",
+            "Les eleves reviennent-ils a la force des le passage difficile ?",
+            "Les observations sont-elles honnetes ?"
+          ],
+          "errors": [
+            "Annoncer une methode et grimper aux bras.",
+            "Revenir a la force au premier passage dur.",
+            "Observation complaisante."
+          ],
+          "feedback": [
+            "Tu as annonce l'adherence : la tu as tire aux bras.",
+            "C'est justement au passage dur que la methode sert.",
+            "Note ce que tu vois vraiment."
+          ],
+          "plus": [
+            "Trois methodes imposees.",
+            "Voie de cotation superieure."
+          ],
+          "minus": [
+            "Une methode imposee.",
+            "Voie de cotation accessible."
+          ],
+          "diff": {
+            "facilitee": "Une seule methode imposee, sur une voie de cotation accessible.",
+            "normale": "Deux methodes imposees sur une voie de son niveau.",
+            "complexifiee": "Trois methodes imposees sur une voie de cotation superieure."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "La main freinatrice ne quitte jamais la corde : noter les methodes ne dispense jamais le contre-assureur de tenir la corde.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Tapis joints, cordes inspectees.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Voie de son niveau, methodes libres",
+          "objective": "Laisser choisir librement les methodes et faire constater le gain d'economie.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque grimpeur refait une voie deja grimpee en seance 1 ou 2, en utilisant les methodes de son choix. Le contre-assureur compare la sensation de fatigue annoncee a l'arrivee.",
+          "studentGoal": "Refaire une voie deja grimpee en arrivant moins fatigue.",
+          "instructions": [
+            "Je refais une voie que j'ai deja grimpee.",
+            "J'utilise les methodes qui me font economiser.",
+            "A l'arrivee, je dis si je suis plus ou moins fatigue qu'avant.",
+            "Contre-assureur : tu notes sa reponse."
+          ],
+          "success": [
+            "La voie est refaite en entier.",
+            "Le grimpeur signale une fatigue moindre ou egale.",
+            "Les methodes utilisees sont identifiees."
+          ],
+          "execution": [
+            "Pousser sur les jambes, bras tendus.",
+            "Utiliser l'adherence plutot que chercher une prise.",
+            "Croiser plutot que multiplier les mouvements."
+          ],
+          "watch": [
+            "La fatigue diminue-t-elle reellement ?",
+            "Les methodes nouvelles sont-elles reinvesties ?",
+            "Les assureurs restent-ils vigilants ?"
+          ],
+          "errors": [
+            "Refaire exactement comme avant.",
+            "Vouloir aller vite plutot qu'economiser.",
+            "Assureur relache sur une voie deja connue."
+          ],
+          "feedback": [
+            "Tu grimpes exactement pareil : essaie autrement.",
+            "Ce n'est pas une course : c'est l'economie qui compte.",
+            "Voie connue ou pas, ton grimpeur d'abord."
+          ],
+          "plus": [
+            "Voie refaite avec contrainte de temps ou de repos."
+          ],
+          "minus": [
+            "Voie plus facile que celle deja grimpee."
+          ],
+          "diff": {
+            "facilitee": "Voie plus facile que celle deja grimpee, methodes libres.",
+            "normale": "Voie deja grimpee refaite avec methodes economiques.",
+            "complexifiee": "Voie refaite avec contrainte de temps ou nombre de repos limite."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart, y compris sur une voie deja grimpee : l'habitude est le principal facteur de relachement.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle methode avez-vous decouverte aujourd'hui, et a quoi sert-elle ?",
+          "Pourquoi ne faut-il pas se coller au mur en adherence ?"
+        ],
+        "key": "Grimper fort, ce n'est pas tirer plus : c'est disposer de plusieurs manieres de passer. Et en adherence, on eloigne le buste du mur pour mettre du poids sur la semelle."
+      },
+      "socialRoles": [
+        "Assureur : assure sans jamais quitter son grimpeur des yeux.",
+        "Contre-assureur : tient la corde et note les methodes utilisees.",
+        "Observateur : verifie la hauteur de bloc dans les ateliers."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Gerer sa fatigue : les repos actifs dans la voie",
+      "mainObjective": "Construire les positions de repos qui permettent de continuer plutot que de redescendre.",
+      "secondaryObjectives": [
+        "Identifier des positions de repos dans une voie.",
+        "Relacher un bras a la fois en position de repos.",
+        "Reduire le nombre d'abandons en pleine voie."
+      ],
+      "linkToPrevious": "Les methodes sont plus variees, mais la fatigue reste subie : beaucoup redescendent parce qu'ils n'ont jamais appris a se reposer dans la voie.",
+      "prerequisiteForNext": "Chaque eleve utilise au moins deux repos actifs dans une voie.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du protocole de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes.",
+          "Reperer dans chaque voie les positions permettant un repos.",
+          "Verifier la position des tapis et le degagement au pied.",
+          "Reconstituer les cordees de trois.",
+          "Rappeler et faire enoncer la procedure de verification mutuelle."
+        ],
+        "sketch": "Six voies ouvertes, positions de repos reperees et signalees.\nZone de bloc pour les ateliers de repos.\nChronometreurs au pied de chaque voie.\nMateriel verifie et range par voie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet avec insistance sur les avant-bras : la seance travaille precisement la recuperation de l'avant-bras dans la voie.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Course souple, deplacements varies.",
+              "Deplacements a quatre pattes."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras, 3 minutes.",
+              "Epaules : cercles et rotations.",
+              "Hanches et chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Traversee et relachements",
+            "details": [
+              "Un aller-retour en bloc.",
+              "Sur la traversee, relacher un bras cinq secondes, trois fois.",
+              "Descente en desescalade."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Trois repos obligatoires dans la voie",
+          "objective": "Construire l'usage des positions de repos, en les rendant obligatoires.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Par cordees de trois. Le grimpeur doit s'arreter trois fois dans la voie, en position de repos, et relacher un bras cinq secondes a chaque fois. Le contre-assureur chronometre. Deux voies par grimpeur.",
+          "studentGoal": "M'arreter trois fois dans la voie pour relacher un bras cinq secondes.",
+          "instructions": [
+            "Je m'arrete dans une position ou mes jambes portent, pas mes bras.",
+            "Je relache un bras et je le secoue cinq secondes.",
+            "Je repose ma main, puis je relache l'autre bras.",
+            "Contre-assureur : tu comptes les cinq secondes a voix haute."
+          ],
+          "success": [
+            "Trois repos sont pris dans chaque voie.",
+            "Chaque repos dure au moins cinq secondes.",
+            "Les jambes portent pendant le repos."
+          ],
+          "execution": [
+            "Chercher une position ou les pieds sont bien poses.",
+            "Tendre le bras qui tient, hanche pres du mur.",
+            "Secouer le bras libre, main vers le bas."
+          ],
+          "watch": [
+            "Les repos se prennent-ils sur les bras ou sur les jambes ?",
+            "Les eleves s'arretent-ils dans des positions intenables ?",
+            "Les assureurs restent-ils attentifs pendant les arrets ?"
+          ],
+          "errors": [
+            "S'arreter suspendu aux bras : le repos fatigue plus qu'il ne repose.",
+            "Choisir une position sans appui de pied.",
+            "Assureur qui relache sa vigilance pendant l'arret."
+          ],
+          "feedback": [
+            "Tes pieds doivent porter, sinon ce n'est pas un repos.",
+            "Cherche une meilleure position deux prises plus haut.",
+            "Il est a l'arret, mais tu restes attentif."
+          ],
+          "plus": [
+            "Repos de dix secondes.",
+            "Repos a des hauteurs imposees."
+          ],
+          "minus": [
+            "Deux repos de trois secondes.",
+            "Positions de repos signalees a l'avance."
+          ],
+          "diff": {
+            "facilitee": "Deux repos de trois secondes, positions signalees a l'avance sur le mur.",
+            "normale": "Trois repos de cinq secondes, positions choisies par le grimpeur.",
+            "complexifiee": "Trois repos de dix secondes, a des hauteurs imposees."
+          },
+          "safety": [
+            "L'assureur reste attentif pendant les arrets : un grimpeur immobile peut lacher a tout moment, et c'est precisement pendant les arrets que la vigilance se relache.",
+            "La main freinatrice ne quitte jamais la corde, y compris pendant un repos prolonge.",
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "Contre-assureur present selon le protocole : chronometrer ne dispense jamais de tenir la corde.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Tapis joints, cordes inspectees.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Trouver la position de repos",
+          "objective": "Construire, en bloc, la reconnaissance d'une position ou l'on peut reellement recuperer.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En bloc, a faible hauteur. Le grimpeur doit tenir une position quinze secondes en relachant alternativement chaque bras. Trois positions differentes.",
+          "studentGoal": "Tenir trois positions quinze secondes en relachant chaque bras.",
+          "instructions": [
+            "Je cherche une position ou mes pieds portent tout mon poids.",
+            "Je tends le bras qui tient et je rapproche ma hanche du mur.",
+            "Je relache l'autre bras et je le secoue.",
+            "Je change de bras a mi-temps."
+          ],
+          "success": [
+            "Les trois positions sont tenues quinze secondes.",
+            "Chaque bras est relache alternativement.",
+            "La hauteur de bloc est respectee."
+          ],
+          "execution": [
+            "Poids sur les pieds, bras tendu.",
+            "Hanche pres du mur pour reduire la traction.",
+            "Secouer le bras libre, main vers le bas."
+          ],
+          "watch": [
+            "Les positions sont-elles reellement reposantes ?",
+            "Les bras restent-ils flechis ?",
+            "La hauteur de bloc est-elle respectee ?"
+          ],
+          "errors": [
+            "Rester bras flechis : l'avant-bras se fatigue davantage.",
+            "Choisir une position sans appui de pied.",
+            "Depasser la hauteur de bloc."
+          ],
+          "feedback": [
+            "Tends ton bras : flechi, tu te fatigues.",
+            "Tes pieds ne portent rien : change de position.",
+            "Redescends, tu es trop haut."
+          ],
+          "plus": [
+            "Positions tenues trente secondes.",
+            "Positions imposees par l'observateur."
+          ],
+          "minus": [
+            "Positions tenues huit secondes.",
+            "Positions signalees a l'avance."
+          ],
+          "diff": {
+            "facilitee": "Positions signalees a l'avance, tenues huit secondes.",
+            "normale": "Trois positions choisies, tenues quinze secondes.",
+            "complexifiee": "Positions imposees par l'observateur, tenues trente secondes."
+          },
+          "safety": [
+            "Hauteur de bloc strictement limitee, pieds jamais au-dessus du repere.",
+            "Tapis joints sous toute la zone.",
+            "Descente en desescalade, aucun saut.",
+            "Un seul grimpeur par section.",
+            "Zone au pied degagee.",
+            "Avant-bras echauffes avant les tenues prolongees."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Voie difficile avec repos libres",
+          "objective": "Reinvestir les repos sur une voie a la limite de son niveau, pour eviter l'abandon.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque grimpeur tente une voie d'une cotation superieure a son niveau habituel, en s'autorisant autant de repos qu'il veut. Le contre-assureur note le nombre de repos et si la voie est terminee.",
+          "studentGoal": "Terminer une voie plus dure que d'habitude, en me reposant autant que necessaire.",
+          "instructions": [
+            "Je choisis une voie un peu au-dessus de mon niveau.",
+            "Je m'autorise autant de repos que je veux.",
+            "Je ne redescends pas au premier doute : je me repose et je reflechis.",
+            "Contre-assureur : tu comptes mes repos."
+          ],
+          "success": [
+            "La voie est tentee jusqu'en haut.",
+            "Des repos sont pris avant les passages difficiles.",
+            "Le nombre de repos est note."
+          ],
+          "execution": [
+            "Se reposer avant le passage dur, pas apres.",
+            "Relire la suite depuis la position de repos.",
+            "Repartir quand l'avant-bras est detendu."
+          ],
+          "watch": [
+            "Les eleves se reposent-ils avant ou apres le passage dur ?",
+            "Abandonnent-ils encore au premier doute ?",
+            "Les assureurs restent-ils vigilants sur les voies longues ?"
+          ],
+          "errors": [
+            "Se reposer apres le passage dur, quand il est trop tard.",
+            "Redescendre au premier doute.",
+            "Assureur qui se relache sur une voie longue."
+          ],
+          "feedback": [
+            "Repose-toi avant le passage, pas apres.",
+            "Depuis ton repos, regarde la suite : tu as le temps.",
+            "Voie longue : tu restes attentif jusqu'au bout."
+          ],
+          "plus": [
+            "Nombre de repos limite a trois.",
+            "Voie de deux cotations superieures."
+          ],
+          "minus": [
+            "Voie de son niveau habituel.",
+            "Repos illimites et positions signalees."
+          ],
+          "diff": {
+            "facilitee": "Voie de son niveau habituel, repos illimites, positions de repos signalees.",
+            "normale": "Voie d'une cotation superieure avec repos libres.",
+            "complexifiee": "Voie de deux cotations superieures, nombre de repos limite a trois."
+          },
+          "safety": [
+            "L'assureur reste attentif pendant les repos prolonges : la duree de la voie ne justifie jamais un relachement.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "Contre-assureur present selon le protocole.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Le grimpeur qui souhaite redescendre le fait en descente assuree, jamais en desescalade depuis la hauteur.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "A quoi reconnait-on une vraie position de repos ?",
+          "Quand faut-il se reposer : avant ou apres le passage difficile ?"
+        ],
+        "key": "Une vraie position de repos est celle ou les pieds portent tout le poids et ou le bras qui tient reste tendu. Et on se repose avant le passage difficile, jamais apres."
+      },
+      "socialRoles": [
+        "Assureur : reste attentif y compris pendant les arrets du grimpeur.",
+        "Contre-assureur : tient la corde et chronometre les repos.",
+        "Observateur : note le nombre de repos et les abandons."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle et projet de grimpe",
+      "mainObjective": "Situer chacun dans les cotations et lui faire construire un projet chiffre pour la fin du cycle.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser une situation de reference identique a celle de la seance 1.",
+        "Choisir les deux voies du projet final.",
+        "Ecrire un objectif personnel."
+      ],
+      "linkToPrevious": "Lecture, methodes et repos ont ete construits separement : l'evaluation de mi-cycle montre ce qui en reste en situation de reference.",
+      "prerequisiteForNext": "Chaque eleve a choisi ses deux voies et ecrit son objectif.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche des criteres d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes.",
+          "Afficher les criteres de l'evaluation finale et les cotations disponibles.",
+          "Preparer les fiches nominatives et les fiches de projet.",
+          "Verifier la position des tapis et le degagement au pied.",
+          "Prevoir un espace d'ecriture a l'ecart des lignes de chute."
+        ],
+        "sketch": "Six voies ouvertes avec cotations affichees.\nAffichage des criteres a l'entree.\nZone d'ecriture avec bancs, a l'ecart des lignes de chute.\nMateriel verifie et range par voie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en partie par les eleves : savoir s'echauffer fait partie des attendus, et l'escalade evaluee exige des doigts et des epaules prepares.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque cordee mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras, 3 minutes.",
+              "Epaules, hanches, chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Traversee et voie de mise en route",
+            "details": [
+              "Un aller-retour en bloc.",
+              "Une voie facile en moulinette, sans forcer.",
+              "Verification mutuelle avant le depart."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Situation de reference evaluee",
+          "objective": "Mesurer les progres sur une situation identique a celle de la seance 1.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par cordees de trois. Chaque grimpeur annonce son itineraire depuis le sol, puis grimpe deux voies. Le contre-assureur note : cotation, itineraire respecte, nombre de repos, methodes utilisees, qualite de l'assurage.",
+          "studentGoal": "Grimper deux voies en annoncant mon itineraire, et connaitre mes progres depuis la seance 1.",
+          "instructions": [
+            "J'annonce mon itineraire depuis le sol avant chaque voie.",
+            "Verification mutuelle avant chaque depart.",
+            "Je grimpe deux voies, en utilisant les methodes et les repos.",
+            "Contre-assureur : tu notes tout sur la fiche."
+          ],
+          "success": [
+            "Deux voies sont grimpees.",
+            "L'itineraire annonce est respecte pour l'essentiel.",
+            "Les repos et les methodes sont identifies.",
+            "L'assurage est conforme au protocole."
+          ],
+          "execution": [
+            "Lire depuis le sol avant d'annoncer.",
+            "Utiliser les repos avant les passages difficiles.",
+            "Pousser sur les jambes, bras tendus."
+          ],
+          "watch": [
+            "Les acquis tiennent-ils sous evaluation ?",
+            "L'assurage reste-t-il rigoureux ?",
+            "Les eleves abandonnent-ils encore au premier doute ?",
+            "Les observations sont-elles honnetes ?"
+          ],
+          "errors": [
+            "Se lancer sans lire, sous l'effet de l'enjeu.",
+            "Assurage expedie parce que l'attention porte sur la grimpe.",
+            "Observation complaisante entre camarades."
+          ],
+          "feedback": [
+            "Prends le temps de lire, meme en evaluation.",
+            "Ta verification, comme d'habitude, sans exception.",
+            "Note ce que tu vois, pas ce qui arrange."
+          ],
+          "plus": [
+            "Trois voies de cotations croissantes.",
+            "Voie ouverte le jour meme."
+          ],
+          "minus": [
+            "Une seule voie.",
+            "Cotation accessible, assurage double."
+          ],
+          "diff": {
+            "facilitee": "Une seule voie dans une cotation accessible, assurage double, itineraire annonce partiellement.",
+            "normale": "Deux voies avec itineraire annonce et observation complete.",
+            "complexifiee": "Trois voies de cotations croissantes, dont une ouverte le jour meme."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart : l'evaluation ne modifie jamais cette regle.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole : renseigner la fiche ne dispense jamais de tenir la corde.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Tapis joints, cordes inspectees avant la seance.",
+            "Echauffement complet obligatoire avant toute voie evaluee.",
+            "Le professeur supervise en permanence et peut arreter toute cordee."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Choisir ses deux voies",
+          "objective": "Faire choisir le projet final : deux voies enchainees, realistes et exigeantes.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des lignes de chute, chacun choisit les deux voies de son projet final et note le temps de repos qu'il s'accordera entre elles.",
+          "studentGoal": "Choisir les deux voies que j'enchainerai a l'evaluation finale.",
+          "instructions": [
+            "Je choisis deux voies parmi les cotations affichees.",
+            "Elles doivent etre exigeantes mais realistes : je dois pouvoir les finir.",
+            "Je note le temps de repos que je m'accorderai entre les deux.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Les deux voies sont choisies et notees.",
+            "Le temps de repos est fixe.",
+            "Le choix s'appuie sur les cotations reussies aujourd'hui."
+          ],
+          "execution": [
+            "Partir des cotations reussies, pas des cotations revees.",
+            "Choisir deux voies de styles differents si possible.",
+            "Fixer un repos realiste."
+          ],
+          "watch": [
+            "Les choix sont-ils realistes ?",
+            "Les eleves prevoient-ils un repos suffisant ?",
+            "Certains choisissent-ils trop facile pour assurer ?"
+          ],
+          "errors": [
+            "Choisir deux voies jamais reussies.",
+            "Choisir deux voies trop faciles.",
+            "Ne prevoir aucun repos entre les deux."
+          ],
+          "feedback": [
+            "Tu n'as jamais fini cette cotation : choisis mieux.",
+            "Tu peux viser plus haut, tu as progresse.",
+            "Prevois un repos, sinon la seconde sera impossible."
+          ],
+          "plus": [
+            "Trois voies enchainees.",
+            "Repos limite annonce a l'avance."
+          ],
+          "minus": [
+            "Une voie, avec projet de la finir sans abandon."
+          ],
+          "diff": {
+            "facilitee": "Projet d'une seule voie, avec objectif de la finir sans abandon.",
+            "normale": "Deux voies choisies avec temps de repos fixe.",
+            "complexifiee": "Trois voies enchainees avec repos limite annonce."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des lignes de chute.",
+            "Materiel range pendant la phase d'ecriture.",
+            "Aucune cordee en activite a proximite immediate de la zone d'ecriture."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier essai du projet et objectif personnel",
+          "objective": "Eprouver la premiere voie du projet et faire ecrire l'objectif de fin de cycle.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque grimpeur tente la premiere voie de son projet. Puis chacun ecrit son objectif personnel au dos de sa fiche.",
+          "studentGoal": "Essayer la premiere voie de mon projet et ecrire mon objectif personnel.",
+          "instructions": [
+            "Je tente la premiere voie de mon projet.",
+            "Je note ce qui a bloque, s'il y a eu un blocage.",
+            "Puis j'ecris seul mon objectif personnel pour la fin du cycle.",
+            "Je garde ma fiche."
+          ],
+          "success": [
+            "La premiere voie du projet est tentee.",
+            "Les blocages sont notes.",
+            "L'objectif personnel est ecrit et precis."
+          ],
+          "execution": [
+            "Lire la voie avant de partir.",
+            "Utiliser les repos avant les passages durs.",
+            "Formuler l'objectif avec un verbe d'action."
+          ],
+          "watch": [
+            "Les projets sont-ils realisables ?",
+            "Les objectifs sont-ils precis ?"
+          ],
+          "errors": [
+            "Objectif vague : mieux grimper.",
+            "Abandonner l'essai au premier blocage.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Precise : qu'est-ce que tu veux reussir exactement ?",
+            "Repose-toi et reflechis avant d'abandonner.",
+            "Note ce qui bloque, on le travaillera."
+          ],
+          "plus": [
+            "Essai des deux voies du projet."
+          ],
+          "minus": [
+            "Essai de la premiere moitie de la voie.",
+            "Objectif choisi dans une liste."
+          ],
+          "diff": {
+            "facilitee": "Essai de la premiere moitie de la voie, objectif choisi dans une liste affichee.",
+            "normale": "Essai complet de la premiere voie, objectif redige librement.",
+            "complexifiee": "Essai des deux voies du projet avec le repos prevu."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present selon le protocole.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Phase d'ecriture realisee a l'ecart des lignes de chute.",
+            "Le professeur supervise en permanence."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les deux voies de votre projet, et pourquoi celles-la ?",
+          "Quel est votre objectif personnel pour les trois dernieres seances ?"
+        ],
+        "key": "Un projet se choisit a partir de ce qu'on a reellement reussi : exigeant, mais realisable. Trop facile, il n'apprend rien ; hors d'atteinte, il ne se termine jamais."
+      },
+      "socialRoles": [
+        "Assureur : assure son grimpeur sur la situation de reference.",
+        "Contre-assureur : tient la corde et renseigne la fiche d'observation.",
+        "Observateur : verifie la qualite des verifications mutuelles."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Enchainer deux voies : la gestion de l'effort",
+      "mainObjective": "Construire l'enchainement de deux voies avec un repos limite, coeur du projet final.",
+      "secondaryObjectives": [
+        "Enchainer deux voies avec un repos court.",
+        "Gerer l'ordre des voies selon leur difficulte.",
+        "Recuperer efficacement entre les deux voies."
+      ],
+      "linkToPrevious": "Le projet est choisi : il reste a construire ce qui le rend difficile, l'enchainement de deux voies avec peu de repos.",
+      "prerequisiteForNext": "Chaque eleve enchaine ses deux voies avec le repos prevu.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du protocole de securite",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes.",
+          "Organiser les voies pour permettre l'enchainement sans attente.",
+          "Verifier la position des tapis et le degagement au pied.",
+          "Ressortir les fiches de projet des eleves.",
+          "Reconstituer les cordees de trois."
+        ],
+        "sketch": "Six voies ouvertes, organisation permettant d'enchainer deux voies sans attente.\nChronometreurs au pied, fiches de projet a disposition.\nZone de recuperation a l'ecart des lignes de chute.\nMateriel verifie et range par voie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet et progressif : la seance comporte des enchainements exigeants, les avant-bras doivent etre prepares sans etre deja fatigues.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque cordee mene son echauffement.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras, 3 minutes.",
+              "Epaules, hanches, chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Voie de mise en route",
+            "details": [
+              "Une voie facile en moulinette, sans forcer.",
+              "Verification mutuelle avant le depart.",
+              "Relachements des avant-bras apres la descente."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Deux voies, un repos compte",
+          "objective": "Construire l'enchainement de deux voies avec un repos limite et chronometre.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois. Chaque grimpeur enchaine ses deux voies avec le repos qu'il a fixe. Le contre-assureur chronometre le repos et note si les deux voies sont terminees.",
+          "studentGoal": "Enchainer mes deux voies avec le repos que j'ai prevu.",
+          "instructions": [
+            "Je grimpe ma premiere voie, je descends, je recupere le temps prevu.",
+            "Pendant la recuperation, je secoue mes bras et je respire amplement.",
+            "Je grimpe la seconde voie sans depasser mon temps de repos.",
+            "Contre-assureur : tu chronometres et tu notes."
+          ],
+          "success": [
+            "Les deux voies sont grimpees.",
+            "Le temps de repos annonce est respecte.",
+            "La seconde voie est terminee."
+          ],
+          "execution": [
+            "Recuperer activement : bras le long du corps, secoues.",
+            "Respirer amplement pendant la recuperation.",
+            "Repartir avant que les muscles ne refroidissent."
+          ],
+          "watch": [
+            "Les repos prevus sont-ils suffisants ?",
+            "La seconde voie est-elle terminee ?",
+            "Les eleves recuperent-ils activement ou restent-ils assis ?"
+          ],
+          "errors": [
+            "Rester assis sans bouger pendant la recuperation.",
+            "Depasser largement le temps de repos prevu.",
+            "Choisir la voie la plus dure en second alors qu'on est fatigue."
+          ],
+          "feedback": [
+            "Secoue tes bras, respire : c'est une recuperation active.",
+            "Tu as double ton repos : ajuste ton projet.",
+            "Mets la plus dure en premier, tu es plus frais."
+          ],
+          "plus": [
+            "Repos reduit de moitie.",
+            "Trois voies enchainees."
+          ],
+          "minus": [
+            "Repos double.",
+            "Deux voies de cotation accessible."
+          ],
+          "diff": {
+            "facilitee": "Deux voies de cotation accessible avec repos double.",
+            "normale": "Deux voies du projet avec le repos annonce.",
+            "complexifiee": "Trois voies enchainees, ou repos reduit de moitie."
+          },
+          "safety": [
+            "La fatigue accumulee sur l'enchainement augmente le risque de chute : l'assureur redouble d'attention sur la seconde voie.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Verification mutuelle obligatoire avant chaque depart, y compris pour la seconde voie enchainee.",
+            "Contre-assureur present selon le protocole : chronometrer ne dispense jamais de tenir la corde.",
+            "Aucun grimpeur n'enchaine s'il signale une douleur aux doigts, a l'epaule ou au coude.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Aucune circulation sous un grimpeur.",
+            "Tapis joints, cordes inspectees.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Recuperer entre deux voies",
+          "objective": "Construire une recuperation active efficace, qui conditionne la reussite de la seconde voie.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Entre les deux voies, chaque grimpeur applique une procedure de recuperation : bras le long du corps secoues, respiration ample, etirements legers des avant-bras. Le contre-assureur verifie.",
+          "studentGoal": "Recuperer activement entre mes deux voies, pas simplement attendre.",
+          "instructions": [
+            "Je laisse mes bras le long du corps et je les secoue.",
+            "Je respire amplement, sans bloquer.",
+            "J'etire legerement mes avant-bras, sans forcer.",
+            "Je ne reste pas assis sans bouger."
+          ],
+          "success": [
+            "La procedure est appliquee integralement.",
+            "Le grimpeur repart avec des avant-bras detendus.",
+            "La recuperation est active, pas passive."
+          ],
+          "execution": [
+            "Bras vers le bas, mains relachees.",
+            "Respiration ample et lente.",
+            "Etirements doux, jamais forces."
+          ],
+          "watch": [
+            "La recuperation est-elle active ?",
+            "Les eleves restent-ils assis a discuter ?",
+            "Les etirements sont-ils forces ?"
+          ],
+          "errors": [
+            "Rester assis immobile : les avant-bras ne se vident pas.",
+            "Etirer violemment les avant-bras.",
+            "Repartir sans avoir recupere."
+          ],
+          "feedback": [
+            "Bouge : assis, tu ne recuperes pas.",
+            "Doucement sur l'etirement, ne force pas.",
+            "Attends d'avoir les bras detendus."
+          ],
+          "plus": [
+            "Recuperation en temps limite."
+          ],
+          "minus": [
+            "Procedure guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Procedure de recuperation guidee pas a pas par le professeur.",
+            "normale": "Procedure appliquee en autonomie, verifiee par le contre-assureur.",
+            "complexifiee": "Recuperation complete a realiser en temps limite."
+          },
+          "safety": [
+            "Etirements des avant-bras doux et progressifs : un etirement force sur un muscle fatigue expose a la lesion.",
+            "Recuperation realisee a l'ecart des lignes de chute.",
+            "Materiel non retire pendant la recuperation : le baudrier reste en place et verifie.",
+            "Aucun grimpeur ne repart s'il signale une douleur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ajuster l'ordre et le repos",
+          "objective": "Faire ajuster le projet a partir de l'experience de l'enchainement.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque grimpeur ajuste son projet : ordre des voies, temps de repos, voire choix d'une voie. Puis il retente l'enchainement ajuste si le temps le permet.",
+          "studentGoal": "Ajuster mon projet a partir de ce que j'ai vecu aujourd'hui.",
+          "instructions": [
+            "Je note ce qui n'a pas marche dans l'enchainement.",
+            "J'ajuste l'ordre des voies ou le temps de repos.",
+            "Si necessaire, je change une voie.",
+            "Je retente l'enchainement ajuste si j'en ai le temps."
+          ],
+          "success": [
+            "Le projet est ajuste et note.",
+            "L'ajustement s'appuie sur l'experience du jour.",
+            "L'enchainement ajuste est tente si possible."
+          ],
+          "execution": [
+            "Partir de ce qui a bloque, pas de l'impression.",
+            "Accepter de changer une voie trop dure.",
+            "Noter immediatement."
+          ],
+          "watch": [
+            "Les ajustements sont-ils pertinents ?",
+            "Les eleves acceptent-ils de changer une voie ?",
+            "La fatigue de fin de seance est-elle prise en compte ?"
+          ],
+          "errors": [
+            "Maintenir un projet manifestement hors d'atteinte.",
+            "Ne pas ajuster le temps de repos alors qu'il etait insuffisant.",
+            "Retenter un enchainement complet en etant deja epuise."
+          ],
+          "feedback": [
+            "Tu n'as pas fini la seconde : ajuste, ce n'est pas un echec.",
+            "Ton repos etait trop court : allonge-le.",
+            "Tu es epuise : note ton ajustement, tu retenteras la prochaine fois."
+          ],
+          "plus": [
+            "Enchainement ajuste retente en entier."
+          ],
+          "minus": [
+            "Ajustement guide par le professeur, sans nouvel essai."
+          ],
+          "diff": {
+            "facilitee": "Ajustement guide par le professeur, sans nouvel essai.",
+            "normale": "Ajustement individuel et nouvel essai si le temps le permet.",
+            "complexifiee": "Enchainement ajuste retente integralement."
+          },
+          "safety": [
+            "Aucun nouvel enchainement complet pour un eleve deja epuise : la fatigue accumulee est le premier facteur de chute et de blessure aux doigts.",
+            "Verification mutuelle obligatoire avant chaque depart.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Aucun grimpeur ne repart s'il signale une douleur aux doigts, a l'epaule ou au coude.",
+            "Descente controlee.",
+            "Le professeur supervise en permanence et peut interdire un nouvel essai."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Dans quel ordre faut-il placer ses deux voies, et pourquoi ?",
+          "Que fait-on exactement pendant la recuperation entre deux voies ?"
+        ],
+        "key": "On place la voie la plus dure en premier, quand on est frais. Et on recupere activement : bras secoues, respiration ample. Rester assis a attendre ne vide pas les avant-bras."
+      },
+      "socialRoles": [
+        "Assureur : redouble d'attention sur la seconde voie de l'enchainement.",
+        "Contre-assureur : tient la corde et chronometre le repos.",
+        "Observateur : verifie la qualite de la recuperation."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale du projet",
+      "mainObjective": "Realiser le projet complet dans les conditions de l'evaluation et ajuster une derniere fois.",
+      "secondaryObjectives": [
+        "Realiser le projet complet avec itineraire annonce.",
+        "Valider definitivement le role d'assureur.",
+        "Ajuster une derniere fois le projet."
+      ],
+      "linkToPrevious": "L'enchainement est construit : il reste a le realiser une fois en entier, dans les conditions exactes de l'evaluation.",
+      "prerequisiteForNext": "Chaque eleve a realise son projet complet une fois et son assurage est valide.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "fiches de projet individuelles",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de validation d'assureur",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du protocole de l'evaluation",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI et inspecter les cordes.",
+          "Installer les voies exactement comme le jour de l'evaluation.",
+          "Afficher le protocole de l'evaluation et l'ordre de passage.",
+          "Preparer les fiches de validation d'assureur.",
+          "Verifier la position des tapis et le degagement au pied."
+        ],
+        "sketch": "Voies installees comme le jour de l'evaluation, ordre de passage affiche.\nProtocole de l'evaluation affiche a l'entree.\nZone de recuperation a l'ecart des lignes de chute.\nMateriel verifie et range par voie."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves, identique a celui du jour de l'evaluation : c'est aussi une repetition de l'echauffement, lui-meme evalue.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque cordee mene son echauffement complet.",
+              "Le professeur observe et valide."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Doigts, poignets, avant-bras, 3 minutes.",
+              "Epaules, hanches, chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Voie de mise en route",
+            "details": [
+              "Une voie facile en moulinette.",
+              "Verification mutuelle avant le depart.",
+              "Relachements apres la descente."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Projet complet a blanc",
+          "objective": "Realiser le projet dans les conditions exactes de l'evaluation.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois, selon l'ordre de passage affiche. Chaque grimpeur annonce son itineraire depuis le sol pour chaque voie, puis enchaine ses deux voies avec le repos annonce.",
+          "studentGoal": "Realiser mon projet complet, comme le jour de l'evaluation.",
+          "instructions": [
+            "J'annonce mon itineraire depuis le sol avant chaque voie.",
+            "Verification mutuelle avant chaque depart.",
+            "J'enchaine mes deux voies avec le repos annonce.",
+            "Contre-assureur : tu chronometres et tu notes."
+          ],
+          "success": [
+            "Le projet est realise en entier.",
+            "Les itineraires annonces sont respectes pour l'essentiel.",
+            "Le repos annonce est respecte.",
+            "L'assurage est conforme du depart a la reception au sol."
+          ],
+          "execution": [
+            "Lire depuis le sol avant chaque voie.",
+            "Utiliser les repos avant les passages difficiles.",
+            "Recuperer activement entre les deux voies."
+          ],
+          "watch": [
+            "Les projets sont-ils realisables ?",
+            "L'assurage tient-il sur les deux voies ?",
+            "Les eleves gerent-ils la fatigue de la seconde voie ?"
+          ],
+          "errors": [
+            "Se lancer sans lire, sous l'effet de l'enjeu.",
+            "Depasser largement le repos annonce.",
+            "Assurage relache sur la seconde voie."
+          ],
+          "feedback": [
+            "Prends le temps de lire, meme aujourd'hui.",
+            "Ton repos annonce : tiens-le.",
+            "Deuxieme voie : c'est la que tu dois etre le plus attentif."
+          ],
+          "plus": [
+            "Trois voies enchainees.",
+            "Repos reduit."
+          ],
+          "minus": [
+            "Une seule voie, projet reduit.",
+            "Repos allonge."
+          ],
+          "diff": {
+            "facilitee": "Projet reduit a une voie, avec repos allonge et assurage double.",
+            "normale": "Projet complet de deux voies avec itineraires annonces.",
+            "complexifiee": "Trois voies enchainees, ou repos reduit."
+          },
+          "safety": [
+            "Verification mutuelle obligatoire avant chaque depart, y compris pour la seconde voie.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "L'assureur redouble d'attention sur la seconde voie, ou la fatigue du grimpeur augmente le risque de chute.",
+            "Contre-assureur present selon le protocole.",
+            "Aucun grimpeur n'enchaine s'il signale une douleur aux doigts, a l'epaule ou au coude.",
+            "Aucune circulation sous un grimpeur.",
+            "Descente controlee, grimpeur assis dans son baudrier.",
+            "Tapis joints, cordes inspectees avant la seance.",
+            "Le professeur supervise en permanence."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Validation definitive de l'assurage",
+          "objective": "Valider definitivement chaque assureur avant l'evaluation finale.",
+          "material": [
+            {
+              "label": "fiches de validation d'assureur",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "mousquetons a vis",
+              "fixed": 12
+            }
+          ],
+          "organization": "Le professeur valide individuellement chaque assureur : verification mutuelle, ravalement, blocage sur chute surprise, descente controlee. Tout assureur non valide n'assure pas a l'evaluation finale.",
+          "studentGoal": "Etre valide definitivement comme assureur pour l'evaluation finale.",
+          "instructions": [
+            "Je fais ma verification mutuelle a voix haute.",
+            "Je ravale le mou en continu, main freinatrice toujours en place.",
+            "Je bloque immediatement sur chute surprise.",
+            "Je descends mon grimpeur regulierement, sans a-coup."
+          ],
+          "success": [
+            "Les quatre epreuves sont reussies.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "La descente est reguliere, sans a-coup."
+          ],
+          "execution": [
+            "Verifier en nommant chaque element a voix haute.",
+            "Ravaler par mouvements courts.",
+            "Descendre lentement et regulierement."
+          ],
+          "watch": [
+            "La verification est-elle reelle ou recitee ?",
+            "La main freinatrice reste-t-elle en place ?",
+            "La descente est-elle reguliere ?"
+          ],
+          "errors": [
+            "Reciter la verification sans regarder.",
+            "Lacher la corde pendant le ravalement.",
+            "Descendre trop vite ou par a-coups."
+          ],
+          "feedback": [
+            "Regarde ce que tu nommes.",
+            "Ta main ne quitte jamais la corde.",
+            "Plus lentement, sans a-coup."
+          ],
+          "plus": [
+            "Validation avec grimpeur plus lourd, sous supervision rapprochee."
+          ],
+          "minus": [
+            "Validation en assurage double."
+          ],
+          "diff": {
+            "facilitee": "Validation en assurage double, avec supervision directe permanente.",
+            "normale": "Validation individuelle sur les quatre epreuves.",
+            "complexifiee": "Validation avec un grimpeur plus lourd, sous supervision rapprochee."
+          },
+          "safety": [
+            "Tout assureur non valide n'assure pas a l'evaluation finale : cette regle ne souffre aucune exception, quelle qu'en soit la consequence sur l'organisation.",
+            "Les chutes surprises sont declenchees a faible hauteur et sous supervision directe du professeur.",
+            "La main freinatrice ne quitte jamais la corde.",
+            "Contre-assureur present pendant toute la validation.",
+            "Cordes et systemes verifies avant les epreuves."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ajustement final du projet",
+          "objective": "Fixer definitivement le projet qui sera presente a l'evaluation.",
+          "material": [
+            {
+              "label": "fiches de projet individuelles",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            }
+          ],
+          "organization": "Assis a l'ecart des lignes de chute, chacun ajuste definitivement son projet : voies, ordre, temps de repos, et note son point de vigilance.",
+          "studentGoal": "Fixer definitivement les deux voies et le repos que j'annoncerai a l'evaluation.",
+          "instructions": [
+            "Je compare ce que j'avais prevu et ce que j'ai reussi aujourd'hui.",
+            "J'ajuste mes voies, leur ordre et mon temps de repos.",
+            "Je note le point sur lequel je dois faire attention.",
+            "Je garde ma fiche pour la seance 8."
+          ],
+          "success": [
+            "Le projet definitif est ecrit.",
+            "L'ajustement s'appuie sur la repetition generale.",
+            "Un point de vigilance est note."
+          ],
+          "execution": [
+            "Partir de ce qui s'est passe, pas de ce qu'on espere.",
+            "Ajuster de facon realiste.",
+            "Formuler le point de vigilance simplement."
+          ],
+          "watch": [
+            "Les ajustements sont-ils realistes ?",
+            "Les eleves identifient-ils leur point faible ?"
+          ],
+          "errors": [
+            "Maintenir un projet non termine aujourd'hui.",
+            "Ajuster sans tenir compte de la fatigue.",
+            "Ne pas identifier de point de vigilance."
+          ],
+          "feedback": [
+            "Tu n'as pas fini la seconde : ajuste.",
+            "Tiens compte de la fatigue, elle sera la aussi.",
+            "Sur quoi dois-tu faire attention la semaine prochaine ?"
+          ],
+          "plus": [
+            "Prevoir une voie de remplacement en cas d'echec."
+          ],
+          "minus": [
+            "Ajustement guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Ajustement guide par le professeur a partir de la repetition.",
+            "normale": "Ajustement individuel du projet definitif.",
+            "complexifiee": "Ajustement avec voie de remplacement prevue en cas d'echec."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des lignes de chute.",
+            "Materiel range pendant la phase d'ecriture.",
+            "Aucune cordee en activite a proximite immediate."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre projet definitif : quelles voies, dans quel ordre, avec quel repos ?",
+          "Que verifie-t-on avant chaque depart, y compris pour la seconde voie ?"
+        ],
+        "key": "Un projet se fixe a partir de ce qu'on a reussi a la repetition generale. Et la verification mutuelle se fait avant chaque depart, sans exception : la seconde voie n'en est pas dispensee."
+      },
+      "socialRoles": [
+        "Assureur : valide definitivement son role avant l'evaluation.",
+        "Contre-assureur : tient la corde et chronometre le repos.",
+        "Observateur : verifie la qualite des verifications mutuelles."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Evaluation finale : le projet mene a son terme",
+      "mainObjective": "Evaluer la realisation du projet, la lecture, la gestion de l'effort et la qualite de l'assurage.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser le projet annonce.",
+        "Assurer un camarade sur son projet.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'evaluation : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve connait ses acquis et ce qu'il pourrait travailler ensuite.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes a simple",
+            "fixed": 6
+          },
+          {
+            "label": "systemes d'assurage",
+            "fixed": 6
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 6
+          },
+          {
+            "label": "chronometres",
+            "per": 0.25,
+            "min": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de projet conservees",
+            "per": 1.0,
+            "min": 24,
+            "note": "celles des seances 5 et 7, pour comparer"
+          },
+          {
+            "label": "affiche du protocole de securite",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Relire le protocole de securite escalade de l'etablissement avant la seance.",
+          "Verifier le registre des EPI et inspecter chaque corde sur toute sa longueur.",
+          "Afficher le protocole, l'ordre de passage et les criteres d'evaluation.",
+          "Verifier que chaque assureur figure sur la liste des assureurs valides.",
+          "Verifier la position des tapis au pied de chaque voie, sans interstice.",
+          "Verifier les PAI et les dispenses avant le premier passage.",
+          "Faire attacher les cheveux, retirer bijoux et montres."
+        ],
+        "sketch": "Voies installees comme a la repetition generale, ordre de passage affiche.\nProtocole et criteres affiches a l'entree.\nZone de recuperation et d'ecriture a l'ecart des lignes de chute.\nMateriel verifie voie par voie avant le premier passage."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene par les eleves : aucune voie evaluee ne s'aborde sans preparation des doigts, des avant-bras et des epaules, et la conduite de l'echauffement est elle-meme evaluee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque cordee mene son echauffement complet.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Mobilisation articulaire complete",
+            "details": [
+              "Doigts : flexions, extensions, ecartements, 3 minutes.",
+              "Poignets et avant-bras.",
+              "Epaules : cercles, rotations internes et externes.",
+              "Hanches et chevilles."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Voie de mise en route",
+            "details": [
+              "Une voie facile en moulinette, sans forcer.",
+              "Verification mutuelle a voix haute avant le depart.",
+              "Relachements des avant-bras apres la descente."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Realisation du projet evalue",
+          "objective": "Evaluer la realisation du projet sur les criteres travailles pendant tout le cycle.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "chronometres",
+              "per": 0.25,
+              "min": 6
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par cordees de trois, selon l'ordre de passage affiche. Chaque grimpeur annonce son projet et ses itineraires, puis enchaine ses deux voies avec le repos annonce. Chacun assure egalement un camarade sur son projet.",
+          "studentGoal": "Realiser le projet que j'ai annonce, et assurer mon camarade sur le sien.",
+          "instructions": [
+            "J'annonce mon projet et mes itineraires avant de commencer.",
+            "Verification mutuelle a voix haute avant chaque depart.",
+            "J'enchaine mes deux voies avec le repos annonce.",
+            "Quand j'assure, je ne quitte pas mon grimpeur des yeux."
+          ],
+          "success": [
+            "L'assurage est conforme au protocole, du depart a la reception au sol.",
+            "L'itineraire annonce depuis le sol correspond a celui realise.",
+            "Les deux voies du projet sont enchainees dans le temps de repos annonce.",
+            "Les pieds portent le deplacement, les bras equilibrent.",
+            "Le grimpeur utilise des repos actifs plutot que de forcer en continu.",
+            "Le role d'assureur et celui de contre-assureur sont tenus avec rigueur."
+          ],
+          "execution": [
+            "Lire depuis le sol avant chaque voie.",
+            "Se reposer avant les passages difficiles.",
+            "Recuperer activement entre les deux voies.",
+            "Assurer sans quitter son grimpeur des yeux."
+          ],
+          "watch": [
+            "L'assurage tient-il sous l'enjeu de l'evaluation ?",
+            "Les projets annonces sont-ils tenus ?",
+            "La fatigue degrade-t-elle la vigilance des assureurs ?",
+            "Les verifications mutuelles restent-elles reelles ?"
+          ],
+          "errors": [
+            "Expedier la verification mutuelle parce que l'attention porte sur sa propre grimpe.",
+            "Se lancer sans lire, sous l'effet de l'enjeu.",
+            "Assurage relache sur la seconde voie.",
+            "Depasser largement le repos annonce."
+          ],
+          "feedback": [
+            "Ta verification, comme d'habitude : regarde ce que tu nommes.",
+            "Prends le temps de lire, meme aujourd'hui.",
+            "Deuxieme voie : c'est la que tu dois etre le plus attentif.",
+            "Ton repos annonce : tiens-le."
+          ],
+          "plus": [
+            "Trois voies enchainees.",
+            "Repos reduit, ou voie ouverte le jour meme."
+          ],
+          "minus": [
+            "Projet reduit a une voie.",
+            "Repos allonge, assurage double."
+          ],
+          "diff": {
+            "facilitee": "Projet reduit a une voie de cotation accessible, repos allonge, assurage double. La qualite de l'assurage, la lecture et l'engagement sont evalues autant que la cotation.",
+            "normale": "Projet de deux voies enchainees avec itineraires annonces et repos annonce.",
+            "complexifiee": "Trois voies enchainees, repos reduit, ou voie ouverte le jour meme."
+          },
+          "safety": [
+            "Le protocole de securite escalade de l'etablissement prime sur tout : il est relu et rappele avant le premier passage.",
+            "Seuls les eleves figurant sur la liste des assureurs valides assurent : aucune exception, quelle qu'en soit la consequence sur l'organisation.",
+            "Verification mutuelle obligatoire avant chaque depart, a voix haute : baudrier double, noeud d'encordement, systeme d'assurage, mousqueton visse. L'evaluation ne modifie jamais cette regle.",
+            "La main freinatrice ne quitte jamais la corde, en aucune circonstance.",
+            "Contre-assureur present a chaque assurage selon le protocole de l'etablissement.",
+            "L'assureur redouble d'attention sur la seconde voie, ou la fatigue du grimpeur augmente le risque de chute.",
+            "Aucun grimpeur n'enchaine s'il signale une douleur aux doigts, a l'epaule ou au coude.",
+            "Aucune circulation sous un grimpeur : les lignes de chute restent degagees en permanence.",
+            "Descente controlee : le grimpeur reste assis dans son baudrier, pieds contre le mur.",
+            "Cordes inspectees sur toute leur longueur avant la seance, registre EPI verifie.",
+            "Tapis joints au pied de chaque voie, sans interstice.",
+            "Echauffement complet obligatoire avant toute voie evaluee.",
+            "Cheveux attaches, bijoux et montres retires.",
+            "Le professeur supervise en permanence et peut arreter toute cordee ou tout passage."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Comparer projet et realisation",
+          "objective": "Faire analyser a chacun l'ecart entre son projet annonce et sa realisation.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de projet conservees",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart des lignes de chute, chacun compare sa realisation a son projet et a sa fiche de la seance 5, puis se prononce sur son objectif personnel.",
+          "studentGoal": "Dire ce que j'ai reussi par rapport a ce que j'avais annonce.",
+          "instructions": [
+            "Je compare ce que j'ai realise a ce que j'avais annonce.",
+            "Je compare aussi a ma fiche de la seance 5.",
+            "J'identifie ce sur quoi j'ai le plus progresse.",
+            "Je dis si mon objectif personnel est atteint."
+          ],
+          "success": [
+            "La comparaison est faite point par point.",
+            "Le progres principal est identifie.",
+            "Chacun se prononce sur son objectif."
+          ],
+          "execution": [
+            "Comparer point par point, pas globalement.",
+            "Reprendre la fiche de la seance 5.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves reperent-ils leurs progres reels ?",
+            "Ne regardent-ils que la cotation ?"
+          ],
+          "errors": [
+            "Ne juger que par la cotation atteinte.",
+            "Negliger les progres d'assurage et de lecture.",
+            "Oublier de comparer a la seance 5."
+          ],
+          "feedback": [
+            "Pas seulement la cotation : ta lecture aussi a progresse.",
+            "Ton assurage est bien meilleur : c'est un acquis majeur.",
+            "Ressors ta fiche de la seance 5."
+          ],
+          "plus": [
+            "Formuler ce qu'il faudrait travailler ensuite."
+          ],
+          "minus": [
+            "Comparaison guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee par le professeur, point par point.",
+            "normale": "Comparaison individuelle du projet et de la realisation.",
+            "complexifiee": "Comparaison complete plus formulation de la suite a travailler."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des lignes de chute.",
+            "Materiel range ou baudrier laisse en place mais non utilise.",
+            "Aucune cordee en activite a proximite immediate de la zone d'analyse."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement du materiel",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant un materiel de securite.",
+          "material": [
+            {
+              "label": "cordes a simple",
+              "fixed": 6
+            },
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage",
+              "fixed": 6
+            },
+            {
+              "label": "mousquetons a vis",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de reception",
+              "fixed": 6
+            }
+          ],
+          "organization": "Rangement collectif du materiel selon le protocole : cordes lovees, baudriers verifies, mousquetons et systemes comptes. Puis classe assise pour le bilan.",
+          "studentGoal": "Ranger le materiel de securite correctement et dire ce que j'ai appris.",
+          "instructions": [
+            "Les cordes se lovent selon la methode montree, sans noeud.",
+            "On signale immediatement tout materiel abime.",
+            "On compte les mousquetons et les systemes d'assurage.",
+            "Une fois range, on s'assoit pour le bilan."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Tout materiel abime est signale.",
+            "Au moins un eleve par cordee s'exprime."
+          ],
+          "execution": [
+            "Lover les cordes sans noeud ni torsion.",
+            "Verifier chaque baudrier avant rangement.",
+            "Compter avant de quitter la salle."
+          ],
+          "watch": [
+            "Le comptage est-il fait ?",
+            "Le materiel abime est-il signale ?",
+            "Les eleves citent-ils des acquis de securite ?"
+          ],
+          "errors": [
+            "Ranger une corde en la jetant en vrac.",
+            "Ne pas signaler un materiel abime.",
+            "Ne parler que de la cotation atteinte."
+          ],
+          "feedback": [
+            "Lovee proprement : une corde en vrac s'abime.",
+            "Signale-le : ce materiel sert a la securite de quelqu'un.",
+            "Pas seulement la cotation : assurer, c'est un acquis."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il travaillerait si le cycle continuait."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule plus objectif de poursuite."
+          },
+          "safety": [
+            "Tout materiel presentant une usure, une coupure ou une deformation est signale et mis de cote : il ne retourne pas dans le stock utilisable.",
+            "Cordes lovees sans noeud ni torsion, rangees a l'abri de la lumiere et de l'humidite.",
+            "Comptage integral des mousquetons, systemes et baudriers avant de quitter la salle.",
+            "Tapis remis en place selon le protocole, portes a deux minimum."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce que vous savez faire en escalade aujourd'hui que vous ne saviez pas a la premiere seance ?",
+          "Pourquoi la verification mutuelle ne se negocie-t-elle jamais, meme apres huit seances ?"
+        ],
+        "key": "En debut de cycle, on grimpait au coup par coup. Maintenant on lit, on choisit, on se repose et on enchaine. Et la verification mutuelle se fait avant chaque depart : c'est justement l'habitude qui rend le relachement dangereux."
+      },
+      "socialRoles": [
+        "Assureur : assure un camarade sur son projet, role evalue au meme titre que la grimpe.",
+        "Contre-assureur : tient la corde en aval et chronometre le repos, role evalue.",
+        "Observateur : verifie la qualite des verifications mutuelles.",
+        "Responsable materiel : organise le rangement et le comptage des EPI."
+      ]
+    }
+  ]
+}
