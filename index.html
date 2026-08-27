@@ -166,8 +166,9 @@
 
       <div id="tab-cours" class="tabpanel" style="display:none">
         <div class="subtabbar" id="coursSubtabs">
-          <button class="subtabbtn" data-coursTab="cycles">Cycles</button>
-          <button class="subtabbtn" data-coursTab="creer">Creer un cours</button>
+          <button class="subtabbtn" data-coursTab="cycles">Cycle</button>
+          <button class="subtabbtn" data-coursTab="cours">Cours</button>
+          <button class="subtabbtn" data-coursTab="creer">Créer un cours</button>
         </div>
 
         <!-- Consultation : aucun enregistrement, on regarde ce que donne un cycle -->
@@ -208,6 +209,19 @@
           <div id="cyclePreview"></div>
         </div>
 
+        <div id="coursTab-cours" style="display:none">
+          <div class="periodBar" id="coursPeriodBar">
+            <button class="periodChip active" data-cours-period="1">Période 1</button>
+            <button class="periodChip" data-cours-period="2">Période 2</button>
+            <button class="periodChip" data-cours-period="3">Période 3</button>
+            <button class="periodChip" data-cours-period="4">Période 4</button>
+            <button class="periodChip" data-cours-period="5">Période 5</button>
+          </div>
+          <div id="cyclesList"></div>
+          <div id="createdCoursePanel" style="display:none; margin-top:16px"></div>
+          <div id="evaluationPanel" style="display:none; margin-top:16px"></div>
+        </div>
+
         <!-- Creation : rattachee a une classe deja enregistree -->
         <div id="coursTab-creer" style="display:none">
           <div class="card">
@@ -233,10 +247,6 @@
             <button id="createCoursBtn">Creer le cours</button>
             <div class="error" id="coursError"></div>
           </div>
-          <h2 style="margin-top:24px">Mes cours</h2>
-          <div id="cyclesList"></div>
-
-          <div id="evaluationPanel" style="display:none; margin-top:16px"></div>
         </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
@@ -1175,15 +1185,18 @@
     }
 
     let coursTabReady = false;
+    let selectedCoursPeriod = 1;
+    let loadedCourses = [];
 
     function showCoursTab(name) {
-      ["cycles", "creer"].forEach(t => {
+      ["cycles", "cours", "creer"].forEach(t => {
         document.getElementById("coursTab-" + t).style.display = t === name ? "block" : "none";
       });
       document.querySelectorAll("#coursSubtabs .subtabbtn").forEach(b => {
         b.classList.toggle("active", b.dataset.courstab === name);
       });
       if (name === "creer") { refreshCoursClassOptions(); loadCycles(); }
+      else if (name === "cours") loadCycles();
       else renderCyclePreview();
     }
 
@@ -1342,6 +1355,13 @@
           const btn = e.target.closest(".subtabbtn");
           if (btn) showCoursTab(btn.dataset.courstab);
         });
+        document.getElementById("coursPeriodBar").addEventListener("click", e => {
+          const button = e.target.closest("[data-cours-period]");
+          if (!button) return;
+          selectedCoursPeriod = parseInt(button.dataset.coursPeriod, 10);
+          document.querySelectorAll("[data-cours-period]").forEach(b => b.classList.toggle("active", b === button));
+          renderCreatedCourses();
+        });
         coursTabReady = true;
       }
       document.getElementById("cycleApsa").innerHTML = apsaOptionsHtml(document.getElementById("cycleGrade").value);
@@ -1369,7 +1389,7 @@
           })
         });
         if (!res.ok) throw new Error("Echec de creation du cours.");
-        loadCycles();
+        showCoursTab("cours");
       } catch (e) {
         errorEl.textContent = e.message;
       }
@@ -1379,35 +1399,83 @@
       const listEl = document.getElementById("cyclesList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
       try {
-        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&select=*&order=updated_at.desc`);
+        const [res, classesRes, slotsRes, activitiesRes] = await Promise.all([
+          apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&select=*&order=updated_at.desc`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=id,class_id`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name`)
+        ]);
         const rows = await res.json();
         if (!res.ok) throw new Error("Impossible de charger les cycles.");
-        if (rows.length === 0) {
-          listEl.innerHTML = '<div class="muted">Aucun cycle pour le moment.</div>';
-          return;
-        }
-        listEl.innerHTML = "";
-        rows.forEach(r => {
+        const classes = classesRes.ok ? await classesRes.json() : [];
+        const slots = slotsRes.ok ? await slotsRes.json() : [];
+        const activities = activitiesRes.ok ? await activitiesRes.json() : [];
+        const classById = Object.fromEntries(classes.map(c => [c.id, c]));
+        const classBySlot = Object.fromEntries(slots.map(s => [s.id, s.class_id]));
+        const normalizeApsa = value => String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+        loadedCourses = rows.map(course => {
+          const periods = activities
+            .filter(a => classBySlot[a.slot_id] === course.class_id && normalizeApsa(a.apsa_name) === normalizeApsa(course.apsa_name))
+            .map(a => Number(a.period_number)).filter(p => p >= 1 && p <= 5);
+          return { ...course, period_number: periods[0] || null, classRow: classById[course.class_id] || null };
+        });
+        renderCreatedCourses();
+      } catch (e) {
+        listEl.innerHTML = `<div class="error">${e.message}</div>`;
+      }
+    }
+
+    function renderCreatedCourses() {
+      const listEl = document.getElementById("cyclesList");
+      const rows = loadedCourses.filter(r => r.period_number === selectedCoursPeriod);
+      document.getElementById("createdCoursePanel").style.display = "none";
+      document.getElementById("evaluationPanel").style.display = "none";
+      if (rows.length === 0) {
+        listEl.innerHTML = `<div class="card muted">Aucun cours créé en période ${selectedCoursPeriod}.</div>`;
+        return;
+      }
+      listEl.innerHTML = "";
+      rows.forEach(r => {
           const div = document.createElement("div");
           div.className = "card";
-          const label = r.class_id ? "" : `<span class="badge">Sans classe</span>`;
+          const classLabel = r.classRow ? `${GRADE_LABELS[r.classRow.grade] || r.classRow.grade}${r.classRow.class_number}` : "Classe";
           div.innerHTML = `
             <div class="top">
-              <div><strong>${r.apsa_name}</strong> · ${GRADE_LABELS[r.grade] || r.grade} · ${r.session_count} seances ${label}</div>
+              <div><strong>${classLabel}</strong> · ${r.apsa_name} · ${r.session_count} séances</div>
               <div>
+                <button data-action="open" style="margin-top:0">Ouvrir</button>
                 <button class="secondary" data-action="evaluations" style="margin-top:0" ${r.class_id ? "" : "disabled title='Aucune classe rattachee'"}>Evaluations</button>
                 <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
               </div>
             </div>
             <div class="muted" style="margin-top:6px">${programmeFor(r.grade, r.school_year)}</div>`;
+          div.querySelector('[data-action="open"]').addEventListener("click", () => openCreatedCourse(r, classLabel));
           div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteCycle(r.id));
           const evalBtn = div.querySelector('[data-action="evaluations"]');
           if (r.class_id) evalBtn.addEventListener("click", () => openEvaluationPanel(r));
           listEl.appendChild(div);
         });
-      } catch (e) {
-        listEl.innerHTML = `<div class="error">${e.message}</div>`;
+    }
+
+    async function openCreatedCourse(course, classLabel) {
+      const panel = document.getElementById("createdCoursePanel");
+      panel.className = "card";
+      panel.style.display = "block";
+      panel.innerHTML = '<div class="muted">Chargement du cours...</div>';
+      const content = await loadCycleContent(course.grade, course.apsa_name);
+      let sessionsHtml = "";
+      for (let i = 1; i <= course.session_count; i++) {
+        const written = content?.sessions.find(s => s.number === i);
+        const title = written?.theme || content?.plannedTitles?.[i - 1] || `Séance ${i}`;
+        sessionsHtml += `<button class="secondary createdSessionBtn" data-session="${i}" style="display:block;width:100%;text-align:left">S${i} · ${title}</button>`;
       }
+      panel.innerHTML = `<div class="top"><div><h2 style="margin:0">${classLabel} · ${course.apsa_name}</h2><div class="muted">Période ${selectedCoursPeriod} · ${course.session_count} séances</div></div><button class="secondary" id="closeCreatedCourse" style="margin-top:0">Fermer</button></div>${sessionsHtml}`;
+      document.getElementById("closeCreatedCourse").onclick = () => { panel.style.display = "none"; };
+      panel.querySelectorAll("[data-session]").forEach(button => button.onclick = () => {
+        const written = content?.sessions.find(s => s.number === Number(button.dataset.session));
+        if (written) showSessionSheet(content, written);
+      });
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     async function deleteCycle(id) {
