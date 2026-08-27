@@ -277,7 +277,7 @@
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
-        <div class="subtabbar" style="justify-content:space-between; align-items:center;">
+        <div class="subtabbar" id="classesSubtabs" style="justify-content:space-between; align-items:center;">
           <div style="display:flex; gap:6px;">
             <button class="subtabbtn" data-subtab="classes">Classes</button>
             <button class="subtabbtn" data-subtab="newimport">Création classe</button>
@@ -630,12 +630,12 @@
       SUBTAB_NAMES.forEach(sub => {
         document.getElementById("subtab-" + sub).style.display = sub === name ? "block" : "none";
       });
-      document.querySelectorAll(".subtabbtn").forEach(btn => {
+      document.querySelectorAll("#classesSubtabs .subtabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.subtab === name);
       });
       if (name === "classes") loadImports();
     }
-    document.querySelector(".subtabbar").addEventListener("click", (e) => {
+    document.getElementById("classesSubtabs").addEventListener("click", (e) => {
       const btn = e.target.closest(".subtabbtn");
       if (btn) showSubtab(btn.dataset.subtab);
     });
