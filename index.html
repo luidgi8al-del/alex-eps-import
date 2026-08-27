@@ -102,6 +102,19 @@
   .scoreTable th:first-child, .scoreTable td:first-child { text-align:left; min-width:150px; }
   .scoreTable input.scoreInput { width:64px; text-align:center; padding:4px; margin:0; }
   .scoreTable td.incomplete { color:var(--text-secondary); }
+  .toolsHero { background:linear-gradient(135deg,#087CD1,#16A6DC); color:#fff; border-radius:24px; padding:24px; margin-bottom:16px; }
+  .toolsHero h2 { color:#fff; font-size:24px; margin-bottom:6px; }
+  .toolGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+  .toolCard { border:0; min-height:145px; text-align:left; color:#15334B; border-radius:20px; padding:18px; margin:0; box-shadow:0 3px 10px rgba(21,51,75,.09); }
+  .toolCard:hover { transform:translateY(-2px); filter:brightness(.98); }
+  .toolCard strong { display:block; font-size:17px; margin:12px 0 5px; }
+  .toolCard span { color:#5F7687; font-weight:400; font-size:12px; }
+  .toolIcon { display:inline-grid; place-items:center; width:46px; height:46px; border-radius:14px; background:#fff; font-size:23px; }
+  #toolPanel { margin-top:16px; }
+  .toolDisplay { text-align:center; font-size:clamp(44px,9vw,76px); font-weight:800; letter-spacing:1px; padding:24px 10px; border-radius:20px; background:#DFF3FF; color:#15334B; }
+  .toolActions { display:flex; gap:10px; flex-wrap:wrap; }
+  .toolActions button { flex:1; min-width:125px; }
+  .teamResult { padding:12px; border-radius:14px; margin-top:8px; background:#EEE8FF; }
   @media print {
     .header, .subtabbar, .card button, .no-print, #tabbar { display:none !important; }
     body, .container { background:#fff !important; }
@@ -227,7 +240,16 @@
         </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
-        <div class="placeholder"><div class="big">Outils</div>Bientot disponible sur le site. Chronometre, minuteurs et equipes restent dans l'application pour l'instant.</div>
+        <div class="toolsHero"><h2>Outils terrain</h2><div>Tout pour piloter votre séance, rapidement et lisiblement.</div></div>
+        <div class="toolGrid">
+          <button class="toolCard" data-tool="timers" style="background:#DFF3FF"><span class="toolIcon">⏱️</span><strong>Chronomètre</strong><span>Chrono, compte à rebours et intervalles</span></button>
+          <button class="toolCard" data-tool="teams" style="background:#EEE8FF"><span class="toolIcon">👥</span><strong>Équipes</strong><span>Groupes et tirage au sort</span></button>
+          <button class="toolCard" data-tool="score" style="background:#E5F7E9"><span class="toolIcon">🏆</span><strong>Tableau de score</strong><span>Points et équipes</span></button>
+          <button class="toolCard" data-tool="tests" style="background:#FFE8EE"><span class="toolIcon">📋</span><strong>Tests EPS</strong><span>VMA et tests d'athlétisme</span></button>
+          <button class="toolCard" data-tool="signals" style="background:#FFF0DD"><span class="toolIcon">🔊</span><strong>Signaux sonores</strong><span>Départs et rotations</span></button>
+          <button class="toolCard" data-tool="measures" style="background:#FFF7CE"><span class="toolIcon">📏</span><strong>Mesures</strong><span>Distance, vitesse et allure</span></button>
+        </div>
+        <div id="toolPanel" class="card" style="display:none"></div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
         <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Programmes officiels et programmation annuelle restent dans l'application. Le planning se gere ici.</div>
@@ -3009,6 +3031,91 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance`, { method: "POST", body: JSON.stringify(rows) });
         document.getElementById("unssAppelOk").textContent = "Appel enregistre.";
       });
+    }
+
+    // ---- Outils terrain : equivalents web des outils de l'application ----
+    let toolTimerId = null;
+    let toolElapsed = 0;
+    let toolStartedAt = 0;
+    let toolRunning = false;
+    const toolPanel = document.getElementById("toolPanel");
+
+    function stopToolTimer() {
+      if (toolTimerId) clearInterval(toolTimerId);
+      toolTimerId = null; toolRunning = false;
+    }
+    function formatToolTime(ms) {
+      const cs = Math.floor(ms / 10), min = Math.floor(cs / 6000), sec = Math.floor(cs / 100) % 60;
+      return `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}.${String(cs % 100).padStart(2,"0")}`;
+    }
+    function openTool(name) {
+      stopToolTimer();
+      toolPanel.style.display = "block";
+      if (name === "timers") renderTimersHub();
+      if (name === "score") renderScoreboard();
+      if (name === "measures") renderMeasures();
+      if (name === "signals") renderSignals();
+      if (name === "tests") renderEpsTests();
+      if (name === "teams") renderTeamsTool();
+      toolPanel.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    document.querySelectorAll("[data-tool]").forEach(button => button.addEventListener("click", () => openTool(button.dataset.tool)));
+
+    function toolHeader(title, subtitle) {
+      return `<div class="top"><div><h2 style="margin-bottom:3px">${title}</h2><div class="muted">${subtitle}</div></div><button class="secondary" id="closeToolBtn" style="margin-top:0">Fermer</button></div>`;
+    }
+    function bindToolClose() { document.getElementById("closeToolBtn").onclick = () => { stopToolTimer(); toolPanel.style.display = "none"; }; }
+
+    function renderTimersHub() {
+      toolPanel.innerHTML = toolHeader("Chronomètre", "Choisissez le mode") + `<div class="toolActions"><button data-timer-mode="chrono">Chronomètre</button><button data-timer-mode="countdown">Compte à rebours</button><button data-timer-mode="interval">Timer intervalles</button></div><div id="timerBody"></div>`;
+      bindToolClose();
+      toolPanel.querySelectorAll("[data-timer-mode]").forEach(b => b.onclick = () => b.dataset.timerMode === "chrono" ? renderChrono() : b.dataset.timerMode === "countdown" ? renderCountdown() : renderIntervalTimer());
+      renderChrono();
+    }
+    function renderChrono() {
+      stopToolTimer(); toolElapsed = 0;
+      const body = document.getElementById("timerBody");
+      body.innerHTML = `<div class="toolDisplay" id="chronoDisplay" style="margin-top:14px">00:00.00</div><div class="toolActions"><button id="chronoStart">DÉPART</button><button class="secondary" id="chronoReset">REMISE À ZÉRO</button></div><div class="row"><input id="lapName" placeholder="Nom facultatif"><button id="lapBtn" style="margin-top:0">Enregistrer</button></div><div id="laps"></div>`;
+      document.getElementById("chronoStart").onclick = () => {
+        if (toolRunning) { toolElapsed += Date.now() - toolStartedAt; stopToolTimer(); document.getElementById("chronoStart").textContent="DÉPART"; }
+        else { toolStartedAt=Date.now(); toolRunning=true; document.getElementById("chronoStart").textContent="PAUSE"; toolTimerId=setInterval(()=>document.getElementById("chronoDisplay").textContent=formatToolTime(toolElapsed+Date.now()-toolStartedAt),30); }
+      };
+      document.getElementById("chronoReset").onclick=()=>{ stopToolTimer(); toolElapsed=0; document.getElementById("chronoDisplay").textContent="00:00.00"; document.getElementById("laps").innerHTML=""; document.getElementById("chronoStart").textContent="DÉPART"; };
+      let lapCount=1;
+      document.getElementById("lapBtn").onclick=()=>{ const elapsed=toolElapsed+(toolRunning?Date.now()-toolStartedAt:0), label=document.getElementById("lapName").value.trim()||`Élève ${lapCount++}`; document.getElementById("laps").insertAdjacentHTML("afterbegin",`<div class="teamResult top"><span>${label}</span><strong>${formatToolTime(elapsed)}</strong></div>`); document.getElementById("lapName").value=""; };
+    }
+    function renderCountdown() {
+      stopToolTimer();
+      const body=document.getElementById("timerBody");
+      body.innerHTML=`<div class="row" style="margin-top:14px"><input id="countSeconds" type="number" min="1" value="60" aria-label="Durée en secondes"><button id="countApply" style="margin-top:0">Appliquer</button></div><div class="toolDisplay" id="countDisplay">01:00</div><div class="toolActions"><button id="countStart">DÉPART</button><button class="secondary" id="countReset">RÉINITIALISER</button></div>`;
+      let total=60, remaining=60;
+      const draw=()=>document.getElementById("countDisplay").textContent=`${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
+      document.getElementById("countApply").onclick=()=>{ total=Math.max(1,parseInt(document.getElementById("countSeconds").value)||60); remaining=total; draw(); };
+      document.getElementById("countStart").onclick=()=>{ if(toolRunning){stopToolTimer();document.getElementById("countStart").textContent="DÉPART";return;} toolRunning=true;document.getElementById("countStart").textContent="PAUSE";toolTimerId=setInterval(()=>{if(--remaining<=0){remaining=0;draw();stopToolTimer();beep(800);document.getElementById("countStart").textContent="DÉPART";}else draw();},1000); };
+      document.getElementById("countReset").onclick=()=>{stopToolTimer();remaining=total;draw();document.getElementById("countStart").textContent="DÉPART";};
+    }
+    function renderIntervalTimer() {
+      stopToolTimer(); const body=document.getElementById("timerBody");
+      body.innerHTML=`<div class="row" style="margin-top:14px"><div><label>Effort (s)</label><input id="iw" type="number" value="30"></div><div><label>Récupération (s)</label><input id="ir" type="number" value="30"></div><div><label>Répétitions</label><input id="in" type="number" value="8"></div></div><div class="toolDisplay" id="intervalDisplay">PRÊT</div><div class="toolActions"><button id="intervalStart">DÉPART</button><button class="secondary" id="intervalReset">RÉINITIALISER</button></div>`;
+      let phase="EFFORT", rep=1, remaining=30;
+      const reset=()=>{stopToolTimer();phase="EFFORT";rep=1;remaining=Math.max(1,+document.getElementById("iw").value||30);document.getElementById("intervalDisplay").innerHTML=`PRÊT<br><small>${remaining} s</small>`;document.getElementById("intervalStart").textContent="DÉPART";}; reset();
+      document.getElementById("intervalStart").onclick=()=>{if(toolRunning){stopToolTimer();document.getElementById("intervalStart").textContent="DÉPART";return;}toolRunning=true;document.getElementById("intervalStart").textContent="PAUSE";toolTimerId=setInterval(()=>{remaining--;if(remaining<=0){beep(350);if(phase==="EFFORT"){phase="RÉCUPÉRATION";remaining=Math.max(1,+document.getElementById("ir").value||30);}else{rep++;if(rep>(+document.getElementById("in").value||8)){stopToolTimer();document.getElementById("intervalDisplay").textContent="TERMINÉ";return;}phase="EFFORT";remaining=Math.max(1,+document.getElementById("iw").value||30);}}document.getElementById("intervalDisplay").innerHTML=`${phase}<br><small>${remaining} s · ${rep}/${document.getElementById("in").value}</small>`;},1000);};
+      document.getElementById("intervalReset").onclick=reset;
+    }
+    function renderScoreboard() {
+      let a=0,b=0; toolPanel.innerHTML=toolHeader("Tableau de score","Points et équipes")+`<div class="row"><div class="teamResult" style="text-align:center"><input id="teamA" value="Équipe A"><div class="toolDisplay" id="scoreA">0</div><button data-score="a" data-delta="-1">−1</button><button data-score="a" data-delta="1">+1</button></div><div class="teamResult" style="text-align:center;background:#FFF0DD"><input id="teamB" value="Équipe B"><div class="toolDisplay" id="scoreB">0</div><button data-score="b" data-delta="-1">−1</button><button data-score="b" data-delta="1">+1</button></div></div><button class="secondary" id="scoreReset">Remise à zéro</button>`; bindToolClose(); const draw=()=>{document.getElementById("scoreA").textContent=a;document.getElementById("scoreB").textContent=b;}; toolPanel.querySelectorAll("[data-score]").forEach(x=>x.onclick=()=>{if(x.dataset.score==="a")a=Math.max(0,a+(+x.dataset.delta));else b=Math.max(0,b+(+x.dataset.delta));draw();});document.getElementById("scoreReset").onclick=()=>{a=b=0;draw();};
+    }
+    function renderMeasures() {
+      toolPanel.innerHTML=toolHeader("Mesures","Distance, vitesse et allure")+`<div class="row"><div><label>Distance (m)</label><input id="measureDistance" type="number"></div><div><label>Temps (minutes)</label><input id="measureMinutes" type="number" step="0.01"></div></div><div class="toolDisplay" id="measureResult">-- km/h<br><small>-- min/km</small></div>`;bindToolClose();const calc=()=>{const d=+document.getElementById("measureDistance").value,m=+document.getElementById("measureMinutes").value;document.getElementById("measureResult").innerHTML=d>0&&m>0?`${(d/1000/(m/60)).toFixed(2)} km/h<br><small>${(m/(d/1000)).toFixed(2)} min/km</small>`:"-- km/h<br><small>-- min/km</small>";};document.getElementById("measureDistance").oninput=calc;document.getElementById("measureMinutes").oninput=calc;
+    }
+    function beep(duration=250) { const ctx=new (window.AudioContext||window.webkitAudioContext)(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.value=.12;o.start();setTimeout(()=>{o.stop();ctx.close();},duration); }
+    function renderSignals(){toolPanel.innerHTML=toolHeader("Signaux sonores","Départs et rotations d'ateliers")+`<div class="toolActions"><button data-beep="180">Signal court</button><button data-beep="450">Changement d'atelier</button><button data-beep="800">Fin de séance</button></div>`;bindToolClose();toolPanel.querySelectorAll("[data-beep]").forEach(b=>b.onclick=()=>beep(+b.dataset.beep));}
+    function renderEpsTests(){
+      const tests=[['Demi-Cooper · 6 min','Distance parcourue (m)',v=>`VMA estimée : ${(v/100).toFixed(2)} km/h`],['Cooper · 12 min','Distance parcourue (m)',v=>`VMA estimée : ${(v/200).toFixed(2)} km/h`],['VAMEVAL','Dernier palier validé',v=>`VMA : ${(8+v*.5).toFixed(1)} km/h`],['Luc Léger · navette 20 m','Dernier palier terminé',v=>`Vitesse du palier : ${(8+v*.5).toFixed(1)} km/h`],['Sprint 30 m','Temps (s)',v=>`Vitesse moyenne : ${(108/v).toFixed(2)} km/h`],['Sprint 50 m','Temps (s)',v=>`Vitesse moyenne : ${(180/v).toFixed(2)} km/h`],['Course 1 000 m','Temps total (s)',v=>`Vitesse moyenne : ${(3600/v).toFixed(2)} km/h`],['Course 1 500 m','Temps total (s)',v=>`Vitesse moyenne : ${(5400/v).toFixed(2)} km/h`],['Saut en longueur','Distance (cm)',v=>`Performance : ${v} cm`],['Navette 4 × 10 m','Temps (s)',v=>`Temps relevé : ${v.toFixed(2)} s`],['Souplesse','Distance (cm)',v=>`Mesure relevée : ${v.toFixed(1)} cm`]];
+      toolPanel.innerHTML=toolHeader("Tests EPS","VMA et Athlé")+tests.map((t,i)=>`<details class="card"><summary><strong>${t[0]}</strong></summary><label>${t[1]}</label><input type="number" step="0.01" data-test-index="${i}"><div class="ok" id="testResult${i}"></div></details>`).join("");bindToolClose();toolPanel.querySelectorAll("[data-test-index]").forEach(input=>input.oninput=()=>{const i=+input.dataset.testIndex,v=+input.value;document.getElementById(`testResult${i}`).textContent=v>0?tests[i][2](v):"";});
+    }
+    async function renderTeamsTool(){
+      toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<div class="muted">Chargement des classes...</div>`;bindToolClose();const res=await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`),classes=res.ok?await res.json():[];toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<label>Classe</label><select id="teamClass"><option value="">Choisir...</option>${classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select><label>Nombre d'équipes</label><input id="teamCount" type="number" min="2" value="2"><button id="generateTeams">Générer les équipes</button><div id="teamsResult"></div>`;bindToolClose();document.getElementById("generateTeams").onclick=async()=>{const id=document.getElementById("teamClass").value,n=Math.max(2,+document.getElementById("teamCount").value||2);if(!id)return;const r=await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${id}&deleted=eq.false&select=*&order=last_name.asc`),students=r.ok?await r.json():[];students.sort(()=>Math.random()-.5);const teams=Array.from({length:n},()=>[]);students.forEach((s,i)=>teams[i%n].push(s));document.getElementById("teamsResult").innerHTML=teams.map((team,i)=>`<div class="teamResult"><strong>Équipe ${i+1}</strong><div>${team.map(s=>`${s.last_name.toUpperCase()} ${s.first_name}`).join("<br>")}</div></div>`).join("");};
     }
 
     // ---- Demarrage ----
