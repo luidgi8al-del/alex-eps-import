@@ -361,10 +361,11 @@
                 <tbody id="previewBody"></tbody>
               </table>
               <div class="muted" id="previewCount"></div>
-              <button id="sendBtn">Envoyer vers l'application</button>
-              <div class="ok" id="sendOk"></div>
-              <div class="error" id="sendError"></div>
             </div>
+            <button id="sendBtn">Créer la classe</button>
+            <div class="muted">Le fichier CSV est facultatif : vous pourrez ajouter les élèves plus tard.</div>
+            <div class="ok" id="sendOk"></div>
+            <div class="error" id="sendError"></div>
           </div>
         </div>
       </div>
@@ -890,7 +891,10 @@
             updated_at: now, deleted: false
           })
         });
-        if (!classRes.ok) throw new Error("Echec de creation de la classe.");
+        if (!classRes.ok) {
+          const details = await classRes.text();
+          throw new Error(`Echec de creation de la classe${details ? ` : ${details}` : "."}`);
+        }
 
         if (parsedStudents.length > 0) {
           const studentsPayload = parsedStudents.map(s => {
@@ -1106,6 +1110,9 @@
       "SIXIEME|Basket-ball": { file: "content/basket-6e.json" },
       "SIXIEME|Gymnastique au sol": { file: "content/gymnastique-6e.json" },
       "SIXIEME|Athletisme - sprint / relais": { file: "content/athletisme-sprint-relais-6e.json" },
+      "SIXIEME|Danse": { file: "content/danse-6e.json" },
+      "SIXIEME|Rugby": { file: "content/rugby-6e.json" },
+      "SIXIEME|Tennis de table": { file: "content/tennis-de-table-6e.json" },
       "QUATRIEME|Escalade": { file: "content/escalade-4e.json" }
     };
     const cycleContentCache = {};
