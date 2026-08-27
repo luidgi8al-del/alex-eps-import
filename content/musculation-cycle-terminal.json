@@ -7,18 +7,19 @@
   "champApprentissage": "CA5 - Realiser et orienter son activite physique pour developper ses ressources et s'entretenir",
   "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
   "attendus": [
-    "AFL1 : s'engager pour obtenir les effets recherches selon son projet personnel, en faisant des choix de parametres d'entrainement coherents avec le theme retenu.",
+    "AFL1 : s'engager pour obtenir les effets recherches selon son projet personnel, en faisant des choix de parametres d'entrainement coherents avec le theme retenu parmi Endurance, Volume ou Puissance.",
     "AFL2 : s'entrainer individuellement et collectivement pour developper ses ressources et s'entretenir, en regulant son entrainement a partir d'indicateurs.",
-    "AFL3 : cooperer pour faire progresser : observer, conseiller, parer et aider un camarade a reguler sa charge de travail.",
+    "AFL3 : cooperer pour faire progresser, dans le role choisi : Observateur ou Coach.",
     "Analyser sa pratique et en rendre compte dans un carnet d'entrainement."
   ],
-  "targetCompetence": "Passer d'une seance construite pour une echeance a un entrainement conduit sur plusieurs semaines : un mobile personnel assume, une planification qui progresse, des regulations justifiees par des indicateurs, et un carnet qui rend compte de tout cela.",
+  "targetCompetence": "Passer d'une seance construite pour une echeance a un entrainement conduit sur plusieurs semaines : un theme personnel assume parmi Endurance, Volume ou Puissance, une planification qui progresse sur au moins deux groupes musculaires, des regulations justifiees par des indicateurs, et un carnet qui rend compte de tout cela.",
   "cycleObjectives": [
-    "Choisir un mobile personnel et le theme d'entrainement correspondant.",
-    "Planifier une progression sur l'ensemble du cycle, et non une seance isolee.",
+    "Choisir un theme d'entrainement personnel parmi Endurance, Volume ou Puissance, et les parametres qui lui correspondent.",
+    "Construire une seance de 60 minutes portant sur au moins deux groupes musculaires, avec deux a trois exercices par groupe.",
+    "Integrer differentes methodes d'entrainement : charge constante, stato-dynamique, super-serie.",
     "Reguler ses charges a partir d'indicateurs objectifs et subjectifs.",
-    "Choisir et assumer la repartition des points entre l'AFL2 et l'AFL3.",
-    "Rendre compte de son entrainement dans un carnet argumente."
+    "Choisir et assumer la repartition des points entre l'AFL2 et l'AFL3, et le role d'AFL3 : Observateur ou Coach.",
+    "Rendre compte de son entrainement dans un carnet argumente, prepare en amont de l'epreuve."
   ],
   "plannedTitles": [
     "Cadre de securite, revalidation technique et evaluation diagnostique",
@@ -68,7 +69,13 @@
     }
   ],
   "protocoleLocal": [
-    "Referentiel d'evaluation de l'etablissement pour cette APSA : il precise les criteres de l'AFL1 et les modalites de l'AFL2 et de l'AFL3. Il prime sur ce qui est ecrit ici.",
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : epreuve d'une seance de musculation de 60 minutes, organisee autour d'un theme personnel choisi parmi trois : Endurance, Volume, Puissance.",
+    "La seance peut etre realisee de maniere classique, en circuit training ou en crossfit.",
+    "Le travail porte au minimum sur deux groupes musculaires ; pour chacun, deux a trois exercices sont presentes dans le carnet.",
+    "L'eleve integre differentes methodes d'entrainement acquises durant le cycle : charge constante, stato-dynamique, super-serie.",
+    "Le carnet d'entrainement, prepare en amont, presente la sequence prevue ; il peut evoluer le jour de l'epreuve selon les ressentis, mais toute evolution doit etre justifiee.",
+    "AFL1 note sur 12 points : Produire sur 8 points, Analyser sur 4 points.",
+    "Pour l'AFL3, l'eleve choisit son role : Observateur ou Coach.",
     "Reglement d'utilisation de la salle de musculation : le lire integralement avant la premiere seance.",
     "Inventaire et etat du materiel : barres, disques, colliers de serrage, bancs, machines, cables, sangles.",
     "Charges maximales autorisees et exercices interdits par le reglement local, notamment derriere la nuque.",
@@ -80,8 +87,8 @@
   "studentProfiles": [
     {
       "label": "Profil 1 - pense la seance, pas le cycle",
-      "observed": "Refait la meme seance chaque semaine, sans progression prevue ni regulation.",
-      "need": "Planifier une progression sur l'ensemble du cycle."
+      "observed": "Refait la meme seance chaque semaine, sans theme choisi ni progression prevue.",
+      "need": "Choisir un theme parmi Endurance, Volume ou Puissance et planifier une progression sur l'ensemble du cycle."
     },
     {
       "label": "Profil 2 - regule au feeling",
@@ -95,21 +102,21 @@
     },
     {
       "label": "Profil 4 - travaille seul a cote des autres",
-      "observed": "Pare quand on le lui demande, mais ne conseille jamais et ne regarde pas son partenaire.",
-      "need": "Assumer l'AFL3 : observer, conseiller, aider a reguler."
+      "observed": "A choisi Observateur ou Coach, mais ne regarde pas son partenaire et n'indique jamais rien de precis.",
+      "need": "Assumer pleinement le role choisi : releves fiables pour l'observateur, conseils precis et cibles pour le coach."
     }
   ],
   "finalEvaluation": {
-    "format": "Epreuve du controle en cours de formation. L'AFL1 est evalue le jour de l'epreuve : realisation d'une seance personnelle de 45 minutes, annoncee et justifiee, avec entretien sur les choix de parametres. Les AFL2 et AFL3 sont evalues au fil du cycle, sur 8 points au total, avec une repartition choisie par l'eleve avant l'epreuve : 4 et 4, 6 et 2, ou 2 et 6.",
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Le candidat realise une seance de musculation de 60 minutes organisee autour d'un theme choisi parmi trois : Endurance, Volume, Puissance. Le travail porte sur au moins deux groupes musculaires, avec deux a trois exercices par groupe, presentes a l'avance dans le carnet d'entrainement. L'AFL1 est note sur 12 points : Produire sur 8 points (gestes, postures, charge et pourcentage de repetitions adaptes au theme) et Analyser sur 4 points (regulations a partir des ressentis avant, pendant et apres l'effort). Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve avant l'epreuve : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve choisit son role : Observateur ou Coach.",
     "criteria": [
-      "AFL1 : les parametres choisis, charges, series, repetitions et recuperations, sont coherents avec le theme d'entrainement annonce.",
-      "AFL1 : l'execution technique est sure sur l'ensemble de la seance, dos maintenu, respiration continue.",
-      "AFL1 : la seance annoncee est realisee integralement et les choix sont justifies lors de l'entretien.",
-      "AFL2 : le carnet retrace la planification, les regulations et leurs raisons sur tout le cycle.",
+      "AFL1 - Produire (8 pts) : gestes de musculation efficaces et specifiques, amplitude et respiration maitrisees, postures tenues, charge et pourcentage de repetitions optimises et coherents avec le theme choisi.",
+      "AFL1 - Analyser (4 pts) : releve de donnees chiffrees exploitables, regulations pertinentes croisant les ressentis avant, pendant et apres l'effort.",
+      "AFL2 : le carnet retrace la planification, les regulations et leurs raisons sur tout le cycle, avec un equilibre recherche entre les groupes musculaires et les methodes d'entrainement (charge constante, stato-dynamique, super-serie).",
       "AFL2 : les regulations sont justifiees par des indicateurs releves, non par une impression.",
-      "AFL3 : l'eleve observe, conseille et pare un camarade de facon utile et fiable."
+      "AFL3 - Observateur : attentif et implique dans l'observation et l'analyse des ressentis de son partenaire.",
+      "AFL3 - Coach : indique le nombre de repetitions, identifie l'amplitude et les postures de securite, apporte des conseils pertinents et cibles."
     ],
-    "referential": "Referentiel national d'evaluation du CA5 au baccalaureat, decline dans le referentiel de l'etablissement, avec les charges maximales et exercices autorises par le reglement de la salle."
+    "referential": "Referentiel certificatif enseignement commun EPS CA5, Lycee Victor Hugo de Marrakech, epreuve musculation."
   },
   "sessions": [
     {
@@ -573,10 +580,13 @@
               "min": 24
             }
           ],
-          "organization": "Assis par groupes de quatre, hors des zones de travail. Chacun choisit son mobile, le theme correspondant, et planifie les six seances restantes : quels exercices, quelle evolution de charge, de volume ou de recuperation.",
+          "organization": "Assis par groupes de quatre, hors des zones de travail. Chacun choisit son mobile et son theme parmi les trois proposes par le referentiel (Endurance, Volume, Puissance), son role d'AFL3 (Observateur ou Coach) et sa repartition AFL2/AFL3, puis planifie les six seances restantes : quels groupes musculaires, quels exercices, quelle evolution de charge, de volume ou de recuperation.",
           "studentGoal": "Ecrire ce que je ferai a chacune des six seances, et comment cela progresse.",
           "instructions": [
-            "Je choisis mon mobile et le theme correspondant.",
+            "Je choisis mon theme parmi les trois proposes : Endurance, Volume ou Puissance.",
+            "Je prevois au moins deux groupes musculaires, avec deux a trois exercices par groupe.",
+            "Je choisis mon role pour l'AFL3, pour toute la sequence : Observateur ou Coach, un seul des deux.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6) et je note mes deux choix sur mon carnet.",
             "Je planifie six seances : ce qui reste identique et ce qui evolue.",
             "L'evolution porte sur un parametre a la fois : charge, volume ou recuperation.",
             "Un camarade verifie que ma planification progresse reellement."
@@ -1635,7 +1645,7 @@
             "Tu ne bouges pas de la pendant sa serie."
           ],
           "plus": [
-            "Seance de 45 minutes avec entretien complet."
+            "Seance de 60 minutes avec entretien complet."
           ],
           "minus": [
             "Seance de trois exercices a charges legeres, accompagnee."
@@ -1643,7 +1653,7 @@
           "diff": {
             "facilitee": "Seance de trois exercices a charges legeres, accompagnee par le professeur, justification orale guidee.",
             "normale": "Seance complete annoncee et realisee, avec justification d'un choix de parametre.",
-            "complexifiee": "Seance de 45 minutes avec entretien complet sur l'ensemble des choix."
+            "complexifiee": "Seance de 60 minutes avec entretien complet sur l'ensemble des choix."
           },
           "safety": [
             "Aucune augmentation de charge le jour de l'evaluation : les charges sont celles determinees par le test et eprouvees en seance.",
@@ -1662,8 +1672,8 @@
         {
           "role": "COMPLEMENT",
           "dur": 12,
-          "title": "Choisir sa repartition AFL2 et AFL3",
-          "objective": "Faire choisir et justifier la repartition des huit points entre l'AFL2 et l'AFL3.",
+          "title": "Verifier son role et sa repartition",
+          "objective": "Verifier que le role d'AFL3 et la repartition choisis en seance 2 restent le bon choix.",
           "material": [
             {
               "label": "affiche du referentiel d'evaluation",
@@ -1680,49 +1690,48 @@
               "min": 24
             }
           ],
-          "organization": "Assis, hors des zones de travail. Chacun choisit sa repartition entre l'AFL2 et l'AFL3, parmi les trois possibles, et la justifie par ecrit sur son carnet.",
-          "studentGoal": "Choisir la repartition qui correspond a mes points forts, et la justifier.",
+          "organization": "Assis, hors des zones de travail. Chacun relit le role et la repartition choisis en seance 2, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mon role et ma repartition me correspondent toujours, et le justifier.",
           "instructions": [
-            "Je relis ce que recouvrent l'AFL2 et l'AFL3.",
+            "Je relis le role (Observateur ou Coach) et la repartition que j'ai choisis en seance 2.",
             "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
-            "Je regarde mon role aupres des autres : est-ce la que je suis le plus utile ?",
-            "Je choisis une repartition et j'ecris pourquoi."
+            "Je regarde mon role aupres des autres depuis la seance 2 : suis-je utile dans ce role ?",
+            "J'ecris si je confirme mes choix, et pourquoi."
           ],
           "success": [
-            "La repartition est choisie parmi les trois possibles.",
-            "Elle est justifiee par ecrit.",
-            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 1."
+            "Le role et la repartition de la seance 2 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 2."
           ],
           "execution": [
             "Partir de son carnet et de son role reel, pas d'une preference.",
-            "Choisir une repartition qui valorise ses points forts.",
+            "Comparer a ce qui avait ete choisi en seance 2.",
             "Ecrire la justification sur le carnet."
           ],
           "watch": [
-            "Les choix s'appuient-ils sur ce que l'eleve fait reellement ?",
-            "Les justifications sont-elles argumentees ?",
-            "Certains choisissent-ils au hasard ?"
+            "Les eleves relisent-ils vraiment leurs choix de seance 2 ?",
+            "Les justifications sont-elles argumentees ?"
           ],
           "errors": [
-            "Choisir la meme repartition que son voisin.",
-            "Choisir sans regarder son carnet.",
+            "Ne pas savoir ce qui avait ete choisi en seance 2.",
+            "Confirmer sans regarder son carnet.",
             "Justifier par une preference sans lien avec sa pratique."
           ],
           "feedback": [
             "Regarde ton carnet : il est complet, c'est un point fort.",
-            "Tu ne conseilles jamais personne : le 2 et 6 serait risque.",
+            "Tu ne conseilles jamais personne : verifie que le role de Coach te convient.",
             "Ce n'est pas le choix de ton voisin qui compte."
           ],
           "plus": [
-            "Justification comparant les trois repartitions possibles."
+            "Justification comparant ce qu'aurait change une autre repartition."
           ],
           "minus": [
-            "Choix guide par le professeur a partir des observations du cycle."
+            "Verification guidee par le professeur a partir des observations du cycle."
           ],
           "diff": {
-            "facilitee": "Choix guide par le professeur a partir des observations du cycle.",
-            "normale": "Choix autonome parmi les trois repartitions, justifie par ecrit.",
-            "complexifiee": "Justification comparant explicitement les trois repartitions."
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome du role et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition."
           },
           "safety": [
             "Phase realisee assis, hors des zones de travail.",
@@ -1976,7 +1985,7 @@
             "Tu ranges avant de partir."
           ],
           "plus": [
-            "Seance de 45 minutes conduite integralement."
+            "Seance de 60 minutes conduite integralement."
           ],
           "minus": [
             "Seance conduite avec rappel des etapes par le professeur."
@@ -1984,7 +1993,7 @@
           "diff": {
             "facilitee": "Seance conduite avec rappel des etapes par le professeur, trois exercices.",
             "normale": "Seance conduite seule, partenaire limite a la parade et a l'observation.",
-            "complexifiee": "Seance de 45 minutes conduite integralement en autonomie."
+            "complexifiee": "Seance de 60 minutes conduite integralement en autonomie."
           },
           "safety": [
             "L'autonomie porte sur la conduite de la seance, jamais sur la securite : le pareur reste obligatoire sur tout exercice a charge libre au-dessus du corps, et le professeur intervient toujours sur un point de securite.",
@@ -2320,7 +2329,7 @@
             "Fin de seance : c'est la qu'il faut etre le plus attentif."
           ],
           "plus": [
-            "Seance de 45 minutes avec entretien complet."
+            "Seance de 60 minutes avec entretien complet."
           ],
           "minus": [
             "Seance de trois exercices, accompagnee."
@@ -2328,7 +2337,7 @@
           "diff": {
             "facilitee": "Seance de trois exercices a charges legeres, accompagnee, entretien guide.",
             "normale": "Seance complete annoncee et realisee, avec entretien court.",
-            "complexifiee": "Seance de 45 minutes avec entretien complet sur tous les choix."
+            "complexifiee": "Seance de 60 minutes avec entretien complet sur tous les choix."
           },
           "safety": [
             "Pareur revalide obligatoire sur tout exercice a charge libre au-dessus du corps, en position pendant toute la serie, y compris en fin de seance.",
@@ -2497,7 +2506,7 @@
       "isFinalEvaluation": true,
       "secondaryObjectives": [
         "Realiser la seance annoncee integralement et justifier ses choix.",
-        "Parer et aider un camarade sur sa seance.",
+        "Parer un camarade et tenir le seul role d'AFL3 choisi en seance 2 : Observateur ou Coach.",
         "Verifier l'objectif personnel fixe a la seance 5."
       ],
       "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
@@ -2624,19 +2633,20 @@
               "min": 12
             }
           ],
-          "organization": "Par deux, en alternance. Chacun annonce sa seance, la realise integralement, puis pare et aide son camarade sur la sienne. Le professeur observe et mene un entretien de justification avec chaque eleve.",
+          "organization": "Par deux, en alternance. Chacun annonce sa seance, la realise integralement ; son camarade pare (obligation de securite sur tout exercice a charge libre) et tient en parallele le seul role d'AFL3 choisi en seance 2, Observateur ou Coach. Le professeur observe et mene un entretien de justification avec chaque eleve.",
           "studentGoal": "Realiser la seance que j'ai annoncee et justifier chacun de mes choix.",
           "instructions": [
             "J'annonce ma seance : theme, exercices, charges, series, repetitions, recuperations.",
             "Je la realise integralement, dans l'ordre annonce.",
-            "Quand je pare, je reste en position pendant toute la serie.",
+            "Quand je pare, je reste en position pendant toute la serie, quel que soit mon role d'AFL3.",
+            "Observateur : je releve des donnees fiables sur la technique, les charges et les recuperations. Coach : j'indique le nombre de repetitions et je donne des conseils cibles.",
             "Je justifie mes choix quand le professeur m'interroge."
           ],
           "success": [
             "AFL1 : les parametres choisis sont coherents avec le theme annonce.",
             "AFL1 : l'execution technique est sure sur l'ensemble de la seance.",
             "AFL1 : la seance est realisee integralement et les choix sont justifies.",
-            "AFL3 : l'eleve pare et aide son camarade de facon fiable.",
+            "AFL3 : l'eleve pare de facon fiable et tient son seul role choisi, Observateur ou Coach.",
             "Le materiel est range apres chaque exercice."
           ],
           "execution": [
@@ -2664,15 +2674,15 @@
             "Tu ne bouges pas de la pendant sa serie : c'est evalue."
           ],
           "plus": [
-            "Seance de 45 minutes avec entretien complet."
+            "Seance de 60 minutes avec entretien complet."
           ],
           "minus": [
             "Seance de trois exercices a charges legeres, accompagnee."
           ],
           "diff": {
-            "facilitee": "Seance de trois exercices a charges legeres, accompagnee, entretien guide. La securite de l'execution, la coherence des choix et le role d'aidant sont evalues autant que la charge.",
+            "facilitee": "Seance de trois exercices a charges legeres, accompagnee, entretien guide. La securite de l'execution, la coherence des choix et le role d'AFL3 choisi sont evalues autant que la charge.",
             "normale": "Seance personnelle annoncee et realisee integralement, avec entretien de justification.",
-            "complexifiee": "Seance de 45 minutes avec entretien complet sur l'ensemble des choix."
+            "complexifiee": "Seance de 60 minutes avec entretien complet sur l'ensemble des choix."
           },
           "safety": [
             "Le reglement de la salle prime sur tout : il est relu et rappele avant la premiere serie.",
@@ -2709,7 +2719,7 @@
               "min": 24
             }
           ],
-          "organization": "Assis, hors des zones de travail. Chacun presente son carnet, en pointe deux regulations justifiees, et fait le bilan de la repartition choisie a la seance 5.",
+          "organization": "Assis, hors des zones de travail. Chacun presente son carnet, en pointe deux regulations justifiees, et fait le bilan du role et de la repartition choisis en seance 2.",
           "studentGoal": "Montrer, carnet en main, comment j'ai conduit et regule mon entrainement.",
           "instructions": [
             "Je presente deux regulations de mon carnet et je les justifie.",
