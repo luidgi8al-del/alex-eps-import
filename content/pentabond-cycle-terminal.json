@@ -1,0 +1,2648 @@
+{
+  "apsa": "Pentabond",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA1 - Realiser une performance motrice maximale mesurable a une echeance donnee",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n. 1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour produire une performance maximale a l'aide de techniques efficaces, en gerant les efforts musculaires et respiratoires necessaires et en faisant le meilleur compromis entre l'accroissement de vitesse d'execution et de precision.",
+    "AFL2 : s'entrainer, individuellement et collectivement, pour realiser une performance.",
+    "AFL3 : choisir et assumer les roles qui permettent un fonctionnement collectif solidaire, dans les roles de coach et de juge exerces pour deux partenaires d'entrainement choisis en debut de sequence.",
+    "Analyser sa prestation technique (cloche-pied, enchainement des bonds, regularite) et en rendre compte pour ajuster son projet de performance."
+  ],
+  "targetCompetence": "Passer d'un saut isole et hesitant, ou le cloche-pied est incertain et les essais tres irreguliers, a un enchainement maitrise de cinq bonds : planche d'appel reglee, premier bond systematiquement cloche-pied, six essais geres avec constance, et un role de coach et de juge assume aupres de deux partenaires choisis des le debut de la sequence.",
+  "cycleObjectives": [
+    "Realiser un enchainement continu de cinq bonds apres une course d'elan, le premier bond etant obligatoirement un cloche-pied.",
+    "Regler sa marque d'elan sur sa planche d'appel et respecter le format des six essais, en l'annoncant avant chaque tentative.",
+    "Reduire l'ecart entre ses deux meilleures performances pour ameliorer sa note d'efficacite technique.",
+    "Choisir, en debut de sequence, deux partenaires d'entrainement et la repartition des points entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6).",
+    "Assumer, pour ces deux partenaires, les roles de coach et de juge tels que definis par le referentiel."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, evaluation diagnostique et decouverte du pentabond",
+    "Choisir ses deux partenaires d'entrainement et sa repartition de points",
+    "Construire l'enchainement des cinq bonds et le cloche-pied",
+    "Regler sa planche d'appel et le format des six essais",
+    "Epreuve evaluee de mi-cycle et verification des partenaires",
+    "Affiner la regularite technique et tenir les roles de coach et de juge",
+    "Repetition generale du format d'epreuve et finalisation du carnet",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-28"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-28"
+    },
+    {
+      "type": "Academique",
+      "title": "Le pentabond et le triple saut au cycle terminal - construire l'enchainement des bonds",
+      "org": "Academie de Versailles",
+      "url": "https://www.pedagogie.ac-versailles.fr/spip.php?rubrique261",
+      "consulted": "2026-08-28"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner les sauts horizontaux au lycee - technique et evaluation du pentabond",
+      "org": "FFA - Federation Francaise d'Athletisme",
+      "url": "https://www.athle.fr/",
+      "consulted": "2026-08-28"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : aire de saut avec trois couloirs paralleles de 30 metres, quinze planches d'appel peintes au sol, et une fosse de reception de sable.",
+    "Le pentabond est un enchainement de cinq bonds apres une course d'elan ; le premier bond est obligatoirement un cloche-pied.",
+    "Six essais maximum par candidat ; avant chaque essai, le candidat indique aux evaluateurs sa planche d'appel.",
+    "Regles d'essai nul : le premier bond n'est pas un cloche-pied ; le cloche-pied est au-dela de la planche d'appel ; le sauteur ne retombe pas dans la zone de reception qui commence un metre au-dela du bord du sautoir.",
+    "AFL1 note sur 12 points : 6 points pour la meilleure performance realisee (distance), 6 points pour l'efficacite technique (ecart en centimetres entre les deux meilleures performances).",
+    "AFL2 et AFL3 notes sur 8 points au fil de la sequence, repartition choisie par l'eleve (2-6, 6-2 ou 4-4), au plus tard avant l'epreuve finale.",
+    "AFL3 : deux partenaires d'entrainement choisis des le debut de la sequence, evalues dans les deux roles, coach et juge, jamais un seul des deux.",
+    "PAI et dispenses : chevilles, genoux, dos - vigilance particuliere sur les activites de bondissement repete.",
+    "Etat de la fosse verifie avant chaque seance : sable ratisse, sans corps etranger, profondeur suffisante.",
+    "Etat des planches d'appel verifie avant chaque seance : peinture visible, sol non degrade autour.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - cloche-pied non maitrise",
+      "observed": "Change de pied entre l'impulsion et la reception au premier bond, ce qui rend la plupart de ses essais nuls.",
+      "need": "Stabiliser le cloche-pied isole avant de le reintegrer dans l'enchainement complet."
+    },
+    {
+      "label": "Profil 2 - elan mal regle",
+      "observed": "Mord systematiquement la planche d'appel ou impulse tres loin en avant d'elle, faute d'une marque d'elan stable.",
+      "need": "Construire une marque d'elan stable par ajustements progressifs."
+    },
+    {
+      "label": "Profil 3 - tres irregulier d'un essai a l'autre",
+      "observed": "Realise un essai excellent puis un essai mediocre, avec un ecart important entre ses deux meilleures performances.",
+      "need": "Reproduire le meme enchainement d'un essai a l'autre pour ameliorer sa note technique."
+    },
+    {
+      "label": "Profil 4 - partenaires choisis mais roles pas assumes",
+      "observed": "A choisi ses deux partenaires en seance 2, mais les coache sans donner d'information exploitable et les juge sans connaitre les regles de validation.",
+      "need": "Assumer pleinement les deux roles, coach et juge, dans les criteres exacts du referentiel, pour ses deux partenaires."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. L'etablissement dispose d'une aire de saut avec trois couloirs paralleles de 30 metres, quinze planches d'appel peintes au sol, et une fosse de reception de sable. Le pentabond est un enchainement de cinq bonds apres une course d'elan ; le premier bond est obligatoirement un cloche-pied. Chaque candidat realise six essais au maximum et indique sa planche d'appel aux evaluateurs avant chaque essai. L'essai est nul si le premier bond n'est pas un cloche-pied, si le cloche-pied est au-dela de la planche d'appel, ou si le sauteur ne retombe pas dans la zone de reception qui commence un metre au-dela du bord du sautoir. L'AFL1 est note sur 12 points le jour de l'epreuve : 6 points pour la meilleure performance realisee (distance) et 6 points pour l'efficacite technique, basee sur l'ecart en centimetres entre les deux meilleures performances. Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve au plus tard avant l'epreuve finale : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve est evalue dans les roles de coach et de juge pour les deux partenaires d'entrainement choisis des le debut de la sequence.",
+    "criteria": [
+      "AFL1 - performance : la meilleure distance realisee sur les essais valides est reportee sur l'echelle de l'etablissement (de 6,6 m a 13,5 m pour les filles, de 7,8 m a 17,0 m pour les garcons, par paliers continus).",
+      "AFL1 - efficacite technique : l'ecart en centimetres entre les deux meilleures performances est reporte sur l'echelle etablissement (de 125 cm d'ecart pour 0 point a 5 cm d'ecart pour 6 points) ; au degre le plus eleve, la vitesse est optimale, les sauts sont equilibres et amples, les appuis dynamiques en griffe et les segments libres actifs.",
+      "AFL1 - le premier bond est obligatoirement un cloche-pied, et le candidat annonce sa planche d'appel avant chaque essai, dans la limite de six essais.",
+      "AFL2 : le carnet d'entrainement retrace le contenu des seances, les difficultes rencontrees et les progres realises ; au degre le plus eleve, trois quarts des essais sont stables, la preparation, la recuperation et la regulation de la marque et de la planche sont pertinentes pour soi et pour le groupe.",
+      "AFL3 - role de coach, exerce pour les deux partenaires choisis en debut de sequence : au degre le plus eleve, l'eleve transmet de maniere argumentee des donnees soigneusement recueillies, identifie et hierarchise les besoins du sauteur, donne des conseils pertinents, reconforte, encourage et felicite.",
+      "AFL3 - role de juge, exerce pour les deux partenaires choisis en debut de sequence : au degre le plus eleve, l'eleve assume avec serieux et application le role de juge, est attentif a l'entretien de la fosse, et conseille egalement le sauteur apres son saut."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA1, Lycee Victor Hugo de Marrakech, epreuve pentabond."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, evaluation diagnostique et decouverte du pentabond",
+      "mainObjective": "Poser le cadre de securite specifique aux bondissements et faire eprouver un enchainement complet de cinq bonds pour reperer le niveau de chacun.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Comprendre ce qui sera evalue le jour de l'epreuve et au fil du cycle.",
+        "Decouvrir la regle du cloche-pied obligatoire au premier bond.",
+        "Ouvrir le carnet d'entrainement avec un premier essai chiffre."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : le pentabond enchaine des appuis que chacun connait separement (sauter, courir), mais leur enchainement sur cinq bonds consecutifs est une experience nouvelle et exigeante pour les appuis.",
+      "prerequisiteForNext": "Chaque eleve connait la regle du cloche-pied obligatoire, a ratisse une fois la fosse, et dispose d'une premiere mesure a la planche la plus proche de son elan.",
+      "setup": {
+        "installationMinutes": 15,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3,
+            "note": "un par couloir"
+          },
+          {
+            "label": "craie de marquage",
+            "fixed": 3
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 2,
+            "note": "pour les gammes hors fosse"
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : format de l'epreuve, regles d'essai nul, bareme.",
+          "Ratisser entierement le sable de la fosse et retirer tout corps etranger (cailloux, debris, bords releves).",
+          "Verifier l'etat des quinze planches d'appel peintes sur les trois couloirs : peinture visible, sol non degrade autour.",
+          "Verifier les PAI et les dispenses, notamment chevilles, genoux et dos.",
+          "Delimiter une zone de gammes de bondissement sur sol souple, jamais sur sol dur, a l'ecart de la fosse."
+        ],
+        "sketch": "Trois couloirs paralleles de 30 metres, planches d'appel peintes reperees.\nFosse de reception ratissee en bout de couloirs, zone de mesure a 1 metre au-dela du bord du sautoir.\nZone de gammes de bondissement sur sol souple, a l'ecart.\nAffiche du referentiel a l'entree de l'aire de saut."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique des appuis avant tout essai a pleine vitesse : les bondissements repetes sollicitent fortement chevilles, genoux et dos, un echauffement general ne suffit pas.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple.",
+              "Verifier l'aisance respiratoire de chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes d'appuis",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses, skipping.",
+              "Gammes de cloche-pied a faible vitesse sur sol souple, jamais sur sol dur."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Bondissements sur une jambe puis sur l'autre, amplitude croissante.",
+              "Trois enchainements de trois bonds a intensite moderee.",
+              "Retour au calme des appuis avant le premier essai a pleine vitesse."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Un premier pentabond, sans preparation",
+          "objective": "Faire eprouver l'enchainement complet des cinq bonds et mesurer une premiere performance.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois sur les trois couloirs. Chacun realise deux essais de pentabond complet, sans preparation particuliere de son elan. Les deux autres membres du groupe mesurent et ratissent la fosse apres chaque essai.",
+          "studentGoal": "Realiser un enchainement complet de cinq bonds, avec un cloche-pied au premier, et connaitre ma distance.",
+          "instructions": [
+            "Je pars d'un elan libre, sur la distance de mon choix.",
+            "Mon premier bond est un cloche-pied : je retombe sur le meme pied qu'a l'impulsion.",
+            "J'enchaine ensuite quatre bonds sans temps d'arret, jusqu'a la reception dans le sable.",
+            "Les mesureurs relevent ma distance a la planche la plus proche de mon impulsion."
+          ],
+          "success": [
+            "Les cinq bonds sont enchaines sans chute ni arret complet.",
+            "Le premier bond est identifiable comme un cloche-pied.",
+            "Une distance est mesuree pour chacun des deux essais."
+          ],
+          "execution": [
+            "Garder les appuis actifs, sans ecrasement au sol.",
+            "Regarder loin devant, pas ses pieds.",
+            "Utiliser les bras pour equilibrer chaque bond."
+          ],
+          "watch": [
+            "Qui ne retombe pas sur le meme pied au premier bond ?",
+            "Qui s'arrete ou tombe entre deux bonds ?",
+            "Qui montre une gene articulaire apres l'essai ?"
+          ],
+          "errors": [
+            "Changer de pied des le premier bond, ce qui n'est pas un cloche-pied.",
+            "Marquer un temps d'arret entre deux bonds.",
+            "Regarder ses pieds pendant l'enchainement."
+          ],
+          "feedback": [
+            "Ton premier bond n'est pas un cloche-pied : tu dois retomber sur le meme pied qu'au depart.",
+            "Enchaine sans t'arreter : chaque bond part de l'elan du precedent.",
+            "Releve les yeux, regarde loin devant toi."
+          ],
+          "plus": [
+            "Elan chronometre sur les dix derniers metres pour objectiver la vitesse."
+          ],
+          "minus": [
+            "Enchainement reduit a trois bonds, cloche-pied puis deux foulees bondissantes."
+          ],
+          "diff": {
+            "facilitee": "Enchainement reduit a trois bonds (cloche-pied et deux foulees bondissantes), elan court de dix metres.",
+            "normale": "Cinq bonds complets, elan libre, deux essais mesures.",
+            "complexifiee": "Cinq bonds complets avec elan chronometre et consigne de vitesse constante."
+          },
+          "safety": [
+            "Le sable de la fosse est ratisse et debarrasse de tout corps etranger avant chaque essai.",
+            "L'etat des planches d'appel est verifie avant l'ouverture de la seance.",
+            "Aucun bond n'est realise sur sol dur : les gammes se font exclusivement sur la zone de sol souple prevue.",
+            "Echauffement specifique des appuis obligatoire avant tout essai a pleine vitesse.",
+            "Arret immediat de l'eleve en cas de douleur articulaire, cheville, genou ou dos, et prise en charge.",
+            "Un seul eleve a la fois sur chaque couloir, depart donne par le professeur ou l'eleve mesureur.",
+            "Les mesureurs restent hors de la trajectoire de course et de bond."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire ses distances et le referentiel",
+          "objective": "Faire analyser la premiere performance et comprendre ce qui sera evalue.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Chacun compare ses deux essais, lit le referentiel affiche : bareme AFL1 (12 points), AFL2 et AFL3 (8 points), et decouvre qu'il choisira bientot deux partenaires d'entrainement.",
+          "studentGoal": "Savoir ce qui sera evalue et noter ma meilleure distance du jour.",
+          "instructions": [
+            "Je compare mes deux essais et je note le meilleur.",
+            "Je lis le referentiel : 6 points pour la performance, 6 points pour la technique, 8 points pour l'AFL2 et l'AFL3.",
+            "Je note que l'AFL3 se construira avec deux partenaires choisis en debut de sequence, dans les roles de coach et de juge.",
+            "J'ecris une phrase sur mon cloche-pied : maitrise, hesitant, ou perdu en cours de route."
+          ],
+          "success": [
+            "La meilleure distance du jour est notee.",
+            "L'eleve distingue ce qui est evalue le jour J et au fil du cycle.",
+            "La phrase sur le cloche-pied est ecrite."
+          ],
+          "execution": [
+            "Comparer les deux essais.",
+            "Lire le referentiel affiche.",
+            "Formuler simplement."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils que le carnet est evalue ?",
+            "Reperent-ils la regle du cloche-pied obligatoire ?"
+          ],
+          "errors": [
+            "Ne retenir que le meilleur essai sans regarder l'ecart.",
+            "Croire que seule la performance du jour J compte.",
+            "Ne rien ecrire."
+          ],
+          "feedback": [
+            "Regarde aussi l'ecart entre tes deux essais : c'est lui qui donnera ta note technique.",
+            "Huit points se jouent pendant tout le cycle : ton carnet commence aujourd'hui.",
+            "Ecris-le, on le relira a la fin du cycle."
+          ],
+          "plus": [
+            "Calculer l'ecart en centimetres entre les deux essais du jour."
+          ],
+          "minus": [
+            "Analyse guidee par le professeur a partir d'un tableau."
+          ],
+          "diff": {
+            "facilitee": "Analyse guidee par le professeur, referentiel commente.",
+            "normale": "Lecture du referentiel et notation de la meilleure distance.",
+            "complexifiee": "Calcul de l'ecart en centimetres entre les deux essais."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme des appuis.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Cloche-pied isole, dix repetitions",
+          "objective": "Isoler et stabiliser le geste du cloche-pied avant de le reintegrer dans l'enchainement.",
+          "material": [
+            {
+              "label": "tapis de reception",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Sur la zone de sol souple, hors fosse. Dix repetitions de cloche-pied isole, sur place puis en deplacement court, jambe droite puis jambe gauche.",
+          "studentGoal": "Realiser dix cloche-pieds sans changer de pied entre l'impulsion et la reception.",
+          "instructions": [
+            "Je realise cinq cloche-pieds sur ma jambe la plus forte, puis cinq sur l'autre.",
+            "Je retombe systematiquement sur le meme pied qu'a l'impulsion.",
+            "J'augmente progressivement la distance de deplacement a chaque repetition."
+          ],
+          "success": [
+            "Les dix repetitions sont realisees.",
+            "Le pied est identique a l'impulsion et a la reception a chaque fois.",
+            "L'amplitude augmente au fil des repetitions."
+          ],
+          "execution": [
+            "Pousser activement sur l'appui.",
+            "Garder le genou de la jambe libre haut.",
+            "Controler la reception sans ecrasement."
+          ],
+          "watch": [
+            "Le pied change-t-il entre impulsion et reception ?",
+            "L'amplitude augmente-t-elle reellement ?",
+            "Y a-t-il une jambe nettement plus faible que l'autre ?"
+          ],
+          "errors": [
+            "Changer de pied a la reception.",
+            "Bondir sans pousser, en pietinant.",
+            "Deplacement nul d'un cloche-pied a l'autre."
+          ],
+          "feedback": [
+            "Meme pied a l'arrivee qu'au depart : c'est la definition du cloche-pied.",
+            "Pousse, ne pietine pas.",
+            "Avance a chaque bond, ne reste pas sur place."
+          ],
+          "plus": [
+            "Cloche-pieds enchaines par trois sans interruption."
+          ],
+          "minus": [
+            "Cloche-pieds sur place uniquement, sans deplacement."
+          ],
+          "diff": {
+            "facilitee": "Cloche-pieds sur place, sans consigne de deplacement.",
+            "normale": "Dix cloche-pieds en deplacement progressif, jambe droite puis jambe gauche.",
+            "complexifiee": "Cloche-pieds enchaines par trois, sans interruption entre les series."
+          },
+          "safety": [
+            "Realise exclusivement sur sol souple, jamais sur sol dur.",
+            "Arret immediat en cas de douleur a la cheville, au genou ou au dos.",
+            "Reception controlee, genou legerement flechi, jamais bloque."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qu'un cloche-pied, en une phrase ?",
+          "Qu'est-ce qui est evalue le jour de l'epreuve, et qu'est-ce qui l'est au fil du cycle ?"
+        ],
+        "key": "Le pentabond commence par une regle non negociable : le premier bond est un cloche-pied, meme pied a l'impulsion et a la reception. Et douze points se jouent le jour J, huit autres se jouent pendant tout le cycle."
+      },
+      "socialRoles": [
+        "Mesureur : releve la distance a la planche la plus proche.",
+        "Ratisseur : remet la fosse en etat apres chaque essai.",
+        "Responsable securite : signale tout eleve en difficulte articulaire."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Choisir ses deux partenaires d'entrainement et sa repartition de points",
+      "mainObjective": "Choisir les deux partenaires d'entrainement pour toute la sequence et la repartition des points entre l'AFL2 et l'AFL3, et debuter le travail de l'elan.",
+      "secondaryObjectives": [
+        "Comprendre le role double de coach et de juge, exerce aupres de deux partenaires.",
+        "Choisir sa repartition des points : 2-6, 6-2 ou 4-4.",
+        "Mesurer sa foulee d'elan pour approcher une planche d'appel."
+      ],
+      "linkToPrevious": "La seance 1 a fait decouvrir le cloche-pied et le format de l'epreuve. Il faut maintenant fixer, pour toute la sequence, avec qui on s'entraine et comment se repartissent les huit points d'AFL2 et d'AFL3.",
+      "prerequisiteForNext": "Chaque eleve a choisi ses deux partenaires et sa repartition, et connait une longueur d'elan approximative.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "craie de marquage",
+            "fixed": 3
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "fiches de choix des partenaires",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Ratisser la fosse et verifier l'etat des planches avant l'ouverture.",
+          "Preparer les fiches de choix des partenaires et de repartition des points.",
+          "Baliser les trois couloirs et verifier l'absence d'obstacles sur l'aire de gammes.",
+          "Verifier les PAI, notamment chevilles, genoux et dos."
+        ],
+        "sketch": "Trois couloirs paralleles de 30 metres, planches d'appel reperees.\nFosse ratissee en bout de couloirs.\nZone assise a l'ecart pour le choix des partenaires, affiche du referentiel visible.\nZone de gammes d'elan sur sol souple."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique des appuis avant tout essai a pleine vitesse : la seance reprend les gammes de cloche-pied de la seance 1 avant d'introduire le travail de l'elan.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple.",
+              "Verifier l'aisance respiratoire de chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Rappel des cloche-pieds isoles travailles en seance 1."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Bondissements sur une jambe puis sur l'autre.",
+              "Trois accelerations progressives sur dix metres.",
+              "Retour au calme des appuis avant l'exercice d'elan."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Mesurer sa foulee d'elan",
+          "objective": "Determiner un nombre de foulees d'elan stable pour approcher regulierement la meme planche.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "craie de marquage",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois. Chacun realise plusieurs elans sans saut, en comptant ses foulees, puis fixe sa marque de depart.",
+          "studentGoal": "Trouver un nombre de foulees d'elan que je peux reproduire a l'identique.",
+          "instructions": [
+            "Je cours mon elan sur la distance de mon choix, sans sauter, en comptant mes foulees a voix haute.",
+            "Je recommence trois fois et je verifie que le nombre de foulees est stable.",
+            "Je marque mon point de depart avec de la craie.",
+            "Une fois stable, je realise un elan avec impulsion, sans les cinq bonds, juste pour verifier ma zone d'appel."
+          ],
+          "success": [
+            "Le nombre de foulees est stable sur trois essais, a une foulee pres.",
+            "La marque de depart est fixee.",
+            "La zone d'appel est identifiee au sol."
+          ],
+          "execution": [
+            "Partir toujours du meme pied.",
+            "Accelerer progressivement, ne pas sprinter d'emblee.",
+            "Regarder la planche, pas ses pieds en approche."
+          ],
+          "watch": [
+            "Le nombre de foulees varie-t-il beaucoup d'un essai a l'autre ?",
+            "L'eleve pietine-t-il a l'approche de la planche ?",
+            "Regarde-t-il ses pieds au lieu de la planche ?"
+          ],
+          "errors": [
+            "Changer de pied de depart d'un essai a l'autre.",
+            "Accelerer trop tot puis decelerer avant la planche.",
+            "Regarder ses pieds au lieu de la planche."
+          ],
+          "feedback": [
+            "Toujours le meme pied au depart, sinon ton nombre de foulees ne veut rien dire.",
+            "Tu ralentis avant la planche : accelere jusqu'au bout.",
+            "Regarde la planche, pas tes pieds."
+          ],
+          "plus": [
+            "Elan mesure sur toute la longueur du couloir, 30 metres."
+          ],
+          "minus": [
+            "Elan reduit a six foulees, sans recherche de vitesse maximale."
+          ],
+          "diff": {
+            "facilitee": "Elan court de six foulees, marque unique donnee par le professeur.",
+            "normale": "Elan de longueur libre, marque de depart stabilisee sur trois essais.",
+            "complexifiee": "Elan sur la longueur complete du couloir avec verification de la vitesse d'approche."
+          },
+          "safety": [
+            "Le sable de la fosse est ratisse et sans corps etranger avant chaque groupe.",
+            "L'etat des planches d'appel est verifie avant l'exercice.",
+            "Aucun bond n'est realise sur sol dur : les essais d'elan sans saut se font sur le couloir prevu, jamais en dehors.",
+            "Echauffement specifique des appuis realise avant toute course a vitesse elevee.",
+            "Arret immediat en cas de douleur articulaire."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Choisir ses deux partenaires et sa repartition",
+          "objective": "Faire choisir, pour toute la sequence, deux partenaires d'entrainement et la repartition des points entre l'AFL2 et l'AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de choix des partenaires",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Lecture du referentiel : l'AFL3 s'evalue dans les roles de coach et de juge, aupres de deux partenaires choisis des le debut de la sequence. Chacun choisit ses deux partenaires et sa repartition, et l'inscrit sur son carnet et sur celui de ses deux partenaires.",
+          "studentGoal": "Choisir mes deux partenaires d'entrainement pour tout le cycle, et ma repartition entre l'AFL2 et l'AFL3.",
+          "instructions": [
+            "Je lis le referentiel : je serai coach et juge pour mes deux partenaires, ce n'est pas un choix entre les deux roles.",
+            "Je choisis deux partenaires avec qui je vais m'entrainer sur toute la sequence.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "J'inscris les deux noms et ma repartition sur mon carnet, et je verifie que mes deux partenaires ont bien note mon nom."
+          ],
+          "success": [
+            "Deux partenaires sont choisis et le choix est reciproque.",
+            "La repartition est choisie et notee.",
+            "La distinction coach et juge (deux roles, pas un choix exclusif) est comprise."
+          ],
+          "execution": [
+            "Choisir des partenaires presents regulierement.",
+            "Ecrire immediatement sur les trois carnets.",
+            "Verifier la reciprocite du choix."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils qu'ils seront coach et juge, pas l'un ou l'autre ?",
+            "Les choix sont-ils reciproques ?",
+            "La repartition est-elle notee ?"
+          ],
+          "errors": [
+            "Croire qu'il faut choisir entre coach et juge comme dans d'autres APSA.",
+            "Choisir un partenaire souvent absent.",
+            "Oublier de noter le choix sur les trois carnets."
+          ],
+          "feedback": [
+            "Tu ne choisis pas entre coach et juge : tu seras les deux, pour tes deux partenaires.",
+            "Choisis quelqu'un de present a toutes les seances, sinon ton AFL3 n'aura pas de matiere.",
+            "Note-le sur les trois carnets, maintenant."
+          ],
+          "plus": [
+            "Justification ecrite du choix des deux partenaires en fonction de leurs besoins respectifs."
+          ],
+          "minus": [
+            "Choix guide par le professeur en cas d'indecision."
+          ],
+          "diff": {
+            "facilitee": "Choix guide par le professeur, repartition 4-4 par defaut.",
+            "normale": "Choix autonome de deux partenaires reciproques et d'une repartition.",
+            "complexifiee": "Choix justifie par ecrit, en fonction des besoins respectifs des trois eleves."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible pendant cette phase."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premier retour de coach sur l'elan",
+          "objective": "Faire exercer un premier essai du role de coach aupres d'un des deux partenaires choisis.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trinomes formes des deux partenaires choisis. Chacun observe l'elan de l'un de ses partenaires et lui transmet une information, puis on inverse.",
+          "studentGoal": "Donner a l'un de mes deux partenaires une information utile sur son elan.",
+          "instructions": [
+            "J'observe l'elan de mon partenaire : nombre de foulees, regularite, vitesse.",
+            "Je lui transmets une information simple et utile a la fin de son essai.",
+            "Il me dit si mon information l'a aide.",
+            "On inverse les roles."
+          ],
+          "success": [
+            "L'information transmise est liee a ce qui a ete observe.",
+            "L'information est comprise par le partenaire.",
+            "L'echange est reciproque."
+          ],
+          "execution": [
+            "Observer avant de parler.",
+            "Formuler court et concret.",
+            "Se placer pour bien voir sans gener."
+          ],
+          "watch": [
+            "Les informations sont-elles liees a l'observation ou vagues ?",
+            "L'echange est-il reciproque ?"
+          ],
+          "errors": [
+            "Donner un encouragement sans information.",
+            "Parler avant d'avoir observe.",
+            "Ne pas inverser les roles."
+          ],
+          "feedback": [
+            "Allez n'est pas une information : dis-lui ce que tu as vu.",
+            "Observe d'abord, parle apres.",
+            "A ton tour d'etre observe maintenant."
+          ],
+          "plus": [
+            "Information appuyee sur un comptage precis du nombre de foulees."
+          ],
+          "minus": [
+            "Information donnee avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Information donnee avec l'aide du professeur.",
+            "normale": "Observation puis information simple, roles inverses.",
+            "complexifiee": "Information chiffree, appuyee sur un comptage precis des foulees."
+          },
+          "safety": [
+            "Les observateurs restent hors de la trajectoire de course.",
+            "Aucun bond n'est demande dans cette situation : seul l'elan est travaille.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qui sont vos deux partenaires, et quelle repartition avez-vous choisie ?",
+          "En quoi le role de coach est-il different de celui de juge ?"
+        ],
+        "key": "A partir d'aujourd'hui et jusqu'a l'epreuve finale, vous serez coach et juge pour les deux memes partenaires : ce n'est pas un choix entre les deux roles, mais un engagement dans les deux."
+      },
+      "socialRoles": [
+        "Coach : observe et transmet des informations utiles a l'un de ses deux partenaires.",
+        "Juge : connait les regles de validation d'un saut et veille a l'etat de la fosse.",
+        "Mesureur : releve les longueurs d'elan et les marques."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Construire l'enchainement des cinq bonds et le cloche-pied",
+      "mainObjective": "Construire un enchainement continu de cinq bonds, avec un cloche-pied fiable au premier bond et des appuis actifs en griffe.",
+      "secondaryObjectives": [
+        "Enchainer cinq bonds sans temps d'arret.",
+        "Attaquer chaque appui en griffe, dynamique, sans ecrasement.",
+        "Utiliser les segments libres (bras, jambe libre) pour equilibrer chaque bond."
+      ],
+      "linkToPrevious": "Le cloche-pied isole et l'elan sont stabilises. Il faut maintenant enchainer les cinq bonds sans rupture, ce qui est le coeur technique du pentabond.",
+      "prerequisiteForNext": "Chaque eleve enchaine cinq bonds sans arret complet, avec un cloche-pied identifiable au premier bond.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "lattes de rythme",
+            "fixed": 10
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de releve technique",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Ratisser la fosse et verifier l'etat des planches avant l'ouverture.",
+          "Disposer les lattes de rythme sur la zone de bonds pour materialiser l'enchainement, jamais sur sol dur.",
+          "Baliser les trois couloirs.",
+          "Verifier les PAI, notamment chevilles, genoux et dos."
+        ],
+        "sketch": "Trois couloirs paralleles de 30 metres, lattes de rythme disposees a distances croissantes sur chaque couloir.\nFosse ratissee en bout de couloirs.\nZone assise pour la partie reglementaire, a l'ecart.\nAffiche du referentiel visible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique des appuis avant tout essai a pleine vitesse : l'enchainement de cinq bonds sollicite intensement les appuis.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple.",
+              "Verifier l'aisance respiratoire de chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Enchainements de trois bonds a intensite moderee.",
+              "Deux accelerations progressives sur quinze metres.",
+              "Retour au calme des appuis avant le premier essai complet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "L'enchainement des cinq bonds guide par des reperes au sol",
+          "objective": "Construire un enchainement continu de cinq bonds a l'aide de reperes au sol materialisant la combinaison cloche-pied, cloche-pied, foulee bondissante, foulee bondissante, saut en extension.",
+          "material": [
+            {
+              "label": "lattes de rythme",
+              "fixed": 10
+            },
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois sur les couloirs, avec des lattes disposees a distances croissantes pour guider le rythme. Chacun realise plusieurs essais avec puis sans les reperes.",
+          "studentGoal": "Enchainer mes cinq bonds sans arret, avec un cloche-pied net au premier bond.",
+          "instructions": [
+            "Mon premier bond est un cloche-pied : meme pied a l'impulsion et a la reception.",
+            "Je poursuis par un deuxieme cloche-pied, puis deux foulees bondissantes en changeant de jambe, puis un saut en extension vers la fosse.",
+            "Je m'appuie sur les reperes au sol pour trouver le rythme, puis je les retire.",
+            "Je pousse activement a chaque appel, en attaquant le sol en griffe."
+          ],
+          "success": [
+            "Les cinq bonds sont enchaines sans arret complet.",
+            "Le premier bond est identifiable comme un cloche-pied.",
+            "L'enchainement est respecte sur au moins deux essais sur trois."
+          ],
+          "execution": [
+            "Attaquer le sol en griffe, appui actif et bref.",
+            "Garder le buste droit.",
+            "Utiliser les bras pour l'equilibre a chaque bond."
+          ],
+          "watch": [
+            "L'enchainement s'arrete-t-il entre deux bonds ?",
+            "Le premier bond reste-t-il un cloche-pied sous la fatigue ?",
+            "L'attaque au sol est-elle en griffe ou ecrasee ?"
+          ],
+          "errors": [
+            "Marquer un temps d'arret entre deux bonds.",
+            "Perdre le cloche-pied au premier bond en fin de serie.",
+            "Ecraser l'appui au lieu d'attaquer en griffe."
+          ],
+          "feedback": [
+            "Tu t'arretes entre le troisieme et le quatrieme bond : relie-les.",
+            "Ton premier bond redevient une foulee normale quand tu es fatigue : concentre-toi dessus en priorite.",
+            "Attaque le sol, ne te laisse pas ecraser dessus."
+          ],
+          "plus": [
+            "Enchainement realise sans aucun repere au sol, en autonomie complete."
+          ],
+          "minus": [
+            "Enchainement reduit a trois bonds : cloche-pied, foulee bondissante, saut."
+          ],
+          "diff": {
+            "facilitee": "Trois bonds guides par des reperes rapproches : cloche-pied, foulee bondissante, saut en extension.",
+            "normale": "Cinq bonds guides par des reperes, puis sans reperes.",
+            "complexifiee": "Cinq bonds sans aucun repere au sol, elan libre."
+          },
+          "safety": [
+            "Le sable de la fosse est ratisse et sans corps etranger avant chaque serie.",
+            "L'etat des planches d'appel et du sol autour des reperes est verifie avant l'exercice.",
+            "Aucun bond n'est realise sur sol dur : les reperes sont places uniquement sur la zone de couloir prevue pour les bonds.",
+            "Echauffement specifique des appuis obligatoire avant tout essai a pleine vitesse.",
+            "Arret immediat de l'eleve en cas de douleur articulaire, cheville, genou ou dos.",
+            "Un seul eleve a la fois par couloir."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le role de juge : connaitre les regles de validation",
+          "objective": "Faire acquerir les criteres de validation d'un saut, prealable indispensable au role de juge.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trinomes de partenaires choisis. Lecture commentee des trois regles d'essai nul, puis exercice de jugement sur les essais du groupe voisin.",
+          "studentGoal": "Savoir dire si un essai de pentabond est valide ou nul, et pourquoi.",
+          "instructions": [
+            "Je lis les trois regles d'essai nul : premier bond pas cloche-pied, cloche-pied au-dela de la planche, reception hors de la zone qui commence a un metre au-dela du sautoir.",
+            "J'observe les essais du groupe voisin et je dis, pour chacun, valide ou nul, en citant la regle.",
+            "Je m'entraine a ratisser la fosse et a verifier son etat entre deux essais.",
+            "Je note sur mon carnet les trois regles, dans mes mots."
+          ],
+          "success": [
+            "Les trois regles sont citees correctement.",
+            "Le jugement rendu s'appuie sur une regle nommee.",
+            "La fosse est ratissee correctement apres l'observation."
+          ],
+          "execution": [
+            "Observer le premier bond en priorite.",
+            "Verifier ensuite la zone de reception.",
+            "Ratisser en tirant le sable vers soi, sans laisser de bosse."
+          ],
+          "watch": [
+            "Les eleves confondent-ils les trois regles ?",
+            "Jugent-ils sans justifier ?",
+            "Ratissent-ils correctement ?"
+          ],
+          "errors": [
+            "Juger un essai nul sans dire laquelle des trois regles est en cause.",
+            "Oublier de verifier la zone de reception a un metre au-dela du sautoir.",
+            "Ratisser en laissant des bosses."
+          ],
+          "feedback": [
+            "Nul, mais pourquoi ? Cite la regle.",
+            "La zone valide commence a un metre au-dela du bord, pas au bord lui-meme.",
+            "Ratisse jusqu'au bord, sans laisser de bosse."
+          ],
+          "plus": [
+            "Jugement rendu a voix haute et argumente devant le groupe, comme le jour de l'epreuve."
+          ],
+          "minus": [
+            "Jugement guide par le professeur, qui valide chaque decision."
+          ],
+          "diff": {
+            "facilitee": "Jugement guide par le professeur, qui valide chaque decision de l'eleve.",
+            "normale": "Jugement autonome, regle citee a chaque decision.",
+            "complexifiee": "Jugement rendu a voix haute et argumente, comme le jour de l'epreuve."
+          },
+          "safety": [
+            "Les observateurs-juges restent hors de la trajectoire de course et de bond.",
+            "Le rateau est manie avec attention, jamais en direction d'un autre eleve.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Trois essais et comparaison des distances",
+          "objective": "Reinvestir l'enchainement complet sur trois essais, en cherchant a garder le meme rythme d'un essai a l'autre.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois sur les couloirs, trois essais chacun, distances relevees.",
+          "studentGoal": "Realiser trois essais avec un enchainement similaire d'un essai a l'autre.",
+          "instructions": [
+            "Je realise trois essais complets de pentabond.",
+            "Je cherche a garder le meme enchainement et le meme rythme a chaque essai.",
+            "Les mesureurs relevent ma distance et ratissent la fosse apres chaque essai.",
+            "Je compare mes trois distances a la fin."
+          ],
+          "success": [
+            "Les trois essais sont realises avec l'enchainement complet.",
+            "Les distances sont mesurees et notees.",
+            "L'ecart entre les trois essais est observe et commente."
+          ],
+          "execution": [
+            "Reproduire la meme marque d'elan a chaque essai.",
+            "Garder le meme enchainement de bonds.",
+            "Ne pas changer de strategie entre les essais."
+          ],
+          "watch": [
+            "Le rythme est-il stable d'un essai a l'autre ?",
+            "L'ecart entre les trois distances est-il important ?"
+          ],
+          "errors": [
+            "Changer d'enchainement entre les essais.",
+            "Changer de marque d'elan a chaque fois.",
+            "Ne pas noter les distances."
+          ],
+          "feedback": [
+            "Garde le meme enchainement a chaque essai, c'est ce qui te rendra regulier.",
+            "Meme marque de depart a chaque fois.",
+            "Note tes trois distances, on va comparer."
+          ],
+          "plus": [
+            "Calcul de l'ecart en centimetres entre la meilleure et la moins bonne des trois distances."
+          ],
+          "minus": [
+            "Deux essais seulement, avec assistance sur la marque d'elan."
+          ],
+          "diff": {
+            "facilitee": "Deux essais avec assistance sur la marque d'elan.",
+            "normale": "Trois essais complets, distances comparees.",
+            "complexifiee": "Trois essais avec calcul de l'ecart en centimetres."
+          },
+          "safety": [
+            "Sable ratisse et sans corps etranger avant chaque essai.",
+            "Etat des planches d'appel verifie.",
+            "Aucun bond sur sol dur.",
+            "Arret immediat en cas de douleur articulaire.",
+            "Un seul eleve a la fois sur chaque couloir."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est l'enchainement des cinq bonds que vous avez travaille aujourd'hui ?",
+          "Quelles sont les trois regles qui rendent un essai nul ?"
+        ],
+        "key": "Cinq bonds enchaines sans arret, un cloche-pied fiable au premier : c'est la base technique du pentabond. Et un juge doit toujours pouvoir nommer la regle sur laquelle il s'appuie."
+      },
+      "socialRoles": [
+        "Juge : applique les trois regles de validation et ratisse la fosse.",
+        "Mesureur : releve les distances a la planche.",
+        "Coach : observe le rythme de l'enchainement et transmet une information."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Regler sa planche d'appel et le format des six essais",
+      "mainObjective": "Determiner sa planche d'appel personnelle et s'entrainer au format exact de l'epreuve : six essais maximum, planche annoncee avant chaque essai.",
+      "secondaryObjectives": [
+        "Ajuster sa marque d'elan pour ne pas mordre la planche d'appel.",
+        "Annoncer sa planche avant chaque essai, comme le jour de l'epreuve.",
+        "Calculer l'ecart entre ses deux meilleurs essais."
+      ],
+      "linkToPrevious": "L'enchainement des cinq bonds est construit. Reste a le caler sur une planche d'appel precise et a s'entrainer au protocole exact des six essais.",
+      "prerequisiteForNext": "Chaque eleve connait sa planche d'appel de reference et sait annoncer une planche avant de s'elancer.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "craie de marquage",
+            "fixed": 3
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de releve technique",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Ratisser la fosse et verifier l'etat des quinze planches d'appel avant l'ouverture.",
+          "Baliser les trois couloirs.",
+          "Preparer les fiches de releve technique pour le classement des essais.",
+          "Verifier les PAI, notamment chevilles, genoux et dos."
+        ],
+        "sketch": "Trois couloirs paralleles de 30 metres, quinze planches d'appel peintes reperees.\nFosse ratissee, zone de mesure a 1 metre au-dela du bord du sautoir.\nZone assise pour le calcul des ecarts, a l'ecart de la fosse.\nAffiche du referentiel visible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique des appuis avant tout essai a pleine vitesse : la seance enchaine de nombreux essais a intensite elevee pour regler la planche d'appel.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train",
+            "details": [
+              "Sept minutes de course tres souple.",
+              "Verifier l'aisance respiratoire de chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Deux enchainements complets a intensite moderee.",
+              "Deux accelerations progressives sur vingt metres.",
+              "Retour au calme des appuis avant les essais de reglage."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Regler sa marque d'elan sur la planche d'appel",
+          "objective": "Ajuster progressivement la marque de depart pour impulser le plus pres possible de la planche d'appel, sans la mordre.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "craie de marquage",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par groupes de trois. Chacun ajuste sa marque de depart par tatonnements successifs : il recule si l'essai mord la planche, il avance s'il impulse loin avant la planche.",
+          "studentGoal": "Trouver une marque d'elan qui me permet d'impulser pres de la planche sans la mordre.",
+          "instructions": [
+            "Je pars d'une marque approximative et je note ou tombe mon impulsion par rapport a la planche.",
+            "Si je mords la planche, je recule ma marque d'un demi-pied.",
+            "Si je suis loin avant la planche, j'avance ma marque d'un demi-pied.",
+            "Une fois ma marque stabilisee, j'annonce ma planche de reference a mes juges."
+          ],
+          "success": [
+            "La marque d'elan est stabilisee en moins de six tatonnements.",
+            "L'impulsion est proche de la planche sans la mordre sur au moins deux essais consecutifs.",
+            "La planche de reference est annoncee clairement."
+          ],
+          "execution": [
+            "Ajuster par petits paliers, pas de grands changements.",
+            "Garder la meme vitesse d'approche a chaque tatonnement.",
+            "Regarder la planche en fin d'elan, pas ses pieds."
+          ],
+          "watch": [
+            "Les ajustements sont-ils demesures ?",
+            "L'eleve regarde-t-il ses pieds en approche, ce qui perturbe la foulee ?",
+            "La planche de reference est-elle annoncee clairement ?"
+          ],
+          "errors": [
+            "Reculer ou avancer sa marque de plusieurs pieds d'un coup.",
+            "Regarder ses pieds au lieu de la planche a l'approche finale.",
+            "Ne pas annoncer sa planche."
+          ],
+          "feedback": [
+            "Un demi-pied a la fois, pas plus, sinon tu ne stabilises jamais rien.",
+            "Regarde la planche, jamais tes pieds a l'approche.",
+            "Annonce ta planche a voix haute, comme le jour de l'epreuve."
+          ],
+          "plus": [
+            "Marque stabilisee avec verification sur trois essais consecutifs sans mordre."
+          ],
+          "minus": [
+            "Marque donnee par le professeur a partir d'une distance standard, ajustee ensuite."
+          ],
+          "diff": {
+            "facilitee": "Marque de depart donnee par le professeur, ajustee ensuite par l'eleve.",
+            "normale": "Marque ajustee en autonomie par tatonnements successifs.",
+            "complexifiee": "Marque stabilisee et verifiee sur trois essais consecutifs sans mordre."
+          },
+          "safety": [
+            "Sable de la fosse ratisse et sans corps etranger avant chaque groupe.",
+            "Etat des planches d'appel verifie avant l'exercice : peinture visible, sol non degrade.",
+            "Aucun bond sur sol dur.",
+            "Echauffement specifique des appuis obligatoire avant tout essai a pleine vitesse.",
+            "Arret immediat en cas de douleur articulaire."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "S'entrainer au protocole des six essais",
+          "objective": "Faire vivre le protocole exact de l'epreuve : annoncer la planche avant chaque essai, six essais maximum, jugement immediat.",
+          "material": [
+            {
+              "label": "fiches de releve technique",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trinomes de partenaires. Chacun realise une serie de six essais avec le protocole complet : annonce, essai, jugement, ratissage.",
+          "studentGoal": "Vivre le protocole exact de l'epreuve : annoncer, sauter, etre juge, six essais maximum.",
+          "instructions": [
+            "Avant chaque essai, j'annonce ma planche d'appel a mon juge.",
+            "Je realise mon essai.",
+            "Mon juge annonce valide ou nul, en citant la regle si l'essai est nul.",
+            "Apres six essais maximum, je regarde ma meilleure distance et l'ecart avec ma deuxieme meilleure."
+          ],
+          "success": [
+            "La planche est annoncee avant chacun des six essais.",
+            "Le jugement est rendu et cite pour chaque essai.",
+            "La meilleure distance et l'ecart sont identifies en fin de serie."
+          ],
+          "execution": [
+            "Annoncer clairement et avant de s'elancer, jamais apres.",
+            "Respecter le nombre maximal de six essais.",
+            "Ratisser entre chaque essai."
+          ],
+          "watch": [
+            "L'annonce est-elle faite avant l'essai ou oubliee ?",
+            "Le juge cite-t-il la regle sur un essai nul ?",
+            "Le compte des six essais est-il respecte ?"
+          ],
+          "errors": [
+            "Annoncer la planche apres avoir couru.",
+            "Depasser six essais.",
+            "Ne pas ratisser entre deux essais."
+          ],
+          "feedback": [
+            "Annonce avant de partir, pas apres.",
+            "Six essais maximum, pas un de plus.",
+            "Ratisse avant l'essai suivant, c'est le role du juge."
+          ],
+          "plus": [
+            "Serie de six essais rendue sans aucune aide, minutee comme le jour de l'epreuve."
+          ],
+          "minus": [
+            "Serie reduite a quatre essais, avec rappel du protocole par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Serie de quatre essais avec rappel du protocole par le professeur.",
+            "normale": "Serie complete de six essais avec protocole integral.",
+            "complexifiee": "Serie de six essais rendue en autonomie complete, sans aucun rappel."
+          },
+          "safety": [
+            "Un seul eleve a la fois par couloir pendant la serie.",
+            "Le juge verifie l'etat de la fosse avant chaque essai.",
+            "Aucun bond sur sol dur.",
+            "Arret immediat en cas de douleur articulaire.",
+            "Point d'eau accessible entre les essais."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ecart entre mes deux meilleurs essais",
+          "objective": "Faire calculer l'ecart entre les deux meilleures performances de la serie, base de la note technique.",
+          "material": [
+            {
+              "label": "fiches de releve technique",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "A partir des six essais de la situation precedente. Chacun classe ses distances et calcule l'ecart entre les deux meilleures.",
+          "studentGoal": "Calculer l'ecart en centimetres entre mes deux meilleures distances.",
+          "instructions": [
+            "Je classe mes six essais du meilleur au moins bon.",
+            "Je releve mes deux meilleures distances.",
+            "Je calcule l'ecart en centimetres entre elles.",
+            "Je note ce chiffre sur mon carnet : plus il est petit, meilleure est ma note technique."
+          ],
+          "success": [
+            "Les six essais sont classes.",
+            "L'ecart entre les deux meilleurs est calcule correctement.",
+            "Le lien avec la note technique est formule."
+          ],
+          "execution": [
+            "Classer avant de calculer.",
+            "Ne pas confondre meilleure et derniere distance.",
+            "Verifier le calcul en centimetres, pas en metres."
+          ],
+          "watch": [
+            "L'eleve confond-il l'ecart entre le meilleur et le moins bon essai avec l'ecart entre les deux meilleurs ?",
+            "Le calcul est-il exact ?"
+          ],
+          "errors": [
+            "Calculer l'ecart entre le meilleur et le moins bon essai au lieu des deux meilleurs.",
+            "Se tromper d'unite.",
+            "Ne pas noter le resultat."
+          ],
+          "feedback": [
+            "Ce sont tes deux MEILLEURS essais qu'on compare, pas le meilleur et le pire.",
+            "En centimetres, pas en metres.",
+            "Note-le, c'est ta base de note technique."
+          ],
+          "plus": [
+            "Comparaison avec l'ecart de la seance 3 pour mesurer la progression de la regularite."
+          ],
+          "minus": [
+            "Calcul effectue avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Calcul effectue avec l'aide du professeur, a partir de deux distances donnees.",
+            "normale": "Classement et calcul de l'ecart en autonomie.",
+            "complexifiee": "Comparaison de l'ecart avec celui de la seance 3."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle est votre planche d'appel de reference ?",
+          "Quel est l'ecart entre vos deux meilleurs essais du jour, et que dit-il de votre regularite ?"
+        ],
+        "key": "La planche d'appel se regle par petits ajustements, jamais par grands changements. Et la note technique ne recompense pas le meilleur essai isole, mais la regularite entre les deux meilleurs."
+      },
+      "socialRoles": [
+        "Juge : applique le protocole complet, annonce valide ou nul en citant la regle.",
+        "Coach : observe la marque d'elan et transmet un ajustement.",
+        "Mesureur : releve et classe les distances."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et verification des partenaires",
+      "mainObjective": "Situer chacun dans des conditions proches du jour J : six essais mesures, planche annoncee, ecart technique calcule.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser une serie de six essais dans des conditions proches de l'epreuve finale.",
+        "Verifier les deux partenaires et la repartition choisis en seance 2.",
+        "Identifier la priorite de travail pour la suite du cycle : elan, cloche-pied, regularite."
+      ],
+      "linkToPrevious": "Enchainement, planche d'appel et protocole des six essais sont construits : l'epreuve de mi-cycle montre ce que cela donne en conditions proches du reel.",
+      "prerequisiteForNext": "Chaque eleve connait sa performance de mi-cycle, son ecart technique, et confirme ou ajuste ses deux partenaires.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches nominatives.",
+          "Ratisser la fosse et verifier l'etat des planches d'appel.",
+          "Verifier les PAI, notamment chevilles, genoux et dos.",
+          "Prevoir un espace d'ecriture a l'ecart de la fosse."
+        ],
+        "sketch": "Trois couloirs, quinze planches d'appel, comme pour une epreuve courante.\nFosse ratissee, zone de mesure a 1 metre au-dela du bord du sautoir.\nAffichage du referentiel et des repartitions a l'entree.\nZone d'ecriture a l'ecart, avec point d'eau et trousse de secours signales."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : la conduite de l'echauffement des appuis fait partie de l'AFL1 et sera observee le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Deux enchainements complets a intensite moderee.",
+              "Deux accelerations progressives sur vingt metres.",
+              "Retour au calme des appuis avant le premier essai evalue."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Serie evaluee de six essais",
+          "objective": "Evaluer la performance et l'ecart technique dans des conditions proches de l'epreuve finale.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            }
+          ],
+          "organization": "Par trinomes de partenaires choisis. Chacun realise jusqu'a six essais maximum avec le protocole complet : planche annoncee avant chaque essai, jugement par les deux partenaires en alternance.",
+          "studentGoal": "Realiser ma meilleure serie possible et connaitre ma performance et mon ecart technique de mi-cycle.",
+          "instructions": [
+            "J'annonce ma planche avant chaque essai.",
+            "Je realise jusqu'a six essais, mes partenaires jugent et mesurent en alternance.",
+            "Je releve ma meilleure distance et l'ecart avec ma deuxieme meilleure.",
+            "Je compare cette performance a mes premiers essais de la seance 1."
+          ],
+          "success": [
+            "La serie est realisee dans le respect integral du protocole.",
+            "La meilleure distance et l'ecart technique sont calcules.",
+            "La comparaison avec la seance 1 est effectuee."
+          ],
+          "execution": [
+            "Garder le meme enchainement que celui travaille depuis la seance 3.",
+            "Respecter l'annonce systematique de la planche.",
+            "Ne pas changer de strategie en cours de serie."
+          ],
+          "watch": [
+            "Le protocole est-il integralement respecte ?",
+            "L'eleve garde-t-il son enchainement sous la pression de l'evaluation ?",
+            "L'ecart technique est-il calcule correctement ?"
+          ],
+          "errors": [
+            "Oublier d'annoncer la planche sous le coup du stress.",
+            "Changer d'enchainement en cours de serie pour tenter un coup.",
+            "Se tromper dans le calcul de l'ecart."
+          ],
+          "feedback": [
+            "Meme sous le stress, tu annonces ta planche avant de partir.",
+            "Garde ton enchainement, ce n'est pas le moment d'en changer.",
+            "Verifie ton calcul : deux MEILLEURS essais."
+          ],
+          "plus": [
+            "Serie realisee avec un temps limite entre deux essais, comme le jour de l'epreuve."
+          ],
+          "minus": [
+            "Serie reduite a quatre essais, avec rappel du protocole possible."
+          ],
+          "diff": {
+            "facilitee": "Serie de quatre essais avec rappel du protocole si necessaire.",
+            "normale": "Serie complete de six essais, protocole integral respecte.",
+            "complexifiee": "Serie de six essais avec temps limite entre essais, comme le jour de l'epreuve."
+          },
+          "safety": [
+            "Sable de la fosse ratisse et sans corps etranger avant l'ouverture de l'evaluation.",
+            "Etat des planches d'appel verifie avant le premier essai.",
+            "Aucun bond sur sol dur.",
+            "Echauffement specifique des appuis obligatoire avant le premier essai a pleine vitesse.",
+            "Arret immediat et prise en charge en cas de douleur articulaire, cheville, genou ou dos.",
+            "Un seul eleve a la fois par couloir, juges places hors de la trajectoire."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier ses deux partenaires et sa repartition",
+          "objective": "Verifier que les deux partenaires et la repartition choisis en seance 2 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Chacun relit son choix de la seance 2, verifie qu'il correspond a ce qu'il fait reellement avec ses deux partenaires, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mes deux partenaires et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis les deux partenaires et la repartition que j'ai choisis en seance 2.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mes roles de coach et de juge tenus depuis la seance 2 aupres de mes deux partenaires : suis-je utile ?",
+            "J'ecris si je confirme mes deux partenaires et ma repartition, et pourquoi."
+          ],
+          "success": [
+            "Les deux partenaires et la repartition de la seance 2 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait comme coach et comme juge."
+          ],
+          "execution": [
+            "Partir de son carnet et de ses roles reels.",
+            "Comparer a ce qui avait ete choisi en seance 2.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de seance 2 ?",
+            "Les justifications sont-elles argumentees ?",
+            "La reciprocite des deux partenaires est-elle toujours effective ?"
+          ],
+          "errors": [
+            "Ne pas savoir qui sont ses deux partenaires choisis en seance 2.",
+            "Confirmer sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique reelle."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort.",
+            "Tu juges sans jamais conseiller : verifie que ce role te convient.",
+            "Ce n'est pas le choix de ton voisin qui compte, c'est le tien."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec une autre repartition."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome des deux partenaires et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Fixer sa priorite pour la suite du cycle",
+          "objective": "Identifier, a partir de la serie evaluee, la priorite de travail pour les seances suivantes.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Chacun identifie sa priorite parmi elan, cloche-pied, regularite technique, et l'ecrit avec un objectif chiffre.",
+          "studentGoal": "Choisir ma priorite de travail pour la suite du cycle et fixer un objectif chiffre.",
+          "instructions": [
+            "Je regarde ma performance et mon ecart technique de mi-cycle.",
+            "J'identifie ma priorite : mon elan, mon cloche-pied, ou la regularite entre mes essais.",
+            "J'ecris un objectif chiffre pour l'epreuve finale : distance visee, ou ecart technique vise.",
+            "Je le montre a l'un de mes deux partenaires, qui joue son role de coach en le commentant."
+          ],
+          "success": [
+            "Une priorite unique et pertinente est identifiee.",
+            "Un objectif chiffre est ecrit.",
+            "Le partenaire coach a commente l'objectif."
+          ],
+          "execution": [
+            "Partir des donnees de la serie du jour, pas d'une impression.",
+            "Choisir une seule priorite, pas trois.",
+            "Formuler un objectif avec un chiffre."
+          ],
+          "watch": [
+            "La priorite choisie correspond-elle vraiment a la donnee la plus faible ?",
+            "L'objectif est-il chiffre ?",
+            "Le retour du partenaire est-il pertinent ?"
+          ],
+          "errors": [
+            "Choisir plusieurs priorites a la fois.",
+            "Fixer un objectif vague, sans chiffre.",
+            "Ignorer le retour du partenaire coach."
+          ],
+          "feedback": [
+            "Une seule priorite, la plus utile.",
+            "Chiffre ton objectif : quelle distance, quel ecart ?",
+            "Ecoute ton coach, c'est son role aujourd'hui."
+          ],
+          "plus": [
+            "Objectif decompose en etapes intermediaires pour les seances 6 et 7."
+          ],
+          "minus": [
+            "Priorite proposee par le professeur a partir des donnees relevees."
+          ],
+          "diff": {
+            "facilitee": "Priorite proposee par le professeur a partir des donnees relevees.",
+            "normale": "Priorite choisie en autonomie, objectif chiffre et commente par un partenaire.",
+            "complexifiee": "Objectif decompose en etapes intermediaires pour les seances suivantes."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse.",
+            "Toute gene mentionnee au carnet est signalee immediatement.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle est votre performance et votre ecart technique de mi-cycle ?",
+          "Confirmez-vous vos deux partenaires et votre repartition choisis en seance 2 ?"
+        ],
+        "key": "La performance de mi-cycle donne une photographie fiable, a condition d'avoir respecte le protocole. Et les deux partenaires choisis en seance 2 s'evaluent maintenant, pas seulement au moment du choix."
+      },
+      "socialRoles": [
+        "Coach : observe et conseille ses deux partenaires choisis.",
+        "Juge : applique le protocole complet et mesure les distances.",
+        "Responsable materiel : ratisse la fosse entre les series."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Affiner la regularite technique et tenir les roles de coach et de juge",
+      "mainObjective": "Reduire l'ecart entre les deux meilleurs essais en exercant reellement les roles de coach et de juge aupres des deux partenaires choisis.",
+      "secondaryObjectives": [
+        "Stabiliser l'enchainement des cinq bonds sous la fatigue.",
+        "Exercer le role de coach avec des criteres precis du referentiel.",
+        "Exercer le role de juge avec rigueur et entretien de la fosse."
+      ],
+      "linkToPrevious": "La priorite de travail est fixee depuis la seance 5. Les roles de coach et de juge, choisis en seance 2, se construisent maintenant selon les criteres exacts du referentiel.",
+      "prerequisiteForNext": "Chaque eleve reduit son ecart technique et tient ses deux roles de facon utile pour ses partenaires.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "fiches d'observation AFL3 - coach",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches d'observation AFL3 - juge",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Ratisser la fosse et verifier l'etat des planches d'appel.",
+          "Preparer les fiches d'observation AFL3, une version coach et une version juge.",
+          "Baliser les trois couloirs.",
+          "Verifier les PAI, notamment chevilles, genoux et dos."
+        ],
+        "sketch": "Trois couloirs, quinze planches d'appel.\nFosse ratissee, zone de mesure a 1 metre au-dela du bord du sautoir.\nFiches d'observation AFL3 (coach et juge) disponibles a l'entree.\nZone assise pour les temps de bilan, a l'ecart."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : la conduite de l'echauffement des appuis reste observee, et sa qualite conditionne la fiabilite des essais qui suivent.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Deux enchainements complets a intensite moderee.",
+              "Deux accelerations progressives sur vingt metres.",
+              "Retour au calme des appuis avant les series ciblees."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Series ciblees sur la priorite personnelle",
+          "objective": "Travailler la priorite fixee en seance 5 par des series adaptees, avec releve systematique des distances.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trinomes de partenaires. Chacun conduit une serie d'essais centree sur sa priorite (elan, cloche-pied ou regularite), les deux partenaires jugent et coachent en alternance.",
+          "studentGoal": "Reduire mon ecart technique en travaillant precisement ma priorite.",
+          "instructions": [
+            "Je rappelle ma priorite de la seance 5 a mes deux partenaires.",
+            "Je realise une serie d'essais centree sur cette priorite.",
+            "Mes partenaires jugent chaque essai et relevent les distances.",
+            "Je compare mon ecart technique du jour a celui de la seance 5."
+          ],
+          "success": [
+            "La serie est centree sur la priorite annoncee.",
+            "Les distances sont relevees pour chaque essai.",
+            "L'ecart technique du jour est compare a celui de mi-cycle."
+          ],
+          "execution": [
+            "Garder la priorite en tete a chaque essai, ne pas se disperser.",
+            "Solliciter activement l'avis des partenaires apres chaque essai.",
+            "Ratisser et remesurer a chaque fois."
+          ],
+          "watch": [
+            "La priorite est-elle vraiment travaillee, ou l'eleve revient-il a ses habitudes ?",
+            "L'ecart technique s'ameliore-t-il ?",
+            "Les partenaires sont-ils sollicites ?"
+          ],
+          "errors": [
+            "Oublier sa priorite des le deuxieme essai.",
+            "Ne solliciter aucun retour des partenaires.",
+            "Ne pas comparer les ecarts."
+          ],
+          "feedback": [
+            "Ta priorite, c'etait ton elan : reviens dessus.",
+            "Demande a tes partenaires ce qu'ils observent.",
+            "Compare ton ecart d'aujourd'hui a celui de la seance 5."
+          ],
+          "plus": [
+            "Serie complete de six essais avec ecart technique calcule a la fin."
+          ],
+          "minus": [
+            "Serie de trois essais avec la priorite rappelee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Serie de trois essais avec la priorite rappelee par le professeur.",
+            "normale": "Serie centree sur la priorite personnelle, ecart compare a la seance 5.",
+            "complexifiee": "Serie complete de six essais avec calcul final de l'ecart technique."
+          },
+          "safety": [
+            "Sable de la fosse ratisse et sans corps etranger avant chaque serie.",
+            "Etat des planches d'appel verifie.",
+            "Aucun bond sur sol dur.",
+            "Echauffement specifique des appuis obligatoire avant tout essai a pleine vitesse.",
+            "Arret immediat en cas de douleur articulaire."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir ses roles de coach et de juge",
+          "objective": "Construire l'AFL3 dans les deux roles choisis en seance 2, coach et juge, aupres des deux memes partenaires, selon les criteres exacts du referentiel.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3 - coach",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'observation AFL3 - juge",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            }
+          ],
+          "organization": "Pendant les series du trinome, chacun alterne coach et juge pour ses deux partenaires selon les criteres du referentiel : le coach transmet des informations concises identifiant les besoins, le juge connait les parametres de validation et entretient la fosse.",
+          "studentGoal": "Etre un coach utile et un juge rigoureux pour mes deux partenaires.",
+          "instructions": [
+            "Coach : j'observe et je transmets une information concise sur ce que j'ai vu, en identifiant le besoin prioritaire de mon partenaire.",
+            "Juge : je connais les trois regles de validation, j'annonce valide ou nul en la citant, et j'entretiens la fosse apres chaque essai.",
+            "Je fais les deux roles, jamais un seul, pour chacun de mes deux partenaires.",
+            "J'encourage et je felicite quand c'est merite, sans flatterie inutile."
+          ],
+          "success": [
+            "Le role de coach transmet une information concise et ciblee sur le besoin.",
+            "Le role de juge cite la regle a chaque decision et entretient la fosse.",
+            "Les deux roles sont exerces pour les deux partenaires."
+          ],
+          "execution": [
+            "Observer avant de parler comme coach.",
+            "Verifier la fosse avant chaque essai comme juge.",
+            "Distinguer clairement les deux moments."
+          ],
+          "watch": [
+            "Le coach donne-t-il une information ciblee ou un encouragement vague ?",
+            "Le juge cite-t-il la regle ?",
+            "La fosse est-elle correctement entretenue ?"
+          ],
+          "errors": [
+            "Melanger encouragement vague et information de coach.",
+            "Juger sans citer la regle.",
+            "Oublier d'entretenir la fosse."
+          ],
+          "feedback": [
+            "Une information ciblee, pas juste bravo.",
+            "Cite la regle a chaque decision de juge.",
+            "Ratisse avant l'essai suivant, c'est ton role."
+          ],
+          "plus": [
+            "Coach : conseils hierarchises et argumentes sur plusieurs essais consecutifs. Juge : attentif a l'entretien de la fosse sans qu'on le demande."
+          ],
+          "minus": [
+            "Roles tenus avec rappel regulier du professeur sur les criteres a observer."
+          ],
+          "diff": {
+            "facilitee": "Roles tenus avec rappel regulier du professeur sur les criteres a observer.",
+            "normale": "Roles de coach et de juge tenus en autonomie pour les deux partenaires.",
+            "complexifiee": "Coach : conseils hierarchises et argumentes. Juge : entretien de la fosse sans sollicitation."
+          },
+          "safety": [
+            "Les juges restent hors de la trajectoire de course et de bond.",
+            "Le rateau est manie avec attention, jamais en direction d'un autre eleve.",
+            "Aucun releve d'eleve ne prevaut sur une regle de securite.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Trois essais sous le regard croise des deux partenaires",
+          "objective": "Reinvestir les series de la journee sous le regard simultane des deux partenaires, coach et juge alternes.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve realise trois essais : un partenaire coache, l'autre juge, puis inversion des roles entre les deux partenaires.",
+          "studentGoal": "Realiser trois essais en tirant parti des deux regards, coach et juge, de mes partenaires.",
+          "instructions": [
+            "Je realise trois essais.",
+            "Un partenaire me coache, l'autre me juge, puis on inverse a mi-serie.",
+            "J'ecoute le coach avant l'essai, je respecte la decision du juge apres.",
+            "Je note sur mon carnet ce que chaque partenaire m'a apporte."
+          ],
+          "success": [
+            "Trois essais sont realises avec les deux roles actifs.",
+            "L'eleve exploite au moins une information du coach.",
+            "Les decisions du juge sont respectees sans contestation."
+          ],
+          "execution": [
+            "Ecouter le conseil du coach juste avant l'essai.",
+            "Accepter la decision du juge, meme en cas de doute.",
+            "Noter l'apport de chacun immediatement."
+          ],
+          "watch": [
+            "L'eleve tient-il compte du conseil recu ?",
+            "Conteste-t-il les decisions du juge ?",
+            "Le carnet est-il rempli en direct ?"
+          ],
+          "errors": [
+            "Ignorer le conseil du coach.",
+            "Contester une decision du juge sans arguments.",
+            "Remplir le carnet plus tard, de memoire."
+          ],
+          "feedback": [
+            "Utilise le conseil qu'on vient de te donner.",
+            "Le juge a cite la regle, la decision est prise.",
+            "Note maintenant, pas plus tard."
+          ],
+          "plus": [
+            "Quatrieme essai integrant un conseil combine des deux partenaires."
+          ],
+          "minus": [
+            "Deux essais seulement, avec un seul role actif a la fois."
+          ],
+          "diff": {
+            "facilitee": "Deux essais avec un seul role actif a la fois, alternance simple.",
+            "normale": "Trois essais avec coach et juge actifs simultanement, roles inverses a mi-serie.",
+            "complexifiee": "Quatrieme essai integrant un conseil combine des deux partenaires."
+          },
+          "safety": [
+            "Sable ratisse avant chaque essai.",
+            "Aucun bond sur sol dur.",
+            "Arret immediat en cas de douleur articulaire.",
+            "Un seul eleve a la fois par couloir."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qu'un conseil de coach utile, en une phrase ?",
+          "Qu'est-ce qu'un jugement de juge rigoureux, en une phrase ?"
+        ],
+        "key": "Un coach utile identifie un besoin precis et le formule court. Un juge rigoureux cite toujours la regle sur laquelle il s'appuie et entretient la fosse sans qu'on le lui demande."
+      },
+      "socialRoles": [
+        "Coach : identifie le besoin prioritaire du partenaire et transmet une information concise.",
+        "Juge : applique les trois regles de validation et entretient la fosse.",
+        "Mesureur : releve et classe les distances de la serie."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale du format d'epreuve et finalisation du carnet",
+      "mainObjective": "Vivre une repetition generale integrale de l'epreuve finale et finaliser le carnet d'entrainement.",
+      "secondaryObjectives": [
+        "Realiser une serie de six essais dans les conditions exactes de l'epreuve.",
+        "Exercer une derniere fois les roles de coach et de juge tels qu'ils seront evalues.",
+        "Completer et relire l'integralite du carnet d'entrainement."
+      ],
+      "linkToPrevious": "Technique, planche d'appel, protocole et roles sont construits depuis six seances : la repetition generale ne doit rien reveler de nouveau.",
+      "prerequisiteForNext": "Chaque eleve a vecu le format exact de l'epreuve et dispose d'un carnet complet.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Ratisser la fosse et verifier l'etat des quinze planches d'appel.",
+          "Afficher le referentiel et l'ordre de passage.",
+          "Baliser les trois couloirs comme le jour de l'epreuve.",
+          "Verifier les PAI, notamment chevilles, genoux et dos."
+        ],
+        "sketch": "Trois couloirs, quinze planches d'appel, disposition identique a l'epreuve finale.\nFosse ratissee, zone de mesure a 1 metre au-dela du bord du sautoir.\nOrdre de passage et referentiel affiches a l'entree.\nZone assise pour la relecture du carnet, a l'ecart."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite est evaluee au titre de l'AFL1 et prepare des essais a pleine vitesse enchaines sur toute la seance.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Deux enchainements complets a intensite moderee.",
+              "Deux accelerations progressives sur vingt metres.",
+              "Retour au calme des appuis avant la repetition generale."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Repetition generale integrale",
+          "objective": "Reproduire integralement les conditions de l'epreuve finale : ordre de passage, annonce de planche, six essais maximum, jugement immediat.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            }
+          ],
+          "organization": "Par trinomes de partenaires, dans l'ordre de passage affiche, comme le jour de l'epreuve.",
+          "studentGoal": "Realiser ma serie exactement comme je le ferai le jour de l'epreuve.",
+          "instructions": [
+            "Je me presente a mon tour de passage, comme le jour de l'epreuve.",
+            "J'annonce ma planche avant chaque essai, jusqu'a six essais maximum.",
+            "Mes partenaires jugent selon les trois regles et mesurent chaque essai valide.",
+            "A la fin, je releve ma meilleure distance et l'ecart entre mes deux meilleurs essais."
+          ],
+          "success": [
+            "La serie est realisee dans l'ordre affiche, sans aide exterieure.",
+            "Le protocole est integralement respecte.",
+            "La meilleure distance et l'ecart technique sont calcules."
+          ],
+          "execution": [
+            "Respecter son tour de passage sans se precipiter.",
+            "Garder l'enchainement travaille depuis la seance 3.",
+            "Annoncer systematiquement la planche."
+          ],
+          "watch": [
+            "L'eleve respecte-t-il son tour ?",
+            "Le protocole est-il integralement respecte sans aide ?",
+            "Les resultats sont-ils correctement calcules ?"
+          ],
+          "errors": [
+            "Sauter son tour de passage.",
+            "Oublier d'annoncer la planche sous la pression.",
+            "Se tromper dans le calcul final."
+          ],
+          "feedback": [
+            "Attends ton tour, comme le jour de l'epreuve.",
+            "Annonce ta planche, meme sous la pression.",
+            "Verifie ton calcul avant de le noter."
+          ],
+          "plus": [
+            "Repetition avec grille d'evaluation finale integralement renseignee par les juges, comme le jour J."
+          ],
+          "minus": [
+            "Repetition avec rappel du protocole par le professeur si necessaire."
+          ],
+          "diff": {
+            "facilitee": "Repetition avec rappel du protocole par le professeur si necessaire.",
+            "normale": "Repetition integrale du format d'epreuve, sans aide.",
+            "complexifiee": "Repetition avec grille d'evaluation finale integralement renseignee par les juges."
+          },
+          "safety": [
+            "Sable de la fosse ratisse et sans corps etranger avant l'ouverture de la repetition.",
+            "Etat des planches d'appel verifie avant le premier essai.",
+            "Aucun bond sur sol dur.",
+            "Echauffement specifique des appuis obligatoire avant le premier essai a pleine vitesse.",
+            "Arret immediat et prise en charge en cas de douleur articulaire.",
+            "Le professeur reste en vue de l'ensemble de l'aire de saut."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Derniere verification des roles de coach et de juge",
+          "objective": "Verifier une derniere fois la maitrise des criteres de coach et de juge avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Relecture des criteres degre par degre du referentiel pour coach et pour juge, puis chacun s'auto-evalue et recoit un avis de ses deux partenaires.",
+          "studentGoal": "Savoir precisement ce qu'on attend de moi comme coach et comme juge le jour de l'epreuve.",
+          "instructions": [
+            "Je relis les criteres du referentiel pour le role de coach : observation, transmission, identification des besoins, encouragement.",
+            "Je relis les criteres du referentiel pour le role de juge : connaissance des regles, attention, entretien de la fosse.",
+            "Je m'auto-evalue sur les deux roles, avec un exemple concret pour chacun.",
+            "Mes deux partenaires me donnent un avis, que je note sur mon carnet."
+          ],
+          "success": [
+            "Les criteres des deux roles sont relus et compris.",
+            "L'auto-evaluation s'appuie sur un exemple concret pour chaque role.",
+            "L'avis des deux partenaires est note."
+          ],
+          "execution": [
+            "Citer un exemple precis, pas une impression generale.",
+            "Ecouter l'avis des partenaires sans le contester d'emblee.",
+            "Noter immediatement."
+          ],
+          "watch": [
+            "Les eleves confondent-ils encore les criteres de coach et de juge ?",
+            "Les exemples sont-ils concrets ?",
+            "Les avis des partenaires sont-ils notes ?"
+          ],
+          "errors": [
+            "Donner un exemple vague, non date.",
+            "Contester l'avis d'un partenaire sans y reflechir.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Donne un exemple precis : quand, quoi, avec qui ?",
+            "Ecoute avant de contester.",
+            "Note l'avis de tes partenaires, il compte pour ta progression."
+          ],
+          "plus": [
+            "Auto-evaluation situant precisement son niveau sur les quatre degres du referentiel, pour chaque role."
+          ],
+          "minus": [
+            "Relecture guidee par le professeur, sans auto-evaluation ecrite."
+          ],
+          "diff": {
+            "facilitee": "Relecture guidee par le professeur, sans auto-evaluation ecrite.",
+            "normale": "Auto-evaluation avec exemple concret, avis des deux partenaires note.",
+            "complexifiee": "Auto-evaluation situant son niveau sur les quatre degres du referentiel."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Finaliser et relire le carnet",
+          "objective": "Completer et relire l'integralite du carnet d'entrainement avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Chacun complete les pages manquantes de son carnet et le relit integralement.",
+          "studentGoal": "Avoir un carnet complet et relu avant l'epreuve finale.",
+          "instructions": [
+            "Je verifie que toutes les seances sont renseignees dans mon carnet.",
+            "Je complete les pages manquantes.",
+            "Je relis l'ensemble et je souligne ma progression la plus nette.",
+            "Je verifie que mes deux partenaires et ma repartition y figurent clairement."
+          ],
+          "success": [
+            "Le carnet est complet sur les sept seances precedentes.",
+            "La progression la plus nette est identifiee.",
+            "Les deux partenaires et la repartition sont clairement notes."
+          ],
+          "execution": [
+            "Completer a partir de ses souvenirs precis, pas d'inventions.",
+            "Relire dans l'ordre chronologique.",
+            "Souligner un element concret de progression."
+          ],
+          "watch": [
+            "Le carnet est-il vraiment complet ou rempli a la hate ?",
+            "La progression citee est-elle concrete ?",
+            "Les partenaires et la repartition sont-ils lisibles ?"
+          ],
+          "errors": [
+            "Inventer des donnees manquantes.",
+            "Ne rien souligner de precis.",
+            "Laisser les partenaires ou la repartition illisibles."
+          ],
+          "feedback": [
+            "N'invente rien : si tu ne sais plus, laisse la case vide et dis-le moi.",
+            "Souligne un chiffre precis, pas une impression.",
+            "Verifie que tes partenaires sont lisibles pour l'evaluation."
+          ],
+          "plus": [
+            "Redaction d'une synthese d'une phrase par seance, en plus des donnees chiffrees."
+          ],
+          "minus": [
+            "Completion guidee par le professeur a partir des grilles conservees."
+          ],
+          "diff": {
+            "facilitee": "Completion guidee par le professeur a partir des grilles conservees en classe.",
+            "normale": "Completion et relecture autonomes du carnet.",
+            "complexifiee": "Redaction d'une synthese d'une phrase par seance."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la fosse.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre ecart technique s'est-il reduit depuis la seance 1 ?",
+          "Votre carnet est-il complet et vos deux partenaires clairement notes ?"
+        ],
+        "key": "Rien ne doit etre decouvert le jour de l'epreuve : la repetition d'aujourd'hui etait deja l'epreuve, dans les memes conditions. Le carnet, lui, doit etre complet des maintenant."
+      },
+      "socialRoles": [
+        "Juge : applique integralement le protocole, comme le jour de l'epreuve.",
+        "Coach : transmet des conseils hierarchises a ses deux partenaires.",
+        "Responsable materiel : verifie l'etat de la fosse et des planches avant la repetition."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve, apres avoir evalue les AFL2 et AFL3 au fil du cycle aupres des deux partenaires choisis.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser jusqu'a six essais en respectant integralement le protocole : planche annoncee, cloche-pied obligatoire au premier bond.",
+        "Tenir les roles de coach et de juge pour les deux partenaires choisis en seance 2.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait construire un enchainement de cinq bonds fiable, regler sa planche d'appel, et tenir les roles de coach et de juge.",
+      "setup": {
+        "installationMinutes": 15,
+        "material": [
+          {
+            "label": "plots de balisage",
+            "fixed": 10
+          },
+          {
+            "label": "decametres",
+            "per": 0.5,
+            "min": 3
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "rateaux",
+            "fixed": 3
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat de la fosse et des quinze planches d'appel avant le premier essai : sable ratisse, sans corps etranger, planches visibles.",
+          "Afficher le referentiel, l'ordre de passage et les criteres.",
+          "Preparer les grilles nominatives et relever les carnets.",
+          "Verifier les PAI et les dispenses avant le premier essai, notamment chevilles, genoux et dos.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord de l'aire de saut."
+        ],
+        "sketch": "Trois couloirs paralleles de 30 metres, quinze planches d'appel peintes, comme le jour de l'epreuve.\nFosse de reception ratissee, zone de mesure a 1 metre au-dela du bord du sautoir.\nOrdre de passage et referentiel affiches a l'entree.\nZone d'echauffement specifique des appuis, sur sol souple, a l'ecart."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : la conduite de l'echauffement des appuis est evaluee au titre de l'AFL1, et l'echauffement specifique des appuis reste obligatoire avant tout essai a pleine vitesse.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes",
+            "details": [
+              "Chevilles, genoux, hanches, dos.",
+              "Montees de genoux, talons-fesses, pas chasses.",
+              "Cloche-pieds isoles a intensite croissante."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Bondissements progressifs",
+            "details": [
+              "Deux enchainements complets a intensite moderee.",
+              "Deux accelerations progressives sur vingt metres.",
+              "Retour au calme des appuis avant le premier essai evalue."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "L'epreuve de pentabond evaluee",
+          "objective": "Evaluer l'AFL1 : jusqu'a six essais, planche annoncee avant chacun, cloche-pied obligatoire au premier bond, performance et efficacite technique notees.",
+          "material": [
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            }
+          ],
+          "organization": "Par ordre de passage affiche, sur les trois couloirs. Chaque candidat annonce sa planche d'appel avant chaque essai et realise jusqu'a six essais. Le premier bond doit obligatoirement etre un cloche-pied. Un essai est nul si le premier bond n'est pas un cloche-pied, si le cloche-pied est au-dela de la planche d'appel, ou si le sauteur ne retombe pas dans la zone de reception qui commence un metre au-dela du bord du sautoir.",
+          "studentGoal": "Realiser ma meilleure performance possible sur mes six essais, avec le premier bond toujours cloche-pied.",
+          "instructions": [
+            "J'annonce ma planche d'appel avant chaque essai.",
+            "Mon premier bond est obligatoirement un cloche-pied.",
+            "J'enchaine mes cinq bonds jusqu'a la reception dans la zone valide.",
+            "Je realise jusqu'a six essais maximum."
+          ],
+          "success": [
+            "AFL1 - performance : ma meilleure distance sur mes essais valides est reportee sur l'echelle de l'etablissement.",
+            "AFL1 - efficacite technique : l'ecart entre mes deux meilleures performances est faible.",
+            "Le cloche-pied est respecte au premier bond sur mes essais valides.",
+            "Le protocole (annonce de planche, six essais maximum) est integralement respecte."
+          ],
+          "execution": [
+            "Garder l'enchainement travaille depuis la seance 3.",
+            "Attaquer chaque appui en griffe, dynamique, sans ecrasement.",
+            "Utiliser les segments libres pour equilibrer chaque bond.",
+            "Ne pas changer de strategie sous la pression de l'evaluation."
+          ],
+          "watch": [
+            "Le premier bond reste-t-il un cloche-pied sous la pression ?",
+            "La planche est-elle annoncee avant chaque essai ?",
+            "L'ecart entre les deux meilleures performances est-il faible ?",
+            "Un eleve montre-t-il une gene articulaire apres un essai ?"
+          ],
+          "errors": [
+            "Perdre le cloche-pied au premier bond sous le coup de l'enjeu.",
+            "Oublier d'annoncer sa planche avant de s'elancer.",
+            "Changer d'enchainement d'un essai a l'autre par tatonnement, ce qui degrade la note technique."
+          ],
+          "feedback": [
+            "Concentre-toi sur ton cloche-pied avant tout : c'est la regle qui invalide le plus d'essais.",
+            "Annonce ta planche, meme sous la pression.",
+            "Garde le meme enchainement a chaque essai : c'est ce qui donne la meilleure note technique."
+          ],
+          "plus": [
+            "Six essais integralement realises avec grille technique detaillee par bond."
+          ],
+          "minus": [
+            "Enchainement adapte, avec priorite donnee a la validite des essais plutot qu'a la distance."
+          ],
+          "diff": {
+            "facilitee": "Enchainement adapte au besoin de l'eleve, priorite donnee a la validite du cloche-pied et des essais plutot qu'a la distance maximale.",
+            "normale": "Six essais maximum avec protocole integral : planche annoncee, cloche-pied obligatoire, jugement selon les trois regles.",
+            "complexifiee": "Six essais avec grille technique detaillee, degre de realisation identifie bond par bond."
+          },
+          "safety": [
+            "Le sable de la fosse est ratisse et debarrasse de tout corps etranger avant le premier essai et entre chaque candidat.",
+            "L'etat des quinze planches d'appel est verifie avant le premier essai.",
+            "Aucun essai n'est realise sur sol dur : l'echauffement des appuis se fait exclusivement sur la zone souple prevue.",
+            "Echauffement specifique des appuis obligatoire avant tout essai a pleine vitesse.",
+            "Arret immediat de l'eleve et prise en charge en cas de douleur articulaire, cheville, genou ou dos.",
+            "PAI verifies avant le premier essai.",
+            "Un seul eleve a la fois par couloir, juges et mesureurs places hors de la trajectoire de course et de bond.",
+            "Le professeur reste en vue de l'ensemble de l'aire de saut et peut suspendre une serie."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan des roles de coach et de juge",
+          "objective": "Evaluer l'AFL3 : bilan des roles de coach et de juge tenus pour les deux partenaires choisis en seance 2, et bilan de l'AFL2 a partir du carnet.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart de la fosse. Chacun tient les roles de coach et de juge pour ses deux partenaires pendant leurs series, puis presente son carnet et fait le bilan de sa repartition choisie en seance 2.",
+          "studentGoal": "Tenir mes roles de coach et de juge pour mes deux partenaires, et presenter mon carnet.",
+          "instructions": [
+            "Pendant les series de mes deux partenaires, je suis tour a tour leur coach et leur juge.",
+            "Je transmets des informations concises et j'identifie leurs besoins.",
+            "Je connais les regles de validation et j'entretiens la fosse.",
+            "Je presente mon carnet et je fais le bilan de ma repartition choisie en seance 2."
+          ],
+          "success": [
+            "AFL3 - coach : les informations transmises aux deux partenaires sont concises et identifient un besoin.",
+            "AFL3 - juge : les regles de validation sont connues et la fosse est entretenue.",
+            "AFL2 : le carnet retrace le contenu des seances, les difficultes et les progres realises."
+          ],
+          "execution": [
+            "Rester attentif aux deux partenaires du debut a la fin de leurs series.",
+            "Citer la regle a chaque decision de juge.",
+            "Presenter le carnet dans l'ordre chronologique."
+          ],
+          "watch": [
+            "Les eleves restent-ils attentifs a leurs deux partenaires jusqu'au bout ?",
+            "Les carnets sont-ils reellement tenus sur tout le cycle ?",
+            "La repartition choisie en seance 2 est-elle assumee jusqu'au bout ?"
+          ],
+          "errors": [
+            "Se desinteresser des partenaires apres leur premier essai.",
+            "Presenter un carnet rempli la veille.",
+            "Ne pas savoir justifier la repartition choisie."
+          ],
+          "feedback": [
+            "Reste attentif jusqu'au dernier essai de tes partenaires.",
+            "Ton carnet est ecrit d'un seul trait : ca se voit.",
+            "Justifie ta repartition avec des faits, pas une impression."
+          ],
+          "plus": [
+            "Bilan chiffre comparant le niveau de coach et de juge entre la seance 2 et aujourd'hui."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire a completer.",
+            "normale": "Bilan des roles de coach et de juge pour les deux partenaires, presentation du carnet.",
+            "complexifiee": "Bilan chiffre comparant la progression entre la seance 2 et aujourd'hui."
+          },
+          "safety": [
+            "Toute gene mentionnee dans le carnet est signalee immediatement au professeur.",
+            "Phase realisee assise a l'ecart de la fosse, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "plots de balisage",
+              "fixed": 10
+            },
+            {
+              "label": "rateaux",
+              "fixed": 3
+            },
+            {
+              "label": "decametres",
+              "per": 0.5,
+              "min": 3
+            }
+          ],
+          "organization": "Rangement collectif du materiel, puis classe assise pour le bilan.",
+          "studentGoal": "Dire ce que j'ai appris sur l'enchainement des bonds et sur mes roles de coach et de juge.",
+          "instructions": [
+            "On ramasse le materiel en marchant, chacun sa portion de l'aire de saut.",
+            "On ratisse une derniere fois la fosse et on compte le materiel.",
+            "Une fois range, on s'assoit pour le bilan.",
+            "Chacun peut dire ce qu'il a appris."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage.",
+            "Au moins un eleve par trinome s'exprime."
+          ],
+          "execution": [
+            "Ramasser en marchant, pas en courant.",
+            "Ratisser la fosse une derniere fois avant de partir.",
+            "Formuler un acquis concret."
+          ],
+          "watch": [
+            "Le rangement est-il partage ?",
+            "Les eleves citent-ils des acquis techniques ou relationnels concrets ?"
+          ],
+          "errors": [
+            "Ramasser en courant apres l'effort.",
+            "Ne parler que de la meilleure distance.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "En marchant : ton retour au calme n'est pas fini.",
+            "Pas seulement ta meilleure distance : ton cloche-pied, ta regularite, tes roles, c'est l'acquis.",
+            "Tout le monde range."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour une autre epreuve de saut."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule et transfere a une autre epreuve de saut."
+          },
+          "safety": [
+            "Rangement realise en marchant : le retour au calme se poursuit pendant le rangement.",
+            "La fosse est ratissee une derniere fois avant de quitter l'aire de saut.",
+            "Verification qu'aucun eleve ne presente de gene articulaire avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre ecart entre vos deux meilleurs essais a-t-il diminue depuis la seance 1 ?",
+          "Que retenez-vous de vos roles de coach et de juge pour vos deux partenaires ?"
+        ],
+        "key": "En debut de cycle, le cloche-pied etait hesitant et les essais irreguliers. Aujourd'hui, l'enchainement est fiable et l'ecart entre les deux meilleurs essais s'est reduit. Etre coach et juge pour deux partenaires, ce n'est pas un choix entre deux roles : c'est un engagement double, tenu jusqu'au bout."
+      },
+      "socialRoles": [
+        "Coach : transmet des informations concises et hierarchisees a ses deux partenaires.",
+        "Juge : applique les trois regles de validation et entretient la fosse.",
+        "Responsable materiel : organise le rangement et la remise en etat de l'aire de saut."
+      ]
+    }
+  ]
+}
