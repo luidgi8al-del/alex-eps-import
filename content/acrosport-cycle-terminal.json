@@ -1,0 +1,2634 @@
+{
+  "apsa": "Acrosport",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA3 - Realiser une prestation corporelle destinee a etre vue et appreciee devant un public ou un jury",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour composer et realiser un enchainement a visee esthetique ou acrobatique destine a etre juge, en combinant des formes corporelles codifiees.",
+    "AFL2 : se preparer et s'engager, individuellement et collectivement, pour s'exprimer devant un public et susciter des emotions.",
+    "AFL3 : choisir et assumer des roles au service de la prestation collective, dans le role choisi en debut de sequence : Juge ou Choregraphe.",
+    "Composer et presenter a plusieurs (4 a 6 eleves) un enchainement s'appuyant sur des figures collectives statiques et dynamiques et des elements de liaison acrobatiques ou gymniques."
+  ],
+  "targetCompetence": "Passer d'une collection de figures isolees, executees sans lien ni intention artistique, a un enchainement pense comme un tout : un theme incarne par un support musical, quatre figures codifiees en duos, trios et quatuors reliees sans temps mort par des elements acrobatiques et gymniques, chaque candidat assumant ses deux roles de porteur et de voltigeur, et un role choisi des le debut de la sequence, Juge ou Choregraphe, tenu jusqu'a l'epreuve finale.",
+  "cycleObjectives": [
+    "Composer et presenter a 4, 5 ou 6 eleves un enchainement de 2 a 3 minutes, sur un support musical, en lien avec une thematique choisie.",
+    "Maitriser quatre figures codifiees differentes, en duos, trios et quatuors, dans les deux roles de porteur et de voltigeur.",
+    "Relier les figures par des elements de liaison acrobatiques (roulade, roue) ou gymniques (saut, pirouette), sans temps mort.",
+    "Renseigner une fiche scenario precisant le decoupage, les figures dans l'ordre d'apparition, les difficultes et la repartition des roles.",
+    "Choisir, en debut de sequence, un seul role parmi deux pour l'AFL3, Juge ou Choregraphe, et la repartition des points entre l'AFL2 et l'AFL3."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, diagnostic et decouverte des postures acrosport",
+    "Former le groupe, choisir son role et batir les premieres figures a plusieurs",
+    "Porteur et voltigeur : construire deux figures codifiees en duo et trio",
+    "Elements de liaison, figure a quatre et choix du support musical",
+    "Epreuve evaluee de mi-cycle et verification du role choisi",
+    "Affiner les figures, exercer son role et travailler la quatrieme figure",
+    "Repetition generale et finalisation du carnet",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Officiel",
+      "title": "Referentiel national d'evaluation du CA3 - Acrosport, epreuve ponctuelle et CCF",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Academique",
+      "title": "Acrosport au cycle terminal - composer et juger une prestation collective codifiee",
+      "org": "Academie de Nantes",
+      "url": "https://www.pedagogie.ac-nantes.fr/education-physique-et-sportive/",
+      "consulted": "2026-08-26"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner l'acrosport au lycee - securite, figures codifiees et fiche scenario",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-26"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : salle de gymnastique carree, tapis de gymnastique jointifs couvrant l'ensemble de la surface de travail.",
+    "Tapis de chute epais obligatoires sous toute figure depassant la hauteur d'un appui direct au sol.",
+    "Parade obligatoire pour toute figure a risque de chute : aucune figure ne se monte sans pareur designe, meme en repetition.",
+    "Groupes de 4 a 6 eleves, enchainement de 2 a 3 minutes, sur support musical en lien avec une thematique.",
+    "Bareme AFL1 (12 points) : 8 points pour la realisation individuelle des formes corporelles (montage/demontage, alignement des segments, stabilite tenue au moins 3 secondes, concentration), 4 points pour la composition collective (theme, qualite des liaisons et deplacements, exploitation du support sonore, rythme, absence de temps morts), ajustes par le coefficient de difficulte moyen des figures (A = 0.1, B = 0.15, C = 0.20, D = 0.25).",
+    "Bareme AFL2/AFL3 (8 points) : role choisi en debut de sequence, un seul parmi Juge et Choregraphe, avec une repartition choisie entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+    "Chaque candidat est observe le jour de l'epreuve sur quatre figures differentes codifiees (duos, trios, quatuors), dans les deux roles de porteur et de voltigeur.",
+    "PAI et dispenses : contre-indications au port de charge, pathologies articulaires ou vertebrales, vertiges, troubles de l'equilibre.",
+    "Retrait obligatoire des bijoux et montres, cheveux longs attaches, mains propres, magnesie disponible en cas de transpiration excessive.",
+    "Modalites de conservation de la fiche scenario et du carnet, supports de l'AFL2 et de la fiche remise le jour de l'epreuve."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - peur du contact et de la hauteur",
+      "observed": "Refuse ou hesite fortement a monter en figure, se raidit au contact.",
+      "need": "Construire la confiance par des figures a hauteur tres progressive et un pareur rassurant."
+    },
+    {
+      "label": "Profil 2 - porteur aux appuis instables",
+      "observed": "Genoux bloques, appuis etroits, la figure tremble et s'effondre en quelques secondes.",
+      "need": "Travailler le gainage et l'elargissement des appuis, genoux flechis."
+    },
+    {
+      "label": "Profil 3 - groupe non synchronise",
+      "observed": "Chaque eleve monte a son propre rythme, sans annonce ni signal commun.",
+      "need": "Construire une communication verbale systematique avant chaque etape du montage."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas assume",
+      "observed": "A choisi Juge ou Choregraphe en debut de sequence, mais observe sans grille, sans argumenter ni proposer de correction.",
+      "need": "Assumer pleinement le seul role choisi, dans les criteres exacts du referentiel : analyse argumentee ou reglage de la synchronisation."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Le candidat compose et presente, a 4, 5 ou 6 eleves, un enchainement de 2 a 3 minutes s'appuyant sur des figures collectives statiques et dynamiques et des elements de liaison acrobatiques (roulade, roue, salto) ou gymniques (saut, pirouette). Le groupe presente un projet d'enchainement sur une fiche scenario qui comporte le scenario complet : figures dans l'ordre d'apparition, difficultes estimees, repartition des roles. La composition doit occuper l'ensemble de l'espace et s'appuyer sur un support musical qui cree un univers en lien avec la thematique choisie. Chaque candidat est observe lors de son passage sur quatre figures differentes codifiees (duos, trios, quatuors), dans ses deux roles de porteur et de voltigeur. L'AFL1 est note sur 12 points : 8 points pour la realisation et la maitrise individuelles des formes corporelles (montage/demontage, alignement des segments, stabilite tenue au moins 3 secondes, concentration), 4 points pour la composition et la presentation collectives de l'enchainement (theme, qualite des liaisons et deplacements, exploitation du support sonore, rythme, absence de temps morts). Les co-evaluateurs positionnent l'eleve selon la qualite d'execution des figures, dans un degre, puis ajustent la note en fonction du niveau moyen de difficulte des elements presentes, selon le coefficient de difficulte : A = 0.1, B = 0.15, C = 0.20, D = 0.25. Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve en debut de sequence : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve choisit egalement en debut de sequence un seul role parmi deux : Juge ou Choregraphe.",
+    "criteria": [
+      "AFL1 - realisation individuelle (8 points) : montage et demontage maitrises et controles, alignement des segments correct, figure tenue au moins 3 secondes, concentration visible du debut a la fin de la prestation.",
+      "AFL1 - composition collective (4 points) : theme identifiable, qualite des liaisons et des deplacements, exploitation reelle du support sonore, rythme tenu, absence de temps morts, ensemble de l'espace occupe.",
+      "AFL1 - la note de la partie individuelle est ajustee en fonction du niveau moyen de difficulte des figures presentees, selon le coefficient : A = 0.1, B = 0.15, C = 0.20, D = 0.25.",
+      "AFL2 : le carnet et la fiche scenario retracent la construction du projet collectif, les ajustements techniques et la regularite de l'engagement sur l'ensemble de la sequence.",
+      "AFL3 - role Juge : capacite a analyser la prestation, attribuer les points, argumenter la reussite des figures codifiees, identifier les alignements et l'efficacite du montage et du demontage.",
+      "AFL3 - role Choregraphe : capacite a regler les deplacements, la synchronisation des mouvements, et a faire naitre des effets esthetiques en integrant les competences individuelles des partenaires."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA3, Lycee Victor Hugo de Marrakech, epreuve acrosport."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, diagnostic et decouverte des postures acrosport",
+      "mainObjective": "Poser le cadre de securite specifique a l'acrosport et diagnostiquer le niveau de chacun sur les postures et figures de base.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre et appliquer les regles de securite propres a l'acrosport : parade, montage, demontage.",
+        "Realiser des figures simples a deux en respectant les roles de porteur et de voltigeur.",
+        "Ouvrir le carnet et la fiche scenario qui suivront tout le cycle."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : l'acrosport combine equilibre, contact corporel et prise de risque partagee, une experience nouvelle pour la plupart des eleves.",
+      "prerequisiteForNext": "Chaque eleve connait et applique les regles de securite, et a identifie sa posture (porteur ou voltigeur) preferentielle.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12,
+            "note": "un tapis par binome minimum, jointifs"
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4,
+            "note": "sous les figures en hauteur"
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des regles de securite specifiques acrosport",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer les tapis de gymnastique cote a cote pour couvrir toute la surface de travail.",
+          "Placer les tapis de chute epais aux emplacements ou des figures en hauteur seront tentees.",
+          "Afficher le referentiel d'evaluation et les regles de securite specifiques a l'acrosport.",
+          "Verifier les PAI et les dispenses, notamment les contre-indications au port de charge.",
+          "Retirer bijoux, montres, et faire attacher les cheveux longs.",
+          "Prevoir la trousse de secours au bord de la surface de travail."
+        ],
+        "sketch": "Surface de travail couverte de tapis de gymnastique jointifs.\nTapis de chute epais aux emplacements des figures en hauteur.\nAffiche des regles de securite et du referentiel a l'entree.\nZone d'observation delimitee autour de la surface."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet et renforcement specifique : l'acrosport sollicite poignets, epaules et gainage des le premier contact corporel.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train generale",
+            "details": [
+              "Sept minutes de mobilisation generale en musique, sans contact.",
+              "Deplacements varies : quadrupedie, pas chasses, sauts legers."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Renforcement et mobilisation specifique",
+            "details": [
+              "Gainage ventral et dorsal, trente secondes par exercice.",
+              "Mobilisation des poignets et des epaules, appuis progressifs sur les mains.",
+              "Equilibres sur un pied, yeux ouverts puis fermes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiers contacts a deux",
+            "details": [
+              "Portes de mains a deux, en confiance progressive.",
+              "Appuis dos a dos, epaule contre epaule.",
+              "Trois minutes de decouverte libre des contacts corporels, sans hauteur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Diagnostic : figures a deux de base",
+          "objective": "Diagnostiquer le niveau de chacun sur des figures statiques simples a deux, dans les deux roles.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, en alternance porteur/voltigeur. Chaque binome tente trois figures statiques de base a hauteur reduite (appui dorsal, avion, table), tenues trois secondes, sous l'oeil du professeur qui releve le niveau de chacun.",
+          "studentGoal": "Realiser trois figures de base a deux, tenues trois secondes, dans les deux roles.",
+          "instructions": [
+            "Je choisis un binome et j'annonce mon role de depart : porteur ou voltigeur.",
+            "Je monte la figure lentement, je verifie mon equilibre avant de la tenir.",
+            "Je tiens la figure trois secondes sans bouger, puis je demonte lentement.",
+            "J'echange les roles a chaque figure."
+          ],
+          "success": [
+            "Trois figures sont montees et tenues trois secondes chacune.",
+            "Le montage et le demontage sont lents et controles, sans saut.",
+            "Les deux roles, porteur et voltigeur, sont eprouves."
+          ],
+          "execution": [
+            "Le porteur place ses appuis larges et stables avant d'accueillir le voltigeur.",
+            "Le voltigeur monte progressivement, jamais en sautant.",
+            "Le regard fixe un point loin devant pour stabiliser l'equilibre."
+          ],
+          "watch": [
+            "Qui montre une peur bloquante du contact ou de la hauteur ?",
+            "Les appuis du porteur sont-ils stables avant la montee du voltigeur ?",
+            "Le demontage se fait-il en controle ou en saut ?"
+          ],
+          "errors": [
+            "Monter en sautant plutot qu'en construisant progressivement.",
+            "Porteur aux appuis instables, genoux non flechis.",
+            "Regarder ses pieds plutot qu'un point fixe, ce qui desequilibre la figure."
+          ],
+          "feedback": [
+            "Monte doucement, construis ta figure, ne saute pas dessus.",
+            "Flechis les genoux et ecarte tes appuis avant d'accueillir ton voltigeur.",
+            "Fixe un point devant toi, pas tes pieds."
+          ],
+          "plus": [
+            "Figure tenue cinq secondes avec les yeux fermes pour le porteur."
+          ],
+          "minus": [
+            "Figures a hauteur tres reduite, avec aide du professeur au montage."
+          ],
+          "diff": {
+            "facilitee": "Figures a hauteur tres reduite (appuis au sol), montage aide par le professeur.",
+            "normale": "Trois figures de base tenues trois secondes, montage et demontage autonomes.",
+            "complexifiee": "Figures tenues cinq secondes, yeux fermes pour le porteur."
+          },
+          "safety": [
+            "Aucune figure ne se monte sans pareur designe, meme a ce niveau debutant : le pareur reste a portee de bras du voltigeur.",
+            "Montage et demontage toujours lents et controles : le voltigeur ne saute jamais d'une figure.",
+            "Tapis de chute sous toute figure depassant la hauteur d'un appui au sol.",
+            "Le professeur circule en permanence et peut arreter toute figure jugee dangereuse.",
+            "Retrait des bijoux et montres obligatoire, cheveux longs attaches.",
+            "Toute douleur ou instabilite signalee est immediatement prise en compte : la figure est interrompue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Les regles de securite de l'acrosport",
+          "objective": "Faire connaitre et memoriser les regles de securite specifiques a l'acrosport.",
+          "material": [
+            {
+              "label": "affiche des regles de securite specifiques acrosport",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis autour de la surface de travail. Le professeur presente les regles de securite specifiques : role du pareur, montage/demontage controles, tapis, zones. Chaque eleve les recopie et les illustre par un exemple observe pendant le NOYAU.",
+          "studentGoal": "Connaitre par coeur les regles de securite de l'acrosport et savoir les appliquer.",
+          "instructions": [
+            "J'ecoute la presentation des regles de securite specifiques a l'acrosport.",
+            "Je note les regles sur mon carnet : jamais de figure sans pareur, montage et demontage lents, tapis sous les figures en hauteur.",
+            "J'illustre une regle avec un exemple vu pendant le premier atelier.",
+            "Je verifie avec mon voisin que nos notes sont completes."
+          ],
+          "success": [
+            "Les regles sont notees integralement sur le carnet.",
+            "Un exemple concret illustre au moins une regle.",
+            "Chaque eleve peut citer sans hesiter la regle du pareur obligatoire."
+          ],
+          "execution": [
+            "Ecouter avant d'ecrire.",
+            "Reformuler avec ses propres mots.",
+            "Comparer ses notes a celles d'un camarade."
+          ],
+          "watch": [
+            "Les eleves memorisent-ils la regle du pareur obligatoire ?",
+            "Les exemples choisis sont-ils pertinents ?"
+          ],
+          "errors": [
+            "Confondre le role du pareur avec celui du voltigeur.",
+            "Noter les regles sans exemple, de facon abstraite.",
+            "Penser que les tapis suffisent sans pareur."
+          ],
+          "feedback": [
+            "Le pareur n'est pas un spectateur : il est pret a intervenir a chaque instant.",
+            "Donne-moi un exemple concret, pas juste la regle recopiee.",
+            "Le tapis amortit une chute, il ne remplace jamais le pareur."
+          ],
+          "plus": [
+            "Redaction d'une regle supplementaire proposee par l'eleve, validee par le professeur."
+          ],
+          "minus": [
+            "Regles recopiees et relues avec le professeur, sans exemple exige."
+          ],
+          "diff": {
+            "facilitee": "Regles recopiees et relues avec le professeur, exemple donne par la classe.",
+            "normale": "Regles notees avec un exemple personnel illustrant chacune.",
+            "complexifiee": "Regle supplementaire proposee par l'eleve et validee par le professeur."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute figure en cours.",
+            "Les regles enoncees ici s'appliquent des la situation suivante, sans exception.",
+            "Toute regle non comprise est reexpliquee individuellement avant de reprendre les figures."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premiere figure a trois",
+          "objective": "Monter une premiere figure a trois en appliquant immediatement les regles de securite vues en COMPLEMENT.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            }
+          ],
+          "organization": "Par trois. Le trio tente une figure simple a trois appuis (deux porteurs, un voltigeur), en appliquant immediatement les regles de securite vues en COMPLEMENT.",
+          "studentGoal": "Monter une figure a trois en appliquant les regles de securite.",
+          "instructions": [
+            "Nous choisissons nos roles : deux porteurs, un voltigeur.",
+            "Nous designons un pareur parmi nous ou un camarade exterieur avant de monter.",
+            "Nous montons lentement, tenons trois secondes, demontons lentement.",
+            "Nous notons sur le carnet ce qui a ete difficile."
+          ],
+          "success": [
+            "La figure a trois est montee, tenue trois secondes, demontee sans saut.",
+            "Un pareur est identifie avant chaque tentative.",
+            "Le trio note une difficulte precise rencontree."
+          ],
+          "execution": [
+            "Les deux porteurs synchronisent leur montee des appuis.",
+            "Le voltigeur attend le signal des porteurs avant de monter.",
+            "Le demontage se fait au signal, dans l'ordre inverse de la montee."
+          ],
+          "watch": [
+            "Le pareur est-il designe avant chaque tentative ?",
+            "Les deux porteurs sont-ils synchronises ?",
+            "Le voltigeur attend-il le signal avant de monter ?"
+          ],
+          "errors": [
+            "Monter sans avoir designe de pareur.",
+            "Le voltigeur monte avant que les porteurs soient stables.",
+            "Aucune communication verbale entre les trois."
+          ],
+          "feedback": [
+            "Pas de pareur, pas de figure : c'est la regle numero un.",
+            "Attends le signal de tes porteurs avant de monter.",
+            "Parlez-vous : annoncez le montage, la tenue, le demontage."
+          ],
+          "plus": [
+            "Figure a trois avec un appui reduit pour le voltigeur (un seul pied)."
+          ],
+          "minus": [
+            "Figure a trois avec appuis au sol uniquement, sans hauteur."
+          ],
+          "diff": {
+            "facilitee": "Figure a trois avec appuis au sol, sans hauteur, pareur systematique.",
+            "normale": "Figure a trois tenue trois secondes, montage et demontage controles.",
+            "complexifiee": "Figure a trois avec appui reduit pour le voltigeur."
+          },
+          "safety": [
+            "Aucune tentative sans pareur designe au prealable.",
+            "Tapis de chute sous la figure.",
+            "Le professeur valide chaque trio avant sa premiere tentative.",
+            "Signal verbal obligatoire avant montage et avant demontage."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle regle de securite retenez-vous en priorite ?",
+          "Preferez-vous le role de porteur ou de voltigeur, et pourquoi ?"
+        ],
+        "key": "En acrosport, aucune figure ne se monte sans pareur, et le montage comme le demontage sont toujours lents et controles. C'est cette rigueur qui permet ensuite de prendre des risques acrobatiques en toute securite."
+      },
+      "socialRoles": [
+        "Pareur : reste a portee de bras du voltigeur et intervient a la moindre instabilite.",
+        "Observateur securite : verifie que le tapis de chute est bien place avant chaque figure.",
+        "Responsable materiel : verifie que les tapis sont jointifs et bien positionnes."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Former le groupe, choisir son role et batir les premieres figures a plusieurs",
+      "mainObjective": "Former des groupes de 4 a 6 eleves, choisir en debut de sequence son role AFL3 (Juge ou Choregraphe) et la repartition des points, et monter les premieres figures a plusieurs.",
+      "secondaryObjectives": [
+        "Constituer un groupe stable de 4 a 6 eleves pour tout le cycle.",
+        "Choisir un seul role parmi Juge et Choregraphe, valable pour toute la sequence.",
+        "Choisir la repartition des 8 points entre AFL2 et AFL3 : 4-4, 6-2 ou 2-6.",
+        "Monter une premiere figure a quatre en respectant les roles porteur/voltigeur."
+      ],
+      "linkToPrevious": "Le cadre de securite est pose et chacun connait sa preference porteur/voltigeur. Reste a se regrouper et a faire les choix qui engagent toute la sequence.",
+      "prerequisiteForNext": "Chaque groupe est forme, chaque eleve a choisi et note son role et sa repartition, une premiere figure a quatre est realisee.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6,
+            "note": "une fiche par groupe"
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des deux roles Juge et Choregraphe",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer les tapis en zones de travail, une zone par futur groupe (six zones pour vingt-quatre eleves).",
+          "Afficher le referentiel et la description des deux roles AFL3.",
+          "Preparer une fiche scenario vierge par groupe.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Six zones de travail delimitees par des tapis, une par groupe.\nAffiche des roles Juge/Choregraphe et du referentiel a l'entree.\nFiches scenario vierges disponibles par zone.\nTapis de chute repartis sur les zones a figures en hauteur."
+      },
+      "warmup": {
+        "rationale": "Echauffement en musique, deja par petits groupes pressentis, pour commencer a construire la cohesion collective necessaire a l'enchainement.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train en musique",
+            "details": [
+              "Sept minutes de mobilisation generale sur un support musical.",
+              "Deplacements varies dans l'espace, en solo puis a deux."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renforcement et equilibre",
+            "details": [
+              "Gainage, poignets, epaules.",
+              "Equilibres varies sur un et deux appuis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Contacts et portes a plusieurs",
+            "details": [
+              "Portes a deux puis a trois, en confiance progressive.",
+              "Trois minutes de recherche libre de contacts a plusieurs, sans hauteur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Constituer le groupe et monter une premiere figure a quatre",
+          "objective": "Former un groupe stable de 4 a 6 eleves et monter une premiere figure codifiee a quatre.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            }
+          ],
+          "organization": "Groupes de 4 a 6 eleves constitues par affinites et complementarite des morphologies (porteurs et voltigeurs). Chaque groupe tente une premiere figure a quatre (deux porteurs, un voltigeur, un pareur qui tourne), en respectant integralement les regles de securite vues en seance 1.",
+          "studentGoal": "Former mon groupe definitif et monter une premiere figure a quatre.",
+          "instructions": [
+            "Je forme un groupe de 4 a 6 avec des porteurs et des voltigeurs varies.",
+            "Nous choisissons une figure a quatre simple dans l'affiche des figures codifiees.",
+            "Nous designons un pareur a chaque tentative, meme parmi les membres du groupe.",
+            "Nous montons, tenons trois secondes, demontons, puis nous notons la figure sur la fiche scenario."
+          ],
+          "success": [
+            "Le groupe de 4 a 6 est stable et complet.",
+            "La figure a quatre est montee et tenue trois secondes.",
+            "La figure est notee sur la fiche scenario du groupe."
+          ],
+          "execution": [
+            "Repartir les roles selon les morphologies : porteurs aux appuis larges, voltigeur le plus leger.",
+            "Monter dans un ordre annonce a l'avance.",
+            "Communiquer verbalement a chaque etape."
+          ],
+          "watch": [
+            "Les groupes sont-ils equilibres en porteurs et voltigeurs ?",
+            "Un pareur est-il designe a chaque tentative ?",
+            "La figure est-elle notee sur la fiche ?"
+          ],
+          "errors": [
+            "Groupe compose uniquement d'affinites, sans porteur solide.",
+            "Tenter la figure sans annoncer l'ordre de montage.",
+            "Oublier de noter la figure sur la fiche."
+          ],
+          "feedback": [
+            "Ton groupe n'a aucun porteur solide : repense la repartition.",
+            "Annoncez l'ordre avant de monter, ca evite les accidents.",
+            "Note tout de suite sur la fiche, ca deviendra ton scenario."
+          ],
+          "plus": [
+            "Figure a quatre avec un appui reduit pour le voltigeur."
+          ],
+          "minus": [
+            "Figure a trois si le groupe n'est pas encore stable, avec aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Figure a trois avec appuis au sol, aide du professeur au montage.",
+            "normale": "Figure a quatre tenue trois secondes, montage et demontage autonomes.",
+            "complexifiee": "Figure a quatre avec appui reduit pour le voltigeur."
+          },
+          "safety": [
+            "Aucune tentative sans pareur designe.",
+            "Tapis de chute sous la figure.",
+            "Le professeur valide la composition de chaque groupe avant la premiere figure a quatre.",
+            "Montage et demontage toujours lents, jamais de saut."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Choisir son role et sa repartition",
+          "objective": "Faire choisir a chaque eleve, en debut de sequence, son role AFL3 et sa repartition des points AFL2/AFL3.",
+          "material": [
+            {
+              "label": "affiche des deux roles Juge et Choregraphe",
+              "fixed": 2
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis en groupe. C'est maintenant, en debut de sequence, que chaque eleve choisit individuellement son role pour l'AFL3, un seul parmi deux : Juge ou Choregraphe. Il choisit egalement sa repartition des 8 points entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6. Les deux choix sont notes sur le carnet.",
+          "studentGoal": "Choisir mon role et ma repartition de points pour toute la sequence, et les noter.",
+          "instructions": [
+            "Je lis la description des deux roles : Juge et Choregraphe.",
+            "Je choisis un seul role, celui qui correspond le mieux a ce que je veux travailler.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 : 4-4, 6-2 ou 2-6.",
+            "J'ecris les deux choix sur mon carnet, ils valent pour toute la sequence."
+          ],
+          "success": [
+            "Un seul role est choisi et note : Juge ou Choregraphe.",
+            "La repartition choisie est notee : 4-4, 6-2 ou 2-6.",
+            "L'eleve peut expliquer pourquoi il a choisi ce role."
+          ],
+          "execution": [
+            "Lire attentivement la description de chaque role avant de choisir.",
+            "Se projeter sur ce que le role implique au quotidien de la sequence.",
+            "Ecrire lisiblement les deux choix."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils la difference entre Juge et Choregraphe ?",
+            "Choisissent-ils par gout reel ou par mimetisme avec un camarade ?"
+          ],
+          "errors": [
+            "Choisir les deux roles a la fois, ce qui n'est pas autorise.",
+            "Choisir un role sans en comprendre le contenu.",
+            "Copier le choix d'un camarade sans reflechir."
+          ],
+          "feedback": [
+            "Un seul role, choisis celui-ci ou l'autre, jamais les deux.",
+            "Le role de Juge analyse et argumente ; le Choregraphe regle les deplacements et la synchronisation : lequel te correspond ?",
+            "C'est ton choix, pas celui de ton voisin."
+          ],
+          "plus": [
+            "L'eleve justifie par ecrit son choix de repartition en une phrase argumentee."
+          ],
+          "minus": [
+            "Choix guide individuellement par le professeur a partir d'un questionnaire."
+          ],
+          "diff": {
+            "facilitee": "Choix guide individuellement par le professeur a partir d'un questionnaire simple.",
+            "normale": "Choix autonome du role et de la repartition, notes au carnet.",
+            "complexifiee": "Choix justifie par ecrit en une phrase argumentee."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute figure en cours.",
+            "Aucun retour en arriere possible apres cette seance : le choix engage toute la sequence, il est donc fait au calme et explique clairement par le professeur avant d'etre acte."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Presenter sa figure au reste de la classe",
+          "objective": "Faire vivre une premiere prestation devant public, sur la figure a quatre montee en NOYAU.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            }
+          ],
+          "organization": "Chaque groupe presente sa figure a quatre devant les autres groupes, qui observent en silence.",
+          "studentGoal": "Presenter notre figure devant un public pour la premiere fois.",
+          "instructions": [
+            "Nous nous placons au centre de la surface.",
+            "Nous annoncons notre figure avant de la monter.",
+            "Nous montons, tenons trois secondes, demontons, puis saluons.",
+            "Les autres groupes observent en silence complet."
+          ],
+          "success": [
+            "La figure est presentee devant le groupe classe.",
+            "Le silence est respecte pendant la presentation.",
+            "Le salut final est realise."
+          ],
+          "execution": [
+            "Annoncer clairement avant de commencer.",
+            "Tenir la position meme sous le regard du public.",
+            "Saluer pour marquer la fin de la prestation."
+          ],
+          "watch": [
+            "Les eleves gerent-ils le regard du public sur leur premiere figure ?",
+            "Le silence est-il respecte par les observateurs ?"
+          ],
+          "errors": [
+            "Rire ou parler pendant la presentation d'un autre groupe.",
+            "Ne pas annoncer la figure avant de monter.",
+            "Oublier le salut final."
+          ],
+          "feedback": [
+            "Le silence, meme si ce n'est pas votre tour : c'est deja une regle de prestation.",
+            "Annonce ta figure, ca fait partie de la presentation.",
+            "Le salut cloture ta prestation, ne l'oublie pas."
+          ],
+          "plus": [
+            "Presentation avec une entree et une sortie chorees, meme simples."
+          ],
+          "minus": [
+            "Presentation sans public, devant le seul professeur."
+          ],
+          "diff": {
+            "facilitee": "Presentation devant le seul professeur, sans public eleve.",
+            "normale": "Presentation devant la classe, avec annonce et salut.",
+            "complexifiee": "Presentation avec entree et sortie chorees."
+          },
+          "safety": [
+            "Pareur toujours designe, meme en presentation.",
+            "Tapis de chute en place avant chaque presentation.",
+            "Le professeur reste en position de pouvoir intervenir sur chaque presentation."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel role avez-vous choisi, Juge ou Choregraphe, et pourquoi ?",
+          "Quelle repartition avez-vous choisie entre l'AFL2 et l'AFL3 ?"
+        ],
+        "key": "Le role et la repartition choisis aujourd'hui valent pour toute la sequence : ils orientent ce que chacun doit travailler en priorite jusqu'a l'epreuve finale."
+      },
+      "socialRoles": [
+        "Juge en formation : observe les figures des autres groupes et commence a reperer les criteres de reussite.",
+        "Choregraphe en formation : observe les deplacements et la synchronisation des autres groupes.",
+        "Pareur : reste a portee de bras du voltigeur pendant toute figure."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Porteur et voltigeur : construire deux figures codifiees en duo et trio",
+      "mainObjective": "Maitriser techniquement les roles de porteur et de voltigeur sur deux figures codifiees, en duo et en trio, et commencer a les inscrire dans la fiche scenario.",
+      "secondaryObjectives": [
+        "Ameliorer l'alignement des segments et la stabilite des figures en duo.",
+        "Construire une figure codifiee en trio.",
+        "Renseigner la fiche scenario avec l'ordre d'apparition des figures."
+      ],
+      "linkToPrevious": "Le groupe est forme, les roles AFL3 sont choisis. Il faut maintenant construire techniquement les figures qui composeront l'enchainement.",
+      "prerequisiteForNext": "Chaque groupe maitrise une figure en duo et une figure en trio, alignees et stables trois secondes, inscrites sur la fiche scenario.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "affiche des figures codifiees",
+            "fixed": 2
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer les zones de travail par groupe, tapis jointifs.",
+          "Afficher les figures codifiees en duo et en trio, avec leurs criteres d'alignement.",
+          "Distribuer une fiche scenario par groupe si non deja en poche.",
+          "Verifier les PAI."
+        ],
+        "sketch": "Zones de travail par groupe, tapis jointifs.\nAffiche des figures codifiees en duo et trio a l'entree.\nTapis de chute sur les figures en hauteur.\nFiches scenario disponibles dans chaque zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement centre sur l'alignement corporel et le gainage, conditions techniques de la stabilite des figures.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train en musique",
+            "details": [
+              "Sept minutes de mobilisation en musique.",
+              "Deplacements et changements de niveau (haut, moyen, bas)."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Gainage et alignement",
+            "details": [
+              "Planche ventrale et dorsale, trente secondes.",
+              "Exercices d'alignement contre un mur : tete, epaules, bassin, talons alignes.",
+              "Equilibres sur un appui, bras en croix."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Portes progressifs",
+            "details": [
+              "Portes a deux avec appuis varies.",
+              "Trois minutes de recherche des appuis stables pour porteur et voltigeur."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Deux figures codifiees : duo puis trio",
+          "objective": "Construire une figure codifiee en duo et une figure codifiee en trio, avec un alignement des segments verifie.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "affiche des figures codifiees",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par groupe. Chaque binome du groupe travaille une figure codifiee en duo (l'avion, la table haute), puis le groupe entier construit une figure codifiee en trio, avec alignement des segments verifie par le professeur ou un camarade exterieur au trio.",
+          "studentGoal": "Maitriser une figure en duo et une figure en trio, alignees et stables trois secondes.",
+          "instructions": [
+            "Je monte ma figure en duo lentement, je verifie mon alignement avant de la tenir.",
+            "Je tiens la figure trois secondes, immobile, en gardant ma concentration.",
+            "En trio, je respecte l'ordre de montage annonce et j'attends le signal pour demonter.",
+            "Un camarade verifie mon alignement : tete, epaules, bassin dans le meme axe."
+          ],
+          "success": [
+            "La figure en duo est tenue trois secondes avec un alignement correct.",
+            "La figure en trio est montee, tenue trois secondes, demontee sans saut.",
+            "L'alignement des segments est verifie par un camarade a chaque tentative."
+          ],
+          "execution": [
+            "Le porteur garde les genoux legerement flechis, jamais bloques.",
+            "Le voltigeur aligne tete, epaules et bassin dans le meme axe vertical ou horizontal selon la figure.",
+            "Le regard fixe un point loin, sans chercher ses appuis des yeux."
+          ],
+          "watch": [
+            "Les segments sont-ils alignes ou la figure est-elle desaxee ?",
+            "La stabilite tient-elle trois secondes pleines ?",
+            "Le porteur garde-t-il les genoux flechis ?"
+          ],
+          "errors": [
+            "Genoux du porteur bloques en extension, ce qui rend la figure rigide et instable.",
+            "Voltigeur desaxe, bassin en avant ou en arriere de l'axe.",
+            "Figure tenue une seconde puis relachee trop tot."
+          ],
+          "feedback": [
+            "Flechis tes genoux, tu es trop raide pour stabiliser.",
+            "Ton bassin part en avant, recentre-le dans l'axe.",
+            "Compte les trois secondes a voix haute si besoin, ne relache pas trop tot."
+          ],
+          "plus": [
+            "Figure en trio tenue cinq secondes avec le porteur les yeux fermes."
+          ],
+          "minus": [
+            "Figures a hauteur reduite, avec appui du professeur sur l'alignement."
+          ],
+          "diff": {
+            "facilitee": "Figures a hauteur reduite, alignement corrige main dans la main par le professeur.",
+            "normale": "Figure en duo et figure en trio, tenues trois secondes, alignement autonome.",
+            "complexifiee": "Figure en trio tenue cinq secondes, porteur les yeux fermes."
+          },
+          "safety": [
+            "Pareur designe a chaque tentative de figure en trio.",
+            "Tapis de chute sous toute figure depassant la hauteur d'un appui direct au sol.",
+            "Montage et demontage toujours lents et annonces verbalement.",
+            "Le professeur circule et corrige les alignements dangereux avant qu'ils ne deviennent des chutes.",
+            "Toute figure ou le porteur signale une gene est immediatement interrompue."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Renseigner la fiche scenario",
+          "objective": "Faire reporter sur la fiche scenario les figures travaillees et les roles de chacun.",
+          "material": [
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En groupe, assis. Chaque groupe reporte sur sa fiche scenario les deux figures travaillees, dans l'ordre d'apparition envisage, avec le nom des porteurs et du voltigeur pour chacune.",
+          "studentGoal": "Ecrire sur la fiche scenario les deux premieres figures de notre enchainement.",
+          "instructions": [
+            "Nous ecrivons le nom de nos deux figures sur la fiche scenario.",
+            "Nous notons qui est porteur et qui est voltigeur pour chaque figure.",
+            "Nous discutons de l'ordre d'apparition dans l'enchainement final.",
+            "Nous relisons la fiche a voix haute pour verifier qu'elle est comprehensible par un juge exterieur."
+          ],
+          "success": [
+            "Les deux figures sont ecrites avec les roles de chacun.",
+            "Un ordre d'apparition est propose.",
+            "La fiche est lisible et comprehensible par un tiers."
+          ],
+          "execution": [
+            "Ecrire au fur et a mesure, pas de memoire en fin de seance.",
+            "Nommer precisement chaque figure.",
+            "Faire relire par un camarade d'un autre groupe pour verifier la clarte."
+          ],
+          "watch": [
+            "La fiche est-elle remplie en temps reel ou de memoire ?",
+            "Les roles porteur/voltigeur sont-ils bien identifies par figure ?"
+          ],
+          "errors": [
+            "Remplir la fiche en fin de seance, approximativement.",
+            "Oublier de preciser qui est porteur et qui est voltigeur.",
+            "Fiche illisible pour quelqu'un d'exterieur au groupe."
+          ],
+          "feedback": [
+            "Ecris maintenant, pas a la fin, sinon tu oublies des details.",
+            "Precise les roles : un juge doit pouvoir s'y retrouver sans vous connaitre.",
+            "Fais relire par un autre groupe : si ce n'est pas clair pour eux, ce ne le sera pas pour le jury."
+          ],
+          "plus": [
+            "Fiche completee avec un premier essai de coefficient de difficulte pour chaque figure."
+          ],
+          "minus": [
+            "Fiche completee avec l'aide directe du professeur."
+          ],
+          "diff": {
+            "facilitee": "Fiche completee avec l'aide directe du professeur, dictee guidee.",
+            "normale": "Fiche completee en autonomie par le groupe, avec roles precises.",
+            "complexifiee": "Fiche avec un premier essai de coefficient de difficulte propose pour chaque figure."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute figure en cours.",
+            "La fiche scenario est conservee par le groupe pour les seances suivantes : elle ne doit jamais rester sur la surface de travail."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Enchainer les deux figures avec une liaison simple",
+          "objective": "Relier les deux figures deja maitrisees par un deplacement simple, pour eprouver une premiere continuite.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            }
+          ],
+          "organization": "Le groupe relie ses deux figures (duo puis trio) par un deplacement simple de quelques secondes, pour eprouver une premiere continuite.",
+          "studentGoal": "Relier mes deux figures par un deplacement, sans temps mort.",
+          "instructions": [
+            "Nous montons la premiere figure, la tenons trois secondes.",
+            "Nous demontons et nous deplacons vers la position de la deuxieme figure, sans nous arreter.",
+            "Nous montons la deuxieme figure, la tenons trois secondes.",
+            "Nous chronometrons la duree totale de cet enchainement court."
+          ],
+          "success": [
+            "Les deux figures sont enchainees sans temps mort superieur a trois secondes.",
+            "Le deplacement entre les deux est fluide.",
+            "La duree totale est mesuree et notee."
+          ],
+          "execution": [
+            "Demonter et se deplacer dans le meme mouvement, sans pause.",
+            "Regarder la position d'arrivee pendant le deplacement.",
+            "Reprendre son souffle apres, pas pendant la liaison."
+          ],
+          "watch": [
+            "Y a-t-il un temps mort entre les deux figures ?",
+            "Le deplacement est-il fluide ou hesitant ?"
+          ],
+          "errors": [
+            "S'arreter completement entre les deux figures pour souffler.",
+            "Deplacement desordonne, chacun part dans une direction differente.",
+            "Oublier de chronometrer."
+          ],
+          "feedback": [
+            "Pas de pause entre les deux : enchaine directement.",
+            "Deplacez-vous ensemble, dans la meme direction.",
+            "Chronometre, c'est cette duree qui construira l'enchainement final."
+          ],
+          "plus": [
+            "Liaison avec un element gymnique simple (pas chasses rythmes, demi-tour)."
+          ],
+          "minus": [
+            "Liaison avec une pause courte autorisee, guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Liaison avec une pause courte autorisee et un signal du professeur.",
+            "normale": "Liaison fluide entre les deux figures, sans temps mort, duree chronometree.",
+            "complexifiee": "Liaison avec un element gymnique simple integre."
+          },
+          "safety": [
+            "Pareur present pendant tout l'enchainement, y compris pendant la liaison.",
+            "Tapis de chute laisses en place pour les deux figures.",
+            "Le professeur valide l'enchainement avant qu'il ne soit repete en autonomie."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle est la difference technique principale entre etre porteur et etre voltigeur ?",
+          "Ou en est votre fiche scenario ce soir ?"
+        ],
+        "key": "Une figure stable repose sur l'alignement des segments et des appuis larges et flechis chez le porteur : ce n'est jamais une question de force seule. Et la fiche scenario se construit seance apres seance, jamais en une fois."
+      },
+      "socialRoles": [
+        "Verificateur d'alignement : observe et corrige la posture d'un camarade porteur ou voltigeur.",
+        "Pareur : reste a portee de bras pendant toute figure.",
+        "Redacteur de la fiche scenario : tient la fiche a jour en temps reel."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Elements de liaison, figure a quatre et choix du support musical",
+      "mainObjective": "Enrichir l'enchainement avec des elements de liaison acrobatiques et gymniques, construire une figure codifiee a quatre, et choisir le support musical du theme.",
+      "secondaryObjectives": [
+        "Maitriser un element de liaison acrobatique simple (roulade) et un element gymnique (saut, pirouette).",
+        "Construire une figure codifiee a quatre (quatuor).",
+        "Choisir un support musical et une thematique pour l'enchainement."
+      ],
+      "linkToPrevious": "Deux figures sont maitrisees et reliees. Il manque les elements qui font la continuite artistique : les liaisons, une figure a quatre, et l'univers musical.",
+      "prerequisiteForNext": "L'enchainement compte trois figures liees par des elements varies, sur un support musical choisi.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "enceinte / lecteur audio",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des figures codifiees",
+            "fixed": 2
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer les zones de travail par groupe, tapis jointifs pour les roulades.",
+          "Preparer l'enceinte et verifier que chaque groupe peut apporter son support musical.",
+          "Afficher les figures codifiees a quatre.",
+          "Verifier les PAI, en particulier les contre-indications aux roulades et sauts."
+        ],
+        "sketch": "Zones de travail par groupe, tapis jointifs et zone degagee pour roulades.\nEnceinte centrale accessible a tous les groupes.\nAffiche des figures a quatre a l'entree.\nTapis de chute sur les figures en hauteur."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire renforce, en particulier de la nuque et du dos, indispensable avant tout travail de roulade et de saut.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Mise en train en musique",
+            "details": [
+              "Sept minutes de mobilisation en musique.",
+              "Deplacements avec changements de rythme."
+            ]
+          },
+          {
+            "dur": 7,
+            "title": "Preparation specifique aux roulades et sauts",
+            "details": [
+              "Mobilisation de la nuque, dos rond, menton rentre.",
+              "Roulades avant et arriere a vide, sans figure, sur tapis.",
+              "Reception de sauts amortie, genoux flechis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Figure a quatre progressive",
+            "details": [
+              "Portes a quatre avec appuis varies, hauteur reduite.",
+              "Trois minutes de recherche des appuis et des prises de main a quatre."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Elements de liaison et figure a quatre",
+          "objective": "Maitriser une roulade et un saut ou une pirouette comme elements de liaison, et construire une figure codifiee a quatre.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "affiche des figures codifiees",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par groupe. Chaque eleve travaille une roulade (element acrobatique) et un saut ou une pirouette (element gymnique) pour relier les figures. Le groupe construit ensuite sa figure codifiee a quatre, avec deux porteurs, un voltigeur et un porteur relais ou un pareur tournant.",
+          "studentGoal": "Maitriser une roulade, un saut, et construire ma figure a quatre.",
+          "instructions": [
+            "Je realise une roulade avant controlee, menton rentre, sans ecraser la nuque.",
+            "Je realise un saut avec reception amortie, genoux flechis, equilibre stabilise.",
+            "En groupe, nous montons la figure a quatre dans l'ordre annonce, avec pareur designe.",
+            "Nous tenons la figure trois secondes puis demontons lentement."
+          ],
+          "success": [
+            "La roulade est realisee sans appui sur la nuque, menton rentre.",
+            "Le saut est reception amortie et stable, sans perte d'equilibre.",
+            "La figure a quatre est montee, tenue trois secondes, demontee sans saut."
+          ],
+          "execution": [
+            "Rentrer le menton et rouler sur les omoplates, jamais sur la tete.",
+            "Flechir les genoux a la reception du saut, bras qui accompagnent.",
+            "Annoncer verbalement chaque etape du montage a quatre."
+          ],
+          "watch": [
+            "La roulade s'appuie-t-elle sur la nuque ou sur les omoplates ?",
+            "La reception du saut est-elle amortie ?",
+            "L'ordre de montage a quatre est-il respecte ?"
+          ],
+          "errors": [
+            "Rouler sur la tete plutot que sur les omoplates.",
+            "Reception de saut jambes tendues, risque d'entorse.",
+            "Monter la figure a quatre sans annoncer l'ordre, en desordre."
+          ],
+          "feedback": [
+            "Rentre le menton, tu roules sur ta tete, c'est dangereux.",
+            "Flechis les genoux a la reception, tu vas te faire mal aux chevilles.",
+            "Annoncez l'ordre a voix haute avant de monter a quatre."
+          ],
+          "plus": [
+            "Roulade enchainee directement avec le depart d'une figure.",
+            "Figure a quatre avec appui reduit pour le voltigeur."
+          ],
+          "minus": [
+            "Roulade et saut travailles separement, sans enchainement.",
+            "Figure a trois si le quatuor n'est pas encore stable."
+          ],
+          "diff": {
+            "facilitee": "Roulade et saut travailles isolement, figure a trois avec aide du professeur.",
+            "normale": "Roulade et saut maitrises separement, figure a quatre tenue trois secondes.",
+            "complexifiee": "Roulade enchainee avec le depart d'une figure, figure a quatre avec appui reduit."
+          },
+          "safety": [
+            "Roulade toujours realisee sur tapis, jamais sur sol nu.",
+            "Aucune roulade arriere tentee sans validation prealable du professeur sur la technique individuelle.",
+            "Pareur designe a chaque tentative de figure a quatre.",
+            "Tapis de chute sous la figure a quatre.",
+            "Toute douleur cervicale signalee arrete immediatement l'exercice de roulade."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Choisir le theme et le support musical",
+          "objective": "Faire choisir a chaque groupe une thematique et un support musical adaptes a la duree de l'enchainement.",
+          "material": [
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En groupe, assis. Chaque groupe propose une thematique pour son enchainement et selectionne un extrait musical de deux a trois minutes qui la soutient, en accord avec le professeur.",
+          "studentGoal": "Choisir notre theme et notre musique pour l'enchainement.",
+          "instructions": [
+            "Nous proposons une thematique en groupe : un univers, une emotion, une histoire.",
+            "Nous ecoutons deux ou trois extraits musicaux et nous en choisissons un, de deux a trois minutes.",
+            "Nous verifions que la musique correspond a la duree exigee de l'enchainement.",
+            "Nous notons le theme et le titre du morceau sur la fiche scenario."
+          ],
+          "success": [
+            "Un theme est choisi et formule en une phrase.",
+            "Un extrait musical de deux a trois minutes est selectionne.",
+            "Le theme et le morceau sont notes sur la fiche scenario."
+          ],
+          "execution": [
+            "Discuter collectivement avant de trancher.",
+            "Verifier la duree exacte de l'extrait au chronometre.",
+            "Choisir une musique qui laisse la place aux figures, pas trop chargee."
+          ],
+          "watch": [
+            "Le theme est-il clair et formulable en une phrase ?",
+            "La duree de l'extrait est-elle verifiee, entre deux et trois minutes ?"
+          ],
+          "errors": [
+            "Choisir une musique sans verifier sa duree.",
+            "Aucun theme clair, juste une musique qui plait.",
+            "Musique trop rapide ou trop chargee, incompatible avec les figures statiques."
+          ],
+          "feedback": [
+            "Verifie la duree au chronometre, pas a l'oreille.",
+            "Quel est votre theme en une phrase ? Si vous ne savez pas le dire, le jury non plus ne le verra pas.",
+            "Une musique trop chargee empeche vos figures de respirer."
+          ],
+          "plus": [
+            "Le groupe propose un montage musical avec un changement de rythme au moment de la figure la plus difficile."
+          ],
+          "minus": [
+            "Theme et musique proposes par le professeur parmi une selection restreinte."
+          ],
+          "diff": {
+            "facilitee": "Theme et musique choisis parmi une selection restreinte proposee par le professeur.",
+            "normale": "Theme et musique choisis librement par le groupe, duree verifiee.",
+            "complexifiee": "Montage musical avec changement de rythme au moment de la figure la plus difficile."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute figure en cours.",
+            "Volume sonore verifie pour ne pas geler l'attention sur les consignes de securite des situations suivantes."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premier enchainement de trois figures liees",
+          "objective": "Realiser un premier enchainement complet reliant les trois figures maitrisees, sur la musique choisie.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            }
+          ],
+          "organization": "Le groupe enchaine ses trois figures (duo, trio, quatuor) reliees par la roulade et le saut travailles, sur un extrait de la musique choisie.",
+          "studentGoal": "Realiser un premier enchainement complet de trois figures liees, en musique.",
+          "instructions": [
+            "Nous demarrons sur le lancement de la musique.",
+            "Nous enchainons figure, liaison, figure, liaison, figure, sans nous arreter.",
+            "Nous tenons chaque figure trois secondes.",
+            "Nous saluons a la fin de l'extrait musical."
+          ],
+          "success": [
+            "Les trois figures sont enchainees sans arret complet.",
+            "Chaque figure est tenue trois secondes.",
+            "L'enchainement se termine par un salut, en musique."
+          ],
+          "execution": [
+            "Demarrer precisement au signal musical.",
+            "Garder le rythme de la musique pendant les liaisons.",
+            "Ne pas ralentir par peur, garder la dynamique prevue."
+          ],
+          "watch": [
+            "L'enchainement tient-il sur la duree musicale prevue ?",
+            "Y a-t-il des arrets complets qui cassent la continuite ?"
+          ],
+          "errors": [
+            "S'arreter longuement entre deux figures par manque de confiance.",
+            "Perdre le rythme de la musique pendant les liaisons.",
+            "Oublier le salut final."
+          ],
+          "feedback": [
+            "Garde le mouvement, meme incertain, plutot que de t'arreter net.",
+            "Ecoute la musique pendant que tu te deplaces, pas seulement pendant les figures.",
+            "Le salut cloture ta prestation, ne l'oublie jamais."
+          ],
+          "plus": [
+            "Enchainement avec une entree choregraphiee avant la premiere figure."
+          ],
+          "minus": [
+            "Enchainement realise sans musique, au signal du professeur."
+          ],
+          "diff": {
+            "facilitee": "Enchainement realise sans musique, au signal verbal du professeur.",
+            "normale": "Enchainement des trois figures en musique, avec liaisons et salut.",
+            "complexifiee": "Enchainement avec entree choregraphiee avant la premiere figure."
+          },
+          "safety": [
+            "Pareur present et attentif pendant tout l'enchainement, y compris pendant les liaisons.",
+            "Tapis de chute repositionnes si necessaire entre les figures.",
+            "Le professeur arrete la musique et l'enchainement au moindre signe de danger."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre theme, et pourquoi ce choix de musique ?",
+          "Ou avez-vous le plus manque de fluidite dans l'enchainement ?"
+        ],
+        "key": "Un enchainement se juge aussi sur sa continuite : les liaisons et le respect du rythme musical comptent autant que la reussite de chaque figure prise isolement."
+      },
+      "socialRoles": [
+        "Choregraphe en formation : propose les deplacements et verifie la synchronisation du groupe.",
+        "Juge en formation : observe et commence a noter la tenue des figures selon les criteres du referentiel.",
+        "Responsable musique : lance et arrete l'extrait au bon moment."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et verification du role choisi",
+      "mainObjective": "Situer chaque groupe dans des conditions proches de l'epreuve et verifier que le role et la repartition choisis en seance 2 sont toujours pertinents.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet en cours de construction devant la classe, en conditions proches de l'evaluation.",
+        "Verifier que le role choisi en seance 2 est tenu.",
+        "Identifier les points a ameliorer d'ici l'epreuve finale."
+      ],
+      "linkToPrevious": "Trois figures sont enchainees sur un support musical, et le role AFL3 ainsi que la repartition sont choisis depuis la seance 2 : l'epreuve evaluee montre ce que cela donne en conditions reelles.",
+      "prerequisiteForNext": "Chaque groupe connait precisement ce qu'il doit ameliorer, et chaque eleve tient son role choisi.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "enceinte / lecteur audio",
+            "fixed": 1
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches d'evaluation mi-cycle, une par eleve.",
+          "Installer la surface de presentation avec tapis et zone de public delimitee.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Surface de presentation degagee au centre, tapis jointifs.\nZone de public delimitee autour, chaises ou tapis pour s'asseoir.\nAffiche du referentiel et des repartitions a l'entree.\nEnceinte proche de la zone de presentation."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en autonomie par chaque groupe : sa conduite fait partie de ce qui sera observe le jour de l'epreuve finale.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome par groupe",
+            "details": [
+              "Chaque groupe mene son echauffement, sept minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renforcement et alignement",
+            "details": [
+              "Gainage, poignets, epaules.",
+              "Verification des alignements individuels contre un mur."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Repetition des liaisons",
+            "details": [
+              "Roulades et sauts a vide, sans figure.",
+              "Trois minutes de repetition des liaisons de l'enchainement."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Presentation evaluee de l'enchainement en construction",
+          "objective": "Evaluer, en conditions proches de l'epreuve, l'alignement, la tenue trois secondes, la fluidite et l'occupation de l'espace.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque groupe presente son enchainement complet (trois figures liees, sur musique) devant la classe, dans les conditions proches de l'epreuve. Le professeur evalue l'alignement, la tenue trois secondes, la fluidite et l'occupation de l'espace.",
+          "studentGoal": "Presenter notre enchainement complet dans des conditions proches de l'epreuve finale.",
+          "instructions": [
+            "Nous nous placons, la musique demarre, nous enchainons nos trois figures liees.",
+            "Nous tenons chaque figure trois secondes, sans relacher trop tot.",
+            "Nous occupons l'ensemble de l'espace de presentation, pas seulement le centre.",
+            "Nous saluons a la fin, en musique."
+          ],
+          "success": [
+            "L'enchainement complet est realise sans arret force.",
+            "Chaque figure est tenue trois secondes pleines.",
+            "L'espace de presentation est occupe dans sa totalite.",
+            "Le role choisi (Juge ou Choregraphe) est tenu par chaque observateur pendant les autres passages."
+          ],
+          "execution": [
+            "Demarrer precisement au signal musical.",
+            "Garder le regard fixe pendant chaque figure, sans chercher le public des yeux.",
+            "Se deplacer largement pendant les liaisons pour occuper l'espace."
+          ],
+          "watch": [
+            "Les figures sont-elles tenues trois secondes pleines sous le regard du public ?",
+            "L'espace est-il occupe dans sa totalite ou l'enchainement reste-t-il concentre au centre ?",
+            "Chaque eleve tient-il son role choisi (Juge ou Choregraphe) pendant les passages des autres groupes ?"
+          ],
+          "errors": [
+            "Relacher la figure avant trois secondes sous l'effet du stress du public.",
+            "Rester concentre au centre de la surface, sans exploiter l'espace.",
+            "Observer sans exercer reellement son role choisi."
+          ],
+          "feedback": [
+            "Tiens tes trois secondes pleines, meme sous le regard du public : c'est deja travaille.",
+            "Utilise tout l'espace, pas seulement le centre.",
+            "Tu es Juge, ou Choregraphe : exerce vraiment ton role, pas seulement regarder."
+          ],
+          "plus": [
+            "Enchainement presente avec l'ajout d'une quatrieme figure en cours de construction."
+          ],
+          "minus": [
+            "Enchainement presente sans musique, avec un signal verbal du professeur entre les figures."
+          ],
+          "diff": {
+            "facilitee": "Enchainement presente sans musique, signal verbal entre les figures, tenue reduite a deux secondes.",
+            "normale": "Enchainement complet en musique, figures tenues trois secondes, espace occupe.",
+            "complexifiee": "Enchainement avec une quatrieme figure en cours de construction ajoutee."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant toute presentation.",
+            "Pareur designe pour chaque figure du groupe pendant toute la presentation.",
+            "Tapis de chute repositionnes entre chaque passage de groupe.",
+            "Le professeur peut arreter une presentation au moindre signe de danger.",
+            "Consulter les PAI avant les presentations.",
+            "Retour au calme propose apres l'ensemble des passages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier son role et sa repartition",
+          "objective": "Verifier que le role et la repartition choisis en seance 2 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart de la surface de presentation. Chacun relit le role et la repartition choisis en seance 2, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mon role et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis le role et la repartition que j'ai choisis en seance 2.",
+            "Je regarde ce que j'ai reellement fait depuis : suis-je un bon Juge, ou un bon Choregraphe ?",
+            "Je regarde mon carnet et ma fiche scenario : sont-ils mon point fort ou mon point faible ?",
+            "J'ecris si je confirme mon choix, et pourquoi."
+          ],
+          "success": [
+            "Le role et la repartition de la seance 2 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 2."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reellement exerce.",
+            "Comparer a ce qui avait ete choisi en seance 2.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de seance 2 ?",
+            "Les justifications sont-elles argumentees ou de pure forme ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qu'on avait choisi en seance 2.",
+            "Confirmer sans regarder son carnet ni sa fiche scenario.",
+            "Justifier par une preference sans lien avec sa pratique reelle."
+          ],
+          "feedback": [
+            "Regarde ton carnet et ta fiche scenario : sont-ils a jour ? C'est un indice sur ton role.",
+            "Tu observes sans jamais argumenter la reussite des figures : verifie que Juge te convient vraiment.",
+            "Ce n'est pas le choix de ton voisin qui compte, c'est le tien."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec l'autre role ou l'autre repartition."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome du role et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change l'autre role ou l'autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la surface de presentation, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Lister les points a ameliorer",
+          "objective": "Identifier avec chaque groupe trois points precis a ameliorer avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "En groupe. Chaque groupe liste, a partir des retours du professeur et des observations des autres groupes, trois points precis a ameliorer d'ici l'epreuve finale, et les inscrit sur la fiche scenario.",
+          "studentGoal": "Identifier avec mon groupe trois points precis a ameliorer avant l'epreuve finale.",
+          "instructions": [
+            "Nous ecoutons les retours du professeur sur notre presentation.",
+            "Nous listons trois points precis, pas vagues : quelle figure, quelle liaison, quel role.",
+            "Nous les ecrivons sur la fiche scenario, en face de chaque figure concernee.",
+            "Nous nous repartissons qui travaille quoi d'ici la prochaine seance."
+          ],
+          "success": [
+            "Trois points precis sont identifies et ecrits.",
+            "Chaque point est associe a une figure ou une liaison precise.",
+            "La repartition du travail est actee dans le groupe."
+          ],
+          "execution": [
+            "Noter les retours du professeur mot pour mot, pas de memoire.",
+            "Formuler chaque point de facon observable, pas vague.",
+            "Associer un responsable a chaque point."
+          ],
+          "watch": [
+            "Les points listes sont-ils precis et observables ?",
+            "Le travail est-il reparti clairement dans le groupe ?"
+          ],
+          "errors": [
+            "Lister un point vague : etre meilleur.",
+            "Ne pas associer de responsable au travail a fournir.",
+            "Oublier d'ecrire sur la fiche scenario."
+          ],
+          "feedback": [
+            "Etre meilleur, ce n'est pas un point de travail : quelle figure, quel defaut precis ?",
+            "Qui s'occupe de ce point d'ici la prochaine seance ?",
+            "Ecris-le sur la fiche, sinon il sera oublie."
+          ],
+          "plus": [
+            "Le groupe fixe une echeance precise pour chaque point de travail."
+          ],
+          "minus": [
+            "Points identifies avec l'aide directe du professeur."
+          ],
+          "diff": {
+            "facilitee": "Points identifies avec l'aide directe du professeur, dictee guidee.",
+            "normale": "Trois points precis identifies et repartis en autonomie.",
+            "complexifiee": "Points avec echeance precise fixee pour chacun."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute figure en cours."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre point faible principal a ameliorer d'ici l'epreuve finale ?",
+          "Confirmez-vous votre role et votre repartition choisis en seance 2 ?"
+        ],
+        "key": "L'epreuve de mi-cycle ne note pas pour noter : elle sert a savoir precisement ce qu'il reste a travailler, et a verifier que le role choisi au depart est toujours le bon."
+      },
+      "socialRoles": [
+        "Juge : observe les figures des autres groupes selon les criteres du referentiel et argumente ses observations.",
+        "Choregraphe : observe les deplacements et la synchronisation des autres groupes.",
+        "Pareur : reste a portee de bras du voltigeur pendant toute la presentation."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Affiner les figures, exercer son role et travailler la quatrieme figure",
+      "mainObjective": "Affiner la technique porteur/voltigeur, construire ou finaliser la quatrieme figure codifiee, et exercer reellement son role choisi (Juge ou Choregraphe) sur les prestations des autres groupes.",
+      "secondaryObjectives": [
+        "Corriger les points faibles identifies en seance 5.",
+        "Construire ou finaliser la quatrieme figure codifiee de l'enchainement.",
+        "Exercer son role (Juge ou Choregraphe) sur au moins deux prestations d'autres groupes."
+      ],
+      "linkToPrevious": "Les points faibles sont identifies en seance 5. Il faut maintenant les corriger, ajouter la derniere figure, et faire vivre reellement le role choisi.",
+      "prerequisiteForNext": "L'enchainement compte ses quatre figures, et chaque eleve a exerce concretement son role sur des prestations reelles.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "enceinte / lecteur audio",
+            "fixed": 1
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6
+          },
+          {
+            "label": "grilles d'observation Juge",
+            "per": 1.0,
+            "min": 12,
+            "note": "pour les eleves ayant choisi ce role"
+          },
+          {
+            "label": "grilles d'observation Choregraphe",
+            "per": 1.0,
+            "min": 12,
+            "note": "pour les eleves ayant choisi ce role"
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Installer les zones de travail par groupe.",
+          "Preparer les grilles d'observation specifiques a chaque role, Juge et Choregraphe.",
+          "Afficher les points faibles generaux releves en seance 5, sans nommer les groupes.",
+          "Verifier les PAI."
+        ],
+        "sketch": "Zones de travail par groupe, tapis jointifs.\nZone de presentation centrale pour les passages observes.\nGrilles d'observation Juge et Choregraphe disponibles.\nTapis de chute sur les figures en hauteur."
+      },
+      "warmup": {
+        "rationale": "Echauffement mene en autonomie, avec une attention particuliere aux points faibles techniques identifies en seance 5.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome par groupe",
+            "details": [
+              "Chaque groupe mene son echauffement, sept minutes minimum.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renforcement cible",
+            "details": [
+              "Chaque eleve travaille le renforcement lie a son point faible identifie.",
+              "Gainage, poignets, equilibre selon les besoins."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Repetition des figures existantes",
+            "details": [
+              "Repetition rapide des trois premieres figures, sans musique.",
+              "Verification des alignements par un camarade."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Construire la quatrieme figure et corriger les points faibles",
+          "objective": "Construire la quatrieme figure codifiee du groupe et corriger precisement les points faibles identifies en seance 5.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            }
+          ],
+          "organization": "Par groupe. Chaque groupe construit sa quatrieme figure codifiee (souvent la plus complexe, en quatuor ou en configuration originale) et retravaille specifiquement les points faibles identifies en seance 5, figure par figure.",
+          "studentGoal": "Construire notre quatrieme figure et corriger nos points faibles identifies.",
+          "instructions": [
+            "Nous reprenons nos trois figures existantes et corrigeons precisement le point faible note en seance 5.",
+            "Nous construisons notre quatrieme figure, en respectant l'ordre de montage et le pareur designe.",
+            "Nous verifions l'alignement de chaque figure avec un camarade exterieur au groupe.",
+            "Nous mettons a jour la fiche scenario avec la quatrieme figure."
+          ],
+          "success": [
+            "Le point faible identifie en seance 5 est visiblement corrige.",
+            "La quatrieme figure est montee, tenue trois secondes, demontee sans saut.",
+            "La fiche scenario est mise a jour avec les quatre figures."
+          ],
+          "execution": [
+            "Cibler precisement le defaut note, pas refaire toute la figure au hasard.",
+            "Annoncer verbalement chaque etape du montage de la nouvelle figure.",
+            "Faire verifier l'alignement par un regard exterieur au groupe."
+          ],
+          "watch": [
+            "Le point faible de seance 5 est-il reellement travaille ?",
+            "La quatrieme figure respecte-t-elle les regles de securite du montage ?",
+            "La fiche scenario est-elle a jour ?"
+          ],
+          "errors": [
+            "Retravailler toute la figure au hasard sans cibler le defaut precis.",
+            "Monter la quatrieme figure sans pareur designe.",
+            "Oublier de mettre a jour la fiche scenario."
+          ],
+          "feedback": [
+            "Cible exactement ce qui a ete note en seance 5, pas autre chose.",
+            "Pas de pareur, pas de nouvelle figure : la regle ne change jamais.",
+            "Mets a jour la fiche maintenant, pas a la fin de la sequence."
+          ],
+          "plus": [
+            "Quatrieme figure avec un coefficient de difficulte C ou D vise."
+          ],
+          "minus": [
+            "Quatrieme figure simplifiee, coefficient A, avec aide du professeur au montage."
+          ],
+          "diff": {
+            "facilitee": "Quatrieme figure de coefficient A, montage aide par le professeur.",
+            "normale": "Quatrieme figure de coefficient B ou C, montage et correction autonomes.",
+            "complexifiee": "Quatrieme figure de coefficient C ou D visee."
+          },
+          "safety": [
+            "Pareur designe systematiquement pour la quatrieme figure, la plus exigeante de l'enchainement.",
+            "Tapis de chute verifies et repositionnes pour chaque nouvelle figure tentee.",
+            "Le professeur valide chaque quatrieme figure avant qu'elle ne soit repetee sans supervision directe.",
+            "Aucune figure de coefficient D n'est tentee sans validation explicite du professeur sur la maitrise technique du groupe."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Exercer reellement son role, Juge ou Choregraphe",
+          "objective": "Faire exercer concretement, sur la prestation d'un autre groupe, le role AFL3 choisi en seance 2.",
+          "material": [
+            {
+              "label": "grilles d'observation Juge",
+              "per": 1.0,
+              "min": 12
+            },
+            {
+              "label": "grilles d'observation Choregraphe",
+              "per": 1.0,
+              "min": 12
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            }
+          ],
+          "organization": "Deux groupes presentent leur enchainement en cours devant les autres. Les eleves Juges remplissent une grille d'observation avec attribution de points et argumentation. Les eleves Choregraphes notent les problemes de synchronisation et de deplacement et proposent une correction.",
+          "studentGoal": "Exercer reellement mon role sur la prestation d'un autre groupe.",
+          "instructions": [
+            "Juge : j'observe la figure, j'attribue un degre de reussite, et j'argumente mon attribution par ecrit.",
+            "Choregraphe : j'observe les deplacements et la synchronisation, et je note un probleme precis et une proposition de correction.",
+            "Je remplis ma grille pendant la prestation, pas apres de memoire.",
+            "Je restitue oralement une observation utile au groupe observe."
+          ],
+          "success": [
+            "La grille est remplie en direct, pendant la prestation.",
+            "Juge : l'attribution de points est argumentee par un critere precis (alignement, tenue, montage/demontage).",
+            "Choregraphe : un probleme de synchronisation ou de deplacement est identifie et une correction est proposee.",
+            "Une restitution orale utile est faite au groupe observe."
+          ],
+          "execution": [
+            "Se concentrer sur son role, pas sur les deux a la fois.",
+            "Ecrire des observations precises, pas des impressions generales.",
+            "Restituer avec un exemple concret observe."
+          ],
+          "watch": [
+            "Les Juges argumentent-ils leur attribution ou notent-ils au hasard ?",
+            "Les Choregraphes reperent-ils des problemes reels de synchronisation ?",
+            "La restitution orale est-elle utile ou vague ?"
+          ],
+          "errors": [
+            "Remplir la grille de memoire apres la prestation.",
+            "Attribuer des points sans justification.",
+            "Restitution vague : c'etait bien, sans exemple precis."
+          ],
+          "feedback": [
+            "Ecris pendant, pas apres : tu oublies deja des details.",
+            "Justifie ton point : pourquoi ce degre et pas un autre ?",
+            "Donne un exemple precis : quelle figure, quel moment."
+          ],
+          "plus": [
+            "L'eleve compare son attribution a celle d'un autre Juge du groupe et argumente l'ecart eventuel."
+          ],
+          "minus": [
+            "Grille remplie avec l'aide directe du professeur pendant la prestation."
+          ],
+          "diff": {
+            "facilitee": "Grille remplie avec l'aide directe du professeur, criteres pointes un par un.",
+            "normale": "Grille remplie en autonomie, avec argumentation ecrite et restitution orale.",
+            "complexifiee": "Attribution comparee a celle d'un autre Juge, ecart argumente."
+          },
+          "safety": [
+            "Les observateurs restent a l'ecart de la surface de presentation, sans gener les pareurs du groupe qui presente.",
+            "Pareur du groupe qui presente toujours designe et actif, meme sous observation.",
+            "Le professeur reste en position d'intervenir sur la prestation en cours a tout moment."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Enchainement des quatre figures, sans musique",
+          "objective": "Verifier la solidite technique de l'enchainement complet des quatre figures avant d'y ajouter le rythme musical.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            }
+          ],
+          "organization": "Chaque groupe enchaine ses quatre figures a la suite, sans musique, pour verifier la solidite technique avant d'y ajouter le rythme musical.",
+          "studentGoal": "Enchainer nos quatre figures a la suite, techniquement solides.",
+          "instructions": [
+            "Nous enchainons nos quatre figures dans l'ordre de la fiche scenario.",
+            "Nous tenons chaque figure trois secondes.",
+            "Nous respectons le pareur designe pour chaque figure.",
+            "Nous notons la duree totale de l'enchainement sans musique."
+          ],
+          "success": [
+            "Les quatre figures sont enchainees dans l'ordre prevu.",
+            "Chaque figure est tenue trois secondes.",
+            "La duree est mesuree et comparee a la duree musicale prevue (2 a 3 minutes)."
+          ],
+          "execution": [
+            "Respecter l'ordre exact de la fiche scenario.",
+            "Garder un rythme regulier entre les figures.",
+            "Ne pas se precipiter par volonte d'aller plus vite que la musique."
+          ],
+          "watch": [
+            "L'ordre de la fiche scenario est-il respecte ?",
+            "La duree obtenue est-elle proche des deux a trois minutes exigees ?"
+          ],
+          "errors": [
+            "Changer l'ordre des figures sans le noter sur la fiche.",
+            "Enchainement trop rapide, hors du cadre de deux a trois minutes.",
+            "Oublier un pareur sur une des quatre figures."
+          ],
+          "feedback": [
+            "Respecte l'ordre de ta fiche, sinon ton scenario ne colle plus a ce que tu fais.",
+            "Trop court : il vous faut etoffer les liaisons pour tenir deux minutes.",
+            "Chaque figure a besoin de son pareur, meme la plus simple."
+          ],
+          "plus": [
+            "Enchainement chronometre avec objectif de tenir dans le haut de la fourchette, pres de trois minutes."
+          ],
+          "minus": [
+            "Enchainement realise figure par figure, avec pause du professeur entre chacune."
+          ],
+          "diff": {
+            "facilitee": "Enchainement realise figure par figure, avec pause et signal du professeur entre chacune.",
+            "normale": "Enchainement complet des quatre figures a la suite, duree mesuree.",
+            "complexifiee": "Enchainement chronometre viser pres de trois minutes."
+          },
+          "safety": [
+            "Pareur present pour chacune des quatre figures, sans exception.",
+            "Tapis de chute repositionnes entre chaque figure si necessaire.",
+            "Le professeur arrete l'enchainement au moindre signe de fatigue excessive ou de danger."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre quatrieme figure est-elle solide, ou reste-t-elle fragile ?",
+          "Qu'avez-vous appris en exercant reellement votre role de Juge ou de Choregraphe ?"
+        ],
+        "key": "Un role ne se choisit pas seulement sur le papier : il se travaille en conditions reelles, sur les prestations des autres, avec des observations precises et argumentees."
+      },
+      "socialRoles": [
+        "Juge : attribue un degre de reussite argumente a chaque figure observee.",
+        "Choregraphe : identifie les problemes de synchronisation et propose des corrections concretes.",
+        "Pareur : reste a portee de bras du voltigeur pour chacune des quatre figures."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et finalisation du carnet",
+      "mainObjective": "Realiser une repetition generale dans les conditions exactes de l'epreuve finale et finaliser la fiche scenario et le carnet.",
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet, en musique, dans les conditions exactes du jour J.",
+        "Finaliser et verifier la fiche scenario avant l'epreuve.",
+        "Confirmer definitivement le role et la repartition choisis en seance 2."
+      ],
+      "linkToPrevious": "La quatrieme figure est construite et le role est exerce en conditions reelles. Il ne reste qu'a repeter l'ensemble tel qu'il sera presente le jour de l'epreuve.",
+      "prerequisiteForNext": "L'enchainement, la fiche scenario et le carnet sont prets pour l'epreuve finale.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "enceinte / lecteur audio",
+            "fixed": 1
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer la surface de presentation exactement comme elle le sera le jour de l'epreuve.",
+          "Verifier que chaque groupe a sa fiche scenario complete et son support musical pret.",
+          "Afficher le referentiel complet et l'ordre de passage.",
+          "Verifier les PAI et les dispenses avant le premier passage."
+        ],
+        "sketch": "Surface de presentation identique aux conditions de l'epreuve finale.\nZone de public delimitee, ordre de passage affiche.\nEnceinte, fiches scenario et grilles d'evaluation pretes.\nTapis de chute en place, trousse de secours signalee."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en autonomie exactement comme il le sera le jour de l'epreuve : sa conduite est deja evaluee au titre de la preparation collective.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome par groupe",
+            "details": [
+              "Chaque groupe mene son echauffement complet, sept minutes minimum.",
+              "Le professeur observe la conduite comme au jour de l'epreuve."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renforcement et alignement",
+            "details": [
+              "Gainage, poignets, epaules.",
+              "Verification finale des alignements individuels."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Repetition des liaisons et de l'entree",
+            "details": [
+              "Repetition de l'entree sur la surface et du salut final.",
+              "Trois minutes de repetition des liaisons les plus fragiles."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Repetition generale dans les conditions de l'epreuve",
+          "objective": "Presenter l'enchainement complet dans les conditions exactes de l'epreuve, avec une grille d'evaluation renseignee a titre d'entrainement.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque groupe presente son enchainement complet, dans l'ordre de passage affiche, en musique, exactement comme le jour de l'epreuve. Le professeur remplit une grille d'evaluation finale a titre d'entrainement, sans que la note compte au bulletin.",
+          "studentGoal": "Presenter mon enchainement dans les conditions exactes de l'epreuve finale.",
+          "instructions": [
+            "Nous attendons notre tour dans l'ordre de passage affiche.",
+            "Nous entrons sur la surface, la musique demarre, nous enchainons nos quatre figures.",
+            "Nous tenons chaque figure trois secondes et occupons tout l'espace.",
+            "Nous saluons a la fin, exactement comme le jour de l'epreuve."
+          ],
+          "success": [
+            "L'enchainement complet est realise sans arret force, dans l'ordre de passage.",
+            "Les quatre figures sont tenues trois secondes chacune.",
+            "L'espace est occupe dans sa totalite, du debut a la fin.",
+            "Le salut final est realise en musique."
+          ],
+          "execution": [
+            "Entrer sur la surface avec assurance, meme sous le regard des autres groupes.",
+            "Garder le regard fixe pendant chaque figure.",
+            "Se deplacer largement pendant les liaisons."
+          ],
+          "watch": [
+            "L'enchainement complet tient-il sans interruption ?",
+            "L'espace est-il occupe dans sa totalite ?",
+            "Le groupe reste-t-il concentre malgre l'attente et le regard des autres groupes ?"
+          ],
+          "errors": [
+            "Interrompre l'enchainement par manque de confiance sur une figure difficile.",
+            "Rester concentre sur une partie reduite de l'espace.",
+            "Se relacher avant le salut final."
+          ],
+          "feedback": [
+            "Continue meme en cas de doute sur une figure : s'arreter penalise plus qu'une figure imparfaite.",
+            "Utilise tout l'espace disponible, du debut a la fin.",
+            "Tiens jusqu'au salut, c'est lui qui cloture ta prestation."
+          ],
+          "plus": [
+            "Enchainement presente avec une entree et une sortie entierement choregraphiees."
+          ],
+          "minus": [
+            "Enchainement presente en deux temps, avec une pause courte au milieu si necessaire."
+          ],
+          "diff": {
+            "facilitee": "Enchainement presente en deux temps avec une pause courte au milieu, signal du professeur.",
+            "normale": "Enchainement complet presente d'une traite, dans les conditions de l'epreuve.",
+            "complexifiee": "Enchainement avec entree et sortie entierement choregraphiees."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant tout passage.",
+            "Pareur designe et actif pour chaque figure de chaque groupe, sans exception.",
+            "Tapis de chute verifies et repositionnes entre chaque passage.",
+            "Le professeur peut arreter tout passage au moindre signe de danger, meme en repetition generale.",
+            "Consulter les PAI avant le premier passage.",
+            "Point d'eau et trousse de secours accessibles pendant toute la seance.",
+            "Retour au calme propose apres l'ensemble des passages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Finaliser la fiche scenario",
+          "objective": "Faire correspondre exactement la fiche scenario a l'enchainement presente, avec estimation du coefficient de difficulte de chaque figure.",
+          "material": [
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "En groupe, assis. Chaque groupe relit sa fiche scenario, verifie qu'elle correspond exactement a ce qui vient d'etre presente, et la complete avec le coefficient de difficulte estime de chaque figure.",
+          "studentGoal": "Finaliser notre fiche scenario avant l'epreuve.",
+          "instructions": [
+            "Nous relisons notre fiche scenario et corrigeons tout ce qui ne correspond plus a la repetition.",
+            "Nous notons le coefficient de difficulte estime de chacune de nos quatre figures : A, B, C ou D.",
+            "Nous verifions que les roles porteur et voltigeur sont precises pour chaque figure.",
+            "Nous rendons la fiche finale au professeur."
+          ],
+          "success": [
+            "La fiche correspond exactement a l'enchainement presente.",
+            "Un coefficient de difficulte est estime pour chacune des quatre figures.",
+            "Les roles sont precises pour chaque figure.",
+            "La fiche finale est rendue au professeur."
+          ],
+          "execution": [
+            "Comparer chaque ligne de la fiche a ce qui vient d'etre fait.",
+            "Utiliser l'echelle de coefficients affichee pour estimer chaque figure.",
+            "Verifier la coherence avec l'ordre de passage reel."
+          ],
+          "watch": [
+            "La fiche correspond-elle vraiment a la repetition qui vient d'avoir lieu ?",
+            "Les coefficients estimes sont-ils realistes ?"
+          ],
+          "errors": [
+            "Rendre une fiche qui ne correspond plus a l'enchainement reellement travaille.",
+            "Surestimer systematiquement le coefficient de difficulte de toutes les figures.",
+            "Oublier de preciser les roles porteur et voltigeur."
+          ],
+          "feedback": [
+            "Ta fiche ne correspond plus a ce que tu viens de faire : corrige-la maintenant.",
+            "Sois honnete sur le coefficient : le jury verifie en direct.",
+            "Precise qui est porteur et qui est voltigeur sur chaque ligne."
+          ],
+          "plus": [
+            "Le groupe justifie par ecrit le coefficient choisi pour sa figure la plus difficile."
+          ],
+          "minus": [
+            "Fiche finalisee avec l'aide directe du professeur."
+          ],
+          "diff": {
+            "facilitee": "Fiche finalisee avec l'aide directe du professeur, coefficients verifies ensemble.",
+            "normale": "Fiche finalisee en autonomie, coefficients estimes pour les quatre figures.",
+            "complexifiee": "Coefficient de la figure la plus difficile justifie par ecrit."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart de la surface de presentation.",
+            "La fiche scenario finale est conservee precieusement : c'est le document remis le jour de l'epreuve."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Derniers ajustements et confirmation du role",
+          "objective": "Regler un dernier point technique par groupe et confirmer definitivement le role et la repartition choisis en seance 2.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "En groupe puis individuellement. Chaque groupe regle un dernier point technique observe pendant la repetition generale, et chaque eleve confirme definitivement, par ecrit, son role et sa repartition choisis en seance 2.",
+          "studentGoal": "Regler le dernier point technique de mon groupe et confirmer definitivement mon role.",
+          "instructions": [
+            "Nous identifions le seul point technique le plus urgent observe aujourd'hui.",
+            "Nous nous entrainons dessus une derniere fois, brievement.",
+            "J'ecris sur mon carnet la confirmation definitive de mon role et de ma repartition.",
+            "Je range mon materiel."
+          ],
+          "success": [
+            "Un point technique precis est identifie et retravaille brievement.",
+            "La confirmation du role et de la repartition est ecrite et definitive.",
+            "Le materiel est range."
+          ],
+          "execution": [
+            "Choisir un seul point, le plus urgent, pas plusieurs a la fois.",
+            "S'entrainer brievement, sans repartir dans une repetition complete.",
+            "Ecrire la confirmation clairement, elle ne changera plus."
+          ],
+          "watch": [
+            "Le point choisi est-il vraiment le plus urgent ?",
+            "La confirmation du role est-elle ecrite clairement ?"
+          ],
+          "errors": [
+            "Vouloir tout retravailler la veille de l'epreuve, au risque de fatiguer le groupe.",
+            "Confirmer son role sans reflexion, par habitude.",
+            "Oublier de ranger le materiel."
+          ],
+          "feedback": [
+            "Un seul point, le plus urgent : ne repars pas dans tout retravailler maintenant.",
+            "C'est ta derniere confirmation : prends dix secondes pour la reflechir vraiment.",
+            "Le rangement fait partie de la seance, pas seulement les figures."
+          ],
+          "plus": [
+            "L'eleve ecrit egalement son objectif personnel pour l'epreuve finale."
+          ],
+          "minus": [
+            "Point technique retravaille avec l'aide directe du professeur."
+          ],
+          "diff": {
+            "facilitee": "Point technique retravaille avec l'aide directe du professeur.",
+            "normale": "Point technique retravaille en autonomie, role confirme par ecrit.",
+            "complexifiee": "Objectif personnel ecrit en complement de la confirmation du role."
+          },
+          "safety": [
+            "Aucun travail intensif supplementaire la veille de l'epreuve : l'objectif est l'ajustement fin, pas la fatigue.",
+            "Rangement du materiel realise en securite, tapis empiles sans se blesser."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre enchainement est-il pret pour l'epreuve finale ?",
+          "Votre role et votre repartition sont-ils definitivement confirmes ?"
+        ],
+        "key": "Apres la repetition generale, rien de nouveau ne doit etre invente le jour de l'epreuve : seuls des ajustements fins restent possibles, jamais des figures non maitrisees."
+      },
+      "socialRoles": [
+        "Juge : confirme son role definitif et sa methode d'observation pour l'epreuve.",
+        "Choregraphe : confirme son role definitif et ses reperes de synchronisation pour l'epreuve.",
+        "Pareur : reste designe et actif pour chaque figure jusqu'a la derniere repetition."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve (12 points), et finaliser l'evaluation des AFL2 et AFL3 (8 points) au titre du role choisi en seance 2.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet de 2 a 3 minutes devant le jury.",
+        "Realiser les quatre figures codifiees dans les deux roles, porteur et voltigeur, selon la fiche scenario.",
+        "Tenir jusqu'au bout le role choisi en seance 2, Juge ou Choregraphe."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait composer, presenter et evaluer une prestation collective codifiee.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de gymnastique",
+            "fixed": 12
+          },
+          {
+            "label": "tapis de chute epais",
+            "fixed": 4
+          },
+          {
+            "label": "enceinte / lecteur audio",
+            "fixed": 1
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches scenario",
+            "per": 1.0,
+            "min": 6
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "magnesie",
+            "fixed": 2
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la surface de presentation et les conditions avant le premier passage.",
+          "Afficher le referentiel, l'ordre de passage et les criteres d'evaluation.",
+          "Recuperer les fiches scenario finales de chaque groupe.",
+          "Verifier les PAI et les dispenses avant le premier passage.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord de la surface."
+        ],
+        "sketch": "Surface de presentation identique a la repetition generale, tapis jointifs.\nZone de jury et de public delimitee, ordre de passage affiche.\nTapis de chute en place, trousse de secours signalee.\nEnceinte et fiches scenario pretes pour chaque groupe."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mene en autonomie par chaque groupe : quatre figures acrobatiques evaluees ne s'abordent jamais sans montee progressive de l'intensite et de la vigilance.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome par groupe",
+            "details": [
+              "Chaque groupe mene son echauffement complet, sept minutes minimum.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renforcement et alignement final",
+            "details": [
+              "Gainage, poignets, epaules.",
+              "Verification finale des alignements individuels avant le passage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Repetition silencieuse de l'entree",
+            "details": [
+              "Repetition de l'entree sur la surface et du salut final, sans musique.",
+              "Trois minutes de concentration individuelle avant le passage."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "L'enchainement evalue devant jury",
+          "objective": "Evaluer l'AFL1 : 8 points sur la realisation individuelle des formes corporelles, 4 points sur la composition collective, avec application du coefficient de difficulte.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par vagues, selon l'ordre de passage affiche. Chaque groupe presente son enchainement complet de 2 a 3 minutes, sur son support musical, devant le jury. Chaque candidat est observe sur ses quatre figures differentes codifiees (duos, trios, quatuors), dans les deux roles de porteur et de voltigeur.",
+          "studentGoal": "Presenter mon enchainement complet et realiser mes quatre figures dans mes deux roles, porteur et voltigeur.",
+          "instructions": [
+            "Nous entrons sur la surface au signal, la musique demarre.",
+            "Nous enchainons nos quatre figures liees, chacune tenue trois secondes.",
+            "J'assume mes deux roles, porteur et voltigeur, selon la fiche scenario.",
+            "Nous occupons tout l'espace et nous saluons a la fin, en musique."
+          ],
+          "success": [
+            "AFL1, partie individuelle (8 points) : le montage et le demontage sont maitrises, les segments sont alignes, chaque figure est tenue au moins trois secondes, la concentration est visible du debut a la fin.",
+            "AFL1, partie collective (4 points) : le theme est identifiable, les liaisons et deplacements sont de qualite, le support sonore est exploite, le rythme est tenu et il n'y a pas de temps mort.",
+            "La note de la partie individuelle est ajustee par le coefficient de difficulte moyen des figures presentees (A = 0.1, B = 0.15, C = 0.20, D = 0.25).",
+            "Chaque candidat est observe sur quatre figures differentes, en duo, trio et quatuor, dans ses deux roles."
+          ],
+          "execution": [
+            "Entrer avec assurance, garder le regard fixe pendant chaque figure.",
+            "Tenir la position pleinement les trois secondes, sans relacher trop tot par nervosite.",
+            "Enchainer les liaisons dans le rythme de la musique, sans temps mort.",
+            "Saluer nettement a la fin pour marquer la cloture de la prestation."
+          ],
+          "watch": [
+            "Le montage et le demontage sont-ils lents et controles, ou precipites par le stress ?",
+            "Les segments sont-ils alignes sur chaque figure ?",
+            "Y a-t-il des temps morts entre les figures ?",
+            "Le theme et le support musical sont-ils exploites dans les deplacements ?"
+          ],
+          "errors": [
+            "Precipiter le montage ou le demontage sous l'effet du stress, au risque d'un mouvement mal controle.",
+            "Relacher une figure avant les trois secondes.",
+            "Laisser un temps mort silencieux entre deux figures, en cherchant la position suivante.",
+            "Ignorer la musique et desynchroniser les deplacements."
+          ],
+          "feedback": [
+            "Ne precipite rien, meme sous le regard du jury : ton montage lent est ta securite et ta note.",
+            "Tiens tes trois secondes pleines, c'est un critere du referentiel.",
+            "Prepare ta liaison avant la fin de la figure precedente pour eviter tout temps mort.",
+            "Ecoute ta musique jusqu'au bout, elle structure ton rythme."
+          ],
+          "plus": [
+            "Groupe presentant une figure de coefficient D maitrisee et validee en amont par le professeur."
+          ],
+          "minus": [
+            "Enchainement adapte avec des figures de coefficient A et B uniquement, pour un groupe fragile techniquement, l'engagement et la rigueur du montage/demontage restant evalues au meme titre."
+          ],
+          "diff": {
+            "facilitee": "Enchainement compose de figures de coefficient A et B, rigueur du montage et de la tenue evaluee au meme niveau d'exigence.",
+            "normale": "Enchainement de 2 a 3 minutes avec quatre figures de coefficients varies, dans les criteres du referentiel.",
+            "complexifiee": "Enchainement incluant une figure de coefficient D validee en amont par le professeur."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant chaque passage : aucune figure acrobatique evaluee ne se tente sans montee progressive de l'intensite.",
+            "PAI verifies avant le premier passage : contre-indications au port de charge, pathologies articulaires.",
+            "Pareur designe et actif pour chaque figure de chaque groupe, sans aucune exception, y compris le jour de l'epreuve.",
+            "Tapis de chute verifies et repositionnes entre chaque passage de groupe.",
+            "Montage et demontage toujours lents et controles : aucun saut de figure n'est tolere, meme sous la pression de l'evaluation.",
+            "Le professeur ou le jury peut arreter tout passage au moindre signe de danger reel.",
+            "Toute douleur, instabilite ou malaise signale interrompt immediatement la figure en cours.",
+            "Point d'eau et trousse de secours accessibles pendant toute l'epreuve.",
+            "Retour au calme propose apres l'ensemble des passages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Evaluation du role Juge ou Choregraphe",
+          "objective": "Evaluer l'AFL3, dans le seul role choisi en seance 2, et finaliser l'AFL2 a partir du carnet et de la fiche scenario.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches scenario",
+              "per": 1.0,
+              "min": 6
+            }
+          ],
+          "organization": "Pendant les passages des autres groupes, chaque eleve exerce et fait evaluer son role choisi. Juge : il analyse la prestation, attribue les points, argumente la reussite des figures codifiees, identifie les alignements et l'efficacite du montage/demontage. Choregraphe : il regle les deplacements, la synchronisation des mouvements, et fait naitre des effets esthetiques en integrant les competences individuelles des partenaires.",
+          "studentGoal": "Exercer pleinement mon role choisi, Juge ou Choregraphe, sur les prestations que j'observe.",
+          "instructions": [
+            "Juge : j'analyse chaque figure observee, j'attribue un degre de reussite et je l'argumente par ecrit, en identifiant precisement l'alignement et la qualite du montage/demontage.",
+            "Choregraphe : je note la synchronisation et les deplacements observes, et je releve les effets esthetiques reussis ou manques.",
+            "Je presente mon carnet et ma fiche scenario au professeur pour l'evaluation de l'AFL2.",
+            "Je reste concentre sur mon role jusqu'a la fin de la derniere prestation observee."
+          ],
+          "success": [
+            "AFL3, role Juge : la capacite a analyser la prestation, attribuer les points, argumenter la reussite des figures codifiees, identifier les alignements et l'efficacite du montage/demontage est demontree.",
+            "AFL3, role Choregraphe : la capacite a regler les deplacements, la synchronisation des mouvements, et a faire naitre des effets esthetiques en integrant les competences individuelles des partenaires est demontree.",
+            "AFL2 : le carnet et la fiche scenario retracent fidelement la construction du projet depuis la seance 1.",
+            "Le role choisi est tenu jusqu'a la derniere prestation observee, sans relachement."
+          ],
+          "execution": [
+            "Observer activement, grille en main, pendant toute la duree de chaque prestation.",
+            "Argumenter chaque evaluation par un critere precis du referentiel.",
+            "Presenter un carnet complet, tenu depuis la seance 1."
+          ],
+          "watch": [
+            "Le role exerce correspond-il exactement au role choisi en seance 2 ?",
+            "Les argumentations du Juge s'appuient-elles sur des criteres precis ?",
+            "Le Choregraphe repere-t-il reellement la synchronisation et les effets esthetiques ?",
+            "Le carnet est-il complet et fidele au parcours reel du cycle ?"
+          ],
+          "errors": [
+            "Melanger les deux roles au lieu de rester exclusivement dans celui choisi.",
+            "Attribuer un degre sans argumentation, ou une argumentation vague.",
+            "Presenter un carnet lacunaire ou rempli en une seule fois."
+          ],
+          "feedback": [
+            "Reste dans ton seul role, choisi depuis la seance 2 : Juge ou Choregraphe, jamais les deux.",
+            "Argumente ton degre avec un critere precis du referentiel, pas une impression.",
+            "Ton carnet raconte tout le cycle : c'est ce qui est evalue en AFL2."
+          ],
+          "plus": [
+            "L'eleve compare son evaluation a celle d'un second Juge ou Choregraphe et argumente les eventuels ecarts."
+          ],
+          "minus": [
+            "Role exerce avec un accompagnement du professeur sur les criteres a observer."
+          ],
+          "diff": {
+            "facilitee": "Role exerce avec accompagnement du professeur sur les criteres precis a observer.",
+            "normale": "Role exerce en autonomie complete, argumentation ecrite et carnet presente.",
+            "complexifiee": "Evaluation comparee a celle d'un second observateur, ecarts argumentes."
+          },
+          "safety": [
+            "Les observateurs restent a l'ecart de la surface de presentation, sans gener les pareurs des groupes qui presentent.",
+            "Toute gene mentionnee dans le carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "tapis de gymnastique",
+              "fixed": 12
+            },
+            {
+              "label": "tapis de chute epais",
+              "fixed": 4
+            },
+            {
+              "label": "enceinte / lecteur audio",
+              "fixed": 1
+            }
+          ],
+          "organization": "Rangement collectif des tapis et du materiel, puis classe assise pour le bilan final.",
+          "studentGoal": "Dire ce que j'ai appris sur la composition et la prestation collective codifiee.",
+          "instructions": [
+            "Nous rangeons les tapis en les portant a plusieurs, jamais en les trainant seul.",
+            "Nous comptons le materiel avant de quitter la surface.",
+            "Une fois range, nous nous asseyons pour le bilan.",
+            "Chacun peut dire ce qu'il a appris sur son role ou sur les figures."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage entre tous les eleves.",
+            "Au moins un eleve par groupe s'exprime sur son role ou son progres."
+          ],
+          "execution": [
+            "Porter les tapis a plusieurs, jamais seul.",
+            "Compter le materiel avant de quitter.",
+            "Formuler un acquis concret, sur une figure ou sur le role tenu."
+          ],
+          "watch": [
+            "Le rangement est-il partage entre tous ?",
+            "Les eleves citent-ils des acquis precis, sur la technique ou sur le role ?"
+          ],
+          "errors": [
+            "Porter un tapis seul, au risque de se blesser le dos.",
+            "Ne parler que de la performance sans evoquer le role tenu.",
+            "Laisser le rangement a quelques eleves."
+          ],
+          "feedback": [
+            "A plusieurs pour porter les tapis, jamais seul : c'est une question de securite.",
+            "Parle aussi de ton role : c'est une partie entiere de ce que tu as appris.",
+            "Tout le monde participe au rangement."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour une autre prestation collective codifiee."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle, technique ou lie a son role.",
+            "complexifiee": "Acquis formule et transfere a une autre prestation collective codifiee."
+          },
+          "safety": [
+            "Rangement des tapis realise a plusieurs, jamais en les trainant ou en les portant seul.",
+            "Comptage du materiel avant de quitter la surface.",
+            "Verification qu'aucun eleve ne presente de gene, de douleur articulaire ou de malaise avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'avez-vous appris sur la construction d'une prestation collective codifiee ?",
+          "Le role que vous avez choisi en seance 2 etait-il le bon, avec le recul ?"
+        ],
+        "key": "Composer et presenter une prestation acrobatique collective, c'est allier la rigueur technique individuelle (alignement, montage, demontage, stabilite) et l'engagement collectif dans un role choisi et tenu jusqu'au bout, Juge ou Choregraphe."
+      },
+      "socialRoles": [
+        "Juge : evalue selon les criteres du referentiel, attribue et argumente les points, role tenu jusqu'a la fin de l'epreuve.",
+        "Choregraphe : evalue la synchronisation et les effets esthetiques, role tenu jusqu'a la fin de l'epreuve.",
+        "Pareur : reste designe et actif pour chaque figure jusqu'a la derniere prestation.",
+        "Responsable materiel : organise le rangement final des tapis et du materiel."
+      ]
+    }
+  ]
+}

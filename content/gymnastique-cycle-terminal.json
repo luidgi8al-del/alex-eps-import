@@ -1,0 +1,2526 @@
+{
+  "apsa": "Gymnastique au sol",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA3 - Realiser une prestation corporelle destinee a etre vue et appreciee devant un public ou un jury",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : se preparer efficacement et en toute securite pour composer et realiser, en autonomie, un enchainement gymnique de six elements a visee esthetique et/ou acrobatique, destine a etre juge.",
+    "AFL2 : s'engager dans un projet individuel de formation, en utilisant un carnet de suivi des acquis pour faire des choix, se preparer, conduire et reguler ses efforts.",
+    "AFL3 : assumer, dans le role choisi a partir de la 3e ou 4e seance (juge ou observateur), un fonctionnement collectif rentable et collaboratif.",
+    "Realiser une prestation corporelle destinee a etre vue et appreciee, devant un public et un jury, dans le respect des regles de securite propres a la gymnastique."
+  ],
+  "targetCompetence": "Se preparer efficacement et en toute securite dans un projet individuel et avec l'aide des autres eleves qui assurent des roles precis, pour composer et realiser un enchainement gymnique a visee esthetique et/ou acrobatique, devant un public, et destine a etre juge.",
+  "cycleObjectives": [
+    "Composer librement un enchainement de six elements gymniques, appartenant a quatre familles distinctes et a deux niveaux de difficulte references au code UNSS 2016-2020.",
+    "Respecter les contraintes de temps (45 secondes a 1 minute), d'espace (deux longueurs et une diagonale du praticable) et de variation de rythmes (statique et dynamique) de l'enchainement.",
+    "Rediger une fiche-scenario type, remise au jury avant le debut de l'epreuve, et tenir un carnet de suivi des acquis presente au jury.",
+    "Choisir, a partir de la 3e ou 4e seance, un seul role parmi juge et observateur, et la repartition des points entre l'AFL2 et l'AFL3.",
+    "Se preparer et realiser en toute securite, notamment sur les elements renverses et aeriens, avec tapis de chute et parade adaptee."
+  ],
+  "plannedTitles": [
+    "Cadre de securite et evaluation diagnostique en gymnastique au sol",
+    "Decouvrir les quatre familles d'elements et les deux niveaux de difficulte",
+    "Construire son enchainement et choisir son role",
+    "Composer l'enchainement : temps, espace et rythmes",
+    "Epreuve evaluee de mi-cycle et fiche-scenario",
+    "Affiner l'enchainement et exercer son role",
+    "Repetition generale devant jury",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 3 - realiser une prestation corporelle : ressources gymnastique au sol",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Academique",
+      "title": "Gymnastique au sol au cycle terminal - composer un enchainement libre de six elements",
+      "org": "Academie de Nantes",
+      "url": "https://www.pedagogie.ac-nantes.fr/education-physique-et-sportive/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Code des agres UNSS 2016-2020 - cotation des elements et des familles en gymnastique scolaire",
+      "org": "Union Nationale du Sport Scolaire / Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-27"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : salle couverte de gymnastique de forme carree, quelques agres gymniques, tapis de chute et materiel pedagogique.",
+    "Tapis de chute et tapis de reception obligatoires sous et autour de tout element renverse ou aerien.",
+    "Echauffement articulaire complet obligatoire avant tout element renverse : aucun ATR, roue ou rondade sans echauffement specifique prealable.",
+    "L'enchainement comprend librement SIX elements, appartenant a QUATRE familles distinctes et a DEUX niveaux de difficulte, cotation referee au code UNSS 2016-2020.",
+    "Contraintes de l'enchainement : duree entre 45 secondes et 1 minute ; espace sur deux longueurs et une diagonale du praticable ; variation de rythmes statique (ex. planche) et dynamique (ex. roue).",
+    "La fiche-scenario type (nombre d'elements et figures, variete des familles, chronologie, niveaux de difficulte) est remise au jury avant le debut de l'epreuve.",
+    "AFL1 note sur 12 points : 8 points pour la realisation maitrisee des elements, 4 points pour la composition et la presentation ; la note globale est ensuite multipliee par le coefficient du niveau de difficulte des elements presentes (exemple : note attribuee 7 x coefficient 1,1 = 7,7, arrondie a 8).",
+    "AFL2/AFL3 notes sur 8 points, avec une repartition choisie par l'eleve parmi trois : 4 et 4, 6 et 2, ou 2 et 6.",
+    "Le role pour l'AFL3 se choisit a partir de la 3e ou 4e seance, sur un seul role parmi deux : juge ou observateur.",
+    "Carnet de suivi des acquis tenu des le debut de la sequence, presente au jury avant l'epreuve.",
+    "PAI et dispenses : troubles de l'equilibre, contre-indications aux efforts en appui manuel ou renverse, allergies.",
+    "Aucun element renverse ou aerien n'est tente sans tapis adapte et, pour les eleves en difficulte, une parade du professeur ou d'un camarade forme."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - refuse le renversement",
+      "observed": "Refuse tout appui tete en bas ou tout renversement, se limite aux roulades avant et arriere connues depuis le college.",
+      "need": "Construire la confiance par une progression securisee (mur, plan incline, parade tenue) avant tout ATR ou toute roue."
+    },
+    {
+      "label": "Profil 2 - acrobate sans maitrise",
+      "observed": "Enchaine des elements difficiles mais mal executes : chutes frequentes, formes corporelles relachees, reception non stabilisee.",
+      "need": "Stabiliser l'execution des elements deja tentes avant d'ajouter de la difficulte."
+    },
+    {
+      "label": "Profil 3 - enchainement pauvre en familles",
+      "observed": "Repete des elements d'une seule famille (plusieurs roulades avant), ignore les niveaux de difficulte et ne varie jamais les rythmes.",
+      "need": "Diversifier les quatre familles d'elements et alterner un temps statique et un temps dynamique."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas assume",
+      "observed": "A choisi juge ou observateur en debut de sequence, mais note au hasard ou releve des donnees inexploitables pour son camarade.",
+      "need": "Assumer pleinement le role choisi, dans les criteres exacts du referentiel : precision, attention, exploitation des donnees."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Le candidat presente librement un enchainement de six elements gymniques, presente dans une fiche-scenario type (nombre d'elements et figures, variete des familles, chronologie et niveau de difficultes) remise au jury avant le debut de l'epreuve. Les six elements appartiennent a quatre familles distinctes et a deux niveaux de difficulte, cotation referee au code UNSS 2016-2020. L'enchainement dure entre 45 secondes et 1 minute, se realise sur deux longueurs et une diagonale du praticable, et varie les rythmes statique (comme la planche) et dynamique (comme la roue). Le gymnaste presente sa realisation devant un public, un jury et un petit groupe d'eleves-juges qui apprecient la prestation a l'aide d'un outil propose par l'enseignant. L'AFL1 est note sur 12 points : 8 points pour la realisation maitrisee des elements les plus difficiles et les plus adequats, 4 points pour la composition et la presentation de l'enchainement. Les co-evaluateurs positionnent l'eleve dans un degre, ajustent la note en fonction des indices respectifs, puis la multiplient avec le coefficient du niveau de difficulte des elements gymniques presentes (exemple : note attribuee 7 x coefficient 1,1 = 7,7, arrondie a 8). Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve en debut de sequence parmi trois : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve choisit egalement, a partir de la 3e ou 4e seance, un seul role parmi deux : juge ou observateur.",
+    "criteria": [
+      "AFL1 - realisation (8 points) : actions et deplacements diversifies avant, arriere et lateraux, passages renverses et aeriens maitrises, formes corporelles adaptees aux ressources, execution maitrisee et stabilisee.",
+      "AFL1 - composition et presentation (4 points) : enchainement organise, rythme et varie, presentation soignee, elements de transition construits, composition reflechie, attitude concentree et engagee.",
+      "AFL1 - la note globale (realisation + composition, sur 12) est multipliee par le coefficient du niveau de difficulte des elements presentes, cotation referee au code UNSS 2016-2020.",
+      "AFL2 : le carnet de suivi des acquis retrace le projet individuel (ressources, choix, preparation, conduite et regulation des efforts, objectifs personnalises et coherents) et est presente au jury avant l'epreuve.",
+      "AFL3 - role juge : repere la difficulte des elements executes, meme les plus difficiles, identifie precisement les fautes d'execution, connait precisement les criteres de notation, quantifie avec precision.",
+      "AFL3 - role observateur : attentif et concentre, releve des donnees significatives et fiables, relit et analyse les donnees, explique les causes de l'echec ou de la reussite, donne des conseils pertinents et exploitables par les gymnastes, les juges et les pareurs."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA3, Lycee Victor Hugo de Marrakech, epreuve gymnastique au sol."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite et evaluation diagnostique en gymnastique au sol",
+      "mainObjective": "Poser le cadre de securite propre a la gymnastique au sol, faire eprouver un enchainement simple et diagnostiquer les elements deja maitrises.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Comprendre les regles de securite specifiques aux elements renverses et aeriens.",
+        "Reperer les roulades, appuis et equilibres deja maitrises par chaque eleve.",
+        "Ouvrir le carnet de suivi des acquis."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : chacun a deja pratique des roulades au college, mais l'enchainement gymnique juge, avec ses exigences de familles, de niveaux et de securite, est une experience nouvelle.",
+      "prerequisiteForNext": "Chaque eleve connait les regles de securite de la salle et a identifie les elements deja maitrises et ceux a construire.",
+      "setup": {
+        "installationMinutes": 15,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8,
+            "note": "disposes sous et autour de chaque atelier"
+          },
+          {
+            "label": "tapis de reception fins",
+            "fixed": 6
+          },
+          {
+            "label": "plinths ou plans inclines",
+            "fixed": 2
+          },
+          {
+            "label": "fiches d'observation diagnostique",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : enchainement, familles, niveaux, bareme.",
+          "Disposer les tapis de chute sous et autour de chaque atelier, verifier leur etat et leur epaisseur.",
+          "Verifier les PAI et les dispenses, notamment les troubles de l'equilibre et les contre-indications a l'appui manuel.",
+          "Delimiter des ateliers par famille d'elements, avec des espaces suffisamment larges pour eviter tout croisement.",
+          "Prevoir la trousse de secours a portee immediate."
+        ],
+        "sketch": "Salle carree, quatre ateliers en peripherie (roulades, appuis, equilibres, sauts).\nTapis de chute sous et autour de chaque atelier.\nZone centrale libre pour les mini-enchainements.\nAffiche du referentiel a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet et generalise, obligatoire avant tout element renverse : poignets, epaules, nuque, chevilles.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train generale",
+            "details": [
+              "Six minutes de course et de deplacements varies (pas chasses, montees de genoux).",
+              "Verifier que chacun est en aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, coudes, epaules : rotations et mises en charge progressives, indispensables avant tout appui manuel.",
+              "Nuque et colonne : mobilisations douces, sans a-coups.",
+              "Chevilles, genoux, hanches : rotations et flexions."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action au sol",
+            "details": [
+              "Roulades avant et arriere lentes, sans recherche de performance.",
+              "Placements de gainage : planche ventrale tenue dix secondes.",
+              "Trois minutes de retour au calme avant le diagnostic."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Circuit diagnostique des elements de base",
+          "objective": "Reperer les roulades, les appuis et les equilibres deja maitrises par chaque eleve, en toute securite.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "tapis de reception fins",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation diagnostique",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Quatre ateliers en rotation, environ six minutes chacun : roulades (avant, arriere), appuis (ATR contre un mur ou tenu par un pareur), equilibres (planche, appui tendu au sol), sauts (saut groupe, saut vertical). Un camarade observe et renseigne la fiche diagnostique a chaque atelier.",
+          "studentGoal": "Montrer ce que je sais deja faire sur chacun des quatre ateliers, sans me mettre en danger.",
+          "instructions": [
+            "Je passe sur les quatre ateliers, dans l'ordre indique.",
+            "Je ne tente un ATR ou un appui manuel que contre un mur ou avec un pareur present.",
+            "J'annonce a mon observateur ce que je vais tenter avant de le faire.",
+            "Mon observateur note ce qu'il voit sur la fiche diagnostique."
+          ],
+          "success": [
+            "Les quatre ateliers sont passes.",
+            "Chaque tentative est annoncee avant d'etre realisee.",
+            "La fiche diagnostique est renseignee pour chaque eleve."
+          ],
+          "execution": [
+            "Placer les mains a plat, doigts ecartes, avant tout appui manuel.",
+            "Regarder ses mains, pas le plafond, pendant un ATR ou une roue.",
+            "Amortir toute reception en flechissant les genoux."
+          ],
+          "watch": [
+            "Qui refuse tout renversement, meme accompagne ?",
+            "Qui tente un element sans annoncer et sans pareur alors qu'il en a besoin ?",
+            "Les receptions sont-elles amorties ou brutales ?"
+          ],
+          "errors": [
+            "Tenter un ATR ou une roue sans avoir prevenu ni verifie la presence d'un pareur ou d'un mur.",
+            "Regarder le plafond au lieu de ses mains pendant un appui renverse.",
+            "Reception jambes tendues, sans amorti."
+          ],
+          "feedback": [
+            "Tu ne tentes jamais seul un renversement : appelle-moi ou un pareur avant.",
+            "Regarde tes mains, pas le plafond : c'est ce qui te fait perdre l'equilibre.",
+            "Flechis les genoux a la reception, sinon tu te fais mal."
+          ],
+          "plus": [
+            "Element de la famille superieure tente avec pareur : roue ou rondade."
+          ],
+          "minus": [
+            "Atelier appuis realise uniquement contre un mur, sans lacher."
+          ],
+          "diff": {
+            "facilitee": "Atelier appuis realise contre un mur, sans lacher ; roulades sur plan incline.",
+            "normale": "Quatre ateliers passes avec les elements de base annonces et observes.",
+            "complexifiee": "Element de niveau superieur tente avec pareur (roue, rondade) sur l'atelier appuis."
+          },
+          "safety": [
+            "Echauffement articulaire complet obligatoire avant l'atelier appuis : aucun ATR sans echauffement specifique des poignets et des epaules.",
+            "Aucun element renverse ou aerien n'est tente sans tapis adapte ni sans pareur pour les eleves qui en ont besoin.",
+            "Le professeur circule en priorite sur l'atelier appuis, le plus a risque.",
+            "Arret immediat de tout eleve qui force un element au-dela de ses ressources reelles.",
+            "Aucun eleve ne quitte son atelier sans autorisation.",
+            "Tapis de chute verifies avant le debut du circuit : etat, epaisseur, absence d'espace entre les tapis."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire le referentiel et ouvrir son carnet",
+          "objective": "Faire comprendre ce qui sera evalue le jour de l'epreuve et au fil du cycle, et ouvrir le carnet de suivi des acquis.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des ateliers. Lecture collective du referentiel : les six elements, les quatre familles, les deux niveaux de difficulte, les contraintes de temps et d'espace, le bareme AFL1/AFL2/AFL3. Chacun ouvre son carnet et note les elements reperes lors du diagnostic.",
+          "studentGoal": "Savoir ce qui sera evalue et noter, sur mon carnet, les elements que je maitrise deja.",
+          "instructions": [
+            "J'ecoute la lecture du referentiel : six elements, quatre familles, deux niveaux, bareme.",
+            "Je note sur mon carnet les elements que j'ai reussis pendant le diagnostic.",
+            "Je note aussi les elements que je n'ai pas oses tenter.",
+            "Je pose mes questions sur ce qui sera evalue."
+          ],
+          "success": [
+            "Le referentiel est compris dans ses grandes lignes.",
+            "Le carnet est ouvert et renseigne avec les elements reussis et non tentes."
+          ],
+          "execution": [
+            "Ecouter sans manipuler le materiel.",
+            "Ecrire au fur et a mesure, pas de memoire a la fin."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils la distinction entre l'AFL1 (jour J) et les AFL2/AFL3 (tout le cycle) ?",
+            "Le carnet est-il vraiment renseigne, ou laisse vide ?"
+          ],
+          "errors": [
+            "Croire que seule la prestation du jour J compte.",
+            "Ne rien ecrire dans le carnet."
+          ],
+          "feedback": [
+            "Huit points se jouent pendant tout le cycle, pas seulement le jour de l'epreuve.",
+            "Ecris-le maintenant : ton carnet sera relu et evalue a la fin du cycle."
+          ],
+          "plus": [
+            "Rediger une premiere phrase sur son projet personnel pour le cycle."
+          ],
+          "minus": [
+            "Carnet renseigne avec l'aide du professeur, a partir d'une liste donnee."
+          ],
+          "diff": {
+            "facilitee": "Carnet renseigne avec l'aide du professeur, a partir d'une liste d'elements donnee.",
+            "normale": "Carnet renseigne en autonomie avec les elements reussis et non tentes.",
+            "complexifiee": "Carnet renseigne, plus une premiere phrase de projet personnel pour le cycle."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart des tapis, apres retour au calme.",
+            "Eleves couverts en cas de salle fraiche."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Mini-enchainement de trois elements connus",
+          "objective": "Faire experimenter, sur un petit enchainement, l'idee de composition qui structurera tout le cycle.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun choisit trois elements deja maitrises (reperes au diagnostic) et les enchaine, avec un debut et une fin marques. Le camarade observe et donne un retour oral simple.",
+          "studentGoal": "Enchainer trois elements connus, avec un debut et une fin marques.",
+          "instructions": [
+            "Je choisis trois elements que je sais deja faire.",
+            "Je marque un debut (position de depart) et une fin (position d'arrivee, bras leves).",
+            "J'enchaine les trois sans m'arreter entre chaque.",
+            "Mon camarade regarde si l'enchainement est fluide ou hache."
+          ],
+          "success": [
+            "Les trois elements sont enchaines sans arret complet entre eux.",
+            "Le debut et la fin sont marques clairement."
+          ],
+          "execution": [
+            "Preparer une transition simple entre chaque element.",
+            "Tenir la position finale au moins deux secondes."
+          ],
+          "watch": [
+            "Les eleves marquent-ils vraiment un debut et une fin ?",
+            "Les transitions sont-elles preparees ou improvisees ?"
+          ],
+          "errors": [
+            "Enchainer sans aucun debut ni fin marques.",
+            "S'arreter longuement entre chaque element."
+          ],
+          "feedback": [
+            "Marque ta position de depart : c'est deja de la composition.",
+            "Ne t'arrete pas entre les elements, prepare la transition."
+          ],
+          "plus": [
+            "Ajouter un quatrieme element d'une famille differente."
+          ],
+          "minus": [
+            "Deux elements enchaines au lieu de trois."
+          ],
+          "diff": {
+            "facilitee": "Deux elements enchaines, avec debut et fin marques.",
+            "normale": "Trois elements connus enchaines, debut et fin marques.",
+            "complexifiee": "Quatre elements enchaines, dont un d'une famille differente des trois autres."
+          },
+          "safety": [
+            "Seuls des elements deja reussis au diagnostic sont utilises, aucune nouveaute risquee.",
+            "Tapis de chute maintenus en place sous la zone d'enchainement.",
+            "Le professeur circule et valide les elements avant leur enchainement pour les eleves les plus a risque."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels elements avez-vous deja reussis aujourd'hui, et lesquels n'avez-vous pas oses tenter ?",
+          "Qu'est-ce qui sera evalue le jour de l'epreuve, et qu'est-ce qui l'est au fil du cycle ?"
+        ],
+        "key": "La gymnastique au sol ne se resume pas a un element isole : c'est un enchainement compose, avec des regles de securite non negociables sur tout ce qui est renverse ou aerien. Et huit points se jouent pendant tout le cycle, pas seulement le jour J."
+      },
+      "socialRoles": [
+        "Observateur diagnostique : renseigne la fiche de chaque camarade sur son atelier.",
+        "Pareur : assure la securite d'un camarade sur un element renverse, sous la conduite du professeur.",
+        "Responsable materiel : verifie la disposition et l'etat des tapis avant chaque atelier."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Decouvrir les quatre familles d'elements et les deux niveaux de difficulte",
+      "mainObjective": "Faire decouvrir les quatre familles d'elements gymniques et les deux niveaux de difficulte, et faire experimenter brievement les deux roles possibles avant de choisir.",
+      "secondaryObjectives": [
+        "Distinguer les quatre familles : equilibres et postures statiques, rotations avant, rotations arriere, renversements et sauts dynamiques.",
+        "Comprendre la cotation en deux niveaux de difficulte, referee au code UNSS 2016-2020.",
+        "Experimenter brievement le role de juge et celui d'observateur, sans encore choisir."
+      ],
+      "linkToPrevious": "Le diagnostic a montre des elements isoles, souvent d'une seule famille. Il faut maintenant connaitre les quatre familles et les deux niveaux qui structureront l'enchainement final.",
+      "prerequisiteForNext": "Chaque eleve connait les quatre familles, les deux niveaux de difficulte, et a une premiere ebauche de fiche-scenario pour ses six elements.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "tapis de reception fins",
+            "fixed": 6
+          },
+          {
+            "label": "affiches des quatre familles",
+            "fixed": 4
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher les quatre familles avec un exemple d'element de chaque niveau.",
+          "Disposer un atelier par famille, avec des tapis adaptes.",
+          "Preparer des fiches-scenario type vierges pour l'ebauche du projet.",
+          "Verifier les PAI et les conditions de securite avant l'atelier renversements."
+        ],
+        "sketch": "Salle carree, quatre ateliers correspondant aux quatre familles.\nAffiches de famille et de niveau de difficulte a chaque atelier.\nZone d'ecriture a l'ecart pour la fiche-scenario.\nTapis de chute renforces sur l'atelier renversements et sauts."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet, indispensable avant la decouverte de familles incluant des renversements.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course et de deplacements varies.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, epaules, nuque : mobilisation complete avant tout appui manuel.",
+              "Chevilles, genoux, hanches.",
+              "Gainage : planche ventrale et dorsale, quinze secondes chacune."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Roulades avant et arriere.",
+              "ATR contre un mur, plusieurs essais courts.",
+              "Trois minutes de retour au calme avant le circuit."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Circuit des quatre familles",
+          "objective": "Faire experimenter au moins un element de chaque famille, aux deux niveaux de difficulte.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "tapis de reception fins",
+              "fixed": 6
+            },
+            {
+              "label": "affiches des quatre familles",
+              "fixed": 4
+            }
+          ],
+          "organization": "Quatre ateliers, un par famille : equilibres et postures statiques (planche, appui tendu au sol, equerre), rotations avant (roulade avant, roulade plongeon), rotations arriere (roulade arriere, roulade arriere jambes tendues), renversements et sauts dynamiques (roue, rondade, saut groupe). Sur chaque atelier, un element de niveau 1 puis, si maitrise, un element de niveau 2.",
+          "studentGoal": "Essayer au moins un element de chaque famille, et reperer celui que je prefere dans chacune.",
+          "instructions": [
+            "Je passe sur les quatre ateliers, environ six minutes chacun.",
+            "Je commence toujours par l'element de niveau 1 avant de tenter le niveau 2.",
+            "Je n'ai le droit de tenter le niveau 2 des renversements qu'avec un pareur ou contre un mur.",
+            "Je note sur mon carnet la famille ou je me sens le plus a l'aise."
+          ],
+          "success": [
+            "Un element au moins est tente dans chacune des quatre familles.",
+            "L'ordre niveau 1 puis niveau 2 est respecte.",
+            "Le carnet indique la famille preferee."
+          ],
+          "execution": [
+            "Reprendre les points cles de chaque famille : appuis, regard, gainage.",
+            "Demander de l'aide des que le niveau 2 semble hors de portee seul."
+          ],
+          "watch": [
+            "Certains eleves restent-ils bloques sur une seule famille ?",
+            "Le niveau 2 est-il tente sans prudence par certains eleves ?"
+          ],
+          "errors": [
+            "Passer directement au niveau 2 sans avoir valide le niveau 1.",
+            "Se limiter a la seule famille deja connue (roulades)."
+          ],
+          "feedback": [
+            "Valide d'abord ton niveau 1, le niveau 2 viendra apres.",
+            "Tu ne connais que les rotations : va essayer les equilibres et les renversements."
+          ],
+          "plus": [
+            "Deux elements de niveau 2 tentes sur des familles differentes."
+          ],
+          "minus": [
+            "Deux familles explorees au lieu de quatre, en priorite equilibres et rotations."
+          ],
+          "diff": {
+            "facilitee": "Deux familles explorees en priorite (equilibres, rotations avant), niveau 1 seulement.",
+            "normale": "Quatre familles explorees, niveau 1 puis niveau 2 selon les ressources.",
+            "complexifiee": "Quatre familles explorees avec deux elements de niveau 2 sur des familles differentes."
+          },
+          "safety": [
+            "Echauffement articulaire complet obligatoire avant l'atelier renversements et sauts dynamiques.",
+            "Aucun element de niveau 2 sur l'atelier renversements sans pareur ou sans mur d'appui.",
+            "Tapis de chute renforces verifies sur l'atelier renversements et sauts avant le debut.",
+            "Le professeur se positionne en priorite sur l'atelier le plus a risque, en alternance.",
+            "Arret immediat de tout eleve en difficulte manifeste sur un element."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Decouvrir les roles de juge et d'observateur",
+          "objective": "Faire experimenter brievement les deux roles possibles pour l'AFL3, avant le choix qui interviendra en seance 3.",
+          "material": [
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trois. A tour de role, un eleve presente un mini-element (deux figures enchainees), un autre tient brievement le role de juge (cotation avec la fiche UNSS), le troisieme tient brievement le role d'observateur (releve qualitatif). Rotation des trois roles.",
+          "studentGoal": "Experimenter les deux roles, sans encore choisir lequel je prefere.",
+          "instructions": [
+            "Je presente un mini-element de deux figures a mes deux camarades.",
+            "Quand je suis juge, j'utilise la fiche de cotation UNSS pour donner un degre et un niveau de difficulte.",
+            "Quand je suis observateur, je note ce que je vois : reussite, chute, hesitation, forme corporelle.",
+            "On tourne les trois roles pour que chacun experimente les deux."
+          ],
+          "success": [
+            "Chaque eleve a tenu au moins une fois le role de juge et une fois celui d'observateur.",
+            "Les fiches sont renseignees, meme de facon imparfaite a ce stade."
+          ],
+          "execution": [
+            "Se referer a la fiche de cotation plutot qu'a une impression.",
+            "Noter en direct, pas apres coup."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils deja ce que fait un juge de ce que fait un observateur ?",
+            "Certains montrent-ils une preference nette pour un des deux roles ?"
+          ],
+          "errors": [
+            "Confondre juger (attribuer un degre et une difficulte) et observer (decrire ce qui se passe).",
+            "Noter apres coup, de memoire."
+          ],
+          "feedback": [
+            "Le juge donne un degre et une difficulte, l'observateur decrit ce qu'il voit : ce n'est pas la meme chose.",
+            "Note tout de suite, pas a la fin du passage de ton camarade."
+          ],
+          "plus": [
+            "Cotation avec calcul du coefficient de difficulte sur le mini-element."
+          ],
+          "minus": [
+            "Role d'observateur seulement, cotation guidee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Role d'observateur seulement, avec une fiche tres guidee.",
+            "normale": "Les deux roles experimentes en rotation, fiches simplifiees.",
+            "complexifiee": "Cotation avec calcul du coefficient de difficulte, comme au jour de l'epreuve."
+          },
+          "safety": [
+            "Mini-elements limites a des figures deja maitrisees, sans nouveaute risquee.",
+            "Tapis de chute maintenus sous la zone de presentation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ebaucher sa fiche-scenario de six elements",
+          "objective": "Faire ecrire une premiere ebauche de la fiche-scenario du projet de gymnaste : six elements, quatre familles, deux niveaux.",
+          "material": [
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des ateliers. A partir des elements essayes dans la journee et de ceux deja connus, chacun ebauche une liste de six elements repartis sur les quatre familles et les deux niveaux de difficulte.",
+          "studentGoal": "Ecrire une premiere liste de six elements pour mon futur enchainement.",
+          "instructions": [
+            "Je choisis six elements parmi ceux que je connais ou viens d'essayer.",
+            "Je verifie qu'ils couvrent bien les quatre familles.",
+            "Je verifie qu'il y a au moins un element de niveau 2.",
+            "J'ecris cette premiere liste sur ma fiche-scenario, elle pourra encore changer."
+          ],
+          "success": [
+            "Six elements sont listes.",
+            "Les quatre familles sont representees.",
+            "Au moins un element de niveau 2 figure dans la liste."
+          ],
+          "execution": [
+            "Partir des elements reellement reussis dans la journee, pas d'un souhait irrealiste.",
+            "Verifier la couverture des familles a l'aide de l'affiche."
+          ],
+          "watch": [
+            "Les six elements couvrent-ils vraiment les quatre familles ?",
+            "Les eleves choisissent-ils des elements jamais reussis ?"
+          ],
+          "errors": [
+            "Choisir six elements de la meme famille.",
+            "Ne prevoir aucun element de niveau 2.",
+            "Lister des elements jamais tentes de la journee."
+          ],
+          "feedback": [
+            "Tu as choisi six rotations : il te faut des equilibres et des renversements aussi.",
+            "Sans niveau 2, ton coefficient de difficulte restera au minimum."
+          ],
+          "plus": [
+            "Ebauche avec un ordre chronologique deja propose."
+          ],
+          "minus": [
+            "Ebauche guidee par le professeur a partir d'une liste de propositions."
+          ],
+          "diff": {
+            "facilitee": "Ebauche guidee par le professeur a partir d'une liste de propositions.",
+            "normale": "Liste de six elements couvrant les quatre familles, avec au moins un niveau 2.",
+            "complexifiee": "Liste de six elements avec un ordre chronologique deja propose."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart des tapis, apres retour au calme.",
+            "Le professeur valide que les elements listes ont bien ete reussis ou approches dans de bonnes conditions de securite."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les quatre familles d'elements, et quelle est celle ou vous etes le plus a l'aise ?",
+          "Quelle difference faites-vous entre le role de juge et celui d'observateur ?"
+        ],
+        "key": "Un enchainement de six elements ne vaut que s'il couvre les quatre familles et les deux niveaux de difficulte : c'est la variete qui est recompensee, pas la repetition d'un seul point fort."
+      },
+      "socialRoles": [
+        "Juge d'un jour : cote un mini-element avec la fiche UNSS.",
+        "Observateur d'un jour : decrit ce qu'il voit sur un mini-element.",
+        "Responsable affichage : veille a ce que les quatre familles restent affichees et visibles."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Construire son enchainement et choisir son role",
+      "mainObjective": "Construire les six elements de l'enchainement et, en fin de seance, choisir un seul role entre juge et observateur, et la repartition des points AFL2/AFL3.",
+      "secondaryObjectives": [
+        "Stabiliser l'execution des six elements retenus.",
+        "Travailler les premieres transitions entre les elements.",
+        "Choisir, a partir de cette seance, un seul role et une repartition de points, et les inscrire au carnet."
+      ],
+      "linkToPrevious": "La seance 2 a fait decouvrir les quatre familles et les deux roles possibles. Le referentiel impose de s'engager, a partir de la 3e ou 4e seance, dans un seul role : c'est maintenant.",
+      "prerequisiteForNext": "Chaque eleve a ses six elements stabilises, un role choisi et inscrit, et une repartition de points arretee.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "tapis de reception fins",
+            "fixed": 6
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'observation",
+            "fixed": 6
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel avec les trois repartitions possibles entre AFL2 et AFL3.",
+          "Disposer des zones de travail individuel avec tapis, pour repeter chaque element du projet.",
+          "Preparer les fiches de cotation et d'observation pour la phase de choix de role.",
+          "Verifier les PAI avant les elements renverses."
+        ],
+        "sketch": "Salle carree, zones de travail individuel disposees en peripherie, tapis de chute a chaque zone.\nEspace central libre pour presenter un enchainement en cours de construction.\nZone d'ecriture a l'ecart pour le choix de role.\nAffiche du referentiel et des repartitions a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet : chaque eleve commence a le conduire lui-meme, pour se preparer specifiquement a ses propres elements du projet.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course et de deplacements varies.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, epaules, nuque, indispensables avant tout appui manuel.",
+              "Chevilles, genoux, hanches.",
+              "Gainage cible sur les elements du projet personnel."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action sur ses propres elements",
+            "details": [
+              "Chacun refait, a vide, les six elements de son ebauche.",
+              "Reperage des elements encore fragiles.",
+              "Trois minutes de retour au calme avant le travail."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Stabiliser les six elements du projet",
+          "objective": "Repeter et stabiliser individuellement les six elements retenus dans la fiche-scenario.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "tapis de reception fins",
+              "fixed": 6
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Travail individuel sur zones dediees. Chacun reprend sa fiche-scenario de la seance 2 et repete chaque element separement, plusieurs fois, avant de commencer a les relier deux par deux. Le professeur valide ou fait ajuster le choix d'un element trop risque ou trop facile.",
+          "studentGoal": "Stabiliser chacun de mes six elements avant de chercher a les enchainer entierement.",
+          "instructions": [
+            "Je reprends ma liste de six elements de la seance 2.",
+            "Je repete chaque element separement, au moins trois fois.",
+            "Je relie deux elements consecutifs quand les deux sont stables.",
+            "Je signale au professeur tout element qui me semble encore hors de portee."
+          ],
+          "success": [
+            "Les six elements sont repetes au moins trois fois chacun.",
+            "Au moins deux liaisons de deux elements sont tentees.",
+            "Les elements manifestement hors de portee sont signales et remplaces."
+          ],
+          "execution": [
+            "Reprendre les points cles de chaque famille avant de repeter.",
+            "Ne relier deux elements que lorsque chacun est individuellement stable."
+          ],
+          "watch": [
+            "Certains eleves cherchent-ils a enchainer avant d'avoir stabilise chaque element ?",
+            "Des elements manifestement hors de portee sont-ils maintenus dans le projet par obstination ?"
+          ],
+          "errors": [
+            "Vouloir enchainer les six elements d'emblee, sans stabilisation prealable.",
+            "Garder un element rate a chaque tentative, par attachement au projet initial."
+          ],
+          "feedback": [
+            "Stabilise d'abord chaque element seul, l'enchainement viendra apres.",
+            "Cet element te fait chuter a chaque fois : remplace-le par un de meme niveau que tu maitrises mieux."
+          ],
+          "plus": [
+            "Trois liaisons de deux elements deja stabilisees."
+          ],
+          "minus": [
+            "Quatre elements travailles au lieu de six, les deux plus difficiles reportes."
+          ],
+          "diff": {
+            "facilitee": "Quatre elements travailles en priorite, les deux plus difficiles reportes a la seance suivante.",
+            "normale": "Six elements repetes individuellement, deux liaisons tentees.",
+            "complexifiee": "Six elements repetes, trois liaisons de deux elements deja stabilisees."
+          },
+          "safety": [
+            "Echauffement articulaire complet obligatoire avant toute repetition d'un element renverse ou aerien.",
+            "Aucun element de niveau 2 travaille sans pareur pour les eleves qui en ont besoin.",
+            "Le professeur valide le remplacement de tout element juge trop risque pour l'eleve.",
+            "Tapis de chute maintenus sous chaque zone de travail individuel.",
+            "Arret immediat de toute repetition en cas de fatigue manifeste ou de chutes repetees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Premieres transitions et respect des contraintes",
+          "objective": "Introduire les contraintes de temps (45 secondes a 1 minute), d'espace (deux longueurs et une diagonale) et de rythme (statique/dynamique) qui structureront l'enchainement final.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun presente son debut d'enchainement (les elements deja lies) a son camarade, qui chronometre et verifie le respect naissant de l'espace (deux longueurs, une diagonale) et de l'alternance statique/dynamique.",
+          "studentGoal": "Commencer a placer mon enchainement dans le temps et dans l'espace du praticable.",
+          "instructions": [
+            "Je presente mes elements deja lies a mon camarade.",
+            "Mon camarade chronometre : meme incomplet, il m'annonce le temps deja pris.",
+            "Je verifie que je me deplace bien sur deux longueurs et une diagonale, pas seulement au meme endroit.",
+            "Je repere si j'ai deja un temps statique (comme une planche tenue) et un temps dynamique (comme une roue)."
+          ],
+          "success": [
+            "Le temps deja pris est connu.",
+            "Un deplacement sur au moins une longueur et une amorce de diagonale est identifie.",
+            "Un temps statique et un temps dynamique sont identifies dans le projet."
+          ],
+          "execution": [
+            "Se deplacer reellement entre les elements, ne pas rester sur place.",
+            "Tenir la position statique au moins deux secondes pour qu'elle soit visible."
+          ],
+          "watch": [
+            "Les eleves restent-ils immobiles au meme endroit du praticable ?",
+            "Le projet comporte-t-il deja un temps statique identifiable ?"
+          ],
+          "errors": [
+            "Enchainer tous les elements au meme endroit du praticable.",
+            "N'avoir que des elements dynamiques, sans aucun temps d'arret."
+          ],
+          "feedback": [
+            "Deplace-toi vraiment : le praticable se joue sur deux longueurs et une diagonale, pas sur un seul point.",
+            "Ajoute un temps statique tenu : une planche ou un equilibre, pour varier le rythme."
+          ],
+          "plus": [
+            "Chronometrage precis avec verification du respect de la fenetre 45 secondes-1 minute des la fin de l'ebauche."
+          ],
+          "minus": [
+            "Presentation guidee par le professeur, sans chronometrage encore."
+          ],
+          "diff": {
+            "facilitee": "Presentation guidee par le professeur, sans chronometrage a ce stade.",
+            "normale": "Presentation chronometree par un camarade, verification de l'espace et du rythme.",
+            "complexifiee": "Chronometrage precis avec verification anticipee de la fenetre 45 secondes-1 minute."
+          },
+          "safety": [
+            "Presentation realisee uniquement sur des elements deja stabilises dans la situation precedente.",
+            "Tapis de chute maintenus sur toute la zone de deplacement du praticable.",
+            "Le professeur reste attentif aux eleves qui forcent le rythme au detriment de la securite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Choisir son role : juge ou observateur",
+          "objective": "Faire choisir, comme l'exige le referentiel a partir de la 3e ou 4e seance, un seul role pour toute la suite de la sequence, et la repartition des points AFL2/AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 6
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des tapis. Apres l'experience de la seance 2 sur les deux roles, chacun choisit definitivement un seul role, juge ou observateur, pour tout le reste du cycle, ainsi que la repartition des points entre l'AFL2 et l'AFL3 parmi les trois possibles : 4 et 4, 6 et 2, ou 2 et 6.",
+          "studentGoal": "Choisir, aujourd'hui et pour tout le cycle, un seul role entre juge et observateur, et ma repartition de points.",
+          "instructions": [
+            "Je me souviens de mon experience des deux roles en seance 2.",
+            "Je choisis un seul role pour tout le reste du cycle : juge ou observateur, jamais les deux.",
+            "Je choisis ma repartition de points entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "J'ecris ce double choix sur mon carnet, avec une phrase qui le justifie."
+          ],
+          "success": [
+            "Un seul role est choisi et ecrit au carnet.",
+            "Une repartition de points est choisie parmi les trois possibles et ecrite au carnet.",
+            "Le choix est justifie par une phrase, pas seulement coche."
+          ],
+          "execution": [
+            "Partir de ce qui a ete reellement vecu en seance 2, pas d'une preference abstraite.",
+            "Choisir la repartition en fonction de ses points forts reels : carnet solide, ou role tenu avec serieux."
+          ],
+          "watch": [
+            "Certains eleves hesitent-ils encore entre les deux roles ?",
+            "Les repartitions choisies sont-elles justifiees ou choisies au hasard ?"
+          ],
+          "errors": [
+            "Choisir un role par copie du voisin, sans lien avec sa propre experience.",
+            "Ne pas ecrire de justification.",
+            "Vouloir garder les deux roles en meme temps."
+          ],
+          "feedback": [
+            "Ce choix engage toute la suite du cycle : appuie-toi sur ce que tu as vraiment prefere en seance 2.",
+            "Un seul role, pas les deux : c'est la regle du referentiel.",
+            "Justifie ton choix, meme en une phrase : c'est ce qui montre que tu l'as reellement pense."
+          ],
+          "plus": [
+            "Justification comparant explicitement ce qu'aurait donne l'autre role."
+          ],
+          "minus": [
+            "Choix accompagne individuellement par le professeur a partir des observations de la seance 2."
+          ],
+          "diff": {
+            "facilitee": "Choix accompagne individuellement par le professeur a partir des observations de la seance 2.",
+            "normale": "Choix autonome du role et de la repartition, justifie par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait donne l'autre role et une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart des tapis, apres retour au calme complet.",
+            "Aucune pression de groupe : le choix reste individuel et confidentiel si l'eleve le souhaite."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel role avez-vous choisi, juge ou observateur, et pourquoi ?",
+          "Quelle repartition de points avez-vous choisie entre l'AFL2 et l'AFL3 ?"
+        ],
+        "key": "A partir d'aujourd'hui, un seul role vous accompagne jusqu'a l'epreuve finale : juge ou observateur, jamais les deux. Ce choix, comme celui de la repartition des points, engage toute la suite du cycle."
+      },
+      "socialRoles": [
+        "Juge en formation : pour ceux qui ont choisi ce role, s'entraine a coter avec la fiche UNSS.",
+        "Observateur en formation : pour ceux qui ont choisi ce role, s'entraine a relever des donnees exploitables.",
+        "Pareur : assure la securite d'un camarade sur un element renverse du projet."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Composer l'enchainement : temps, espace et rythmes",
+      "mainObjective": "Composer l'enchainement complet en respectant les contraintes de temps, d'espace et de variation de rythmes.",
+      "secondaryObjectives": [
+        "Enchainer les six elements sans interruption complete.",
+        "Respecter la fenetre de 45 secondes a 1 minute.",
+        "Utiliser reellement les deux longueurs et la diagonale du praticable, en alternant statique et dynamique."
+      ],
+      "linkToPrevious": "Le role et la repartition sont choisis depuis la seance 3. Reste a composer l'enchainement complet dans les contraintes imposees par le referentiel.",
+      "prerequisiteForNext": "Chaque eleve realise son enchainement complet de six elements, dans le temps imparti, sur l'espace impose, avec une alternance de rythmes.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "marquage au sol du praticable",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Marquer au sol les deux longueurs et la diagonale du praticable.",
+          "Disposer les tapis de chute sur l'ensemble de l'espace utilise, y compris la diagonale.",
+          "Verifier les PAI avant les elements renverses et aeriens.",
+          "Preparer des chronometres visibles pour chaque binome."
+        ],
+        "sketch": "Praticable marque au sol : deux longueurs et une diagonale bien identifiees.\nTapis de chute sur l'ensemble de la zone utilisee.\nChronometreurs positionnes en bord de praticable.\nZone d'ecriture a l'ecart pour ajuster la fiche-scenario."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet conduit en autonomie croissante, indispensable avant l'enchainement complet des six elements.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement general, six minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, epaules, nuque : mobilisation complete.",
+              "Chevilles, genoux, hanches.",
+              "Gainage cible sur les elements statiques et dynamiques du projet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Chacun refait ses six elements a vide, dans l'ordre du projet.",
+              "Verification des transitions les plus fragiles.",
+              "Trois minutes de retour au calme avant le travail."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Composer l'enchainement complet",
+          "objective": "Relier les six elements en un enchainement continu, dans la fenetre de 45 secondes a 1 minute.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun realise son enchainement complet, du debut a la fin, pendant que son camarade chronometre et verifie l'usage de l'espace (deux longueurs, une diagonale).",
+          "studentGoal": "Realiser mon enchainement complet de six elements, entre 45 secondes et 1 minute.",
+          "instructions": [
+            "Je realise mes six elements dans l'ordre de ma fiche-scenario, sans m'arreter completement.",
+            "Je me deplace reellement sur les deux longueurs et la diagonale.",
+            "Chronometreur : tu m'annonces mon temps total a la fin.",
+            "Je note mon temps et j'ajuste ma fiche si je suis trop court ou trop long."
+          ],
+          "success": [
+            "L'enchainement des six elements est realise sans arret complet.",
+            "Le temps est compris entre 45 secondes et 1 minute, ou proche.",
+            "Les deux longueurs et la diagonale sont utilisees."
+          ],
+          "execution": [
+            "Preparer une transition pour chaque changement d'element.",
+            "Ralentir les transitions plutot que les elements eux-memes si le temps est trop court."
+          ],
+          "watch": [
+            "L'enchainement est-il trop court (moins de 40 secondes) ou trop long (plus de 1 minute 10) ?",
+            "L'espace est-il vraiment utilise, ou l'eleve reste-t-il sur place ?"
+          ],
+          "errors": [
+            "Realiser les six elements en moins de 30 secondes, sans aucune transition.",
+            "Rester dans un coin du praticable sans utiliser la diagonale."
+          ],
+          "feedback": [
+            "Trente secondes, c'est trop court : allonge tes transitions et tiens tes positions statiques.",
+            "Utilise la diagonale : c'est une contrainte du referentiel, pas une option."
+          ],
+          "plus": [
+            "Enchainement realise avec un temps deja stable a plus ou moins trois secondes."
+          ],
+          "minus": [
+            "Enchainement de quatre elements, sans contrainte de temps stricte encore."
+          ],
+          "diff": {
+            "facilitee": "Enchainement de quatre elements, temps indicatif seulement.",
+            "normale": "Enchainement complet de six elements, temps chronometre entre 45 secondes et 1 minute.",
+            "complexifiee": "Enchainement complet avec un temps deja stable a plus ou moins trois secondes d'un essai a l'autre."
+          },
+          "safety": [
+            "Echauffement articulaire complet obligatoire avant tout enchainement comportant un element renverse.",
+            "Tapis de chute couvrant l'ensemble de l'espace utilise, y compris la diagonale.",
+            "Aucun element de niveau 2 sans pareur pour les eleves qui en ont besoin.",
+            "Le chronometreur reste attentif a la securite de son camarade, pas seulement au temps.",
+            "Arret immediat en cas de chute repetee sur le meme element."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Alterner statique et dynamique",
+          "objective": "Construire explicitement l'alternance de rythmes exigee par le referentiel : un temps statique et un temps dynamique clairement identifiables.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun identifie dans son enchainement un temps statique (tenu, comme une planche) et un temps dynamique (rapide, comme une roue), et travaille le contraste entre les deux : ralentir avant le temps statique, accelerer sur le temps dynamique.",
+          "studentGoal": "Faire clairement sentir, dans mon enchainement, un temps qui s'arrete et un temps qui va vite.",
+          "instructions": [
+            "Je repere mon temps statique et je le tiens au moins deux secondes, sans trembler.",
+            "Je repere mon temps dynamique et je l'execute avec de la vitesse, pas mollement.",
+            "Je marque le contraste : ralentir juste avant le temps statique, accelerer juste avant le temps dynamique.",
+            "Mon camarade me dit si le contraste se voit vraiment."
+          ],
+          "success": [
+            "Un temps statique tenu au moins deux secondes est identifiable.",
+            "Un temps dynamique execute avec vitesse est identifiable.",
+            "Le contraste entre les deux est percu par l'observateur."
+          ],
+          "execution": [
+            "Gainer fermement pendant le temps statique.",
+            "Ne pas ralentir un element dynamique par prudence excessive une fois maitrise."
+          ],
+          "watch": [
+            "Le temps statique tremble-t-il ou est-il tenu fermement ?",
+            "Le contraste entre statique et dynamique est-il visible depuis l'exterieur ?"
+          ],
+          "errors": [
+            "Executer tout l'enchainement a la meme vitesse, sans contraste.",
+            "Tenir le temps statique moins d'une seconde, invisible pour le spectateur."
+          ],
+          "feedback": [
+            "Tiens ta planche au moins deux secondes, sinon le jury ne la voit pas.",
+            "Accelere sur ta roue : un enchainement uniforme n'utilise pas la contrainte de rythme."
+          ],
+          "plus": [
+            "Deux temps statiques et deux temps dynamiques clairement contrastes dans l'enchainement."
+          ],
+          "minus": [
+            "Un seul contraste travaille, guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Un seul contraste statique/dynamique travaille, guide par le professeur.",
+            "normale": "Un temps statique et un temps dynamique clairement contrastes.",
+            "complexifiee": "Deux temps statiques et deux temps dynamiques contrastes dans l'enchainement complet."
+          },
+          "safety": [
+            "Le temps dynamique reste limite aux elements deja stabilises dans la situation precedente.",
+            "Tapis de chute maintenus sur toute la zone de travail.",
+            "Le professeur verifie que l'acceleration recherchee ne degrade pas la securite d'execution."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Presentation complete devant le groupe",
+          "objective": "Realiser l'enchainement complet devant un petit groupe, dans des conditions proches de l'epreuve.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 6
+            }
+          ],
+          "organization": "Par groupes de quatre a six. Chacun presente son enchainement complet devant le groupe. Selon le role choisi en seance 3, les camarades cotent (juges) ou observent (observateurs) la prestation.",
+          "studentGoal": "Presenter mon enchainement complet devant un public, dans le temps et l'espace imposes.",
+          "instructions": [
+            "Je presente mon enchainement complet devant le groupe, du debut marque a la fin marquee.",
+            "Juges : vous cotez avec la fiche UNSS. Observateurs : vous relevez vos donnees.",
+            "Je respecte le temps, l'espace et l'alternance de rythmes travailles aujourd'hui.",
+            "Je recueille un retour de mon camarade a la fin de ma presentation."
+          ],
+          "success": [
+            "L'enchainement complet est presente devant le groupe, du debut a la fin.",
+            "Le temps, l'espace et l'alternance de rythmes sont globalement respectes.",
+            "Un retour, cote ou observe, est recueilli."
+          ],
+          "execution": [
+            "Prendre une position de depart claire avant de commencer.",
+            "Tenir la position finale, bras leves, au moins deux secondes."
+          ],
+          "watch": [
+            "La presentation devant un public modifie-t-elle la qualite d'execution (stress, precipitation) ?",
+            "Les juges et observateurs utilisent-ils bien leurs fiches respectives ?"
+          ],
+          "errors": [
+            "Se precipiter sous l'effet du regard du groupe, en degradant les elements deja maitrises.",
+            "Oublier de marquer le debut ou la fin."
+          ],
+          "feedback": [
+            "Ralentis : le regard du groupe te fait precipiter des elements que tu maitrises bien seul.",
+            "Marque ta fin, bras leves : c'est la que le jury arrete de juger."
+          ],
+          "plus": [
+            "Presentation suivie d'une cotation avec calcul du coefficient de difficulte."
+          ],
+          "minus": [
+            "Presentation devant deux camarades seulement, sans cotation formelle."
+          ],
+          "diff": {
+            "facilitee": "Presentation devant deux camarades seulement, retour oral simple.",
+            "normale": "Presentation devant un groupe de quatre a six, cotee ou observee selon le role.",
+            "complexifiee": "Presentation suivie d'une cotation avec calcul du coefficient de difficulte."
+          },
+          "safety": [
+            "Tapis de chute maintenus sur l'ensemble de l'espace de presentation.",
+            "Le professeur reste en observation prioritaire pendant les presentations, en particulier sur les elements renverses.",
+            "Aucune presentation d'un element non stabilise dans les situations precedentes."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre enchainement tient-il dans la fenetre de 45 secondes a 1 minute ?",
+          "Le contraste entre votre temps statique et votre temps dynamique se voit-il vraiment ?"
+        ],
+        "key": "Un enchainement gymnique se juge aussi sur le temps, l'espace et le rythme : six elements bien executes mais entasses au meme endroit, ou sans aucun contraste, ne respectent pas les contraintes du referentiel."
+      },
+      "socialRoles": [
+        "Juge (role choisi) : cote les prestations du groupe avec la fiche UNSS.",
+        "Observateur (role choisi) : releve des donnees exploitables sur les prestations du groupe.",
+        "Chronometreur : verifie le respect de la fenetre de temps pour chaque prestation."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et fiche-scenario",
+      "mainObjective": "Situer chacun dans des conditions proches du jour J, fiche-scenario remise a un jury, et verifier le role et la repartition choisis en seance 3.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet devant un jury, fiche-scenario remise avant le passage.",
+        "Verifier que le role et la repartition choisis en seance 3 restent le bon choix.",
+        "Ajuster l'enchainement a partir des remarques recues."
+      ],
+      "linkToPrevious": "Les six elements sont composes, places dans le temps, l'espace et les rythmes exiges : l'epreuve evaluee de mi-cycle montre ce que cela donne en conditions proches du jour J.",
+      "prerequisiteForNext": "Chaque eleve a un enchainement evalue une premiere fois, un role verifie, et une liste d'ajustements a mener d'ici l'epreuve finale.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "marquage au sol du praticable",
+            "fixed": 1
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches d'evaluation mi-cycle nominatives.",
+          "Marquer le praticable comme pour l'epreuve finale.",
+          "Verifier les PAI et les conditions de securite avant les passages."
+        ],
+        "sketch": "Praticable marque comme le jour de l'epreuve.\nZone jury face au praticable, zone d'attente sur le cote.\nAffichage du referentiel et des repartitions a l'entree.\nTapis de chute sur l'ensemble de la zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet mene en autonomie complete : sa conduite fait partie de ce qui sera observe le jour de l'epreuve finale.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six minutes minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, genoux, hanches.",
+              "Gainage cible sur les elements du projet."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action",
+            "details": [
+              "Chacun refait son enchainement complet a vide, une fois.",
+              "Verification des transitions et du minutage.",
+              "Trois minutes de retour au calme avant les passages evalues."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Passage evalue devant jury",
+          "objective": "Evaluer la capacite a presenter l'enchainement complet, fiche-scenario remise avant le passage.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque eleve remet sa fiche-scenario au jury (le professeur et, si possible, un ou deux eleves-juges) avant son passage, puis presente son enchainement complet. Le jury cote avec la fiche UNSS, en distinguant realisation (8 points) et composition/presentation (4 points).",
+          "studentGoal": "Presenter mon enchainement complet devant un jury, fiche-scenario remise au prealable.",
+          "instructions": [
+            "Je remets ma fiche-scenario au jury avant de commencer.",
+            "Je presente mon enchainement complet, du debut marque a la fin marquee.",
+            "Je respecte le temps, l'espace et l'alternance de rythmes.",
+            "J'attends le retour du jury avant de quitter le praticable."
+          ],
+          "success": [
+            "La fiche-scenario est remise avant le passage.",
+            "L'enchainement complet est presente sans interruption majeure.",
+            "Une cotation realisation/composition est obtenue."
+          ],
+          "execution": [
+            "Se placer en position de depart et attendre le signal du jury.",
+            "Terminer par une position finale tenue, bras leves."
+          ],
+          "watch": [
+            "La fiche-scenario correspond-elle vraiment a ce qui est presente ?",
+            "Le stress du jury degrade-t-il des elements deja maitrises seul ?"
+          ],
+          "errors": [
+            "Presenter un enchainement different de la fiche-scenario remise.",
+            "Omettre de marquer le debut ou la fin devant le jury."
+          ],
+          "feedback": [
+            "Ta fiche annonce six elements de quatre familles : ce que tu presentes doit y correspondre.",
+            "Marque ton debut et ta fin : le jury commence et arrete de juger a ces moments-la."
+          ],
+          "plus": [
+            "Passage suivi d'un calcul immediat du coefficient de difficulte applique a la note."
+          ],
+          "minus": [
+            "Passage avec fiche-scenario simplifiee, cotation orale seulement."
+          ],
+          "diff": {
+            "facilitee": "Passage avec une fiche-scenario simplifiee, cotation orale seulement.",
+            "normale": "Passage complet avec fiche-scenario remise et cotation ecrite realisation/composition.",
+            "complexifiee": "Passage avec calcul immediat du coefficient de difficulte applique a la note obtenue."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les passages evalues.",
+            "Tapis de chute verifies sur l'ensemble du praticable avant le premier passage.",
+            "Aucun element de niveau 2 sans pareur disponible pour les eleves qui en ont besoin.",
+            "Le professeur interrompt tout passage presentant un risque manifeste.",
+            "Retour au calme obligatoire apres l'ensemble des passages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier son role et sa repartition",
+          "objective": "Verifier que le role et la repartition choisis en seance 3 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du praticable. Chacun relit le role et la repartition choisis en seance 3, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mon role et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis le role et la repartition que j'ai choisis en seance 3.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mon role tenu depuis la seance 3 : suis-je utile a mes camarades ?",
+            "J'ecris si je confirme mon choix, et pourquoi."
+          ],
+          "success": [
+            "Le role et la repartition de la seance 3 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reel.",
+            "Comparer a ce qui avait ete choisi en seance 3."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de seance 3 ?",
+            "Les justifications sont-elles argumentees ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qu'on avait choisi en seance 3.",
+            "Confirmer sans regarder son carnet."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort.",
+            "Tu observes sans jamais rien noter d'exploitable : verifie que ce role te convient."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec l'autre repartition."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome du role et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du praticable, apres retour au calme complet.",
+            "Eleves couverts en cas de salle fraiche."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ajuster l'enchainement a partir du passage",
+          "objective": "Transformer les remarques recues en ajustements concrets de la fiche-scenario.",
+          "material": [
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart du praticable. Chacun relit les remarques du jury et identifie un ou deux ajustements precis a mener d'ici l'epreuve finale : un element a stabiliser, une transition a construire, un contraste de rythme a accentuer.",
+          "studentGoal": "Identifier precisement ce que je dois ameliorer d'ici l'epreuve finale.",
+          "instructions": [
+            "Je relis les remarques du jury sur mon passage.",
+            "J'identifie un ou deux ajustements precis, pas une intention vague.",
+            "J'ecris ces ajustements sur mon carnet, avec une echeance."
+          ],
+          "success": [
+            "Un ou deux ajustements precis sont identifies et ecrits.",
+            "Les ajustements s'appuient sur les remarques reellement recues."
+          ],
+          "execution": [
+            "Choisir des ajustements realisables d'ici l'epreuve finale.",
+            "Formuler chaque ajustement avec un verbe d'action."
+          ],
+          "watch": [
+            "Les ajustements sont-ils precis ou vagues ?",
+            "Les eleves relisent-ils vraiment leurs remarques ?"
+          ],
+          "errors": [
+            "Ecrire un objectif vague : mieux faire mon enchainement.",
+            "Ignorer les remarques du jury et fixer ses propres priorites sans lien."
+          ],
+          "feedback": [
+            "Trop vague : precise quel element, quelle transition.",
+            "Le jury t'a signale ce point precis : c'est celui-la qu'il faut travailler d'abord."
+          ],
+          "plus": [
+            "Plan de travail sur les trois seances restantes, avec un ajustement par seance."
+          ],
+          "minus": [
+            "Ajustement propose par le professeur a partir des remarques."
+          ],
+          "diff": {
+            "facilitee": "Ajustement propose par le professeur a partir des remarques du jury.",
+            "normale": "Un a deux ajustements precis identifies et ecrits par l'eleve.",
+            "complexifiee": "Plan de travail sur les trois seances restantes, un ajustement par seance."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du praticable.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle note avez-vous obtenue en realisation et en composition, et que cela vous apprend-il ?",
+          "Confirmez-vous votre role et votre repartition choisis en seance 3 ?"
+        ],
+        "key": "L'epreuve de mi-cycle n'est pas une sanction mais une photographie : elle dit precisement ce qui reste a stabiliser avant l'epreuve finale, et confirme, ou non, le role choisi en seance 3."
+      },
+      "socialRoles": [
+        "Juge (role choisi) : cote les passages avec la fiche UNSS.",
+        "Observateur (role choisi) : renseigne la fiche d'evaluation mi-cycle.",
+        "Responsable materiel : verifie les tapis entre chaque passage."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Affiner l'enchainement et exercer son role",
+      "mainObjective": "Affiner l'execution des elements, s'entrainer au calcul du coefficient de difficulte, et exercer reellement le role choisi sur les prestations des camarades.",
+      "secondaryObjectives": [
+        "Corriger les points faibles identifies en seance 5.",
+        "Calculer le coefficient de difficulte applique a une note.",
+        "Exercer le role choisi (juge ou observateur) selon les criteres exacts du referentiel."
+      ],
+      "linkToPrevious": "Les ajustements a mener ont ete identifies en seance 5 a partir du passage evalue : cette seance les met en oeuvre concretement.",
+      "prerequisiteForNext": "Chaque eleve a corrige au moins un point faible identifie, sait calculer un coefficient de difficulte, et a exerce son role selon les criteres du referentiel.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "marquage au sol du praticable",
+            "fixed": 1
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche des coefficients de difficulte",
+            "fixed": 2
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher un tableau des coefficients de difficulte (niveau 1 : coefficient 1,0 ; niveau 2 : coefficient 1,1) avec un exemple de calcul et d'arrondi.",
+          "Preparer des fiches d'observation AFL3 adaptees au role choisi par chaque eleve.",
+          "Disposer les tapis de chute sur l'ensemble du praticable.",
+          "Verifier les PAI avant les elements renverses."
+        ],
+        "sketch": "Praticable marque comme pour l'epreuve.\nAffiche des coefficients de difficulte a l'entree.\nZones de travail individuel en peripherie avec tapis de chute.\nEspace d'observation pour les juges et observateurs en bord de praticable."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet conduit en autonomie, cible sur les points faibles identifies en seance 5.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement general, six minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 8,
+            "title": "Echauffement articulaire complet",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, genoux, hanches.",
+              "Gainage cible sur l'element identifie comme point faible."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en action ciblee",
+            "details": [
+              "Chacun refait a vide l'element ou la transition identifie comme fragile.",
+              "Trois minutes de retour au calme avant le travail."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Corriger les points faibles identifies",
+          "objective": "Reprendre precisement l'element ou la transition identifie en seance 5 et le stabiliser.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Travail individuel cible. Chacun reprend l'ajustement note en seance 5 et le repete jusqu'a stabilisation, avant de le reinserer dans l'enchainement complet.",
+          "studentGoal": "Corriger precisement le point faible que j'ai identifie en seance 5.",
+          "instructions": [
+            "Je reprends l'ajustement note sur mon carnet en seance 5.",
+            "Je repete l'element ou la transition isolement, plusieurs fois.",
+            "Je reinsere l'ajustement dans mon enchainement complet.",
+            "Je verifie que l'enchainement complet reste dans le temps impose."
+          ],
+          "success": [
+            "L'element ou la transition identifie est repete et ameliore.",
+            "L'ajustement est reinsere dans l'enchainement complet.",
+            "Le temps global reste dans la fenetre imposee."
+          ],
+          "execution": [
+            "Isoler d'abord le point faible avant de le reinserer.",
+            "Verifier le temps global apres chaque reinsertion."
+          ],
+          "watch": [
+            "L'ajustement est-il reellement travaille, ou l'eleve repete-t-il l'ensemble sans cibler ?",
+            "Le temps global derive-t-il apres l'ajustement ?"
+          ],
+          "errors": [
+            "Refaire l'enchainement complet sans jamais isoler le point faible.",
+            "Ajouter du temps sans le compenser ailleurs, faisant deriver le minutage."
+          ],
+          "feedback": [
+            "Isole d'abord ce point precis, tu le reinsereras ensuite.",
+            "Ton temps a change : verifie que tu restes entre 45 secondes et 1 minute."
+          ],
+          "plus": [
+            "Deux points faibles corriges dans la meme seance."
+          ],
+          "minus": [
+            "Correction guidee individuellement par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Correction guidee individuellement par le professeur, pas a pas.",
+            "normale": "Un point faible corrige et reinsere dans l'enchainement complet.",
+            "complexifiee": "Deux points faibles corriges et reinseres, temps global reverifie."
+          },
+          "safety": [
+            "Echauffement articulaire complet obligatoire avant toute reprise d'un element renverse.",
+            "Aucun element de niveau 2 travaille sans pareur pour les eleves qui en ont besoin.",
+            "Tapis de chute maintenus sous chaque zone de travail individuel.",
+            "Arret immediat en cas de chute repetee sur le meme point faible."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Calculer le coefficient de difficulte",
+          "objective": "Faire calculer, a partir d'exemples, la note finale obtenue en multipliant la note de degre par le coefficient de difficulte.",
+          "material": [
+            {
+              "label": "affiche des coefficients de difficulte",
+              "fixed": 2
+            },
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux ou trois. A partir d'exemples de notes de degre (par exemple 7 sur 12) et de niveaux de difficulte presentes dans l'enchainement, chacun calcule la note finale en multipliant par le coefficient correspondant, puis arrondit selon la regle donnee.",
+          "studentGoal": "Savoir calculer ma note finale en multipliant ma note de degre par mon coefficient de difficulte.",
+          "instructions": [
+            "Je prends une note de degre donnee en exemple, par exemple 7 sur 12.",
+            "Je multiplie par le coefficient de difficulte correspondant a mon enchainement : 1,0 ou 1,1.",
+            "J'arrondis le resultat selon la regle donnee : 7 x 1,1 = 7,7, arrondi a 8.",
+            "Je refais le calcul avec ma propre note obtenue en seance 5."
+          ],
+          "success": [
+            "Le calcul est effectue correctement sur l'exemple donne.",
+            "Le calcul est refait avec la propre note de l'eleve.",
+            "L'arrondi est applique correctement."
+          ],
+          "execution": [
+            "Multiplier avant d'arrondir, jamais l'inverse.",
+            "Verifier le coefficient reellement associe au niveau de difficulte presente."
+          ],
+          "watch": [
+            "Les eleves multiplient-ils dans le bon ordre ?",
+            "Comprennent-ils pourquoi un enchainement plus difficile rapporte davantage a note de degre egale ?"
+          ],
+          "errors": [
+            "Arrondir avant de multiplier.",
+            "Confondre le coefficient de niveau 1 et celui de niveau 2."
+          ],
+          "feedback": [
+            "Multiplie d'abord, arrondis ensuite : 7 x 1,1 = 7,7, puis on arrondit a 8.",
+            "C'est ton niveau de difficulte qui donne le coefficient, verifie lequel s'applique a toi."
+          ],
+          "plus": [
+            "Calcul mene sur trois exemples differents, avec comparaison des ecarts obtenus."
+          ],
+          "minus": [
+            "Calcul mene avec le professeur sur un seul exemple."
+          ],
+          "diff": {
+            "facilitee": "Calcul mene avec le professeur sur un seul exemple donne.",
+            "normale": "Calcul mene en autonomie sur l'exemple donne, puis sur sa propre note.",
+            "complexifiee": "Calcul mene sur trois exemples differents, avec comparaison des ecarts obtenus."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du praticable, apres retour au calme.",
+            "Eleves couverts en cas de salle fraiche."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Exercer son role selon les criteres du referentiel",
+          "objective": "Faire exercer reellement, sur les prestations des camarades, le role choisi (juge ou observateur), selon les criteres precis du referentiel.",
+          "material": [
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant que des camarades presentent leur enchainement en cours de construction, chacun exerce exclusivement le role choisi en seance 3. Juge : repere la difficulte, identifie les fautes d'execution, applique precisement les criteres de notation. Observateur : releve des donnees significatives et fiables, capables d'etre relues et analysees ensuite.",
+          "studentGoal": "Exercer mon role choisi selon les criteres exacts du referentiel, sur une vraie prestation.",
+          "instructions": [
+            "Juge : je repere la difficulte de chaque element, meme le plus difficile, et je note precisement les fautes d'execution.",
+            "Observateur : je releve des donnees precises et fiables, que je pourrai relire et analyser plus tard.",
+            "Je reste concentre du debut a la fin de la prestation de mon camarade.",
+            "Je donne un retour bref et utile a la fin, dans mon role."
+          ],
+          "success": [
+            "Le role exerce est bien celui choisi en seance 3, un seul des deux.",
+            "Juge : la difficulte et les fautes sont identifiees precisement.",
+            "Observateur : les donnees relevees sont fiables et exploitables pour une progression."
+          ],
+          "execution": [
+            "Se referer a la fiche de criteres plutot qu'a une impression generale.",
+            "Noter en direct, sans attendre la fin de la prestation."
+          ],
+          "watch": [
+            "Le juge connait-il precisement les criteres de notation ?",
+            "L'observateur peut-il expliquer, apres coup, une cause de reussite ou d'echec a partir de ses notes ?"
+          ],
+          "errors": [
+            "Juger a l'impression, sans se referer aux criteres precis.",
+            "Observer sans relever de donnees exploitables pour une progression."
+          ],
+          "feedback": [
+            "Base-toi sur les criteres, pas sur ton impression generale.",
+            "Tes donnees doivent permettre a ton camarade de savoir precisement quoi corriger."
+          ],
+          "plus": [
+            "Retour donne avec un conseil concret et exploitable pour la prochaine seance."
+          ],
+          "minus": [
+            "Role exerce avec une fiche tres guidee et rappel regulier du professeur."
+          ],
+          "diff": {
+            "facilitee": "Role exerce avec une fiche tres guidee et rappel regulier du professeur.",
+            "normale": "Role exerce en autonomie, fiche renseignee prestation par prestation.",
+            "complexifiee": "Retour donne avec un conseil concret et exploitable, appuye sur les donnees relevees."
+          },
+          "safety": [
+            "Le juge et l'observateur restent en dehors du praticable pendant la prestation.",
+            "Ils signalent immediatement tout signe anormal chez le gymnaste observe.",
+            "Aucun releve ne prevaut sur une regle de securite : le professeur interrompt si necessaire."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel point faible avez-vous corrige aujourd'hui ?",
+          "Comment calcule-t-on la note finale a partir de la note de degre et du coefficient de difficulte ?"
+        ],
+        "key": "Une note de degre ne suffit pas : c'est sa multiplication par le coefficient de difficulte qui donne la note finale. Et un role bien exerce se reconnait a des donnees precises, pas a une impression."
+      },
+      "socialRoles": [
+        "Juge (role choisi) : applique precisement les criteres de notation du referentiel.",
+        "Observateur (role choisi) : releve des donnees fiables et exploitables.",
+        "Pareur : assure la securite sur les elements renverses en cours de correction."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale devant jury",
+      "mainObjective": "Realiser une repetition generale complete, fiche-type remise a un jury simule, et finaliser le carnet de suivi.",
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet dans des conditions identiques a celles de l'epreuve finale.",
+        "Finaliser et relire le carnet de suivi des acquis.",
+        "Verifier une derniere fois la securite de chaque element renverse ou aerien."
+      ],
+      "linkToPrevious": "Les points faibles sont corriges, le calcul du coefficient est maitrise, le role est exerce : reste a repeter dans les conditions exactes de l'epreuve finale.",
+      "prerequisiteForNext": "Chaque eleve a realise une repetition complete validee, avec fiche-type remise et carnet finalise, pret pour l'epreuve finale.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "marquage au sol du praticable",
+            "fixed": 1
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Marquer le praticable exactement comme pour l'epreuve finale.",
+          "Preparer une zone jury simule avec le professeur et des eleves-juges.",
+          "Verifier une derniere fois les tapis de chute sur l'ensemble de la zone.",
+          "Verifier les PAI et rappeler les regles de securite avant les passages."
+        ],
+        "sketch": "Praticable marque exactement comme le jour de l'epreuve.\nZone jury simule face au praticable.\nZone d'attente avec fiches-scenario prets a etre remis.\nTapis de chute verifies sur l'ensemble de la zone."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet mene entierement en autonomie, exactement comme il devra l'etre le jour de l'epreuve finale.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome complet",
+            "details": [
+              "Chaque eleve mene l'integralite de son echauffement seul, sept minutes minimum.",
+              "Le professeur observe sans intervenir, sauf securite."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Verification articulaire ciblee",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, genoux, hanches.",
+              "Gainage cible sur les elements les plus exigeants du projet."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Derniere mise en action",
+            "details": [
+              "Chacun refait son enchainement complet une fois, a intensite reduite.",
+              "Deux minutes de retour au calme avant les passages."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Repetition generale devant jury simule",
+          "objective": "Realiser l'enchainement complet dans des conditions identiques a celles de l'epreuve finale, fiche-scenario remise au prealable.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque eleve remet sa fiche-scenario definitive au jury simule (professeur et eleves-juges), presente son enchainement complet, puis recoit un retour immediat sur la realisation et la composition.",
+          "studentGoal": "Realiser ma repetition generale dans des conditions identiques a celles de l'epreuve finale.",
+          "instructions": [
+            "Je remets ma fiche-scenario definitive avant de commencer.",
+            "Je presente mon enchainement complet, sans interruption, comme le jour de l'epreuve.",
+            "Je respecte le temps, l'espace et l'alternance de rythmes.",
+            "Je note le retour du jury simule sur mon carnet."
+          ],
+          "success": [
+            "La fiche-scenario definitive est remise avant le passage.",
+            "L'enchainement complet est realise sans interruption majeure.",
+            "Le retour du jury est note sur le carnet."
+          ],
+          "execution": [
+            "Se preparer mentalement avant d'entrer sur le praticable.",
+            "Terminer par une position finale tenue, bras leves, au moins deux secondes."
+          ],
+          "watch": [
+            "L'enchainement est-il stable d'un passage a l'autre par rapport a la seance 5 ?",
+            "Le stress diminue-t-il par rapport a l'epreuve de mi-cycle ?"
+          ],
+          "errors": [
+            "Modifier son enchainement au dernier moment sans l'avoir repete.",
+            "Negliger la position finale, quitter le praticable sans la marquer."
+          ],
+          "feedback": [
+            "Ne change rien au dernier moment : c'est ce que tu as repete qui doit sortir aujourd'hui.",
+            "Marque ta position finale, meme fatigue : c'est elle qui cloture le jugement."
+          ],
+          "plus": [
+            "Deux passages complets dans la seance, avec comparaison de la stabilite entre les deux."
+          ],
+          "minus": [
+            "Passage realise devant un seul camarade, sans jury simule complet."
+          ],
+          "diff": {
+            "facilitee": "Passage realise devant un seul camarade, retour oral simple.",
+            "normale": "Passage complet devant jury simule, fiche-scenario remise, retour note au carnet.",
+            "complexifiee": "Deux passages complets, avec comparaison de la stabilite entre les deux."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant la repetition generale.",
+            "Tapis de chute verifies une derniere fois sur l'ensemble du praticable avant le premier passage.",
+            "Aucun element de niveau 2 sans pareur disponible pour les eleves qui en ont besoin.",
+            "Le professeur interrompt tout passage presentant un risque manifeste, meme en repetition generale.",
+            "Retour au calme obligatoire apres l'ensemble des passages."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Finaliser le carnet de suivi des acquis",
+          "objective": "Relire et completer le carnet de suivi des acquis, qui sera presente au jury avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du praticable. Chacun relit l'integralite de son carnet depuis la seance 1 : elements diagnostiques, choix de role, ajustements, et complete les parties manquantes avant l'epreuve finale.",
+          "studentGoal": "Avoir un carnet complet et a jour, pret a etre presente au jury.",
+          "instructions": [
+            "Je relis mon carnet depuis la seance 1.",
+            "Je complete les parties manquantes ou incompletes.",
+            "Je verifie que mon role et ma repartition de points y figurent clairement.",
+            "Je verifie que mes ajustements de la seance 5 y sont notes."
+          ],
+          "success": [
+            "Le carnet couvre l'ensemble du cycle sans partie manquante.",
+            "Le role, la repartition et les ajustements y figurent clairement."
+          ],
+          "execution": [
+            "Relire seance par seance, dans l'ordre chronologique.",
+            "Completer avec des faits reels, pas des reconstitutions approximatives."
+          ],
+          "watch": [
+            "Les carnets sont-ils vraiment complets, ou partiellement vides ?",
+            "Le role et la repartition sont-ils clairement identifiables ?"
+          ],
+          "errors": [
+            "Laisser des seances entieres non renseignees.",
+            "Reconstituer approximativement, de memoire, sans lien avec ce qui a ete reellement fait."
+          ],
+          "feedback": [
+            "Ce carnet est presente au jury : une seance vide se voit.",
+            "Ecris ce que tu as reellement fait, pas ce que tu penses avoir fait."
+          ],
+          "plus": [
+            "Ajout d'une synthese personnelle d'une demi-page sur la progression du cycle."
+          ],
+          "minus": [
+            "Completion guidee individuellement par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Completion guidee individuellement par le professeur, seance par seance.",
+            "normale": "Carnet relu et complete en autonomie sur l'ensemble du cycle.",
+            "complexifiee": "Carnet complete, plus une synthese personnelle d'une demi-page sur la progression."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du praticable, apres retour au calme.",
+            "Eleves couverts en cas de salle fraiche."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Derniers reglages et verification de securite",
+          "objective": "Ajuster les tout derniers details de l'enchainement et verifier une derniere fois la securite de chaque element renverse ou aerien.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux. Chacun repasse une derniere fois chaque element renverse ou aerien de son enchainement avec son camarade en position de pareur, verifie sa fiche-scenario definitive, et fixe sa tenue et son placement de depart.",
+          "studentGoal": "Verifier une derniere fois la securite de mes elements les plus difficiles avant l'epreuve finale.",
+          "instructions": [
+            "Je repasse chaque element renverse ou aerien avec mon camarade en pareur.",
+            "Je verifie que ma fiche-scenario definitive correspond exactement a ce que je vais presenter.",
+            "Je fixe ma tenue et mon placement de depart.",
+            "Je signale au professeur toute derniere inquietude sur un element."
+          ],
+          "success": [
+            "Chaque element renverse ou aerien est repasse une derniere fois en securite.",
+            "La fiche-scenario definitive est verifiee et coherente.",
+            "Aucune inquietude de securite n'est laissee sans reponse."
+          ],
+          "execution": [
+            "Rester sur des elements deja stabilises, pas de nouveaute a ce stade.",
+            "Verifier la coherence entre fiche et prestation reelle."
+          ],
+          "watch": [
+            "Des inquietudes de derniere minute apparaissent-elles sur certains elements ?",
+            "La fiche-scenario est-elle vraiment a jour ?"
+          ],
+          "errors": [
+            "Tenter un element non maitrise a la derniere minute, par exces de confiance.",
+            "Garder une fiche-scenario qui ne correspond plus a l'enchainement reel."
+          ],
+          "feedback": [
+            "Ce n'est pas le moment de tenter du nouveau : consolide ce que tu maitrises deja.",
+            "Ta fiche doit correspondre exactement a ce que tu vas presenter, corrige-la maintenant."
+          ],
+          "plus": [
+            "Verification croisee avec un deuxieme camarade sur la coherence fiche/prestation."
+          ],
+          "minus": [
+            "Verification guidee entierement par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee entierement par le professeur pour les elements les plus a risque.",
+            "normale": "Verification en binome, pareur present sur chaque element renverse ou aerien.",
+            "complexifiee": "Verification croisee avec un deuxieme camarade sur la coherence fiche/prestation."
+          },
+          "safety": [
+            "Aucun element non stabilise n'est tente a ce stade du cycle.",
+            "Tapis de chute maintenus sous chaque zone de verification.",
+            "Le professeur valide chaque fiche-scenario definitive avant l'epreuve finale."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre carnet est-il complet et pret a etre presente au jury ?",
+          "Quel est le dernier point de securite que vous avez verifie aujourd'hui ?"
+        ],
+        "key": "La repetition generale doit ressembler exactement a l'epreuve finale : meme fiche, meme temps, meme espace. Et un carnet incomplet se voit immediatement par le jury."
+      },
+      "socialRoles": [
+        "Jury simule (professeur et eleves-juges) : cote les passages comme au jour J.",
+        "Pareur : verifie une derniere fois la securite des elements renverses ou aeriens.",
+        "Responsable fiches : verifie que chaque fiche-scenario est complete et coherente avant le passage."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Realiser l'epreuve finale : enchainement de six elements juge devant un public et un jury, AFL1 note sur 12 points multiplie par le coefficient de difficulte, AFL2/AFL3 finalises sur 8 points.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Presenter l'enchainement complet devant public et jury, fiche-type remise avant le debut de l'epreuve.",
+        "Assumer pleinement son role choisi (juge ou observateur) pendant les passages des camarades.",
+        "Cloturer le cycle par la remise du carnet de suivi et un bilan personnel."
+      ],
+      "linkToPrevious": "Tout est pret : enchainement stabilise, fiche-scenario definitive, role exerce, carnet complete. L'epreuve finale evalue l'ensemble de ce travail.",
+      "prerequisiteForNext": "Fin de cycle : chaque eleve a une note d'AFL1, d'AFL2 et d'AFL3, et un carnet de suivi complet.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "tapis de chute",
+            "fixed": 8
+          },
+          {
+            "label": "marquage au sol du praticable",
+            "fixed": 1
+          },
+          {
+            "label": "fiches-scenario type",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de cotation UNSS",
+            "fixed": 6
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi des acquis",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Marquer le praticable exactement comme prevu par le referentiel.",
+          "Installer le jury face au praticable et une zone de public sur le cote.",
+          "Verifier une derniere fois les tapis de chute sur l'ensemble de la zone.",
+          "Verifier les PAI et les dispenses avant le debut de l'epreuve.",
+          "Prevoir la trousse de secours a portee immediate."
+        ],
+        "sketch": "Praticable marque officiellement, zone jury face a lui.\nZone public et zone d'attente des candidats sur les cotes.\nTapis de chute sur l'ensemble du praticable, y compris la diagonale.\nAffiche du referentiel et trousse de secours a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet mene entierement en autonomie : sa conduite fait partie de ce qui est observe le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome complet",
+            "details": [
+              "Chaque eleve mene l'integralite de son echauffement seul, sept minutes minimum.",
+              "Le professeur observe la conduite de l'echauffement sans intervenir, sauf securite."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Verification articulaire ciblee",
+            "details": [
+              "Poignets, epaules, nuque, chevilles, genoux, hanches.",
+              "Gainage cible sur les elements les plus exigeants."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mise en action finale",
+            "details": [
+              "Chacun refait une derniere fois, a intensite reduite, les elements les plus techniques.",
+              "Deux minutes de retour au calme avant l'entree en piste."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Epreuve finale : enchainement juge",
+          "objective": "Evaluer l'AFL1 : realisation (8 points) et composition/presentation (4 points), note multipliee par le coefficient de difficulte.",
+          "material": [
+            {
+              "label": "tapis de chute",
+              "fixed": 8
+            },
+            {
+              "label": "fiches-scenario type",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            }
+          ],
+          "organization": "Chaque candidat remet sa fiche-type au jury avant le debut de son epreuve, puis presente son enchainement complet de six elements devant le public, le jury et le petit groupe d'eleves-juges. Le jury note la realisation (8 points) et la composition/presentation (4 points), puis multiplie la note globale par le coefficient de difficulte (exemple : 7 x 1,1 = 7,7, arrondi a 8).",
+          "studentGoal": "Presenter mon enchainement complet, fiche-type remise au prealable, devant le public et le jury.",
+          "instructions": [
+            "Je remets ma fiche-type au jury avant le debut de mon epreuve.",
+            "Je presente mon enchainement complet de six elements, du debut marque a la fin marquee.",
+            "Je respecte le temps (45 secondes a 1 minute), l'espace (deux longueurs, une diagonale) et l'alternance de rythmes.",
+            "J'attends le signal du jury avant d'entrer sur le praticable et je le remercie avant de le quitter."
+          ],
+          "success": [
+            "La fiche-type est remise avant le debut de l'epreuve.",
+            "L'enchainement complet de six elements est realise, avec quatre familles et deux niveaux de difficulte representes.",
+            "Le temps, l'espace et l'alternance de rythmes sont respectes."
+          ],
+          "execution": [
+            "Se placer en position de depart et attendre le signal du jury.",
+            "Terminer par une position finale tenue, bras leves, au moins deux secondes."
+          ],
+          "watch": [
+            "L'enchainement presente correspond-il exactement a la fiche-type remise ?",
+            "Le stress du jour J degrade-t-il des elements deja stabilises ?"
+          ],
+          "errors": [
+            "Presenter un enchainement different de la fiche-type remise.",
+            "Precipiter les elements sous le coup du stress, en degradant l'execution."
+          ],
+          "feedback": [
+            "Prends le temps de te placer avant de commencer, le jury attend ton signal.",
+            "Ralentis : c'est l'enchainement travaille depuis sept seances qui doit sortir, pas une version precipitee."
+          ],
+          "plus": [
+            "Enchainement realise avec les deux niveaux de difficulte clairement identifiables et un temps stable a plus ou moins deux secondes."
+          ],
+          "minus": [
+            "Enchainement realise avec un accompagnement verbal reduit du jury pour rassurer l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Enchainement realise avec un accompagnement verbal du jury pour rassurer l'eleve, sans modifier la notation.",
+            "normale": "Enchainement complet realise dans les conditions officielles du referentiel.",
+            "complexifiee": "Enchainement realise avec un temps stable a plus ou moins deux secondes et deux niveaux de difficulte clairement identifiables."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant l'entree en piste de chaque candidat.",
+            "Tapis de chute verifies avant le premier passage et apres chaque passage comportant une chute.",
+            "Aucun element de niveau 2 sans pareur disponible pour les eleves qui en ont besoin, meme le jour de l'epreuve.",
+            "Le professeur interrompt immediatement tout passage presentant un risque manifeste.",
+            "Trousse de secours et point d'eau accessibles pendant toute l'epreuve.",
+            "Retour au calme obligatoire pour chaque candidat apres son passage."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Assumer son role pendant l'epreuve des camarades",
+          "objective": "Evaluer l'AFL3 dans le role choisi (juge ou observateur), pendant les passages des camarades.",
+          "material": [
+            {
+              "label": "fiches de cotation UNSS",
+              "fixed": 6
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant les passages des camarades, chaque eleve exerce exclusivement le role choisi depuis la seance 3. Juge : repere la difficulte, meme la plus difficile, identifie precisement les fautes d'execution, connait precisement les criteres de notation, quantifie avec precision. Observateur : reste attentif et concentre, releve des donnees significatives et fiables, capables d'etre relues et analysees, et pourra en expliquer les causes de reussite ou d'echec.",
+          "studentGoal": "Assumer pleinement mon role choisi pendant les passages de mes camarades, du premier au dernier.",
+          "instructions": [
+            "Je tiens mon role choisi (juge ou observateur) du premier au dernier passage de la journee.",
+            "Juge : je quantifie avec precision, en connaissant exactement les criteres de notation.",
+            "Observateur : je releve des donnees que je pourrai relire et analyser, et j'explique les causes de reussite ou d'echec.",
+            "Je reste attentif et concentre, meme apres mon propre passage."
+          ],
+          "success": [
+            "Le role est tenu du premier au dernier passage, sans relachement apres son propre passage.",
+            "Juge : la quantification est precise et conforme aux criteres.",
+            "Observateur : les donnees relevees sont fiables, exploitables et expliquees."
+          ],
+          "execution": [
+            "Rester concentre meme quand ce n'est pas son tour de passer.",
+            "Se referer systematiquement a la fiche de criteres."
+          ],
+          "watch": [
+            "L'attention retombe-t-elle apres le propre passage de l'eleve ?",
+            "Les donnees ou les cotations restent-elles precises jusqu'au dernier passage ?"
+          ],
+          "errors": [
+            "Se relacher completement une fois son propre passage termine.",
+            "Coter ou observer de maniere approximative sur les derniers passages, par fatigue d'attention."
+          ],
+          "feedback": [
+            "Ton passage est termine, mais ton role continue jusqu'au dernier candidat.",
+            "Reste aussi precis sur le dernier passage que sur le premier."
+          ],
+          "plus": [
+            "Conseils donnes en fin de journee, exploitables pour un futur cycle de gymnastique."
+          ],
+          "minus": [
+            "Role tenu avec un rappel regulier du professeur sur l'attention a maintenir."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec un rappel regulier du professeur sur l'attention a maintenir.",
+            "normale": "Role tenu en autonomie du premier au dernier passage, fiche renseignee integralement.",
+            "complexifiee": "Conseils donnes en fin de journee, exploitables pour un futur cycle de gymnastique."
+          },
+          "safety": [
+            "Le juge et l'observateur restent en dehors du praticable pendant chaque passage.",
+            "Ils signalent immediatement tout signe anormal chez le candidat observe.",
+            "Aucun releve ni aucune cotation ne prevaut sur une regle de securite."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Bilan du carnet et cloture du cycle",
+          "objective": "Cloturer le cycle par la remise du carnet de suivi des acquis et un bilan personnel de la sequence.",
+          "material": [
+            {
+              "label": "carnets de suivi des acquis",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart du praticable, une fois tous les passages termines. Chacun remet son carnet de suivi des acquis complet au professeur et ecrit un bilan personnel de la sequence : progres realises, role tenu, difficulte de l'enchainement final.",
+          "studentGoal": "Remettre mon carnet complet et ecrire un bilan personnel de mon cycle de gymnastique.",
+          "instructions": [
+            "Je remets mon carnet de suivi des acquis complet.",
+            "J'ecris un bilan : ce que j'ai appris, ce que mon role m'a apporte, ce que je retiens de l'enchainement final.",
+            "Je compare mon niveau de depart (seance 1) et mon niveau d'arrivee (aujourd'hui)."
+          ],
+          "success": [
+            "Le carnet complet est remis.",
+            "Le bilan personnel est ecrit et compare le depart et l'arrivee du cycle."
+          ],
+          "execution": [
+            "S'appuyer sur des faits precis du carnet, pas sur une impression generale.",
+            "Formuler le bilan en quelques phrases claires."
+          ],
+          "watch": [
+            "Les bilans sont-ils factuels ou vagues ?",
+            "Les eleves reperent-ils vraiment leur progression depuis la seance 1 ?"
+          ],
+          "errors": [
+            "Ecrire un bilan vague, sans lien avec le carnet.",
+            "Ne pas remettre le carnet."
+          ],
+          "feedback": [
+            "Appuie-toi sur ton carnet : que disait la seance 1, que dit aujourd'hui ?",
+            "Ton carnet fait partie de l'evaluation, il doit etre remis complet."
+          ],
+          "plus": [
+            "Bilan incluant une piste de travail pour un futur cycle de gymnastique."
+          ],
+          "minus": [
+            "Bilan ecrit avec l'aide du professeur, a partir de questions guidees."
+          ],
+          "diff": {
+            "facilitee": "Bilan ecrit avec l'aide du professeur, a partir de questions guidees.",
+            "normale": "Bilan personnel autonome, comparant le depart et l'arrivee du cycle.",
+            "complexifiee": "Bilan incluant une piste de travail concrete pour un futur cycle de gymnastique."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart du praticable, apres retour au calme complet de l'ensemble du groupe.",
+            "Eleves couverts en cas de salle fraiche."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Etes-vous satisfait de votre enchainement final, et pourquoi ?",
+          "Qu'avez-vous appris en tenant votre role de juge ou d'observateur pendant tout le cycle ?"
+        ],
+        "key": "L'epreuve finale recompense un enchainement compose et maitrise, mais aussi tout ce qui a ete construit au fil du cycle : le carnet, le role tenu, et la capacite a se preparer en toute securite, seul et avec les autres."
+      },
+      "socialRoles": [
+        "Juge (role choisi) : note les passages avec la fiche UNSS du premier au dernier candidat.",
+        "Observateur (role choisi) : releve des donnees fiables du premier au dernier candidat.",
+        "Responsable materiel et securite : verifie les tapis entre chaque passage et signale toute anomalie."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2762 @@
+{
+  "apsa": "Badminton",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel pour gagner",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour gagner une rencontre en faisant des choix techniques et tactiques pertinents au regard de l'analyse du rapport de force.",
+    "AFL2 : se preparer et s'entrainer, individuellement ou collectivement, pour conduire et maitriser un affrontement collectif ou interindividuel.",
+    "AFL3 : choisir et assumer les roles qui permettent un fonctionnement collectif solidaire, dans deux roles choisis a l'issue de la troisieme seance parmi coach, partenaire d'entrainement, observateur ou arbitre."
+  ],
+  "targetCompetence": "Passer d'un jeu de renvoi simple, joue uniquement de face avec une prise universelle et un service unique et previsible, a un jeu varie et pense : prise adaptee (universelle, revers, rush), jeu de face et de profil, panel de coups complet (smash, amorti, contre-amorti, degagements), services varies et peu previsibles, deplacements en pas chasses gagnant en rapidite et en equilibre, et un projet de jeu que l'on adapte en continu a l'evolution du rapport de force au fil du match.",
+  "cycleObjectives": [
+    "Passer de la prise universelle a une prise adaptee, revers et rush, selon la situation de jeu.",
+    "Jouer aussi bien de profil que de face, notamment au filet et sur le cote revers.",
+    "Construire un panel de coups complet : smash, amorti, contre-amorti, degagements.",
+    "Varier ses services pour les rendre peu previsibles pour l'adversaire.",
+    "Se deplacer en pas chasses, en gagnant en rapidite et en equilibre.",
+    "Adapter en permanence son projet de jeu a l'evolution du rapport de force, au lieu de se contenter d'eviter la faute.",
+    "Choisir, a l'issue de la troisieme seance, deux roles parmi coach, partenaire d'entrainement, observateur et arbitre, et fixer sa repartition de points entre l'AFL2 et l'AFL3."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, evaluation diagnostique et decouverte des roles",
+    "Constituer les poules de niveau homogene et premiers matchs",
+    "Choisir ses deux roles d'AFL3 et sa repartition de points",
+    "Construire son panel de coups et adapter son projet de jeu",
+    "Epreuve evaluee de mi-cycle et verification des roles choisis",
+    "Approfondir la technique et exercer ses deux roles en match",
+    "Repetition generale en conditions de poule et carnet finalise",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage, CA4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Academique",
+      "title": "Le badminton au cycle terminal - construire le rapport de force et les roles sociaux",
+      "org": "Academie de Nantes",
+      "url": "https://www.pedagogie.ac-nantes.fr/education-physique-et-sportive/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le badminton au lycee - du renvoi au jeu place",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-27"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : gymnase de 7 terrains de badminton.",
+    "Les eleves s'opposent en poules de niveau homogene de 4 joueurs : l'ensemble des joueurs de la poule se rencontre au fil du cycle.",
+    "Format de match : 2 sets gagnants de 11 points.",
+    "AFL1 note sur 12 points le jour du CCF, croisant niveau de performance et efficacite technique et tactique sur les matchs de poule : 8 points pour l'engagement et la realisation d'actions techniques d'attaque et de defense, 4 points pour les choix operes au regard de l'analyse du rapport de force, chaque note ponderee par un coefficient dependant du bilan des matchs de poule (plus de defaites, autant de defaites que de victoires, ou plus de victoires).",
+    "AFL2 et AFL3 evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve (2-6, 6-2 ou 4-4) au plus tard avant l'epreuve finale.",
+    "AFL3 : l'eleve choisit, a l'issue de la troisieme seance, deux roles parmi coach, partenaire d'entrainement, observateur ou arbitre.",
+    "PAI et dispenses : epaule, poignet, genou, asthme d'effort, allergies saisonnieres.",
+    "Zones de jeu partagees entre 7 terrains contigus : circulation et securite des volants et raquettes a organiser strictement.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - joue uniquement de face",
+      "observed": "Ne pivote jamais, frappe systematiquement face au filet, y compris sur un volant arrivant du cote revers loin de lui.",
+      "need": "Apprendre a se placer de profil et a utiliser la prise revers."
+    },
+    {
+      "label": "Profil 2 - service unique et previsible",
+      "observed": "Sert toujours le meme service, long et haut, ce que l'adversaire anticipe et exploite des le retour.",
+      "need": "Construire un repertoire de services varies, courts et longs, pour devenir imprevisible."
+    },
+    {
+      "label": "Profil 3 - subit le rapport de force",
+      "observed": "Joue le meme jeu qu'il soit mene ou devant, sans jamais ajuster ses choix a l'evolution du score.",
+      "need": "Apprendre a lire le rapport de force et a adapter son projet de jeu en cours de match."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas assume",
+      "observed": "A choisi ses deux roles a l'issue de la seance 3, mais arbitre sans annoncer le score ou observe sans rien noter d'exploitable.",
+      "need": "Assumer pleinement les deux roles choisis, dans les criteres exacts du referentiel : concentration, fiabilite, autorite."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Les eleves sont repartis en poules de niveau homogene de 4 joueurs ; l'ensemble des joueurs de la poule se rencontre en matchs de 2 sets gagnants de 11 points. L'AFL1 est note sur 12 points le jour du CCF, en croisant le niveau de performance et l'efficacite technique et tactique au cours des matchs de poule : 8 points pour l'engagement et la realisation d'actions techniques d'attaque et de defense (prise universelle puis revers et rush, jeu de face puis de profil, panel de coups smash/amorti/contre-amorti/degagements, services varies et peu previsibles, deplacements en pas chasses gagnant en rapidite et en equilibre), 4 points pour les choix operes au regard de l'analyse du rapport de force (du simple evitement de la faute a l'adaptation permanente du projet de jeu). Chaque note est ponderee par un coefficient qui depend du bilan des matchs de poule : plus de defaites, autant de defaites que de victoires, ou plus de victoires. L'AFL2 et l'AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve au plus tard avant l'epreuve finale : 2-6, 6-2 ou 4-4. Pour l'AFL3, l'eleve est evalue dans les deux roles choisis a l'issue de la troisieme seance, parmi coach, partenaire d'entrainement, observateur ou arbitre.",
+    "criteria": [
+      "AFL1 - actions techniques (8 points) : prise de raquette adaptee (universelle, revers, rush), capacite a jouer de profil autant que de face, panel de coups mobilise (smash, amorti, contre-amorti, degagements), services varies et peu previsibles, deplacements en pas chasses rapides et equilibres.",
+      "AFL1 - choix tactiques (4 points) : au degre le plus eleve, l'eleve adapte en permanence son projet de jeu a l'evolution du rapport de force pendant le match, plutot que de se contenter d'eviter la faute.",
+      "AFL1 - ponderation : la note est multipliee par un coefficient qui depend du bilan des matchs de poule (plus de defaites, autant de defaites que de victoires, ou plus de victoires).",
+      "AFL2 : le carnet d'entrainement retrace l'engagement dans les phases de repetition, la capacite a etablir un projet d'entrainement individualise et a le faire evoluer au fil du cycle.",
+      "AFL3 - role observateur, si choisi : concentration sur la tache, fiabilite des donnees quantitatives puis qualitatives relevees, capacite a comprendre et analyser ces donnees et a proposer des axes d'adaptation technique et tactique pertinents.",
+      "AFL3 - role arbitre, si choisi : concentration sur l'ensemble du match, exactitude de l'annonce du score en annoncant le score du serveur en premier apres chaque point, remplissage correct de la fiche de score, autorite sur les points litigieux, gestion des temps morts et des temps de repos entre chaque set.",
+      "AFL3 - roles coach et partenaire d'entrainement, si choisis : pertinence et regularite des conseils donnes en situation de match, capacite a cibler reellement le travail d'un camarade sur son besoin identifie."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA4, Lycee Victor Hugo de Marrakech, epreuve badminton."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, evaluation diagnostique et decouverte des roles",
+      "mainObjective": "Poser le cadre de securite du badminton, faire eprouver des matchs diagnostiques et decouvrir les quatre roles possibles de l'AFL3.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Comprendre les zones de jeu partagees et les regles de securite du gymnase.",
+        "Jouer des matchs diagnostiques pour reveler son niveau technique et tactique.",
+        "Decouvrir, sans s'engager, les quatre roles possibles : coach, partenaire d'entrainement, observateur, arbitre.",
+        "Ouvrir le carnet d'entrainement."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : le badminton mobilise huit joueurs a la fois sur des terrains contigus, ce qui exige un cadre de securite specifique avant tout engagement.",
+      "prerequisiteForNext": "Chaque eleve connait les regles de securite du gymnase, a une premiere idee de son niveau, et les quatre roles d'AFL3 ont ete presentes.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 60,
+            "note": "plumes et plastique melanges"
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7,
+            "note": "gymnase, filets a hauteur reglementaire"
+          },
+          {
+            "label": "fiches de score",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "affiche des quatre roles d'AFL3",
+            "fixed": 1
+          },
+          {
+            "label": "plots de zone",
+            "fixed": 14
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : format des matchs, bareme, roles.",
+          "Verifier la tension des filets et la hauteur reglementaire sur les 7 terrains.",
+          "Delimiter des couloirs de circulation entre les terrains pour eviter les collisions de raquettes.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord du gymnase."
+        ],
+        "sketch": "7 terrains de badminton cote a cote dans le gymnase, filets tendus.\nCouloirs de circulation balises entre les terrains.\nZone d'attente et d'observation en bordure, hors trajectoire des volants.\nAffiche du referentiel et des quatre roles a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique articulaire, cible sur l'epaule et le poignet, fortement sollicites par la frappe et le service repetes.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course souple avec appuis varies.",
+              "Changements de direction et arrets courts."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Mobilisation du poignet raquette en main, a vide.",
+              "Gammes de pas chasses, avant, arriere, lateral."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges main a main au filet, sans raquette.",
+              "Coup droit puis revers a faible intensite, au filet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Matchs diagnostiques en simple",
+          "objective": "Reveler le niveau technique et tactique initial de chaque eleve pour orienter le cycle.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches de score",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Par 4 sur chaque terrain, en rotation. Matchs en simple, un set a 11 points, chaque eleve joue 2 a 3 matchs. Le professeur observe et note un profil par eleve.",
+          "studentGoal": "Jouer mes matchs normalement, pour montrer ce que je sais deja faire.",
+          "instructions": [
+            "Je joue normalement, sans chercher a bien faire pour l'evaluation.",
+            "Je sers alternativement et j'annonce le score, le mien en premier, avant chaque service.",
+            "Entre mes matchs, j'observe ceux qui jouent.",
+            "Je note sur mon carnet ce que je crois etre mon point fort et mon point faible."
+          ],
+          "success": [
+            "Chaque eleve joue au moins deux matchs complets.",
+            "Le score est correctement tenu et annonce, serveur en premier.",
+            "Le professeur releve un profil technique et tactique par eleve."
+          ],
+          "execution": [
+            "Prise de raquette, meme approximative, tenue avant chaque frappe.",
+            "Deplacement vers le volant plutot que frappe a bras tendu sans placement.",
+            "Retour a une position centrale apres chaque frappe."
+          ],
+          "watch": [
+            "Quels eleves ne jouent que de face, jamais de profil ?",
+            "Quels eleves ont une prise universelle unique, y compris au filet ?",
+            "Le service est-il varie ou toujours identique ?",
+            "Qui reste immobile au centre du terrain sans se deplacer vers le volant ?"
+          ],
+          "errors": [
+            "Courir apres le volant a la derniere seconde au lieu d'anticiper son deplacement.",
+            "Servir toujours le meme service, long et haut.",
+            "Frapper systematiquement en coup droit, meme quand le volant arrive du cote revers."
+          ],
+          "feedback": [
+            "Tu attends le volant au lieu d'aller vers lui : place-toi avant de frapper.",
+            "Ton service est toujours pareil : ton adversaire l'attend.",
+            "Tu tournes le dos au filet pour eviter le revers, au lieu de jouer de profil."
+          ],
+          "plus": [
+            "Match joue en 2 sets gagnants de 11 points, comme le format d'examen."
+          ],
+          "minus": [
+            "Match raccourci a 7 points, avec conseils du professeur entre les points."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, service uniquement en coup droit haut et long autorise, conseils du professeur.",
+            "normale": "Match en un set a 11 points, service libre.",
+            "complexifiee": "Match en 2 sets gagnants de 11 points, arbitrage assure par un camarade."
+          },
+          "safety": [
+            "Echauffement specifique epaule et poignet obligatoire avant toute frappe a intensite reelle.",
+            "Zones de jeu strictement delimitees : aucun eleve ne traverse un terrain voisin pour recuperer un volant.",
+            "Raquette tenue en permanence fermement en main, jamais lancee ni balancee hors zone de jeu.",
+            "Chaussures de sport a semelle non marquante obligatoires, lacets verifies.",
+            "Arret immediat en cas de collision entre deux joueurs ou de choc de raquette.",
+            "Consulter les PAI : epaule, poignet, genou.",
+            "Le professeur circule entre les 7 terrains et reste en vue de l'ensemble du gymnase.",
+            "Point d'eau accessible entre les matchs."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Lire le referentiel et decouvrir les quatre roles",
+          "objective": "Comprendre ce qui sera evalue et decouvrir, sans s'engager, les quatre roles possibles de l'AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "affiche des quatre roles d'AFL3",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord d'un terrain. Lecture collective du referentiel (AFL1 : 12 points, AFL2 et AFL3 : 8 points), puis presentation des quatre roles possibles : coach, partenaire d'entrainement, observateur, arbitre. Aucun choix n'est fait aujourd'hui.",
+          "studentGoal": "Savoir ce qui sera evalue et connaitre les quatre roles parmi lesquels je choisirai plus tard.",
+          "instructions": [
+            "J'ecoute la presentation du bareme : 12 points pour l'AFL1, 8 points pour l'AFL2 et l'AFL3.",
+            "Je note dans mon carnet les quatre roles possibles et ce qu'ils demandent.",
+            "Je repere le role qui m'attire le plus, sans le choisir encore.",
+            "Je note que le choix de deux roles se fera a la fin de la troisieme seance."
+          ],
+          "success": [
+            "Le bareme AFL1 et AFL2/AFL3 est note dans le carnet.",
+            "Les quatre roles sont identifies et brievement decrits.",
+            "L'echeance du choix, fin de seance 3, est comprise."
+          ],
+          "execution": [
+            "Ecouter avant d'ecrire.",
+            "Reformuler avec ses propres mots.",
+            "Poser une question si un point n'est pas clair."
+          ],
+          "watch": [
+            "Les eleves confondent-ils les 12 points de l'AFL1 et les 8 points de l'AFL2/AFL3 ?",
+            "Notent-ils vraiment les quatre roles, ou se contentent-ils d'ecouter ?"
+          ],
+          "errors": [
+            "Confondre les 12 points de l'AFL1 avec les 8 points de l'AFL2/AFL3.",
+            "Croire que le role se choisit des aujourd'hui.",
+            "Ne rien noter."
+          ],
+          "feedback": [
+            "Douze points le jour de l'epreuve, huit points pendant tout le cycle : ce n'est pas la meme chose.",
+            "Pas aujourd'hui : tu choisiras tes deux roles a la fin de la seance 3.",
+            "Ecris-le, on le relira."
+          ],
+          "plus": [
+            "Identifier, pour chaque role, un exemple concret vu pendant les matchs diagnostiques."
+          ],
+          "minus": [
+            "Presentation guidee, carnet complete avec le professeur."
+          ],
+          "diff": {
+            "facilitee": "Presentation guidee, carnet complete avec le professeur phrase par phrase.",
+            "normale": "Lecture du referentiel et prise de notes autonome sur les quatre roles.",
+            "complexifiee": "Identification d'un exemple concret par role, observe pendant les matchs du jour."
+          },
+          "safety": [
+            "Phase realisee assise au bord d'un terrain, hors trajectoire des volants des terrains encore actifs.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premiers essais de role : observateur et arbitre",
+          "objective": "Faire essayer concretement, sans enjeu, les roles d'observateur et d'arbitre sur un match court.",
+          "material": [
+            {
+              "label": "fiches de score",
+              "per": 0.25,
+              "min": 4
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            }
+          ],
+          "organization": "Par 4, rotation rapide : 2 eleves jouent un mini-match a 7 points, 1 arbitre en annoncant le score, 1 observe et note un constat simple.",
+          "studentGoal": "Essayer d'annoncer un score ou de noter une observation, pour la premiere fois.",
+          "instructions": [
+            "Arbitre : j'annonce le score du serveur en premier, apres chaque point.",
+            "Observateur : je note un constat simple, par exemple le nombre de fois ou chacun joue de profil.",
+            "Joueurs : je joue normalement, j'accepte les annonces de l'arbitre.",
+            "On tourne les roles a chaque mini-match."
+          ],
+          "success": [
+            "Chaque eleve a tenu au moins une fois le role d'observateur ou d'arbitre.",
+            "Le score annonce respecte l'ordre serveur en premier.",
+            "L'observateur note une donnee exploitable."
+          ],
+          "execution": [
+            "Annoncer fort et clairement, avant le service.",
+            "Noter tout de suite, pas de memoire.",
+            "Rester concentre meme sans enjeu."
+          ],
+          "watch": [
+            "L'ordre d'annonce, serveur en premier, est-il respecte ?",
+            "Les eleves restent-ils concentres sur leur role, ou regardent-ils ailleurs ?"
+          ],
+          "errors": [
+            "Annoncer le score de l'adversaire en premier.",
+            "Se distraire pendant le role.",
+            "Ne rien noter comme observateur."
+          ],
+          "feedback": [
+            "Le score du serveur d'abord, toujours.",
+            "Reste concentre : c'est deja ce qui sera evalue plus tard.",
+            "Note quelque chose, meme simple."
+          ],
+          "plus": [
+            "Essayer aussi rapidement les roles de coach et de partenaire d'entrainement sur l'echange suivant."
+          ],
+          "minus": [
+            "Role tenu avec l'aide du professeur qui souffle les annonces."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec l'aide du professeur qui souffle les annonces et les observations.",
+            "normale": "Role tenu seul sur un mini-match a 7 points.",
+            "complexifiee": "Role tenu sur un mini-match complet, avec en plus un essai du role de coach entre deux points."
+          },
+          "safety": [
+            "Mini-matchs courts pour limiter la fatigue en fin de seance.",
+            "Arbitre et observateur restent hors de la zone de jeu, en bordure du terrain.",
+            "Point d'eau accessible.",
+            "Retour au calme en fin de seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'avez-vous decouvert sur votre niveau initial ?",
+          "Quels sont les quatre roles possibles pour l'AFL3, et quand les choisirez-vous ?"
+        ],
+        "key": "Le badminton evalue autant le joueur que celui qui l'entoure : douze points se jouent le jour de l'epreuve, huit points se jouent tout au long du cycle, dans deux roles que vous choisirez a la fin de la seance 3."
+      },
+      "socialRoles": [
+        "Arbitre du jour : annonce le score du serveur en premier.",
+        "Observateur du jour : note un constat simple sur le jeu de son camarade.",
+        "Responsable securite : signale toute collision ou volant errant sur un terrain voisin."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Constituer les poules de niveau homogene et premiers matchs",
+      "mainObjective": "Constituer des poules de 4 joueurs de niveau homogene et jouer les premiers matchs de poule.",
+      "secondaryObjectives": [
+        "Repartir les eleves en poules de 4 a partir du diagnostic de la seance 1.",
+        "Jouer les premiers matchs au sein de la poule, tous contre tous.",
+        "Continuer a decouvrir les quatre roles, sans les choisir encore."
+      ],
+      "linkToPrevious": "La seance 1 a revele les niveaux ; il faut maintenant constituer des poules homogenes de 4 joueurs, comme le prevoit le referentiel, ou tous les joueurs de la poule se rencontrent.",
+      "prerequisiteForNext": "Chaque eleve connait sa poule de 4 et a joue au moins un match de poule.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 60
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7,
+            "note": "une par terrain, tableau des rencontres"
+          },
+          {
+            "label": "fiches de score",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "affiche des poules",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher la repartition des poules de 4, etablie a partir des matchs diagnostiques.",
+          "Preparer une fiche de poule par terrain : les 4 joueurs et le tableau des rencontres a jouer.",
+          "Verifier la tension des filets sur les 7 terrains.",
+          "Verifier les PAI et les conditions du gymnase."
+        ],
+        "sketch": "7 terrains, une poule de 4 par terrain.\nFiche de poule affichee a chaque terrain, avec le tableau des rencontres.\nZone d'attente en bordure pour le joueur qui ne joue pas son tour."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique articulaire, cible sur l'epaule et le poignet, avant les premiers matchs de poule.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course souple avec appuis varies.",
+              "Changements de direction et arrets courts."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses, avant, arriere, lateral."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet a faible intensite.",
+              "Coup droit puis revers, en montant en intensite."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Premiers matchs de poule",
+          "objective": "Jouer les premiers matchs du tableau de poule et commencer a le renseigner.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches de poule",
+              "fixed": 7
+            }
+          ],
+          "organization": "Chaque poule de 4 joue selon son tableau de rencontres : chacun affronte les trois autres membres de sa poule au fil des seances. Aujourd'hui, chaque eleve joue au moins un match de sa poule.",
+          "studentGoal": "Jouer mon premier match de poule et commencer a remplir le tableau des rencontres.",
+          "instructions": [
+            "Je verifie sur la fiche de poule qui je dois affronter aujourd'hui.",
+            "Je joue un set a 11 points, comme prevu au format de la poule.",
+            "J'annonce le score, mon score de serveur en premier.",
+            "Je note le resultat sur la fiche de poule a la fin du match."
+          ],
+          "success": [
+            "Chaque eleve joue au moins un match de sa poule.",
+            "Le resultat est reporte sur la fiche de poule.",
+            "Le score est annonce dans le bon ordre pendant tout le match."
+          ],
+          "execution": [
+            "Se replacer au centre du terrain apres chaque echange.",
+            "Servir en variant la longueur, meme approximativement.",
+            "Se deplacer vers le volant plutot que de l'attendre."
+          ],
+          "watch": [
+            "Les poules sont-elles bien homogenes, ou un ecart de niveau apparait-il deja ?",
+            "Le score est-il correctement tenu par les joueurs eux-memes ?",
+            "Qui reste passif entre les points, sans se repositionner ?"
+          ],
+          "errors": [
+            "Jouer contre un adversaire qui n'est pas sur le tableau du jour.",
+            "Oublier de reporter le resultat sur la fiche de poule.",
+            "Rester sur place apres avoir frappe."
+          ],
+          "feedback": [
+            "Regarde le tableau : ce n'est pas cet adversaire aujourd'hui.",
+            "Reporte ton score tout de suite, sinon on le perd.",
+            "Reviens au centre apres ta frappe."
+          ],
+          "plus": [
+            "Match joue en 2 sets gagnants de 11 points, comme le format d'examen complet."
+          ],
+          "minus": [
+            "Match raccourci a 7 points pour permettre davantage de rotations."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, avec un temps mort supplementaire autorise pour souffler.",
+            "normale": "Un set a 11 points, resultat reporte sur la fiche de poule.",
+            "complexifiee": "Match en 2 sets gagnants de 11 points, arbitre camarade."
+          },
+          "safety": [
+            "Echauffement complet avant les matchs de poule.",
+            "Zones de terrain respectees, aucun eleve ne traverse un terrain voisin.",
+            "Consulter les PAI.",
+            "Point d'eau accessible entre les matchs.",
+            "Le professeur circule entre les 7 terrains."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Experimenter le role de coach et de partenaire d'entrainement",
+          "objective": "Faire experimenter, sans engagement definitif, les roles de coach et de partenaire d'entrainement.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par 4, rotation : pendant qu'un binome joue un mini-match, un eleve tient le role de coach (conseille entre les points) et un autre celui de partenaire d'entrainement (envoie des volants cibles sur un point faible identifie en seance 1).",
+          "studentGoal": "Essayer de conseiller un camarade ou de l'aider a s'entrainer sur un point precis.",
+          "instructions": [
+            "Coach : je donne un conseil court, entre deux points, sur ce que je vois.",
+            "Partenaire d'entrainement : j'envoie des volants cibles sur le point faible de mon camarade, identifie en seance 1.",
+            "Joueurs : j'ecoute le conseil du coach sans discuter.",
+            "On tourne les quatre roles au cours de la situation."
+          ],
+          "success": [
+            "Chaque eleve a tenu au moins une fois le role de coach et une fois celui de partenaire d'entrainement.",
+            "Le conseil du coach est concret, pas general.",
+            "Le partenaire d'entrainement cible reellement le point faible identifie."
+          ],
+          "execution": [
+            "Formuler un conseil en une phrase courte, actionnable.",
+            "Envoyer des volants precis, pas au hasard.",
+            "Choisir un point faible reellement observe."
+          ],
+          "watch": [
+            "Les conseils sont-ils concrets, ou vagues ?",
+            "Les volants envoyes ciblent-ils vraiment le point faible annonce ?"
+          ],
+          "errors": [
+            "Donner un conseil vague : joue mieux.",
+            "Envoyer des volants faciles au lieu de cibler le point faible.",
+            "Coacher pendant l'echange, ce qui perturbe le jeu."
+          ],
+          "feedback": [
+            "Joue mieux, ce n'est pas un conseil : dis quoi precisement.",
+            "Vise son cote revers, c'est son point faible.",
+            "Attends la fin du point pour parler."
+          ],
+          "plus": [
+            "Le coach s'appuie sur une observation precise du match diagnostique de la seance 1."
+          ],
+          "minus": [
+            "Conseils donnes avec l'aide du professeur qui propose des exemples."
+          ],
+          "diff": {
+            "facilitee": "Conseils donnes avec l'aide du professeur qui propose des exemples de phrases.",
+            "normale": "Coach et partenaire d'entrainement autonomes, conseil et volants cibles.",
+            "complexifiee": "Le coach s'appuie sur une donnee precise du carnet de son camarade."
+          },
+          "safety": [
+            "Le partenaire d'entrainement envoie des volants a intensite moderee, sans chercher a marquer le point.",
+            "Le coach reste hors de la zone de jeu.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Deuxieme match de poule",
+          "objective": "Rejouer un match de poule en appliquant un conseil recu.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "fiches de poule",
+              "fixed": 7
+            }
+          ],
+          "organization": "Chaque eleve joue un deuxieme match de sa poule, en appliquant un conseil recu pendant la situation precedente.",
+          "studentGoal": "Jouer mon deuxieme match de poule en appliquant un conseil recu.",
+          "instructions": [
+            "Je verifie le tableau : qui est mon adversaire aujourd'hui.",
+            "J'applique le conseil recu par mon coach dans la situation precedente.",
+            "Je joue un set, je reporte le resultat."
+          ],
+          "success": [
+            "Le deuxieme match de la poule est joue et reporte.",
+            "Un conseil recu est visiblement applique."
+          ],
+          "execution": [
+            "Choisir un seul conseil a appliquer, pas plusieurs a la fois.",
+            "Se concentrer sur ce conseil pendant tout le match.",
+            "Reporter le resultat immediatement apres le match."
+          ],
+          "watch": [
+            "Le conseil recu est-il applique ?",
+            "Le tableau de poule se remplit-il correctement ?"
+          ],
+          "errors": [
+            "Oublier le conseil recu des le premier point difficile.",
+            "Jouer un adversaire hors tableau."
+          ],
+          "feedback": [
+            "Tu as oublie ton conseil des la premiere balle difficile : reviens-y.",
+            "Ce n'est pas ton adversaire du jour, verifie le tableau."
+          ],
+          "plus": [
+            "Match en 2 sets gagnants de 11 points."
+          ],
+          "minus": [
+            "Match a 7 points."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, conseil rappele par le professeur avant le debut.",
+            "normale": "Un set a 11 points, conseil applique en autonomie.",
+            "complexifiee": "Match en 2 sets gagnants de 11 points, avec un deuxieme conseil ajoute en cours de match."
+          },
+          "safety": [
+            "Consulter les PAI.",
+            "Zones de terrain respectees.",
+            "Point d'eau accessible.",
+            "Retour au calme en fin de seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre poule de 4 est-elle equilibree, d'apres vos deux premiers matchs ?",
+          "Quel role, parmi les quatre, vous a le plus interesse aujourd'hui ?"
+        ],
+        "key": "Une poule homogene se joue tous contre tous : le tableau de rencontres n'est complet qu'a la fin du cycle. Et le choix de vos deux roles approche : il se fera a la fin de la prochaine seance."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points.",
+        "Partenaire d'entrainement : cible le point faible identifie.",
+        "Responsable du tableau de poule : reporte les resultats."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Choisir ses deux roles d'AFL3 et sa repartition de points",
+      "mainObjective": "Terminer la decouverte des quatre roles et choisir, a l'issue de la seance, deux roles d'AFL3 et sa repartition de points.",
+      "secondaryObjectives": [
+        "Jouer les derniers matchs de la premiere boucle de poule.",
+        "Experimenter une derniere fois le role d'observateur, en conditions proches du reel.",
+        "Choisir deux roles parmi coach, partenaire d'entrainement, observateur, arbitre.",
+        "Fixer, au moins provisoirement, sa repartition de points entre l'AFL2 et l'AFL3."
+      ],
+      "linkToPrevious": "Les quatre roles ont ete presentes et essayes en seances 1 et 2 : le referentiel impose de choisir, a l'issue de cette troisieme seance, deux roles parmi les quatre.",
+      "prerequisiteForNext": "Chaque eleve a choisi ses deux roles d'AFL3 et sa repartition de points, notes dans son carnet.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 60
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "affiche des quatre roles d'AFL3",
+            "fixed": 1
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Afficher a nouveau les quatre roles et le referentiel du bareme.",
+          "Preparer les fiches de poule mises a jour.",
+          "Verifier les PAI et l'etat des 7 terrains.",
+          "Prevoir un temps calme, a l'ecart des terrains, pour le choix ecrit des roles en fin de seance."
+        ],
+        "sketch": "7 terrains, poules en cours de tableau.\nAffiche des quatre roles et du referentiel a l'entree.\nZone calme amenagee en fin de seance, a l'ecart, pour le choix ecrit des roles."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique articulaire, cible sur l'epaule et le poignet, avant de terminer la premiere boucle de poule.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course souple avec appuis varies.",
+              "Changements de direction et arrets courts."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses, avant, arriere, lateral."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet a faible intensite.",
+              "Coup droit puis revers, en montant en intensite."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Derniers matchs de la premiere boucle de poule",
+          "objective": "Terminer le tableau de la premiere boucle : chaque joueur affronte les trois autres membres de sa poule.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches de poule",
+              "fixed": 7
+            }
+          ],
+          "organization": "Chaque poule termine son tableau de rencontres : le ou les matchs restants pour que tous les joueurs de la poule se soient affrontes une fois.",
+          "studentGoal": "Terminer mon tableau de poule : avoir affronte les trois autres membres.",
+          "instructions": [
+            "Je verifie sur la fiche de poule le ou les matchs qu'il me reste a jouer.",
+            "Je joue un set a 11 points.",
+            "J'annonce le score, mon score de serveur en premier.",
+            "Je reporte le resultat : le tableau de la poule doit etre complet a la fin de la seance."
+          ],
+          "success": [
+            "Chaque poule a un tableau complet : tous les joueurs se sont rencontres.",
+            "Les resultats sont tous reportes.",
+            "Le score est annonce dans le bon ordre pendant tout le match."
+          ],
+          "execution": [
+            "Se replacer au centre du terrain apres chaque echange.",
+            "Varier ses services, meme approximativement.",
+            "Se deplacer vers le volant plutot que de l'attendre."
+          ],
+          "watch": [
+            "Le tableau de chaque poule est-il complet en fin de seance ?",
+            "Le score est-il correctement tenu ?",
+            "Les ecarts de niveau au sein d'une poule sont-ils trop importants ?"
+          ],
+          "errors": [
+            "Laisser un match du tableau non joue.",
+            "Oublier de reporter un resultat.",
+            "Rester sur place apres avoir frappe."
+          ],
+          "feedback": [
+            "Il te manque un match pour completer ton tableau.",
+            "Reporte ton resultat tout de suite.",
+            "Reviens au centre apres ta frappe."
+          ],
+          "plus": [
+            "Match joue en 2 sets gagnants de 11 points."
+          ],
+          "minus": [
+            "Match raccourci a 7 points pour permettre de finir le tableau."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, avec conseils du professeur entre les points.",
+            "normale": "Un set a 11 points, tableau de poule complete.",
+            "complexifiee": "Match en 2 sets gagnants de 11 points, arbitre camarade."
+          },
+          "safety": [
+            "Echauffement complet avant les matchs.",
+            "Zones de terrain respectees.",
+            "Consulter les PAI.",
+            "Point d'eau accessible entre les matchs.",
+            "Le professeur circule entre les 7 terrains."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Dernier essai : observer en conditions proches du reel",
+          "objective": "Faire essayer le role d'observateur avec une fiche proche de celle du jour de l'epreuve, avant le choix des roles.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 0.25,
+              "min": 4
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            }
+          ],
+          "organization": "Par 4, rotation : pendant un match de la poule, un eleve observe avec une fiche proche de celle du jour de l'epreuve : donnees quantitatives (nombre de smashs, d'amortis, de fautes directes), puis une analyse qualitative (point fort, point faible, axe de progres).",
+          "studentGoal": "Relever des donnees chiffrees fiables, puis proposer une analyse qualitative utile.",
+          "instructions": [
+            "Je releve d'abord des donnees chiffrees : nombre de smashs, d'amortis, de fautes directes sur le match.",
+            "Je note ensuite un point fort, un point faible et un axe de progres pour le joueur observe.",
+            "Je reste concentre sur tout le match, sans regarder ailleurs.",
+            "Je montre ma fiche au joueur observe a la fin du match."
+          ],
+          "success": [
+            "Les donnees quantitatives sont completes et vraisemblables.",
+            "L'analyse qualitative propose un axe de progres concret, pas une impression vague.",
+            "La concentration est maintenue sur l'ensemble du match."
+          ],
+          "execution": [
+            "Compter en direct, pas de memoire a la fin.",
+            "Distinguer clairement le comptage et l'analyse.",
+            "Formuler l'axe de progres avec un verbe d'action."
+          ],
+          "watch": [
+            "Les donnees sont-elles relevees en direct ou reconstituees a la fin ?",
+            "L'axe de progres propose est-il concret et utilisable ?"
+          ],
+          "errors": [
+            "Reconstituer les chiffres de memoire a la fin du match.",
+            "Proposer un axe de progres vague : joue mieux au filet.",
+            "Se distraire pendant le match observe."
+          ],
+          "feedback": [
+            "Compte en direct, pas a la fin : tu vas te tromper.",
+            "Joue mieux au filet, ce n'est pas un axe de progres : dis quoi precisement.",
+            "Reste concentre sur le match, du premier au dernier point."
+          ],
+          "plus": [
+            "Ajouter une observation qualitative sur le respect du rapport de force par le joueur observe."
+          ],
+          "minus": [
+            "Fiche simplifiee, un seul type de donnee quantitative a relever."
+          ],
+          "diff": {
+            "facilitee": "Fiche simplifiee, un seul type de donnee quantitative a relever.",
+            "normale": "Fiche complete : donnees quantitatives puis analyse qualitative avec axe de progres.",
+            "complexifiee": "Fiche complete avec en plus une observation sur l'adaptation du joueur au rapport de force."
+          },
+          "safety": [
+            "L'observateur reste hors de la zone de jeu, en bordure du terrain.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 14,
+          "title": "Choisir ses deux roles d'AFL3",
+          "objective": "Choisir, a l'issue de cette troisieme seance comme l'exige le referentiel, deux roles parmi coach, partenaire d'entrainement, observateur et arbitre, et fixer sa repartition de points entre l'AFL2 et l'AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "affiche des quatre roles d'AFL3",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des terrains. Chacun relit ses essais des trois roles vecus depuis la seance 1 (coach, partenaire d'entrainement, observateur, et l'arbitrage entrevu en seance 1), puis choisit deux roles pour le reste de la sequence, et une repartition de points entre l'AFL2 et l'AFL3.",
+          "studentGoal": "Choisir mes deux roles d'AFL3 pour tout le reste du cycle, et ma repartition de points.",
+          "instructions": [
+            "Je relis mes essais des trois dernieres seances : coach, partenaire d'entrainement, observateur, arbitre.",
+            "Je choisis deux roles parmi les quatre, ceux que je tiendrai jusqu'a l'epreuve finale.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "J'ecris mes deux roles et ma repartition sur mon carnet : la repartition pourra encore evoluer, mais doit etre fixee au plus tard avant l'epreuve finale."
+          ],
+          "success": [
+            "Deux roles sont choisis et notes au carnet.",
+            "La repartition de points est choisie et notee.",
+            "Le choix s'appuie sur les essais reels des seances precedentes, pas sur une preference au hasard."
+          ],
+          "execution": [
+            "Comparer ses sensations dans chaque role essaye.",
+            "Choisir deux roles complementaires plutot que deux roles identiques.",
+            "Ecrire la date du choix a cote."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils par facilite ou par reel interet et competence ?",
+            "Le choix est-il ecrit et date ?"
+          ],
+          "errors": [
+            "Choisir un role jamais essaye.",
+            "Ne pas choisir de repartition.",
+            "Copier le choix d'un camarade sans reflexion."
+          ],
+          "feedback": [
+            "Tu n'as jamais essaye l'arbitrage : es-tu sur de ce choix ?",
+            "Choisis aussi ta repartition, elle est evaluee des maintenant.",
+            "C'est ton choix, pas celui de ton voisin."
+          ],
+          "plus": [
+            "Justifier par ecrit pourquoi ces deux roles plutot que les deux autres."
+          ],
+          "minus": [
+            "Choix guide par le professeur a partir des observations des trois premieres seances."
+          ],
+          "diff": {
+            "facilitee": "Choix guide par le professeur a partir des observations des trois premieres seances.",
+            "normale": "Choix autonome de deux roles et d'une repartition, notes et dates au carnet.",
+            "complexifiee": "Choix justifie par ecrit, comparant les quatre roles essayes."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des terrains, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont vos deux roles choisis, et pourquoi ?",
+          "Quelle repartition de points avez-vous fixee entre l'AFL2 et l'AFL3 ?"
+        ],
+        "key": "A partir d'aujourd'hui, vous tenez uniquement vos deux roles choisis, jusqu'a l'epreuve finale : coach, partenaire d'entrainement, observateur ou arbitre. Votre repartition de points peut encore evoluer, mais doit etre fixee au plus tard avant l'epreuve."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points, dans un jeu qui a du sens pour le joueur.",
+        "Partenaire d'entrainement : cible un point faible identifie par des volants precis.",
+        "Observateur : releve des donnees quantitatives puis qualitatives, fiables et exploitables.",
+        "Arbitre : annonce le score du serveur en premier, tient la fiche de score."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Construire son panel de coups et adapter son projet de jeu",
+      "mainObjective": "Faire evoluer la prise de raquette vers la prise revers et rush, construire un panel de coups et adapter son projet de jeu au rapport de force.",
+      "secondaryObjectives": [
+        "Passer de la prise universelle a la prise revers, puis a la prise rush.",
+        "Jouer de profil, pas seulement de face.",
+        "Construire un panel de coups : smash, amorti, contre-amorti, degagement.",
+        "Varier ses services pour les rendre peu previsibles.",
+        "Exercer ses deux roles choisis en seance 3, pour la premiere fois en conditions reelles."
+      ],
+      "linkToPrevious": "Les roles sont choisis depuis la seance 3 : chacun sait desormais sur quoi se jouent ses huit points, et peut se concentrer sur la construction technique et tactique evaluee au titre de l'AFL1.",
+      "prerequisiteForNext": "Chaque eleve dispose d'un panel de coups elargi et adapte au moins partiellement son jeu au rapport de force.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 80,
+            "note": "usure accrue en atelier de coups repetes"
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "plots de zone",
+            "fixed": 21,
+            "note": "zones cibles pour amorti, degagement, smash"
+          },
+          {
+            "label": "affiche des criteres techniques",
+            "fixed": 2
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher les criteres techniques des quatre familles de coups : smash, amorti, contre-amorti, degagement.",
+          "Marquer au sol, avec des plots, les zones cibles de chaque coup sur les terrains dedies aux ateliers.",
+          "Verifier la tension des filets sur les 7 terrains.",
+          "Verifier les PAI et l'etat du gymnase."
+        ],
+        "sketch": "2 terrains en ateliers de coups avec zones cibles au sol.\n5 terrains en matchs de poule.\nAffiche des criteres techniques a l'entree des ateliers.\nFiches de role disponibles pour les eleves qui exercent leur role choisi."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique articulaire, cible sur l'epaule et le poignet, avant une seance riche en frappes variees.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mise en train",
+            "details": [
+              "Six minutes de course souple avec appuis varies.",
+              "Changements de direction et arrets courts."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses dans les quatre directions du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet avec changement de prise, coup droit puis revers.",
+              "Deux series de smash a intensite croissante."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Ateliers de coups : smash, amorti, contre-amorti, degagement",
+          "objective": "Construire les quatre familles de coups et la prise adaptee a chacune.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 80
+            },
+            {
+              "label": "plots de zone",
+              "fixed": 21
+            },
+            {
+              "label": "affiche des criteres techniques",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par ateliers tournants de deux terrains : atelier smash et degagement en fond de terrain (prise universelle vers rush), atelier amorti et contre-amorti au filet (prise revers), avec zones cibles au sol pour chaque coup.",
+          "studentGoal": "Placer mes coups dans les zones cibles avec la prise adaptee a chacun.",
+          "instructions": [
+            "Atelier fond de terrain : je frappe un smash puis un degagement, en changeant de prise si necessaire.",
+            "Atelier filet : je joue un amorti puis un contre-amorti, avec la prise revers quand le volant arrive de ce cote.",
+            "Je vise les zones marquees au sol, pas seulement le terrain adverse.",
+            "Je compte mes reussites sur 10 volants par coup."
+          ],
+          "success": [
+            "Au moins 6 volants sur 10 atteignent la zone ciblee pour chaque coup.",
+            "La prise revers est utilisee quand le volant arrive du cote revers.",
+            "Le smash est frappe vers le bas, l'amorti passe juste au-dessus du filet."
+          ],
+          "execution": [
+            "Armer le coude avant de frapper le smash, vers le bas et devant soi.",
+            "Amortir le geste au dernier moment pour l'amorti, sans l'annoncer par une prise d'elan.",
+            "Changer de prise avant l'impact, pas apres."
+          ],
+          "watch": [
+            "Les eleves annoncent-ils leur amorti par un geste trop visible ?",
+            "La prise revers est-elle utilisee, ou evitee en tournant le corps ?",
+            "Le smash part-il vers le bas ou reste-t-il plat ?"
+          ],
+          "errors": [
+            "Frapper le smash a plat, sans direction vers le bas.",
+            "Annoncer l'amorti par un grand geste d'elan, ce qui le rend previsible.",
+            "Tourner tout le corps pour eviter la prise revers."
+          ],
+          "feedback": [
+            "Vise le sol, pas seulement l'autre cote du filet : c'est ca, un smash.",
+            "Ton amorti s'annonce de loin : reduis ton geste au dernier moment.",
+            "Change ta prise, pas ta position : la prise revers existe pour ca."
+          ],
+          "plus": [
+            "Enchainer les quatre coups dans un ordre impose, sans temps de reflexion entre chacun."
+          ],
+          "minus": [
+            "Un seul coup travaille a la fois, avec alimentation facilitee par un partenaire."
+          ],
+          "diff": {
+            "facilitee": "Un seul coup travaille a la fois, volant alimente facilement par un partenaire, sans contrainte de zone.",
+            "normale": "Les quatre coups travailles en rotation, zones cibles au sol.",
+            "complexifiee": "Enchainement impose des quatre coups, sans temps de reflexion entre chacun."
+          },
+          "safety": [
+            "Echauffement specifique epaule et poignet obligatoire avant les series de smash.",
+            "Zones d'atelier delimitees, aucun croisement avec les terrains de match.",
+            "Consulter les PAI : epaule, poignet.",
+            "Point d'eau accessible.",
+            "Le professeur circule entre les ateliers et les matchs."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Se deplacer en pas chasses et jouer de profil",
+          "objective": "Ameliorer le deplacement en pas chasses pour arriver de profil sur le volant, gagner en rapidite et en equilibre.",
+          "material": [
+            {
+              "label": "plots de zone",
+              "fixed": 21
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 80
+            }
+          ],
+          "organization": "Par deux : un eleve envoie des volants alternativement dans les quatre coins du terrain, l'autre se deplace en pas chasses, frappe de profil, et revient au centre entre chaque frappe.",
+          "studentGoal": "Arriver de profil sur chaque volant, en pas chasses, sans croiser les appuis.",
+          "instructions": [
+            "Je pars du centre du terrain a chaque volant.",
+            "Je me deplace en pas chasses, jamais en croisant les jambes.",
+            "J'arrive de profil, l'epaule non-raquette pointee vers le volant.",
+            "Je reviens au centre juste apres ma frappe."
+          ],
+          "success": [
+            "Le deplacement se fait en pas chasses sur au moins 8 volants sur 10.",
+            "L'eleve arrive de profil, pas de face, sur les volants lateraux.",
+            "Le retour au centre est systematique."
+          ],
+          "execution": [
+            "Premier pas dans la direction du volant, sans hesitation.",
+            "Garder le buste equilibre, sans se pencher en arriere.",
+            "Pousser sur l'appui exterieur pour revenir au centre."
+          ],
+          "watch": [
+            "Les eleves croisent-ils les jambes au lieu de faire des pas chasses ?",
+            "Reviennent-ils au centre, ou restent-ils sur le cote apres leur frappe ?"
+          ],
+          "errors": [
+            "Croiser les appuis, ce qui fait perdre l'equilibre.",
+            "Rester sur le cote du terrain apres la frappe.",
+            "Partir en retard, une fois le volant deja proche."
+          ],
+          "feedback": [
+            "Pas chasses, pas de croise : tu vas tomber sur ce type d'appui.",
+            "Reviens au centre, sinon le prochain volant te surprend.",
+            "Anticipe des le geste de ton partenaire, pas au moment ou le volant part."
+          ],
+          "plus": [
+            "Volants envoyes sans ordre annonce, a la decision du partenaire."
+          ],
+          "minus": [
+            "Volants envoyes toujours dans le meme coin, ordre connu a l'avance."
+          ],
+          "diff": {
+            "facilitee": "Volants envoyes toujours dans le meme coin, deplacement guide.",
+            "normale": "Volants envoyes dans les quatre coins, ordre annonce a l'avance.",
+            "complexifiee": "Volants envoyes sans ordre annonce, a la decision du partenaire."
+          },
+          "safety": [
+            "Sol verifie, sec et non glissant : les pas chasses et changements d'appui exposent a l'entorse sur un sol glissant.",
+            "Chaussures a semelle non marquante obligatoires.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Match avec consigne : adapter son projet selon le score",
+          "objective": "Adapter son projet de jeu en fonction du rapport de force en cours de match, et exercer son role choisi.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 80
+            },
+            {
+              "label": "fiches de poule",
+              "fixed": 7
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Match de poule avec consigne tactique : si l'eleve est mene, il doit varier ses services et allonger les echanges ; s'il mene, il doit conserver son avantage par la variete des coups plutot que par la prudence. Un camarade exerce, pendant ce temps, l'un de ses deux roles choisis.",
+          "studentGoal": "Changer reellement de jeu selon que je mene ou que je suis mene.",
+          "instructions": [
+            "Si je suis mene, je varie mes services et j'allonge les echanges plutot que de forcer.",
+            "Si je mene, je continue a varier mes coups plutot que de jouer la securite.",
+            "Je verifie le score avant chaque service pour savoir ou j'en suis.",
+            "Si j'ai choisi observateur ou arbitre, je tiens mon role sur ce match."
+          ],
+          "success": [
+            "Le jeu change visiblement selon que l'eleve mene ou est mene.",
+            "L'eleve connait le score a tout moment du match.",
+            "Le role choisi, s'il est exerce sur ce match, est correctement tenu."
+          ],
+          "execution": [
+            "Reperer son statut, mene ou menant, avant chaque point.",
+            "Choisir un coup different de son habitude quand la consigne l'exige.",
+            "Annoncer le score a voix haute avant chaque service."
+          ],
+          "watch": [
+            "Le jeu change-t-il vraiment, ou l'eleve joue-t-il pareil quel que soit le score ?",
+            "L'eleve connait-il le score en cours de match ?"
+          ],
+          "errors": [
+            "Jouer exactement le meme jeu, mene ou menant.",
+            "Perdre le fil du score en cours de match.",
+            "Forcer le jeu quand on est mene, au lieu de temporiser."
+          ],
+          "feedback": [
+            "Tu es mene de cinq points et tu joues pareil qu'au debut : change quelque chose.",
+            "Quel est le score ? Tu dois le savoir a tout instant.",
+            "Force moins, allonge l'echange : c'est la consigne quand tu es mene."
+          ],
+          "plus": [
+            "Match en 2 sets gagnants de 11 points, avec la consigne appliquee sur les deux sets."
+          ],
+          "minus": [
+            "Match a 7 points, avec un arret du professeur a mi-match pour verifier la consigne."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, arret a mi-match pour verifier verbalement la consigne avec le professeur.",
+            "normale": "Un set a 11 points, consigne appliquee en autonomie.",
+            "complexifiee": "2 sets gagnants de 11 points, consigne appliquee sur l'ensemble du match."
+          },
+          "safety": [
+            "Consulter les PAI.",
+            "Zones de terrain respectees.",
+            "Point d'eau accessible.",
+            "Retour au calme en fin de seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel coup nouveau avez-vous le mieux reussi aujourd'hui ?",
+          "Comment avez-vous change votre jeu quand vous etiez mene ?"
+        ],
+        "key": "Un panel de coups ne sert a rien s'il n'est jamais adapte au score : desormais, chaque point doit interroger votre projet de jeu, pas seulement votre technique."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points, dans un jeu qui a du sens pour le joueur.",
+        "Partenaire d'entrainement : cible un point faible identifie par des volants precis.",
+        "Observateur : releve des donnees quantitatives puis qualitatives, fiables et exploitables.",
+        "Arbitre : annonce le score du serveur en premier, tient la fiche de score."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et verification des roles choisis",
+      "mainObjective": "Situer chacun dans des conditions proches du jour J et verifier les deux roles et la repartition choisis en seance 3.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer des matchs de poule en conditions proches de l'examen, en 2 sets gagnants de 11 points.",
+        "Verifier que les deux roles choisis en seance 3 restent pertinents, sans les remettre en cause a la legere.",
+        "Ajuster son projet de jeu au vu du rapport de force observe."
+      ],
+      "linkToPrevious": "Le panel de coups et l'adaptation au rapport de force ont ete travailles en seance 4, et les roles ainsi que la repartition des points sont choisis depuis la seance 3 : l'epreuve evaluee de mi-cycle montre ce que cela donne en conditions reelles.",
+      "prerequisiteForNext": "Chaque eleve a un projet de jeu ajuste et confirme, ou fait evoluer, sa repartition de points.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 60
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et les trois repartitions possibles entre AFL2 et AFL3.",
+          "Preparer les fiches d'evaluation mi-cycle, nominatives, par poule.",
+          "Verifier la tension des filets sur les 7 terrains.",
+          "Verifier les PAI, les dispenses et l'etat du gymnase.",
+          "Prevoir un espace calme pour l'ecriture, a l'ecart des terrains."
+        ],
+        "sketch": "7 terrains, poules completes jouant comme le jour de l'epreuve.\nAffichage du referentiel et des repartitions a l'entree.\nZone d'ecriture a l'ecart des terrains.\nFiches d'evaluation mi-cycle disponibles par poule."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite fait partie de l'AFL1 et sera observee le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six minutes minimum de course souple.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses dans les quatre directions du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet avec changement de prise.",
+              "Deux series de smash a intensite croissante."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Matchs de poule evalues, conditions proches du jour J",
+          "objective": "Evaluer la capacite a mobiliser le panel de coups et a adapter son projet de jeu au rapport de force, comme le jour de l'epreuve.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 60
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque poule joue un match en 2 sets gagnants de 11 points, comme le format de l'epreuve finale. Le professeur observe l'AFL1 : actions techniques et choix tactiques au regard du rapport de force. Un camarade de la poule exerce, sur ce match, l'un de ses deux roles choisis en seance 3.",
+          "studentGoal": "Jouer mon match en mobilisant mon panel de coups et en adaptant mon jeu au score.",
+          "instructions": [
+            "Je joue un match en 2 sets gagnants de 11 points.",
+            "J'utilise mon panel de coups : smash, amorti, contre-amorti, degagement, services varies.",
+            "J'adapte mon jeu selon que je mene ou que je suis mene.",
+            "Si j'exerce un role ce match, je le tiens sans me melanger avec le jeu."
+          ],
+          "success": [
+            "Le match complet en 2 sets gagnants de 11 points est joue.",
+            "Le panel de coups est mobilise, pas seulement le degagement.",
+            "Le jeu change visiblement selon le rapport de force en cours de match.",
+            "Le role exerce sur ce match, s'il y en a un, est correctement tenu."
+          ],
+          "execution": [
+            "Varier les services des le debut du match, pas seulement en cas de retard au score.",
+            "Se placer de profil au filet, pas seulement en fond de terrain.",
+            "Verifier le score avant chaque service."
+          ],
+          "watch": [
+            "Le panel de coups est-il reellement mobilise, ou l'eleve reste-t-il sur le degagement ?",
+            "Le jeu s'adapte-t-il au rapport de force, ou reste-t-il identique du debut a la fin ?",
+            "Le role exerce sur ce match est-il tenu avec serieux ?"
+          ],
+          "errors": [
+            "Jouer uniquement en degagement, par securite, sous la pression de l'evaluation.",
+            "Ne pas changer de jeu alors que le score est tres defavorable.",
+            "Melanger son role (par exemple observer tout en jouant) au lieu de le tenir separement."
+          ],
+          "feedback": [
+            "Sous pression, tu reviens au degagement seul : c'est justement ce qu'on evalue, ta capacite a varier.",
+            "Tu es mene de six points et tu joues pareil : change quelque chose.",
+            "Ton role et ton match sont deux choses separees : tu ne fais jamais les deux en meme temps."
+          ],
+          "plus": [
+            "Match evalue avec relance du professeur sur un point tactique specifique en cours de set."
+          ],
+          "minus": [
+            "Match en un seul set a 11 points, pour raccourcir l'evaluation."
+          ],
+          "diff": {
+            "facilitee": "Un seul set a 11 points, panel de coups reduit a trois familles evaluees.",
+            "normale": "2 sets gagnants de 11 points, panel de coups complet evalue.",
+            "complexifiee": "2 sets gagnants de 11 points, avec relance du professeur sur un point tactique en cours de set."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les matchs evalues.",
+            "Consulter les PAI : epaule, poignet, genou.",
+            "Zones de jeu strictement respectees entre les 7 terrains.",
+            "Arret immediat en cas de collision ou de choc de raquette.",
+            "Point d'eau accessible entre les matchs.",
+            "Le professeur circule entre les 7 terrains et reste en vue de l'ensemble du gymnase."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier ses deux roles et sa repartition",
+          "objective": "Verifier que les deux roles et la repartition choisis en seance 3 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des terrains. Chacun relit les deux roles et la repartition choisis en seance 3, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mes deux roles et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis les deux roles et la repartition que j'ai choisis en seance 3.",
+            "Je regarde mon carnet : mes roles sont-ils mon point fort ou mon point faible ?",
+            "Je regarde mes roles tenus depuis la seance 3 : suis-je utile a mes camarades ?",
+            "J'ecris si je confirme mes choix, et pourquoi."
+          ],
+          "success": [
+            "Les deux roles et la repartition de la seance 3 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 3."
+          ],
+          "execution": [
+            "Partir de son carnet et de ses roles reellement tenus.",
+            "Comparer a ce qui avait ete choisi en seance 3.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leurs choix de seance 3 ?",
+            "Les justifications sont-elles argumentees, ou une simple reconduction sans reflexion ?"
+          ],
+          "errors": [
+            "Ne pas savoir quels roles avaient ete choisis en seance 3.",
+            "Confirmer sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique reelle."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort dans ton role d'observateur.",
+            "Tu arbitres sans jamais annoncer le score : verifie que ce role te convient toujours.",
+            "Ce n'est pas le choix de ton voisin qui compte, c'est le tien."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec les deux autres roles."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome des deux roles et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'auraient change les deux roles non choisis."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des terrains, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Fixer son projet de jeu pour la suite",
+          "objective": "Arreter un projet de jeu individualise pour les seances suivantes, a partir du rapport de force observe aujourd'hui.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart des terrains. Chacun identifie, a partir de son match evalue, un point fort a conserver et un point faible a travailler d'ici l'epreuve finale, et ecrit son objectif personnel.",
+          "studentGoal": "Ecrire l'objectif technique et tactique que je vise pour la suite du cycle.",
+          "instructions": [
+            "Je releve un point fort de mon match : un coup, un service, une adaptation reussie.",
+            "Je releve un point faible : un coup absent, une prise evitee, un jeu qui ne s'adapte pas au score.",
+            "J'ecris un objectif precis pour les prochaines seances.",
+            "Je garde mon carnet pour verifier cet objectif a la seance 8."
+          ],
+          "success": [
+            "Un point fort et un point faible sont identifies et notes.",
+            "L'objectif personnel est ecrit et precis, avec un verbe d'action.",
+            "L'objectif est realiste au vu du match observe."
+          ],
+          "execution": [
+            "Partir de faits observes pendant le match, pas d'une impression generale.",
+            "Formuler l'objectif avec un verbe d'action : utiliser, varier, adapter.",
+            "Choisir un seul objectif prioritaire."
+          ],
+          "watch": [
+            "Les objectifs sont-ils precis, ou vagues comme mieux jouer ?",
+            "S'appuient-ils sur le match reellement observe ?"
+          ],
+          "errors": [
+            "Ecrire un objectif vague : etre meilleur.",
+            "Choisir un point faible qu'on ne compte pas travailler.",
+            "Ne pas relier l'objectif au match du jour."
+          ],
+          "feedback": [
+            "Etre meilleur, ce n'est pas un objectif : utiliser l'amorti au filet, c'en est un.",
+            "Choisis un point faible que tu es pret a travailler vraiment.",
+            "Repars de ton match : qu'est-ce qui t'a manque exactement ?"
+          ],
+          "plus": [
+            "Objectif accompagne d'un moyen concret pour le travailler d'ici la seance 7."
+          ],
+          "minus": [
+            "Objectif propose par le professeur a partir de l'observation du match."
+          ],
+          "diff": {
+            "facilitee": "Objectif propose par le professeur a partir de l'observation du match, note par l'eleve.",
+            "normale": "Objectif ecrit en autonomie, avec point fort et point faible identifies.",
+            "complexifiee": "Objectif accompagne d'un moyen concret pour le travailler d'ici la seance 7."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des terrains, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Confirmez-vous vos deux roles et votre repartition choisis en seance 3 ?",
+          "Quel est votre objectif technique et tactique pour la suite du cycle ?"
+        ],
+        "key": "A mi-cycle, on ne rejoue pas ses choix a la legere : on verifie qu'ils correspondent a ce qu'on fait reellement, et on fixe un objectif precis pour la suite, a partir de faits observes aujourd'hui."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points, sur un match evalue.",
+        "Partenaire d'entrainement : cible le point faible identifie a l'issue de l'evaluation.",
+        "Observateur : renseigne la fiche d'evaluation mi-cycle.",
+        "Arbitre : tient le score officiel du match evalue."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Approfondir la technique et exercer ses deux roles en match",
+      "mainObjective": "Perfectionner le panel de coups et le jeu de profil, et exercer pleinement ses deux roles choisis dans des matchs de poule.",
+      "secondaryObjectives": [
+        "Consolider l'objectif technique fixe a la seance 5.",
+        "Tenir en conditions reelles le role d'observateur ou d'arbitre, pour les eleves qui l'ont choisi.",
+        "Tenir en conditions reelles le role de coach ou de partenaire d'entrainement, pour les eleves qui l'ont choisi.",
+        "Poursuivre le tableau de la deuxieme boucle de poule."
+      ],
+      "linkToPrevious": "L'evaluation de mi-cycle a fixe un objectif technique individuel et a confirme les roles choisis en seance 3 : place maintenant a un entrainement cible et a des roles pleinement exerces.",
+      "prerequisiteForNext": "Chaque eleve a progresse sur son objectif technique et a tenu ses deux roles au moins une fois chacun en conditions reelles.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 70
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "fiches de score",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation AFL3 completes : donnees quantitatives et qualitatives.",
+          "Preparer des fiches de score completes avec emplacement pour les deux sets et les temps morts.",
+          "Verifier la tension des filets sur les 7 terrains.",
+          "Verifier les PAI et l'etat du gymnase."
+        ],
+        "sketch": "7 terrains, matchs de la deuxieme boucle de poule.\nFiches d'observation AFL3 et fiches de score disponibles a chaque terrain.\nZone de recuperation active avec point d'eau."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, cible sur l'epaule et le poignet.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six minutes minimum.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses dans les quatre directions du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet avec changement de prise.",
+              "Deux series de smash a intensite croissante."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Matchs de poule avec panel de coups complet",
+          "objective": "Mobiliser l'ensemble du panel de coups et progresser sur l'objectif technique fixe en seance 5.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches de poule",
+              "fixed": 7
+            }
+          ],
+          "organization": "Chaque poule poursuit son tableau de la deuxieme boucle. Avant chaque match, l'eleve relit son objectif technique de la seance 5 et le communique a son adversaire.",
+          "studentGoal": "Jouer mon match en travaillant precisement mon objectif de la seance 5.",
+          "instructions": [
+            "Je relis mon objectif avant le match : le coup ou la prise que je dois travailler.",
+            "Je joue un set a 11 points, ou 2 sets gagnants si le temps le permet.",
+            "Je cherche a utiliser mon objectif au moins trois fois dans le match, meme si ce n'est pas encore parfait.",
+            "Je note apres le match si j'ai reussi a l'utiliser."
+          ],
+          "success": [
+            "L'objectif de la seance 5 est utilise au moins trois fois dans le match.",
+            "Le resultat est reporte sur la fiche de poule.",
+            "Le panel de coups reste varie, pas seulement centre sur l'objectif."
+          ],
+          "execution": [
+            "Chercher les occasions d'utiliser son objectif, sans le forcer hors contexte.",
+            "Continuer a varier les autres coups et services.",
+            "Reporter le resultat immediatement apres le match."
+          ],
+          "watch": [
+            "L'objectif de la seance 5 est-il reellement recherche ?",
+            "Le reste du jeu reste-t-il varie, ou l'eleve se fige-t-il sur son seul objectif ?"
+          ],
+          "errors": [
+            "Oublier completement son objectif une fois le match commence.",
+            "Forcer son objectif dans des situations ou il n'est pas pertinent.",
+            "Delaisser tout le reste du jeu pour se concentrer sur un seul coup."
+          ],
+          "feedback": [
+            "Tu as oublie ton objectif : relis-le entre deux points si besoin.",
+            "Ce n'etait pas le bon moment pour cet amorti : attends une occasion plus favorable.",
+            "N'oublie pas le reste de ton jeu, ton objectif s'ajoute, il ne remplace pas tout."
+          ],
+          "plus": [
+            "Match en 2 sets gagnants de 11 points, objectif recherche sur les deux sets."
+          ],
+          "minus": [
+            "Match a 7 points, avec rappel de l'objectif par le professeur a la moitie."
+          ],
+          "diff": {
+            "facilitee": "Match a 7 points, rappel de l'objectif par le professeur a la moitie du match.",
+            "normale": "Un set a 11 points, objectif recherche en autonomie.",
+            "complexifiee": "2 sets gagnants de 11 points, objectif recherche sur l'ensemble du match."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant les matchs.",
+            "Zones de terrain respectees, aucun eleve ne traverse un terrain voisin.",
+            "Consulter les PAI.",
+            "Point d'eau accessible entre les matchs.",
+            "Le professeur circule entre les 7 terrains."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir son role : observateur ou arbitre en conditions reelles",
+          "objective": "Exercer, en conditions proches de l'epreuve, le role d'observateur ou d'arbitre, pour les eleves qui ont choisi l'un de ces deux roles.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 0.25,
+              "min": 4
+            },
+            {
+              "label": "fiches de score",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Pendant les matchs de la poule, l'eleve qui a choisi observateur remplit une fiche complete (donnees chiffrees puis analyse qualitative avec axes de progres) ; celui qui a choisi arbitre tient le score du match integralement, annonce le score du serveur en premier apres chaque point, et gere les temps morts.",
+          "studentGoal": "Tenir mon role d'observateur ou d'arbitre du debut a la fin d'un match, sans faille.",
+          "instructions": [
+            "Observateur : je releve des donnees chiffrees en direct, puis une analyse qualitative avec un axe de progres.",
+            "Arbitre : j'annonce le score du serveur en premier apres chaque point, je remplis la fiche de score, et je gere les temps morts demandes.",
+            "Je reste concentre sur l'ensemble du match, du premier au dernier point.",
+            "En cas de point litigieux, si je suis arbitre, je tranche avec autorite et je l'annonce clairement."
+          ],
+          "success": [
+            "Observateur : la fiche est complete, chiffree puis qualitative, avec un axe de progres exploitable.",
+            "Arbitre : le score est exact et annonce dans le bon ordre a chaque point, la fiche est correctement remplie.",
+            "La concentration est maintenue sur l'integralite du match.",
+            "Les points litigieux, s'il y en a, sont tranches avec autorite."
+          ],
+          "execution": [
+            "Observateur : noter chaque donnee au moment ou elle se produit, pas a la fin.",
+            "Arbitre : annoncer avant chaque service, fort et clair, en commencant par le score du serveur.",
+            "Rester positionne pour voir l'ensemble du terrain."
+          ],
+          "watch": [
+            "L'observateur reste-t-il concentre sur tout le match, ou decroche-t-il ?",
+            "L'arbitre annonce-t-il systematiquement le score du serveur en premier ?",
+            "L'arbitre tranche-t-il les points litigieux, ou les laisse-t-il sans arbitrage ?"
+          ],
+          "errors": [
+            "Observateur : remplir sa fiche a la fin du match, de memoire.",
+            "Arbitre : annoncer le score de l'adversaire en premier.",
+            "Arbitre : ne rien dire sur un point litigieux, par crainte de trancher.",
+            "Oublier de gerer un temps mort demande par un joueur."
+          ],
+          "feedback": [
+            "Note en direct, pas a la fin : tu vas perdre des donnees.",
+            "Le score du serveur d'abord, toujours, meme si c'est celui qui perd.",
+            "Un point litigieux se tranche : c'est ton role, assume-le.",
+            "Le temps mort a ete demande : tu dois le gerer, pas l'ignorer."
+          ],
+          "plus": [
+            "Observateur : ajouter une proposition d'axe de progres tactique, pas seulement technique. Arbitre : gerer aussi le temps de repos entre les deux sets."
+          ],
+          "minus": [
+            "Role tenu avec rappel regulier du professeur sur ce qu'il faut relever ou annoncer."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec rappel regulier du professeur sur ce qu'il faut relever ou annoncer.",
+            "normale": "Role tenu seul, fiche complete, du debut a la fin du match.",
+            "complexifiee": "Observateur : axe de progres technique et tactique propose. Arbitre : gestion complete des temps morts et du temps de repos entre les sets."
+          },
+          "safety": [
+            "L'observateur et l'arbitre restent hors de la zone de jeu, en bordure du terrain.",
+            "L'arbitre signale immediatement tout choc entre joueurs ou incident materiel.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Tenir son role : coach ou partenaire d'entrainement en conditions reelles",
+          "objective": "Exercer, en conditions proches de l'epreuve, le role de coach ou de partenaire d'entrainement, pour les eleves qui ont choisi l'un de ces deux roles.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant les matchs de la poule ou juste apres, l'eleve qui a choisi coach conseille son camarade entre les points a partir de ce qu'il observe reellement ; celui qui a choisi partenaire d'entrainement lui propose ensuite une courte serie de volants cibles sur son point faible du match.",
+          "studentGoal": "Conseiller ou entrainer un camarade de facon utile, a partir de ce qui vient de se passer.",
+          "instructions": [
+            "Coach : je donne un conseil concret, entre deux points, base sur ce que je viens de voir.",
+            "Partenaire d'entrainement : apres le match, j'envoie une serie de dix volants cibles sur le point faible observe.",
+            "Je choisis un seul point a la fois, pas plusieurs conseils en meme temps.",
+            "Je verifie que mon camarade a compris avant de continuer."
+          ],
+          "success": [
+            "Le conseil du coach est concret et base sur une observation reelle du match.",
+            "La serie de volants du partenaire d'entrainement cible reellement le point faible identifie.",
+            "Le camarade confirme avoir compris le conseil ou l'objectif de la serie."
+          ],
+          "execution": [
+            "Formuler le conseil en une phrase courte et actionnable.",
+            "Envoyer des volants precis, dans la zone qui pose probleme.",
+            "Verifier la comprehension avant de repartir sur un match."
+          ],
+          "watch": [
+            "Les conseils du coach s'appuient-ils sur le match qui vient d'avoir lieu ?",
+            "La serie du partenaire d'entrainement cible-t-elle vraiment le point faible du match ?"
+          ],
+          "errors": [
+            "Donner un conseil general, sans lien avec le match observe.",
+            "Envoyer des volants faciles au lieu de cibler le point faible.",
+            "Cumuler plusieurs conseils a la fois, ce qui noie le message."
+          ],
+          "feedback": [
+            "Base-toi sur ce que tu viens de voir, pas sur une idee generale.",
+            "Vise la ou il a eu du mal, pas la ou il est deja a l'aise.",
+            "Un seul conseil a la fois, sinon il ne retient rien."
+          ],
+          "plus": [
+            "Le coach note son conseil au carnet du camarade, pour verification a la seance suivante."
+          ],
+          "minus": [
+            "Conseil et serie de volants donnes avec l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Conseil et serie de volants donnes avec l'aide du professeur.",
+            "normale": "Coach et partenaire d'entrainement autonomes, a partir du match qui vient d'avoir lieu.",
+            "complexifiee": "Le conseil est note au carnet du camarade, pour verification a la seance suivante."
+          },
+          "safety": [
+            "Le partenaire d'entrainement envoie des volants a intensite moderee.",
+            "Le coach reste hors de la zone de jeu.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Avez-vous progresse sur votre objectif technique de la seance 5 ?",
+          "Comment vos deux roles se sont-ils passes aujourd'hui ?"
+        ],
+        "key": "Un role ne se decouvre plus a partir d'aujourd'hui : il se tient, entierement, sur chaque match ou vous etes designe. C'est cette regularite qui sera evaluee."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points, a partir d'une observation reelle.",
+        "Partenaire d'entrainement : propose une serie ciblee apres le match.",
+        "Observateur : releve des donnees quantitatives et qualitatives completes.",
+        "Arbitre : annonce le score, tient la fiche, gere les temps morts."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale en conditions de poule et carnet finalise",
+      "mainObjective": "Simuler integralement l'epreuve finale, pour ne rien decouvrir le jour J : format de poule, bareme, roles.",
+      "secondaryObjectives": [
+        "Jouer un match complet dans les conditions exactes de l'epreuve.",
+        "Finaliser sa repartition de points entre l'AFL2 et l'AFL3.",
+        "Ajuster une derniere fois son projet de jeu a partir de la repetition generale."
+      ],
+      "linkToPrevious": "Le panel de coups est construit et les deux roles sont exerces regulierement depuis la seance 6 : il reste a tout enchainer une fois, dans les conditions exactes du jour J.",
+      "prerequisiteForNext": "Chaque eleve a vecu l'epreuve complete une fois, sa repartition de points est definitivement fixee, et son carnet est a jour.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 70
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "fiches de poule",
+            "fixed": 7
+          },
+          {
+            "label": "fiches de score",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et l'ordre de passage des matchs, comme le jour de l'epreuve.",
+          "Preparer les fiches de score et d'observation completes, identiques a celles de l'epreuve finale.",
+          "Verifier la tension des filets sur les 7 terrains.",
+          "Verifier les PAI et l'etat du gymnase.",
+          "Relever les carnets pour verifier qu'ils sont a jour."
+        ],
+        "sketch": "7 terrains, poules jouant comme le jour de l'epreuve.\nOrdre de passage et referentiel affiches a l'entree.\nFiches de score et d'observation identiques a celles de l'epreuve finale.\nZone calme pour la finalisation du carnet."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, dans les memes conditions que le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six minutes minimum, comme le jour de l'epreuve.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses dans les quatre directions du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet avec changement de prise.",
+              "Deux series de smash a intensite croissante."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Poule complete en conditions d'examen",
+          "objective": "Jouer un match de poule integral, 2 sets gagnants de 11 points, avec les deux roles exerces simultanement comme le jour de l'epreuve.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "fiches de score",
+              "per": 0.25,
+              "min": 4
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Chaque poule joue un match complet en 2 sets gagnants de 11 points, exactement comme le jour de l'epreuve. Les eleves non-joueurs de la poule tiennent leurs deux roles choisis, en alternance selon les matchs, avec les fiches officielles.",
+          "studentGoal": "Vivre l'epreuve complete une fois, comme joueur et dans mes deux roles.",
+          "instructions": [
+            "Je joue mon match en 2 sets gagnants de 11 points, sans interruption du professeur.",
+            "Je mobilise mon panel de coups et j'adapte mon jeu au rapport de force.",
+            "Quand je ne joue pas, je tiens l'un de mes deux roles choisis, avec les fiches officielles.",
+            "Je respecte le temps de repos entre les deux sets, gere par l'arbitre."
+          ],
+          "success": [
+            "Le match complet en 2 sets gagnants de 11 points est joue sans interruption.",
+            "Le panel de coups et l'adaptation au rapport de force sont mobilises.",
+            "Les deux roles sont tenus par les eleves non-joueurs, avec les fiches officielles completes.",
+            "Le temps de repos entre les sets est respecte et gere par l'arbitre."
+          ],
+          "execution": [
+            "Enchainer les deux sets sans relachement entre les deux.",
+            "Utiliser le temps de repos entre les sets pour ajuster son projet de jeu, pas pour se relacher.",
+            "Rester dans son role tenu sans se laisser distraire par le jeu."
+          ],
+          "watch": [
+            "Le match se deroule-t-il sans intervention du professeur, comme le jour de l'epreuve ?",
+            "Les roles sont-ils tenus avec les fiches officielles, completes ?",
+            "Le temps de repos entre les sets est-il utilise pour ajuster le projet de jeu ?"
+          ],
+          "errors": [
+            "S'arreter au milieu du match pour demander de l'aide au professeur.",
+            "Rendre une fiche de role incomplete ou approximative.",
+            "Ignorer le temps de repos entre les sets, ou le prolonger sans raison."
+          ],
+          "feedback": [
+            "Le jour de l'epreuve, personne ne t'aidera en cours de match : continue seul.",
+            "Ta fiche doit etre complete, comme le jour de l'epreuve.",
+            "Le temps de repos entre les sets sert a ajuster ton jeu, utilise-le."
+          ],
+          "plus": [
+            "Match joue sans aucun temps mort supplementaire, dans le temps strict de l'epreuve."
+          ],
+          "minus": [
+            "Match en un set a 11 points, avec un point d'etape du professeur a la fin."
+          ],
+          "diff": {
+            "facilitee": "Un set a 11 points, avec un point d'etape du professeur a la fin du match.",
+            "normale": "2 sets gagnants de 11 points, deroulement complet sans intervention.",
+            "complexifiee": "2 sets gagnants de 11 points, sans aucun temps mort supplementaire au-dela de ceux prevus au reglement."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant le match.",
+            "Consulter les PAI : epaule, poignet, genou.",
+            "Zones de jeu strictement respectees entre les 7 terrains.",
+            "L'arbitre ou le camarade en role signale immediatement tout incident.",
+            "Point d'eau accessible avant, pendant le temps de repos entre les sets, et apres.",
+            "Le professeur circule entre les 7 terrains et reste en vue de l'ensemble du gymnase."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Finaliser le carnet et la repartition de points",
+          "objective": "Fixer definitivement la repartition de points entre l'AFL2 et l'AFL3 et mettre a jour le carnet avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des terrains. Chacun complete son carnet a jour, relit ses deux roles choisis en seance 3, et fixe definitivement sa repartition de points entre l'AFL2 et l'AFL3, comme l'exige le referentiel au plus tard avant l'epreuve finale.",
+          "studentGoal": "Terminer mon carnet et fixer definitivement ma repartition de points.",
+          "instructions": [
+            "Je complete les pages manquantes de mon carnet.",
+            "Je relis mes deux roles choisis en seance 3 et je confirme qu'ils sont toujours les bons.",
+            "Je fixe definitivement ma repartition entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "Je note la date de ce choix definitif sur mon carnet."
+          ],
+          "success": [
+            "Le carnet est complet, sans page manquante.",
+            "La repartition de points est fixee definitivement et datee.",
+            "Les deux roles choisis sont confirmes."
+          ],
+          "execution": [
+            "Reprendre le carnet seance par seance pour reperer les manques.",
+            "Relire les traces des roles tenus depuis la seance 3 avant de confirmer.",
+            "Ecrire la date a cote de la repartition definitive."
+          ],
+          "watch": [
+            "Les carnets sont-ils vraiment complets, ou des pages manquent-elles ?",
+            "La repartition definitive est-elle ecrite et datee ?"
+          ],
+          "errors": [
+            "Rendre un carnet avec des seances manquantes.",
+            "Ne pas fixer de repartition definitive avant l'epreuve.",
+            "Changer de repartition sans justification, au dernier moment."
+          ],
+          "feedback": [
+            "Il te manque la seance 4 : complete-la maintenant.",
+            "Ta repartition doit etre fixee aujourd'hui, au plus tard : c'est la derniere seance avant l'epreuve.",
+            "Si tu changes, dis pourquoi : ce n'est pas un choix au hasard."
+          ],
+          "plus": [
+            "Bilan chiffre comparant l'objectif de la seance 5 et la progression reelle constatee aujourd'hui."
+          ],
+          "minus": [
+            "Carnet complete avec l'aide du professeur, repartition confirmee avec lui."
+          ],
+          "diff": {
+            "facilitee": "Carnet complete avec l'aide du professeur, repartition confirmee avec lui.",
+            "normale": "Carnet complete en autonomie, repartition fixee et datee.",
+            "complexifiee": "Bilan chiffre comparant l'objectif de la seance 5 et la progression reelle."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des terrains, apres retour au calme.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Derniere mise au point technique",
+          "objective": "Corriger individuellement, une derniere fois avant l'epreuve, un point technique precis.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "plots de zone",
+              "fixed": 21
+            }
+          ],
+          "organization": "Par deux, chacun choisit le point technique le moins solide identifie dans son carnet, et le travaille avec un partenaire qui lui envoie des volants cibles, avant le rangement.",
+          "studentGoal": "Corriger une derniere fois mon point technique le plus fragile avant l'epreuve.",
+          "instructions": [
+            "Je choisis, dans mon carnet, le point technique que je maitrise le moins.",
+            "Mon partenaire m'envoie des volants cibles sur ce point precis.",
+            "Je m'entraine dix minutes maximum, sans chercher a tout corriger d'un coup.",
+            "Je note sur mon carnet si je me sens plus a l'aise."
+          ],
+          "success": [
+            "Le point technique travaille est bien celui identifie comme le plus fragile.",
+            "L'eleve se sent plus a l'aise sur ce point en fin de situation.",
+            "Le constat est note sur le carnet."
+          ],
+          "execution": [
+            "Choisir un seul point, pas plusieurs.",
+            "Repeter le geste en s'ajustant a chaque essai.",
+            "Noter honnetement le constat final."
+          ],
+          "watch": [
+            "Le point travaille est-il vraiment le plus fragile, ou un point deja maitrise par confort ?",
+            "L'eleve progresse-t-il visiblement sur ce point precis ?"
+          ],
+          "errors": [
+            "Travailler un point deja maitrise, par facilite.",
+            "Vouloir tout corriger en dix minutes.",
+            "Ne rien noter sur le constat final."
+          ],
+          "feedback": [
+            "Ce point-la, tu le maitrises deja : reviens sur celui qui te pose vraiment probleme.",
+            "Un seul point, pas cinq : concentre-toi.",
+            "Note ton constat, meme s'il n'est pas parfait."
+          ],
+          "plus": [
+            "Travail integre a une sequence de jeu, pas seulement sur des volants alimentes."
+          ],
+          "minus": [
+            "Point technique propose par le professeur a partir du carnet."
+          ],
+          "diff": {
+            "facilitee": "Point technique propose par le professeur a partir du carnet, alimentation facilitee.",
+            "normale": "Point technique choisi par l'eleve, volants cibles par un partenaire.",
+            "complexifiee": "Travail integre a une sequence de jeu proche du match."
+          },
+          "safety": [
+            "Volants envoyes a intensite moderee, sans chercher a marquer le point.",
+            "Point d'eau accessible.",
+            "Retour au calme en fin de seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'avez-vous appris de cette repetition en conditions d'examen ?",
+          "Quelle est votre repartition de points definitive entre l'AFL2 et l'AFL3 ?"
+        ],
+        "key": "Rien ne se decouvre le jour de l'epreuve : le format, le bareme et vos deux roles ont ete vecus aujourd'hui exactement comme ils le seront a la seance 8."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points.",
+        "Partenaire d'entrainement : cible le dernier point faible identifie.",
+        "Observateur : renseigne la fiche d'observation officielle.",
+        "Arbitre : tient la fiche de score officielle et gere le temps de repos entre les sets."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Evaluer l'AFL1 le jour de l'epreuve, apres avoir evalue les AFL2 et AFL3 au fil du cycle.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer les matchs de poule en 2 sets gagnants de 11 points, evalues au titre de l'AFL1.",
+        "Tenir ses deux roles choisis en seance 3, evalues au titre de l'AFL3.",
+        "Verifier l'objectif personnel fixe a la seance 5."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 s'est deroulee dans les conditions exactes de l'epreuve : rien de nouveau n'est decouvert aujourd'hui.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve sait construire et conduire un projet de jeu au regard du rapport de force, et assumer les roles qui font fonctionner une rencontre.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants",
+            "fixed": 70
+          },
+          {
+            "label": "terrains de badminton",
+            "fixed": 7
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches de score",
+            "per": 0.25,
+            "min": 4
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier la tension des filets et la hauteur reglementaire sur les 7 terrains avant le premier match.",
+          "Afficher le referentiel, l'ordre de passage des poules et les criteres d'evaluation.",
+          "Preparer les grilles nominatives par poule et relever les carnets.",
+          "Verifier les PAI et les dispenses avant le premier match.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord du gymnase."
+        ],
+        "sketch": "7 terrains, poules jouant comme a la repetition generale de la seance 7.\nReferentiel, ordre de passage et criteres affiches a l'entree.\nZone de recuperation active avec point d'eau, a l'ecart des terrains.\nTrousse de secours signalee, professeur en vue de l'ensemble du gymnase."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite fait partie des observables du jour et prepare l'articulation de l'epaule et du poignet avant les matchs evalues.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, sept minutes minimum.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation epaule et poignet",
+            "details": [
+              "Rotations d'epaule, moulinets de bras, cercles de poignet.",
+              "Gammes de pas chasses dans les quatre directions du terrain."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Frappes progressives",
+            "details": [
+              "Echanges au filet avec changement de prise.",
+              "Deux series de smash a intensite croissante avant le premier match."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "Les matchs de poule evalues",
+          "objective": "Evaluer l'AFL1 sur 12 points : actions techniques d'attaque et de defense sur 8 points, choix au regard du rapport de force sur 4 points, ponderes par le bilan des matchs de poule.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "terrains de badminton",
+              "fixed": 7
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches de score",
+              "per": 0.25,
+              "min": 4
+            }
+          ],
+          "organization": "Chaque poule de 4 joue l'ensemble de ses matchs restants, en 2 sets gagnants de 11 points. Les eleves non-joueurs tiennent leurs deux roles choisis en seance 3, avec les fiches officielles. Le professeur evalue l'AFL1 sur chaque match : 8 points d'actions techniques, 4 points de choix tactiques au regard du rapport de force.",
+          "studentGoal": "Gagner le plus de matchs possible, en mobilisant mon panel de coups et en adaptant mon jeu au rapport de force.",
+          "instructions": [
+            "Je joue mes matchs de poule en 2 sets gagnants de 11 points.",
+            "J'utilise mon panel de coups : smash, amorti, contre-amorti, degagement, services varies et peu previsibles.",
+            "J'adapte mon projet de jeu en continu, selon que je mene ou que je suis mene.",
+            "Quand je ne joue pas, je tiens l'un de mes deux roles choisis, avec la fiche officielle."
+          ],
+          "success": [
+            "AFL1 - actions techniques : la prise est adaptee (universelle, revers, rush), le jeu se fait de face et de profil, le panel de coups est mobilise, le service est varie.",
+            "AFL1 - choix tactiques : le projet de jeu s'adapte en continu au rapport de force, au-dela du simple evitement de la faute.",
+            "AFL1 - la note est ponderee par le bilan des matchs de poule : plus de defaites, autant de defaites que de victoires, ou plus de victoires.",
+            "AFL3 : les deux roles choisis sont tenus fiablement sur les matchs des autres membres de la poule."
+          ],
+          "execution": [
+            "Se placer de profil au filet et en defense.",
+            "Varier ses services des le debut de chaque match, pas seulement en cas de retard au score.",
+            "Verifier le score avant chaque service, pour ajuster son projet de jeu."
+          ],
+          "watch": [
+            "Le panel de coups est-il mobilise sous la pression de l'evaluation, ou l'eleve se replie-t-il sur un seul coup ?",
+            "Le jeu s'adapte-t-il visiblement au rapport de force en cours de match ?",
+            "Les deux roles sont-ils tenus avec serieux sur l'ensemble de la seance ?",
+            "Le bilan de chaque poule est-il correctement etabli en fin de matchs ?"
+          ],
+          "errors": [
+            "Se replier sur le degagement seul, par securite, sous l'enjeu de l'evaluation.",
+            "Jouer le meme jeu, mene ou menant, sans jamais ajuster son projet.",
+            "Negliger un role au profit d'un match qui se joue a cote.",
+            "Perdre le compte du bilan de la poule."
+          ],
+          "feedback": [
+            "Sous la pression, tu reviens au degagement seul : c'est justement ce qui est evalue, ta capacite a varier.",
+            "Tu es mene et tu joues pareil qu'au debut : change quelque chose, c'est ce qui rapporte les quatre points.",
+            "Ton role compte autant que ton match : ne le neglige pas.",
+            "Verifie le bilan de ta poule a chaque match termine."
+          ],
+          "plus": [
+            "Poule jouee integralement sans aucune pause supplementaire au-dela du reglement."
+          ],
+          "minus": [
+            "Poule jouee en un set a 11 points par match, pour tenir le creneau."
+          ],
+          "diff": {
+            "facilitee": "Un set a 11 points par match, panel de coups evalue avec exigence adaptee, choix tactiques evalues du simple evitement de la faute a un premier ajustement.",
+            "normale": "2 sets gagnants de 11 points par match, panel de coups complet et adaptation continue evalues.",
+            "complexifiee": "2 sets gagnants de 11 points, sans aucune pause supplementaire au-dela du reglement."
+          },
+          "safety": [
+            "Echauffement complet obligatoire avant le premier match : l'articulation de l'epaule est la premiere exposee sur les gestes de service et de smash repetes.",
+            "PAI verifies avant le premier match : epaule, poignet, genou, allergies saisonnieres.",
+            "Zones de jeu strictement respectees entre les 7 terrains, aucun eleve ne traverse un terrain voisin.",
+            "Raquette tenue fermement en main en permanence, jamais lancee.",
+            "Arret immediat et prise en charge en cas de collision entre joueurs ou de choc de raquette.",
+            "L'arbitre ou le camarade en role signale immediatement tout incident.",
+            "Point d'eau accessible entre les matchs et pendant les temps de repos entre les sets.",
+            "Le professeur circule entre les 7 terrains et reste en vue de l'ensemble du gymnase."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Bilan du carnet et evaluation de l'AFL2/AFL3",
+          "objective": "Evaluer l'AFL2 a partir du carnet et l'AFL3 dans les deux roles choisis, selon la repartition de points fixee en seance 7.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart des terrains. Chacun presente son carnet complet, rappelle sa repartition de points fixee en seance 7, et le professeur evalue l'AFL2 (engagement dans les phases de repetition, projet d'entrainement individualise et son evolution) et l'AFL3 dans les deux roles choisis (observateur : concentration, fiabilite des donnees, capacite a analyser et proposer des axes d'adaptation ; arbitre : concentration, exactitude de l'annonce du score, fiche correctement remplie, autorite sur les points litigieux, gestion des temps morts et du temps de repos entre les sets ; coach et partenaire d'entrainement : pertinence et regularite des conseils et de l'entrainement cible).",
+          "studentGoal": "Montrer, carnet en main, mon engagement sur le cycle et la maitrise de mes deux roles.",
+          "instructions": [
+            "Je presente mon carnet complet, seance par seance.",
+            "Je rappelle ma repartition de points, fixee en seance 7, entre l'AFL2 et l'AFL3.",
+            "Je rappelle mes deux roles choisis, et je montre, si possible, une fiche que j'ai remplie.",
+            "Je dis comment mon projet d'entrainement a evolue depuis la seance 1."
+          ],
+          "success": [
+            "Le carnet est complet et retrace l'ensemble du cycle.",
+            "La repartition de points est rappelee et coherente avec le choix de la seance 3, confirme en seance 7.",
+            "Les deux roles sont illustres par des traces concretes, fiches ou observations du professeur.",
+            "L'evolution du projet d'entrainement est expliquee avec des exemples precis."
+          ],
+          "execution": [
+            "Citer des exemples precis, pas des impressions generales.",
+            "S'appuyer sur les fiches de role reellement remplies au fil du cycle.",
+            "Relier chaque etape du carnet a une seance precise."
+          ],
+          "watch": [
+            "Le carnet est-il tenu depuis la seance 1, ou rempli d'un seul trait recemment ?",
+            "Les fiches de role presentees sont-elles authentiques et completes ?",
+            "L'eleve peut-il expliquer l'evolution de son projet, pas seulement le recopier ?"
+          ],
+          "errors": [
+            "Presenter un carnet rempli la veille de l'epreuve.",
+            "Ne pas retrouver ses fiches de role remplies au fil du cycle.",
+            "Repondre par une impression vague sur son evolution."
+          ],
+          "feedback": [
+            "Ton carnet est ecrit d'un seul trait : ca se voit, ce n'est pas ce qui est demande.",
+            "Tu ne retrouves pas tes fiches d'observateur : elles auraient du etre conservees.",
+            "Donne un exemple precis, pas juste j'ai progresse."
+          ],
+          "plus": [
+            "Bilan chiffre comparant l'objectif fixe en seance 5 et le resultat constate aujourd'hui."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire du professeur."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire a completer avec le professeur.",
+            "normale": "Presentation autonome du carnet, de la repartition et des deux roles.",
+            "complexifiee": "Bilan chiffre comparant l'objectif de la seance 5 et le resultat constate aujourd'hui."
+          },
+          "safety": [
+            "Toute gene mentionnee dans le carnet est signalee immediatement au professeur.",
+            "Phase realisee assise a l'ecart des terrains, apres retour au calme complet.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Bilan collectif et rangement",
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants",
+              "fixed": 70
+            },
+            {
+              "label": "plots de zone",
+              "fixed": 21
+            }
+          ],
+          "organization": "Rangement collectif des raquettes, volants et plots, puis classe assise pour le bilan.",
+          "studentGoal": "Dire ce que j'ai appris sur le jeu d'opposition et sur mes deux roles.",
+          "instructions": [
+            "On range les raquettes et les volants, chacun sa portion de materiel.",
+            "On compte les plots de zone avant de quitter le gymnase.",
+            "Une fois range, on s'assoit pour le bilan.",
+            "Chacun peut dire ce qu'il a appris, comme joueur ou dans ses roles."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage entre tous les eleves.",
+            "Au moins un eleve par poule s'exprime sur le bilan."
+          ],
+          "execution": [
+            "Ranger calmement, sans courir apres l'effort des matchs.",
+            "Compter le materiel avant de quitter le gymnase.",
+            "Formuler un acquis concret, technique, tactique ou lie a un role."
+          ],
+          "watch": [
+            "Le rangement est-il partage, ou laisse a quelques eleves ?",
+            "Les eleves citent-ils des acquis concrets, techniques, tactiques ou lies aux roles ?"
+          ],
+          "errors": [
+            "Ranger en courant apres l'effort des matchs.",
+            "Ne parler que du resultat des matchs, sans evoquer la technique, la tactique ou les roles.",
+            "Laisser le rangement a quelques eleves seulement."
+          ],
+          "feedback": [
+            "Range calmement : ton retour au calme n'est pas fini.",
+            "Pas seulement le score : qu'as-tu appris sur ton jeu ou dans ton role ?",
+            "Tout le monde range, pas seulement les memes."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour un autre sport d'opposition."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle.",
+            "complexifiee": "Acquis formule et transfere a un autre sport d'opposition, collectif ou interindividuel."
+          },
+          "safety": [
+            "Rangement realise calmement : le retour au calme se poursuit pendant le rangement.",
+            "Comptage du materiel avant de quitter le gymnase.",
+            "Verification qu'aucun eleve ne presente de gene, notamment a l'epaule ou au poignet, avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "En quoi votre jeu a-t-il change depuis la seance 1, ou vous jouiez surtout de face avec une prise unique ?",
+          "Que retenez-vous de vos deux roles pour un autre sport d'opposition ?"
+        ],
+        "key": "En debut de cycle, un jeu de face, une prise unique et un service previsible. Aujourd'hui, un jeu de profil, un panel de coups complet et un projet qui s'adapte au rapport de force. Et deux roles assumes du debut a la fin, qui font vivre la rencontre autant que le match lui-meme."
+      },
+      "socialRoles": [
+        "Coach : conseille entre les points, role evalue au titre de l'AFL3 s'il est choisi.",
+        "Partenaire d'entrainement : cible un point faible par des volants precis, role evalue au titre de l'AFL3 s'il est choisi.",
+        "Observateur : releve des donnees quantitatives et qualitatives, role evalue au titre de l'AFL3 s'il est choisi.",
+        "Arbitre : annonce le score du serveur en premier, tient la fiche, gere les temps morts et le temps de repos entre les sets, role evalue au titre de l'AFL3 s'il est choisi.",
+        "Responsable materiel : organise le rangement des raquettes, volants et plots."
+      ]
+    }
+  ]
+}
+

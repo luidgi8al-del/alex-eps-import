@@ -1,0 +1,2718 @@
+{
+  "apsa": "Natation sauvetage",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA2 - Adapter son deplacement a des environnements varies ou incertains",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : mettre en rapport les exigences du milieu aquatique avec ses propres ressources pour une maitrise de deplacement et un franchissement efficace des obstacles, et maitriser son deplacement avec le mannequin remorque.",
+    "AFL2 : s'engager dans un projet individuel de sauvetage, en tenant un carnet de suivi des acquis avec un ou deux objectifs et une strategie de progression identifiable.",
+    "AFL3 : s'engager et assumer, dans le role choisi au plus tard en seance 4 (arbitre-chronometreur ou observateur), une cooperation rentable et collaborative avec ses camarades.",
+    "Choisir judicieusement son itineraire dans un contexte plus ou moins inconnu, pour le realiser efficacement et en toute securite."
+  ],
+  "targetCompetence": "Choisir judicieusement son itineraire dans un contexte plus ou moins inconnu, pour le realiser efficacement et en toute securite et pour pouvoir assumer ses roles et cooperer avec les autres.",
+  "cycleObjectives": [
+    "Choisir et realiser l'un des deux parcours de nage chronometres (200 metres ou 150 metres), en franchissant l'obstacle tapis sans penalite.",
+    "Remorquer un mannequin (enfant ou adulte) pendant une minute maximum, tete hors de l'eau, en retropedalage ou en ciseau de brasse.",
+    "Renseigner une fiche-projet completee avec les trois choix de difficulte, presentee au jury.",
+    "Reduire au minimum les penalites de 5 secondes (toucher le tapis, prendre appui sur les pieds avant le bord).",
+    "Choisir, au plus tard en seance 4, un role entre arbitre-chronometreur et observateur, et la repartition des points entre l'AFL2 et l'AFL3."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, evaluation diagnostique et referentiel",
+    "Decouverte des trois couloirs et de la fiche-projet",
+    "Franchir le tapis et remorquer : construire la technique",
+    "Affiner le projet et choisir son role : arbitre-chronometreur ou observateur",
+    "Epreuve evaluee de mi-cycle et verification du role",
+    "Reduire les penalites et s'entrainer dans son role",
+    "Repetition generale en conditions d'epreuve",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage (CA2)",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Academique",
+      "title": "Le sauvetage aquatique en CA2 au lycee - construire la competence de sauveteur",
+      "org": "Academie de Versailles",
+      "url": "https://www.eps.ac-versailles.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le sauvetage en milieu aquatique - securite, remorquage et franchissement d'obstacles",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-27"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : piscine de 6 couloirs de 25 metres, eau chauffee en periode estivale.",
+    "Presence obligatoire de deux maitres-nageurs, postes sur la longueur des couloirs, prets a intervenir en cas de courbature ou de fatigue insupportable : aucune seance ne se deroule sans eux.",
+    "L'epreuve mobilise trois couloirs : couloir 1 pour la nage et l'obstacle tapis (2 metres, obstacle horizontal, situe au milieu du couloir mais plus vers le petit bain), couloir 2 pour le remorquage des mannequins enfant et adulte (une minute maximum), couloir 3 pour la circulation et le regroupement des candidats en attente.",
+    "Le candidat choisit et realise un des deux parcours de nage chronometres : parcours 1 de 200 metres, ou parcours 2 de 150 metres.",
+    "La fiche-projet formalise trois choix de difficulte : le nombre d'obstacles a franchir (A/B/C), le type de mannequin (A/B), la distance de remorquage en une minute (A/B/C). Elle est presentee au jury et utilisee par l'observateur.",
+    "Chaque penalite (toucher le tapis avec une partie du corps, prendre appui sur les pieds avant de toucher le bord du couloir) ajoute 5 secondes au temps final.",
+    "AFL1 note sur 12 points le jour de l'epreuve : temps de parcours = temps realise + cumul des penalites, avec un intervalle de temps different filles/garcons sur l'echelle de l'etablissement. Deux elements de 6 points : la mise en rapport des exigences du milieu avec ses ressources, et la maitrise de deplacement avec le mannequin remorque.",
+    "AFL2 evalue au fil de la sequence via le carnet de suivi des acquis : realisations, difficultes rencontrees, un ou deux objectifs, moyens deployes, strategie de progression.",
+    "AFL3 evalue dans le role choisi au plus tard en seance 4, un seul entre arbitre-chronometreur et observateur, jamais les deux.",
+    "Repartition des 8 points AFL2/AFL3 : trois choix possibles, 2, 4 ou 6 points pour chacun des deux (4-4, 6-2 ou 2-6).",
+    "PAI et dispenses specifiques au milieu aquatique a verifier avant chaque seance : otites, pathologies cardiaques, asthme."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - nage vite mais neglige le tapis",
+      "observed": "Nage a fond mais touche systematiquement le tapis avec les pieds ou une autre partie du corps.",
+      "need": "Anticiper l'obstacle et accepter de ralentir legerement avant de le franchir."
+    },
+    {
+      "label": "Profil 2 - tete du mannequin immergee en continu",
+      "observed": "Remorque le mannequin en s'aidant des bras : la tete du mannequin passe l'essentiel du trajet sous l'eau (degre 1).",
+      "need": "Construire le retropedalage ou le ciseau de brasse pour propulser avec les jambes, mains libres pour tenir la tete hors de l'eau."
+    },
+    {
+      "label": "Profil 3 - fiche-projet irrealiste",
+      "observed": "Choisit systematiquement la difficulte maximale sur les trois criteres de la fiche-projet, sans lien avec son niveau reel.",
+      "need": "Ajuster ses trois choix de difficulte a partir de ce qu'il reussit reellement en seance."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas assume",
+      "observed": "A choisi arbitre-chronometreur ou observateur en seance 4, mais chronometre sans juger le virage au bord, ou observe sans relever de donnees exploitables.",
+      "need": "Assumer pleinement le seul role choisi, dans les criteres exacts du referentiel : deplacement, attention, precision."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. L'epreuve se deroule dans trois couloirs d'une piscine de 25 metres : le couloir 1 pour la nage et l'obstacle tapis (2 metres, obstacle horizontal, situe au milieu du couloir mais plus vers le petit bain), le couloir 2 pour le remorquage des mannequins enfant et adulte (une minute maximum), le couloir 3 pour la circulation. Deux maitres-nageurs sont presents sur la longueur des couloirs, prets a intervenir en cas de courbature ou de fatigue insupportable. Le candidat choisit et realise un des deux parcours de nage chronometres (parcours 1 : 200 metres, parcours 2 : 150 metres) et presente au jury une fiche-projet mentionnant trois choix de difficulte : le nombre d'obstacles a franchir (A/B/C), le type de mannequin (A/B), la distance de remorquage en une minute (A/B/C). Chaque penalite (toucher le tapis avec une partie du corps, prendre appui sur les pieds avant de toucher le bord du couloir) ajoute 5 secondes au temps final. L'AFL1 est note sur 12 points (temps realise + cumul des penalites, intervalle de temps different filles/garcons), avec deux elements de 6 points chacun. Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, avec une repartition choisie par l'eleve au plus tard en seance 4 : 4 et 4, 6 et 2, ou 2 et 6. Pour l'AFL3, l'eleve choisit egalement au plus tard en seance 4 un seul role parmi deux : arbitre-chronometreur ou observateur.",
+    "criteria": [
+      "AFL1 - mettre en rapport les exigences du milieu avec ses ressources (6 points) : lecture et analyse predictive du milieu, deplacement fluide et rapide en nage et en franchissement des obstacles, bonne anticipation et adaptation, differenciation et enchainement de techniques anticipees.",
+      "AFL1 - maitrise de deplacement avec le mannequin remorque (6 points) : du degre 1 (tete du mannequin souvent immergee) au degre 4 (tete hors de l'eau en continu, retropedalage ou ciseau de brasse maitrise).",
+      "AFL1 - le temps de parcours de nage retenu est le temps realise augmente du cumul des penalites de 5 secondes, avec un intervalle de temps different filles/garcons sur l'echelle de l'etablissement.",
+      "AFL2 : le carnet de suivi des acquis retrace les realisations et les difficultes rencontrees a chaque seance, avec un ou deux objectifs fixes, les moyens deployes et une strategie de progression identifiable.",
+      "AFL3 - role arbitre-chronometreur : commandements de depart donnes, temps pris avec precision, deplacement avec le nageur jusqu'a toucher le bord pour juger le virage, fiche d'evaluation remplie soigneusement, toutes les fautes annoncees et justifiees par reference aux regles.",
+      "AFL3 - role observateur : tres attentif et concentre, recueil de donnees complet et precis, capacite a relire et analyser les donnees pour expliquer les causes d'un echec ou d'une reussite, conseils justes et pertinents exploitables par les nageurs, les juges ou les entraineurs."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA2, Lycee Victor Hugo de Marrakech, epreuve sauvetage aquatique."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, evaluation diagnostique et referentiel",
+      "mainObjective": "Poser le cadre de securite specifique au milieu aquatique, faire decouvrir l'epreuve de sauvetage et realiser le diagnostic de niveau de chaque eleve.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Connaitre et respecter les regles de securite du bassin : presence des maitres-nageurs, signaux d'alerte, jamais seul dans l'eau.",
+        "Verifier les PAI et les dispenses specifiques au milieu aquatique (otites, pathologies cardiaques, asthme).",
+        "Realiser un diagnostic du niveau de nage et d'aisance avec un mannequin.",
+        "Ouvrir le carnet de suivi des acquis (AFL2)."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : le sauvetage aquatique combine nage rapide, franchissement d'obstacle et remorquage de mannequin, trois competences que la plupart des eleves n'ont jamais associees.",
+      "prerequisiteForNext": "Chaque eleve connait les regles de securite du bassin, a un niveau de nage diagnostique et un carnet ouvert.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "lignes d'eau / plots de couloir",
+            "fixed": 6
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "ceintures de flottaison",
+            "per": 0.5,
+            "min": 8
+          },
+          {
+            "label": "planches",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2,
+            "note": "2 metres, obstacle horizontal"
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          },
+          {
+            "label": "perche de sauvetage",
+            "fixed": 2
+          }
+        ],
+        "instructions": [
+          "Verifier la presence effective de deux maitres-nageurs avant l'entree dans l'eau : aucune seance ne debute sans eux.",
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : parcours, penalites, bareme.",
+          "Verifier les PAI et les dispenses : otites, pathologies cardiaques, asthme.",
+          "Verifier la temperature de l'eau et les conditions (piscine chauffee en periode estivale).",
+          "Repartir le materiel : couloir 1 pour la nage et le tapis, couloir 2 pour le remorquage, couloir 3 laisse libre pour la circulation.",
+          "Prevoir la trousse de secours et la perche au bord du bassin."
+        ],
+        "sketch": "Piscine 6 couloirs de 25 metres.\nCouloir 1 : nage et tapis-obstacle au milieu, cote petit bain.\nCouloir 2 : remorquage des mannequins enfant et adulte.\nCouloir 3 : circulation et regroupement.\nDeux maitres-nageurs postes sur la longueur des couloirs, trousse de secours au bord."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique progressif : entree dans l'eau encadree, mise en confiance avant tout effort, familiarisation avec le materiel de sauvetage.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Entree dans l'eau et mise en confiance",
+            "details": [
+              "Entree echelonnee dans l'eau, sous surveillance directe des deux maitres-nageurs.",
+              "Deplacements souples sur quatre longueurs, respiration large."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mobilisation et gammes de nage",
+            "details": [
+              "Battements, coulees, respiration laterale.",
+              "Alternance crawl et brasse sur la largeur du bassin."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Familiarisation avec le materiel",
+            "details": [
+              "Manipulation des frites, planches, ceintures.",
+              "Premier contact avec un mannequin : le soulever, le deplacer sur place."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Diagnostic : nage, tapis, mannequin",
+          "objective": "Mesurer le niveau initial de chaque eleve sur les trois composantes de l'epreuve : nage rapide, franchissement d'obstacle, remorquage.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par groupes de quatre, en rotation sur les trois couloirs : couloir 1 pour un 100 metres nage libre avec passage sur le tapis, couloir 2 pour un remorquage de mannequin enfant sur 25 metres, couloir 3 pour l'observation. Deux maitres-nageurs surveillent l'ensemble des couloirs en permanence.",
+          "studentGoal": "Nager, franchir le tapis et remorquer un mannequin, pour que le professeur connaisse mon niveau de depart.",
+          "instructions": [
+            "Je nage 100 metres a une allure que je peux tenir, en franchissant le tapis sans m'arreter.",
+            "Je remorque le mannequin enfant sur 25 metres, en gardant sa tete hors de l'eau autant que possible.",
+            "Je respecte le sens de nage et je ne double jamais dans mon couloir sans prevenir.",
+            "Au moindre signal des maitres-nageurs ou du professeur, je m'arrete immediatement."
+          ],
+          "success": [
+            "Le 100 metres est realise en entier, avec passage du tapis.",
+            "Le remorquage de 25 metres est realise, meme lentement.",
+            "Le professeur situe chaque eleve sur les quatre degres de maitrise du remorquage."
+          ],
+          "execution": [
+            "Passer le tapis sans le toucher si possible, en godillant ou en plongeant sous l'obstacle selon le niveau.",
+            "Tenir la tete du mannequin hors de l'eau en le poussant devant soi ou en le tractant.",
+            "Garder une respiration ample pendant tout l'effort."
+          ],
+          "watch": [
+            "Qui touche systematiquement le tapis ?",
+            "Qui a la tete du mannequin qui s'immerge en permanence (degre 1) ?",
+            "Qui montre des signes de fatigue anormale ou de panique ?"
+          ],
+          "errors": [
+            "Retenir sa respiration en passant sous le tapis.",
+            "Laisser couler la tete du mannequin faute de prise adaptee.",
+            "Paniquer au contact du mannequin et lacher prise."
+          ],
+          "feedback": [
+            "Souffle sous l'eau, ne bloque pas ta respiration.",
+            "Change ta prise : sous les aisselles ou par le harnais, pour garder sa tete hors de l'eau.",
+            "Arrete-toi, respire, on reprend calmement."
+          ],
+          "plus": [
+            "Chronometrage du 100 metres pour situer chacun sur l'echelle de performance."
+          ],
+          "minus": [
+            "50 metres nage et remorquage sur 15 metres, avec appui possible au bord."
+          ],
+          "diff": {
+            "facilitee": "50 metres nage et remorquage sur 15 metres, appui au bord autorise, mannequin enfant leger uniquement.",
+            "normale": "100 metres nage avec tapis, remorquage de 25 metres du mannequin enfant.",
+            "complexifiee": "100 metres chronometre, remorquage de 25 metres avec le mannequin adulte."
+          },
+          "safety": [
+            "Aucun eleve n'entre dans l'eau avant la presence verifiee des deux maitres-nageurs postes sur la longueur des couloirs.",
+            "Verification prealable des PAI : aucune activite en immersion prolongee pour un eleve porteur d'une otite en cours, d'une contre-indication cardiaque non stabilisee ou d'un asthme non equilibre.",
+            "Signaux d'alerte a connaitre et a signaler immediatement : crampe, essoufflement anormal, debut de panique, avale d'eau repete.",
+            "Tout eleve qui leve le bras ou appelle est pris en charge immediatement, sans attendre confirmation.",
+            "Aucun eleve seul dans l'eau sans surveillance directe d'un adulte.",
+            "Protocole d'arret immediat de la seance en cas d'incident : sifflet du maitre-nageur, tous les eleves regagnent le bord.",
+            "Le professeur ne quitte jamais des yeux l'ensemble des couloirs.",
+            "Materiel de sauvetage (perche, bouee) accessible immediatement au bord."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le referentiel et le carnet de suivi",
+          "objective": "Faire comprendre ce qui sera evalue et ouvrir le carnet de suivi des acquis.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin, enveloppes dans une serviette. Lecture collective du referentiel : les deux parcours, le tapis, le remorquage, les penalites, le bareme. Ouverture du carnet de suivi.",
+          "studentGoal": "Savoir ce qui sera evalue et noter mon niveau de depart dans mon carnet.",
+          "instructions": [
+            "J'ecoute la presentation des deux parcours possibles : 200 metres ou 150 metres.",
+            "Je note les penalites : 5 secondes pour chaque faute au tapis ou au virage.",
+            "J'ecris dans mon carnet mon niveau observe sur la nage, le tapis et le remorquage.",
+            "Je note une premiere idee de ce que je veux ameliorer."
+          ],
+          "success": [
+            "Le referentiel est compris : parcours, penalites, bareme.",
+            "Le carnet est ouvert avec le niveau de depart note.",
+            "Une premiere piste de progression est ecrite."
+          ],
+          "execution": [
+            "Ecouter avant d'ecrire.",
+            "Reformuler avec ses propres mots.",
+            "Ecrire une phrase precise, pas une impression vague."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils la difference entre les deux parcours (200 m et 150 m) ?",
+            "Savent-ils ce que coute une penalite ?"
+          ],
+          "errors": [
+            "Confondre les deux parcours.",
+            "Ne pas comprendre que chaque faute ajoute du temps.",
+            "Ne rien ecrire dans le carnet."
+          ],
+          "feedback": [
+            "200 metres ou 150 metres : ce sont deux parcours differents, pas un choix libre de distance.",
+            "Chaque faute, c'est 5 secondes ajoutees a ton temps : ca peut couter cher.",
+            "Ecris, meme une phrase : c'est ce qu'on relira a la fin du cycle."
+          ],
+          "plus": [
+            "Calcul de l'impact de trois penalites cumulees sur un temps donne."
+          ],
+          "minus": [
+            "Lecture du referentiel commentee et simplifiee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Lecture du referentiel commentee et simplifiee par le professeur, carnet ouvert avec son aide.",
+            "normale": "Lecture collective du referentiel et ouverture autonome du carnet.",
+            "complexifiee": "Calcul de l'impact de trois penalites cumulees sur un temps donne."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts d'une serviette en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premier contact avec les roles arbitre et observateur",
+          "objective": "Faire decouvrir les deux roles proposes pour l'AFL3, sans engagement definitif.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation decouverte",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trois : un nageur, un arbitre-chronometreur, un observateur, qui tournent. Chacun essaie les deux roles sur un court passage (25 metres avec franchissement du tapis).",
+          "studentGoal": "Essayer les deux roles pour savoir lequel je preferai choisir plus tard.",
+          "instructions": [
+            "En tant qu'arbitre : je donne le commandement de depart et je releve le temps.",
+            "En tant qu'observateur : je note ce que je vois sur une fiche simple.",
+            "Je nage un 25 metres avec le tapis pendant que mes deux camarades tiennent leur role.",
+            "On tourne pour que chacun passe par les trois postes."
+          ],
+          "success": [
+            "Chacun tient les deux roles au moins une fois.",
+            "Le temps est bien releve par l'arbitre.",
+            "L'observateur remplit sa fiche."
+          ],
+          "execution": [
+            "Se placer clairement au depart et a l'arrivee.",
+            "Regarder son camarade nager, pas les autres couloirs.",
+            "Noter tout de suite, pas de memoire."
+          ],
+          "watch": [
+            "Les eleves preferent-ils deja un role a l'autre ?",
+            "Le chronometrage est-il fiable ?"
+          ],
+          "errors": [
+            "Declencher le chronometre en retard.",
+            "Observer sans rien noter.",
+            "Regarder ailleurs pendant le passage de son camarade."
+          ],
+          "feedback": [
+            "Declenche au signal de depart, pas apres.",
+            "Note ce que tu vois, meme en quelques mots.",
+            "Ton camarade nage : c'est lui que tu regardes."
+          ],
+          "plus": [
+            "Fiche d'observation plus detaillee avec plusieurs criteres a la fois."
+          ],
+          "minus": [
+            "Un seul role essaye dans la seance, l'autre a la seance suivante."
+          ],
+          "diff": {
+            "facilitee": "Un seul role essaye dans la seance, l'autre a la seance suivante.",
+            "normale": "Les deux roles essayes dans la seance, fiche simple renseignee.",
+            "complexifiee": "Fiche d'observation plus detaillee avec plusieurs criteres a la fois."
+          },
+          "safety": [
+            "Le tapis est retire de l'eau des que la situation change, pour eviter tout obstacle non surveille.",
+            "Les maitres-nageurs restent postes sur la longueur des couloirs pendant toute la situation.",
+            "Aucun nageur ne part sans que l'arbitre ait donne le commandement.",
+            "Point d'eau et trousse de secours accessibles."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelles sont les trois composantes de l'epreuve de sauvetage ?",
+          "Quel role, arbitre ou observateur, avez-vous prefere aujourd'hui ?"
+        ],
+        "key": "Le sauvetage aquatique associe trois competences : nager vite, franchir un obstacle, remorquer une victime. Vous avez jusqu'a la seance 4 pour choisir votre role : arbitre-chronometreur ou observateur."
+      },
+      "socialRoles": [
+        "Maitre-nageur referent (adulte) : surveille en permanence l'ensemble des couloirs.",
+        "Arbitre-chronometreur (decouverte) : donne le depart et releve le temps.",
+        "Observateur (decouverte) : note ce qu'il voit sur une fiche simple."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Decouverte des trois couloirs et de la fiche-projet",
+      "mainObjective": "Faire decouvrir le format complet de l'epreuve dans les trois couloirs et introduire la fiche-projet avec ses trois choix de difficulte.",
+      "secondaryObjectives": [
+        "Vivre successivement le couloir 1 (nage et tapis) et le couloir 2 (remorquage).",
+        "Decouvrir les trois choix de difficulte de la fiche-projet.",
+        "Continuer a experimenter les roles d'arbitre-chronometreur et d'observateur, sans encore choisir."
+      ],
+      "linkToPrevious": "Le diagnostic de la seance 1 a situe chaque eleve sur la nage, le tapis et le remorquage : il faut maintenant faire vivre l'epreuve complete, telle qu'elle sera evaluee, dans son organisation en trois couloirs.",
+      "prerequisiteForNext": "Chaque eleve connait l'organisation en trois couloirs et les trois choix de la fiche-projet.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "lignes d'eau / plots de couloir",
+            "fixed": 6
+          },
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer le tapis-obstacle au milieu du couloir 1, plus pres du petit bain, comme au jour de l'epreuve.",
+          "Disposer les mannequins enfant et adulte au bord du couloir 2.",
+          "Verifier la presence des deux maitres-nageurs avant l'entree dans l'eau.",
+          "Preparer et distribuer les fiches-projet vierges.",
+          "Verifier les PAI et les conditions de l'eau."
+        ],
+        "sketch": "Couloir 1 : depart, tapis au milieu cote petit bain, arrivee.\nCouloir 2 : mannequins enfant et adulte au bord, zone de remorquage sur 25 metres.\nCouloir 3 : circulation et attente.\nDeux maitres-nageurs postes sur la longueur des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique complet avant de decouvrir l'organisation en trois couloirs, avec reactivation du passage sur le tapis et du contact avec le mannequin.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Reprise en douceur",
+            "details": [
+              "Quatre longueurs en nage souple, respiration large.",
+              "Verification individuelle de l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees ventrales et dorsales.",
+              "Virages simples travailles au mur."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation tapis et mannequin",
+            "details": [
+              "Deux passages sur le tapis a allure moderee.",
+              "Une manipulation du mannequin enfant : le soulever, le positionner tete hors de l'eau."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Le parcours complet en trois couloirs",
+          "objective": "Faire vivre l'organisation reelle de l'epreuve : couloir 1 nage et tapis, couloir 2 remorquage.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par groupes de six, rotation sur les trois couloirs : couloir 1 pour 75 metres avec un passage du tapis, couloir 2 pour un remorquage de 15 metres avec le mannequin enfant, couloir 3 pour observer et se preparer. Deux maitres-nageurs surveillent l'ensemble.",
+          "studentGoal": "Realiser dans l'ordre le passage du couloir 1 puis du couloir 2, comme le jour de l'epreuve.",
+          "instructions": [
+            "Je nage 75 metres dans le couloir 1, en franchissant le tapis sans le toucher si possible.",
+            "Je passe ensuite au couloir 2 pour remorquer le mannequin enfant sur 15 metres.",
+            "Je garde la tete du mannequin hors de l'eau le plus possible.",
+            "Je respecte les consignes des maitres-nageurs a tout moment."
+          ],
+          "success": [
+            "Le passage du couloir 1 est realise, avec ou sans toucher du tapis.",
+            "Le remorquage du couloir 2 est realise sur toute la distance.",
+            "L'enchainement des deux couloirs est compris."
+          ],
+          "execution": [
+            "Anticiper le tapis des les derniers metres avant l'obstacle.",
+            "Changer de prise pour le remorquage sans lacher le mannequin.",
+            "Garder un rythme de nage regulier sur l'ensemble."
+          ],
+          "watch": [
+            "Le tapis est-il anticipe ou subi ?",
+            "La transition entre les deux couloirs est-elle fluide ?",
+            "Le mannequin est-il tenu correctement ?"
+          ],
+          "errors": [
+            "Arriver sur le tapis sans avoir ralenti ni anticipe.",
+            "Lacher le mannequin en cours de remorquage.",
+            "S'arreter completement entre les deux couloirs."
+          ],
+          "feedback": [
+            "Anticipe le tapis : regarde-le venir, ne le decouvre pas au dernier moment.",
+            "Change de prise sans lacher : sous les aisselles, ou par le harnais.",
+            "Enchaine, meme lentement : c'est l'organisation qui compte aujourd'hui."
+          ],
+          "plus": [
+            "Parcours complet : 100 metres avec tapis puis remorquage sur 25 metres."
+          ],
+          "minus": [
+            "50 metres avec tapis facilite (obstacle plus bas) puis remorquage sur 10 metres."
+          ],
+          "diff": {
+            "facilitee": "50 metres avec tapis abaisse et remorquage sur 10 metres, appui au bord autorise.",
+            "normale": "75 metres avec tapis, remorquage de 15 metres du mannequin enfant.",
+            "complexifiee": "100 metres avec tapis, remorquage de 25 metres du mannequin enfant."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs avant toute entree dans l'eau.",
+            "Verification des PAI : otites, pathologies cardiaques, asthme.",
+            "Signaux d'alerte rappeles avant la mise a l'eau : crampe, essoufflement anormal, debut de panique.",
+            "Le tapis est retire immediatement si un eleve reste bloque dessus plus de quelques secondes.",
+            "Aucun eleve ne reste seul dans l'eau sans surveillance directe.",
+            "Arret immediat de la situation au signal d'un maitre-nageur ou du professeur.",
+            "Materiel de sauvetage (perche, bouee) accessible au bord de chaque couloir."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "La fiche-projet et ses trois choix de difficulte",
+          "objective": "Faire decouvrir les trois choix de difficulte de la fiche-projet, sans encore les figer.",
+          "material": [
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Presentation des trois choix : choix 1 sur le nombre d'obstacles (A/B/C), choix 2 sur le type de mannequin (A/B), choix 3 sur la distance de remorquage en une minute (A/B/C). Chacun remplit une premiere version d'essai de sa fiche.",
+          "studentGoal": "Comprendre les trois choix de la fiche-projet et remplir une premiere version.",
+          "instructions": [
+            "J'ecoute la presentation des trois choix de difficulte.",
+            "Je remplis une premiere fiche-projet d'essai, avec mes trois choix provisoires.",
+            "Je choisis aussi, pour m'entrainer, entre le parcours de 200 metres et celui de 150 metres.",
+            "Je garde cette fiche : elle sera revue et affinee dans les prochaines seances."
+          ],
+          "success": [
+            "Les trois choix de la fiche-projet sont compris.",
+            "Une premiere fiche est remplie completement.",
+            "Un parcours (200 m ou 150 m) est choisi provisoirement."
+          ],
+          "execution": [
+            "Distinguer clairement les trois choix, un a un.",
+            "Choisir en fonction de son niveau reel, pas d'une envie.",
+            "Remplir chaque case de la fiche."
+          ],
+          "watch": [
+            "Les eleves confondent-ils les trois choix ?",
+            "Les choix provisoires sont-ils coherents avec le niveau observe en seance 1 ?"
+          ],
+          "errors": [
+            "Melanger le choix du mannequin et celui du nombre d'obstacles.",
+            "Choisir la difficulte maximale partout sans lien avec son niveau.",
+            "Laisser des cases vides sur la fiche."
+          ],
+          "feedback": [
+            "Trois choix distincts : obstacles, mannequin, distance de remorquage. Un a la fois.",
+            "Ton niveau de la seance 1 dit un mannequin enfant : vise juste, pas le plus dur.",
+            "Chaque case compte : une fiche incomplete n'est pas exploitable au jury."
+          ],
+          "plus": [
+            "Fiche remplie avec une justification ecrite pour chacun des trois choix."
+          ],
+          "minus": [
+            "Fiche remplie avec le professeur, choix guides un par un."
+          ],
+          "diff": {
+            "facilitee": "Fiche remplie avec le professeur, choix guides un par un.",
+            "normale": "Fiche remplie en autonomie avec les trois choix provisoires.",
+            "complexifiee": "Fiche remplie avec une justification ecrite pour chacun des trois choix."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Deuxieme experience des roles",
+          "objective": "Continuer a experimenter les deux roles proposes, sur un passage complet cette fois.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation decouverte",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trois, rotation. Un nageur realise un passage complet (couloir 1 puis couloir 2 reduits), un arbitre-chronometreur, un observateur qui utilise pour la premiere fois une fiche proche de celle du jury.",
+          "studentGoal": "Essayer les deux roles sur un passage complet, pour affiner ma preference.",
+          "instructions": [
+            "Arbitre : je donne le commandement de depart, je releve le temps et j'observe le virage.",
+            "Observateur : j'utilise la fiche proche de celle du jury pour noter la prestation.",
+            "Nageur : je realise le passage complet reduit.",
+            "On tourne pour que chacun passe par les trois postes dans la seance."
+          ],
+          "success": [
+            "Chacun tient les deux roles.",
+            "La fiche du jury est utilisee correctement par l'observateur.",
+            "Le temps est fiable."
+          ],
+          "execution": [
+            "Se placer au bon endroit pour juger le virage.",
+            "Suivre la fiche colonne par colonne.",
+            "Rester concentre du depart a l'arrivee."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils mieux les deux roles qu'en seance 1 ?",
+            "Ont-ils deja une preference qui se dessine ?"
+          ],
+          "errors": [
+            "Juger le virage sans se deplacer avec le nageur.",
+            "Remplir la fiche a la fin, de memoire.",
+            "Se disperser pendant le passage de son camarade."
+          ],
+          "feedback": [
+            "Deplace-toi jusqu'au bord pour juger le virage, ne reste pas immobile au milieu.",
+            "Note en direct, colonne par colonne.",
+            "Ton camarade nage : c'est lui que tu regardes, personne d'autre."
+          ],
+          "plus": [
+            "Observateur note aussi une donnee qualitative en plus des donnees chiffrees."
+          ],
+          "minus": [
+            "Un seul role essaye, l'autre reporte a la prochaine seance."
+          ],
+          "diff": {
+            "facilitee": "Un seul role essaye, l'autre reporte a la prochaine seance.",
+            "normale": "Les deux roles essayes sur un passage complet reduit.",
+            "complexifiee": "Observateur note aussi une donnee qualitative en plus des donnees chiffrees."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents pendant toute la situation.",
+            "Le tapis est retire des que la situation ne l'utilise plus.",
+            "Aucun nageur ne part sans le commandement de l'arbitre.",
+            "Materiel de sauvetage accessible au bord."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont les trois choix de la fiche-projet ?",
+          "Quel role vous convient le mieux pour l'instant, arbitre-chronometreur ou observateur ?"
+        ],
+        "key": "La fiche-projet formalise trois choix independants : le nombre d'obstacles, le type de mannequin, la distance de remorquage. Vous avez encore deux seances pour choisir votre role definitif."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (decouverte) : donne le depart, releve le temps, juge le virage.",
+        "Observateur (decouverte) : utilise la fiche proche de celle du jury.",
+        "Responsable fiche-projet : verifie que chaque camarade a rempli toutes les cases."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Franchir le tapis et remorquer : construire la technique",
+      "mainObjective": "Construire la technique de franchissement du tapis et le retropedalage ou le ciseau de brasse pour remorquer un mannequin tete hors de l'eau.",
+      "secondaryObjectives": [
+        "Franchir le tapis sans le toucher, en godillant ou en passant par-dessus selon le choix technique.",
+        "Construire le retropedalage ou le ciseau de brasse pour remorquer tete hors de l'eau (viser le degre 4).",
+        "Affiner les trois choix de la fiche-projet a partir de l'experience des seances 1 et 2."
+      ],
+      "linkToPrevious": "Les seances 1 et 2 ont montre que le tapis et le remorquage sont les deux points techniques qui coutent le plus de temps et de penalites : il faut maintenant les travailler specifiquement.",
+      "prerequisiteForNext": "Chaque eleve franchit le tapis avec une technique choisie et remorque en gardant la tete du mannequin hors de l'eau la plupart du temps.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "frites",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "pull buoy",
+            "per": 1.0,
+            "min": 16
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Installer le tapis au milieu du couloir 1, cote petit bain, comme au jour de l'epreuve.",
+          "Repartir les mannequins enfant et adulte entre plusieurs postes du couloir 2.",
+          "Verifier la presence des deux maitres-nageurs.",
+          "Prevoir un poste pour travailler le geste de retropedalage en eau peu profonde avant de l'exiger sur une plus longue distance.",
+          "Verifier les PAI et l'etat de l'eau."
+        ],
+        "sketch": "Couloir 1 : deux postes de franchissement du tapis, l'un avec obstacle bas, l'autre a hauteur reglementaire.\nCouloir 2 : postes de remorquage avec mannequin enfant et mannequin adulte.\nCouloir 3 : travail technique du retropedalage en eau peu profonde.\nDeux maitres-nageurs postes sur la longueur des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique cible sur les gestes techniques du jour : passage sous obstacle et deplacement en retropedalage.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Reprise en douceur",
+            "details": [
+              "Six longueurs en nage souple.",
+              "Verification de l'aisance respiratoire de chacun."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes ciblees",
+            "details": [
+              "Ondulations et coulees sous l'eau.",
+              "Deplacements sur le dos, jambes de brasse, pour preparer le retropedalage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Premiers passages",
+            "details": [
+              "Deux franchissements du tapis a allure lente, en godille.",
+              "Une manipulation du mannequin adulte en eau peu profonde : prise, mise en flottaison."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Construire le franchissement du tapis",
+          "objective": "Faire choisir et automatiser une technique de franchissement du tapis sans le toucher.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Deux postes en alternance : un tapis a hauteur reduite pour travailler le geste, un tapis a hauteur reglementaire pour la validation. Chaque eleve realise plusieurs passages, avec retour immediat sur sa technique.",
+          "studentGoal": "Franchir le tapis sans le toucher, avec une technique que je choisis et que je repete.",
+          "instructions": [
+            "Je choisis ma technique de franchissement : godille par-dessus, ou plongee sous l'obstacle.",
+            "Je m'entraine d'abord sur le tapis bas, puis je passe au tapis reglementaire.",
+            "Je souffle sous l'eau si je passe en dessous, je ne bloque jamais ma respiration.",
+            "Je repete jusqu'a reussir trois franchissements consecutifs sans toucher."
+          ],
+          "success": [
+            "Trois franchissements consecutifs sans toucher le tapis avec une partie du corps.",
+            "La technique choisie est stable d'un passage a l'autre.",
+            "La respiration reste maitrisee pendant le franchissement."
+          ],
+          "execution": [
+            "Anticiper l'obstacle des les derniers metres de nage.",
+            "Garder les appuis efficaces (bras ou jambes selon la technique).",
+            "Reprendre une nage normale immediatement apres le franchissement."
+          ],
+          "watch": [
+            "Qui touche le tapis avec les pieds, les mains ou le corps ?",
+            "La technique choisie est-elle adaptee au niveau de l'eleve ?",
+            "La respiration est-elle bloquee pendant le passage ?"
+          ],
+          "errors": [
+            "Toucher le tapis avec les pieds en voulant prendre appui pour sauter.",
+            "Retenir sa respiration et ressortir en panique.",
+            "Changer de technique a chaque passage sans jamais la stabiliser."
+          ],
+          "feedback": [
+            "Prendre appui sur les pieds sur le tapis, c'est une penalite : passe par-dessus ou en dessous, jamais dessus.",
+            "Souffle sous l'eau : c'est ce qui evite la panique.",
+            "Garde la meme technique plusieurs fois de suite pour qu'elle devienne automatique."
+          ],
+          "plus": [
+            "Franchissement enchaine avec une acceleration juste avant et juste apres le tapis."
+          ],
+          "minus": [
+            "Tapis abaisse, franchissement accompagne par le professeur au bord."
+          ],
+          "diff": {
+            "facilitee": "Tapis abaisse, franchissement accompagne au bord, appui possible sur la ligne d'eau.",
+            "normale": "Tapis a hauteur reglementaire, trois franchissements consecutifs sans toucher.",
+            "complexifiee": "Tapis reglementaire, franchissement enchaine avec acceleration avant et apres."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et attentifs specifiquement aux franchissements, moment ou le risque d'avaler de l'eau est le plus eleve.",
+            "Un eleve qui reste bloque sous le tapis plus de deux secondes est immediatement assiste.",
+            "Le tapis est retire de l'eau des que le poste n'est plus utilise ou surveille.",
+            "Signal d'alerte rappele : lever le bras si difficulte, arret immediat de l'exercice.",
+            "Aucun passage en franchissement sans surveillance directe d'un adulte sur ce poste.",
+            "Materiel de sauvetage accessible au bord du couloir 1."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Le retropedalage et le ciseau de brasse avec mannequin",
+          "objective": "Construire le retropedalage ou le ciseau de brasse pour remorquer tete hors de l'eau, en visant le degre 4 du referentiel.",
+          "material": [
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "pull buoy",
+              "per": 1.0,
+              "min": 16
+            }
+          ],
+          "organization": "Par deux, en eau peu profonde puis en grand bassin. Travail progressif : d'abord le geste de jambes seul (retropedalage ou ciseau de brasse) tenu contre le bord, puis avec le mannequin enfant, puis avec le mannequin adulte.",
+          "studentGoal": "Remorquer le mannequin en gardant sa tete hors de l'eau, avec le retropedalage ou le ciseau de brasse.",
+          "instructions": [
+            "Je travaille d'abord le geste de jambes seul, en tenant le bord, tete hors de l'eau.",
+            "Je passe ensuite au remorquage du mannequin enfant sur 15 metres, tete hors de l'eau en permanence.",
+            "Si je maitrise, je passe au mannequin adulte, plus lourd et plus difficile a stabiliser.",
+            "Je verifie a chaque instant que la tete du mannequin reste hors de l'eau."
+          ],
+          "success": [
+            "Le geste de jambes est tenu au moins 20 secondes sans les mains.",
+            "La tete du mannequin enfant reste hors de l'eau sur la majorite du trajet (degre 3 ou 4).",
+            "L'eleve le plus avance tient ce niveau avec le mannequin adulte."
+          ],
+          "execution": [
+            "Garder le buste vertical ou legerement incline en arriere.",
+            "Propulser uniquement avec les jambes, mains libres pour tenir le mannequin.",
+            "Ajuster la prise si la tete commence a s'immerger."
+          ],
+          "watch": [
+            "La tete du mannequin s'immerge-t-elle en permanence (degre 1) ou seulement par moments (degre 2-3) ?",
+            "Le geste de jambes est-il efficace ou l'eleve s'aide-t-il trop des bras ?",
+            "La fatigue apparait-elle rapidement ?"
+          ],
+          "errors": [
+            "Laisser la tete du mannequin s'immerger en continu faute de propulsion suffisante des jambes.",
+            "S'aider des bras au lieu de propulser avec les jambes.",
+            "Serrer le mannequin trop fort, ce qui bloque le geste de jambes."
+          ],
+          "feedback": [
+            "Ta tete de mannequin est sous l'eau tout le temps : c'est le degre 1, travaille tes jambes.",
+            "Tes bras tiennent le mannequin, ce sont tes jambes qui doivent te faire avancer.",
+            "Detends ta prise, laisse tes jambes faire le travail."
+          ],
+          "plus": [
+            "Remorquage du mannequin adulte sur 25 metres avec tete hors de l'eau en continu (degre 4)."
+          ],
+          "minus": [
+            "Geste de jambes seul contre le bord, sans mannequin."
+          ],
+          "diff": {
+            "facilitee": "Geste de jambes seul contre le bord, tete hors de l'eau, sans mannequin.",
+            "normale": "Remorquage du mannequin enfant sur 15 metres, tete hors de l'eau la majorite du trajet.",
+            "complexifiee": "Remorquage du mannequin adulte sur 25 metres, tete hors de l'eau en continu."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents, attentifs a la fatigue specifique du retropedalage prolonge.",
+            "Travail initial en eau peu profonde pour les eleves les moins a l'aise.",
+            "Arret immediat si un eleve montre des signes de crampe aux jambes ou d'essoufflement anormal.",
+            "Le mannequin adulte n'est propose qu'aux eleves ayant valide le mannequin enfant.",
+            "Aucun remorquage prolonge sans temps de recuperation entre les essais.",
+            "Materiel de sauvetage accessible au bord du couloir 2."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Affiner sa fiche-projet",
+          "objective": "Reajuster les trois choix de la fiche-projet a partir de l'experience technique du jour.",
+          "material": [
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Chacun reprend sa fiche-projet d'essai de la seance 2 et l'ajuste a partir de ce qu'il vient de reussir ou d'echouer sur le tapis et le remorquage.",
+          "studentGoal": "Ajuster mes trois choix de difficulte a partir de ce que je viens de reussir aujourd'hui.",
+          "instructions": [
+            "Je reprends ma fiche-projet de la seance 2.",
+            "Je regarde ma reussite au tapis : combien de franchissements sans toucher ?",
+            "Je regarde mon niveau de remorquage : quel mannequin, quelle distance tenue tete hors de l'eau ?",
+            "J'ajuste mes trois choix en consequence, sans les laisser identiques par habitude."
+          ],
+          "success": [
+            "La fiche est ajustee sur au moins un des trois choix, avec une raison ecrite.",
+            "Les choix sont coherents avec la reussite technique observee aujourd'hui.",
+            "La fiche reste complete, sans case vide."
+          ],
+          "execution": [
+            "Comparer chaque choix a une reussite ou un echec concret du jour.",
+            "Ajuster par un seul niveau a la fois si besoin.",
+            "Ecrire la raison de l'ajustement."
+          ],
+          "watch": [
+            "Les eleves ajustent-ils vraiment ou recopient-ils leur fiche de la seance 2 ?",
+            "Les choix restent-ils coherents avec le niveau reel observe ?"
+          ],
+          "errors": [
+            "Garder les memes choix sans les reinterroger.",
+            "Choisir plus difficile alors que le tapis n'est pas maitrise.",
+            "Ne pas justifier l'ajustement."
+          ],
+          "feedback": [
+            "Tu as touche le tapis trois fois sur trois : ton choix d'obstacles est peut-etre trop ambitieux.",
+            "Tu maitrises le mannequin adulte : ton choix peut monter d'un niveau.",
+            "Ecris pourquoi tu ajustes : c'est ce qui sera relu au jury."
+          ],
+          "plus": [
+            "Fiche ajustee avec un objectif chiffre pour la prochaine seance sur chacun des trois choix."
+          ],
+          "minus": [
+            "Ajustement guide par le professeur a partir de ce qu'il a observe."
+          ],
+          "diff": {
+            "facilitee": "Ajustement guide par le professeur a partir de ses observations du jour.",
+            "normale": "Ajustement autonome d'au moins un choix, avec raison ecrite.",
+            "complexifiee": "Ajustement des trois choix avec objectif chiffre pour la prochaine seance."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle technique de franchissement du tapis avez-vous choisie, et pourquoi ?",
+          "Votre remorquage tient-il la tete du mannequin hors de l'eau : a quel degre vous situez-vous ?"
+        ],
+        "key": "Toucher le tapis coute 5 secondes : mieux vaut une technique lente mais propre qu'une technique rapide qui touche a chaque fois. Et le degre 4 du remorquage, c'est la tete hors de l'eau en continu grace aux jambes, pas aux bras."
+      },
+      "socialRoles": [
+        "Observateur technique : compte les franchissements reussis sans toucher.",
+        "Aide-remorquage : verifie que la tete du mannequin reste hors de l'eau et alerte si besoin.",
+        "Responsable materiel : replace le tapis et les mannequins entre chaque poste."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Affiner le projet et choisir son role : arbitre-chronometreur ou observateur",
+      "mainObjective": "Poursuivre le travail technique du tapis et du remorquage, et faire choisir a chaque eleve son role definitif ainsi que sa repartition des points AFL2/AFL3.",
+      "secondaryObjectives": [
+        "Consolider la technique de franchissement et de remorquage sur un parcours enchaine.",
+        "Choisir, au plus tard aujourd'hui, un seul role pour toute la suite de la sequence : arbitre-chronometreur ou observateur.",
+        "Choisir sa repartition des huit points entre l'AFL2 et l'AFL3 : 4-4, 6-2 ou 2-6."
+      ],
+      "linkToPrevious": "Le tapis et le remorquage ont ete travailles specifiquement en seance 3 : il est temps d'enchainer les deux sur un parcours complet, et le referentiel impose de choisir son role au plus tard aujourd'hui.",
+      "prerequisiteForNext": "Chaque eleve a choisi et note son role et sa repartition de points, et tient un carnet a jour.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer le parcours complet : couloir 1 avec tapis, couloir 2 avec mannequins.",
+          "Preparer et afficher les trois repartitions possibles entre AFL2 et AFL3 (4-4, 6-2, 2-6).",
+          "Verifier la presence des deux maitres-nageurs.",
+          "Preparer les carnets de suivi pour y noter le choix definitif.",
+          "Verifier les PAI et l'etat de l'eau."
+        ],
+        "sketch": "Couloir 1 : parcours nage et tapis, comme au jour de l'epreuve.\nCouloir 2 : remorquage des mannequins.\nCouloir 3 : circulation.\nAffiche des roles et des repartitions a l'entree du bassin.\nDeux maitres-nageurs postes sur la longueur des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique complet avant un parcours enchaine qui mobilise nage, franchissement et remorquage.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Reprise en douceur",
+            "details": [
+              "Six longueurs en nage souple.",
+              "Verification de l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees, virages au mur.",
+              "Deplacements en jambes de brasse pour reactiver le retropedalage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation technique",
+            "details": [
+              "Deux franchissements du tapis a allure moderee.",
+              "Un remorquage court du mannequin enfant sur 10 metres."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Parcours enchaine : nage, tapis, remorquage",
+          "objective": "Enchainer sur un seul parcours la nage, le franchissement du tapis et le remorquage, en limitant les penalites.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Individuellement, chronometre par un camarade : parcours complet dans l'ordre du couloir 1 (nage + tapis, distance choisie) puis du couloir 2 (remorquage sur 1 minute maximum, mannequin choisi).",
+          "studentGoal": "Enchainer mon parcours sans toucher le tapis et en remorquant le plus loin possible en une minute.",
+          "instructions": [
+            "Je nage la distance de mon parcours d'entrainement en franchissant le tapis avec ma technique.",
+            "J'enchaine directement sur le remorquage, en gardant la tete du mannequin hors de l'eau.",
+            "Le remorquage dure une minute maximum : je m'arrete des le signal.",
+            "Mon chronometreur releve mon temps et compte mes fautes eventuelles."
+          ],
+          "success": [
+            "Le parcours est realise dans l'ordre, sans arret complet entre les deux couloirs.",
+            "Le tapis est franchi sans toucher, ou avec au maximum une faute.",
+            "La distance de remorquage en une minute est notee et comparee a la seance 3."
+          ],
+          "execution": [
+            "Garder un rythme de nage stable jusqu'au tapis.",
+            "Enchainer le remorquage sans temps de pause prolonge.",
+            "Utiliser la technique de retropedalage travaillee en seance 3."
+          ],
+          "watch": [
+            "Le tapis est-il toujours source de faute ?",
+            "La transition entre les deux couloirs est-elle fluide ?",
+            "La distance de remorquage progresse-t-elle depuis la seance 3 ?"
+          ],
+          "errors": [
+            "S'arreter longuement entre les deux couloirs.",
+            "Reprendre une mauvaise prise de mannequin par precipitation.",
+            "Toucher le tapis par manque d'anticipation sous la fatigue de la nage."
+          ],
+          "feedback": [
+            "Enchaine directement : une pause trop longue coute du temps sur le parcours reel.",
+            "Reprends la prise qui marchait en seance 3, ne l'improvise pas.",
+            "Anticipe le tapis meme fatigue : c'est justement la que la technique doit tenir."
+          ],
+          "plus": [
+            "Parcours complet sur la distance maximale (200 metres) avec mannequin adulte."
+          ],
+          "minus": [
+            "Parcours reduit avec recuperation entre les deux couloirs."
+          ],
+          "diff": {
+            "facilitee": "Parcours reduit avec recuperation entre les deux couloirs, mannequin enfant uniquement.",
+            "normale": "Parcours complet a la distance d'entrainement choisie, mannequin selon le niveau.",
+            "complexifiee": "Parcours a la distance maximale avec mannequin adulte, sans recuperation entre les couloirs."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs pendant tout le parcours.",
+            "Arret immediat en cas de signe de detresse : crampe, essoufflement anormal, panique.",
+            "Le chronometreur surveille son camarade en continu, y compris pendant le remorquage.",
+            "Aucun parcours enchaine sans recuperation suffisante entre deux passages du meme eleve.",
+            "Materiel de sauvetage accessible au bord de chaque couloir.",
+            "Le professeur peut arreter tout parcours a tout moment."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Choisir son role : arbitre-chronometreur ou observateur",
+          "objective": "Faire choisir a chaque eleve, de facon definitive pour la suite de la sequence, son role et sa repartition de points, conformement au referentiel qui impose ce choix au plus tard en seance 4.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Rappel des deux roles possibles et de leurs criteres exacts : arbitre-chronometreur (commandements de depart, prise de temps, deplacement avec le nageur jusqu'au bord pour juger le virage, remplissage de la fiche, annonce et justification des fautes) et observateur (attention et concentration, recueil de donnees complet et precis, analyse possible, conseils pertinents). Chaque eleve choisit un seul role et une repartition des huit points entre AFL2 et AFL3.",
+          "studentGoal": "Choisir, aujourd'hui et pour toute la suite de la sequence, mon role et ma repartition de points.",
+          "instructions": [
+            "Je relis les criteres exacts des deux roles : arbitre-chronometreur et observateur.",
+            "Je choisis le role qui me correspond le mieux, en pensant aux deux seances essayees precedemment.",
+            "Je choisis ma repartition des huit points entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "J'ecris mon choix definitif dans mon carnet : il ne changera plus jusqu'a la fin de la sequence."
+          ],
+          "success": [
+            "Un seul role est choisi et note, jamais les deux.",
+            "La repartition choisie est l'une des trois prevues par le referentiel.",
+            "Le choix est ecrit dans le carnet avec une phrase de justification."
+          ],
+          "execution": [
+            "Comparer honnetement ses deux experiences des seances 1 et 2.",
+            "Choisir la repartition en fonction de son point fort reel : le carnet ou le role sur le terrain.",
+            "Ecrire clairement, sans laisser place au doute plus tard."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils un role qu'ils ont reellement apprecie, ou par facilite ?",
+            "La repartition choisie correspond-elle a un point fort identifiable ?",
+            "Le choix est-il ecrit clairement, de facon a ne plus etre remis en cause ?"
+          ],
+          "errors": [
+            "Choisir un role uniquement parce qu'un ami l'a choisi.",
+            "Choisir une repartition sans lien avec ses points forts reels.",
+            "Ne pas ecrire le choix, ou l'ecrire de facon ambigue."
+          ],
+          "feedback": [
+            "Ce choix, c'est le tien : pas celui de ton voisin.",
+            "Si ton carnet est deja solide, la repartition 6-2 en ta faveur sur l'AFL2 peut avoir du sens.",
+            "Ecris-le noir sur blanc : c'est ce choix qui compte jusqu'a la fin du cycle."
+          ],
+          "plus": [
+            "Justification ecrite comparant precisement les deux roles essayes avant de trancher."
+          ],
+          "minus": [
+            "Choix accompagne individuellement par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Choix accompagne individuellement par le professeur, a partir de ce qu'il a observe.",
+            "normale": "Choix autonome du role et de la repartition, note et justifie dans le carnet.",
+            "complexifiee": "Choix justifie par une comparaison ecrite des deux roles essayes precedemment."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premier exercice dans le role choisi",
+          "objective": "Faire exercer immediatement, sur un camarade, le role tout juste choisi.",
+          "material": [
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par deux, role choisi tenu pour de vrai : l'un realise un passage reduit (couloir 1 + couloir 2), l'autre exerce exclusivement le role qu'il vient de choisir.",
+          "studentGoal": "Exercer pour de vrai le role que je viens de choisir, un seul, jusqu'au bout.",
+          "instructions": [
+            "Je tiens uniquement le role que je viens de choisir : arbitre-chronometreur ou observateur.",
+            "Si je suis arbitre : je donne le commandement, je releve le temps, je me deplace jusqu'au bord pour juger le virage.",
+            "Si je suis observateur : je remplis ma fiche en continu, avec attention.",
+            "Je ne melange jamais les deux roles pendant ce passage."
+          ],
+          "success": [
+            "Le role choisi est tenu du debut a la fin du passage, sans melange avec l'autre.",
+            "Arbitre : le temps est fiable et le virage est juge au bord.",
+            "Observateur : la fiche est remplie et exploitable."
+          ],
+          "execution": [
+            "Se rappeler son role avant que le camarade ne parte.",
+            "Rester concentre sur ce seul role jusqu'a l'arrivee.",
+            "Noter ou chronometrer en continu, sans interruption."
+          ],
+          "watch": [
+            "L'eleve reste-t-il bien dans son seul role choisi ?",
+            "Le role est-il tenu avec serieux des le premier essai ?"
+          ],
+          "errors": [
+            "Chronometrer puis se mettre a observer en cours de passage.",
+            "Rester passif, depasse par ce qu'il se passe dans l'eau.",
+            "Remplir la fiche apres coup, de memoire."
+          ],
+          "feedback": [
+            "Ton role est choisi : tiens-le jusqu'au bout, ne le melange pas.",
+            "Reste actif : c'est toi la securite de ton camarade autant que son juge.",
+            "Note en direct, pas apres : c'est deja ca qui est evalue."
+          ],
+          "plus": [
+            "Arbitre : annonce a voix haute chaque faute constatee en la justifiant. Observateur : ajoute une donnee qualitative en plus des donnees chiffrees."
+          ],
+          "minus": [
+            "Role tenu avec rappel regulier du professeur sur ce qu'il faut faire."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec rappel regulier du professeur.",
+            "normale": "Role tenu seul, sans melange, sur un passage reduit.",
+            "complexifiee": "Arbitre : fautes annoncees et justifiees a voix haute. Observateur : donnee qualitative en plus des donnees chiffrees."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents pendant toute la situation.",
+            "Le chronometreur ou arbitre surveille aussi son camarade en permanence : c'est un role de securite.",
+            "Aucun nageur ne part sans commandement de l'arbitre.",
+            "Materiel de sauvetage accessible au bord."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel role avez-vous choisi definitivement, et pourquoi ?",
+          "Quelle repartition de points avez-vous choisie entre l'AFL2 et l'AFL3 ?"
+        ],
+        "key": "A partir d'aujourd'hui, votre role est fixe pour toute la sequence : arbitre-chronometreur ou observateur, un seul des deux. Votre repartition de points l'est aussi. Ces deux choix ne se refont pas a la legere."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (role choisi, definitif) : commandements, temps, jugement du virage, fiche.",
+        "Observateur (role choisi, definitif) : recueil de donnees precis et exploitable.",
+        "Responsable carnet : verifie que chacun a bien note son choix definitif."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et verification du role",
+      "mainObjective": "Situer chaque eleve dans des conditions proches de l'epreuve finale, fiche-projet a l'appui, et verifier que le role choisi en seance 4 est bien tenu.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser le parcours choisi (200 ou 150 metres) avec la fiche-projet presentee.",
+        "Verifier, sans le remettre en cause a la legere, le role et la repartition choisis en seance 4.",
+        "Ajuster la fiche-projet pour l'epreuve finale."
+      ],
+      "linkToPrevious": "Le role et la repartition sont choisis depuis la seance 4 : l'epreuve de mi-cycle montre ce que cela donne en conditions proches du reel, fiche-projet a l'appui.",
+      "prerequisiteForNext": "Chaque eleve a une fiche-projet ajustee et tient effectivement le role choisi.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "grilles d'evaluation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer le parcours dans les trois couloirs, comme le jour de l'epreuve.",
+          "Afficher le referentiel complet et les trois repartitions possibles.",
+          "Preparer les fiches-projet et les grilles d'evaluation nominatives.",
+          "Verifier la presence des deux maitres-nageurs.",
+          "Verifier les PAI et l'etat de l'eau."
+        ],
+        "sketch": "Couloir 1 : nage et tapis, comme au jour de l'epreuve.\nCouloir 2 : remorquage des mannequins, une minute maximum.\nCouloir 3 : circulation et attente.\nAffiche du referentiel a l'entree.\nDeux maitres-nageurs postes sur la longueur des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique complet et autonome : sa conduite prepare celle qui sera observee le jour de l'epreuve finale.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six longueurs minimum.",
+              "Le professeur observe et evalue la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees, virages au mur.",
+              "Reactivation du geste de jambes pour le remorquage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation technique",
+            "details": [
+              "Deux franchissements du tapis a allure moderee.",
+              "Un remorquage court, tete hors de l'eau."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Epreuve de mi-cycle avec fiche-projet",
+          "objective": "Evaluer, en conditions proches du reel, la capacite a realiser le parcours choisi et a appliquer la fiche-projet.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Individuellement. Chaque eleve presente sa fiche-projet au professeur, puis realise le parcours choisi (200 ou 150 metres) avec l'obstacle tapis et le remorquage d'une minute maximum, selon ses choix de difficulte. Un camarade dans le role choisi (arbitre-chronometreur ou observateur) l'assiste comme le jour de l'epreuve.",
+          "studentGoal": "Realiser mon parcours choisi en appliquant ma fiche-projet, penalites comprises.",
+          "instructions": [
+            "Je presente ma fiche-projet avant de partir : parcours, obstacles, mannequin, distance de remorquage.",
+            "Je nage mon parcours en franchissant le tapis avec ma technique.",
+            "J'enchaine sur le remorquage d'une minute maximum, avec le mannequin choisi.",
+            "Arbitre : tu donnes le depart, releves le temps, juges le virage au bord, annonces les fautes. Observateur : tu releves les donnees en continu."
+          ],
+          "success": [
+            "Le parcours choisi est realise en entier.",
+            "Le temps final integre les penalites de 5 secondes par faute (tapis touche, appui sur les pieds avant le bord).",
+            "La fiche-projet correspond a ce qui est reellement realise.",
+            "Le role du camarade est tenu correctement."
+          ],
+          "execution": [
+            "Anticiper le tapis meme sous la pression du chronometre.",
+            "Enchainer sans pause prolongee entre nage et remorquage.",
+            "Garder la technique de retropedalage travaillee depuis la seance 3."
+          ],
+          "watch": [
+            "Le parcours choisi correspond-il au niveau reel de l'eleve ?",
+            "Les penalites sont-elles annoncees et justifiees par l'arbitre ?",
+            "Le role du camarade est-il tenu serieusement sous la pression de l'evaluation ?"
+          ],
+          "errors": [
+            "Choisir un parcours ou une difficulte trop ambitieuse par rapport au niveau reel.",
+            "Toucher le tapis par precipitation sous la pression du chronometre.",
+            "Arbitre qui n'annonce pas les fautes ou les minimise."
+          ],
+          "feedback": [
+            "Ta fiche dit 200 metres mais tu n'as jamais tenu cette distance : c'est un risque a assumer ou a corriger.",
+            "Meme sous la pression, anticipe le tapis : 5 secondes de penalite se payent cher.",
+            "Annonce chaque faute et justifie-la : c'est ce qui est evalue chez toi aussi."
+          ],
+          "plus": [
+            "Parcours a la difficulte maximale sur les trois choix de la fiche-projet."
+          ],
+          "minus": [
+            "Parcours reduit avec obstacle facilite et mannequin enfant uniquement."
+          ],
+          "diff": {
+            "facilitee": "Parcours reduit (150 metres avec obstacle facilite), mannequin enfant, distance de remorquage reduite.",
+            "normale": "Parcours choisi (200 ou 150 metres) avec la fiche-projet du niveau reel de l'eleve.",
+            "complexifiee": "Parcours a la difficulte maximale sur les trois choix de la fiche-projet."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs pendant toute l'epreuve.",
+            "Verification des PAI avant le premier depart : otites, pathologies cardiaques, asthme.",
+            "Arret immediat et prise en charge pour tout eleve signalant une crampe, un essoufflement anormal ou un debut de panique.",
+            "Le camarade dans le role choisi surveille aussi son coequipier : c'est une securite autant qu'une evaluation.",
+            "Aucun eleve seul dans l'eau sans surveillance directe.",
+            "Materiel de sauvetage accessible au bord de chaque couloir.",
+            "Le professeur peut arreter toute serie a tout moment."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Verifier son role et sa repartition",
+          "objective": "Verifier que le role et la repartition choisis en seance 4 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Chacun relit le role et la repartition choisis en seance 4, verifie qu'ils correspondent toujours a ce qu'il fait reellement, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mon role et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis le role et la repartition que j'ai choisis en seance 4.",
+            "Je regarde mon carnet : est-il mon point fort ou mon point faible ?",
+            "Je regarde mon role tenu depuis la seance 4 : suis-je utile et fiable pour mon camarade ?",
+            "J'ecris si je confirme mon choix, et pourquoi."
+          ],
+          "success": [
+            "Le role et la repartition de la seance 4 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait depuis la seance 4."
+          ],
+          "execution": [
+            "Partir de son carnet et de son role reel.",
+            "Comparer a ce qui avait ete choisi en seance 4.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de seance 4 ?",
+            "Les justifications sont-elles argumentees, pas seulement affirmees ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qu'on avait choisi en seance 4.",
+            "Confirmer sans regarder son carnet.",
+            "Justifier par une preference sans lien avec sa pratique reelle."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet et precis, c'est un point fort.",
+            "Tu chronometres sans jamais surveiller ton camarade : verifie que ce role te convient vraiment.",
+            "Ce n'est pas le choix de ton voisin qui compte, c'est le tien."
+          ],
+          "plus": [
+            "Justification comparant ce qui aurait change avec l'autre repartition."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir de ses observations.",
+            "normale": "Verification autonome du role et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ajuster la fiche-projet pour l'epreuve finale",
+          "objective": "Arreter une fiche-projet ajustee, realiste, en vue de l'epreuve finale.",
+          "material": [
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Chacun ajuste sa fiche-projet a partir du parcours realise aujourd'hui, en vue de l'epreuve finale.",
+          "studentGoal": "Arreter la fiche-projet que je presenterai a l'epreuve finale.",
+          "instructions": [
+            "Je pars des resultats de mon parcours d'aujourd'hui : temps, penalites, distance de remorquage tenue.",
+            "J'ajuste mes trois choix de difficulte si necessaire, a la hausse ou a la baisse.",
+            "Je choisis definitivement mon parcours : 200 ou 150 metres.",
+            "J'ecris mon objectif pour l'epreuve finale : reduire mes penalites, tenir mon temps, ameliorer mon remorquage."
+          ],
+          "success": [
+            "La fiche-projet est ajustee et coherente avec les resultats du jour.",
+            "Le parcours final (200 ou 150 metres) est choisi definitivement.",
+            "Un objectif precis est ecrit pour l'epreuve finale."
+          ],
+          "execution": [
+            "Partir des resultats reellement obtenus aujourd'hui.",
+            "Ajuster par petits paliers, pas par bonds.",
+            "Formuler l'objectif avec un verbe d'action et un chiffre si possible."
+          ],
+          "watch": [
+            "Les ajustements sont-ils realistes au regard du jour ?",
+            "Les eleves visent-ils encore trop haut malgre des penalites nombreuses ?"
+          ],
+          "errors": [
+            "Garder une fiche identique malgre des penalites repetees.",
+            "Viser une difficulte jamais reussie.",
+            "Objectif vague : mieux nager."
+          ],
+          "feedback": [
+            "Trois penalites aujourd'hui : baisse ton choix d'obstacles ou travaille specifiquement le tapis d'ici l'epreuve.",
+            "Tu n'as jamais tenu cette distance de remorquage : ajuste ton choix.",
+            "Precise : quel temps, combien de penalites en moins, quelle distance de remorquage ?"
+          ],
+          "plus": [
+            "Fiche ajustee avec deux scenarios selon la forme du jour de l'epreuve finale."
+          ],
+          "minus": [
+            "Fiche ajustee avec le professeur, a partir des resultats du jour."
+          ],
+          "diff": {
+            "facilitee": "Fiche ajustee avec le professeur, a partir des resultats du jour.",
+            "normale": "Fiche ajustee en autonomie, parcours final choisi, objectif ecrit.",
+            "complexifiee": "Fiche ajustee avec deux scenarios selon la forme le jour de l'epreuve."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de penalites avez-vous cumulees aujourd'hui, et sur quoi portaient-elles ?",
+          "Confirmez-vous votre role et votre repartition choisis en seance 4 ?"
+        ],
+        "key": "La fiche-projet doit correspondre a ce qu'on sait reellement faire, pas a ce qu'on souhaiterait. Et le role choisi en seance 4 ne se remet pas en cause a la legere : il se verifie, se confirme, et se tient jusqu'a la fin."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (role definitif) : commandements, temps, jugement du virage, annonce des fautes.",
+        "Observateur (role definitif) : recueil de donnees precis, fiche-projet verifiee.",
+        "Responsable fiche-projet : verifie que chaque camarade a rempli les trois choix de sa fiche."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Reduire les penalites et s'entrainer dans son role",
+      "mainObjective": "Reduire au minimum les penalites de 5 secondes et exercer pleinement le role choisi sur les prestations des camarades.",
+      "secondaryObjectives": [
+        "Identifier et corriger la cause de ses penalites recurrentes.",
+        "Exercer le role choisi (arbitre-chronometreur ou observateur) selon les criteres exacts du referentiel.",
+        "Conduire une seance d'entrainement individualise a partir de sa fiche-projet."
+      ],
+      "linkToPrevious": "L'epreuve de mi-cycle a montre des penalites recurrentes chez la plupart des eleves et un role choisi qui doit maintenant s'exercer avec exigence, comme le jour J.",
+      "prerequisiteForNext": "Chaque eleve a reduit ses penalites et tient son role avec le niveau d'exigence attendu au jury.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "grilles d'evaluation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Installer le parcours complet dans les trois couloirs.",
+          "Preparer des grilles d'evaluation AFL3 fideles aux criteres exacts du referentiel pour les deux roles.",
+          "Verifier la presence des deux maitres-nageurs.",
+          "Verifier les PAI et l'etat de l'eau.",
+          "Prevoir un poste d'observation croisee pour analyser les fautes."
+        ],
+        "sketch": "Couloir 1 : nage et tapis, avec poste d'analyse des fautes au bord.\nCouloir 2 : remorquage, minute chronometree.\nCouloir 3 : circulation.\nDeux maitres-nageurs postes sur la longueur des couloirs."
+      },
+      "warmup": {
+        "rationale": "Echauffement aquatique autonome, chacun preparant l'intensite de sa propre seance d'entrainement individualise.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement selon l'intensite de sa seance.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees, virages au mur.",
+              "Reactivation du geste de jambes de remorquage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation technique",
+            "details": [
+              "Deux franchissements du tapis.",
+              "Un remorquage court, tete hors de l'eau."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Reduire ses penalites",
+          "objective": "Identifier la cause precise de ses penalites et les corriger par une pratique ciblee.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Individuellement, en alternance avec un camarade qui observe precisement les fautes. Chacun realise plusieurs passages du couloir 1 et du couloir 2, en cherchant a eliminer sa faute la plus frequente.",
+          "studentGoal": "Realiser plusieurs passages sans la faute qui me coute des penalites d'habitude.",
+          "instructions": [
+            "Je rappelle a mon camarade quelle faute je fais le plus souvent : toucher le tapis, ou prendre appui sur les pieds au bord.",
+            "Il observe specifiquement cette faute a chaque passage.",
+            "Je repete jusqu'a reussir trois passages consecutifs sans cette faute.",
+            "Je note ma progression dans mon carnet."
+          ],
+          "success": [
+            "La faute ciblee n'apparait plus sur au moins trois passages consecutifs.",
+            "Le camarade confirme l'observation.",
+            "La progression est notee dans le carnet."
+          ],
+          "execution": [
+            "Ralentir legerement avant l'obstacle pour mieux l'anticiper.",
+            "Toucher le bord avec les mains avant tout appui des pieds au virage.",
+            "Repeter le meme geste correctif a chaque passage."
+          ],
+          "watch": [
+            "La faute ciblee disparait-elle vraiment ou seulement par chance ?",
+            "L'eleve ralentit-il suffisamment pour securiser son geste sans perdre trop de temps ?"
+          ],
+          "errors": [
+            "Continuer a prendre appui sur les pieds par habitude, meme en le sachant penalise.",
+            "Corriger une faute mais en creer une nouvelle par precipitation.",
+            "Ne pas ralentir assez avant l'obstacle et le toucher malgre tout."
+          ],
+          "feedback": [
+            "Touche le bord avec les mains avant de prendre appui : c'est le reflexe a automatiser.",
+            "Ralentis un peu avant le tapis : mieux vaut perdre une demi-seconde que cinq secondes de penalite.",
+            "Repete le meme geste a chaque fois, c'est ca qui l'automatise."
+          ],
+          "plus": [
+            "Passages enchaines a allure proche de la course, faute ciblee toujours absente."
+          ],
+          "minus": [
+            "Passages au ralenti, avec correction immediate du professeur a chaque faute."
+          ],
+          "diff": {
+            "facilitee": "Passages au ralenti avec correction immediate du professeur.",
+            "normale": "Plusieurs passages a allure d'entrainement, faute ciblee eliminee sur trois passages consecutifs.",
+            "complexifiee": "Passages enchaines a allure de course, sans jamais la faute ciblee."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs.",
+            "Signaux d'alerte rappeles avant chaque serie : crampe, essoufflement anormal, panique.",
+            "Arret immediat si un eleve montre des signes de fatigue excessive du fait des repetitions.",
+            "Aucun passage sans surveillance directe.",
+            "Materiel de sauvetage accessible au bord de chaque couloir."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Tenir son role : arbitre-chronometreur ou observateur",
+          "objective": "Exercer le role choisi selon les criteres exacts du referentiel, sur les prestations reelles des camarades.",
+          "material": [
+            {
+              "label": "grilles d'evaluation AFL3",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Pendant les passages des camarades, chacun tient exclusivement le role choisi en seance 4. Arbitre-chronometreur : commandements de depart, prise du temps, deplacement avec le nageur jusqu'au bord pour juger le virage, remplissage soigneux de la fiche, annonce et justification de chaque faute. Observateur : attention et concentration constantes, recueil de donnees complet et precis, capacite a relire et analyser, conseils justes et exploitables.",
+          "studentGoal": "Tenir mon role avec le niveau d'exigence exact du referentiel.",
+          "instructions": [
+            "Arbitre : je donne les commandements de depart, je releve le temps, je me deplace avec le nageur jusqu'au bord pour juger le virage.",
+            "Arbitre : je remplis soigneusement la fiche d'evaluation et j'annonce toutes les fautes en les justifiant par la regle.",
+            "Observateur : je reste tres attentif et concentre, je recueille des donnees completes et precises.",
+            "Observateur : je relis mes donnees a la fin et je propose un conseil concret et exploitable a mon camarade."
+          ],
+          "success": [
+            "Arbitre : le temps est fiable, le virage est juge au bord, chaque faute est annoncee et justifiee.",
+            "Observateur : les donnees sont completes, precises et permettent d'expliquer une reussite ou un echec.",
+            "Le conseil final donne au camarade est concret et exploitable."
+          ],
+          "execution": [
+            "Se deplacer physiquement jusqu'au bord pour juger le virage, ne pas juger de loin.",
+            "Annoncer chaque faute immediatement, avec la regle qui la justifie.",
+            "Prendre des notes completes en cours de passage, pas seulement a la fin."
+          ],
+          "watch": [
+            "L'arbitre se deplace-t-il vraiment jusqu'au bord pour juger le virage ?",
+            "Les fautes sont-elles annoncees et justifiees, ou seulement constatees en silence ?",
+            "L'observateur peut-il expliquer une reussite ou un echec a partir de ses notes ?"
+          ],
+          "errors": [
+            "Juger le virage de loin, sans se deplacer jusqu'au bord.",
+            "Annoncer une faute sans la justifier par la regle.",
+            "Observateur qui prend des notes trop vagues pour etre exploitables."
+          ],
+          "feedback": [
+            "Deplace-toi jusqu'au bord : c'est la seule facon de juger un virage correctement.",
+            "Annonce la faute et dis pourquoi : appui sur les pieds avant le bord, penalite de 5 secondes.",
+            "Tes notes doivent permettre a ton camarade de comprendre precisement ce qui s'est passe."
+          ],
+          "plus": [
+            "Arbitre : connaissance complete du reglement, capable d'aider un autre arbitre. Observateur : analyse ecrite proposant une piste de progression precise."
+          ],
+          "minus": [
+            "Role tenu avec grille simplifiee et rappel regulier du professeur."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec grille simplifiee et rappel regulier du professeur.",
+            "normale": "Role tenu seul selon les criteres du referentiel, fiche renseignee completement.",
+            "complexifiee": "Arbitre : reglement maitrise integralement. Observateur : analyse ecrite avec piste de progression precise."
+          },
+          "safety": [
+            "L'arbitre-chronometreur reste aussi attentif a la securite de son camarade qu'a son chronometrage : c'est un role double.",
+            "Il signale immediatement tout signe anormal : paleur, gene respiratoire, desequilibre.",
+            "Deux maitres-nageurs presents pendant toute la situation.",
+            "Aucun releve d'eleve ne prevaut sur une regle de securite.",
+            "Materiel de sauvetage accessible au bord."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Conduire sa seance a partir de sa fiche-projet",
+          "objective": "Conduire en autonomie une seance d'entrainement individualisee, guidee par sa propre fiche-projet.",
+          "material": [
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Individuellement, avec un camarade au role de securite. Chacun choisit lui-meme ce qu'il travaille en priorite, en fonction de sa fiche-projet et de ses penalites recurrentes.",
+          "studentGoal": "Choisir seul ce que je dois travailler en priorite avant l'epreuve finale.",
+          "instructions": [
+            "Je regarde ma fiche-projet et mes penalites du jour.",
+            "Je choisis ce qui me manque le plus : le tapis, le remorquage, ou la gestion du temps.",
+            "Je conduis mon travail seul, mon camarade se limite a la securite et au chronometrage.",
+            "Je note ce que j'ai travaille et le resultat dans mon carnet."
+          ],
+          "success": [
+            "Le choix de travail correspond a un besoin reel identifie dans la seance.",
+            "Le travail est conduit sans consigne exterieure du professeur.",
+            "Le carnet est renseigne avec precision."
+          ],
+          "execution": [
+            "Choisir ce qui manque, pas ce qu'on reussit deja.",
+            "Rester autonome, sans attendre de consigne.",
+            "Noter immediatement le resultat."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils vraiment leur point faible ?",
+            "Attendent-ils encore une consigne du professeur ?"
+          ],
+          "errors": [
+            "Refaire ce qu'on reussit deja par confort.",
+            "Attendre une consigne pour commencer.",
+            "Remplir le carnet a la fin, de memoire."
+          ],
+          "feedback": [
+            "Tu reussis deja le tapis : travaille ton remorquage.",
+            "C'est ta seance : tu n'as pas besoin de moi pour commencer.",
+            "Note tout de suite, pendant que c'est frais."
+          ],
+          "plus": [
+            "Travail conduit avec un objectif chiffre annonce avant de commencer."
+          ],
+          "minus": [
+            "Travail conduit avec une proposition du professeur au depart."
+          ],
+          "diff": {
+            "facilitee": "Travail conduit avec une proposition du professeur au depart.",
+            "normale": "Travail choisi et conduit seul, resultat note au carnet.",
+            "complexifiee": "Travail conduit avec objectif chiffre annonce avant de commencer."
+          },
+          "safety": [
+            "L'autonomie porte sur le contenu du travail, jamais sur la securite : le camarade surveille en permanence.",
+            "Deux maitres-nageurs presents pendant toute la situation.",
+            "Arret immediat en cas de signe de fatigue excessive.",
+            "Materiel de sauvetage accessible au bord."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quelle faute avez-vous reussi a eliminer aujourd'hui ?",
+          "Que devez-vous encore ameliorer dans votre role avant l'epreuve finale ?"
+        ],
+        "key": "Chaque penalite eliminee, c'est cinq secondes gagnees sans nager plus vite. Et le role choisi s'exerce avec la meme exigence que le jour de l'epreuve : deplacement au bord, fautes justifiees, notes exploitables."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (role definitif) : commandements, temps, jugement du virage, fiche completee.",
+        "Observateur (role definitif) : donnees completes et analyse et conseils exploitables.",
+        "Responsable securite : veille en permanence sur le camarade qui s'entraine."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale en conditions d'epreuve",
+      "mainObjective": "Realiser une repetition generale complete dans les conditions exactes de l'epreuve finale, fiche-projet, roles et bareme compris.",
+      "secondaryObjectives": [
+        "Realiser le parcours choisi dans les conditions exactes du jour J.",
+        "Finaliser le carnet de suivi des acquis (AFL2).",
+        "Tenir son role definitif sur une prestation complete, comme au jour de l'epreuve."
+      ],
+      "linkToPrevious": "Les penalites ont ete travaillees et le role s'exerce avec exigence depuis la seance 6 : il reste a assembler l'ensemble dans les conditions exactes de l'epreuve, une derniere fois avant l'evaluation finale.",
+      "prerequisiteForNext": "Chaque eleve a vecu une repetition complete et peut se presenter a l'epreuve finale avec une fiche-projet et un carnet prets.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "grilles d'evaluation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Installer le parcours dans les trois couloirs exactement comme le jour de l'epreuve.",
+          "Afficher le referentiel complet : bareme, penalites, roles.",
+          "Preparer l'ordre de passage nominatif.",
+          "Verifier la presence des deux maitres-nageurs.",
+          "Verifier les PAI et l'etat de l'eau avant le premier depart."
+        ],
+        "sketch": "Couloir 1 : nage et tapis, conditions d'epreuve.\nCouloir 2 : remorquage, une minute maximum.\nCouloir 3 : circulation et attente, ordre de passage affiche.\nDeux maitres-nageurs postes sur la longueur des couloirs, trousse de secours au bord."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, identique a celui qui sera mene le jour de l'epreuve finale.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six longueurs minimum.",
+              "Le professeur observe la conduite de l'echauffement, comme au jour de l'epreuve."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees, virages au mur.",
+              "Reactivation du geste de jambes de remorquage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation technique",
+            "details": [
+              "Deux franchissements du tapis.",
+              "Un remorquage court, tete hors de l'eau."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Repetition generale complete",
+          "objective": "Realiser le parcours choisi dans les conditions exactes de l'epreuve : fiche-projet, penalites, role du camarade.",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Individuellement, par ordre de passage affiche. Chaque eleve presente sa fiche-projet, realise son parcours (200 ou 150 metres) avec le tapis et le remorquage d'une minute maximum, assiste par un camarade dans son role definitif.",
+          "studentGoal": "Realiser mon parcours complet dans les conditions exactes du jour de l'epreuve.",
+          "instructions": [
+            "Je presente ma fiche-projet avant de partir, sans modification de derniere minute.",
+            "Je nage mon parcours choisi, je franchis le tapis avec ma technique.",
+            "J'enchaine sur le remorquage d'une minute maximum, mannequin choisi.",
+            "Mon camarade tient son role definitif exactement comme il le fera le jour de l'epreuve."
+          ],
+          "success": [
+            "Le parcours est realise en entier, dans les conditions du jour J.",
+            "Le temps final integre les penalites eventuelles.",
+            "Le role du camarade est tenu integralement, sans aide du professeur.",
+            "La fiche-projet correspond a la prestation reelle."
+          ],
+          "execution": [
+            "Se comporter exactement comme au jour de l'epreuve, sans facilite.",
+            "Anticiper le tapis malgre la pression de la repetition.",
+            "Enchainer nage et remorquage sans pause prolongee."
+          ],
+          "watch": [
+            "La prestation est-elle representative de ce que l'eleve fera le jour J ?",
+            "Le role du camarade est-il tenu sans aide du professeur ?",
+            "Les penalites sont-elles correctement annoncees et justifiees ?"
+          ],
+          "errors": [
+            "Se relacher parce que ce n'est qu'une repetition.",
+            "Modifier sa fiche-projet au dernier moment sans raison solide.",
+            "Camarade qui attend une aide du professeur pour tenir son role."
+          ],
+          "feedback": [
+            "Traite cette repetition comme l'epreuve reelle : c'est la seule facon d'en tirer profit.",
+            "Ta fiche est arretee depuis la seance 5 : ne la change pas sans raison serieuse.",
+            "Tiens ton role seul : personne ne t'aidera le jour de l'epreuve."
+          ],
+          "plus": [
+            "Repetition avec grille d'evaluation finale complete utilisee des maintenant."
+          ],
+          "minus": [
+            "Repetition avec parcours reduit et role simplifie."
+          ],
+          "diff": {
+            "facilitee": "Parcours reduit, role du camarade simplifie et accompagne par le professeur.",
+            "normale": "Parcours choisi complet, role definitif du camarade tenu seul.",
+            "complexifiee": "Parcours complet avec grille d'evaluation finale utilisee des la repetition."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs pendant toute la repetition.",
+            "Verification des PAI avant le premier depart.",
+            "Arret immediat et prise en charge pour tout eleve signalant une crampe, un essoufflement anormal ou un debut de panique.",
+            "Le camarade dans son role surveille aussi la securite de son coequipier.",
+            "Aucun eleve seul dans l'eau sans surveillance directe.",
+            "Materiel de sauvetage accessible au bord de chaque couloir.",
+            "Le professeur peut arreter toute serie a tout moment."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Finaliser le carnet de suivi",
+          "objective": "Finaliser le carnet de suivi des acquis pour l'evaluation de l'AFL2.",
+          "material": [
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis au bord du bassin. Chacun relit l'ensemble de son carnet depuis la seance 1 et complete les dernieres traces manquantes : objectifs, ajustements, moyens deployes, strategie de progression.",
+          "studentGoal": "Verifier que mon carnet retrace fidelement toute ma progression depuis la seance 1.",
+          "instructions": [
+            "Je relis mon carnet depuis la seance 1.",
+            "Je verifie que mes un ou deux objectifs sont clairement ecrits.",
+            "Je verifie que les moyens que j'ai utilises pour progresser sont notes.",
+            "Je complete ce qui manque avant l'epreuve finale."
+          ],
+          "success": [
+            "Le carnet retrace une progression identifiable depuis la seance 1.",
+            "Un ou deux objectifs sont clairement ecrits.",
+            "Les moyens deployes pour progresser sont notes."
+          ],
+          "execution": [
+            "Relire chronologiquement, seance par seance.",
+            "Completer avec des faits precis, pas des impressions.",
+            "Verifier la coherence entre les objectifs et les moyens notes."
+          ],
+          "watch": [
+            "Le carnet est-il complet depuis la seance 1 ?",
+            "La strategie de progression est-elle identifiable, ou le carnet est-il une suite de notes sans lien ?"
+          ],
+          "errors": [
+            "Completer le carnet en une fois, de memoire, la veille de l'epreuve.",
+            "Ecrire des objectifs sans lien avec les moyens deployes.",
+            "Laisser des seances entieres sans trace."
+          ],
+          "feedback": [
+            "Un carnet rempli d'un coup, ca se voit : complete au fil de l'eau la prochaine fois, mais pour aujourd'hui, sois precis.",
+            "Tes moyens doivent repondre a tes objectifs : verifie le lien.",
+            "Il manque la seance 3 : retrouve ce que tu as travaille ce jour-la."
+          ],
+          "plus": [
+            "Carnet complete avec un bilan chiffre de la progression sur chaque composante de l'epreuve."
+          ],
+          "minus": [
+            "Carnet complete avec l'aide du professeur, a partir de ses observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Carnet complete avec l'aide du professeur.",
+            "normale": "Carnet relu et complete en autonomie, objectifs et moyens verifies.",
+            "complexifiee": "Carnet complete avec bilan chiffre de la progression sur chaque composante."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "title": "Derniers ajustements avant l'epreuve",
+          "objective": "Arreter les derniers ajustements techniques et de fiche-projet avant l'epreuve finale.",
+          "material": [
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par deux, courts passages libres sur les points encore fragiles identifies pendant la repetition generale.",
+          "studentGoal": "Corriger un dernier point fragile avant l'epreuve finale.",
+          "instructions": [
+            "Je choisis le point le plus fragile constate pendant ma repetition generale.",
+            "Je fais deux ou trois passages courts pour le corriger.",
+            "Je verifie ma fiche-projet une derniere fois : elle ne changera plus.",
+            "Je range mon materiel et je verifie mon carnet complet."
+          ],
+          "success": [
+            "Le point fragile identifie est retravaille specifiquement.",
+            "La fiche-projet est definitivement arretee.",
+            "Le carnet est complet et pret pour l'epreuve finale."
+          ],
+          "execution": [
+            "Cibler un seul point, pas tout reprendre.",
+            "Faire des passages courts, pas un entrainement complet.",
+            "Verifier chaque case de la fiche une derniere fois."
+          ],
+          "watch": [
+            "Les eleves ciblent-ils vraiment leur point fragile ?",
+            "La fiche-projet est-elle definitivement stabilisee ?"
+          ],
+          "errors": [
+            "Vouloir tout retravailler la veille de l'epreuve.",
+            "Changer sa fiche-projet au dernier moment sans raison.",
+            "Arriver a l'epreuve finale avec un carnet incomplet."
+          ],
+          "feedback": [
+            "Un seul point, le plus fragile : pas tout reprendre a quelques jours de l'epreuve.",
+            "Ta fiche est stable depuis la seance 5 : ne la bouleverse pas maintenant.",
+            "Verifie ton carnet aujourd'hui, pas le jour de l'epreuve."
+          ],
+          "plus": [
+            "Passage complet supplementaire integrant la correction du point fragile."
+          ],
+          "minus": [
+            "Point fragile retravaille avec accompagnement direct du professeur."
+          ],
+          "diff": {
+            "facilitee": "Point fragile retravaille avec accompagnement direct du professeur.",
+            "normale": "Deux ou trois passages courts cibles sur le point fragile identifie.",
+            "complexifiee": "Passage complet supplementaire integrant la correction."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents pendant toute la situation.",
+            "Passages courts uniquement : pas de nouvel effort maximal a quelques jours de l'epreuve.",
+            "Materiel de sauvetage accessible au bord.",
+            "Le professeur reste en vue de l'ensemble des couloirs."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre fiche-projet est-elle definitivement arretee ?",
+          "Votre carnet retrace-t-il toute votre progression depuis la seance 1 ?"
+        ],
+        "key": "La repetition generale s'est deroulee dans les conditions exactes de l'epreuve : fiche-projet, penalites, role du camarade. Il ne reste plus qu'a le refaire une derniere fois, le jour de l'epreuve."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (role definitif) : tenu integralement, sans aide du professeur.",
+        "Observateur (role definitif) : donnees completes et exploitables, sans aide du professeur.",
+        "Responsable materiel : verifie le rangement et la disponibilite du materiel pour l'epreuve finale."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Realiser l'epreuve certificative de sauvetage aquatique : parcours choisi, fiche-projet, penalites, AFL1, AFL2 et AFL3.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser le parcours choisi (200 ou 150 metres) avec le tapis et le remorquage, penalites de 5 secondes appliquees.",
+        "Presenter le carnet de suivi pour l'evaluation de l'AFL2.",
+        "Tenir le role choisi (arbitre-chronometreur ou observateur) pour l'evaluation de l'AFL3."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 a ete menee dans les conditions exactes de l'epreuve : il s'agit maintenant de faire la meme chose, en conditions reellement evaluees.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve a ete evalue sur l'AFL1 (12 points), l'AFL2 et l'AFL3 (8 points) selon le referentiel de l'etablissement.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "tapis-obstacle de franchissement",
+            "fixed": 2
+          },
+          {
+            "label": "mannequins enfant",
+            "fixed": 3
+          },
+          {
+            "label": "mannequins adulte",
+            "fixed": 3
+          },
+          {
+            "label": "chronometres",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets de suivi",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "fiches-projet",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat de l'eau et sa temperature avant le premier depart.",
+          "Installer le parcours dans les trois couloirs exactement selon le referentiel : couloir 1 nage et tapis, couloir 2 remorquage, couloir 3 circulation.",
+          "Afficher le referentiel, le bareme et l'ordre de passage.",
+          "Verifier les PAI et les dispenses avant le premier depart.",
+          "Preparer les grilles d'evaluation finale nominatives et relever les carnets.",
+          "Prevoir la trousse de secours et le materiel de sauvetage au bord de chaque couloir."
+        ],
+        "sketch": "Couloir 1 : depart, tapis au milieu cote petit bain, arrivee/virage juge au bord.\nCouloir 2 : mannequins enfant et adulte, zone de remorquage chronometree une minute.\nCouloir 3 : circulation et attente, ordre de passage affiche.\nDeux maitres-nageurs postes sur la longueur des couloirs, trousse de secours signalee."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, dont la conduite est elle-meme observee au titre de la gestion de l'epreuve.",
+        "steps": [
+          {
+            "dur": 8,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement, six longueurs minimum de nage souple.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Gammes et virages",
+            "details": [
+              "Battements, coulees, virages au mur.",
+              "Reactivation du geste de jambes de remorquage."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reactivation technique finale",
+            "details": [
+              "Un franchissement du tapis a allure moderee.",
+              "Un remorquage court, tete hors de l'eau, pour se replacer avant l'epreuve."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 30,
+          "title": "L'epreuve de sauvetage aquatique",
+          "objective": "Evaluer l'AFL1 sur 12 points : mise en rapport des exigences du milieu avec ses ressources (6 points) et maitrise de deplacement avec le mannequin remorque (6 points).",
+          "material": [
+            {
+              "label": "tapis-obstacle de franchissement",
+              "fixed": 2
+            },
+            {
+              "label": "mannequins enfant",
+              "fixed": 3
+            },
+            {
+              "label": "mannequins adulte",
+              "fixed": 3
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches-projet",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par ordre de passage affiche, dans les trois couloirs de la piscine de 25 metres. Chaque candidat presente sa fiche-projet au jury, puis realise le parcours de nage choisi (200 ou 150 metres) dans le couloir 1 avec l'obstacle tapis, puis le remorquage d'un mannequin dans le couloir 2 pendant une minute maximum, selon ses trois choix de difficulte. Deux maitres-nageurs sont presents sur la longueur des couloirs.",
+          "studentGoal": "Realiser mon parcours choisi, avec mes choix de difficulte, en limitant mes penalites et en maitrisant le remorquage.",
+          "instructions": [
+            "Je presente ma fiche-projet complete au jury avant de partir : parcours (200 ou 150 metres), choix des obstacles, choix du mannequin, distance de remorquage visee.",
+            "Je realise le parcours de nage choisi dans le couloir 1, en franchissant l'obstacle tapis.",
+            "J'enchaine sur le remorquage dans le couloir 2, pendant une minute maximum, avec le mannequin choisi.",
+            "Je garde la tete du mannequin hors de l'eau le plus possible, avec le retropedalage ou le ciseau de brasse."
+          ],
+          "success": [
+            "AFL1 - premier element (6 points) : lecture et analyse predictive du milieu, deplacement fluide et rapide en nage et en franchissement de l'obstacle, bonne anticipation et adaptation, differenciation et enchainement de techniques anticipees.",
+            "AFL1 - second element (6 points) : maitrise de deplacement avec le mannequin remorque, du degre 1 (tete souvent immergee) au degre 4 (tete hors de l'eau en continu, retropedalage ou ciseau de brasse maitrise).",
+            "Le temps final integre le temps realise et le cumul des penalites de 5 secondes par faute (toucher le tapis, prendre appui sur les pieds avant de toucher le bord du couloir).",
+            "La fiche-projet correspond a la prestation reellement realisee."
+          ],
+          "execution": [
+            "Anticiper l'obstacle tapis suffisamment tot pour ne pas le toucher.",
+            "Toucher le bord avec les mains avant tout appui des pieds au virage.",
+            "Enchainer la nage et le remorquage sans pause prolongee.",
+            "Propulser le remorquage avec les jambes, mains libres pour tenir le mannequin tete hors de l'eau."
+          ],
+          "watch": [
+            "Le candidat lit-il et anticipe-t-il les exigences du milieu, ou les subit-il ?",
+            "Le franchissement de l'obstacle est-il fluide et rapide, ou source de penalite ?",
+            "A quel degre se situe la maitrise du remorquage, de 1 (tete immergee) a 4 (tete hors de l'eau en continu) ?",
+            "Le temps de passage n'est communique que sur les phases prevues par le referentiel, jamais en cours de remorquage."
+          ],
+          "errors": [
+            "Partir trop vite et subir l'obstacle plutot que de l'anticiper.",
+            "Toucher le tapis avec une partie du corps par precipitation.",
+            "Prendre appui sur les pieds avant de toucher le bord du couloir.",
+            "Laisser la tete du mannequin s'immerger en continu faute de propulsion des jambes."
+          ],
+          "feedback": [
+            "Anticipe l'obstacle : c'est la lecture du milieu qui est evaluee, pas seulement la vitesse.",
+            "Touche d'abord avec les mains : prendre appui sur les pieds avant, c'est cinq secondes de penalite.",
+            "Ta tete de mannequin est sous l'eau en continu : c'est le degre 1, pas le degre 4 vise.",
+            "Enchaine sans pause : la transition fait partie de la performance evaluee."
+          ],
+          "plus": [
+            "Parcours a la difficulte maximale sur les trois choix de la fiche-projet, mannequin adulte, remorquage a distance maximale."
+          ],
+          "minus": [
+            "Parcours de 150 metres avec obstacles et mannequin des choix les plus accessibles."
+          ],
+          "diff": {
+            "facilitee": "Parcours de 150 metres, choix de difficulte les plus accessibles sur les trois criteres de la fiche-projet.",
+            "normale": "Parcours choisi (200 ou 150 metres) avec les choix de difficulte du niveau reel de l'eleve.",
+            "complexifiee": "Parcours a la difficulte maximale sur les trois choix de la fiche-projet."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs pendant toute l'epreuve, prets a intervenir en cas de courbature ou de fatigue insupportable.",
+            "Verification des PAI et des dispenses avant le premier depart : otites, pathologies cardiaques, asthme.",
+            "Signaux d'alerte connus de tous : crampe, essoufflement anormal, debut de panique.",
+            "Arret immediat et prise en charge pour tout candidat signalant une douleur, un vertige, une paleur ou une gene respiratoire inhabituelle.",
+            "Le camarade dans son role de securite (arbitre-chronometreur ou observateur) surveille en permanence le candidat.",
+            "Aucun candidat seul dans l'eau sans surveillance directe.",
+            "Materiel de sauvetage (perche, bouee) accessible immediatement au bord de chaque couloir.",
+            "Le jury ou le professeur peut arreter toute serie a tout moment, la securite prevalant toujours sur l'evaluation."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Evaluation du carnet de suivi (AFL2)",
+          "objective": "Evaluer l'AFL2 a partir du carnet de suivi des acquis presente par chaque candidat.",
+          "material": [
+            {
+              "label": "carnets de suivi",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis au bord du bassin, apres son passage. Chaque candidat presente son carnet de suivi : ses un ou deux objectifs, les moyens deployes, les difficultes rencontrees a chaque seance, sa strategie de progression.",
+          "studentGoal": "Presenter mon carnet et montrer comment j'ai construit ma progression depuis la seance 1.",
+          "instructions": [
+            "Je presente mes un ou deux objectifs fixes en debut de sequence.",
+            "Je montre les moyens que j'ai deployes pour les atteindre.",
+            "Je cite les difficultes rencontrees, seance par seance.",
+            "Je montre ma strategie de progression, identifiable dans le carnet."
+          ],
+          "success": [
+            "Un ou deux objectifs sont clairement identifiables dans le carnet.",
+            "Les moyens deployes pour progresser sont decrits precisement.",
+            "Les difficultes rencontrees sont notees a chaque seance, pas seulement a la fin.",
+            "Une strategie de progression est identifiable sur l'ensemble du cycle."
+          ],
+          "execution": [
+            "Presenter dans l'ordre chronologique.",
+            "Citer des faits precis, pas des impressions generales.",
+            "Relier chaque difficulte a un moyen mis en place pour la depasser."
+          ],
+          "watch": [
+            "Le carnet retrace-t-il une progression reelle depuis la seance 1 ?",
+            "Les objectifs et les moyens sont-ils coherents entre eux ?"
+          ],
+          "errors": [
+            "Presenter un carnet rempli en une seule fois, juste avant l'epreuve.",
+            "Citer des objectifs sans lien avec les moyens deployes.",
+            "Ne mentionner aucune difficulte, ce qui rend le carnet peu credible."
+          ],
+          "feedback": [
+            "Ton carnet a ete rempli en une fois : ca se voit, et ce n'est pas ce qui est valorise.",
+            "Quels moyens exactement pour atteindre cet objectif ?",
+            "Une progression sans aucune difficulte mentionnee manque de credibilite."
+          ],
+          "plus": [
+            "Presentation avec un bilan chiffre precis de la progression sur chaque composante de l'epreuve."
+          ],
+          "minus": [
+            "Presentation guidee par des questions du professeur."
+          ],
+          "diff": {
+            "facilitee": "Presentation guidee par des questions du professeur.",
+            "normale": "Presentation autonome des objectifs, des moyens et des difficultes.",
+            "complexifiee": "Presentation avec bilan chiffre precis de la progression."
+          },
+          "safety": [
+            "Phase realisee assise au bord, hors de l'eau, apres sechage.",
+            "Eleves couverts en cas de temps frais.",
+            "Point d'eau potable accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Evaluation du role choisi (AFL3) et cloture du cycle",
+          "objective": "Evaluer l'AFL3 dans le role choisi et clore le cycle par un bilan collectif.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "chronometres",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Pendant les passages des autres candidats, chaque eleve tient son role definitif, evalue selon les criteres exacts du referentiel. Une fois toutes les series terminees, bilan collectif et rangement.",
+          "studentGoal": "Tenir mon role jusqu'au bout de l'epreuve, puis faire le bilan du cycle.",
+          "instructions": [
+            "Arbitre-chronometreur : je donne les commandements de depart, je prends le temps realise par le candidat, je me deplace avec lui jusqu'a toucher le bord pour juger le virage.",
+            "Arbitre-chronometreur : je remplis soigneusement la fiche d'evaluation et j'annonce toutes les fautes commises en les justifiant par la regle.",
+            "Observateur : je reste tres attentif et concentre, je recueille des donnees completes et precises, exploitables par le candidat, le jury ou l'entraineur.",
+            "En fin d'epreuve, je participe au rangement du materiel et au bilan collectif du cycle."
+          ],
+          "success": [
+            "AFL3 - role arbitre-chronometreur : commandements donnes, temps pris fiablement, virage juge au bord, fiche remplie, fautes annoncees et justifiees.",
+            "AFL3 - role observateur : attention et concentration constantes, donnees completes et precises, capacite a relire et analyser les causes d'une reussite ou d'un echec, conseils justes et pertinents.",
+            "Le materiel est integralement range.",
+            "Le bilan collectif du cycle est partage."
+          ],
+          "execution": [
+            "Tenir son role du premier au dernier candidat, sans relachement.",
+            "Se deplacer physiquement jusqu'au bord pour juger chaque virage.",
+            "Noter en continu, sans attendre la fin de la serie."
+          ],
+          "watch": [
+            "Le role est-il tenu avec la meme exigence sur tous les passages, y compris les derniers ?",
+            "Les fautes sont-elles annoncees et justifiees a chaque fois ?",
+            "Les observateurs peuvent-ils expliquer une reussite ou un echec a partir de leurs donnees ?"
+          ],
+          "errors": [
+            "Relacher son attention sur les derniers passages de la serie.",
+            "Juger un virage sans se deplacer jusqu'au bord.",
+            "Observateur qui ne peut pas justifier ses donnees quand on l'interroge."
+          ],
+          "feedback": [
+            "Ton role compte jusqu'au dernier candidat, pas seulement les premiers.",
+            "Deplace-toi jusqu'au bord a chaque virage, sans exception.",
+            "Sois capable d'expliquer ce que tu as note : c'est ca, un observateur exploitable."
+          ],
+          "plus": [
+            "Role tenu avec une explication argumentee, a la demande du jury, d'une reussite ou d'un echec observe."
+          ],
+          "minus": [
+            "Role tenu avec assistance ponctuelle du professeur sur les cas difficiles."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec assistance ponctuelle du professeur sur les cas difficiles.",
+            "normale": "Role tenu seul sur l'ensemble de la serie, selon les criteres du referentiel.",
+            "complexifiee": "Role tenu avec explication argumentee d'une reussite ou d'un echec, a la demande du jury."
+          },
+          "safety": [
+            "Deux maitres-nageurs presents et postes sur la longueur des couloirs jusqu'a la fin de la derniere serie.",
+            "L'arbitre-chronometreur et l'observateur restent aussi attentifs a la securite du candidat qu'a leur mission d'evaluation.",
+            "Tout signe anormal chez un candidat (paleur, gene respiratoire, desequilibre, arret brutal) est signale immediatement.",
+            "Aucun candidat ne reste seul dans l'eau sans surveillance directe, jusqu'a la fin de l'epreuve.",
+            "Materiel de sauvetage accessible au bord de chaque couloir jusqu'au rangement complet.",
+            "Rangement du materiel realise en marchant, apres verification qu'aucun candidat ne presente de gene avant de quitter le bassin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur les trois composantes de l'epreuve (nage, tapis, remorquage), laquelle avez-vous le plus progressee depuis la seance 1 ?",
+          "Le role que vous avez tenu tout le cycle, arbitre-chronometreur ou observateur, vous a-t-il appris quelque chose sur le sauvetage ?"
+        ],
+        "key": "Le sauvetage aquatique ne se resume pas a nager vite : c'est lire le milieu, franchir un obstacle proprement, remorquer une victime tete hors de l'eau, et assumer un role de securite et d'evaluation pour un camarade. Ces quatre exigences ont ete evaluees aujourd'hui."
+      },
+      "socialRoles": [
+        "Arbitre-chronometreur (role definitif, evalue) : commandements, temps, jugement du virage au bord, fiche, fautes annoncees et justifiees.",
+        "Observateur (role definitif, evalue) : donnees completes et precises, analyse et conseils exploitables.",
+        "Responsable materiel : organise le rangement en fin d'epreuve.",
+        "Deux maitres-nageurs (adultes) : surveillance constante de l'ensemble des couloirs jusqu'a la fin."
+      ]
+    }
+  ]
+}

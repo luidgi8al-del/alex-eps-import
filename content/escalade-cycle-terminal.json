@@ -1,0 +1,2759 @@
+{
+  "apsa": "Escalade",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA2 - Adapter son deplacement a des environnements varies ou incertains",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager a l'aide d'une motricite specifique pour realiser en securite et a son meilleur niveau, un itineraire dans un contexte incertain.",
+    "AFL2 : s'entrainer individuellement et collectivement, pour se deplacer de maniere efficiente et en toute securite.",
+    "AFL3 : cooperer pour realiser un projet de deplacement, en toute securite."
+  ],
+  "targetCompetence": "Passer d'une pratique ou l'eleve grimpe une voie deja repetee, s'assure passivement et connait mal la chaine de securite, a un grimpeur capable de lire une voie inconnue tiree au sort, de choisir entre ascension en tete et en moulinette selon son niveau reel, de gerer une chute selon les regles exactes de l'epreuve, et d'assumer pleinement les trois roles cooperatifs de la cordee : assureur, compagnon de cordee et coach.",
+  "cycleObjectives": [
+    "Maitriser l'encordement en huit double et le noeud d'arret, et la verification systematique de toute la chaine d'assurage.",
+    "Grimper en tete sur une voie cotee, avec un mousquetonnage au bon moment et une position de moindre effort.",
+    "Lire une voie depuis le sol pour choisir et conduire son itineraire en toute securite.",
+    "Assumer les trois roles cooperatifs de la cordee au fil des rotations : assureur, compagnon de cordee, coach.",
+    "Connaitre et appliquer les regles exactes de gestion de la chute et de reprise selon la position en voie.",
+    "Choisir, en debut de sequence, une repartition des points entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6).",
+    "Se preparer a l'epreuve certificative : voie tiree au sort parmi celles proposees, en tete ou en moulinette, chronometree sur 8 minutes."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, encordement et evaluation diagnostique",
+    "Constitution des cordees et choix de la repartition AFL2/AFL3",
+    "Lire une voie, se placer, mousquetonner : les fondamentaux de la tete",
+    "Grimper en tete, gerer son effort, jouer son role dans la cordee",
+    "Epreuve evaluee de mi-cycle et bilan des roles cooperatifs",
+    "Gerer la chute et perfectionner le mousquetonnage",
+    "Repetition generale dans les conditions de l'epreuve",
+    "Epreuve finale : voie tiree au sort et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'enseignement commun d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage, CA2",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Academique",
+      "title": "Reglement, securite et cotation des voies en SAE",
+      "org": "Federation Francaise de la Montagne et de l'Escalade (FFME)",
+      "url": "https://www.ffme.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner l'escalade au lycee - de la voie travaillee a la voie tiree au sort",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-27"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : mur d'escalade en SAE (structure artificielle d'escalade) de 8 metres de hauteur, 19 relais, profils d'escalade varies, majoritairement en devers.",
+    "Verification systematique de toute la chaine d'assurage avant chaque ascension : baudrier boucle et double, noeud d'encordement en huit double avec noeud d'arret, mousqueton du systeme d'assurage visse, cheveux longs attaches, descendeur installe a la bonne distance.",
+    "Port du casque selon le reglement local en vigueur dans l'etablissement.",
+    "Tapis de reception disposes sans interstice au pied de chaque voie utilisee, zone de chute degagee de tout obstacle et de toute circulation.",
+    "PAI et dispenses a verifier avant toute ascension : vertige, pathologies articulaires ou cardiaques.",
+    "Le candidat propose 3 voies differentes pour les garcons et 2 voies differentes pour les filles ; la voie a realiser le jour de l'epreuve est tiree au sort parmi celles-ci.",
+    "Choix entre ascension en tete et ascension en moulinette annonce apres le tirage au sort ; le professeur peut imposer la moulinette si la maitrise des gestes de securite n'est pas suffisante.",
+    "Cordees determinees a l'avance et maintenues sur toute la sequence, afin de s'entrainer ensemble et de permettre a chacun d'etre tour a tour grimpeur et assureur en tete.",
+    "Bareme : AFL1 note sur 12 points (6 points pour la lecture et l'analyse de la voie, 6 points pour l'adaptation du deplacement), note ajustee selon la cotation de la voie tiree au sort. AFL2 et AFL3 notes sur 8 points au fil de la sequence, sur les trois roles cooperatifs (assureur, compagnon de cordee, coach), selon une repartition choisie en debut de sequence parmi 4-4, 6-2 ou 2-6."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - bloque devant l'inconnu",
+      "observed": "Reussit des voies deja repetees, mais se fige, hesite longuement ou redescend des qu'une voie n'a pas ete essayee a l'avance.",
+      "need": "Construire une methode de lecture de voie depuis le sol et la confiance necessaire pour s'engager sur une voie inconnue."
+    },
+    {
+      "label": "Profil 2 - assureur passif",
+      "observed": "Tient la corde sans jamais anticiper les passages difficiles, laisse trop de mou ou trop de tension, ne communique pas avec le grimpeur.",
+      "need": "Construire la vigilance active, l'anticipation et la communication du role d'assureur."
+    },
+    {
+      "label": "Profil 3 - mousquetonnage hasardeux",
+      "observed": "Mousquetonne au dernier moment, en extension complete, parfois a l'envers ou en yoyo, sans jamais chercher la position de moindre effort.",
+      "need": "Automatiser un mousquetonnage au bon moment, en position de moindre effort, avec le bon geste."
+    },
+    {
+      "label": "Profil 4 - role choisi mais pas investi",
+      "observed": "A choisi une repartition entre l'AFL2 et l'AFL3, mais ne joue reellement qu'un seul des trois roles cooperatifs au fil des rotations de cordee, sans s'investir dans les deux autres.",
+      "need": "S'investir reellement dans les trois roles cooperatifs (assureur, compagnon de cordee, coach), quelle que soit la repartition choisie."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. Le candidat propose a l'avance 3 voies differentes (garcons) ou 2 voies differentes (filles) sur le mur en SAE de 8 metres a 19 relais. Le jour de l'epreuve, la voie a realiser est tiree au sort parmi celles proposees, puis le choix entre ascension en tete et ascension en moulinette est annonce ; le professeur peut imposer la moulinette si la maitrise des gestes de securite n'est pas suffisante. La cordee, determinee a l'avance, prepare son ascension : baudriers, couple d'assurage, noeud d'encordement en huit double avec noeud d'arret. Pour une ascension en tete, les deux premieres degaines sont deja mousquetonnees. Le candidat dispose de 8 minutes pour terminer sa voie ; l'epreuve commence quand le grimpeur debute son noeud d'encordement et que l'assureur installe son couple d'assurage. La voie est terminee quand la derniere prise est tenue 2 secondes et, pour une ascension en tete, quand la derniere degaine du relais est mousquetonnee. En cas de chute, le grimpeur beneficie de 30 secondes de repos dans le baudrier et reprend a la derniere prise utilisee. En cas de 2e chute en moulinette, l'epreuve s'arrete. En cas de 2e chute en tete au-dessus de la 3e degaine, l'epreuve s'arrete ; en dessous de la 3e degaine, le candidat recommence en moulinette. Une erreur de mousquetonnage non corrigee (a l'envers ou en yoyo) avant la 3e degaine entraine une reprise en moulinette ; a la 3e degaine ou apres, l'epreuve est terminee. L'AFL1 est note sur 12 points (6 points pour la lecture et l'analyse de la voie, 6 points pour l'adaptation du deplacement), ajustes selon la cotation de la voie tiree au sort. Les AFL2 et AFL3 sont evalues sur 8 points au fil de la sequence, sur les trois roles cooperatifs vecus par chaque eleve au fil des rotations de cordee (assureur, compagnon de cordee, coach), avec une repartition choisie en debut de sequence parmi 4-4, 6-2 ou 2-6.",
+    "criteria": [
+      "AFL1 - lire et analyser (6 points) : rythme et respiration adaptes a la voie, choix de difficulte pertinent au regard de son niveau, moment et technique de mousquetonnage maitrises, recherche systematique de la position de moindre effort.",
+      "AFL1 - adapter son deplacement (6 points) : placement du grimpeur juste, valorisation des prises disponibles, motricite specifique utilisee (opposition, adherence, equilibre), prise d'informations en cours de grimpe par une fenetre visuelle large.",
+      "AFL1 : la note est ajustee a la hausse ou a la baisse selon la cotation reelle de la voie tiree au sort.",
+      "AFL2 : le choix des voies au fil de la sequence est raisonne selon la cotation, jamais laisse au hasard ; le volume de pratique est equilibre entre le temps passe grimpeur et le temps passe assureur ; l'entrainement alterne des voies du niveau de l'eleve, plus difficiles et plus faciles selon l'objectif ; les mouvements d'un passage difficile sont decomposes et travailles specifiquement ; l'eleve observe les autres grimpeurs pour analyser et transposer.",
+      "AFL3 - role assureur : en moulinette, corde juste molle et anticipation des passages difficiles ; en tete, mou donne et repris au bon moment par rapport au mousquetonnage, placement correct par rapport au couloir de chute, notamment vigilance sur le risque de retour au sol avant la 3e degaine.",
+      "AFL3 - role compagnon de cordee : realisation correcte et automatique du noeud d'encordement en huit double avec noeud d'arret, verification systematique de toute la chaine d'assurage du camarade (baudrier, encordement, vis du mousqueton, cheveux longs attaches, descendeur a la bonne distance, vis fermee).",
+      "AFL3 - role coach : conseils oraux pertinents sur l'emplacement des prises et la maniere de les utiliser, reinvestissement de ce qui a ete observe chez d'autres grimpeurs, maitrise du vocabulaire specifique de l'escalade (materiel, gestuelle, technique), propositions d'exercices-conseils adaptes.",
+      "La repartition des 8 points entre l'AFL2 et l'AFL3, choisie en debut de sequence parmi 4-4, 6-2 ou 2-6, est respectee et coherente avec ce que l'eleve a reellement fait au fil du cycle."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA2, Lycee Victor Hugo de Marrakech, epreuve escalade."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, encordement et evaluation diagnostique",
+      "mainObjective": "Poser le cadre de securite absolu du cycle : encordement, verification mutuelle de la chaine d'assurage, premiere prise en main du dispositif d'assurage.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Maitriser le noeud d'encordement en huit double et le noeud d'arret.",
+        "Verifier methodiquement toute la chaine d'assurage d'un camarade.",
+        "Prendre en main un systeme d'assurage en simulation au sol avant toute grimpe reelle.",
+        "Situer le niveau technique de chacun sur une premiere voie facile en moulinette.",
+        "Ouvrir le carnet de cycle."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : rien n'est suppose acquis. Avant tout grimper reel, chaque eleve doit demontrer qu'il maitrise l'encordement et la verification de la chaine d'assurage.",
+      "prerequisiteForNext": "Chaque eleve realise seul et sans erreur son noeud d'encordement en huit double avec noeud d'arret, et sait verifier methodiquement la chaine d'assurage d'un camarade.",
+      "setup": {
+        "installationMinutes": 18,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8,
+            "note": "une par voie utilisee"
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "mousquetons a vis",
+            "fixed": 16
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8,
+            "note": "sans interstice au pied de chaque voie"
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24,
+            "note": "selon le protocole local"
+          },
+          {
+            "label": "affiche du protocole de verification mutuelle",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier le registre des EPI de l'etablissement : dates de controle des cordes, baudriers, mousquetons et points d'ancrage du mur SAE de 8 metres.",
+          "N'ouvrir que des voies faciles, largement dans les cotations les plus basses disponibles sur le mur a 19 relais.",
+          "Verifier la position des tapis de reception au pied de chaque voie, sans interstice, et degager toute la zone de chute.",
+          "Afficher le protocole de verification mutuelle a l'entree de la salle.",
+          "Verifier les PAI et les dispenses : vertige, pathologies articulaires ou cardiaques.",
+          "Prevoir un espace au sol, a l'ecart des voies, pour l'apprentissage du noeud et la simulation d'assurage."
+        ],
+        "sketch": "Zone au sol, a l'ecart des voies, pour l'apprentissage du noeud d'encordement et la simulation d'assurage sur point fixe.\nQuatre a six voies faciles ouvertes, tapis joints sans interstice au pied de chacune.\nAffiche du protocole de verification mutuelle a l'entree.\nZone d'attente en dehors de tout couloir de chute."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire cible sur les avant-bras, les epaules et les doigts, indispensable avant toute prise de prise, meme sur une voie facile.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mobilisation articulaire generale",
+            "details": [
+              "Rotations des poignets, des epaules, des chevilles.",
+              "Extensions et flexions des doigts, mains ouvertes puis fermees.",
+              "Mobilisation du rachis en douceur."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions breves a une barre ou a une prise basse.",
+              "Pompes de doigts legeres, sans surcharge.",
+              "Gainage dynamique cinq fois quinze secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Deplacements au sol type escalade",
+            "details": [
+              "Traversees a quatre appuis au ras du sol, sans grimper.",
+              "Recherche d'appuis larges, opposition bras-jambes.",
+              "Retour au calme respiratoire avant le premier encordement."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Encordement et verification mutuelle de la chaine d'assurage",
+          "objective": "Automatiser le noeud d'encordement en huit double avec noeud d'arret, et la verification methodique de toute la chaine d'assurage.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "affiche du protocole de verification mutuelle",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par cordees de trois, au sol, a l'ecart des voies. Chacun s'equipe, realise son noeud d'encordement en huit double avec noeud d'arret, puis les deux autres membres de la cordee verifient a voix haute toute la chaine : baudrier boucle et double, noeud correct, mousqueton du systeme d'assurage visse, cheveux longs attaches.",
+          "studentGoal": "Realiser seul mon noeud d'encordement et verifier a voix haute la chaine d'assurage d'un camarade.",
+          "instructions": [
+            "Je m'equipe : baudrier boucle et double verifie.",
+            "Je realise mon noeud en huit double, puis mon noeud d'arret.",
+            "Je fais verifier mon noeud par les deux autres membres de ma cordee.",
+            "A mon tour, je verifie a voix haute la chaine complete d'un camarade : baudrier, noeud, systeme d'assurage, mousqueton, cheveux attaches."
+          ],
+          "success": [
+            "Le noeud en huit double est correct, sans aide, en moins de deux minutes.",
+            "Le noeud d'arret est present et serre.",
+            "La verification mutuelle est faite a voix haute, sur les cinq points de la chaine.",
+            "Chaque eleve a verifie et a ete verifie au moins deux fois."
+          ],
+          "execution": [
+            "Former le huit avec un brin, puis le doubler en suivant le trace.",
+            "Serrer completement le noeud avant de le faire verifier.",
+            "Enoncer chaque point de la verification a voix haute, jamais en silence.",
+            "Regarder reellement le noeud et le mousqueton, ne pas se fier a la memoire."
+          ],
+          "watch": [
+            "Le noeud est-il vraiment un huit double, ou un huit simple insuffisant ?",
+            "Le noeud d'arret est-il present ?",
+            "La verification est-elle reellement faite, ou seulement recitee sans regarder ?",
+            "Les eleves verifient-ils les cinq points, ou en oublient-ils ?"
+          ],
+          "errors": [
+            "Realiser un huit simple sans le doubler.",
+            "Oublier le noeud d'arret.",
+            "Reciter la verification sans regarder le noeud ni le mousqueton.",
+            "Ne pas verifier que le mousqueton du systeme d'assurage est visse."
+          ],
+          "feedback": [
+            "Ton huit n'est pas double : reprends-le entierement.",
+            "Il manque le noeud d'arret : la voie ne demarre pas sans lui.",
+            "Regarde, ne recite pas : mets ton doigt sur le noeud pendant que tu verifies.",
+            "La vis du mousqueton : ferme-la, verifie-la, dis-le a voix haute."
+          ],
+          "plus": [
+            "Noeud realise les yeux fermes, puis verifie par deux camarades independamment."
+          ],
+          "minus": [
+            "Noeud realise avec l'affiche du protocole sous les yeux et l'aide du professeur."
+          ],
+          "diff": {
+            "facilitee": "Noeud realise avec l'affiche du protocole sous les yeux et l'aide directe du professeur, verification guidee point par point.",
+            "normale": "Noeud realise seul, verification mutuelle a voix haute sur les cinq points de la chaine.",
+            "complexifiee": "Noeud realise les yeux fermes puis verifie independamment par deux camarades."
+          },
+          "safety": [
+            "Aucune ascension n'est autorisee tant que le noeud et la verification mutuelle ne sont pas valides par le professeur.",
+            "Le professeur controle personnellement chaque premier noeud de chaque eleve avant toute utilisation en hauteur.",
+            "La verification mutuelle est obligatoire avant chaque depart, meme quand elle a deja ete faite plus tot dans la seance.",
+            "Aucun eleve ne s'encorde seul sans un second regard : la verification est toujours faite par un camarade, jamais par soi-meme uniquement.",
+            "Phase realisee entierement au sol, a l'ecart de toute zone de chute.",
+            "Le professeur reste en vue de l'ensemble du groupe."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Premiere prise en main du dispositif d'assurage, en simulation au sol",
+          "objective": "Faire decouvrir le fonctionnement du systeme d'assurage (donner du mou, reprendre le mou, bloquer une chute) en simulation, avant toute utilisation en hauteur.",
+          "material": [
+            {
+              "label": "systemes d'assurage (tube ou grigri)",
+              "fixed": 8
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "mousquetons a vis",
+              "fixed": 16
+            }
+          ],
+          "organization": "Par cordees de trois, au sol, sur un point fixe bas. Un eleve simule le grimpeur en se deplacant lentement le long d'un parcours au sol, l'assureur donne et reprend le mou en suivant ses deplacements, sous le regard du troisieme membre de la cordee qui commente.",
+          "studentGoal": "Comprendre et sentir le geste d'assurage : donner du mou, le reprendre, bloquer.",
+          "instructions": [
+            "Assureur : tu installes ton systeme d'assurage sur ton baudrier, mousqueton visse.",
+            "Tu suis les deplacements de ton camarade au sol en donnant et en reprenant le mou.",
+            "Sur mon signal, tu bloques la corde comme si je chutais.",
+            "Le troisieme membre de la cordee observe et dit si le mou est juste, trop lache ou trop tendu."
+          ],
+          "success": [
+            "Le systeme d'assurage est correctement installe, mousqueton visse.",
+            "Le mou suit les deplacements sans etre ni trop lache ni trop tendu.",
+            "Le blocage sur signal est immediat.",
+            "Chaque eleve a tenu le role d'assureur au moins une fois."
+          ],
+          "execution": [
+            "Garder une main constamment sur le brin de freinage.",
+            "Reprendre le mou par petits gestes reguliers, pas par a-coups.",
+            "Bloquer en ramenant le brin de freinage vers le bas, sans lacher la corde."
+          ],
+          "watch": [
+            "La main de freinage quitte-t-elle jamais la corde ?",
+            "Le mou est-il adapte, ni trop lache ni trop tendu ?",
+            "Le blocage sur signal est-il immediat et sur ?"
+          ],
+          "errors": [
+            "Lacher la corde de la main de freinage, meme brievement.",
+            "Laisser trop de mou, qui ne suit pas les deplacements.",
+            "Bloquer trop tard ou de facon hesitante."
+          ],
+          "feedback": [
+            "Ta main de freinage ne quitte jamais la corde, meme pour se gratter le nez.",
+            "Trop de mou : suis reellement les deplacements de ton camarade.",
+            "Bloque tout de suite, pas une seconde apres."
+          ],
+          "plus": [
+            "Simulation avec deplacements plus rapides et changements de direction imprevus."
+          ],
+          "minus": [
+            "Simulation avec le professeur qui guide chaque geste en direct."
+          ],
+          "diff": {
+            "facilitee": "Simulation avec le professeur qui guide chaque geste en direct, deplacements tres lents.",
+            "normale": "Simulation autonome par cordee de trois, mou suivi et blocage sur signal.",
+            "complexifiee": "Simulation avec deplacements rapides et changements de direction imprevus."
+          },
+          "safety": [
+            "Phase realisee exclusivement au sol, sur point fixe bas, sans aucune hauteur de chute reelle.",
+            "Le professeur controle chaque installation de systeme d'assurage avant le debut de la simulation.",
+            "La main de freinage doit rester en permanence sur la corde : toute simulation ou elle est lachee est immediatement interrompue et reprise.",
+            "Aucun passage en hauteur n'est autorise tant que ce geste n'est pas maitrise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Premiere voie diagnostique en moulinette",
+          "objective": "Situer le niveau technique reel de chaque eleve sur une voie facile, en moulinette, avec assurage double par le professeur.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "casques",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois, sur des voies faciles preequipees en moulinette. Chaque eleve grimpe une fois, assure par un camarade sous supervision directe et rapprochee du professeur, qui observe la motricite, le placement et la gestion de l'effort.",
+          "studentGoal": "Grimper une voie facile en moulinette, pour que je sache ou j'en suis.",
+          "instructions": [
+            "Je grimpe une voie facile deja equipee, en moulinette.",
+            "Mon assureur est verifie par le professeur avant mon depart.",
+            "J'essaie de grimper avec des mouvements amples, sans me crisper.",
+            "A la fin, je note sur mon carnet mon impression : facile, moyen, difficile."
+          ],
+          "success": [
+            "La voie est tentee jusqu'au relais ou jusqu'a l'abandon volontaire.",
+            "Le professeur a pu observer le niveau technique reel de chaque eleve.",
+            "Une impression est notee au carnet."
+          ],
+          "execution": [
+            "Chercher des appuis larges, pas seulement les prises les plus proches.",
+            "Respirer regulierement, ne pas bloquer sa respiration.",
+            "Accepter de redescendre si la voie est trop difficile, sans se forcer."
+          ],
+          "watch": [
+            "Quel est le niveau technique reel de chaque eleve ?",
+            "Qui bloque sa respiration ou se crispe excessivement ?",
+            "Qui refuse de s'engager, meme sur une voie facile ?"
+          ],
+          "errors": [
+            "Se crisper sur les bras et negliger les appuis de pieds.",
+            "Bloquer sa respiration en cherchant une prise.",
+            "Refuser de tenter la voie par crainte de l'inconnu."
+          ],
+          "feedback": [
+            "Pousse sur tes jambes, tes bras ne font que t'equilibrer.",
+            "Respire, meme en cherchant une prise difficile.",
+            "C'est une voie facile, juste pour voir ou tu en es : essaie."
+          ],
+          "plus": [
+            "Deuxieme voie facile tentee, de cotation legerement superieure."
+          ],
+          "minus": [
+            "Voie tres facile, avec conseils continus du professeur pendant la grimpe."
+          ],
+          "diff": {
+            "facilitee": "Voie tres facile, avec conseils continus du professeur pendant la grimpe.",
+            "normale": "Une voie facile grimpee en moulinette, observation du niveau technique.",
+            "complexifiee": "Deux voies faciles tentees, de cotations legerement differentes."
+          },
+          "safety": [
+            "Assurage systematiquement double par le professeur pour cette premiere grimpe reelle, en plus de l'assureur eleve.",
+            "Tapis de reception verifies sans interstice avant chaque depart.",
+            "Le professeur se place a portee de la corde et peut reprendre l'assurage a tout moment.",
+            "Aucun eleve ne grimpe si sa chaine d'assurage n'a pas ete revalidee juste avant.",
+            "Consulter les PAI : vertige, pathologies articulaires ou cardiaques.",
+            "Arret immediat en cas de malaise, de vertige important ou de panique.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quels sont les cinq points de la chaine d'assurage a verifier avant chaque depart ?",
+          "Qu'avez-vous ressenti sur votre premiere voie : ou en etes-vous techniquement ?"
+        ],
+        "key": "Rien ne commence sans une chaine d'assurage verifiee a voix haute : baudrier, noeud, systeme d'assurage, mousqueton visse, cheveux attaches. Ce reflexe se construit des la premiere seance et ne se relache jamais."
+      },
+      "socialRoles": [
+        "Compagnon de cordee : verifie a voix haute la chaine d'assurage de son camarade avant chaque depart.",
+        "Assureur en simulation : donne et reprend le mou, bloque sur signal.",
+        "Observateur : commente le geste d'assurage de son camarade en simulation."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Constitution des cordees et choix de la repartition AFL2/AFL3",
+      "mainObjective": "Constituer des cordees stables pour toute la sequence, decouvrir plusieurs voies en moulinette, et choisir la repartition des points entre l'AFL2 et l'AFL3.",
+      "secondaryObjectives": [
+        "Former des cordees stables qui pourront s'entrainer ensemble et alterner grimpeur et assureur en tete.",
+        "Decouvrir plusieurs voies de cotations differentes en moulinette.",
+        "S'auto-evaluer sur ses points forts et ses points faibles dans les trois roles cooperatifs.",
+        "Choisir sa repartition entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6) et la noter au carnet."
+      ],
+      "linkToPrevious": "La seance 1 a valide l'encordement, la verification et une premiere grimpe diagnostique. Il faut maintenant fixer des cordees stables pour toute la sequence et choisir la strategie d'evaluation.",
+      "prerequisiteForNext": "Chaque eleve appartient a une cordee stable, a grimpe sur plusieurs voies de cotations differentes, et a choisi et note sa repartition entre l'AFL2 et l'AFL3.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "fiches de voies et cotations",
+            "fixed": 8
+          },
+          {
+            "label": "affiche des trois roles cooperatifs et des repartitions AFL2/AFL3",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Ouvrir plusieurs voies de cotations differentes, du facile au moyen, toutes preequipees en moulinette.",
+          "Afficher les cotations de chaque voie a son pied.",
+          "Preparer l'affiche des trois roles cooperatifs (assureur, compagnon de cordee, coach) et des trois repartitions possibles.",
+          "Verifier les PAI et les dispenses.",
+          "Verifier les tapis de reception au pied de chaque voie."
+        ],
+        "sketch": "Six a huit voies ouvertes, cotations affichees a leur pied, du facile au moyen.\nTapis joints sans interstice au pied de chaque voie.\nZone d'attente en dehors des couloirs de chute.\nAffiche des trois roles cooperatifs et des repartitions AFL2/AFL3 a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet, avec une phase de mobilisation en cordee pour commencer a instaurer la cohesion du groupe qui va s'entrainer ensemble toute la sequence.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mobilisation articulaire generale",
+            "details": [
+              "Rotations des poignets, des epaules, des chevilles.",
+              "Extensions et flexions des doigts.",
+              "Mobilisation du rachis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions breves a une barre ou a une prise basse.",
+              "Gainage dynamique cinq fois quinze secondes.",
+              "Rotations des epaules en charge legere."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en confiance en cordee",
+            "details": [
+              "Verification mutuelle de la chaine d'assurage au sein de la future cordee stable.",
+              "Traversees basses a quatre appuis pour se remettre en mouvement.",
+              "Presentation rapide de chacun a ses deux futurs partenaires de cordee."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Constitution des cordees et decouverte de plusieurs voies",
+          "objective": "Former des cordees stables pour toute la sequence et faire decouvrir plusieurs voies de cotations differentes en moulinette.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de voies et cotations",
+              "fixed": 8
+            }
+          ],
+          "organization": "Le professeur constitue des cordees de trois, en tenant compte du niveau observe en seance 1, pour equilibrer chaque cordee. Chaque cordee tourne sur trois voies de cotations differentes, chacun grimpant une fois par voie pendant que les deux autres assurent et observent.",
+          "studentGoal": "Grimper sur plusieurs voies de cotations differentes avec ma cordee stable.",
+          "instructions": [
+            "Je reste avec ma cordee toute la seance et toute la sequence a venir.",
+            "Je grimpe chaque voie proposee, en moulinette.",
+            "Quand je n'suis pas grimpeur, je verifie la chaine d'assurage puis j'assure ou j'observe.",
+            "Je note sur mon carnet la cotation de chaque voie et mon ressenti."
+          ],
+          "success": [
+            "Chaque eleve a grimpe au moins trois voies de cotations differentes.",
+            "La cordee reste stable sur toute la seance.",
+            "Chaque voie et chaque ressenti sont notes au carnet."
+          ],
+          "execution": [
+            "Choisir une voie legerement plus difficile a chaque tour, sans brusquer.",
+            "Verifier la chaine d'assurage avant chaque depart, meme au sein d'une cordee deja connue.",
+            "Observer les autres membres de la cordee pendant qu'ils grimpent."
+          ],
+          "watch": [
+            "Les cordees sont-elles equilibrees en niveau ?",
+            "La verification mutuelle est-elle faite a chaque depart, meme entre camarades deja connus ?",
+            "Chacun grimpe-t-il reellement sur des cotations differentes ?"
+          ],
+          "errors": [
+            "Rester toujours sur la meme cotation, sans progresser dans la difficulte.",
+            "Relacher la verification mutuelle parce que la cordee se connait deja.",
+            "Ne rien noter au carnet."
+          ],
+          "feedback": [
+            "Tu refais la meme voie : essaie la cotation au-dessus.",
+            "Ce n'est pas parce que vous vous connaissez que la verification saute.",
+            "Note la cotation et ton ressenti, meme deux mots suffisent."
+          ],
+          "plus": [
+            "Quatrieme voie tentee, de cotation superieure a celles deja realisees."
+          ],
+          "minus": [
+            "Deux voies faciles seulement, avec accompagnement du professeur."
+          ],
+          "diff": {
+            "facilitee": "Deux voies faciles seulement, avec accompagnement et conseils du professeur pendant la grimpe.",
+            "normale": "Trois voies de cotations differentes, en cordee stable.",
+            "complexifiee": "Quatrieme voie tentee, de cotation superieure a celles deja realisees."
+          },
+          "safety": [
+            "Verification mutuelle de la chaine d'assurage obligatoire avant chaque depart, y compris au sein d'une cordee deja formee.",
+            "Tapis de reception verifies sans interstice au pied de chaque voie.",
+            "Le professeur circule entre les voies et controle regulierement les assurages.",
+            "Aucun eleve ne grimpe sans assureur verifie et attentif.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Choisir sa repartition entre l'AFL2 et l'AFL3",
+          "objective": "Faire s'auto-evaluer chaque eleve sur les trois roles cooperatifs et choisir sa repartition de points entre l'AFL2 et l'AFL3.",
+          "material": [
+            {
+              "label": "affiche des trois roles cooperatifs et des repartitions AFL2/AFL3",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des voies. Le professeur presente les trois roles cooperatifs qui seront tous les trois vecus par chacun au fil des rotations de cordee (assureur, compagnon de cordee, coach), puis les trois repartitions possibles entre l'AFL2 et l'AFL3 (4-4, 6-2 ou 2-6). Chacun s'auto-evalue sur ses points forts et faibles dans les trois roles, puis choisit et note sa repartition.",
+          "studentGoal": "Choisir et noter ma repartition entre l'AFL2 et l'AFL3, en fonction de mes points forts.",
+          "instructions": [
+            "J'ecoute la presentation des trois roles cooperatifs : assureur, compagnon de cordee, coach.",
+            "Je m'auto-evalue : dans lequel de ces trois roles suis-je le plus a l'aise aujourd'hui ?",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 : 4 points et 4 points, 6 et 2, ou 2 et 6.",
+            "J'ecris ma repartition sur mon carnet, avec une phrase qui la justifie."
+          ],
+          "success": [
+            "Les trois roles cooperatifs sont compris et distingues.",
+            "L'auto-evaluation identifie un point fort et un point faible reels.",
+            "La repartition choisie est notee au carnet avec une justification."
+          ],
+          "execution": [
+            "Distinguer clairement les trois roles : donner du mou et anticiper n'est pas la meme chose que verifier un noeud, qui n'est pas la meme chose que conseiller a l'oral.",
+            "S'appuyer sur ce qui a ete observe en seance 1 et 2, pas sur une impression generale.",
+            "Ecrire une justification precise, pas seulement un chiffre."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils bien qu'ils vivront les trois roles, contrairement a d'autres APSA ou l'on choisit un role exclusif ?",
+            "Les auto-evaluations sont-elles honnetes et argumentees ?",
+            "Les choix de repartition sont-ils coherents avec l'auto-evaluation ?"
+          ],
+          "errors": [
+            "Croire qu'il faut choisir un seul role parmi les trois, comme dans d'autres activites.",
+            "Choisir une repartition par copie sur son voisin.",
+            "Ne rien justifier par ecrit."
+          ],
+          "feedback": [
+            "Tu vivras les trois roles, ce n'est pas un choix exclusif : la repartition, c'est le poids des points, pas le choix d'un role.",
+            "Ce n'est pas la repartition de ton voisin qu'il faut noter, c'est la tienne.",
+            "Justifie : pourquoi cette repartition et pas une autre ?"
+          ],
+          "plus": [
+            "Auto-evaluation ecrite et argumentee pour chacun des trois roles separement."
+          ],
+          "minus": [
+            "Choix guide individuellement par le professeur a partir des observations de la seance 1."
+          ],
+          "diff": {
+            "facilitee": "Choix guide individuellement par le professeur a partir des observations de la seance 1.",
+            "normale": "Auto-evaluation sur les trois roles et choix autonome de la repartition, justifie par ecrit.",
+            "complexifiee": "Auto-evaluation ecrite et argumentee separement pour chacun des trois roles."
+          },
+          "safety": [
+            "Phase realisee assise, a l'ecart de toute zone de chute.",
+            "Aucun risque physique specifique ; veiller a ce que chaque eleve reste attentif et ne s'installe pas sous une voie en cours d'utilisation."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Premiere mise en pratique du role de compagnon de cordee",
+          "objective": "Mettre en pratique immediatement le role de compagnon de cordee : verification complete et automatique de la chaine d'assurage d'un camarade.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "systemes d'assurage (tube ou grigri)",
+              "fixed": 8
+            }
+          ],
+          "organization": "Au sein de la cordee stable, chaque eleve verifie successivement la chaine d'assurage des deux autres membres, sans l'aide de l'affiche, en enoncant chaque point a voix haute.",
+          "studentGoal": "Verifier seul, sans affiche, toute la chaine d'assurage de mes deux camarades de cordee.",
+          "instructions": [
+            "Je verifie la chaine d'assurage complete de mon premier camarade, sans regarder l'affiche.",
+            "J'enonce chaque point a voix haute : baudrier, noeud, systeme d'assurage, mousqueton, cheveux attaches.",
+            "Je recommence avec mon deuxieme camarade.",
+            "Mes camarades me disent si j'ai oublie un point."
+          ],
+          "success": [
+            "Les cinq points de la chaine sont verifies pour les deux camarades, sans affiche.",
+            "Chaque point est enonce a voix haute.",
+            "Aucun point n'est oublie sur les deux verifications."
+          ],
+          "execution": [
+            "Suivre toujours le meme ordre, pour ne rien oublier.",
+            "Toucher physiquement le noeud et le mousqueton pendant la verification.",
+            "Demander confirmation orale au camarade verifie."
+          ],
+          "watch": [
+            "L'eleve verifie-t-il de memoire, sans regarder l'affiche ?",
+            "Un point de la chaine est-il systematiquement oublie par certains ?"
+          ],
+          "errors": [
+            "Oublier de verifier que les cheveux longs sont attaches.",
+            "Verifier trop vite, sans toucher le noeud.",
+            "Ne pas enoncer a voix haute."
+          ],
+          "feedback": [
+            "Les cheveux attaches, tu l'as oublie : c'est un point de la chaine comme les autres.",
+            "Touche le noeud, ne le regarde pas seulement.",
+            "A voix haute, pour que tout le monde entende que c'est fait."
+          ],
+          "plus": [
+            "Verification chronometree, en visant moins de trente secondes sans erreur."
+          ],
+          "minus": [
+            "Verification avec l'affiche du protocole encore disponible."
+          ],
+          "diff": {
+            "facilitee": "Verification avec l'affiche du protocole encore disponible en soutien.",
+            "normale": "Verification de memoire, a voix haute, des deux camarades de cordee.",
+            "complexifiee": "Verification chronometree, visant moins de trente secondes sans erreur."
+          },
+          "safety": [
+            "Toute verification incomplete est reprise entierement avant validation.",
+            "Le professeur controle par sondage la qualite des verifications realisees par les eleves.",
+            "Phase realisee au sol, avant toute utilisation en hauteur pour la suite de la seance."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont les trois roles cooperatifs que vous vivrez tous au fil de la sequence ?",
+          "Quelle repartition avez-vous choisie entre l'AFL2 et l'AFL3, et pourquoi ?"
+        ],
+        "key": "Contrairement a d'autres activites ou l'on choisit un role exclusif, en escalade chacun vit les trois roles cooperatifs au fil des rotations de cordee. La repartition choisie aujourd'hui ne change pas les roles vecus, elle change seulement le poids des points."
+      },
+      "socialRoles": [
+        "Compagnon de cordee : verifie a voix haute et de memoire la chaine d'assurage de ses deux camarades.",
+        "Assureur : donne et reprend le mou en moulinette, anticipe les passages difficiles.",
+        "Coach : observe et commente la grimpe des membres de sa cordee."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Lire une voie, se placer, mousquetonner : les fondamentaux de la tete",
+      "mainObjective": "Construire la lecture de voie depuis le sol, le placement du grimpeur et la technique de mousquetonnage, en preparation des premieres ascensions en tete.",
+      "secondaryObjectives": [
+        "Lire une voie depuis le sol pour anticiper son itineraire.",
+        "Rechercher systematiquement la position de moindre effort.",
+        "Decouvrir la technique et le moment optimal du mousquetonnage.",
+        "Pratiquer le role de coach au sein de sa cordee."
+      ],
+      "linkToPrevious": "Les cordees sont stables et les gestes de securite sont acquis. Il faut maintenant construire les fondamentaux techniques qui rendront la tete possible : lire, se placer, mousquetonner.",
+      "prerequisiteForNext": "Chaque eleve lit une voie facile depuis le sol avant de grimper, recherche la position de moindre effort, et mousquetonne correctement sur un mur bas ou en moulinette avancee.",
+      "setup": {
+        "installationMinutes": 16,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8,
+            "note": "pour l'initiation au mousquetonnage sur mur bas"
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "fiches de voies et cotations",
+            "fixed": 8
+          },
+          {
+            "label": "affiche de la technique de mousquetonnage",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Ouvrir des voies de cotations variees, dont au moins deux preequipees pour un mousquetonnage accessible depuis le sol ou a faible hauteur.",
+          "Afficher la technique de mousquetonnage : degaine orientee, mouvement du bas vers le haut, corde placee correctement.",
+          "Verifier les tapis de reception au pied de chaque voie.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un temps d'observation au sol devant chaque voie avant la grimpe."
+        ],
+        "sketch": "Six a huit voies ouvertes, cotations variees affichees.\nDeux voies au moins avec degaines accessibles a faible hauteur pour l'initiation au mousquetonnage.\nZone d'observation au sol devant chaque voie, en dehors du couloir de chute.\nAffiche de la technique de mousquetonnage a l'entree."
+      },
+      "warmup": {
+        "rationale": "Echauffement articulaire complet, avec une phase d'observation visuelle des voies pour commencer a entrainer la lecture depuis le sol des l'echauffement.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mobilisation articulaire generale",
+            "details": [
+              "Rotations des poignets, des epaules, des chevilles.",
+              "Extensions et flexions des doigts.",
+              "Mobilisation du rachis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions breves a une barre ou a une prise basse.",
+              "Gainage dynamique cinq fois quinze secondes.",
+              "Traversees basses a quatre appuis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Lecture visuelle des voies depuis le sol",
+            "details": [
+              "Chacun observe une voie une minute, sans grimper, et decrit a voix haute son itineraire imagine.",
+              "Reperage des prises de mains et de pieds, du bas vers le haut.",
+              "Identification d'un passage qui semble difficile."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Lire la voie et rechercher la position de moindre effort",
+          "objective": "Construire la lecture de voie depuis le sol et la recherche systematique de la position de moindre effort.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "fiches de voies et cotations",
+              "fixed": 8
+            }
+          ],
+          "organization": "Par cordees de trois. Avant de grimper, chaque eleve observe la voie une minute depuis le sol et annonce a ses camarades son itineraire prevu. Il grimpe ensuite en moulinette en cherchant systematiquement la position de moindre effort a chaque prise intermediaire.",
+          "studentGoal": "Annoncer mon itineraire avant de grimper, puis chercher la position de moindre effort a chaque prise.",
+          "instructions": [
+            "J'observe la voie une minute depuis le sol, sans toucher le mur.",
+            "J'annonce a voix haute mon itineraire prevu a ma cordee.",
+            "Je grimpe en cherchant, a chaque prise, la position ou je me fatigue le moins.",
+            "A l'arrivee, je dis si j'ai suivi mon itineraire prevu ou si j'ai du m'adapter."
+          ],
+          "success": [
+            "L'itineraire est annonce avant le depart.",
+            "La voie est grimpee en recherchant activement des positions de repos.",
+            "L'ecart entre l'itineraire annonce et l'itineraire reellement suivi est identifie."
+          ],
+          "execution": [
+            "Reperer les prises les plus grandes et les plus reposantes avant de partir.",
+            "Chercher a etendre les bras plutot qu'a les garder flechis en permanence.",
+            "S'arreter brievement sur une bonne prise pour recuperer avant un passage difficile."
+          ],
+          "watch": [
+            "Les eleves observent-ils reellement la voie, ou grimpent-ils sans lecture prealable ?",
+            "Cherchent-ils des positions de repos, ou restent-ils constamment en tension ?",
+            "L'itineraire annonce correspond-il a ce qui est reellement grimpe ?"
+          ],
+          "errors": [
+            "Grimper sans avoir observe la voie au prealable.",
+            "Rester bras flechis en permanence, sans jamais chercher a se detendre.",
+            "Annoncer un itineraire puis en suivre un totalement different sans le remarquer."
+          ],
+          "feedback": [
+            "Regarde avant de grimper : tu perds du temps a chercher en cours de route.",
+            "Tends les bras la, tu es en train de t'epuiser pour rien.",
+            "Tu avais annonce autre chose : qu'est-ce qui t'a fait changer ?"
+          ],
+          "plus": [
+            "Lecture limitee a trente secondes, itineraire annonce plus precisement (main droite, pied gauche)."
+          ],
+          "minus": [
+            "Lecture accompagnee par le professeur, qui pointe les prises interessantes."
+          ],
+          "diff": {
+            "facilitee": "Lecture accompagnee par le professeur, qui pointe les prises interessantes et les positions de repos.",
+            "normale": "Lecture autonome d'une minute, itineraire annonce, recherche active de la position de moindre effort.",
+            "complexifiee": "Lecture limitee a trente secondes, itineraire annonce prise par prise."
+          },
+          "safety": [
+            "La lecture se fait entierement au sol, en dehors du couloir de chute des voies en cours d'utilisation.",
+            "Verification mutuelle de la chaine d'assurage avant chaque depart.",
+            "Tapis de reception verifies sans interstice.",
+            "Le professeur circule entre les voies et controle les assurages.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Technique et moment du mousquetonnage",
+          "objective": "Construire le geste technique du mousquetonnage et le moment optimal pour le realiser, en position de moindre effort.",
+          "material": [
+            {
+              "label": "jeux de degaines",
+              "fixed": 8
+            },
+            {
+              "label": "affiche de la technique de mousquetonnage",
+              "fixed": 2
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            }
+          ],
+          "organization": "Sur un mur bas ou des degaines sont accessibles depuis le sol ou en position stable, chaque eleve repete le geste de mousquetonnage : sortir la corde du systeme d'assurage, la passer dans la degaine du bas vers le haut, verifier le sens du mousqueton.",
+          "studentGoal": "Realiser un mousquetonnage correct, au bon moment, en position de moindre effort.",
+          "instructions": [
+            "Je m'installe en position de moindre effort avant de mousquetonner, pas en extension complete.",
+            "Je sors la corde, je la passe dans la degaine du bas vers le haut.",
+            "Je verifie que le mousqueton n'est pas a l'envers et que la corde n'est pas vrillee.",
+            "Je repete le geste sur plusieurs degaines a differentes hauteurs."
+          ],
+          "success": [
+            "Le mousquetonnage est realise en position stable, jamais en extension complete.",
+            "Le geste du bas vers le haut est respecte.",
+            "Le sens du mousqueton est verifie a chaque fois."
+          ],
+          "execution": [
+            "Se rapprocher suffisamment de la degaine pour ne pas etre en extension.",
+            "Sortir un metre de corde environ avant de mousquetonner, pas plus.",
+            "Verifier visuellement le sens du mousqueton avant de lacher la corde."
+          ],
+          "watch": [
+            "Le mousquetonnage se fait-il en position de moindre effort ou en extension complete ?",
+            "Le geste est-il fluide, du bas vers le haut ?",
+            "Le sens du mousqueton est-il verifie ?"
+          ],
+          "errors": [
+            "Mousquetonner en extension complete, epuisant inutilement les bras.",
+            "Sortir trop de corde d'un coup, qui risque de se coincer.",
+            "Mousquetonner a l'envers sans le remarquer."
+          ],
+          "feedback": [
+            "Rapproche-toi de la degaine avant de mousquetonner, tu es en extension.",
+            "Pas tant de corde d'un coup, juste ce qu'il faut.",
+            "Regarde le sens du mousqueton avant de lacher la corde."
+          ],
+          "plus": [
+            "Mousquetonnage repete sur une degaine en devers, plus exigeante en placement."
+          ],
+          "minus": [
+            "Mousquetonnage repete au sol sur une degaine fixe, sans grimper."
+          ],
+          "diff": {
+            "facilitee": "Mousquetonnage repete au sol, sur une degaine fixe accessible sans grimper.",
+            "normale": "Mousquetonnage repete sur un mur bas, en position de moindre effort recherchee.",
+            "complexifiee": "Mousquetonnage repete sur une degaine en devers, plus exigeante en placement."
+          },
+          "safety": [
+            "Exercice realise a faible hauteur, avec tapis de reception sous chaque point de travail.",
+            "Le professeur controle individuellement chaque premier mousquetonnage avant de le valider.",
+            "Aucun eleve ne mousquetonne en extension forcee ou en desequilibre : la position est corrigee avant le geste.",
+            "Consulter les PAI."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Le role de coach au sein de la cordee",
+          "objective": "Pratiquer le role de coach : donner des conseils oraux pertinents a un camarade pendant sa grimpe.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            }
+          ],
+          "organization": "Au sein de la cordee, pendant qu'un membre grimpe en moulinette, le troisieme membre, non assureur, se place pour observer et conseille oralement le grimpeur sur l'emplacement des prises et la maniere de les utiliser.",
+          "studentGoal": "Donner a mon camarade des conseils oraux utiles pendant sa grimpe.",
+          "instructions": [
+            "Je me place pour bien voir la voie et mon camarade.",
+            "Je lui indique l'emplacement d'une prise qu'il ne voit pas, avec un mot precis (a droite, plus haut, pour ton pied).",
+            "Je reinvestis ce que j'ai observe chez d'autres grimpeurs sur cette voie.",
+            "J'utilise le vocabulaire specifique de l'escalade : prise, degaine, mousquetonner, adherence, opposition."
+          ],
+          "success": [
+            "Au moins trois conseils oraux precis sont donnes pendant la grimpe.",
+            "Le vocabulaire specifique de l'escalade est utilise.",
+            "Le grimpeur declare que les conseils lui ont ete utiles."
+          ],
+          "execution": [
+            "Donner des indications courtes et precises, pas de longues phrases.",
+            "Nommer clairement la main ou le pied concerne.",
+            "Attendre le bon moment, sans distraire le grimpeur dans un passage delicat."
+          ],
+          "watch": [
+            "Les conseils sont-ils precis et utiles, ou seulement des encouragements ?",
+            "Le vocabulaire specifique est-il utilise correctement ?",
+            "Le coach observe-t-il vraiment, ou est-il distrait ?"
+          ],
+          "errors": [
+            "Se contenter d'encourager sans donner d'information utile.",
+            "Donner une consigne au mauvais moment, qui deconcentre le grimpeur.",
+            "Utiliser un vocabulaire vague ou incorrect."
+          ],
+          "feedback": [
+            "Allez n'est pas un conseil : dis-lui ou est la prise.",
+            "Attends qu'il soit stable pour parler, pas en plein mouvement.",
+            "Le mot juste : c'est une prise, pas un truc."
+          ],
+          "plus": [
+            "Le coach propose en plus un exercice-conseil pour la prochaine tentative sur cette voie."
+          ],
+          "minus": [
+            "Conseils donnes avec une liste de mots-cles fournie par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Conseils donnes avec une liste de mots-cles fournie par le professeur en soutien.",
+            "normale": "Conseils oraux precis et reguliers pendant toute la grimpe du camarade.",
+            "complexifiee": "Conseils oraux precis, plus une proposition d'exercice-conseil pour la tentative suivante."
+          },
+          "safety": [
+            "Le coach ne remplace jamais la vigilance de l'assureur : il observe en plus, sans jamais toucher la corde de freinage.",
+            "Le coach se place hors du couloir de chute du grimpeur.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi vaut-il mieux mousquetonner en position de moindre effort plutot qu'en extension ?",
+          "Quel conseil oral avez-vous donne aujourd'hui, en tant que coach, qui a reellement aide un camarade ?"
+        ],
+        "key": "Lire la voie depuis le sol, chercher la position de moindre effort et mousquetonner au bon moment sont les trois bases techniques qui rendront la tete possible. Et un bon coach donne une information precise, pas un encouragement."
+      },
+      "socialRoles": [
+        "Coach : observe et conseille oralement un camarade pendant sa grimpe, avec un vocabulaire precis.",
+        "Assureur : donne et reprend le mou en moulinette.",
+        "Compagnon de cordee : verifie la chaine d'assurage avant chaque depart."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Grimper en tete, gerer son effort, jouer son role dans la cordee",
+      "mainObjective": "Realiser les premieres ascensions en tete sur une voie cotee, avec un mousquetonnage maitrise, en alternant les trois roles cooperatifs.",
+      "secondaryObjectives": [
+        "Grimper en tete sur une voie facile a moyenne, avec les deux premieres degaines deja mousquetonnees.",
+        "Gerer son rythme et sa respiration sur l'ensemble d'une voie.",
+        "Assurer un camarade en tete en donnant et reprenant le mou au bon moment.",
+        "Decomposer et travailler specifiquement un passage difficile."
+      ],
+      "linkToPrevious": "La lecture de voie, la position de moindre effort et le mousquetonnage sont construits. Il est temps de les mobiliser en situation reelle d'ascension en tete.",
+      "prerequisiteForNext": "Chaque eleve a grimpe au moins une fois en tete sur une voie cotee, et a assure un camarade en tete en gerant le mou par rapport au mousquetonnage.",
+      "setup": {
+        "installationMinutes": 18,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "fiches de voies et cotations",
+            "fixed": 8
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Preequiper au moins quatre voies faciles a moyennes pour la tete, avec les deux premieres degaines deja mousquetonnees sur chacune.",
+          "Verifier chaque point d'ancrage et chaque degaine avant la seance.",
+          "Verifier les tapis de reception, en particulier sous les premieres degaines ou le risque de retour au sol est le plus important.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir une zone d'observation pour le professeur, en vue de toutes les voies en tete."
+        ],
+        "sketch": "Quatre voies preequipees en tete, deux premieres degaines deja mousquetonnees.\nTapis renforces sous les premieres degaines de chaque voie.\nZone de supervision du professeur en vue de toutes les voies utilisees en tete.\nZone d'attente hors des couloirs de chute."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet et progressif, l'ascension en tete etant plus exigeante physiquement et mentalement que la moulinette deja pratiquee.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mobilisation articulaire generale",
+            "details": [
+              "Rotations des poignets, des epaules, des chevilles.",
+              "Extensions et flexions des doigts.",
+              "Mobilisation du rachis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions progressives, de plus en plus longues.",
+              "Gainage dynamique cinq fois quinze secondes.",
+              "Pompes de doigts legeres."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Grimpe facile en moulinette avant la tete",
+            "details": [
+              "Une voie tres facile grimpee en moulinette pour se remettre en mouvement.",
+              "Recherche de la position de moindre effort et respiration ample.",
+              "Rappel oral du protocole de mousquetonnage avant le premier passage en tete."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Premieres ascensions en tete",
+          "objective": "Realiser une ascension en tete sur une voie cotee, avec un mousquetonnage maitrise et une gestion reguliere de l'effort.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "jeux de degaines",
+              "fixed": 8
+            }
+          ],
+          "organization": "Par cordees de trois, sur des voies faciles a moyennes preequipees en tete (deux premieres degaines deja mousquetonnees). Chacun grimpe une fois en tete, assure par un camarade sous supervision rapprochee du professeur pour ce premier passage.",
+          "studentGoal": "Grimper une voie en tete, en mousquetonnant correctement chaque degaine.",
+          "instructions": [
+            "Je lis la voie avant de partir et j'annonce mon itineraire.",
+            "Je grimpe en tete : les deux premieres degaines sont deja mousquetonnees, je mousquetonne les suivantes en position de moindre effort.",
+            "Je gere ma respiration et mon rythme sur l'ensemble de la voie.",
+            "A la fin, je note ma cotation et mon ressenti sur mon carnet."
+          ],
+          "success": [
+            "La voie est grimpee en tete, du sol au relais ou jusqu'a un abandon volontaire et controle.",
+            "Chaque mousquetonnage est realise en position stable, sans erreur de sens.",
+            "Le rythme et la respiration restent reguliers sur l'ensemble de la voie."
+          ],
+          "execution": [
+            "Se rapprocher de chaque degaine avant de mousquetonner, jamais en extension.",
+            "Respirer amplement a chaque prise de repos.",
+            "Continuer a lire la suite de la voie pendant la grimpe, pas seulement au depart."
+          ],
+          "watch": [
+            "Le mousquetonnage est-il fait au bon moment, en position stable ?",
+            "L'eleve bloque-t-il sa respiration dans les passages difficiles ?",
+            "L'assureur gere-t-il correctement le mou par rapport a la progression du grimpeur ?"
+          ],
+          "errors": [
+            "Mousquetonner en extension complete, epuisant les bras.",
+            "Bloquer sa respiration en montant.",
+            "Assureur qui laisse trop de mou juste apres un mousquetonnage."
+          ],
+          "feedback": [
+            "Rapproche-toi avant de mousquetonner, tu forces inutilement.",
+            "Respire, meme dans le passage difficile.",
+            "Reprends ce mou, ton grimpeur vient de mousquetonner, ce n'est pas le moment de laisser du lache."
+          ],
+          "plus": [
+            "Ascension en tete sur une voie de cotation superieure a celle deja reussie."
+          ],
+          "minus": [
+            "Ascension en tete sur une voie tres facile, avec conseils continus depuis le sol."
+          ],
+          "diff": {
+            "facilitee": "Ascension en tete sur une voie tres facile, avec conseils continus du professeur ou d'un camarade coach depuis le sol.",
+            "normale": "Ascension en tete sur une voie cotee au niveau de l'eleve, deux premieres degaines deja mousquetonnees.",
+            "complexifiee": "Ascension en tete sur une voie de cotation superieure a celle deja reussie."
+          },
+          "safety": [
+            "Le professeur supervise directement et se tient a portee immediate pour chaque premiere ascension en tete de chaque eleve.",
+            "Verification complete de la chaine d'assurage avant chaque depart, y compris le sens et la fermeture des mousquetons de degaines.",
+            "L'assureur se place systematiquement decale du pied de voie, jamais directement dessous, pour le risque de chute d'objet et pour sa propre trajectoire de reprise du mou.",
+            "Vigilance particuliere sur le risque de retour au sol avant la 3e degaine : l'assureur reste tres attentif et rapproche du mur sur ce passage bas.",
+            "Tapis renforces et verifies sous les premieres degaines de chaque voie.",
+            "Le professeur peut interrompre une ascension en tete et faire terminer en moulinette si la maitrise des gestes de securite n'est pas suffisante.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees en tete."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Decomposer et travailler un passage difficile",
+          "objective": "Construire l'AFL2 : decomposer les mouvements d'un passage difficile identifie et le travailler specifiquement.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois, en moulinette sur une voie deja tentee en tete. Chacun identifie le passage le plus difficile de sa voie, puis le travaille en isolant les mouvements : plusieurs essais courts sur ce seul passage, avant de retenter la voie en entier.",
+          "studentGoal": "Isoler mon passage le plus difficile et le travailler specifiquement avant de retenter toute la voie.",
+          "instructions": [
+            "Je repere le passage ou j'ai le plus bloque en tete.",
+            "Je le retravaille en moulinette, en essayant plusieurs solutions de placement sur ce seul passage.",
+            "Une fois une solution trouvee, je l'ecris sur mon carnet.",
+            "Je retente ensuite la voie en entier avec cette solution."
+          ],
+          "success": [
+            "Un passage difficile precis est identifie.",
+            "Plusieurs essais isoles sont realises sur ce seul passage.",
+            "Une solution de placement est trouvee et notee au carnet."
+          ],
+          "execution": [
+            "Isoler reellement le passage, sans repartir du sol a chaque essai.",
+            "Essayer differentes positions de pieds et de mains sur le meme passage.",
+            "Noter la solution avec des mots precis : quelle main, quel pied, quelle prise."
+          ],
+          "watch": [
+            "Les eleves isolent-ils vraiment le passage, ou repartent-ils du sol a chaque fois ?",
+            "Cherchent-ils plusieurs solutions, ou abandonnent-ils apres un seul essai ?",
+            "La solution trouvee est-elle notee de facon exploitable ?"
+          ],
+          "errors": [
+            "Repartir du bas a chaque essai, ce qui fatigue sans cibler le probleme.",
+            "Abandonner apres un seul essai infructueux.",
+            "Ne noter qu'une impression generale, sans details exploitables."
+          ],
+          "feedback": [
+            "Reste sur ce passage, ne repars pas du sol a chaque fois.",
+            "Essaie une autre position de pied avant d'abandonner.",
+            "Note precisement : quelle prise, quel pied, ca servira pour la prochaine fois."
+          ],
+          "plus": [
+            "Deux passages difficiles differents decomposes et travailles dans la seance."
+          ],
+          "minus": [
+            "Passage decompose avec une solution de placement proposee par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Passage decompose avec une solution de placement proposee par le professeur ou un camarade coach.",
+            "normale": "Un passage difficile isole, plusieurs essais, solution trouvee et notee.",
+            "complexifiee": "Deux passages difficiles differents decomposes et travailles dans la meme seance."
+          },
+          "safety": [
+            "Travail realise en moulinette pour ce type de repetition, plus adapte que la tete a des essais multiples rapproches.",
+            "Assureur attentif en permanence, y compris pendant des essais courts et repetes.",
+            "Consulter les PAI.",
+            "Point d'eau et retour au calme prevus en fin de sequence de travail specifique."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Assurer en tete : donner et reprendre le mou au bon moment",
+          "objective": "Construire le role d'assureur en tete : gerer le mou par rapport au mousquetonnage et se placer par rapport au couloir de chute.",
+          "material": [
+            {
+              "label": "systemes d'assurage (tube ou grigri)",
+              "fixed": 8
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            }
+          ],
+          "organization": "Au sein de la cordee, pendant une ascension en tete, l'assureur est observe par le troisieme membre qui commente sa gestion du mou et son placement, en particulier sous la 3e degaine.",
+          "studentGoal": "Assurer mon camarade en tete en donnant juste le mou necessaire au bon moment.",
+          "instructions": [
+            "Je reste proche du mur tant que mon grimpeur n'a pas depasse la 3e degaine, pour limiter tout risque de retour au sol.",
+            "Je donne du mou juste avant que mon grimpeur mousquetonne, pas avant, pas apres.",
+            "Je reprends immediatement le mou une fois la degaine mousquetonnee.",
+            "J'anticipe les passages difficiles en restant tres attentif, sans jamais lacher la corde de freinage."
+          ],
+          "success": [
+            "Le mou est donne juste avant chaque mousquetonnage, ni trop tot ni trop tard.",
+            "Le placement de l'assureur est correct par rapport au couloir de chute, notamment sous la 3e degaine.",
+            "La main de freinage reste en permanence sur la corde."
+          ],
+          "execution": [
+            "Observer les mains du grimpeur pour anticiper le moment du mousquetonnage.",
+            "Donner un mou juste suffisant pour le geste, pas plus.",
+            "Se replacer en continu, en restant proche du mur en bas de voie."
+          ],
+          "watch": [
+            "L'assureur anticipe-t-il le mousquetonnage ou reagit-il en retard ?",
+            "Son placement est-il correct sous la 3e degaine ?",
+            "La main de freinage quitte-t-elle jamais la corde ?"
+          ],
+          "errors": [
+            "Donner le mou trop tot, ce qui cree du mou inutile en cas de chute.",
+            "Rester trop loin du mur en bas de voie, augmentant le risque en cas de chute avant la 3e degaine.",
+            "Lacher un instant la main de freinage pour aider au geste de mousquetonnage."
+          ],
+          "feedback": [
+            "Trop tot : attends qu'il ait vraiment la degaine en main.",
+            "Rapproche-toi du mur, tu es trop loin pour ce bas de voie.",
+            "Ta main de freinage ne bouge jamais de la corde, meme pour l'aider."
+          ],
+          "plus": [
+            "Assurage en tete sur une voie avec un passage en devers, plus exigeant en anticipation."
+          ],
+          "minus": [
+            "Assurage en tete supervise en continu par le professeur, qui commente chaque geste."
+          ],
+          "diff": {
+            "facilitee": "Assurage en tete supervise en continu par le professeur, qui commente chaque geste en direct.",
+            "normale": "Assurage en tete autonome, observe et commente par le troisieme membre de la cordee.",
+            "complexifiee": "Assurage en tete sur une voie avec un passage en devers, plus exigeant en anticipation."
+          },
+          "safety": [
+            "Le professeur supervise en permanence tout assurage en tete realise par un eleve, avec possibilite d'intervention immediate.",
+            "L'assureur reste proche du mur tant que le grimpeur n'a pas depasse la 3e degaine.",
+            "Tout assureur juge insuffisamment attentif est immediatement remplace par le professeur ou repositionne.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees en tete."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Pourquoi l'assureur doit-il rester proche du mur tant que le grimpeur n'a pas depasse la 3e degaine ?",
+          "Quel passage difficile avez-vous decompose aujourd'hui, et quelle solution avez-vous trouvee ?"
+        ],
+        "key": "En tete, l'assureur gere le mou par rapport au mousquetonnage et surveille particulierement le bas de voie, ou le risque de retour au sol est le plus grand avant la 3e degaine. Et un passage difficile se travaille isole, pas en repartant du sol a chaque essai."
+      },
+      "socialRoles": [
+        "Assureur en tete : gere le mou par rapport au mousquetonnage, vigilant sous la 3e degaine.",
+        "Coach : observe et commente le placement de l'assureur et du grimpeur.",
+        "Compagnon de cordee : verifie la chaine d'assurage et les degaines avant chaque depart."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et bilan des roles cooperatifs",
+      "mainObjective": "Situer chacun dans des conditions proches de l'epreuve, sur une voie imposee chronometree sur 8 minutes, et faire le bilan de la repartition et des trois roles cooperatifs.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser une ascension chronometree sur 8 minutes, dans des conditions proches de l'epreuve.",
+        "Verifier que la repartition AFL2/AFL3 choisie en seance 2 correspond toujours a la pratique reelle.",
+        "Faire le bilan des progres dans les trois roles cooperatifs depuis le debut de la sequence.",
+        "Ajuster son projet pour la suite du cycle."
+      ],
+      "linkToPrevious": "La lecture de voie, le mousquetonnage et l'assurage en tete sont construits. L'epreuve evaluee de mi-cycle permet de mesurer ou en est chacun face aux conditions reelles de l'epreuve finale.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau reel face a une contrainte de temps, a verifie sa repartition AFL2/AFL3, et a identifie ce qui doit encore progresser dans chacun des trois roles cooperatifs.",
+      "setup": {
+        "installationMinutes": 18,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "chronometres",
+            "per": 0.34,
+            "min": 8
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Preequiper des voies de cotations variees, en tete comme en moulinette, deux premieres degaines mousquetonnees sur les voies de tete.",
+          "Afficher le referentiel d'evaluation : bareme AFL1 12 points, AFL2/AFL3 8 points, regles de chute et de reprise.",
+          "Preparer les fiches d'evaluation mi-cycle, nominatives, avec la regle des 8 minutes rappelee.",
+          "Verifier les tapis de reception et les points d'ancrage.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Voies preequipees, tete et moulinette, cotations variees affichees.\nAffiche du referentiel d'evaluation a l'entree.\nZone de chronometrage visible depuis chaque voie.\nZone d'ecriture pour le carnet, a l'ecart des couloirs de chute."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet : sa conduite est un indicateur d'autonomie et prepare a l'effort chronometre qui suit.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement articulaire, le professeur observe et valide.",
+              "Mobilisation des poignets, epaules, chevilles, doigts."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions progressives.",
+              "Gainage dynamique cinq fois quinze secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en condition proche de l'epreuve",
+            "details": [
+              "Une voie facile grimpee en moulinette pour se remettre en mouvement.",
+              "Rappel oral des regles de chute et de reprise, et de la duree de 8 minutes.",
+              "Verification complete de la chaine d'assurage avant le debut de l'evaluation."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Ascension chronometree sur 8 minutes, voie imposee",
+          "objective": "Evaluer l'AFL1 dans des conditions proches de l'epreuve : voie imposee par le professeur, chronometree sur 8 minutes, en tete ou en moulinette selon le niveau valide.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.34,
+              "min": 8
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois. Le professeur impose a chaque eleve une voie adaptee a son niveau reel observe depuis le debut du cycle. Le grimpeur est chronometre sur 8 minutes ; le chronometre demarre quand il commence son noeud d'encordement et que l'assureur installe son couple d'assurage, comme le jour de l'epreuve. Le professeur valide ou non l'ascension en tete ; a defaut, l'eleve grimpe en moulinette.",
+          "studentGoal": "Terminer ma voie imposee en moins de 8 minutes, en tete si mon niveau le permet.",
+          "instructions": [
+            "Je m'equipe et je m'encorde : le chronometre demarre a cet instant.",
+            "Je grimpe ma voie imposee, en tete si le professeur me l'a valide, sinon en moulinette.",
+            "Si je chute, je beneficie de 30 secondes de repos dans le baudrier et je reprends a la derniere prise utilisee.",
+            "Je dois tenir la derniere prise 2 secondes et, en tete, mousquetonner la derniere degaine du relais."
+          ],
+          "success": [
+            "La voie est terminee en moins de 8 minutes.",
+            "La derniere prise est tenue 2 secondes.",
+            "En tete, la derniere degaine du relais est mousquetonnee.",
+            "Les regles de chute et de reprise sont respectees si une chute survient."
+          ],
+          "execution": [
+            "Ne pas se precipiter au depart malgre le chronometre : lire quand meme.",
+            "Utiliser les 30 secondes de repos apres une chute pour respirer et se replacer, pas pour paniquer.",
+            "Reprendre exactement a la derniere prise utilisee, pas plus bas ni plus haut."
+          ],
+          "watch": [
+            "Le chronometre est-il declenche au bon moment, des le debut du noeud ?",
+            "Les 8 minutes sont-elles suffisantes pour la voie imposee ?",
+            "Les regles de chute et de reprise sont-elles bien appliquees ?",
+            "L'eleve gere-t-il la pression du chronometre sans se precipiter dangereusement ?"
+          ],
+          "errors": [
+            "Se precipiter au depart et negliger la lecture de la voie.",
+            "Reprendre plus bas que la derniere prise utilisee apres une chute, par facilite.",
+            "Oublier de tenir la derniere prise 2 secondes.",
+            "En tete, oublier de mousquetonner la derniere degaine du relais."
+          ],
+          "feedback": [
+            "8 minutes, c'est suffisant pour lire : ne te precipite pas.",
+            "Reprends exactement ou tu etais, pas plus bas.",
+            "Tiens la derniere prise, compte deux secondes.",
+            "La derniere degaine du relais : sans elle, ta voie en tete n'est pas terminee."
+          ],
+          "plus": [
+            "Voie imposee de cotation superieure a celle du niveau habituel de l'eleve, en tete."
+          ],
+          "minus": [
+            "Voie imposee facile, grimpee en moulinette, chronometree sur une duree allongee."
+          ],
+          "diff": {
+            "facilitee": "Voie imposee facile, grimpee en moulinette, avec une duree allongee au-dela de 8 minutes.",
+            "normale": "Voie imposee au niveau de l'eleve, chronometree sur 8 minutes, en tete si validee.",
+            "complexifiee": "Voie imposee de cotation superieure au niveau habituel, en tete."
+          },
+          "safety": [
+            "Le professeur ne valide l'ascension en tete que pour les eleves dont la maitrise des gestes de securite est jugee suffisante ; les autres grimpent en moulinette.",
+            "Verification complete de la chaine d'assurage avant chaque depart, y compris en conditions chronometrees.",
+            "L'assureur reste proche du mur tant que le grimpeur n'a pas depasse la 3e degaine, en tete.",
+            "En cas de 2e chute en moulinette, l'epreuve blanche s'arrete immediatement pour cet eleve.",
+            "En cas de 2e chute en tete au-dessus de la 3e degaine, l'epreuve blanche s'arrete ; en dessous de la 3e degaine, l'eleve recommence en moulinette.",
+            "Toute erreur de mousquetonnage non corrigee avant la 3e degaine entraine une reprise en moulinette ; a la 3e degaine ou apres, l'epreuve blanche est terminee.",
+            "Tapis de reception verifies sans interstice avant le debut de la situation.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees et peut arreter toute ascension a tout moment."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "Bilan de la repartition et des trois roles cooperatifs",
+          "objective": "Verifier que la repartition AFL2/AFL3 choisie en seance 2 correspond a la pratique reelle, et faire le bilan des progres dans les trois roles cooperatifs.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des voies. Chacun relit la repartition choisie en seance 2, evalue ses progres dans les trois roles cooperatifs (assureur, compagnon de cordee, coach) depuis le debut de la sequence, et confirme ou ajuste sa repartition pour la suite.",
+          "studentGoal": "Verifier que ma repartition correspond a ce que je fais reellement, et faire le bilan de mes progres dans les trois roles.",
+          "instructions": [
+            "Je relis la repartition que j'ai choisie en seance 2.",
+            "Pour chacun des trois roles (assureur, compagnon de cordee, coach), j'ecris un progres realise depuis le debut de la sequence.",
+            "Je regarde si ma repartition correspond toujours a mes points forts reels.",
+            "J'ecris si je confirme ma repartition ou si je souhaite la faire evoluer, et pourquoi."
+          ],
+          "success": [
+            "Un progres precis est note pour chacun des trois roles.",
+            "La repartition de la seance 2 est relue et commentee.",
+            "La confirmation ou l'ajustement est justifie par ecrit."
+          ],
+          "execution": [
+            "S'appuyer sur des faits observes, pas sur une impression generale.",
+            "Comparer sa pratique reelle depuis la seance 2 a ce qui avait ete choisi.",
+            "Ecrire une justification precise pour chaque role."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leur choix de la seance 2 ?",
+            "Les progres notes sont-ils precis et reels, ou vagues ?",
+            "Les justifications s'appuient-elles sur des faits observes en seance ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qui avait ete choisi en seance 2.",
+            "Noter un progres identique pour les trois roles, sans distinction.",
+            "Confirmer sa repartition sans aucune justification."
+          ],
+          "feedback": [
+            "Regarde ton carnet de seance 2 : c'est ecrit, relis-le.",
+            "Un progres different pour chaque role, ils ne se ressemblent pas.",
+            "Justifie : qu'est-ce qui te fait dire que c'est le bon choix ?"
+          ],
+          "plus": [
+            "Bilan ecrit comparant precisement ce qu'aurait change une autre repartition."
+          ],
+          "minus": [
+            "Bilan guide par le professeur a partir des observations notees en seance."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par le professeur a partir de ses observations des quatre premieres seances.",
+            "normale": "Bilan autonome des trois roles, repartition confirmee ou ajustee et justifiee par ecrit.",
+            "complexifiee": "Bilan ecrit comparant precisement ce qu'aurait change une autre repartition."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des voies, apres l'ascension chronometree.",
+            "Point d'eau accessible.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Ajuster son projet pour la suite du cycle",
+          "objective": "Choisir les voies a travailler pour la suite du cycle en fonction du bilan de l'ascension chronometree.",
+          "material": [
+            {
+              "label": "fiches de voies et cotations",
+              "fixed": 8
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart des voies. A partir du resultat de l'ascension chronometree, chacun choisit les cotations qu'il devra travailler prioritairement d'ici l'epreuve finale : consolider une cotation deja tenue, ou progresser vers la cotation superieure.",
+          "studentGoal": "Choisir les cotations que je dois travailler d'ici l'epreuve finale, en fonction de mon resultat aujourd'hui.",
+          "instructions": [
+            "Je regarde si j'ai reussi ma voie imposee dans les 8 minutes, en tete ou en moulinette.",
+            "Si j'ai reussi facilement, je choisis de viser la cotation superieure pour la suite.",
+            "Si j'ai eu des difficultes, je choisis de consolider ma cotation actuelle.",
+            "J'ecris mon objectif de cotation pour les trois prochaines seances."
+          ],
+          "success": [
+            "Le resultat du jour est utilise pour choisir l'objectif, pas ignore.",
+            "L'objectif de cotation est ecrit et realiste.",
+            "L'objectif distingue consolidation et progression."
+          ],
+          "execution": [
+            "Partir du resultat reellement obtenu, pas d'une envie.",
+            "Choisir un ecart de cotation raisonnable, pas un saut trop important.",
+            "Ecrire l'objectif avec la cotation precise visee."
+          ],
+          "watch": [
+            "Les objectifs choisis sont-ils coherents avec le resultat du jour ?",
+            "Les eleves choisissent-ils un saut de cotation raisonnable ?"
+          ],
+          "errors": [
+            "Viser une cotation trop ambitieuse malgre un echec le jour meme.",
+            "Rester sur une cotation deja largement maitrisee, sans chercher a progresser.",
+            "Ne pas ecrire d'objectif precis."
+          ],
+          "feedback": [
+            "Tu n'as pas termine aujourd'hui : consolide avant de viser plus haut.",
+            "Tu as reussi facilement : cette cotation ne te fait plus progresser.",
+            "Precise la cotation visee, pas seulement plus dur."
+          ],
+          "plus": [
+            "Objectif de cotation avec un plan des voies a travailler seance par seance."
+          ],
+          "minus": [
+            "Objectif de cotation propose par le professeur a partir du resultat du jour."
+          ],
+          "diff": {
+            "facilitee": "Objectif de cotation propose par le professeur a partir du resultat du jour.",
+            "normale": "Objectif de cotation choisi en autonomie, consolidation ou progression.",
+            "complexifiee": "Objectif de cotation avec un plan des voies a travailler seance par seance."
+          },
+          "safety": [
+            "Le professeur valide chaque objectif : un objectif de cotation trop ambitieux au regard du niveau reel est corrige avant d'etre retenu.",
+            "Phase realisee assise a l'ecart des voies.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Avez-vous termine votre voie imposee dans les 8 minutes, en tete ou en moulinette ?",
+          "Quelle repartition avez-vous confirmee ou ajustee entre l'AFL2 et l'AFL3, et pourquoi ?"
+        ],
+        "key": "Les 8 minutes ne servent pas a se precipiter, elles servent a lire, grimper et mousquetonner sans se hater inutilement. Le bilan des trois roles cooperatifs guide ce qui reste a travailler d'ici l'epreuve finale."
+      },
+      "socialRoles": [
+        "Chronometreur : declenche le chronometre au bon moment et annonce le temps ecoule.",
+        "Assureur : gere le mou en tete ou en moulinette selon le niveau valide, vigilant sous la 3e degaine.",
+        "Coach : observe et prepare le bilan des progres de son camarade dans les trois roles cooperatifs."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Gerer la chute et perfectionner le mousquetonnage",
+      "mainObjective": "Connaitre et appliquer les regles exactes de gestion de la chute et de reprise, et corriger les erreurs de mousquetonnage.",
+      "secondaryObjectives": [
+        "Vivre une chute controlee en tete, dans un cadre securise et progressif.",
+        "Connaitre les regles exactes de reprise selon la position en voie.",
+        "Corriger une erreur de mousquetonnage (a l'envers, en yoyo) avant qu'elle ne soit fixee.",
+        "Poursuivre l'alternance des trois roles cooperatifs."
+      ],
+      "linkToPrevious": "L'epreuve blanche de la seance 5 a montre que la gestion de la chute et le mousquetonnage restent des points a securiser avant l'epreuve finale.",
+      "prerequisiteForNext": "Chaque eleve connait et applique les regles de chute et de reprise, et corrige immediatement une erreur de mousquetonnage.",
+      "setup": {
+        "installationMinutes": 18,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "affiche des regles de chute et de reprise",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          }
+        ],
+        "instructions": [
+          "Preequiper des voies en tete permettant des chutes controlees a differentes hauteurs, avec degaines fiables.",
+          "Afficher les regles de chute et de reprise : 30 secondes de repos, reprise a la derniere prise, cas de la 3e degaine.",
+          "Verifier particulierement les tapis de reception sous les zones de chute prevues.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un temps d'explication collective avant toute chute controlee."
+        ],
+        "sketch": "Voies en tete equipees pour des chutes controlees progressives, tapis renforces sous les zones de chute.\nAffiche des regles de chute et de reprise a l'entree.\nZone d'explication collective avant le debut des chutes controlees.\nSupervision rapprochee du professeur sur chaque premiere chute."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet, avec un temps d'explication et de mise en confiance avant les premieres chutes controlees, moment souvent source d'apprehension.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Mobilisation articulaire generale",
+            "details": [
+              "Rotations des poignets, des epaules, des chevilles.",
+              "Extensions et flexions des doigts.",
+              "Mobilisation du rachis."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions progressives.",
+              "Gainage dynamique cinq fois quinze secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Explication et mise en confiance avant les chutes controlees",
+            "details": [
+              "Rappel oral des regles de chute et de reprise, avec l'affiche.",
+              "Demonstration au sol de la position du grimpeur qui chute (jambes flechies, pas de saisie de la corde).",
+              "Verification complete de la chaine d'assurage de chaque cordee."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 26,
+          "title": "Chutes controlees et regles de reprise",
+          "objective": "Faire vivre une chute controlee en tete, progressive et securisee, et appliquer les regles exactes de reprise.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "jeux de degaines",
+              "fixed": 8
+            },
+            {
+              "label": "affiche des regles de chute et de reprise",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par cordees de trois, sur des voies en tete adaptees. Chaque grimpeur realise, sous supervision rapprochee du professeur, une chute controlee annoncee au-dessus d'une degaine deja mousquetonnee, puis applique la regle de reprise : 30 secondes de repos dans le baudrier, reprise a la derniere prise utilisee.",
+          "studentGoal": "Vivre une chute controlee en tete et reprendre correctement selon la regle.",
+          "instructions": [
+            "J'annonce a mon assureur le moment ou je vais chuter, pour cette premiere fois controlee.",
+            "Je me laisse tomber depuis une position stable, jambes flechies, sans saisir la corde.",
+            "Je beneficie de 30 secondes de repos dans mon baudrier.",
+            "Je reprends exactement a la derniere prise que j'utilisais avant la chute."
+          ],
+          "success": [
+            "La chute est realisee en position controlee, jambes flechies, sans saisie de la corde.",
+            "Les 30 secondes de repos sont respectees.",
+            "La reprise se fait a la derniere prise utilisee, ni plus haut ni plus bas.",
+            "Chaque eleve a vecu au moins une chute controlee en tete."
+          ],
+          "execution": [
+            "Flechir les jambes avant de lacher, pour amortir le contact avec le mur.",
+            "Garder les mains ouvertes, loin de la corde, pendant la chute.",
+            "Utiliser les 30 secondes pour respirer et se repositionner, pas pour redescendre."
+          ],
+          "watch": [
+            "Le grimpeur garde-t-il les jambes flechies et les mains loin de la corde ?",
+            "L'assureur bloque-t-il correctement et immediatement la chute ?",
+            "La reprise se fait-elle a la bonne prise, sans tricher vers le bas ?"
+          ],
+          "errors": [
+            "Saisir la corde par reflexe pendant la chute.",
+            "Garder les jambes tendues, ce qui provoque un choc violent contre le mur.",
+            "Reprendre plus bas que la derniere prise utilisee, par facilite."
+          ],
+          "feedback": [
+            "Lache la corde, tes mains restent sur le mur ou libres.",
+            "Flechis les jambes, tu vas te faire mal en tendu.",
+            "Reprends exactement ou tu etais, pas plus bas."
+          ],
+          "plus": [
+            "Chute controlee depuis une position plus haute, apres la 3e degaine, sur une voie deja bien maitrisee."
+          ],
+          "minus": [
+            "Chute controlee de tres faible amplitude, juste au-dessus de la degaine, avec le professeur en double assurage."
+          ],
+          "diff": {
+            "facilitee": "Chute controlee de tres faible amplitude, avec double assurage du professeur en plus de l'assureur eleve.",
+            "normale": "Chute controlee annoncee au-dessus d'une degaine mousquetonnee, reprise selon la regle.",
+            "complexifiee": "Chute controlee depuis une position plus haute, apres la 3e degaine, sur voie maitrisee."
+          },
+          "safety": [
+            "Toute premiere chute controlee de chaque eleve se fait sous double assurage : l'assureur eleve et le professeur.",
+            "La chute est systematiquement annoncee a l'avance par le grimpeur, jamais surprise, pour cette phase d'apprentissage.",
+            "Tapis de reception verifies et renforces sous chaque zone de chute utilisee.",
+            "L'assureur reste extremement attentif : main de freinage jamais lachee, blocage immediat sur l'annonce.",
+            "Aucune chute controlee n'est tentee au-dessous de la 3e degaine, en raison du risque de retour au sol.",
+            "Consulter les PAI, en particulier vertige et apprehension importante.",
+            "Tout eleve refusant la chute controlee n'y est jamais contraint : il poursuit le travail en moulinette.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees et supervise personnellement chaque premiere chute."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Corriger une erreur de mousquetonnage",
+          "objective": "Reconnaitre et corriger immediatement une erreur de mousquetonnage, a l'envers ou en yoyo, avant qu'elle ne devienne automatique.",
+          "material": [
+            {
+              "label": "jeux de degaines",
+              "fixed": 8
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            }
+          ],
+          "organization": "Sur mur bas ou en moulinette avancee, le professeur ou le coach de cordee provoque volontairement une situation ou l'eleve doit reconnaitre un mousquetonnage a l'envers ou en yoyo deja realise, et le corriger avant de poursuivre.",
+          "studentGoal": "Reconnaitre un mousquetonnage incorrect et le corriger immediatement.",
+          "instructions": [
+            "Apres chaque mousquetonnage, je verifie visuellement le sens du mousqueton et le trajet de la corde.",
+            "Si je repere un mousquetonnage a l'envers ou en yoyo, je le corrige avant de continuer a grimper.",
+            "Mon coach de cordee verifie aussi depuis le sol et me signale une erreur si je ne l'ai pas vue.",
+            "Je nomme l'erreur a voix haute quand je la corrige : a l'envers, ou en yoyo."
+          ],
+          "success": [
+            "Chaque mousquetonnage est verifie visuellement juste apres le geste.",
+            "Une erreur provoquee est reconnue et corrigee avant la poursuite de la grimpe.",
+            "Le coach de cordee repere et signale les erreurs non vues par le grimpeur."
+          ],
+          "execution": [
+            "Regarder le mousqueton juste apres l'avoir clipe, sans attendre.",
+            "Redescendre la corde du mousqueton pour la repasser correctement en cas d'erreur.",
+            "Verifier a nouveau apres correction."
+          ],
+          "watch": [
+            "L'eleve verifie-t-il systematiquement apres chaque mousquetonnage ?",
+            "Repere-t-il seul l'erreur provoquee, ou faut-il que le coach la signale ?",
+            "La correction est-elle bien faite, pas seulement annoncee ?"
+          ],
+          "errors": [
+            "Ne jamais regarder le mousqueton apres l'avoir clipe.",
+            "Continuer a grimper malgre une erreur signalee par le coach.",
+            "Corriger a moitie, sans reverifier le resultat."
+          ],
+          "feedback": [
+            "Regarde ton mousqueton juste apres l'avoir clipe, c'est le reflexe a prendre.",
+            "Ton coach te l'a dit : corrige avant de continuer.",
+            "Reverifie apres avoir corrige, ne suppose pas que c'est bon."
+          ],
+          "plus": [
+            "Reperage d'une erreur de mousquetonnage a distance, uniquement a l'oeil depuis le sol, sans indice donne."
+          ],
+          "minus": [
+            "Erreur signalee directement par le professeur avec explication du risque."
+          ],
+          "diff": {
+            "facilitee": "Erreur signalee directement par le professeur, avec explication du risque encouru.",
+            "normale": "Erreur provoquee reperee par l'eleve ou signalee par le coach, puis corrigee.",
+            "complexifiee": "Reperage d'une erreur de mousquetonnage a distance, depuis le sol, sans indice donne."
+          },
+          "safety": [
+            "Les mousquetonnages volontairement errones sont provoques uniquement sur mur bas ou en moulinette, jamais en tete reelle avec risque de chute.",
+            "Toute erreur non corrigee avant la fin de l'exercice est reprise integralement par le professeur.",
+            "Tapis de reception verifies.",
+            "Consulter les PAI."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Ascension en tete avec application complete des regles de chute",
+          "objective": "Grimper une voie en tete en integrant naturellement les regles de chute et de reprise en cas d'incident reel.",
+          "material": [
+            {
+              "label": "baudriers",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par cordees de trois, sur une voie en tete au niveau de chacun. L'objectif n'est plus de chuter volontairement mais de grimper normalement en sachant que les regles de chute et de reprise s'appliqueront automatiquement en cas d'incident reel.",
+          "studentGoal": "Grimper ma voie en tete normalement, en sachant reagir correctement si je chute reellement.",
+          "instructions": [
+            "Je grimpe ma voie en tete comme d'habitude, sans chercher a chuter.",
+            "Si je chute reellement, je respecte les 30 secondes de repos et je reprends a la derniere prise.",
+            "Si une erreur de mousquetonnage se produit, je la corrige immediatement des que je la remarque.",
+            "Je note sur mon carnet si un incident est survenu et comment je l'ai gere."
+          ],
+          "success": [
+            "La voie est grimpee en tete jusqu'au relais ou jusqu'a un arret controle.",
+            "En cas de chute reelle, la regle de reprise est appliquee sans intervention du professeur.",
+            "Tout incident est note au carnet."
+          ],
+          "execution": [
+            "Grimper de facon naturelle, sans crispation liee a la peur de chuter.",
+            "Reagir immediatement et correctement en cas d'incident, sans attendre une consigne.",
+            "Noter honnetement ce qui s'est passe, meme en cas d'erreur."
+          ],
+          "watch": [
+            "Les regles de chute sont-elles appliquees spontanement, sans intervention ?",
+            "L'eleve grimpe-t-il normalement ou reste-t-il crispe par la peur de chuter ?",
+            "Les incidents sont-ils notes honnetement ?"
+          ],
+          "errors": [
+            "Grimper de facon crispee, en refusant tout mouvement engage par peur de chuter.",
+            "Attendre l'intervention du professeur en cas d'incident au lieu d'appliquer la regle seul.",
+            "Ne pas noter un incident survenu."
+          ],
+          "feedback": [
+            "Tu connais la regle maintenant, grimpe normalement.",
+            "Tu sais quoi faire : applique la regle toi-meme.",
+            "Note ce qui s'est passe, meme si ce n'etait pas parfait."
+          ],
+          "plus": [
+            "Ascension en tete sur une voie de cotation superieure a celle deja maitrisee."
+          ],
+          "minus": [
+            "Ascension en moulinette, avec rappel oral des regles avant le depart."
+          ],
+          "diff": {
+            "facilitee": "Ascension en moulinette, avec rappel oral des regles de chute avant le depart.",
+            "normale": "Ascension en tete au niveau de l'eleve, application autonome des regles en cas d'incident.",
+            "complexifiee": "Ascension en tete sur une voie de cotation superieure a celle deja maitrisee."
+          },
+          "safety": [
+            "Le professeur reste pret a intervenir a tout moment, meme si l'objectif est l'autonomie de l'eleve dans l'application des regles.",
+            "Verification complete de la chaine d'assurage avant chaque depart.",
+            "Assureur vigilant en permanence, notamment sous la 3e degaine.",
+            "Tapis de reception verifies sans interstice.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Que se passe-t-il en cas de 2e chute en moulinette ? Et en cas de 2e chute en tete, selon la position par rapport a la 3e degaine ?",
+          "Comment avez-vous repere et corrige une erreur de mousquetonnage aujourd'hui ?"
+        ],
+        "key": "Les regles de chute et de reprise ne sont pas theoriques : elles doivent etre appliquees sans hesiter le jour de l'epreuve. Une erreur de mousquetonnage se corrige tout de suite, avant qu'elle ne devienne un automatisme dangereux."
+      },
+      "socialRoles": [
+        "Assureur : bloque immediatement toute chute, annoncee ou reelle, et applique le placement adapte.",
+        "Coach : verifie a distance le sens des mousquetonnages et signale toute erreur.",
+        "Compagnon de cordee : verifie la chaine d'assurage avant chaque chute controlee."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale dans les conditions de l'epreuve",
+      "mainObjective": "Reproduire les conditions exactes de l'epreuve finale : tirage au sort simule, annonce tete ou moulinette, chronometrage sur 8 minutes.",
+      "secondaryObjectives": [
+        "Vivre un tirage au sort simule parmi les voies proposees par chacun.",
+        "Confirmer le choix definitif des voies a proposer pour l'epreuve finale (3 pour les garcons, 2 pour les filles).",
+        "Finaliser le carnet d'entrainement.",
+        "Faire le bilan final des trois roles cooperatifs avant l'epreuve."
+      ],
+      "linkToPrevious": "Les regles de chute, de reprise et de mousquetonnage sont maitrisees. Il reste a vivre l'epreuve dans ses conditions exactes, une fois, avant qu'elle ne compte reellement.",
+      "prerequisiteForNext": "Chaque eleve a vecu une repetition generale complete de l'epreuve, a confirme ses voies proposees, et a un carnet finalise.",
+      "setup": {
+        "installationMinutes": 20,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "chronometres",
+            "per": 0.34,
+            "min": 8
+          },
+          {
+            "label": "billets de tirage au sort",
+            "fixed": 24,
+            "note": "un jeu de billets par eleve, correspondant a ses voies proposees"
+          },
+          {
+            "label": "fiches de voies et cotations",
+            "fixed": 8
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Demander a chaque eleve, avant la seance, de confirmer ses voies proposees : 3 pour les garcons, 2 pour les filles.",
+          "Preparer un jeu de billets de tirage au sort par eleve, correspondant exactement a ses voies proposees.",
+          "Preequiper toutes les voies proposees par la classe, en tete comme en moulinette.",
+          "Afficher le referentiel d'evaluation complet.",
+          "Verifier les tapis de reception, les points d'ancrage et les degaines de toutes les voies concernees.",
+          "Verifier les PAI et les dispenses."
+        ],
+        "sketch": "Toutes les voies proposees par la classe preequipees, tete et moulinette.\nZone de tirage au sort visible par toute la cordee avant chaque passage.\nAffiche du referentiel d'evaluation a l'entree.\nZone de chronometrage et zone d'ecriture du carnet, a l'ecart des couloirs de chute."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, mene exactement comme il le sera le jour de l'epreuve, sans intervention du professeur sauf sur la securite.",
+        "steps": [
+          {
+            "dur": 6,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement seul, comme le jour de l'epreuve.",
+              "Le professeur observe sans intervenir, sauf sur un point de securite."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions progressives.",
+              "Gainage dynamique cinq fois quinze secondes."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Mise en condition proche de l'epreuve",
+            "details": [
+              "Verification complete de la chaine d'assurage de chaque cordee.",
+              "Rappel silencieux, chacun pour soi, des regles de chute et de reprise.",
+              "Installation du materiel de tirage au sort."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 28,
+          "title": "Simulation complete de l'epreuve : tirage au sort, tete ou moulinette, 8 minutes",
+          "objective": "Reproduire integralement les conditions de l'epreuve finale, du tirage au sort a la fin de l'ascension chronometree.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.34,
+              "min": 8
+            },
+            {
+              "label": "billets de tirage au sort",
+              "fixed": 24
+            }
+          ],
+          "organization": "Par cordees de trois. Chaque eleve tire au sort une voie parmi celles qu'il a lui-meme proposees. Le professeur annonce ensuite si l'ascension se fera en tete ou en moulinette, selon la maitrise observee. L'ascension est chronometree sur 8 minutes, avec application stricte des regles de chute et de reprise en cas d'incident.",
+          "studentGoal": "Vivre l'epreuve en entier, dans ses conditions exactes, une fois avant qu'elle ne compte.",
+          "instructions": [
+            "Je tire au sort une voie parmi celles que j'ai proposees.",
+            "J'ecoute l'annonce du professeur : tete ou moulinette.",
+            "Je m'equipe et je m'encorde : le chronometre demarre a cet instant, pour 8 minutes.",
+            "Je grimpe en appliquant tout ce qui a ete travaille depuis la seance 1."
+          ],
+          "success": [
+            "Le tirage au sort est realise comme le jour de l'epreuve.",
+            "L'ascension respecte la duree de 8 minutes.",
+            "Les regles de chute et de reprise sont appliquees si necessaire.",
+            "La voie est terminee : derniere prise tenue 2 secondes et, en tete, derniere degaine du relais mousquetonnee."
+          ],
+          "execution": [
+            "Prendre le temps de lire la voie tiree au sort avant de partir, malgre l'enjeu.",
+            "Grimper avec le rythme et la gestion de l'effort travailles depuis le debut du cycle.",
+            "Appliquer les regles de chute sans hesitation si un incident survient."
+          ],
+          "watch": [
+            "Le tirage au sort cree-t-il une pression geree ou une panique ?",
+            "Les 8 minutes sont-elles respectees, sans precipitation dangereuse ?",
+            "Les regles de chute et de reprise sont-elles appliquees correctement ?"
+          ],
+          "errors": [
+            "Se precipiter sous l'effet du tirage au sort et negliger la lecture de la voie.",
+            "Oublier les regles de chute apprises sous le coup du stress.",
+            "Ne pas mousquetonner la derniere degaine du relais en tete."
+          ],
+          "feedback": [
+            "Tu as le temps de lire, meme apres le tirage au sort.",
+            "Tu connais la regle, applique-la comme en seance 6.",
+            "La derniere degaine du relais : sans elle, la voie n'est pas terminee."
+          ],
+          "plus": [
+            "Simulation avec un second tirage au sort, sur une deuxieme voie, pour multiplier l'entrainement a la pression."
+          ],
+          "minus": [
+            "Simulation avec un choix de voie plutot qu'un tirage au sort strict, pour reduire la pression."
+          ],
+          "diff": {
+            "facilitee": "Simulation avec un choix de voie plutot qu'un tirage au sort strict, pour reduire la pression le temps de securiser les gestes.",
+            "normale": "Simulation complete : tirage au sort, annonce tete ou moulinette, 8 minutes chronometrees.",
+            "complexifiee": "Simulation avec un second tirage au sort sur une deuxieme voie."
+          },
+          "safety": [
+            "Le professeur n'annonce la tete que pour les eleves dont la maitrise des gestes de securite est jugee suffisante.",
+            "Verification complete de la chaine d'assurage avant chaque depart, sans exception meme sous la pression du tirage au sort.",
+            "L'assureur reste proche du mur tant que le grimpeur n'a pas depasse la 3e degaine.",
+            "Toutes les regles de chute et de reprise de l'epreuve reelle s'appliquent integralement lors de cette simulation.",
+            "Tapis de reception verifies sans interstice sur toutes les voies utilisees.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees et peut arreter toute ascension a tout moment."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Confirmer les voies proposees et finaliser le carnet",
+          "objective": "Confirmer le choix definitif des voies a proposer pour l'epreuve finale et finaliser le carnet d'entrainement.",
+          "material": [
+            {
+              "label": "fiches de voies et cotations",
+              "fixed": 8
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des voies. A partir du resultat de la simulation, chacun confirme ou modifie ses voies proposees (3 pour les garcons, 2 pour les filles), puis complete son carnet avec la synthese de sa sequence.",
+          "studentGoal": "Confirmer mes voies proposees pour l'epreuve finale et finaliser mon carnet.",
+          "instructions": [
+            "Je regarde le resultat de ma simulation : ai-je reussi la voie tiree au sort ?",
+            "Je confirme mes voies proposees, ou j'en modifie une si elle s'est averee trop difficile ou trop facile.",
+            "Je verifie que j'ai bien 3 voies proposees si je suis un garcon, 2 si je suis une fille.",
+            "Je complete mon carnet : progres realises, roles cooperatifs pratiques, repartition choisie."
+          ],
+          "success": [
+            "Le nombre de voies proposees est correct (3 ou 2 selon le cas).",
+            "Chaque voie proposee est realiste au regard du niveau reel de l'eleve.",
+            "Le carnet est complete et lisible pour l'evaluation finale."
+          ],
+          "execution": [
+            "Partir du resultat reel de la simulation, pas d'une envie.",
+            "Verifier que les voies proposees couvrent des cotations que l'eleve sait reellement grimper.",
+            "Relire l'ensemble du carnet avant de le considerer termine."
+          ],
+          "watch": [
+            "Le nombre de voies proposees est-il correct pour chaque eleve ?",
+            "Les voies proposees sont-elles realistes, pas seulement ambitieuses ?",
+            "Le carnet est-il complet et exploitable pour l'evaluation ?"
+          ],
+          "errors": [
+            "Proposer un nombre de voies incorrect.",
+            "Proposer une voie jamais reussie, par optimisme excessif.",
+            "Laisser le carnet incomplet."
+          ],
+          "feedback": [
+            "Verifie le nombre exact de voies a proposer selon ton cas.",
+            "Cette voie, tu ne l'as jamais terminee : es-tu sur de la proposer ?",
+            "Ton carnet doit etre complet aujourd'hui, pas la veille de l'epreuve."
+          ],
+          "plus": [
+            "Analyse ecrite comparant le niveau des trois (ou deux) voies proposees, pour verifier leur coherence."
+          ],
+          "minus": [
+            "Confirmation des voies proposees avec l'aide directe du professeur."
+          ],
+          "diff": {
+            "facilitee": "Confirmation des voies proposees avec l'aide directe du professeur, carnet complete avec un questionnaire guide.",
+            "normale": "Confirmation autonome des voies proposees et finalisation complete du carnet.",
+            "complexifiee": "Analyse ecrite comparant le niveau des voies proposees pour verifier leur coherence."
+          },
+          "safety": [
+            "Le professeur valide le choix final des voies proposees par chaque eleve, en particulier si elles paraissent trop ambitieuses.",
+            "Phase realisee assise a l'ecart des voies, apres retour au calme.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Bilan final des trois roles cooperatifs",
+          "objective": "Faire le bilan final des progres realises dans les trois roles cooperatifs avant l'epreuve certificative.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Par cordees de trois. Chacun recoit un retour rapide de ses deux camarades de cordee sur sa fiabilite dans chacun des trois roles cooperatifs (assureur, compagnon de cordee, coach) au fil de la sequence, et le note au carnet.",
+          "studentGoal": "Recevoir et noter un retour de ma cordee sur mes trois roles cooperatifs, avant l'epreuve.",
+          "instructions": [
+            "Je demande a mes deux camarades de cordee un retour sur mon role d'assureur.",
+            "Je fais de meme pour mon role de compagnon de cordee, puis pour mon role de coach.",
+            "Je note les trois retours sur mon carnet, meme s'ils sont critiques.",
+            "Je dis, pour chaque role, ce que je vais encore ameliorer d'ici l'epreuve."
+          ],
+          "success": [
+            "Un retour est recu et note pour chacun des trois roles.",
+            "Les retours critiques sont acceptes sans discussion defensive.",
+            "Un point d'amelioration precis est identifie pour chaque role."
+          ],
+          "execution": [
+            "Demander un retour concret, pas seulement une opinion generale.",
+            "Ecouter sans se justifier immediatement.",
+            "Formuler un point d'amelioration precis, pas vague."
+          ],
+          "watch": [
+            "Les retours donnes sont-ils concrets et constructifs ?",
+            "Les eleves acceptent-ils les retours critiques ?",
+            "Les points d'amelioration notes sont-ils precis ?"
+          ],
+          "errors": [
+            "Donner un retour uniquement flatteur, sans aucune critique constructive.",
+            "Se justifier au lieu d'ecouter un retour critique.",
+            "Noter un point d'amelioration vague, comme etre plus attentif."
+          ],
+          "feedback": [
+            "Sois honnete, ca sert a progresser d'ici l'epreuve, pas a faire plaisir.",
+            "Ecoute d'abord, tu discuteras apres si besoin.",
+            "Plus attentif a quoi, precisement ? Dis-le."
+          ],
+          "plus": [
+            "Retour ecrit et argumente par chaque membre de la cordee, avec un exemple concret par role."
+          ],
+          "minus": [
+            "Retour guide par une grille de questions fournie par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Retour guide par une grille de questions fournie par le professeur.",
+            "normale": "Retour oral des deux camarades de cordee sur les trois roles, note au carnet.",
+            "complexifiee": "Retour ecrit et argumente, avec un exemple concret pour chaque role."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des voies.",
+            "Aucun risque physique specifique ; veiller a la bienveillance des echanges entre eleves."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Comment avez-vous vecu le tirage au sort : geree ou subie ?",
+          "Vos voies proposees pour l'epreuve finale sont-elles confirmees, et pourquoi ?"
+        ],
+        "key": "L'epreuve finale ne reserve plus de surprise de forme : le tirage au sort, le choix tete ou moulinette, les 8 minutes et les regles de chute ont deja ete vecus. Il ne reste qu'a les rejouer, une derniere fois, en conditions reelles."
+      },
+      "socialRoles": [
+        "Assureur : applique integralement les regles de securite dans les conditions exactes de l'epreuve.",
+        "Compagnon de cordee : verifie la chaine d'assurage avant chaque tirage au sort.",
+        "Coach : donne un retour constructif sur les trois roles cooperatifs pratiques depuis le debut de la sequence."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale : voie tiree au sort et evaluation",
+      "mainObjective": "Realiser l'epreuve certificative : voie tiree au sort parmi celles proposees, ascension en tete ou en moulinette, chronometree sur 8 minutes.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Realiser l'epreuve dans le respect strict du protocole et des regles de chute et de reprise.",
+        "Etre evalue en direct sur l'AFL1 : 12 points, 6 pour la lecture et l'analyse, 6 pour l'adaptation du deplacement, ajustes a la cotation.",
+        "Finaliser l'evaluation de l'AFL2 et de l'AFL3 sur les trois roles cooperatifs, selon la repartition choisie.",
+        "Cloturer le cycle par un bilan collectif."
+      ],
+      "linkToPrevious": "Toutes les composantes de l'epreuve ont ete travaillees et simulees : encordement, lecture de voie, mousquetonnage, gestion de la chute, roles cooperatifs. L'epreuve finale les reunit une derniere fois, en conditions reelles.",
+      "prerequisiteForNext": "Fin de cycle : chaque eleve dispose d'une note d'AFL1 issue de sa voie tiree au sort, et d'une note d'AFL2/AFL3 issue de l'ensemble de la sequence.",
+      "setup": {
+        "installationMinutes": 22,
+        "material": [
+          {
+            "label": "baudriers",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "cordes dynamiques",
+            "fixed": 8
+          },
+          {
+            "label": "systemes d'assurage (tube ou grigri)",
+            "fixed": 8
+          },
+          {
+            "label": "jeux de degaines",
+            "fixed": 8
+          },
+          {
+            "label": "casques",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "tapis de reception",
+            "fixed": 8
+          },
+          {
+            "label": "chronometres",
+            "per": 0.34,
+            "min": 8
+          },
+          {
+            "label": "billets de tirage au sort",
+            "fixed": 24,
+            "note": "un jeu par eleve, correspondant exactement a ses voies proposees"
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Preequiper integralement toutes les voies proposees par la classe, en tete comme en moulinette, avec les deux premieres degaines deja mousquetonnees sur les voies de tete.",
+          "Verifier une derniere fois le registre des EPI : cordes, baudriers, mousquetons, points d'ancrage.",
+          "Preparer les grilles d'evaluation finale nominatives, avec le detail AFL1 12 points (6+6) et AFL2/AFL3 8 points.",
+          "Organiser l'ordre de passage des cordees, avec un temps d'attente hors des couloirs de chute.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir la trousse de secours et un point d'eau accessibles en permanence."
+        ],
+        "sketch": "Toutes les voies proposees par la classe preequipees, tete et moulinette, deux premieres degaines mousquetonnees en tete.\nZone de tirage au sort visible par chaque cordee juste avant son passage.\nZone d'attente hors des couloirs de chute, ordre de passage affiche.\nZone d'evaluation du professeur en vue de la voie en cours, grilles a portee de main.\nPoint d'eau et trousse de secours accessibles en permanence."
+      },
+      "warmup": {
+        "rationale": "Echauffement autonome complet, mene individuellement par chaque eleve avant son passage, sa conduite faisant partie des observables de l'AFL1.",
+        "steps": [
+          {
+            "dur": 7,
+            "title": "Echauffement autonome",
+            "details": [
+              "Chaque eleve mene son echauffement seul, avant son passage.",
+              "Mobilisation des poignets, epaules, chevilles, doigts.",
+              "Le professeur observe la conduite de l'echauffement sans intervenir, sauf sur la securite."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Echauffement specifique des avant-bras",
+            "details": [
+              "Suspensions progressives.",
+              "Gainage dynamique.",
+              "Quelques mouvements sur une voie tres facile deja connue, pour se remettre en confiance."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Verification finale avant le premier passage",
+            "details": [
+              "Verification complete de la chaine d'assurage de la premiere cordee a passer.",
+              "Rappel oral bref des regles de chute, de reprise et de la duree de 8 minutes.",
+              "Installation du materiel de tirage au sort."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 32,
+          "title": "Epreuve certificative : voie tiree au sort, tete ou moulinette, 8 minutes",
+          "objective": "Evaluer l'AFL1 en direct sur la voie tiree au sort, dans le respect integral du protocole et des regles de chute et de reprise.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "chronometres",
+              "per": 0.34,
+              "min": 8
+            },
+            {
+              "label": "billets de tirage au sort",
+              "fixed": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par ordre de passage affiche, cordee par cordee. Chaque eleve tire au sort sa voie parmi celles qu'il a proposees (3 pour les garcons, 2 pour les filles), le professeur annonce le choix tete ou moulinette, la cordee s'equipe, puis le chronometre demarre des le debut du noeud d'encordement et l'installation du couple d'assurage, pour 8 minutes.",
+          "studentGoal": "Realiser ma voie tiree au sort dans les regles de l'epreuve, du mieux que je peux.",
+          "instructions": [
+            "Je tire au sort ma voie parmi celles que j'ai proposees.",
+            "J'ecoute l'annonce du professeur : ascension en tete ou en moulinette.",
+            "Je m'equipe, je m'encorde : le chronometre demarre, j'ai 8 minutes.",
+            "Je dois tenir la derniere prise 2 secondes et, en tete, mousquetonner la derniere degaine du relais."
+          ],
+          "success": [
+            "AFL1 - lire et analyser (6 points) : rythme et respiration adaptes, choix de difficulte pertinent, mousquetonnage au bon moment et bonne technique, recherche de la position de moindre effort.",
+            "AFL1 - adapter son deplacement (6 points) : placement juste, valorisation des prises, motricite specifique, prise d'informations en cours de grimpe.",
+            "La voie est terminee dans les 8 minutes selon les criteres exacts : derniere prise tenue 2 secondes et, en tete, derniere degaine mousquetonnee.",
+            "Les regles de chute et de reprise sont appliquees correctement en cas d'incident."
+          ],
+          "execution": [
+            "Prendre le temps de lire la voie avant de partir, malgre l'enjeu du jour.",
+            "Grimper avec le rythme, la respiration et la recherche de repos travailles depuis la seance 1.",
+            "Appliquer sans hesiter les regles de chute et de reprise si un incident survient."
+          ],
+          "watch": [
+            "Le rythme et la respiration restent-ils geres sous la pression de l'evaluation ?",
+            "Le mousquetonnage est-il fait au bon moment, en position de moindre effort ?",
+            "Le placement et la motricite specifique sont-ils adaptes au profil de la voie tiree au sort ?",
+            "Les regles de chute et de reprise sont-elles respectees a la lettre ?"
+          ],
+          "errors": [
+            "Se precipiter sous la pression de l'epreuve et negliger la lecture initiale.",
+            "Mousquetonner en extension, par precipitation.",
+            "Reprendre plus bas que la derniere prise apres une chute.",
+            "Oublier de mousquetonner la derniere degaine du relais en tete."
+          ],
+          "feedback": [
+            "Prends le temps de lire, tu as 8 minutes.",
+            "Rapproche-toi avant de mousquetonner, meme aujourd'hui.",
+            "Reprends exactement ou tu etais.",
+            "La derniere degaine du relais, sans elle ta voie n'est pas terminee."
+          ],
+          "plus": [],
+          "minus": [],
+          "diff": {
+            "facilitee": "Non applicable : l'epreuve certificative se deroule selon le protocole unique du referentiel de l'etablissement, sur la voie tiree au sort parmi celles proposees par le candidat.",
+            "normale": "Voie tiree au sort parmi les voies proposees par le candidat, tete ou moulinette selon l'annonce du professeur, 8 minutes chronometrees.",
+            "complexifiee": "Non applicable : la cotation de la voie est deja fixee par le choix des voies proposees par le candidat en amont."
+          },
+          "safety": [
+            "Le professeur n'autorise l'ascension en tete que si la maitrise des gestes de securite du candidat est jugee suffisante ; a defaut, ascension en moulinette.",
+            "Verification complete et systematique de la chaine d'assurage juste avant chaque passage, sans aucune exception.",
+            "L'assureur reste proche du mur tant que le grimpeur n'a pas depasse la 3e degaine, vigilance maximale sur le risque de retour au sol.",
+            "En cas de chute, 30 secondes de repos dans le baudrier puis reprise a la derniere prise utilisee.",
+            "En cas de 2e chute en moulinette, l'epreuve s'arrete pour ce candidat.",
+            "En cas de 2e chute en tete au-dessus de la 3e degaine, l'epreuve s'arrete ; en dessous de la 3e degaine, le candidat recommence en moulinette.",
+            "Toute erreur de mousquetonnage non corrigee avant la 3e degaine entraine une reprise en moulinette ; a la 3e degaine ou apres, l'epreuve est terminee.",
+            "Tapis de reception verifies sans interstice avant chaque passage.",
+            "Consulter les PAI avant le debut de l'epreuve.",
+            "Le professeur reste en vue de l'ensemble des voies utilisees et peut arreter toute ascension a tout moment.",
+            "Trousse de secours et point d'eau accessibles en permanence pendant toute l'epreuve."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "title": "AFL2 et AFL3 : les trois roles cooperatifs en action pendant l'epreuve",
+          "objective": "Finaliser l'evaluation de l'AFL2 et de l'AFL3 en observant chaque eleve dans ses trois roles cooperatifs pendant les passages des autres membres de sa cordee.",
+          "material": [
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            }
+          ],
+          "organization": "Pendant que deux membres de la cordee passent leur epreuve, le troisieme tient successivement les roles d'assureur, de compagnon de cordee et de coach, observes par le professeur pour finaliser la note d'AFL2/AFL3 selon la repartition choisie en seance 2.",
+          "studentGoal": "Assumer pleinement mes trois roles cooperatifs pendant les passages de mes camarades de cordee.",
+          "instructions": [
+            "Quand je ne passe pas mon epreuve, je verifie la chaine d'assurage de mon camarade avant son depart.",
+            "J'assure ou j'observe l'assurage selon l'organisation de ma cordee, avec la meme rigueur qu'a l'entrainement.",
+            "Je conseille mon camarade a l'oral, avant son passage, avec un vocabulaire specifique et precis.",
+            "Je reste attentif du debut a la fin du passage de mes deux camarades."
+          ],
+          "success": [
+            "AFL2 : le choix des voies proposees et le volume de pratique equilibre entre grimpeur et assureur sont visibles dans le carnet et dans la sequence.",
+            "AFL3 - role assureur : mou juste, anticipation, placement correct par rapport au couloir de chute.",
+            "AFL3 - role compagnon de cordee : verification complete et automatique de la chaine d'assurage.",
+            "AFL3 - role coach : conseils oraux pertinents, vocabulaire specifique maitrise."
+          ],
+          "execution": [
+            "Rester concentre sur les trois roles, sans relachement en fin de cycle.",
+            "Verifier la chaine d'assurage avec la meme rigueur que lors de la premiere seance.",
+            "Donner des conseils utiles et precis, pas seulement des encouragements."
+          ],
+          "watch": [
+            "Les trois roles sont-ils tous tenus serieusement jusqu'a la derniere seance ?",
+            "La verification de la chaine d'assurage reste-t-elle rigoureuse en fin de cycle ?",
+            "Les conseils de coach restent-ils precis et utiles sous la pression du jour de l'epreuve ?"
+          ],
+          "errors": [
+            "Relacher la vigilance d'assureur en pensant que l'epreuve de son camarade compte moins que la sienne.",
+            "Expedier la verification de la chaine d'assurage par manque de temps.",
+            "Ne plus donner de conseils de coach, concentre uniquement sur son propre passage a venir."
+          ],
+          "feedback": [
+            "Son epreuve compte autant que la tienne : reste vigilant.",
+            "Prends le temps de verifier, meme si le planning presse.",
+            "Un conseil utile, meme aujourd'hui, meme sous pression."
+          ],
+          "plus": [],
+          "minus": [],
+          "diff": {
+            "facilitee": "Non applicable : les trois roles cooperatifs sont evalues tels qu'ils ont ete pratiques tout au long de la sequence.",
+            "normale": "Les trois roles cooperatifs (assureur, compagnon de cordee, coach) sont tenus et observes pendant les passages des camarades de cordee.",
+            "complexifiee": "Non applicable."
+          },
+          "safety": [
+            "Aucun releve d'evaluation ne prevaut jamais sur une regle de securite : un assureur inattentif est immediatement rappele a l'ordre ou remplace.",
+            "Le professeur supervise en permanence l'ensemble des assurages, meme pendant l'observation des roles cooperatifs.",
+            "Point d'eau et trousse de secours accessibles en permanence."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Bilan collectif de cycle et rangement",
+          "objective": "Cloturer le cycle par un bilan collectif des acquis et un rangement complet et securise du materiel.",
+          "material": [
+            {
+              "label": "cordes dynamiques",
+              "fixed": 8
+            },
+            {
+              "label": "systemes d'assurage (tube ou grigri)",
+              "fixed": 8
+            },
+            {
+              "label": "jeux de degaines",
+              "fixed": 8
+            }
+          ],
+          "organization": "Rangement collectif de tout le materiel, cordee par cordee, puis classe assise pour le bilan du cycle.",
+          "studentGoal": "Ranger le materiel avec ma cordee et dire ce que j'ai appris sur ce cycle.",
+          "instructions": [
+            "Je range le materiel de ma cordee : corde, systeme d'assurage, degaines.",
+            "Je verifie qu'aucun mousqueton ni aucune corde n'est laisse en hauteur.",
+            "Une fois range, je m'assois pour le bilan collectif.",
+            "Je peux dire ce que j'ai appris depuis la seance 1, sur la securite ou sur mes roles cooperatifs."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Aucun element n'est laisse en hauteur ou hors de son emplacement.",
+            "Au moins un eleve par cordee s'exprime sur le bilan du cycle."
+          ],
+          "execution": [
+            "Ranger methodiquement, cordee par cordee.",
+            "Verifier visuellement chaque voie utilisee avant de quitter la salle.",
+            "Formuler un acquis concret, lie a la securite ou aux roles cooperatifs."
+          ],
+          "watch": [
+            "Le rangement est-il complet et securise ?",
+            "Les eleves citent-ils des acquis concrets, lies au cycle ?"
+          ],
+          "errors": [
+            "Laisser une degaine ou un mousqueton en hauteur.",
+            "Ne parler que de la performance du jour, sans evoquer les roles cooperatifs.",
+            "Laisser le rangement a quelques eleves seulement."
+          ],
+          "feedback": [
+            "Verifie qu'il ne reste rien en hauteur avant de partir.",
+            "Pas seulement ta voie du jour : parle aussi de ce que tu as appris comme assureur ou comme coach.",
+            "Tout le monde range, c'est aussi ca, etre un compagnon de cordee."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour une future pratique de l'escalade, hors du cadre scolaire."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis principaux du cycle, la classe valide ou complete."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis principaux du cycle, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis du cycle, securite ou roles cooperatifs.",
+            "complexifiee": "Acquis formule et transfere a une pratique future de l'escalade, hors cadre scolaire."
+          },
+          "safety": [
+            "Rangement realise sous la supervision du professeur, avec verification finale qu'aucun materiel n'est laisse en hauteur.",
+            "Comptage complet du materiel avant la fin de la seance.",
+            "Verification qu'aucun eleve ne presente de gene ou de douleur avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quelle voie avez-vous tiree au sort, et l'avez-vous terminee dans les 8 minutes ?",
+          "Que retenez-vous de vos trois roles cooperatifs sur l'ensemble du cycle : assureur, compagnon de cordee, coach ?"
+        ],
+        "key": "L'epreuve ne recompense pas seulement la voie du jour : elle recompense aussi tout ce qui a ete construit en tant qu'assureur, compagnon de cordee et coach, seance apres seance. La securite, elle, ne s'arrete jamais avec la derniere seance."
+      },
+      "socialRoles": [
+        "Assureur : applique integralement les regles de securite pendant l'epreuve de ses camarades de cordee.",
+        "Compagnon de cordee : verifie la chaine d'assurage avant chaque passage de l'epreuve.",
+        "Coach : conseille ses camarades avant leur passage et reste attentif jusqu'a la fin de leur ascension.",
+        "Responsable materiel : organise le rangement final et le comptage du materiel."
+      ]
+    }
+  ]
+}

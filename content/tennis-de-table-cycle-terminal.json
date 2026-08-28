@@ -1,0 +1,2678 @@
+{
+  "apsa": "Tennis de table",
+  "grades": [
+    "PREMIERE",
+    "TERMINALE"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel pour gagner",
+  "programme": "Programme d'enseignement commun d'EPS pour les classes de premiere et terminale des voies generale et technologique - arrete du 17 janvier 2019, BO special n°1 du 22 janvier 2019.",
+  "attendus": [
+    "AFL1 : s'engager pour gagner une rencontre en faisant des choix techniques et tactiques pertinents au regard de l'analyse du rapport de force.",
+    "AFL2 : se preparer et s'entrainer, individuellement ou collectivement, pour conduire et maitriser un affrontement collectif ou interindividuel.",
+    "AFL3 : choisir et assumer les roles qui permettent un fonctionnement collectif solidaire.",
+    "Construire un projet de jeu qui s'appuie sur l'analyse des forces et des faiblesses de l'adversaire, en s'auto-arbitrant de maniere fiable."
+  ],
+  "targetCompetence": "Passer d'un joueur reactif, focalise sur le simple renvoi de balle avec un seul coup a plat, a un joueur qui construit la rupture sur plusieurs echanges en combinant service arme, coup droit, revers, smash, top spin, bloc et amorti, au sein d'un binome stabilise et d'une poule de niveau homogene, evalue sur quatre matchs en deux manches gagnantes de onze points secs, en s'auto-arbitrant et en assumant deux roles choisis parmi partenaire d'entrainement, arbitre et coach.",
+  "cycleObjectives": [
+    "Constituer des poules de niveau homogene par table disponible et des binomes stabilises au plus tard trois lecons avant l'evaluation finale.",
+    "Construire un panel technique varie : service, coup droit, revers, smash, top spin, bloc, amorti.",
+    "Construire un projet de jeu qui s'adapte a l'evolution du rapport de force pendant le match.",
+    "Choisir, au plus tard trois lecons avant l'evaluation finale, deux roles d'AFL3 parmi partenaire d'entrainement, arbitre et coach, et la repartition des points entre l'AFL2 et l'AFL3.",
+    "Maitriser l'auto-arbitrage : annonce systematique et correcte du score, serveur annonce en premier, connaissance et application du reglement.",
+    "S'entrainer et se preparer individuellement et collectivement, avec une routine d'echauffement et d'entrainement adaptee a l'adversaire."
+  ],
+  "plannedTitles": [
+    "Cadre de securite, evaluation diagnostique et referentiel",
+    "Constituer les poules et les binomes stables",
+    "Construire son panel technique et son projet de jeu",
+    "Choisir ses deux roles d'AFL3 et sa repartition de points",
+    "Epreuve evaluee de mi-cycle et verification des roles",
+    "Affiner son jeu et exercer ses roles choisis",
+    "Repetition generale et carnet finalise",
+    "Epreuve finale et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Programme d'EPS - classes de premiere et terminale, voies generale et technologique",
+      "org": "Ministere de l'Education nationale",
+      "url": "https://www.education.gouv.fr/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Officiel",
+      "title": "Evaluation de l'EPS au baccalaureat - referentiels par champ d'apprentissage, CA4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/1727/education-physique-et-sportive-voie-generale-et-technologique",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Academique",
+      "title": "Reglement officiel, fiches techniques et progressions federales en tennis de table scolaire",
+      "org": "FFTT - Federation Francaise de Tennis de Table",
+      "url": "https://www.fftt.com/",
+      "consulted": "2026-08-27"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Enseigner le tennis de table au lycee - construire le rapport de force et le projet de jeu",
+      "org": "Revue EPS",
+      "url": "https://www.revue-eps.com/",
+      "consulted": "2026-08-27"
+    }
+  ],
+  "protocoleLocal": [
+    "Referentiel de l'etablissement (Lycee Victor Hugo de Marrakech) : autant de poules que de tables disponibles, environ 4 eleves par table.",
+    "Filles et garcons peuvent etre evalues au sein d'une meme poule.",
+    "Au sein de chaque poule, les eleves se regroupent librement par deux. Les binomes sont stabilises au plus tard trois lecons avant la seance d'evaluation terminale.",
+    "Chaque eleve affronte au moins les deux eleves du binome adverse de sa poule : chacun est evalue sur au moins deux matchs.",
+    "La rencontre se deroule en 4 matchs au total (2 matchs par joueur), en 2 manches gagnantes de 11 points secs.",
+    "Lors des simples, chaque joueur est coache par son partenaire : temps de conseils entre les deux manches, et possibilite d'un temps mort par manche.",
+    "AFL1 est note sur 12 points : 8 points pour les techniques de jeu (parametres de trajectoires : vitesse, hauteur, direction) et 4 points pour les pertinences strategiques. Chaque note est ajustee selon la proportion d'oppositions gagnees individuellement.",
+    "AFL2 et AFL3 sont notes sur 8 points au total, avec une repartition choisie par l'eleve au plus tard trois lecons avant l'evaluation : 4 et 4, 6 et 2, ou 2 et 6.",
+    "AFL3 : l'eleve est evalue dans au moins deux roles choisis parmi partenaire d'entrainement, arbitre et coach.",
+    "Auto-arbitrage obligatoire pendant tous les matchs : annonce du score a voix haute, systematique, score du serveur annonce en premier.",
+    "Materiel verifie avant chaque seance : etat des tables, tension des filets, raquettes et balles disponibles en nombre suffisant.",
+    "Securite des zones de jeu partagees : espace de recul suffisant entre les tables, aucun croisement de joueurs entre deux aires de jeu voisines.",
+    "PAI et dispenses : pathologies de l'epaule ou du poignet, troubles visuels, allergies au caoutchouc des raquettes.",
+    "Modalites de conservation du carnet d'entrainement, support de l'AFL2."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - reactif, focalise sur le renvoi",
+      "observed": "Renvoie toutes les balles avec le meme coup a plat, sans jamais chercher a faire mal a l'adversaire.",
+      "need": "Construire un premier projet tactique simple : viser un point faible identifie chez l'adversaire."
+    },
+    {
+      "label": "Profil 2 - panel technique reduit",
+      "observed": "Ne joue qu'en coup droit, evite systematiquement le revers, ne varie ni la vitesse ni la direction.",
+      "need": "Construire un panel technique varie : revers, service arme, puis smash, top spin, bloc et amorti."
+    },
+    {
+      "label": "Profil 3 - preparation negligee",
+      "observed": "Arrive sur la table sans echauffement specifique, enchaine les matchs sans routine ni observation de l'adversaire.",
+      "need": "Construire une routine d'echauffement et d'observation de l'adversaire avant chaque match."
+    },
+    {
+      "label": "Profil 4 - roles choisis mais peu investis",
+      "observed": "A choisi deux roles en seance 4, mais coache sans rien dire de precis ou arbitre sans annoncer le score a voix haute.",
+      "need": "Assumer pleinement ses deux roles choisis, dans les criteres exacts du referentiel."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Controle en cours de formation, referentiel du Lycee Victor Hugo de Marrakech. L'enseignant hierarchise la classe en autant de poules que de tables disponibles, environ 4 eleves par table ; filles et garcons peuvent etre evalues dans une meme poule. Au sein des poules, les eleves sont regroupes librement par deux, en binomes stabilises depuis au moins trois lecons. Chaque eleve affronte au moins les deux eleves du binome adverse de sa poule : la rencontre compte 4 matchs au total (2 matchs par joueur), en 2 manches gagnantes de 11 points secs. Lors des simples, chaque joueur est coache par son partenaire, avec un temps de conseils entre les deux manches et un temps mort par manche. Les matchs se jouent en auto-arbitrage : annonce correcte et systematique du score, serveur annonce en premier. AFL1 est note sur 12 points (8 pour les techniques de jeu, 4 pour les pertinences strategiques), chaque note ajustee selon la proportion d'oppositions gagnees individuellement. AFL2 et AFL3 sont notes sur 8 points au total selon la repartition choisie par l'eleve (4-4, 6-2 ou 2-6), et l'AFL3 porte sur deux roles choisis parmi partenaire d'entrainement, arbitre et coach.",
+    "criteria": [
+      "AFL1 - techniques de jeu (8 points) : du service simple utilise comme mise en jeu non reglementaire jusqu'au service veritable arme au service d'une strategie ; d'un seul coup technique joue a plat jusqu'a la combinaison de plusieurs coups (smash, top spin, bloc, amorti) ; de deplacements inexistants jusqu'a des deplacements systematiques autour de la table.",
+      "AFL1 - pertinences strategiques (4 points) : d'un joueur reactif focalise sur le renvoi de balle jusqu'a un joueur qui construit la rupture sur plusieurs coups, avec un projet tactique pertinent prenant en compte les forces et les faiblesses en presence.",
+      "AFL1 - chaque note (techniques de jeu et pertinences strategiques) est ajustee selon la proportion d'oppositions gagnees individuellement, de 0% a 100% de victoires, du bas vers le haut de la fourchette.",
+      "AFL2 : engagement reel dans les phases de repetition (routine d'entrainement, choix et adaptation d'exercices cibles selon les points forts et les points faibles) et qualite de la preparation, de l'absence d'echauffement jusqu'a un echauffement individualise permettant d'identifier les caracteristiques de l'adversaire.",
+      "AFL3 - role de coach, si choisi : du coach qui n'aide pas son partenaire et recueille des donnees peu fiables, jusqu'au coach qui exploite et interprete les donnees pour accompagner les choix de son partenaire, personne-ressource indispensable a l'evolution du score, qui demande a bon escient un temps mort.",
+      "AFL3 - role d'(auto-)arbitrage, si choisi : de l'eleve qui ne donne pas le score a voix haute, fait de nombreuses erreurs et ne connait pas toutes les regles, jusqu'a l'eleve qui prend son role a coeur, donne le score a voix haute dans l'ordre (score du serveur en premier), connait et fait respecter le reglement, sans aucun conflit.",
+      "AFL3 - role de partenaire d'entrainement, si choisi : de l'eleve qui refuse ou subit la cooperation, jusqu'a l'eleve qui accepte pleinement d'etre partenaire, s'investit pour faire progresser son camarade et adapte ses envois a son niveau.",
+      "AFL2 et AFL3 sont notes sur 8 points au total, selon la repartition choisie par l'eleve : 4 et 4, 6 et 2, ou 2 et 6."
+    ],
+    "referential": "Referentiel certificatif enseignement commun EPS CA4, Lycee Victor Hugo de Marrakech, epreuve tennis de table."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Cadre de securite, evaluation diagnostique et referentiel",
+      "mainObjective": "Poser le cadre de securite specifique au tennis de table, faire eprouver des matchs diagnostiques et comprendre ce qui sera evalue.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Verifier l'etat des tables, des filets et du materiel, et delimiter des zones de jeu partagees en securite.",
+        "Observer le niveau technique (prise, coups, deplacements) et tactique de chaque eleve en situation de match.",
+        "Ouvrir le carnet d'entrainement et decouvrir le referentiel d'evaluation."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : chacun sait renvoyer une balle, mais l'epreuve reunit prise de raquette, panel de coups, deplacements, projet tactique et auto-arbitrage dans un affrontement complet.",
+      "prerequisiteForNext": "Chaque eleve connait son niveau technique et tactique de depart, et le format de l'epreuve finale.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "filets et poteaux",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Lire le referentiel d'evaluation de l'etablissement et l'afficher : format des matchs, bareme, roles.",
+          "Verifier l'etat de chaque table et la tension de chaque filet.",
+          "Delimiter les zones de jeu partagees : espace de recul suffisant entre les tables, aucun croisement entre deux aires voisines.",
+          "Verifier les PAI et les dispenses, notamment les pathologies de l'epaule ou du poignet.",
+          "Repartir les raquettes et les balles table par table.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord de la salle."
+        ],
+        "sketch": "Six tables alignees avec un espace de recul d'au moins deux metres derriere chaque table.\nZones de jeu numerotees, aucun croisement entre deux tables voisines.\nAffiche du referentiel a l'entree de la salle.\nZone d'ecriture et point d'eau a l'ecart des tables."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes : le tennis de table sollicite des gestes rapides et repetes du bras et du poignet, sans montee en temperature generale suffisante par la seule course.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale",
+            "details": [
+              "Cinq minutes de deplacements varies dans la salle : pas chasses, pas croises, changements de direction.",
+              "Verifier que chacun peut parler en se deplacant."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Mobilisation des chevilles et des genoux pour les appuis.",
+              "Etirements actifs, sans temps de maintien long."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois progressifs, montee en reflexes",
+            "details": [
+              "Par deux sur chaque table, echanges de renvois simples, vitesse croissante.",
+              "Alterner coup droit et revers sans chercher la vitesse maximale.",
+              "Deux minutes de jeu libre pour affuter les reflexes avant les matchs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Matchs diagnostiques en poules improvisees",
+          "role": "NOYAU",
+          "dur": 26,
+          "objective": "Observer le niveau technique (prise, coups, deplacements) et tactique de chaque eleve en situation de match.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Poules improvisees de 4 eleves par table, rotation toutes les 6 minutes. Matchs courts en une manche a 11 points, auto-arbitres. Le professeur circule de table en table et observe.",
+          "studentGoal": "Jouer plusieurs matchs courts et montrer mon niveau reel de jeu.",
+          "instructions": [
+            "Je joue chaque match comme si c'etait le jour de l'epreuve.",
+            "J'annonce le score a voix haute a chaque point.",
+            "Je change de table a chaque rotation.",
+            "Je note mon ressenti apres chaque match : ce qui a marche, ce qui a coince."
+          ],
+          "success": [
+            "Chaque eleve joue au moins trois matchs courts.",
+            "Le score est annonce a voix haute sur chaque match.",
+            "Un ressenti est note apres chaque match."
+          ],
+          "execution": [
+            "Se placer a bonne distance de la table, jambes flechies.",
+            "Regarder la balle jusqu'au contact avec la raquette.",
+            "Revenir a une position d'attente entre chaque echange."
+          ],
+          "watch": [
+            "Quelle prise de raquette utilise chaque eleve ?",
+            "Le coup droit et le revers sont-ils tous les deux utilises, ou un seul coup a plat domine-t-il ?",
+            "Les deplacements autour de la table existent-ils ou l'eleve reste-t-il immobile ?",
+            "Le score est-il annonce, et dans quel ordre ?"
+          ],
+          "errors": [
+            "Rester immobile et attendre la balle sans se deplacer.",
+            "N'utiliser qu'un seul coup, toujours a plat.",
+            "Ne pas annoncer le score ou l'annoncer seulement a la fin du match."
+          ],
+          "feedback": [
+            "Tu ne bouges pas les pieds : la balle ne vient pas toujours a toi.",
+            "Essaie ton revers, pas seulement ton coup droit.",
+            "Annonce le score a chaque point, pas seulement a la fin."
+          ],
+          "plus": [
+            "Matchs en deux manches a 11 points pour affiner l'observation."
+          ],
+          "minus": [
+            "Echanges diriges sans notion de score, pour observer sans enjeu."
+          ],
+          "diff": {
+            "facilitee": "Echanges diriges sans notion de score, uniquement pour observer prise et coups.",
+            "normale": "Matchs courts en une manche a 11 points, auto-arbitres.",
+            "complexifiee": "Matchs en deux manches a 11 points, avec relance tactique du professeur."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table verifie avant le premier match.",
+            "Aucun croisement entre deux aires de jeu voisines.",
+            "Consulter les PAI : pathologies de l'epaule ou du poignet, troubles visuels.",
+            "Arret immediat pour tout eleve signalant une douleur a l'epaule, au poignet ou au dos.",
+            "Chaussures de sport obligatoires, sol verifie non glissant.",
+            "Le professeur reste en vue de l'ensemble des tables."
+          ]
+        },
+        {
+          "title": "Lire le referentiel et comprendre l'epreuve",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Faire comprendre le format de l'epreuve finale et ce qui est evalue au fil du cycle.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des tables. Lecture collective du referentiel puis reponses individuelles ecrites sur le carnet : format des matchs, bareme AFL1, roles possibles pour l'AFL3.",
+          "studentGoal": "Savoir comment se deroulera l'epreuve finale et ce qui sera evalue.",
+          "instructions": [
+            "J'ecoute la presentation du format : 4 matchs au total, 2 manches gagnantes de 11 points secs.",
+            "Je note les trois roles possibles pour l'AFL3 : partenaire d'entrainement, arbitre, coach.",
+            "Je note qu'il faudra choisir deux de ces trois roles, plus tard dans le cycle.",
+            "J'ecris une phrase sur mon niveau de depart, a partir des matchs de tout a l'heure."
+          ],
+          "success": [
+            "Le format de l'epreuve est reformule correctement par l'eleve.",
+            "Les trois roles possibles pour l'AFL3 sont notes.",
+            "Une phrase sur le niveau de depart est ecrite au carnet."
+          ],
+          "execution": [
+            "Ecouter avant d'ecrire.",
+            "Reformuler avec ses propres mots.",
+            "Relier le format a ce qui vient d'etre joue."
+          ],
+          "watch": [
+            "Les eleves comprennent-ils qu'il faudra choisir deux roles parmi trois, pas les trois ?",
+            "Distinguent-ils l'evaluation du jour J de l'evaluation au fil du cycle ?"
+          ],
+          "errors": [
+            "Croire qu'il faudra tenir les trois roles de l'AFL3.",
+            "Ne rien ecrire au carnet.",
+            "Confondre le nombre de matchs et le nombre de manches."
+          ],
+          "feedback": [
+            "Deux roles parmi trois, pas les trois : on choisira plus tard.",
+            "Ecris-le : on le relira a la fin du cycle.",
+            "Quatre matchs au total, deux par joueur : relis la fiche."
+          ],
+          "plus": [
+            "Calcul du nombre de points maximum possibles sur l'AFL1 et sur l'AFL2 et l'AFL3."
+          ],
+          "minus": [
+            "Reformulation guidee par le professeur, phrase a completer."
+          ],
+          "diff": {
+            "facilitee": "Reformulation guidee par le professeur, phrase a completer.",
+            "normale": "Lecture collective puis reponses ecrites individuelles au carnet.",
+            "complexifiee": "Calcul du bareme complet et des points maximum sur chaque AFL."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Premier jeu libre en auto-arbitrage",
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "objective": "Decouvrir l'exigence de l'auto-arbitrage des la premiere seance, sans engagement definitif de role.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Par deux, jeu libre en une petite manche a 11 points. Consigne unique : annoncer le score du serveur en premier, a voix haute, a chaque point.",
+          "studentGoal": "Annoncer correctement le score, serveur en premier, sur toute une manche.",
+          "instructions": [
+            "Avant chaque point, je sais qui sert.",
+            "J'annonce le score du serveur en premier, par exemple 3 a 5.",
+            "Je change de serveur toutes les deux balles, comme le prevoit le reglement.",
+            "En cas de doute sur un point, on le rejoue plutot que de se disputer."
+          ],
+          "success": [
+            "Le score est annonce a chaque point, serveur en premier.",
+            "Le changement de serveur toutes les deux balles est respecte.",
+            "Aucun conflit non resolu en fin de manche."
+          ],
+          "execution": [
+            "Annoncer avant de servir, pas apres.",
+            "Compter mentalement les services pour changer au bon moment.",
+            "Rester calme en cas de point litigieux."
+          ],
+          "watch": [
+            "Le score est-il annonce dans le bon ordre ?",
+            "Le changement de serveur est-il respecte ?",
+            "Y a-t-il des tensions sur les points litigieux ?"
+          ],
+          "errors": [
+            "Annoncer son propre score en premier plutot que celui du serveur.",
+            "Oublier de changer de serveur toutes les deux balles.",
+            "Se disputer sur un point litigieux au lieu de le rejouer."
+          ],
+          "feedback": [
+            "Le score du serveur d'abord, toujours.",
+            "Deux balles chacun : verifie le compte.",
+            "Un point litigieux se rejoue, il ne se dispute pas."
+          ],
+          "plus": [
+            "Manche complete jusqu'a 11 points avec ecart de deux points obligatoire."
+          ],
+          "minus": [
+            "Echanges de cinq points seulement, avec aide du professeur pour l'annonce."
+          ],
+          "diff": {
+            "facilitee": "Echanges de cinq points avec aide du professeur pour l'annonce du score.",
+            "normale": "Une manche complete a 11 points, auto-arbitree.",
+            "complexifiee": "Manche complete avec ecart de deux points obligatoire en cas d'egalite a 10."
+          },
+          "safety": [
+            "Aucun eleve ne discute physiquement un point litigieux : on rejoue.",
+            "Le professeur intervient sur tout conflit persistant.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel coup utilisez-vous le plus souvent, et lequel n'osez-vous pas encore utiliser ?",
+          "Que faut-il annoncer en premier quand on donne le score ?"
+        ],
+        "key": "L'epreuve ne se joue pas avec un seul coup a plat : coup droit, revers, et bientot smash, top spin, bloc et amorti. Et le score du serveur s'annonce toujours en premier."
+      },
+      "socialRoles": [
+        "Arbitre debutant : annonce le score de son propre match, serveur en premier.",
+        "Observateur : aide le professeur a reperer les coups utilises par ses camarades.",
+        "Responsable materiel : verifie les raquettes et les balles a chaque rotation."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Constituer les poules et les binomes stables",
+      "mainObjective": "Constituer des poules de niveau homogene et des binomes stabilises pour tout le cycle, et decouvrir les trois roles candidats de l'AFL3.",
+      "secondaryObjectives": [
+        "Repartir la classe en poules hierarchisees, autant de poules que de tables disponibles.",
+        "Former, au sein de chaque poule, des binomes choisis librement par deux.",
+        "Experimenter tour a tour les trois roles candidats : partenaire d'entrainement, arbitre, coach."
+      ],
+      "linkToPrevious": "Les matchs diagnostiques ont montre les niveaux. Il faut maintenant hierarchiser la classe en poules et fixer des binomes stables : c'est la base de toute l'epreuve finale.",
+      "prerequisiteForNext": "Chaque eleve connait sa poule et son binome, stabilises pour le reste du cycle.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche des poules",
+            "fixed": 1
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "A partir des observations de la seance 1, hierarchiser la classe en autant de poules que de tables disponibles, environ 4 eleves par table.",
+          "Afficher les poules a l'entree de la salle.",
+          "Verifier l'etat des tables et des filets.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Six tables numerotees, une poule affectee a chaque table.\nAffiche des poules et des binomes a l'entree de la salle.\nZone d'ecriture a l'ecart pour la formation des binomes.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, mene par table de poule pour que le groupe commence a se connaitre.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale",
+            "details": [
+              "Cinq minutes de deplacements varies par petits groupes de poule.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois progressifs par poule",
+            "details": [
+              "Echanges de renvois simples sur la table de sa poule.",
+              "Alterner coup droit et revers.",
+              "Deux minutes de jeu libre avant les matchs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Formation des poules et des binomes",
+          "role": "NOYAU",
+          "dur": 26,
+          "objective": "Constituer des poules de niveau homogene par table disponible, puis des binomes librement choisis au sein de chaque poule.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "affiche des poules",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Le professeur annonce les poules, hierarchisees en montee et descente selon les observations de la seance 1, une poule par table. Au sein de chaque poule, les eleves se regroupent librement par deux. Chaque binome joue un premier match contre un autre binome de sa poule.",
+          "studentGoal": "Trouver ma poule, choisir mon binome, et jouer mon premier match en binome.",
+          "instructions": [
+            "Je rejoins la table de ma poule, affichee a l'entree.",
+            "Je choisis librement mon binome au sein de ma poule.",
+            "Mon binome et moi jouons un premier match contre un autre binome de la poule.",
+            "Je note le nom de mon binome sur mon carnet : il ne changera plus jusqu'a l'evaluation finale."
+          ],
+          "success": [
+            "Chaque eleve a rejoint sa poule et choisi un binome.",
+            "Le binome est note au carnet.",
+            "Un premier match est joue entre deux binomes de la poule."
+          ],
+          "execution": [
+            "Choisir un binome avec qui l'on peut s'entrainer regulierement, pas seulement un ami.",
+            "Se placer sur la table de sa poule des l'annonce.",
+            "Jouer le match en appliquant l'auto-arbitrage vu en seance 1."
+          ],
+          "watch": [
+            "Les binomes se forment-ils rapidement, ou faut-il arbitrer des desaccords ?",
+            "Le niveau au sein de chaque poule est-il homogene ?",
+            "Un eleve reste-t-il sans binome ?"
+          ],
+          "errors": [
+            "Choisir un binome uniquement par amitie, sans tenir compte de la disponibilite pour s'entrainer.",
+            "Changer de binome des le lendemain.",
+            "Oublier de noter son binome au carnet."
+          ],
+          "feedback": [
+            "Ton binome doit pouvoir s'entrainer avec toi regulierement : y as-tu pense ?",
+            "Ce binome est stable jusqu'a l'evaluation finale, pas seulement pour aujourd'hui.",
+            "Note-le maintenant, tu en auras besoin toute la sequence."
+          ],
+          "plus": [
+            "Le binome ecrit aussi une phrase sur les points forts et faibles complementaires du duo."
+          ],
+          "minus": [
+            "Binomes proposes par le professeur a partir des observations de la seance 1."
+          ],
+          "diff": {
+            "facilitee": "Binomes proposes par le professeur a partir des observations de la seance 1.",
+            "normale": "Binomes choisis librement au sein de la poule, notes au carnet.",
+            "complexifiee": "Binome qui analyse par ecrit ses points forts et faibles complementaires."
+          },
+          "safety": [
+            "Aucun eleve n'est laisse sans poule ni sans binome : le professeur arbitre les cas difficiles.",
+            "Espace de recul suffisant derriere chaque table.",
+            "Consulter les PAI.",
+            "Le professeur reste en vue de l'ensemble des tables."
+          ]
+        },
+        {
+          "title": "Decouvrir les trois roles candidats",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Faire experimenter brievement les trois roles candidats de l'AFL3, sans engagement definitif.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Par trinome autour d'une table (les binomes se regroupent momentanement par trois). Rotation toutes les 3 minutes sur les trois roles : partenaire d'entrainement (renvois cibles pour faire progresser), arbitre (annonce du score), coach (une consigne breve donnee entre deux echanges).",
+          "studentGoal": "Essayer les trois roles pour savoir lequel me correspond le mieux.",
+          "instructions": [
+            "Role partenaire d'entrainement : j'envoie des balles ciblees pour faire travailler mon camarade, pas pour gagner.",
+            "Role arbitre : j'annonce le score a voix haute, serveur en premier.",
+            "Role coach : je donne une seule consigne breve et utile entre deux echanges.",
+            "Je note sur mon carnet le role qui m'a semble le plus naturel."
+          ],
+          "success": [
+            "Les trois roles sont experimentes par chaque eleve.",
+            "Une consigne de coach au moins est jugee utile par le camarade.",
+            "Un ressenti sur le role prefere est note au carnet."
+          ],
+          "execution": [
+            "Rester concentre sur le seul role en cours, sans anticiper le suivant.",
+            "En coach, choisir une consigne courte et concrete.",
+            "En partenaire d'entrainement, adapter ses envois au niveau du camarade."
+          ],
+          "watch": [
+            "Les eleves distinguent-ils bien les trois roles ?",
+            "Les consignes de coach sont-elles concretes ou vagues ?",
+            "Le role de partenaire d'entrainement est-il pris au serieux, ou transforme en match ?"
+          ],
+          "errors": [
+            "Transformer le role de partenaire d'entrainement en veritable match.",
+            "Donner une consigne de coach vague, du type continue comme ca.",
+            "Melanger les roles au lieu de les tenir separement."
+          ],
+          "feedback": [
+            "Ce n'est pas un match, c'est de l'entrainement : envoie des balles utiles a ton camarade.",
+            "Une consigne concrete : leve plus ta balle, pas juste continue.",
+            "Un seul role a la fois, c'est plus facile a bien tenir."
+          ],
+          "plus": [
+            "Le coach note par ecrit la consigne donnee et son effet observe."
+          ],
+          "minus": [
+            "Roles decouverts avec l'aide constante du professeur qui propose les consignes."
+          ],
+          "diff": {
+            "facilitee": "Roles decouverts avec l'aide du professeur qui propose des exemples de consignes.",
+            "normale": "Rotation autonome des trois roles, ressenti note au carnet.",
+            "complexifiee": "Le coach note par ecrit sa consigne et l'effet observe sur le jeu du camarade."
+          },
+          "safety": [
+            "Le partenaire d'entrainement adapte la vitesse de ses envois pour ne pas mettre son camarade en difficulte.",
+            "Le professeur circule et corrige tout envoi dangereux.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Match en binome, format simplifie",
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "objective": "Jouer un premier match en deux manches, format proche de l'epreuve, pour asseoir la routine de poule.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Chaque binome affronte un autre binome de sa poule sur un match en deux manches gagnantes de 11 points, chacun coache par son partenaire entre les deux manches.",
+          "studentGoal": "Jouer un match en deux manches et me faire coacher par mon partenaire entre les deux.",
+          "instructions": [
+            "Je joue mes deux manches contre l'eleve du binome adverse.",
+            "Entre les deux manches, mon partenaire me donne un conseil bref.",
+            "J'annonce le score, serveur en premier, sur toute la rencontre.",
+            "Je note le resultat sur mon carnet."
+          ],
+          "success": [
+            "Deux manches sont jouees contre un adversaire du binome adverse.",
+            "Un conseil est donne entre les deux manches.",
+            "Le resultat est note au carnet."
+          ],
+          "execution": [
+            "Ecouter le conseil du partenaire sans le discuter longuement.",
+            "Appliquer le conseil des le debut de la deuxieme manche.",
+            "Annoncer le score sans interruption."
+          ],
+          "watch": [
+            "Le temps de conseils entre manches est-il utilise ?",
+            "Le score est-il annonce correctement sur toute la rencontre ?",
+            "Le format en deux manches est-il respecte ?"
+          ],
+          "errors": [
+            "Ignorer le conseil donne entre les deux manches.",
+            "Oublier d'annoncer le score en cours de manche.",
+            "Jouer une seule manche au lieu de deux."
+          ],
+          "feedback": [
+            "Ton partenaire vient de te parler : essaie son conseil.",
+            "Le score, a chaque point, pas seulement a la fin.",
+            "Deux manches, c'est le format : la deuxieme compte autant que la premiere."
+          ],
+          "plus": [
+            "Match complet en 2 manches gagnantes avec temps mort possible sur une manche."
+          ],
+          "minus": [
+            "Une seule manche a 11 points, sans coaching entre manches."
+          ],
+          "diff": {
+            "facilitee": "Une seule manche a 11 points, sans coaching entre manches.",
+            "normale": "Deux manches gagnantes de 11 points avec coaching entre les deux.",
+            "complexifiee": "Match complet avec un temps mort demande par l'un des deux joueurs."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table.",
+            "Le partenaire-coach reste hors de la zone de jeu pendant les echanges.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qui est votre binome, et pourquoi l'avez-vous choisi ?",
+          "Parmi les trois roles essayes aujourd'hui, lequel vous a semble le plus naturel ?"
+        ],
+        "key": "Votre poule et votre binome sont fixes pour tout le cycle : c'est sur cette base que se jouera l'epreuve finale. Et parmi les trois roles, il faudra bientot en choisir deux."
+      },
+      "socialRoles": [
+        "Partenaire d'entrainement : envoie des balles ciblees pour faire progresser son camarade.",
+        "Arbitre : annonce le score, serveur en premier, sur son propre match.",
+        "Coach : donne un conseil bref et utile entre les deux manches de son partenaire."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Construire son panel technique et son projet de jeu",
+      "mainObjective": "Construire un panel technique varie (prise, coup droit, revers, smash, top spin, bloc, amorti) et un premier projet de jeu adapte au rapport de force.",
+      "secondaryObjectives": [
+        "Ameliorer la prise de raquette et le placement du corps sur coup droit et revers.",
+        "Decouvrir le smash, le top spin, le bloc et l'amorti en situation dirigee.",
+        "Construire un projet de jeu qui vise un point faible identifie chez l'adversaire."
+      ],
+      "linkToPrevious": "Poules et binomes sont fixes. Reste a enrichir le jeu : sortir du seul coup a plat et commencer a jouer avec une intention tactique.",
+      "prerequisiteForNext": "Chaque eleve utilise coup droit et revers, connait au moins deux coups du panel avance, et formule un projet de jeu simple.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "affiche du panel technique",
+            "fixed": 2
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le panel technique attendu : service, coup droit, revers, smash, top spin, bloc, amorti.",
+          "Verifier l'etat des tables et des filets.",
+          "Organiser les tables par poule.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Six tables organisees par poule.\nAffiche du panel technique visible depuis chaque table.\nZone d'ecriture a l'ecart pour la formulation du projet de jeu.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, avec renvois de plus en plus varies pour preparer le travail technique.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale",
+            "details": [
+              "Cinq minutes de deplacements varies dans la salle.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois varies, montee en reflexes",
+            "details": [
+              "Echanges alternant coup droit et revers, vitesse croissante.",
+              "Quelques services simples pour se remettre en jambes.",
+              "Deux minutes de jeu libre avant les ateliers."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Ateliers prise, coup droit et revers",
+          "role": "NOYAU",
+          "dur": 24,
+          "objective": "Ameliorer la prise de raquette et la qualite technique du coup droit et du revers.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "affiche du panel technique",
+              "fixed": 2
+            }
+          ],
+          "organization": "Par binome, sur la table de sa poule. Series de renvois cibles : dix balles en coup droit dans une zone, dix balles en revers dans une autre zone, puis alternance coup droit-revers imposee par le partenaire.",
+          "studentGoal": "Ameliorer la precision de mon coup droit et de mon revers, dans une prise correcte.",
+          "instructions": [
+            "Je verifie ma prise de raquette avant de commencer.",
+            "Je renvoie dix balles en coup droit dans la zone indiquee.",
+            "Je renvoie dix balles en revers dans l'autre zone.",
+            "Mon partenaire alterne ensuite ses envois entre coup droit et revers, sans prevenir."
+          ],
+          "success": [
+            "Au moins 6 balles sur 10 atteignent la zone visee en coup droit.",
+            "Au moins 6 balles sur 10 atteignent la zone visee en revers.",
+            "L'alternance coup droit-revers est geree sans blocage prolonge."
+          ],
+          "execution": [
+            "Garder une prise stable, sans la modifier a chaque coup.",
+            "Armer le geste avant le contact avec la balle.",
+            "Revenir a une position centrale entre chaque coup."
+          ],
+          "watch": [
+            "La prise de raquette est-elle stable ou change-t-elle a chaque coup ?",
+            "Le revers est-il evite au profit du coup droit ?",
+            "Le retour a la position centrale est-il systematique ?"
+          ],
+          "errors": [
+            "Changer de prise a chaque coup selon la difficulte.",
+            "Se deplacer pour jouer tous les coups en coup droit, meme sur le revers.",
+            "Ne pas revenir en position centrale apres le coup."
+          ],
+          "feedback": [
+            "Garde ta prise, ne la change pas a chaque balle.",
+            "Cette balle est sur ton revers : ne te decale pas pour la jouer en coup droit.",
+            "Reviens au centre : tu es pris de vitesse sur le coup suivant."
+          ],
+          "plus": [
+            "Alternance coup droit-revers avec zones reduites de moitie."
+          ],
+          "minus": [
+            "Renvois libres sans zone imposee, uniquement coup droit puis uniquement revers."
+          ],
+          "diff": {
+            "facilitee": "Renvois libres sans zone imposee, un cote a la fois.",
+            "normale": "Series de dix balles par zone, puis alternance imposee par le partenaire.",
+            "complexifiee": "Alternance coup droit-revers avec zones reduites de moitie."
+          },
+          "safety": [
+            "Le partenaire envoie des balles a une vitesse adaptee au niveau de son camarade.",
+            "Espace de recul suffisant derriere chaque table.",
+            "Consulter les PAI : pathologies du poignet ou de l'epaule.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Decouvrir smash, top spin, bloc et amorti",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Faire decouvrir en situation dirigee les quatre coups du panel avance : smash, top spin, bloc, amorti.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "affiche du panel technique",
+              "fixed": 2
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Par binome, quatre ateliers tournants de 3 minutes : smash sur balle haute envoyee par le partenaire, top spin sur balle a effet, bloc face a une attaque, amorti pres du filet.",
+          "studentGoal": "Essayer les quatre coups du panel avance, un a la fois.",
+          "instructions": [
+            "Sur balle haute envoyee par mon partenaire, je tente un smash.",
+            "Sur balle a effet, je tente un top spin.",
+            "Face a une attaque, je tente un bloc court.",
+            "Pres du filet, je tente un amorti qui retombe court."
+          ],
+          "success": [
+            "Chaque eleve tente les quatre coups au moins trois fois.",
+            "Au moins un coup sur les quatre est reussi de maniere reconnaissable.",
+            "Le coup est identifie correctement par le partenaire qui observe."
+          ],
+          "execution": [
+            "Smash : frapper vers le bas, sur une balle haute uniquement.",
+            "Top spin : accompagner la balle avec un geste vers le haut et l'avant.",
+            "Bloc : opposer une surface stable, sans grand geste.",
+            "Amorti : freiner la balle au dernier moment, geste court."
+          ],
+          "watch": [
+            "Le smash est-il tente sur une balle basse, ce qui l'envoie dans le filet ?",
+            "Le geste du top spin accompagne-t-il vraiment la balle vers le haut ?",
+            "Le bloc reste-t-il stable ou devient-il un grand geste incontrole ?",
+            "L'amorti retombe-t-il pres du filet ou traverse-t-il toute la table ?"
+          ],
+          "errors": [
+            "Tenter un smash sur une balle basse.",
+            "Faire un top spin avec un geste trop bref, sans accompagnement.",
+            "Bloquer avec un grand geste au lieu d'une surface stable.",
+            "Faire un amorti qui part trop fort et traverse la table."
+          ],
+          "feedback": [
+            "Attends la balle haute pour smasher, pas celle-la.",
+            "Accompagne plus longtemps ta balle vers le haut pour le top spin.",
+            "Bloque avec une surface stable, pas un grand geste.",
+            "Freine davantage ta balle pour l'amorti."
+          ],
+          "plus": [
+            "Enchainement de deux coups du panel avance sur le meme echange."
+          ],
+          "minus": [
+            "Un seul coup du panel avance travaille sur toute la duree, au choix de l'eleve."
+          ],
+          "diff": {
+            "facilitee": "Un seul coup du panel avance travaille sur toute la duree, avec balles facilitees par le partenaire.",
+            "normale": "Quatre ateliers tournants de 3 minutes, un coup par atelier.",
+            "complexifiee": "Enchainement de deux coups du panel avance sur le meme echange."
+          },
+          "safety": [
+            "Le partenaire envoie des balles adaptees a l'exercice demande, sans viser le corps.",
+            "Espace de recul suffisant pour le smash, geste qui peut deborder de la table.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Matchs avec projet de jeu simple",
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "objective": "Appliquer en match un premier projet tactique : viser un point faible identifie chez l'adversaire.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Match en une manche a 11 points contre un adversaire de la poule. Avant de servir, chacun annonce a son partenaire le point faible qu'il va viser (revers, balle haute, amorti...).",
+          "studentGoal": "Jouer un match en visant volontairement un point faible identifie chez mon adversaire.",
+          "instructions": [
+            "J'observe mon adversaire pendant l'echauffement de match.",
+            "Je dis a mon partenaire le point faible que je vais viser.",
+            "Je joue ma manche en cherchant a exploiter ce point faible.",
+            "Je note apres le match si mon projet a fonctionne."
+          ],
+          "success": [
+            "Un point faible est identifie et annonce avant le match.",
+            "Au moins trois points sont marques en exploitant ce point faible.",
+            "Un bilan ecrit est fait sur l'efficacite du projet."
+          ],
+          "execution": [
+            "Observer le revers, les deplacements et la reception de balle haute de l'adversaire.",
+            "Diriger volontairement certaines balles vers le point faible identifie.",
+            "Adapter le projet si l'adversaire corrige son point faible en cours de match."
+          ],
+          "watch": [
+            "Le point faible annonce est-il reellement vise pendant le match ?",
+            "L'eleve adapte-t-il son projet si l'adversaire progresse dans le match ?",
+            "Le bilan ecrit est-il honnete sur l'efficacite reelle ?"
+          ],
+          "errors": [
+            "Annoncer un projet puis jouer sans lien avec lui.",
+            "Continuer a viser un point faible que l'adversaire a corrige.",
+            "Ne rien noter apres le match."
+          ],
+          "feedback": [
+            "Tu as dit revers, mais tu joues surtout coup droit : reviens a ton projet.",
+            "Il a corrige son revers : trouve un autre point faible.",
+            "Note ce qui a marche, tu t'en serviras au prochain match."
+          ],
+          "plus": [
+            "Deux points faibles identifies et vises tour a tour selon l'evolution du score."
+          ],
+          "minus": [
+            "Projet propose par le partenaire-coach depuis l'exterieur de la table."
+          ],
+          "diff": {
+            "facilitee": "Projet propose par le partenaire-coach, qui rappelle la consigne pendant le match.",
+            "normale": "Projet identifie et annonce par l'eleve avant le match, bilan ecrit ensuite.",
+            "complexifiee": "Deux points faibles identifies et exploites tour a tour selon le score."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table.",
+            "Consulter les PAI.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel nouveau coup avez-vous reussi aujourd'hui pour la premiere fois ?",
+          "Quel point faible avez-vous vise chez votre adversaire, et cela a-t-il fonctionne ?"
+        ],
+        "key": "Le panel technique s'enrichit coup apres coup : coup droit, revers, puis smash, top spin, bloc et amorti. Et un projet de jeu, c'est viser un point faible reel, pas jouer au hasard."
+      },
+      "socialRoles": [
+        "Partenaire d'entrainement : envoie des balles ciblees pour les ateliers techniques.",
+        "Arbitre : annonce le score, serveur en premier, sur les matchs de reinvestissement.",
+        "Observateur : aide a identifier le point faible de l'adversaire avant le match."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Choisir ses deux roles d'AFL3, sa repartition de points et approfondir le projet de jeu",
+      "mainObjective": "Approfondir le panel technique et le projet de jeu, et choisir formellement ses deux roles d'AFL3 ainsi que la repartition des points entre AFL2 et AFL3.",
+      "secondaryObjectives": [
+        "Combiner plusieurs coups du panel technique sur un meme echange.",
+        "Choisir deux roles parmi partenaire d'entrainement, arbitre et coach, au plus tard trois lecons avant l'evaluation finale.",
+        "Choisir sa repartition des points entre AFL2 et AFL3 : 4-4, 6-2 ou 2-6."
+      ],
+      "linkToPrevious": "Le panel technique s'est enrichi et un premier projet de jeu existe. Les trois roles de l'AFL3 ont ete experimentes en seance 2 : il est temps d'en choisir deux, suffisamment tot pour s'y entrainer avant l'evaluation.",
+      "prerequisiteForNext": "Chaque eleve a choisi ses deux roles d'AFL3 et sa repartition de points, notes au carnet, et ne les changera plus sans raison majeure.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel avec les trois repartitions possibles entre AFL2 et AFL3 : 4-4, 6-2, 2-6.",
+          "Rappeler les trois roles candidats de l'AFL3 : partenaire d'entrainement, arbitre, coach.",
+          "Verifier l'etat des tables et des filets.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un espace d'ecriture a l'ecart des tables."
+        ],
+        "sketch": "Six tables organisees par poule.\nAffiche du referentiel et des repartitions a l'entree.\nZone d'ecriture dediee au choix des roles, a l'ecart des tables.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, avec renvois combinant deja plusieurs coups.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale",
+            "details": [
+              "Cinq minutes de deplacements varies dans la salle.",
+              "Verifier l'aisance respiratoire."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois combines, montee en reflexes",
+            "details": [
+              "Echanges combinant coup droit, revers et un coup du panel avance au choix.",
+              "Quelques services varies en vitesse et en direction.",
+              "Deux minutes de jeu libre avant les ateliers."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Combiner plusieurs coups sur un meme echange",
+          "role": "NOYAU",
+          "dur": 24,
+          "objective": "Construire la capacite a combiner plusieurs coups techniques sur un meme echange, au service d'un projet tactique.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Par binome. Sequences dirigees imposant un enchainement : service, puis top spin, puis smash si la balle remonte haute ; ou service, puis amorti, puis bloc si l'adversaire relance court.",
+          "studentGoal": "Enchainer au moins deux coups differents sur le meme point, avec une intention.",
+          "instructions": [
+            "Je sers, puis j'enchaine avec un top spin des que possible.",
+            "Si la balle remonte haute, je termine par un smash.",
+            "Si mon adversaire relance court, je varie avec un amorti puis un bloc.",
+            "Je ne joue plus un seul coup a plat sur tout l'echange."
+          ],
+          "success": [
+            "Au moins deux coups differents sont enchaines sur la majorite des points.",
+            "L'enchainement suit une logique tactique, pas seulement une succession au hasard.",
+            "Le point se termine par une rupture construite, pas par une erreur adverse fortuite."
+          ],
+          "execution": [
+            "Preparer le coup suivant des la fin du coup precedent.",
+            "Adapter l'enchainement a la balle recue, pas a un enchainement fige.",
+            "Revenir en position d'attente entre chaque coup de la sequence."
+          ],
+          "watch": [
+            "Les eleves enchainent-ils reellement deux coups differents, ou reviennent-ils au coup a plat unique ?",
+            "L'enchainement s'adapte-t-il a la balle recue ?",
+            "Le smash arrive-t-il seulement sur balle haute ?"
+          ],
+          "errors": [
+            "Revenir au meme coup a plat des que la pression monte.",
+            "Enchainer les coups sans lien avec la balle recue.",
+            "Smasher une balle basse par habitude."
+          ],
+          "feedback": [
+            "Tu reviens a ton seul coup habituel : essaie l'enchainement prevu.",
+            "Adapte-toi a la balle que tu recois, pas a un enchainement fige d'avance.",
+            "Cette balle est basse : pas de smash, plutot un top spin."
+          ],
+          "plus": [
+            "Enchainement libre de trois coups minimum, choisi par l'eleve selon la situation."
+          ],
+          "minus": [
+            "Enchainement de deux coups guide pas a pas par le partenaire."
+          ],
+          "diff": {
+            "facilitee": "Enchainement de deux coups guide pas a pas par le partenaire, balles facilitees.",
+            "normale": "Sequences dirigees imposant un enchainement de deux coups selon la balle recue.",
+            "complexifiee": "Enchainement libre d'au moins trois coups, choisi par l'eleve selon la situation."
+          },
+          "safety": [
+            "Le partenaire adapte la vitesse de ses envois pour permettre l'enchainement demande.",
+            "Espace de recul suffisant, notamment pour le smash.",
+            "Consulter les PAI.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Choisir ses deux roles d'AFL3",
+          "role": "COMPLEMENT",
+          "dur": 14,
+          "objective": "Faire choisir formellement, en connaissance de cause, deux roles parmi trois pour l'AFL3, et la repartition des points entre AFL2 et AFL3.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des tables. Chacun relit sa fiche de ressenti de la seance 2 sur les trois roles essayes, puis choisit deux roles parmi partenaire d'entrainement, arbitre et coach, et une repartition des points entre AFL2 et AFL3 (4-4, 6-2 ou 2-6). Le choix est ecrit et date au carnet.",
+          "studentGoal": "Choisir mes deux roles d'AFL3 et ma repartition de points, et les noter definitivement.",
+          "instructions": [
+            "Je relis mon ressenti de la seance 2 sur les trois roles essayes.",
+            "Je choisis deux roles parmi les trois : partenaire d'entrainement, arbitre, coach.",
+            "Je choisis ma repartition entre l'AFL2 et l'AFL3 : 4 et 4, 6 et 2, ou 2 et 6.",
+            "J'ecris mes deux roles et ma repartition sur mon carnet, avec la date de ce choix."
+          ],
+          "success": [
+            "Deux roles precis sont choisis parmi les trois possibles.",
+            "Une repartition des points est choisie parmi les trois proposees.",
+            "Le choix est ecrit et date au carnet, au plus tard trois lecons avant l'evaluation finale."
+          ],
+          "execution": [
+            "S'appuyer sur son ressenti reel de la seance 2, pas sur ce qui semble le plus facile.",
+            "Choisir une repartition coherente avec ses points forts : un carnet solide oriente vers l'AFL2, un role tres investi vers l'AFL3.",
+            "Ecrire lisiblement, ce choix ne sera plus modifie sans raison majeure."
+          ],
+          "watch": [
+            "Les eleves choisissent-ils deux roles distincts, pas trois ni un seul ?",
+            "Le choix de repartition est-il coherent avec ce que l'eleve sait de lui-meme ?",
+            "Le choix est-il ecrit et date au carnet ?"
+          ],
+          "errors": [
+            "Vouloir garder les trois roles au lieu d'en choisir deux.",
+            "Choisir une repartition sans lien avec ses points forts reels.",
+            "Ne pas dater le choix, ou le laisser au brouillon."
+          ],
+          "feedback": [
+            "Deux roles seulement, pas trois : lesquels te correspondent le mieux ?",
+            "Ton carnet est deja tres complet : une repartition 6-2 vers l'AFL2 peut te convenir.",
+            "Date ton choix : c'est ce qui prouve qu'il a ete fait a temps."
+          ],
+          "plus": [
+            "L'eleve ecrit une phrase justifiant pourquoi il ecarte le troisieme role."
+          ],
+          "minus": [
+            "Choix accompagne individuellement par le professeur a partir des observations des seances 1 et 2."
+          ],
+          "diff": {
+            "facilitee": "Choix accompagne individuellement par le professeur a partir des observations deja faites.",
+            "normale": "Choix autonome de deux roles et d'une repartition, ecrit et date au carnet.",
+            "complexifiee": "Choix justifie par ecrit, y compris la raison d'ecarter le troisieme role."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables, sans urgence de temps qui pousserait a un choix hatif.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Premier match dans un role choisi",
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "objective": "Mettre en application immediate l'un des deux roles tout juste choisis, en situation de match.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Match en une manche a 11 points contre un adversaire de la poule. Le partenaire tient l'un des deux roles qu'il vient de choisir : coach (une consigne bref avant le match et une entre les deux moities de la manche) ou arbitre (annonce du score de la table voisine, en plus de son propre match).",
+          "studentGoal": "Tenir des maintenant l'un de mes deux roles choisis, sur un vrai match.",
+          "instructions": [
+            "Si j'ai choisi coach : je donne une consigne avant le match et une seule en cours de manche.",
+            "Si j'ai choisi arbitre : j'annonce aussi le score d'une table voisine, en plus du mien.",
+            "Je reste concentre sur mon role choisi, sans le brouiller avec un role que je n'ai pas retenu.",
+            "Je note comment ce role s'est passe, pour la seance 5."
+          ],
+          "success": [
+            "Le role choisi est tenu sur toute la duree du match.",
+            "La consigne de coach est concrete, ou le score annonce est exact.",
+            "Un bilan est note au carnet."
+          ],
+          "execution": [
+            "Preparer sa consigne ou son observation avant le debut du match.",
+            "Rester attentif meme quand on ne joue pas soi-meme.",
+            "Noter immediatement apres le match, pas plus tard."
+          ],
+          "watch": [
+            "L'eleve reste-t-il dans le role tout juste choisi ?",
+            "La consigne de coach est-elle utile, ou seulement un encouragement ?",
+            "L'arbitrage d'une table voisine est-il fiable ?"
+          ],
+          "errors": [
+            "Tenir un role qu'il n'a pas choisi, par habitude.",
+            "Donner une consigne vague de type joue bien.",
+            "Se laisser distraire par son propre match et perdre le fil de l'autre table."
+          ],
+          "feedback": [
+            "Ce n'est pas le role que tu as choisi tout a l'heure : reste sur le bon.",
+            "Une consigne concrete, pas seulement des encouragements.",
+            "Reste attentif a la table voisine, c'est aussi ton role aujourd'hui."
+          ],
+          "plus": [
+            "Coach : deux consignes differenciees selon l'evolution du score."
+          ],
+          "minus": [
+            "Role tenu avec l'aide du professeur qui souffle la consigne ou verifie le score."
+          ],
+          "diff": {
+            "facilitee": "Role tenu avec l'aide du professeur qui souffle la consigne ou confirme le score.",
+            "normale": "Role choisi tenu en autonomie sur un match complet, bilan note au carnet.",
+            "complexifiee": "Coach : deux consignes differenciees selon l'evolution du score du match."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table.",
+            "Le coach reste hors de la zone de jeu pendant les echanges.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quels sont vos deux roles choisis pour l'AFL3, et votre repartition entre AFL2 et AFL3 ?",
+          "Pourquoi avez-vous ecarte le troisieme role ?"
+        ],
+        "key": "Vos deux roles et votre repartition sont choisis et dates au carnet : c'est plus de trois lecons avant l'evaluation finale, exactement comme le demande le referentiel. Ce choix ne se refait plus, il se verifie."
+      },
+      "socialRoles": [
+        "Coach (si choisi) : donne une consigne concrete avant le match et une en cours de manche.",
+        "Arbitre (si choisi) : annonce le score de son match et surveille une table voisine.",
+        "Partenaire d'entrainement (si choisi) : adapte ses envois pour faire progresser son camarade."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Epreuve evaluee de mi-cycle et verification des roles",
+      "mainObjective": "Situer chacun dans des conditions proches de l'epreuve finale et verifier que les deux roles et la repartition choisis en seance 4 restent pertinents.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer des matchs en poule dans le format exact de l'epreuve : 2 manches gagnantes de 11 points secs, coaching entre manches, temps mort possible, auto-arbitrage.",
+        "Verifier, sans les rechoisir, les deux roles d'AFL3 et la repartition choisis en seance 4.",
+        "Ajuster son projet de jeu a partir des matchs evalues."
+      ],
+      "linkToPrevious": "Panel technique, projet de jeu et roles sont construits depuis la seance 4 : l'epreuve evaluee de mi-cycle montre ce que cela donne en conditions proches du jour J.",
+      "prerequisiteForNext": "Chaque eleve a verifie ses deux roles et sa repartition, et ajuste son projet de jeu pour la suite du cycle.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel et l'ordre de passage par poule.",
+          "Preparer les fiches nominatives d'evaluation mi-cycle.",
+          "Verifier l'etat des tables et des filets.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un espace d'ecriture a l'ecart des tables."
+        ],
+        "sketch": "Six tables organisees par poule, comme le jour de l'epreuve.\nAffichage du referentiel et de l'ordre de passage a l'entree.\nZone d'ecriture a l'ecart pour la verification des roles.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, mene de maniere autonome comme le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale autonome",
+            "details": [
+              "Chaque eleve mene ses cinq minutes de deplacements varies.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois avec son adversaire du jour",
+            "details": [
+              "Echanges de mise en jeu avec le premier adversaire de la poule.",
+              "Alternance coup droit, revers, un coup du panel avance.",
+              "Deux minutes de services avant le premier match."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Matchs evalues en conditions d'epreuve",
+          "role": "NOYAU",
+          "dur": 26,
+          "objective": "Evaluer, dans le format exact de l'epreuve, la capacite a jouer des matchs en poule avec un projet tactique.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque binome affronte l'autre binome de sa poule : 2 matchs en 2 manches gagnantes de 11 points secs, coaching entre les deux manches, un temps mort possible par manche, auto-arbitrage integral.",
+          "studentGoal": "Jouer mes matchs dans le format exact de l'epreuve et appliquer mon projet de jeu.",
+          "instructions": [
+            "Je joue mon match en 2 manches gagnantes de 11 points secs.",
+            "Entre les deux manches, mon partenaire me coache brievement.",
+            "Je peux demander un temps mort, une fois par manche, si j'en ai besoin.",
+            "J'annonce le score en auto-arbitrage sur toute la rencontre, serveur en premier."
+          ],
+          "success": [
+            "Le format complet (2 manches gagnantes de 11 points secs) est respecte.",
+            "Le coaching entre manches est utilise et applique.",
+            "L'auto-arbitrage est correct et sans conflit sur l'ensemble du match.",
+            "La fiche d'evaluation mi-cycle est renseignee."
+          ],
+          "execution": [
+            "Servir en respectant le changement de serveur toutes les deux balles.",
+            "Utiliser le conseil du coach des la reprise de la manche suivante.",
+            "Demander un temps mort au bon moment, pas trop tard dans une manche perdue."
+          ],
+          "watch": [
+            "Le format en 2 manches gagnantes de 11 points secs est-il respecte ?",
+            "Le coaching entre manches est-il reellement utilise ?",
+            "Le temps mort, si demande, l'est-il a un moment pertinent ?",
+            "L'auto-arbitrage est-il fiable, score du serveur annonce en premier ?"
+          ],
+          "errors": [
+            "Jouer une seule manche au lieu de deux.",
+            "Ignorer le conseil du coach entre les deux manches.",
+            "Demander un temps mort trop tard, quand la manche est deja perdue.",
+            "Annoncer son propre score avant celui du serveur."
+          ],
+          "feedback": [
+            "Deux manches gagnantes, pas une seule : reprends le format.",
+            "Ton coach vient de te parler : applique son conseil des le debut de la deuxieme manche.",
+            "Un temps mort se demande a temps, pas quand tout est joue.",
+            "Le score du serveur d'abord, toujours."
+          ],
+          "plus": [
+            "Match complet avec relance tactique du professeur entre les deux manches."
+          ],
+          "minus": [
+            "Une seule manche a 11 points, coaching guide par le professeur."
+          ],
+          "diff": {
+            "facilitee": "Une seule manche a 11 points, avec un coaching guide par le professeur.",
+            "normale": "Deux manches gagnantes de 11 points secs, format complet de l'epreuve.",
+            "complexifiee": "Match complet avec une relance tactique proposee par le professeur entre les deux manches."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table.",
+            "Aucun croisement entre deux aires de jeu voisines.",
+            "Consulter les PAI.",
+            "Arret immediat pour tout eleve signalant une douleur a l'epaule, au poignet ou au dos.",
+            "Le professeur reste en vue de l'ensemble des tables et arbitre tout conflit persistant.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Verifier ses roles et sa repartition",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Verifier que les deux roles et la repartition choisis en seance 4 restent le bon choix, sans les remettre en cause a la legere.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des tables. Chacun relit les deux roles et la repartition choisis en seance 4, verifie qu'ils correspondent toujours a ce qu'il fait reellement pendant les matchs, et l'ecrit sur son carnet.",
+          "studentGoal": "Verifier que mes deux roles et ma repartition me correspondent toujours, et le justifier.",
+          "instructions": [
+            "Je relis les deux roles et la repartition que j'ai choisis en seance 4.",
+            "Je regarde mon carnet : est-il complet et bien tenu depuis la seance 4 ?",
+            "Je regarde mes deux roles tenus depuis la seance 4 : suis-je utile a mon binome dans chacun ?",
+            "J'ecris si je confirme mes choix, et pourquoi."
+          ],
+          "success": [
+            "Les deux roles et la repartition de la seance 4 sont relus.",
+            "La confirmation ou le doute est justifie par ecrit.",
+            "La justification s'appuie sur ce que l'eleve a reellement fait, pas sur une preference nouvelle."
+          ],
+          "execution": [
+            "Partir de son carnet et de ses roles reellement tenus.",
+            "Comparer a ce qui avait ete choisi en seance 4.",
+            "Ecrire la justification sur le carnet."
+          ],
+          "watch": [
+            "Les eleves relisent-ils vraiment leurs choix de la seance 4 ?",
+            "Les justifications sont-elles argumentees a partir de faits observes ?"
+          ],
+          "errors": [
+            "Ne pas savoir ce qui avait ete choisi en seance 4.",
+            "Confirmer sans regarder son carnet.",
+            "Vouloir changer de role sur un coup de tete, sans raison majeure."
+          ],
+          "feedback": [
+            "Regarde ton carnet : il est complet, c'est un point fort pour l'AFL2.",
+            "Tu coaches sans jamais donner de consigne precise : verifie que ce role te convient vraiment.",
+            "Un choix ne se change pas sur une envie du jour, seulement pour une raison serieuse."
+          ],
+          "plus": [
+            "Justification comparant ce qu'aurait donne une autre repartition sur les matchs deja joues."
+          ],
+          "minus": [
+            "Verification guidee par le professeur a partir des observations du cycle."
+          ],
+          "diff": {
+            "facilitee": "Verification guidee par le professeur a partir des observations du cycle.",
+            "normale": "Verification autonome des deux roles et de la repartition, justifiee par ecrit.",
+            "complexifiee": "Justification comparant ce qu'aurait change une autre repartition sur les matchs deja joues."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Ajuster son projet de jeu",
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "objective": "Ajuster le projet de jeu a partir des matchs evalues et fixer un objectif pour la suite du cycle.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Assis a l'ecart des tables. Chacun releve un point fort et un point a ameliorer dans son projet de jeu a partir des matchs evalues, et ecrit un objectif pour les seances 6 et 7.",
+          "studentGoal": "Ajuster mon projet de jeu et fixer un objectif clair pour la suite du cycle.",
+          "instructions": [
+            "Je releve un point fort de mon projet de jeu, observe pendant les matchs evalues.",
+            "Je releve un point a ameliorer.",
+            "J'ecris un objectif precis pour les seances 6 et 7.",
+            "Je garde mon carnet a jour."
+          ],
+          "success": [
+            "Un point fort et un point a ameliorer sont notes.",
+            "L'objectif ecrit est precis et lie a une action concrete.",
+            "Le carnet est a jour."
+          ],
+          "execution": [
+            "S'appuyer sur des faits observes pendant les matchs, pas sur une impression generale.",
+            "Formuler l'objectif avec un verbe d'action.",
+            "Relier l'objectif a un coup ou a une tactique precise."
+          ],
+          "watch": [
+            "Les points forts et faibles sont-ils lies a des faits reels du match evalue ?",
+            "Les objectifs sont-ils precis ou vagues ?"
+          ],
+          "errors": [
+            "Noter un point fort ou faible sans lien avec les matchs du jour.",
+            "Ecrire un objectif vague : jouer mieux.",
+            "Ne rien ecrire, faute de temps."
+          ],
+          "feedback": [
+            "Quel fait precis du match te fait dire ca ?",
+            "Precise : quel coup, quelle tactique, quel resultat vise ?",
+            "Deux minutes suffisent : ecris au moins une ligne."
+          ],
+          "plus": [
+            "Objectif chiffre, par exemple un pourcentage de balles gagnees sur le point faible vise."
+          ],
+          "minus": [
+            "Bilan guide par un questionnaire simple du professeur."
+          ],
+          "diff": {
+            "facilitee": "Bilan guide par un questionnaire simple du professeur.",
+            "normale": "Point fort, point a ameliorer et objectif ecrits en autonomie.",
+            "complexifiee": "Objectif chiffre, avec un indicateur mesurable sur les prochains matchs."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Vos deux roles et votre repartition choisis en seance 4 restent-ils les bons, ou pourquoi doutez-vous ?",
+          "Quel est votre objectif technique ou tactique pour les seances 6 et 7 ?"
+        ],
+        "key": "A mi-cycle, on ne rechoisit pas ses roles, on les verifie a partir de ce qu'on a reellement fait. Et un projet de jeu s'ajuste toujours a partir de faits observes, jamais d'une impression."
+      },
+      "socialRoles": [
+        "Coach (si choisi) : conseille son partenaire entre les deux manches, valide ou ajuste le temps mort.",
+        "Arbitre (si choisi) : annonce le score sur tout le match, serveur en premier, sans conflit.",
+        "Partenaire d'entrainement (si choisi) : prepare l'echauffement de match avec son binome."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Affiner son jeu et exercer ses roles choisis",
+      "mainObjective": "Affiner le panel technique et le projet de jeu, et exercer pour de vrai les deux roles choisis en situation de match.",
+      "secondaryObjectives": [
+        "Perfectionner les coups les moins maitrises du panel technique.",
+        "Exercer le role de coach : recueillir et analyser des indices pour aider son partenaire a gagner.",
+        "Exercer le role d'arbitre : auto-arbitrage fiable, score du serveur annonce en premier, aucun conflit."
+      ],
+      "linkToPrevious": "Les roles sont verifies depuis la seance 5. Il reste a les exercer pour de vrai, dans des matchs qui comptent, en meme temps que le jeu continue de progresser.",
+      "prerequisiteForNext": "Chaque eleve exerce fiablement ses deux roles choisis, et son panel technique s'est affine.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "fiches d'observation AFL3",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Preparer des fiches d'observation AFL3 : ce que le coach ou l'arbitre doit relever selon le role choisi.",
+          "Verifier l'etat des tables et des filets.",
+          "Organiser les tables par poule.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Six tables organisees par poule.\nFiches d'observation AFL3 disponibles table par table.\nZone d'ecriture a l'ecart pour le bilan des roles.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, mene en autonomie avec observation par le partenaire des le debut de la seance.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale autonome",
+            "details": [
+              "Chaque eleve mene ses cinq minutes de deplacements varies.",
+              "Le professeur circule et valide."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois cibles sur le point a ameliorer",
+            "details": [
+              "Chacun travaille en priorite le coup note comme objectif en seance 5.",
+              "Le partenaire adapte ses envois a cet objectif.",
+              "Deux minutes de services avant les matchs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Perfectionnement technique cible",
+          "role": "NOYAU",
+          "dur": 24,
+          "objective": "Perfectionner en priorite les coups les moins maitrises, a partir de l'objectif fixe en seance 5.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Par binome. Chacun annonce l'objectif technique note en seance 5, et son partenaire adapte ses envois pour le travailler specifiquement pendant 10 minutes, avant d'inverser les roles.",
+          "studentGoal": "Progresser precisement sur le coup que j'ai identifie comme objectif en seance 5.",
+          "instructions": [
+            "J'annonce a mon partenaire mon objectif technique de la seance 5.",
+            "Mon partenaire m'envoie des balles adaptees a cet objectif.",
+            "Je travaille ce coup pendant dix minutes, en cherchant la regularite puis la precision.",
+            "On inverse les roles pour que mon partenaire travaille son propre objectif."
+          ],
+          "success": [
+            "L'objectif technique de la seance 5 est retravaille specifiquement.",
+            "Une progression est observable, meme modeste, en fin de sequence.",
+            "Les deux membres du binome ont pu travailler leur propre objectif."
+          ],
+          "execution": [
+            "Commencer par la regularite avant de chercher la puissance ou la vitesse.",
+            "Le partenaire adapte la difficulte de ses envois a la progression observee.",
+            "Alterner les deux temps de travail sans deborder sur le temps de l'autre."
+          ],
+          "watch": [
+            "Le travail cible correspond-il vraiment a l'objectif note en seance 5 ?",
+            "Le partenaire adapte-t-il ses envois a la progression ?",
+            "Les deux membres du binome ont-ils un temps de travail equivalent ?"
+          ],
+          "errors": [
+            "Travailler un coup deja maitrise plutot que l'objectif fixe.",
+            "Envoyer des balles trop difficiles d'emblee, qui bloquent toute progression.",
+            "Deborder sur le temps de travail du partenaire."
+          ],
+          "feedback": [
+            "Ce n'est pas ton objectif de la seance 5 : reviens dessus.",
+            "Facilite tes envois, il n'y arrive pas encore a cette vitesse.",
+            "Cinq minutes chacun, verifie le temps."
+          ],
+          "plus": [
+            "Travail cible integrant une opposition legere en fin de sequence."
+          ],
+          "minus": [
+            "Travail cible guide en continu par le professeur, envois facilites."
+          ],
+          "diff": {
+            "facilitee": "Travail cible guide en continu par le professeur, envois facilites.",
+            "normale": "Travail cible en binome, dix minutes chacun, sur l'objectif de la seance 5.",
+            "complexifiee": "Travail cible integrant une opposition legere en fin de sequence."
+          },
+          "safety": [
+            "Le partenaire adapte la vitesse et la difficulte de ses envois au niveau reel de progression.",
+            "Espace de recul suffisant derriere chaque table.",
+            "Consulter les PAI.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Exercer le role de coach",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Construire le role de coach pour les eleves qui l'ont choisi : recueillir et analyser des indices pour aider le partenaire a remporter la rencontre.",
+          "material": [
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            }
+          ],
+          "organization": "Pendant un match du binome (pour les eleves ayant choisi le role de coach), le coach observe en continu, releve des indices sur la fiche d'observation, et conseille son partenaire entre les deux manches ou lors d'un temps mort.",
+          "studentGoal": "Recueillir des indices fiables et les utiliser pour aider mon partenaire a gagner.",
+          "instructions": [
+            "Je releve sur ma fiche des indices pendant le match : points faibles adverses, efficacite de nos coups, evolution du score.",
+            "J'utilise ces indices pour donner un conseil precis entre les deux manches.",
+            "Si necessaire, je demande un temps mort au bon moment pour faire passer une information decisive.",
+            "Je suis une personne-ressource pour mon partenaire, pas un simple spectateur."
+          ],
+          "success": [
+            "Les indices releves sont fiables et exploitables.",
+            "Le conseil donne entre les manches s'appuie sur ces indices, pas sur une impression.",
+            "Le temps mort, s'il est demande, arrive a un moment pertinent du match."
+          ],
+          "execution": [
+            "Observer en continu, sans se laisser distraire.",
+            "Noter au fur et a mesure, pas seulement a la fin de la manche.",
+            "Formuler un conseil court, precis, applicable immediatement."
+          ],
+          "watch": [
+            "Le coach observe-t-il vraiment en continu ?",
+            "Les indices sont-ils exploitables ou seulement des impressions vagues ?",
+            "Le conseil donne change-t-il quelque chose dans la manche suivante ?"
+          ],
+          "errors": [
+            "Ne rien noter et improviser un conseil vague a la fin de la manche.",
+            "Donner un conseil deconnecte des indices releves.",
+            "Ne jamais demander de temps mort, meme quand la situation le justifierait."
+          ],
+          "feedback": [
+            "Note en direct, tu oublieras sinon.",
+            "Ton conseil doit venir de ce que tu as observe, pas d'une impression.",
+            "La, un temps mort aurait pu casser sa dynamique : pense-y la prochaine fois."
+          ],
+          "plus": [
+            "Le coach propose deux options tactiques differentes selon l'evolution possible du score."
+          ],
+          "minus": [
+            "Coach accompagne par le professeur qui aide a formuler le conseil."
+          ],
+          "diff": {
+            "facilitee": "Coach accompagne par le professeur qui aide a formuler le conseil a partir des indices releves.",
+            "normale": "Coach autonome, indices releves en continu, conseil donne entre les manches.",
+            "complexifiee": "Coach qui propose deux options tactiques differentes selon l'evolution possible du score."
+          },
+          "safety": [
+            "Le coach reste hors de la zone de jeu pendant les echanges.",
+            "Il n'intervient qu'entre les manches ou lors d'un temps mort, jamais pendant un echange.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Exercer le role d'arbitre",
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "objective": "Construire le role d'arbitre pour les eleves qui l'ont choisi : auto-arbitrage fiable, score du serveur annonce en premier, aucun conflit.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "fiches d'observation AFL3",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant un match du binome (pour les eleves ayant choisi le role d'arbitre), l'arbitre annonce systematiquement le score a voix haute, serveur en premier, et applique le reglement en cas de point litigieux.",
+          "studentGoal": "Arbitrer un match sans erreur et sans conflit, du premier au dernier point.",
+          "instructions": [
+            "J'annonce le score a voix haute a chaque point, serveur en premier.",
+            "Je respecte et fais respecter le changement de serveur toutes les deux balles.",
+            "En cas de point litigieux, j'applique le reglement calmement, sans laisser le conflit s'installer.",
+            "Je reste attentif du premier au dernier point, y compris sur la deuxieme manche."
+          ],
+          "success": [
+            "Le score est annonce a voix haute et dans l'ordre correct sur tout le match.",
+            "Le changement de serveur toutes les deux balles est respecte.",
+            "Aucun conflit non resolu n'est signale en fin de match."
+          ],
+          "execution": [
+            "Annoncer avant que le point suivant ne commence.",
+            "Compter les services pour ne jamais se tromper de serveur.",
+            "Trancher un point litigieux avec calme, en s'appuyant sur le reglement."
+          ],
+          "watch": [
+            "Le score est-il annonce a chaque point, dans le bon ordre ?",
+            "L'arbitre reste-t-il attentif sur toute la duree du match, y compris la deuxieme manche ?",
+            "Les points litigieux sont-ils geres sans conflit ?"
+          ],
+          "errors": [
+            "Annoncer le score seulement de temps en temps.",
+            "Se tromper de serveur en cours de manche.",
+            "Laisser un point litigieux degenerer en dispute."
+          ],
+          "feedback": [
+            "A chaque point, sans exception.",
+            "Verifie ton compte de services, tu t'es trompe de serveur.",
+            "Le reglement tranche, pas la discussion : applique-le calmement."
+          ],
+          "plus": [
+            "L'arbitre justifie oralement chaque decision litigieuse par la regle exacte."
+          ],
+          "minus": [
+            "Arbitrage assiste par le professeur qui confirme chaque score."
+          ],
+          "diff": {
+            "facilitee": "Arbitrage assiste par le professeur qui confirme chaque score annonce.",
+            "normale": "Arbitrage autonome sur tout le match, sans conflit non resolu.",
+            "complexifiee": "L'arbitre justifie oralement chaque decision litigieuse par la regle exacte du reglement."
+          },
+          "safety": [
+            "L'arbitre se place de maniere a voir toute la table sans genner les joueurs.",
+            "Le professeur intervient sur tout conflit qui ne se resout pas rapidement.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Si vous avez coache aujourd'hui, quel indice concret avez-vous utilise pour conseiller votre partenaire ?",
+          "Si vous avez arbitre aujourd'hui, avez-vous eu un point litigieux, et comment l'avez-vous tranche ?"
+        ],
+        "key": "Un coach utile s'appuie sur des indices reels, pas sur des impressions. Et un arbitre fiable annonce le score a chaque point, serveur en premier, et applique le reglement sans jamais laisser le conflit s'installer."
+      },
+      "socialRoles": [
+        "Coach : releve des indices en continu et conseille son partenaire entre les manches ou lors d'un temps mort.",
+        "Arbitre : annonce le score, serveur en premier, et applique le reglement sur tout le match.",
+        "Partenaire d'entrainement : adapte ses envois a l'objectif technique de son camarade."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Repetition generale et carnet finalise",
+      "mainObjective": "Repeter l'epreuve dans des conditions integrales et finaliser le carnet d'entrainement avant l'evaluation finale.",
+      "secondaryObjectives": [
+        "Jouer une rencontre complete de 4 matchs en poule, au format exact de l'epreuve.",
+        "Tenir ses deux roles choisis sur l'ensemble de la rencontre, sans les melanger.",
+        "Finaliser le carnet d'entrainement avec un bilan complet du cycle."
+      ],
+      "linkToPrevious": "Technique, tactique et roles sont exerces depuis les seances precedentes : il reste a les assembler dans une repetition generale identique, en tout point, a l'epreuve finale.",
+      "prerequisiteForNext": "Chaque eleve a vecu une rencontre complete au format de l'epreuve et son carnet est finalise.",
+      "setup": {
+        "installationMinutes": 12,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "fiches d'evaluation mi-cycle",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          }
+        ],
+        "instructions": [
+          "Afficher le referentiel, l'ordre de passage par poule et les criteres exacts de l'evaluation finale.",
+          "Verifier l'etat des tables et des filets, comme le jour de l'epreuve.",
+          "Verifier les PAI et les dispenses.",
+          "Prevoir un espace d'ecriture a l'ecart des tables pour la finalisation du carnet.",
+          "Prevoir un point d'eau accessible."
+        ],
+        "sketch": "Six tables organisees par poule, exactement comme le jour de l'epreuve.\nAffichage du referentiel, de l'ordre de passage et des criteres a l'entree.\nZone d'ecriture dediee au carnet, a l'ecart des tables.\nPoint d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, mene entierement en autonomie, exactement comme il devra l'etre le jour de l'epreuve.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale autonome",
+            "details": [
+              "Chaque eleve mene ses cinq minutes de deplacements varies, sans consigne du professeur.",
+              "Le professeur observe la conduite de l'echauffement, comme le jour de l'epreuve."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois avec son adversaire du jour",
+            "details": [
+              "Echanges de mise en jeu avec le premier adversaire de la poule.",
+              "Alternance des coups du panel technique complet.",
+              "Deux minutes de services avant le premier match."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "Rencontre complete au format de l'epreuve",
+          "role": "NOYAU",
+          "dur": 28,
+          "objective": "Vivre une rencontre complete de 4 matchs en poule, dans le format exact de l'epreuve finale.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "fiches d'evaluation mi-cycle",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Rencontre complete entre deux binomes de la meme poule : 4 matchs au total (2 matchs par joueur), en 2 manches gagnantes de 11 points secs, coaching entre les manches, un temps mort possible par manche, auto-arbitrage integral.",
+          "studentGoal": "Vivre une rencontre complete exactement comme le jour de l'epreuve finale.",
+          "instructions": [
+            "Je joue mes deux matchs contre les deux eleves du binome adverse.",
+            "Chaque match se joue en 2 manches gagnantes de 11 points secs.",
+            "Entre les manches, mon partenaire me coache ; je peux demander un temps mort par manche.",
+            "J'auto-arbitre l'ensemble de mes matchs, score du serveur annonce en premier."
+          ],
+          "success": [
+            "Les 4 matchs de la rencontre sont joues integralement (2 par joueur).",
+            "Le format en 2 manches gagnantes de 11 points secs est respecte a chaque match.",
+            "Le coaching et le temps mort, s'ils sont utilises, le sont au bon moment.",
+            "L'auto-arbitrage est fiable sur l'ensemble de la rencontre."
+          ],
+          "execution": [
+            "Gerer son energie sur l'ensemble des deux matchs, pas seulement le premier.",
+            "Appliquer son projet de jeu des le debut de chaque match.",
+            "Rester rigoureux sur l'auto-arbitrage, meme fatigue en fin de rencontre."
+          ],
+          "watch": [
+            "La rencontre complete de 4 matchs est-elle jouee dans le bon format ?",
+            "Le projet de jeu est-il applique sur les deux matchs, pas seulement le premier ?",
+            "L'auto-arbitrage reste-t-il rigoureux en fin de rencontre ?",
+            "Les deux roles choisis sont-ils tenus correctement pendant les matchs des coequipiers ?"
+          ],
+          "errors": [
+            "S'epuiser sur le premier match et abandonner le projet sur le second.",
+            "Relacher l'auto-arbitrage en fin de rencontre par fatigue.",
+            "Melanger les deux roles choisis pendant les matchs du binome."
+          ],
+          "feedback": [
+            "Garde de l'energie pour ton second match, la rencontre n'est pas finie.",
+            "Le score s'annonce jusqu'au dernier point, meme fatigue.",
+            "Reste dans le role que tu as choisi, ne les melange pas."
+          ],
+          "plus": [
+            "Rencontre complete avec bilan tactique ecrit apres chacun des deux matchs."
+          ],
+          "minus": [
+            "Rencontre en 2 matchs (1 par joueur), format en une seule manche a 11 points."
+          ],
+          "diff": {
+            "facilitee": "Rencontre en 2 matchs (1 par joueur), format en une seule manche a 11 points, avec aide du professeur.",
+            "normale": "Rencontre complete de 4 matchs, format integral de l'epreuve.",
+            "complexifiee": "Rencontre complete avec bilan tactique ecrit apres chacun des deux matchs."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table.",
+            "Aucun croisement entre deux aires de jeu voisines.",
+            "Consulter les PAI.",
+            "Arret immediat pour tout eleve signalant une douleur a l'epaule, au poignet ou au dos.",
+            "Le professeur reste en vue de l'ensemble des tables et arbitre tout conflit persistant.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Finaliser le carnet d'entrainement",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Finaliser le carnet d'entrainement, support de l'AFL2, avec un bilan complet du cycle.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "stylos",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Assis a l'ecart des tables. Chacun relit l'ensemble de son carnet depuis la seance 1 et complete les elements manquants : roles choisis, repartition, objectifs, ajustements, bilan de la rencontre du jour.",
+          "studentGoal": "Avoir un carnet complet et a jour, pret pour l'evaluation finale.",
+          "instructions": [
+            "Je relis mon carnet depuis la seance 1.",
+            "Je complete tout ce qui manque : roles, repartition, objectifs, ajustements.",
+            "J'ajoute le bilan de la rencontre jouee aujourd'hui.",
+            "Je verifie que la date du choix de mes roles, en seance 4, est bien notee."
+          ],
+          "success": [
+            "Le carnet est complet depuis la seance 1.",
+            "Les roles, la repartition et leur date de choix sont clairement notes.",
+            "Le bilan de la rencontre du jour est ajoute."
+          ],
+          "execution": [
+            "Relire page par page, dans l'ordre chronologique.",
+            "Completer immediatement ce qui manque, sans attendre.",
+            "Verifier la lisibilite de l'ensemble."
+          ],
+          "watch": [
+            "Le carnet est-il complet sur l'ensemble du cycle, ou seulement sur les dernieres seances ?",
+            "La date du choix des roles en seance 4 est-elle bien presente ?"
+          ],
+          "errors": [
+            "Completer le carnet uniquement pour les dernieres seances.",
+            "Oublier de noter la date du choix des roles.",
+            "Rendre un carnet illisible, rempli a la hate."
+          ],
+          "feedback": [
+            "Il manque les premieres seances : reviens en arriere.",
+            "La date de ton choix de roles, c'est important : elle prouve qu'il a ete fait a temps.",
+            "Ecris lisiblement, ce carnet sera relu pour ton evaluation."
+          ],
+          "plus": [
+            "Ajout d'une synthese personnelle d'une demi-page sur la progression du cycle."
+          ],
+          "minus": [
+            "Completion guidee par le professeur, page par page."
+          ],
+          "diff": {
+            "facilitee": "Completion guidee par le professeur, page par page.",
+            "normale": "Carnet relu et complete en autonomie sur l'ensemble du cycle.",
+            "complexifiee": "Ajout d'une synthese personnelle sur la progression complete du cycle."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Bilan collectif de la repetition generale",
+          "role": "REINVESTISSEMENT",
+          "dur": 8,
+          "objective": "Faire le bilan collectif de la repetition generale et identifier les derniers points a securiser avant l'evaluation finale.",
+          "material": [
+            {
+              "label": "affiche du referentiel d'evaluation",
+              "fixed": 1
+            },
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Classe assise a l'ecart des tables. Bilan collectif guide par le professeur : ce qui a bien fonctionne, ce qui reste fragile, rappel des criteres exacts de l'evaluation finale.",
+          "studentGoal": "Savoir precisement ce qu'il me reste a securiser avant l'evaluation finale.",
+          "instructions": [
+            "J'ecoute le bilan collectif de la rencontre du jour.",
+            "Je note un point que je dois encore securiser d'ici l'evaluation finale.",
+            "Je reformule, en une phrase, le format exact de l'epreuve.",
+            "Je verifie que mes deux roles et ma repartition sont bien notes au carnet."
+          ],
+          "success": [
+            "Un point a securiser est identifie et note par chaque eleve.",
+            "Le format de l'epreuve est reformule correctement.",
+            "Chaque eleve verifie la presence de ses roles et de sa repartition au carnet."
+          ],
+          "execution": [
+            "Ecouter le bilan avant de le noter.",
+            "Choisir un point precis, pas une intention generale.",
+            "Verifier son propre carnet a la fin de l'echange collectif."
+          ],
+          "watch": [
+            "Les points a securiser identifies sont-ils precis ?",
+            "Le format de l'epreuve est-il correctement reformule par la classe ?"
+          ],
+          "errors": [
+            "Noter une intention vague : bien jouer.",
+            "Ne pas verifier son carnet a la fin de la seance.",
+            "Se tromper sur le nombre de matchs ou de manches de l'epreuve."
+          ],
+          "feedback": [
+            "Precise : quel coup, quelle situation exactement ?",
+            "Verifie ton carnet maintenant, pas la veille de l'evaluation.",
+            "Quatre matchs au total, deux par joueur, deux manches gagnantes de onze points secs : redis-le."
+          ],
+          "plus": [
+            "Chaque eleve formule aussi un point fort a conserver tel quel."
+          ],
+          "minus": [
+            "Bilan entierement mene par le professeur, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Bilan entierement mene par le professeur, chacun note ce qui le concerne.",
+            "normale": "Bilan collectif participatif, chacun identifie un point a securiser.",
+            "complexifiee": "Chaque eleve formule un point fort a conserver et un point a securiser."
+          },
+          "safety": [
+            "Phase realisee assise a l'ecart des tables.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que retenez-vous de cette rencontre complete jouee dans les conditions exactes de l'epreuve ?",
+          "Quel est le point que vous devez encore securiser avant l'evaluation finale ?"
+        ],
+        "key": "La rencontre d'aujourd'hui etait, en tout point, celle de l'evaluation finale. Ce qui a fonctionne aujourd'hui doit se reproduire ; ce qui reste fragile doit etre securise d'ici la."
+      },
+      "socialRoles": [
+        "Coach : conseille son partenaire entre les manches et gere le temps mort de son binome.",
+        "Arbitre : annonce le score, serveur en premier, sur l'ensemble de la rencontre.",
+        "Partenaire d'entrainement : prepare l'echauffement de match avec son binome."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Epreuve finale et evaluation",
+      "mainObjective": "Realiser l'epreuve certificative complete : rencontre en poule, AFL1 sur les matchs, AFL2 et AFL3 sur les deux roles choisis et la repartition retenue.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer la rencontre complete de 4 matchs en poule, au format certificatif exact.",
+        "Etre evalue sur l'AFL1 : techniques de jeu et pertinences strategiques, ajustees selon la proportion de victoires.",
+        "Etre evalue sur l'AFL2 et l'AFL3, selon la repartition et les deux roles choisis en seance 4."
+      ],
+      "linkToPrevious": "La repetition generale de la seance 7 a reproduit exactement ce format : l'epreuve finale en est la version evaluee, sans changement de regle.",
+      "prerequisiteForNext": "Fin de cycle : chaque eleve connait sa note d'AFL1, et son evaluation d'AFL2 et d'AFL3 selon ses roles et sa repartition choisis.",
+      "setup": {
+        "installationMinutes": 14,
+        "material": [
+          {
+            "label": "tables de tennis de table",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "balles de tennis de table",
+            "fixed": 60
+          },
+          {
+            "label": "grilles d'evaluation finale",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "carnets d'entrainement",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "affiche du referentiel d'evaluation",
+            "fixed": 1
+          },
+          {
+            "label": "stylos",
+            "per": 0.5,
+            "min": 12
+          },
+          {
+            "label": "bidons d'eau",
+            "fixed": 4
+          },
+          {
+            "label": "trousse de secours",
+            "fixed": 1
+          }
+        ],
+        "instructions": [
+          "Verifier l'etat de chaque table et la tension de chaque filet avant le premier match.",
+          "Afficher le referentiel, l'ordre de passage par poule et les criteres exacts de l'evaluation.",
+          "Preparer les grilles nominatives et relever les carnets d'entrainement pour l'evaluation de l'AFL2.",
+          "Verifier les PAI et les dispenses avant le premier match.",
+          "Prevoir un point d'eau accessible et la trousse de secours au bord de la salle."
+        ],
+        "sketch": "Six tables organisees par poule, comme lors de la repetition generale.\nReferentiel, ordre de passage et criteres affiches a l'entree.\nZone d'ecriture a l'ecart pour la remise des carnets.\nTrousse de secours signalee, point d'eau accessible."
+      },
+      "warmup": {
+        "rationale": "Echauffement specifique epaule, poignet et reflexes, mene entierement en autonomie : sa conduite fait partie de l'engagement evalue au titre de l'AFL1 et de l'AFL2.",
+        "steps": [
+          {
+            "dur": 5,
+            "title": "Mise en train generale autonome",
+            "details": [
+              "Chaque eleve mene ses cinq minutes de deplacements varies, sans consigne du professeur.",
+              "Le professeur observe la conduite de l'echauffement."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation epaule, poignet, coude",
+            "details": [
+              "Rotations d'epaules, cercles de poignets, flexions et extensions de coude.",
+              "Etirements actifs."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Renvois avec son premier adversaire",
+            "details": [
+              "Echanges de mise en jeu avec le premier adversaire de la poule.",
+              "Alternance des coups du panel technique complet.",
+              "Deux minutes de services avant le premier match."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "title": "La rencontre en poule, evaluee",
+          "role": "NOYAU",
+          "dur": 30,
+          "objective": "Evaluer l'AFL1 sur la rencontre complete : techniques de jeu et pertinences strategiques, ajustees selon la proportion de victoires.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Chaque binome affronte l'autre binome de sa poule : rencontre de 4 matchs au total (2 matchs par joueur), chaque match en 2 manches gagnantes de 11 points secs, coaching entre les manches, un temps mort possible par manche, auto-arbitrage integral. Chaque eleve est ainsi evalue sur au moins 2 matchs.",
+          "studentGoal": "Jouer mes deux matchs en appliquant mon panel technique et mon projet de jeu, en auto-arbitrage.",
+          "instructions": [
+            "Je joue mes deux matchs contre les deux eleves du binome adverse de ma poule.",
+            "Chaque match se joue en 2 manches gagnantes de 11 points secs.",
+            "Entre les deux manches, mon partenaire me coache ; je peux demander un temps mort par manche.",
+            "J'annonce le score en auto-arbitrage sur toute la rencontre, serveur en premier."
+          ],
+          "success": [
+            "AFL1 - techniques de jeu : le service, le panel de coups (coup droit, revers, smash, top spin, bloc, amorti) et les deplacements sont utilises et combines.",
+            "AFL1 - pertinences strategiques : un projet tactique pertinent est construit et adapte au rapport de force en cours de match.",
+            "Le format complet de la rencontre (4 matchs, 2 manches gagnantes de 11 points secs) est respecte.",
+            "L'auto-arbitrage est fiable sur l'ensemble de la rencontre, sans conflit non resolu."
+          ],
+          "execution": [
+            "Varier reellement les coups selon la situation, pas un seul coup a plat.",
+            "Adapter le projet tactique si l'adversaire progresse pendant le match.",
+            "Utiliser le coaching entre manches et le temps mort au bon moment.",
+            "Rester rigoureux sur l'auto-arbitrage jusqu'au dernier point de la rencontre."
+          ],
+          "watch": [
+            "Le panel technique utilise va-t-il au-dela d'un seul coup a plat ?",
+            "Le projet tactique s'adapte-t-il a l'evolution du rapport de force ?",
+            "Le format exact de la rencontre est-il respecte sur les deux matchs ?",
+            "L'auto-arbitrage reste-t-il rigoureux jusqu'au dernier point ?"
+          ],
+          "errors": [
+            "Se limiter a un seul coup a plat sous la pression de l'enjeu.",
+            "Garder le meme projet tactique alors que l'adversaire a corrige son point faible.",
+            "Escamoter une manche ou le coaching entre les manches.",
+            "Relacher l'auto-arbitrage en fin de rencontre."
+          ],
+          "feedback": [
+            "Varie tes coups, meme sous la pression de l'evaluation.",
+            "Il a corrige son point faible : ajuste ton projet.",
+            "Deux manches gagnantes, et le coaching entre elles : respecte le format jusqu'au bout.",
+            "Le score s'annonce jusqu'au dernier point, meme en fin de rencontre."
+          ],
+          "plus": [
+            "Rencontre complete avec bilan tactique demande apres chacun des deux matchs."
+          ],
+          "minus": [
+            "Rencontre en 2 matchs (1 par joueur), format en une seule manche a 11 points, avec accompagnement du professeur.",
+            "La regularite, l'engagement et le respect du format sont evalues autant que la performance pure."
+          ],
+          "diff": {
+            "facilitee": "Rencontre en 2 matchs (1 par joueur), format en une seule manche a 11 points, avec accompagnement du professeur. La regularite, l'engagement et l'auto-arbitrage sont evalues autant que la performance pure.",
+            "normale": "Rencontre complete de 4 matchs, format integral de l'epreuve, 2 manches gagnantes de 11 points secs.",
+            "complexifiee": "Rencontre complete avec bilan tactique ecrit demande apres chacun des deux matchs."
+          },
+          "safety": [
+            "Espace de recul suffisant derriere chaque table, verifie avant le premier match.",
+            "Aucun croisement entre deux aires de jeu voisines.",
+            "PAI verifies avant le premier match : pathologies de l'epaule ou du poignet, troubles visuels.",
+            "Arret immediat et prise en charge pour tout eleve signalant une douleur a l'epaule, au poignet ou au dos.",
+            "Le professeur reste en vue de l'ensemble des tables et peut arbitrer ou arreter tout conflit persistant.",
+            "Point d'eau accessible avant, entre et apres les matchs.",
+            "Chaussures de sport obligatoires, sol verifie non glissant sur l'ensemble de la salle."
+          ]
+        },
+        {
+          "title": "Evaluation des deux roles d'AFL3 et de l'AFL2",
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "objective": "Evaluer l'AFL2 a partir du carnet d'entrainement, et l'AFL3 sur les deux roles choisis en seance 4, selon la repartition retenue.",
+          "material": [
+            {
+              "label": "carnets d'entrainement",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "grilles d'evaluation finale",
+              "per": 1.0,
+              "min": 24
+            }
+          ],
+          "organization": "Pendant les matchs des autres binomes de la poule, chaque eleve tient ses deux roles choisis (parmi partenaire d'entrainement, arbitre, coach), qui sont observes et evalues par le professeur. Le carnet d'entrainement est releve pour l'evaluation de l'AFL2.",
+          "studentGoal": "Tenir mes deux roles choisis jusqu'au bout, et presenter un carnet complet pour l'AFL2.",
+          "instructions": [
+            "Je tiens mes deux roles choisis, exactement comme je les ai exerces depuis la seance 4.",
+            "Si je suis coach : je recueille des indices fiables et je conseille utilement mon partenaire.",
+            "Si je suis arbitre : j'annonce le score a voix haute, serveur en premier, et je fais respecter le reglement sans conflit.",
+            "Si je suis partenaire d'entrainement : j'adapte mes envois pour faire progresser reellement mon camarade.",
+            "Je remets mon carnet d'entrainement complet pour l'evaluation de l'AFL2."
+          ],
+          "success": [
+            "AFL3 - les deux roles choisis sont tenus fiablement jusqu'au dernier point observe.",
+            "AFL3 - coach : les indices sont exploites pour accompagner les choix du partenaire, y compris la demande de temps mort a bon escient.",
+            "AFL3 - arbitre : le score est annonce a voix haute et dans l'ordre, serveur en premier, sans conflit.",
+            "AFL2 - le carnet est complet sur l'ensemble du cycle et retrace la routine d'entrainement et la preparation."
+          ],
+          "execution": [
+            "Rester concentre sur ses deux roles jusqu'a la fin de la rencontre de son binome.",
+            "Ne pas relacher l'exigence du role sous pretexte que son propre match est termine.",
+            "Presenter le carnet dans l'ordre chronologique du cycle."
+          ],
+          "watch": [
+            "Les deux roles choisis sont-ils tenus jusqu'au bout, y compris apres son propre match ?",
+            "Le coach exploite-t-il reellement ses indices pour conseiller ?",
+            "L'arbitre reste-t-il rigoureux sur l'ensemble des matchs observes ?",
+            "Le carnet remis est-il complet et exploitable ?"
+          ],
+          "errors": [
+            "Relacher son role des que son propre match est termine.",
+            "Coacher sans exploiter les indices releves.",
+            "Arbitrer sans annoncer le score a voix haute sur certains points.",
+            "Remettre un carnet incomplet ou rempli a la derniere minute."
+          ],
+          "feedback": [
+            "Ton match est fini, mais ton role continue : reste concentre.",
+            "Utilise les indices que tu as releves, pas seulement des encouragements.",
+            "Le score a voix haute, sur chaque point, jusqu'a la fin.",
+            "Ce carnet a ete rempli d'un coup : ca se voit et ca compte pour ta note."
+          ],
+          "plus": [
+            "Le coach formalise par ecrit une analyse breve du match qu'il vient de suivre."
+          ],
+          "minus": [
+            "Roles tenus avec un accompagnement ponctuel du professeur."
+          ],
+          "diff": {
+            "facilitee": "Roles tenus avec un accompagnement ponctuel du professeur, qui rappelle les points cles.",
+            "normale": "Deux roles choisis tenus en autonomie complete sur l'ensemble des matchs observes.",
+            "complexifiee": "Le coach formalise par ecrit une courte analyse du match qu'il vient de suivre."
+          },
+          "safety": [
+            "Le coach et l'arbitre restent hors de la zone de jeu pendant les echanges.",
+            "Toute gene mentionnee au carnet est signalee immediatement au professeur.",
+            "Point d'eau accessible."
+          ]
+        },
+        {
+          "title": "Bilan collectif et rangement",
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "objective": "Cloturer le cycle en formalisant les acquis et en rangeant le materiel.",
+          "material": [
+            {
+              "label": "tables de tennis de table",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "balles de tennis de table",
+              "fixed": 60
+            }
+          ],
+          "organization": "Rangement collectif des raquettes, des balles et des filets, puis classe assise pour le bilan de fin de cycle.",
+          "studentGoal": "Dire ce que j'ai appris sur le jeu, le projet tactique et mes roles au fil du cycle.",
+          "instructions": [
+            "On range les raquettes et les balles table par table.",
+            "On verifie l'etat des filets avant de les ranger.",
+            "Une fois range, on s'assoit pour le bilan.",
+            "Chacun peut dire ce qu'il a appris, sur le jeu ou sur son role."
+          ],
+          "success": [
+            "Le materiel est integralement range et compte.",
+            "Le rangement est partage entre tous les eleves.",
+            "Au moins un eleve par binome s'exprime sur ses acquis."
+          ],
+          "execution": [
+            "Ranger avec soin, notamment les filets.",
+            "Compter le materiel avant de quitter la salle.",
+            "Formuler un acquis concret, technique, tactique ou lie a un role."
+          ],
+          "watch": [
+            "Le rangement est-il partage entre tous ?",
+            "Les eleves citent-ils des acquis precis, techniques, tactiques ou lies a leurs roles ?"
+          ],
+          "errors": [
+            "Laisser le rangement a quelques eleves seulement.",
+            "Ne parler que du resultat des matchs, sans evoquer les acquis techniques ou tactiques.",
+            "Ranger les filets sans verifier leur etat."
+          ],
+          "feedback": [
+            "Tout le monde range, pas seulement quelques-uns.",
+            "Pas seulement le score : qu'as-tu appris sur ton jeu ou sur ton role ?",
+            "Verifie l'etat du filet avant de le ranger."
+          ],
+          "plus": [
+            "Chaque eleve formule ce qu'il retiendrait pour un futur affrontement interindividuel."
+          ],
+          "minus": [
+            "Le professeur enonce les acquis, la classe valide."
+          ],
+          "diff": {
+            "facilitee": "Le professeur enonce les acquis, chacun dit s'il s'y reconnait.",
+            "normale": "Chacun formule librement un acquis technique, tactique ou lie a un role.",
+            "complexifiee": "Acquis formule et transfere a un futur affrontement interindividuel."
+          },
+          "safety": [
+            "Rangement realise avec soin, sans precipitation.",
+            "Comptage du materiel avant de quitter la salle.",
+            "Verification qu'aucun eleve ne presente de gene avant de quitter la seance.",
+            "Point d'eau accessible."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Votre panel technique s'est-il elargi depuis la seance 1, du coup a plat unique jusqu'a la combinaison de plusieurs coups ?",
+          "Vos deux roles d'AFL3 vous ont-ils semble utiles a votre binome sur l'ensemble du cycle ?"
+        ],
+        "key": "En debut de cycle, un seul coup a plat suffisait a decrire le jeu de chacun. Aujourd'hui, service, coup droit, revers, smash, top spin, bloc et amorti se combinent au service d'un projet tactique, evalue en auto-arbitrage, avec deux roles assumes jusqu'au bout."
+      },
+      "socialRoles": [
+        "Coach : recueille et analyse des indices pour aider son partenaire a gagner, role evalue au titre de l'AFL3.",
+        "Arbitre : annonce le score, serveur en premier, et fait respecter le reglement, role evalue au titre de l'AFL3.",
+        "Partenaire d'entrainement : cooperer pour faire progresser son camarade, role evalue au titre de l'AFL3.",
+        "Responsable materiel : organise le rangement des raquettes, des balles et des filets."
+      ]
+    }
+  ]
+}
