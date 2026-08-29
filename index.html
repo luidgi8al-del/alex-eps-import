@@ -121,6 +121,16 @@
     .card { box-shadow:none !important; border:none !important; }
   }
 
+  /* ---- Recherche globale ---- */
+  .searchOverlay { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:940; display:none; justify-content:center; align-items:flex-start; padding:60px 16px 16px; }
+  .searchOverlay.open { display:flex; }
+  .searchSheet { background:var(--bg); width:100%; max-width:620px; max-height:80vh; overflow-y:auto; border-radius:16px; padding:16px; }
+  .searchSheet input { flex:1; }
+  .searchHit { display:block; width:100%; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin:0 0 8px; color:var(--text); }
+  .searchHit:hover { background:#F3F4F6; }
+  .searchHit .cat { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--primary-light); font-weight:700; }
+  .searchHit .ttl { font-weight:600; }
+
   /* ---- Accueil : carte du jour puis grille des modules (miroir de HomeScreen.kt) ---- */
   .todayCard { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; text-align:left;
                background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:18px 22px; margin-top:16px;
@@ -187,7 +197,42 @@
       <button class="tabbtn" data-tab="classes">Classes</button>
     </div>
     <div class="headerRight">
+      <button class="secondary" id="searchBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Rechercher</button>
+      <button class="secondary" id="settingsBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Reglages</button>
       <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se deconnecter</button>
+    </div>
+  </div>
+
+  <!-- Verrouillage par code : confort d'ecran, pas une protection des donnees -->
+  <div class="searchOverlay" id="lockOverlay" style="align-items:center">
+    <div class="searchSheet" style="max-width:340px; text-align:center">
+      <h2 style="margin:0 0 4px">Application verrouillee</h2>
+      <div class="muted">Saisissez votre code pour continuer.</div>
+      <input type="password" id="lockInput" inputmode="numeric" style="margin-top:12px; text-align:center; font-size:22px; letter-spacing:6px">
+      <button id="lockSubmit" style="width:100%">Deverrouiller</button>
+      <div class="error" id="lockError"></div>
+    </div>
+  </div>
+
+  <!-- Reglages -->
+  <div class="searchOverlay" id="settingsOverlay">
+    <div class="searchSheet">
+      <div class="top">
+        <h2 style="margin:0">Reglages</h2>
+        <button class="secondary" id="settingsClose" style="margin-top:0">Fermer</button>
+      </div>
+      <div id="settingsBody" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- Recherche globale : eleves, classes, cours, materiel, EPI, groupes UNSS -->
+  <div class="searchOverlay" id="searchOverlay">
+    <div class="searchSheet">
+      <div class="top">
+        <input type="text" id="searchInput" placeholder="Rechercher un eleve, une classe, un materiel, un EPI..." autocomplete="off">
+        <button class="secondary" id="searchClose" style="margin-top:0">Fermer</button>
+      </div>
+      <div id="searchResults" style="margin-top:12px"></div>
     </div>
   </div>
 
@@ -644,15 +689,20 @@
       document.getElementById("authView").style.display = "flex";
       document.getElementById("mainView").style.display = "none";
       document.getElementById("logoutBtn").style.display = "none";
+      document.getElementById("searchBtn").style.display = "none";
+      document.getElementById("settingsBtn").style.display = "none";
       document.getElementById("tabbar").style.display = "none";
     }
     function showMainView() {
       document.getElementById("authView").style.display = "none";
       document.getElementById("mainView").style.display = "block";
       document.getElementById("logoutBtn").style.display = "inline-block";
+      document.getElementById("searchBtn").style.display = "inline-block";
+      document.getElementById("settingsBtn").style.display = "inline-block";
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
       loadInstitution();
+      maybeLock();
     }
 
     // ---- Etablissement : rattachement par code (n'importe qui peut creer un etablissement en
@@ -795,6 +845,249 @@
     document.getElementById("tabbar").addEventListener("click", (e) => {
       const btn = e.target.closest(".tabbtn");
       if (btn) showTab(btn.dataset.tab);
+    });
+
+    // ---- Reglages (miroir de SettingsScreen.kt) ----
+    // Les preferences sont propres a l'appareil, comme le DataStore de l'application : elles
+    // vivent dans le navigateur et ne sont pas partagees avec les collegues.
+
+    const PREFS_KEY = "alexEpsPrefs";
+
+    function loadPrefs() {
+      try { return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); }
+      catch (e) { return {}; }
+    }
+    function savePrefs(prefs) {
+      try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch (e) { /* navigation privee */ }
+    }
+
+    function openSettings() {
+      const prefs = loadPrefs();
+      const periods = prefs.periods || {};
+      const field = (id, label, value, type = "text") =>
+        `<div><label for="${id}">${label}</label><input type="${type}" id="${id}" value="${(value || "").toString().replace(/"/g, "&quot;")}"></div>`;
+
+      document.getElementById("settingsBody").innerHTML = `
+        <div class="card">
+          <h2 style="margin:0 0 4px">Profil enseignant</h2>
+          <div class="row">${field("prefName", "Nom", prefs.teacherName)}${field("prefSchool", "Etablissement", prefs.schoolName)}</div>
+          <div class="row">${field("prefEmail", "Email professionnel", prefs.proEmail, "email")}${field("prefYear", "Annee scolaire", prefs.schoolYear || "2026-2027")}</div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 4px">Nombre de periodes</h2>
+          <div class="muted">Periodes de l'annee utilisees par le Planning et la programmation.</div>
+          <div class="row">
+            ${field("prefPeriodCollege", "6e a 2nde", periods.college ?? 5, "number")}
+            ${field("prefPeriodPremiere", "1re", periods.premiere ?? 4, "number")}
+            ${field("prefPeriodTerminale", "Tle", periods.terminale ?? 3, "number")}
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 4px">Verrouillage par code</h2>
+          <div class="muted">Masque l'ecran quand vous laissez l'appareil sans surveillance. C'est un confort d'affichage : vos donnees restent protegees par votre mot de passe de compte. Le deverrouillage par empreinte n'existe pas sur le web.</div>
+          ${prefs.pin
+            ? `<div class="row"><button class="secondary" id="changePinBtn">Changer le code</button><button class="danger" id="removePinBtn" style="margin-top:14px">Desactiver</button></div>`
+            : `<div class="row"><div><label for="newPin">Nouveau code (4 chiffres minimum)</label><input type="password" id="newPin" inputmode="numeric"></div></div>
+               <button id="setPinBtn">Activer le code</button>`}
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 4px">Mes donnees</h2>
+          <div class="muted">Exporte en un fichier JSON tout ce que ce compte a enregistre.</div>
+          <button class="secondary" id="exportDataBtn">Exporter toutes mes donnees</button>
+        </div>
+
+        <button id="saveSettingsBtn">Enregistrer les reglages</button>
+        <div class="ok" id="settingsOk"></div>`;
+
+      document.getElementById("settingsOverlay").classList.add("open");
+      document.getElementById("saveSettingsBtn").onclick = saveSettings;
+      document.getElementById("exportDataBtn").onclick = exportAllData;
+
+      const setPin = document.getElementById("setPinBtn");
+      if (setPin) setPin.onclick = () => {
+        const value = document.getElementById("newPin").value.trim();
+        if (value.length < 4) { alert("Le code doit faire au moins 4 chiffres."); return; }
+        const prefs = loadPrefs(); prefs.pin = value; savePrefs(prefs);
+        openSettings();
+      };
+      const changePin = document.getElementById("changePinBtn");
+      if (changePin) changePin.onclick = () => {
+        const value = (prompt("Nouveau code (4 chiffres minimum) :") || "").trim();
+        if (value.length < 4) return;
+        const prefs = loadPrefs(); prefs.pin = value; savePrefs(prefs);
+        openSettings();
+      };
+      const removePin = document.getElementById("removePinBtn");
+      if (removePin) removePin.onclick = () => {
+        const prefs = loadPrefs(); delete prefs.pin; savePrefs(prefs);
+        openSettings();
+      };
+    }
+
+    function saveSettings() {
+      const prefs = loadPrefs();
+      prefs.teacherName = document.getElementById("prefName").value;
+      prefs.schoolName = document.getElementById("prefSchool").value;
+      prefs.proEmail = document.getElementById("prefEmail").value;
+      prefs.schoolYear = document.getElementById("prefYear").value;
+      prefs.periods = {
+        college: parseInt(document.getElementById("prefPeriodCollege").value, 10) || 5,
+        premiere: parseInt(document.getElementById("prefPeriodPremiere").value, 10) || 4,
+        terminale: parseInt(document.getElementById("prefPeriodTerminale").value, 10) || 3
+      };
+      savePrefs(prefs);
+      document.getElementById("settingsOk").textContent = "Reglages enregistres.";
+    }
+
+    /** Export JSON de tout ce que ce compte a enregistre, table par table. */
+    async function exportAllData() {
+      const tables = ["classes", "students", "cycles", "evaluations", "evaluation_criteria",
+        "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
+        "sport_installations", "unss_groups", "unss_students", "unss_memberships",
+        "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
+        "equipment", "equipment_purchases", "epi_items", "epi_inspections"];
+      const dump = { exportedAt: new Date().toISOString(), account: session.email };
+      for (const table of tables) {
+        try {
+          const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`);
+          dump[table] = res.ok ? await res.json() : [];
+        } catch (e) { dump[table] = []; }
+      }
+      const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `alex-eps-export-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("settingsBtn").addEventListener("click", openSettings);
+    document.getElementById("settingsClose").addEventListener("click", () =>
+      document.getElementById("settingsOverlay").classList.remove("open"));
+    document.getElementById("settingsOverlay").addEventListener("click", e => {
+      if (e.target.id === "settingsOverlay") e.currentTarget.classList.remove("open");
+    });
+
+    // ---- Verrouillage par code ----
+    function maybeLock() {
+      const prefs = loadPrefs();
+      if (!prefs.pin) return;
+      document.getElementById("lockOverlay").classList.add("open");
+      document.getElementById("lockInput").value = "";
+      document.getElementById("lockInput").focus();
+    }
+
+    function tryUnlock() {
+      const prefs = loadPrefs();
+      const value = document.getElementById("lockInput").value.trim();
+      if (value === prefs.pin) {
+        document.getElementById("lockOverlay").classList.remove("open");
+        document.getElementById("lockError").textContent = "";
+      } else {
+        document.getElementById("lockError").textContent = "Code incorrect.";
+      }
+    }
+
+    document.getElementById("lockSubmit").addEventListener("click", tryUnlock);
+    document.getElementById("lockInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") tryUnlock();
+    });
+
+    // ---- Recherche globale (miroir de SearchScreen.kt) ----
+    // Cherche a partir de deux caracteres dans les eleves, classes, cours, materiel, EPI et
+    // groupes UNSS, et emmene directement sur l'onglet concerne.
+
+    let searchDebounce = null;
+
+    function openSearch() {
+      document.getElementById("searchOverlay").classList.add("open");
+      const input = document.getElementById("searchInput");
+      input.value = "";
+      document.getElementById("searchResults").innerHTML =
+        '<div class="muted">Tapez au moins deux caracteres.</div>';
+      input.focus();
+    }
+
+    function closeSearch() {
+      document.getElementById("searchOverlay").classList.remove("open");
+    }
+
+    function searchNormalize(value) {
+      return String(value || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    }
+
+    async function runGlobalSearch(query) {
+      const resultsEl = document.getElementById("searchResults");
+      const q = searchNormalize(query.trim());
+      if (q.length < 2) {
+        resultsEl.innerHTML = '<div class="muted">Tapez au moins deux caracteres.</div>';
+        return;
+      }
+      resultsEl.innerHTML = '<div class="muted">Recherche...</div>';
+
+      // Chaque source est facultative : une table absente ne doit pas casser la recherche.
+      const fetchJson = async (path) => {
+        try {
+          const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${path}`);
+          return res.ok ? await res.json() : [];
+        } catch (e) { return []; }
+      };
+
+      const [classes, students, cycles, equip, epis, groups] = await Promise.all([
+        fetchJson("classes?deleted=eq.false&select=id,name,school_year,grade"),
+        fetchJson("students?deleted=eq.false&select=id,first_name,last_name,class_id"),
+        fetchJson("cycles?deleted=eq.false&select=id,apsa_name,grade,session_count"),
+        fetchJson("equipment?deleted=eq.false&select=id,name,category,location"),
+        fetchJson("epi_items?deleted=eq.false&select=id,internal_id,manufacturer,model"),
+        fetchJson("unss_groups?deleted=eq.false&select=id,activity_name,responsible_teacher")
+      ]);
+
+      const classById = {};
+      classes.forEach(c => { classById[c.id] = c.name; });
+
+      const hits = [];
+      const push = (category, title, subtitle, tab) => hits.push({ category, title, subtitle, tab });
+      const match = (...values) => values.some(v => searchNormalize(v).includes(q));
+
+      classes.forEach(c => { if (match(c.name, c.school_year)) push("Classe", c.name, c.school_year || "", "classes"); });
+      students.forEach(s => {
+        if (match(s.last_name, s.first_name)) {
+          push("Eleve", `${(s.last_name || "").toUpperCase()} ${s.first_name || ""}`.trim(), classById[s.class_id] || "", "classes");
+        }
+      });
+      cycles.forEach(c => { if (match(c.apsa_name)) push("Cours", c.apsa_name, `${GRADE_LABELS[c.grade] || c.grade} · ${c.session_count} seances`, "cours"); });
+      equip.forEach(e => { if (match(e.name, e.location)) push("Materiel", e.name, e.location || "", "equipement"); });
+      epis.forEach(e => { if (match(e.internal_id, e.manufacturer, e.model)) push("EPI", e.internal_id, [e.manufacturer, e.model].filter(Boolean).join(" "), "equipement"); });
+      groups.forEach(g => { if (match(g.activity_name, g.responsible_teacher)) push("UNSS", g.activity_name, g.responsible_teacher || "", "unss"); });
+
+      resultsEl.innerHTML = hits.length === 0
+        ? `<div class="muted">Aucun resultat pour « ${query} ».</div>`
+        : hits.slice(0, 60).map((h, i) => `<button class="searchHit" data-hit="${i}">
+            <span class="cat">${h.category}</span>
+            <span class="ttl">${h.title}</span>
+            ${h.subtitle ? `<div class="muted">${h.subtitle}</div>` : ""}
+          </button>`).join("");
+
+      resultsEl.querySelectorAll("[data-hit]").forEach(b =>
+        b.onclick = () => { closeSearch(); showTab(hits[Number(b.dataset.hit)].tab); });
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", openSearch);
+    document.getElementById("searchClose").addEventListener("click", closeSearch);
+    document.getElementById("searchOverlay").addEventListener("click", e => {
+      if (e.target.id === "searchOverlay") closeSearch();
+    });
+    document.getElementById("searchInput").addEventListener("input", e => {
+      clearTimeout(searchDebounce);
+      const value = e.target.value;
+      searchDebounce = setTimeout(() => runGlobalSearch(value), 220);
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeSearch();
     });
 
     // ---- Accueil : carte du jour et acces aux modules (miroir de HomeScreen.kt) ----
@@ -2374,10 +2667,12 @@
     const PLANNING_DURATIONS = [[60, "1h"], [90, "1h30"], [120, "2h"], [150, "2h30"]];
     const TODAY_DAY_KEY = PLANNING_DAYS[(new Date().getDay() + 6) % 7]?.key || null; // getDay(): 0=dimanche
 
+    /** Nombre de periodes de l'annee, ajustable dans les Reglages comme dans l'application. */
     function planningPeriodCount(grade) {
-      if (grade === "PREMIERE") return 4;
-      if (grade === "TERMINALE") return 3;
-      return 5;
+      const periods = loadPrefs().periods || {};
+      if (grade === "PREMIERE") return periods.premiere ?? 4;
+      if (grade === "TERMINALE") return periods.terminale ?? 3;
+      return periods.college ?? 5;
     }
     function planningWeeklySlotsNeeded(grade) {
       return ["SIXIEME", "CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade) ? 2 : 1;
