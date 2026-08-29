@@ -473,6 +473,7 @@
         <div id="subtab-classes">
           <div id="importsList"></div>
 
+          <div id="classDashboardPanel" class="card" style="display:none"></div>
           <div id="classSchedulePanel" class="card" style="display:none"></div>
 
           <div id="editImportPanel" class="card" style="display:none">
@@ -1482,11 +1483,13 @@
             <div class="top">
               <div><strong>${label}</strong> · ${r.school_year}</div>
               <div>
+                <button class="secondary" data-action="dashboard" style="margin-top:0">Tableau de bord</button>
                 <button class="secondary" data-action="schedule" style="margin-top:0">Emploi du temps</button>
                 <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
                 <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
               </div>
             </div>`;
+          div.querySelector('[data-action="dashboard"]').addEventListener("click", () => openClassDashboard(r, label));
           div.querySelector('[data-action="schedule"]').addEventListener("click", () => openClassSchedule(r, label));
           div.querySelector('[data-action="edit"]').addEventListener("click", () => openEditImport(r));
           div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteImport(r.id));
@@ -2084,6 +2087,127 @@
       document.getElementById("livePrev").disabled = liveIndex === 0;
       document.getElementById("liveNext").disabled = liveIndex >= liveSteps.length - 1;
       document.querySelector(".liveBody").scrollTop = 0;
+    }
+
+    // ---- Tableau de bord d'une classe (miroir de ClassPeriodDashboard.kt) ----
+    // Une periode a la fois : l'activite programmee, ses exercices rapides, et l'acces
+    // direct aux evaluations. C'est la vue qu'on ouvre juste avant un cours.
+
+    let dashboardClass = null;
+    let dashboardPeriod = 1;
+    let dashboardActivities = [];
+    let dashboardExerciseType = "WARMUP";
+
+    async function openClassDashboard(cls, label) {
+      dashboardClass = { row: cls, label };
+      dashboardPeriod = 1;
+      document.getElementById("classSchedulePanel").style.display = "none";
+      const panel = document.getElementById("classDashboardPanel");
+      panel.style.display = "block";
+      panel.innerHTML = '<div class="muted">Chargement du tableau de bord...</div>';
+
+      // Les activites d'une classe passent par ses creneaux : period_activities pointe sur le
+      // creneau, pas sur la classe.
+      const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id`);
+      const slots = slotsRes.ok ? await slotsRes.json() : [];
+      if (slots.length) {
+        const ids = slots.map(s => s.id).join(",");
+        const actRes = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${ids})&select=*`);
+        dashboardActivities = actRes.ok ? await actRes.json() : [];
+      } else {
+        dashboardActivities = [];
+      }
+      renderClassDashboard();
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderClassDashboard() {
+      const panel = document.getElementById("classDashboardPanel");
+      const { row, label } = dashboardClass;
+      const periodCount = planningPeriodCount(row.grade);
+      if (dashboardPeriod > periodCount) dashboardPeriod = periodCount;
+
+      const activity = dashboardActivities.find(a => a.period_number === dashboardPeriod);
+      const chips = [];
+      for (let p = 1; p <= periodCount; p++) {
+        chips.push(`<button class="periodChip${p === dashboardPeriod ? " active" : ""}" data-dash-period="${p}">Periode ${p}</button>`);
+      }
+
+      panel.innerHTML = `
+        <div class="top">
+          <div>
+            <h2 style="margin:0">${label}</h2>
+            <div class="muted">${row.school_year || ""}</div>
+          </div>
+          <button class="secondary" id="closeDashboardBtn" style="margin-top:0">Fermer</button>
+        </div>
+
+        <div class="periodBar" style="display:flex; margin-top:12px">${chips.join("")}</div>
+
+        <div class="card" style="background:#DDF3FF; border:0">
+          <div class="muted" style="font-size:11px; text-transform:uppercase; letter-spacing:.06em">Periode ${dashboardPeriod}</div>
+          <div style="font-size:22px; font-weight:800; color:#102F4A">${activity ? activity.apsa_name : "Aucune activite programmee"}</div>
+          ${activity && activity.installation_name ? `<div class="muted">${activity.installation_name}</div>` : ""}
+        </div>
+
+        <div id="dashExercises"></div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="secondary" id="dashEvalBtn">Evaluations de la classe</button>
+        </div>`;
+
+      document.getElementById("closeDashboardBtn").onclick = () => { panel.style.display = "none"; };
+      panel.querySelectorAll("[data-dash-period]").forEach(b =>
+        b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); renderClassDashboard(); });
+      document.getElementById("dashEvalBtn").onclick = () => showTab("cours");
+
+      renderDashboardExercises(activity);
+    }
+
+    /**
+     * Exercices rapides de l'activite de la periode. Le catalogue vit dans quick-exercises.js ;
+     * s'il n'est pas charge, la carte disparait plutot que de casser le tableau de bord.
+     */
+    function renderDashboardExercises(activity) {
+      const host = document.getElementById("dashExercises");
+      if (!host) return;
+      if (!activity || typeof QuickExercises === "undefined") { host.innerHTML = ""; return; }
+
+      const all = QuickExercises.forActivity(activity.apsa_name, dashboardClass.row.grade);
+      const list = all.filter(e => e.type === dashboardExerciseType);
+
+      host.innerHTML = `
+        <h2 style="margin:18px 0 6px; font-size:15px">Exercices rapides — ${activity.apsa_name}</h2>
+        <div class="subtabbar">
+          <button class="subtabbtn${dashboardExerciseType === "WARMUP" ? " active" : ""}" data-ex-type="WARMUP">Echauffement</button>
+          <button class="subtabbtn${dashboardExerciseType === "GAME" ? " active" : ""}" data-ex-type="GAME">Exercice / Jeu</button>
+        </div>
+        ${list.map((e, i) => `
+          <details class="card" style="margin-top:8px">
+            <summary style="cursor:pointer"><strong>${e.title}</strong> <span class="muted">· ${e.durationMinutes} min</span></summary>
+            <div class="muted" style="margin-top:6px">${e.material}</div>
+            <canvas data-diagram="${e.diagramKind}" width="520" height="240" style="width:100%; max-width:520px; margin-top:10px; border:1px solid var(--border); border-radius:10px; background:#fff"></canvas>
+            <div style="margin-top:10px">${e.organization}</div>
+            <div style="margin-top:8px"><strong>Consignes</strong><div>${e.instructions}</div></div>
+            ${e.steps && e.steps.length ? `<div style="margin-top:8px"><strong>Deroulement</strong><ul class="tight" style="margin:2px 0 0; padding-left:18px">${e.steps.map(s => `<li>${s}</li>`).join("")}</ul></div>` : ""}
+            <div style="margin-top:8px"><strong>Reussite</strong><div>${e.successCriteria}</div></div>
+            <div class="muted" style="margin-top:8px">Plus facile — ${e.easier}</div>
+            <div class="muted">Plus difficile — ${e.harder}</div>
+            ${e.safety ? `<div style="margin-top:8px; padding:8px 10px; border-left:3px solid var(--danger); background:#FDEEED; border-radius:0 4px 4px 0"><strong style="color:var(--danger)">Securite</strong><div>${e.safety}</div></div>` : ""}
+          </details>`).join("")}`;
+
+      host.querySelectorAll("[data-ex-type]").forEach(b =>
+        b.onclick = () => { dashboardExerciseType = b.dataset.exType; renderDashboardExercises(activity); });
+
+      // Les schemas ne se dessinent qu'a l'ouverture du detail : inutile de peindre 10 canvas.
+      host.querySelectorAll("details").forEach(d => d.addEventListener("toggle", () => {
+        if (!d.open) return;
+        const canvas = d.querySelector("canvas[data-diagram]");
+        if (canvas && !canvas.dataset.drawn) {
+          QuickExercises.drawDiagram(canvas, canvas.dataset.diagram);
+          canvas.dataset.drawn = "1";
+        }
+      }));
     }
 
     // ---- Emploi du temps d'une classe (miroir de ClassScheduleScreen.kt) ----
