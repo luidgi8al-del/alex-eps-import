@@ -3546,8 +3546,17 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         ? `<div class="muted">Aucun membre. Ajoutez-en un.</div>`
         : members.map(s => `<div class="unssCard" style="padding:6px 0">
             <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
-            <button class="danger" data-remove-member="${s.id}" style="margin-top:0">Retirer</button>
+            <div style="display:flex; gap:6px">
+              <button class="secondary" data-member-stats="${s.id}" style="margin-top:0">Statistiques</button>
+              <button class="danger" data-remove-member="${s.id}" style="margin-top:0">Retirer</button>
+            </div>
           </div>`).join("");
+      membersListEl.querySelectorAll("[data-member-stats]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const student = members.find(m => m.id === btn.dataset.memberStats);
+          openUnssStudentStats(group, student, sessions);
+        });
+      });
       membersListEl.querySelectorAll("[data-remove-member]").forEach(btn => {
         btn.addEventListener("click", async () => {
           const membership = memberships.find(m => m.student_id === btn.dataset.removeMember);
@@ -3662,6 +3671,61 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance`, { method: "POST", body: JSON.stringify(rows) });
         document.getElementById("unssAppelOk").textContent = "Appel enregistre.";
       });
+    }
+
+    // ---- Statistiques UNSS d'un eleve (miroir de StudentUnssStatsScreen.kt) ----
+    // Seances du groupe, presences, absences, taux, puis l'historique date par date.
+    // Une seance sans ligne d'appel pour cet eleve compte comme une absence, comme dans l'app.
+
+    async function openUnssStudentStats(group, student, sessions) {
+      const panel = document.getElementById("unssPanel");
+      panel.style.display = "block";
+      panel.innerHTML = '<div class="muted">Chargement des statistiques...</div>';
+
+      const sessionIds = sessions.map(s => s.id);
+      let attendance = [];
+      if (sessionIds.length) {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance?student_id=eq.${student.id}&session_id=in.(${sessionIds.join(",")})&select=*`);
+        attendance = res.ok ? await res.json() : [];
+      }
+
+      const presenceBySession = {};
+      attendance.forEach(a => { presenceBySession[a.session_id] = !!a.present; });
+
+      const total = sessions.length;
+      const present = sessions.filter(s => presenceBySession[s.id]).length;
+      const absent = total - present;
+      const rate = total === 0 ? 0 : Math.round((present / total) * 100);
+
+      const ordered = sessions.slice().sort((a, b) => b.date_epoch_millis - a.date_epoch_millis);
+      const history = total === 0
+        ? '<div class="muted">Aucune seance enregistree pour ce groupe.</div>'
+        : ordered.map(s => {
+            const ok = presenceBySession[s.id];
+            const date = new Date(s.date_epoch_millis).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+            return `<div class="top" style="padding:7px 0; border-bottom:1px solid var(--border)">
+              <div>${date}${s.label ? ` <span class="muted">— ${s.label}</span>` : ""}</div>
+              <strong style="color:${ok ? "var(--primary)" : "var(--danger)"}">${ok ? "Present" : "Absent"}</strong>
+            </div>`;
+          }).join("");
+
+      const stat = (label, value) =>
+        `<div style="text-align:center; flex:1"><div style="font-size:24px; font-weight:700">${value}</div><div class="muted">${label}</div></div>`;
+
+      panel.innerHTML = `
+        <div class="top">
+          <h2 style="margin:0">${student.last_name.toUpperCase()} ${student.first_name}</h2>
+          <button class="secondary" id="closeStudentStats" style="margin-top:0">Fermer</button>
+        </div>
+        <div class="muted">${group.activity_name}</div>
+        <div class="card" style="display:flex; gap:10px">
+          ${stat("Seances", total)}${stat("Present", present)}${stat("Absent", absent)}${stat("Taux", rate + " %")}
+        </div>
+        <h2 style="margin-top:16px; font-size:15px">Historique</h2>
+        ${history}`;
+
+      document.getElementById("closeStudentStats").onclick = () => openUnssGroupDetailPanel(group);
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     // ---- Outils terrain : equivalents web des outils de l'application ----
