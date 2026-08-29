@@ -352,12 +352,13 @@
         <div id="toolPanel" class="card" style="display:none"></div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
-        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Programmes officiels et programmation annuelle restent dans l'application. Le planning se gere ici.</div>
+        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Planning hebdomadaire et programmation annuelle se gerent ici. Les programmes officiels restent dans l'application.</div>
 
         <div class="subtabbar" id="planningSubtabs">
           <button class="subtabbtn" data-planningtab="global">Planning global Alex</button>
           <button class="subtabbtn" data-planningtab="eps">Planning global EPS</button>
           <button class="subtabbtn" data-planningtab="periode">Par periode</button>
+          <button class="subtabbtn" data-planningtab="annuelle">Programmation annuelle</button>
         </div>
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
@@ -371,6 +372,7 @@
         <div id="planningGrid"></div>
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
+        <div id="annualPlanWrap" style="display:none"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="subtabbar" id="unssSubtabs">
@@ -2421,6 +2423,11 @@
         b.classList.toggle("active", b.dataset.planningtab === mode);
       });
       document.getElementById("planningPanel").style.display = "none";
+      if (mode === "annuelle") {
+        renderPlanningTab();
+        loadAnnualPlan();
+        return;
+      }
       if (mode === "periode") {
         loadPlanningActivities().then(renderPlanningTab);
         return;
@@ -2430,6 +2437,207 @@
         return;
       }
       renderPlanningTab();
+    }
+
+    // ---- Programmation annuelle (miroir de AnnualPlanningScreen.kt) ----
+    // Une periode = une APSA sur une plage de dates, pour une classe. Deux vues : la sienne,
+    // modifiable, et celle de toute l'equipe EPS, en lecture seule (memes libelles
+    // denormalises que le Planning, donc pas besoin de lire les classes des collegues).
+
+    let annualBlocks = [];
+    let annualClassId = null;
+    let annualView = "mine";
+
+    async function loadAnnualPlan() {
+      const wrap = document.getElementById("annualPlanWrap");
+      wrap.innerHTML = '<div class="card muted">Chargement de la programmation...</div>';
+      if (!planningClasses.length) await loadPlanningClasses();
+
+      const filter = annualView === "mine" ? `&user_id=eq.${session.user_id}` : "";
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks?deleted=eq.false${filter}&select=*&order=start_date_epoch_millis.asc`);
+      annualBlocks = res.ok ? await res.json() : [];
+
+      if (annualView === "mine" && !annualClassId && planningClasses.length) annualClassId = planningClasses[0].id;
+      renderAnnualPlan();
+    }
+
+    function annualMonth(millis) {
+      return new Date(millis).toLocaleDateString("fr-FR", { month: "short", year: "numeric" });
+    }
+
+    function renderAnnualPlan() {
+      const wrap = document.getElementById("annualPlanWrap");
+
+      const viewSwitch = `
+        <div class="subtabbar" style="margin-bottom:12px">
+          <button class="subtabbtn${annualView === "mine" ? " active" : ""}" data-annualview="mine">Ma programmation</button>
+          <button class="subtabbtn${annualView === "eps" ? " active" : ""}" data-annualview="eps">Programmation EPS</button>
+        </div>`;
+
+      if (annualView === "eps") {
+        const byTeacher = {};
+        annualBlocks.forEach(b => {
+          const key = `${b.teacher_label || "?"} · ${b.class_label || "Classe"}`;
+          (byTeacher[key] = byTeacher[key] || []).push(b);
+        });
+        const groups = Object.keys(byTeacher).sort();
+        wrap.innerHTML = viewSwitch + `<div class="card">
+          <h2 style="margin:0">Programmation de l'equipe EPS</h2>
+          <div class="muted">Lecture seule : la programmation annuelle de tous les collegues qui utilisent l'app.</div>
+          ${groups.length === 0 ? '<div class="muted" style="margin-top:12px">Aucune programmation partagee.</div>'
+            : groups.map(g => `<h2 style="margin:16px 0 4px; font-size:15px">${g}</h2>` +
+                byTeacher[g].map(b => `<div class="top" style="padding:6px 0; border-bottom:1px solid var(--border)">
+                  <div><strong>${b.apsa_name}</strong> <span class="muted">${b.session_count} seances</span></div>
+                  <div class="muted">${annualMonth(b.start_date_epoch_millis)} → ${annualMonth(b.end_date_epoch_millis)}</div>
+                </div>`).join("")).join("")}
+        </div>`;
+        bindAnnualViewSwitch();
+        return;
+      }
+
+      const mine = annualBlocks.filter(b => b.class_id === annualClassId);
+      const options = planningClasses.map(c =>
+        `<option value="${c.id}"${c.id === annualClassId ? " selected" : ""}>${c.name}</option>`).join("");
+
+      wrap.innerHTML = viewSwitch + `<div class="card">
+        <div class="row">
+          <div>
+            <label for="annualClass">Classe</label>
+            <select id="annualClass">${options || '<option value="">Aucune classe</option>'}</select>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          ${mine.length === 0
+            ? '<div class="muted">Aucune periode programmee pour cette classe.</div>'
+            : mine.map(b => `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
+                <div>
+                  <strong>${b.apsa_name}</strong> <span class="muted">— ${b.session_count} seances</span>
+                  <div class="muted">${annualMonth(b.start_date_epoch_millis)} → ${annualMonth(b.end_date_epoch_millis)}${b.champ_apprentissage ? " · " + b.champ_apprentissage : ""}</div>
+                </div>
+                <button class="danger" data-del-block="${b.id}" style="margin-top:0">Supprimer</button>
+              </div>`).join("")}
+        </div>
+
+        <h2 style="margin:18px 0 0; font-size:15px">Ajouter une periode</h2>
+        <div class="row">
+          <div>
+            <label for="annualApsa">Activite</label>
+            <select id="annualApsa"></select>
+          </div>
+          <div>
+            <label for="annualSessions">Seances</label>
+            <input type="number" id="annualSessions" min="1" value="8">
+          </div>
+        </div>
+        <div class="row">
+          <div><label for="annualStart">Debut</label><input type="date" id="annualStart"></div>
+          <div><label for="annualEnd">Fin</label><input type="date" id="annualEnd"></div>
+        </div>
+        <button id="annualAddBtn">Ajouter la periode</button>
+        ${mine.length ? '<button class="secondary" id="annualCopyBtn">Copier vers une autre classe</button>' : ""}
+        <div class="error" id="annualError"></div>
+      </div>`;
+
+      bindAnnualViewSwitch();
+      const classSelect = document.getElementById("annualClass");
+      if (classSelect) classSelect.onchange = () => { annualClassId = classSelect.value; renderAnnualPlan(); };
+      refreshAnnualApsaOptions();
+
+      wrap.querySelectorAll("[data-del-block]").forEach(b =>
+        b.onclick = () => deleteAnnualBlock(b.dataset.delBlock));
+      const addBtn = document.getElementById("annualAddBtn");
+      if (addBtn) addBtn.onclick = addAnnualBlock;
+      const copyBtn = document.getElementById("annualCopyBtn");
+      if (copyBtn) copyBtn.onclick = copyAnnualPlan;
+    }
+
+    function bindAnnualViewSwitch() {
+      document.querySelectorAll("[data-annualview]").forEach(b =>
+        b.onclick = () => { annualView = b.dataset.annualview; loadAnnualPlan(); });
+    }
+
+    /** Les APSA proposees sont celles programmees pour le niveau de la classe choisie. */
+    function refreshAnnualApsaOptions() {
+      const select = document.getElementById("annualApsa");
+      if (!select) return;
+      const cls = planningClasses.find(c => c.id === annualClassId);
+      const list = (cls && PROGRAMMATION[cls.grade]) || [];
+      select.innerHTML = list.length
+        ? list.map(a => `<option value="${a}">${a}</option>`).join("")
+        : '<option value="">Aucune activite programmee</option>';
+    }
+
+    async function addAnnualBlock() {
+      const errorEl = document.getElementById("annualError");
+      errorEl.textContent = "";
+      const apsa = document.getElementById("annualApsa").value;
+      const start = document.getElementById("annualStart").value;
+      const end = document.getElementById("annualEnd").value;
+      const sessions = parseInt(document.getElementById("annualSessions").value, 10) || 0;
+
+      if (!annualClassId) { errorEl.textContent = "Choisissez une classe."; return; }
+      if (!apsa) { errorEl.textContent = "Choisissez une activite."; return; }
+      if (!start || !end) { errorEl.textContent = "Indiquez les dates de debut et de fin."; return; }
+      if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le debut."; return; }
+
+      const cls = planningClasses.find(c => c.id === annualClassId);
+      try {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks`, {
+          method: "POST",
+          body: JSON.stringify({
+            id: crypto.randomUUID(), user_id: session.user_id, class_id: annualClassId,
+            apsa_name: apsa,
+            start_date_epoch_millis: new Date(start).getTime(),
+            end_date_epoch_millis: new Date(end).getTime(),
+            session_count: sessions, champ_apprentissage: "",
+            class_label: cls ? cls.name : "", teacher_label: session.email || "?",
+            updated_at: new Date().toISOString(), deleted: false
+          })
+        });
+        await loadAnnualPlan();
+      } catch (e) {
+        errorEl.textContent = e.message;
+      }
+    }
+
+    async function deleteAnnualBlock(id) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks?id=eq.${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      await loadAnnualPlan();
+    }
+
+    /** "Copier vers..." de l'app : reprend toute la programmation d'une classe sur une autre. */
+    async function copyAnnualPlan() {
+      const others = planningClasses.filter(c => c.id !== annualClassId);
+      if (!others.length) { alert("Aucune autre classe."); return; }
+      const target = prompt(
+        "Copier cette programmation vers quelle classe ?\n\n" +
+        others.map((c, i) => `${i + 1}. ${c.name}`).join("\n"),
+        "1"
+      );
+      const index = parseInt(target, 10) - 1;
+      if (isNaN(index) || !others[index]) return;
+
+      const cls = others[index];
+      const blocks = annualBlocks.filter(b => b.class_id === annualClassId);
+      for (const b of blocks) {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks`, {
+          method: "POST",
+          body: JSON.stringify({
+            id: crypto.randomUUID(), user_id: session.user_id, class_id: cls.id,
+            apsa_name: b.apsa_name,
+            start_date_epoch_millis: b.start_date_epoch_millis,
+            end_date_epoch_millis: b.end_date_epoch_millis,
+            session_count: b.session_count, champ_apprentissage: b.champ_apprentissage || "",
+            class_label: cls.name, teacher_label: session.email || "?",
+            updated_at: new Date().toISOString(), deleted: false
+          })
+        });
+      }
+      annualClassId = cls.id;
+      await loadAnnualPlan();
     }
 
     async function loadPlanningClasses() {
@@ -2484,6 +2692,19 @@
     }
 
     function renderPlanningTab() {
+      // La programmation annuelle n'utilise pas la grille horaire : on bascule l'affichage.
+      const annualMode = planningMode === "annuelle";
+      document.getElementById("annualPlanWrap").style.display = annualMode ? "block" : "none";
+      document.getElementById("planningGrid").style.display = annualMode ? "none" : "";
+      if (annualMode) {
+        document.getElementById("planningPeriodBar").style.display = "none";
+        document.getElementById("planningPendingHint").style.display = "none";
+        document.getElementById("planningNewClassHint").style.display = "none";
+        document.getElementById("planningEpsHint").style.display = "none";
+        document.getElementById("planningAnalysisPanel").style.display = "none";
+        return;
+      }
+
       // Barre de periodes
       const periodBar = document.getElementById("planningPeriodBar");
       if (planningMode === "periode" || planningMode === "eps") {
