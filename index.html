@@ -1224,6 +1224,106 @@
       return cycleContentCache[entry.file];
     }
 
+    // ---- Adaptation du nombre de seances (miroir de SessionCountAdapter.kt) ----
+    // Les huit seances redigees sont adaptees au nombre demande en gardant la diagnostique en
+    // premier, la mi-cycle vers le milieu et la finale toujours en dernier : le cycle reste
+    // evaluable quel que soit le nombre de seances choisi.
+
+    // Meme restriction que CyclePreviewBuilder : validee du college a la seconde, le cycle
+    // terminal garde la troncature simple en attendant validation.
+    const ADAPTED_GRADES = ["SIXIEME", "CINQUIEME", "QUATRIEME", "TROISIEME", "SECONDE"];
+
+    function orderedSessions(content, grade, count) {
+      if (!content || !content.sessions) return [];
+      return ADAPTED_GRADES.includes(grade)
+        ? adaptSessionCount(content.sessions, count)
+        : content.sessions;
+    }
+
+    function adaptSessionCount(sessions, target) {
+      if (!sessions || !sessions.length || target <= 0) return [];
+      if (target === sessions.length) return sessions.slice();
+      return target < sessions.length ? compressSessions(sessions, target) : expandSessions(sessions, target);
+    }
+
+    /**
+     * Retire des seances de construction en priorite pres de la mi-cycle : les premieres de
+     * chaque moitie sont gardees car les suivantes s'appuient dessus. Sous tres forte
+     * contrainte, la mi-cycle est la premiere sacrifiee, la finale jamais.
+     */
+    function compressSessions(sessions, target) {
+      const last = sessions.length - 1;
+
+      let diagnosticIdx = sessions.findIndex(s => s.isDiagnostic);
+      if (diagnosticIdx < 0) diagnosticIdx = 0;
+
+      let finalIdx = -1;
+      for (let i = last; i >= 0; i--) if (sessions[i].isFinalEvaluation) { finalIdx = i; break; }
+      if (finalIdx < 0) finalIdx = last;
+
+      let midIdx = sessions.findIndex(s => s.isMidCycleEvaluation);
+      if (midIdx < 0 || midIdx === diagnosticIdx || midIdx === finalIdx) midIdx = null;
+
+      const mid = midIdx !== null ? [midIdx] : [];
+      const mandatory = [...new Set([diagnosticIdx, finalIdx, ...mid])];
+
+      if (target <= mandatory.length) {
+        const priority = [...new Set([finalIdx, diagnosticIdx, ...mid])];
+        return priority.slice(0, target).sort((a, b) => a - b).map(i => sessions[i]);
+      }
+
+      const range = (from, to) => { const r = []; for (let i = from; i < to; i++) r.push(i); return r; };
+      const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+
+      const groupA = range(diagnosticIdx + 1, midIdx !== null ? midIdx : finalIdx);
+      const groupB = midIdx !== null ? range(midIdx + 1, finalIdx) : [];
+      const total = groupA.length + groupB.length;
+      const remaining = target - mandatory.length;
+
+      let kA = total > 0 ? Math.floor((remaining * groupA.length) / total) : 0;
+      kA = clamp(kA, 0, groupA.length);
+      let kB = clamp(remaining - kA, 0, groupB.length);
+
+      const leftover = remaining - kA - kB;
+      if (leftover > 0) {
+        const extraA = Math.min(groupA.length - kA, leftover);
+        kA += extraA;
+        kB = Math.min(kB + (leftover - extraA), groupB.length);
+      }
+
+      const selected = [...new Set([...mandatory, ...groupA.slice(0, kA), ...groupB.slice(0, kB)])]
+        .sort((a, b) => a - b);
+      return selected.map(i => sessions[i]);
+    }
+
+    /**
+     * Insere des seances supplementaires en dupliquant, a tour de role, les seances de
+     * construction (jamais la diagnostique, la mi-cycle ni la finale), toujours placees juste
+     * avant la finale qui doit rester en derniere position.
+     */
+    function expandSessions(sessions, target) {
+      const extra = target - sessions.length;
+
+      let candidates = sessions
+        .map((s, i) => i)
+        .filter(i => !sessions[i].isDiagnostic && !sessions[i].isFinalEvaluation && !sessions[i].isMidCycleEvaluation);
+      if (!candidates.length) candidates = [Math.max(sessions.length - 2, 0)];
+
+      const result = sessions.slice();
+      for (let i = 0; i < extra; i++) {
+        const source = sessions[candidates[i % candidates.length]];
+        const duplicate = Object.assign({}, source, {
+          theme: `${source.theme} (reprise)`,
+          mainObjective: `Reprise et consolidation : ${source.mainObjective}`
+        });
+        let finalPos = -1;
+        for (let j = result.length - 1; j >= 0; j--) if (result[j].isFinalEvaluation) { finalPos = j; break; }
+        if (finalPos < 0) finalPos = result.length;
+        result.splice(finalPos, 0, duplicate);
+      }
+      return result;
+    }
+
     let coursTabReady = false;
     let selectedCoursPeriod = 1;
     let loadedCourses = [];
@@ -1256,10 +1356,11 @@
       if (!apsa) { el.innerHTML = '<div class="card muted">Aucune activite programmee pour ce niveau.</div>'; return; }
 
       const content = await loadCycleContent(grade, apsa);
+      const ordered = orderedSessions(content, grade, count);
 
       let rows = "";
       for (let i = 1; i <= count; i++) {
-        const written = content?.sessions.find(s => s.number === i);
+        const written = ordered[i - 1];
         const title = written?.theme || content?.plannedTitles?.[i - 1] || `Seance ${i}`;
         rows += `<div class="card sessionCard" data-n="${i}" style="margin-top:8px;${written ? "cursor:pointer" : "opacity:.6"}">
           <div class="top">
@@ -1280,13 +1381,29 @@
 
       el.querySelectorAll(".sessionCard").forEach(card => {
         const n = parseInt(card.dataset.n, 10);
-        const written = content?.sessions.find(s => s.number === n);
-        if (written) card.addEventListener("click", () => showSessionSheet(content, written));
+        const written = ordered[n - 1];
+        if (written) card.addEventListener("click", () => showSessionSheet(content, written, n));
       });
     }
 
     // ---- Fiche de seance (mode preparation) ----
     const li = a => `<ul class="tight" style="margin:2px 0 0;padding-left:18px">${a.map(x => `<li>${x}</li>`).join("")}</ul>`;
+
+    // Miroir de MaterialNeed.kt : le besoin est exprime par effectif ("1 raquette pour 2
+    // eleves") plutot qu'en quantite figee, et se calcule donc au moment de l'affichage.
+    function materialQuantity(m, studentCount) {
+      if (m.fixed !== undefined && m.fixed !== null) return m.fixed;
+      const min = m.min !== undefined && m.min !== null ? m.min : 1;
+      if (m.per === undefined || m.per === null) return min;
+      return Math.max(min, Math.ceil(studentCount * m.per));
+    }
+
+    function materialLines(list, studentCount) {
+      return (list || []).map(m => {
+        const quantity = materialQuantity(m, studentCount);
+        return m.note ? `${quantity} ${m.label} (${m.note})` : `${quantity} ${m.label}`;
+      });
+    }
     const block = (k, html) => `<div style="margin-top:10px"><div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.06em">${k}</div>${html}</div>`;
 
     function situationHtml(s, studentCount) {
@@ -1298,6 +1415,7 @@
           </div>
           <div style="margin-top:6px">${s.objective}</div>
           ${block("But pour l'eleve", `<em>« ${s.studentGoal} »</em>`)}
+          ${block("Materiel", li(materialLines(s.material, studentCount)))}
           ${block("Organisation", s.organization)}
           ${block("Consignes", li(s.instructions))}
           ${block("Criteres de reussite", li(s.success))}
@@ -1319,12 +1437,14 @@
         </div>`;
     }
 
-    function showSessionSheet(content, s) {
+    // `position` est le rang affiche dans le cycle adapte : apres adaptation du nombre de
+    // seances, il ne correspond plus forcement au numero d'origine de la seance redigee.
+    function showSessionSheet(content, s, position) {
       const el = document.getElementById("sessionSheet");
       const studentCount = 28;
       el.innerHTML = `
         <div class="top">
-          <h2 style="margin:0">S${s.number} — ${s.theme}</h2>
+          <h2 style="margin:0">S${position || s.number} — ${s.theme}</h2>
           <button class="secondary" id="closeSheetBtn" style="margin-top:0">Fermer</button>
         </div>
         <div style="margin-top:8px">${s.mainObjective}</div>
@@ -1333,7 +1453,7 @@
         ${block("A acquerir avant la seance suivante", s.prerequisiteForNext)}
 
         <h2 style="margin-top:18px">A preparer avant le cours — installation ${s.setup.installationMinutes} min</h2>
-        ${block(`Materiel pour ${studentCount} eleves`, li(s.setup.material))}
+        ${block(`Materiel pour ${studentCount} eleves`, li(materialLines(s.setup.material, studentCount)))}
         ${block("Mise en place", li(s.setup.instructions))}
         ${block("Schema", `<pre style="white-space:pre-wrap;font-size:12px;margin:2px 0 0">${s.setup.sketch}</pre>`)}
 
@@ -1503,17 +1623,19 @@
       panel.style.display = "block";
       panel.innerHTML = '<div class="muted">Chargement du cours...</div>';
       const content = await loadCycleContent(course.grade, course.apsa_name);
+      const ordered = orderedSessions(content, course.grade, course.session_count);
       let sessionsHtml = "";
       for (let i = 1; i <= course.session_count; i++) {
-        const written = content?.sessions.find(s => s.number === i);
+        const written = ordered[i - 1];
         const title = written?.theme || content?.plannedTitles?.[i - 1] || `Séance ${i}`;
         sessionsHtml += `<button class="secondary createdSessionBtn" data-session="${i}" style="display:block;width:100%;text-align:left">S${i} · ${title}</button>`;
       }
       panel.innerHTML = `<div class="top"><div><h2 style="margin:0">${classLabel} · ${course.apsa_name}</h2><div class="muted">Période ${selectedCoursPeriod} · ${course.session_count} séances</div></div><button class="secondary" id="closeCreatedCourse" style="margin-top:0">Fermer</button></div>${sessionsHtml}`;
       document.getElementById("closeCreatedCourse").onclick = () => { panel.style.display = "none"; };
       panel.querySelectorAll("[data-session]").forEach(button => button.onclick = () => {
-        const written = content?.sessions.find(s => s.number === Number(button.dataset.session));
-        if (written) showSessionSheet(content, written);
+        const n = Number(button.dataset.session);
+        const written = ordered[n - 1];
+        if (written) showSessionSheet(content, written, n);
       });
       panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
