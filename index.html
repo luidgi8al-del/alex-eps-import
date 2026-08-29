@@ -121,6 +121,28 @@
     .card { box-shadow:none !important; border:none !important; }
   }
 
+  /* ---- Accueil : carte du jour puis grille des modules (miroir de HomeScreen.kt) ---- */
+  .todayCard { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; text-align:left;
+               background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:18px 22px; margin-top:16px;
+               box-shadow:0 3px 10px rgba(21,51,75,.08); color:var(--text); }
+  .todayCard:hover { background:var(--surface); filter:brightness(.99); }
+  .todayLabel { color:#163A5F; font-weight:700; font-size:16px; }
+  .todayCount { color:#2678C8; font-weight:800; font-size:32px; line-height:1.1; }
+  .todayNext { color:#405D73; font-size:13px; margin-top:2px; }
+  .todayLink { color:#2678C8; font-weight:700; font-size:12px; margin-top:8px; }
+  .todayIcon { font-size:44px; opacity:.85; }
+  .homeGrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:11px; }
+  .homeCard { position:relative; overflow:hidden; display:block; text-align:left; border:0; margin:0; color:#163A5F;
+              border-radius:22px; padding:16px; min-height:118px; box-shadow:0 3px 10px rgba(21,51,75,.09); }
+  .homeCard:hover { transform:translateY(-2px); filter:brightness(.985); }
+  .homeCard.featured { grid-column:1 / -1; min-height:126px; }
+  .homeTitle { display:block; font-weight:800; font-style:italic; font-size:18px; letter-spacing:.5px; }
+  .homeCard.featured .homeTitle { font-size:24px; }
+  .homeRule { display:block; width:34px; height:4px; border-radius:3px; margin-top:5px; }
+  .homeSub { display:block; color:#405D73; font-weight:500; font-size:11px; line-height:1.35; margin-top:8px; max-width:70%; }
+  .homeIcon { position:absolute; right:14px; bottom:10px; font-size:40px; opacity:.9; }
+  .homeCard.featured .homeIcon { font-size:54px; }
+
   /* ---- Mode cours en cours : gros texte, gros boutons, lisible a bout de bras ---- */
   .liveOverlay { position:fixed; inset:0; background:var(--bg); z-index:900; display:none; flex-direction:column; }
   .liveOverlay.open { display:flex; }
@@ -187,11 +209,48 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
+        <button class="todayCard" id="todayCard">
+          <div class="todayInfo">
+            <div class="todayLabel">Aujourd'hui</div>
+            <div class="todayCount" id="todayCount">—</div>
+            <div class="todayNext" id="todayNext">Chargement...</div>
+            <div class="todayLink">Voir le planning ›</div>
+          </div>
+          <div class="todayIcon">🕗</div>
+        </button>
+
+        <h2 style="margin:22px 0 10px">Mes espaces</h2>
+        <div class="homeGrid">
+          <button class="homeCard featured" data-goto="classes" style="background:#FFE8E7">
+            <span class="homeTitle">CLASSE</span><span class="homeRule" style="background:#C8493F"></span>
+            <span class="homeSub">Classes, eleves et evaluations</span><span class="homeIcon">🎓</span>
+          </button>
+          <button class="homeCard" data-goto="cours" style="background:#DFF3FF">
+            <span class="homeTitle">COURS</span><span class="homeRule" style="background:#2678C8"></span>
+            <span class="homeSub">Cycles, seances et evaluations</span><span class="homeIcon">📘</span>
+          </button>
+          <button class="homeCard" data-goto="outils" style="background:#FFF0D8">
+            <span class="homeTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span>
+            <span class="homeSub">Chronos, scores et tests</span><span class="homeIcon">⏱️</span>
+          </button>
+          <button class="homeCard" data-goto="programmation" style="background:#E5F8F5">
+            <span class="homeTitle">PROGRAMMATION</span><span class="homeRule" style="background:#159B91"></span>
+            <span class="homeSub">Cycles et planification</span><span class="homeIcon">🗓️</span>
+          </button>
+          <button class="homeCard" data-goto="unss" style="background:#F0E9FF">
+            <span class="homeTitle">ASLVH</span><span class="homeRule" style="background:#7548C8"></span>
+            <span class="homeSub">Licencies, groupes et sorties</span><span class="homeIcon">🏆</span>
+          </button>
+          <button class="homeCard" data-goto="equipement" style="background:#FFF8C9">
+            <span class="homeTitle">EQUIPEMENT</span><span class="homeRule" style="background:#93A900"></span>
+            <span class="homeSub">Materiel et installations</span><span class="homeIcon">🏋️</span>
+          </button>
+        </div>
+
         <div class="card" id="institutionCard">
           <h2>Etablissement</h2>
           <div id="institutionStatus" class="muted">Chargement...</div>
         </div>
-        <div class="placeholder" style="margin-top:16px"><div class="big">Bienvenue</div>Choisissez un onglet ci-dessus.</div>
       </div>
       <div id="institutionPanel" class="card" style="display:none"></div>
 
@@ -705,6 +764,7 @@
       document.querySelectorAll(".tabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
+      if (name === "home") loadTodayCard();
       if (name === "classes") showSubtab("classes");
       if (name === "cours") initCoursTab();
       if (name === "programmation") initPlanningTab();
@@ -716,6 +776,53 @@
       const btn = e.target.closest(".tabbtn");
       if (btn) showTab(btn.dataset.tab);
     });
+
+    // ---- Accueil : carte du jour et acces aux modules (miroir de HomeScreen.kt) ----
+    // Meme regle que TodayCard : on compte les creneaux du jour et on annonce le prochain,
+    // c'est-a-dire le premier qui n'a pas encore commence, sinon le premier de la journee.
+    document.querySelectorAll("[data-goto]").forEach(b =>
+      b.addEventListener("click", () => showTab(b.dataset.goto))
+    );
+    document.getElementById("todayCard").addEventListener("click", () => showTab("programmation"));
+
+    function slotStartMinutes(slot) {
+      const parts = String(slot.start_time || "").trim().replace("h", ":").split(":");
+      const hour = parseInt(parts[0], 10);
+      if (isNaN(hour)) return Number.MAX_SAFE_INTEGER;
+      return hour * 60 + (parseInt(parts[1], 10) || 0);
+    }
+
+    async function loadTodayCard() {
+      const countEl = document.getElementById("todayCount");
+      const nextEl = document.getElementById("todayNext");
+      try {
+        const [slotsRes, classesRes] = await Promise.all([
+          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name`)
+        ]);
+        const slots = slotsRes.ok ? await slotsRes.json() : [];
+        const classes = classesRes.ok ? await classesRes.json() : [];
+
+        const today = slots
+          .filter(s => s.day_of_week === TODAY_DAY_KEY)
+          .sort((a, b) => slotStartMinutes(a) - slotStartMinutes(b));
+
+        const now = new Date();
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        const next = today.find(s => slotStartMinutes(s) >= nowMinutes) || today[0];
+
+        countEl.textContent = `${today.length} cours`;
+        if (!next) {
+          nextEl.textContent = "Aucun cours aujourd'hui";
+        } else {
+          const cls = classes.find(c => c.id === next.class_id);
+          nextEl.textContent = `Prochain · ${cls ? cls.name : "Classe"} · ${next.start_time || ""}`;
+        }
+      } catch (e) {
+        countEl.textContent = "—";
+        nextEl.textContent = "Planning indisponible";
+      }
+    }
 
     // ---- Sous-onglets du module Classes : "Classes" (creees, modifiables) / "Nouvel import classe" ----
     const SUBTAB_NAMES = ["classes", "newimport"];
