@@ -416,6 +416,9 @@
           <button class="secondary" id="planningAnalyzeBtn" style="margin-top:0; white-space:nowrap">Analyser</button>
         </div>
 
+        <div id="planningFullscreenBar" style="display:flex; justify-content:flex-end; margin-bottom:6px">
+          <button class="secondary" id="planningFullscreenBtn" style="margin-top:0">Plein ecran</button>
+        </div>
         <div id="planningGrid"></div>
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
@@ -2842,6 +2845,7 @@
           if (btn) showPlanningTab(btn.dataset.planningtab);
         });
         document.getElementById("planningAnalyzeBtn").addEventListener("click", runPlanningAnalysis);
+        document.getElementById("planningFullscreenBtn").addEventListener("click", openPlanningFullscreen);
         planningTabReady = true;
       }
       await loadPlanningClasses();
@@ -3310,6 +3314,30 @@
       await loadAnnualPlan();
     }
 
+    /**
+     * Equivalent web de FullscreenLandscapeTable : la grille passe en plein ecran. L'app force
+     * la rotation en paysage, ce qu'un navigateur ne garantit pas — on la demande quand elle
+     * est disponible (Android), et on se contente du plein ecran ailleurs (iOS notamment).
+     */
+    async function openPlanningFullscreen() {
+      const grid = document.getElementById("planningGrid");
+      try {
+        await grid.requestFullscreen();
+      } catch (e) {
+        alert("Le plein ecran n'est pas disponible sur ce navigateur.");
+        return;
+      }
+      try {
+        if (screen.orientation && screen.orientation.lock) await screen.orientation.lock("landscape");
+      } catch (e) { /* verrouillage refuse : le plein ecran seul fait deja le travail */ }
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement && screen.orientation && screen.orientation.unlock) {
+        try { screen.orientation.unlock(); } catch (e) { /* rien a liberer */ }
+      }
+    });
+
     async function loadPlanningClasses() {
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
       planningClasses = res.ok ? await res.json() : [];
@@ -3370,6 +3398,7 @@
       document.getElementById("programsWrap").style.display = planningMode === "programmes" ? "block" : "none";
       document.getElementById("calendarWrap").style.display = planningMode === "calendrier" ? "block" : "none";
       document.getElementById("planningGrid").style.display = listMode ? "none" : "";
+      document.getElementById("planningFullscreenBar").style.display = listMode ? "none" : "flex";
       if (listMode) {
         document.getElementById("planningPeriodBar").style.display = "none";
         document.getElementById("planningPendingHint").style.display = "none";
