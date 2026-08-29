@@ -359,6 +359,8 @@
           <button class="subtabbtn" data-planningtab="eps">Planning global EPS</button>
           <button class="subtabbtn" data-planningtab="periode">Par periode</button>
           <button class="subtabbtn" data-planningtab="annuelle">Programmation annuelle</button>
+          <button class="subtabbtn" data-planningtab="programmes">Programmes officiels</button>
+          <button class="subtabbtn" data-planningtab="calendrier">Calendrier etablissement</button>
         </div>
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
@@ -373,6 +375,8 @@
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
         <div id="annualPlanWrap" style="display:none"></div>
+        <div id="programsWrap" style="display:none"></div>
+        <div id="calendarWrap" style="display:none"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="subtabbar" id="unssSubtabs">
@@ -2423,11 +2427,9 @@
         b.classList.toggle("active", b.dataset.planningtab === mode);
       });
       document.getElementById("planningPanel").style.display = "none";
-      if (mode === "annuelle") {
-        renderPlanningTab();
-        loadAnnualPlan();
-        return;
-      }
+      if (mode === "annuelle") { renderPlanningTab(); loadAnnualPlan(); return; }
+      if (mode === "programmes") { renderPlanningTab(); loadOfficialPrograms(); return; }
+      if (mode === "calendrier") { renderPlanningTab(); loadInstitutionCalendar(); return; }
       if (mode === "periode") {
         loadPlanningActivities().then(renderPlanningTab);
         return;
@@ -2437,6 +2439,243 @@
         return;
       }
       renderPlanningTab();
+    }
+
+    // ---- Programmes officiels (miroir de OfficialProgramsScreen.kt) ----
+    // Les champs de contenu restent vides par defaut : l'outil n'invente jamais de texte
+    // reglementaire. C'est au professeur de recopier les textes officiels (Eduscol, BO),
+    // avec leur source, pour ne jamais les confondre avec les propositions pedagogiques.
+
+    const SCHOOL_LEVELS = [["ECOLE", "Ecole"], ["COLLEGE", "College"], ["LYCEE", "Lycee"]];
+    const PROGRAM_FIELDS = [
+      ["title", "Titre"],
+      ["class_level", "Niveau de classe"],
+      ["champ_apprentissage", "Champ d'apprentissage"],
+      ["general_objectives", "Objectifs generaux"],
+      ["attendus", "Attendus"],
+      ["competences", "Competences"],
+      ["elements_prioritaires", "Elements prioritaires"],
+      ["example_apsa", "Exemples d'APSA"],
+      ["attendus_fin_de_cycle", "Attendus de fin de cycle"],
+      ["evaluation_elements", "Elements d'evaluation"],
+      ["source_officielle", "Source officielle"],
+      ["bulletin_officiel", "Bulletin officiel"],
+      ["version_label", "Version"]
+    ];
+    const LONG_PROGRAM_FIELDS = ["general_objectives", "attendus", "competences",
+      "elements_prioritaires", "example_apsa", "attendus_fin_de_cycle", "evaluation_elements"];
+
+    let programs = [];
+    let programOpenedId = null;
+
+    async function loadOfficialPrograms() {
+      const wrap = document.getElementById("programsWrap");
+      wrap.innerHTML = '<div class="card muted">Chargement des programmes...</div>';
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?deleted=eq.false&select=*&order=school_level.asc`);
+        programs = res.ok ? await res.json() : [];
+        renderOfficialPrograms();
+      } catch (e) {
+        wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+      }
+    }
+
+    function renderOfficialPrograms() {
+      const wrap = document.getElementById("programsWrap");
+      if (programOpenedId) { renderProgramDetail(); return; }
+
+      const byLevel = SCHOOL_LEVELS.map(([key, label]) => {
+        const list = programs.filter(p => p.school_level === key);
+        if (!list.length) return "";
+        return `<h2 style="margin:16px 0 4px; font-size:15px">${label}</h2>` + list.map(p => `
+          <div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
+            <div>
+              <strong>${p.title || "Programme sans titre"}</strong>
+              <div class="muted">${[p.class_level, p.champ_apprentissage, p.version_label].filter(Boolean).join(" · ") || "Aucun detail"}</div>
+            </div>
+            <div style="display:flex; gap:6px">
+              <button class="secondary" data-open-prog="${p.id}" style="margin-top:0">Ouvrir</button>
+              <button class="danger" data-del-prog="${p.id}" style="margin-top:0">Supprimer</button>
+            </div>
+          </div>`).join("");
+      }).join("");
+
+      wrap.innerHTML = `<div class="card">
+        <div class="top">
+          <div>
+            <h2 style="margin:0">Programmes officiels</h2>
+            <div class="muted">Recopiez ici les textes officiels (Eduscol, Bulletin officiel). Rien n'est pre-rempli : ce sont vos textes, avec leur source.</div>
+          </div>
+          <button id="addProgramBtn" style="margin-top:0">+ Programme</button>
+        </div>
+        ${byLevel || '<div class="muted" style="margin-top:12px">Aucun programme enregistre.</div>'}
+      </div>`;
+
+      document.getElementById("addProgramBtn").onclick = addOfficialProgram;
+      wrap.querySelectorAll("[data-open-prog]").forEach(b =>
+        b.onclick = () => { programOpenedId = b.dataset.openProg; renderOfficialPrograms(); });
+      wrap.querySelectorAll("[data-del-prog]").forEach(b =>
+        b.onclick = () => deleteOfficialProgram(b.dataset.delProg));
+    }
+
+    function renderProgramDetail() {
+      const wrap = document.getElementById("programsWrap");
+      const p = programs.find(x => x.id === programOpenedId);
+      if (!p) { programOpenedId = null; renderOfficialPrograms(); return; }
+
+      const fields = PROGRAM_FIELDS.map(([key, label]) => {
+        const value = p[key] || "";
+        const input = LONG_PROGRAM_FIELDS.includes(key)
+          ? `<textarea data-prog-field="${key}" rows="4" style="width:100%; font-family:inherit; font-size:14px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text)">${value}</textarea>`
+          : `<input type="text" data-prog-field="${key}" value="${value.replace(/"/g, "&quot;")}">`;
+        return `<label>${label}</label>${input}`;
+      }).join("");
+
+      wrap.innerHTML = `<div class="card">
+        <div class="top">
+          <h2 style="margin:0">${p.title || "Programme"}</h2>
+          <button class="secondary" id="backProgramsBtn" style="margin-top:0">Retour</button>
+        </div>
+        <label for="progLevel">Niveau d'enseignement</label>
+        <select id="progLevel">${SCHOOL_LEVELS.map(([k, l]) =>
+          `<option value="${k}"${p.school_level === k ? " selected" : ""}>${l}</option>`).join("")}</select>
+        ${fields}
+        <button id="saveProgramBtn">Enregistrer</button>
+        <div class="ok" id="programOk"></div>
+      </div>`;
+
+      document.getElementById("backProgramsBtn").onclick = () => { programOpenedId = null; renderOfficialPrograms(); };
+      document.getElementById("saveProgramBtn").onclick = saveOfficialProgram;
+    }
+
+    async function addOfficialProgram() {
+      const id = crypto.randomUUID();
+      await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs`, {
+        method: "POST",
+        body: JSON.stringify({
+          id, user_id: session.user_id, school_level: "COLLEGE", title: "Nouveau programme",
+          updated_at: new Date().toISOString(), deleted: false
+        })
+      });
+      await loadOfficialPrograms();
+      programOpenedId = id;
+      renderOfficialPrograms();
+    }
+
+    async function saveOfficialProgram() {
+      const wrap = document.getElementById("programsWrap");
+      const payload = { school_level: document.getElementById("progLevel").value, updated_at: new Date().toISOString() };
+      wrap.querySelectorAll("[data-prog-field]").forEach(el => { payload[el.dataset.progField] = el.value; });
+      await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?id=eq.${programOpenedId}`, {
+        method: "PATCH", body: JSON.stringify(payload)
+      });
+      Object.assign(programs.find(x => x.id === programOpenedId), payload);
+      document.getElementById("programOk").textContent = "Programme enregistre.";
+    }
+
+    async function deleteOfficialProgram(id) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      await loadOfficialPrograms();
+    }
+
+    // ---- Calendrier d'etablissement (miroir de InstitutionCalendarScreen.kt) ----
+    // Ce qui bloque ou deplace les cours dans l'annee : vacances, examens, sorties,
+    // journees banalisees.
+
+    const CALENDAR_KINDS = [
+      ["VACANCES", "Vacances", "#DFF3FF"], ["EXAMEN", "Examen", "#FFE8EE"],
+      ["SORTIE", "Sortie", "#E5F7E9"], ["BANALISEE", "Journee banalisee", "#FFF0DD"],
+      ["AUTRE", "Autre", "#F3F4F6"]
+    ];
+    let calendarEvents = [];
+
+    async function loadInstitutionCalendar() {
+      const wrap = document.getElementById("calendarWrap");
+      wrap.innerHTML = '<div class="card muted">Chargement du calendrier...</div>';
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc`);
+        calendarEvents = res.ok ? await res.json() : [];
+        renderInstitutionCalendar();
+      } catch (e) {
+        wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+      }
+    }
+
+    function calendarDate(millis) {
+      return new Date(millis).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+    }
+
+    function renderInstitutionCalendar() {
+      const wrap = document.getElementById("calendarWrap");
+      const rows = calendarEvents.length === 0
+        ? '<div class="muted" style="margin-top:12px">Aucun evenement enregistre.</div>'
+        : calendarEvents.map(e => {
+            const kind = CALENDAR_KINDS.find(k => k[0] === e.kind) || CALENDAR_KINDS[4];
+            return `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
+              <div>
+                <span class="badge" style="background:${kind[2]}">${kind[1]}</span>
+                <strong style="margin-left:6px">${e.label || "Sans titre"}</strong>
+                <div class="muted">${calendarDate(e.start_date_epoch_millis)} → ${calendarDate(e.end_date_epoch_millis)}${e.comment ? " · " + e.comment : ""}</div>
+              </div>
+              <button class="danger" data-del-event="${e.id}" style="margin-top:0">Supprimer</button>
+            </div>`;
+          }).join("");
+
+      wrap.innerHTML = `<div class="card">
+        <h2 style="margin:0">Calendrier de l'etablissement</h2>
+        <div class="muted">Vacances, examens, sorties et journees banalisees : ce qui bloque ou deplace les cours dans l'annee.</div>
+        ${rows}
+        <h2 style="margin:18px 0 0; font-size:15px">Ajouter un evenement</h2>
+        <div class="row">
+          <div><label for="eventLabel">Intitule</label><input type="text" id="eventLabel" placeholder="Ex : Vacances de printemps"></div>
+          <div><label for="eventKind">Type</label><select id="eventKind">${CALENDAR_KINDS.map(k => `<option value="${k[0]}">${k[1]}</option>`).join("")}</select></div>
+        </div>
+        <div class="row">
+          <div><label for="eventStart">Debut</label><input type="date" id="eventStart"></div>
+          <div><label for="eventEnd">Fin</label><input type="date" id="eventEnd"></div>
+        </div>
+        <button id="addEventBtn">Ajouter</button>
+        <div class="error" id="eventError"></div>
+      </div>`;
+
+      document.getElementById("addEventBtn").onclick = addCalendarEvent;
+      wrap.querySelectorAll("[data-del-event]").forEach(b =>
+        b.onclick = () => deleteCalendarEvent(b.dataset.delEvent));
+    }
+
+    async function addCalendarEvent() {
+      const errorEl = document.getElementById("eventError");
+      errorEl.textContent = "";
+      const label = document.getElementById("eventLabel").value.trim();
+      const kind = document.getElementById("eventKind").value;
+      const start = document.getElementById("eventStart").value;
+      const end = document.getElementById("eventEnd").value;
+      if (!label) { errorEl.textContent = "Indiquez un intitule."; return; }
+      if (!start || !end) { errorEl.textContent = "Indiquez les dates de debut et de fin."; return; }
+      if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le debut."; return; }
+      try {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events`, {
+          method: "POST",
+          body: JSON.stringify({
+            id: crypto.randomUUID(), user_id: session.user_id, label, kind,
+            start_date_epoch_millis: new Date(start).getTime(),
+            end_date_epoch_millis: new Date(end).getTime(),
+            comment: "", updated_at: new Date().toISOString(), deleted: false
+          })
+        });
+        await loadInstitutionCalendar();
+      } catch (e) {
+        errorEl.textContent = e.message;
+      }
+    }
+
+    async function deleteCalendarEvent(id) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?id=eq.${id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      await loadInstitutionCalendar();
     }
 
     // ---- Programmation annuelle (miroir de AnnualPlanningScreen.kt) ----
@@ -2692,11 +2931,15 @@
     }
 
     function renderPlanningTab() {
-      // La programmation annuelle n'utilise pas la grille horaire : on bascule l'affichage.
+      // Programmation annuelle, programmes officiels et calendrier n'utilisent pas la grille
+      // horaire : on bascule l'affichage.
       const annualMode = planningMode === "annuelle";
+      const listMode = ["annuelle", "programmes", "calendrier"].includes(planningMode);
       document.getElementById("annualPlanWrap").style.display = annualMode ? "block" : "none";
-      document.getElementById("planningGrid").style.display = annualMode ? "none" : "";
-      if (annualMode) {
+      document.getElementById("programsWrap").style.display = planningMode === "programmes" ? "block" : "none";
+      document.getElementById("calendarWrap").style.display = planningMode === "calendrier" ? "block" : "none";
+      document.getElementById("planningGrid").style.display = listMode ? "none" : "";
+      if (listMode) {
         document.getElementById("planningPeriodBar").style.display = "none";
         document.getElementById("planningPendingHint").style.display = "none";
         document.getElementById("planningNewClassHint").style.display = "none";
