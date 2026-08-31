@@ -190,7 +190,7 @@
   <div class="header">
     <div class="brand">EPS · Espace enseignant</div>
     <div class="tabbar" id="tabbar" style="display:none">
-      <button class="tabbtn" data-tab="home">Accueil</button>
+      <button class="tabbtn" data-tab="home">ACCUEIL</button>
       <button class="tabbtn" data-tab="classes">CLASSE</button>
       <button class="tabbtn" data-tab="planning">PLANNING</button>
       <button class="tabbtn" data-tab="cours">COURS</button>
@@ -258,7 +258,8 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
-        <div class="homeWelcome"><div><p id="homeGreeting">Bonjour</p><h1>Votre journée EPS commence ici.</h1><p>Vos classes, vos séances et votre équipe, au même endroit.</p></div><span aria-hidden="true">✦</span></div>
+        <div class="homeWelcome"><div><h1>ACCUEIL</h1><p id="homeGreeting">Bonjour</p></div><span aria-hidden="true">✦</span></div>
+        <section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section>
         <button class="todayCard" id="todayCard">
           <div class="todayInfo">
             <div class="todayLabel">Aujourd'hui</div>
@@ -616,6 +617,7 @@
   <script src="period-settings.js"></script>
   <script src="student-fields.js"></script>
   <script src="teacher-settings.js"></script>
+  <script src="home-weather.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -869,7 +871,7 @@
         loadTodayCard();
       }
       if (name === "classes") showSubtab("classes");
-      if (name === "home") applyHomeVisual();
+      if (name === "home") { applyHomeVisual(); renderHomeWeather(); }
       if (name === "cours") initCoursTab();
       if (name === "planning" || name === "programmation") {
         const requestedTab = name;
