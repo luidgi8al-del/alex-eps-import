@@ -258,8 +258,7 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
-        <div class="homeWelcome"><div><h1>ACCUEIL</h1><p id="homeGreeting">Bonjour</p></div><span aria-hidden="true">✦</span></div>
-        <section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section>
+        <div class="homeHero"><div class="homeWelcome"><div><h1>ACCUEIL</h1><p id="homeGreeting">Bonjour</p></div></div><section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section></div>
         <button class="todayCard" id="todayCard">
           <div class="todayInfo">
             <div class="todayLabel">Aujourd'hui</div>
@@ -293,7 +292,7 @@
           </button>
         </div>
 
-        <div class="card" id="institutionCard">
+        <div class="card" id="institutionCard" hidden>
           <h2>Etablissement</h2>
           <div id="institutionStatus" class="muted">Chargement...</div>
         </div>
