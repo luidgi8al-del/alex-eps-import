@@ -615,6 +615,7 @@
   <script src="school-levels.js"></script>
   <script src="period-settings.js"></script>
   <script src="student-fields.js"></script>
+  <script src="teacher-settings.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -723,7 +724,7 @@
       document.getElementById("settingsBtn").style.display = "inline-block";
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
-      refreshPeriodSettings();
+      refreshTeacherSettings().then(() => { if(currentWebTab === "home") showTab("home"); }).catch(e => console.warn(e.message));
       loadInstitution();
       maybeLock();
     }
@@ -868,6 +869,7 @@
         loadTodayCard();
       }
       if (name === "classes") showSubtab("classes");
+      if (name === "home") applyHomeVisual();
       if (name === "cours") initCoursTab();
       if (name === "planning" || name === "programmation") {
         const requestedTab = name;
@@ -889,102 +891,7 @@
       if (btn) showTab(btn.dataset.tab);
     });
 
-    // ---- Reglages (miroir de SettingsScreen.kt) ----
-    // Les preferences sont propres a l'appareil, comme le DataStore de l'application : elles
-    // vivent dans le navigateur et ne sont pas partagees avec les collegues.
-
-    const PREFS_KEY = "alexEpsPrefs";
-
-    function loadPrefs() {
-      try { const prefs=JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); const shared=cachedPeriodSettings(); return shared ? {...prefs,periodCounts:shared.period_counts} : prefs; }
-      catch (e) { return {}; }
-    }
-    function savePrefs(prefs) {
-      try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch (e) { /* navigation privee */ }
-    }
-
-    let settingsPeriodRevision=0;
-    async function openSettings() {
-      let periodLoadError="";
-      try { await refreshPeriodSettings(); } catch(e) { periodLoadError=e.message; }
-      settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
-      const prefs = loadPrefs();
-      const periods = prefs.periods || {};
-      const field = (id, label, value, type = "text") =>
-        `<div><label for="${id}">${label}</label><input type="${type}" id="${id}" value="${(value || "").toString().replace(/"/g, "&quot;")}"></div>`;
-
-      document.getElementById("settingsBody").innerHTML = `
-        <div class="card">
-          <h2 style="margin:0 0 4px">Profil enseignant</h2>
-          <div class="row">${field("prefName", "Nom", prefs.teacherName)}${field("prefSchool", "Etablissement", prefs.schoolName)}</div>
-          <div class="row">${field("prefEmail", "Email professionnel", prefs.proEmail, "email")}${field("prefYear", "Annee scolaire", prefs.schoolYear || "2026-2027")}</div>
-        </div>
-
-        <div class="card">
-          <h2 style="margin:0 0 4px">Nombre de periodes</h2>
-          <div class="muted">Periodes de l'annee utilisees par le Planning et la programmation.</div>
-          <div class="row">
-            ${Object.entries(GRADE_LABELS).map(([grade,label]) => `<div><label for="period_${grade}">${label}</label><select id="period_${grade}">${[3,4,5].map(n => `<option value="${n}" ${n===periodCountForLevel(grade,prefs)?"selected":""}>${n} périodes</option>`).join("")}</select></div>`).join("")}
-          </div>
-        </div>
-
-        <div class="card">
-          <h2 style="margin:0 0 4px">Verrouillage par code</h2>
-          <div class="muted">Masque l'ecran quand vous laissez l'appareil sans surveillance. C'est un confort d'affichage : vos donnees restent protegees par votre mot de passe de compte. Le deverrouillage par empreinte n'existe pas sur le web.</div>
-          ${prefs.pin
-            ? `<div class="row"><button class="secondary" id="changePinBtn">Changer le code</button><button class="danger" id="removePinBtn" style="margin-top:14px">Desactiver</button></div>`
-            : `<div class="row"><div><label for="newPin">Nouveau code (4 chiffres minimum)</label><input type="password" id="newPin" inputmode="numeric"></div></div>
-               <button id="setPinBtn">Activer le code</button>`}
-        </div>
-
-        <div class="card">
-          <h2 style="margin:0 0 4px">Mes donnees</h2>
-          <div class="muted">Exporte en un fichier JSON tout ce que ce compte a enregistre.</div>
-          <button class="secondary" id="exportDataBtn">Exporter toutes mes donnees</button>
-        </div>
-
-        <button id="saveSettingsBtn">Enregistrer les reglages</button>
-        <div class="ok" id="settingsOk"></div>`;
-
-      if(periodLoadError) document.getElementById("settingsOk").textContent=periodLoadError;
-      document.getElementById("settingsOverlay").classList.add("open");
-      document.getElementById("saveSettingsBtn").onclick = saveSettings;
-      document.getElementById("exportDataBtn").onclick = exportAllData;
-
-      const setPin = document.getElementById("setPinBtn");
-      if (setPin) setPin.onclick = () => {
-        const value = document.getElementById("newPin").value.trim();
-        if (value.length < 4) { alert("Le code doit faire au moins 4 chiffres."); return; }
-        const prefs = loadPrefs(); prefs.pin = value; savePrefs(prefs);
-        openSettings();
-      };
-      const changePin = document.getElementById("changePinBtn");
-      if (changePin) changePin.onclick = () => {
-        const value = (prompt("Nouveau code (4 chiffres minimum) :") || "").trim();
-        if (value.length < 4) return;
-        const prefs = loadPrefs(); prefs.pin = value; savePrefs(prefs);
-        openSettings();
-      };
-      const removePin = document.getElementById("removePinBtn");
-      if (removePin) removePin.onclick = () => {
-        const prefs = loadPrefs(); delete prefs.pin; savePrefs(prefs);
-        openSettings();
-      };
-    }
-
-    async function saveSettings() {
-      const prefs = loadPrefs();
-      prefs.teacherName = document.getElementById("prefName").value;
-      prefs.schoolName = document.getElementById("prefSchool").value;
-      prefs.proEmail = document.getElementById("prefEmail").value;
-      prefs.schoolYear = document.getElementById("prefYear").value;
-      const counts=Object.fromEntries(Object.keys(GRADE_LABELS).map(grade => [grade,Number(document.getElementById("period_"+grade).value)]));
-      await savePeriodSettings(counts,settingsPeriodRevision);
-      settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
-      prefs.periodCounts=counts;
-      savePrefs(prefs);
-      document.getElementById("settingsOk").textContent = "Reglages enregistres.";
-    }
+    // Réglages : voir teacher-settings.js (profil et périodes partagés par compte).
 
     /** Export JSON de tout ce que ce compte a enregistre, table par table. */
     async function exportAllData() {
@@ -992,7 +899,7 @@
         "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
         "sport_installations", "unss_groups", "unss_students", "unss_memberships",
         "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
-        "equipment", "equipment_purchases", "epi_items", "epi_inspections"];
+        "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles"];
       const dump = { exportedAt: new Date().toISOString(), account: session.email };
       for (const table of tables) {
         try {
