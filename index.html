@@ -1193,6 +1193,8 @@
       document.getElementById("fileImportFields").style.display = mode === "file" ? "block" : "none";
       document.getElementById("manualClassMode").classList.toggle("secondary", mode !== "manual");
       document.getElementById("fileClassMode").classList.toggle("secondary", mode !== "file");
+      document.getElementById("manualClassMode").setAttribute("aria-pressed", String(mode === "manual"));
+      document.getElementById("fileClassMode").setAttribute("aria-pressed", String(mode === "file"));
       document.getElementById("sendBtn").textContent = mode === "file" ? "Créer la classe et importer" : "Créer la classe";
       if (mode === "manual") {
         parsedStudents = [];
@@ -1452,13 +1454,14 @@
       const schoolYear = document.getElementById("schoolYear").value.trim();
       if (!schoolYear) { sendError.textContent = "Annee scolaire requise."; return; }
       try {
+        const className = creationClassName(grade, classNumber);
         const classId = crypto.randomUUID();
         const now = new Date().toISOString();
         const classRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, {
           method: "POST",
           body: JSON.stringify({
             id: classId, user_id: session.user_id, grade, class_number: classNumber,
-            school_year: schoolYear, name: `${GRADE_LABELS[grade] || grade}${classNumber}`,
+            school_year: schoolYear, name: className,
             updated_at: now, deleted: false
           })
         });
@@ -1496,6 +1499,28 @@
     // ---- Liste des classes creees/envoyees ----
     const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
 
+    function creationClassName(grade, number) {
+      if (grade !== "TERMINALE") return `${GRADE_LABELS[grade] || grade}${number}`;
+      const teacher = (loadPrefs().teacherName || "").trim();
+      if (!teacher) throw new Error("Renseignez votre nom dans Réglage → Profil enseignant avant de créer une Terminale.");
+      if (![1, 2].includes(number)) throw new Error("Choisissez Lundi ou Jeudi pour la Terminale.");
+      return `Terminale ${number === 1 ? "Lundi" : "Jeudi"} — ${teacher}`;
+    }
+    function updateClassDayChoice(gradeId, numberId, selected) {
+      const terminale = document.getElementById(gradeId).value === "TERMINALE";
+      const select = document.getElementById(numberId);
+      const previous = selected ?? select.value;
+      select.replaceChildren();
+      const teacher = (loadPrefs().teacherName || "").trim();
+      const labels = terminale ? ["Lundi", "Jeudi"] : ["1","2","3","4","5","6","7","8"];
+      labels.forEach((label, index) => select.add(new Option(terminale && teacher ? `${label} — ${teacher}` : label, String(index + 1))));
+      document.querySelector(`label[for="${numberId}"]`).textContent = terminale ? "Jour de la Terminale" : "Numéro de classe";
+      // An existing numbered Terminale must be explicitly assigned a day when edited.
+      select.value = terminale && selected != null ? "" : (labels[Number(previous)-1] ? String(previous) : "1");
+    }
+    document.getElementById("grade").addEventListener("change", () => updateClassDayChoice("grade", "classNumber"));
+    document.getElementById("editGrade").addEventListener("change", () => updateClassDayChoice("editGrade", "editClassNumber"));
+
     async function loadImports() {
       const listEl = document.getElementById("importsList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
@@ -1511,7 +1536,7 @@
         rows.forEach(r => {
           const div = document.createElement("div");
           div.className = "card";
-          const label = `${GRADE_LABELS[r.grade] || r.grade}${r.class_number}`;
+          const label = planningText(planningClassLabel(r));
           div.innerHTML = `
             <div class="top">
               <div><strong>${label}</strong> · ${r.school_year}</div>
@@ -1589,7 +1614,8 @@
       editImportId = row.id;
       editStudentsToDelete = [];
       document.getElementById("editGrade").value = row.grade;
-      document.getElementById("editClassNumber").value = row.class_number;
+      updateClassDayChoice("editGrade", "editClassNumber", row.class_number);
+      if (row.grade === "TERMINALE" && /^Terminale (Lundi|Jeudi) — /.test(row.name || "")) document.getElementById("editClassNumber").value = row.class_number;
       document.getElementById("editSchoolYear").value = row.school_year;
       document.getElementById("editError").textContent = "";
       document.getElementById("editImportPanel").style.display = "block";
@@ -1622,7 +1648,7 @@
           body: JSON.stringify({
             grade, class_number: classNumber,
             school_year: document.getElementById("editSchoolYear").value.trim(),
-            name: `${GRADE_LABELS[grade] || grade}${classNumber}`, updated_at: now
+            name: creationClassName(grade, classNumber), updated_at: now
           })
         });
         if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
@@ -2356,7 +2382,7 @@
         const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
         const rows = res.ok ? await res.json() : [];
         select.innerHTML = rows.length
-          ? rows.map(r => `<option value="${r.id}" data-grade="${r.grade}">${GRADE_LABELS[r.grade] || r.grade}${r.class_number}</option>`).join("")
+          ? rows.map(r => `<option value="${r.id}" data-grade="${r.grade}">${planningText(planningClassLabel(r))}</option>`).join("")
           : '<option value="">Aucune classe enregistree</option>';
         refreshCoursApsaOptions();
       } catch (e) {
@@ -2466,7 +2492,7 @@
       rows.forEach(r => {
           const div = document.createElement("div");
           div.className = "card";
-          const classLabel = r.classRow ? `${GRADE_LABELS[r.classRow.grade] || r.classRow.grade}${r.classRow.class_number}` : "Classe";
+          const classLabel = r.classRow ? planningText(planningClassLabel(r.classRow)) : "Classe";
           div.innerHTML = `
             <div class="top">
               <div><strong>${classLabel}</strong> · ${r.apsa_name} · ${r.session_count} séances</div>
@@ -3439,7 +3465,7 @@
         return `<span class="ap planningPeriodActivity" title="${planningText(detail)}">${planningText(label)}</span>`;
       }).join("");
     }
-    function planningClassLabel(c) { return c ? `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}` : "?"; }
+    function planningClassLabel(c) { return c ? (c.grade === "TERMINALE" && c.name ? c.name : `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}`) : "?"; }
     function planningActivityForSlot(slotId) {
       const a = planningActivities.find(x => !x.deleted && x.slot_id === slotId && Number(x.period_number) === Number(planningPeriod));
       return a ? a.apsa_name : null;
@@ -3889,8 +3915,8 @@
       let selectedDuration = 60;
       let selectedInstallation = null;
       panel.innerHTML = `
-        <h2>2e creneau de ${planningClassLabel(classGroup)}</h2>
-        <div class="muted">${planningClassLabel(classGroup)} a EPS deux fois par semaine. Ce creneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
+        <h2>2e creneau de ${planningText(planningClassLabel(classGroup))}</h2>
+        <div class="muted">${planningText(planningClassLabel(classGroup))} a EPS deux fois par semaine. Ce creneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
         <label>Duree</label>
         <div id="planningDurationChips2">${durationChipsHtml("dur2", selectedDuration)}</div>
         <label>Installation</label>
@@ -3923,7 +3949,7 @@
       const plans = Object.fromEntries(rows.map(r => [r.period_number, { id:r.id, activity:r.apsa_name, installation:r.installation_name || null }]));
       function renderEdit() {
         panel.innerHTML = `
-          <h2>${planningClassLabel(cl)} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
+          <h2>${planningText(planningClassLabel(cl))} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
           <label>Duree</label><div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
           ${periodPlannerHtml(cl.grade, plans, openStep, "edit")}
           <button id="planningSaveBtn">Enregistrer</button>
@@ -3981,7 +4007,7 @@
       }
 
       panel.innerHTML = `
-        <h2>${planningClassLabel(cl)} · Periode ${planningPeriod}</h2>
+        <h2>${planningText(planningClassLabel(cl))} · Periode ${planningPeriod}</h2>
         ${hasLinkedSibling ? `<div class="muted" id="planningLinkNote" style="margin-bottom:8px">S'applique aux 2 creneaux de la semaine.</div>` : ""}
         <label for="planningApsaSelect">Activite</label>
         <select id="planningApsaSelect">${optionsHtml()}</select>
