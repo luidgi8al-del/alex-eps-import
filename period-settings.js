@@ -2,6 +2,12 @@ function periodSettingsKey() { return `eps_period_settings:${session?.user_id ||
 function cachedPeriodSettings() {
   try { return JSON.parse(localStorage.getItem(periodSettingsKey()) || "null"); } catch { return null; }
 }
+function periodCountForLevel(grade, prefs) {
+  const shared=cachedPeriodSettings()?.period_counts;
+  const configured=Number(prefs?.periodCounts?.[grade] ?? shared?.[grade]);
+  if([3,4,5].includes(configured)) return configured;
+  return String(grade || "").startsWith("TERMINALE") ? 3 : 4;
+}
 async function refreshPeriodSettings() {
   if(!session) return;
   const owner=session.user_id;
