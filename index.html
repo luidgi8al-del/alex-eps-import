@@ -510,7 +510,7 @@
             <label for="editSchoolYear">Annee scolaire</label>
             <input type="text" id="editSchoolYear">
             <table style="margin-top:16px">
-              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th></th></tr></thead>
+              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th>Naissance</th><th>Téléphone parent</th><th></th></tr></thead>
               <tbody id="editStudentsBody"></tbody>
             </table>
             <button id="saveEditBtn">Enregistrer</button>
@@ -611,6 +611,9 @@
   <script src="quick-exercises.js"></script>
   <script src="eps-tests.js"></script>
   <script src="planning-scroll.js"></script>
+  <script src="sync-safety.js"></script>
+  <script src="school-levels.js"></script>
+  <script src="period-settings.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -651,6 +654,9 @@
       if (res.status === 401) {
         sessionExpired();
         throw new Error("Session expiree.");
+      }
+      if (!res.ok && options.method && !["GET", "HEAD"].includes(options.method.toUpperCase())) {
+        throw new Error(`Enregistrement non confirmé (HTTP ${res.status}). Vos saisies restent affichées ; vérifiez la connexion et les droits avant de réessayer.`);
       }
       return res;
     }
@@ -716,6 +722,7 @@
       document.getElementById("settingsBtn").style.display = "inline-block";
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
+      refreshPeriodSettings();
       loadInstitution();
       maybeLock();
     }
@@ -888,14 +895,18 @@
     const PREFS_KEY = "alexEpsPrefs";
 
     function loadPrefs() {
-      try { return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); }
+      try { const prefs=JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); const shared=cachedPeriodSettings(); return shared ? {...prefs,periodCounts:shared.period_counts} : prefs; }
       catch (e) { return {}; }
     }
     function savePrefs(prefs) {
       try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch (e) { /* navigation privee */ }
     }
 
-    function openSettings() {
+    let settingsPeriodRevision=0;
+    async function openSettings() {
+      let periodLoadError="";
+      try { await refreshPeriodSettings(); } catch(e) { periodLoadError=e.message; }
+      settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
       const prefs = loadPrefs();
       const periods = prefs.periods || {};
       const field = (id, label, value, type = "text") =>
@@ -912,9 +923,7 @@
           <h2 style="margin:0 0 4px">Nombre de periodes</h2>
           <div class="muted">Periodes de l'annee utilisees par le Planning et la programmation.</div>
           <div class="row">
-            ${field("prefPeriodCollege", "6e a 2nde", periods.college ?? 5, "number")}
-            ${field("prefPeriodPremiere", "1re", periods.premiere ?? 4, "number")}
-            ${field("prefPeriodTerminale", "Tle", periods.terminale ?? 3, "number")}
+            ${Object.entries(GRADE_LABELS).map(([grade,label]) => `<div><label for="period_${grade}">${label}</label><select id="period_${grade}">${[3,4,5].map(n => `<option value="${n}" ${n===periodCountForLevel(grade,prefs)?"selected":""}>${n} périodes</option>`).join("")}</select></div>`).join("")}
           </div>
         </div>
 
@@ -936,6 +945,7 @@
         <button id="saveSettingsBtn">Enregistrer les reglages</button>
         <div class="ok" id="settingsOk"></div>`;
 
+      if(periodLoadError) document.getElementById("settingsOk").textContent=periodLoadError;
       document.getElementById("settingsOverlay").classList.add("open");
       document.getElementById("saveSettingsBtn").onclick = saveSettings;
       document.getElementById("exportDataBtn").onclick = exportAllData;
@@ -961,17 +971,16 @@
       };
     }
 
-    function saveSettings() {
+    async function saveSettings() {
       const prefs = loadPrefs();
       prefs.teacherName = document.getElementById("prefName").value;
       prefs.schoolName = document.getElementById("prefSchool").value;
       prefs.proEmail = document.getElementById("prefEmail").value;
       prefs.schoolYear = document.getElementById("prefYear").value;
-      prefs.periods = {
-        college: parseInt(document.getElementById("prefPeriodCollege").value, 10) || 5,
-        premiere: parseInt(document.getElementById("prefPeriodPremiere").value, 10) || 4,
-        terminale: parseInt(document.getElementById("prefPeriodTerminale").value, 10) || 3
-      };
+      const counts=Object.fromEntries(Object.keys(GRADE_LABELS).map(grade => [grade,Number(document.getElementById("period_"+grade).value)]));
+      await savePeriodSettings(counts,settingsPeriodRevision);
+      settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
+      prefs.periodCounts=counts;
       savePrefs(prefs);
       document.getElementById("settingsOk").textContent = "Reglages enregistres.";
     }
@@ -1498,16 +1507,17 @@
 
     // ---- Liste des classes creees/envoyees ----
     const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
+    Object.assign(GRADE_LABELS, EXTRA_SCHOOL_LEVELS);
 
     function creationClassName(grade, number) {
-      if (grade !== "TERMINALE") return `${GRADE_LABELS[grade] || grade}${number}`;
+      if (!isTerminalSchoolLevel(grade)) return `${GRADE_LABELS[grade] || grade}${EXTRA_SCHOOL_LEVELS[grade] ? " " : ""}${number}`;
       const teacher = (loadPrefs().teacherName || "").trim();
       if (!teacher) throw new Error("Renseignez votre nom dans Réglage → Profil enseignant avant de créer une Terminale.");
       if (![1, 2].includes(number)) throw new Error("Choisissez Lundi ou Jeudi pour la Terminale.");
-      return `Terminale ${number === 1 ? "Lundi" : "Jeudi"} — ${teacher}`;
+      return `${EXTRA_SCHOOL_LEVELS[grade] || "Terminale"} ${number === 1 ? "Lundi" : "Jeudi"} — ${teacher}`;
     }
     function updateClassDayChoice(gradeId, numberId, selected) {
-      const terminale = document.getElementById(gradeId).value === "TERMINALE";
+      const terminale = isTerminalSchoolLevel(document.getElementById(gradeId).value);
       const select = document.getElementById(numberId);
       const previous = selected ?? select.value;
       select.replaceChildren();
@@ -1591,7 +1601,9 @@
           <td><select data-field="sex">${sexOptions}</select></td>
           <td><select class="levelSelect" data-field="eps_level">${levelOptions}</select></td>
           <td><input type="text" data-field="student_email" value="${s.student_email || ""}"></td>
-          <td><input type="text" data-field="parent1_email" placeholder="Parent 1" value="${s.parent1_email || ""}"></td>
+          <td><input type="text" data-field="parent1_email" placeholder="Parent 1" value="${planningText(s.parent1_email || "")}"><input type="text" data-field="parent2_email" placeholder="Parent 2" value="${planningText(s.parent2_email || "")}"></td>
+          <td><input type="date" data-field="birth_date" value="${s.birth_date_epoch_millis != null ? new Date(Number(s.birth_date_epoch_millis)).toISOString().slice(0,10) : ""}"></td>
+          <td><input type="tel" data-field="parent_phone" value="${planningText(s.parent_phone || "")}"></td>
           <td><button class="danger" data-action="removeRow" style="margin-top:0">Suppr.</button></td>
         </tr>`;
     }
@@ -1615,7 +1627,7 @@
       editStudentsToDelete = [];
       document.getElementById("editGrade").value = row.grade;
       updateClassDayChoice("editGrade", "editClassNumber", row.class_number);
-      if (row.grade === "TERMINALE" && /^Terminale (Lundi|Jeudi) — /.test(row.name || "")) document.getElementById("editClassNumber").value = row.class_number;
+      if (isTerminalSchoolLevel(row.grade) && /^Terminale(?: EPPCS)? (Lundi|Jeudi) — /.test(row.name || "")) document.getElementById("editClassNumber").value = row.class_number;
       document.getElementById("editSchoolYear").value = row.school_year;
       document.getElementById("editError").textContent = "";
       document.getElementById("editImportPanel").style.display = "block";
@@ -1664,7 +1676,9 @@
             body: JSON.stringify({
               last_name: s.last_name, first_name: s.first_name, sex: s.sex,
               eps_level: s.eps_level, student_email: s.student_email,
-              parent1_email: s.parent1_email, updated_at: now
+              parent1_email: s.parent1_email, parent2_email: s.parent2_email,
+              birth_date_epoch_millis: s.birth_date ? Date.parse(s.birth_date + "T00:00:00Z") : null,
+              parent_phone: s.parent_phone, extended_data_updated_at: now, updated_at: now
             })
           });
         }
@@ -1687,6 +1701,7 @@
       PREMIERE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"],
       TERMINALE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"]
     };
+    Object.assign(PROGRAMMATION, {PREMIERE_EPPCS:PROGRAMMATION.PREMIERE, TERMINALE_EPPCS:PROGRAMMATION.TERMINALE, SECONDE_SPORT_SANTE:PROGRAMMATION.SECONDE, OPTION_GOLF:["Golf"]});
 
     // Meme regle que ProgrammeResolver.kt : l'arrete du 22 avril 2026 ne s'applique a la 6e
     // qu'a la rentree 2027. Prendre le texte le plus recent par defaut serait une erreur.
@@ -2852,10 +2867,7 @@
 
     /** Nombre de periodes de l'annee, ajustable dans les Reglages comme dans l'application. */
     function planningPeriodCount(grade) {
-      const periods = loadPrefs().periods || {};
-      if (grade === "PREMIERE") return periods.premiere ?? 4;
-      if (grade === "TERMINALE") return periods.terminale ?? 3;
-      return periods.college ?? 5;
+      return periodCountForLevel(grade, loadPrefs());
     }
     function planningWeeklySlotsNeeded(grade) {
       return ["SIXIEME", "CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade) ? 2 : 1;
@@ -3465,7 +3477,7 @@
         return `<span class="ap planningPeriodActivity" title="${planningText(detail)}">${planningText(label)}</span>`;
       }).join("");
     }
-    function planningClassLabel(c) { return c ? (c.grade === "TERMINALE" && c.name ? c.name : `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}`) : "?"; }
+    function planningClassLabel(c) { return c ? (c.name || `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}`) : "?"; }
     function planningActivityForSlot(slotId) {
       const a = planningActivities.find(x => !x.deleted && x.slot_id === slotId && Number(x.period_number) === Number(planningPeriod));
       return a ? a.apsa_name : null;
@@ -3946,7 +3958,7 @@
       let openStep = -1;
       const activitiesRes = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?slot_id=eq.${slot.id}&deleted=eq.false&select=*`);
       const rows = activitiesRes.ok ? await activitiesRes.json() : [];
-      const plans = Object.fromEntries(rows.map(r => [r.period_number, { id:r.id, activity:r.apsa_name, installation:r.installation_name || null }]));
+      const plans = Object.fromEntries(rows.map(r => [r.period_number, { id:r.id, updated_at:r.updated_at, activity:r.apsa_name, installation:r.installation_name || null }]));
       function renderEdit() {
         panel.innerHTML = `
           <h2>${planningText(planningClassLabel(cl))} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
@@ -3974,7 +3986,7 @@
         for (const [period, plan] of Object.entries(plans)) {
           if (!plan.activity) continue;
           const body = { apsa_name:plan.activity, installation_name:plan.installation || null, updated_at:new Date().toISOString(), deleted:false };
-          if (plan.id) await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${plan.id}`, { method:"PATCH", body:JSON.stringify(body) });
+          if (plan.id) await patchPlanningActivity(plan, body);
           else await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, { method:"POST", body:JSON.stringify({ ...body, id:crypto.randomUUID(), user_id:session.user_id, slot_id:slot.id, period_number:parseInt(period,10) }) });
         }
         panel.style.display = "none";
@@ -4077,9 +4089,7 @@
       for (const slotId of targetSlotIds) {
         const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
         if (existing) {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${existing.id}`, {
-            method: "PATCH", body: JSON.stringify({ apsa_name: apsaName, updated_at: new Date().toISOString() })
-          });
+          await patchPlanningActivity(existing, { apsa_name: apsaName });
         } else {
           await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, {
             method: "POST",
@@ -4103,9 +4113,7 @@
       for (const slotId of targetSlotIds) {
         const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
         if (existing) {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?id=eq.${existing.id}`, {
-            method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-          });
+          await patchPlanningActivity(existing, { deleted: true });
         }
       }
       await loadPlanningActivities();
