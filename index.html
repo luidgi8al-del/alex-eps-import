@@ -2880,7 +2880,6 @@
       await loadPlanningClasses();
       await loadPlanningSlots();
       await loadPlanningInstallations();
-      if (planningMode === "periode") await loadPlanningActivities();
       if (planningMode === "eps") await loadPlanningCommunity();
       renderPlanningTab();
     }
@@ -3373,10 +3372,13 @@
     }
     async function loadPlanningSlots() {
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
-      planningSlots = res.ok ? await res.json() : [];
+      const rows = res.ok ? await res.json() : [];
+      // Display only: keep orphan/deleted-class records on the server for synchronization.
+      planningSlots = visiblePersonalPlanningSlots(rows, planningClasses);
+      await loadPlanningActivities();
     }
     async function loadPlanningActivities() {
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&period_number=eq.${planningPeriod}&select=*`);
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
       planningActivities = res.ok ? await res.json() : [];
     }
     async function loadPlanningInstallations() {
@@ -3412,9 +3414,27 @@
     }
 
     function planningClassById(id) { return planningClasses.find(c => c.id === id); }
+    function visiblePersonalPlanningSlots(slots, classes) {
+      const ids = new Set(classes.filter(c => !c.deleted).map(c => c.id));
+      return slots.filter(s => !s.deleted && ids.has(s.class_id));
+    }
+    function planningText(value) {
+      return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    }
+    function planningRowsForSlot(slotId) {
+      return planningActivities.filter(a => !a.deleted && a.slot_id === slotId)
+        .sort((a, b) => Number(a.period_number) - Number(b.period_number));
+    }
+    function planningGlobalActivityLines(slotId) {
+      return planningRowsForSlot(slotId).map(a => {
+        const label = `P${a.period_number} · ${a.apsa_name || "À définir"}`;
+        const detail = a.installation_name ? `${label} — ${a.installation_name}` : label;
+        return `<span class="ap planningPeriodActivity" title="${planningText(detail)}">${planningText(label)}</span>`;
+      }).join("");
+    }
     function planningClassLabel(c) { return c ? `${GRADE_LABELS[c.grade] || c.grade}${c.class_number}` : "?"; }
     function planningActivityForSlot(slotId) {
-      const a = planningActivities.find(x => x.slot_id === slotId);
+      const a = planningActivities.find(x => !x.deleted && x.slot_id === slotId && Number(x.period_number) === Number(planningPeriod));
       return a ? a.apsa_name : null;
     }
 
@@ -3509,7 +3529,7 @@
 
       // Colonnes des jours : cases vides cliquables + blocs positionnes en absolu par-dessus
       PLANNING_DAYS.forEach((d, dayIdx) => {
-        const daySlots = planningSlots.filter(s => s.day_of_week === d.key);
+        const daySlots = visiblePersonalPlanningSlots(planningSlots, planningClasses).filter(s => s.day_of_week === d.key);
         html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
         for (let r = 0; r < PLANNING_ROWS; r++) {
           const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
@@ -3521,9 +3541,10 @@
           const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
           const cls = planningClassById(s.class_id);
           const apsa = planningMode === "periode" ? (planningActivityForSlot(s.id) || "A definir") : null;
-          const installationLine = (planningMode === "global" && s.installation_name) ? `<span class="ap">${s.installation_name}</span>` : "";
+          const activityLines = planningMode === "global" ? planningGlobalActivityLines(s.id) : (apsa ? `<span class="ap">${planningText(apsa)}</span>` : "");
+          const installationLine = (planningMode === "global" && !activityLines && s.installation_name) ? `<span class="ap">${planningText(s.installation_name)}</span>` : "";
           html += `<div class="planningBlock" style="top:${top}px; height:${height}px;" data-slot="${s.id}">
-            <span class="cl">${planningClassLabel(cls)}</span>${apsa ? `<span class="ap">${apsa}</span>` : ""}${installationLine}
+            <span class="cl">${planningText(planningClassLabel(cls))}</span>${activityLines}${installationLine}
           </div>`;
         });
         html += `</div>`;
