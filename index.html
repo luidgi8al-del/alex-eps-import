@@ -610,6 +610,7 @@
        (15 packs de sports) et le dessin des schemas. -->
   <script src="quick-exercises.js"></script>
   <script src="eps-tests.js"></script>
+  <script src="planning-scroll.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -3390,13 +3391,15 @@
       planningCommunityLoading = true;
       planningCommunityError = null;
       try {
+        // Refresh our class list before filtering our obsolete slots; other teachers' classes are private.
+        await loadPlanningClasses();
         const [slotsRes, activitiesRes, overridesRes] = await Promise.all([
           apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
           apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`),
           apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
         ]);
         if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
-        planningCommunitySlots = await slotsRes.json();
+        planningCommunitySlots = visibleCommunityPlanningSlots(await slotsRes.json(), planningClasses, session.user_id);
         planningCommunityActivities = activitiesRes.ok ? await activitiesRes.json() : [];
         planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
       } catch (e) {
@@ -3417,6 +3420,10 @@
     function visiblePersonalPlanningSlots(slots, classes) {
       const ids = new Set(classes.filter(c => !c.deleted).map(c => c.id));
       return slots.filter(s => !s.deleted && ids.has(s.class_id));
+    }
+    function visibleCommunityPlanningSlots(slots, classes, userId) {
+      const ownClassIds = new Set(classes.filter(c => !c.deleted).map(c => c.id));
+      return slots.filter(s => !s.deleted && (s.user_id !== userId || ownClassIds.has(s.class_id)));
     }
     function planningText(value) {
       return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -3553,6 +3560,7 @@
       html += `</div></div>`;
       wrap.innerHTML = html;
       wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
+      installPlanningScroll(wrap.querySelector(".planningWrap"));
 
       wrap.querySelectorAll(".planningCell:not(.occupied)").forEach(cell => {
         cell.addEventListener("click", () => onPlanningEmptyCellClick(cell.dataset.day, parseInt(cell.dataset.minutes, 10)));
@@ -3657,6 +3665,7 @@
       html += `</div></div>`;
       wrap.innerHTML = html;
       wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
+      installPlanningScroll(wrap.querySelector(".planningWrap"));
     }
 
     /** Bouton "Analyser" : relit le planning partage a jour, puis liste chaque chevauchement
