@@ -72,6 +72,10 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 .settingsNested > summary::after { content:"＋"; float:right; color:#1976c9; }
 .settingsNested[open] > summary::after { content:"−"; }
 .settingsNestedContents { padding:2px 4px 12px 12px; }
+.teacherAdminList { display:grid; gap:10px; margin-top:14px; }
+.teacherAdminRow { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px; border:1px solid #dce7f1; border-radius:14px; background:#f7fbff; }
+.teacherAdminRow > div:last-child { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+@media (max-width:700px) { .teacherAdminRow { align-items:stretch; flex-direction:column; } .teacherAdminRow > div:last-child { justify-content:stretch; } .teacherAdminRow button { width:100%; } }
 .settingsPeriodRow { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid #e5edf5; }
 .settingsPeriodRow > div { display:flex; gap:6px; flex-shrink:0; }
 .periodChoice { margin:0; background:#f0f6ff; color:#163a5f; border:1px solid #b9d0e6; min-width:42px; }
