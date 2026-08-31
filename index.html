@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alex EPS Outils — Import de classe</title>
+<title>EPS — Espace enseignant</title>
+<link rel="stylesheet" href="home-navigation.css">
 <style>
   :root {
     --primary: #1B4332;
@@ -187,14 +188,17 @@
 </head>
 <body>
   <div class="header">
-    <div class="brand">Alex EPS Outils</div>
+    <div class="brand">EPS · Espace enseignant</div>
     <div class="tabbar" id="tabbar" style="display:none">
-      <button class="tabbtn" data-tab="cours">Cours</button>
-      <button class="tabbtn" data-tab="outils">Outils</button>
-      <button class="tabbtn" data-tab="programmation">Programmation</button>
-      <button class="tabbtn" data-tab="unss">UNSS</button>
-      <button class="tabbtn" data-tab="equipement">Equipement</button>
-      <button class="tabbtn" data-tab="classes">Classes</button>
+      <button class="tabbtn" data-tab="home">Accueil</button>
+      <button class="tabbtn" data-tab="classes">CLASSE</button>
+      <button class="tabbtn" data-tab="planning">PLANNING</button>
+      <button class="tabbtn" data-tab="cours">COURS</button>
+      <button class="tabbtn" data-tab="unss">ASLVH</button>
+      <button class="tabbtn" data-tab="outils">OUTILS</button>
+      <button class="tabbtn" data-tab="equipement">EQUIPEMENT</button>
+      <button class="tabbtn" data-tab="programmation">PROGRAMMATION</button>
+      <button class="tabbtn" data-tab="settings">REGLAGE</button>
     </div>
     <div class="headerRight">
       <button class="secondary" id="searchBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Rechercher</button>
@@ -254,6 +258,7 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
+        <div class="homeWelcome"><div><p id="homeGreeting">Bonjour</p><h1>Votre journée EPS commence ici.</h1><p>Vos classes, vos séances et votre équipe, au même endroit.</p></div><span aria-hidden="true">✦</span></div>
         <button class="todayCard" id="todayCard">
           <div class="todayInfo">
             <div class="todayLabel">Aujourd'hui</div>
@@ -264,15 +269,10 @@
           <div class="todayIcon">🕗</div>
         </button>
 
-        <h2 style="margin:22px 0 10px">Mes espaces</h2>
-        <div class="homeGrid">
+        <div class="homeGrid" aria-label="Accès rapides">
           <button class="homeCard featured" data-goto="classes" style="background:#FFE8E7">
             <span class="homeTitle">CLASSE</span><span class="homeRule" style="background:#C8493F"></span>
             <span class="homeSub">Classes, eleves et evaluations</span><span class="homeIcon">🎓</span>
-          </button>
-          <button class="homeCard" data-goto="cours" style="background:#DFF3FF">
-            <span class="homeTitle">COURS</span><span class="homeRule" style="background:#2678C8"></span>
-            <span class="homeSub">Cycles, seances et evaluations</span><span class="homeIcon">📘</span>
           </button>
           <button class="homeCard" data-goto="outils" style="background:#FFF0D8">
             <span class="homeTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span>
@@ -402,7 +402,7 @@
         <div id="toolPanel" class="card" style="display:none"></div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
-        <div class="placeholder" style="padding:30px 20px 10px"><div class="big" style="margin-bottom:2px">Programmation</div>Planning hebdomadaire et programmation annuelle se gerent ici. Les programmes officiels restent dans l'application.</div>
+        <div class="placeholder" style="padding:18px 20px"><div class="big" id="planningModuleTitle" style="margin-bottom:2px">Programmation</div><span id="planningModuleSubtitle">Programmation annuelle, programmes et calendrier de l’établissement.</span></div>
 
         <div class="subtabbar" id="planningSubtabs">
           <button class="subtabbtn" data-planningtab="global">Planning global Alex</button>
@@ -841,17 +841,36 @@
 
     // ---- Onglets (memes 6 modules que l'application) ----
     const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes"];
+    let currentWebTab = "home";
     function showTab(name) {
+      if (name === "settings") { openSettings(); return; }
+      if (!TAB_NAMES.includes(name) && name !== "planning") return;
+      currentWebTab = name;
+      const panelName = name === "planning" ? "programmation" : name;
       TAB_NAMES.forEach(tab => {
-        document.getElementById("tab-" + tab).style.display = tab === name ? "block" : "none";
+        document.getElementById("tab-" + tab).style.display = tab === panelName ? "block" : "none";
       });
       document.querySelectorAll(".tabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
-      if (name === "home") loadTodayCard();
+      if (name === "home") {
+        const teacher = loadPrefs().teacherName || session?.email?.split("@")[0] || "";
+        document.getElementById("homeGreeting").textContent = teacher ? `Bonjour ${teacher}` : "Bonjour";
+        loadTodayCard();
+      }
       if (name === "classes") showSubtab("classes");
       if (name === "cours") initCoursTab();
-      if (name === "programmation") initPlanningTab();
+      if (name === "planning" || name === "programmation") {
+        const requestedTab = name;
+        document.getElementById("planningModuleTitle").textContent = name === "planning" ? "Planning" : "Programmation";
+        document.getElementById("planningModuleSubtitle").textContent = name === "planning" ? "Votre emploi du temps, le planning EPS et les périodes." : "Programmation annuelle, programmes et calendrier de l’établissement.";
+        document.querySelectorAll("#planningSubtabs .subtabbtn").forEach(button => {
+          const isSchedule = ["global", "eps", "periode"].includes(button.dataset.planningtab);
+          button.hidden = requestedTab === "planning" ? !isSchedule : isSchedule;
+        });
+        planningMode = name === "planning" ? "global" : "annuelle";
+        initPlanningTab().then(() => { if (currentWebTab === requestedTab) showPlanningTab(requestedTab === "planning" ? "global" : "annuelle"); });
+      }
       if (name === "equipement") initInstallationsTab();
       if (name === "unss") initUnssTab();
       history.replaceState(null, "", "#" + name);
@@ -1110,7 +1129,7 @@
     document.querySelectorAll("[data-goto]").forEach(b =>
       b.addEventListener("click", () => showTab(b.dataset.goto))
     );
-    document.getElementById("todayCard").addEventListener("click", () => showTab("programmation"));
+    document.getElementById("todayCard").addEventListener("click", () => showTab("planning"));
 
     function slotStartMinutes(slot) {
       const parts = String(slot.start_time || "").trim().replace("h", ":").split(":");
