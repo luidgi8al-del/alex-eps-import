@@ -48,8 +48,23 @@ function settingsSection(id,title,body) { return `<details class="card settingsS
 function nestedSettingsSection(id,title,body) { return `<details class="settingsNested" id="${id}"><summary>${title}</summary><div class="settingsNestedContents">${body}</div></details>`; }
 async function loadTeamContext() {
   if(!session?.user_id) return null;
-  const res=await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_team_context`,{method:"POST",body:"{}"});
-  return await res.json();
+  try {
+    const res=await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_team_context`,{method:"POST",body:"{}"});
+    const context=await res.json();
+    if(context && typeof context.is_admin==="boolean") return context;
+  } catch {}
+  // Repli RLS : seules les lignes du même établissement sont visibles au compte connecté.
+  const profileRes=await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(session.user_id)}&select=institution_id`);
+  const profiles=profileRes.ok ? await profileRes.json() : [];
+  const institutionId=profiles[0]?.institution_id;
+  if(!institutionId) return {active:true,institution_id:null,is_admin:false,members:[]};
+  const [institutionRes,membersRes]=await Promise.all([
+    apiFetch(`${SUPABASE_URL}/rest/v1/institutions?id=eq.${encodeURIComponent(institutionId)}&select=created_by`),
+    apiFetch(`${SUPABASE_URL}/rest/v1/profiles?institution_id=eq.${encodeURIComponent(institutionId)}&select=id,email`)
+  ]);
+  const institutions=institutionRes.ok ? await institutionRes.json() : [];
+  const members=membersRes.ok ? await membersRes.json() : [];
+  return {active:true,institution_id:institutionId,is_admin:institutions[0]?.created_by===session.user_id,members:members.map(member=>({id:member.id,email:member.email,name:member.email}))};
 }
 async function teamAdminAction(payload) {
   const res=await fetch(`${SUPABASE_URL}/functions/v1/eps-team-admin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
