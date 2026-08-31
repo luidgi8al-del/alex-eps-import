@@ -1,0 +1,42 @@
+/* Accueil et navigation : même palette sportive claire que l'application Android. */
+body .header { background:linear-gradient(110deg,#087cc1,#147fd3); padding:18px 26px; gap:16px; }
+body .header .brand { font-size:20px; font-weight:800; }
+body .tabbar { order:3; width:100%; gap:6px; padding-bottom:3px; }
+body .tabbtn { margin:0; padding:11px 14px; min-height:44px; font-size:12px; }
+body .tabbtn.active { color:#176eb6; }
+body .tabbtn:hover { background:rgba(255,255,255,.16); }
+body .tabbtn.active:hover { background:white; }
+body #settingsBtn { display:none !important; }
+body .tabbtn:focus-visible,body .homeCard:focus-visible,body .todayCard:focus-visible { outline:3px solid #f4a229; outline-offset:3px; }
+body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
+#tab-home .homeWelcome { display:flex; align-items:center; justify-content:space-between; padding:12px 0 6px; color:#163a5f; gap:20px; }
+#tab-home .homeWelcome h1 { font-size:clamp(24px,3vw,36px); letter-spacing:-1px; }
+#tab-home .homeWelcome p { margin:6px 0; color:#58718a; }
+#tab-home #homeGreeting { color:#2678c8; font-weight:750; font-size:18px; }
+#tab-home .homeWelcome>span { font-size:72px; color:#edac4b; }
+#tab-home .todayCard { margin:18px 0 22px; padding:22px 28px; border:0; box-shadow:0 8px 26px #17395b0b; }
+#tab-home .todayIcon { display:grid; place-items:center; width:90px; height:90px; border-radius:50%; background:#edf5ff; }
+#tab-home .homeGrid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
+#tab-home .homeCard { min-height:185px; padding:22px; border-radius:28px; transition:transform .18s,box-shadow .18s; }
+#tab-home .homeCard:hover { box-shadow:0 12px 25px #17395b18; }
+#tab-home .homeCard.featured { grid-column:1/-1; min-height:145px; }
+#tab-home .homeCard::before { content:""; position:absolute; width:130px; height:130px; border-radius:50%; background:#ffffff66; right:-20px; bottom:-30px; pointer-events:none; }
+#tab-home .homeTitle { font-size:clamp(14px,1.5vw,20px); font-weight:900; white-space:nowrap; position:relative; }
+#tab-home .homeCard.featured .homeTitle { font-size:30px; }
+#tab-home .homeSub { font-size:13px; max-width:82%; position:relative; }
+#tab-home .homeIcon { font-size:43px; bottom:15px; right:20px; }
+#tab-home [data-goto="outils"] { order:1; }
+#tab-home [data-goto="unss"] { order:2; }
+#tab-home [data-goto="equipement"] { order:3; }
+#tab-home [data-goto="programmation"] { order:4; }
+#tab-home #institutionCard { margin-top:24px; }
+@media(max-width:850px) {
+  body .header { padding:16px; }
+  body .container { padding:18px 16px 40px; }
+  #tab-home .homeGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #tab-home .homeWelcome>span { display:none; }
+  #tab-home .homeTitle { font-size:clamp(12px,2.8vw,20px); }
+  #tab-home .homeCard { padding:17px; min-height:180px; }
+  #tab-home .todayCard { padding:18px; }
+}
+@media(prefers-reduced-motion:reduce) { #tab-home .homeCard { transition:none; } }
