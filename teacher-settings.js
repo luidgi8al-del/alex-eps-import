@@ -15,6 +15,7 @@ function loadPrefs() {
 function savePrefs(prefs) { localStorage.setItem(teacherPrefsKey(),JSON.stringify(prefs)); }
 function profileCacheKey() { return `eps_teacher_profile:${session?.user_id || "anonymous"}`; }
 let settingsPeriodRevision=0, settingsProfileRevision=0;
+let openWeatherSettingsOnOpen=false;
 function profilePayload(prefs) {
   return {teacherName:prefs.teacherName || "",proEmail:prefs.proEmail || "",schoolYear:prefs.schoolYear || "2026-2027",interactiveHomeEnabled:String(prefs.interactiveHomeEnabled===true || prefs.interactiveHomeEnabled==="true")};
 }
@@ -57,12 +58,14 @@ async function openSettings() {
     settingsSection("accountSection","Compte web / synchronisation",`<p>Connecté : ${esc(session.email)}</p><p>${currentInstitution?`Rattaché à ${esc(currentInstitution.name)} (code ${esc(currentInstitution.code)}).`:"Aucun établissement rattaché."}</p><button id="syncSettingsBtn">Actualiser les réglages</button><button class="secondary" id="settingsInstitutionBtn">${currentInstitution?"Gérer mon établissement":"Se rattacher à un établissement"}</button><button class="secondary" id="settingsLogoutBtn">Déconnecter</button>`)+
     settingsSection("periodSection","Réglage des périodes",`<p>Choisis 3, 4 ou 5 périodes pour chaque niveau, comme dans l’application.</p>${grades.map(grade=>`<div class="settingsPeriodRow"><span>${esc(GRADE_LABELS[grade])}</span><div role="group" aria-label="Périodes ${esc(GRADE_LABELS[grade])}">${[3,4,5].map(n=>`<button type="button" class="periodChoice ${n===periodCountForLevel(grade,prefs)?"selected":""}" data-grade="${grade}" data-count="${n}" aria-pressed="${n===periodCountForLevel(grade,prefs)}">${n}</button>`).join("")}</div></div>`).join("")}<button id="savePeriodsBtn">Enregistrer les périodes</button>`)+
     settingsSection("visualSection","Visuel de l’accueil",`<div class="row"><button id="basicVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="false"?"":"secondary"}">Visuel basique</button><button id="interactiveVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="true"?"":"secondary"}">Visuel interactif</button></div>`)+
+    settingsSection("weatherSettingsSection","Météo de l’accueil",`<p>Ville actuelle : <strong>${settingsEscape(weatherCity()?.name || "Non réglée")}</strong></p><form id="settingsWeatherForm"><label for="settingsWeatherCity">Ville<input id="settingsWeatherCity" placeholder="Ex. Marrakech" minlength="2" maxlength="100" required autocomplete="off"></label><button type="submit">Rechercher</button></form><div id="settingsWeatherResults" class="weatherSearchResults" aria-live="polite"></div><p class="muted">La ville recherchée est transmise à Open-Meteo. Aucune localisation GPS ni donnée scolaire n’est utilisée.</p>`)+
     settingsSection("backupSection","Sauvegarde / restauration",`<p>Exporter les données accessibles à ce compte au format JSON.</p><button id="exportDataBtn">Exporter mes données web</button><p class="muted">La restauration des sauvegardes Android se fait dans l’application, puis par synchronisation. Un export web n’est pas une sauvegarde Android.</p>`)+
     settingsSection("resetSection","Réinitialisation",`<p>Actions irréversibles : exporte une sauvegarde avant de continuer.</p><button class="danger" id="resetPersonalBtn">Réinitialiser mes données</button><button class="danger" id="resetSchoolBtn" ${currentInstitution?"":"disabled"}>Réinitialisation complète établissement</button>`)+
     settingsSection("privacySection","Confidentialité et sécurité",`<p>Les réglages partagés sont privés à ton compte. Le PIN reste sur cet appareil et ne remplace pas la sécurité du compte. La biométrie Android n’est pas disponible ici.</p>${field("settingsPin","Code PIN local (4 à 8 chiffres)","","password")}<button id="setPinBtn">${prefs.pin?"Changer":"Activer"} le code</button>${prefs.pin?'<button class="secondary" id="removePinBtn">Désactiver le code</button>':""}`)+
     `<p id="settingsOk" role="status" aria-live="polite"></p>`;
   document.getElementById("settingsOk").textContent=errors.join(" ") || (prefs.profilePending?"Un profil enregistré localement attend sa synchronisation.":"");
   document.getElementById("settingsOverlay").classList.add("open");
+  if(openWeatherSettingsOnOpen){document.getElementById("weatherSettingsSection").open=true;openWeatherSettingsOnOpen=false;}
   const bind=(id,fn)=>{const el=document.getElementById(id); if(el) el.onclick=async()=>{el.disabled=true;try{await fn();}catch(e){document.getElementById("settingsOk").textContent=e.message;}finally{el.disabled=false;}};};
   bind("saveProfileBtn",saveSettings);
   bind("savePeriodsBtn",async()=>{
@@ -84,6 +87,13 @@ async function openSettings() {
   bind("setPinBtn",()=>{const pin=document.getElementById("settingsPin").value;if(!/^\d{4,8}$/.test(pin))throw Error("Saisis entre 4 et 8 chiffres.");savePrefs({...loadPrefs(),pin});return openSettings();});
   bind("removePinBtn",()=>{const next=loadPrefs();delete next.pin;savePrefs(next);return openSettings();});
   bind("resetPersonalBtn",()=>resetSettingsData(false));bind("resetSchoolBtn",()=>resetSettingsData(true));
+  document.getElementById("settingsWeatherForm").onsubmit=async event=>{
+    event.preventDefault();const button=event.currentTarget.querySelector("button"),results=document.getElementById("settingsWeatherResults"),query=document.getElementById("settingsWeatherCity").value.trim();
+    if(query.length<2)return;button.disabled=true;results.textContent="Recherche…";
+    try { const cities=await searchWeatherCities(query);results.replaceChildren();if(!cities.length)results.textContent="Aucune ville trouvée.";
+      cities.forEach(city=>{const choice=document.createElement("button");choice.type="button";choice.className="secondary";choice.textContent=[city.name,city.admin1,city.country].filter(Boolean).join(" · ");choice.onclick=()=>{saveWeatherCity(city,choice.textContent);document.getElementById("settingsOk").textContent="Ville météo enregistrée.";openSettings();};results.appendChild(choice);});
+    } catch {results.textContent="Recherche indisponible. Vérifie ta connexion.";} finally {button.disabled=false;}
+  };
 }
 async function saveSettings() {
   const input=document.getElementById("prefEmail"); if(!input.reportValidity()) return;
