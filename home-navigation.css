@@ -1,4 +1,16 @@
 /* Accueil et navigation : même palette sportive claire que l'application Android. */
+/* A committed choice stays highlighted after focus leaves the field. */
+body select:has(option:checked:not([value=""])):not(:disabled) {
+  background-color:#deefff; color:#123b5b; border:2px solid #176eae; font-weight:700;
+}
+body select option { background:var(--surface); color:var(--text); }
+body select option:checked { background:#176eae; color:white; }
+body input[type="checkbox"],body input[type="radio"] { accent-color:#176eae; }
+body .durationChip.selected,body .installationChip.selected,body button[aria-pressed="true"] {
+  background:#0868ac; color:white; border:2px solid #075b99; font-weight:700;
+}
+body .durationChip.selected::before,body .installationChip.selected::before,body button[aria-pressed="true"]::before { content:"✓ "; }
+body select:focus-visible { outline:3px solid #e69b20; outline-offset:2px; }
 /* All periods remain readable even in short slots or on a narrow screen. */
 .planningWrap .planningBlock { overflow-y:auto; padding:4px 6px; }
 .planningWrap .planningPeriodActivity { display:block; line-height:1.3; padding:1px 0; overflow-wrap:anywhere; opacity:1; }
