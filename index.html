@@ -4514,6 +4514,11 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     let unssTabReady = false;
 
     async function initUnssTab() {
+      const asSchema = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_as_roster_version`);
+      if (!asSchema.ok || await asSchema.json() !== 2) {
+        document.getElementById("unssList").textContent="Mise à jour AS nécessaire : exécutez schema_as_roster.sql dans Supabase avant de gérer les groupes et appels.";
+        return;
+      }
       if (!unssTabReady) {
         document.getElementById("unssSubtabs").addEventListener("click", (e) => {
           const btn = e.target.closest(".subtabbtn");
@@ -4841,7 +4846,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       const studentIds = memberships.map(m => m.student_id);
       let members = [];
       if (studentIds.length > 0) {
-        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
         members = studentsRes.ok ? await studentsRes.json() : [];
       }
 
@@ -4901,12 +4906,12 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     async function openUnssAddMemberPanel(group, excludeIds) {
       const panel = document.getElementById("unssPanel");
       panel.innerHTML = `<h2>Ajouter un membre</h2><div class="muted">Chargement...</div>`;
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&select=*&order=last_name.asc`);
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc`);
       const students = res.ok ? await res.json() : [];
       const candidates = students.filter(s => !excludeIds.includes(s.id));
       panel.innerHTML = `<h2>Ajouter un membre</h2>` +
         (candidates.length === 0
-          ? `<div class="muted">Tous les eleves importes (module Classes) sont deja membres.</div>`
+          ? `<div class="muted">Aucun élève disponible dans Élèves LVH / Licenciés AS. Ajoutez les élèves au répertoire AS.</div>`
           : candidates.map(s => `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`).join("")
         ) +
         `<button class="secondary" id="unssAddMemberCancel" style="margin-top:14px">Fermer</button>`;
@@ -4949,7 +4954,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
       const studentIds = memberships.map(m => m.student_id);
       if (studentIds.length === 0) return;
-      const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+      const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
       unssAppelMembers = studentsRes.ok ? await studentsRes.json() : [];
       unssAppelMembers.forEach(s => { unssAppelPresence[s.id] = true; });
     }
