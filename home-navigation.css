@@ -66,6 +66,12 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 /* Settings match the Android accordion hierarchy; all sections start closed. */
 .settingsSection summary { cursor:pointer; font-size:1.15rem; font-weight:750; color:#163a5f; padding:8px 0; }
 .settingsContents { padding-top:16px; }
+.settingsNested { margin-top:14px; border-top:1px solid #dce7f1; padding-top:6px; }
+.settingsNested > summary { cursor:pointer; padding:10px 4px; font-weight:800; color:#173d63; list-style:none; }
+.settingsNested > summary::-webkit-details-marker { display:none; }
+.settingsNested > summary::after { content:"＋"; float:right; color:#1976c9; }
+.settingsNested[open] > summary::after { content:"−"; }
+.settingsNestedContents { padding:2px 4px 12px 12px; }
 .settingsPeriodRow { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid #e5edf5; }
 .settingsPeriodRow > div { display:flex; gap:6px; flex-shrink:0; }
 .periodChoice { margin:0; background:#f0f6ff; color:#163a5f; border:1px solid #b9d0e6; min-width:42px; }
