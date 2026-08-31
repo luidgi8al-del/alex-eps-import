@@ -614,6 +614,7 @@
   <script src="sync-safety.js"></script>
   <script src="school-levels.js"></script>
   <script src="period-settings.js"></script>
+  <script src="student-fields.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -1382,7 +1383,8 @@
           sex: sexFromValue(get(idx.sexe)) || "NON_PRECISE",
           eps_level: idx.niveau >= 0 ? (get(idx.niveau) || "MOYEN") : "MOYEN",
           student_email: get(idx.emailEleve) || null,
-          parent_emails: get(idx.emailsParents) || null
+          parent_emails: get(idx.emailsParents) || null,
+          ...studentExtraColumns(headerFields, f)
         });
       }
       return { students, niveauDetected: idx.niveau >= 0 };
@@ -1485,7 +1487,8 @@
             return {
               id: crypto.randomUUID(), class_id: classId, user_id: session.user_id,
               last_name: s.last_name, first_name: s.first_name, sex: s.sex, eps_level: s.eps_level,
-              student_email: s.student_email || null, parent1_email: parent1, parent2_email: parent2,
+              student_email: s.student_email || null, parent1_email: s.parent1_email || parent1, parent2_email: s.parent2_email || parent2,
+              birth_date_epoch_millis:s.birth_date_epoch_millis, parent_phone:s.parent_phone, extended_data_updated_at:now,
               updated_at: now, deleted: false
             };
           });
@@ -1596,11 +1599,11 @@
       ).join("");
       return `
         <tr class="editRow" data-index="${index}">
-          <td><input type="text" data-field="last_name" value="${s.last_name || ""}"></td>
-          <td><input type="text" data-field="first_name" value="${s.first_name || ""}"></td>
+          <td><input type="text" data-field="last_name" value="${planningText(s.last_name || "")}"></td>
+          <td><input type="text" data-field="first_name" value="${planningText(s.first_name || "")}"></td>
           <td><select data-field="sex">${sexOptions}</select></td>
           <td><select class="levelSelect" data-field="eps_level">${levelOptions}</select></td>
-          <td><input type="text" data-field="student_email" value="${s.student_email || ""}"></td>
+          <td><input type="text" data-field="student_email" value="${planningText(s.student_email || "")}"></td>
           <td><input type="text" data-field="parent1_email" placeholder="Parent 1" value="${planningText(s.parent1_email || "")}"><input type="text" data-field="parent2_email" placeholder="Parent 2" value="${planningText(s.parent2_email || "")}"></td>
           <td><input type="date" data-field="birth_date" value="${s.birth_date_epoch_millis != null ? new Date(Number(s.birth_date_epoch_millis)).toISOString().slice(0,10) : ""}"></td>
           <td><input type="tel" data-field="parent_phone" value="${planningText(s.parent_phone || "")}"></td>
