@@ -25,38 +25,25 @@ async function weatherFetch(url){
 function weatherDayHtml(daily,index,hourly={}) {
   const date=daily.time?.[index];
   const caption=typeof date==='string' && /^\d{4}-\d{2}-\d{2}$/.test(date)?new Date(`${date}T12:00:00`).toLocaleDateString('fr-FR',{day:'numeric',month:'long'}):'';
-  const hours=(hourly.time||[]).map((time,i)=>({time,i})).filter(({time})=>typeof time==='string' && /^\d{4}-\d{2}-\d{2}T\d{2}:00$/.test(time) && time.startsWith(date+'T'));
+  const hours=(hourly.time||[]).map((time,i)=>({time,i})).filter(({time})=>{
+    if(typeof time!=='string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:00$/.test(time) || !time.startsWith(date+'T'))return false;
+    const hour=Number(time.slice(11,13));return [8,10,12,14,16,18].includes(hour);
+  });
   const timeline=hours.map(({time,i})=>{
     const [icon,label]=weatherDescription(hourly.weather_code?.[i]);
     const hour=time.slice(11,13)+'h';
-    return `<div class="weatherHour"><time datetime="${time}">${hour}</time><span class="weatherSymbol" role="img" aria-label="${label}">${icon}</span><strong>${weatherNumber(hourly.temperature_2m?.[i],'°')}</strong><span class="weatherHourLabel">${label}</span><span>Pluie ${weatherNumber(hourly.precipitation_probability?.[i],'%')}</span><span>Vent ${weatherNumber(hourly.wind_speed_10m?.[i],' km/h')}</span></div>`;
+    return `<div class="weatherHour" title="${label} · pluie ${weatherNumber(hourly.precipitation_probability?.[i],'%')} · vent ${weatherNumber(hourly.wind_speed_10m?.[i],' km/h')}"><time datetime="${time}">${hour}</time><span class="weatherSymbol" role="img" aria-label="${label}">${icon}</span><strong>${weatherNumber(hourly.temperature_2m?.[i],'°')}</strong><span>💧 ${weatherNumber(hourly.precipitation_probability?.[i],'%')}</span></div>`;
   }).join('');
-  return `<article class="weatherDay"><h3>${index===0?'Aujourd’hui':'Demain'} <small>${caption}</small></h3><p>Évolution heure par heure · ${weatherNumber(daily.temperature_2m_min?.[index],'°')} / ${weatherNumber(daily.temperature_2m_max?.[index],'°')}</p>${hours.length?`<div class="weatherTimeline" tabindex="0" role="region" aria-label="Prévisions heure par heure ${index===0?'aujourd’hui':'demain'}">${timeline}</div><p class="weatherSource">Fais défiler les heures de gauche à droite.</p>`:'<p>Prévisions horaires indisponibles.</p>'}</article>`;
+  return `<article class="weatherDay"><h3>${index===0?'Aujourd’hui':'Demain'} <small>${caption}</small> <span>${weatherNumber(daily.temperature_2m_min?.[index],'°')} / ${weatherNumber(daily.temperature_2m_max?.[index],'°')}</span></h3>${hours.length?`<div class="weatherTimeline" tabindex="0" role="region" aria-label="Prévisions ${index===0?'aujourd’hui':'demain'}, toutes les trois heures">${timeline}</div>`:'<p>Prévisions horaires indisponibles.</p>'}</article>`;
 }
 async function renderHomeWeather() {
   const host=document.getElementById('homeWeather');if(!host)return;
   const renderId=++weatherRenderId,owner=weatherCityKey();
   const active=()=>renderId===weatherRenderId && weatherCityKey()===owner;
   const saved=weatherCity(),city=validWeatherCity(saved)?saved:null;
-  host.innerHTML=`<div class="weatherTop"><h2>Météo${city?' · '+settingsEscape(city.name):''}</h2><button class="secondary" id="weatherRefresh">Actualiser</button></div><details class="weatherSearch" ${city?'':'open'}><summary>${city?'Changer de ville':'Choisir la ville de l’établissement'}</summary><form id="weatherSearchForm"><label for="weatherCityInput">Ville<input id="weatherCityInput" placeholder="Ex. Marrakech" minlength="2" maxlength="100" required autocomplete="off"></label><button type="submit">Rechercher</button></form><p class="weatherSource">La ville recherchée est transmise à Open-Meteo. Aucune localisation GPS ni donnée scolaire n’est utilisée. Choix mémorisé dans ce navigateur.</p><div id="weatherSearchResults" class="weatherSearchResults" aria-live="polite"></div></details><div id="weatherForecast" aria-live="polite">${city?'Chargement des prévisions…':'Choisis une ville pour afficher les prévisions d’aujourd’hui et de demain.'}</div><div class="weatherSource">Prévisions : <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></div>`;
+  host.innerHTML=`<div class="weatherTop"><h2>🌤️ ${city?settingsEscape(city.name):'Météo'}</h2><button class="secondary" id="weatherRefresh" title="Actualiser la météo" aria-label="Actualiser la météo">↻</button></div><div id="weatherForecast" aria-live="polite">${city?'Chargement…':'Ville non réglée. '}</div>${city?'<div class="weatherSource"><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></div>':'<button class="secondary weatherSetup" id="weatherSetup">Régler la ville</button>'}`;
   document.getElementById('weatherRefresh').onclick=()=>{if(city)weatherCache.delete(`${city.latitude},${city.longitude}`);renderHomeWeather();};
-  document.getElementById('weatherSearchForm').onsubmit=async event=>{
-    event.preventDefault();const form=event.currentTarget,button=form.querySelector('button');
-    const query=document.getElementById('weatherCityInput').value.trim();if(query.length<2)return;
-    const results=document.getElementById('weatherSearchResults');button.disabled=true;results.textContent='Recherche…';
-    try {
-      const data=await weatherFetch('https://geocoding-api.open-meteo.com/v1/search?'+new URLSearchParams({name:query,count:'6',language:'fr',format:'json'}));
-      if(!active())return;
-      results.replaceChildren();
-      const choices=(data.results||[]).filter(validWeatherCity);
-      if(!choices.length)results.textContent='Aucune ville trouvée. Précise le nom de la ville.';
-      choices.forEach(item=>{const b=document.createElement('button');b.className='secondary';b.textContent=[item.name,item.admin1,item.country].filter(Boolean).join(' · ');b.onclick=()=>{
-        try{localStorage.setItem(owner,JSON.stringify({name:b.textContent,latitude:item.latitude,longitude:item.longitude}));renderHomeWeather();}
-        catch{results.textContent='Le navigateur empêche de mémoriser la ville.';}
-      };results.appendChild(b);});
-    }catch{if(active())results.textContent='Recherche indisponible. Vérifie ta connexion et réessaie.';}
-    finally{button.disabled=false;}
-  };
+  const setup=document.getElementById('weatherSetup');if(setup)setup.onclick=()=>{openWeatherSettingsOnOpen=true;openSettings();};
   if(!city)return;
   const forecast=document.getElementById('weatherForecast'),key=`${city.latitude},${city.longitude}`;
   try{
@@ -68,9 +55,14 @@ async function renderHomeWeather() {
     if(!data.daily || data.daily.time?.length!==2)throw Error('Prévisions incomplètes');
     if(!cached)weatherCache.set(key,{at:Date.now(),data});
     forecast.innerHTML=`<div class="weatherDays">${weatherDayHtml(data.daily,0,data.hourly)}${weatherDayHtml(data.daily,1,data.hourly)}</div><p class="weatherSource">Prévisions locales · actualisées à ${new Date(cached?.at || Date.now()).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</p>`;
-    // Open at 6h for the school day, while keeping the full 24h accessible in both directions.
-    forecast.querySelectorAll('.weatherTimeline').forEach(row=>{
-      const six=row.children[6];if(six)row.scrollLeft=six.offsetLeft-row.children[0].offsetLeft;
-    });
   }catch{if(active())forecast.textContent='Météo indisponible pour le moment. Vérifie ta connexion puis clique sur Actualiser.';}
+}
+async function searchWeatherCities(query) {
+  const data=await weatherFetch('https://geocoding-api.open-meteo.com/v1/search?'+new URLSearchParams({name:query,count:'6',language:'fr',format:'json'}));
+  return (data.results||[]).filter(validWeatherCity);
+}
+function saveWeatherCity(item,label) {
+  if(!validWeatherCity(item))throw Error('Ville invalide.');
+  localStorage.setItem(weatherCityKey(),JSON.stringify({name:label,latitude:item.latitude,longitude:item.longitude}));
+  weatherCache.clear();renderHomeWeather();
 }
