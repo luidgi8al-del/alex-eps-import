@@ -1,0 +1,2674 @@
+{
+  "apsa": "Badminton",
+  "grades": [
+    "SIXIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie. Le programme publie le 22 avril 2026 ne s'applique a la 6e qu'a la rentree 2027.",
+  "attendus": [
+    "En situation amenagee ou a effectif reduit, s'organiser tactiquement pour gagner le duel ou le match en identifiant les situations favorables de marque.",
+    "Maintenir un engagement moteur efficace sur tout le temps de jeu prevu.",
+    "Respecter les partenaires, les adversaires et l'arbitre.",
+    "Assurer differents roles sociaux (joueur, arbitre, observateur) inherents a l'activite et a l'organisation de la classe.",
+    "Accepter le resultat de la rencontre et etre capable de le commenter."
+  ],
+  "targetCompetence": "Passer d'un renvoi aleatoire, ou l'eleve subit le volant et frappe au hasard, a un jeu intentionnel : se replacer au centre, renvoyer haut en securite, puis choisir d'envoyer le volant la ou l'adversaire n'est pas.",
+  "cycleObjectives": [
+    "Renvoyer le volant par-dessus le filet plusieurs fois de suite.",
+    "Se replacer au centre du terrain apres chaque frappe.",
+    "Servir reglementairement, en dessous de la taille et en diagonale.",
+    "Envoyer le volant dans l'espace libre pour marquer le point.",
+    "Tenir les roles d'arbitre-marqueur et de juge de ligne avec rigueur."
+  ],
+  "plannedTitles": [
+    "Decouvrir le volant et se situer",
+    "Renvoyer en securite : le volant repasse le filet",
+    "Se replacer au centre apres chaque frappe",
+    "Le service : mettre en jeu reglementairement",
+    "Match evalue de mi-cycle",
+    "Placer le volant : jouer la ou l'adversaire n'est pas",
+    "Varier : le fond et le filet",
+    "Tournoi final et evaluation"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Champ d'apprentissage 4 - attendus de fin de cycle 3",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/document/16714/download",
+      "consulted": "2026-09-01"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources pour le cycle 3 - education physique et sportive",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.fr/259/education-physique-et-sportive-cycle-3",
+      "consulted": "2026-09-01"
+    },
+    {
+      "type": "Academique",
+      "title": "Badminton au college - niveau 1, situations d'apprentissage",
+      "org": "Academie de Lyon",
+      "url": "https://eps.enseigne.ac-lyon.fr/spip/",
+      "consulted": "2026-09-01"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Le badminton scolaire - regles amenagees et progression",
+      "org": "Federation francaise de badminton",
+      "url": "https://www.ffbad.org/",
+      "consulted": "2026-09-01"
+    }
+  ],
+  "protocoleLocal": [
+    "Nombre de terrains et de filets disponibles : conditionne directement le temps de jeu reel par eleve.",
+    "Hauteur des filets : 1,55 m aux poteaux. Un filet trop bas transforme le jeu en echange a plat.",
+    "Stock de volants : prevoir large, les volants plastique se fendent et se perdent.",
+    "Etat des cordages : une raquette detendue rend le renvoi long impossible.",
+    "Hauteur sous plafond : un plafond bas interdit le jeu haut et impose d'adapter les consignes.",
+    "Eleves dispenses : prevoir les roles d'arbitre-marqueur, de juge de ligne et d'observateur.",
+    "Emplacement de la trousse de secours et modalites d'alerte."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Profil 1 - subit le volant",
+      "observed": "Reste immobile, bras tendu, et frappe au hasard quand le volant arrive pres de lui. Perd le point des la deuxieme frappe.",
+      "need": "Construire le renvoi haut en securite et le deplacement vers le volant."
+    },
+    {
+      "label": "Profil 2 - frappe trop fort",
+      "observed": "Cherche a smasher chaque volant, l'envoie systematiquement dehors ou dans le filet. Ne fait jamais deux echanges de suite.",
+      "need": "Accepter de renvoyer haut avant de chercher a marquer."
+    },
+    {
+      "label": "Profil 3 - reste sur le cote",
+      "observed": "Ne revient jamais au centre apres sa frappe, se fait donc systematiquement prendre du cote oppose.",
+      "need": "Construire le replacement au centre apres chaque frappe."
+    },
+    {
+      "label": "Profil 4 - a l'aise mais ne place pas",
+      "observed": "Echange bien et longtemps, mais renvoie toujours a la meme hauteur et au meme endroit, sans jamais deplacer l'adversaire.",
+      "need": "Passer de l'echange a l'intention : varier gauche-droite et fond-filet."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi en montante-descendante, matchs en 11 points avec service alterne tous les deux points. Chaque eleve joue au moins quatre matchs et tient une fois le role d'arbitre-marqueur.",
+    "criteria": [
+      "L'eleve realise des echanges de quatre frappes ou plus sur la majorite des points.",
+      "Le service est reglementaire, frappe en dessous de la taille, et regulier : moins de deux services rates par match.",
+      "L'eleve se replace au centre apres ses frappes.",
+      "L'eleve cherche a envoyer le volant dans l'espace libre plutot que de renvoyer au meme endroit.",
+      "L'eleve varie la profondeur : il joue au fond et au filet, pas seulement a mi-terrain.",
+      "Le score est tenu correctement et le role d'arbitre-marqueur est assume.",
+      "Le resultat est accepte et l'eleve sait le commenter."
+    ],
+    "referential": "Attendus de fin de cycle 3 du CA4, a croiser avec le projet pedagogique EPS de l'etablissement."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Decouvrir le volant et se situer",
+      "mainObjective": "Etablir un etat des lieux : observer ce que chaque eleve fait reellement avec un volant, pour construire la suite du cycle sur des constats et non des suppositions.",
+      "isDiagnostic": true,
+      "secondaryObjectives": [
+        "Tenir la raquette en prise universelle, poignee dans la main comme une poignee de main.",
+        "Envoyer le volant par-dessus le filet dans le terrain adverse.",
+        "Reperer les limites du terrain de simple."
+      ],
+      "linkToPrevious": "Premiere seance du cycle : aucun prerequis. Certains eleves ont deja joue en famille ou au centre de loisirs, d'autres n'ont jamais tenu une raquette.",
+      "prerequisiteForNext": "Chaque eleve a ete observe au moins une fois en situation de match : le professeur dispose d'un profil par eleve.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Une reprise longue et progressive : beaucoup d'eleves decouvrent le geste, il faut du temps de contact avec le volant avant toute consigne technique.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Jonglage : faire rebondir le volant sur le tamis, sans compter d'abord.",
+              "Jonglage compte : combien de touches d'affilee ?",
+              "Par deux, echanges libres sans filet, a 3 metres."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Match libre en 7 points",
+          "objective": "Observer les conduites spontanees : c'est le coeur du diagnostic. Le professeur n'intervient pas techniquement, il regarde et note.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux sur chaque terrain, matchs en 7 points, service alterne. Rotation des adversaires toutes les deux manches. Le professeur passe de terrain en terrain avec sa fiche.",
+          "studentGoal": "Jouer mes matchs et decouvrir ce que je sais deja faire.",
+          "instructions": [
+            "Le volant doit passer au-dessus du filet et tomber dans le terrain adverse.",
+            "On annonce le score a voix haute avant chaque service.",
+            "On ramasse son volant : personne ne joue si un volant traine au sol."
+          ],
+          "success": [
+            "Chaque eleve a joue au moins trois manches.",
+            "Le professeur a note un profil pour chaque eleve.",
+            "Le score est annonce sans conflit."
+          ],
+          "execution": [
+            "Prise universelle : la raquette se tient comme on serre une main.",
+            "Frapper le volant devant soi, bras tendu vers le haut.",
+            "Regarder le volant jusqu'au contact avec le tamis."
+          ],
+          "watch": [
+            "Qui frappe a cote du corps plutot que devant ?",
+            "Qui tient la raquette a pleine paume, poignet bloque ?",
+            "Qui reste immobile et attend que le volant vienne a lui ?"
+          ],
+          "errors": [
+            "Rattraper le volant a cote du corps, au dernier moment.",
+            "Serrer la raquette trop fort : le poignet ne peut plus se deverrouiller.",
+            "Regarder l'adversaire au lieu de regarder le volant."
+          ],
+          "feedback": [
+            "Frappe devant toi, pas sur le cote.",
+            "Desserre ta main : le volant part avec le poignet, pas avec le bras.",
+            "Garde les yeux sur le volant jusqu'au bout."
+          ],
+          "plus": [
+            "Matchs en 11 points.",
+            "Interdiction de servir deux fois au meme endroit."
+          ],
+          "minus": [
+            "Volant lance a la main par le partenaire.",
+            "Terrain reduit a une demi-largeur."
+          ],
+          "diff": {
+            "facilitee": "Volant lance a la main, terrain reduit, echanges sans compter les points.",
+            "normale": "Matchs libres en 7 points, service alterne.",
+            "complexifiee": "Matchs en 11 points avec service reglementaire impose."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le volant et moi",
+          "objective": "Construire le premier repere technique : le volant se frappe devant soi, jamais a cote du corps.",
+          "material": [
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            }
+          ],
+          "organization": "Individuellement, chacun son volant. Trois ateliers de 4 minutes : jonglage haut, jonglage bas, envoi dans un cerceau a 4 metres.",
+          "studentGoal": "Toucher le volant devant moi, pas sur le cote.",
+          "instructions": [
+            "Je frappe le volant devant moi, bras tendu vers le haut.",
+            "Je regarde le volant jusqu'au contact.",
+            "Je compte mes touches et j'essaie de battre mon score."
+          ],
+          "success": [
+            "Cinq touches consecutives en jonglage haut.",
+            "Le volant est frappe devant le corps, pas rattrape au dernier moment."
+          ],
+          "execution": [
+            "Volant frappe au-dessus de la tete, bras tendu.",
+            "Le tamis reste horizontal en jonglage haut.",
+            "Les appuis restent mobiles sous le volant."
+          ],
+          "watch": [
+            "Qui frappe avec le cadre plutot qu'avec le tamis ?",
+            "Qui doit courir apres son volant a chaque touche ?"
+          ],
+          "errors": [
+            "Frapper trop fort : le volant part hors de portee.",
+            "Bloquer les pieds et se pencher au lieu de se deplacer.",
+            "Baisser les yeux au moment du contact."
+          ],
+          "feedback": [
+            "Touche plus doucement, le volant doit rester au-dessus de toi.",
+            "Deplace tes pieds pour te mettre sous le volant.",
+            "Tamis a plat, comme un plateau."
+          ],
+          "plus": [
+            "Jonglage en alternant coup droit et revers.",
+            "Jonglage en marchant."
+          ],
+          "minus": [
+            "Jonglage avec la main, sans raquette, pour sentir la trajectoire.",
+            "Volant tenu et lache juste au-dessus du tamis."
+          ],
+          "diff": {
+            "facilitee": "Jonglage a une main sans raquette, puis volant lache sur le tamis.",
+            "normale": "Trois ateliers : jonglage haut, jonglage bas, envoi dans un cerceau.",
+            "complexifiee": "Jonglage en alternant coup droit et revers, en deplacement."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Le terrain, jusqu'ou ?",
+          "objective": "Installer la connaissance des limites du terrain de simple, indispensable pour arbitrer et pour placer le volant ensuite.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            }
+          ],
+          "organization": "Par quatre : deux joueurs, deux juges de ligne places aux extremites. Rotation toutes les 2 minutes. Matchs en 5 points ou seules les fautes de limite comptent.",
+          "studentGoal": "Savoir dire si le volant est dedans ou dehors.",
+          "instructions": [
+            "Le juge annonce fort : dedans ou dehors.",
+            "Un volant sur la ligne est dedans.",
+            "En simple, les couloirs lateraux ne comptent pas."
+          ],
+          "success": [
+            "Les quatre eleves ont tenu le role de juge.",
+            "Les annonces correspondent a la realite dans la majorite des cas."
+          ],
+          "execution": [
+            "Le juge se place dans l'axe de la ligne qu'il surveille.",
+            "L'annonce se fait immediatement, sans attendre l'avis des joueurs."
+          ],
+          "watch": [
+            "Les juges osent-ils annoncer contre un camarade ?",
+            "Les limites du simple sont-elles connues, notamment les couloirs ?"
+          ],
+          "errors": [
+            "Annoncer apres avoir regarde la reaction des joueurs.",
+            "Confondre les limites du simple et du double.",
+            "Discuter une annonce au lieu de l'accepter."
+          ],
+          "feedback": [
+            "Annonce tout de suite et fort, tu es le juge.",
+            "Place-toi dans l'axe de ta ligne, pas en diagonale.",
+            "Un volant sur la ligne est dedans : c'est la regle."
+          ],
+          "plus": [
+            "Le juge justifie son annonce en une phrase.",
+            "Matchs en 11 points."
+          ],
+          "minus": [
+            "Terrain delimite par des plots tres visibles.",
+            "Un seul juge par terrain, sur la ligne de fond."
+          ],
+          "diff": {
+            "facilitee": "Limites materialisees par des plots, un seul juge sur la ligne de fond.",
+            "normale": "Deux juges par terrain, rotation toutes les 2 minutes.",
+            "complexifiee": "Le juge justifie chaque annonce contestee."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui a ete le plus difficile : toucher le volant, ou le mettre dans le terrain ?",
+          "Ou faut-il frapper le volant : devant soi ou a cote de soi ?"
+        ],
+        "key": "Le badminton commence par une chose simple : toucher le volant devant soi. Tant que le volant est rattrape a cote du corps, aucun controle n'est possible."
+      },
+      "socialRoles": [
+        "Juge de ligne : annonce dedans ou dehors, sans discuter.",
+        "Marqueur : annonce le score avant chaque service.",
+        "Responsable materiel : compte les volants au debut et a la fin."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Renvoyer en securite : le volant repasse le filet",
+      "mainObjective": "Construire la continuite d'echange : sans echange qui dure, aucune intention tactique n'est possible.",
+      "secondaryObjectives": [
+        "Frapper le volant vers le haut pour lui donner de la hauteur.",
+        "Viser le milieu du terrain adverse.",
+        "Atteindre dix echanges consecutifs en cooperation."
+      ],
+      "linkToPrevious": "La seance 1 a montre que les points se terminent en une ou deux frappes : le volant tombe au sol avant que le jeu ne commence.",
+      "prerequisiteForNext": "Chaque binome realise dix echanges consecutifs par-dessus le filet.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Prepare le poignet et installe d'emblee la recherche de continuite : on echauffe en echangeant, pas en frappant fort.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Jonglage haut, 20 touches.",
+              "Par deux sans filet, echanges lents a 4 metres.",
+              "Par deux au filet, echanges hauts sans compter."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Dix echanges d'affilee",
+          "objective": "Construire la continuite par la cooperation, avec des paliers chiffres qui rendent le progres visible.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux par terrain, en cooperation stricte : on ne cherche pas a gagner. Trois paliers : 4 echanges, 7 echanges, 10 echanges. On ne passe au palier suivant qu'apres deux reussites.",
+          "studentGoal": "Atteindre dix echanges consecutifs avec mon partenaire.",
+          "instructions": [
+            "On coopere : on cherche a faire durer, pas a gagner le point.",
+            "Je frappe le volant vers le haut : un volant haut laisse du temps a l'autre.",
+            "Je vise le milieu du terrain adverse.",
+            "On note notre meilleur score sur la fiche."
+          ],
+          "success": [
+            "Le palier de dix echanges est atteint au moins une fois.",
+            "Les scores sont notes sur la fiche.",
+            "Progression visible entre le debut et la fin de la situation."
+          ],
+          "execution": [
+            "Frapper sous le volant pour l'envoyer haut.",
+            "Volant frappe devant soi, jamais au-dessus de l'epaule arriere.",
+            "Viser le milieu du terrain adverse."
+          ],
+          "watch": [
+            "Les eleves accelerent-ils des que l'echange dure ?",
+            "Les trajectoires sont-elles hautes ou tendues ?",
+            "La cooperation est-elle reelle, ou l'un cherche-t-il a piquer l'autre ?"
+          ],
+          "errors": [
+            "Accelerer des que le compte monte, et casser l'echange.",
+            "Frapper a plat : le volant tombe court et l'echange s'arrete.",
+            "Envoyer volontairement un volant injouable au partenaire."
+          ],
+          "feedback": [
+            "Envoie plus haut, tu lui donnes le temps de se placer.",
+            "Ne va pas plus vite parce que ca marche : garde le meme rythme.",
+            "Vous cooperez : envoie-lui un volant qu'il peut jouer."
+          ],
+          "plus": [
+            "Objectif 15 ou 20 echanges.",
+            "Echanges en visant le fond du terrain adverse."
+          ],
+          "minus": [
+            "Objectif 4 echanges.",
+            "Echanges sans filet, a 4 metres, volant lance a la main."
+          ],
+          "diff": {
+            "facilitee": "Sans filet a 4 metres, volant lance a la main, objectif 4 echanges.",
+            "normale": "Paliers 4, 7 puis 10 echanges en cooperation par-dessus le filet.",
+            "complexifiee": "Objectif 15 a 20 echanges en visant le fond du terrain."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Haut et loin",
+          "objective": "Faire comprendre par l'experience qu'un volant haut donne du temps, et qu'un volant tendu tombe court.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            }
+          ],
+          "organization": "Une zone de 2 metres materialisee par des plots au fond du terrain adverse. Par deux, 10 envois chacun depuis le fond de son terrain.",
+          "studentGoal": "Envoyer le volant dans la zone du fond, en le frappant vers le haut.",
+          "instructions": [
+            "Je frappe sous le volant pour l'envoyer haut.",
+            "Plus le volant monte, plus il va loin.",
+            "Mon partenaire compte mes reussites sur dix essais."
+          ],
+          "success": [
+            "Au moins quatre envois sur dix atteignent la zone du fond.",
+            "La trajectoire est haute, pas tendue."
+          ],
+          "execution": [
+            "Le volant est frappe sous sa base, tamis oriente vers le haut.",
+            "Le bras accompagne vers le haut et vers l'avant.",
+            "Les appuis sont sous le volant au moment du contact."
+          ],
+          "watch": [
+            "Les trajectoires montent-elles reellement, ou restent-elles tendues ?",
+            "Les eleves comprennent-ils le lien entre hauteur et profondeur ?"
+          ],
+          "errors": [
+            "Frapper le volant de cote : il part a plat et tombe court.",
+            "Vouloir compenser par la force au lieu de la hauteur.",
+            "Frapper derriere soi, en retard sur le volant."
+          ],
+          "feedback": [
+            "Passe ta raquette sous le volant, pas devant.",
+            "Ce n'est pas la force qui envoie loin, c'est la hauteur.",
+            "Avance sous le volant avant de frapper."
+          ],
+          "plus": [
+            "Zone du fond reduite a 1 metre.",
+            "Envoi depuis sa propre ligne de fond."
+          ],
+          "minus": [
+            "Zone du fond elargie a 3 metres.",
+            "Envoi depuis le milieu du terrain."
+          ],
+          "diff": {
+            "facilitee": "Zone elargie a 3 metres, envoi depuis le milieu du terrain.",
+            "normale": "Zone de 2 metres au fond, dix envois depuis sa ligne de fond.",
+            "complexifiee": "Zone reduite a 1 metre, envoi en deplacement."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Le match qui dure",
+          "objective": "Reinvestir la continuite dans un contexte d'opposition, sans que le gain du point efface le travail de la seance.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs en 7 points, avec une regle particuliere : un point gagne apres un echange de quatre frappes ou plus compte double.",
+          "studentGoal": "Gagner mes points sur des echanges longs, pas sur les fautes de l'autre.",
+          "instructions": [
+            "Un point apres quatre frappes ou plus compte double.",
+            "Je continue a frapper haut : c'est ce qui fait durer l'echange.",
+            "L'observateur compte les echanges longs de son binome."
+          ],
+          "success": [
+            "Au moins trois echanges de quatre frappes dans le match.",
+            "Le score double est correctement applique."
+          ],
+          "execution": [
+            "Conserver la trajectoire haute meme quand le point compte.",
+            "Se replacer entre deux frappes pour pouvoir continuer l'echange."
+          ],
+          "watch": [
+            "La regle du point double change-t-elle reellement le comportement ?",
+            "Les eleves retombent-ils dans le jeu tendu des que le score compte ?"
+          ],
+          "errors": [
+            "Oublier la consigne de hauteur des que le point est en jeu.",
+            "Chercher le point gagnant des la deuxieme frappe.",
+            "Compter les echanges de facon approximative."
+          ],
+          "feedback": [
+            "Le point double, c'est en faisant durer : continue a monter le volant.",
+            "Tu as gagne, mais en deux frappes : ce point ne vaut qu'un.",
+            "Observateur, compte a voix haute pour que les joueurs entendent."
+          ],
+          "plus": [
+            "Seuls les points apres six frappes comptent double.",
+            "Matchs en 11 points."
+          ],
+          "minus": [
+            "Point double des trois frappes.",
+            "Matchs en 5 points."
+          ],
+          "diff": {
+            "facilitee": "Point double des trois frappes, matchs en 5 points.",
+            "normale": "Point double a partir de quatre frappes, matchs en 7 points.",
+            "complexifiee": "Point double a partir de six frappes, matchs en 11 points."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien d'echanges avez-vous reussi a enchainer aujourd'hui ?",
+          "Que se passe-t-il quand on frappe le volant a plat, sans le monter ?"
+        ],
+        "key": "Renvoyer haut, c'est la base : un volant haut donne du temps a l'autre, mais aussi a soi-meme pour se replacer. L'attaque viendra apres."
+      },
+      "socialRoles": [
+        "Compteur d'echanges : annonce le nombre de frappes a voix haute.",
+        "Ramasseur : securise la zone entre les points.",
+        "Responsable materiel : installe et range les plots et les cerceaux."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Se replacer au centre apres chaque frappe",
+      "mainObjective": "Construire le replacement : apres avoir frappe, revenir au centre du terrain pour pouvoir couvrir les deux cotes.",
+      "secondaryObjectives": [
+        "Revenir au centre apres chaque frappe, sans y penser.",
+        "Se deplacer en pas chasses plutot qu'en courant de face.",
+        "Comprendre pourquoi un joueur reste sur le cote perd le point suivant."
+      ],
+      "linkToPrevious": "Les echanges durent maintenant, mais les eleves restent la ou ils ont frappe : le point se perd systematiquement du cote oppose.",
+      "prerequisiteForNext": "Chaque eleve revient spontanement vers le centre apres ses frappes dans un echange cooperatif.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12,
+            "note": "cibles posees au sol"
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Poser un cerceau au centre de chaque demi-terrain : c'est la base de replacement."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement oriente deplacement : chevilles et appuis lateraux, car le replacement se fait en pas chasses.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Deplacements en pas chasses d'un plot a l'autre, sans raquette.",
+              "Meme chose raquette en main, en touchant le cerceau central a chaque passage.",
+              "Par deux, echanges hauts au filet."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Le cerceau du milieu",
+          "objective": "Rendre le replacement obligatoire et visible : la contrainte materielle installe l'habitude avant la comprehension.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Un cerceau pose au centre de chaque demi-terrain. Echanges cooperatifs : apres chaque frappe, le joueur doit poser un pied dans son cerceau avant la frappe suivante. L'observateur compte les oublis.",
+          "studentGoal": "Toucher mon cerceau apres chaque frappe.",
+          "instructions": [
+            "Je frappe, puis je reviens tout de suite dans le cerceau.",
+            "Je me deplace en pas chasses, face au filet.",
+            "L'observateur compte le nombre de fois ou j'oublie de revenir."
+          ],
+          "success": [
+            "Moins de trois oublis sur un echange de dix frappes.",
+            "Le deplacement se fait en pas chasses, pas en courant de dos."
+          ],
+          "execution": [
+            "Retour au centre en pas chasses, face au filet.",
+            "Le pied touche le cerceau avant la frappe suivante.",
+            "Le regard reste sur le volant pendant le deplacement."
+          ],
+          "watch": [
+            "Le retour au centre se fait-il en pas chasses ou en courant de dos ?",
+            "Le replacement survit-il quand l'echange s'accelere ?"
+          ],
+          "errors": [
+            "Revenir au centre en tournant le dos au filet.",
+            "Rester dans le cerceau au lieu d'aller vers le volant.",
+            "Oublier le retour des que l'echange devient interessant."
+          ],
+          "feedback": [
+            "Reviens en pas chasses, garde le filet en face de toi.",
+            "Le cerceau, c'est la ou tu attends, pas la ou tu restes.",
+            "Tu as frappe : reviens tout de suite, n'attends pas de voir."
+          ],
+          "plus": [
+            "Cerceau reduit, ou obligation de toucher avec les deux pieds.",
+            "Echanges plus rapides imposes par le partenaire."
+          ],
+          "minus": [
+            "Zone centrale large materialisee par quatre plots.",
+            "Echanges lents, volant lance a la main."
+          ],
+          "diff": {
+            "facilitee": "Zone centrale large delimitee par des plots, echanges lents.",
+            "normale": "Un cerceau au centre, un pied pose apres chaque frappe.",
+            "complexifiee": "Cerceau reduit, deux pieds poses, echanges rapides."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Gauche-droite impose",
+          "objective": "Faire vivre l'interet du replacement : sans retour au centre, le joueur ne peut pas atteindre le volant suivant.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            }
+          ],
+          "organization": "Un lanceur envoie alternativement a gauche puis a droite du terrain adverse, 10 volants. Le joueur renvoie et se replace. Puis inversion des roles.",
+          "studentGoal": "Atteindre les dix volants, meme ceux qui sont loin de moi.",
+          "instructions": [
+            "Le lanceur envoie haut et alterne franchement les cotes.",
+            "Le joueur revient au centre entre chaque volant.",
+            "On compte les volants atteints, pas les points marques."
+          ],
+          "success": [
+            "Au moins sept volants sur dix sont touches.",
+            "Le retour au centre est visible entre chaque frappe."
+          ],
+          "execution": [
+            "Depart du centre, deplacement lateral, frappe, retour au centre.",
+            "Le dernier appui se pose avant la frappe, pas pendant."
+          ],
+          "watch": [
+            "Les eleves anticipent-ils le cote, ou attendent-ils le volant ?",
+            "Le lanceur envoie-t-il des volants reellement jouables ?"
+          ],
+          "errors": [
+            "Partir avant que le volant ne soit lance : anticipation au hasard.",
+            "Frapper en deplacement, sans appui pose.",
+            "Lancer trop fort ou trop pres du filet quand on est lanceur."
+          ],
+          "feedback": [
+            "Attends de voir le cote avant de partir.",
+            "Pose ton pied, puis frappe : pas l'inverse.",
+            "Lanceur, envoie haut : ton camarade doit pouvoir y aller."
+          ],
+          "plus": [
+            "Alternance imprevisible, gauche-droite au hasard.",
+            "Quinze volants au lieu de dix."
+          ],
+          "minus": [
+            "Alternance annoncee a voix haute par le lanceur.",
+            "Six volants, terrain reduit."
+          ],
+          "diff": {
+            "facilitee": "Cote annonce a voix haute avant chaque envoi, six volants.",
+            "normale": "Alternance reguliere gauche-droite, dix volants.",
+            "complexifiee": "Alternance imprevisible, quinze volants."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Match avec zone centrale",
+          "objective": "Reinvestir en opposition : le replacement doit resister a la pression du match.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs en 7 points, cerceau central conserve. Un observateur par terrain note pour chaque joueur le nombre de retours au centre sur cinq points.",
+          "studentGoal": "Continuer a revenir au centre meme quand je joue pour gagner.",
+          "instructions": [
+            "Je reviens au centre meme si le point est engage.",
+            "L'observateur note les retours au centre de chaque joueur.",
+            "On compare les deux joueurs a la fin."
+          ],
+          "success": [
+            "Le joueur qui se replace le plus gagne generalement le match.",
+            "Le lien entre replacement et gain du point est verbalise au bilan."
+          ],
+          "execution": [
+            "Le retour au centre precede toujours la frappe adverse.",
+            "Le joueur se met de profil pour frapper, puis revient de face."
+          ],
+          "watch": [
+            "Le lien entre replacement et gain du point est-il verbalise par les eleves ?",
+            "L'observateur compte-t-il vraiment, ou regarde-t-il le match ?"
+          ],
+          "errors": [
+            "Abandonner le replacement des que le score devient serre.",
+            "Compter approximativement en tant qu'observateur.",
+            "Rester au filet apres une frappe courte."
+          ],
+          "feedback": [
+            "Tu as perdu ce point parce que tu es reste sur le cote.",
+            "Observateur, un trait par retour au centre, sinon on ne pourra pas comparer.",
+            "Regarde : celui qui se replace le plus mene le match."
+          ],
+          "plus": [
+            "Sans cerceau : le replacement doit tenir sans repere materiel.",
+            "Matchs en 11 points."
+          ],
+          "minus": [
+            "Cerceau tres visible, matchs en 5 points.",
+            "Un seul point observe a la fois."
+          ],
+          "diff": {
+            "facilitee": "Cerceau large et visible, matchs en 5 points.",
+            "normale": "Matchs en 7 points, cerceau conserve, observation sur cinq points.",
+            "complexifiee": "Cerceau retire, matchs en 11 points."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Que se passe-t-il quand on reste la ou on a frappe ?",
+          "Pourquoi le centre du terrain est-il la meilleure place pour attendre ?"
+        ],
+        "key": "Du centre, tous les coins du terrain sont a la meme distance. Rester sur le cote, c'est offrir la moitie du terrain a l'adversaire."
+      },
+      "socialRoles": [
+        "Observateur de replacement : compte les retours au centre.",
+        "Lanceur : envoie des volants reguliers et hauts pour son camarade.",
+        "Responsable materiel : place et ramasse les cerceaux."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Le service : mettre en jeu reglementairement",
+      "mainObjective": "Construire un service reglementaire et regulier : sans mise en jeu fiable, le match ne demarre pas et le point est perdu avant d'etre joue.",
+      "secondaryObjectives": [
+        "Servir en dessous de la taille, raquette dirigee vers le bas.",
+        "Servir en diagonale dans le carre de service adverse.",
+        "Reussir huit services sur dix."
+      ],
+      "linkToPrevious": "Les echanges durent et les eleves se replacent, mais beaucoup de points se perdent avant meme le premier echange : le service est rate ou irregulier.",
+      "prerequisiteForNext": "Chaque eleve reussit huit services reglementaires sur dix, condition pour que le match de mi-cycle ait du sens.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12,
+            "note": "cibles posees au sol"
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Materialiser les carres de service avec des plots si le marquage au sol est absent."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement centre sur le geste bas du service : le poignet travaille vers le bas, a l'inverse des seances precedentes.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Lacher-frapper : je lache le volant et je le frappe avant qu'il touche le sol.",
+              "Meme geste en visant un cerceau a 3 metres.",
+              "Par deux, services libres sans compter."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Dix services dans le carre",
+          "objective": "Construire la regularite du service par la repetition guidee, avec un objectif chiffre et une correction immediate par le partenaire.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, un serveur et un observateur. Series de 10 services vers le carre en diagonale. L'observateur note reussite ou echec et la cause. Inversion des roles toutes les 5 minutes.",
+          "studentGoal": "Reussir huit services sur dix dans le bon carre.",
+          "instructions": [
+            "Je tiens le volant par les plumes, bras tendu devant moi.",
+            "Je frappe en dessous de ma taille, raquette vers le bas.",
+            "Je vise en diagonale, dans le carre de service adverse.",
+            "L'observateur me dit ce qui n'a pas marche : trop haut, trop court, mauvais carre."
+          ],
+          "success": [
+            "Huit services reglementaires sur dix.",
+            "Le volant est frappe en dessous de la taille.",
+            "L'observateur sait nommer la cause d'un service rate."
+          ],
+          "execution": [
+            "Volant tenu par les plumes, bras tendu devant soi.",
+            "Contact en dessous de la taille, raquette dirigee vers le bas.",
+            "Le volant part en diagonale vers le carre adverse."
+          ],
+          "watch": [
+            "Le contact se fait-il vraiment sous la taille ?",
+            "Les eleves visent-ils le carre en diagonale ou le terrain entier ?",
+            "L'observateur sait-il nommer la cause d'un echec ?"
+          ],
+          "errors": [
+            "Frapper au-dessus de la taille : service non reglementaire.",
+            "Lacher le volant trop haut et le frapper en retard.",
+            "Servir tout droit au lieu de servir en diagonale."
+          ],
+          "feedback": [
+            "Ton contact est trop haut : frappe en dessous de ta ceinture.",
+            "Lache le volant plus bas, juste devant ta raquette.",
+            "En diagonale : vise le carre oppose, pas en face de toi."
+          ],
+          "plus": [
+            "Objectif dix services sur dix.",
+            "Carre de service reduit de moitie."
+          ],
+          "minus": [
+            "Service par en dessous a la main, sans raquette, pour sentir la trajectoire.",
+            "Cible elargie a tout le demi-terrain."
+          ],
+          "diff": {
+            "facilitee": "Cible elargie au demi-terrain, service lance a la main pour demarrer.",
+            "normale": "Series de dix services vers le carre en diagonale, objectif huit sur dix.",
+            "complexifiee": "Carre reduit de moitie, objectif dix sur dix."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Court ou long",
+          "objective": "Decouvrir que le service se choisit : court pour empecher l'attaque, long pour repousser l'adversaire au fond.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            }
+          ],
+          "organization": "Deux zones materialisees dans le carre adverse : une zone avant pres du filet, une zone arriere. Dix services, alternativement annonces court ou long.",
+          "studentGoal": "Servir la ou j'ai annonce, court ou long.",
+          "instructions": [
+            "J'annonce court ou long avant de servir.",
+            "Service court : le volant passe juste au-dessus du filet.",
+            "Service long : le volant monte haut et retombe au fond."
+          ],
+          "success": [
+            "Au moins cinq services sur dix atteignent la zone annoncee.",
+            "La difference de trajectoire entre court et long est visible."
+          ],
+          "execution": [
+            "Service court : geste freine, le volant rase le filet.",
+            "Service long : geste accompagne vers le haut, le volant monte puis retombe."
+          ],
+          "watch": [
+            "La difference de geste entre court et long est-elle visible ?",
+            "Les eleves annoncent-ils avant de servir, ou apres avoir vu le resultat ?"
+          ],
+          "errors": [
+            "Annoncer apres coup en fonction du resultat.",
+            "Frapper aussi fort pour le court que pour le long.",
+            "Service court trop haut, qui offre l'attaque."
+          ],
+          "feedback": [
+            "Annonce d'abord, sers ensuite.",
+            "Pour le court, freine ton geste : pose le volant.",
+            "Pour le long, accompagne vers le haut."
+          ],
+          "plus": [
+            "Alternance imposee court-long-court.",
+            "Zones reduites a 1 metre."
+          ],
+          "minus": [
+            "Une seule zone visee sur la serie.",
+            "Zones elargies a 3 metres."
+          ],
+          "diff": {
+            "facilitee": "Une seule zone visee par serie, zones larges de 3 metres.",
+            "normale": "Dix services alternant court et long, zones de 2 metres.",
+            "complexifiee": "Alternance imposee court-long-court, zones de 1 metre."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Match a service compte",
+          "objective": "Reinvestir en opposition en donnant au service une valeur explicite dans le score.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs en 7 points. Un service rate donne directement le point a l'adversaire, et l'observateur note le nombre de services rates par joueur.",
+          "studentGoal": "Ne pas offrir de points a l'adversaire sur mes services.",
+          "instructions": [
+            "Un service rate donne le point a l'adversaire.",
+            "Je prends le temps de me placer avant de servir.",
+            "L'observateur note mes services rates."
+          ],
+          "success": [
+            "Moins de deux services rates par match.",
+            "Le lien entre service rate et point perdu est verbalise."
+          ],
+          "execution": [
+            "Prendre le temps de se placer avant de servir.",
+            "Meme geste de service qu'a l'entrainement, malgre l'enjeu."
+          ],
+          "watch": [
+            "Le nombre de services rates baisse-t-il par rapport au debut de seance ?",
+            "Les eleves precipitent-ils leur service quand le score est serre ?"
+          ],
+          "errors": [
+            "Servir dans la precipitation sans se placer.",
+            "Changer de geste sous la pression du score.",
+            "Contester le jugement de service de l'observateur."
+          ],
+          "feedback": [
+            "Prends ton temps : personne ne te gene sur ton service.",
+            "Meme geste qu'a l'exercice, ne change rien.",
+            "Un service rate, c'est un point offert."
+          ],
+          "plus": [
+            "Un service rate donne deux points a l'adversaire.",
+            "Matchs en 11 points."
+          ],
+          "minus": [
+            "Deux essais de service autorises.",
+            "Matchs en 5 points."
+          ],
+          "diff": {
+            "facilitee": "Deux essais de service autorises, matchs en 5 points.",
+            "normale": "Un service rate donne le point, matchs en 7 points.",
+            "complexifiee": "Un service rate donne deux points, matchs en 11 points."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Combien de points avez-vous perdus sur un service rate ?",
+          "Quelle est la difference entre un service court et un service long ?"
+        ],
+        "key": "Le service est le seul geste du badminton ou personne ne vous gene. Un service rate, c'est un point offert sans avoir joue."
+      },
+      "socialRoles": [
+        "Observateur de service : note reussite, echec et cause.",
+        "Juge de service : verifie que la frappe est bien en dessous de la taille.",
+        "Responsable materiel : delimite les carres de service."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Match evalue de mi-cycle",
+      "mainObjective": "Faire le point a mi-parcours : mesurer ce qui est acquis et orienter la seconde moitie du cycle sur ce qui manque.",
+      "isMidCycleEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer des matchs complets en tenant le score.",
+        "Se situer par rapport aux quatre reperes du cycle : echange, replacement, service, intention.",
+        "Tenir le role d'arbitre-marqueur sur un match entier."
+      ],
+      "linkToPrevious": "Les quatre premieres seances ont installe l'echange, le replacement et le service. Cette seance verifie ce qui tient reellement en situation de match.",
+      "prerequisiteForNext": "Chaque eleve connait son point faible principal : c'est ce qui guidera son travail sur les seances 6 et 7.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Preparer une fiche d'observation par eleve, avec les quatre reperes du cycle."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement complet mais court : la seance est dense, le temps de jeu doit etre preserve.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Jonglage libre, 30 touches.",
+              "Par deux, echanges hauts pendant 2 minutes.",
+              "Cinq services chacun pour se regler."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 22,
+          "title": "Matchs evalues en 11 points",
+          "objective": "Recueillir des observations fiables sur les quatre reperes du cycle, en situation reelle de match.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Poules de quatre par terrain : deux joueurs, un arbitre-marqueur, un observateur avec la fiche. Matchs en 11 points, service alterne tous les deux points. Rotation complete des quatre roles.",
+          "studentGoal": "Jouer mon match en montrant ce que je sais faire, et observer serieusement quand c'est mon tour.",
+          "instructions": [
+            "Match en 11 points, service alterne tous les deux points.",
+            "L'arbitre annonce le score avant chaque service.",
+            "L'observateur remplit la fiche : echanges longs, replacements, services rates.",
+            "Chacun passe par les quatre roles."
+          ],
+          "success": [
+            "Chaque eleve a joue au moins deux matchs complets.",
+            "Chaque eleve a arbitre un match entier.",
+            "Toutes les fiches d'observation sont remplies."
+          ],
+          "execution": [
+            "Service alterne tous les deux points, score annonce avant chaque service.",
+            "Les quatre roles sont tenus a tour de role sans interruption du jeu."
+          ],
+          "watch": [
+            "Les acquis des seances 2 a 4 tiennent-ils sous la pression du match ?",
+            "L'arbitrage est-il assume, ou delegue aux joueurs ?",
+            "Les fiches sont-elles remplies pendant le match, pas apres ?"
+          ],
+          "errors": [
+            "Oublier d'annoncer le score avant le service.",
+            "Remplir la fiche de memoire a la fin du match.",
+            "Abandonner replacement et hauteur des que le score compte."
+          ],
+          "feedback": [
+            "Arbitre, annonce le score avant chaque service, c'est ton role.",
+            "Observateur, note pendant le match, pas apres.",
+            "Tu joues comme a la seance 1 : reprends de la hauteur."
+          ],
+          "plus": [
+            "Matchs en 15 points.",
+            "L'observateur note aussi les zones visees."
+          ],
+          "minus": [
+            "Matchs en 7 points.",
+            "Fiche simplifiee a deux criteres."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 7 points, fiche reduite a deux criteres.",
+            "normale": "Matchs en 11 points, fiche a quatre reperes, rotation des quatre roles.",
+            "complexifiee": "Matchs en 15 points, fiche enrichie des zones visees."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 10,
+          "title": "Je me situe",
+          "objective": "Rendre l'eleve capable de nommer son point faible : sans cela, les seances suivantes restent une consigne du professeur, pas un projet personnel.",
+          "material": [
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Par deux, lecture croisee des fiches d'observation. Chaque eleve identifie son point faible principal parmi les quatre reperes et l'ecrit sur sa fiche.",
+          "studentGoal": "Nommer ce que je dois travailler en priorite.",
+          "instructions": [
+            "Je lis ma fiche avec mon observateur.",
+            "Je choisis un seul point a travailler, pas quatre.",
+            "Je l'ecris sur ma fiche : je le relirai a la seance 8."
+          ],
+          "success": [
+            "Chaque eleve a ecrit un point de progres unique et precis.",
+            "Le point choisi correspond a ce que montre la fiche."
+          ],
+          "execution": [
+            "Le point de progres est ecrit en une phrase, a la premiere personne.",
+            "Il porte sur un seul des quatre reperes du cycle."
+          ],
+          "watch": [
+            "Le point choisi correspond-il a ce que montre la fiche ?",
+            "Les eleves choisissent-ils un point precis ou une formule vague ?"
+          ],
+          "errors": [
+            "Choisir quatre points de progres au lieu d'un.",
+            "Ecrire une formule vague du type je dois mieux jouer.",
+            "Choisir un point qui ne correspond pas aux observations."
+          ],
+          "feedback": [
+            "Un seul point : celui qui te coute le plus de points en match.",
+            "Ecris-le precisement, tu le reliras a la seance 8.",
+            "Ta fiche dit autre chose : regarde tes services rates."
+          ],
+          "plus": [
+            "L'eleve formule aussi comment il compte s'y prendre."
+          ],
+          "minus": [
+            "Choix guide parmi trois formulations proposees par ecrit."
+          ],
+          "diff": {
+            "facilitee": "Choix guide parmi trois formulations ecrites au tableau.",
+            "normale": "Lecture croisee de la fiche et redaction libre d'un point de progres.",
+            "complexifiee": "Le point de progres est accompagne d'un moyen concret d'y travailler."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Defi sur mon point faible",
+          "objective": "Passer immediatement du constat a l'action, pour que le bilan ne reste pas theorique.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            }
+          ],
+          "organization": "Trois ateliers correspondant aux trois points faibles les plus frequents : continuite d'echange, replacement au centre, regularite du service. Chaque eleve rejoint l'atelier de son point faible.",
+          "studentGoal": "Travailler tout de suite ce que je viens d'identifier.",
+          "instructions": [
+            "Je vais a l'atelier qui correspond a ce que j'ai ecrit.",
+            "Je fais le maximum de repetitions en 10 minutes.",
+            "Je note mon score de depart pour le comparer a la seance 8."
+          ],
+          "success": [
+            "Chaque eleve est a l'atelier correspondant a son point ecrit.",
+            "Un score de depart est note."
+          ],
+          "execution": [
+            "Maximum de repetitions en dix minutes, sans temps mort.",
+            "Le score de depart est note avant la premiere repetition."
+          ],
+          "watch": [
+            "Les eleves sont-ils a l'atelier qui correspond a leur point ecrit ?",
+            "Le score de depart est-il note serieusement ?"
+          ],
+          "errors": [
+            "Rejoindre l'atelier de ses camarades plutot que le sien.",
+            "Ne pas noter le score de depart, ce qui rendra la comparaison impossible.",
+            "Enchainer sans chercher a progresser."
+          ],
+          "feedback": [
+            "Va a l'atelier que tu as ecrit, pas a celui de tes copains.",
+            "Note ton score maintenant, sinon tu ne sauras pas si tu progresses.",
+            "Cherche a battre ton chiffre, pas juste a repeter."
+          ],
+          "plus": [
+            "Objectif chiffre a atteindre avant la fin des dix minutes."
+          ],
+          "minus": [
+            "Atelier realise en binome, avec relance a la main."
+          ],
+          "diff": {
+            "facilitee": "Atelier en binome avec relance a la main, objectif libre.",
+            "normale": "Trois ateliers au choix selon le point de progres, score de depart note.",
+            "complexifiee": "Objectif chiffre a atteindre dans le temps imparti."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Quel est votre point fort aujourd'hui, et votre point faible ?",
+          "Qu'est-ce qui a ete le plus difficile dans le role d'arbitre ?"
+        ],
+        "key": "A mi-cycle, chacun sait ce qu'il sait faire et ce qui lui manque. Les trois seances qui restent servent a combler ce manque precis."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : annonce le score avant chaque service, tranche les litiges.",
+        "Observateur : remplit la fiche des quatre reperes.",
+        "Responsable de rotation : veille a ce que chacun passe par les quatre roles."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Placer le volant : jouer la ou l'adversaire n'est pas",
+      "mainObjective": "Passer de l'echange a l'intention : ne plus renvoyer au meme endroit, mais choisir ou envoyer le volant.",
+      "secondaryObjectives": [
+        "Regarder ou se trouve l'adversaire avant de frapper.",
+        "Envoyer le volant dans l'espace libre.",
+        "Marquer le point en deplacant l'adversaire, pas en frappant plus fort."
+      ],
+      "linkToPrevious": "Le bilan de mi-cycle a montre que les eleves echangent bien mais renvoient toujours au meme endroit : l'adversaire n'a jamais a se deplacer.",
+      "prerequisiteForNext": "Chaque eleve marque au moins un point en envoyant le volant dans l'espace libre.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12,
+            "note": "cibles posees au sol"
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Poser quatre cerceaux dans chaque terrain : deux au fond, deux pres du filet."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement avec prise d'information : des la reprise de volant, l'eleve doit regarder ailleurs que sur son propre volant.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Echanges hauts par deux, 2 minutes.",
+              "Echanges ou le partenaire leve un bras : le frappeur annonce lequel.",
+              "Echanges en visant alternativement gauche puis droite."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Les quatre coins",
+          "objective": "Construire l'intention de placement par une contrainte simple : viser une zone, donc regarder le terrain adverse.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "cerceaux",
+              "fixed": 12,
+              "note": "cibles posees au sol"
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Quatre cerceaux dans le terrain adverse : deux au fond, deux pres du filet. Echanges cooperatifs ou chaque frappe doit viser un cerceau annonce a voix haute avant la frappe.",
+          "studentGoal": "Annoncer un coin et l'atteindre.",
+          "instructions": [
+            "J'annonce le coin vise avant de frapper.",
+            "Je regarde le terrain adverse avant de frapper, pas seulement le volant.",
+            "L'observateur compte mes reussites."
+          ],
+          "success": [
+            "Au moins cinq zones atteintes sur dix annonces.",
+            "L'annonce precede toujours la frappe."
+          ],
+          "execution": [
+            "Le regard se porte sur le terrain adverse avant la frappe.",
+            "Le poignet oriente le volant vers la zone visee.",
+            "L'annonce precede toujours la frappe."
+          ],
+          "watch": [
+            "Les eleves regardent-ils reellement avant de frapper ?",
+            "L'annonce est-elle faite avant ou apres le resultat ?"
+          ],
+          "errors": [
+            "Annoncer apres avoir vu ou le volant est parti.",
+            "Regarder uniquement son propre volant.",
+            "Frapper plus fort au lieu de frapper ailleurs."
+          ],
+          "feedback": [
+            "Annonce d'abord, frappe ensuite.",
+            "Leve les yeux avant de frapper : ou est le terrain vide ?",
+            "Ce n'est pas la force qui place le volant, c'est le poignet."
+          ],
+          "plus": [
+            "Quatre zones sans annonce prealable, l'observateur devine.",
+            "Zones reduites a un cerceau."
+          ],
+          "minus": [
+            "Deux zones seulement, gauche et droite.",
+            "Volant lance a la main."
+          ],
+          "diff": {
+            "facilitee": "Deux zones seulement, volant lance a la main.",
+            "normale": "Quatre cerceaux, zone annoncee a voix haute avant chaque frappe.",
+            "complexifiee": "Quatre zones sans annonce, l'observateur identifie l'intention."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Ou est l'adversaire ?",
+          "objective": "Faire dependre le choix de la position reelle de l'adversaire : c'est le passage de la cible fixe a la cible mobile.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            }
+          ],
+          "organization": "Un joueur se place volontairement d'un cote du terrain avant chaque frappe adverse. Le frappeur doit envoyer le volant de l'autre cote. Dix repetitions, puis inversion.",
+          "studentGoal": "Envoyer le volant la ou l'adversaire n'est pas.",
+          "instructions": [
+            "Je regarde ou se place l'adversaire avant de frapper.",
+            "J'envoie de l'autre cote, meme si c'est mon cote faible.",
+            "Je ne frappe pas plus fort : je frappe ailleurs."
+          ],
+          "success": [
+            "Au moins sept volants sur dix vont dans l'espace libre.",
+            "L'eleve regarde l'adversaire avant la frappe."
+          ],
+          "execution": [
+            "Prise d'information sur la position adverse avant la frappe.",
+            "Le volant part vers le cote oppose, meme si c'est le cote faible."
+          ],
+          "watch": [
+            "Les eleves osent-ils jouer sur leur cote faible pour placer le volant ?",
+            "La prise d'information est-elle reelle ou simulee ?"
+          ],
+          "errors": [
+            "Jouer toujours du meme cote parce que c'est plus confortable.",
+            "Regarder l'adversaire trop tard, apres avoir arme.",
+            "Se placer d'un cote sans jouer le jeu, quand on est celui qui se decale."
+          ],
+          "feedback": [
+            "Il est a gauche : envoie a droite, meme si c'est ton revers.",
+            "Regarde avant d'armer, pas pendant.",
+            "Decale-toi vraiment, sinon l'exercice ne sert a rien."
+          ],
+          "plus": [
+            "L'adversaire se decale au dernier moment.",
+            "Quinze repetitions."
+          ],
+          "minus": [
+            "L'adversaire annonce son cote a voix haute.",
+            "Six repetitions."
+          ],
+          "diff": {
+            "facilitee": "L'adversaire annonce son cote a voix haute, six repetitions.",
+            "normale": "L'adversaire se place avant la frappe, dix repetitions.",
+            "complexifiee": "L'adversaire se decale au dernier moment, quinze repetitions."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Match a point double",
+          "objective": "Valoriser le point gagne par le placement plutot que par la faute adverse.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs en 7 points. Un point gagne parce que l'adversaire n'a pas pu atteindre le volant compte double. Un point gagne sur une faute adverse compte simple.",
+          "studentGoal": "Marquer en deplacant mon adversaire, pas en attendant sa faute.",
+          "instructions": [
+            "Point gagne parce que l'autre n'a pas pu atteindre le volant : double.",
+            "Point gagne sur une faute de l'autre : simple.",
+            "L'arbitre tranche et annonce le type de point."
+          ],
+          "success": [
+            "Au moins deux points doubles dans le match.",
+            "La distinction entre les deux types de points est comprise."
+          ],
+          "execution": [
+            "Le point se construit en deplacant l'adversaire, pas en accelerant.",
+            "L'arbitre distingue point gagne et faute adverse."
+          ],
+          "watch": [
+            "Les eleves cherchent-ils encore le point en force ?",
+            "L'arbitre sait-il distinguer les deux types de points ?"
+          ],
+          "errors": [
+            "Confondre point gagnant et faute de l'adversaire.",
+            "Revenir au jeu en force des que le score est serre.",
+            "Contester la decision de l'arbitre sur le type de point."
+          ],
+          "feedback": [
+            "Ce point est une faute de l'autre, il ne compte que simple.",
+            "Tu as gagne en le faisant courir : voila un point double.",
+            "Arbitre, tranche et annonce : point simple ou point double."
+          ],
+          "plus": [
+            "Seuls les points doubles comptent.",
+            "Matchs en 11 points."
+          ],
+          "minus": [
+            "Tous les points comptent simple, l'arbitre signale seulement les points places.",
+            "Matchs en 5 points."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 5 points, l'arbitre signale les points places sans double.",
+            "normale": "Matchs en 7 points, point double si l'adversaire n'atteint pas le volant.",
+            "complexifiee": "Matchs en 11 points, seuls les points places comptent."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Avez-vous marque en frappant plus fort, ou en envoyant ailleurs ?",
+          "Que faut-il regarder avant de frapper ?"
+        ],
+        "key": "On ne gagne pas en frappant plus fort, on gagne en envoyant le volant la ou l'adversaire n'est pas. Cela suppose de le regarder avant de frapper."
+      },
+      "socialRoles": [
+        "Observateur de placement : compte les volants envoyes dans l'espace libre.",
+        "Arbitre : distingue point double et point simple.",
+        "Responsable materiel : place les cerceaux dans les quatre coins."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Varier : le fond et le filet",
+      "mainObjective": "Ajouter la profondeur au placement lateral : deplacer l'adversaire vers l'avant et vers l'arriere, pas seulement a gauche et a droite.",
+      "secondaryObjectives": [
+        "Envoyer un volant long au fond du terrain adverse.",
+        "Envoyer un volant court juste derriere le filet.",
+        "Alterner long et court dans le meme echange."
+      ],
+      "linkToPrevious": "Les eleves placent maintenant a gauche et a droite, mais l'adversaire reste toujours a la meme distance du filet : il n'a jamais a avancer ni a reculer.",
+      "prerequisiteForNext": "Chaque eleve sait produire un volant long et un volant court a la demande, condition pour varier pendant le tournoi final.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "cerceaux",
+            "fixed": 12,
+            "note": "cibles posees au sol"
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Materialiser deux bandes dans chaque terrain adverse : une bande avant pres du filet, une bande arriere."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement avec changement de profondeur : les fentes avant et les reculs preparent les deplacements de la seance.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Deplacements avant-arriere entre deux plots, sans raquette.",
+              "Meme chose raquette en main, en simulant une frappe haute puis une frappe basse.",
+              "Par deux, echanges alternant un volant haut et un volant court."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 20,
+          "title": "Long puis court",
+          "objective": "Construire les deux trajectoires de profondeur et leur alternance, qui est ce qui met reellement l'adversaire en difficulte.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Deux bandes materialisees dans le terrain adverse. Echanges cooperatifs imposes : un volant long, puis un volant court, en alternance. L'observateur compte les alternances reussies.",
+          "studentGoal": "Alterner un volant au fond et un volant au filet.",
+          "instructions": [
+            "Volant long : je frappe sous le volant, je l'envoie haut et loin.",
+            "Volant court : je pose le volant juste derriere le filet, sans force.",
+            "J'alterne strictement : long, court, long, court."
+          ],
+          "success": [
+            "Au moins quatre alternances completes reussies.",
+            "La difference de trajectoire entre les deux est nette."
+          ],
+          "execution": [
+            "Volant long : frappe sous le volant, geste accompagne vers le haut.",
+            "Volant court : geste freine au contact, le volant rase le filet.",
+            "Le meme placement de raquette prepare les deux coups."
+          ],
+          "watch": [
+            "La difference de trajectoire entre long et court est-elle nette ?",
+            "Les eleves annoncent-ils leur intention avant la frappe ?"
+          ],
+          "errors": [
+            "Frapper le court avec le meme geste que le long : le volant part au fond.",
+            "Casser l'alternance des que le volant devient difficile.",
+            "Frapper le court trop haut, ce qui offre l'attaque."
+          ],
+          "feedback": [
+            "Pour le court, freine ta raquette au contact.",
+            "Pour le long, passe bien sous le volant.",
+            "Respecte l'alternance meme si le volant est mal place."
+          ],
+          "plus": [
+            "Alternance sur trois zones : fond, milieu, filet.",
+            "Six alternances a reussir."
+          ],
+          "minus": [
+            "Deux zones tres larges.",
+            "Volant lance a la main pour les envois courts."
+          ],
+          "diff": {
+            "facilitee": "Deux zones larges, volant lance a la main pour le court.",
+            "normale": "Alternance stricte long-court, deux bandes de 2 metres.",
+            "complexifiee": "Trois zones : fond, milieu, filet, six alternances a reussir."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 12,
+          "title": "Le joueur bloque au fond",
+          "objective": "Faire vivre l'effet du jeu court sur un adversaire recule : c'est ce contraste qui donne du sens a la variation.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "plots",
+              "fixed": 16
+            }
+          ],
+          "organization": "Un joueur doit rester derriere une ligne materialisee au milieu de son terrain. L'autre cherche a marquer en jouant court. Cinq points, puis inversion.",
+          "studentGoal": "Faire avancer mon adversaire jusqu'au filet.",
+          "instructions": [
+            "Le joueur bloque ne peut pas depasser la ligne avant que le volant ne passe le filet.",
+            "L'attaquant cherche le volant court.",
+            "On compte les points marques grace au jeu court."
+          ],
+          "success": [
+            "Au moins trois points sur cinq marques grace a un volant court.",
+            "L'eleve bloque verbalise la difficulte ressentie."
+          ],
+          "execution": [
+            "L'attaquant cherche le volant court des que l'adversaire est recule.",
+            "Le joueur bloque repart vers l'avant des que le volant passe le filet."
+          ],
+          "watch": [
+            "Le joueur bloque respecte-t-il la ligne ?",
+            "L'attaquant identifie-t-il le bon moment pour jouer court ?"
+          ],
+          "errors": [
+            "Depasser la ligne avant que le volant ne passe le filet.",
+            "Jouer court quand l'adversaire est deja au filet.",
+            "Frapper le volant court trop fort, il sort."
+          ],
+          "feedback": [
+            "Attends que le volant passe le filet pour avancer.",
+            "Il est au fond : c'est maintenant qu'il faut jouer court.",
+            "Pose le volant, ne le frappe pas."
+          ],
+          "plus": [
+            "La ligne de blocage est reculee au tiers arriere.",
+            "Sept points au lieu de cinq."
+          ],
+          "minus": [
+            "Ligne de blocage avancee.",
+            "Trois points, volant lance a la main."
+          ],
+          "diff": {
+            "facilitee": "Ligne avancee, trois points, volant lance a la main.",
+            "normale": "Ligne au milieu du terrain, cinq points puis inversion.",
+            "complexifiee": "Ligne reculee au tiers arriere, sept points."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Match libre a quatre zones",
+          "objective": "Reinvestir les deux dimensions du placement, laterale et en profondeur, dans un match sans contrainte artificielle.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Matchs en 7 points sans contrainte particuliere. L'observateur note, pour chaque joueur, dans combien de zones differentes du terrain adverse le volant a ete envoye.",
+          "studentGoal": "Utiliser tout le terrain adverse, pas seulement le milieu.",
+          "instructions": [
+            "Je varie : gauche, droite, fond, filet.",
+            "L'observateur note les zones utilisees.",
+            "On compare a la fin : qui a utilise le plus de zones ?"
+          ],
+          "success": [
+            "Au moins trois zones differentes utilisees.",
+            "Le joueur qui varie le plus gagne generalement."
+          ],
+          "execution": [
+            "Le joueur alterne les quatre zones sans schema previsible.",
+            "Le choix de zone depend de la position adverse, pas d'un ordre appris."
+          ],
+          "watch": [
+            "Les eleves varient-ils reellement, ou repetent-ils une sequence apprise ?",
+            "L'observateur distingue-t-il bien les quatre zones ?"
+          ],
+          "errors": [
+            "Repeter toujours la meme alternance, devenue previsible.",
+            "Revenir au jeu au milieu des que le point compte.",
+            "Compter les zones approximativement."
+          ],
+          "feedback": [
+            "Tu fais toujours la meme sequence : il l'a comprise.",
+            "Regarde ou il est avant de choisir ta zone.",
+            "Observateur, note la zone exacte, pas seulement gauche ou droite."
+          ],
+          "plus": [
+            "Matchs en 11 points.",
+            "Obligation d'utiliser les quatre zones dans le match."
+          ],
+          "minus": [
+            "Matchs en 5 points.",
+            "Deux zones observees seulement."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 5 points, deux zones observees.",
+            "normale": "Matchs en 7 points, quatre zones relevees par l'observateur.",
+            "complexifiee": "Matchs en 11 points, les quatre zones doivent etre utilisees."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Qu'est-ce qui est le plus difficile a rattraper : un volant loin sur le cote, ou un volant court au filet ?",
+          "Pourquoi alterner long et court est-il plus efficace que de toujours jouer long ?"
+        ],
+        "key": "Un terrain a quatre coins, pas deux. Alterner le fond et le filet oblige l'adversaire a courir vers l'avant et vers l'arriere : c'est la que le point se gagne."
+      },
+      "socialRoles": [
+        "Observateur de zones : note les zones du terrain adverse utilisees.",
+        "Juge de ligne : verifie le respect de la ligne de blocage.",
+        "Responsable materiel : trace les bandes avant et arriere."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Tournoi final et evaluation",
+      "mainObjective": "Evaluer les acquis du cycle en situation de match reel, et permettre a chaque eleve de mesurer son progres depuis la seance 5.",
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Jouer plusieurs matchs complets en tenant les roles sociaux.",
+        "Mobiliser echange, replacement, service et placement dans le meme match.",
+        "Comparer sa performance a celle de la mi-cycle."
+      ],
+      "linkToPrevious": "Les seances 6 et 7 ont ajoute l'intention et la variation. Le tournoi verifie que tout tient ensemble sous la pression du match.",
+      "prerequisiteForNext": "Fin du cycle : chaque eleve dispose d'un bilan ecrit comparant sa mi-cycle et sa fin de cycle.",
+      "setup": {
+        "installationMinutes": 10,
+        "material": [
+          {
+            "label": "terrains de badminton avec filet",
+            "fixed": 6
+          },
+          {
+            "label": "raquettes",
+            "per": 1.0,
+            "min": 24
+          },
+          {
+            "label": "volants plastique",
+            "per": 1.0,
+            "min": 40
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches d'observation",
+            "per": 0.5,
+            "min": 12
+          }
+        ],
+        "instructions": [
+          "Verifier la tension et la hauteur des filets (1,55 m aux poteaux).",
+          "Delimiter les terrains au sol avec des plots si le marquage manque.",
+          "Compter les volants avant et apres la seance : ils se perdent vite.",
+          "Verifier l'etat des cordages : une raquette detendue rend le renvoi impossible.",
+          "Afficher le tableau de montante-descendante avant l'arrivee des eleves.",
+          "Ressortir les fiches de la seance 5 : chaque eleve doit relire son point de progres."
+        ],
+        "sketch": "6 terrains en simple, filets a 1,55 m.\n2 m entre chaque terrain, plots aux quatre coins.\nBac a volants au bord de chaque terrain.\nZone de rangement des raquettes hors des couloirs de jeu."
+      },
+      "warmup": {
+        "rationale": "Echauffement de competition : court, complet, et termine par des services pour se regler avant le premier match.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Mise en train",
+            "details": [
+              "Course souple autour des terrains.",
+              "Pas chasses lateraux, changements de direction."
+            ]
+          },
+          {
+            "dur": 4,
+            "title": "Mobilisation",
+            "details": [
+              "Poignets, coudes, epaules : le badminton sollicite d'abord le poignet.",
+              "Chevilles et genoux : fentes avant controlees."
+            ]
+          },
+          {
+            "dur": 6,
+            "title": "Reprise de volant",
+            "details": [
+              "Jonglage libre, 30 touches.",
+              "Echanges hauts par deux, 2 minutes.",
+              "Cinq services chacun dans le carre en diagonale."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 24,
+          "title": "Tournoi en montante-descendante",
+          "objective": "Evaluer en situation reelle : matchs courts, adversaires de niveau proche grace a la montante-descendante, et roles sociaux tenus.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            },
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Terrains numerotes du plus fort au plus faible. Matchs en 11 points, service alterne tous les deux points. Le gagnant monte d'un terrain, le perdant descend. Chaque eleve joue au moins quatre matchs et arbitre une fois.",
+          "studentGoal": "Jouer mes matchs en utilisant tout ce que j'ai appris.",
+          "instructions": [
+            "Match en 11 points, service alterne tous les deux points.",
+            "Le gagnant monte, le perdant descend.",
+            "L'arbitre annonce le score avant chaque service.",
+            "Je pense a mon point de progres note a la seance 5."
+          ],
+          "success": [
+            "Chaque eleve a joue au moins quatre matchs.",
+            "Chaque eleve a arbitre au moins un match.",
+            "Les scores sont tenus sans conflit."
+          ],
+          "execution": [
+            "Service alterne tous les deux points, score annonce avant chaque service.",
+            "Le gagnant monte d'un terrain, le perdant descend."
+          ],
+          "watch": [
+            "Les quatre acquis du cycle apparaissent-ils dans le meme match ?",
+            "Les montees et descentes sont-elles respectees sans contestation ?",
+            "Les eleves se souviennent-ils de leur point de progres ?"
+          ],
+          "errors": [
+            "Oublier de monter ou descendre apres le match.",
+            "Abandonner le placement sous la pression du classement.",
+            "Contester le score au lieu de s'en remettre a l'arbitre."
+          ],
+          "feedback": [
+            "Pense a ton point de progres de la seance 5.",
+            "Tu as gagne ce point en le deplacant : c'est exactement le cycle.",
+            "Monte d'un terrain, le tableau doit rester a jour."
+          ],
+          "plus": [
+            "Matchs en 15 points.",
+            "Deux montees possibles en cas de victoire nette."
+          ],
+          "minus": [
+            "Matchs en 7 points.",
+            "Terrains fixes, sans montante-descendante."
+          ],
+          "diff": {
+            "facilitee": "Matchs en 7 points sur terrains fixes, sans classement.",
+            "normale": "Montante-descendante, matchs en 11 points, quatre matchs minimum.",
+            "complexifiee": "Matchs en 15 points, double montee en cas de victoire nette."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "COMPLEMENT",
+          "dur": 8,
+          "title": "Mon progres depuis la mi-cycle",
+          "objective": "Rendre le progres visible et personnel : c'est la comparaison avec sa propre seance 5, pas avec les autres, qui donne du sens au cycle.",
+          "material": [
+            {
+              "label": "fiches d'observation",
+              "per": 0.5,
+              "min": 12
+            }
+          ],
+          "organization": "Chaque eleve reprend sa fiche de la seance 5, relit le point de progres qu'il avait ecrit, et note ce qui a change.",
+          "studentGoal": "Voir si j'ai progresse sur le point que j'avais choisi.",
+          "instructions": [
+            "Je relis ce que j'avais ecrit a la seance 5.",
+            "J'ecris ce qui a change : mieux, pareil, ou toujours difficile.",
+            "Je donne un exemple concret tire d'un match d'aujourd'hui."
+          ],
+          "success": [
+            "Chaque fiche comporte une comparaison ecrite.",
+            "L'exemple donne est concret et tire du tournoi."
+          ],
+          "execution": [
+            "La comparaison porte sur le point ecrit en seance 5, pas sur le classement.",
+            "L'exemple donne est tire d'un match du jour."
+          ],
+          "watch": [
+            "Les eleves comparent-ils a eux-memes ou aux autres ?",
+            "L'exemple donne est-il concret ?"
+          ],
+          "errors": [
+            "Se comparer au classement du tournoi plutot qu'a sa propre seance 5.",
+            "Ecrire j'ai progresse sans exemple.",
+            "Avoir perdu sa fiche de la seance 5."
+          ],
+          "feedback": [
+            "Compare-toi a toi-meme, pas a ton voisin.",
+            "Donne un exemple precis d'un point d'aujourd'hui.",
+            "Relis ce que tu avais ecrit : est-ce encore vrai ?"
+          ],
+          "plus": [
+            "L'eleve formule un objectif pour le prochain cycle."
+          ],
+          "minus": [
+            "Comparaison guidee par trois questions ecrites au tableau."
+          ],
+          "diff": {
+            "facilitee": "Comparaison guidee par trois questions affichees.",
+            "normale": "Relecture de la fiche de seance 5 et comparaison ecrite avec exemple.",
+            "complexifiee": "La comparaison debouche sur un objectif pour le prochain cycle."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 10,
+          "title": "Matchs de classement libre",
+          "objective": "Terminer le cycle sur du jeu, dans une opposition equilibree, sans enjeu d'evaluation.",
+          "material": [
+            {
+              "label": "terrains de badminton avec filet",
+              "fixed": 6
+            },
+            {
+              "label": "raquettes",
+              "per": 1.0,
+              "min": 24
+            },
+            {
+              "label": "volants plastique",
+              "per": 1.0,
+              "min": 40
+            }
+          ],
+          "organization": "Matchs libres en 7 points entre eleves de terrains voisins, sans notation. Composition des paires laissee aux eleves.",
+          "studentGoal": "Jouer pour le plaisir avec un adversaire de mon niveau.",
+          "instructions": [
+            "On choisit son adversaire sur un terrain voisin.",
+            "On tient son score soi-meme.",
+            "On range le materiel au signal."
+          ],
+          "success": [
+            "Tous les eleves jouent jusqu'au signal.",
+            "Le materiel est range et les volants comptes."
+          ],
+          "execution": [
+            "Score tenu par les joueurs eux-memes, sans arbitre.",
+            "Rangement du materiel au signal, volants comptes."
+          ],
+          "watch": [
+            "Les eleves parviennent-ils a tenir leur score sans arbitre ?",
+            "Le rangement est-il assure par tous ?"
+          ],
+          "errors": [
+            "Perdre le fil du score sans arbitre.",
+            "Laisser des volants au sol pendant le jeu.",
+            "Partir avant le comptage des volants."
+          ],
+          "feedback": [
+            "Annoncez le score a voix haute avant chaque service, meme sans arbitre.",
+            "Ramassez les volants au fur et a mesure.",
+            "On compte les volants avant de partir."
+          ],
+          "plus": [
+            "Matchs en 11 points, score tenu sans annonce."
+          ],
+          "minus": [
+            "Echanges cooperatifs sans score."
+          ],
+          "diff": {
+            "facilitee": "Echanges cooperatifs sans score, pour finir sur du jeu.",
+            "normale": "Matchs libres en 7 points entre terrains voisins, score tenu par les joueurs.",
+            "complexifiee": "Matchs en 11 points, score tenu de memoire sans annonce."
+          },
+          "safety": [
+            "Un seul joueur ramasse un volant a la fois : ne jamais courir sous une frappe.",
+            "Espace de 2 metres entre deux terrains.",
+            "Ne jamais lancer une raquette, meme par jeu : le cadre blesse.",
+            "Annoncer avant de traverser un terrain voisin."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 5,
+        "questions": [
+          "Sur quoi avez-vous le plus progresse pendant ce cycle ?",
+          "Qu'est-ce qui reste difficile pour vous en badminton ?"
+        ],
+        "key": "En huit seances, on est passe d'un volant renvoye au hasard a un volant place avec intention. Ce qui reste difficile pour chacun est le point de depart du prochain cycle."
+      },
+      "socialRoles": [
+        "Arbitre-marqueur : annonce le score, tranche les litiges, valide la montante-descendante.",
+        "Responsable de tableau : tient a jour les montees et les descentes.",
+        "Responsable materiel : compte les volants et range les filets."
+      ]
+    }
+  ]
+}
