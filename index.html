@@ -258,16 +258,14 @@
     <!-- Ecran principal (apres connexion) -->
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
-        <div class="homeHero"><div class="homeWelcome"><div><h1>ACCUEIL</h1><p id="homeGreeting">Bonjour</p></div></div><section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section></div>
-        <button class="todayCard" id="todayCard">
-          <div class="todayInfo">
-            <div class="todayLabel">Aujourd'hui</div>
-            <div class="todayCount" id="todayCount">—</div>
-            <div class="todayNext" id="todayNext">Chargement...</div>
-            <div class="todayLink">Voir le planning ›</div>
-          </div>
-          <div class="todayIcon">🕗</div>
-        </button>
+        <div class="homeHero">
+          <div class="homeWelcome"><div><h1>ACCUEIL</h1><p id="homeGreeting">Bonjour</p></div></div>
+          <button class="todayCard" id="todayCard">
+            <div class="todayInfo"><div class="todayLabel">Aujourd'hui</div><div class="todayCount" id="todayCount">—</div><div class="todayNext" id="todayNext">Chargement...</div><div class="todayLink">Voir le planning ›</div></div>
+            <div class="todayIcon">🕗</div>
+          </button>
+          <section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section>
+        </div>
 
         <div class="homeGrid" aria-label="Accès rapides">
           <button class="homeCard featured" data-goto="classes" style="background:#FFE8E7">
