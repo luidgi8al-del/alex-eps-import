@@ -4390,7 +4390,7 @@
             return a < b + other.duration_minutes && b < a + s.duration_minutes;
           }).sort((a,b) => planningStartMinutes(a)-planningStartMinutes(b) || (a.teacher_label||"").localeCompare(b.teacher_label||"") || a.id.localeCompare(b.id));
           const laneCount = Math.max(1, overlapping.length), laneIndex = Math.max(0, overlapping.findIndex(x => x.id === s.id));
-          const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && a.period_number === planningPeriod);
+          const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && Number(a.period_number) === Number(planningPeriod));
           const activity = periodInfo?.apsa_name || "A definir";
           // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
           const [fond, encre] = couleurEnseignant(s.teacher_label);
@@ -4854,7 +4854,7 @@
         ? planningSlots.filter(s => s.class_id === classGroup.id).map(s => s.id)
         : [slot.id];
       for (const slotId of targetSlotIds) {
-        const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
+        const existing = planningActivities.find(a => a.slot_id === slotId && Number(a.period_number) === Number(planningPeriod));
         if (existing) {
           await patchPlanningActivity(existing, { apsa_name: apsaName });
         } else {
@@ -4878,7 +4878,7 @@
         ? planningSlots.filter(s => s.class_id === classGroup.id).map(s => s.id)
         : [slot.id];
       for (const slotId of targetSlotIds) {
-        const existing = planningActivities.find(a => a.slot_id === slotId && a.period_number === planningPeriod);
+        const existing = planningActivities.find(a => a.slot_id === slotId && Number(a.period_number) === Number(planningPeriod));
         if (existing) {
           await patchPlanningActivity(existing, { deleted: true });
         }
