@@ -63,6 +63,16 @@
   .subtabbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; margin-top:0; cursor:pointer; }
   .subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
   .periodBar { display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; }
+  /* Grille annuelle : les mois en colonnes, comme le planificateur papier et l'application. */
+  .calGrid { display:flex; gap:2px; overflow-x:auto; padding-bottom:6px; }
+  .calMonth { min-width:118px; flex:0 0 auto; }
+  .calMonthName { font-size:11px; font-weight:700; text-align:center; padding:4px 0; background:#163A5F; color:#fff; border-radius:4px 4px 0 0; }
+  .calDay { display:flex; align-items:center; gap:4px; height:20px; padding:0 3px; border:.5px solid #BBC2C9; font-size:9px; line-height:1.05; overflow:hidden; cursor:pointer; }
+  .calDay .num { font-weight:700; width:26px; flex:0 0 auto; }
+  .calDay .txt { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .calDay .per { font-weight:700; color:#2678C8; flex:0 0 auto; }
+  .calLegend { display:flex; flex-wrap:wrap; gap:10px; margin:8px 0; font-size:11px; align-items:center; }
+  .calLegend span.box { display:inline-block; width:12px; height:12px; border:.5px solid #BBC2C9; margin-right:4px; vertical-align:-2px; }
   .periodChip { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; margin-top:0; cursor:pointer; white-space:nowrap; }
   .periodChip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
   .pendingHint { background:#FFF4E5; border:1px solid #F5C875; color:#7A4D00; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:10px; }
@@ -3136,6 +3146,116 @@
       return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     }
 
+    // ---- Grille annuelle de l'etablissement (miroir de l'application) ----
+    //
+    // Memes donnees que l'app : jours feries et evenements fixes de l'annee, vacances, periodes
+    // EPS, et les epreuves du BAC calculees depuis les periodes Terminale. Le site n'affichait
+    // qu'une liste, on ne voyait donc pas l'annee.
+
+    const CAL_MOIS = [
+      [2026, 9, "Septembre"], [2026, 10, "Octobre"], [2026, 11, "Novembre"], [2026, 12, "Decembre"],
+      [2027, 1, "Janvier"], [2027, 2, "Fevrier"], [2027, 3, "Mars"], [2027, 4, "Avril"],
+      [2027, 5, "Mai"], [2027, 6, "Juin"], [2027, 7, "Juillet"]
+    ];
+
+    const CAL_FIXES = {
+      "2026-09-01": ["Pre-rentree enseignants", false], "2026-09-02": ["Rentree des eleves", false],
+      "2026-10-31": ["Aid El Wahda", false], "2026-11-01": ["Toussaint", false],
+      "2026-11-06": ["Marche Verte", false], "2026-11-18": ["Fete de l'Independance", false],
+      "2027-01-11": ["Manifeste de l'Independance", false], "2027-01-14": ["Nouvel An Amazigh", false],
+      "2027-03-10": ["Aid El Fitr ?", true], "2027-03-11": ["Aid El Fitr ?", true],
+      "2027-05-01": ["Fete du Travail", false], "2027-05-17": ["Aid El Kebir ?", true],
+      "2027-05-18": ["Aid El Kebir ?", true], "2027-05-19": ["Paques reporte ?", true],
+      "2027-06-06": ["1er Moharrem ?", true], "2027-07-02": ["Fin des cours", false],
+      "2027-07-05": ["Fin du calendrier", false]
+    };
+
+    const CAL_VACANCES = [
+      ["2026-10-17", "2026-11-01"], ["2026-12-19", "2027-01-03"],
+      ["2027-02-20", "2027-03-07"], ["2027-04-24", "2027-05-09"]
+    ];
+
+    const CAL_PERIODES = [
+      ["2026-09-07", "2026-11-15"], ["2026-11-16", "2027-01-24"],
+      ["2027-01-25", "2027-04-04"], ["2027-04-05", "2027-07-05"]
+    ];
+
+    const CAL_COULEURS_PERIODE = ["#E6F1FF", "#E5F7E9", "#FFF2D9", "#F1E8FF", "#FFE8EE"];
+
+    function calEnVacances(iso) { return CAL_VACANCES.some(v => iso >= v[0] && iso <= v[1]); }
+    function calPeriode(iso) {
+      const index = CAL_PERIODES.findIndex(p => iso >= p[0] && iso <= p[1]);
+      return index === -1 ? null : index + 1;
+    }
+
+    /** Evenements saisis, ramenes a la journee : la liste stocke des plages debut-fin. */
+    function calEvenementsParJour() {
+      const parJour = {};
+      for (const e of calendarEvents) {
+        const debut = new Date(e.start_date_epoch_millis), fin = new Date(e.end_date_epoch_millis);
+        for (let d = new Date(debut); d <= fin; d.setDate(d.getDate() + 1)) {
+          parJour[isoDate(d)] = e;
+        }
+      }
+      return parJour;
+    }
+
+    function grilleCalendrier() {
+      const saisis = calEvenementsParJour();
+      const ccf = {};
+      for (const e of datesCcfBac()) {
+        ccf[e.lundi] = "BAC EPS CCF" + e.numero;
+        ccf[e.jeudi] = "BAC EPS CCF" + e.numero;
+      }
+      const lettres = ["D", "L", "M", "M", "J", "V", "S"];
+
+      return '<div class="calGrid">' + CAL_MOIS.map(function (mois) {
+        const annee = mois[0], numero = mois[1];
+        const jours = new Date(annee, numero, 0).getDate();
+        let cellules = "";
+        for (let jour = 1; jour <= jours; jour++) {
+          const iso = annee + "-" + String(numero).padStart(2, "0") + "-" + String(jour).padStart(2, "0");
+          const date = new Date(annee, numero - 1, jour);
+          const weekend = date.getDay() === 0 || date.getDay() === 6;
+          const fixe = CAL_FIXES[iso];
+          const saisi = saisis[iso];
+          const epreuve = ccf[iso];
+          const vacances = calEnVacances(iso);
+          const periode = calPeriode(iso);
+
+          // Meme ordre de priorite que l'application, pour que les deux calendriers coincident.
+          let fond = "#fff", encre = "inherit";
+          if (vacances) fond = "#D5D9DE";
+          else if (saisi && saisi.kind === "SORTIE") fond = "#FFD966";
+          else if (saisi && saisi.kind === "EXAMEN") fond = "#FFB3C7";
+          else if (saisi && saisi.kind === "VACANCES") fond = "#CFE2F3";
+          else if (epreuve) { fond = "#1B3A6B"; encre = "#fff"; }
+          else if (fixe && fixe[1]) fond = "#F1E4FF";
+          else if (fixe) fond = "#CFE2F3";
+          else if (periode) fond = CAL_COULEURS_PERIODE[periode - 1];
+          else if (weekend) fond = "#EDF1F5";
+
+          const texte = [vacances ? "VAC" : null, fixe ? fixe[0] : null, epreuve,
+                         saisi ? saisi.label : null].filter(Boolean).join(" · ");
+          cellules += '<div class="calDay" data-cal-jour="' + iso + '" title="' + planningText(texte || iso) + '"'
+            + ' style="background:' + fond + ';color:' + encre + '">'
+            + '<span class="num">' + String(jour).padStart(2, "0") + " " + lettres[date.getDay()] + "</span>"
+            + (periode ? '<span class="per" style="color:' + (encre === "#fff" ? "#9EC5F0" : "#2678C8") + '">P' + periode + "</span>" : "")
+            + '<span class="txt">' + planningText(texte) + "</span></div>";
+        }
+        return '<div class="calMonth"><div class="calMonthName">' + mois[2] + " " + annee + "</div>" + cellules + "</div>";
+      }).join("") + "</div>";
+    }
+
+    function legendeCalendrier() {
+      const items = [
+        ["#D5D9DE", "Vacances"], ["#CFE2F3", "Jour ferie"], ["#FFD966", "Sortie"],
+        ["#FFB3C7", "Examen"], ["#F1E4FF", "A confirmer"], ["#1B3A6B", "BAC EPS CCF"]
+      ].concat(CAL_COULEURS_PERIODE.slice(0, 4).map((c, i) => [c, "Periode " + (i + 1)]));
+      return '<div class="calLegend">' + items.map(i =>
+        '<span><span class="box" style="background:' + i[0] + '"></span>' + i[1] + "</span>").join("") + "</div>";
+    }
+
     let calendarEvents = [];
 
     async function loadInstitutionCalendar() {
@@ -3184,6 +3304,12 @@
         <h2 style="margin:0">Epreuves du BAC EPS</h2>
         <div class="muted">Posees automatiquement le lundi et le jeudi de la semaine ou se termine chaque periode Terminale. Elles suivent les dates des periodes : rien a saisir ici, et une periode deplacee deplace l'epreuve.</div>
         ${blocCcf}
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h2 style="margin:0">Planification etablissement 2026-2027</h2>
+        <div class="muted">Vue annuelle, identique a celle de l'application. Survolez un jour pour lire son intitule complet.</div>
+        ${legendeCalendrier()}
+        ${grilleCalendrier()}
       </div>
       <div class="card" style="margin-top:14px">
         <h2 style="margin:0">Calendrier de l'etablissement</h2>
