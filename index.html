@@ -4364,6 +4364,14 @@
      * faux conflit. On compte donc, a chaque instant, ce que chaque groupe d'espaces homonymes peut
      * accueillir et ce qui lui est reclame.
      */
+    /** L'installation retenue pour ce creneau a cette periode, sinon celle du creneau lui-meme. */
+    function installationPourPeriode(slot, periode) {
+      if (periode == null) return slot.installation_name;
+      const activite = planningCommunityActivities.find(a =>
+        a.slot_id === slot.id && Number(a.period_number) === Number(periode));
+      return activite?.installation_name || slot.installation_name;
+    }
+
     function findCommunityConflictPairs(slots) {
       const couloirs = couloirsInstallations((planningInstallations || []).filter(i => !i.deleted));
       if (!couloirs.length) return [];
@@ -4371,49 +4379,80 @@
       const familleDuGroupe = new Map(couloirs.map(c =>
         [cleInstallation(c.name), cleInstallation(familleInstallation(c.name))]));
 
-      const demandes = new Map();
-      slots.forEach(s => demandes.set(s.id, demandeInstallation(s.installation_name, couloirs)));
+      // Quand personne ne choisit d'installation par periode, le planning ne bouge pas de l'annee :
+      // une seule passe suffit, et le chevauchement vaut alors pour toutes les periodes.
+      const idsAffiches = new Set(slots.map(s => s.id));
+      const periodesDeclarees = [...new Set(planningCommunityActivities
+        .filter(a => idsAffiches.has(a.slot_id) && (a.installation_name || "").trim())
+        .map(a => Number(a.period_number)))].sort((x, y) => x - y);
+      const periodes = periodesDeclarees.length ? periodesDeclarees : [null];
 
-      const byDay = {};
-      slots.forEach((s, i) => {
-        if (!demandes.get(s.id)) return;
-        (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i });
-      });
-
+      // Une paire validee l'est une fois pour toutes : on la presente une seule fois, en listant
+      // les periodes concernees, plutot qu'une entree par periode qu'un seul clic ferait sauter.
       const pairs = new Map();
-      Object.values(byDay).forEach(dayEntries => {
-        // Tout chevauchement contient le debut d'un creneau : ces instants suffisent a tout voir.
-        const instants = [...new Set(dayEntries.map(e => planningStartMinutes(e.s)))];
-        capacites.forEach((capacite, groupe) => {
-          const famille = familleDuGroupe.get(groupe);
-          instants.forEach(instant => {
-            const actifs = dayEntries.filter(e => {
-              const debut = planningStartMinutes(e.s);
-              return instant >= debut && instant < debut + e.s.duration_minutes
-                && unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite) > 0;
-            });
-            const reclame = actifs.reduce((total, e) =>
-              total + unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite), 0);
-            if (reclame <= capacite) return;
 
-            for (let a = 0; a < actifs.length; a++) {
-              for (let b = a + 1; b < actifs.length; b++) {
-                const A = actifs[a].s, B = actifs[b].s;
-                if (A.user_id === B.user_id) continue;
-                if (isConflictOverridden(A.id, B.id)) continue;
-                const cle = [A.id, B.id].sort().join("|");
-                if (!pairs.has(cle)) pairs.set(cle, { indexA: actifs[a].i, indexB: actifs[b].i, slotA: A, slotB: B });
+      periodes.forEach(periode => {
+        const demandes = new Map();
+        slots.forEach(s => demandes.set(s.id, demandeInstallation(installationPourPeriode(s, periode), couloirs)));
+
+        const byDay = {};
+        slots.forEach((s, i) => {
+          if (!demandes.get(s.id)) return;
+          (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i });
+        });
+
+        Object.values(byDay).forEach(dayEntries => {
+          // Tout chevauchement contient le debut d'un creneau : ces instants suffisent a tout voir.
+          const instants = [...new Set(dayEntries.map(e => planningStartMinutes(e.s)))];
+          capacites.forEach((capacite, groupe) => {
+            const famille = familleDuGroupe.get(groupe);
+            instants.forEach(instant => {
+              const actifs = dayEntries.filter(e => {
+                const debut = planningStartMinutes(e.s);
+                return instant >= debut && instant < debut + e.s.duration_minutes
+                  && unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite) > 0;
+              });
+              const reclame = actifs.reduce((total, e) =>
+                total + unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite), 0);
+              if (reclame <= capacite) return;
+
+              for (let a = 0; a < actifs.length; a++) {
+                for (let b = a + 1; b < actifs.length; b++) {
+                  const A = actifs[a].s, B = actifs[b].s;
+                  if (A.user_id === B.user_id) continue;
+                  if (isConflictOverridden(A.id, B.id)) continue;
+                  const cle = [A.id, B.id].sort().join("|");
+                  const paire = pairs.get(cle)
+                    || { indexA: actifs[a].i, indexB: actifs[b].i, slotA: A, slotB: B, periodes: [], installations: [] };
+                  if (periode != null && !paire.periodes.includes(periode)) paire.periodes.push(periode);
+                  [installationPourPeriode(A, periode), installationPourPeriode(B, periode)]
+                    .filter(Boolean)
+                    .forEach(nom => { if (!paire.installations.includes(nom)) paire.installations.push(nom); });
+                  pairs.set(cle, paire);
+                }
               }
-            }
+            });
           });
         });
       });
       return [...pairs.values()];
     }
 
+    /** "Gymnase / Gymnase 1/3" : les deux ecritures qui se disputent la meme place. */
+    function libelleInstallationsConflit(paire) {
+      return paire.installations.join(" / ") || "?";
+    }
+    function libellePeriodesConflit(paire) {
+      return paire.periodes.length ? "Periode " + paire.periodes.join(", ") : "Toutes les periodes";
+    }
+
     function computeCommunityConflicts(slots) {
       const conflicts = new Set();
-      findCommunityConflictPairs(slots).forEach(p => { conflicts.add(p.indexA); conflicts.add(p.indexB); });
+      findCommunityConflictPairs(slots)
+        // Un chevauchement de periode 2 n'a pas a rougir la grille de periode 1. Une paire sans
+        // periode vaut toute l'annee : elle reste signalee quoi qu'on affiche.
+        .filter(p => !p.periodes.length || p.periodes.includes(Number(planningPeriod)))
+        .forEach(p => { conflicts.add(p.indexA); conflicts.add(p.indexB); });
       return conflicts;
     }
 
@@ -4670,7 +4709,8 @@
       panel.innerHTML = `<h2>Analyse — ${conflicts.length} chevauchement(s) d'installation</h2>` +
         conflicts.map((p, i) => `
           <div class="card" style="margin-top:${i === 0 ? 0 : 10}px">
-            <div><strong>${p.slotA.installation_name}</strong></div>
+            <div><strong>${planningText(libelleInstallationsConflit(p))}</strong></div>
+            <div class="muted" style="font-size:11px">${planningText(libellePeriodesConflit(p))}</div>
             <div class="muted" style="margin-top:4px">${planningSlotSummary(p.slotA)}</div>
             <div class="muted">${planningSlotSummary(p.slotB)}</div>
             <div style="margin-top:10px">
