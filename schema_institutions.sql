@@ -139,17 +139,42 @@ $$;
 
 grant execute on function same_institution(uuid) to authenticated;
 
+-- Etat commun de finalisation du planning EPS. Une ligne par etablissement : tous les membres
+-- voient le meme bouton Valide/En modification et le meme calendrier d'utilisation.
+create table if not exists planning_validations (
+  institution_id uuid primary key references institutions(id) on delete cascade,
+  validated boolean not null default false,
+  updated_by uuid not null references auth.users(id) on delete cascade,
+  updated_at timestamptz not null default now()
+);
+alter table planning_validations enable row level security;
+drop policy if exists "select institution planning validation" on planning_validations;
+drop policy if exists "insert institution planning validation" on planning_validations;
+drop policy if exists "update institution planning validation" on planning_validations;
+create policy "select institution planning validation" on planning_validations for select using (same_institution(updated_by));
+create policy "insert institution planning validation" on planning_validations for insert with check (same_institution(updated_by));
+create policy "update institution planning validation" on planning_validations for update using (same_institution(updated_by)) with check (same_institution(updated_by));
+
 drop policy if exists "select all schedule slots" on class_schedule_slots;
+drop policy if exists "select institution schedule slots" on class_schedule_slots;
 create policy "select institution schedule slots" on class_schedule_slots for select using (
   auth.uid() = user_id or same_institution(user_id)
 );
 
+drop policy if exists "select own period activities" on period_activities;
+drop policy if exists "select institution period activities" on period_activities;
+create policy "select institution period activities" on period_activities for select using (
+  auth.uid() = user_id or same_institution(user_id)
+);
+
 drop policy if exists "select all annual plan blocks" on annual_plan_blocks;
+drop policy if exists "select institution annual plan blocks" on annual_plan_blocks;
 create policy "select institution annual plan blocks" on annual_plan_blocks for select using (
   auth.uid() = user_id or same_institution(user_id)
 );
 
 drop policy if exists "select all conflict overrides" on installation_conflict_overrides;
+drop policy if exists "select institution conflict overrides" on installation_conflict_overrides;
 create policy "select institution conflict overrides" on installation_conflict_overrides for select using (
   auth.uid() = created_by or same_institution(created_by)
 );

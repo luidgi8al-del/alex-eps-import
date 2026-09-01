@@ -34,6 +34,8 @@ create table if not exists period_activities (
   unique (slot_id, period_number)
 );
 
+alter table period_activities add column if not exists installation_name text;
+
 -- Installations sportives de l'etablissement (module Equipement) : reste privee a chaque
 -- compte (juste une liste de noms proposee au moment de poser un creneau) ; ce qui devient
 -- visible entre collegues, c'est le nom choisi sur le creneau (installation_name ci-dessus),
