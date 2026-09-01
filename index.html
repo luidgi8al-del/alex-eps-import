@@ -4742,6 +4742,11 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
       let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
       html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
+      // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
+      // verrait pas ce qu'on supprime, puisque les licencies sont justement ce qui est preserve.
+      if (unssMode !== "licensed" && rows.length > 0) {
+        html += `<button class="secondary" id="unssClearBtn" style="margin-top:0">Supprimer toute la liste</button>`;
+      }
       html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
       html += `</div>`;
 
@@ -4767,6 +4772,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
       });
       document.getElementById("unssImportBtn").addEventListener("click", () => unssFileInput().click());
+      const clearBtn = document.getElementById("unssClearBtn");
+      if (clearBtn) clearBtn.addEventListener("click", () => viderRepertoireAs());
       wrap.querySelectorAll("[data-edit]").forEach(el => {
         el.addEventListener("click", (e) => {
           if (e.target.closest("[data-delete]")) return;
@@ -4813,6 +4820,62 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       document.body.appendChild(input);
       unssHiddenFileInput = input;
       return input;
+    }
+
+    /**
+     * Vide le repertoire Eleve LVH apres un import rate ou un export de l'annee precedente.
+     *
+     * Deux categories sont preservees, parce que les supprimer detruirait un travail qui ne se
+     * refait pas depuis un CSV : les licencies AS (voeux, taille de maillot, emails saisis a la
+     * main) et les eleves deja inscrits dans un groupe. Un eleve inscrit mais non licencie
+     * viderait sinon la composition du groupe sans que rien ne le signale.
+     *
+     * La suppression est logique (deleted = true), comme celle d'un eleve isole : une vraie
+     * suppression SQL ne se propagerait pas, et l'app republierait ses copies locales a la
+     * prochaine synchro. Les lignes disparaissent partout, y compris sur Android.
+     */
+    async function viderRepertoireAs() {
+      const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?deleted=eq.false&select=student_id`);
+      if (!membershipsRes.ok) { alert("Impossible de verifier les inscriptions aux groupes. Rien n'a ete supprime."); return; }
+      const inscrits = new Set((await membershipsRes.json()).map(m => m.student_id));
+
+      const aSupprimer = unssStudents.filter(s => !s.licensed && !inscrits.has(s.id));
+      const preserves = unssStudents.length - aSupprimer.length;
+      if (aSupprimer.length === 0) {
+        alert("Rien a supprimer : tous les eleves du repertoire sont licencies ou inscrits dans un groupe.");
+        return;
+      }
+      if (!confirm(
+        `Supprimer ${aSupprimer.length} eleve(s) du repertoire ?
+
+` +
+        `${preserves} eleve(s) sont conserves : les licencies AS et ceux deja inscrits dans un groupe.
+` +
+        `Les groupes eux-memes ne sont pas touches.
+
+Cette action est definitive.`
+      )) return;
+
+      const ids = aSupprimer.map(s => s.id);
+      const TAILLE_LOT = 200;
+      let supprimes = 0;
+      for (let i = 0; i < ids.length; i += TAILLE_LOT) {
+        const lot = ids.slice(i, i + TAILLE_LOT);
+        const res = await apiFetch(
+          `${SUPABASE_URL}/rest/v1/unss_students?id=in.(${lot.map(encodeURIComponent).join(",")})`,
+          { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) }
+        );
+        if (!res.ok) {
+          await loadUnssStudents();
+          renderUnssTab();
+          alert(`${supprimes} eleve(s) supprime(s), puis l'operation s'est interrompue. Relancez pour terminer.`);
+          return;
+        }
+        supprimes += lot.length;
+      }
+      await loadUnssStudents();
+      renderUnssTab();
+      alert(`${supprimes} eleve(s) supprime(s). ${preserves} conserve(s) (licencies AS et inscrits en groupe).`);
     }
 
     /** Meme principe que le CSV Planning : intitules reconnus dans n'importe quel ordre. */
