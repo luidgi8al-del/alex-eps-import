@@ -4535,6 +4535,10 @@
       let showStartTimes = false;
 
       function render() {
+        // Une Terminale se distingue par son jour, pas par un numero : c'est la meme regle que
+        // le formulaire Creation classe, qui l'appliquait deja.
+        const terminale = selectedGrade ? isTerminalSchoolLevel(selectedGrade) : false;
+        const numeroLabels = terminale ? ["Lundi", "Jeudi"] : ["1","2","3","4","5","6","7","8"];
         panel.innerHTML = `
           <h2>Nouveau creneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
           ${showStartTimes ? `<div id="planningStartTimeList" style="max-height:260px; overflow-y:auto">${Array.from({length:PLANNING_ROWS}, (_,i) => PLANNING_START_HOUR * 60 + i * PLANNING_SLOT_MIN).map(value => `<button type="button" class="secondary planningStartOption" data-start="${value}" style="display:block;width:100%;text-align:left;margin-top:4px">${planningMinutesLabel(value)}</button>`).join("")}</div>` : ""}
@@ -4543,9 +4547,9 @@
             `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
           ).join(" ")}</div></details>
           ${selectedGrade ? `
-            <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>Numero de classe</strong>${selectedNumber ? ` — ${selectedNumber}` : ""}</summary>
-            <div id="planningNumberChips" style="margin-top:8px">${[1,2,3,4,5,6,7,8].map(n =>
-              `<button type="button" class="secondary durationChip" data-num="${n}" style="margin-top:0; ${n === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${n}</button>`
+            <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>${terminale ? "Jour de la Terminale" : "Numero de classe"}</strong>${selectedNumber ? ` — ${numeroLabels[selectedNumber - 1]}` : ""}</summary>
+            <div id="planningNumberChips" style="margin-top:8px">${numeroLabels.map((label, index) =>
+              `<button type="button" class="secondary durationChip" data-num="${index + 1}" style="margin-top:0; ${index + 1 === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${label}</button>`
             ).join(" ")}</div></details>` : ""}
           <details id="planningDurationStep" ${openStep === 2 ? "open" : ""}><summary><strong>Duree</strong> — ${PLANNING_DURATIONS.find(x => x[0] === selectedDuration)?.[1] || ""}</summary>
           <div id="planningDurationChips" style="margin-top:8px">${durationChipsHtml("dur", selectedDuration)}</div></details>
@@ -4578,9 +4582,15 @@
             document.getElementById("planningPanelError").textContent = "Choisissez un niveau et un numero de classe.";
             return;
           }
-          const classId = await planningFindOrCreateClass(selectedGrade, selectedNumber);
-          await planningCreateSlot(classId, day, selectedStartMinutes, selectedDuration, null, periodPlans);
-          panel.style.display = "none";
+          try {
+            const classId = await planningFindOrCreateClass(selectedGrade, selectedNumber);
+            await planningCreateSlot(classId, day, selectedStartMinutes, selectedDuration, null, periodPlans);
+            panel.style.display = "none";
+          } catch (e) {
+            // creationClassName refuse une Terminale sans nom d'enseignant : le message doit
+            // arriver ici plutot que de laisser le panneau se fermer sur une classe mal nommee.
+            document.getElementById("planningPanelError").textContent = e.message;
+          }
         });
       }
       render();
@@ -4595,7 +4605,9 @@
       if (existing) return existing.id;
       const newClass = {
         id: crypto.randomUUID(), user_id: session.user_id, grade, class_number: classNumber,
-        school_year: schoolYear, name: `${GRADE_LABELS[grade]}${classNumber}`,
+        // Meme convention que le formulaire Creation classe : une Terminale porte son jour et le
+        // nom de l'enseignant, pas un numero. Sans cela le Planning creait des classes "Tle3".
+        school_year: schoolYear, name: creationClassName(grade, classNumber),
         updated_at: new Date().toISOString(), deleted: false
       };
       await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, { method: "POST", body: JSON.stringify(newClass) });
