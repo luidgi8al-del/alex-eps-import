@@ -417,7 +417,11 @@
         <div id="planningNewClassHint" class="pendingHint" style="display:none; align-items:center; justify-content:space-between; gap:10px"></div>
         <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px; align-items:center; justify-content:space-between; gap:10px" >
           <span>Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</span>
-          <button class="secondary" id="planningAnalyzeBtn" style="margin-top:0; white-space:nowrap">Analyser</button>
+          <span style="display:flex; gap:8px; align-items:center; white-space:nowrap">
+            <span id="planningValidationState"></span>
+            <button class="secondary" id="planningValidationBtn" style="margin-top:0; white-space:nowrap; display:none">Valider le planning</button>
+            <button class="secondary" id="planningAnalyzeBtn" style="margin-top:0; white-space:nowrap">Analyser</button>
+          </span>
         </div>
 
         <div id="planningFullscreenBar" style="display:flex; justify-content:flex-end; margin-bottom:6px">
@@ -3436,6 +3440,58 @@
       planningInstallations = res.ok ? await res.json() : [];
     }
     /** Planning global EPS : creneaux de TOUS les comptes (RLS ouverte en lecture sur cette table). */
+    // Etat commun de finalisation du planning EPS : une ligne par etablissement, partagee par
+    // tous les collegues. Meme contrat que l'app (SupabaseSyncManager) : institution_id en cle,
+    // et on renvoie toujours updated_by / updated_at pour tracer qui a fige le planning.
+    let planningValidated = false;
+
+    async function loadPlanningValidation() {
+      planningValidated = false;
+      if (!currentInstitution) return;
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/planning_validations?institution_id=eq.${encodeURIComponent(currentInstitution.id)}&select=validated`);
+      if (!res.ok) return;
+      const rows = await res.json();
+      planningValidated = rows.length > 0 && rows[0].validated === true;
+    }
+
+    async function setPlanningValidated(validated) {
+      if (!currentInstitution) throw new Error("Compte non rattache a un etablissement.");
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/planning_validations`, {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=representation" },
+        body: JSON.stringify([{
+          institution_id: currentInstitution.id, validated,
+          updated_by: session.user_id, updated_at: new Date().toISOString()
+        }])
+      });
+      if (!res.ok) throw new Error("Etat du planning non enregistre. Verifiez votre connexion.");
+      planningValidated = validated;
+    }
+
+    function renderPlanningValidation() {
+      const label = document.getElementById("planningValidationState");
+      const button = document.getElementById("planningValidationBtn");
+      if (!label || !button) return;
+      // Sans etablissement il n'y a personne avec qui partager l'etat : on masque plutot
+      // que d'afficher un bouton qui echouerait a l'enregistrement.
+      button.style.display = currentInstitution ? "" : "none";
+      label.textContent = !currentInstitution ? ""
+        : planningValidated ? "Planning valide" : "En modification";
+      label.style.fontWeight = "600";
+      button.textContent = planningValidated ? "Reprendre les modifications" : "Valider le planning";
+      button.onclick = async () => {
+        button.disabled = true;
+        try {
+          await setPlanningValidated(!planningValidated);
+        } catch (e) {
+          alert(e.message);
+        } finally {
+          button.disabled = false;
+          renderPlanningValidation();
+        }
+      };
+    }
+
     async function loadPlanningCommunity() {
       planningCommunityLoading = true;
       planningCommunityError = null;
@@ -3451,6 +3507,7 @@
         planningCommunitySlots = visibleCommunityPlanningSlots(await slotsRes.json(), planningClasses, session.user_id);
         planningCommunityActivities = activitiesRes.ok ? await activitiesRes.json() : [];
         planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
+        await loadPlanningValidation();
       } catch (e) {
         planningCommunityError = e.message;
         planningCommunitySlots = [];
@@ -3559,6 +3616,7 @@
       }
 
       document.getElementById("planningEpsHint").style.display = planningMode === "eps" ? "flex" : "none";
+      if (planningMode === "eps") renderPlanningValidation();
       if (planningMode !== "eps") document.getElementById("planningAnalysisPanel").style.display = "none";
 
       if (planningMode === "eps") renderPlanningEpsGrid();
