@@ -4321,36 +4321,94 @@
       });
     }
 
-    /** Paires de creneaux qui partagent la meme installation (comparaison insensible a la
-     * casse/aux espaces) avec chevauchement horaire, pour des comptes differents (un meme prof
-     * peut legitimement enchainer 2 creneaux au meme endroit). Les paires deja validees via le
-     * bouton "Analyser" (installation_conflict_overrides) sont exclues. */
+    /**
+     * Ce qu'un creneau reclame : soit une famille entiere ("Gymnase"), soit un groupe de parts
+     * homonymes ("Gymnase 2/3", ou l'une des deux "1/2 Piscine").
+     */
+    function demandeInstallation(nomChoisi, couloirs) {
+      const choisi = cleInstallation(nomChoisi);
+      if (!choisi) return null;
+      const exacts = couloirs.filter(c => cleInstallation(c.name) === choisi);
+      if (exacts.length) return { famille: cleInstallation(familleInstallation(exacts[0].name)), groupe: choisi };
+      const entier = couloirs.some(c => estPartieInstallation(c.name)
+        && cleInstallation(familleInstallation(c.name)) === choisi);
+      // groupe nul : la famille entiere, donc chacune de ses parts.
+      return entier ? { famille: choisi, groupe: null } : null;
+    }
+
+    /** Combien d'espaces identiques porte chaque nom : deux "1/2 Piscine", un seul "Gymnase 2/3". */
+    function capacitesCouloirs(couloirs) {
+      const capacites = new Map();
+      couloirs.forEach(c => {
+        const cle = cleInstallation(c.name);
+        capacites.set(cle, (capacites.get(cle) || 0) + 1);
+      });
+      return capacites;
+    }
+
+    /** Les unites que ce creneau prend dans un groupe donne. */
+    function unitesDemandees(demande, groupe, familleDuGroupe, capacite) {
+      if (demande.groupe !== null) return demande.groupe === groupe ? 1 : 0;
+      return demande.famille === familleDuGroupe ? capacite : 0;
+    }
+
+    /**
+     * Paires de creneaux qui se disputent un espace : meme jour, chevauchement horaire, comptes
+     * differents (un meme prof peut legitimement enchainer 2 creneaux au meme endroit). Les paires
+     * deja validees via "Analyser" (installation_conflict_overrides) sont exclues.
+     *
+     * Ce n'est pas le nom de l'installation qui decide, mais la place disponible. Comparer les noms
+     * a l'identique laissait passer le cas qui compte : "Gymnase" et "Gymnase 1/3" ne s'ecrivent pas
+     * pareil et se disputent pourtant le meme tiers de salle. A l'inverse, deux collegues inscrits
+     * sur "1/2 Piscine" tiennent chacun leur moitie et ne se genent pas - les signaler serait un
+     * faux conflit. On compte donc, a chaque instant, ce que chaque groupe d'espaces homonymes peut
+     * accueillir et ce qui lui est reclame.
+     */
     function findCommunityConflictPairs(slots) {
-      const pairs = [];
+      const couloirs = couloirsInstallations((planningInstallations || []).filter(i => !i.deleted));
+      if (!couloirs.length) return [];
+      const capacites = capacitesCouloirs(couloirs);
+      const familleDuGroupe = new Map(couloirs.map(c =>
+        [cleInstallation(c.name), cleInstallation(familleInstallation(c.name))]));
+
+      const demandes = new Map();
+      slots.forEach(s => demandes.set(s.id, demandeInstallation(s.installation_name, couloirs)));
+
       const byDay = {};
-      slots.forEach((s, i) => { (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i }); });
+      slots.forEach((s, i) => {
+        if (!demandes.get(s.id)) return;
+        (byDay[s.day_of_week] = byDay[s.day_of_week] || []).push({ s, i });
+      });
+
+      const pairs = new Map();
       Object.values(byDay).forEach(dayEntries => {
-        const byInstallation = {};
-        dayEntries.forEach(entry => {
-          const name = (entry.s.installation_name || "").trim().toLowerCase();
-          if (!name) return;
-          (byInstallation[name] = byInstallation[name] || []).push(entry);
-        });
-        Object.values(byInstallation).forEach(group => {
-          for (let a = 0; a < group.length; a++) {
-            for (let b = a + 1; b < group.length; b++) {
-              const A = group[a].s, B = group[b].s;
-              if (A.user_id === B.user_id) continue;
-              const startA = planningStartMinutes(A), endA = startA + A.duration_minutes;
-              const startB = planningStartMinutes(B), endB = startB + B.duration_minutes;
-              if (startA < endB && startB < endA && !isConflictOverridden(A.id, B.id)) {
-                pairs.push({ indexA: group[a].i, indexB: group[b].i, slotA: A, slotB: B });
+        // Tout chevauchement contient le debut d'un creneau : ces instants suffisent a tout voir.
+        const instants = [...new Set(dayEntries.map(e => planningStartMinutes(e.s)))];
+        capacites.forEach((capacite, groupe) => {
+          const famille = familleDuGroupe.get(groupe);
+          instants.forEach(instant => {
+            const actifs = dayEntries.filter(e => {
+              const debut = planningStartMinutes(e.s);
+              return instant >= debut && instant < debut + e.s.duration_minutes
+                && unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite) > 0;
+            });
+            const reclame = actifs.reduce((total, e) =>
+              total + unitesDemandees(demandes.get(e.s.id), groupe, famille, capacite), 0);
+            if (reclame <= capacite) return;
+
+            for (let a = 0; a < actifs.length; a++) {
+              for (let b = a + 1; b < actifs.length; b++) {
+                const A = actifs[a].s, B = actifs[b].s;
+                if (A.user_id === B.user_id) continue;
+                if (isConflictOverridden(A.id, B.id)) continue;
+                const cle = [A.id, B.id].sort().join("|");
+                if (!pairs.has(cle)) pairs.set(cle, { indexA: actifs[a].i, indexB: actifs[b].i, slotA: A, slotB: B });
               }
             }
-          }
+          });
         });
       });
-      return pairs;
+      return [...pairs.values()];
     }
 
     function computeCommunityConflicts(slots) {
