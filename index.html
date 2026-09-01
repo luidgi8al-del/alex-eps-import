@@ -73,6 +73,10 @@
   .calDay .per { font-weight:700; color:#2678C8; flex:0 0 auto; }
   .calLegend { display:flex; flex-wrap:wrap; gap:10px; margin:8px 0; font-size:11px; align-items:center; }
   .calLegend span.box { display:inline-block; width:12px; height:12px; border:.5px solid #BBC2C9; margin-right:4px; vertical-align:-2px; }
+  .rappelCols { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:10px; }
+  .rappelCol { border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .rappelTitre { font-weight:700; padding:6px 10px; font-size:13px; }
+  .rappelLigne { padding:8px 10px; border-top:1px solid var(--border); font-size:13px; }
   .periodChip { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; margin-top:0; cursor:pointer; white-space:nowrap; }
   .periodChip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
   .pendingHint { background:#FFF4E5; border:1px solid #F5C875; color:#7A4D00; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:10px; }
@@ -3115,10 +3119,12 @@
     // Ce qui bloque ou deplace les cours dans l'annee : vacances, examens, sorties,
     // journees banalisees.
 
+    // BAC_EPS s'ajoute aux types existants : une date saisie avec ce type rejoint la colonne EPS
+    // du rappel, a cote des epreuves calculees depuis les periodes Terminale.
     const CALENDAR_KINDS = [
       ["VACANCES", "Vacances", "#DFF3FF"], ["EXAMEN", "Examen", "#FFE8EE"],
-      ["SORTIE", "Sortie", "#E5F7E9"], ["BANALISEE", "Journee banalisee", "#FFF0DD"],
-      ["AUTRE", "Autre", "#F3F4F6"]
+      ["SORTIE", "Sortie AS", "#E5F7E9"], ["BAC_EPS", "BAC EPS", "#1B3A6B"],
+      ["BANALISEE", "Journee banalisee", "#FFF0DD"], ["AUTRE", "Autre", "#F3F4F6"]
     ];
     /**
      * Epreuves du BAC EPS : lundi et jeudi de la semaine ou se termine chaque periode Terminale.
@@ -3229,7 +3235,7 @@
           else if (saisi && saisi.kind === "SORTIE") fond = "#FFD966";
           else if (saisi && saisi.kind === "EXAMEN") fond = "#FFB3C7";
           else if (saisi && saisi.kind === "VACANCES") fond = "#CFE2F3";
-          else if (epreuve) { fond = "#1B3A6B"; encre = "#fff"; }
+          else if (epreuve || (saisi && saisi.kind === "BAC_EPS")) { fond = "#1B3A6B"; encre = "#fff"; }
           else if (fixe && fixe[1]) fond = "#F1E4FF";
           else if (fixe) fond = "#CFE2F3";
           else if (periode) fond = CAL_COULEURS_PERIODE[periode - 1];
@@ -3244,6 +3250,47 @@
             + '<span class="txt">' + planningText(texte) + "</span></div>";
         }
         return '<div class="calMonth"><div class="calMonthName">' + mois[2] + " " + annee + "</div>" + cellules + "</div>";
+      }).join("") + "</div>";
+    }
+
+    /**
+     * Rappel des dates qui comptent, en trois colonnes. Elles etaient noyees dans la liste
+     * chronologique : impossible de repondre a "c'est quand le prochain CCF ?" d'un coup d'oeil.
+     *
+     * EPS reunit les epreuves calculees depuis les periodes Terminale et les dates saisies avec
+     * le type BAC EPS. AS reprend les sorties, Examen les examens.
+     */
+    function rappelImportantDates() {
+      const saisisPar = kind => calendarEvents
+        .filter(e => e.kind === kind)
+        .sort((a, b) => a.start_date_epoch_millis - b.start_date_epoch_millis)
+        .map(e => {
+          const debut = dateFr(isoDate(new Date(e.start_date_epoch_millis)));
+          const fin = dateFr(isoDate(new Date(e.end_date_epoch_millis)));
+          const quand = debut === fin ? debut : debut + " au " + fin;
+          return { titre: e.label || "Sans titre", quand, calcule: false };
+        });
+
+      const eps = datesCcfBac().map(e => ({
+        titre: "BAC EPS CCF" + e.numero,
+        quand: "lundi " + dateFr(e.lundi) + " et jeudi " + dateFr(e.jeudi),
+        calcule: true
+      })).concat(saisisPar("BAC_EPS"));
+
+      const colonnes = [
+        ["EPS", "#1B3A6B", eps, "Saisissez une date avec le type BAC EPS pour l'ajouter ici."],
+        ["AS", "#E5F7E9", saisisPar("SORTIE"), "Saisissez une date avec le type Sortie AS."],
+        ["Examen", "#FFE8EE", saisisPar("EXAMEN"), "Saisissez une date avec le type Examen."]
+      ];
+
+      return '<div class="rappelCols">' + colonnes.map(function (col) {
+        const lignes = col[2].length === 0
+          ? '<div class="muted" style="font-size:12px">' + col[3] + "</div>"
+          : col[2].map(d => '<div class="rappelLigne"><strong>' + planningText(d.titre) + "</strong>"
+              + (d.calcule ? ' <span class="muted" style="font-size:11px">calcule</span>' : "")
+              + '<div class="muted">' + d.quand + "</div></div>").join("");
+        return '<div class="rappelCol"><div class="rappelTitre" style="background:' + col[1]
+          + ';color:' + (col[1] === "#1B3A6B" ? "#fff" : "#173a57") + '">' + col[0] + "</div>" + lignes + "</div>";
       }).join("") + "</div>";
     }
 
@@ -3292,24 +3339,16 @@
             </div>`;
           }).join("");
 
-      const epreuves = datesCcfBac();
-      const blocCcf = epreuves.length === 0
-        ? `<div class="muted" style="margin-top:8px">Aucune epreuve calculee : saisissez d'abord les dates des periodes Terminale dans l'onglet <strong>Dates des periodes</strong>.</div>`
-        : epreuves.map(e => `<div style="padding:8px 0; border-bottom:1px solid var(--border)">
-            <span class="badge" style="background:#1B3A6B; color:#fff">BAC EPS CCF${e.numero}</span>
-            <div class="muted" style="margin-top:4px">Lundi ${dateFr(e.lundi)} et jeudi ${dateFr(e.jeudi)}</div>
-          </div>`).join("");
-
       wrap.innerHTML = `<div class="card">
-        <h2 style="margin:0">Epreuves du BAC EPS</h2>
-        <div class="muted">Posees automatiquement le lundi et le jeudi de la semaine ou se termine chaque periode Terminale. Elles suivent les dates des periodes : rien a saisir ici, et une periode deplacee deplace l'epreuve.</div>
-        ${blocCcf}
-      </div>
-      <div class="card" style="margin-top:14px">
         <h2 style="margin:0">Planification etablissement 2026-2027</h2>
         <div class="muted">Vue annuelle, identique a celle de l'application. Cliquez un jour pour y ajouter ou modifier un evenement ; survolez-le pour lire son intitule complet.</div>
         ${legendeCalendrier()}
         ${grilleCalendrier()}
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h2 style="margin:0">Rappel des dates importantes</h2>
+        <div class="muted">Les epreuves du BAC EPS sont calculees depuis les periodes Terminale : une periode deplacee deplace l'epreuve. Les autres dates viennent de ce que vous saisissez, classees par type.</div>
+        ${rappelImportantDates()}
       </div>
       <div class="card" style="margin-top:14px">
         <h2 style="margin:0">Calendrier de l'etablissement</h2>
