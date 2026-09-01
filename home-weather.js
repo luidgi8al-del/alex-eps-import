@@ -15,6 +15,9 @@ function weatherDescription(code) {
 }
 function weatherNumber(value,unit) { return typeof value==='number' && Number.isFinite(value)?`${Math.round(value)}${unit}`:'—'; }
 function weatherCityKey(){return `eps_weather_city:${session?.user_id || 'anonymous'}`;}
+function weatherEnabledKey(){return `eps_weather_enabled:${session?.user_id || 'anonymous'}`;}
+function weatherEnabled(){return localStorage.getItem(weatherEnabledKey())!=='false';}
+function setWeatherEnabled(enabled){localStorage.setItem(weatherEnabledKey(),String(Boolean(enabled)));renderHomeWeather();}
 function weatherCity(){try{return JSON.parse(localStorage.getItem(weatherCityKey())||'null');}catch{return null;}}
 function validWeatherCity(city){return city && typeof city.name==='string' && Number.isFinite(city.latitude) && Number.isFinite(city.longitude) && Math.abs(city.latitude)<=90 && Math.abs(city.longitude)<=180;}
 async function weatherFetch(url){
@@ -27,7 +30,7 @@ function weatherDayHtml(daily,index,hourly={}) {
   const caption=typeof date==='string' && /^\d{4}-\d{2}-\d{2}$/.test(date)?new Date(`${date}T12:00:00`).toLocaleDateString('fr-FR',{day:'numeric',month:'long'}):'';
   const hours=(hourly.time||[]).map((time,i)=>({time,i})).filter(({time})=>{
     if(typeof time!=='string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:00$/.test(time) || !time.startsWith(date+'T'))return false;
-    const hour=Number(time.slice(11,13));return [8,10,12,14,16,18].includes(hour);
+    const hour=Number(time.slice(11,13));return [8,12,16].includes(hour);
   });
   const timeline=hours.map(({time,i})=>{
     const [icon,label]=weatherDescription(hourly.weather_code?.[i]);
@@ -38,6 +41,8 @@ function weatherDayHtml(daily,index,hourly={}) {
 }
 async function renderHomeWeather() {
   const host=document.getElementById('homeWeather');if(!host)return;
+  host.hidden=!weatherEnabled();
+  if(host.hidden){host.innerHTML='';return;}
   const renderId=++weatherRenderId,owner=weatherCityKey();
   const active=()=>renderId===weatherRenderId && weatherCityKey()===owner;
   const saved=weatherCity(),city=validWeatherCity(saved)?saved:null;
