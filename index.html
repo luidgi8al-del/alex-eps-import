@@ -410,6 +410,7 @@
           <button class="subtabbtn" data-planningtab="annuelle">Programmation annuelle</button>
           <button class="subtabbtn" data-planningtab="programmes">Programmes officiels</button>
           <button class="subtabbtn" data-planningtab="calendrier">Calendrier etablissement</button>
+          <button class="subtabbtn" data-planningtab="periodes">Dates des periodes</button>
         </div>
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
@@ -433,6 +434,7 @@
         <div id="annualPlanWrap" style="display:none"></div>
         <div id="programsWrap" style="display:none"></div>
         <div id="calendarWrap" style="display:none"></div>
+        <div id="periodDatesWrap" style="display:none"></div>
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="subtabbar" id="unssSubtabs">
@@ -3553,14 +3555,162 @@
       return a ? a.apsa_name : null;
     }
 
+    // ---- Programmation > Dates des periodes ----
+    //
+    // Miroir du panneau Programmation EPS de l'application. Les niveaux 6e a 1re suivent le
+    // calendrier commun de l'etablissement : leurs dates sont des constantes, affichees en
+    // lecture seule des deux cotes. Seule la Terminale a un decoupage propre, donc modifiable.
+    //
+    // Ce decoupage ne vivait que dans les preferences locales du telephone : invisible ici, et
+    // perdu au changement d'appareil. Il passe par Supabase et devient partage entre collegues.
+
+    const PERIODES_STANDARD = [
+      { number: 1, start: "2026-09-01", end: "2026-10-16" },
+      { number: 2, start: "2026-11-02", end: "2026-12-18" },
+      { number: 3, start: "2027-01-04", end: "2027-02-19" },
+      { number: 4, start: "2027-03-08", end: "2027-04-23" },
+      { number: 5, start: "2027-05-10", end: "2027-07-05" }
+    ];
+    const NIVEAUX_STANDARD = [
+      ["SIXIEME", "Sixieme"], ["CINQUIEME", "Cinquieme"], ["QUATRIEME", "Quatrieme"],
+      ["TROISIEME", "Troisieme"], ["SECONDE", "Seconde"], ["PREMIERE", "Premiere"]
+    ];
+    const ANNEE_PERIODES = "2026-2027";
+
+    let periodesTerminale = [];
+
+    /** La derniere periode d'un niveau va jusqu'a la fin de l'annee, comme dans l'application. */
+    function periodeStandard(numero, nombre) {
+      const base = PERIODES_STANDARD[numero - 1];
+      return numero === nombre
+        ? Object.assign({}, base, { end: PERIODES_STANDARD[PERIODES_STANDARD.length - 1].end })
+        : base;
+    }
+
+    function dateFr(iso) {
+      if (!iso) return "";
+      const parts = String(iso).split("-");
+      return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : iso;
+    }
+
+    async function loadPeriodDates() {
+      const res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?deleted=eq.false&school_year=eq."
+        + encodeURIComponent(ANNEE_PERIODES) + "&select=*&order=number.asc");
+      periodesTerminale = res.ok ? (await res.json()).filter(p => p.grade === "TERMINALE") : [];
+    }
+
+    async function renderPeriodDatesTab() {
+      const wrap = document.getElementById("periodDatesWrap");
+      wrap.innerHTML = '<div class="muted">Chargement...</div>';
+      await loadPeriodDates();
+
+      const prefs = loadPrefs();
+      const nbTerminale = periodCountForLevel("TERMINALE", prefs);
+
+      const lignesStandard = NIVEAUX_STANDARD.map(function (niveau) {
+        const nombre = periodCountForLevel(niveau[0], prefs);
+        const cellules = PERIODES_STANDARD.map(function (p) {
+          if (p.number > nombre) return '<td class="muted">-</td>';
+          const d = periodeStandard(p.number, nombre);
+          return "<td>" + dateFr(d.start) + '<br><span class="muted">' + dateFr(d.end) + "</span></td>";
+        }).join("");
+        return '<tr><th style="text-align:left">' + planningText(niveau[1]) + "</th>" + cellules + "</tr>";
+      }).join("");
+
+      const lignesTerminale = Array.from({ length: nbTerminale }, (_, i) => i + 1).map(function (numero) {
+        const p = periodesTerminale.find(x => x.number === numero);
+        const debut = p ? dateFr(p.start_date) : '<span class="muted">Non definie</span>';
+        const fin = p ? dateFr(p.end_date) : '<span class="muted">Non definie</span>';
+        return '<tr><th style="text-align:left">Periode ' + numero + "</th><td>" + debut + "</td><td>" + fin
+          + '</td><td><button class="secondary" data-periode="' + numero + '" style="margin-top:0">'
+          + (p ? "Modifier" : "Definir") + "</button></td></tr>";
+      }).join("");
+
+      wrap.innerHTML =
+        '<div class="card"><h2>Terminale</h2>'
+        + '<div class="muted">Decoupage personnalise en ' + nbTerminale + ' periode(s). Ces dates sont partagees avec vos collegues et avec l\'application.</div>'
+        + '<table style="margin-top:10px"><thead><tr><th style="text-align:left">Periode</th><th>Debut</th><th>Fin</th><th></th></tr></thead>'
+        + "<tbody>" + lignesTerminale + "</tbody></table></div>"
+        + '<div class="card" style="margin-top:14px"><h2>Autres niveaux</h2>'
+        + '<div class="muted">Dates reprises du calendrier commun de l\'etablissement : elles ne se modifient pas ici, comme dans l\'application. Le nombre de periodes par niveau se regle dans Reglages.</div>'
+        + '<div style="overflow-x:auto"><table style="margin-top:10px"><thead><tr><th style="text-align:left">Niveau</th>'
+        + PERIODES_STANDARD.map(p => "<th>P" + p.number + "</th>").join("")
+        + "</tr></thead><tbody>" + lignesStandard + "</tbody></table></div></div>"
+        + '<div id="periodDatesMsg" class="muted" style="margin-top:10px" role="status" aria-live="polite"></div>';
+
+      wrap.querySelectorAll("[data-periode]").forEach(function (btn) {
+        btn.addEventListener("click", () => openPeriodDatePanel(Number(btn.dataset.periode)));
+      });
+    }
+
+    function openPeriodDatePanel(numero) {
+      const existante = periodesTerminale.find(p => p.number === numero);
+      const panel = document.getElementById("planningPanel");
+      panel.innerHTML =
+        "<h2>Terminale - periode " + numero + "</h2>"
+        + '<label for="periodStart">Date de debut</label>'
+        + '<input type="date" id="periodStart" value="' + (existante ? existante.start_date : "") + '">'
+        + '<label for="periodEnd">Date de fin</label>'
+        + '<input type="date" id="periodEnd" value="' + (existante ? existante.end_date : "") + '">'
+        + '<button id="periodSaveBtn">Enregistrer</button>'
+        + (existante ? '<button class="danger" id="periodDeleteBtn">Supprimer cette periode</button>' : "")
+        + '<button class="secondary" id="periodCancelBtn">Annuler</button>'
+        + '<div class="error" id="periodError"></div>';
+      panel.style.display = "block";
+
+      document.getElementById("periodCancelBtn").addEventListener("click", function () {
+        panel.style.display = "none";
+      });
+
+      document.getElementById("periodSaveBtn").addEventListener("click", async function () {
+        const debut = document.getElementById("periodStart").value;
+        const fin = document.getElementById("periodEnd").value;
+        const erreur = document.getElementById("periodError");
+        if (!debut || !fin) { erreur.textContent = "Les deux dates sont obligatoires."; return; }
+        // Une periode qui se termine avant de commencer casserait le classement des cycles.
+        if (fin < debut) { erreur.textContent = "La date de fin doit suivre la date de debut."; return; }
+        const chevauche = periodesTerminale.find(p => p.number !== numero && debut <= p.end_date && fin >= p.start_date);
+        if (chevauche && !confirm("Cette periode chevauche la periode " + chevauche.number + " ("
+            + dateFr(chevauche.start_date) + " - " + dateFr(chevauche.end_date) + "). Enregistrer quand meme ?")) return;
+
+        const corps = { school_year: ANNEE_PERIODES, grade: "TERMINALE", number: numero,
+                        start_date: debut, end_date: fin, deleted: false, updated_at: new Date().toISOString() };
+        let res;
+        if (existante) {
+          res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?id=eq." + encodeURIComponent(existante.id),
+            { method: "PATCH", body: JSON.stringify(corps) });
+        } else {
+          // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
+          res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates",
+            { method: "POST", body: JSON.stringify(Object.assign({ id: crypto.randomUUID(), user_id: session.user_id }, corps)) });
+        }
+        if (!res.ok) { erreur.textContent = "Periode non enregistree. Verifiez votre connexion."; return; }
+        panel.style.display = "none";
+        await renderPeriodDatesTab();
+        document.getElementById("periodDatesMsg").textContent = "Periode " + numero + " enregistree et partagee.";
+      });
+
+      const suppr = document.getElementById("periodDeleteBtn");
+      if (suppr) suppr.addEventListener("click", async function () {
+        if (!confirm("Supprimer les dates de la periode " + numero + " ?")) return;
+        const res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?id=eq." + encodeURIComponent(existante.id),
+          { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) });
+        if (!res.ok) { document.getElementById("periodError").textContent = "Suppression impossible."; return; }
+        panel.style.display = "none";
+        await renderPeriodDatesTab();
+      });
+    }
+
     function renderPlanningTab() {
       // Programmation annuelle, programmes officiels et calendrier n'utilisent pas la grille
       // horaire : on bascule l'affichage.
       const annualMode = planningMode === "annuelle";
-      const listMode = ["annuelle", "programmes", "calendrier"].includes(planningMode);
+      const listMode = ["annuelle", "programmes", "calendrier", "periodes"].includes(planningMode);
       document.getElementById("annualPlanWrap").style.display = annualMode ? "block" : "none";
       document.getElementById("programsWrap").style.display = planningMode === "programmes" ? "block" : "none";
       document.getElementById("calendarWrap").style.display = planningMode === "calendrier" ? "block" : "none";
+      document.getElementById("periodDatesWrap").style.display = planningMode === "periodes" ? "block" : "none";
+      if (planningMode === "periodes") renderPeriodDatesTab();
       document.getElementById("planningGrid").style.display = listMode ? "none" : "";
       document.getElementById("planningFullscreenBar").style.display = listMode ? "none" : "flex";
       if (listMode) {
