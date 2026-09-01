@@ -192,6 +192,7 @@
     <div class="tabbar" id="tabbar" style="display:none">
       <button class="tabbtn" data-tab="home">ACCUEIL</button>
       <button class="tabbtn" data-tab="classes">CLASSE</button>
+      <button class="tabbtn" data-tab="health">SANTÉ / ACCIDENT</button>
       <button class="tabbtn" data-tab="planning">PLANNING</button>
       <button class="tabbtn" data-tab="cours">COURS</button>
       <button class="tabbtn" data-tab="unss">ASLVH</button>
@@ -571,6 +572,10 @@
           </div>
         </div>
       </div>
+
+      <div id="tab-health" class="tabpanel" style="display:none">
+        <div id="healthBody"></div>
+      </div>
     </div>
   </div>
 
@@ -612,6 +617,7 @@
   <script src="sync-safety.js"></script>
   <script src="school-levels.js"></script>
   <script src="period-settings.js"></script>
+  <script src="health.js"></script>
   <script src="student-fields.js"></script>
   <script src="teacher-settings.js"></script>
   <script src="home-weather.js"></script>
@@ -890,7 +896,7 @@
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
-    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes"];
+    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health"];
     let currentWebTab = "home";
     function showTab(name) {
       if (name === "settings") { openSettings(); return; }
@@ -909,6 +915,7 @@
         loadTodayCard();
       }
       if (name === "classes") showSubtab("classes");
+      if (name === "health") initHealthTab();
       if (name === "home") { applyHomeVisual(); renderHomeWeather(); }
       if (name === "cours") initCoursTab();
       if (name === "planning" || name === "programmation") {
@@ -939,7 +946,7 @@
         "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
         "sport_installations", "unss_groups", "unss_students", "unss_memberships",
         "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
-        "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles"];
+        "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles", "health_dispensations"];
       const dump = { exportedAt: new Date().toISOString(), account: session.email };
       for (const table of tables) {
         try {
@@ -2178,12 +2185,14 @@
 
         <div class="row" style="margin-top:12px">
           <button class="secondary" id="dashEvalBtn">Evaluations de la classe</button>
+          <button class="secondary" id="dashDispenseBtn">Dispenses</button>
         </div>`;
 
       document.getElementById("closeDashboardBtn").onclick = () => { panel.style.display = "none"; };
       panel.querySelectorAll("[data-dash-period]").forEach(b =>
         b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); renderClassDashboard(); });
       document.getElementById("dashEvalBtn").onclick = () => showTab("cours");
+      document.getElementById("dashDispenseBtn").onclick = () => openClassDispenses(row.id);
 
       renderDashboardExercises(activity);
     }
