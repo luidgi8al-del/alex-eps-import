@@ -14,7 +14,7 @@ export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,creat
    const actor=await verifyUser(match[1]);
    if(!actor?.id)return reply({error:'Connexion expirée'},401);
    const body=await req.json();
-   if(!['invite','reserve','send_invite','pending_invites','impersonate','reset_password','delete'].includes(body.action))return reply({error:'Action inconnue'},400);
+   if(!['invite','reserve','send_invite','pending_invites','cancel_invite','impersonate','reset_password','delete'].includes(body.action))return reply({error:'Action inconnue'},400);
    // Places reservees dont le mail n'est pas encore parti.
    if(body.action==='pending_invites')return reply({ok:true,invites:await rpc('eps_pending_invites',{p_actor:actor.id})});
    if(body.action==='invite'||body.action==='reserve') {
@@ -30,6 +30,14 @@ export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,creat
     }
     await invite(email);
     return reply({ok:true,message:'Invitation envoyée. Le collègue définit son propre mot de passe.'});
+   }
+   if(body.action==='cancel_invite') {
+    const email=String(body.email||'').trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return reply({error:'E-mail valide requis'},400);
+    // Annule une place reservee dont le compte n'a pas encore ete cree : une adresse saisie de
+    // travers restait sinon dans la liste sans moyen de l'en retirer.
+    await rpc('eps_cancel_invite',{p_actor:actor.id,p_email:email});
+    return reply({ok:true,message:'Réservation annulée.'});
    }
    if(body.action==='send_invite') {
     const email=String(body.email||'').trim().toLowerCase();
