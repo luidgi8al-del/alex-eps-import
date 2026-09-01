@@ -671,6 +671,18 @@
     // ---- Auth ----
     let isSignup = false;
     let passwordLinkSession = null;
+    async function sendPasswordSetupLink(email) {
+      const redirectTo = `${location.origin}${location.pathname}`;
+      const response = await fetch(`${SUPABASE_URL}/auth/v1/recover?redirect_to=${encodeURIComponent(redirectTo)}`, {
+        method: "POST",
+        headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.msg || body.message || "Impossible d’envoyer le lien de mot de passe.");
+      }
+    }
     async function preparePasswordLink() {
       const params = new URLSearchParams(location.hash.startsWith("#") ? location.hash.slice(1) : "");
       const type = params.get("type");
@@ -706,6 +718,7 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const errorEl = document.getElementById("authError");
+      errorEl.className = "error";
       errorEl.textContent = "";
       if (passwordLinkSession) {
         if (password.length < 6) { errorEl.textContent = "Choisissez un mot de passe d’au moins 6 caractères."; return; }
@@ -736,7 +749,20 @@
           body: JSON.stringify({ email, password })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error_description || data.msg || "Echec de l'authentification.");
+        if (!res.ok) {
+          const rawMessage = data.error_description || data.msg || data.message || "Echec de l'authentification.";
+          if (isSignup && /already registered|already exists|déjà enregistré/i.test(rawMessage)) {
+            await sendPasswordSetupLink(email);
+            isSignup = false;
+            document.getElementById("authTitle").textContent = "Compte déjà invité";
+            document.getElementById("authSubmitBtn").textContent = "Se connecter";
+            document.getElementById("authToggleBtn").textContent = "Pas encore de compte ? Créer un compte";
+            errorEl.className = "ok";
+            errorEl.textContent = "Cette adresse a déjà été invitée. Un nouveau lien vient d’être envoyé : ouvrez-le pour choisir votre mot de passe. Vous ne devez pas recréer le compte.";
+            return;
+          }
+          throw new Error(rawMessage);
+        }
         if (!data.access_token) {
           errorEl.textContent = isSignup ? "Compte cree. Verifiez vos emails si une confirmation est requise, puis connectez-vous." : "Reponse inattendue du serveur.";
           return;
@@ -745,6 +771,7 @@
         justSignedUp = isSignup;
         showMainView();
       } catch (e) {
+        errorEl.className = "error";
         errorEl.textContent = e.message;
       }
     });
