@@ -438,6 +438,7 @@
         <div class="subtabbar" id="unssSubtabs">
           <button class="subtabbtn" data-unsstab="all">Eleve LVH</button>
           <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
+          <button class="subtabbtn" data-unsstab="slots">Creneaux AS</button>
           <button class="subtabbtn" data-unsstab="groups">Groupe</button>
           <button class="subtabbtn" data-unsstab="appel">Appel</button>
         </div>
@@ -4715,6 +4716,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       }
       await loadUnssStudents();
       await loadUnssGroups();
+      await loadUnssSlots();
       renderUnssTab();
     }
 
@@ -4730,12 +4732,63 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       unssStudents = res.ok ? await res.json() : [];
     }
 
+    let unssSlots = [];
+
+    /**
+     * Creneaux AS : l'offre d'activites de l'association sportive, parmi laquelle l'eleve
+     * formule ses trois voeux. Distincte des groupes, qui sont les listes d'eleves reellement
+     * inscrits une fois les voeux traites.
+     */
+    async function loadUnssSlots() {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?deleted=eq.false&select=*&order=activity_name.asc`);
+      unssSlots = res.ok ? await res.json() : [];
+    }
+
+    const UNSS_SLOT_DAYS = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
+
+    /**
+     * Menu deroulant des creneaux AS pour un voeu. [ancienLibelle] couvre les voeux saisis en
+     * texte libre avant ce module : plutot que de les perdre silencieusement, on les propose en
+     * tete de liste, signales comme ne correspondant a aucun creneau existant.
+     */
+    function menuCreneaux(id, slotIdChoisi, ancienLibelle) {
+      const orphelin = !slotIdChoisi && ancienLibelle
+        ? `<option value="" selected>${unssText(ancienLibelle)} (ancien voeu, hors creneaux)</option>`
+        : "";
+      const vide = `<option value=""${!slotIdChoisi && !ancienLibelle ? " selected" : ""}>Aucun voeu</option>`;
+      const options = unssSlots.map(slot =>
+        `<option value="${slot.id}"${slot.id === slotIdChoisi ? " selected" : ""}>${unssText(unssSlotLabel(slot))}</option>`
+      ).join("");
+      if (unssSlots.length === 0) {
+        return `<select id="${id}" disabled><option>Aucun creneau AS. Creez-en dans l'onglet Creneaux AS.</option></select>`;
+      }
+      return `<select id="${id}">${orphelin}${vide}${options}</select>`;
+    }
+
+    /** Les intitules de creneau sont saisis a la main : ils repassent par un echappement HTML. */
+    function unssText(value) {
+      return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    }
+
+    function unssSlotLabel(slot) {
+      if (!slot) return "";
+      const horaire = [slot.start_time, slot.end_time].filter(Boolean).join("-");
+      return [slot.activity_name, capitaliseJour(slot.day_of_week), horaire, slot.location]
+        .filter(Boolean).join(" · ");
+    }
+
+    function capitaliseJour(jour) {
+      if (!jour) return "";
+      return jour.charAt(0) + jour.slice(1).toLowerCase();
+    }
+
     async function loadUnssGroups() {
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc`);
       unssGroups = res.ok ? await res.json() : [];
     }
 
     function renderUnssTab() {
+      if (unssMode === "slots") { renderUnssSlotsTab(); return; }
       if (unssMode === "groups") { renderUnssGroupsTab(); return; }
       if (unssMode === "appel") { renderUnssAppelTab(); return; }
       const wrap = document.getElementById("unssList");
@@ -4963,6 +5016,136 @@ Cette action est definitive.`
       alert(`${count} eleve(s) importe(s).`);
     }
 
+    // ---- UNSS > Creneaux AS : l'offre d'activites parmi laquelle se formulent les voeux ----
+
+    function renderUnssSlotsTab() {
+      const wrap = document.getElementById("unssList");
+      let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">
+        <button id="unssSlotAddBtn" style="margin-top:0">Ajouter un creneau</button></div>`;
+
+      if (unssSlots.length === 0) {
+        html += `<div class="muted">Aucun creneau AS. Creez-en un : c'est parmi ces creneaux que
+          les eleves formulent leurs trois voeux au moment de leur licence.</div>`;
+      } else {
+        html += unssSlots.map(slot => {
+          const detail = [capitaliseJour(slot.day_of_week),
+            [slot.start_time, slot.end_time].filter(Boolean).join(" - "),
+            slot.location].filter(Boolean).join(" · ");
+          const demandes = compterVoeux(slot.id);
+          const places = slot.max_places ? ` / ${slot.max_places} places` : "";
+          return `<div class="card unssCard" data-slot="${slot.id}">
+            <div>
+              <div><strong>${unssText(slot.activity_name || "Creneau sans nom")}</strong></div>
+              <div class="muted">${unssText(detail) || "Horaire non renseigne"}</div>
+              <div class="muted" style="font-size:12px">${demandes} voeu(x)${places}</div>
+            </div>
+            <button class="danger" data-slot-delete="${slot.id}" style="margin-top:0">Supprimer</button>
+          </div>`;
+        }).join("");
+      }
+      wrap.innerHTML = html;
+
+      document.getElementById("unssSlotAddBtn").addEventListener("click", () => openUnssSlotPanel(null));
+      wrap.querySelectorAll("[data-slot]").forEach(el => {
+        el.addEventListener("click", () => openUnssSlotPanel(unssSlots.find(x => x.id === el.dataset.slot)));
+      });
+      wrap.querySelectorAll("[data-slot-delete]").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          await supprimerCreneau(btn.dataset.slotDelete);
+        });
+      });
+    }
+
+    /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
+    function compterVoeux(slotId) {
+      return unssStudents.filter(s =>
+        s.wish1_slot_id === slotId || s.wish2_slot_id === slotId || s.wish3_slot_id === slotId).length;
+    }
+
+    /**
+     * Supprimer un creneau demande par des eleves effacerait leur voeu sans que rien ne le
+     * signale : on annonce le nombre concerne avant de confirmer. Les voeux gardent leur
+     * intitule lisible (wish1/2/3), seule la reference au creneau disparait.
+     */
+    async function supprimerCreneau(slotId) {
+      const demandes = compterVoeux(slotId);
+      const slot = unssSlots.find(x => x.id === slotId);
+      const avertissement = demandes > 0
+        ? `
+
+Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu restera lisible mais ne pointera plus sur un creneau.`
+        : "";
+      if (!confirm(`Supprimer le creneau "${slot ? slot.activity_name : ""}" ?${avertissement}`)) return;
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slotId)}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      if (!res.ok) { alert("Creneau non supprime. Verifiez votre connexion."); return; }
+      await loadUnssSlots();
+      renderUnssTab();
+    }
+
+    function openUnssSlotPanel(slot) {
+      const panel = document.getElementById("unssPanel");
+      const isNew = !slot;
+      panel.innerHTML = `
+        <h2>${isNew ? "Nouveau creneau AS" : "Modifier le creneau"}</h2>
+        <label for="unssSlotActivity">Activite</label>
+        <input type="text" id="unssSlotActivity" value="${slot ? unssText(slot.activity_name) : ""}" placeholder="Badminton, Cross, Futsal...">
+        <label for="unssSlotDay">Jour</label>
+        <select id="unssSlotDay">
+          <option value="">Non renseigne</option>
+          ${UNSS_SLOT_DAYS.map(j => `<option value="${j}"${slot && slot.day_of_week === j ? " selected" : ""}>${capitaliseJour(j)}</option>`).join("")}
+        </select>
+        <label for="unssSlotStart">Heure de debut</label>
+        <input type="time" id="unssSlotStart" value="${slot ? slot.start_time || "" : ""}">
+        <label for="unssSlotEnd">Heure de fin</label>
+        <input type="time" id="unssSlotEnd" value="${slot ? slot.end_time || "" : ""}">
+        <label for="unssSlotLocation">Lieu</label>
+        <input type="text" id="unssSlotLocation" value="${slot ? unssText(slot.location) : ""}" placeholder="Gymnase, stade...">
+        <label for="unssSlotPlaces">Places (facultatif)</label>
+        <input type="number" id="unssSlotPlaces" min="1" value="${slot && slot.max_places ? slot.max_places : ""}">
+        <label for="unssSlotComment">Commentaire</label>
+        <input type="text" id="unssSlotComment" value="${slot ? unssText(slot.comment) : ""}">
+        <button id="unssSlotSaveBtn">Enregistrer</button>
+        <button class="secondary" id="unssSlotCancelBtn">Annuler</button>
+        <div class="error" id="unssSlotError"></div>`;
+      panel.style.display = "block";
+
+      document.getElementById("unssSlotCancelBtn").addEventListener("click", () => panel.style.display = "none");
+      document.getElementById("unssSlotSaveBtn").addEventListener("click", async () => {
+        const activite = document.getElementById("unssSlotActivity").value.trim();
+        if (!activite) { document.getElementById("unssSlotError").textContent = "L'activite est obligatoire."; return; }
+        const places = parseInt(document.getElementById("unssSlotPlaces").value, 10);
+        const body = {
+          activity_name: activite,
+          day_of_week: document.getElementById("unssSlotDay").value,
+          start_time: document.getElementById("unssSlotStart").value,
+          end_time: document.getElementById("unssSlotEnd").value,
+          location: document.getElementById("unssSlotLocation").value.trim(),
+          max_places: Number.isFinite(places) && places > 0 ? places : null,
+          comment: document.getElementById("unssSlotComment").value.trim(),
+          updated_at: new Date().toISOString()
+        };
+        let res;
+        if (isNew) {
+          // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
+          res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots`, {
+            method: "POST",
+            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, deleted: false, ...body })
+          });
+        } else {
+          res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slot.id)}`, {
+            method: "PATCH", body: JSON.stringify(body)
+          });
+        }
+        if (!res.ok) { document.getElementById("unssSlotError").textContent = "Creneau non enregistre. Verifiez votre connexion."; return; }
+        panel.style.display = "none";
+        await loadUnssSlots();
+        renderUnssTab();
+      });
+    }
+
     /** Etape 1 pour licencier : on coche l'eleve deja present dans le repertoire Eleve LVH. */
     /** Comparaison tolerante : sans accent, sans casse, pour chercher "Benoit" et trouver "Benoit". */
     function chaineRecherche(valeur) {
@@ -5063,12 +5246,10 @@ Cette action est definitive.`
         <label for="unssCategory">Categorie</label>
         <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${unssCategoryLabel(c.value, student ? student.sex : "")}</option>`).join("")}</select>
         ${licensing || (student && student.licensed) ? `
-          <label for="unssWish1">Voeu 1</label>
-          <input type="text" id="unssWish1" value="${student ? student.wish1 || "" : ""}">
-          <label for="unssWish2">Voeu 2</label>
-          <input type="text" id="unssWish2" value="${student ? student.wish2 || "" : ""}">
-          <label for="unssWish3">Voeu 3</label>
-          <input type="text" id="unssWish3" value="${student ? student.wish3 || "" : ""}">
+          ${[1, 2, 3].map(n => `
+            <label for="unssWish${n}">Voeu ${n}</label>
+            ${menuCreneaux(`unssWish${n}`, student ? student[`wish${n}_slot_id`] : null, student ? student[`wish${n}`] : "")}
+          `).join("")}
           <label for="unssJersey">Taille maillot</label>
           <input type="text" id="unssJersey" value="${student ? student.jersey_size || "" : ""}">
           <label for="unssEmailEleve">Email eleve</label>
@@ -5110,9 +5291,14 @@ Cette action est definitive.`
         const wishField = document.getElementById("unssWish1");
         if (wishField) {
           body.licensed = true;
-          body.wish1 = document.getElementById("unssWish1").value;
-          body.wish2 = document.getElementById("unssWish2").value;
-          body.wish3 = document.getElementById("unssWish3").value;
+          // On enregistre la reference au creneau et son intitule lisible : l'intitule survit a
+          // la suppression du creneau, et reste affichable pour les voeux saisis avant ce module.
+          for (const n of [1, 2, 3]) {
+            const slotId = document.getElementById(`unssWish${n}`).value;
+            const slot = unssSlots.find(x => x.id === slotId);
+            body[`wish${n}_slot_id`] = slotId || null;
+            body[`wish${n}`] = slot ? unssSlotLabel(slot) : "";
+          }
           body.jersey_size = document.getElementById("unssJersey").value;
           body.student_email = document.getElementById("unssEmailEleve").value || null;
           body.parent_email = document.getElementById("unssEmailParent").value || null;
