@@ -925,6 +925,36 @@
     // ---- Onglets (memes 6 modules que l'application) ----
     const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health"];
     let currentWebTab = "home";
+    let epsPageFullyReady = false;
+    let pendingModuleTab = null;
+    function showModuleFailure(name, error) {
+      console.error(`Module ${name}`, error);
+      const panel = document.getElementById("tab-" + (name === "planning" ? "programmation" : name));
+      if (!panel) return;
+      let notice = panel.querySelector(".moduleLoadError");
+      if (!notice) {
+        notice = document.createElement("div"); notice.className = "card moduleLoadError error";
+        panel.prepend(notice);
+      }
+      notice.textContent = `Le module ${name} n’a pas fini de se charger. Cliquez ici pour réessayer.`;
+      notice.onclick = () => { notice.remove(); startSelectedModule(name); };
+    }
+    function startSelectedModule(name) {
+      if (!epsPageFullyReady) { pendingModuleTab = name; return; }
+      try {
+        if (name === "classes") showSubtab("classes");
+        if (name === "health") initHealthTab();
+        if (name === "cours") initCoursTab();
+        if (name === "equipement") initInstallationsTab();
+        if (name === "unss") initUnssTab().catch(error => showModuleFailure(name, error));
+        if (name === "planning" || name === "programmation") {
+          const requestedTab = name;
+          initPlanningTab()
+            .then(() => { if (currentWebTab === requestedTab) showPlanningTab(requestedTab === "planning" ? "global" : "annuelle"); })
+            .catch(error => showModuleFailure(name, error));
+        }
+      } catch (error) { showModuleFailure(name, error); }
+    }
     function showTab(name) {
       if (name === "settings") { openSettings(); return; }
       if (!TAB_NAMES.includes(name) && name !== "planning") return;
@@ -941,10 +971,7 @@
         document.getElementById("homeGreeting").textContent = teacher ? `Bonjour ${teacher}` : "Bonjour";
         loadTodayCard();
       }
-      if (name === "classes") showSubtab("classes");
-      if (name === "health") initHealthTab();
       if (name === "home") { applyHomeVisual(); renderHomeWeather(); }
-      if (name === "cours") initCoursTab();
       if (name === "planning" || name === "programmation") {
         const requestedTab = name;
         document.getElementById("planningModuleTitle").textContent = name === "planning" ? "Planning" : "Programmation";
@@ -954,10 +981,8 @@
           button.hidden = requestedTab === "planning" ? !isSchedule : isSchedule;
         });
         planningMode = name === "planning" ? "global" : "annuelle";
-        initPlanningTab().then(() => { if (currentWebTab === requestedTab) showPlanningTab(requestedTab === "planning" ? "global" : "annuelle"); });
       }
-      if (name === "equipement") initInstallationsTab();
-      if (name === "unss") initUnssTab();
+      startSelectedModule(name);
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -1868,7 +1893,7 @@
       return result;
     }
 
-    let coursTabReady = false;
+    var coursTabReady = false;
     let selectedCoursPeriod = 1;
     let loadedCourses = [];
 
@@ -2870,7 +2895,7 @@
     let planningInstallations = []; // installations de l'enseignant (module Equipement)
     let planningPendingClass = null; // classe qui attend son 2e creneau (mode global)
     let planningNewlyCreatedClasses = []; // classes creees automatiquement depuis Planning (rappel)
-    let planningTabReady = false;
+    var planningTabReady = false;
     let planningCommunitySlots = null; // null = pas encore charge ; sinon liste (Planning global EPS)
     let planningCommunityActivities = [];
     let planningCommunityLoading = false;
@@ -4107,7 +4132,7 @@
     }
 
     // ---- Onglet Equipement > Installations sportives ----
-    let installationsTabReady = false;
+    var installationsTabReady = false;
 
     function initInstallationsTab() {
       if (!installationsTabReady) {
@@ -5857,6 +5882,12 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     }
 
     // ---- Demarrage ----
+    epsPageFullyReady = true;
+    if (pendingModuleTab) {
+      const tabToStart = pendingModuleTab;
+      pendingModuleTab = null;
+      setTimeout(() => startSelectedModule(tabToStart), 0);
+    }
     const domainField = document.getElementById("studentEmailDomain");
     domainField.value = localStorage.getItem("alex_eps_student_domain") || "";
     domainField.addEventListener("change", () => localStorage.setItem("alex_eps_student_domain", domainField.value.trim()));
