@@ -1,5 +1,5 @@
 // Dependency-injected server handler: no secret key or admin capability reaches a client.
-export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,allowedOrigin}) {
+export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,createUser,magicLink,allowedOrigin}) {
  return async function(req) {
   const origin=req.headers.get('origin');
   const headers={'Content-Type':'application/json','Vary':'Origin'};
@@ -14,15 +14,20 @@ export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,allow
    const actor=await verifyUser(match[1]);
    if(!actor?.id)return reply({error:'Connexion expirée'},401);
    const body=await req.json();
-   if(!['invite','reserve','send_invite','pending_invites','reset_password','delete'].includes(body.action))return reply({error:'Action inconnue'},400);
+   if(!['invite','reserve','send_invite','pending_invites','impersonate','reset_password','delete'].includes(body.action))return reply({error:'Action inconnue'},400);
    // Places reservees dont le mail n'est pas encore parti.
    if(body.action==='pending_invites')return reply({ok:true,invites:await rpc('eps_pending_invites',{p_actor:actor.id})});
    if(body.action==='invite'||body.action==='reserve') {
     const email=String(body.email||'').trim().toLowerCase(),name=String(body.name||'').trim();
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!name||name.length>150)return reply({error:'Nom et e-mail valides requis'},400);
     await rpc('eps_reserve_invite',{p_actor:actor.id,p_email:email,p_name:name});
-    // 'reserve' s'arrete la : l'administrateur prepare le compte, et declenche l'envoi plus tard.
-    if(body.action==='reserve')return reply({ok:true,message:'Compte réservé. Préparez ses classes, puis envoyez l’invitation.'});
+    // 'reserve' cree reellement le compte, sans ecrire au collegue : il faut un compte existant
+    // pour pouvoir le preparer, y basculer, et lui envoyer son lien de mot de passe plus tard.
+    // Le declencheur eps_claim_reserved_invite le rattache a l'etablissement des sa creation.
+    if(body.action==='reserve') {
+     await createUser(email);
+     return reply({ok:true,message:'Compte créé. Préparez ses classes, puis envoyez son lien de mot de passe.'});
+    }
     await invite(email);
     return reply({ok:true,message:'Invitation envoyée. Le collègue définit son propre mot de passe.'});
    }
@@ -32,10 +37,21 @@ export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,allow
     // Sans ce controle, l'envoi deviendrait un moyen d'expedier des mails a n'importe qui.
     if(await rpc('eps_pending_invite_exists',{p_actor:actor.id,p_email:email})!==true)
      return reply({error:'Aucune place réservée pour cette adresse'},400);
-    await invite(email);
-    return reply({ok:true,message:'Invitation envoyée. Le collègue définit son propre mot de passe.'});
+    // Le compte existe deja (cree par 'reserve') : une invitation serait refusee, c'est un lien
+    // de definition de mot de passe qu'il faut envoyer.
+    await recover(email);
+    return reply({ok:true,message:'Lien envoyé. Le collègue définit son propre mot de passe.'});
    }
    const target=String(body.target_id||'');
+   if(body.action==='impersonate') {
+    if(!/^[0-9a-f]{8}-[0-9a-f-]{27}$/i.test(target))return reply({error:'Compte invalide'},400);
+    // Les droits sont verifies et la bascule enregistree cote base : la page ne decide de rien.
+    const ctx=await rpc('eps_begin_impersonation',{p_actor:actor.id,p_target:target});
+    const link=await magicLink(ctx.email);
+    const hash=link?.properties?.hashed_token;
+    if(!hash)return reply({error:'Bascule impossible pour ce compte'},400);
+    return reply({ok:true,token_hash:hash,email:ctx.email});
+   }
    if(!/^[0-9a-f]{8}-[0-9a-f-]{27}$/i.test(target))return reply({error:'Compte invalide'},400);
    if(target===actor.id)return reply({error:'Cette action ne permet pas de supprimer votre propre compte.'},400);
    const context=await rpc('eps_admin_target',{p_actor:actor.id,p_target:target});

@@ -222,6 +222,13 @@
     </div>
   </div>
 
+  <!-- Bandeau de bascule : il doit rester visible en permanence, sinon on saisit sans savoir
+       sur quel compte on ecrit. -->
+  <div id="impersonationBar" style="display:none; background:#7A4D00; color:#fff; padding:10px 24px; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <span id="impersonationLabel"></span>
+    <button class="secondary" id="impersonationBackBtn" style="margin-top:0; border-color:rgba(255,255,255,.5); color:#fff">Revenir sur mon compte</button>
+  </div>
+
   <!-- Verrouillage par code : confort d'ecran, pas une protection des donnees -->
   <div class="searchOverlay" id="lockOverlay" style="align-items:center">
     <div class="searchSheet" style="max-width:340px; text-align:center">
@@ -672,6 +679,65 @@
       };
     }
 
+    /**
+     * Bascule d'administrateur : ouvrir la session d'un collegue pour preparer son compte.
+     *
+     * La session administrateur est mise de cote avant la bascule, jamais ecrasee : sans elle,
+     * le retour serait impossible et il faudrait se reconnecter a la main.
+     *
+     * Les droits sont verifies cote serveur et chaque bascule est enregistree
+     * (eps_begin_impersonation). La page ne recoit qu'un jeton a usage unique, jamais la cle de
+     * service.
+     */
+    const ADMIN_SESSION_KEY = "alex_eps_admin_session";
+
+    function sessionAdministrateur() {
+      return JSON.parse(localStorage.getItem(ADMIN_SESSION_KEY) || "null");
+    }
+
+    function renderImpersonationBar() {
+      const bar = document.getElementById("impersonationBar");
+      const admin = sessionAdministrateur();
+      if (!admin || !session) { bar.style.display = "none"; return; }
+      document.getElementById("impersonationLabel").textContent =
+        `Vous etes sur le compte de ${session.email}. Tout ce que vous saisissez lui appartiendra.`;
+      document.getElementById("impersonationBackBtn").textContent =
+        `Revenir sur mon compte (${admin.email})`;
+      bar.style.display = "flex";
+    }
+
+    async function basculerSurCompte(targetId, nom) {
+      if (!confirm(`Basculer sur le compte de ${nom} ?\n\nVous verrez et modifierez ses donnees. La bascule est enregistree.`)) return;
+      const reponse = await teamAdminAction({ action: "impersonate", target_id: targetId });
+      // Le jeton ne sert qu'une fois : on l'echange tout de suite contre une session.
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+        method: "POST",
+        headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "magiclink", token_hash: reponse.token_hash })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.access_token) throw new Error(data.msg || data.error_description || "Bascule impossible.");
+
+      // On garde la session administrateur seulement si on n'est pas deja bascule : sinon une
+      // seconde bascule ecraserait le point de retour.
+      if (!sessionAdministrateur()) localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
+      saveSession({ access_token: data.access_token, user_id: data.user.id, email: data.user.email });
+      document.getElementById("settingsOverlay").classList.remove("open");
+      showMainView();
+      renderImpersonationBar();
+    }
+
+    function revenirSurMonCompte() {
+      const admin = sessionAdministrateur();
+      if (!admin) return;
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+      saveSession(admin);
+      showMainView();
+      renderImpersonationBar();
+    }
+
+    document.getElementById("impersonationBackBtn").addEventListener("click", revenirSurMonCompte);
+
     // Quand le token de connexion a expire, Supabase repond 401 (souvent "JWT expired") : on
     // deconnecte proprement et on montre l'ecran de connexion plutot que de laisser un message
     // d'erreur brut du serveur, qui ne dit pas a l'utilisateur qu'il faut se reconnecter.
@@ -803,6 +869,9 @@
     });
 
     document.getElementById("logoutBtn").addEventListener("click", () => {
+      // Sinon un retour serait propose au prochain visiteur de ce navigateur.
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+      document.getElementById("impersonationBar").style.display = "none";
       clearSession();
       showAuthView();
     });
@@ -823,6 +892,7 @@
       document.getElementById("settingsBtn").style.display = "inline-block";
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
+      renderImpersonationBar();
       refreshTeacherSettings().then(() => { if(currentWebTab === "home") showTab("home"); }).catch(e => console.warn(e.message));
       loadInstitution();
       maybeLock();
