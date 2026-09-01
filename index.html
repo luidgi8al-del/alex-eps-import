@@ -4560,7 +4560,10 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     let unssAppelGroupId = null;
     let unssAppelMembers = [];
     let unssAppelPresence = {};
-    let unssTabReady = false;
+    // `var` est volontaire ici : initUnssTab est appelable dès le premier affichage de la page.
+    // Une déclaration `let` placée plus bas provoquait une zone morte temporelle lorsque l'onglet
+    // ASLVH était restauré ou cliqué pendant l'initialisation asynchrone.
+    var unssTabReady = false;
 
     async function initUnssTab() {
       const asSchema = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_as_roster_version`);
