@@ -80,15 +80,16 @@
   }
   async function openSettings() {
     const errors=[];
-    let teamContext=null;
-    await Promise.all([refreshPeriodSettings().catch(e=>errors.push(e.message)),refreshTeacherProfile().catch(e=>errors.push(e.message)),loadInstitution().catch(e=>errors.push("Établissement non actualisé.")),loadTeamContext().then(v=>teamContext=v).catch(()=>{})]);
+    let teamContext=null,pendingInvites=[];
+    await Promise.all([refreshPeriodSettings().catch(e=>errors.push(e.message)),refreshTeacherProfile().catch(e=>errors.push(e.message)),loadInstitution().catch(e=>errors.push("Établissement non actualisé.")),loadTeamContext().then(v=>teamContext=v).catch(()=>{}),
+      teamAdminAction({action:"pending_invites"}).then(r=>pendingInvites=r.invites||[]).catch(()=>{})]);
     settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
     settingsProfileRevision=readSettingsJson(profileCacheKey())?.revision || 0;
     const prefs=loadPrefs(), esc=settingsEscape;
     const field=(id,label,value,type="text",readonly=false)=>`<div><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${esc(value)}" ${readonly?"readonly":""}></div>`;
     const grades=["SIXIEME","CINQUIEME","QUATRIEME","TROISIEME","SECONDE","SECONDE_SPORT_SANTE","PREMIERE","PREMIERE_EPPCS","TERMINALE","TERMINALE_EPPCS","OPTION_GOLF"].filter(g=>GRADE_LABELS[g]);
     const colleagues=(teamContext?.members || []).filter(member=>member.id!==session.user_id);
-    const administration=teamContext?.is_admin ? nestedSettingsSection("teacherAdminSection","Administration des professeurs",`<p class="muted">Vous êtes administrateur de l’établissement. Les collègues définissent eux-mêmes leur mot de passe.</p><form id="inviteTeacherForm"><div class="row">${field("inviteTeacherName","Nom du professeur","")}${field("inviteTeacherEmail","E-mail professionnel","","email")}</div><button type="submit">Inviter un professeur</button></form><div class="teacherAdminList">${colleagues.length?colleagues.map(member=>`<div class="teacherAdminRow" data-teacher-id="${esc(member.id)}"><div><strong>${esc(member.name || member.email)}</strong><br><span class="muted">${esc(member.email || "")}</span></div><div><button type="button" class="secondary resetTeacherPasswordBtn">Renvoyer l’invitation / mot de passe</button><button type="button" class="danger deleteTeacherBtn">Supprimer</button></div></div>`).join(""):'<p>Aucun autre professeur rattaché.</p>'}</div>`) : "";
+    const administration=teamContext?.is_admin ? nestedSettingsSection("teacherAdminSection","Administration des professeurs",`<p class="muted">Vous êtes administrateur de l’établissement. Les collègues définissent eux-mêmes leur mot de passe.</p><form id="inviteTeacherForm"><div class="row">${field("inviteTeacherName","Nom du professeur","")}${field("inviteTeacherEmail","E-mail professionnel","","email")}</div><button type="submit">Créer le compte</button><button type="button" class="secondary" id="inviteAndSendBtn">Créer et inviter tout de suite</button><p class="muted">Créer le compte réserve sa place sans lui écrire. Préparez ses classes en les lui attribuant, puis envoyez l’invitation quand c’est prêt.</p></form>${pendingInvites.length?`<h3 style="font-size:14px; margin:12px 0 4px">Comptes créés, invitation pas encore envoyée</h3><div class="teacherAdminList">${pendingInvites.map(inv=>`<div class="teacherAdminRow" data-pending-email="${esc(inv.email)}"><div><strong>${esc(inv.name||inv.email)}</strong><br><span class="muted">${esc(inv.email)}</span></div><div><button type="button" class="sendPendingInviteBtn">Envoyer l’invitation</button></div></div>`).join("")}</div>`:""}<div class="teacherAdminList">${colleagues.length?colleagues.map(member=>`<div class="teacherAdminRow" data-teacher-id="${esc(member.id)}"><div><strong>${esc(member.name || member.email)}</strong><br><span class="muted">${esc(member.email || "")}</span></div><div><button type="button" class="secondary resetTeacherPasswordBtn">Renvoyer l’invitation / mot de passe</button><button type="button" class="danger deleteTeacherBtn">Supprimer</button></div></div>`).join(""):'<p>Aucun autre professeur rattaché.</p>'}</div>`) : "";
     document.getElementById("settingsBody").innerHTML=
       settingsSection("profileSection","Profil enseignant",`<div class="row">${field("prefName","Nom de l’enseignant",prefs.teacherName)}${field("prefSchool","Établissement",currentInstitution?.name || prefs.schoolName, "text",!!currentInstitution)}</div><div class="row">${field("prefEmail","E-mail professionnel",prefs.proEmail,"email")}${field("prefYear","Année scolaire",prefs.schoolYear || "2026-2027")}</div><button id="saveProfileBtn">Enregistrer le profil</button>`)+
       settingsSection("accountSection","Compte web / synchronisation",`<p>Connecté : ${esc(session.email)}</p><p>${currentInstitution?`Rattaché à ${esc(currentInstitution.name)} (code ${esc(currentInstitution.code)}).`:"Aucun établissement rattaché."}</p><button id="syncSettingsBtn">Actualiser les réglages</button><button class="secondary" id="settingsInstitutionBtn">${currentInstitution?"Gérer mon établissement":"Se rattacher à un établissement"}</button><button class="secondary" id="settingsLogoutBtn">Déconnecter</button>${administration}${nestedSettingsSection("backupSection","Sauvegarde / restauration",`<p>Exporter les données accessibles à ce compte au format JSON.</p><button id="exportDataBtn">Exporter mes données web</button><p class="muted">La restauration des sauvegardes Android se fait dans l’application, puis par synchronisation. Un export web n’est pas une sauvegarde Android.</p>`)}${nestedSettingsSection("resetSection","Réinitialisation",`<p>Actions irréversibles : exporte une sauvegarde avant de continuer.</p><button class="danger" id="resetPersonalBtn">Réinitialiser mes données</button><button class="danger" id="resetSchoolBtn" ${currentInstitution?"":"disabled"}>Réinitialisation complète établissement</button>`)}${nestedSettingsSection("privacySection","Confidentialité et sécurité",`<p>Les réglages partagés sont privés à ton compte. Le PIN reste sur cet appareil et ne remplace pas la sécurité du compte. La biométrie Android n’est pas disponible ici.</p>${field("settingsPin","Code PIN local (4 à 8 chiffres)","","password")}<button id="setPinBtn">${prefs.pin?"Changer":"Activer"} le code</button>${prefs.pin?'<button class="secondary" id="removePinBtn">Désactiver le code</button>':""}`)}`)+
@@ -112,7 +113,30 @@
     bind("syncSettingsBtn",openSettings);
     bind("toggleHomeWeatherBtn",()=>{setWeatherEnabled(!weatherEnabled());openSettings();});
     const inviteForm=document.getElementById("inviteTeacherForm");
-    if(inviteForm) inviteForm.onsubmit=async event=>{event.preventDefault();const button=inviteForm.querySelector("button");button.disabled=true;try{const result=await teamAdminAction({action:"invite",name:document.getElementById("inviteTeacherName").value,email:document.getElementById("inviteTeacherEmail").value});document.getElementById("settingsOk").textContent=result.message;inviteForm.reset();}catch(e){document.getElementById("settingsOk").textContent=e.message;}finally{button.disabled=false;}};
+    const envoyerInvitation=async action=>{
+      const boutons=inviteForm.querySelectorAll("button");
+      boutons.forEach(b=>b.disabled=true);
+      try{
+        const result=await teamAdminAction({action,name:document.getElementById("inviteTeacherName").value,email:document.getElementById("inviteTeacherEmail").value});
+        document.getElementById("settingsOk").textContent=result.message;
+        inviteForm.reset();
+        // La liste des places reservees vient de changer : on rouvre pour l'afficher a jour.
+        await openSettings();
+      }catch(e){document.getElementById("settingsOk").textContent=e.message;}
+      finally{boutons.forEach(b=>b.disabled=false);}
+    };
+    if(inviteForm) inviteForm.onsubmit=event=>{event.preventDefault();envoyerInvitation("reserve");};
+    const inviteNow=document.getElementById("inviteAndSendBtn");
+    if(inviteNow) inviteNow.onclick=()=>envoyerInvitation("invite");
+    document.querySelectorAll(".sendPendingInviteBtn").forEach(button=>button.onclick=async()=>{
+      const email=button.closest("[data-pending-email]").dataset.pendingEmail;
+      button.disabled=true;
+      try{
+        const result=await teamAdminAction({action:"send_invite",email});
+        document.getElementById("settingsOk").textContent=result.message;
+      }catch(e){document.getElementById("settingsOk").textContent=e.message;}
+      finally{button.disabled=false;}
+    });
     document.querySelectorAll(".resetTeacherPasswordBtn").forEach(button=>button.onclick=async()=>{button.disabled=true;try{const result=await teamAdminAction({action:"reset_password",target_id:button.closest(".teacherAdminRow").dataset.teacherId});document.getElementById("settingsOk").textContent=result.message;}catch(e){document.getElementById("settingsOk").textContent=e.message;}finally{button.disabled=false;}});
     document.querySelectorAll(".deleteTeacherBtn").forEach(button=>button.onclick=async()=>{const row=button.closest(".teacherAdminRow"),name=row.querySelector("strong").textContent;if(!confirm(`Supprimer définitivement le compte de ${name} et toutes ses données personnelles ? Les groupes et appels AS seront conservés.`))return;button.disabled=true;try{const result=await teamAdminAction({action:"delete",target_id:row.dataset.teacherId,confirm:true});row.remove();document.getElementById("settingsOk").textContent=result.message;}catch(e){document.getElementById("settingsOk").textContent=e.message;}finally{button.disabled=false;}});
     bind("settingsLogoutBtn",()=>document.getElementById("logoutBtn").click());
