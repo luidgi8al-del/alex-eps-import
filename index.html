@@ -3307,7 +3307,7 @@
       </div>
       <div class="card" style="margin-top:14px">
         <h2 style="margin:0">Planification etablissement 2026-2027</h2>
-        <div class="muted">Vue annuelle, identique a celle de l'application. Survolez un jour pour lire son intitule complet.</div>
+        <div class="muted">Vue annuelle, identique a celle de l'application. Cliquez un jour pour y ajouter ou modifier un evenement ; survolez-le pour lire son intitule complet.</div>
         ${legendeCalendrier()}
         ${grilleCalendrier()}
       </div>
@@ -3331,6 +3331,100 @@
       document.getElementById("addEventBtn").onclick = addCalendarEvent;
       wrap.querySelectorAll("[data-del-event]").forEach(b =>
         b.onclick = () => deleteCalendarEvent(b.dataset.delEvent));
+      wrap.querySelectorAll("[data-cal-jour]").forEach(c =>
+        c.onclick = () => ouvrirJourCalendrier(c.dataset.calJour));
+    }
+
+    /**
+     * Clic sur un jour de la grille : ajouter, modifier ou supprimer un evenement, comme dans
+     * l'application.
+     *
+     * Un evenement peut couvrir plusieurs jours (des vacances, un voyage). Modifier depuis une
+     * case, c'est modifier tout l'evenement : on l'annonce explicitement avec ses dates, plutot
+     * que de laisser croire qu'on ne touche qu'a cette journee. C'est exactement le genre
+     * d'ecrasement silencieux qu'on ne veut plus.
+     */
+    function ouvrirJourCalendrier(iso) {
+      const panel = document.getElementById("planningPanel");
+      const saisi = calEvenementsParJour()[iso];
+      const multiJours = saisi && saisi.start_date_epoch_millis !== saisi.end_date_epoch_millis;
+      const fixe = CAL_FIXES[iso];
+      const epreuve = datesCcfBac().find(e => e.lundi === iso || e.jeudi === iso);
+
+      const lecture = [
+        fixe ? `<div>Date de l'annee : <strong>${planningText(fixe[0])}</strong>${fixe[1] ? " (a confirmer)" : ""}</div>` : "",
+        calEnVacances(iso) ? `<div>Periode de vacances scolaires.</div>` : "",
+        epreuve ? `<div><span class="badge" style="background:#1B3A6B; color:#fff">BAC EPS CCF${epreuve.numero}</span>
+                   <span class="muted"> — calcule depuis les periodes Terminale, non modifiable ici.</span></div>` : ""
+      ].filter(Boolean).join("");
+
+      const avertissement = multiJours
+        ? `<div class="pendingHint" style="display:block">Cet evenement s'etend du
+             ${dateFr(isoDate(new Date(saisi.start_date_epoch_millis)))} au
+             ${dateFr(isoDate(new Date(saisi.end_date_epoch_millis)))}.
+             Enregistrer ou supprimer ici agit sur <strong>tout l'evenement</strong>, pas seulement sur ce jour.</div>`
+        : "";
+
+      panel.innerHTML = `
+        <h2>${dateFr(iso)}</h2>
+        ${lecture}
+        ${avertissement}
+        <label for="jourLabel">Intitule</label>
+        <input type="text" id="jourLabel" value="${saisi ? planningText(saisi.label || "") : ""}" placeholder="Ex : Sortie AS">
+        <label for="jourKind">Type</label>
+        <select id="jourKind">${CALENDAR_KINDS.map(k => {
+          // Sans evenement existant, le premier type de la liste serait retenu par defaut et un
+          // simple ajout se retrouverait classe en "Vacances". On part donc sur le type neutre.
+          const choisi = saisi ? saisi.kind === k[0] : k[0] === "AUTRE";
+          return `<option value="${k[0]}"${choisi ? " selected" : ""}>${k[1]}</option>`;
+        }).join("")}</select>
+        <button id="jourSaveBtn">${saisi ? "Enregistrer" : "Ajouter"}</button>
+        ${saisi ? '<button class="danger" id="jourDeleteBtn">Supprimer</button>' : ""}
+        <button class="secondary" id="jourCancelBtn">Fermer</button>
+        <div class="error" id="jourError"></div>`;
+      panel.style.display = "block";
+
+      document.getElementById("jourCancelBtn").onclick = () => panel.style.display = "none";
+
+      document.getElementById("jourSaveBtn").onclick = async () => {
+        const erreur = document.getElementById("jourError");
+        const label = document.getElementById("jourLabel").value.trim();
+        if (!label) { erreur.textContent = "Indiquez un intitule."; return; }
+        const corps = {
+          label, kind: document.getElementById("jourKind").value,
+          updated_at: new Date().toISOString()
+        };
+        let res;
+        if (saisi) {
+          // On ne touche pas aux dates : modifier l'intitule d'une plage ne doit pas la reduire
+          // a la seule journee cliquee.
+          res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?id=eq.${encodeURIComponent(saisi.id)}`,
+            { method: "PATCH", body: JSON.stringify(corps) });
+        } else {
+          const millis = new Date(iso + "T12:00:00").getTime();
+          res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events`, {
+            method: "POST",
+            body: JSON.stringify(Object.assign({
+              id: crypto.randomUUID(), user_id: session.user_id,
+              start_date_epoch_millis: millis, end_date_epoch_millis: millis,
+              comment: "", deleted: false
+            }, corps))
+          });
+        }
+        if (!res.ok) { erreur.textContent = "Enregistrement impossible. Verifiez votre connexion."; return; }
+        panel.style.display = "none";
+        await loadInstitutionCalendar();
+      };
+
+      const suppr = document.getElementById("jourDeleteBtn");
+      if (suppr) suppr.onclick = async () => {
+        const question = multiJours
+          ? `Supprimer tout l'evenement "${saisi.label}" (du ${dateFr(isoDate(new Date(saisi.start_date_epoch_millis)))} au ${dateFr(isoDate(new Date(saisi.end_date_epoch_millis)))}) ?`
+          : `Supprimer "${saisi.label}" du ${dateFr(iso)} ?`;
+        if (!confirm(question)) return;
+        panel.style.display = "none";
+        await deleteCalendarEvent(saisi.id);
+      };
     }
 
     async function addCalendarEvent() {
