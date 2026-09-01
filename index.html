@@ -666,6 +666,30 @@
 
     // ---- Auth ----
     let isSignup = false;
+    let passwordLinkSession = null;
+    async function preparePasswordLink() {
+      const params = new URLSearchParams(location.hash.startsWith("#") ? location.hash.slice(1) : "");
+      const type = params.get("type");
+      const accessToken = params.get("access_token");
+      if (!accessToken || !["invite", "recovery"].includes(type)) return false;
+      const userResponse = await fetch(`${SUPABASE_URL}/auth/v1/user`, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${accessToken}` } });
+      const user = await userResponse.json();
+      if (!userResponse.ok || !user?.id) {
+        history.replaceState(null, "", location.pathname + location.search);
+        document.getElementById("authError").textContent = "Ce lien a expiré. Demandez à l’administrateur de renvoyer une invitation.";
+        return false;
+      }
+      passwordLinkSession = { access_token: accessToken, refresh_token: params.get("refresh_token") || "", user, type };
+      document.getElementById("authTitle").textContent = type === "invite" ? "Créer votre mot de passe" : "Choisir un nouveau mot de passe";
+      document.getElementById("email").value = user.email || "";
+      document.getElementById("email").readOnly = true;
+      document.getElementById("password").value = "";
+      document.getElementById("password").autocomplete = "new-password";
+      document.getElementById("authSubmitBtn").textContent = "Enregistrer mon mot de passe";
+      document.getElementById("authToggleBtn").style.display = "none";
+      showAuthView();
+      return true;
+    }
     document.getElementById("authToggleBtn").addEventListener("click", () => {
       isSignup = !isSignup;
       document.getElementById("authTitle").textContent = isSignup ? "Creer un compte" : "Connexion";
@@ -679,6 +703,23 @@
       const password = document.getElementById("password").value;
       const errorEl = document.getElementById("authError");
       errorEl.textContent = "";
+      if (passwordLinkSession) {
+        if (password.length < 6) { errorEl.textContent = "Choisissez un mot de passe d’au moins 6 caractères."; return; }
+        try {
+          const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+            method: "PUT",
+            headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${passwordLinkSession.access_token}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ password })
+          });
+          const user = await res.json();
+          if (!res.ok) throw new Error(user.msg || user.message || "Le mot de passe n’a pas été enregistré.");
+          saveSession({ access_token: passwordLinkSession.access_token, refresh_token: passwordLinkSession.refresh_token, user_id: user.id, email: user.email });
+          passwordLinkSession = null;
+          history.replaceState(null, "", location.pathname + location.search);
+          showMainView();
+        } catch (e) { errorEl.textContent = e.message; }
+        return;
+      }
       if (!email || password.length < 6) {
         errorEl.textContent = "Email requis, mot de passe d'au moins 6 caracteres.";
         return;
@@ -5783,7 +5824,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     domainField.value = localStorage.getItem("alex_eps_student_domain") || "";
     domainField.addEventListener("change", () => localStorage.setItem("alex_eps_student_domain", domainField.value.trim()));
 
-    if (session) { showMainView(); } else { showAuthView(); }
+    preparePasswordLink().then(handled => { if (!handled) { if (session) showMainView(); else showAuthView(); } }).catch(() => showAuthView());
   </script>
 </body>
 </html>
