@@ -570,6 +570,11 @@
             </div>
             <label for="schoolYear">Annee scolaire</label>
             <input type="text" id="schoolYear" value="2026-2027">
+            <div id="assignedTeacherRow" style="display:none">
+              <label for="assignedTeacher">Attribuer a un collegue (administrateur)</label>
+              <select id="assignedTeacher"><option value="">Pour moi</option></select>
+              <div class="muted" style="font-size:12px">La classe et ses eleves apparaitront chez le collegue, modifiables par lui. Il peut ne pas encore avoir cree son mot de passe.</div>
+            </div>
             <div id="fileImportFields" style="display:none">
               <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
               <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
@@ -1500,6 +1505,9 @@
           body: JSON.stringify({
             id: classId, user_id: session.user_id, grade, class_number: classNumber,
             school_year: schoolYear, name: className,
+            // Vide quand la classe est pour soi : le declencheur cote base refuse une attribution
+            // faite par un non-administrateur ou vers un professeur d'un autre etablissement.
+            assigned_teacher_id: (document.getElementById("assignedTeacher") || {}).value || null,
             updated_at: now, deleted: false
           })
         });
@@ -1561,10 +1569,36 @@
     document.getElementById("grade").addEventListener("change", () => updateClassDayChoice("grade", "classNumber"));
     document.getElementById("editGrade").addEventListener("change", () => updateClassDayChoice("editGrade", "editClassNumber"));
 
+    /**
+     * Attribution d'une classe a un collegue : c'est ainsi qu'un administrateur prepare le compte
+     * d'un professeur avant meme sa premiere connexion. Le modele reprend celui des groupes AS
+     * (assigned_teacher_id) : personne ne se connecte a la place de personne.
+     */
+    let collegues = [];
+
+    async function chargerColleguesAttribuables() {
+      const contexte = await loadTeamContext().catch(() => null);
+      const ligne = document.getElementById("assignedTeacherRow");
+      if (!contexte || !contexte.is_admin) { collegues = []; if (ligne) ligne.style.display = "none"; return; }
+      collegues = (contexte.members || []).filter(m => m.id !== session.user_id);
+      if (!ligne) return;
+      if (collegues.length === 0) { ligne.style.display = "none"; return; }
+      const select = document.getElementById("assignedTeacher");
+      select.innerHTML = '<option value="">Pour moi</option>'
+        + collegues.map(m => `<option value="${m.id}">${planningText(m.name || m.email)}</option>`).join("");
+      ligne.style.display = "block";
+    }
+
+    function nomCollegue(id) {
+      const trouve = collegues.find(m => m.id === id);
+      return trouve ? (trouve.name || trouve.email) : "un collegue";
+    }
+
     async function loadImports() {
       const listEl = document.getElementById("importsList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
       try {
+        await chargerColleguesAttribuables();
         const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
         const rows = await res.json();
         if (!res.ok) throw new Error("Impossible de charger les classes.");
@@ -1579,7 +1613,11 @@
           const label = planningText(planningClassLabel(r));
           div.innerHTML = `
             <div class="top">
-              <div><strong>${label}</strong> · ${r.school_year}</div>
+              <div><strong>${label}</strong> · ${r.school_year}${
+                r.assigned_teacher_id && r.assigned_teacher_id !== session.user_id
+                  ? ` · <span class="badge" style="background:#E6F1FF">Attribuee a ${planningText(nomCollegue(r.assigned_teacher_id))}</span>`
+                  : (r.user_id !== session.user_id ? ' · <span class="badge" style="background:#E5F7E9">Preparee pour vous</span>' : "")
+              }</div>
               <div>
                 <button class="secondary" data-action="dashboard" style="margin-top:0">Tableau de bord</button>
                 <button class="secondary" data-action="schedule" style="margin-top:0">Emploi du temps</button>
