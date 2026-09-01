@@ -4964,22 +4964,80 @@ Cette action est definitive.`
     }
 
     /** Etape 1 pour licencier : on coche l'eleve deja present dans le repertoire Eleve LVH. */
+    /** Comparaison tolerante : sans accent, sans casse, pour chercher "Benoit" et trouver "Benoit". */
+    function chaineRecherche(valeur) {
+      return String(valeur || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+    }
+
+    /**
+     * Classe les eleves par pertinence : un nom qui commence par la recherche passe avant un nom
+     * qui la contient au milieu. Sur un repertoire d'etablissement de plus de mille eleves, une
+     * simple liste alphabetique obligerait a faire defiler pour rien.
+     */
+    function chercherEleves(eleves, recherche) {
+      const q = chaineRecherche(recherche);
+      if (!q) return eleves;
+      const mots = q.split(/\s+/).filter(Boolean);
+      return eleves
+        .map(s => {
+          const nom = chaineRecherche(s.last_name), prenom = chaineRecherche(s.first_name);
+          // Chaque mot tape doit se retrouver quelque part : "abat nil" trouve ABAT Nil.
+          if (!mots.every(m => nom.includes(m) || prenom.includes(m))) return null;
+          const debut = mots.some(m => nom.startsWith(m) || prenom.startsWith(m));
+          return { eleve: s, score: debut ? 0 : 1 };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.score - b.score ||
+          a.eleve.last_name.localeCompare(b.eleve.last_name, "fr") ||
+          a.eleve.first_name.localeCompare(b.eleve.first_name, "fr"))
+        .map(r => r.eleve);
+    }
+
     function openUnssPickPanel() {
       const panel = document.getElementById("unssPanel");
       const candidates = unssStudents.filter(s => !s.licensed);
       panel.innerHTML = `<h2>Choisir un eleve a licencier</h2>` +
         (candidates.length === 0
           ? `<div class="muted">Tous les eleves du repertoire sont deja licencies, ou le repertoire Eleve LVH est vide. Importez-le d'abord dans cet onglet.</div>`
-          : candidates.map(s => `<div class="card unssPick" data-pick="${s.id}" style="margin-top:6px">${s.last_name} ${s.first_name}</div>`).join("")
+          : `<input type="search" id="unssPickSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+             <div class="muted" id="unssPickCount" style="margin:6px 0"></div>
+             <div id="unssPickResults"></div>`
         ) +
         `<button class="secondary" id="unssPickCancel" style="margin-top:14px">Annuler</button>`;
       panel.style.display = "block";
-      panel.querySelectorAll("[data-pick]").forEach(el => {
-        el.addEventListener("click", () => {
-          const student = unssStudents.find(s => s.id === el.dataset.pick);
-          openUnssStudentPanel(student, true);
-        });
-      });
+
+      const resultats = document.getElementById("unssPickResults");
+      if (resultats) {
+        const champ = document.getElementById("unssPickSearch");
+        const compteur = document.getElementById("unssPickCount");
+        // Au-dela de cette limite on n'affiche rien tant que rien n'est tape : peindre un millier
+        // de cartes fige la page, et une liste aussi longue ne se parcourt pas a l'oeil.
+        const LIMITE_AFFICHAGE = 50;
+        const afficher = () => {
+          const recherche = champ.value.trim();
+          const trouves = chercherEleves(candidates, recherche);
+          if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
+            compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+            resultats.innerHTML = "";
+            return;
+          }
+          const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
+          compteur.textContent = trouves.length === 0
+            ? "Aucun eleve ne correspond."
+            : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+          resultats.innerHTML = affiches.map(s =>
+            `<div class="card unssPick" data-pick="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
+          ).join("");
+          resultats.querySelectorAll("[data-pick]").forEach(el => {
+            el.addEventListener("click", () => {
+              openUnssStudentPanel(unssStudents.find(s => s.id === el.dataset.pick), true);
+            });
+          });
+        };
+        champ.addEventListener("input", afficher);
+        afficher();
+        champ.focus();
+      }
       document.getElementById("unssPickCancel").addEventListener("click", () => panel.style.display = "none");
     }
 
@@ -5219,18 +5277,46 @@ Cette action est definitive.`
       panel.innerHTML = `<h2>Ajouter un membre</h2>` +
         (candidates.length === 0
           ? `<div class="muted">Aucun élève disponible dans Élèves LVH / Licenciés AS. Ajoutez les élèves au répertoire AS.</div>`
-          : candidates.map(s => `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`).join("")
+          : `<input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+             <div class="muted" id="unssMemberCount" style="margin:6px 0"></div>
+             <div id="unssMemberResults"></div>`
         ) +
         `<button class="secondary" id="unssAddMemberCancel" style="margin-top:14px">Fermer</button>`;
-      panel.querySelectorAll("[data-add-member]").forEach(el => {
-        el.addEventListener("click", async () => {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships`, {
-            method: "POST",
-            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id, student_id: el.dataset.addMember, deleted: false })
+
+      const zoneMembres = document.getElementById("unssMemberResults");
+      if (zoneMembres) {
+        const champ = document.getElementById("unssMemberSearch");
+        const compteur = document.getElementById("unssMemberCount");
+        const LIMITE_AFFICHAGE = 50;
+        const afficher = () => {
+          const recherche = champ.value.trim();
+          const trouves = chercherEleves(candidates, recherche);
+          if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
+            compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+            zoneMembres.innerHTML = "";
+            return;
+          }
+          const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
+          compteur.textContent = trouves.length === 0
+            ? "Aucun eleve ne correspond."
+            : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+          zoneMembres.innerHTML = affiches.map(s =>
+            `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
+          ).join("");
+          zoneMembres.querySelectorAll("[data-add-member]").forEach(el => {
+            el.addEventListener("click", async () => {
+              await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships`, {
+                method: "POST",
+                body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id, student_id: el.dataset.addMember, deleted: false })
+              });
+              openUnssGroupDetailPanel(group);
+            });
           });
-          openUnssGroupDetailPanel(group);
-        });
-      });
+        };
+        champ.addEventListener("input", afficher);
+        afficher();
+        champ.focus();
+      }
       document.getElementById("unssAddMemberCancel").addEventListener("click", () => openUnssGroupDetailPanel(group));
     }
 
