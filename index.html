@@ -3110,6 +3110,32 @@
       ["SORTIE", "Sortie", "#E5F7E9"], ["BANALISEE", "Journee banalisee", "#FFF0DD"],
       ["AUTRE", "Autre", "#F3F4F6"]
     ];
+    /**
+     * Epreuves du BAC EPS : lundi et jeudi de la semaine ou se termine chaque periode Terminale.
+     *
+     * Rien n'est enregistre. Ces dates sont recalculees a chaque affichage a partir des periodes,
+     * exactement comme dans l'application : deplacer une periode deplace l'epreuve, et il n'y a
+     * aucune ligne a mettre a jour ni aucun risque d'ecraser une saisie.
+     */
+    function datesCcfBac() {
+      const epreuves = [];
+      for (const periode of [...periodesTerminale].sort((a, b) => a.number - b.number)) {
+        if (!periode.end_date) continue;
+        const fin = new Date(periode.end_date + "T12:00:00");
+        // getDay() : 0 = dimanche. On remonte au lundi de la semaine qui contient la fin.
+        const lundi = new Date(fin);
+        lundi.setDate(fin.getDate() - ((fin.getDay() + 6) % 7));
+        const jeudi = new Date(lundi);
+        jeudi.setDate(lundi.getDate() + 3);
+        epreuves.push({ numero: periode.number, lundi: isoDate(lundi), jeudi: isoDate(jeudi) });
+      }
+      return epreuves;
+    }
+
+    function isoDate(d) {
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+
     let calendarEvents = [];
 
     async function loadInstitutionCalendar() {
@@ -3118,6 +3144,8 @@
       try {
         const res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc`);
         calendarEvents = res.ok ? await res.json() : [];
+        // Les epreuves du BAC se deduisent des periodes Terminale : il faut les avoir lues.
+        await loadPeriodDates();
         renderInstitutionCalendar();
       } catch (e) {
         wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
@@ -3144,7 +3172,20 @@
             </div>`;
           }).join("");
 
+      const epreuves = datesCcfBac();
+      const blocCcf = epreuves.length === 0
+        ? `<div class="muted" style="margin-top:8px">Aucune epreuve calculee : saisissez d'abord les dates des periodes Terminale dans l'onglet <strong>Dates des periodes</strong>.</div>`
+        : epreuves.map(e => `<div style="padding:8px 0; border-bottom:1px solid var(--border)">
+            <span class="badge" style="background:#1B3A6B; color:#fff">BAC EPS CCF${e.numero}</span>
+            <div class="muted" style="margin-top:4px">Lundi ${dateFr(e.lundi)} et jeudi ${dateFr(e.jeudi)}</div>
+          </div>`).join("");
+
       wrap.innerHTML = `<div class="card">
+        <h2 style="margin:0">Epreuves du BAC EPS</h2>
+        <div class="muted">Posees automatiquement le lundi et le jeudi de la semaine ou se termine chaque periode Terminale. Elles suivent les dates des periodes : rien a saisir ici, et une periode deplacee deplace l'epreuve.</div>
+        ${blocCcf}
+      </div>
+      <div class="card" style="margin-top:14px">
         <h2 style="margin:0">Calendrier de l'etablissement</h2>
         <div class="muted">Vacances, examens, sorties et journees banalisees : ce qui bloque ou deplace les cours dans l'annee.</div>
         ${rows}
