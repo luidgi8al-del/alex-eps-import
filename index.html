@@ -3512,6 +3512,7 @@
         planningCommunityActivities = activitiesRes.ok ? await activitiesRes.json() : [];
         planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
         await loadPlanningValidation();
+        await loadPeriodDates();
       } catch (e) {
         planningCommunityError = e.message;
         planningCommunitySlots = [];
@@ -3587,6 +3588,31 @@
         : base;
     }
 
+    /**
+     * Periodes du calendrier commun qu'une periode Terminale recouvre.
+     *
+     * Le decoupage de la Terminale ne s'aligne pas sur celui des autres niveaux : une periode
+     * Terminale se termine au milieu d'une periode standard et la suivante demarre dans la meme.
+     * Sans ce reperage, un professeur qui remplit "Periode 2" pour une Terminale ne sait pas a
+     * quel moment de l'annee cela correspond pour ses collegues.
+     *
+     * Le calcul part des dates : il reste juste si le decoupage change.
+     */
+    function periodesStandardCouvertes(debut, fin) {
+      if (!debut || !fin) return [];
+      return PERIODES_STANDARD
+        .filter(p => debut <= p.end && fin >= p.start)
+        .map(p => p.number);
+    }
+
+    /** "P1-P2" pour une periode a cheval, "P1" quand elle tient dans une seule. */
+    function libelleChevauchement(debut, fin) {
+      const couvertes = periodesStandardCouvertes(debut, fin);
+      if (couvertes.length === 0) return "";
+      if (couvertes.length === 1) return "P" + couvertes[0];
+      return "P" + couvertes[0] + "-P" + couvertes[couvertes.length - 1];
+    }
+
     function dateFr(iso) {
       if (!iso) return "";
       const parts = String(iso).split("-");
@@ -3621,15 +3647,19 @@
         const p = periodesTerminale.find(x => x.number === numero);
         const debut = p ? dateFr(p.start_date) : '<span class="muted">Non definie</span>';
         const fin = p ? dateFr(p.end_date) : '<span class="muted">Non definie</span>';
+        const chevauchement = p
+          ? libelleChevauchement(p.start_date, p.end_date)
+          : '<span class="muted">-</span>';
         return '<tr><th style="text-align:left">Periode ' + numero + "</th><td>" + debut + "</td><td>" + fin
-          + '</td><td><button class="secondary" data-periode="' + numero + '" style="margin-top:0">'
+          + "</td><td><strong>" + chevauchement + "</strong></td>"
+          + '<td><button class="secondary" data-periode="' + numero + '" style="margin-top:0">'
           + (p ? "Modifier" : "Definir") + "</button></td></tr>";
       }).join("");
 
       wrap.innerHTML =
         '<div class="card"><h2>Terminale</h2>'
-        + '<div class="muted">Decoupage personnalise en ' + nbTerminale + ' periode(s). Ces dates sont partagees avec vos collegues et avec l\'application.</div>'
-        + '<table style="margin-top:10px"><thead><tr><th style="text-align:left">Periode</th><th>Debut</th><th>Fin</th><th></th></tr></thead>'
+        + '<div class="muted">Decoupage personnalise en ' + nbTerminale + ' periode(s). Ces dates sont partagees avec vos collegues et avec l\'application. La colonne <em>Correspond a</em> indique les periodes du calendrier commun recouvertes : une periode Terminale est souvent a cheval sur deux.</div>'
+        + '<table style="margin-top:10px"><thead><tr><th style="text-align:left">Periode</th><th>Debut</th><th>Fin</th><th>Correspond a</th><th></th></tr></thead>'
         + "<tbody>" + lignesTerminale + "</tbody></table></div>"
         + '<div class="card" style="margin-top:14px"><h2>Autres niveaux</h2>'
         + '<div class="muted">Dates reprises du calendrier commun de l\'etablissement : elles ne se modifient pas ici, comme dans l\'application. Le nombre de periodes par niveau se regle dans Reglages.</div>'
@@ -3743,8 +3773,32 @@
           periodBar.appendChild(chip);
         }
         periodBar.style.display = "flex";
+        majRappelTerminale();
       } else {
         periodBar.style.display = "none";
+      }
+
+      /**
+       * En Terminale, "Periode 2" ne designe pas la meme portion d'annee que pour les autres
+       * niveaux. On l'affiche sous la barre, sinon l'activite est saisie sans savoir a quelle
+       * partie de l'annee elle correspond reellement.
+       */
+      function majRappelTerminale() {
+        let rappel = document.getElementById("planningTerminaleHint");
+        if (!rappel) {
+          rappel = document.createElement("div");
+          rappel.id = "planningTerminaleHint";
+          rappel.className = "muted";
+          rappel.style.cssText = "margin:-4px 0 10px; padding:0 4px";
+          periodBar.insertAdjacentElement("afterend", rappel);
+        }
+        const periode = periodesTerminale.find(x => x.number === planningPeriod);
+        if (!periode) { rappel.style.display = "none"; return; }
+        const couvre = libelleChevauchement(periode.start_date, periode.end_date);
+        rappel.innerHTML = "Terminale : la periode " + planningPeriod + " va du "
+          + dateFr(periode.start_date) + " au " + dateFr(periode.end_date)
+          + " et recouvre <strong>" + couvre + "</strong> du calendrier commun.";
+        rappel.style.display = "block";
       }
 
       // Bandeau "2e creneau en attente"
