@@ -1263,8 +1263,11 @@
       const countEl = document.getElementById("todayCount");
       const nextEl = document.getElementById("todayNext");
       try {
+        // La lecture des creneaux est ouverte a tout l'etablissement (c'est ce qui fait vivre
+        // Planning global EPS). Sans filtre sur le compte, cette carte comptait donc les cours de
+        // tous les collegues reunis : il faut demander explicitement les siens.
         const [slotsRes, classesRes] = await Promise.all([
-          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`),
           apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name`)
         ]);
         const slots = slotsRes.ok ? await slotsRes.json() : [];
@@ -1861,7 +1864,7 @@
       CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte"],
       QUATRIEME: ["Natation", "Escalade", "Acrosport", "Volley-ball"],
       TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton"],
-      SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree"],
+      SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree", "Natation de duree"],
       PREMIERE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"],
       TERMINALE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"]
     };
@@ -1913,6 +1916,7 @@
       "SECONDE|Badminton": { file: "content/badminton-2nde.json" },
       "SECONDE|Musculation": { file: "content/musculation-2nde.json" },
       "SECONDE|Course de duree": { file: "content/course-de-duree-2nde.json" },
+      "SECONDE|Natation de duree": { file: "content/natation-de-duree-2nde.json" },
       "PREMIERE|3 x 500 m": { file: "content/3x500m-cycle-terminal.json" },
       "PREMIERE|Musculation": { file: "content/musculation-cycle-terminal.json" },
       "PREMIERE|Course de duree": { file: "content/course-de-duree-cycle-terminal.json" },
