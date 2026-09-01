@@ -1617,24 +1617,37 @@
     const GRADE_LABELS = { SIXIEME: "6e", CINQUIEME: "5e", QUATRIEME: "4e", TROISIEME: "3e", SECONDE: "2nde", PREMIERE: "1ere", TERMINALE: "Tle" };
     Object.assign(GRADE_LABELS, EXTRA_SCHOOL_LEVELS);
 
+    /**
+     * Niveaux dont une classe se distingue par son creneau et son enseignant, pas par un numero :
+     * plusieurs professeurs ont une Terminale, "Tle1" ne dirait pas laquelle. La Premiere suit la
+     * meme logique, avec ses deux horaires.
+     */
+    function creneauxNommes(grade) {
+      const base = baseSchoolLevel(grade);
+      if (base === "TERMINALE") return { libelle: "Terminale", choix: ["Lundi", "Jeudi"], intitule: "Jour de la Terminale" };
+      if (base === "PREMIERE") return { libelle: "Première", choix: ["14h", "16h"], intitule: "Creneau de la Première" };
+      return null;
+    }
+
     function creationClassName(grade, number) {
-      if (!isTerminalSchoolLevel(grade)) return `${GRADE_LABELS[grade] || grade}${EXTRA_SCHOOL_LEVELS[grade] ? " " : ""}${number}`;
+      const regle = creneauxNommes(grade);
+      if (!regle) return `${GRADE_LABELS[grade] || grade}${EXTRA_SCHOOL_LEVELS[grade] ? " " : ""}${number}`;
       const teacher = (loadPrefs().teacherName || "").trim();
-      if (!teacher) throw new Error("Renseignez votre nom dans Réglage → Profil enseignant avant de créer une Terminale.");
-      if (![1, 2].includes(number)) throw new Error("Choisissez Lundi ou Jeudi pour la Terminale.");
-      return `${EXTRA_SCHOOL_LEVELS[grade] || "Terminale"} ${number === 1 ? "Lundi" : "Jeudi"} — ${teacher}`;
+      if (!teacher) throw new Error(`Renseignez votre nom dans Réglage → Profil enseignant avant de créer une ${regle.libelle}.`);
+      if (![1, 2].includes(number)) throw new Error(`Choisissez ${regle.choix[0]} ou ${regle.choix[1]} pour la ${regle.libelle}.`);
+      return `${EXTRA_SCHOOL_LEVELS[grade] || regle.libelle} ${regle.choix[number - 1]} — ${teacher}`;
     }
     function updateClassDayChoice(gradeId, numberId, selected) {
-      const terminale = isTerminalSchoolLevel(document.getElementById(gradeId).value);
+      const regle = creneauxNommes(document.getElementById(gradeId).value);
       const select = document.getElementById(numberId);
       const previous = selected ?? select.value;
       select.replaceChildren();
       const teacher = (loadPrefs().teacherName || "").trim();
-      const labels = terminale ? ["Lundi", "Jeudi"] : ["1","2","3","4","5","6","7","8"];
-      labels.forEach((label, index) => select.add(new Option(terminale && teacher ? `${label} — ${teacher}` : label, String(index + 1))));
-      document.querySelector(`label[for="${numberId}"]`).textContent = terminale ? "Jour de la Terminale" : "Numéro de classe";
-      // An existing numbered Terminale must be explicitly assigned a day when edited.
-      select.value = terminale && selected != null ? "" : (labels[Number(previous)-1] ? String(previous) : "1");
+      const labels = regle ? regle.choix : ["1","2","3","4","5","6","7","8"];
+      labels.forEach((label, index) => select.add(new Option(regle && teacher ? `${label} — ${teacher}` : label, String(index + 1))));
+      document.querySelector(`label[for="${numberId}"]`).textContent = regle ? regle.intitule : "Numéro de classe";
+      // Une classe numerotee qui passe a un niveau a creneaux doit se voir attribuer son creneau.
+      select.value = regle && selected != null ? "" : (labels[Number(previous)-1] ? String(previous) : "1");
     }
     document.getElementById("grade").addEventListener("change", () => updateClassDayChoice("grade", "classNumber"));
     document.getElementById("editGrade").addEventListener("change", () => updateClassDayChoice("editGrade", "editClassNumber"));
@@ -1765,7 +1778,12 @@
       editStudentsToDelete = [];
       document.getElementById("editGrade").value = row.grade;
       updateClassDayChoice("editGrade", "editClassNumber", row.class_number);
-      if (isTerminalSchoolLevel(row.grade) && /^Terminale(?: EPPCS)? (Lundi|Jeudi) — /.test(row.name || "")) document.getElementById("editClassNumber").value = row.class_number;
+      // Une classe deja nommee selon la convention garde son creneau ; les anciennes classes
+      // numerotees restent sans choix, pour obliger a le preciser.
+      const regleEdition = creneauxNommes(row.grade);
+      if (regleEdition && new RegExp(`^${regleEdition.libelle}(?: EPPCS)? (${regleEdition.choix.join("|")}) — `).test(row.name || "")) {
+        document.getElementById("editClassNumber").value = row.class_number;
+      }
       document.getElementById("editSchoolYear").value = row.school_year;
       document.getElementById("editError").textContent = "";
       document.getElementById("editImportPanel").style.display = "block";
@@ -4550,8 +4568,8 @@
       function render() {
         // Une Terminale se distingue par son jour, pas par un numero : c'est la meme regle que
         // le formulaire Creation classe, qui l'appliquait deja.
-        const terminale = selectedGrade ? isTerminalSchoolLevel(selectedGrade) : false;
-        const numeroLabels = terminale ? ["Lundi", "Jeudi"] : ["1","2","3","4","5","6","7","8"];
+        const regleCreneau = selectedGrade ? creneauxNommes(selectedGrade) : null;
+        const numeroLabels = regleCreneau ? regleCreneau.choix : ["1","2","3","4","5","6","7","8"];
         panel.innerHTML = `
           <h2>Nouveau creneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
           ${showStartTimes ? `<div id="planningStartTimeList" style="max-height:260px; overflow-y:auto">${Array.from({length:PLANNING_ROWS}, (_,i) => PLANNING_START_HOUR * 60 + i * PLANNING_SLOT_MIN).map(value => `<button type="button" class="secondary planningStartOption" data-start="${value}" style="display:block;width:100%;text-align:left;margin-top:4px">${planningMinutesLabel(value)}</button>`).join("")}</div>` : ""}
@@ -4560,7 +4578,7 @@
             `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
           ).join(" ")}</div></details>
           ${selectedGrade ? `
-            <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>${terminale ? "Jour de la Terminale" : "Numero de classe"}</strong>${selectedNumber ? ` — ${numeroLabels[selectedNumber - 1]}` : ""}</summary>
+            <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>${regleCreneau ? regleCreneau.intitule : "Numero de classe"}</strong>${selectedNumber ? ` — ${numeroLabels[selectedNumber - 1]}` : ""}</summary>
             <div id="planningNumberChips" style="margin-top:8px">${numeroLabels.map((label, index) =>
               `<button type="button" class="secondary durationChip" data-num="${index + 1}" style="margin-top:0; ${index + 1 === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${label}</button>`
             ).join(" ")}</div></details>` : ""}
