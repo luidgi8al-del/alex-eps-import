@@ -26,6 +26,11 @@ create table if not exists unss_students (
   deleted boolean not null default false
 );
 
+-- Le sexe sert a differencier les categories UNSS : "Minime Fille" et "Minime Garcon" sont
+-- deux categories distinctes, les competitions sont separees. Vide quand l'information n'est
+-- pas connue (saisie manuelle, import sans colonne Sexe) : on affiche alors la forme epicene.
+alter table unss_students add column if not exists sex text not null default '';
+
 create index if not exists idx_unss_students_user_id on unss_students(user_id);
 
 alter table unss_students enable row level security;

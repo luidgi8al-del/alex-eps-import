@@ -4650,7 +4650,32 @@
       if (age <= 16) return "CADET";
       return "JUNIOR";
     }
-    function unssCategoryLabel(value) { return (UNSS_CATEGORIES.find(c => c.value === value) || {}).label || value; }
+    /**
+     * Les categories UNSS se declinent au masculin et au feminin, et les competitions sont
+     * separees : "Minime Fille" n'est pas la meme categorie que "Minime Garcon". Le sexe n'est
+     * pas toujours renseigne (saisie manuelle, ancien import), on retombe alors sur la forme
+     * epicene plutot que d'imposer le masculin.
+     */
+    const UNSS_CATEGORY_LABELS = {
+      BENJAMIN: { M: "Benjamin", F: "Benjamine", "": "Benjamin(e)" },
+      MINIME:   { M: "Minime Garcon", F: "Minime Fille", "": "Minime" },
+      CADET:    { M: "Cadet", F: "Cadette", "": "Cadet(te)" },
+      JUNIOR:   { M: "Junior", F: "Juniore", "": "Junior(e)" }
+    };
+    function unssCategoryLabel(value, sex) {
+      const formes = UNSS_CATEGORY_LABELS[value];
+      if (!formes) return (UNSS_CATEGORIES.find(c => c.value === value) || {}).label || value;
+      return formes[sex === "M" || sex === "F" ? sex : ""];
+    }
+
+    /** "Masculin", "M", "Garcon", "H" -> M ; "Feminin", "F", "Fille" -> F ; sinon inconnu. */
+    function normalizeSex(value) {
+      const v = String(value || "").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      if (!v) return "";
+      if (v.startsWith("m") || v.startsWith("g") || v.startsWith("h")) return "M";
+      if (v.startsWith("f")) return "F";
+      return "";
+    }
 
     function parseFrDate(value) {
       const m = (value || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
@@ -4728,7 +4753,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
           html += `<div class="card unssCard" data-edit="${s.id}">
             <div>
               <div><strong>${s.last_name} ${s.first_name}</strong></div>
-              <div class="muted">${[unssCategoryLabel(s.category), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
+              <div class="muted">${[unssCategoryLabel(s.category, s.sex), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
               ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
               ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
             </div>
@@ -4808,30 +4833,38 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         voeu2: ["voeu 2", "activite voeu 2", "activite 2", "voeu2"],
         voeu3: ["voeu 3", "activite voeu 3", "activite 3", "voeu3"],
         emailEleve: ["email eleve", "mail eleve", "email"],
-        emailParent: ["email parent", "mail parent", "emails parent", "emails parents"]
+        emailParent: ["email parent", "mail parent", "emails parent", "emails parents"],
+        sexe: ["sexe", "sex", "genre", "civilite"]
       };
       const header = lines[0].split(delimiter).map(norm);
       const idx = (key) => header.findIndex(h => ALIASES[key].includes(h));
       const iNom = idx("nom"), iPrenom = idx("prenom"), iNaissance = idx("naissance");
       const iVoeu1 = idx("voeu1"), iVoeu2 = idx("voeu2"), iVoeu3 = idx("voeu3");
       const iEmailEleve = idx("emailEleve"), iEmailParent = idx("emailParent");
+      const iSexe = idx("sexe");
       const hasHeader = iNom >= 0 || iPrenom >= 0;
       const dataLines = hasHeader ? lines.slice(1) : lines;
       const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
 
       const rows = [];
-      let ignorees = 0;
+      let ignorees = 0, entetesRepetees = 0;
       for (const line of dataLines) {
         const fields = line.split(delimiter).map(f => f.trim());
         const lastName = hasHeader ? (fields[iNom] || "") : (fields[0] || "");
         const firstName = hasHeader ? (fields[iPrenom] || "") : (fields[1] || "");
         if (!lastName || !firstName) { ignorees++; continue; }
+        // Un export d'etablissement est parfois plusieurs extractions collees bout a bout : la
+        // ligne d'entete reapparait alors au milieu du fichier, et creerait un eleve "Nom Prenom".
+        if (ALIASES.nom.includes(norm(lastName)) && ALIASES.prenom.includes(norm(firstName))) {
+          entetesRepetees++; continue;
+        }
         const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
         rows.push({
           id: crypto.randomUUID(), user_id: session.user_id,
           last_name: lastName, first_name: firstName,
           birth_date_epoch_millis: birthDate,
           category: computeUnssCategory(birthDate, schoolYear),
+          sex: iSexe >= 0 ? normalizeSex(fields[iSexe]) : "",
           licensed: markLicensed,
           wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
           wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
@@ -4861,6 +4894,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         count += lot.length;
       }
       if (ignorees > 0) console.warn(`Import AS : ${ignorees} ligne(s) sans nom ou prenom ignoree(s).`);
+      if (entetesRepetees > 0) console.warn(`Import AS : ${entetesRepetees} ligne(s) d'entete rencontree(s) au milieu du fichier, ignoree(s).`);
       await loadUnssStudents();
       renderUnssTab();
       alert(`${count} eleve(s) importe(s).`);
@@ -4899,8 +4933,14 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         <input type="text" id="unssFirstName" value="${student ? student.first_name : ""}">
         <label for="unssBirth">Date de naissance (JJ/MM/AAAA)</label>
         <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
+        <label for="unssSex">Sexe</label>
+        <select id="unssSex">
+          <option value=""${!student || !student.sex ? " selected" : ""}>Non renseigne</option>
+          <option value="M"${student && student.sex === "M" ? " selected" : ""}>Garcon</option>
+          <option value="F"${student && student.sex === "F" ? " selected" : ""}>Fille</option>
+        </select>
         <label for="unssCategory">Categorie</label>
-        <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${c.label}</option>`).join("")}</select>
+        <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${unssCategoryLabel(c.value, student ? student.sex : "")}</option>`).join("")}</select>
         ${licensing || (student && student.licensed) ? `
           <label for="unssWish1">Voeu 1</label>
           <input type="text" id="unssWish1" value="${student ? student.wish1 || "" : ""}">
@@ -4926,6 +4966,14 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
         document.getElementById("unssCategory").value = computeUnssCategory(birth, schoolYear);
       });
+      document.getElementById("unssSex").addEventListener("change", () => {
+        // Les intitules de categorie s'accordent au sexe : on les reecrit sans perdre la selection.
+        const select = document.getElementById("unssCategory");
+        const choisie = select.value, sexe = document.getElementById("unssSex").value;
+        select.innerHTML = UNSS_CATEGORIES
+          .map(c => `<option value="${c.value}"${c.value === choisie ? " selected" : ""}>${unssCategoryLabel(c.value, sexe)}</option>`)
+          .join("");
+      });
       document.getElementById("unssCancelBtn").addEventListener("click", () => panel.style.display = "none");
       document.getElementById("unssSaveBtn").addEventListener("click", async () => {
         const lastName = document.getElementById("unssLastName").value.trim();
@@ -4935,6 +4983,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
         const body = {
           last_name: lastName, first_name: firstName, birth_date_epoch_millis: birth,
           category: document.getElementById("unssCategory").value,
+          sex: document.getElementById("unssSex").value,
           updated_at: new Date().toISOString()
         };
         const wishField = document.getElementById("unssWish1");
