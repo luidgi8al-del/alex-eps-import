@@ -4761,6 +4761,18 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       });
     }
 
+    /**
+     * Les exports de Pronote/SIECLE sortent en Windows-1252, pas en UTF-8. Lus en UTF-8, les
+     * octets accentues deviennent U+FFFD : l'entete "Prenom" n'est alors plus reconnu et chaque
+     * ligne est rejetee faute de prenom (l'import annonce alors 0 eleve importe).
+     * On decode donc en UTF-8, et on retombe sur Windows-1252 des qu'un caractere est invalide.
+     */
+    async function readCsvText(file) {
+      const buffer = await file.arrayBuffer();
+      const utf8 = new TextDecoder("utf-8").decode(buffer);
+      return utf8.includes("�") ? new TextDecoder("windows-1252").decode(buffer) : utf8;
+    }
+
     let unssHiddenFileInput = null;
     function unssFileInput() {
       if (unssHiddenFileInput) return unssHiddenFileInput;
@@ -4769,7 +4781,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       input.addEventListener("change", async () => {
         const file = input.files[0];
         if (!file) return;
-        const text = await file.text();
+        const text = await readCsvText(file);
         await importUnssCsv(text, unssMode === "licensed");
         input.value = "";
       });
@@ -4783,7 +4795,11 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       const lines = csv.split(/\r?\n/).filter(l => l.trim().length > 0);
       if (lines.length === 0) return;
       const delimiter = (lines[0].split(";").length > lines[0].split(",").length) ? ";" : ",";
-      const norm = (v) => v.trim().toLowerCase().replace(/é|è|ê/g, "e").replace(/à/g, "a").replace(/î/g, "i");
+      // NFD separe la lettre de son accent, et on retire les accents : couvre tout l'alphabet
+      // francais au lieu de la liste ecrite a la main. Le BOM d'un CSV Excel est retire aussi,
+      // sinon la premiere colonne s'appellerait "﻿nom" et ne serait jamais reconnue.
+      const norm = (v) => v.replace(/^﻿/, "").trim().toLowerCase()
+        .normalize("NFD").replace(/[̀-ͯ]/g, "");
       const ALIASES = {
         nom: ["nom", "nom de famille", "lastname", "last name"],
         prenom: ["prenom", "firstname", "first name"],
@@ -4803,31 +4819,48 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       const dataLines = hasHeader ? lines.slice(1) : lines;
       const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
 
-      let count = 0;
+      const rows = [];
+      let ignorees = 0;
       for (const line of dataLines) {
         const fields = line.split(delimiter).map(f => f.trim());
         const lastName = hasHeader ? (fields[iNom] || "") : (fields[0] || "");
         const firstName = hasHeader ? (fields[iPrenom] || "") : (fields[1] || "");
-        if (!lastName || !firstName) continue;
+        if (!lastName || !firstName) { ignorees++; continue; }
         const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
-        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-          method: "POST",
-          body: JSON.stringify({
-            id: crypto.randomUUID(), user_id: session.user_id,
-            last_name: lastName, first_name: firstName,
-            birth_date_epoch_millis: birthDate,
-            category: computeUnssCategory(birthDate, schoolYear),
-            licensed: markLicensed,
-            wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
-            wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
-            wish3: iVoeu3 >= 0 ? (fields[iVoeu3] || "") : "",
-            student_email: iEmailEleve >= 0 ? (fields[iEmailEleve] || null) : null,
-            parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null,
-            updated_at: new Date().toISOString(), deleted: false
-          })
+        rows.push({
+          id: crypto.randomUUID(), user_id: session.user_id,
+          last_name: lastName, first_name: firstName,
+          birth_date_epoch_millis: birthDate,
+          category: computeUnssCategory(birthDate, schoolYear),
+          licensed: markLicensed,
+          wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
+          wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
+          wish3: iVoeu3 >= 0 ? (fields[iVoeu3] || "") : "",
+          student_email: iEmailEleve >= 0 ? (fields[iEmailEleve] || null) : null,
+          parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null,
+          updated_at: new Date().toISOString(), deleted: false
         });
-        count++;
       }
+
+      // Un export d'etablissement fait facilement plus de mille lignes : une requete par eleve
+      // prendrait plusieurs minutes. On envoie par paquets, et on s'arrete au premier paquet
+      // refuse pour annoncer un total honnete plutot qu'un chiffre optimiste.
+      let count = 0;
+      const TAILLE_LOT = 200;
+      for (let i = 0; i < rows.length; i += TAILLE_LOT) {
+        const lot = rows.slice(i, i + TAILLE_LOT);
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+          method: "POST", body: JSON.stringify(lot)
+        });
+        if (!res.ok) {
+          await loadUnssStudents();
+          renderUnssTab();
+          alert(`${count} eleve(s) importe(s), puis l'envoi s'est interrompu. Attention : reimporter le meme fichier creerait un doublon pour ces ${count} eleves. Supprimez-les d'abord, ou retirez-les du fichier avant de relancer.`);
+          return;
+        }
+        count += lot.length;
+      }
+      if (ignorees > 0) console.warn(`Import AS : ${ignorees} ligne(s) sans nom ou prenom ignoree(s).`);
       await loadUnssStudents();
       renderUnssTab();
       alert(`${count} eleve(s) importe(s).`);
