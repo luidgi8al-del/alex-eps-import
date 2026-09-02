@@ -15,11 +15,18 @@
 --     professeur responsable doit pouvoir remplir son propre creneau.
 
 -- ATTENTION, A LANCER D'ABORD, SEUL.
--- Si votre compte n'etait pas reconnu comme administrateur, ce fichier empecherait TOUT LE MONDE
--- d'ajouter un eleve, vous compris. La requete ci-dessous doit renvoyer true avant d'aller plus
--- loin. Si elle renvoie false ou rien, n'appliquez pas la suite et dites-le.
+-- Si aucun compte n'etait reconnu comme administrateur, ce fichier empecherait TOUT LE MONDE
+-- d'ajouter un eleve. Verifiez d'abord qui administre :
 --
---   select eps_is_admin(eps_institution()) as je_suis_administrateur;
+--   select u.email as administrateur, i.name as etablissement, i.code
+--     from institutions i join auth.users u on u.id = i.created_by;
+--
+-- Votre adresse doit apparaitre en face de votre etablissement. Si la requete ne renvoie rien,
+-- n'appliquez pas la suite.
+--
+-- N'utilisez pas eps_is_admin() pour cette verification : l'editeur SQL n'ouvre pas de session
+-- utilisateur, auth.uid() y vaut null, et la fonction repondrait toujours false - y compris a un
+-- administrateur. Elle n'a de sens qu'appelee par l'application, jeton en main.
 --
 -- Pour revenir en arriere, il suffit de reappliquer schema_team_administration_1.sql, qui
 -- reconstruit toutes ces regles dans leur version ouverte a tous.
