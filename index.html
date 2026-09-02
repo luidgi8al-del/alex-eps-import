@@ -106,6 +106,14 @@
   .classeEntete .chevron { color:var(--text-secondary); flex:0 0 auto; }
   .classeEntete .classeNom { flex:1; }
   .classeActions { display:flex; flex-wrap:wrap; gap:8px; padding:0 16px 14px; }
+  .eleveTable { border-collapse:collapse; width:100%; font-size:13px; }
+  .eleveTable th, .eleveTable td { border-bottom:1px solid var(--border); padding:6px 8px; text-align:left; white-space:nowrap; }
+  .eleveTable thead th { position:sticky; top:0; background:var(--surface); z-index:1; }
+  .eleveTable tr.choisi { background:#EAF3ED; }
+  .eleveCoche { width:30px; }
+  .eleveTri { margin:0; padding:2px 4px; background:none; border:0; font-weight:700; font-size:12px;
+              color:var(--text); cursor:pointer; text-transform:uppercase; letter-spacing:.04em; }
+  .eleveTri.actif { color:var(--primary); }
   .pagination { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:10px 0; }
   .pagination button { margin:0; padding:6px 11px; min-width:38px; }
   .pagination button[disabled] { opacity:.45; cursor:default; }
@@ -6142,6 +6150,129 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
       });
     }
 
+    /**
+     * Verse les eleves coches dans une classe.
+     *
+     * C'est une recopie, pas un deplacement : une classe garde ses propres eleves, ou vivent le
+     * niveau EPS, les evaluations et les dispenses. Le repertoire reste la source, la classe en
+     * prend une copie de travail.
+     *
+     * Les eleves deja presents dans la classe sont laisses de cote plutot que dupliques : on
+     * reconnait un eleve a son nom, son prenom et sa date de naissance, les trois seuls champs
+     * fiables a ce stade.
+     */
+    async function ouvrirChoixClassePourEleves() {
+      if (selectionEleves.size === 0) return;
+      const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade,class_number&order=name.asc`);
+      if (!res.ok) { alert("Impossible de lire vos classes."); return; }
+      const classes = res.rows;
+      if (classes.length === 0) { alert("Aucune classe. Creez-en une d'abord dans Creation classe."); return; }
+
+      const choix = prompt(
+        `Dans quelle classe verser les ${selectionEleves.size} eleve(s) selectionne(s) ?\n\n`
+        + classes.map((c, i) => `${i + 1} - ${c.name}`).join("\n")
+        + `\n\nTapez le numero de la classe.`
+      );
+      if (choix === null) return;
+      const classe = classes[parseInt(choix, 10) - 1];
+      if (!classe) { alert("Numero de classe inconnu. Rien n'a ete ajoute."); return; }
+
+      const existantsRes = await apiFetchAll(
+        `${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${classe.id}&select=last_name,first_name,birth_date_epoch_millis`);
+      if (!existantsRes.ok) { alert("Impossible de lire les eleves de cette classe. Rien n'a ete ajoute."); return; }
+      const cle = e => [ (e.last_name || "").trim().toLowerCase(),
+                         (e.first_name || "").trim().toLowerCase(),
+                         e.birth_date_epoch_millis || "" ].join("|");
+      const deja = new Set(existantsRes.rows.map(cle));
+
+      const maintenant = new Date().toISOString();
+      const aVerser = unssStudents.filter(e => selectionEleves.has(e.id) && !deja.has(cle(e)));
+      const ignores = selectionEleves.size - aVerser.length;
+      if (aVerser.length === 0) {
+        alert(`Ces ${ignores} eleve(s) sont deja dans ${classe.name}. Rien n'a ete ajoute.`);
+        return;
+      }
+
+      const creation = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+        method: "POST",
+        body: JSON.stringify(aVerser.map(e => ({
+          id: crypto.randomUUID(), class_id: classe.id, user_id: session.user_id,
+          last_name: e.last_name, first_name: e.first_name, sex: e.sex || "",
+          birth_date_epoch_millis: e.birth_date_epoch_millis || null,
+          student_email: e.student_email || null, parent1_email: e.parent_email || null,
+          updated_at: maintenant, deleted: false
+        })))
+      });
+      if (!creation.ok) { alert("Ajout non confirme. Rien n'a ete ajoute."); return; }
+
+      selectionEleves.clear();
+      renderUnssTab();
+      alert(`${aVerser.length} eleve(s) ajoute(s) a ${classe.name}.`
+        + (ignores > 0 ? `\n${ignores} deja present(s), laisse(s) de cote.` : ""));
+    }
+
+    /**
+     * Colonnes de la Liste eleve, dans un ordre fixe.
+     *
+     * Un tableau plutot que des fiches : on vient y chercher tous les eleves d'une meme division,
+     * et comparer une colonne suppose qu'elle soit toujours au meme endroit.
+     */
+    const COLONNES_ELEVE = [
+      { cle: "last_name", titre: "Nom", valeur: e => e.last_name || "" },
+      { cle: "first_name", titre: "Prenom", valeur: e => e.first_name || "" },
+      { cle: "birth", titre: "Naissance", valeur: e => e.birth_date_epoch_millis || 0,
+        texte: e => formatFrDate(e.birth_date_epoch_millis) },
+      { cle: "division", titre: "Division", valeur: e => e.division || "" },
+      { cle: "sex", titre: "Sexe", valeur: e => e.sex || "",
+        texte: e => ({ M: "Garcon", F: "Fille" })[e.sex] || "" },
+      { cle: "student_email", titre: "Mail eleve", valeur: e => e.student_email || "" },
+      { cle: "parent_email", titre: "Mail parent", valeur: e => e.parent_email || "" }
+    ];
+
+    /** Colonne triee et sens du tri. La division en premier : c'est par elle qu'on regroupe. */
+    let triEleve = { cle: "division", croissant: true };
+    /** Eleves coches, conserves d'une page a l'autre : une selection ne doit pas s'evaporer. */
+    let selectionEleves = new Set();
+
+    function trierEleves(eleves) {
+      const colonne = COLONNES_ELEVE.find(c => c.cle === triEleve.cle) || COLONNES_ELEVE[0];
+      const sens = triEleve.croissant ? 1 : -1;
+      return [...eleves].sort((a, b) => {
+        const va = colonne.valeur(a), vb = colonne.valeur(b);
+        // Une division vide se range apres les autres, quel que soit le sens : elle n'est pas
+        // une division "petite", c'est une information manquante.
+        if (typeof va === "string" && typeof vb === "string") {
+          if (!va && vb) return 1;
+          if (va && !vb) return -1;
+          const c = va.localeCompare(vb, "fr", { numeric: true, sensitivity: "base" });
+          if (c !== 0) return c * sens;
+        } else if (va !== vb) {
+          return (va < vb ? -1 : 1) * sens;
+        }
+        // A valeur egale, l'ordre alphabetique evite qu'une ligne saute d'une page a l'autre.
+        return (a.last_name || "").localeCompare(b.last_name || "", "fr")
+          || (a.first_name || "").localeCompare(b.first_name || "", "fr");
+      });
+    }
+
+    function tableauElevesHtml(eleves) {
+      let html = `<div style="overflow-x:auto"><table class="eleveTable"><thead><tr>`;
+      html += `<th class="eleveCoche"><input type="checkbox" id="cocheToutesPages"></th>`;
+      COLONNES_ELEVE.forEach(c => {
+        const actif = triEleve.cle === c.cle;
+        html += `<th><button type="button" class="eleveTri${actif ? " actif" : ""}" data-tri="${c.cle}">`
+          + `${planningText(c.titre)}${actif ? (triEleve.croissant ? " \u25B2" : " \u25BC") : ""}</button></th>`;
+      });
+      html += `</tr></thead><tbody>`;
+      eleves.forEach(e => {
+        html += `<tr data-eleve="${e.id}"${selectionEleves.has(e.id) ? ' class="choisi"' : ""}>`
+          + `<td class="eleveCoche"><input type="checkbox" data-coche="${e.id}"${selectionEleves.has(e.id) ? " checked" : ""}></td>`
+          + COLONNES_ELEVE.map(c => `<td>${planningText(c.texte ? c.texte(e) : c.valeur(e))}</td>`).join("")
+          + `</tr>`;
+      });
+      return html + `</tbody></table></div>`;
+    }
+
     /** Page affichee du repertoire. Repart a la premiere des que la liste change de nature. */
     let unssPage = 1;
     /** Connu avant le rendu : le tableau se construit d'un bloc, il ne peut pas attendre. */
@@ -6153,7 +6284,11 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
       if (unssMode === "appel") { renderUnssAppelTab(); return; }
       const wrap = document.getElementById(unssCibleRendu);
       if (!wrap) return;
-      const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
+      // Liste eleve se lit en tableau : on y cherche une division entiere, pas une fiche.
+      // Licencies AS garde ses cartes, ou l'on consulte les voeux et la taille de maillot.
+      const enTableau = unssCibleRendu === "listeEleveList";
+      const brut = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
+      const rows = enTableau ? trierEleves(brut) : brut;
       const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
       // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
       if (unssPage > totalPages) unssPage = totalPages;
@@ -6174,15 +6309,24 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
       if (unssAdmin || unssMode === "licensed") {
         html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
       }
+      // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
+      if (unssCibleRendu === "listeEleveList") {
+        html += `<button id="eleveVersClasseBtn" style="margin-top:0" ${selectionEleves.size ? "" : "disabled"}>`
+          + `Ajouter a une classe${selectionEleves.size ? ` (${selectionEleves.size})` : ""}</button>`;
+      }
       html += `</div>`;
 
       if (rows.length === 0) {
         html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve de Classe > Liste eleve." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
       } else {
         html += `<div class="muted" style="margin-bottom:8px">`
-          + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)</div>`;
+          + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)`
+          + (enTableau && selectionEleves.size ? ` \u00b7 ${selectionEleves.size} selectionne(s)` : "")
+          + `</div>`;
         html += paginationHtml(unssPage, totalPages, "unss");
-        rowsPage.forEach(s => {
+        if (enTableau) {
+          html += tableauElevesHtml(rowsPage);
+        } else rowsPage.forEach(s => {
           const wishes = [s.wish1, s.wish2, s.wish3].filter(Boolean).join(", ");
           html += `<div class="card unssCard" data-edit="${s.id}">
             <div>
@@ -6197,6 +6341,28 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
         html += paginationHtml(unssPage, totalPages, "unss");
       }
       wrap.innerHTML = html;
+      wrap.querySelectorAll("[data-tri]").forEach(btn => btn.addEventListener("click", () => {
+        const cle = btn.dataset.tri;
+        // Recliquer la meme colonne inverse le sens ; changer de colonne repart du croissant.
+        triEleve = { cle, croissant: triEleve.cle === cle ? !triEleve.croissant : true };
+        unssPage = 1;
+        renderUnssTab();
+      }));
+      wrap.querySelectorAll("[data-coche]").forEach(box => box.addEventListener("change", () => {
+        if (box.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
+        renderUnssTab();
+      }));
+      const cocheTout = wrap.querySelector("#cocheToutesPages");
+      if (cocheTout) cocheTout.addEventListener("change", () => {
+        // Ne coche que la page affichee : cocher mille eleves d'un clic invisible serait piegeux.
+        wrap.querySelectorAll("[data-coche]").forEach(box => {
+          if (cocheTout.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
+        });
+        renderUnssTab();
+      });
+      const versClasse = wrap.querySelector("#eleveVersClasseBtn");
+      if (versClasse) versClasse.addEventListener("click", () => ouvrirChoixClassePourEleves());
+
       wirePagination(wrap, "unss", page => {
         unssPage = page;
         renderUnssTab();
@@ -6334,14 +6500,16 @@ Cette action est definitive.`
         voeu3: ["voeu 3", "activite voeu 3", "activite 3", "voeu3"],
         emailEleve: ["email eleve", "mail eleve", "email"],
         emailParent: ["email parent", "mail parent", "emails parent", "emails parents"],
-        sexe: ["sexe", "sex", "genre", "civilite"]
+        sexe: ["sexe", "sex", "genre", "civilite"],
+        // L'export d'etablissement nomme cette colonne de plusieurs facons selon le logiciel.
+        division: ["division", "classe", "classe origine", "classe d origine", "groupe classe", "div"]
       };
       const header = lines[0].split(delimiter).map(norm);
       const idx = (key) => header.findIndex(h => ALIASES[key].includes(h));
       const iNom = idx("nom"), iPrenom = idx("prenom"), iNaissance = idx("naissance");
       const iVoeu1 = idx("voeu1"), iVoeu2 = idx("voeu2"), iVoeu3 = idx("voeu3");
       const iEmailEleve = idx("emailEleve"), iEmailParent = idx("emailParent");
-      const iSexe = idx("sexe");
+      const iSexe = idx("sexe"), iDivision = idx("division");
       const hasHeader = iNom >= 0 || iPrenom >= 0;
       const dataLines = hasHeader ? lines.slice(1) : lines;
       const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
@@ -6365,6 +6533,7 @@ Cette action est definitive.`
           birth_date_epoch_millis: birthDate,
           category: computeUnssCategory(birthDate, schoolYear),
           sex: iSexe >= 0 ? normalizeSex(fields[iSexe]) : "",
+          division: iDivision >= 0 ? (fields[iDivision] || "").trim() : "",
           licensed: markLicensed,
           wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
           wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
@@ -6619,6 +6788,8 @@ Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu 
         <input type="text" id="unssLastName" value="${student ? student.last_name : ""}">
         <label for="unssFirstName">Prenom</label>
         <input type="text" id="unssFirstName" value="${student ? student.first_name : ""}">
+        <label for="unssDivision">Division (classe d'origine)</label>
+        <input type="text" id="unssDivision" placeholder="ex : 2.1, 6e3" value="${student ? (student.division || "") : ""}">
         <label for="unssBirth">Date de naissance (JJ/MM/AAAA)</label>
         <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
         <label for="unssSex">Sexe</label>
@@ -6670,6 +6841,7 @@ Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu 
           last_name: lastName, first_name: firstName, birth_date_epoch_millis: birth,
           category: document.getElementById("unssCategory").value,
           sex: document.getElementById("unssSex").value,
+          division: document.getElementById("unssDivision").value.trim(),
           updated_at: new Date().toISOString()
         };
         const wishField = document.getElementById("unssWish1");
