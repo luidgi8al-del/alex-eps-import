@@ -1861,7 +1861,7 @@
     // Programmation locale de l'etablissement : memes listes que EtablissementProgrammation.kt.
     const PROGRAMMATION = {
       SIXIEME: ["Natation", "Athletisme - sprint / relais", "Escalade", "Gymnastique au sol", "Danse", "Rugby", "Basket-ball", "Tennis de table", "Badminton"],
-      CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte"],
+      CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte", "Rugby"],
       QUATRIEME: ["Natation", "Escalade", "Acrosport", "Volley-ball"],
       TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton"],
       SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree", "Natation de duree"],
@@ -1902,6 +1902,7 @@
       "CINQUIEME|Cirque": { file: "content/cirque-5e.json" },
       "CINQUIEME|Volley-ball": { file: "content/volley-ball-5e.json" },
       "CINQUIEME|Lutte": { file: "content/lutte-5e.json" },
+      "CINQUIEME|Rugby": { file: "content/rugby-5e.json" },
       "QUATRIEME|Escalade": { file: "content/escalade-4e.json" },
       "QUATRIEME|Natation": { file: "content/natation-4e.json" },
       "QUATRIEME|Acrosport": { file: "content/acrosport-4e.json" },
@@ -4767,7 +4768,15 @@
     /** "Aucune" + les installations enregistrees (module Equipement). */
     function installationChipsHtml(name, selectedName) {
       const none = `<button type="button" class="secondary installationChip" data-${name}="" style="display:block; width:100%; text-align:left; margin-top:4px; ${!selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">Aucune</button>`;
-      const chips = planningInstallations.map(inst =>
+      // Un espace divisible est enregistre autant de fois qu'il a de parts : la piscine tient deux
+      // lignes "Piscine 1/2". Les proposer toutes afficherait deux boutons identiques, et comme le
+      // choix se retient par son nom, en cocher un les allumerait tous les deux. Ce qu'on choisit
+      // ici c'est "une demi-piscine" ; c'est le tableau d'occupation qui decide laquelle est libre.
+      const uniques = [];
+      planningInstallations.forEach(inst => {
+        if (!uniques.some(u => cleInstallation(u.name) === cleInstallation(inst.name))) uniques.push(inst);
+      });
+      const chips = uniques.map(inst =>
         `<button type="button" class="secondary installationChip" data-${name}="${inst.name}" style="display:block; width:100%; text-align:left; margin-top:4px; ${inst.name === selectedName ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${inst.name}</button>`
       ).join("");
       return none + chips;
