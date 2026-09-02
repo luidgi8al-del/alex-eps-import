@@ -828,7 +828,17 @@
      */
     const TAILLE_PAGE_LECTURE = 1000;
     async function apiFetchAll(url) {
-      const chemin = url.includes("order=") ? url : url + (url.includes("?") ? "&" : "?") + "order=id";
+      // Toutes les tables n'ont pas de colonne "id" : celles qui portent le professeur en cle
+      // (teacher_profiles, teacher_period_settings) n'en ont pas. Demander un tri sur une colonne
+      // absente fait echouer la requete entiere, et la table paraissait alors illisible.
+      const triDemande = url.includes("order=");
+      const resultat = await lirePaginee(triDemande ? url : url + (url.includes("?") ? "&" : "?") + "order=id");
+      if (resultat.ok || triDemande) return resultat;
+      // Ces tables tiennent en une ligne par professeur : l'absence de tri stable ne coute rien.
+      return lirePaginee(url);
+    }
+
+    async function lirePaginee(chemin) {
       const tout = [];
       for (let debut = 0, pages = 0; pages < 200; pages++, debut += TAILLE_PAGE_LECTURE) {
         const res = await apiFetch(chemin, {
