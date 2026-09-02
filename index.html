@@ -1387,6 +1387,24 @@
     }
 
     /**
+     * Vrai si le compte administre l'etablissement.
+     *
+     * Sert a ne pas proposer des actions que la base refusera : mieux vaut un bouton absent qu'un
+     * bouton qui echoue. La reponse est mise de cote, le contexte d'equipe etant deja relu a
+     * l'ouverture des reglages.
+     *
+     * Ce n'est qu'un confort d'affichage : la vraie interdiction vit dans les regles de la base
+     * (schema_droits_administrateur.sql), seules capables de resister a un contournement.
+     */
+    let estAdminCache = null;
+    async function estAdministrateur() {
+      if (estAdminCache !== null) return estAdminCache;
+      const contexte = await loadTeamContext().catch(() => null);
+      estAdminCache = !!(contexte && contexte.is_admin);
+      return estAdminCache;
+    }
+
+    /**
      * Le repertoire s'affiche dans deux onglets : Liste eleve (sous Classe) et Licencies AS.
      * C'est la meme liste, filtree differemment - il ne doit donc en rester qu'un rendu a la fois,
      * sinon deux boutons de meme identifiant coexisteraient et le mauvais recevrait les clics.
@@ -1403,6 +1421,7 @@
       unssMode = "all";
       unssPage = 1;
       viderAutreRendu("listeEleveList");
+      unssAdmin = await estAdministrateur();
       await loadUnssStudents();
       renderUnssTab();
     }
@@ -6010,10 +6029,11 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
       renderUnssTab();
     }
 
-    function showUnssTab(mode) {
+    async function showUnssTab(mode) {
       unssMode = mode;
       unssCibleRendu = "unssList";
       viderAutreRendu("unssList");
+      unssAdmin = await estAdministrateur();
       // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
       unssPage = 1;
       document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
@@ -6124,6 +6144,8 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
 
     /** Page affichee du repertoire. Repart a la premiere des que la liste change de nature. */
     let unssPage = 1;
+    /** Connu avant le rendu : le tableau se construit d'un bloc, il ne peut pas attendre. */
+    let unssAdmin = false;
 
     function renderUnssTab() {
       if (unssMode === "slots") { renderUnssSlotsTab(); return; }
@@ -6138,13 +6160,20 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
       const debutPage = (unssPage - 1) * TAILLE_PAGE_LISTE;
       const rowsPage = rows.slice(debutPage, debutPage + TAILLE_PAGE_LISTE);
       let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
-      html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
+      // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
+      // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
+      if (unssAdmin) {
+        html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
+      }
       // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
       // verrait pas ce qu'on supprime, puisque les licencies sont justement ce qui est preserve.
-      if (unssMode !== "licensed" && rows.length > 0) {
+      if (unssAdmin && unssMode !== "licensed" && rows.length > 0) {
         html += `<button class="secondary" id="unssClearBtn" style="margin-top:0">Supprimer toute la liste</button>`;
       }
-      html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
+      // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
+      if (unssAdmin || unssMode === "licensed") {
+        html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
+      }
       html += `</div>`;
 
       if (rows.length === 0) {
@@ -6162,7 +6191,7 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
               ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
               ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
             </div>
-            <button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>
+            ${unssAdmin ? `<button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>` : ""}
           </div>`;
         });
         html += paginationHtml(unssPage, totalPages, "unss");
@@ -6174,10 +6203,12 @@ let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
         wrap.scrollIntoView({ block: "start" });
       });
 
-      document.getElementById("unssAddBtn").addEventListener("click", () => {
+      const addBtn = document.getElementById("unssAddBtn");
+      if (addBtn) addBtn.addEventListener("click", () => {
         if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
       });
-      document.getElementById("unssImportBtn").addEventListener("click", () => unssFileInput().click());
+      const importBtn = document.getElementById("unssImportBtn");
+      if (importBtn) importBtn.addEventListener("click", () => unssFileInput().click());
       const clearBtn = document.getElementById("unssClearBtn");
       if (clearBtn) clearBtn.addEventListener("click", () => viderRepertoireAs());
       wrap.querySelectorAll("[data-edit]").forEach(el => {
