@@ -97,7 +97,13 @@
   .planningHeadCell + .planningHeadCell { border-left:2px solid #C4D0D9; }
   .planningHeadCell.today { color:#fff; background:var(--primary-light); }
   .planningHeadCell.weekend { background:#5A6B62; }
+  .planningSubCell { font-size:9.5px; font-weight:700; text-align:center; padding:3px 2px; color:#31463C; background:#EAF3ED; border-bottom:1px solid var(--border); position:sticky; top:31px; }
+  .planningSubCell.vide { background:var(--surface); }
+  .planningSubCell span { overflow:hidden; white-space:nowrap; padding:0 1px; }
   .planningDayCol { border-left:2px solid #C4D0D9; }
+  /* Limite entre deux enseignants d'une meme journee : discrete, pour ne pas concurrencer le
+     filet epais qui separe les jours. */
+  .profSep { position:absolute; top:0; bottom:0; width:1px; background:#E7ECF0; pointer-events:none; }
   .planningDayCol.weekend { background:#F1F3F5; }
   .planningTimeCell { font-size:10px; color:var(--text-secondary); text-align:right; padding-right:4px; border-top:1px solid #F1F2F0; height:26px; box-sizing:border-box; }
   .planningCell { border-top:1px solid #F1F2F0; border-left:1px solid #F1F2F0; height:26px; box-sizing:border-box; cursor:pointer; position:relative; }
@@ -4508,6 +4514,18 @@
       html += `<div class="planningHeadCell"></div>`;
       PLANNING_DAYS.forEach(d => { html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}">${d.label}</div>`; });
 
+      // Le nom de chaque colonne, sous celui du jour : avec six a huit colonnes par journee, la
+      // couleur seule obligerait a redescendre a la legende pour chaque case.
+      const profsParJour = {};
+      html += `<div class="planningSubCell vide"></div>`;
+      PLANNING_DAYS.forEach(d => {
+        const { profs } = placementParEnseignant(slots.filter(x => x.day_of_week === d.key));
+        profsParJour[d.key] = profs;
+        html += `<div class="planningSubCell"><div style="display:grid; grid-template-columns:repeat(${Math.max(1, profs.length)}, minmax(0,1fr))">`
+          + (profs.length ? profs.map(n => `<span title="${planningText(n)}">${planningText(n.slice(0, 3))}</span>`).join("") : "<span></span>")
+          + `</div></div>`;
+      });
+
       html += `<div style="grid-column:1;">`;
       for (let r = 0; r < PLANNING_ROWS; r++) {
         const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
@@ -4518,13 +4536,20 @@
       PLANNING_DAYS.forEach((d, dayIdx) => {
         html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
         const daySlots = slots.filter(s => s.day_of_week === d.key);
-        const placementDuJour = repartirEnColonnes(daySlots);
+        const { profs: profsDuJour, placement: placementDuJour } = placementParEnseignant(daySlots);
+        // Un filet fin marque la limite entre deux enseignants, sans concurrencer le filet epais
+        // qui separe les jours.
+        for (let i = 1; i < profsDuJour.length; i++) {
+          html += `<div class="profSep" style="left:${i * 100 / profsDuJour.length}%"></div>`;
+        }
         daySlots.forEach(s => {
           const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
           const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
           const conflict = conflictIdx.has(slots.indexOf(s));
-          const place = placementDuJour.get(s.id) || { index: 0, total: 1 };
-          const laneCount = Math.max(1, place.total), laneIndex = place.index;
+          const place = placementDuJour.get(s.id) || { colonne: 0, sousIndex: 0, sousTotal: 1 };
+          const largeurColonne = 100 / Math.max(1, profsDuJour.length);
+          const gauche = place.colonne * largeurColonne + place.sousIndex * largeurColonne / place.sousTotal;
+          const largeur = largeurColonne / place.sousTotal;
           const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && Number(a.period_number) === Number(planningPeriod));
           // Une case vide dit deja que l'activite reste a choisir : ecrire "A definir" prenait la
           // place du seul mot qu'on vient y lire.
@@ -4532,7 +4557,7 @@
           // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
           const [fond, encre] = couleurEnseignant(s.teacher_label);
           const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
-          html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${laneIndex * 100 / laneCount}% + 1px); right:auto; width:calc(${100 / laneCount}% - 2px); ${style}">
+          html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${gauche}% + 1px); right:auto; width:calc(${largeur}% - 2px); ${style}">
             <span class="cl clFit" data-full="${planningText(s.class_label || "?")}">${planningText(s.class_label || "?")}</span>
             ${activity ? `<span class="apFit" data-full="${planningText(activity)}">${planningText(activity)}</span>` : ""}
           </div>`;
@@ -4596,6 +4621,32 @@
     }
 
     /**
+     * Reserve une colonne a chaque enseignant present dans la journee.
+     *
+     * Au plus serre, un professeur changeait de colonne au fil des heures : sa journee ne se lisait
+     * pas d'un trait, et une case vide ne voulait rien dire. Avec une colonne par enseignant, on
+     * suit sa journee du regard de haut en bas et un trou signifie qu'il n'a pas cours.
+     *
+     * L'ordre est celui de la legende, pour que la meme personne soit toujours a la meme place.
+     */
+    function placementParEnseignant(creneauxDuJour) {
+      const profs = [...new Set(creneauxDuJour.map(s => nomCourtEnseignant(s.teacher_label) || "?"))].sort();
+      const placement = new Map();
+      profs.forEach((nom, colonne) => {
+        const siens = creneauxDuJour.filter(s => (nomCourtEnseignant(s.teacher_label) || "?") === nom);
+        // Un professeur n'a normalement pas deux cours a la meme heure, ses creneaux s'enchainent.
+        // Si la base en contenait malgre tout, sa colonne se coupe plutot que de laisser une case
+        // en cacher une autre : une donnee ne doit pas disparaitre en silence.
+        const interne = repartirEnColonnes(siens);
+        siens.forEach(s => {
+          const sous = interne.get(s.id) || { index: 0, total: 1 };
+          placement.set(s.id, { colonne, sousIndex: sous.index, sousTotal: Math.max(1, sous.total) });
+        });
+      });
+      return { profs, placement };
+    }
+
+    /**
      * Largeur minimale d'une case. Le plancher mesure est 36 px, en dessous duquel l'activite
      * tombe a deux lettres ; on prend nettement plus large, l'equipe preferant faire defiler la
      * grille vers la droite plutot que de dechiffrer des libelles de trois lettres.
@@ -4613,10 +4664,9 @@
     function largeursColonnesEps(slots) {
       const parJour = {};
       PLANNING_DAYS.forEach(d => {
-        // Le meme decompte que le placement, sinon la colonne serait dimensionnee pour un nombre
-        // de voies que la grille n'utilise pas.
-        const placement = repartirEnColonnes(slots.filter(x => x.day_of_week === d.key));
-        parJour[d.key] = Math.max(1, ...[...placement.values()].map(v => v.total), 1);
+        // Autant de colonnes que d'enseignants ce jour-la, puisque chacun garde la sienne.
+        const { profs } = placementParEnseignant(slots.filter(x => x.day_of_week === d.key));
+        parJour[d.key] = Math.max(1, profs.length);
       });
       const colonnes = PLANNING_DAYS.map(d =>
         `minmax(${Math.max(110, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
