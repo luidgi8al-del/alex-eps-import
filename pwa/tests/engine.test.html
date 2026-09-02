@@ -28,6 +28,8 @@
 
 <script type="module">
 import { lancer, viderTout } from "./engine.test.js";
+// Les cas de l'adaptateur s'ajoutent au meme banc : ils s'enregistrent a l'import.
+import "./adapter.test.js";
 
 const bilan = document.getElementById("bilan");
 const details = document.getElementById("details");
