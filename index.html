@@ -4518,16 +4518,13 @@
       PLANNING_DAYS.forEach((d, dayIdx) => {
         html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
         const daySlots = slots.filter(s => s.day_of_week === d.key);
+        const placementDuJour = repartirEnColonnes(daySlots);
         daySlots.forEach(s => {
-          if (s.day_of_week !== d.key) return;
           const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
           const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
           const conflict = conflictIdx.has(slots.indexOf(s));
-          const overlapping = daySlots.filter(other => {
-            const a = planningStartMinutes(s), b = planningStartMinutes(other);
-            return a < b + other.duration_minutes && b < a + s.duration_minutes;
-          }).sort((a,b) => planningStartMinutes(a)-planningStartMinutes(b) || (a.teacher_label||"").localeCompare(b.teacher_label||"") || a.id.localeCompare(b.id));
-          const laneCount = Math.max(1, overlapping.length), laneIndex = Math.max(0, overlapping.findIndex(x => x.id === s.id));
+          const place = placementDuJour.get(s.id) || { index: 0, total: 1 };
+          const laneCount = Math.max(1, place.total), laneIndex = place.index;
           const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && Number(a.period_number) === Number(planningPeriod));
           // Une case vide dit deja que l'activite reste a choisir : ecrire "A definir" prenait la
           // place du seul mot qu'on vient y lire.
@@ -4560,11 +4557,50 @@
     }
 
     /**
+     * Repartit les creneaux d'une journee en colonnes qui ne se chevauchent jamais.
+     *
+     * Le calcul se faisait creneau par creneau : chacun comptait ceux qui le croisaient et en
+     * deduisait sa position. Deux creneaux pouvaient donc tomber sur la meme place. Avec A de 8h a
+     * 9h, B de 8h30 a 9h30 et C de 9h a 10h, A se croyait seul face a B et prenait la moitie
+     * gauche, tandis que B se partageait en trois : leurs cases se recouvraient de 8h30 a 9h.
+     *
+     * On traite maintenant la journee d'un bloc. Les creneaux qui se touchent forment un groupe ;
+     * dans un groupe, chacun prend la premiere colonne libre a son heure de debut, et tout le
+     * groupe se partage la largeur en autant de colonnes qu'il en a fallu.
+     */
+    function repartirEnColonnes(creneaux) {
+      const tri = [...creneaux].sort((a, b) => planningStartMinutes(a) - planningStartMinutes(b)
+        || (a.teacher_label || "").localeCompare(b.teacher_label || "")
+        || String(a.id).localeCompare(String(b.id)));
+      const placement = new Map();
+      let groupe = [], finsDeColonnes = [], finDuGroupe = -Infinity;
+
+      const cloturerGroupe = () => {
+        groupe.forEach(id => { placement.get(id).total = finsDeColonnes.length; });
+        groupe = []; finsDeColonnes = [];
+      };
+
+      tri.forEach(s => {
+        const debut = planningStartMinutes(s), fin = debut + s.duration_minutes;
+        // Plus aucun creneau du groupe n'est encore en cours : le groupe est clos.
+        if (groupe.length && debut >= finDuGroupe) cloturerGroupe();
+        let colonne = finsDeColonnes.findIndex(finCol => finCol <= debut);
+        if (colonne === -1) { finsDeColonnes.push(fin); colonne = finsDeColonnes.length - 1; }
+        else finsDeColonnes[colonne] = fin;
+        placement.set(s.id, { index: colonne, total: 0 });
+        groupe.push(s.id);
+        finDuGroupe = groupe.length === 1 ? fin : Math.max(finDuGroupe, fin);
+      });
+      if (groupe.length) cloturerGroupe();
+      return placement;
+    }
+
+    /**
      * Largeur minimale d'une case. Le plancher mesure est 36 px, en dessous duquel l'activite
      * tombe a deux lettres ; on prend nettement plus large, l'equipe preferant faire defiler la
      * grille vers la droite plutot que de dechiffrer des libelles de trois lettres.
      */
-    const LARGEUR_CASE_MIN = 56;
+    const LARGEUR_CASE_MIN = 42;
 
     /**
      * Largeurs des colonnes de Planning global EPS, une journee a la fois.
@@ -4576,20 +4612,14 @@
      */
     function largeursColonnesEps(slots) {
       const parJour = {};
-      PLANNING_DAYS.forEach(d => { parJour[d.key] = 1; });
       PLANNING_DAYS.forEach(d => {
-        const duJour = slots.filter(x => x.day_of_week === d.key);
-        duJour.forEach(s => {
-          const debut = planningStartMinutes(s);
-          const simultanes = duJour.filter(autre => {
-            const b = planningStartMinutes(autre);
-            return debut < b + autre.duration_minutes && b < debut + s.duration_minutes;
-          }).length;
-          if (simultanes > parJour[d.key]) parJour[d.key] = simultanes;
-        });
+        // Le meme decompte que le placement, sinon la colonne serait dimensionnee pour un nombre
+        // de voies que la grille n'utilise pas.
+        const placement = repartirEnColonnes(slots.filter(x => x.day_of_week === d.key));
+        parJour[d.key] = Math.max(1, ...[...placement.values()].map(v => v.total), 1);
       });
       const colonnes = PLANNING_DAYS.map(d =>
-        `minmax(${Math.max(130, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
+        `minmax(${Math.max(110, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
       return `40px ${colonnes}`;
     }
 
