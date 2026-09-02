@@ -97,6 +97,15 @@
   .planningHeadCell + .planningHeadCell { border-left:2px solid #C4D0D9; }
   .planningHeadCell.today { color:#fff; background:var(--primary-light); }
   .planningHeadCell.weekend { background:#5A6B62; }
+  /* Liste des classes en accordeon : l'entete occupe toute la largeur pour etre cliquable
+     partout, sans ressembler a un bouton d'action. */
+  .classeCard { padding:0; overflow:hidden; }
+  .classeEntete { display:flex; align-items:center; gap:10px; width:100%; margin:0; padding:14px 16px;
+                  background:none; border:0; text-align:left; color:var(--text); font-size:14px; cursor:pointer; }
+  .classeEntete:hover { background:#F3F6F8; }
+  .classeEntete .chevron { color:var(--text-secondary); flex:0 0 auto; }
+  .classeEntete .classeNom { flex:1; }
+  .classeActions { display:flex; flex-wrap:wrap; gap:8px; padding:0 16px 14px; }
   .planningSubCell { font-size:9.5px; font-weight:700; text-align:center; padding:3px 2px; color:#31463C; background:#EAF3ED; border-bottom:1px solid var(--border); position:sticky; top:31px; }
   .planningSubCell.vide { background:var(--surface); }
   .planningSubCell span { overflow:hidden; white-space:nowrap; padding:0 1px; }
@@ -568,6 +577,7 @@
               <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th>Naissance</th><th>Téléphone parent</th><th></th></tr></thead>
               <tbody id="editStudentsBody"></tbody>
             </table>
+            <button type="button" class="secondary" id="addStudentBtn" style="margin-top:10px">Ajouter un eleve</button>
             <button id="saveEditBtn">Enregistrer</button>
             <button class="secondary" id="closeEditBtn">Fermer</button>
             <div class="error" id="editError"></div>
@@ -1738,24 +1748,34 @@
           return;
         }
         listEl.innerHTML = "";
+        // Une classe ouverte a la fois : la liste tenait sur plusieurs ecrans des qu'un
+        // etablissement complet etait saisi, chaque classe montrant en permanence ses quatre
+        // boutons. Repliee, elle n'affiche que son nom ; ouverte, elle referme les autres.
+        if (!rows.some(r => r.id === classeOuverteId)) classeOuverteId = null;
         rows.forEach(r => {
           const div = document.createElement("div");
-          div.className = "card";
+          div.className = "card classeCard";
           const label = planningText(planningClassLabel(r));
+          const ouverte = r.id === classeOuverteId;
           div.innerHTML = `
-            <div class="top">
-              <div><strong>${label}</strong> · ${r.school_year}${
+            <button type="button" class="classeEntete" aria-expanded="${ouverte}">
+              <span class="chevron">${ouverte ? "▾" : "▸"}</span>
+              <span class="classeNom"><strong>${label}</strong> · ${r.school_year}${
                 r.assigned_teacher_id && r.assigned_teacher_id !== session.user_id
                   ? ` · <span class="badge" style="background:#E6F1FF">Attribuee a ${planningText(nomCollegue(r.assigned_teacher_id))}</span>`
                   : (r.user_id !== session.user_id ? ' · <span class="badge" style="background:#E5F7E9">Preparee pour vous</span>' : "")
-              }</div>
-              <div>
-                <button class="secondary" data-action="dashboard" style="margin-top:0">Tableau de bord</button>
-                <button class="secondary" data-action="schedule" style="margin-top:0">Emploi du temps</button>
-                <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
-                <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
-              </div>
+              }</span>
+            </button>
+            <div class="classeActions" ${ouverte ? "" : "hidden"}>
+              <button class="secondary" data-action="dashboard" style="margin-top:0">Tableau de bord</button>
+              <button class="secondary" data-action="schedule" style="margin-top:0">Emploi du temps</button>
+              <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
+              <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
             </div>`;
+          div.querySelector(".classeEntete").addEventListener("click", () => {
+            classeOuverteId = ouverte ? null : r.id;
+            loadImports();
+          });
           div.querySelector('[data-action="dashboard"]').addEventListener("click", () => openClassDashboard(r, label));
           div.querySelector('[data-action="schedule"]').addEventListener("click", () => openClassSchedule(r, label));
           div.querySelector('[data-action="edit"]').addEventListener("click", () => openEditImport(r));
@@ -1782,6 +1802,8 @@
     }
 
     // ---- Modifier une classe deja envoyee : metadonnees + liste de ses eleves ----
+    /** Classe dépliée dans la liste : une seule a la fois, d'ou un identifiant et non un ensemble. */
+    let classeOuverteId = null;
     let editImportId = null;
     let editStudents = [];
     let editStudentsToDelete = [];
@@ -1845,6 +1867,20 @@
       document.getElementById("editImportPanel").style.display = "none";
     });
 
+    document.getElementById("addStudentBtn").addEventListener("click", () => {
+      // Une ligne vide, sans identifiant : c'est ce qui la distingue d'un eleve deja enregistre
+      // au moment de l'enregistrement.
+      document.querySelectorAll("#editStudentsBody .editRow").forEach(tr => {
+        const student = editStudents[parseInt(tr.dataset.index, 10)];
+        tr.querySelectorAll("[data-field]").forEach(f => { student[f.dataset.field] = f.value.trim() || null; });
+      });
+      editStudents.push({ last_name: "", first_name: "", sex: "NON_PRECISE" });
+      renderEditStudents();
+      const lignes = document.querySelectorAll("#editStudentsBody .editRow");
+      const derniere = lignes[lignes.length - 1];
+      if (derniere) { derniere.scrollIntoView({ block: "center" }); derniere.querySelector("[data-field]")?.focus(); }
+    });
+
     document.getElementById("saveEditBtn").addEventListener("click", async () => {
       const errorEl = document.getElementById("editError");
       errorEl.textContent = "";
@@ -1874,16 +1910,30 @@
             method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
           });
         }
-        for (const s of editStudents) {
+        const champs = s => ({
+          last_name: s.last_name, first_name: s.first_name, sex: s.sex,
+          eps_level: s.eps_level, student_email: s.student_email,
+          parent1_email: s.parent1_email, parent2_email: s.parent2_email,
+          birth_date_epoch_millis: s.birth_date ? Date.parse(s.birth_date + "T00:00:00Z") : null,
+          parent_phone: s.parent_phone, extended_data_updated_at: now, updated_at: now
+        });
+
+        // Un eleve ajoute n'a pas encore d'identifiant : le mettre a jour comme les autres
+        // n'aurait rien ecrit du tout. Il faut le creer.
+        const nouveaux = editStudents.filter(s => !s.id && (s.last_name || s.first_name));
+        if (nouveaux.length) {
+          const creationRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+            method: "POST",
+            body: JSON.stringify(nouveaux.map(s => ({
+              id: crypto.randomUUID(), class_id: editImportId, user_id: session.user_id,
+              ...champs(s), deleted: false
+            })))
+          });
+          if (!creationRes.ok) throw new Error("Echec de l'ajout des nouveaux eleves.");
+        }
+        for (const s of editStudents.filter(s => s.id)) {
           await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${s.id}`, {
-            method: "PATCH",
-            body: JSON.stringify({
-              last_name: s.last_name, first_name: s.first_name, sex: s.sex,
-              eps_level: s.eps_level, student_email: s.student_email,
-              parent1_email: s.parent1_email, parent2_email: s.parent2_email,
-              birth_date_epoch_millis: s.birth_date ? Date.parse(s.birth_date + "T00:00:00Z") : null,
-              parent_phone: s.parent_phone, extended_data_updated_at: now, updated_at: now
-            })
+            method: "PATCH", body: JSON.stringify(champs(s))
           });
         }
         document.getElementById("editImportPanel").style.display = "none";
