@@ -1065,6 +1065,18 @@
         }
       } catch (error) { showModuleFailure(name, error); }
     }
+    /**
+     * Publie la hauteur du bandeau bleu pour que l'accueil sache ce qu'il lui reste d'ecran.
+     *
+     * Elle n'est pas constante : les onglets passent sur deux lignes quand la fenetre retrecit, et
+     * une hauteur codee en dur laisserait soit une barre de defilement, soit un vide en bas.
+     */
+    function mesurerEntete() {
+      const entete = document.querySelector(".header");
+      if (entete) document.documentElement.style.setProperty("--hauteurEntete", entete.offsetHeight + "px");
+    }
+    window.addEventListener("resize", mesurerEntete);
+
     function showTab(name) {
       if (name === "settings") { openSettings(); return; }
       if (!TAB_NAMES.includes(name) && name !== "planning") return;
@@ -1077,6 +1089,7 @@
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
       if (name === "home") {
+        mesurerEntete();
         const teacher = loadPrefs().teacherName || session?.email?.split("@")[0] || "";
         document.getElementById("homeGreeting").textContent = teacher ? `Bonjour ${teacher}` : "Bonjour";
         loadTodayCard();
