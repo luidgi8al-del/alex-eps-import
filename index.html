@@ -1189,20 +1189,35 @@
         "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
         "sport_installations", "unss_groups", "unss_students", "unss_memberships",
         "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
-        "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles", "health_dispensations"];
+        "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles", "health_dispensations",
+        // Manquaient a l'appel : une sauvegarde qui oublie une table ne se voit qu'au moment de
+        // restaurer, c'est-a-dire trop tard.
+        "unss_slots", "installation_conflict_overrides"];
       const dump = { exportedAt: new Date().toISOString(), account: session.email };
+      // Lecture paginee : PostgREST plafonne le nombre de lignes rendues, et une sauvegarde
+      // tronquee ne se remarque qu'au moment de restaurer. On note aussi les tables qui n'ont pas
+      // pu etre lues, plutot que de rendre un fichier qui a l'air complet.
+      const manquantes = [];
       for (const table of tables) {
         try {
-          const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`);
-          dump[table] = res.ok ? await res.json() : [];
-        } catch (e) { dump[table] = []; }
+          const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/${table}?select=*`);
+          if (res.ok) dump[table] = res.rows; else { dump[table] = []; manquantes.push(table); }
+        } catch (e) { dump[table] = []; manquantes.push(table); }
       }
+      dump.tablesNonLues = manquantes;
+      dump.total = Object.entries(dump)
+        .filter(([, v]) => Array.isArray(v)).reduce((n, [, v]) => n + v.length, 0);
       const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = `alex-eps-export-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
+      if (manquantes.length) {
+        alert(`Sauvegarde incomplete : ${manquantes.join(", ")} n'a pas pu etre lu.
+`
+          + `Le fichier contient ${dump.total} ligne(s). Ne vous y fiez pas pour restaurer.`);
+      }
       URL.revokeObjectURL(url);
     }
 
