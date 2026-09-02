@@ -137,18 +137,24 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
    retrecit) : elle est mesuree et publiee dans --hauteurEntete plutot que codee en dur. */
 body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 
+/* height, pas max-height : l'accueil doit occuper la fenetre, sinon les cartes gardent leur
+   hauteur naturelle et laissent un grand vide en bas. */
 #tab-home[style*="block"] { display:flex !important; flex-direction:column; gap:12px;
-                            max-height:calc(100dvh - var(--hauteurEntete, 210px) - 40px); }
-#tab-home .homeHero { margin:0; flex:0 0 auto; }
-#tab-home .todayCard { min-height:clamp(108px,16vh,150px); padding:14px 20px; }
+                            height:calc(100dvh - var(--hauteurEntete, 210px) - 40px); min-height:430px; }
+/* La meteo donne sa hauteur a la bande du haut : la plafonner coupait "Demain" sans le dire.
+   La carte du jour s'aligne dessus, et le reste de l'ecran revient aux cartes. */
+#tab-home .homeHero { margin:0; flex:0 0 auto; align-items:stretch; }
+#tab-home .todayCard { min-height:0; padding:14px 20px; }
 #tab-home .todayIcon { width:clamp(52px,7vh,72px); height:clamp(52px,7vh,72px); font-size:clamp(26px,3.6vh,36px); }
-.homeWeather { max-height:clamp(108px,16vh,150px); }
+#tab-home .homeWeather { max-height:none; }
 
 /* La grille prend ce qui reste, et ses deux rangees se partagent la place au lieu de la reclamer. */
 #tab-home .homeGrid { flex:1 1 auto; min-height:0; gap:12px;
                       grid-template-rows:minmax(0,0.85fr) minmax(0,1fr); }
-#tab-home .homeCard { min-height:clamp(92px,14vh,150px); padding:clamp(12px,2vh,20px); }
-#tab-home .homeCard.featured { min-height:clamp(80px,11vh,122px); }
+/* Une carte qui remplit la hauteur laisserait son titre colle en haut : on centre. */
+#tab-home .homeCard { min-height:92px; padding:clamp(14px,2.2vh,24px);
+                      display:flex; flex-direction:column; justify-content:center; }
+#tab-home .homeCard.featured { min-height:80px; }
 #tab-home .homeCard.featured .homeTitle { font-size:clamp(19px,3.2vh,30px); }
 #tab-home .homeSub { font-size:clamp(11px,1.6vh,13px); margin-top:clamp(4px,1vh,8px); }
 #tab-home .homeIcon { font-size:clamp(24px,4.4vh,43px); bottom:clamp(8px,1.4vh,15px); right:clamp(12px,1.8vh,20px); }
