@@ -88,9 +88,17 @@
   .periodChip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
   .pendingHint { background:#FFF4E5; border:1px solid #F5C875; color:#7A4D00; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:10px; }
   .planningWrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
-  .planningGrid { display:grid; grid-template-columns:40px repeat(6, minmax(90px, 1fr)); min-width:640px; }
-  .planningHeadCell { font-size:11px; font-weight:700; text-transform:uppercase; color:var(--text-secondary); text-align:center; padding:8px 2px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--surface); }
-  .planningHeadCell.today { color:var(--primary); background:var(--accent-container); }
+  .planningGrid { display:grid; grid-template-columns:40px repeat(6, minmax(130px, 1fr)); min-width:860px; }
+  /* Une colonne de jour n'avait aucune bordure : rien ne separait les jours, et seul le jour
+     courant ressortait. Filet marque entre les colonnes, entetes pleines pour poser la limite des
+     le haut, et samedi grise comme jour sans cours. */
+  .planningHeadCell { font-size:11px; font-weight:700; text-transform:uppercase; color:#fff; text-align:center; padding:8px 2px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--primary); letter-spacing:.1em; }
+  .planningHeadCell:first-child { background:var(--surface); }
+  .planningHeadCell + .planningHeadCell { border-left:2px solid #C4D0D9; }
+  .planningHeadCell.today { color:#fff; background:var(--primary-light); }
+  .planningHeadCell.weekend { background:#5A6B62; }
+  .planningDayCol { border-left:2px solid #C4D0D9; }
+  .planningDayCol.weekend { background:#F1F3F5; }
   .planningTimeCell { font-size:10px; color:var(--text-secondary); text-align:right; padding-right:4px; border-top:1px solid #F1F2F0; height:26px; box-sizing:border-box; }
   .planningCell { border-top:1px solid #F1F2F0; border-left:1px solid #F1F2F0; height:26px; box-sizing:border-box; cursor:pointer; position:relative; }
   .planningCell:hover { background:#F3F8F4; }
@@ -4295,7 +4303,7 @@
       let html = `<div class="planningWrap"><div class="planningGrid">`;
       html += `<div class="planningHeadCell"></div>`;
       PLANNING_DAYS.forEach(d => {
-        html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}">${d.label}</div>`;
+        html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}">${d.label}</div>`;
       });
 
       // Colonne des heures
@@ -4309,7 +4317,7 @@
       // Colonnes des jours : cases vides cliquables + blocs positionnes en absolu par-dessus
       PLANNING_DAYS.forEach((d, dayIdx) => {
         const daySlots = visiblePersonalPlanningSlots(planningSlots, planningClasses).filter(s => s.day_of_week === d.key);
-        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
+        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
         for (let r = 0; r < PLANNING_ROWS; r++) {
           const minutes = PLANNING_START_HOUR * 60 + r * PLANNING_SLOT_MIN;
           const occupied = daySlots.some(s => minutes >= planningStartMinutes(s) && minutes < planningStartMinutes(s) + s.duration_minutes);
@@ -4498,7 +4506,7 @@
 
       let html = `<div class="planningWrap"><div class="planningGrid" style="grid-template-columns:${largeursColonnesEps(slots)}">`;
       html += `<div class="planningHeadCell"></div>`;
-      PLANNING_DAYS.forEach(d => { html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}">${d.label}</div>`; });
+      PLANNING_DAYS.forEach(d => { html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}">${d.label}</div>`; });
 
       html += `<div style="grid-column:1;">`;
       for (let r = 0; r < PLANNING_ROWS; r++) {
@@ -4508,7 +4516,7 @@
       html += `</div>`;
 
       PLANNING_DAYS.forEach((d, dayIdx) => {
-        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
+        html += `<div class="planningDayCol${d.key === TODAY_DAY_KEY ? " today" : ""}${d.key === "SAMEDI" ? " weekend" : ""}" style="grid-column:${dayIdx + 2}; position:relative;">`;
         const daySlots = slots.filter(s => s.day_of_week === d.key);
         daySlots.forEach(s => {
           if (s.day_of_week !== d.key) return;
@@ -4552,11 +4560,11 @@
     }
 
     /**
-     * Largeur minimale d'une case. Mesuree plutot que devinee : en dessous de 36 px l'activite
-     * tombe a deux lettres, donc 38 px garantit les trois. On ne va pas au-dela - elargir encore
-     * ferait defiler la grille sans rien apprendre de plus.
+     * Largeur minimale d'une case. Le plancher mesure est 36 px, en dessous duquel l'activite
+     * tombe a deux lettres ; on prend nettement plus large, l'equipe preferant faire defiler la
+     * grille vers la droite plutot que de dechiffrer des libelles de trois lettres.
      */
-    const LARGEUR_CASE_MIN = 38;
+    const LARGEUR_CASE_MIN = 56;
 
     /**
      * Largeurs des colonnes de Planning global EPS, une journee a la fois.
@@ -4581,7 +4589,7 @@
         });
       });
       const colonnes = PLANNING_DAYS.map(d =>
-        `minmax(${Math.max(90, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
+        `minmax(${Math.max(130, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
       return `40px ${colonnes}`;
     }
 
