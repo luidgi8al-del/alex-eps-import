@@ -106,6 +106,10 @@
   .classeEntete .chevron { color:var(--text-secondary); flex:0 0 auto; }
   .classeEntete .classeNom { flex:1; }
   .classeActions { display:flex; flex-wrap:wrap; gap:8px; padding:0 16px 14px; }
+  .pagination { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:10px 0; }
+  .pagination button { margin:0; padding:6px 11px; min-width:38px; }
+  .pagination button[disabled] { opacity:.45; cursor:default; }
+  .paginationEcart { color:var(--text-secondary); padding:0 2px; }
   .planningSubCell { font-size:9.5px; font-weight:700; text-align:center; padding:3px 2px; color:#31463C; background:#EAF3ED; border-bottom:1px solid var(--border); position:sticky; top:31px; }
   .planningSubCell.vide { background:var(--surface); }
   .planningSubCell span { overflow:hidden; white-space:nowrap; padding:0 1px; }
@@ -5979,6 +5983,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
 
     function showUnssTab(mode) {
       unssMode = mode;
+      // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
+      unssPage = 1;
       document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
       document.getElementById("unssPanel").style.display = "none";
       renderUnssTab();
@@ -6044,12 +6050,61 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       unssGroups = res.ok ? await res.json() : [];
     }
 
+    /**
+     * Decoupe une longue liste en pages numerotees.
+     *
+     * Mille quatre cents eleves affiches d'un bloc, c'est une page interminable ou l'on ne retrouve
+     * rien. On en montre cent a la fois.
+     */
+    const TAILLE_PAGE_LISTE = 100;
+
+    /**
+     * Boutons de navigation : les premieres et dernieres pages restent toujours accessibles, et une
+     * fenetre suit la page courante. Au-dela d'une dizaine de pages, tout afficher ferait une ligne
+     * de chiffres illisible.
+     */
+    function paginationHtml(page, total, nom) {
+      if (total <= 1) return "";
+      const numeros = new Set([1, total]);
+      for (let n = page - 2; n <= page + 2; n++) if (n >= 1 && n <= total) numeros.add(n);
+      const tries = [...numeros].sort((a, b) => a - b);
+
+      let html = `<div class="pagination">`;
+      html += `<button class="secondary" data-${nom}-page="${page - 1}" ${page === 1 ? "disabled" : ""}>Precedent</button>`;
+      let precedent = 0;
+      tries.forEach(n => {
+        if (n - precedent > 1) html += `<span class="paginationEcart">…</span>`;
+        html += `<button class="${n === page ? "" : "secondary"}" data-${nom}-page="${n}">${n}</button>`;
+        precedent = n;
+      });
+      html += `<button class="secondary" data-${nom}-page="${page + 1}" ${page === total ? "disabled" : ""}>Suivant</button>`;
+      return html + `</div>`;
+    }
+
+    /** Rend cliquables les boutons produits par paginationHtml. */
+    function wirePagination(wrap, nom, onPage) {
+      wrap.querySelectorAll(`[data-${nom}-page]`).forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cible = parseInt(btn.dataset[nom + "Page"], 10);
+          if (!isNaN(cible)) onPage(cible);
+        });
+      });
+    }
+
+    /** Page affichee du repertoire. Repart a la premiere des que la liste change de nature. */
+    let unssPage = 1;
+
     function renderUnssTab() {
       if (unssMode === "slots") { renderUnssSlotsTab(); return; }
       if (unssMode === "groups") { renderUnssGroupsTab(); return; }
       if (unssMode === "appel") { renderUnssAppelTab(); return; }
       const wrap = document.getElementById("unssList");
       const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
+      const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
+      // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
+      if (unssPage > totalPages) unssPage = totalPages;
+      const debutPage = (unssPage - 1) * TAILLE_PAGE_LISTE;
+      const rowsPage = rows.slice(debutPage, debutPage + TAILLE_PAGE_LISTE);
       let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
       html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
       // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
@@ -6063,7 +6118,10 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       if (rows.length === 0) {
         html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve du repertoire Eleve LVH." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
       } else {
-        rows.forEach(s => {
+        html += `<div class="muted" style="margin-bottom:8px">`
+          + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)</div>`;
+        html += paginationHtml(unssPage, totalPages, "unss");
+        rowsPage.forEach(s => {
           const wishes = [s.wish1, s.wish2, s.wish3].filter(Boolean).join(", ");
           html += `<div class="card unssCard" data-edit="${s.id}">
             <div>
@@ -6075,8 +6133,14 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
             <button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>
           </div>`;
         });
+        html += paginationHtml(unssPage, totalPages, "unss");
       }
       wrap.innerHTML = html;
+      wirePagination(wrap, "unss", page => {
+        unssPage = page;
+        renderUnssTab();
+        wrap.scrollIntoView({ block: "start" });
+      });
 
       document.getElementById("unssAddBtn").addEventListener("click", () => {
         if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
