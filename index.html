@@ -798,6 +798,32 @@
       return res;
     }
 
+    /**
+     * Lit une table entiere, page par page.
+     *
+     * PostgREST plafonne le nombre de lignes rendues par requete : au-dela, le reste n'arrivait
+     * jamais et la liste paraissait simplement plus courte, sans le moindre message. Avec plus de
+     * mille eleves au repertoire, une partie de l'etablissement etait invisible.
+     *
+     * L'ordre est impose sur l'identifiant : sans tri stable, deux pages successives peuvent
+     * renvoyer deux fois la meme ligne et en oublier une autre.
+     */
+    const TAILLE_PAGE_LECTURE = 1000;
+    async function apiFetchAll(url) {
+      const chemin = url.includes("order=") ? url : url + (url.includes("?") ? "&" : "?") + "order=id";
+      const tout = [];
+      for (let debut = 0, pages = 0; pages < 200; pages++, debut += TAILLE_PAGE_LECTURE) {
+        const res = await apiFetch(chemin, {
+          headers: { "Range-Unit": "items", "Range": `${debut}-${debut + TAILLE_PAGE_LECTURE - 1}` }
+        });
+        if (!res.ok) return { ok: false, rows: [] };
+        const page = await res.json();
+        tout.push(...page);
+        if (page.length < TAILLE_PAGE_LECTURE) break;
+      }
+      return { ok: true, rows: tout };
+    }
+
     // ---- Auth ----
     let isSignup = false;
     let passwordLinkSession = null;
@@ -4029,13 +4055,13 @@
         // Refresh our class list before filtering our obsolete slots; other teachers' classes are private.
         await loadPlanningClasses();
         const [slotsRes, activitiesRes, overridesRes] = await Promise.all([
-          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
-          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`),
+          apiFetchAll(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+          apiFetchAll(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`),
           apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
         ]);
         if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
-        planningCommunitySlots = visibleCommunityPlanningSlots(await slotsRes.json(), planningClasses, session.user_id);
-        planningCommunityActivities = activitiesRes.ok ? await activitiesRes.json() : [];
+        planningCommunitySlots = visibleCommunityPlanningSlots(slotsRes.rows, planningClasses, session.user_id);
+        planningCommunityActivities = activitiesRes.ok ? activitiesRes.rows : [];
         planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
         await loadPlanningValidation();
         await loadPeriodDates();
@@ -5959,8 +5985,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
     }
 
     async function loadUnssStudents() {
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc,first_name.asc`);
-      unssStudents = res.ok ? await res.json() : [];
+      const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc,first_name.asc`);
+      unssStudents = res.ok ? res.rows : [];
     }
 
     let unssSlots = [];
