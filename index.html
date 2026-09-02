@@ -4097,6 +4097,16 @@
       planningActivities = res.ok ? await res.json() : [];
     }
     async function loadPlanningInstallations() {
+      // Meme source que la liste de l'onglet Equipement. Sans cela, ajouter une installation hors
+      // connexion reussissait mais faisait surgir "Failed to fetch" : la saisie etait bien
+      // enregistree, et le message disait le contraire.
+      if (modeHorsConnexion) {
+        const lecture = await modeHorsConnexion.lire("sport_installations");
+        planningInstallations = lecture.rows
+          .filter(r => !r.deleted)
+          .sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+        return;
+      }
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
       planningInstallations = res.ok ? await res.json() : [];
     }
@@ -5975,6 +5985,9 @@
           // Une seule table pour commencer. Le reste du site continue de parler a Supabase en
           // direct : on n'expose pas toutes les rubriques au premier essai.
           tables: ["sport_installations"]
+        });
+        modeHorsConnexion?.surEtat(detail => {
+          if (detail.state === "synced" && currentWebTab === "equipement") loadInstallationsList();
         });
       } catch (e) {
         console.warn("Mode hors connexion indisponible :", e.message);

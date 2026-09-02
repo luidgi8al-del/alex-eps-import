@@ -18,6 +18,9 @@ import { mountConflictDialog } from "./ui/conflict-dialog.js";
  * Le raccordement se fait rubrique par rubrique. Une rubrique non raccordee continue de parler
  * directement a Supabase comme avant : rien ne casse pendant la transition.
  */
+/** Intervalle des reprises automatiques quand il reste quelque chose a envoyer. */
+const RELANCE_MS = 15000;
+
 let etat = null;
 
 export async function demarrerHorsConnexion({
@@ -59,6 +62,15 @@ export async function demarrerHorsConnexion({
     if (!isOnline()) return false;
     try { await engine.sync(); return true; } catch { return false; }
   }
+
+  // Filet de securite : dans une fenetre installee, couper puis retablir le wifi ne declenche pas
+  // toujours l'evenement "online". Sans cette relance, une saisie pouvait rester en attente
+  // jusqu'au prochain geste de l'utilisateur, qui n'avait aucune raison de le deviner.
+  let enRetard = false;
+  subscribeSyncState(detail => {
+    enRetard = Boolean(detail.pending) || detail.state === "offline" || detail.state === "error";
+  });
+  setInterval(() => { if (enRetard) rapprocher(); }, RELANCE_MS);
 
   etat = {
     engine,

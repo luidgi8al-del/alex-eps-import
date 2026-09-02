@@ -1,6 +1,7 @@
 import { DEFAULT_BATCH_SIZE, MAX_RETRY_DELAY_MS, recordKey, STORES } from "../core/constants.js";
 import { openOfflineDatabase, requestResult, transaction } from "../storage/database.js";
 import { seal, unseal } from "../storage/vault.js";
+import { estPanneReseau } from "../core/connectivity.js";
 function operationId() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
 export async function enqueueOperation({ entity, id, action = "upsert", baseVersion = 0, baseData = null, data = null, changedFields = [], authorId = null, deviceId = null }) {
   const key = recordKey(entity, id), opId = operationId(), createdAt = new Date().toISOString();
@@ -21,7 +22,13 @@ export async function operationsForRecord(key) {
 export async function countPendingOperations() { const db = await openOfflineDatabase(); return requestResult(db.transaction(STORES.OUTBOX, "readonly").objectStore(STORES.OUTBOX).count()); }
 export async function acknowledgeOperation(opId) { return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].delete(opId)); }
 export async function deferOperation(operation, error) {
-  const attempts = operation.attempts + 1, delay = Math.min(MAX_RETRY_DELAY_MS, 1000 * 2 ** Math.min(attempts, 8));
+  const attempts = operation.attempts + 1;
+  // L'espacement croissant protege un serveur en difficulte. Une coupure reseau ne lui doit rien :
+  // sans cette distinction, revenir sur le wifi apres quelques essais laissait la saisie attendre
+  // cinq minutes de plus, sans raison.
+  const delay = estPanneReseau(error)
+    ? 5000
+    : Math.min(MAX_RETRY_DELAY_MS, 1000 * 2 ** Math.min(attempts, 8));
   const row = { ...operation, attempts, retryAt: new Date(Date.now() + delay).toISOString(), lastError: String(error?.message || error) };
   delete row.baseData; delete row.data;
   return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row));

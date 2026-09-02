@@ -1,5 +1,6 @@
 import { DEFAULT_BATCH_SIZE, SYNC_STATE } from "../core/constants.js";
 import { publishSyncState } from "../core/events.js";
+import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
 import { saveLocalRecord } from "../storage/records.js";
 import { acknowledgeOperation, countPendingOperations, deferOperation, operationsForRecord, pendingOperations, replaceOperation } from "./outbox.js";
@@ -23,7 +24,12 @@ export class OfflineSyncEngine {
       await this.#pullAndReconcile(); await this.#pushPending(); await this.#pullAndReconcile();
       const pending = await countPendingOperations(), conflicts = await countConflicts();
       return publishSyncState(conflicts ? SYNC_STATE.CONFLICT : pending ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED, { pending, conflicts });
-    } catch (error) { return publishSyncState(SYNC_STATE.ERROR, { pending: await countPendingOperations(), message: error.message }); }
+    } catch (error) {
+      const pending = await countPendingOperations();
+      // Une coupure n'est pas une panne : les saisies sont en securite, elles attendent le reseau.
+      if (estPanneReseau(error)) return publishSyncState(SYNC_STATE.OFFLINE, { pending });
+      return publishSyncState(SYNC_STATE.ERROR, { pending, message: error.message });
+    }
   }
   async #pullAndReconcile() {
     let cursor = await getMeta(CURSOR_KEY), more = true;
