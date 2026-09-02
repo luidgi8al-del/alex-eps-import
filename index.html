@@ -99,6 +99,10 @@
   .planningBlock { position:absolute; left:2px; right:2px; border-radius:6px; background:var(--accent-container); color:var(--accent-text); border-left:3px solid var(--primary); padding:2px 6px; font-size:11px; line-height:1.25; overflow:hidden; cursor:pointer; }
   .planningBlock .cl { font-weight:700; display:block; }
   .planningBlock .ap { display:block; opacity:0.85; }
+  /* Sans nowrap le texte reviendrait a la ligne au lieu de deborder, et la mesure de largeur ne
+     dirait plus rien. */
+  .planningBlock .clFit { display:block; font-weight:700; white-space:nowrap; overflow:hidden; }
+  .planningBlock .apFit { display:block; opacity:0.85; white-space:nowrap; overflow:hidden; }
   .planningBlock.conflict { background:#FBE2E1; border-left-color:var(--danger); color:#5C1410; }
   .planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
   .durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
@@ -4477,7 +4481,7 @@
       const conflictIdx = computeCommunityConflicts(slots);
       const gridHeight = PLANNING_ROWS * PLANNING_ROW_PX;
 
-      let html = `<div class="planningWrap"><div class="planningGrid">`;
+      let html = `<div class="planningWrap"><div class="planningGrid" style="grid-template-columns:${largeursColonnesEps(slots)}">`;
       html += `<div class="planningHeadCell"></div>`;
       PLANNING_DAYS.forEach(d => { html += `<div class="planningHeadCell${d.key === TODAY_DAY_KEY ? " today" : ""}">${d.label}</div>`; });
 
@@ -4502,14 +4506,15 @@
           }).sort((a,b) => planningStartMinutes(a)-planningStartMinutes(b) || (a.teacher_label||"").localeCompare(b.teacher_label||"") || a.id.localeCompare(b.id));
           const laneCount = Math.max(1, overlapping.length), laneIndex = Math.max(0, overlapping.findIndex(x => x.id === s.id));
           const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && Number(a.period_number) === Number(planningPeriod));
-          const activity = periodInfo?.apsa_name || "A definir";
+          // Une case vide dit deja que l'activite reste a choisir : ecrire "A definir" prenait la
+          // place du seul mot qu'on vient y lire.
+          const activity = (periodInfo?.apsa_name || "").trim();
           // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
           const [fond, encre] = couleurEnseignant(s.teacher_label);
           const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
           html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${laneIndex * 100 / laneCount}% + 1px); right:auto; width:calc(${100 / laneCount}% - 2px); ${style}">
-            <span class="cl">${s.class_label || "?"}</span>
-            <span class="ap">${activity}</span>
-            <span class="tc">${planningText(nomCourtEnseignant(s.teacher_label) || "?")}</span>
+            <span class="cl clFit" data-full="${planningText(s.class_label || "?")}">${planningText(s.class_label || "?")}</span>
+            ${activity ? `<span class="apFit" data-full="${planningText(activity)}">${planningText(activity)}</span>` : ""}
           </div>`;
         });
         html += `</div>`;
@@ -4528,7 +4533,97 @@
       wrap.innerHTML = html;
       wrap.querySelector(".planningGrid").style.minHeight = gridHeight + "px";
       installPlanningScroll(wrap.querySelector(".planningWrap"));
+      ajusterLibellesCases(wrap);
     }
+
+    /**
+     * Largeur minimale d'une case. Mesuree plutot que devinee : en dessous de 36 px l'activite
+     * tombe a deux lettres, donc 38 px garantit les trois. On ne va pas au-dela - elargir encore
+     * ferait defiler la grille sans rien apprendre de plus.
+     */
+    const LARGEUR_CASE_MIN = 38;
+
+    /**
+     * Largeurs des colonnes de Planning global EPS, une journee a la fois.
+     *
+     * Les creneaux simultanes se partagent la largeur d'une journee : a cinq collegues en meme
+     * temps, chaque case tombe sous vingt pixels et il ne reste qu'une lettre. On donne donc a
+     * chaque jour de quoi loger ses creneaux les plus nombreux, quitte a ce que la grille depasse
+     * l'ecran - elle defile deja horizontalement, alors qu'un libelle rogne, lui, ne revient pas.
+     */
+    function largeursColonnesEps(slots) {
+      const parJour = {};
+      PLANNING_DAYS.forEach(d => { parJour[d.key] = 1; });
+      PLANNING_DAYS.forEach(d => {
+        const duJour = slots.filter(x => x.day_of_week === d.key);
+        duJour.forEach(s => {
+          const debut = planningStartMinutes(s);
+          const simultanes = duJour.filter(autre => {
+            const b = planningStartMinutes(autre);
+            return debut < b + autre.duration_minutes && b < debut + s.duration_minutes;
+          }).length;
+          if (simultanes > parJour[d.key]) parJour[d.key] = simultanes;
+        });
+      });
+      const colonnes = PLANNING_DAYS.map(d =>
+        `minmax(${Math.max(90, parJour[d.key] * LARGEUR_CASE_MIN)}px, 1fr)`).join(" ");
+      return `40px ${colonnes}`;
+    }
+
+    /**
+     * Ecritures de plus en plus courtes d'un nom de classe, de la plus complete a la plus reduite.
+     *
+     * Le nom du professeur part en premier : la couleur de la case et la legende le disent deja,
+     * et "Terminale Jeudi - Diouch" mange toute la largeur pour une information en double. Ne
+     * restent ensuite que "Terminale" et "Premiere", seuls niveaux ecrits en toutes lettres.
+     */
+    function variantesClasse(libelle) {
+      const complet = String(libelle || "?").trim();
+      const sansProf = complet.split("\u2014")[0].trim() || complet;
+      const abrege = sansProf.replace(/\bTerminale\b/i, "Term").replace(/\bPremi[eè]re\b/i, "Pre");
+      const lettre = sansProf.replace(/\bTerminale\b/i, "T").replace(/\bPremi[eè]re\b/i, "P");
+      return [...new Set([complet, sansProf, abrege, lettre].filter(Boolean))];
+    }
+
+    /** Nom entier, puis ses trois premieres lettres, puis deux, puis une. */
+    function variantesActivite(libelle) {
+      const complet = String(libelle || "").trim();
+      return [...new Set([complet, complet.slice(0, 3), complet.slice(0, 2), complet.slice(0, 1)]
+        .map(x => x.trim()).filter(Boolean))];
+    }
+
+    /**
+     * Reduit chaque libelle jusqu'a ce qu'il tienne dans sa case.
+     *
+     * Les cases d'une meme journee se partagent la largeur entre les collegues qui se chevauchent :
+     * a cinq creneaux simultanes il ne reste qu'une vingtaine de pixels, ou "Musculation" ne veut
+     * plus rien dire. On mesure la place reelle plutot que de deviner un seuil, sinon le resultat
+     * dependrait de la police et de la taille de l'ecran.
+     */
+    function ajusterLibellesCases(wrap) {
+      wrap.querySelectorAll(".clFit, .apFit").forEach(el => {
+        const complet = el.dataset.full || "";
+        const essais = el.classList.contains("clFit") ? variantesClasse(complet) : variantesActivite(complet);
+        el.title = complet;
+        for (const essai of essais) {
+          el.textContent = essai;
+          // clientWidth vaut 0 tant que la grille n'est pas affichee : on garde alors la version
+          // la plus courte, que le prochain redimensionnement corrigera.
+          if (el.clientWidth > 0 && el.scrollWidth <= el.clientWidth) break;
+        }
+      });
+    }
+
+    // Changer la largeur de la fenetre change le nombre de lettres qui tiennent.
+    let ajustementCasesEnAttente = null;
+    window.addEventListener("resize", () => {
+      if (planningMode !== "eps") return;
+      clearTimeout(ajustementCasesEnAttente);
+      ajustementCasesEnAttente = setTimeout(() => {
+        const wrap = document.getElementById("planningGrid");
+        if (wrap) ajusterLibellesCases(wrap);
+      }, 150);
+    });
 
     // ---- Planning > Installations : qui occupe quoi, et quand ----
     //
