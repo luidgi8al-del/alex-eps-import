@@ -72,7 +72,12 @@
     return {active:true,institution_id:institutionId,is_admin:institutions[0]?.created_by===session.user_id,members:members.map(member=>({id:member.id,email:member.email,name:member.email}))};
   }
   async function teamAdminAction(payload) {
-    const res=await fetch(`${SUPABASE_URL}/functions/v1/eps-team-admin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    // La bascule de compte et les invitations passent par une fonction serveur : elles ne
+    // peuvent pas aboutir hors connexion. Autant le dire, plutot que "Failed to fetch".
+    let res;
+    try {
+      res=await fetch(`${SUPABASE_URL}/functions/v1/eps-team-admin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    } catch { throw Error("Pas de réseau. Cette action d'administration a besoin d'une connexion."); }
     let data={}; try { data=await res.json(); } catch {}
     if(res.status===401){sessionExpired();throw Error("Session expirée.");}
     if(!res.ok || !data.ok) throw Error(data.error || "Opération d’administration non confirmée.");
@@ -81,8 +86,14 @@
   async function openSettings() {
     const errors=[];
     let teamContext=null,pendingInvites=[];
-    await Promise.all([refreshPeriodSettings().catch(e=>errors.push(e.message)),refreshTeacherProfile().catch(e=>errors.push(e.message)),loadInstitution().catch(e=>errors.push("Établissement non actualisé.")),loadTeamContext().then(v=>teamContext=v).catch(()=>{}),
-      teamAdminAction({action:"pending_invites"}).then(r=>pendingInvites=r.invites||[]).catch(()=>{})]);
+    // Chaque appel nomme sa source. Sans cela, cinq appels differents produisaient le meme
+    // "Failed to fetch" en bas du panneau, et rien ne disait lequel avait echoue.
+    await Promise.all([
+      refreshPeriodSettings().catch(e=>errors.push("Périodes : "+e.message)),
+      refreshTeacherProfile().catch(e=>errors.push("Profil : "+e.message)),
+      loadInstitution().catch(()=>errors.push("Établissement non actualisé.")),
+      loadTeamContext().then(v=>teamContext=v).catch(e=>errors.push("Équipe : "+e.message)),
+      teamAdminAction({action:"pending_invites"}).then(r=>pendingInvites=r.invites||[]).catch(e=>errors.push("Invitations : "+e.message))]);
     settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
     settingsProfileRevision=readSettingsJson(profileCacheKey())?.revision || 0;
     const prefs=loadPrefs(), esc=settingsEscape;

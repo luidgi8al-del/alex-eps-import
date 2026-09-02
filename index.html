@@ -783,11 +783,14 @@
       if (!confirm(`Basculer sur le compte de ${nom} ?\n\nVous verrez et modifierez ses donnees. La bascule est enregistree.`)) return;
       const reponse = await teamAdminAction({ action: "impersonate", target_id: targetId });
       // Le jeton ne sert qu'une fois : on l'echange tout de suite contre une session.
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
-        method: "POST",
-        headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "magiclink", token_hash: reponse.token_hash })
-      });
+      let res;
+      try {
+        res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+          method: "POST",
+          headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "magiclink", token_hash: reponse.token_hash })
+        });
+      } catch (erreur) { throw erreurReseau(erreur, `${SUPABASE_URL}/auth/v1/verify`); }
       const data = await res.json();
       if (!res.ok || !data.access_token) throw new Error(data.msg || data.error_description || "Bascule impossible.");
 
@@ -821,8 +824,28 @@
     }
 
     /** fetch() avec les en-tetes d'auth, qui redirige vers la connexion si le token a expire. */
+    /**
+     * Une requete qui ne part pas n'est pas une panne du site : c'est le reseau.
+     *
+     * Le navigateur remonte "Failed to fetch", qui ne dit rien a personne et laisse croire que
+     * quelque chose est casse. Seules les installations savent aujourd'hui travailler hors
+     * connexion ; pour le reste, mieux vaut le dire franchement.
+     */
+    function erreurReseau(erreur, cible) {
+      const reseau = erreur?.name === "TypeError" ||
+        /failed to fetch|networkerror|load failed|network request failed/i.test(String(erreur?.message || erreur));
+      if (!reseau) return erreur;
+      // Le chemin vise, jamais l'adresse complete : il identifie l'appel sans exposer de jeton.
+      let ou = "";
+      try { ou = " (" + new URL(cible).pathname + ")"; } catch { /* cible inconnue */ }
+      return new Error("Requete non partie" + ou + " : reseau indisponible ou requete bloquee. Vos saisies deja enregistrees sont conservees.");
+    }
+
     async function apiFetch(url, options = {}) {
-      const res = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
+      let res;
+      try {
+        res = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
+      } catch (erreur) { throw erreurReseau(erreur, url); }
       if (res.status === 401) {
         sessionExpired();
         throw new Error("Session expiree.");
