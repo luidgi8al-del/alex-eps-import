@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Test isolé — synchronisation PWA</title>
+  <style>
+    :root { font:16px system-ui,sans-serif; color:#12395f; background:#eef5fb; }
+    body { max-width:920px; margin:auto; padding:32px 18px; }
+    main { background:white; border-radius:24px; padding:24px; box-shadow:0 10px 30px #16436b18; }
+    h1 { margin-top:0; } button { border:0; border-radius:12px; padding:12px 18px; font-weight:700; color:white; background:#147bc1; cursor:pointer; }
+    pre { min-height:190px; padding:16px; border-radius:14px; background:#102d49; color:#dff4ff; white-space:pre-wrap; }
+    .note { padding:12px 14px; border-left:4px solid #ef9d28; background:#fff7e9; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Test PWA hors connexion</h1>
+    <p class="note">Simulation en mémoire uniquement : aucune base locale, donnée Supabase, application Android ou donnée du site n’est utilisée.</p>
+    <p><button id="run">Lancer les scénarios</button></p>
+    <pre id="log">Prêt.</pre>
+  </main>
+  <script type="module" src="./offline-sync-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#087DCA">
+  <title>EPS LVH — Hors connexion</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#f4f8fc;color:#123a55;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}.card{width:min(560px,100%);padding:34px;border:1px solid #d7e6f2;border-radius:28px;background:#fff;box-shadow:0 18px 50px #123a5518}.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;background:#e5f4ff;color:#087dca;font-weight:800}.dot{width:10px;height:10px;border-radius:50%;background:#f28a2c}h1{margin:22px 0 10px;font-size:clamp(30px,7vw,48px)}p{line-height:1.55;color:#587184}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}button,a{appearance:none;border:0;border-radius:14px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.primary{background:#087dca;color:#fff}.secondary{background:#edf4f8;color:#123a55}.note{margin-top:24px;padding-top:18px;border-top:1px solid #e3edf4;font-size:14px}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <span class="badge"><span class="dot"></span>Mode hors connexion</span>
+    <h1>Internet est indisponible</h1>
+    <p>Les éléments déjà enregistrés sur cet appareil restent accessibles. Les données partagées, la météo et la synchronisation reprendront lorsque la connexion reviendra.</p>
+    <div class="actions">
+      <button class="primary" onclick="location.reload()">Réessayer</button>
+      <a class="secondary" href="./">Revenir à l’accueil</a>
+    </div>
+    <p class="note">Cette page ne contient aucune donnée personnelle d’élève.</p>
+  </main>
+</body>
+</html>

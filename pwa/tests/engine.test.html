@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Tests du moteur hors connexion</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 26px;
+         background: #FAFAF7; color: #14181A; line-height: 1.5; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.intro { color: #6B7280; margin: 0 0 18px; max-width: 70ch; font-size: 14px; }
+  #bilan { font-weight: 700; padding: 10px 14px; border-radius: 8px; display: inline-block; }
+  #bilan.ok { background: #B7E4C7; color: #04240F; }
+  #bilan.ko { background: #FBE2E1; color: #5C1410; }
+  ul { padding-left: 18px; }
+  li { margin: 8px 0; font-size: 14px; }
+  code { background: #EEF1F4; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  pre { background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px;
+        overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+  <h1>Tests du moteur hors connexion</h1>
+  <p class="intro">Le moteur repose sur IndexedDB et sur la crypto du navigateur : il ne peut pas
+     etre teste sous Node. Cette page exerce le chemin complet — saisie hors ligne, envoi, echec,
+     reprise, fusion, conflit — et non seulement la comparaison de champs.</p>
+  <div id="bilan">Execution…</div>
+  <ul id="details"></ul>
+
+<script type="module">
+import { lancer, viderTout } from "./engine.test.js";
+
+const bilan = document.getElementById("bilan");
+const details = document.getElementById("details");
+try {
+  const resultat = await lancer({ avantChaque: viderTout });
+  const ok = resultat.echecs.length === 0;
+  bilan.className = ok ? "ok" : "ko";
+  bilan.textContent = ok
+    ? `${resultat.reussis} tests au vert`
+    : `${resultat.echecs.length} echec(s) sur ${resultat.total}`;
+  details.innerHTML = resultat.echecs
+    .map(e => `<li><code>${e.nom}</code><pre>${e.message}</pre></li>`)
+    .join("");
+  console.log(ok ? `PWA engine tests: OK (${resultat.reussis})` : resultat.echecs);
+  window.__resultat = resultat;
+} catch (error) {
+  bilan.className = "ko";
+  bilan.textContent = "Le banc d'essai n'a pas pu demarrer";
+  details.innerHTML = `<li><pre>${error.stack || error.message}</pre></li>`;
+  window.__resultat = { erreur: error.message };
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import { changedFieldsBetween, mergeOfflineChange } from "../sync/merge.js";
+assert.deepEqual(changedFieldsBetween({ title: "A", room: "Gym" }, { title: "B", room: "Gym" }), ["title"]);
+const records = [{ entity: "course", id: "A" }, { entity: "planning", id: "B" }];
+assert.equal(new Set(records.map(item => `${item.entity}:${item.id}`)).size, 2);
+const disjoint = mergeOfflineChange({ baseData: { title: "Cours", room: "Gym", duration: 60 }, localData: { title: "Cours PWA", room: "Gym", duration: 60 }, serverData: { title: "Cours", room: "Stade", duration: 60 } });
+assert.equal(disjoint.kind, "merged");
+assert.deepEqual(disjoint.data, { title: "Cours PWA", room: "Stade", duration: 60 });
+const overlap = mergeOfflineChange({ baseData: { title: "Cours", room: "Gym" }, localData: { title: "Version PWA", room: "Gym" }, serverData: { title: "Version Web", room: "Gym" } });
+assert.equal(overlap.kind, "conflict");
+assert.deepEqual(overlap.overlappingFields, ["title"]);
+console.log("PWA merge tests: OK");

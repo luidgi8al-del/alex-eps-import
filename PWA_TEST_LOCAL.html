@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#087DCA">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <title>Test local PWA — EPS LVH</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#f4f8fc;color:#123a55;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}.card{width:min(680px,100%);padding:34px;border:1px solid #d7e6f2;border-radius:28px;background:#fff;box-shadow:0 18px 50px #123a5518}h1{margin:0 0 10px;font-size:clamp(28px,6vw,44px)}p,li{line-height:1.55;color:#587184}.state{margin:22px 0;padding:15px 17px;border-radius:15px;background:#eef5f9;font-weight:800}.state.ok{background:#e5f8ef;color:#137251}.state.bad{background:#fff1e7;color:#9b4b0b}button,a{display:inline-block;border:0;border-radius:14px;padding:13px 18px;background:#087dca;color:#fff;font:inherit;font-weight:800;text-decoration:none;cursor:pointer}.secondary{margin-left:8px;background:#edf4f8;color:#123a55}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Test local de la PWA</h1>
+    <p>Cette page active le mode PWA uniquement sur l'adresse locale de ton ordinateur.</p>
+    <div id="state" class="state">Préparation du mode hors connexion…</div>
+    <ol>
+      <li>Attends que le message vert apparaisse.</li>
+      <li>Ouvre ensuite le site local.</li>
+      <li>Dans Edge ou Chrome, utilise l'icône d'installation située dans la barre d'adresse.</li>
+      <li>Après une première ouverture connectée, coupe Internet puis relance l'application installée.</li>
+    </ol>
+    <a id="openSite" href="./" hidden>Ouvrir le site local</a>
+    <button id="retry" class="secondary" type="button" hidden>Réessayer</button>
+  </main>
+  <script>
+    const state = document.getElementById("state");
+    const openSite = document.getElementById("openSite");
+    const retry = document.getElementById("retry");
+
+    async function prepare() {
+      if (!("serviceWorker" in navigator)) {
+        state.className = "state bad";
+        state.textContent = "Ce navigateur ne prend pas en charge les PWA. Utilise Edge ou Chrome.";
+        return;
+      }
+      try {
+        const registration = await navigator.serviceWorker.register("./service-worker.js", { scope: "./" });
+        await navigator.serviceWorker.ready;
+        state.className = "state ok";
+        state.textContent = "Mode PWA local prêt. Tu peux ouvrir et installer le site.";
+        openSite.hidden = false;
+        retry.hidden = true;
+        console.info("Service worker local prêt", registration.scope);
+      } catch (error) {
+        state.className = "state bad";
+        state.textContent = `Échec de la préparation locale : ${error.message}`;
+        retry.hidden = false;
+      }
+    }
+
+    retry.addEventListener("click", prepare);
+    prepare();
+  </script>
+</body>
+</html>

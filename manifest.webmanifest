@@ -1,0 +1,41 @@
+{
+  "id": "./",
+  "name": "EPS LVH - Espace enseignant",
+  "short_name": "EPS LVH",
+  "description": "Outils, classes, cours, plannings et suivi EPS de l'etablissement.",
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#F4F8FC",
+  "theme_color": "#087DCA",
+  "categories": ["education", "sports", "productivity"],
+  "icons": [
+    {
+      "src": "icons/eps-lvh-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/eps-lvh-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/eps-lvh-maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {"name": "Classes", "short_name": "Classes", "url": "./?source=pwa&tab=classes"},
+    {"name": "Planning", "short_name": "Planning", "url": "./?source=pwa&tab=planning"},
+    {"name": "Outils", "short_name": "Outils", "url": "./?source=pwa&tab=outils"}
+  ]
+}
