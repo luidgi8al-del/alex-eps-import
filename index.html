@@ -500,7 +500,6 @@
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="subtabbar" id="unssSubtabs">
-          <button class="subtabbtn" data-unsstab="all">Eleve LVH</button>
           <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
           <button class="subtabbtn" data-unsstab="slots">Creneaux AS</button>
           <button class="subtabbtn" data-unsstab="groups">Groupe</button>
@@ -540,10 +539,17 @@
       <div id="tab-classes" class="tabpanel" style="display:none">
         <div class="subtabbar" id="classesSubtabs" style="justify-content:space-between; align-items:center;">
           <div style="display:flex; gap:6px;">
-            <button class="subtabbtn" data-subtab="classes">Classes</button>
+            <button class="subtabbtn" data-subtab="liste">Liste élève</button>
             <button class="subtabbtn" data-subtab="newimport">Création classe</button>
+            <button class="subtabbtn" data-subtab="classes">Classe</button>
           </div>
           <button class="secondary" id="syncBtn" style="margin-top:0">Synchroniser</button>
+        </div>
+
+        <!-- Le repertoire des eleves de l'etablissement, deplace depuis ASLVH : c'est de lui que
+             partent aussi bien les licencies AS que le remplissage d'une classe. -->
+        <div id="subtab-liste">
+          <div id="listeEleveList"></div>
         </div>
 
         <div id="subtab-classes">
@@ -1368,7 +1374,7 @@
     }
 
     // ---- Sous-onglets du module Classes : "Classes" (creees, modifiables) / "Nouvel import classe" ----
-    const SUBTAB_NAMES = ["classes", "newimport"];
+    const SUBTAB_NAMES = ["liste", "newimport", "classes"];
     function showSubtab(name) {
       SUBTAB_NAMES.forEach(sub => {
         document.getElementById("subtab-" + sub).style.display = sub === name ? "block" : "none";
@@ -1377,6 +1383,28 @@
         btn.classList.toggle("active", btn.dataset.subtab === name);
       });
       if (name === "classes") loadImports();
+      if (name === "liste") ouvrirListeEleve();
+    }
+
+    /**
+     * Le repertoire s'affiche dans deux onglets : Liste eleve (sous Classe) et Licencies AS.
+     * C'est la meme liste, filtree differemment - il ne doit donc en rester qu'un rendu a la fois,
+     * sinon deux boutons de meme identifiant coexisteraient et le mauvais recevrait les clics.
+     */
+    let unssCibleRendu = "unssList";
+    function viderAutreRendu(cible) {
+      const autre = cible === "unssList" ? "listeEleveList" : "unssList";
+      const el = document.getElementById(autre);
+      if (el) el.innerHTML = "";
+    }
+
+    async function ouvrirListeEleve() {
+      unssCibleRendu = "listeEleveList";
+      unssMode = "all";
+      unssPage = 1;
+      viderAutreRendu("listeEleveList");
+      await loadUnssStudents();
+      renderUnssTab();
     }
     document.getElementById("classesSubtabs").addEventListener("click", (e) => {
       const btn = e.target.closest(".subtabbtn");
@@ -5951,7 +5979,8 @@
       return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
     }
 
-let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
+// "all" ne s'atteint plus depuis ASLVH : le repertoire complet vit dans Classe > Liste eleve.
+let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
     let unssStudents = [];
     let unssGroups = [];
     let unssAppelGroupId = null;
@@ -5983,6 +6012,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
 
     function showUnssTab(mode) {
       unssMode = mode;
+      unssCibleRendu = "unssList";
+      viderAutreRendu("unssList");
       // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
       unssPage = 1;
       document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
@@ -6098,7 +6129,8 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       if (unssMode === "slots") { renderUnssSlotsTab(); return; }
       if (unssMode === "groups") { renderUnssGroupsTab(); return; }
       if (unssMode === "appel") { renderUnssAppelTab(); return; }
-      const wrap = document.getElementById("unssList");
+      const wrap = document.getElementById(unssCibleRendu);
+      if (!wrap) return;
       const rows = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
       const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
       // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
@@ -6116,7 +6148,7 @@ let unssMode = "all"; // "all" | "licensed" | "groups" | "appel"
       html += `</div>`;
 
       if (rows.length === 0) {
-        html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve du repertoire Eleve LVH." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
+        html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve de Classe > Liste eleve." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
       } else {
         html += `<div class="muted" style="margin-bottom:8px">`
           + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)</div>`;
