@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="home-navigation.css">
+<link rel="manifest" href="manifest.webmanifest">
 <style>
   :root {
     --primary: #1B4332;
@@ -78,6 +79,12 @@
   .installTable thead th { background:var(--surface-2, #EEF1F4); font-weight:700; }
   .installTable td { min-width:44px; height:20px; }
   .installHour { font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+  .syncStatus { font-size:12px; color:#fff; padding:4px 10px; border-radius:999px;
+                background:rgba(255,255,255,.16); white-space:nowrap; }
+  .syncStatus:empty { display:none; }
+  .syncStatus[data-sync-state="offline"] { background:#7A4D00; }
+  .syncStatus[data-sync-state="conflict"], .syncStatus[data-sync-state="error"] { background:#8A1C1C; }
+  .conflitAucun { display:none; }
   .calLegend { display:flex; flex-wrap:wrap; gap:10px; margin:8px 0; font-size:11px; align-items:center; }
   .calLegend span.box { display:inline-block; width:12px; height:12px; border:.5px solid #BBC2C9; margin-right:4px; vertical-align:-2px; }
   .rappelCols { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:10px; }
@@ -264,6 +271,9 @@
       <button class="tabbtn" data-tab="settings">REGLAGE</button>
     </div>
     <div class="headerRight">
+      <!-- Etat de la synchronisation. Vide donc invisible tant que le mode hors connexion n'a pas
+           demarre : un bandeau qui n'annonce rien inquiete plus qu'il n'informe. -->
+      <span id="syncStatus" class="syncStatus"></span>
       <button class="secondary" id="searchBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Rechercher</button>
       <button class="secondary" id="settingsBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Reglages</button>
       <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se deconnecter</button>
@@ -537,6 +547,8 @@
             <button id="addInstallationBtn">Ajouter</button>
             <div class="error" id="installationError"></div>
             <div id="installationsList" style="margin-top:16px"></div>
+            <!-- Reste vide tant qu'il n'y a rien a trancher : voir .conflitAucun. -->
+            <div id="conflictPanel" style="margin-top:16px"></div>
           </div>
         </div>
 
@@ -719,6 +731,11 @@
     let parsedStudents = [];
 
     function saveSession(s) {
+      // Bascule de compte ou nouvelle connexion : sans cela, le collegue suivant sur cet
+      // ordinateur verrait la copie locale du precedent.
+      if (session && s && session.user_id !== s.user_id) {
+        modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
+      }
       session = s;
       localStorage.setItem("alex_eps_session", JSON.stringify(s));
     }
@@ -964,6 +981,7 @@
       // Sinon un retour serait propose au prochain visiteur de ce navigateur.
       localStorage.removeItem(ADMIN_SESSION_KEY);
       document.getElementById("impersonationBar").style.display = "none";
+      modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
       clearSession();
       showAuthView();
     });
@@ -985,6 +1003,7 @@
       document.getElementById("tabbar").style.display = "flex";
       showTab("home");
       renderImpersonationBar();
+      demarrerModeHorsConnexion();
       refreshTeacherSettings().then(() => { if(currentWebTab === "home") showTab("home"); }).catch(e => console.warn(e.message));
       loadInstitution();
       maybeLock();
@@ -5934,25 +5953,62 @@
       }
     }
 
+    /**
+     * Demarre le mode hors connexion (la partie "application installable" du site).
+     *
+     * Charge a la demande, et jamais bloquant : une panne de ce cote ne doit pas empecher
+     * d'utiliser le site. D'ou le catch silencieux - chaque rubrique raccordee sait retomber sur
+     * son fonctionnement d'avant, en direct avec Supabase.
+     */
+    let modeHorsConnexion = null;
+    async function demarrerModeHorsConnexion() {
+      if (modeHorsConnexion) return modeHorsConnexion;
+      try {
+        const module = await import("./pwa/bootstrap.js");
+        modeHorsConnexion = await module.demarrerHorsConnexion({
+          url: SUPABASE_URL,
+          anonKey: SUPABASE_KEY,
+          // Relue a chaque appel : une bascule de compte ne doit pas figer le moteur sur l'ancien.
+          session: () => session,
+          statusElement: document.getElementById("syncStatus"),
+          conflictElement: document.getElementById("conflictPanel"),
+          // Une seule table pour commencer. Le reste du site continue de parler a Supabase en
+          // direct : on n'expose pas toutes les rubriques au premier essai.
+          tables: ["sport_installations"]
+        });
+      } catch (e) {
+        console.warn("Mode hors connexion indisponible :", e.message);
+        modeHorsConnexion = null;
+      }
+      return modeHorsConnexion;
+    }
+
     async function createInstallation() {
       const input = document.getElementById("installationName");
       const errorEl = document.getElementById("installationError");
       errorEl.textContent = "";
       const name = input.value.trim();
       if (!name) { errorEl.textContent = "Donnez un nom a l'installation."; return; }
-      await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations`, {
-        method: "POST",
-        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, name, updated_at: new Date().toISOString(), deleted: false })
-      });
+      const ligne = { id: crypto.randomUUID(), user_id: session.user_id, name, updated_at: new Date().toISOString(), deleted: false };
+      if (modeHorsConnexion) {
+        // Retenue localement d'abord : sans reseau elle attend dans la file au lieu d'etre perdue.
+        await modeHorsConnexion.enregistrer("sport_installations", ligne.id, ligne);
+      } else {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations`, { method: "POST", body: JSON.stringify(ligne) });
+      }
       input.value = "";
       await loadInstallationsList();
       await loadPlanningInstallations();
     }
 
     async function deleteInstallation(id) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?id=eq.${id}`, {
-        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-      });
+      if (modeHorsConnexion) {
+        await modeHorsConnexion.supprimer("sport_installations", id);
+      } else {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?id=eq.${id}`, {
+          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+        });
+      }
       await loadInstallationsList();
       await loadPlanningInstallations();
     }
@@ -5960,8 +6016,16 @@
     async function loadInstallationsList() {
       const listEl = document.getElementById("installationsList");
       listEl.innerHTML = '<div class="muted">Chargement...</div>';
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
-      const rows = res.ok ? await res.json() : [];
+      let rows;
+      if (modeHorsConnexion) {
+        // La copie locale fait foi a l'affichage, meme connecte : une installation ajoutee hors
+        // reseau doit rester visible jusqu'a son envoi, sinon elle semble avoir disparu.
+        const lecture = await modeHorsConnexion.lire("sport_installations");
+        rows = lecture.rows.filter(r => !r.deleted).sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      } else {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
+        rows = res.ok ? await res.json() : [];
+      }
       if (rows.length === 0) {
         listEl.innerHTML = '<div class="muted">Aucune installation pour le moment.</div>';
         return;

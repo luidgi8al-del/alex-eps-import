@@ -97,9 +97,21 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
     const corps = { ...operation.data, id: operation.id, version: operation.baseVersion || undefined };
     if (operation.action === "delete") { corps.deleted = true; corps.data = undefined; }
 
-    const reponse = await fetch(`${url}/rest/v1/${operation.entity}?id=eq.${encodeURIComponent(operation.id)}`, {
-      method: "PATCH",
-      headers: { ...entetes(), Prefer: "return=representation" },
+    // Une version de depart a zero veut dire que la ligne n'existait pas quand elle a ete saisie.
+    // Un PATCH ne toucherait alors aucune ligne et repartirait avec un acquittement trompeur : la
+    // saisie serait sortie de la file sans jamais atteindre le serveur. On insere donc, en
+    // laissant PostgREST fusionner au cas ou la ligne aurait ete creee entre-temps ailleurs.
+    const creation = !operation.baseVersion && operation.action !== "delete";
+    const cible = creation
+      ? `${url}/rest/v1/${operation.entity}`
+      : `${url}/rest/v1/${operation.entity}?id=eq.${encodeURIComponent(operation.id)}`;
+
+    const reponse = await fetch(cible, {
+      method: creation ? "POST" : "PATCH",
+      headers: {
+        ...entetes(),
+        Prefer: creation ? "resolution=merge-duplicates,return=representation" : "return=representation"
+      },
       body: JSON.stringify(nettoyer(corps))
     });
 

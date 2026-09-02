@@ -156,3 +156,27 @@ test("les champs vides ne sont pas envoyes", async () => {
     assert(!("version" in reseau.appels[0].body), "sans version connue, on n'en invente pas");
   } finally { reseau.rendre(); }
 });
+
+test("une ligne inconnue du serveur est inseree, pas modifiee", async () => {
+  // Le piege : un PATCH sur une ligne inexistante ne touche personne et repond 200 avec une liste
+  // vide. La saisie sortirait de la file en paraissant envoyee, et serait perdue sans un mot.
+  const reseau = fauxReseau(() => reponse([{ id: "c1", name: "6e1", version: 1, updated_at: "2026-09-03T09:00:00Z" }]));
+  try {
+    const resultat = await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "upsert", baseVersion: 0, data: { name: "6e1" }
+    });
+    const [appel] = reseau.appels;
+    assertEgal(appel.method, "POST", "une creation");
+    assert(!appel.url.includes("id=eq."), "sur la table, pas sur une ligne");
+    assertEgal(resultat.status, "ok", "acceptee");
+    assertEgal(resultat.record.version, 1, "avec sa premiere version");
+  } finally { reseau.rendre(); }
+});
+
+test("une suppression reste une modification ciblee", async () => {
+  const reseau = fauxReseau(() => reponse([{ id: "c1", version: 6, updated_at: "2026-09-03T09:00:00Z", deleted: true }]));
+  try {
+    await adaptateur().pushOperation({ entity: "classes", id: "c1", action: "delete", baseVersion: 0, data: null });
+    assertEgal(reseau.appels[0].method, "PATCH", "on n'insere jamais une suppression");
+  } finally { reseau.rendre(); }
+});
