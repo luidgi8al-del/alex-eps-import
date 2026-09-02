@@ -1667,6 +1667,10 @@
      * meme logique, avec ses deux horaires.
      */
     function creneauxNommes(grade) {
+      // L'EPPCS a son propre emploi du temps : ses deux jours ne sont pas ceux du tronc commun.
+      if (grade === "TERMINALE_EPPCS") {
+        return { libelle: "Terminale EPPCS", choix: ["Mardi", "Mercredi"], intitule: "Jour de la Terminale EPPCS" };
+      }
       const base = baseSchoolLevel(grade);
       if (base === "TERMINALE") return { libelle: "Terminale", choix: ["Lundi", "Jeudi"], intitule: "Jour de la Terminale" };
       if (base === "PREMIERE") return { libelle: "Première", choix: ["14h", "16h"], intitule: "Creneau de la Première" };
@@ -1687,7 +1691,7 @@
       const previous = selected ?? select.value;
       select.replaceChildren();
       const teacher = (loadPrefs().teacherName || "").trim();
-      const labels = regle ? regle.choix : ["1","2","3","4","5","6","7","8"];
+      const labels = regle ? regle.choix : ["1","2","3","4","5","6","7","8","9"];
       labels.forEach((label, index) => select.add(new Option(regle && teacher ? `${label} — ${teacher}` : label, String(index + 1))));
       document.querySelector(`label[for="${numberId}"]`).textContent = regle ? regle.intitule : "Numéro de classe";
       // Une classe numerotee qui passe a un niveau a creneaux doit se voir attribuer son creneau.
@@ -5035,7 +5039,7 @@
         // Une Terminale se distingue par son jour, pas par un numero : c'est la meme regle que
         // le formulaire Creation classe, qui l'appliquait deja.
         const regleCreneau = selectedGrade ? creneauxNommes(selectedGrade) : null;
-        const numeroLabels = regleCreneau ? regleCreneau.choix : ["1","2","3","4","5","6","7","8"];
+        const numeroLabels = regleCreneau ? regleCreneau.choix : ["1","2","3","4","5","6","7","8","9"];
         panel.innerHTML = `
           <h2>Nouveau creneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
           ${showStartTimes ? `<div id="planningStartTimeList" style="max-height:260px; overflow-y:auto">${Array.from({length:PLANNING_ROWS}, (_,i) => PLANNING_START_HOUR * 60 + i * PLANNING_SLOT_MIN).map(value => `<button type="button" class="secondary planningStartOption" data-start="${value}" style="display:block;width:100%;text-align:left;margin-top:4px">${planningMinutesLabel(value)}</button>`).join("")}</div>` : ""}
@@ -5268,11 +5272,24 @@
      * derive du libelle : elle reste la meme d'une visite a l'autre et sur tous les appareils,
      * sans rien avoir a enregistrer.
      */
-    const COULEURS_ENSEIGNANTS = [
+    // Deux jeux au choix (Reglages > Visuel de l'accueil). Le clair repose l'oeil sur une grille
+    // chargee ; le vif separe mieux les collegues quand ils sont nombreux le meme jour. Chaque
+    // paire associe un fond et une encre assez sombre pour rester lisible dessus.
+    const COULEURS_ENSEIGNANTS_CLAIRES = [
       ["#D6ECFF", "#1B5E96"], ["#DFF3E0", "#256B2C"], ["#FFE9D4", "#8A4B12"],
       ["#EDE1FF", "#5B3A9B"], ["#FFE1EC", "#93264F"], ["#D8F3F0", "#14655E"],
       ["#FFF3C9", "#7A5B00"], ["#E4E7FF", "#33409B"]
     ];
+    const COULEURS_ENSEIGNANTS_VIVES = [
+      ["#9CCDFB", "#0B3F6B"], ["#98DFA8", "#0E4A1B"], ["#FFC38A", "#63300B"],
+      ["#CDB2FA", "#3A2073"], ["#FFA9C6", "#69102F"], ["#84DDD3", "#06413B"],
+      ["#FFDA7A", "#523C00"], ["#B0B8FB", "#1F2A75"]
+    ];
+
+    /** Le professeur choisit son jeu ; a defaut, le clair, qui etait le seul avant ce reglage. */
+    function paletteEnseignants() {
+      return loadPrefs().planningPaletteVive ? COULEURS_ENSEIGNANTS_VIVES : COULEURS_ENSEIGNANTS_CLAIRES;
+    }
 
     /**
      * La couleur vient du rang de l'enseignant dans la liste triee de ceux presents, pas d'un
@@ -5282,9 +5299,10 @@
     let ordreEnseignants = [];
 
     function couleurEnseignant(libelle) {
+      const palette = paletteEnseignants();
       const nom = nomCourtEnseignant(libelle) || "?";
       const rang = ordreEnseignants.indexOf(nom);
-      return COULEURS_ENSEIGNANTS[(rang < 0 ? 0 : rang) % COULEURS_ENSEIGNANTS.length];
+      return palette[(rang < 0 ? 0 : rang) % palette.length];
     }
 
     async function planningCreateSlot(classId, day, startMinutes, durationMinutes, installationName, periodPlans = {}) {
