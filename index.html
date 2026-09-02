@@ -106,6 +106,35 @@
   .planningHeadCell.weekend { background:#5A6B62; }
   /* Liste des classes en accordeon : l'entete occupe toute la largeur pour etre cliquable
      partout, sans ressembler a un bouton d'action. */
+  /* Rangee des classes : une seule ligne, qui defile plutot que de se replier sur plusieurs
+     hauteurs. Un etablissement complet tenait sur trois ecrans en liste verticale. */
+  .classeBarre { display:flex; gap:8px; overflow-x:auto; padding:4px 2px 10px; scrollbar-width:thin; }
+  .classePuce { flex:0 0 auto; background:var(--surface); color:var(--text); border:1px solid var(--border);
+                border-radius:999px; padding:9px 18px; font-size:14px; font-weight:700; margin-top:0;
+                cursor:pointer; white-space:nowrap; }
+  .classePuce:hover { background:#F3F6F8; }
+  .classePuce.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .classePuce .annee { font-weight:500; opacity:.7; font-size:12px; margin-left:6px; }
+
+  /* Cartes du tableau de bord, calquees sur l'application : chacune annonce son contenu en une
+     ligne et s'ouvre au clic, plutot que d'etaler ses details en permanence. */
+  .dashCarte { display:flex; align-items:center; gap:12px; width:100%; text-align:left; margin:8px 0 0;
+               padding:13px 15px; border:0; border-radius:16px; cursor:pointer; font:inherit; color:var(--text); }
+  .dashCarte .dashPastille { flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:#fff;
+                             display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .dashCarte .dashTexte { flex:1; min-width:0; }
+  .dashCarte .dashTitre { font-weight:700; color:#102F4A; }
+  .dashCarte .dashSous { font-size:12px; color:#637889; }
+  .dashCarte .dashFleche { color:#637889; font-size:20px; }
+  .dashSeance { background:#fff; box-shadow:0 2px 8px rgba(16,47,74,.10); display:block; cursor:default; }
+  .dashJauge { height:10px; border-radius:999px; background:#E1E7EC; overflow:hidden; flex:1; }
+  .dashJauge > div { height:100%; background:var(--primary); }
+  .dashRond { flex:0 0 auto; width:34px; height:34px; border-radius:50%; border:0; margin-top:0;
+              font-size:19px; font-weight:800; cursor:pointer; background:var(--primary); color:#fff; }
+  .dashRond:disabled { background:#E1E7EC; color:#9AA9B5; cursor:default; }
+  .dashDuo { display:flex; gap:10px; margin-top:8px; }
+  .dashDuo > button { flex:1; margin-top:0; border:0; border-radius:16px; padding:15px 10px;
+                      font-weight:700; color:#102F4A; cursor:pointer; }
   .classeCard { padding:0; overflow:hidden; }
   .classeEntete { display:flex; align-items:center; gap:10px; width:100%; margin:0; padding:14px 16px;
                   background:none; border:0; text-align:left; color:var(--text); font-size:14px; cursor:pointer; }
@@ -1901,41 +1930,39 @@
           listEl.innerHTML = '<div class="muted">Aucune classe pour le moment.</div>';
           return;
         }
-        listEl.innerHTML = "";
-        // Une classe ouverte a la fois : la liste tenait sur plusieurs ecrans des qu'un
-        // etablissement complet etait saisi, chaque classe montrant en permanence ses quatre
-        // boutons. Repliee, elle n'affiche que son nom ; ouverte, elle referme les autres.
+        // Une rangee de noms, comme dans l'application : la liste verticale tenait sur trois
+        // ecrans des qu'un etablissement complet etait saisi, et chaque classe y montrait ses
+        // quatre boutons en permanence. Ici on ne voit que les noms, et rien n'est ouvert tant
+        // qu'on n'a pas choisi.
         if (!rows.some(r => r.id === classeOuverteId)) classeOuverteId = null;
+        // Aucune classe retenue : le panneau d'une classe supprimee ou d'une autre session ne
+        // doit pas rester ouvert sous une rangee ou plus rien n'est selectionne.
+        if (!classeOuverteId) {
+          document.getElementById("classDashboardPanel").style.display = "none";
+          document.getElementById("classSchedulePanel").style.display = "none";
+        }
+        const barre = document.createElement("div");
+        barre.className = "classeBarre";
+        classesConnues = rows;
         rows.forEach(r => {
-          const div = document.createElement("div");
-          div.className = "card classeCard";
           const label = planningText(planningClassLabel(r));
-          const ouverte = r.id === classeOuverteId;
-          div.innerHTML = `
-            <button type="button" class="classeEntete" aria-expanded="${ouverte}">
-              <span class="chevron">${ouverte ? "▾" : "▸"}</span>
-              <span class="classeNom"><strong>${label}</strong> · ${r.school_year}${
-                r.assigned_teacher_id && r.assigned_teacher_id !== session.user_id
-                  ? ` · <span class="badge" style="background:#E6F1FF">Attribuee a ${planningText(nomCollegue(r.assigned_teacher_id))}</span>`
-                  : (r.user_id !== session.user_id ? ' · <span class="badge" style="background:#E5F7E9">Preparee pour vous</span>' : "")
-              }</span>
-            </button>
-            <div class="classeActions" ${ouverte ? "" : "hidden"}>
-              <button class="secondary" data-action="dashboard" style="margin-top:0">Tableau de bord</button>
-              <button class="secondary" data-action="schedule" style="margin-top:0">Emploi du temps</button>
-              <button class="secondary" data-action="edit" style="margin-top:0">Modifier</button>
-              <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
-            </div>`;
-          div.querySelector(".classeEntete").addEventListener("click", () => {
-            classeOuverteId = ouverte ? null : r.id;
-            loadImports();
+          const puce = document.createElement("button");
+          puce.type = "button";
+          puce.className = "classePuce" + (r.id === classeOuverteId ? " active" : "");
+          puce.innerHTML = `${label}<span class="annee">${planningText(r.school_year || "")}</span>`;
+          puce.addEventListener("click", () => {
+            // Recliquer sur la classe ouverte la referme : c'est le seul moyen de revenir a un
+            // ecran vide sans avoir a chercher un bouton "Fermer".
+            if (r.id === classeOuverteId) { fermerTableauDeBord(); return; }
+            classeOuverteId = r.id;
+            barre.querySelectorAll(".classePuce").forEach(b => b.classList.remove("active"));
+            puce.classList.add("active");
+            openClassDashboard(r, label);
           });
-          div.querySelector('[data-action="dashboard"]').addEventListener("click", () => openClassDashboard(r, label));
-          div.querySelector('[data-action="schedule"]').addEventListener("click", () => openClassSchedule(r, label));
-          div.querySelector('[data-action="edit"]').addEventListener("click", () => openEditImport(r));
-          div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteImport(r.id));
-          listEl.appendChild(div);
+          barre.appendChild(puce);
         });
+        listEl.innerHTML = "";
+        listEl.appendChild(barre);
       } catch (e) {
         listEl.innerHTML = `<div class="error">${e.message}</div>`;
       }
@@ -2582,7 +2609,24 @@
     let dashboardPeriod = 1;
     let dashboardActivities = [];
     let dashboardExerciseType = "WARMUP";
+    // Ce que le tableau de bord doit connaitre pour ressembler a celui de l'application : le
+    // cycle porte la seance en cours, les evaluations et les tests alimentent le recapitulatif,
+    // les dispenses la derniere carte.
+    let classesConnues = [];
+    let dashboardCycles = [];
+    let dashboardEvaluations = [];
+    let dashboardTests = [];
+    let dashboardDispenses = [];
+    let dashboardStudents = [];
+    let dashboardSeanceEnregistrable = true;
 
+    /**
+     * Tableau de bord d'une classe, calque sur celui de l'application (ClassPeriodDashboard.kt).
+     *
+     * Meme ordre, meme decoupage : periode, activite, seance en cours, fiches, evaluations,
+     * recapitulatif, dispenses. Un professeur qui passe du telephone au navigateur doit
+     * retrouver ses reperes sans reapprendre l'ecran.
+     */
     async function openClassDashboard(cls, label) {
       dashboardClass = { row: cls, label };
       dashboardPeriod = 1;
@@ -2591,19 +2635,74 @@
       panel.style.display = "block";
       panel.innerHTML = '<div class="muted">Chargement du tableau de bord...</div>';
 
-      // Les activites d'une classe passent par ses creneaux : period_activities pointe sur le
-      // creneau, pas sur la classe.
-      const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id`);
-      const slots = slotsRes.ok ? await slotsRes.json() : [];
-      if (slots.length) {
-        const ids = slots.map(s => s.id).join(",");
-        const actRes = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${ids})&select=*`);
-        dashboardActivities = actRes.ok ? await actRes.json() : [];
-      } else {
-        dashboardActivities = [];
+      try {
+        // Les activites d'une classe passent par ses creneaux : period_activities pointe sur le
+        // creneau, pas sur la classe.
+        const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id`);
+        const slots = slotsRes.ok ? await slotsRes.json() : [];
+        const [actRes, cyclesRes, studentsRes, dispRes, testsRes] = await Promise.all([
+          slots.length
+            ? apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${slots.map(s => s.id).join(",")})&select=*`)
+            : Promise.resolve(null),
+          apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${cls.id}&select=id,first_name,last_name`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?class_id=eq.${cls.id}&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions?deleted=eq.false&class_id=eq.${cls.id}&select=*`)
+        ]);
+        dashboardActivities = actRes && actRes.ok ? await actRes.json() : [];
+        dashboardCycles = cyclesRes.ok ? await cyclesRes.json() : [];
+        dashboardStudents = studentsRes.ok ? await studentsRes.json() : [];
+        dashboardDispenses = dispRes.ok ? await dispRes.json() : [];
+        dashboardTests = testsRes.ok ? await testsRes.json() : [];
+
+        // Le compteur de seances n'existe cote serveur que depuis schema_cycle_seance_en_cours.sql.
+        // Tant qu'il n'est pas applique, on affiche la seance sans permettre de l'avancer : mieux
+        // vaut un bouton grise et explique qu'un bouton qui echoue en silence.
+        dashboardSeanceEnregistrable = dashboardCycles.length === 0
+          || Object.prototype.hasOwnProperty.call(dashboardCycles[0], "current_session_number");
+
+        dashboardEvaluations = [];
+        if (dashboardCycles.length) {
+          const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
+          dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
+        }
+      } catch (e) {
+        panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
+        return;
       }
+
       renderClassDashboard();
       panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function fermerTableauDeBord() {
+      classeOuverteId = null;
+      document.getElementById("classDashboardPanel").style.display = "none";
+      document.getElementById("classSchedulePanel").style.display = "none";
+      document.querySelectorAll("#importsList .classePuce").forEach(b => b.classList.remove("active"));
+    }
+
+    /**
+     * Le cycle qui porte la seance de cette periode.
+     *
+     * Meme regle que l'application : on cherche un cycle de la classe sur la meme APSA, en
+     * preferant un cycle libre ; a defaut celui qui a ete cree depuis le planning pour cette
+     * periode precise. Sans cette preference, un cycle d'evaluation ponctuelle prendrait la place
+     * du cycle d'enseignement.
+     */
+    function cyclePourPeriode(activity, periode) {
+      if (!activity) {
+        return dashboardCycles.find(c => c.priority_objective === `planning-period-${periode}`) || null;
+      }
+      const memeApsa = dashboardCycles.filter(c => c.apsa_name === activity.apsa_name);
+      return memeApsa.find(c => !String(c.priority_objective || "").startsWith("planning-period-"))
+        || memeApsa.find(c => c.priority_objective === `planning-period-${periode}`)
+        || memeApsa[0] || null;
+    }
+
+    function dispensesEnCours() {
+      const aujourdhui = new Date().toISOString().slice(0, 10);
+      return dashboardDispenses.filter(d => d.start_date <= aujourdhui && d.end_date >= aujourdhui);
     }
 
     function renderClassDashboard() {
@@ -2613,16 +2712,21 @@
       if (dashboardPeriod > periodCount) dashboardPeriod = periodCount;
 
       const activity = dashboardActivities.find(a => a.period_number === dashboardPeriod);
+      const cycle = cyclePourPeriode(activity, dashboardPeriod);
       const chips = [];
       for (let p = 1; p <= periodCount; p++) {
-        chips.push(`<button class="periodChip${p === dashboardPeriod ? " active" : ""}" data-dash-period="${p}">Periode ${p}</button>`);
+        chips.push(`<button class="periodChip${p === dashboardPeriod ? " active" : ""}" data-dash-period="${p}">Période ${p}</button>`);
       }
+
+      const evalsPeriode = cycle ? dashboardEvaluations.filter(e => e.cycle_id === cycle.id) : [];
+      const testsPeriode = dashboardTests.filter(t => (t.period_number || 1) === dashboardPeriod);
+      const dispenses = dispensesEnCours();
 
       panel.innerHTML = `
         <div class="top">
           <div>
-            <h2 style="margin:0">${label}</h2>
-            <div class="muted">${row.school_year || ""}</div>
+            <h2 style="margin:0">${planningText(label)}</h2>
+            <div class="muted">${planningText(row.school_year || "")}</div>
           </div>
           <button class="secondary" id="closeDashboardBtn" style="margin-top:0">Fermer</button>
         </div>
@@ -2630,25 +2734,178 @@
         <div class="periodBar" style="display:flex; margin-top:12px">${chips.join("")}</div>
 
         <div class="card" style="background:#DDF3FF; border:0">
-          <div class="muted" style="font-size:11px; text-transform:uppercase; letter-spacing:.06em">Periode ${dashboardPeriod}</div>
-          <div style="font-size:22px; font-weight:800; color:#102F4A">${activity ? activity.apsa_name : "Aucune activite programmee"}</div>
-          ${activity && activity.installation_name ? `<div class="muted">${activity.installation_name}</div>` : ""}
+          <div class="muted" style="font-size:11px; text-transform:uppercase; letter-spacing:.06em">Période ${dashboardPeriod}</div>
+          <div style="font-size:22px; font-weight:800; color:#102F4A">${activity ? planningText(activity.apsa_name) : "Aucune activité renseignée"}</div>
+          <div class="muted">${activity && activity.installation_name ? planningText(activity.installation_name) : "Installation non renseignée"}</div>
         </div>
+
+        ${carteSeanceHtml(cycle)}
 
         <div id="dashExercises"></div>
 
-        <div class="row" style="margin-top:12px">
-          <button class="secondary" id="dashEvalBtn">Evaluations de la classe</button>
-          <button class="secondary" id="dashDispenseBtn">Dispenses</button>
-        </div>`;
+        <div class="dashDuo">
+          <button type="button" id="dashEvalPonctuelle" style="background:#FFE8D2">Évaluation<br>ponctuelle</button>
+          <button type="button" id="dashEvalFinale" style="background:#EDE6FF">Évaluation<br>finale</button>
+        </div>
 
-      document.getElementById("closeDashboardBtn").onclick = () => { panel.style.display = "none"; };
+        <button type="button" class="dashCarte" id="dashRecapBtn" style="background:#E8F1FF">
+          <span class="dashPastille">📋</span>
+          <span class="dashTexte">
+            <span class="dashTitre">Récapitulatif Tests / Évaluations</span><br>
+            <span class="dashSous">P${dashboardPeriod} · ${testsPeriode.length} test(s) · ${evalsPeriode.length} évaluation(s)</span>
+          </span>
+          <span class="dashFleche">›</span>
+        </button>
+
+        <button type="button" class="dashCarte" id="dashDispenseBtn" style="background:#E8F8F3">
+          <span class="dashPastille">🩺</span>
+          <span class="dashTexte">
+            <span class="dashTitre">Dispenses</span><br>
+            <span class="dashSous">${dispenses.length} élève(s) actuellement dispensé(s)</span>
+          </span>
+          <span class="dashFleche">›</span>
+        </button>
+
+        <div class="row" style="margin-top:14px">
+          <button class="secondary" data-classe-action="schedule" style="margin-top:0">Emploi du temps</button>
+          <button class="secondary" data-classe-action="edit" style="margin-top:0">Modifier la classe</button>
+          <button class="danger" data-classe-action="delete" style="margin-top:0">Supprimer</button>
+        </div>
+
+        <div id="dashDetail"></div>`;
+
+      document.getElementById("closeDashboardBtn").onclick = fermerTableauDeBord;
       panel.querySelectorAll("[data-dash-period]").forEach(b =>
         b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); renderClassDashboard(); });
-      document.getElementById("dashEvalBtn").onclick = () => showTab("cours");
-      document.getElementById("dashDispenseBtn").onclick = () => openClassDispenses(row.id);
 
+      panel.querySelector('[data-classe-action="schedule"]').onclick = () => openClassSchedule(row, label);
+      panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
+      panel.querySelector('[data-classe-action="delete"]').onclick = () => deleteImport(row.id);
+
+      document.getElementById("dashEvalPonctuelle").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "PONCTUELLE");
+      document.getElementById("dashEvalFinale").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "FINALE");
+      document.getElementById("dashRecapBtn").onclick = () => afficherRecapPeriode(evalsPeriode, testsPeriode);
+      document.getElementById("dashDispenseBtn").onclick = () => afficherDispenses(dispenses);
+
+      brancherCarteSeance(cycle);
       renderDashboardExercises(activity);
+    }
+
+    /** La carte "Seance x/y", avec sa jauge et ses deux boutons ronds. */
+    function carteSeanceHtml(cycle) {
+      if (!cycle) {
+        return `<div class="card dashSeance" style="margin-top:8px">
+          <div class="dashTitre">Aucun cycle pour cette période</div>
+          <div class="dashSous">Créez-le dans COURS pour suivre les séances.</div>
+        </div>`;
+      }
+      const total = Math.max(1, Number(cycle.session_count) || 8);
+      const courante = Math.min(total, Math.max(1, Number(cycle.current_session_number) || 1));
+      const avancement = Math.round((courante / total) * 100);
+      return `<div class="card dashSeance" style="margin-top:8px">
+        <div class="dashTitre">Séance ${courante}/${total}</div>
+        <div class="dashSous">${planningText(cycle.apsa_name || "")} · Séance à préparer</div>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:10px">
+          <button type="button" class="dashRond" id="seanceMoins" ${courante <= 1 ? "disabled" : ""}>−</button>
+          <div class="dashJauge"><div style="width:${avancement}%"></div></div>
+          <button type="button" class="dashRond" id="seancePlus" ${courante >= total ? "disabled" : ""}>+</button>
+        </div>
+        ${dashboardSeanceEnregistrable ? "" :
+          `<div class="muted" style="margin-top:8px">Compteur en lecture seule : appliquez schema_cycle_seance_en_cours.sql dans Supabase pour l'avancer depuis le site.</div>`}
+      </div>`;
+    }
+
+    function brancherCarteSeance(cycle) {
+      const moins = document.getElementById("seanceMoins");
+      const plus = document.getElementById("seancePlus");
+      if (!moins || !plus) return;
+      if (!dashboardSeanceEnregistrable) { moins.disabled = true; plus.disabled = true; return; }
+      moins.onclick = () => changerSeance(cycle, -1);
+      plus.onclick = () => changerSeance(cycle, 1);
+    }
+
+    /**
+     * Avance ou recule la seance en cours.
+     *
+     * L'ecran est redessine avant l'envoi : le geste doit repondre tout de suite. En cas de refus
+     * du serveur, on remet la valeur d'avant et on le dit - jamais l'inverse, sinon le compteur
+     * afficherait une seance que l'application ne connaitrait pas.
+     */
+    async function changerSeance(cycle, delta) {
+      const total = Math.max(1, Number(cycle.session_count) || 8);
+      const avant = Math.min(total, Math.max(1, Number(cycle.current_session_number) || 1));
+      const apres = Math.min(total, Math.max(1, avant + delta));
+      if (apres === avant) return;
+
+      cycle.current_session_number = apres;
+      renderClassDashboard();
+      try {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${cycle.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({ current_session_number: apres, updated_at: new Date().toISOString() })
+        });
+      } catch (e) {
+        cycle.current_session_number = avant;
+        renderClassDashboard();
+        const detail = document.getElementById("dashDetail");
+        if (detail) detail.innerHTML = `<div class="error">Séance non enregistrée : ${planningText(e.message)}</div>`;
+      }
+    }
+
+    /** Les deux boutons d'evaluation menent au meme ecran que l'application, dans COURS. */
+    function ouvrirEvaluationDepuisClasse(cycle, type) {
+      const detail = document.getElementById("dashDetail");
+      if (!cycle) {
+        if (detail) detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucun cycle sur cette période : créez-le dans COURS pour y attacher une évaluation.</div>`;
+        return;
+      }
+      evalExpandedType = type;
+      showTab("cours");
+      openEvaluationPanel(cycle);
+    }
+
+    function afficherRecapPeriode(evaluations, tests) {
+      const hote = document.getElementById("dashDetail");
+      if (!hote) return;
+      if (!evaluations.length && !tests.length) {
+        hote.innerHTML = `<div class="muted" style="margin-top:10px">Aucun test ni évaluation sur cette période.</div>`;
+        return;
+      }
+      hote.innerHTML = `
+        <div class="card" style="margin-top:10px">
+          <div class="top"><h3 style="margin:0">Récapitulatif · P${dashboardPeriod}</h3>
+            <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
+          ${tests.length ? `<h4 style="margin:12px 0 4px">Tests</h4><ul class="tight" style="margin:0; padding-left:18px">${
+            tests.map(t => `<li>${planningText(t.test_name || "Test")}</li>`).join("")}</ul>` : ""}
+          ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4><ul class="tight" style="margin:0; padding-left:18px">${
+            evaluations.map(e => `<li>${planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}</span></li>`).join("")}</ul>` : ""}
+        </div>`;
+      document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
+    }
+
+    /**
+     * Les dispenses en cours de la classe. La carte du tableau de bord n'en donnait que le
+     * nombre : le bouton appelait une fonction qui n'existait pas, et ne faisait donc rien.
+     */
+    function afficherDispenses(dispenses) {
+      const hote = document.getElementById("dashDetail");
+      if (!hote) return;
+      if (!dispenses.length) {
+        hote.innerHTML = `<div class="muted" style="margin-top:10px">Aucun élève dispensé aujourd'hui.</div>`;
+        return;
+      }
+      const nom = id => {
+        const e = dashboardStudents.find(s => s.id === id);
+        return e ? `${planningText((e.last_name || "").toUpperCase())} ${planningText(e.first_name || "")}` : "Élève";
+      };
+      hote.innerHTML = `
+        <div class="card" style="margin-top:10px">
+          <div class="top"><h3 style="margin:0">Dispenses en cours</h3>
+            <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
+          <ul class="tight" style="margin:10px 0 0; padding-left:18px">${
+            dispenses.map(d => `<li>${nom(d.student_id)} <span class="muted">· du ${planningText(d.start_date)} au ${planningText(d.end_date)}</span></li>`).join("")}</ul>
+        </div>`;
+      document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
     }
 
     /**
@@ -2663,9 +2920,14 @@
       const all = QuickExercises.forActivity(activity.apsa_name, dashboardClass.row.grade);
       const list = all.filter(e => e.type === dashboardExerciseType);
 
+      // Une carte repliee, comme dans l'application : deplie, le catalogue occupait tout l'ecran
+      // et repoussait les evaluations et le recapitulatif hors de vue.
       host.innerHTML = `
-        <h2 style="margin:18px 0 6px; font-size:15px">Exercices rapides — ${activity.apsa_name}</h2>
-        <div class="subtabbar">
+        <details class="card" style="background:#E5F7E9; border:0; margin-top:8px">
+        <summary style="cursor:pointer; font-weight:700; color:#102F4A; list-style:none">
+          Fiches Exercices / Jeux <span class="muted" style="font-weight:400">— ${planningText(activity.apsa_name)}</span>
+        </summary>
+        <div class="subtabbar" style="margin-top:10px">
           <button class="subtabbtn${dashboardExerciseType === "WARMUP" ? " active" : ""}" data-ex-type="WARMUP">Echauffement</button>
           <button class="subtabbtn${dashboardExerciseType === "GAME" ? " active" : ""}" data-ex-type="GAME">Exercice / Jeu</button>
         </div>
@@ -2681,7 +2943,8 @@
             <div class="muted" style="margin-top:8px">Plus facile — ${e.easier}</div>
             <div class="muted">Plus difficile — ${e.harder}</div>
             ${e.safety ? `<div style="margin-top:8px; padding:8px 10px; border-left:3px solid var(--danger); background:#FDEEED; border-radius:0 4px 4px 0"><strong style="color:var(--danger)">Securite</strong><div>${e.safety}</div></div>` : ""}
-          </details>`).join("")}`;
+          </details>`).join("")}
+        </details>`;
 
       host.querySelectorAll("[data-ex-type]").forEach(b =>
         b.onclick = () => { dashboardExerciseType = b.dataset.exType; renderDashboardExercises(activity); });
