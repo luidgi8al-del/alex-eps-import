@@ -1214,9 +1214,11 @@
           if (res.ok) dump[table] = res.rows; else { dump[table] = []; manquantes.push(table); }
         } catch (e) { dump[table] = []; manquantes.push(table); }
       }
+      // Compte avant d'ajouter la liste des manques, qui est elle-meme un tableau : sinon deux
+      // tables illisibles gonflaient le total de deux lignes. Un chiffre faux dans une sauvegarde
+      // est pire que pas de chiffre du tout.
+      dump.total = tables.reduce((n, table) => n + (dump[table]?.length || 0), 0);
       dump.tablesNonLues = manquantes;
-      dump.total = Object.entries(dump)
-        .filter(([, v]) => Array.isArray(v)).reduce((n, [, v]) => n + v.length, 0);
       const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
