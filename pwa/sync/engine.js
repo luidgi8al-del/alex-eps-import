@@ -2,11 +2,13 @@ import { DEFAULT_BATCH_SIZE, PAGE_LECTURE, SYNC_STATE } from "../core/constants.
 import { publishSyncState } from "../core/events.js";
 import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
-import { saveLocalRecord } from "../storage/records.js";
+import { saveLocalRecord, countLocalRecords, generationLocale } from "../storage/records.js";
 import { acknowledgeOperation, countPendingOperations, deferOperation, operationsForRecord, pendingOperations, replaceOperation } from "./outbox.js";
 import { countConflicts, storeConflict, storeRejection } from "./conflicts.js";
 import { mergeOfflineChange } from "./merge.js";
 const CURSOR_KEY = "last-server-cursor";
+/** Nombre de fiches locales au moment ou le curseur a ete ecrit. Voir #pullAndReconcile. */
+const FICHES_KEY = "records-at-cursor";
 export class OfflineSyncEngine {
   #adapter; #batchSize; #running;
   constructor({ adapter, batchSize = DEFAULT_BATCH_SIZE }) {
@@ -34,11 +36,38 @@ export class OfflineSyncEngine {
   async #pullAndReconcile() {
     // L'adaptateur tient un curseur par table : une table qui rejoint la liste n'a pas encore de
     // repere, et se lit donc depuis le debut sans qu'on ait a le demander.
-    let cursor = await getMeta(CURSOR_KEY), more = true;
+    let cursor = await getMeta(CURSOR_KEY);
+
+    // Un curseur qui a connu des fiches, en face d'une copie devenue vide, ne veut plus rien
+    // dire : il affirme que tout a ete lu alors qu'il ne reste rien, et plus rien ne redescend.
+    // On repart alors de zero. La comparaison porte sur le nombre de fiches au moment ou le
+    // curseur a ete ecrit, et non sur le vide seul : un compte qui n'a legitimement aucune
+    // donnee ne doit pas relire toute la base a chaque synchronisation.
+    // Un curseur ecrit par une version anterieure n'a pas de repere : sa provenance est inconnue,
+    // et c'est precisement l'etat dans lequel un changement de compte a pu laisser l'application.
+    // On le traite comme suspect une fois, puis on pose le repere pour ne plus y revenir.
+    const fichesAuCurseur = await getMeta(FICHES_KEY);
+    const repereInconnu = fichesAuCurseur === undefined;
+    if (cursor && (repereInconnu || fichesAuCurseur > 0) && (await countLocalRecords()) === 0) {
+      cursor = undefined;
+      await setMeta(CURSOR_KEY, undefined);
+      await setMeta(FICHES_KEY, 0);
+    }
+
+    // La generation change quand la copie locale est effacee - a la deconnexion ou au changement
+    // de compte. Une lecture commencee avant ne doit pas enregistrer son curseur apres.
+    const generationAuDepart = generationLocale();
+    let more = true;
     while (more) {
       const page = await this.#adapter.pullChanges({ cursor, limit: PAGE_LECTURE });
+      if (generationLocale() !== generationAuDepart) return;
       for (const serverRecord of page.records || []) await this.#applyServerRecord(serverRecord);
-      cursor = page.cursor ?? cursor; more = Boolean(page.hasMore); if (cursor) await setMeta(CURSOR_KEY, cursor);
+      if (generationLocale() !== generationAuDepart) return;
+      cursor = page.cursor ?? cursor; more = Boolean(page.hasMore);
+      if (cursor) {
+        await setMeta(CURSOR_KEY, cursor);
+        await setMeta(FICHES_KEY, await countLocalRecords());
+      }
     }
   }
   async #applyServerRecord(serverRecord) {

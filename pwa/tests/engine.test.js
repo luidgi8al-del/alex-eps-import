@@ -8,7 +8,7 @@
 import { test, assert, assertEgal, assertRejette, lancer } from "./harness.js";
 import { STORES, SYNC_STATE } from "../core/constants.js";
 import { transaction, getMeta, setMeta } from "../storage/database.js";
-import { listLocalRecords, readLocalRecord, saveLocalRecord } from "../storage/records.js";
+import { listLocalRecords, readLocalRecord, saveLocalRecord, removeAllLocalData, countLocalRecords } from "../storage/records.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
 import { countConflicts, listConflicts } from "../sync/conflicts.js";
@@ -386,4 +386,54 @@ test("chaque table garde son propre repere", async () => {
   const dernier = rendus[rendus.length - 1];
   assertEgal(dernier.eleve.updatedAt, "2026-01-01T08:00:00Z", "l'eleve garde sa date ancienne");
   assertEgal(dernier.creneau.updatedAt, "2026-09-03T08:00:00Z", "sans etre entraine par le creneau plus recent");
+});
+
+// ---------------------------------------------------------------- effacement et curseur
+
+test("un curseur sans copie locale est abandonne", async () => {
+  // C'est l'etat dans lequel un changement de compte pouvait laisser l'application : plus une
+  // seule fiche, mais un curseur affirmant que tout avait ete lu. Plus rien ne redescendait, et
+  // l'ecran restait vide indefiniment.
+  // Etat exact laisse par la version precedente : un curseur, et aucun repere du nombre de
+  // fiches - le banc d'essai ne vide pas les metadonnees entre deux cas, il faut donc le poser.
+  await setMeta("last-server-cursor", { eleve: { updatedAt: "2026-09-03T08:00:00Z", id: "x" } });
+  await setMeta("records-at-cursor", undefined);
+  const recu = [];
+  const adaptateur = {
+    tables: ["eleve"],
+    async pullChanges({ cursor }) {
+      recu.push(cursor);
+      return { records: [{ entity: "eleve", id: "1", version: 1, updatedAt: "2026-01-01T08:00:00Z",
+                           deleted: false, data: { nom: "Dupont" } }],
+               cursor: { eleve: { updatedAt: "2026-01-01T08:00:00Z", id: "1" } }, hasMore: false };
+    },
+    async pushOperation() { return { status: "ok" }; }
+  };
+  await new OfflineSyncEngine({ adapter: adaptateur }).sync();
+
+  assertEgal(recu[0], undefined, "la lecture doit repartir de zero");
+  assert(await readLocalRecord("eleve", "1"), "et la fiche doit etre redescendue");
+});
+
+test("un effacement pendant une synchronisation n'avance pas le curseur", async () => {
+  // La course qui a casse l'application : le changement de compte efface la copie locale pendant
+  // qu'une lecture est en cours. Si cette lecture enregistre son curseur apres l'effacement, la
+  // copie reste vide pour toujours.
+  const adaptateur = {
+    tables: ["eleve"],
+    async pullChanges() {
+      // L'effacement tombe pendant la lecture, comme au changement de compte.
+      await removeAllLocalData();
+      return { records: [{ entity: "eleve", id: "1", version: 1, updatedAt: "2026-09-03T08:00:00Z",
+                           deleted: false, data: { nom: "Dupont" } }],
+               cursor: { eleve: { updatedAt: "2026-09-03T08:00:00Z", id: "1" } }, hasMore: false };
+    },
+    async pushOperation() { return { status: "ok" }; }
+  };
+  await setMeta("records-at-cursor", 12);   // la copie contenait des fiches avant l'effacement
+  await new OfflineSyncEngine({ adapter: adaptateur }).sync();
+
+  assertEgal(await getMeta("last-server-cursor"), undefined,
+    "aucun curseur ne doit survivre a l'effacement");
+  assertEgal(await countLocalRecords(), 0, "et la copie reste vide, prete a etre relue entierement");
 });
