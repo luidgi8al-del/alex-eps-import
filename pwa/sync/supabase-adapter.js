@@ -166,5 +166,6 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
     return Object.fromEntries(Object.entries(objet).filter(([, valeur]) => valeur !== undefined));
   }
 
-  return { pullChanges, pushOperation, lireLigne };
+  // Le moteur a besoin de connaitre la liste : elle determine ce que le curseur couvre.
+  return { pullChanges, pushOperation, lireLigne, tables };
 }
