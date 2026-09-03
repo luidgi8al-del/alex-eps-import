@@ -184,8 +184,13 @@ async function openClassDashboard(cls, label) {
     // creneau, pas sur la classe.
     // Le jour de la semaine sert a dater les seances : sans lui, impossible de dire que la
     // seance 2 tombe le vendredi.
-    const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id,day_of_week,start_time`);
-    const slots = slotsRes.ok ? await slotsRes.json() : [];
+    let slots;
+    if (modeHorsConnexion) {
+      slots = (await modeHorsConnexion.lire("class_schedule_slots", { ou: s => s.class_id === cls.id })).rows;
+    } else {
+      const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id,day_of_week,start_time`);
+      slots = slotsRes.ok ? await slotsRes.json() : [];
+    }
     dashboardSlots = slots;
     // Le decoupage de la Terminale ne suit pas le calendrier commun : il vit en base.
     if (cls.grade === "TERMINALE" && !periodesTerminale.length) await loadPeriodDates().catch(() => {});
@@ -690,8 +695,14 @@ async function renderClassSchedule() {
   const panel = document.getElementById("classSchedulePanel");
   const { row, label } = scheduleClass;
 
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${row.id}&select=*`);
-  const slots = (res.ok ? await res.json() : [])
+  let brut;
+  if (modeHorsConnexion) {
+    brut = (await modeHorsConnexion.lire("class_schedule_slots", { ou: s => s.class_id === row.id })).rows;
+  } else {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${row.id}&select=*`);
+    brut = res.ok ? await res.json() : [];
+  }
+  const slots = brut
     .sort((a, b) => {
       const d = PLANNING_DAYS.findIndex(x => x.key === a.day_of_week) - PLANNING_DAYS.findIndex(x => x.key === b.day_of_week);
       return d !== 0 ? d : slotStartMinutes(a) - slotStartMinutes(b);

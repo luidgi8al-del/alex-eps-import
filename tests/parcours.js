@@ -103,6 +103,18 @@
         }
       },
       {
+        nom: "Classe ouverte · emploi du temps",
+        action: async () => {
+          const bouton = f.document.querySelector('#classDashboardPanel [data-classe-action="schedule"]');
+          if (!bouton) throw new Error("le bouton Emploi du temps a disparu du tableau de bord");
+          bouton.click();
+          await attendre(() => visible($("classSchedulePanel")) && rempli($("classSchedulePanel")),
+            "l'emploi du temps ne s'affiche pas", 6000);
+          await attendre(() => !/Chargement/.test($("classSchedulePanel").innerText),
+            "l'emploi du temps reste sur Chargement", 6000);
+        }
+      },
+      {
         nom: "Onglet CLASSE · liste des eleves",
         action: async () => {
           await onglet("classes");

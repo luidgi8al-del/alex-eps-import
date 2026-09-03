@@ -846,17 +846,35 @@ document.addEventListener("fullscreenchange", () => {
 });
 
 async function loadPlanningClasses() {
+  if (modeHorsConnexion) {
+    const lecture = await modeHorsConnexion.lire("classes", {
+      trier: (a, b) => String(a.name || "").localeCompare(String(b.name || ""))
+    });
+    planningClasses = lecture.rows;
+    return;
+  }
   const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
   planningClasses = res.ok ? await res.json() : [];
 }
 async function loadPlanningSlots() {
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
-  const rows = res.ok ? await res.json() : [];
+  let rows;
+  if (modeHorsConnexion) {
+    const lecture = await modeHorsConnexion.lire("class_schedule_slots", { ou: s => s.user_id === session.user_id });
+    rows = lecture.rows;
+  } else {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
+    rows = res.ok ? await res.json() : [];
+  }
   // Display only: keep orphan/deleted-class records on the server for synchronization.
   planningSlots = visiblePersonalPlanningSlots(rows, planningClasses);
   await loadPlanningActivities();
 }
 async function loadPlanningActivities() {
+  if (modeHorsConnexion) {
+    const lecture = await modeHorsConnexion.lire("period_activities", { ou: a => a.user_id === session.user_id });
+    planningActivities = lecture.rows;
+    return;
+  }
   const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
   planningActivities = res.ok ? await res.json() : [];
 }
@@ -933,20 +951,36 @@ async function loadPlanningCommunity() {
   try {
     // Refresh our class list before filtering our obsolete slots; other teachers' classes are private.
     await loadPlanningClasses();
-    const [slotsRes, activitiesRes, overridesRes] = await Promise.all([
-      apiFetchAll(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
-      apiFetchAll(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
-    ]);
-    if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
-    planningCommunitySlots = visibleCommunityPlanningSlots(slotsRes.rows, planningClasses, session.user_id);
-    planningCommunityActivities = activitiesRes.ok ? activitiesRes.rows : [];
+    // La copie locale porte deja les creneaux de tout l'etablissement : la lecture est ouverte a
+    // tous sur ces deux tables, c'est ce qui fait vivre le planning partage. On peut donc le
+    // consulter dans un gymnase sans reseau, ce qui est precisement ou on en a besoin.
+    let slotsRows, activitiesRows;
+    const overridesRes = await apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
+      .catch(() => ({ ok: false }));
+    if (modeHorsConnexion) {
+      slotsRows = (await modeHorsConnexion.lire("class_schedule_slots")).rows;
+      activitiesRows = (await modeHorsConnexion.lire("period_activities")).rows;
+    } else {
+      const [slotsRes, activitiesRes] = await Promise.all([
+        apiFetchAll(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
+        apiFetchAll(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`)
+      ]);
+      if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
+      slotsRows = slotsRes.rows;
+      activitiesRows = activitiesRes.ok ? activitiesRes.rows : [];
+    }
+    planningCommunitySlots = visibleCommunityPlanningSlots(slotsRows, planningClasses, session.user_id);
+    planningCommunityActivities = activitiesRows;
     planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
-    await loadPlanningValidation();
-    await loadPeriodDates();
+    // Deux lectures accessoires : l'etat de validation et les dates de periodes. Elles decoraient
+    // le planning, mais leur echec faisait tomber tout le bloc et vidait les creneaux deja
+    // charges - une coupure de trois secondes effacait le planning partage entier.
+    await loadPlanningValidation().catch(() => { planningValidated = false; });
+    await loadPeriodDates().catch(() => { periodesTerminale = periodesTerminale || []; });
   } catch (e) {
     planningCommunityError = e.message;
-    planningCommunitySlots = [];
+    // On ne jette pas ce qu'on a : mieux vaut un planning d'hier avec un message qu'un ecran vide.
+    if (!planningCommunitySlots.length) planningCommunitySlots = [];
   } finally {
     planningCommunityLoading = false;
   }
@@ -2102,6 +2136,20 @@ function openPlanningSecondSlotPanel(day, minutes) {
   });
 }
 
+/**
+ * Dit pourquoi une modification du planning n'a pas eu lieu.
+ *
+ * Le planning se consulte hors connexion depuis que sa lecture passe par la copie locale : un
+ * professeur va donc essayer de le modifier dans un gymnase. Ses ecritures, elles, ont besoin du
+ * reseau - elles portent un protocole de concurrence partage avec l'application, qu'on ne double
+ * pas. Sans ce message, le clic ne produisait rien du tout.
+ */
+function signalerPlanning(panel, erreur) {
+  const message = String(erreur && erreur.message || erreur);
+  panel.insertAdjacentHTML("beforeend",
+    `<div class="error" style="margin-top:10px">${planningText(message)}</div>`);
+}
+
 async function openPlanningEditSlotPanel(slot) {
   const panel = document.getElementById("planningPanel");
   const cl = planningClassById(slot.class_id);
@@ -2125,6 +2173,7 @@ async function openPlanningEditSlotPanel(slot) {
     wirePeriodPlanner(panel, cl.grade, plans, "edit", next => { openStep = next; renderEdit(); });
     document.getElementById("planningCloseBtn").addEventListener("click", () => panel.style.display = "none");
     document.getElementById("planningSaveBtn").addEventListener("click", async () => {
+    try {
     const cl2 = planningClassById(slot.class_id);
     await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
       method: "PATCH",
@@ -2143,14 +2192,17 @@ async function openPlanningEditSlotPanel(slot) {
     panel.style.display = "none";
     await loadPlanningSlots();
     renderPlanningTab();
+    } catch (e) { signalerPlanning(panel, e); }
   });
   document.getElementById("planningDeleteBtn").addEventListener("click", async () => {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
-      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-    });
-    panel.style.display = "none";
-    await loadPlanningSlots();
-    renderPlanningTab();
+    try {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      panel.style.display = "none";
+      await loadPlanningSlots();
+      renderPlanningTab();
+    } catch (e) { signalerPlanning(panel, e); }
   });
   }
   renderEdit();

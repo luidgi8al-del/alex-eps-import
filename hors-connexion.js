@@ -15,12 +15,19 @@
  * ferait travailler le moteur pour rien, et une table raccordee mais non suivie ne recevrait
  * jamais les modifications des collegues.
  */
-const TABLES_HORS_CONNEXION = ["sport_installations", "classes", "students"];
+const TABLES_HORS_CONNEXION = [
+  "sport_installations", "classes", "students",
+  // Creneaux et activites : lisibles hors connexion, modifiables seulement connecte. Leurs
+  // ecritures portent deja un protocole de concurrence partage avec l'application, qu'on ne
+  // double pas par celui du moteur.
+  "class_schedule_slots", "period_activities"
+];
 
 /** Ce qu'il faut redessiner quand le retard est rattrape, selon l'onglet ouvert. */
 function rafraichirApresSynchro() {
   if (currentWebTab === "equipement") loadInstallationsList();
   if (currentWebTab === "classes") loadImports();
+  if (currentWebTab === "planning" || currentWebTab === "programmation") renderPlanningTab();
 }
 
 /**
