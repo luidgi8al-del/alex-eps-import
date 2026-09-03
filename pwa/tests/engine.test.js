@@ -12,7 +12,7 @@ import { listLocalRecords, readLocalRecord, saveLocalRecord } from "../storage/r
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
 import { countConflicts, listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection } from "../sync/resolve.js";
 import { OfflineSyncEngine } from "../sync/engine.js";
 import { currentSyncState } from "../core/events.js";
 
@@ -287,3 +287,60 @@ test("un choix inconnu est refuse plutot que devine", async () => {
 });
 
 export { lancer };
+
+// ---------------------------------------------------------------- refus de droits
+
+test("une saisie refusee sort de la file au lieu d'etre rejouee", async () => {
+  // Sans cela, un professeur non administrateur verrait "1 en attente" indefiniment : le moteur
+  // reproposerait la meme saisie a chaque synchronisation, et le serveur la refuserait a chaque
+  // fois. C'est le cas normal des que les eleves seront raccordes.
+  await saveOfflineEdit({ entity: "eleve", id: "1", data: eleve, authorId: "moi" });
+  const serveur = serveurFactice({
+    reponsePush: () => ({
+      status: "rejected", reason: "droits insuffisants",
+      serverRecord: { entity: "eleve", id: "1", version: 4, updatedAt: "2026-09-03T10:00:00Z",
+                      deleted: false, data: { nom: "Dupond", division: "2.1", mail: "d@ex.fr" } }
+    })
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+
+  assertEgal(await countPendingOperations(), 0, "la file doit etre vidée");
+  assertEgal(await countConflicts(), 1, "le refus doit rester visible");
+  const [refus] = await listConflicts();
+  assertEgal(refus.kind, "refus", "range comme un refus, pas comme un conflit a arbitrer");
+  const fiche = await readLocalRecord("eleve", "1");
+  assertEgal(fiche.data.nom, "Dupond", "la fiche revient dans l'etat du serveur");
+});
+
+test("prendre acte d'un refus n'envoie rien et libere l'ecran", async () => {
+  await saveOfflineEdit({ entity: "eleve", id: "1", data: eleve, authorId: "moi" });
+  const serveur = serveurFactice({
+    reponsePush: () => ({
+      status: "rejected", reason: "droits insuffisants",
+      serverRecord: { entity: "eleve", id: "1", version: 4, updatedAt: "2026-09-03T10:00:00Z",
+                      deleted: false, data: { nom: "Dupond", division: "2.1", mail: "d@ex.fr" } }
+    })
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  const [refus] = await listConflicts();
+  await acknowledgeRejection(refus.conflictId);
+
+  assertEgal(await countConflicts(), 0, "le refus est traite");
+  assertEgal(await countPendingOperations(), 0, "et rien n'est renvoye");
+  assertEgal((await readLocalRecord("eleve", "1")).data.nom, "Dupond", "la version du serveur reste");
+});
+
+test("une creation refusee ne laisse pas une fiche fantome a l'ecran", async () => {
+  // Le serveur n'a rien : la fiche n'existe pour personne d'autre. La laisser affichee ferait
+  // croire a une donnee partagee, et le professeur la chercherait en vain sur son telephone.
+  await saveOfflineEdit({ entity: "eleve", id: "9", data: eleve, authorId: "moi" });
+  const serveur = serveurFactice({
+    reponsePush: () => ({ status: "rejected", reason: "droits insuffisants", serverRecord: null })
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  const [refus] = await listConflicts();
+  await acknowledgeRejection(refus.conflictId);
+
+  const visibles = await listLocalRecords("eleve");
+  assertEgal(visibles.filter(r => r.id === "9").length, 0, "la fiche refusee disparait de la liste");
+});

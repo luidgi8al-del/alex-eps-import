@@ -123,15 +123,35 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       throw new Error(`Enregistrement refuse (HTTP ${reponse.status}).`);
     }
     if (reponse.status === 401) throw new Error("Session expiree.");
+
+    // Un droit refuse n'est pas une panne : reessayer ne changera rien. Traite comme une erreur,
+    // l'operation reviendrait indefiniment dans la file, et le professeur verrait une
+    // synchronisation qui ne finit jamais sans jamais savoir pourquoi.
+    if (reponse.status === 403) {
+      return { status: "rejected", reason: "droits insuffisants",
+               serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
+    }
     if (!reponse.ok) throw new Error(`Enregistrement refuse (HTTP ${reponse.status}).`);
 
     const [ligne] = await reponse.json();
-    if (!ligne) return { status: "ok" };
+    // Une modification qui ne touche aucune ligne repond 200 avec une liste vide : soit la ligne
+    // n'existe pas, soit les regles de securite la rendent invisible a ce compte. Dans les deux
+    // cas elle ne partira jamais. L'acquitter comme un succes faisait disparaitre la saisie en
+    // silence - c'est le pire des cas, celui que personne ne remarque.
+    if (!ligne) {
+      return { status: "rejected", reason: "ligne absente ou non modifiable par ce compte",
+               serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
+    }
     return {
       status: "ok",
       record: { entity: operation.entity, id: ligne.id, version: ligne.version ?? 0,
                 updatedAt: ligne.updated_at, deleted: Boolean(ligne.deleted), data: ligne }
     };
+  }
+
+  /** Comme lireLigne, mais rend null quand la ligne est illisible : on est deja dans un refus. */
+  async function lireLigneSiPossible(table, id) {
+    try { return await lireLigne(table, id); } catch { return null; }
   }
 
   async function lireLigne(table, id) {

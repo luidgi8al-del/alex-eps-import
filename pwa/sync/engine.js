@@ -4,7 +4,7 @@ import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
 import { saveLocalRecord } from "../storage/records.js";
 import { acknowledgeOperation, countPendingOperations, deferOperation, operationsForRecord, pendingOperations, replaceOperation } from "./outbox.js";
-import { countConflicts, storeConflict } from "./conflicts.js";
+import { countConflicts, storeConflict, storeRejection } from "./conflicts.js";
 import { mergeOfflineChange } from "./merge.js";
 const CURSOR_KEY = "last-server-cursor";
 export class OfflineSyncEngine {
@@ -66,6 +66,15 @@ export class OfflineSyncEngine {
       for (const operation of batch) {
         try {
           const result = await this.#adapter.pushOperation(operation);
+          // Refus definitif : la reprise ne servirait a rien. On sort l'operation de la file, on
+          // remet la fiche dans l'etat du serveur pour que l'ecran cesse d'annoncer une
+          // modification qui n'aura pas lieu, et on garde une trace visible pour le professeur.
+          if (result.status === "rejected") {
+            await storeRejection({ operation, serverRecord: result.serverRecord, reason: result.reason });
+            if (result.serverRecord) await saveLocalRecord(result.serverRecord);
+            await acknowledgeOperation(operation.opId);
+            continue;
+          }
           if (result.status === "conflict") {
             await storeConflict({ operation, serverRecord: result.serverRecord, overlappingFields: result.overlappingFields || operation.changedFields });
             await acknowledgeOperation(operation.opId);

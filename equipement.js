@@ -426,6 +426,8 @@ async function demarrerModeHorsConnexion() {
       session: () => session,
       statusElement: document.getElementById("syncStatus"),
       conflictElement: document.getElementById("conflictPanel"),
+      // Miroir des regles de la base : ce qui sera refuse n'entre pas dans la file d'attente.
+      droits: droitEcriture,
       // Une seule table pour commencer. Le reste du site continue de parler a Supabase en
       // direct : on n'expose pas toutes les rubriques au premier essai.
       tables: ["sport_installations"]
@@ -449,7 +451,9 @@ async function createInstallation() {
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, name, updated_at: new Date().toISOString(), deleted: false };
   if (modeHorsConnexion) {
     // Retenue localement d'abord : sans reseau elle attend dans la file au lieu d'etre perdue.
-    await modeHorsConnexion.enregistrer("sport_installations", ligne.id, ligne);
+    // Sauf si ce compte n'a pas le droit de la creer : autant le dire maintenant.
+    try { await modeHorsConnexion.enregistrer("sport_installations", ligne.id, ligne); }
+    catch (e) { errorEl.textContent = e.message; return; }
   } else {
     await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations`, { method: "POST", body: JSON.stringify(ligne) });
   }
@@ -459,8 +463,13 @@ async function createInstallation() {
 }
 
 async function deleteInstallation(id) {
+  const errorEl = document.getElementById("installationError");
+  if (errorEl) errorEl.textContent = "";
   if (modeHorsConnexion) {
-    await modeHorsConnexion.supprimer("sport_installations", id);
+    // Le refus arrive avant toute mise en file : il doit se lire tout de suite, la ou le
+    // professeur vient de cliquer.
+    try { await modeHorsConnexion.supprimer("sport_installations", id); }
+    catch (e) { if (errorEl) errorEl.textContent = e.message; return; }
   } else {
     await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?id=eq.${id}`, {
       method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })

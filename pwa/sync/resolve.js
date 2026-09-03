@@ -66,6 +66,34 @@ export function buildFieldChoice(conflit, choixParChamp = {}) {
   return resultat;
 }
 
+/**
+ * Prend acte d'un refus definitif.
+ *
+ * Il n'y a rien a decider : le serveur n'acceptera pas cette saisie de ce compte. Reste a remettre
+ * la fiche dans un etat honnete. Quand le serveur porte une version, elle fait foi. Quand il n'en
+ * porte aucune - creation refusee, ou ligne rendue invisible par les regles de securite - la fiche
+ * locale est marquee supprimee : la laisser affichee ferait croire a une donnee partagee qui
+ * n'existe pour personne d'autre.
+ */
+export async function acknowledgeRejection(conflictId) {
+  const refus = (await listConflicts()).find(item => item.conflictId === conflictId);
+  if (!refus) throw new Error("Refus introuvable : il a peut-etre deja ete traite.");
+
+  if (refus.serverData) {
+    await saveLocalRecord({
+      entity: refus.entity, id: refus.id, data: refus.serverData,
+      version: refus.serverVersion, updatedAt: refus.serverModifiedAt, deleted: false
+    });
+  } else {
+    await saveLocalRecord({
+      entity: refus.entity, id: refus.id, data: refus.localData,
+      version: refus.baseVersion, updatedAt: new Date().toISOString(), deleted: true
+    });
+  }
+  await removeConflict(conflictId);
+  return publierEtat({ refusPrisEnCompte: conflictId, envoye: false });
+}
+
 /** Abandonne un conflit sans rien renvoyer : la version du serveur fait foi. */
 export async function discardConflict(conflictId) {
   return resolveConflict(conflictId, "server");

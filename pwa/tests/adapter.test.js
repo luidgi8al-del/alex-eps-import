@@ -180,3 +180,46 @@ test("une suppression reste une modification ciblee", async () => {
     assertEgal(reseau.appels[0].method, "PATCH", "on n'insere jamais une suppression");
   } finally { reseau.rendre(); }
 });
+
+test("un droit refuse n'est pas une panne a rejouer", async () => {
+  // C'est le cas qui compte pour les eleves : un professeur non administrateur qui ajoute une
+  // fiche. Traite comme une erreur, l'operation reviendrait indefiniment dans la file.
+  const reseau = fauxReseau(({ options }) =>
+    options.method === "POST" || options.method === "PATCH"
+      ? new Response('{"message":"new row violates row-level security policy"}', { status: 403 })
+      : reponse([{ id: "c1", name: "6e1", version: 3, updated_at: "2026-09-03T10:00:00Z" }]));
+  try {
+    const resultat = await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "upsert", baseVersion: 2, data: { name: "6e2" }
+    });
+    assertEgal(resultat.status, "rejected", "un refus definitif");
+    assert(/droits/i.test(resultat.reason), "avec sa raison");
+    assertEgal(resultat.serverRecord.version, 3, "et la version qui fait foi");
+  } finally { reseau.rendre(); }
+});
+
+test("une modification qui ne touche aucune ligne n'est pas un succes", async () => {
+  // PostgREST repond 200 avec une liste vide quand les regles de securite rendent la ligne
+  // invisible. L'acquitter comme un envoi reussi faisait disparaitre la saisie sans un mot.
+  const reseau = fauxReseau(({ options }) =>
+    options.method === "PATCH" ? reponse([]) : reponse([]));
+  try {
+    const resultat = await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "upsert", baseVersion: 4, data: { name: "6e2" }
+    });
+    assertEgal(resultat.status, "rejected", "pas un succes");
+    assertEgal(resultat.serverRecord, null, "et rien a restaurer");
+  } finally { reseau.rendre(); }
+});
+
+test("un refus sans ligne lisible reste un refus", async () => {
+  const reseau = fauxReseau(({ options }) =>
+    options.method === "POST" ? new Response("", { status: 403 }) : new Response("", { status: 401 }));
+  try {
+    const resultat = await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "upsert", baseVersion: 0, data: { name: "6e1" }
+    });
+    assertEgal(resultat.status, "rejected", "le refus prime sur la lecture ratee");
+    assertEgal(resultat.serverRecord, null, "sans version de reference");
+  } finally { reseau.rendre(); }
+});

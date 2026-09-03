@@ -24,7 +24,7 @@ const RELANCE_MS = 15000;
 let etat = null;
 
 export async function demarrerHorsConnexion({
-  url, anonKey, session, statusElement, conflictElement, tables, onConflitsChanges
+  url, anonKey, session, statusElement, conflictElement, tables, onConflitsChanges, droits
 } = {}) {
   if (etat) return etat;
 
@@ -72,6 +72,22 @@ export async function demarrerHorsConnexion({
   });
   setInterval(() => { if (enRetard) rapprocher(); }, RELANCE_MS);
 
+  /**
+   * Leve si le compte n'a pas le droit d'ecrire, avec le message a afficher.
+   *
+   * Une creation et une modification se ressemblent trop pour etre distinguees ici : on demande
+   * les deux gestes et on accepte si l'un des deux est permis. La base tranchera le cas exact.
+   */
+  function verifierDroit(entity, ...gestes) {
+    if (typeof droits !== "function") return;
+    for (const geste of gestes) {
+      const verdict = droits(entity, geste);
+      if (verdict === true || verdict === undefined) return;
+    }
+    const message = droits(entity, gestes[0]);
+    throw new Error(typeof message === "string" ? message : "Action non autorisée pour ce compte.");
+  }
+
   etat = {
     engine,
     adapter,
@@ -92,14 +108,24 @@ export async function demarrerHorsConnexion({
       return { source: synchronise ? "reseau" : "local", rows: locales.map(r => r.data) };
     },
 
-    /** Enregistre une modification : elle part tout de suite si le reseau est la, sinon elle attend. */
+    /**
+     * Enregistre une modification : elle part tout de suite si le reseau est la, sinon elle attend.
+     *
+     * Le droit est verifie avant la mise en file. Une saisie que le serveur refusera n'a rien a
+     * faire dans la file d'attente : elle y resterait jusqu'au retour du reseau pour n'etre
+     * refusee que la, longtemps apres que le professeur soit passe a autre chose. Ce n'est pas
+     * une securite - la vraie interdiction est dans la base - c'est une question d'honnetete
+     * envers celui qui saisit.
+     */
     async enregistrer(entity, id, data) {
+      verifierDroit(entity, "creer", "modifier");
       const resultat = await saveOfflineEdit({ entity, id, data, authorId: session()?.user_id });
       rapprocher();
       return resultat;
     },
 
     async supprimer(entity, id) {
+      verifierDroit(entity, "supprimer");
       const resultat = await saveOfflineDeletion({ entity, id, authorId: session()?.user_id });
       rapprocher();
       return resultat;

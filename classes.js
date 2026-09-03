@@ -30,11 +30,53 @@ function showSubtab(name) {
  * (schema_droits_administrateur.sql), seules capables de resister a un contournement.
  */
 let estAdminCache = null;
+
+/** La cle est propre au compte : deux professeurs sur le meme ordinateur n'heritent pas l'un de l'autre. */
+function cleAdmin() { return `eps_admin:${session?.user_id || "inconnu"}`; }
+
 async function estAdministrateur() {
   if (estAdminCache !== null) return estAdminCache;
   const contexte = await loadTeamContext().catch(() => null);
-  estAdminCache = !!(contexte && contexte.is_admin);
+  if (contexte && typeof contexte.is_admin === "boolean") {
+    estAdminCache = contexte.is_admin;
+    try { localStorage.setItem(cleAdmin(), String(estAdminCache)); } catch { /* stockage indisponible */ }
+    return estAdminCache;
+  }
+  // Sans reseau, on se souvient de la derniere reponse connue : c'est ce qui permet de refuser
+  // tout de suite une saisie que le serveur refusera de toute facon, au lieu de la mettre en
+  // attente pendant des heures pour rien.
+  const memorise = (() => { try { return localStorage.getItem(cleAdmin()); } catch { return null; } })();
+  estAdminCache = memorise === "true";
   return estAdminCache;
+}
+
+/**
+ * Ce que ce compte a le droit d'ecrire, sans demander au serveur.
+ *
+ * Miroir de schema_droits_administrateur.sql. Ce n'est pas une securite - la vraie interdiction
+ * vit dans la base - mais c'est ce qui evite de mettre en file une saisie condamnee : hors
+ * connexion, elle attendrait le retour du reseau pour etre refusee, longtemps apres que le
+ * professeur soit passe a autre chose.
+ */
+const ECRITURE_RESERVEE = {
+  unss_students: { creer: true, supprimer: true },
+  unss_groups: { supprimer: true },
+  sport_installations: { creer: true, modifier: true, supprimer: true },
+  equipment: { creer: true, modifier: true, supprimer: true }
+};
+
+function droitEcriture(entite, geste) {
+  const reservee = ECRITURE_RESERVEE[entite];
+  if (!reservee || !reservee[geste]) return true;
+  // Le verdict doit tenir meme si personne n'a encore appele estAdministrateur() : sans cela il
+  // dependrait de l'ordre d'ouverture des onglets, ce qui est le genre de regle qu'on ne voit
+  // jamais venir.
+  if (estAdminCache === null) {
+    try { estAdminCache = localStorage.getItem(cleAdmin()) === "true"; } catch { estAdminCache = false; }
+    estAdministrateur().catch(() => {});
+  }
+  if (estAdminCache === true) return true;
+  return "Réservé à l'administrateur : cette action ne sera pas enregistrée.";
 }
 
 /**

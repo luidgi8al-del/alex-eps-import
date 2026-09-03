@@ -1,5 +1,5 @@
 import { listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection } from "../sync/resolve.js";
 
 /**
  * L'ecran de resolution des conflits.
@@ -31,6 +31,27 @@ function dateLisible(valeur) {
   if (!valeur) return "";
   const d = new Date(valeur);
   return isNaN(d) ? "" : d.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+}
+
+/**
+ * Un refus n'offre aucun choix : le serveur n'acceptera pas cette saisie de ce compte. On dit ce
+ * qui a ete tente, pourquoi c'est refuse, et on laisse un seul geste possible.
+ */
+function refusHtml(refus, libelles) {
+  const champs = (refus.overlappingFields || [])
+    .filter(champ => champ !== "__deleted__")
+    .map(champ => `${echapper(libelles[champ] || champ)} : ${echapper(texte(refus.localData?.[champ]))}`);
+  const geste = (refus.overlappingFields || []).includes("__deleted__") ? "Suppression" : "Modification";
+  return `
+    <section class="conflit conflitRefus" data-refus="${echapper(refus.conflictId)}">
+      <h3>${echapper(libelles[refus.entity] || refus.entity)} · ${echapper(refus.id)}</h3>
+      <p class="conflitQuand">${geste} refusée — ${echapper(refus.reason || "droits insuffisants")}.
+         Cette action est réservée à l'administrateur : votre saisie ne sera pas enregistrée.</p>
+      ${champs.length ? `<ul class="conflitChamps">${champs.map(c => `<li>${c}</li>`).join("")}</ul>` : ""}
+      <div class="conflitActions">
+        <button type="button" data-refus-ok="${echapper(refus.conflictId)}">J'ai compris</button>
+      </div>
+    </section>`;
 }
 
 function conflitHtml(conflit, libelles) {
@@ -74,9 +95,28 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
       element.innerHTML = `<p class="conflitAucun">Aucun conflit a traiter.</p>`;
       return conflits.length;
     }
-    element.innerHTML = `<p class="conflitIntro">${conflits.length} fiche(s) modifiee(s) des deux cotes.
-      Choisissez la version a conserver : rien ne sera envoye avant votre decision.</p>`
-      + conflits.map(c => conflitHtml(c, libelles)).join("");
+    const refuses = conflits.filter(c => c.kind === "refus");
+    const arbitrer = conflits.filter(c => c.kind !== "refus");
+    element.innerHTML =
+      (refuses.length ? `<p class="conflitIntro">${refuses.length} saisie(s) refusée(s) par le serveur.</p>`
+        + refuses.map(r => refusHtml(r, libelles)).join("") : "")
+      + (arbitrer.length ? `<p class="conflitIntro">${arbitrer.length} fiche(s) modifiee(s) des deux cotes.
+        Choisissez la version a conserver : rien ne sera envoye avant votre decision.</p>`
+        + arbitrer.map(c => conflitHtml(c, libelles)).join("") : "");
+
+    element.querySelectorAll("[data-refus-ok]").forEach(bouton => {
+      bouton.addEventListener("click", async () => {
+        bouton.disabled = true;
+        try { await acknowledgeRejection(bouton.dataset.refusOk); }
+        catch (error) {
+          bouton.disabled = false;
+          bouton.insertAdjacentHTML("afterend", `<p class="conflitErreur">${echapper(error.message)}</p>`);
+          return;
+        }
+        onResolved?.({ conflictId: bouton.dataset.refusOk }, "refus");
+        await afficher();
+      });
+    });
 
     element.querySelectorAll("[data-conflit]").forEach(bloc => {
       const conflit = conflits.find(c => c.conflictId === bloc.dataset.conflit);
