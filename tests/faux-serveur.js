@@ -131,7 +131,20 @@
     return Promise.resolve(reponse(filtrer(DONNEES[nom] || [], url)));
   }
 
-  window.__fauxServeur = { DONNEES, appels, table };
+  // Les erreurs du chargement, avant meme que le banc puisse ecouter.
+  //
+  // Une premiere version n'installait les ecoutes qu'apres le chargement du site : un fichier qui
+  // referencait au chargement une fonction definie dans un fichier charge plus tard levait une
+  // erreur que le banc annoncait ensuite "au vert". C'est exactement le defaut que le decoupage
+  // peut introduire, donc celui qu'il faut voir en premier.
+  const incidents = [];
+  window.addEventListener("error", e => incidents.push("Chargement : " + (e.message || e.error)));
+  window.addEventListener("unhandledrejection", e =>
+    incidents.push("Chargement : promesse rejetee — " + ((e.reason && e.reason.message) || e.reason)));
+  const erreurConsole = console.error;
+  console.error = function (...args) { incidents.push("Chargement : " + args.map(String).join(" ")); erreurConsole.apply(console, args); };
+
+  window.__fauxServeur = { DONNEES, appels, table, incidents };
   window.fetch = fauxFetch;
 
   // Le site lit sa session au chargement. On intercepte la lecture au lieu d'ecrire dans le

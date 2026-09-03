@@ -91,6 +91,22 @@
   const etapes = window.__parcours(f);
   const echecs = [];
 
+  // Ce qui a casse avant que le banc puisse ecouter compte autant que la suite : un site qui
+  // demarre mal peut tres bien afficher ensuite tous ses ecrans.
+  const auChargement = ((f.__fauxServeur && f.__fauxServeur.incidents) || [])
+    .filter(m => !/favicon|manifest|service worker desactive/i.test(m));
+  const li0 = document.createElement("li");
+  if (auChargement.length) {
+    li0.className = "rouge";
+    const texte = auChargement.join(String.fromCharCode(10));
+    li0.innerHTML = `Chargement du site<pre>${echapper(texte)}</pre>`;
+    echecs.push({ nom: "Chargement du site", message: texte });
+  } else {
+    li0.className = "vert";
+    li0.textContent = "Chargement du site, sans erreur";
+  }
+  details.appendChild(li0);
+
   for (const etape of etapes) {
     const li = document.createElement("li");
     li.textContent = etape.nom + " …";
@@ -111,8 +127,8 @@
 
   bilan.className = echecs.length ? "ko" : "ok";
   bilan.textContent = echecs.length
-    ? `${echecs.length} ecran(s) en echec sur ${etapes.length}`
-    : `${etapes.length} ecrans au vert`;
+    ? `${echecs.length} echec(s) sur ${etapes.length + 1} controles`
+    : `${etapes.length + 1} controles au vert`;
   window.__resultat = { total: etapes.length, echecs };
   console.log(echecs.length ? echecs : `Banc d'essai du site : OK (${etapes.length})`);
 })();
