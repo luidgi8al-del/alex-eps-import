@@ -31,7 +31,19 @@ function planningLinksActivity(grade) {
 }
 
 let planningMode = "global"; // "global" | "eps" | "periode"
-let planningPeriod = 1;
+/**
+ * Periode affichee. Zero signifie "toutes periodes".
+ *
+ * Les deux plannings globaux acceptent zero. Deux modes ne le peuvent pas : "Par periode" est par
+ * definition une periode a la fois, et l'occupation des installations n'a de sens que periode par
+ * periode - deux classes ne se disputent pas un gymnase a des moments differents de l'annee.
+ *
+ * Les autres modes du meme panneau (programmation annuelle, programmes, calendrier, dates) ne
+ * regardent pas la periode du tout : les faire trancher ramenait le planning sur la periode 1 des
+ * qu'on etait passe par Programmation.
+ */
+let planningPeriod = 0;
+const MODES_PERIODE_UNIQUE = ["periode", "installations"];
 let planningClasses = [];
 let planningSlots = [];
 let planningActivities = []; // pour planningPeriod courant
@@ -79,6 +91,9 @@ async function initPlanningTab() {
 
 function showPlanningTab(mode) {
   planningMode = mode;
+  // Un mode qui ne sait pas afficher toutes les periodes doit repartir sur une periode reelle,
+  // sinon sa grille se construirait sur une periode qui n'existe pas.
+  if (MODES_PERIODE_UNIQUE.includes(mode) && planningPeriod === 0) planningPeriod = 1;
   document.querySelectorAll("#planningSubtabs .subtabbtn").forEach(b => {
     b.classList.toggle("active", b.dataset.planningtab === mode);
   });
@@ -1219,16 +1234,20 @@ function renderPlanningTab() {
 
   // Barre de periodes
   const periodBar = document.getElementById("planningPeriodBar");
-  if (planningMode === "periode" || planningMode === "eps" || planningMode === "installations") {
+  if (["global", "periode", "eps", "installations"].includes(planningMode)) {
     const maxPeriod = planningClasses.length
       ? Math.max(...planningClasses.map(c => planningPeriodCount(c.grade)))
       : 5;
     if (planningPeriod > maxPeriod) planningPeriod = maxPeriod;
     periodBar.innerHTML = "";
-    for (let p = 1; p <= maxPeriod; p++) {
+
+    const choix = MODES_PERIODE_UNIQUE.includes(planningMode) ? [] : [0];
+    for (let p = 1; p <= maxPeriod; p++) choix.push(p);
+
+    for (const p of choix) {
       const chip = document.createElement("button");
       chip.className = "periodChip" + (p === planningPeriod ? " active" : "");
-      chip.textContent = "Periode " + p;
+      chip.textContent = p === 0 ? "Toutes periodes" : "Periode " + p;
       chip.addEventListener("click", async () => {
         planningPeriod = p;
         if (planningMode === "periode") await loadPlanningActivities();
@@ -1326,8 +1345,14 @@ function renderPlanningGrid() {
       const top = ((planningStartMinutes(s) - PLANNING_START_HOUR * 60) / PLANNING_SLOT_MIN) * PLANNING_ROW_PX;
       const height = (s.duration_minutes / PLANNING_SLOT_MIN) * PLANNING_ROW_PX - 2;
       const cls = planningClassById(s.class_id);
-      const apsa = planningMode === "periode" ? (planningActivityForSlot(s.id) || "A definir") : null;
-      const activityLines = planningMode === "global" ? planningGlobalActivityLines(s.id) : (apsa ? `<span class="ap">${planningText(apsa)}</span>` : "");
+      // Sur le planning personnel, "toutes periodes" empile les quatre lignes ; une periode
+      // choisie n'en montre qu'une, comme le fait "Par periode".
+      const toutesPeriodes = planningPeriod === 0;
+      const apsa = (planningMode === "periode" || (planningMode === "global" && !toutesPeriodes))
+        ? (planningActivityForSlot(s.id) || "A definir") : null;
+      const activityLines = (planningMode === "global" && toutesPeriodes)
+        ? planningGlobalActivityLines(s.id)
+        : (apsa ? `<span class="ap">${planningText(apsa)}</span>` : "");
       const installationLine = (planningMode === "global" && !activityLines && s.installation_name) ? `<span class="ap">${planningText(s.installation_name)}</span>` : "";
       html += `<div class="planningBlock" style="top:${top}px; height:${height}px;" data-slot="${s.id}">
         <span class="cl">${planningText(planningClassLabel(cls))}</span>${activityLines}${installationLine}
@@ -1481,8 +1506,9 @@ function computeCommunityConflicts(slots) {
   const conflicts = new Set();
   findCommunityConflictPairs(slots)
     // Un chevauchement de periode 2 n'a pas a rougir la grille de periode 1. Une paire sans
-    // periode vaut toute l'annee : elle reste signalee quoi qu'on affiche.
-    .filter(p => !p.periodes.length || p.periodes.includes(Number(planningPeriod)))
+    // periode vaut toute l'annee : elle reste signalee quoi qu'on affiche. Et sur "toutes
+    // periodes", on montre tout - c'est la vue ou l'on cherche justement les problemes.
+    .filter(p => planningPeriod === 0 || !p.periodes.length || p.periodes.includes(Number(planningPeriod)))
     .forEach(p => { conflicts.add(p.indexA); conflicts.add(p.indexB); });
   return conflicts;
 }
@@ -1543,14 +1569,29 @@ function renderPlanningEpsGrid() {
       const largeurColonne = 100 / Math.max(1, profsDuJour.length);
       const gauche = place.colonne * largeurColonne + place.sousIndex * largeurColonne / place.sousTotal;
       const largeur = largeurColonne / place.sousTotal;
-      const periodInfo = planningCommunityActivities.find(a => a.slot_id === s.id && Number(a.period_number) === Number(planningPeriod));
+      // Toutes periodes : la case ne peut pas porter quatre activites - elle fait deux
+      // centimetres de large avec une colonne par enseignant. On y laisse la classe, et le detail
+      // passe dans l'infobulle, ou il reste consultable sans encombrer la grille.
+      const activitesDuCreneau = planningCommunityActivities
+        .filter(a => a.slot_id === s.id)
+        .sort((a, b) => Number(a.period_number) - Number(b.period_number));
+      const periodInfo = planningPeriod === 0
+        ? null
+        : activitesDuCreneau.find(a => Number(a.period_number) === Number(planningPeriod));
       // Une case vide dit deja que l'activite reste a choisir : ecrire "A definir" prenait la
       // place du seul mot qu'on vient y lire.
       const activity = (periodInfo?.apsa_name || "").trim();
+      const detailPeriodes = planningPeriod === 0
+        ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "A definir"}`).join(" — ")
+        : "";
       // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
       const [fond, encre] = couleurEnseignant(s.teacher_label);
       const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
-      html += `<div class="planningBlock${conflict ? " conflict" : ""}" style="top:${top}px; height:${height}px; left:calc(${gauche}% + 1px); right:auto; width:calc(${largeur}% - 2px); ${style}">
+      // L'infobulle va sur la case entiere, pas sur le libelle de classe : ajusterLibellesCases
+      // reecrit le title des libelles pour y mettre le nom complet quand il est abrege.
+      html += `<div class="planningBlock${conflict ? " conflict" : ""}"${
+        detailPeriodes ? ` title="${planningText(s.class_label || "?")} — ${planningText(detailPeriodes)}"` : ""
+      } style="top:${top}px; height:${height}px; left:calc(${gauche}% + 1px); right:auto; width:calc(${largeur}% - 2px); ${style}">
         <span class="cl clFit" data-full="${planningText(s.class_label || "?")}">${planningText(s.class_label || "?")}</span>
         ${activity ? `<span class="apFit" data-full="${planningText(activity)}">${planningText(activity)}</span>` : ""}
       </div>`;
