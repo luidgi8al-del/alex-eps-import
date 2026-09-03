@@ -5,7 +5,9 @@ export function mountSyncStatus(element) {
   if (!element) throw new TypeError("Element d'etat absent");
   element.setAttribute("role", "status"); element.setAttribute("aria-live", "polite");
   return subscribeSyncState(detail => {
-    const suffix = detail.conflicts ? ` · ${detail.conflicts} conflit(s)` : detail.pending ? ` · ${detail.pending} en attente` : "";
+    const suffix = detail.conflicts ? ` · ${detail.conflicts} conflit(s)`
+      : detail.pending ? ` · ${detail.pending} en attente`
+      : detail.lues ? ` · ${detail.lues} fiches` : "";
     element.textContent = `${LABELS[detail.state] || detail.state}${suffix}`;
     element.dataset.syncState = detail.state; element.title = detail.message || detail.at || "";
   });

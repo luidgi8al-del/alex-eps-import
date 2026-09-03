@@ -57,12 +57,18 @@ export class OfflineSyncEngine {
     // La generation change quand la copie locale est effacee - a la deconnexion ou au changement
     // de compte. Une lecture commencee avant ne doit pas enregistrer son curseur apres.
     const generationAuDepart = generationLocale();
+    let lues = 0;
     let more = true;
     while (more) {
       const page = await this.#adapter.pullChanges({ cursor, limit: PAGE_LECTURE });
       if (generationLocale() !== generationAuDepart) return;
       for (const serverRecord of page.records || []) await this.#applyServerRecord(serverRecord);
       if (generationLocale() !== generationAuDepart) return;
+      lues += (page.records || []).length;
+      // Une premiere lecture rapatrie tout l'etablissement : plusieurs minutes, pendant
+      // lesquelles "Synchronisation..." seul ne distingue pas une attente normale d'un blocage.
+      // Le compte qui avance est la seule chose qui fasse la difference, pour qui regarde.
+      if (lues) publishSyncState(SYNC_STATE.SYNCING, { lues });
       const precedent = JSON.stringify(cursor ?? null);
       cursor = page.cursor ?? cursor; more = Boolean(page.hasMore);
       if (cursor) {

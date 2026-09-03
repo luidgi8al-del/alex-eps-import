@@ -79,7 +79,10 @@ do $$
 declare t text;
 begin
   foreach t in array array['classes','students','class_schedule_slots','period_activities',
-                           'unss_students','unss_groups','sport_installations','equipment'] loop
+                           'unss_students','unss_groups','sport_installations','equipment',
+                           -- Ajoutees en raccordant Cours. Les oublier ici a coute cher : sans
+                           -- index, chaque page de lecture parcourait et triait la table entiere.
+                           'cycles','evaluations','evaluation_criteria','evaluation_scores'] loop
     if to_regclass('public.' || t) is not null then
       execute format('create index if not exists %I on public.%I (updated_at, id)', t || '_maj_idx', t);
     end if;
