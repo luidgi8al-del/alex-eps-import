@@ -20,6 +20,8 @@ import { mountConflictDialog } from "./ui/conflict-dialog.js";
  */
 /** Intervalle des reprises automatiques quand il reste quelque chose a envoyer. */
 const RELANCE_MS = 15000;
+/** Delai minimal entre deux synchronisations qu'aucun geste de l'utilisateur n'a demandees. */
+const INTERVALLE_MIN_SYNCHRO_MS = 30000;
 
 let etat = null;
 
@@ -66,11 +68,22 @@ export async function demarrerHorsConnexion({
    * dernier ecran attendait la somme des cinq autres.
    */
   let synchroEnCours = null;
-  function rapprocher() {
+  let finDerniereSynchro = 0;
+
+  /**
+   * @param {boolean} force geste explicite de l'utilisateur : on y va sans attendre le delai.
+   */
+  function rapprocher({ force = false } = {}) {
     if (!isOnline()) return Promise.resolve(false);
     if (synchroEnCours) return synchroEnCours;
+    // Delai minimal entre deux synchronisations spontanees, sans quoi elles se declenchent
+    // l'une l'autre : une synchronisation terminee rafraichit les ecrans, un ecran rafraichi
+    // relit ses donnees, et une lecture demande une synchronisation. La boucle etait complete
+    // et tournait tant qu'une page restait ouverte - des milliers de lectures par heure, pour
+    // rien. Un geste de l'utilisateur, lui, passe outre : il attend un resultat tout de suite.
+    if (!force && Date.now() - finDerniereSynchro < INTERVALLE_MIN_SYNCHRO_MS) return Promise.resolve(false);
     synchroEnCours = engine.sync().then(() => true, () => false);
-    synchroEnCours.finally(() => { synchroEnCours = null; });
+    synchroEnCours.finally(() => { finDerniereSynchro = Date.now(); synchroEnCours = null; });
     return synchroEnCours;
   }
 
@@ -104,7 +117,7 @@ export async function demarrerHorsConnexion({
     adapter,
 
     /** Synchronise maintenant. Sans reseau, le moteur se contente d'annoncer l'attente. */
-    synchroniser: () => engine.sync(),
+    synchroniser: () => rapprocher({ force: true }),
 
     /**
      * Lit une table depuis la copie locale, apres l'avoir rapprochee du serveur si possible.
