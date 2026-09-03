@@ -1,0 +1,1246 @@
+/*
+ * Onglet ASLVH : licencies, creneaux, groupes, appels et statistiques.
+ *
+ * Sorti d'index.html. Script classique, comme les dix autres fichiers du site :
+ * les fonctions restent accessibles depuis les autres fichiers sans rien exporter,
+ * et ce fichier est charge avant le script principal qui s'en sert.
+ */
+
+// ---- Onglet UNSS : repertoire "Eleve LVH" (general) / "Licencies AS" (categorie, voeux,
+// taille maillot). Prive au compte (pas de partage entre collegues, contrairement a
+// Planning/Programmation) : synchronise juste avec l'app via le meme compte.
+const UNSS_CATEGORIES = [
+  { value: "BENJAMIN", label: "Benjamin" }, { value: "MINIME", label: "Minime" },
+  { value: "CADET", label: "Cadet" }, { value: "JUNIOR", label: "Junior" }
+];
+
+function computeUnssCategory(birthDateEpochMillis, schoolYear) {
+  if (!birthDateEpochMillis) return "MINIME";
+  const birthYear = new Date(birthDateEpochMillis).getFullYear();
+  const startYear = parseInt(String(schoolYear || "").slice(0, 4), 10) || new Date().getFullYear();
+  const age = startYear - birthYear;
+  if (age <= 12) return "BENJAMIN";
+  if (age <= 14) return "MINIME";
+  if (age <= 16) return "CADET";
+  return "JUNIOR";
+}
+/**
+ * Les categories UNSS se declinent au masculin et au feminin, et les competitions sont
+ * separees : "Minime Fille" n'est pas la meme categorie que "Minime Garcon". Le sexe n'est
+ * pas toujours renseigne (saisie manuelle, ancien import), on retombe alors sur la forme
+ * epicene plutot que d'imposer le masculin.
+ */
+const UNSS_CATEGORY_LABELS = {
+  BENJAMIN: { M: "Benjamin", F: "Benjamine", "": "Benjamin(e)" },
+  MINIME:   { M: "Minime Garcon", F: "Minime Fille", "": "Minime" },
+  CADET:    { M: "Cadet", F: "Cadette", "": "Cadet(te)" },
+  JUNIOR:   { M: "Junior", F: "Juniore", "": "Junior(e)" }
+};
+function unssCategoryLabel(value, sex) {
+  const formes = UNSS_CATEGORY_LABELS[value];
+  if (!formes) return (UNSS_CATEGORIES.find(c => c.value === value) || {}).label || value;
+  return formes[sex === "M" || sex === "F" ? sex : ""];
+}
+
+/** "Masculin", "M", "Garcon", "H" -> M ; "Feminin", "F", "Fille" -> F ; sinon inconnu. */
+function normalizeSex(value) {
+  const v = String(value || "").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  if (!v) return "";
+  if (v.startsWith("m") || v.startsWith("g") || v.startsWith("h")) return "M";
+  if (v.startsWith("f")) return "F";
+  return "";
+}
+
+function parseFrDate(value) {
+  const m = (value || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!m) return null;
+  const d = new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+  return isNaN(d.getTime()) ? null : d.getTime();
+}
+function formatFrDate(epochMillis) {
+  if (!epochMillis) return "";
+  const d = new Date(epochMillis);
+  return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+}
+
+// "all" ne s'atteint plus depuis ASLVH : le repertoire complet vit dans Classe > Liste eleve.
+let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
+let unssStudents = [];
+let unssGroups = [];
+let unssAppelGroupId = null;
+let unssAppelMembers = [];
+let unssAppelPresence = {};
+// `var` est volontaire ici : initUnssTab est appelable dès le premier affichage de la page.
+// Une déclaration `let` placée plus bas provoquait une zone morte temporelle lorsque l'onglet
+// ASLVH était restauré ou cliqué pendant l'initialisation asynchrone.
+var unssTabReady = false;
+
+async function initUnssTab() {
+  const asSchema = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_as_roster_version`);
+  if (!asSchema.ok || await asSchema.json() !== 2) {
+    document.getElementById("unssList").textContent="Mise à jour AS nécessaire : exécutez schema_as_roster.sql dans Supabase avant de gérer les groupes et appels.";
+    return;
+  }
+  if (!unssTabReady) {
+    document.getElementById("unssSubtabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".subtabbtn");
+      if (btn) showUnssTab(btn.dataset.unsstab);
+    });
+    unssTabReady = true;
+  }
+  await loadUnssStudents();
+  await loadUnssGroups();
+  await loadUnssSlots();
+  renderUnssTab();
+}
+
+async function showUnssTab(mode) {
+  unssMode = mode;
+  unssCibleRendu = "unssList";
+  viderAutreRendu("unssList");
+  unssAdmin = await estAdministrateur();
+  // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
+  unssPage = 1;
+  document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
+  document.getElementById("unssPanel").style.display = "none";
+  renderUnssTab();
+}
+
+async function loadUnssStudents() {
+  const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc,first_name.asc`);
+  unssStudents = res.ok ? res.rows : [];
+}
+
+let unssSlots = [];
+
+/**
+ * Creneaux AS : l'offre d'activites de l'association sportive, parmi laquelle l'eleve
+ * formule ses trois voeux. Distincte des groupes, qui sont les listes d'eleves reellement
+ * inscrits une fois les voeux traites.
+ */
+async function loadUnssSlots() {
+  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?deleted=eq.false&select=*&order=activity_name.asc`);
+  unssSlots = res.ok ? await res.json() : [];
+}
+
+const UNSS_SLOT_DAYS = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
+
+/**
+ * Menu deroulant des creneaux AS pour un voeu. [ancienLibelle] couvre les voeux saisis en
+ * texte libre avant ce module : plutot que de les perdre silencieusement, on les propose en
+ * tete de liste, signales comme ne correspondant a aucun creneau existant.
+ */
+function menuCreneaux(id, slotIdChoisi, ancienLibelle) {
+  const orphelin = !slotIdChoisi && ancienLibelle
+    ? `<option value="" selected>${unssText(ancienLibelle)} (ancien voeu, hors creneaux)</option>`
+    : "";
+  const vide = `<option value=""${!slotIdChoisi && !ancienLibelle ? " selected" : ""}>Aucun voeu</option>`;
+  const options = unssSlots.map(slot =>
+    `<option value="${slot.id}"${slot.id === slotIdChoisi ? " selected" : ""}>${unssText(unssSlotLabel(slot))}</option>`
+  ).join("");
+  if (unssSlots.length === 0) {
+    return `<select id="${id}" disabled><option>Aucun creneau AS. Creez-en dans l'onglet Creneaux AS.</option></select>`;
+  }
+  return `<select id="${id}">${orphelin}${vide}${options}</select>`;
+}
+
+/** Les intitules de creneau sont saisis a la main : ils repassent par un echappement HTML. */
+function unssText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function unssSlotLabel(slot) {
+  if (!slot) return "";
+  const horaire = [slot.start_time, slot.end_time].filter(Boolean).join("-");
+  return [slot.activity_name, capitaliseJour(slot.day_of_week), horaire, slot.location]
+    .filter(Boolean).join(" · ");
+}
+
+function capitaliseJour(jour) {
+  if (!jour) return "";
+  return jour.charAt(0) + jour.slice(1).toLowerCase();
+}
+
+async function loadUnssGroups() {
+  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc`);
+  unssGroups = res.ok ? await res.json() : [];
+}
+
+/**
+ * Decoupe une longue liste en pages numerotees.
+ *
+ * Mille quatre cents eleves affiches d'un bloc, c'est une page interminable ou l'on ne retrouve
+ * rien. On en montre cent a la fois.
+ */
+const TAILLE_PAGE_LISTE = 100;
+
+/**
+ * Boutons de navigation : les premieres et dernieres pages restent toujours accessibles, et une
+ * fenetre suit la page courante. Au-dela d'une dizaine de pages, tout afficher ferait une ligne
+ * de chiffres illisible.
+ */
+function paginationHtml(page, total, nom) {
+  if (total <= 1) return "";
+  const numeros = new Set([1, total]);
+  for (let n = page - 2; n <= page + 2; n++) if (n >= 1 && n <= total) numeros.add(n);
+  const tries = [...numeros].sort((a, b) => a - b);
+
+  let html = `<div class="pagination">`;
+  html += `<button class="secondary" data-${nom}-page="${page - 1}" ${page === 1 ? "disabled" : ""}>Precedent</button>`;
+  let precedent = 0;
+  tries.forEach(n => {
+    if (n - precedent > 1) html += `<span class="paginationEcart">…</span>`;
+    html += `<button class="${n === page ? "" : "secondary"}" data-${nom}-page="${n}">${n}</button>`;
+    precedent = n;
+  });
+  html += `<button class="secondary" data-${nom}-page="${page + 1}" ${page === total ? "disabled" : ""}>Suivant</button>`;
+  return html + `</div>`;
+}
+
+/** Rend cliquables les boutons produits par paginationHtml. */
+function wirePagination(wrap, nom, onPage) {
+  wrap.querySelectorAll(`[data-${nom}-page]`).forEach(btn => {
+    btn.addEventListener("click", () => {
+      const cible = parseInt(btn.dataset[nom + "Page"], 10);
+      if (!isNaN(cible)) onPage(cible);
+    });
+  });
+}
+
+/**
+ * Verse les eleves coches dans une classe.
+ *
+ * C'est une recopie, pas un deplacement : une classe garde ses propres eleves, ou vivent le
+ * niveau EPS, les evaluations et les dispenses. Le repertoire reste la source, la classe en
+ * prend une copie de travail.
+ *
+ * Les eleves deja presents dans la classe sont laisses de cote plutot que dupliques : on
+ * reconnait un eleve a son nom, son prenom et sa date de naissance, les trois seuls champs
+ * fiables a ce stade.
+ */
+async function ouvrirChoixClassePourEleves() {
+  if (selectionEleves.size === 0) return;
+  const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade,class_number&order=name.asc`);
+  if (!res.ok) { alert("Impossible de lire vos classes."); return; }
+  const classes = res.rows;
+  if (classes.length === 0) { alert("Aucune classe. Creez-en une d'abord dans Creation classe."); return; }
+
+  const choix = prompt(
+    `Dans quelle classe verser les ${selectionEleves.size} eleve(s) selectionne(s) ?\n\n`
+    + classes.map((c, i) => `${i + 1} - ${c.name}`).join("\n")
+    + `\n\nTapez le numero de la classe.`
+  );
+  if (choix === null) return;
+  const classe = classes[parseInt(choix, 10) - 1];
+  if (!classe) { alert("Numero de classe inconnu. Rien n'a ete ajoute."); return; }
+
+  const existantsRes = await apiFetchAll(
+    `${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${classe.id}&select=last_name,first_name,birth_date_epoch_millis`);
+  if (!existantsRes.ok) { alert("Impossible de lire les eleves de cette classe. Rien n'a ete ajoute."); return; }
+  const cle = e => [ (e.last_name || "").trim().toLowerCase(),
+                     (e.first_name || "").trim().toLowerCase(),
+                     e.birth_date_epoch_millis || "" ].join("|");
+  const deja = new Set(existantsRes.rows.map(cle));
+
+  const maintenant = new Date().toISOString();
+  const aVerser = unssStudents.filter(e => selectionEleves.has(e.id) && !deja.has(cle(e)));
+  const ignores = selectionEleves.size - aVerser.length;
+  if (aVerser.length === 0) {
+    alert(`Ces ${ignores} eleve(s) sont deja dans ${classe.name}. Rien n'a ete ajoute.`);
+    return;
+  }
+
+  const creation = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+    method: "POST",
+    body: JSON.stringify(aVerser.map(e => ({
+      id: crypto.randomUUID(), class_id: classe.id, user_id: session.user_id,
+      last_name: e.last_name, first_name: e.first_name, sex: e.sex || "",
+      birth_date_epoch_millis: e.birth_date_epoch_millis || null,
+      student_email: e.student_email || null, parent1_email: e.parent_email || null,
+      updated_at: maintenant, deleted: false
+    })))
+  });
+  if (!creation.ok) { alert("Ajout non confirme. Rien n'a ete ajoute."); return; }
+
+  selectionEleves.clear();
+  renderUnssTab();
+  alert(`${aVerser.length} eleve(s) ajoute(s) a ${classe.name}.`
+    + (ignores > 0 ? `\n${ignores} deja present(s), laisse(s) de cote.` : ""));
+}
+
+/**
+ * Colonnes de la Liste eleve, dans un ordre fixe.
+ *
+ * Un tableau plutot que des fiches : on vient y chercher tous les eleves d'une meme division,
+ * et comparer une colonne suppose qu'elle soit toujours au meme endroit.
+ */
+const COLONNES_ELEVE = [
+  { cle: "last_name", titre: "Nom", valeur: e => e.last_name || "" },
+  { cle: "first_name", titre: "Prenom", valeur: e => e.first_name || "" },
+  { cle: "birth", titre: "Naissance", valeur: e => e.birth_date_epoch_millis || 0,
+    texte: e => formatFrDate(e.birth_date_epoch_millis) },
+  { cle: "division", titre: "Division", valeur: e => e.division || "" },
+  { cle: "sex", titre: "Sexe", valeur: e => e.sex || "",
+    texte: e => ({ M: "Garcon", F: "Fille" })[e.sex] || "" },
+  { cle: "student_email", titre: "Mail eleve", valeur: e => e.student_email || "" },
+  { cle: "parent_email", titre: "Mail parent", valeur: e => e.parent_email || "" }
+];
+
+/** Colonne triee et sens du tri. La division en premier : c'est par elle qu'on regroupe. */
+let triEleve = { cle: "division", croissant: true };
+/** Eleves coches, conserves d'une page a l'autre : une selection ne doit pas s'evaporer. */
+let selectionEleves = new Set();
+
+function trierEleves(eleves) {
+  const colonne = COLONNES_ELEVE.find(c => c.cle === triEleve.cle) || COLONNES_ELEVE[0];
+  const sens = triEleve.croissant ? 1 : -1;
+  return [...eleves].sort((a, b) => {
+    const va = colonne.valeur(a), vb = colonne.valeur(b);
+    // Une division vide se range apres les autres, quel que soit le sens : elle n'est pas
+    // une division "petite", c'est une information manquante.
+    if (typeof va === "string" && typeof vb === "string") {
+      if (!va && vb) return 1;
+      if (va && !vb) return -1;
+      const c = va.localeCompare(vb, "fr", { numeric: true, sensitivity: "base" });
+      if (c !== 0) return c * sens;
+    } else if (va !== vb) {
+      return (va < vb ? -1 : 1) * sens;
+    }
+    // A valeur egale, l'ordre alphabetique evite qu'une ligne saute d'une page a l'autre.
+    return (a.last_name || "").localeCompare(b.last_name || "", "fr")
+      || (a.first_name || "").localeCompare(b.first_name || "", "fr");
+  });
+}
+
+function tableauElevesHtml(eleves) {
+  let html = `<div style="overflow-x:auto"><table class="eleveTable"><thead><tr>`;
+  html += `<th class="eleveCoche"><input type="checkbox" id="cocheToutesPages"></th>`;
+  COLONNES_ELEVE.forEach(c => {
+    const actif = triEleve.cle === c.cle;
+    html += `<th><button type="button" class="eleveTri${actif ? " actif" : ""}" data-tri="${c.cle}">`
+      + `${planningText(c.titre)}${actif ? (triEleve.croissant ? " \u25B2" : " \u25BC") : ""}</button></th>`;
+  });
+  html += `</tr></thead><tbody>`;
+  eleves.forEach(e => {
+    html += `<tr data-eleve="${e.id}"${selectionEleves.has(e.id) ? ' class="choisi"' : ""}>`
+      + `<td class="eleveCoche"><input type="checkbox" data-coche="${e.id}"${selectionEleves.has(e.id) ? " checked" : ""}></td>`
+      + COLONNES_ELEVE.map(c => `<td>${planningText(c.texte ? c.texte(e) : c.valeur(e))}</td>`).join("")
+      + `</tr>`;
+  });
+  return html + `</tbody></table></div>`;
+}
+
+/** Page affichee du repertoire. Repart a la premiere des que la liste change de nature. */
+let unssPage = 1;
+/** Connu avant le rendu : le tableau se construit d'un bloc, il ne peut pas attendre. */
+let unssAdmin = false;
+
+function renderUnssTab() {
+  if (unssMode === "slots") { renderUnssSlotsTab(); return; }
+  if (unssMode === "groups") { renderUnssGroupsTab(); return; }
+  if (unssMode === "appel") { renderUnssAppelTab(); return; }
+  const wrap = document.getElementById(unssCibleRendu);
+  if (!wrap) return;
+  // Liste eleve se lit en tableau : on y cherche une division entiere, pas une fiche.
+  // Licencies AS garde ses cartes, ou l'on consulte les voeux et la taille de maillot.
+  const enTableau = unssCibleRendu === "listeEleveList";
+  const brut = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
+  const rows = enTableau ? trierEleves(brut) : brut;
+  const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
+  // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
+  if (unssPage > totalPages) unssPage = totalPages;
+  const debutPage = (unssPage - 1) * TAILLE_PAGE_LISTE;
+  const rowsPage = rows.slice(debutPage, debutPage + TAILLE_PAGE_LISTE);
+  let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
+  // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
+  // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
+  if (unssAdmin) {
+    html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
+  }
+  // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
+  // verrait pas ce qu'on supprime, puisque les licencies sont justement ce qui est preserve.
+  if (unssAdmin && unssMode !== "licensed" && rows.length > 0) {
+    html += `<button class="secondary" id="unssClearBtn" style="margin-top:0">Supprimer toute la liste</button>`;
+  }
+  // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
+  if (unssAdmin || unssMode === "licensed") {
+    html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
+  }
+  // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
+  if (unssCibleRendu === "listeEleveList") {
+    html += `<button id="eleveVersClasseBtn" style="margin-top:0" ${selectionEleves.size ? "" : "disabled"}>`
+      + `Ajouter a une classe${selectionEleves.size ? ` (${selectionEleves.size})` : ""}</button>`;
+  }
+  html += `</div>`;
+
+  if (rows.length === 0) {
+    html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve de Classe > Liste eleve." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
+  } else {
+    html += `<div class="muted" style="margin-bottom:8px">`
+      + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)`
+      + (enTableau && selectionEleves.size ? ` \u00b7 ${selectionEleves.size} selectionne(s)` : "")
+      + `</div>`;
+    html += paginationHtml(unssPage, totalPages, "unss");
+    if (enTableau) {
+      html += tableauElevesHtml(rowsPage);
+    } else rowsPage.forEach(s => {
+      const wishes = [s.wish1, s.wish2, s.wish3].filter(Boolean).join(", ");
+      html += `<div class="card unssCard" data-edit="${s.id}">
+        <div>
+          <div><strong>${s.last_name} ${s.first_name}</strong></div>
+          <div class="muted">${[unssCategoryLabel(s.category, s.sex), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
+          ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
+          ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
+        </div>
+        ${unssAdmin ? `<button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>` : ""}
+      </div>`;
+    });
+    html += paginationHtml(unssPage, totalPages, "unss");
+  }
+  wrap.innerHTML = html;
+  wrap.querySelectorAll("[data-tri]").forEach(btn => btn.addEventListener("click", () => {
+    const cle = btn.dataset.tri;
+    // Recliquer la meme colonne inverse le sens ; changer de colonne repart du croissant.
+    triEleve = { cle, croissant: triEleve.cle === cle ? !triEleve.croissant : true };
+    unssPage = 1;
+    renderUnssTab();
+  }));
+  wrap.querySelectorAll("[data-coche]").forEach(box => box.addEventListener("change", () => {
+    if (box.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
+    renderUnssTab();
+  }));
+  const cocheTout = wrap.querySelector("#cocheToutesPages");
+  if (cocheTout) cocheTout.addEventListener("change", () => {
+    // Ne coche que la page affichee : cocher mille eleves d'un clic invisible serait piegeux.
+    wrap.querySelectorAll("[data-coche]").forEach(box => {
+      if (cocheTout.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
+    });
+    renderUnssTab();
+  });
+  const versClasse = wrap.querySelector("#eleveVersClasseBtn");
+  if (versClasse) versClasse.addEventListener("click", () => ouvrirChoixClassePourEleves());
+
+  wirePagination(wrap, "unss", page => {
+    unssPage = page;
+    renderUnssTab();
+    wrap.scrollIntoView({ block: "start" });
+  });
+
+  const addBtn = document.getElementById("unssAddBtn");
+  if (addBtn) addBtn.addEventListener("click", () => {
+    if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
+  });
+  const importBtn = document.getElementById("unssImportBtn");
+  if (importBtn) importBtn.addEventListener("click", () => unssFileInput().click());
+  const clearBtn = document.getElementById("unssClearBtn");
+  if (clearBtn) clearBtn.addEventListener("click", () => viderRepertoireAs());
+  wrap.querySelectorAll("[data-edit]").forEach(el => {
+    el.addEventListener("click", (e) => {
+      if (e.target.closest("[data-delete]")) return;
+      const student = unssStudents.find(s => s.id === el.dataset.edit);
+      if (student) openUnssStudentPanel(student, student.licensed);
+    });
+  });
+  wrap.querySelectorAll("[data-delete]").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${btn.dataset.delete}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      await loadUnssStudents();
+      renderUnssTab();
+    });
+  });
+}
+
+/**
+ * Les exports de Pronote/SIECLE sortent en Windows-1252, pas en UTF-8. Lus en UTF-8, les
+ * octets accentues deviennent U+FFFD : l'entete "Prenom" n'est alors plus reconnu et chaque
+ * ligne est rejetee faute de prenom (l'import annonce alors 0 eleve importe).
+ * On decode donc en UTF-8, et on retombe sur Windows-1252 des qu'un caractere est invalide.
+ */
+async function readCsvText(file) {
+  const buffer = await file.arrayBuffer();
+  const utf8 = new TextDecoder("utf-8").decode(buffer);
+  return utf8.includes("�") ? new TextDecoder("windows-1252").decode(buffer) : utf8;
+}
+
+let unssHiddenFileInput = null;
+function unssFileInput() {
+  if (unssHiddenFileInput) return unssHiddenFileInput;
+  const input = document.createElement("input");
+  input.type = "file"; input.accept = ".csv,text/csv"; input.style.display = "none";
+  input.addEventListener("change", async () => {
+    const file = input.files[0];
+    if (!file) return;
+    const text = await readCsvText(file);
+    await importUnssCsv(text, unssMode === "licensed");
+    input.value = "";
+  });
+  document.body.appendChild(input);
+  unssHiddenFileInput = input;
+  return input;
+}
+
+/**
+ * Vide le repertoire Eleve LVH apres un import rate ou un export de l'annee precedente.
+ *
+ * Deux categories sont preservees, parce que les supprimer detruirait un travail qui ne se
+ * refait pas depuis un CSV : les licencies AS (voeux, taille de maillot, emails saisis a la
+ * main) et les eleves deja inscrits dans un groupe. Un eleve inscrit mais non licencie
+ * viderait sinon la composition du groupe sans que rien ne le signale.
+ *
+ * La suppression est logique (deleted = true), comme celle d'un eleve isole : une vraie
+ * suppression SQL ne se propagerait pas, et l'app republierait ses copies locales a la
+ * prochaine synchro. Les lignes disparaissent partout, y compris sur Android.
+ */
+async function viderRepertoireAs() {
+  const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?deleted=eq.false&select=student_id`);
+  if (!membershipsRes.ok) { alert("Impossible de verifier les inscriptions aux groupes. Rien n'a ete supprime."); return; }
+  const inscrits = new Set((await membershipsRes.json()).map(m => m.student_id));
+
+  const aSupprimer = unssStudents.filter(s => !s.licensed && !inscrits.has(s.id));
+  const preserves = unssStudents.length - aSupprimer.length;
+  if (aSupprimer.length === 0) {
+    alert("Rien a supprimer : tous les eleves du repertoire sont licencies ou inscrits dans un groupe.");
+    return;
+  }
+  if (!confirm(
+    `Supprimer ${aSupprimer.length} eleve(s) du repertoire ?
+
+` +
+    `${preserves} eleve(s) sont conserves : les licencies AS et ceux deja inscrits dans un groupe.
+` +
+    `Les groupes eux-memes ne sont pas touches.
+
+Cette action est definitive.`
+  )) return;
+
+  const ids = aSupprimer.map(s => s.id);
+  const TAILLE_LOT = 200;
+  let supprimes = 0;
+  for (let i = 0; i < ids.length; i += TAILLE_LOT) {
+    const lot = ids.slice(i, i + TAILLE_LOT);
+    const res = await apiFetch(
+      `${SUPABASE_URL}/rest/v1/unss_students?id=in.(${lot.map(encodeURIComponent).join(",")})`,
+      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) }
+    );
+    if (!res.ok) {
+      await loadUnssStudents();
+      renderUnssTab();
+      alert(`${supprimes} eleve(s) supprime(s), puis l'operation s'est interrompue. Relancez pour terminer.`);
+      return;
+    }
+    supprimes += lot.length;
+  }
+  await loadUnssStudents();
+  renderUnssTab();
+  alert(`${supprimes} eleve(s) supprime(s). ${preserves} conserve(s) (licencies AS et inscrits en groupe).`);
+}
+
+/** Meme principe que le CSV Planning : intitules reconnus dans n'importe quel ordre. */
+async function importUnssCsv(csv, markLicensed) {
+  const lines = csv.split(/\r?\n/).filter(l => l.trim().length > 0);
+  if (lines.length === 0) return;
+  const delimiter = (lines[0].split(";").length > lines[0].split(",").length) ? ";" : ",";
+  // NFD separe la lettre de son accent, et on retire les accents : couvre tout l'alphabet
+  // francais au lieu de la liste ecrite a la main. Le BOM d'un CSV Excel est retire aussi,
+  // sinon la premiere colonne s'appellerait "﻿nom" et ne serait jamais reconnue.
+  const norm = (v) => v.replace(/^﻿/, "").trim().toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    // "Classe d'origine" et "Classe d’origine" designent la meme colonne : le tableur choisit
+    // l'apostrophe droite ou courbe selon l'humeur du logiciel qui a produit l'export.
+    .replace(/['’]/g, " ").replace(/\s+/g, " ").trim();
+  const ALIASES = {
+    nom: ["nom", "nom de famille", "lastname", "last name"],
+    prenom: ["prenom", "firstname", "first name"],
+    naissance: ["date de naissance", "date naissance", "naissance", "ddn", "ne le", "nee le"],
+    voeu1: ["voeu 1", "activite voeu 1", "activite 1", "voeu1"],
+    voeu2: ["voeu 2", "activite voeu 2", "activite 2", "voeu2"],
+    voeu3: ["voeu 3", "activite voeu 3", "activite 3", "voeu3"],
+    emailEleve: ["email eleve", "mail eleve", "email"],
+    emailParent: ["email parent", "mail parent", "emails parent", "emails parents"],
+    sexe: ["sexe", "sex", "genre", "civilite"],
+    // L'export d'etablissement nomme cette colonne de plusieurs facons selon le logiciel.
+    division: ["division", "classe", "classe origine", "classe d origine", "groupe classe", "div"]
+  };
+  const header = lines[0].split(delimiter).map(norm);
+  const idx = (key) => header.findIndex(h => ALIASES[key].includes(h));
+  const iNom = idx("nom"), iPrenom = idx("prenom"), iNaissance = idx("naissance");
+  const iVoeu1 = idx("voeu1"), iVoeu2 = idx("voeu2"), iVoeu3 = idx("voeu3");
+  const iEmailEleve = idx("emailEleve"), iEmailParent = idx("emailParent");
+  const iSexe = idx("sexe"), iDivision = idx("division");
+  const hasHeader = iNom >= 0 || iPrenom >= 0;
+  const dataLines = hasHeader ? lines.slice(1) : lines;
+  const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
+
+  const rows = [];
+  let ignorees = 0, entetesRepetees = 0;
+  for (const line of dataLines) {
+    const fields = line.split(delimiter).map(f => f.trim());
+    const lastName = hasHeader ? (fields[iNom] || "") : (fields[0] || "");
+    const firstName = hasHeader ? (fields[iPrenom] || "") : (fields[1] || "");
+    if (!lastName || !firstName) { ignorees++; continue; }
+    // Un export d'etablissement est parfois plusieurs extractions collees bout a bout : la
+    // ligne d'entete reapparait alors au milieu du fichier, et creerait un eleve "Nom Prenom".
+    if (ALIASES.nom.includes(norm(lastName)) && ALIASES.prenom.includes(norm(firstName))) {
+      entetesRepetees++; continue;
+    }
+    const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
+    rows.push({
+      id: crypto.randomUUID(), user_id: session.user_id,
+      last_name: lastName, first_name: firstName,
+      birth_date_epoch_millis: birthDate,
+      category: computeUnssCategory(birthDate, schoolYear),
+      sex: iSexe >= 0 ? normalizeSex(fields[iSexe]) : "",
+      division: iDivision >= 0 ? (fields[iDivision] || "").trim() : "",
+      licensed: markLicensed,
+      wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
+      wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
+      wish3: iVoeu3 >= 0 ? (fields[iVoeu3] || "") : "",
+      student_email: iEmailEleve >= 0 ? (fields[iEmailEleve] || null) : null,
+      parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null,
+      updated_at: new Date().toISOString(), deleted: false
+    });
+  }
+
+  // Un export d'etablissement fait facilement plus de mille lignes : une requete par eleve
+  // prendrait plusieurs minutes. On envoie par paquets, et on s'arrete au premier paquet
+  // refuse pour annoncer un total honnete plutot qu'un chiffre optimiste.
+  let count = 0;
+  const TAILLE_LOT = 200;
+  for (let i = 0; i < rows.length; i += TAILLE_LOT) {
+    const lot = rows.slice(i, i + TAILLE_LOT);
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+      method: "POST", body: JSON.stringify(lot)
+    });
+    if (!res.ok) {
+      await loadUnssStudents();
+      renderUnssTab();
+      alert(`${count} eleve(s) importe(s), puis l'envoi s'est interrompu. Attention : reimporter le meme fichier creerait un doublon pour ces ${count} eleves. Supprimez-les d'abord, ou retirez-les du fichier avant de relancer.`);
+      return;
+    }
+    count += lot.length;
+  }
+  if (ignorees > 0) console.warn(`Import AS : ${ignorees} ligne(s) sans nom ou prenom ignoree(s).`);
+  if (entetesRepetees > 0) console.warn(`Import AS : ${entetesRepetees} ligne(s) d'entete rencontree(s) au milieu du fichier, ignoree(s).`);
+  await loadUnssStudents();
+  renderUnssTab();
+  alert(`${count} eleve(s) importe(s).`);
+}
+
+// ---- UNSS > Creneaux AS : l'offre d'activites parmi laquelle se formulent les voeux ----
+
+function renderUnssSlotsTab() {
+  const wrap = document.getElementById("unssList");
+  let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">
+    <button id="unssSlotAddBtn" style="margin-top:0">Ajouter un creneau</button></div>`;
+
+  if (unssSlots.length === 0) {
+    html += `<div class="muted">Aucun creneau AS. Creez-en un : c'est parmi ces creneaux que
+      les eleves formulent leurs trois voeux au moment de leur licence.</div>`;
+  } else {
+    html += unssSlots.map(slot => {
+      const detail = [capitaliseJour(slot.day_of_week),
+        [slot.start_time, slot.end_time].filter(Boolean).join(" - "),
+        slot.location].filter(Boolean).join(" · ");
+      const demandes = compterVoeux(slot.id);
+      const places = slot.max_places ? ` / ${slot.max_places} places` : "";
+      return `<div class="card unssCard" data-slot="${slot.id}">
+        <div>
+          <div><strong>${unssText(slot.activity_name || "Creneau sans nom")}</strong></div>
+          <div class="muted">${unssText(detail) || "Horaire non renseigne"}</div>
+          <div class="muted" style="font-size:12px">${demandes} voeu(x)${places}</div>
+        </div>
+        <button class="danger" data-slot-delete="${slot.id}" style="margin-top:0">Supprimer</button>
+      </div>`;
+    }).join("");
+  }
+  wrap.innerHTML = html;
+
+  document.getElementById("unssSlotAddBtn").addEventListener("click", () => openUnssSlotPanel(null));
+  wrap.querySelectorAll("[data-slot]").forEach(el => {
+    el.addEventListener("click", () => openUnssSlotPanel(unssSlots.find(x => x.id === el.dataset.slot)));
+  });
+  wrap.querySelectorAll("[data-slot-delete]").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await supprimerCreneau(btn.dataset.slotDelete);
+    });
+  });
+}
+
+/** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
+function compterVoeux(slotId) {
+  return unssStudents.filter(s =>
+    s.wish1_slot_id === slotId || s.wish2_slot_id === slotId || s.wish3_slot_id === slotId).length;
+}
+
+/**
+ * Supprimer un creneau demande par des eleves effacerait leur voeu sans que rien ne le
+ * signale : on annonce le nombre concerne avant de confirmer. Les voeux gardent leur
+ * intitule lisible (wish1/2/3), seule la reference au creneau disparait.
+ */
+async function supprimerCreneau(slotId) {
+  const demandes = compterVoeux(slotId);
+  const slot = unssSlots.find(x => x.id === slotId);
+  const avertissement = demandes > 0
+    ? `
+
+Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu restera lisible mais ne pointera plus sur un creneau.`
+    : "";
+  if (!confirm(`Supprimer le creneau "${slot ? slot.activity_name : ""}" ?${avertissement}`)) return;
+  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slotId)}`, {
+    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+  });
+  if (!res.ok) { alert("Creneau non supprime. Verifiez votre connexion."); return; }
+  await loadUnssSlots();
+  renderUnssTab();
+}
+
+function openUnssSlotPanel(slot) {
+  const panel = document.getElementById("unssPanel");
+  const isNew = !slot;
+  panel.innerHTML = `
+    <h2>${isNew ? "Nouveau creneau AS" : "Modifier le creneau"}</h2>
+    <label for="unssSlotActivity">Activite</label>
+    <input type="text" id="unssSlotActivity" value="${slot ? unssText(slot.activity_name) : ""}" placeholder="Badminton, Cross, Futsal...">
+    <label for="unssSlotDay">Jour</label>
+    <select id="unssSlotDay">
+      <option value="">Non renseigne</option>
+      ${UNSS_SLOT_DAYS.map(j => `<option value="${j}"${slot && slot.day_of_week === j ? " selected" : ""}>${capitaliseJour(j)}</option>`).join("")}
+    </select>
+    <label for="unssSlotStart">Heure de debut</label>
+    <input type="time" id="unssSlotStart" value="${slot ? slot.start_time || "" : ""}">
+    <label for="unssSlotEnd">Heure de fin</label>
+    <input type="time" id="unssSlotEnd" value="${slot ? slot.end_time || "" : ""}">
+    <label for="unssSlotLocation">Lieu</label>
+    <input type="text" id="unssSlotLocation" value="${slot ? unssText(slot.location) : ""}" placeholder="Gymnase, stade...">
+    <label for="unssSlotPlaces">Places (facultatif)</label>
+    <input type="number" id="unssSlotPlaces" min="1" value="${slot && slot.max_places ? slot.max_places : ""}">
+    <label for="unssSlotComment">Commentaire</label>
+    <input type="text" id="unssSlotComment" value="${slot ? unssText(slot.comment) : ""}">
+    <button id="unssSlotSaveBtn">Enregistrer</button>
+    <button class="secondary" id="unssSlotCancelBtn">Annuler</button>
+    <div class="error" id="unssSlotError"></div>`;
+  panel.style.display = "block";
+
+  document.getElementById("unssSlotCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssSlotSaveBtn").addEventListener("click", async () => {
+    const activite = document.getElementById("unssSlotActivity").value.trim();
+    if (!activite) { document.getElementById("unssSlotError").textContent = "L'activite est obligatoire."; return; }
+    const places = parseInt(document.getElementById("unssSlotPlaces").value, 10);
+    const body = {
+      activity_name: activite,
+      day_of_week: document.getElementById("unssSlotDay").value,
+      start_time: document.getElementById("unssSlotStart").value,
+      end_time: document.getElementById("unssSlotEnd").value,
+      location: document.getElementById("unssSlotLocation").value.trim(),
+      max_places: Number.isFinite(places) && places > 0 ? places : null,
+      comment: document.getElementById("unssSlotComment").value.trim(),
+      updated_at: new Date().toISOString()
+    };
+    let res;
+    if (isNew) {
+      // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
+      res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots`, {
+        method: "POST",
+        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, deleted: false, ...body })
+      });
+    } else {
+      res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slot.id)}`, {
+        method: "PATCH", body: JSON.stringify(body)
+      });
+    }
+    if (!res.ok) { document.getElementById("unssSlotError").textContent = "Creneau non enregistre. Verifiez votre connexion."; return; }
+    panel.style.display = "none";
+    await loadUnssSlots();
+    renderUnssTab();
+  });
+}
+
+/** Etape 1 pour licencier : on coche l'eleve deja present dans le repertoire Eleve LVH. */
+/** Comparaison tolerante : sans accent, sans casse, pour chercher "Benoit" et trouver "Benoit". */
+function chaineRecherche(valeur) {
+  return String(valeur || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+}
+
+/**
+ * Classe les eleves par pertinence : un nom qui commence par la recherche passe avant un nom
+ * qui la contient au milieu. Sur un repertoire d'etablissement de plus de mille eleves, une
+ * simple liste alphabetique obligerait a faire defiler pour rien.
+ */
+function chercherEleves(eleves, recherche) {
+  const q = chaineRecherche(recherche);
+  if (!q) return eleves;
+  const mots = q.split(/\s+/).filter(Boolean);
+  return eleves
+    .map(s => {
+      const nom = chaineRecherche(s.last_name), prenom = chaineRecherche(s.first_name);
+      // Chaque mot tape doit se retrouver quelque part : "abat nil" trouve ABAT Nil.
+      if (!mots.every(m => nom.includes(m) || prenom.includes(m))) return null;
+      const debut = mots.some(m => nom.startsWith(m) || prenom.startsWith(m));
+      return { eleve: s, score: debut ? 0 : 1 };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.score - b.score ||
+      a.eleve.last_name.localeCompare(b.eleve.last_name, "fr") ||
+      a.eleve.first_name.localeCompare(b.eleve.first_name, "fr"))
+    .map(r => r.eleve);
+}
+
+function openUnssPickPanel() {
+  const panel = document.getElementById("unssPanel");
+  const candidates = unssStudents.filter(s => !s.licensed);
+  panel.innerHTML = `<h2>Choisir un eleve a licencier</h2>` +
+    (candidates.length === 0
+      ? `<div class="muted">Tous les eleves du repertoire sont deja licencies, ou le repertoire Eleve LVH est vide. Importez-le d'abord dans cet onglet.</div>`
+      : `<input type="search" id="unssPickSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+         <div class="muted" id="unssPickCount" style="margin:6px 0"></div>
+         <div id="unssPickResults"></div>`
+    ) +
+    `<button class="secondary" id="unssPickCancel" style="margin-top:14px">Annuler</button>`;
+  panel.style.display = "block";
+
+  const resultats = document.getElementById("unssPickResults");
+  if (resultats) {
+    const champ = document.getElementById("unssPickSearch");
+    const compteur = document.getElementById("unssPickCount");
+    // Au-dela de cette limite on n'affiche rien tant que rien n'est tape : peindre un millier
+    // de cartes fige la page, et une liste aussi longue ne se parcourt pas a l'oeil.
+    const LIMITE_AFFICHAGE = 50;
+    const afficher = () => {
+      const recherche = champ.value.trim();
+      const trouves = chercherEleves(candidates, recherche);
+      if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
+        compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+        resultats.innerHTML = "";
+        return;
+      }
+      const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
+      compteur.textContent = trouves.length === 0
+        ? "Aucun eleve ne correspond."
+        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+      resultats.innerHTML = affiches.map(s =>
+        `<div class="card unssPick" data-pick="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
+      ).join("");
+      resultats.querySelectorAll("[data-pick]").forEach(el => {
+        el.addEventListener("click", () => {
+          openUnssStudentPanel(unssStudents.find(s => s.id === el.dataset.pick), true);
+        });
+      });
+    };
+    champ.addEventListener("input", afficher);
+    afficher();
+    champ.focus();
+  }
+  document.getElementById("unssPickCancel").addEventListener("click", () => panel.style.display = "none");
+}
+
+/** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
+function openUnssStudentPanel(student, licensing) {
+  const panel = document.getElementById("unssPanel");
+  const isNew = !student;
+  const category = student ? student.category : "MINIME";
+  panel.innerHTML = `
+    <h2>${licensing ? "Licencier " + (student.first_name || "") : (isNew ? "Nouvel eleve" : "Modifier l'eleve")}</h2>
+    <label for="unssLastName">Nom</label>
+    <input type="text" id="unssLastName" value="${student ? student.last_name : ""}">
+    <label for="unssFirstName">Prenom</label>
+    <input type="text" id="unssFirstName" value="${student ? student.first_name : ""}">
+    <label for="unssDivision">Division (classe d'origine)</label>
+    <input type="text" id="unssDivision" placeholder="ex : 2.1, 6e3" value="${student ? (student.division || "") : ""}">
+    <label for="unssBirth">Date de naissance (JJ/MM/AAAA)</label>
+    <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
+    <label for="unssSex">Sexe</label>
+    <select id="unssSex">
+      <option value=""${!student || !student.sex ? " selected" : ""}>Non renseigne</option>
+      <option value="M"${student && student.sex === "M" ? " selected" : ""}>Garcon</option>
+      <option value="F"${student && student.sex === "F" ? " selected" : ""}>Fille</option>
+    </select>
+    <label for="unssCategory">Categorie</label>
+    <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${unssCategoryLabel(c.value, student ? student.sex : "")}</option>`).join("")}</select>
+    ${licensing || (student && student.licensed) ? `
+      ${[1, 2, 3].map(n => `
+        <label for="unssWish${n}">Voeu ${n}</label>
+        ${menuCreneaux(`unssWish${n}`, student ? student[`wish${n}_slot_id`] : null, student ? student[`wish${n}`] : "")}
+      `).join("")}
+      <label for="unssJersey">Taille maillot</label>
+      <input type="text" id="unssJersey" value="${student ? student.jersey_size || "" : ""}">
+      <label for="unssEmailEleve">Email eleve</label>
+      <input type="text" id="unssEmailEleve" value="${student ? student.student_email || "" : ""}">
+      <label for="unssEmailParent">Email parent</label>
+      <input type="text" id="unssEmailParent" value="${student ? student.parent_email || "" : ""}">
+    ` : ""}
+    <button id="unssSaveBtn">Enregistrer</button>
+    <button class="secondary" id="unssCancelBtn">Annuler</button>
+    <div class="error" id="unssError"></div>`;
+  panel.style.display = "block";
+
+  document.getElementById("unssBirth").addEventListener("change", () => {
+    if (!isNew) return;
+    const birth = parseFrDate(document.getElementById("unssBirth").value);
+    const schoolYear = (document.getElementById("schoolYear") || {}).value || "2026-2027";
+    document.getElementById("unssCategory").value = computeUnssCategory(birth, schoolYear);
+  });
+  document.getElementById("unssSex").addEventListener("change", () => {
+    // Les intitules de categorie s'accordent au sexe : on les reecrit sans perdre la selection.
+    const select = document.getElementById("unssCategory");
+    const choisie = select.value, sexe = document.getElementById("unssSex").value;
+    select.innerHTML = UNSS_CATEGORIES
+      .map(c => `<option value="${c.value}"${c.value === choisie ? " selected" : ""}>${unssCategoryLabel(c.value, sexe)}</option>`)
+      .join("");
+  });
+  document.getElementById("unssCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssSaveBtn").addEventListener("click", async () => {
+    const lastName = document.getElementById("unssLastName").value.trim();
+    const firstName = document.getElementById("unssFirstName").value.trim();
+    if (!lastName || !firstName) { document.getElementById("unssError").textContent = "Nom et prenom obligatoires."; return; }
+    const birth = parseFrDate(document.getElementById("unssBirth").value);
+    const body = {
+      last_name: lastName, first_name: firstName, birth_date_epoch_millis: birth,
+      category: document.getElementById("unssCategory").value,
+      sex: document.getElementById("unssSex").value,
+      division: document.getElementById("unssDivision").value.trim(),
+      updated_at: new Date().toISOString()
+    };
+    const wishField = document.getElementById("unssWish1");
+    if (wishField) {
+      body.licensed = true;
+      // On enregistre la reference au creneau et son intitule lisible : l'intitule survit a
+      // la suppression du creneau, et reste affichable pour les voeux saisis avant ce module.
+      for (const n of [1, 2, 3]) {
+        const slotId = document.getElementById(`unssWish${n}`).value;
+        const slot = unssSlots.find(x => x.id === slotId);
+        body[`wish${n}_slot_id`] = slotId || null;
+        body[`wish${n}`] = slot ? unssSlotLabel(slot) : "";
+      }
+      body.jersey_size = document.getElementById("unssJersey").value;
+      body.student_email = document.getElementById("unssEmailEleve").value || null;
+      body.parent_email = document.getElementById("unssEmailParent").value || null;
+    }
+    if (isNew) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+        method: "POST",
+        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body })
+      });
+    } else {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${student.id}`, { method: "PATCH", body: JSON.stringify(body) });
+    }
+    panel.style.display = "none";
+    await loadUnssStudents();
+    renderUnssTab();
+  });
+}
+
+// ---- UNSS > Groupe : liste des groupes, detail (membres + historique des seances) ----
+
+function renderUnssGroupsTab() {
+  const wrap = document.getElementById("unssList");
+  let html = `<div style="display:flex; justify-content:flex-end; margin-bottom:10px"><button id="unssNewGroupBtn" style="margin-top:0">Nouveau groupe</button></div>`;
+  if (unssGroups.length === 0) {
+    html += `<div class="muted">Aucun groupe UNSS. Touchez "Nouveau groupe" pour en creer un (ex : Escalade, mercredi 13h-15h).</div>`;
+  } else {
+    unssGroups.forEach(g => {
+      const schedule = [g.day_of_week, g.start_time, g.end_time].filter(Boolean).join(" · ");
+      html += `<div class="card unssPick" data-group="${g.id}" style="margin-top:8px">
+        <strong>${g.activity_name}</strong>
+        <div class="muted">${schedule}${g.responsible_teacher ? " · Responsable : " + g.responsible_teacher : ""}</div>
+      </div>`;
+    });
+  }
+  wrap.innerHTML = html;
+  document.getElementById("unssNewGroupBtn").addEventListener("click", () => openUnssGroupEditPanel(null));
+  wrap.querySelectorAll("[data-group]").forEach(el => {
+    el.addEventListener("click", () => openUnssGroupDetailPanel(unssGroups.find(g => g.id === el.dataset.group)));
+  });
+}
+
+function openUnssGroupEditPanel(group) {
+  const panel = document.getElementById("unssPanel");
+  panel.innerHTML = `
+    <h2>${group ? "Modifier le groupe" : "Nouveau groupe UNSS"}</h2>
+    <label for="unssGroupActivity">Activite (ex : Escalade)</label>
+    <input type="text" id="unssGroupActivity" value="${group ? group.activity_name : ""}">
+    <label for="unssGroupDay">Jour</label>
+    <input type="text" id="unssGroupDay" value="${group ? group.day_of_week : ""}">
+    <label for="unssGroupStart">Heure de debut</label>
+    <input type="text" id="unssGroupStart" value="${group ? group.start_time : ""}">
+    <label for="unssGroupEnd">Heure de fin</label>
+    <input type="text" id="unssGroupEnd" value="${group ? group.end_time : ""}">
+    <label for="unssGroupResp">Professeur responsable</label>
+    <input type="text" id="unssGroupResp" value="${group ? group.responsible_teacher : ""}">
+    <button id="unssGroupSaveBtn">${group ? "Enregistrer" : "Creer"}</button>
+    <button class="secondary" id="unssGroupCancelBtn">Annuler</button>`;
+  panel.style.display = "block";
+  document.getElementById("unssGroupCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssGroupSaveBtn").addEventListener("click", async () => {
+    const activityName = document.getElementById("unssGroupActivity").value.trim();
+    if (!activityName) return;
+    const body = {
+      activity_name: activityName,
+      day_of_week: document.getElementById("unssGroupDay").value.trim(),
+      start_time: document.getElementById("unssGroupStart").value.trim(),
+      end_time: document.getElementById("unssGroupEnd").value.trim(),
+      responsible_teacher: document.getElementById("unssGroupResp").value.trim(),
+      updated_at: new Date().toISOString()
+    };
+    if (group) {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, { method: "PATCH", body: JSON.stringify(body) });
+    } else {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups`, {
+        method: "POST",
+        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, active: true, deleted: false, ...body })
+      });
+    }
+    panel.style.display = "none";
+    await loadUnssGroups();
+    renderUnssTab();
+  });
+}
+
+async function openUnssGroupDetailPanel(group) {
+  const panel = document.getElementById("unssPanel");
+  panel.innerHTML = `<h2>${group.activity_name}</h2><div class="muted">Chargement...</div>`;
+  panel.style.display = "block";
+
+  const [membershipsRes, sessionsRes] = await Promise.all([
+    apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${group.id}&deleted=eq.false&select=*`),
+    apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions?group_id=eq.${group.id}&select=*&order=date_epoch_millis.desc`)
+  ]);
+  const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
+  const sessions = sessionsRes.ok ? await sessionsRes.json() : [];
+  const studentIds = memberships.map(m => m.student_id);
+  let members = [];
+  if (studentIds.length > 0) {
+    const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+    members = studentsRes.ok ? await studentsRes.json() : [];
+  }
+
+  const schedule = [group.day_of_week, group.start_time, group.end_time].filter(Boolean).join(" · ");
+  panel.innerHTML = `
+    <h2>${group.activity_name}</h2>
+    <div class="muted">${schedule}${group.responsible_teacher ? " · Responsable : " + group.responsible_teacher : ""}</div>
+    <h2 style="margin-top:16px; font-size:15px">Membres (${members.length})</h2>
+    <div id="unssMembersList"></div>
+    <button class="secondary" id="unssAddMemberBtn" style="margin-top:8px">+ Ajouter un membre</button>
+    <h2 style="margin-top:16px; font-size:15px">Historique des seances (${sessions.length})</h2>
+    <div class="muted">${sessions.length === 0 ? "Aucune seance." : sessions.map(s => new Date(s.date_epoch_millis).toLocaleDateString("fr-FR") + (s.label ? " — " + s.label : "")).join("<br>")}</div>
+    <button id="unssGroupEditBtn" style="margin-top:14px">Modifier</button>
+    <button class="secondary" id="unssGroupCloseBtn">Fermer</button>
+    <button class="danger" id="unssGroupDeleteBtn">Supprimer le groupe</button>`;
+
+  const membersListEl = document.getElementById("unssMembersList");
+  membersListEl.innerHTML = members.length === 0
+    ? `<div class="muted">Aucun membre. Ajoutez-en un.</div>`
+    : members.map(s => `<div class="unssCard" style="padding:6px 0">
+        <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
+        <div style="display:flex; gap:6px">
+          <button class="secondary" data-member-stats="${s.id}" style="margin-top:0">Statistiques</button>
+          <button class="danger" data-remove-member="${s.id}" style="margin-top:0">Retirer</button>
+        </div>
+      </div>`).join("");
+  membersListEl.querySelectorAll("[data-member-stats]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const student = members.find(m => m.id === btn.dataset.memberStats);
+      openUnssStudentStats(group, student, sessions);
+    });
+  });
+  membersListEl.querySelectorAll("[data-remove-member]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const membership = memberships.find(m => m.student_id === btn.dataset.removeMember);
+      if (membership) {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?id=eq.${membership.id}`, {
+          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+        });
+      }
+      openUnssGroupDetailPanel(group);
+    });
+  });
+  document.getElementById("unssAddMemberBtn").addEventListener("click", () => openUnssAddMemberPanel(group, members.map(m => m.id)));
+  document.getElementById("unssGroupEditBtn").addEventListener("click", () => openUnssGroupEditPanel(group));
+  document.getElementById("unssGroupCloseBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssGroupDeleteBtn").addEventListener("click", async () => {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, {
+      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+    });
+    panel.style.display = "none";
+    await loadUnssGroups();
+    renderUnssTab();
+  });
+}
+
+async function openUnssAddMemberPanel(group, excludeIds) {
+  const panel = document.getElementById("unssPanel");
+  panel.innerHTML = `<h2>Ajouter un membre</h2><div class="muted">Chargement...</div>`;
+  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc`);
+  const students = res.ok ? await res.json() : [];
+  const candidates = students.filter(s => !excludeIds.includes(s.id));
+  panel.innerHTML = `<h2>Ajouter un membre</h2>` +
+    (candidates.length === 0
+      ? `<div class="muted">Aucun élève disponible dans Élèves LVH / Licenciés AS. Ajoutez les élèves au répertoire AS.</div>`
+      : `<input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+         <div class="muted" id="unssMemberCount" style="margin:6px 0"></div>
+         <div id="unssMemberResults"></div>`
+    ) +
+    `<button class="secondary" id="unssAddMemberCancel" style="margin-top:14px">Fermer</button>`;
+
+  const zoneMembres = document.getElementById("unssMemberResults");
+  if (zoneMembres) {
+    const champ = document.getElementById("unssMemberSearch");
+    const compteur = document.getElementById("unssMemberCount");
+    const LIMITE_AFFICHAGE = 50;
+    const afficher = () => {
+      const recherche = champ.value.trim();
+      const trouves = chercherEleves(candidates, recherche);
+      if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
+        compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+        zoneMembres.innerHTML = "";
+        return;
+      }
+      const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
+      compteur.textContent = trouves.length === 0
+        ? "Aucun eleve ne correspond."
+        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+      zoneMembres.innerHTML = affiches.map(s =>
+        `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
+      ).join("");
+      zoneMembres.querySelectorAll("[data-add-member]").forEach(el => {
+        el.addEventListener("click", async () => {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships`, {
+            method: "POST",
+            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id, student_id: el.dataset.addMember, deleted: false })
+          });
+          openUnssGroupDetailPanel(group);
+        });
+      });
+    };
+    champ.addEventListener("input", afficher);
+    afficher();
+    champ.focus();
+  }
+  document.getElementById("unssAddMemberCancel").addEventListener("click", () => openUnssGroupDetailPanel(group));
+}
+
+// ---- UNSS > Appel : choisir un groupe, cocher present/absent, enregistrer une seance ----
+
+function renderUnssAppelTab() {
+  const wrap = document.getElementById("unssList");
+  let html = `<label for="unssAppelGroupSelect">Groupe</label>
+    <select id="unssAppelGroupSelect">
+      <option value="">Choisir...</option>
+      ${unssGroups.map(g => `<option value="${g.id}"${g.id === unssAppelGroupId ? " selected" : ""}>${g.activity_name}</option>`).join("")}
+    </select>
+    <div id="unssAppelBody" style="margin-top:14px"></div>`;
+  wrap.innerHTML = html;
+  document.getElementById("unssAppelGroupSelect").addEventListener("change", async (e) => {
+    unssAppelGroupId = e.target.value || null;
+    await loadUnssAppelMembers();
+    renderUnssAppelBody();
+  });
+  if (unssAppelGroupId) renderUnssAppelBody();
+}
+
+async function loadUnssAppelMembers() {
+  unssAppelMembers = [];
+  unssAppelPresence = {};
+  if (!unssAppelGroupId) return;
+  const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${unssAppelGroupId}&deleted=eq.false&select=*`);
+  const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
+  const studentIds = memberships.map(m => m.student_id);
+  if (studentIds.length === 0) return;
+  const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
+  unssAppelMembers = studentsRes.ok ? await studentsRes.json() : [];
+  unssAppelMembers.forEach(s => { unssAppelPresence[s.id] = true; });
+}
+
+function renderUnssAppelBody() {
+  const body = document.getElementById("unssAppelBody");
+  if (!unssAppelGroupId) { body.innerHTML = ""; return; }
+  if (unssAppelMembers.length === 0) {
+    body.innerHTML = `<div class="muted">Ce groupe n'a aucun membre. Ajoutez-en depuis l'onglet Groupe.</div>`;
+    return;
+  }
+  const todayLabel = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  body.innerHTML = `<div class="muted" style="margin-bottom:10px">Appel du ${todayLabel}</div>` +
+    unssAppelMembers.map(s => `
+      <div class="unssCard" style="padding:8px 0">
+        <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
+        <div>
+          <button data-present="${s.id}" style="margin-top:0; ${unssAppelPresence[s.id] ? "" : "background:var(--surface); color:var(--text); border:1px solid var(--border)"}">Present</button>
+          <button data-absent="${s.id}" class="${unssAppelPresence[s.id] ? "secondary" : "danger"}" style="margin-top:0">Absent</button>
+        </div>
+      </div>`).join("") +
+    `<button id="unssAppelSaveBtn" style="margin-top:14px; width:100%">Enregistrer l'appel</button>
+     <div class="ok" id="unssAppelOk"></div>`;
+  body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(); }));
+  body.querySelectorAll("[data-absent]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.absent] = false; renderUnssAppelBody(); }));
+  document.getElementById("unssAppelSaveBtn").addEventListener("click", async () => {
+    const sessionId = crypto.randomUUID();
+    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions`, {
+      method: "POST",
+      body: JSON.stringify({ id: sessionId, user_id: session.user_id, group_id: unssAppelGroupId, date_epoch_millis: Date.now(), label: "" })
+    });
+    const rows = unssAppelMembers.map(s => ({
+      id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
+      student_id: s.id, present: !!unssAppelPresence[s.id]
+    }));
+    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance`, { method: "POST", body: JSON.stringify(rows) });
+    document.getElementById("unssAppelOk").textContent = "Appel enregistre.";
+  });
+}
+
+// ---- Statistiques UNSS d'un eleve (miroir de StudentUnssStatsScreen.kt) ----
+// Seances du groupe, presences, absences, taux, puis l'historique date par date.
+// Une seance sans ligne d'appel pour cet eleve compte comme une absence, comme dans l'app.
+
+async function openUnssStudentStats(group, student, sessions) {
+  const panel = document.getElementById("unssPanel");
+  panel.style.display = "block";
+  panel.innerHTML = '<div class="muted">Chargement des statistiques...</div>';
+
+  const sessionIds = sessions.map(s => s.id);
+  let attendance = [];
+  if (sessionIds.length) {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance?student_id=eq.${student.id}&session_id=in.(${sessionIds.join(",")})&select=*`);
+    attendance = res.ok ? await res.json() : [];
+  }
+
+  const presenceBySession = {};
+  attendance.forEach(a => { presenceBySession[a.session_id] = !!a.present; });
+
+  const total = sessions.length;
+  const present = sessions.filter(s => presenceBySession[s.id]).length;
+  const absent = total - present;
+  const rate = total === 0 ? 0 : Math.round((present / total) * 100);
+
+  const ordered = sessions.slice().sort((a, b) => b.date_epoch_millis - a.date_epoch_millis);
+  const history = total === 0
+    ? '<div class="muted">Aucune seance enregistree pour ce groupe.</div>'
+    : ordered.map(s => {
+        const ok = presenceBySession[s.id];
+        const date = new Date(s.date_epoch_millis).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+        return `<div class="top" style="padding:7px 0; border-bottom:1px solid var(--border)">
+          <div>${date}${s.label ? ` <span class="muted">— ${s.label}</span>` : ""}</div>
+          <strong style="color:${ok ? "var(--primary)" : "var(--danger)"}">${ok ? "Present" : "Absent"}</strong>
+        </div>`;
+      }).join("");
+
+  const stat = (label, value) =>
+    `<div style="text-align:center; flex:1"><div style="font-size:24px; font-weight:700">${value}</div><div class="muted">${label}</div></div>`;
+
+  panel.innerHTML = `
+    <div class="top">
+      <h2 style="margin:0">${student.last_name.toUpperCase()} ${student.first_name}</h2>
+      <button class="secondary" id="closeStudentStats" style="margin-top:0">Fermer</button>
+    </div>
+    <div class="muted">${group.activity_name}</div>
+    <div class="card" style="display:flex; gap:10px">
+      ${stat("Seances", total)}${stat("Present", present)}${stat("Absent", absent)}${stat("Taux", rate + " %")}
+    </div>
+    <h2 style="margin-top:16px; font-size:15px">Historique</h2>
+    ${history}`;
+
+  document.getElementById("closeStudentStats").onclick = () => openUnssGroupDetailPanel(group);
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}

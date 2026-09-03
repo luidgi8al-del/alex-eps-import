@@ -1,0 +1,280 @@
+/*
+ * Feuille de style du site EPS.
+ *
+ * Sortie d'index.html telle quelle. home-navigation.css reste a part : il ne porte que
+ * l'accueil et la barre d'onglets, et vivait deja hors du fichier.
+ */
+
+:root {
+  --primary: #1B4332;
+  --primary-light: #2D6A4F;
+  --accent-container: #B7E4C7;
+  --accent-text: #04240F;
+  --bg: #FAFAF7;
+  --surface: #FFFFFF;
+  --text: #14181A;
+  --text-secondary: #6B7280;
+  --border: #E5E7EB;
+  --danger: #B3261E;
+}
+* { box-sizing: border-box; }
+body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; }
+.header { background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:14px 24px; flex-wrap:wrap; gap:10px; }
+.header .brand { font-weight:700; font-size:16px; white-space:nowrap; }
+.tabbar { display:flex; gap:4px; overflow-x:auto; }
+.tabbtn { background:none; border:none; color:rgba(255,255,255,0.75); padding:9px 16px; font-size:13px; font-weight:600; white-space:nowrap; border-radius:999px; cursor:pointer; }
+.tabbtn:hover { color:#fff; }
+.tabbtn.active { background:#fff; color:var(--primary); }
+.headerRight { display:flex; align-items:center; gap:14px; }
+.container { max-width: 1180px; margin: 0 auto; padding: 24px 32px 60px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+h2 { font-size: 16px; margin-top: 0; margin-bottom: 14px; color:var(--text); }
+.sub { color:var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
+label { display:block; font-size: 13px; color:var(--text-secondary); font-weight:600; margin: 12px 0 5px; }
+input, select { width:100%; box-sizing:border-box; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:14px; }
+input:focus, select:focus { outline:none; border-color:var(--primary-light); }
+button { background:var(--primary); color:#fff; border:none; border-radius:8px; padding:11px 18px; font-size:14px; font-weight:600; cursor:pointer; margin-top:14px; }
+button:hover { background:var(--primary-light); }
+button.secondary { background:transparent; color:var(--primary); border:1px solid var(--border); }
+button.secondary:hover { background:#F3F4F6; }
+button.danger { background:transparent; border:1px solid var(--danger); color:var(--danger); margin-top:0; }
+button.danger:hover { background:#FDEEED; }
+button:disabled { opacity:0.5; cursor:default; }
+.levelSelect { width:auto; padding:4px 6px; font-size:12px; }
+table { width:100%; border-collapse: collapse; margin-top: 12px; }
+th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 13px; }
+th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; }
+.error { color:var(--danger); font-size: 13px; margin-top: 8px; }
+.ok { color:var(--primary); font-weight:600; font-size: 13px; margin-top: 8px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.row { display:flex; gap:10px; }
+.row > * { flex:1; }
+.muted { color:var(--text-secondary); font-size:13px; }
+.top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600; background:#F3F4F6; color:var(--text-secondary); }
+.badge.imported { background:var(--accent-container); color:var(--accent-text); }
+.tabpanel { padding-top: 4px; }
+.placeholder { text-align:center; padding: 70px 20px; color:var(--text-secondary); }
+.placeholder .big { font-size: 17px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.authWrap { display:flex; justify-content:center; padding-top: 60px; }
+.authCard { width:100%; max-width:360px; }
+.subtabbar { display:flex; gap:6px; margin-bottom:14px; }
+.subtabbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; margin-top:0; cursor:pointer; }
+.subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
+.periodBar { display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; }
+/* Grille annuelle : les mois en colonnes, comme le planificateur papier et l'application. */
+.calGrid { display:flex; gap:2px; overflow-x:auto; padding-bottom:6px; }
+.calMonth { min-width:118px; flex:0 0 auto; }
+.calMonthName { font-size:11px; font-weight:700; text-align:center; padding:4px 0; background:#163A5F; color:#fff; border-radius:4px 4px 0 0; }
+.calDay { display:flex; align-items:center; gap:4px; height:20px; padding:0 3px; border:.5px solid #BBC2C9; font-size:9px; line-height:1.05; overflow:hidden; cursor:pointer; }
+.calDay .num { font-weight:700; width:26px; flex:0 0 auto; }
+.calDay .txt { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.calDay .per { font-weight:700; color:#2678C8; flex:0 0 auto; }
+/* Tableau d'occupation des installations : dense par necessite, une ligne par demi-heure. */
+.installDays { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.installTable { border-collapse:collapse; font-size:11px; width:100%; }
+.installTable th, .installTable td { border:.5px solid #BBC2C9; text-align:center; padding:3px 6px; white-space:nowrap; }
+.installTable thead th { background:var(--surface-2, #EEF1F4); font-weight:700; }
+.installTable td { min-width:44px; height:20px; }
+.installHour { font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.syncStatus { font-size:12px; color:#fff; padding:4px 10px; border-radius:999px;
+              background:rgba(255,255,255,.16); white-space:nowrap; }
+.syncStatus:empty { display:none; }
+.syncStatus[data-sync-state="offline"] { background:#7A4D00; }
+.syncStatus[data-sync-state="conflict"], .syncStatus[data-sync-state="error"] { background:#8A1C1C; }
+.conflitAucun { display:none; }
+.calLegend { display:flex; flex-wrap:wrap; gap:10px; margin:8px 0; font-size:11px; align-items:center; }
+.calLegend span.box { display:inline-block; width:12px; height:12px; border:.5px solid #BBC2C9; margin-right:4px; vertical-align:-2px; }
+.rappelCols { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:10px; }
+.rappelCol { border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.rappelTitre { font-weight:700; padding:6px 10px; font-size:13px; }
+.rappelLigne { padding:8px 10px; border-top:1px solid var(--border); font-size:13px; }
+.periodChip { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; margin-top:0; cursor:pointer; white-space:nowrap; }
+.periodChip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.pendingHint { background:#FFF4E5; border:1px solid #F5C875; color:#7A4D00; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:10px; }
+.planningWrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+.planningGrid { display:grid; grid-template-columns:40px repeat(6, minmax(130px, 1fr)); min-width:860px; }
+/* Une colonne de jour n'avait aucune bordure : rien ne separait les jours, et seul le jour
+   courant ressortait. Filet marque entre les colonnes, entetes pleines pour poser la limite des
+   le haut, et samedi grise comme jour sans cours. */
+.planningHeadCell { font-size:11px; font-weight:700; text-transform:uppercase; color:#fff; text-align:center; padding:8px 2px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--primary); letter-spacing:.1em; }
+.planningHeadCell:first-child { background:var(--surface); }
+.planningHeadCell + .planningHeadCell { border-left:2px solid #C4D0D9; }
+.planningHeadCell.today { color:#fff; background:var(--primary-light); }
+.planningHeadCell.weekend { background:#5A6B62; }
+/* Liste des classes en accordeon : l'entete occupe toute la largeur pour etre cliquable
+   partout, sans ressembler a un bouton d'action. */
+/* Rangee des classes : une seule ligne, qui defile plutot que de se replier sur plusieurs
+   hauteurs. Un etablissement complet tenait sur trois ecrans en liste verticale. */
+.classeBarre { display:flex; gap:8px; overflow-x:auto; padding:4px 2px 10px; scrollbar-width:thin; }
+.classePuce { flex:0 0 auto; background:var(--surface); color:var(--text); border:1px solid var(--border);
+              border-radius:999px; padding:9px 18px; font-size:14px; font-weight:700; margin-top:0;
+              cursor:pointer; white-space:nowrap; }
+.classePuce:hover { background:#F3F6F8; }
+.classePuce.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.classePuce .annee { font-weight:500; opacity:.7; font-size:12px; margin-left:6px; }
+
+/* Cartes du tableau de bord, calquees sur l'application : chacune annonce son contenu en une
+   ligne et s'ouvre au clic, plutot que d'etaler ses details en permanence. */
+.dashCarte { display:flex; align-items:center; gap:12px; width:100%; text-align:left; margin:8px 0 0;
+             padding:13px 15px; border:0; border-radius:16px; cursor:pointer; font:inherit; color:var(--text); }
+.dashCarte .dashPastille { flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:#fff;
+                           display:flex; align-items:center; justify-content:center; font-size:17px; }
+.dashCarte .dashTexte { flex:1; min-width:0; }
+.dashCarte .dashTitre { font-weight:700; color:#102F4A; }
+.dashCarte .dashSous { font-size:12px; color:#637889; }
+.dashCarte .dashFleche { color:#637889; font-size:20px; }
+.dashSeance { background:#fff; box-shadow:0 2px 8px rgba(16,47,74,.10); display:block; cursor:default; }
+.dashJauge { height:10px; border-radius:999px; background:#E1E7EC; overflow:hidden; flex:1; }
+.dashJauge > div { height:100%; background:var(--primary); }
+.dashRond { flex:0 0 auto; width:34px; height:34px; border-radius:50%; border:0; margin-top:0;
+            font-size:19px; font-weight:800; cursor:pointer; background:var(--primary); color:#fff; }
+.dashRond:disabled { background:#E1E7EC; color:#9AA9B5; cursor:default; }
+.dashDuo { display:flex; gap:10px; margin-top:8px; }
+.dashDuo > button { flex:1; margin-top:0; border:0; border-radius:16px; padding:15px 10px;
+                    font-weight:700; color:#102F4A; cursor:pointer; }
+.classeCard { padding:0; overflow:hidden; }
+.classeEntete { display:flex; align-items:center; gap:10px; width:100%; margin:0; padding:14px 16px;
+                background:none; border:0; text-align:left; color:var(--text); font-size:14px; cursor:pointer; }
+.classeEntete:hover { background:#F3F6F8; }
+.classeEntete .chevron { color:var(--text-secondary); flex:0 0 auto; }
+.classeEntete .classeNom { flex:1; }
+.classeActions { display:flex; flex-wrap:wrap; gap:8px; padding:0 16px 14px; }
+.eleveTable { border-collapse:collapse; width:100%; font-size:13px; }
+.eleveTable th, .eleveTable td { border-bottom:1px solid var(--border); padding:6px 8px; text-align:left; white-space:nowrap; }
+.eleveTable thead th { position:sticky; top:0; background:var(--surface); z-index:1; }
+.eleveTable tr.choisi { background:#EAF3ED; }
+.eleveCoche { width:30px; }
+.eleveTri { margin:0; padding:2px 4px; background:none; border:0; font-weight:700; font-size:12px;
+            color:var(--text); cursor:pointer; text-transform:uppercase; letter-spacing:.04em; }
+.eleveTri.actif { color:var(--primary); }
+.pagination { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:10px 0; }
+.pagination button { margin:0; padding:6px 11px; min-width:38px; }
+.pagination button[disabled] { opacity:.45; cursor:default; }
+.paginationEcart { color:var(--text-secondary); padding:0 2px; }
+.planningSubCell { font-size:9.5px; font-weight:700; text-align:center; padding:3px 2px; color:#31463C; background:#EAF3ED; border-bottom:1px solid var(--border); position:sticky; top:31px; }
+.planningSubCell.vide { background:var(--surface); }
+.planningSubCell span { overflow:hidden; white-space:nowrap; padding:0 1px; }
+.planningDayCol { border-left:2px solid #C4D0D9; }
+/* Limite entre deux enseignants d'une meme journee : discrete, pour ne pas concurrencer le
+   filet epais qui separe les jours. */
+.profSep { position:absolute; top:0; bottom:0; width:1px; background:#E7ECF0; pointer-events:none; }
+.planningDayCol.weekend { background:#F1F3F5; }
+.planningTimeCell { font-size:10px; color:var(--text-secondary); text-align:right; padding-right:4px; border-top:1px solid #F1F2F0; height:26px; box-sizing:border-box; }
+.planningCell { border-top:1px solid #F1F2F0; border-left:1px solid #F1F2F0; height:26px; box-sizing:border-box; cursor:pointer; position:relative; }
+.planningCell:hover { background:#F3F8F4; }
+.planningCell.occupied { cursor:default; }
+.planningDayCol.today { background:rgba(183,228,199,0.18); }
+.planningBlock { position:absolute; left:2px; right:2px; border-radius:6px; background:var(--accent-container); color:var(--accent-text); border-left:3px solid var(--primary); padding:2px 6px; font-size:11px; line-height:1.25; overflow:hidden; cursor:pointer; }
+.planningBlock .cl { font-weight:700; display:block; }
+.planningBlock .ap { display:block; opacity:0.85; }
+/* Sans nowrap le texte reviendrait a la ligne au lieu de deborder, et la mesure de largeur ne
+   dirait plus rien. */
+.planningBlock .clFit { display:block; font-weight:700; white-space:nowrap; overflow:hidden; }
+.planningBlock .apFit { display:block; opacity:0.85; white-space:nowrap; overflow:hidden; }
+.planningBlock.conflict { background:#FBE2E1; border-left-color:var(--danger); color:#5C1410; }
+.planningBlock .tc { display:block; opacity:0.75; font-size:10px; }
+.durationChip.selected, .installationChip.selected { background:var(--accent-container); border-color:var(--accent-container); }
+/* Superposition (modale) : box-shadow demesuree = fond assombri plein ecran sans element supplementaire. */
+#planningPanel, #unssPanel, #institutionPanel {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 1000; width: calc(100% - 40px); max-width: 480px; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 0 0 9999px rgba(20,24,26,0.55), 0 20px 50px rgba(0,0,0,0.3);
+}
+#planningPanel { max-height:75vh; overflow-y:auto; }
+.unssCard { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.unssPick { cursor:pointer; }
+.unssPick:hover { background:#F3F8F4; }
+.editRow input, .editRow select { padding:6px 8px; font-size:12px; }
+.editRow td { vertical-align:middle; }
+.accType { cursor:pointer; }
+.accType.expanded { background:var(--accent-container); color:var(--accent-text); }
+.accBody { padding:8px 0 4px 12px; }
+.gradeChip { display:inline-block; background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:13px; margin:0 6px 6px 0; cursor:pointer; }
+.gradeChip.active { background:var(--secondary-container, var(--accent-container)); border-color:var(--accent-container); }
+.scoreTable { width:100%; border-collapse:collapse; margin-top:10px; }
+.scoreTable th, .scoreTable td { border:1px solid var(--border); padding:6px 8px; font-size:13px; text-align:center; }
+.scoreTable th:first-child, .scoreTable td:first-child { text-align:left; min-width:150px; }
+.scoreTable input.scoreInput { width:64px; text-align:center; padding:4px; margin:0; }
+.scoreTable td.incomplete { color:var(--text-secondary); }
+.toolsHero { background:linear-gradient(135deg,#087CD1,#16A6DC); color:#fff; border-radius:24px; padding:24px; margin-bottom:16px; }
+.toolsHero h2 { color:#fff; font-size:24px; margin-bottom:6px; }
+.toolGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+.toolCard { border:0; min-height:145px; text-align:left; color:#15334B; border-radius:20px; padding:18px; margin:0; box-shadow:0 3px 10px rgba(21,51,75,.09); }
+.toolCard:hover { transform:translateY(-2px); filter:brightness(.98); }
+.toolCard strong { display:block; font-size:17px; margin:12px 0 5px; }
+.toolCard span { color:#5F7687; font-weight:400; font-size:12px; }
+.toolIcon { display:inline-grid; place-items:center; width:46px; height:46px; border-radius:14px; background:#fff; font-size:23px; }
+#toolPanel { margin-top:16px; }
+.toolDisplay { text-align:center; font-size:clamp(44px,9vw,76px); font-weight:800; letter-spacing:1px; padding:24px 10px; border-radius:20px; background:#DFF3FF; color:#15334B; }
+.toolActions { display:flex; gap:10px; flex-wrap:wrap; }
+.toolActions button { flex:1; min-width:125px; }
+.teamResult { padding:12px; border-radius:14px; margin-top:8px; background:#EEE8FF; }
+@media print {
+  .header, .subtabbar, .card button, .no-print, #tabbar { display:none !important; }
+  body, .container { background:#fff !important; }
+  .card { box-shadow:none !important; border:none !important; }
+}
+
+/* ---- Recherche globale ---- */
+.searchOverlay { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:940; display:none; justify-content:center; align-items:flex-start; padding:60px 16px 16px; }
+.searchOverlay.open { display:flex; }
+.searchSheet { background:var(--bg); width:100%; max-width:620px; max-height:80vh; overflow-y:auto; border-radius:16px; padding:16px; }
+.searchSheet input { flex:1; }
+.searchHit { display:block; width:100%; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin:0 0 8px; color:var(--text); }
+.searchHit:hover { background:#F3F4F6; }
+.searchHit .cat { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--primary-light); font-weight:700; }
+.searchHit .ttl { font-weight:600; }
+
+/* ---- Accueil : carte du jour puis grille des modules (miroir de HomeScreen.kt) ---- */
+.todayCard { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; text-align:left;
+             background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:18px 22px; margin-top:16px;
+             box-shadow:0 3px 10px rgba(21,51,75,.08); color:var(--text); }
+.todayCard:hover { background:var(--surface); filter:brightness(.99); }
+.todayLabel { color:#163A5F; font-weight:700; font-size:16px; }
+.todayCount { color:#2678C8; font-weight:800; font-size:32px; line-height:1.1; }
+.todayNext { color:#405D73; font-size:13px; margin-top:2px; }
+.todayLink { color:#2678C8; font-weight:700; font-size:12px; margin-top:8px; }
+.todayIcon { font-size:44px; opacity:.85; }
+.homeGrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:11px; }
+.homeCard { position:relative; overflow:hidden; display:block; text-align:left; border:0; margin:0; color:#163A5F;
+            border-radius:22px; padding:16px; min-height:118px; box-shadow:0 3px 10px rgba(21,51,75,.09); }
+.homeCard:hover { transform:translateY(-2px); filter:brightness(.985); }
+.homeCard.featured { grid-column:1 / -1; min-height:126px; }
+.homeTitle { display:block; font-weight:800; font-style:italic; font-size:18px; letter-spacing:.5px; }
+.homeCard.featured .homeTitle { font-size:24px; }
+.homeRule { display:block; width:34px; height:4px; border-radius:3px; margin-top:5px; }
+.homeSub { display:block; color:#405D73; font-weight:500; font-size:11px; line-height:1.35; margin-top:8px; max-width:70%; }
+.homeIcon { position:absolute; right:14px; bottom:10px; font-size:40px; opacity:.9; }
+.homeCard.featured .homeIcon { font-size:54px; }
+
+/* ---- Mode cours en cours : gros texte, gros boutons, lisible a bout de bras ---- */
+.liveOverlay { position:fixed; inset:0; background:var(--bg); z-index:900; display:none; flex-direction:column; }
+.liveOverlay.open { display:flex; }
+.liveBar { background:var(--primary); color:#fff; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.liveBar .liveWho { font-size:13px; opacity:.85; }
+.liveBar .liveTitle { font-size:17px; font-weight:700; }
+.liveBar button { margin-top:0; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.4); }
+.liveBar button:hover { background:rgba(255,255,255,.28); }
+.liveBody { flex:1; overflow-y:auto; padding:18px; }
+.liveInner { max-width:820px; margin:0 auto; }
+.liveStepMeta { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+.liveStepNum { color:var(--primary-light); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.06em; }
+.liveStepTitle { font-size:clamp(22px,4.4vw,32px); font-weight:800; line-height:1.15; margin:0 0 10px; }
+.liveGoal { font-size:clamp(16px,2.4vw,19px); background:var(--accent-container); color:var(--accent-text); padding:12px 14px; border-radius:12px; margin-bottom:12px; }
+.liveBlock { margin-top:14px; }
+.liveBlock h3 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-secondary); margin:0 0 4px; }
+.liveBlock ul { margin:0; padding-left:20px; }
+.liveBlock li { font-size:clamp(15px,2.2vw,17px); margin-bottom:4px; }
+.liveBlock p { font-size:clamp(15px,2.2vw,17px); margin:0; }
+.liveSafety { margin-top:16px; padding:12px 14px; border-left:4px solid var(--danger); background:#FDEEED; border-radius:0 10px 10px 0; }
+.liveSafety h3 { color:var(--danger); }
+.liveNav { display:flex; gap:12px; padding:12px 18px; border-top:1px solid var(--border); background:var(--surface); }
+.liveNav button { flex:1; margin-top:0; min-height:58px; font-size:16px; }
+.liveDots { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.liveDot { flex:1; min-width:14px; height:5px; border-radius:3px; background:var(--border); border:0; padding:0; margin:0; cursor:pointer; }
+.liveDot.done { background:var(--primary-light); }
+.liveDot.now { background:var(--primary); }
+.liveTools { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:950; display:none; align-items:flex-end; justify-content:center; }
+.liveTools.open { display:flex; }
+.liveToolsSheet { background:var(--bg); width:100%; max-width:640px; max-height:86vh; overflow-y:auto; border-radius:18px 18px 0 0; padding:16px; }
