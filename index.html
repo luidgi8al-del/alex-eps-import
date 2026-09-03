@@ -415,7 +415,6 @@
 
         <!-- Consultation : aucun enregistrement, on regarde ce que donne un cycle -->
         <div id="coursTab-cycles">
-          <div id="sessionSheet" class="card" style="display:none"></div>
           <div class="card">
             <h2>Regarder un cycle</h2>
             <div class="muted" style="margin-bottom:6px">
@@ -463,6 +462,11 @@
           <div id="createdCoursePanel" style="display:none; margin-top:16px"></div>
           <div id="evaluationPanel" style="display:none; margin-top:16px"></div>
         </div>
+
+        <!-- Fiche d'une seance. Commune aux trois sous-onglets : posee dans "Cycle", elle se
+             remplissait sans jamais s'afficher quand on l'ouvrait depuis "Cours", son parent
+             etant masque. Un clic sur une seance ne faisait alors rien, sans message. -->
+        <div id="sessionSheet" class="card" style="display:none; margin-top:16px"></div>
 
         <!-- Creation : rattachee a une classe deja enregistree -->
         <div id="coursTab-creer" style="display:none">
@@ -2694,10 +2698,23 @@
       if (!activity) {
         return dashboardCycles.find(c => c.priority_objective === `planning-period-${periode}`) || null;
       }
-      const memeApsa = dashboardCycles.filter(c => c.apsa_name === activity.apsa_name);
+      const memeApsa = dashboardCycles.filter(c => memeActivite(c.apsa_name, activity.apsa_name));
       return memeApsa.find(c => !String(c.priority_objective || "").startsWith("planning-period-"))
         || memeApsa.find(c => c.priority_objective === `planning-period-${periode}`)
         || memeApsa[0] || null;
+    }
+
+    /**
+     * Deux noms d'activite designent-ils la meme chose ?
+     *
+     * Le cycle est cree dans Cours, l'activite est posee dans Programmation : casse, accents et
+     * ponctuation different sans que le professeur ait rien fait d'incoherent. Comparer les
+     * chaines telles quelles faisait passer un cycle existant pour absent.
+     */
+    function memeActivite(a, b) {
+      const reduire = v => String(v || "").toLowerCase().normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+      return reduire(a) !== "" && reduire(a) === reduire(b);
     }
 
     function dispensesEnCours() {
@@ -2794,9 +2811,13 @@
     /** La carte "Seance x/y", avec sa jauge et ses deux boutons ronds. */
     function carteSeanceHtml(cycle) {
       if (!cycle) {
+        const activite = dashboardActivities.find(a => a.period_number === dashboardPeriod);
         return `<div class="card dashSeance" style="margin-top:8px">
           <div class="dashTitre">Aucun cycle pour cette période</div>
-          <div class="dashSous">Créez-le dans COURS pour suivre les séances.</div>
+          <div class="dashSous">${activite
+            ? "Le cycle n'existe pas encore : créez-le ici, il apparaîtra aussi dans COURS."
+            : "Renseignez d'abord l'activité de la période dans PROGRAMMATION."}</div>
+          ${activite ? `<button type="button" id="creerCycleBtn" style="margin-top:10px">Créer le cycle ${planningText(activite.apsa_name)}</button>` : ""}
         </div>`;
       }
       const total = Math.max(1, Number(cycle.session_count) || 8);
@@ -2816,6 +2837,8 @@
     }
 
     function brancherCarteSeance(cycle) {
+      const creer = document.getElementById("creerCycleBtn");
+      if (creer) creer.onclick = () => creerCyclePourPeriode();
       const moins = document.getElementById("seanceMoins");
       const plus = document.getElementById("seancePlus");
       if (!moins || !plus) return;
@@ -2849,6 +2872,37 @@
         renderClassDashboard();
         const detail = document.getElementById("dashDetail");
         if (detail) detail.innerHTML = `<div class="error">Séance non enregistrée : ${planningText(e.message)}</div>`;
+      }
+    }
+
+    /**
+     * Cree le cycle de la periode affichee, comme le fait l'application au moment d'ouvrir une
+     * seance (CoursRepository.findOrCreatePlanningCycle) : meme classe, meme activite, huit
+     * seances, et le marqueur de periode qui permettra de le retrouver.
+     */
+    async function creerCyclePourPeriode() {
+      const activite = dashboardActivities.find(a => a.period_number === dashboardPeriod);
+      if (!activite) return;
+      const bouton = document.getElementById("creerCycleBtn");
+      if (bouton) { bouton.disabled = true; bouton.textContent = "Création..."; }
+      // Construction dans le try : une session expiree faisait echouer la ligne suivante hors du
+      // filet, et le bouton restait bloque sur "Création..." sans un mot.
+      try {
+        const nouveau = {
+          id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
+          grade: dashboardClass.row.grade, apsa_name: activite.apsa_name, session_count: 8,
+          current_session_number: 1, priority_objective: `planning-period-${dashboardPeriod}`,
+          installation: activite.installation_name || null,
+          school_year: dashboardClass.row.school_year || "2026-2027",
+          updated_at: new Date().toISOString(), deleted: false
+        };
+        await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, { method: "POST", body: JSON.stringify(nouveau) });
+        dashboardCycles.push(nouveau);
+        renderClassDashboard();
+      } catch (e) {
+        if (bouton) { bouton.disabled = false; bouton.textContent = "Créer le cycle"; }
+        const detail = document.getElementById("dashDetail");
+        if (detail) detail.innerHTML = `<div class="error">Cycle non créé : ${planningText(e.message)}</div>`;
       }
     }
 
@@ -3221,7 +3275,17 @@
         const n = Number(button.dataset.session);
         const written = ordered[n - 1];
         sessionSheetContext = `${classLabel} · ${course.apsa_name}`;
-        if (written) showSessionSheet(content, written, n);
+        if (written) { showSessionSheet(content, written, n); return; }
+        // Le titre d'une seance peut venir du programme sans qu'une fiche existe pour ce niveau.
+        // Le clic ne faisait alors rien : mieux vaut le dire que de laisser croire a une panne.
+        const sheet = document.getElementById("sessionSheet");
+        sheet.style.display = "block";
+        sheet.innerHTML = `<div class="top"><h2 style="margin:0">S${n}</h2>
+          <button class="secondary" id="closeSheetBtn" style="margin-top:0">Fermer</button></div>
+          <div class="muted" style="margin-top:8px">Aucune fiche rédigée pour cette séance en
+          ${planningText(GRADE_LABELS[course.grade] || course.grade)} · ${planningText(course.apsa_name)}.</div>`;
+        document.getElementById("closeSheetBtn").onclick = () => { sheet.style.display = "none"; };
+        sheet.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
