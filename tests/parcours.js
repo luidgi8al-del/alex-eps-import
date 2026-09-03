@@ -205,17 +205,32 @@
         nom: "ASLVH · l'import annonce ce qu'il va faire",
         action: async () => {
           // On va jusqu'au recapitulatif, puis on annule : le banc ne doit rien enregistrer.
+          //
+          // Les en-tetes sont ceux d'un vrai export d'etablissement, parentheses et pluriels
+          // compris. "Ne(e) le" et "Mail parents" n'etaient pas reconnus : les deux colonnes
+          // restaient muettes, et reimporter un fichier enrichi n'ajoutait aucun mail parent.
           await onglet("unss");
           const lignes = [
-            "nom;prenom;date de naissance;division;email eleve",
-            "MARTIN;Lea;12/05/2011;3e6;lea.martin@lycee.fr",
-            "NOUVEAU;Eleve;01/01/2012;5e1;nouveau@lycee.fr"
+            "Nom;Prénom;Né(e) le;Classe;Sexe;Mail élève;Mail parents",
+            "MARTIN;Lea;12/05/2011;3-06;Féminin;lea.martin@lycee.fr;famille.martin@exemple.fr",
+            "NOUVEAU;Eleve;01/01/2012;5-01;Masculin;nouveau@lycee.fr;famille.nouveau@exemple.fr"
           ];
           await f.importUnssCsv(lignes.join(String.fromCharCode(10)), false);
           await attendre(() => $("importValider"), "le recapitulatif d'import ne s'affiche pas", 6000);
           const texte = $("unssList").innerText;
           if (!/doublon cree/.test(texte)) throw new Error("le recapitulatif ne compte pas les doublons");
           if (!/eleve\(s\) reconnu\(s\)/.test(texte)) throw new Error("le recapitulatif ne compte pas les reconnus");
+
+          // Une colonne lue apparait soit comme un trou a combler, soit comme une divergence -
+          // selon ce que porte deja la fiche. Ce qu'on verifie ici, c'est qu'elle est lue.
+          const lues = f.eval(`importEnCours.reconnus.map(r =>
+            r.aCompleter.map(c => c.champ).concat(r.divergences.map(d => d.champ)).join(",")).join(" | ")`);
+          for (const attendu of ["parent_email", "birth_date_epoch_millis", "division"]) {
+            if (!lues.includes(attendu)) {
+              throw new Error(`la colonne ${attendu} n'est pas lue — lues : ${lues || "aucune"}`);
+            }
+          }
+
           $("importAnnuler").click();
           await attendre(() => !$("importValider"), "l'annulation ne referme pas le recapitulatif");
         }

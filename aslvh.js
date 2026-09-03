@@ -556,7 +556,19 @@ async function importUnssCsv(csv, markLicensed) {
     .normalize("NFD").replace(/[̀-ͯ]/g, "")
     // "Classe d'origine" et "Classe d’origine" designent la meme colonne : le tableur choisit
     // l'apostrophe droite ou courbe selon l'humeur du logiciel qui a produit l'export.
-    .replace(/['’]/g, " ").replace(/\s+/g, " ").trim();
+    .replace(/['’]/g, " ")
+    // "Ne(e) le" est la meme colonne que "Ne le" : la parenthese ne sert qu'a l'accord.
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/\s+/g, " ").trim();
+
+  /**
+   * Compare un en-tete a un intitule connu, au singulier pres.
+   *
+   * Les exports ecrivent "Mail parents" ou "Emails parents" selon le logiciel, et la colonne
+   * restait muette pour un seul "s" - donc aucun mail parent n'etait importe, sans un mot.
+   */
+  const auSingulier = (v) => v.split(" ").map(m => m.replace(/s$/, "")).join(" ");
+  const memeEntete = (entete, intitule) => auSingulier(entete) === auSingulier(intitule);
   const ALIASES = {
     nom: ["nom", "nom de famille", "lastname", "last name"],
     prenom: ["prenom", "firstname", "first name"],
@@ -571,7 +583,7 @@ async function importUnssCsv(csv, markLicensed) {
     division: ["division", "classe", "classe origine", "classe d origine", "groupe classe", "div"]
   };
   const header = lines[0].split(delimiter).map(norm);
-  const idx = (key) => header.findIndex(h => ALIASES[key].includes(h));
+  const idx = (key) => header.findIndex(h => ALIASES[key].some(intitule => memeEntete(h, intitule)));
   const iNom = idx("nom"), iPrenom = idx("prenom"), iNaissance = idx("naissance");
   const iVoeu1 = idx("voeu1"), iVoeu2 = idx("voeu2"), iVoeu3 = idx("voeu3");
   const iEmailEleve = idx("emailEleve"), iEmailParent = idx("emailParent");
@@ -589,7 +601,7 @@ async function importUnssCsv(csv, markLicensed) {
     if (!lastName || !firstName) { ignorees++; continue; }
     // Un export d'etablissement est parfois plusieurs extractions collees bout a bout : la
     // ligne d'entete reapparait alors au milieu du fichier, et creerait un eleve "Nom Prenom".
-    if (ALIASES.nom.includes(norm(lastName)) && ALIASES.prenom.includes(norm(firstName))) {
+    if (ALIASES.nom.some(i => memeEntete(norm(lastName), i)) && ALIASES.prenom.some(i => memeEntete(norm(firstName), i))) {
       entetesRepetees++; continue;
     }
     const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
