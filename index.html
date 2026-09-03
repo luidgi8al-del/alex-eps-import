@@ -547,6 +547,16 @@
     }
 
     async function basculerSurCompte(targetId, nom) {
+      // Basculer sur le compte d'ou l'on vient, c'est y revenir. Les Reglages proposent la meme
+      // liste de collegues une fois bascule : reprendre son propre compte par cette liste
+      // empilait une bascule sur la precedente, et le point de retour designait alors le compte
+      // ou l'on se trouvait deja.
+      const admin = sessionAdministrateur();
+      if (admin && admin.user_id === targetId) {
+        document.getElementById("settingsOverlay").classList.remove("open");
+        revenirSurMonCompte();
+        return;
+      }
       if (!confirm(`Basculer sur le compte de ${nom} ?\n\nVous verrez et modifierez ses donnees. La bascule est enregistree.`)) return;
       const reponse = await teamAdminAction({ action: "impersonate", target_id: targetId });
       // Le jeton ne sert qu'une fois : on l'echange tout de suite contre une session.
@@ -577,6 +587,17 @@
       saveSession(admin);
       showMainView();
       renderImpersonationBar();
+      // Le jeton mis de cote avant la bascule a pu expirer entre-temps. Le verifier tout de
+      // suite evite la pire des situations : une page qui parait chargee mais dont chaque
+      // lecture echoue, sans jamais dire qu'il faut se reconnecter.
+      verifierSessionValide();
+    }
+
+    /** Une lecture anodine, seulement pour savoir si le jeton courant est encore accepte. */
+    async function verifierSessionValide() {
+      try {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user_id}&select=id`);
+      } catch (e) { /* apiFetch a deja renvoye vers la connexion si le jeton est expire */ }
     }
 
     document.getElementById("impersonationBackBtn").addEventListener("click", revenirSurMonCompte);

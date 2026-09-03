@@ -4,7 +4,7 @@ import { subscribeSyncState } from "./core/events.js";
 import { OfflineSyncEngine } from "./sync/engine.js";
 import { createSupabaseAdapter } from "./sync/supabase-adapter.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "./sync/local-edits.js";
-import { listLocalRecords, removeAllLocalData } from "./storage/records.js";
+import { listLocalRecords, removeAllLocalData, countLocalRecords } from "./storage/records.js";
 import { mountSyncStatus } from "./ui/sync-status.js";
 import { mountConflictDialog } from "./ui/conflict-dialog.js";
 
@@ -58,9 +58,20 @@ export async function demarrerHorsConnexion({
    * et l'indicateur d'etat dit deja ce qui se passe. Lever ici masquerait la liste entiere pour
    * une coupure de trois secondes.
    */
-  async function rapprocher() {
-    if (!isOnline()) return false;
-    try { await engine.sync(); return true; } catch { return false; }
+  /**
+   * Une seule synchronisation a la fois, partagee par tous les appelants.
+   *
+   * Chaque ecran demande a se rapprocher du serveur en s'ouvrant. Sans mise en commun, six
+   * ecrans declenchaient six synchronisations qui s'enchainaient l'une apres l'autre, et le
+   * dernier ecran attendait la somme des cinq autres.
+   */
+  let synchroEnCours = null;
+  function rapprocher() {
+    if (!isOnline()) return Promise.resolve(false);
+    if (synchroEnCours) return synchroEnCours;
+    synchroEnCours = engine.sync().then(() => true, () => false);
+    synchroEnCours.finally(() => { synchroEnCours = null; });
+    return synchroEnCours;
   }
 
   // Filet de securite : dans une fenetre installee, couper puis retablir le wifi ne declenche pas
@@ -103,7 +114,16 @@ export async function demarrerHorsConnexion({
      * l'ecran jusqu'a son envoi, et personne ne comprendrait ou est passee sa ligne.
      */
     async lire(entity, { ou, trier, avecSupprimes = false } = {}) {
-      const synchronise = await rapprocher();
+      // Une lecture locale n'attend pas le reseau. Elle le faisait, et il a suffi qu'une
+      // synchronisation soit longue - un premier chargement, qui rapatrie tout l'etablissement -
+      // pour que chaque rubrique reste sur "Chargement" jusqu'au bout, Reglages compris.
+      //
+      // La copie locale est donc rendue telle quelle et la synchronisation continue derriere :
+      // les ecrans se remettent a jour quand elle aboutit (voir rafraichirApresSynchro).
+      // Seule exception : quand il n'y a encore rien a montrer, autant attendre, sinon on
+      // afficherait "aucune donnee" a quelqu'un qui en a.
+      const dejaLa = await countLocalRecords();
+      const synchronise = dejaLa > 0 ? (rapprocher(), false) : await rapprocher();
       // Les lignes effacees servent parfois : une note effacee garde sa ligne, ce qui permet de
       // la resaisir sans en creer une nouvelle a chaque fois.
       const locales = await listLocalRecords(entity, { includeDeleted: avecSupprimes });

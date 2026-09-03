@@ -154,10 +154,32 @@ function showMainView() {
 let justSignedUp = false;
 let currentInstitution = null;
 
+/**
+ * Relit le rattachement du compte a son etablissement.
+ *
+ * Une lecture qui echoue n'est pas un compte sans etablissement. C'etait pourtant traite pareil :
+ * la moindre reponse en erreur affichait "Aucun etablissement rattache" a un professeur qui
+ * l'etait, et coupait du meme coup le Planning et la Programmation, qui ne se partagent
+ * qu'entre collegues du meme etablissement. Le rattachement precedent est donc conserve, et
+ * l'incertitude est dite comme telle.
+ */
+let rattachementIncertain = false;
 async function loadInstitution() {
-  const statusEl = document.getElementById("institutionStatus");
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user_id}&select=institution_id,institutions(name,code)`);
-  const rows = res.ok ? await res.json() : [];
+  let res;
+  try {
+    res = await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user_id}&select=institution_id,institutions(name,code)`);
+  } catch (e) {
+    rattachementIncertain = true;
+    renderInstitutionCard();
+    return;
+  }
+  if (!res.ok) {
+    rattachementIncertain = true;
+    renderInstitutionCard();
+    return;
+  }
+  rattachementIncertain = false;
+  const rows = await res.json();
   currentInstitution = rows[0]?.institutions || null;
   renderInstitutionCard();
   if (justSignedUp) {
@@ -176,6 +198,11 @@ function renderInstitutionCard() {
       currentInstitution = null;
       renderInstitutionCard();
     });
+  } else if (rattachementIncertain) {
+    statusEl.innerHTML = `Impossible de verifier le rattachement a l'etablissement pour l'instant.
+      Rien n'est perdu : reessayez dans un moment.
+      <button id="institutionRetryBtn" style="margin-top:10px">Reessayer</button>`;
+    document.getElementById("institutionRetryBtn").addEventListener("click", () => loadInstitution());
   } else {
     statusEl.innerHTML = `Non rattache. Le Planning et la Programmation annuelle ne se partagent qu'entre collegues du meme etablissement.
       <button id="institutionLinkBtn" style="margin-top:10px">Se rattacher a un etablissement</button>`;
