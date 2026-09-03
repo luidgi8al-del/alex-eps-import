@@ -13,7 +13,7 @@ const PROGRAMMATION = {
   SIXIEME: ["Natation", "Athletisme - sprint / relais", "Escalade", "Gymnastique au sol", "Danse", "Rugby", "Basket-ball", "Tennis de table", "Badminton"],
   CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte", "Rugby"],
   QUATRIEME: ["Natation", "Escalade", "Acrosport", "Volley-ball"],
-  TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton"],
+  TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton", "Athletisme - sprint / duree"],
   SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree", "Natation de duree"],
   PREMIERE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"],
   TERMINALE: ["3 x 500 m", "Natation sauvetage", "Escalade", "Volley-ball", "Badminton", "Rugby", "Musculation", "Course de duree", "Acrosport", "Gymnastique au sol", "Tennis de table", "Pentabond"]
@@ -61,6 +61,7 @@ const DETAILED_CYCLES = {
   "TROISIEME|Escalade": { file: "content/escalade-3e.json" },
   "TROISIEME|Rugby": { file: "content/rugby-3e.json" },
   "TROISIEME|Badminton": { file: "content/badminton-3e.json" },
+  "TROISIEME|Athletisme - sprint / duree": { file: "content/athletisme-sprint-duree-3e.json" },
   "SECONDE|Escalade": { file: "content/escalade-2nde.json" },
   "SECONDE|Acrosport": { file: "content/acrosport-2nde.json" },
   "SECONDE|Danse": { file: "content/danse-2nde.json" },

@@ -1,0 +1,2558 @@
+{
+ "apsa": "Athletisme - sprint / duree",
+ "grades": [
+  "TROISIEME"
+ ],
+ "champApprentissage": "CA1 - Produire une performance optimale, mesurable a une echeance donnee",
+ "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n.11 du 26 novembre 2015.",
+ "targetCompetence": "Passer d'une course subie, ou l'eleve part vite et s'effondre, a une course pilotee : sur 40 metres il construit une mise en action et tient sa vitesse jusqu'a la ligne ; sur la course de duree il annonce une allure, la tient et sait la comparer a ce qu'il a reellement realise.",
+ "attendus": [
+  "Realiser une performance maximale en gerant les efforts musculaires et respiratoires.",
+  "Utiliser des repartitions d'effort adaptees a sa possibilite pour realiser la meilleure performance.",
+  "Planifier et realiser une epreuve combinee.",
+  "S'echauffer avant un effort et adapter l'intensite de son engagement.",
+  "Aider ses camarades et assumer differents roles sociaux : chronometreur, observateur, juge."
+ ],
+ "cycleObjectives": [
+  "Mesurer sa vitesse maximale sur 40 metres et sa distance sur six minutes, pour disposer de reperes chiffres.",
+  "Construire une mise en action efficace : trois appuis pousses, buste qui se redresse progressivement.",
+  "Tenir une allure annoncee sur une course de duree, sans partir trop vite.",
+  "Conserver sa vitesse jusqu'a la ligne au lieu de se crisper sur les dix derniers metres.",
+  "Annoncer une performance et reduire l'ecart entre ce qui est annonce et ce qui est realise.",
+  "Chronometrer, observer et juger avec precision pour un camarade."
+ ],
+ "plannedTitles": [
+  "Mesures de depart : ma vitesse et mon allure",
+  "Le depart et la mise en action",
+  "Trouver et tenir son allure",
+  "Conserver sa vitesse : frequence et amplitude",
+  "Mi-cycle evalue : 40 metres et six minutes",
+  "Gerer une course en deux temps",
+  "Repeter l'epreuve et preparer son echauffement",
+  "Epreuve finale : performance et projet"
+ ],
+ "sources": [
+  {
+   "type": "Officiel",
+   "title": "Champ d'apprentissage 1 - cycle 4, demi-fond",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsdemifondnd565118pdf-78294.pdf",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Officiel",
+   "title": "Champ d'apprentissage 1 - cycle 4, le relais",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsrelaisnd565128pdf-78300.pdf",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Officiel",
+   "title": "Ressources d'accompagnement du programme d'EPS au cycle 4",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/5724/ressources-d-accompagnement-du-programme-d-education-physique-et-sportive-au-cycle-4",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Academique",
+   "title": "Relais vitesse - proposition de demarche d'enseignement",
+   "org": "Academie de Strasbourg",
+   "url": "https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/eps/ressources/CA1/Demarches_d_enseignement/Relais_vitesse_proposition_de_demarche.pdf",
+   "consulted": "2026-09-03"
+  }
+ ],
+ "protocoleLocal": [
+  "Distance de sprint retenue par l'etablissement : ce cycle est ecrit sur 40 metres, distance qui tient sur un plateau. Sur une piste, tout se transpose sur 50 ou 60 metres sans changer la demarche.",
+  "Duree de l'epreuve de duree : six minutes en cours de cycle, huit minutes a l'epreuve finale. Adapter si le protocole de l'etablissement retient une autre duree, en gardant la meme duree entre le test de depart et l'epreuve finale, faute de quoi la comparaison ne veut plus rien dire.",
+  "Etat du sol : verifier l'absence de gravillons, de flaques et de marquages glissants sur toute la zone de course et sur les vingt metres de ralentissement.",
+  "Meteo : par forte chaleur, decaler la course de duree en debut de seance et prevoir des pauses d'hydratation.",
+  "Eleves asthmatiques ou dispenses partiels : prevenir avant la seance, prevoir un role de chronometreur ou d'observateur qui garde l'eleve dans l'activite.",
+  "Chronometres : verifier qu'ils sont tous du meme modele ou accepter un ecart de mesure ; un chronometre different d'une seance a l'autre fausse la comparaison des performances."
+ ],
+ "studentProfiles": [
+  {
+   "label": "Profil 1 - part trop vite et s'effondre",
+   "observed": "Sur la course de duree, mene le premier tour, puis marche avant la moitie du temps.",
+   "need": "Construire une allure tenable et accepter de partir moins vite que les autres."
+  },
+  {
+   "label": "Profil 2 - court a allure unique",
+   "observed": "Court a la meme vitesse quelle que soit la consigne, sur 40 metres comme sur six minutes.",
+   "need": "Differencier les intensites et sentir la difference entre vitesse maximale et allure de duree."
+  },
+  {
+   "label": "Profil 3 - se crispe sur la fin du sprint",
+   "observed": "Accelere puis se raidit sur les dix derniers metres, epaules hautes et machoire serree.",
+   "need": "Apprendre a relacher pour conserver sa vitesse jusqu'a la ligne."
+  },
+  {
+   "label": "Profil 4 - performant mais sans projet",
+   "observed": "Court vite, mais annonce n'importe quel temps et ne sait pas dire ce qu'il vient de faire.",
+   "need": "Relier ce qu'il annonce, ce qu'il realise et ce qu'il ressent."
+  }
+ ],
+ "finalEvaluation": {
+  "format": "Epreuve en deux parties, dans la meme seance. D'abord deux courses de 40 metres chronometrees, le meilleur temps est retenu, avec une recuperation d'au moins six minutes entre les deux. Ensuite une course de duree de huit minutes, pour laquelle l'eleve annonce avant le depart la distance qu'il vise. Chaque eleve tient aussi le role de chronometreur sur le sprint et celui de compteur de plots sur la duree.",
+  "criteria": [
+   "Le temps sur 40 metres est egal ou meilleur qu'a la seance 1.",
+   "La mise en action se fait sur trois appuis pousses, sans redressement immediat.",
+   "La vitesse est conservee jusqu'a la ligne, sans crispation visible des epaules.",
+   "L'allure de la course de duree est reguliere : l'ecart entre les deux moities de la course reste inferieur a un plot.",
+   "L'ecart entre la distance annoncee et la distance realisee est inferieur a un demi-tour.",
+   "Les roles de chronometreur et de compteur sont tenus avec precision et annonces a voix haute."
+  ],
+  "referential": "Attendus de fin de cycle 4 du CA1 - produire une performance optimale, mesurable a une echeance donnee."
+ },
+ "sessions": [
+  {
+   "number": 1,
+   "theme": "Mesures de depart : ma vitesse et mon allure",
+   "mainObjective": "Etablir les deux reperes chiffres qui serviront de comparaison pendant tout le cycle : le temps sur 40 metres et la distance sur six minutes.",
+   "isDiagnostic": true,
+   "secondaryObjectives": [
+    "Comprendre ce que mesure chacun des deux tests.",
+    "Apprendre a chronometrer et a compter des plots pour un camarade.",
+    "Ecrire ses deux reperes sur sa fiche de suivi."
+   ],
+   "linkToPrevious": "Premiere seance du cycle : on ne compare a rien, on mesure.",
+   "prerequisiteForNext": "Chaque eleve dispose d'un temps sur 40 metres et d'une distance sur six minutes, ecrits sur sa fiche.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "crayons",
+      "per": 0.34,
+      "min": 10
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "decametre",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Mesurer et marquer une ligne droite de 40 metres, plus 20 metres de ralentissement libre apres l'arrivee.",
+     "Marquer un circuit de duree en coupelles, une tous les 25 metres, sur un tour de 200 metres.",
+     "Verifier l'absence de gravillons et de flaques sur les deux zones.",
+     "Preparer les fiches de suivi, une par eleve, avec le nom deja inscrit.",
+     "Verifier que tous les chronometres fonctionnent et sont remis a zero."
+    ],
+    "sketch": "Ligne droite de 40 m, depart et arrivee marques, 20 m de degagement apres l'arrivee.\nA cote, circuit de duree de 200 m en coupelles, une coupelle tous les 25 m.\nTable des fiches de suivi au centre, accessible des deux zones."
+   },
+   "warmup": {
+    "rationale": "Premier echauffement du cycle : on l'explique autant qu'on le fait, puisque les eleves devront le conduire seuls en fin de cycle.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Talons-fesses sur vingt metres, deux fois.",
+       "Montees de genoux sur vingt metres, deux fois.",
+       "Foulees bondissantes souples sur vingt metres.",
+       "Deux accelerations progressives sur trente metres, sans depart force."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 20,
+     "title": "40 metres chronometres : ma vitesse de depart",
+     "objective": "Mesurer la vitesse maximale de chaque eleve sur 40 metres, avec une mesure fiable.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois : un coureur, un chronometreur a l'arrivee, un starter au depart. Deux passages par eleve, avec au moins cinq minutes entre les deux, le meilleur temps est retenu. Le starter donne un depart a la voix : 'a vos marques, pret, partez'. Le chronometreur declenche au 'partez' et arrete quand le buste franchit la ligne.",
+     "studentGoal": "Courir mes 40 metres le plus vite possible, et noter mon meilleur temps.",
+     "instructions": [
+      "Je pars au signal, sans anticiper.",
+      "Je cours jusqu'apres la ligne, je ne ralentis pas avant.",
+      "Je note mon temps sur ma fiche des la fin du passage.",
+      "Quand je chronometre, je ne parle a personne."
+     ],
+     "success": [
+      "Les deux temps du meme eleve ne different pas de plus de trois dixiemes.",
+      "Le coureur franchit la ligne sans avoir ralenti avant.",
+      "Le temps est ecrit sur la fiche avant le passage suivant."
+     ],
+     "execution": [
+      "Depart en appui sur la jambe avant, buste penche.",
+      "Regard vers l'avant, pas vers les pieds.",
+      "Course poursuivie sur cinq metres apres la ligne."
+     ],
+     "watch": [
+      "Les coureurs ralentissent-ils avant la ligne ?",
+      "Les chronometreurs declenchent-ils au signal ou au mouvement ?",
+      "Les temps sont-ils ecrits immediatement ?",
+      "La recuperation entre les deux passages est-elle respectee ?"
+     ],
+     "errors": [
+      "Ralentir dans les cinq derniers metres.",
+      "Chronometrer au depart du coureur plutot qu'au signal.",
+      "Enchainer les deux passages sans recuperer, ce qui fausse la seconde mesure."
+     ],
+     "feedback": [
+      "Ta ligne d'arrivee est cinq metres plus loin que tu ne crois.",
+      "Ton pouce part avec la voix, pas avec ses jambes.",
+      "Assieds-toi, respire : ton deuxieme temps compte autant que le premier."
+     ],
+     "plus": [
+      "Depart accroupi, mains au sol.",
+      "Troisieme passage pour les eleves dont les deux temps s'ecartent trop."
+     ],
+     "minus": [
+      "Depart debout, sans commandement, au moment choisi par le coureur.",
+      "Distance ramenee a 30 metres."
+     ],
+     "diff": {
+      "facilitee": "Depart debout au moment choisi, 30 metres, un seul chronometreur par coureur.",
+      "normale": "40 metres, depart commande, deux passages avec cinq minutes de recuperation.",
+      "complexifiee": "Depart accroupi mains au sol, deux passages, ecart maximal de deux dixiemes exige."
+     },
+     "safety": [
+      "Vingt metres de ralentissement libre apres la ligne d'arrivee, sans obstacle.",
+      "Un seul coureur par couloir, jamais de depassement.",
+      "Echauffement complet obligatoire avant tout sprint.",
+      "Cinq minutes de recuperation entre les deux passages.",
+      "Sol verifie avant la seance : ni gravillons ni flaques."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 20,
+     "title": "Six minutes : ma distance de reference",
+     "objective": "Mesurer la distance parcourue en six minutes, qui servira de base a l'allure de tout le cycle.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Par deux : un coureur, un compteur. Le coureur court six minutes sur le circuit de 200 metres, en essayant de garder la meme vitesse du debut a la fin. Le compteur note le nombre de tours et la coupelle atteinte au coup de sifflet final. Puis rotation.",
+     "studentGoal": "Courir six minutes a une allure que je peux tenir jusqu'au bout, sans marcher.",
+     "instructions": [
+      "Je pars a une allure ou je peux encore parler.",
+      "Je ne marche pas : si c'est trop dur, je ralentis.",
+      "Mon compteur annonce mes tours a voix haute.",
+      "A la fin, je note ma distance sur ma fiche."
+     ],
+     "success": [
+      "La course est courue en entier sans marcher.",
+      "L'ecart entre la premiere et la seconde moitie est inferieur a une demi-coupelle.",
+      "La distance est ecrite sur la fiche avant de quitter la zone."
+     ],
+     "execution": [
+      "Foulee souple, epaules basses.",
+      "Respiration reguliere, sur un rythme choisi et tenu.",
+      "Regard porte loin devant, pas sur les pieds."
+     ],
+     "watch": [
+      "Qui part trop vite et marche avant la fin ?",
+      "Les compteurs annoncent-ils les tours a voix haute ?",
+      "Les allures sont-elles regulieres ou en dents de scie ?",
+      "Quelqu'un s'arrete-t-il brutalement a la fin ?"
+     ],
+     "errors": [
+      "Partir au sprint pour prendre la tete du groupe.",
+      "Marcher plutot que ralentir.",
+      "S'arreter net au coup de sifflet, sans retour au calme."
+     ],
+     "feedback": [
+      "Si tu ne peux plus parler, tu es trop vite.",
+      "Ralentir n'est pas abandonner ; marcher, si.",
+      "Continue a trottiner une minute apres le sifflet."
+     ],
+     "plus": [
+      "Le coureur annonce avant le depart la distance qu'il vise.",
+      "Course de huit minutes pour les eleves les plus a l'aise."
+     ],
+     "minus": [
+      "Course de quatre minutes.",
+      "Alternance libre course et marche rapide, distance quand meme comptee."
+     ],
+     "diff": {
+      "facilitee": "Quatre minutes, alternance course et marche autorisee, distance comptee.",
+      "normale": "Six minutes sans marcher, allure choisie librement.",
+      "complexifiee": "Six minutes avec distance annoncee avant le depart, ecart mesure a l'arrivee."
+     },
+     "safety": [
+      "Retour au calme d'une minute obligatoire apres le sifflet : jamais d'arret net.",
+      "Bouteille d'eau accessible en bordure de circuit.",
+      "Eleves asthmatiques : inhalateur a portee, signale au professeur avant le depart.",
+      "Circuit degage, sans croisement avec la zone de sprint."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ma fiche de projet",
+     "objective": "Transformer deux mesures en un projet chiffre que l'eleve pourra suivre et ajuster.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      }
+     ],
+     "organization": "Individuellement, avec l'aide du professeur : chaque eleve reporte ses deux mesures sur sa fiche, puis ecrit ce qu'il vise a la fin du cycle - un temps sur 40 metres et une distance sur huit minutes. La fiche reste au gymnase entre les seances.",
+     "studentGoal": "Ecrire ce que je vise, en partant de ce que je viens de mesurer.",
+     "instructions": [
+      "Je reporte mon meilleur temps et ma distance.",
+      "J'ecris ce que je vise a la fin du cycle.",
+      "Je choisis un objectif atteignable : un ou deux dixiemes, pas deux secondes.",
+      "Je relis ma fiche au debut de chaque seance."
+     ],
+     "success": [
+      "Les deux mesures et les deux objectifs sont ecrits.",
+      "L'objectif de sprint est compris entre un et trois dixiemes de mieux.",
+      "L'eleve sait dire a voix haute ce qu'il vise."
+     ],
+     "execution": [
+      "Chiffres lisibles, unites ecrites.",
+      "Objectif formule en une phrase : 'je veux courir en ...'."
+     ],
+     "watch": [
+      "Les objectifs sont-ils realistes ou fantaisistes ?",
+      "Les fiches sont-elles completes avant de quitter la zone ?",
+      "Qui n'ose pas ecrire d'objectif ?"
+     ],
+     "errors": [
+      "Annoncer deux secondes de mieux sur 40 metres.",
+      "Laisser la case vide faute de savoir quoi ecrire.",
+      "Recopier l'objectif du voisin."
+     ],
+     "feedback": [
+      "Un dixieme sur 40 metres, c'est deja beaucoup.",
+      "Ton objectif est le tien : il part de ton chiffre a toi.",
+      "Ecris-le, meme approximatif : on l'ajustera a la seance 5."
+     ],
+     "plus": [
+      "Ecrire aussi l'allure visee en coupelles par minute."
+     ],
+     "minus": [
+      "Objectif choisi parmi trois propositions ecrites par le professeur."
+     ],
+     "diff": {
+      "facilitee": "Objectif choisi parmi trois propositions ecrites au tableau.",
+      "normale": "Objectif ecrit par l'eleve a partir de ses deux mesures.",
+      "complexifiee": "Objectif chiffre sur les deux epreuves, avec l'allure visee en coupelles par minute."
+     },
+     "safety": [
+      "Temps calme assis, apres le retour au calme de la course de duree."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Qu'est-ce que mesure le test de 40 metres, et qu'est-ce que mesure celui de six minutes ?",
+     "Pourquoi partir trop vite sur six minutes fait-il perdre de la distance ?"
+    ],
+    "key": "Deux mesures, deux qualites differentes : la vitesse maximale et la capacite a tenir une allure. Tout le cycle consistera a ameliorer les deux, chacun a partir de ses propres chiffres."
+   },
+   "socialRoles": [
+    "Chronometreur : declenche au signal, arrete au passage du buste, annonce le temps a voix haute.",
+    "Starter : donne un depart identique pour tous, sans precipitation.",
+    "Compteur de tours : annonce chaque tour, retient la coupelle finale."
+   ]
+  },
+  {
+   "number": 2,
+   "theme": "Le depart et la mise en action",
+   "mainObjective": "Construire une mise en action efficace : pousser sur trois appuis avant de redresser le buste, au lieu de se relever des le premier pas.",
+   "secondaryObjectives": [
+    "Adopter une position de depart stable et deja orientee vers l'avant.",
+    "Reagir au signal sans anticiper ni se figer.",
+    "Comparer un depart arrete a un depart lance pour comprendre ce que coute la mise en action."
+   ],
+   "linkToPrevious": "Les temps de la seance 1 sont ecrits. On attaque ce qui fait perdre le plus de temps sur 40 metres : les dix premiers metres.",
+   "prerequisiteForNext": "Chaque eleve pousse sur au moins trois appuis avant de redresser le buste.",
+   "setup": {
+    "installationMinutes": 10,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Marquer quatre couloirs de 40 metres, plus 20 metres de ralentissement.",
+     "Poser un plot a 10 metres dans chaque couloir : c'est le repere de redressement.",
+     "Marquer une zone de depart lance : 20 metres d'elan puis 20 metres chronometres.",
+     "Verifier le sol sur les quatre couloirs."
+    ],
+    "sketch": "Quatre couloirs paralleles de 40 m, plot de redressement a 10 m dans chacun.\nA cote, zone de depart lance : 20 m d'elan, puis 20 m entre deux plots.\n20 m de ralentissement apres chaque arrivee."
+   },
+   "warmup": {
+    "rationale": "Gammes centrees sur la poussee et l'orientation du corps, qui sont l'objet de la seance.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Talons-fesses sur vingt metres, deux fois.",
+       "Montees de genoux sur vingt metres, deux fois.",
+       "Depart en fente, trois appuis pousses, marche ensuite : cinq fois.",
+       "Deux accelerations progressives sur trente metres."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Trois appuis avant de se redresser",
+     "objective": "Faire sentir qu'une mise en action se construit sur des appuis pousses vers l'arriere, buste bas.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux, dans un couloir : un coureur, un observateur place a hauteur du plot des 10 metres. Le coureur part en position de fente, buste penche, et doit rester penche jusqu'au plot. L'observateur dit a quel appui le buste s'est redresse. Six passages par eleve, puis rotation.",
+     "studentGoal": "Rester penche jusqu'au plot des 10 metres, en poussant fort a chaque appui.",
+     "instructions": [
+      "Je pars en fente, mon poids deja vers l'avant.",
+      "Je pousse mon appui vers l'arriere, pas vers le haut.",
+      "Je garde mon buste penche jusqu'au plot.",
+      "Mon observateur me dit a quel appui je me suis redresse."
+     ],
+     "success": [
+      "Le buste reste penche sur au moins trois appuis.",
+      "Aucun pas en arriere avant de partir.",
+      "L'observateur peut annoncer le nombre d'appuis pousses."
+     ],
+     "execution": [
+      "Poids du corps en avant des appuis au moment du signal.",
+      "Poussee complete de la jambe arriere, cheville comprise.",
+      "Redressement progressif entre le troisieme et le sixieme appui."
+     ],
+     "watch": [
+      "Le buste se redresse-t-il des le premier appui ?",
+      "Y a-t-il un pas en arriere avant le depart ?",
+      "Les bras accompagnent-ils ou restent-ils colles au corps ?",
+      "Les observateurs regardent-ils le buste ou les pieds ?"
+     ],
+     "errors": [
+      "Se redresser des le premier pas, ce qui annule la poussee.",
+      "Reculer un pied avant de partir : du temps perdu pour rien.",
+      "Regarder la ligne d'arrivee des le depart, ce qui redresse la tete et le buste."
+     ],
+     "feedback": [
+      "Pousse vers l'arriere, pas vers le ciel.",
+      "Ton regard reste au sol jusqu'au plot.",
+      "Trois appuis penches avant de te relever : compte-les."
+     ],
+     "plus": [
+      "Depart accroupi mains au sol, plot de redressement recule a 15 metres."
+     ],
+     "minus": [
+      "Depart debout, plot avance a 6 metres, marche apres le plot."
+     ],
+     "diff": {
+      "facilitee": "Depart debout, redressement autorise des 6 metres, marche apres le plot.",
+      "normale": "Depart en fente, buste penche jusqu'au plot des 10 metres, six passages.",
+      "complexifiee": "Depart accroupi mains au sol, buste penche jusqu'a 15 metres."
+     },
+     "safety": [
+      "Un coureur par couloir, jamais deux de front.",
+      "Vingt metres de ralentissement libre apres l'arrivee.",
+      "Echauffement complet obligatoire avant les departs.",
+      "Deux minutes de recuperation entre les passages."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 16,
+     "title": "Reagir au signal",
+     "objective": "Dissocier le temps de reaction du temps de course, et supprimer l'anticipation.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Par groupes de quatre, alignes derriere une ligne. Le professeur ou un eleve donne un signal a intervalle variable, parfois apres deux secondes, parfois apres six. Course de 15 metres. Tout depart anticipe fait recommencer le groupe entier.",
+     "studentGoal": "Partir au signal, jamais avant, et etre le premier a franchir les 15 metres.",
+     "instructions": [
+      "J'attends le signal, meme s'il tarde.",
+      "Je pars sur le son, pas sur le voisin.",
+      "Je cours les 15 metres en entier."
+     ],
+     "success": [
+      "Aucun depart anticipe sur cinq essais.",
+      "Le premier appui part vers l'avant, pas vers le haut.",
+      "La course est menee jusqu'apres la ligne."
+     ],
+     "execution": [
+      "Immobilite complete avant le signal.",
+      "Premier appui oriente vers l'avant.",
+      "Bras qui partent en meme temps que les jambes."
+     ],
+     "watch": [
+      "Qui part sur le mouvement du voisin plutot que sur le son ?",
+      "L'immobilite avant le signal est-elle reelle ?",
+      "Les eleves ralentissent-ils avant la ligne ?"
+     ],
+     "errors": [
+      "Se balancer d'avant en arriere en attendant le signal.",
+      "Partir au mouvement du voisin.",
+      "Se relever d'un coup au signal, sans pousser."
+     ],
+     "feedback": [
+      "Immobile veut dire immobile : rien ne bouge.",
+      "Ecoute, ne regarde pas.",
+      "Le signal, c'est le depart de ta poussee, pas de ton buste."
+     ],
+     "plus": [
+      "Signal visuel plutot que sonore, donne dans le dos du groupe."
+     ],
+     "minus": [
+      "Signal annonce par un compte a rebours regulier."
+     ],
+     "diff": {
+      "facilitee": "Compte a rebours regulier annonce a voix haute, 10 metres.",
+      "normale": "Signal a intervalle variable, 15 metres, recommencement en cas d'anticipation.",
+      "complexifiee": "Signal visuel donne dans le dos, 15 metres, un seul essai par serie."
+     },
+     "safety": [
+      "Quatre coureurs maximum de front, couloirs marques.",
+      "Dix metres de ralentissement apres la ligne.",
+      "Aucun depart avant que la zone precedente soit degagee."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 14,
+     "title": "Depart arrete contre depart lance",
+     "objective": "Chiffrer ce que coute la mise en action, pour comprendre pourquoi on la travaille.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois. Chaque eleve court deux fois 20 metres chronometres : une fois depart arrete, une fois avec 20 metres d'elan. Les deux temps sont notes cote a cote sur la fiche.",
+     "studentGoal": "Mesurer l'ecart entre mes 20 metres depart arrete et mes 20 metres lances.",
+     "instructions": [
+      "Je note mes deux temps l'un a cote de l'autre.",
+      "Je calcule l'ecart entre les deux.",
+      "Je compare mon ecart a celui de mon groupe."
+     ],
+     "success": [
+      "Les deux temps sont mesures et notes.",
+      "L'eleve sait dire lequel des deux est le plus rapide et pourquoi.",
+      "L'ecart est calcule."
+     ],
+     "execution": [
+      "Elan progressif, sans a-coup, sur le depart lance.",
+      "Passage a pleine vitesse sur toute la zone chronometree."
+     ],
+     "watch": [
+      "L'elan est-il vraiment progressif ?",
+      "Les eleves comprennent-ils ce que mesure l'ecart ?",
+      "Les fiches sont-elles remplies ?"
+     ],
+     "errors": [
+      "Prendre un elan trop court, ce qui annule la difference.",
+      "Comparer son temps a celui du voisin plutot qu'a son propre autre temps."
+     ],
+     "feedback": [
+      "L'ecart, c'est le temps que te coute ton depart.",
+      "Compare-toi a toi : c'est le seul chiffre qui te concerne."
+     ],
+     "plus": [
+      "Refaire le depart arrete apres la situation noyau, pour mesurer un gain immediat."
+     ],
+     "minus": [
+      "Un seul passage lance, l'ecart est calcule avec le professeur."
+     ],
+     "diff": {
+      "facilitee": "Un passage de chaque, ecart calcule avec le professeur.",
+      "normale": "Deux passages, ecart calcule et note par l'eleve.",
+      "complexifiee": "Trois passages, ecart moyen calcule et compare a celui de la seance 5."
+     },
+     "safety": [
+      "Zone d'elan degagee sur toute sa longueur.",
+      "Ralentissement de vingt metres apres la zone chronometree.",
+      "Recuperation complete entre les deux passages."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Pourquoi faut-il rester penche sur les premiers appuis ?",
+     "Que mesure l'ecart entre un 20 metres depart arrete et un 20 metres lance ?"
+    ],
+    "key": "Un depart se pousse vers l'arriere, buste bas, sur trois appuis au moins. L'ecart entre depart arrete et depart lance mesure exactement ce que coute la mise en action : c'est la qu'on gagne des dixiemes."
+   },
+   "socialRoles": [
+    "Observateur de redressement : annonce a quel appui le buste s'est releve.",
+    "Starter : donne un signal identique et imprevisible.",
+    "Chronometreur : declenche au signal, annonce le temps a voix haute."
+   ]
+  },
+  {
+   "number": 3,
+   "theme": "Trouver et tenir son allure",
+   "mainObjective": "Construire une allure tenable sur six minutes et la reconnaitre par des reperes exterieurs autant que par ses sensations.",
+   "secondaryObjectives": [
+    "Traduire la distance de la seance 1 en une allure exprimee en coupelles par minute.",
+    "Tenir cette allure malgre les autres coureurs.",
+    "Observer un camarade et lui annoncer son avance ou son retard."
+   ],
+   "linkToPrevious": "Le depart de sprint est construit. On passe a l'autre bout du cycle : l'allure, qui se pilote au lieu de se subir.",
+   "prerequisiteForNext": "Chaque eleve connait son allure cible en coupelles par minute et l'a tenue au moins quatre minutes.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "coupelles de marquage d'allure",
+      "fixed": 24
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "decametre",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Marquer le circuit de 200 metres avec une coupelle tous les 25 metres, soit huit coupelles.",
+     "Calculer avec les eleves leur allure cible : distance de la seance 1 divisee par six, arrondie a la coupelle.",
+     "Preparer un tableau visible des allures cibles par eleve.",
+     "Verifier le sol sur tout le circuit et prevoir l'eau."
+    ],
+    "sketch": "Circuit de 200 m, huit coupelles numerotees de 1 a 8, une tous les 25 m.\nTableau des allures cibles pose au depart, visible de tous.\nPoint d'eau en bordure, hors du circuit."
+   },
+   "warmup": {
+    "rationale": "Echauffement progressif oriente vers l'endurance : on installe la respiration et la foulee souple, pas la vitesse.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Course souple trois minutes, allure ou l'on peut parler.",
+       "Talons-fesses et montees de genoux sur vingt metres.",
+       "Deux accelerations progressives de trente metres, sans forcer.",
+       "Une minute a l'allure cible, pour la sentir avant de la tenir."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 24,
+     "title": "Tenir son allure au signal",
+     "objective": "Faire correspondre une allure ressentie a un repere exterieur mesurable.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Deux fois six minutes, en alternance par binome. Un coup de sifflet toutes les trente secondes : au signal, le coureur doit se trouver a la coupelle prevue par son allure cible. L'observateur note, a chaque signal, si son coureur est en avance, a l'heure ou en retard.",
+     "studentGoal": "Etre a la bonne coupelle a chaque coup de sifflet.",
+     "instructions": [
+      "Je connais ma coupelle cible avant de partir.",
+      "Je regarde ou je suis au signal, et j'ajuste doucement.",
+      "Je n'accelere jamais pour rattraper d'un coup.",
+      "Mon observateur m'annonce 'avance', 'bon' ou 'retard'."
+     ],
+     "success": [
+      "Au moins huit signaux sur douze a la coupelle prevue.",
+      "Aucune marche pendant les six minutes.",
+      "L'ecart, quand il existe, est corrige sur deux signaux et non d'un coup."
+     ],
+     "execution": [
+      "Foulee reguliere, epaules relachees.",
+      "Respiration calee sur un rythme choisi.",
+      "Ajustement progressif de la vitesse, jamais par a-coups."
+     ],
+     "watch": [
+      "Qui accelere brutalement pour rattraper un retard ?",
+      "Les observateurs annoncent-ils a chaque signal ?",
+      "Qui se cale sur un camarade plutot que sur sa propre allure ?",
+      "Les allures cibles sont-elles realistes ?"
+     ],
+     "errors": [
+      "Suivre un camarade plus rapide et exploser a la moitie.",
+      "Rattraper tout son retard en une accélération.",
+      "Oublier sa coupelle cible et courir au hasard."
+     ],
+     "feedback": [
+      "Ton allure est la tienne : ne cours pas celle du voisin.",
+      "Un demi-plot de retard se rattrape en deux signaux, pas en un.",
+      "Regarde la coupelle, pas tes pieds."
+     ],
+     "plus": [
+      "Signal toutes les quinze secondes, tolerance reduite a un quart de coupelle.",
+      "Allure cible augmentee d'une demi-coupelle par minute."
+     ],
+     "minus": [
+      "Signal toutes les minutes, tolerance d'une coupelle entiere.",
+      "Course reduite a quatre minutes."
+     ],
+     "diff": {
+      "facilitee": "Quatre minutes, signal chaque minute, tolerance d'une coupelle.",
+      "normale": "Six minutes, signal toutes les trente secondes, tolerance d'une demi-coupelle.",
+      "complexifiee": "Six minutes, signal toutes les quinze secondes, allure cible augmentee."
+     },
+     "safety": [
+      "Retour au calme d'une minute apres chaque course.",
+      "Eau accessible entre les deux series.",
+      "Sens de course unique, depassement par l'exterieur.",
+      "Eleves asthmatiques : inhalateur a portee, signale avant le depart."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Contrat d'allure par binome",
+     "objective": "Rendre l'allure explicite en la faisant annoncer avant la course.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux. Le coureur annonce a son observateur la distance qu'il vise sur trois minutes. Il court, l'observateur compte. A l'arrivee, les deux comparent l'annonce et le realise, puis inversent les roles.",
+     "studentGoal": "Annoncer une distance sur trois minutes et m'en approcher au plus pres.",
+     "instructions": [
+      "J'annonce ma distance avant de partir, a voix haute.",
+      "Je cours pour tenir mon annonce, pas pour gagner.",
+      "Je compare a l'arrivee et je note l'ecart."
+     ],
+     "success": [
+      "L'ecart entre annonce et realise est inferieur a une coupelle.",
+      "L'annonce est faite avant le depart, jamais apres.",
+      "L'observateur sait annoncer la distance exacte."
+     ],
+     "execution": [
+      "Depart a l'allure annoncee, sans emballement des trente premieres secondes.",
+      "Allure maintenue jusqu'au signal final."
+     ],
+     "watch": [
+      "Les annonces sont-elles ambitieuses au point d'etre intenables ?",
+      "Qui modifie son annonce apres coup ?",
+      "Les observateurs comptent-ils vraiment ?"
+     ],
+     "errors": [
+      "Annoncer beaucoup trop haut pour impressionner.",
+      "Partir vite puis marcher, ce qui donne la meme distance mais pas la meme course.",
+      "Changer son annonce a l'arrivee."
+     ],
+     "feedback": [
+      "Une annonce tenue vaut mieux qu'une annonce ambitieuse ratee.",
+      "Ce qu'on evalue, c'est l'ecart, pas la distance.",
+      "Ecris ton annonce avant de partir : elle ne bougera plus."
+     ],
+     "plus": [
+      "Annonce a la demi-coupelle pres.",
+      "Course de cinq minutes."
+     ],
+     "minus": [
+      "Annonce choisie parmi trois propositions.",
+      "Course de deux minutes."
+     ],
+     "diff": {
+      "facilitee": "Deux minutes, annonce choisie parmi trois propositions du professeur.",
+      "normale": "Trois minutes, annonce libre a la coupelle pres.",
+      "complexifiee": "Cinq minutes, annonce a la demi-coupelle pres."
+     },
+     "safety": [
+      "Meme sens de course pour tous.",
+      "Retour au calme apres chaque serie.",
+      "Pas de depassement a l'interieur du circuit."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ce que je sens, ce que je mesure",
+     "objective": "Relier les sensations et les chiffres, pour que l'allure devienne pilotable sans coup de sifflet.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux, assis apres le retour au calme : chacun ecrit sur sa fiche trois phrases - comment il respirait a son allure cible, s'il pouvait parler, et ce qu'il ferait differemment la prochaine fois.",
+     "studentGoal": "Decrire mon allure avec mes mots, pas seulement avec des chiffres.",
+     "instructions": [
+      "J'ecris comment je respirais.",
+      "Je dis si je pouvais parler en courant.",
+      "J'ecris une chose a changer la prochaine fois."
+     ],
+     "success": [
+      "Les trois phrases sont ecrites.",
+      "L'eleve relie une sensation a un chiffre : 'a cette allure, je pouvais parler'.",
+      "Le changement annonce est precis."
+     ],
+     "execution": [
+      "Phrases courtes, a la premiere personne."
+     ],
+     "watch": [
+      "Les eleves relient-ils sensation et allure ?",
+      "Qui recopie le voisin ?",
+      "Les fiches sont-elles rendues completes ?"
+     ],
+     "errors": [
+      "Ecrire 'c'etait bien' sans rien decrire.",
+      "Confondre l'allure du sprint et celle de la duree."
+     ],
+     "feedback": [
+      "Pouvoir parler, c'est un reperage aussi fiable qu'un chronometre.",
+      "Une phrase precise vaut mieux que trois generalites."
+     ],
+     "plus": [
+      "Ecrire l'allure visee pour la seance 5."
+     ],
+     "minus": [
+      "Repondre oralement au professeur plutot qu'a l'ecrit."
+     ],
+     "diff": {
+      "facilitee": "Reponses orales au professeur, notees par lui.",
+      "normale": "Trois phrases ecrites sur la fiche.",
+      "complexifiee": "Trois phrases plus l'allure visee pour la seance 5, en coupelles par minute."
+     },
+     "safety": [
+      "Temps assis, apres retour au calme et hydratation."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "A quoi reconnait-on qu'on court a la bonne allure, sans regarder les coupelles ?",
+     "Pourquoi rattraper un retard d'un seul coup est-il une mauvaise idee ?"
+    ],
+    "key": "Une allure se reconnait a la respiration autant qu'aux reperes au sol. Elle s'ajuste par petites touches : une acceleration brutale coute plus qu'elle ne rapporte."
+   },
+   "socialRoles": [
+    "Observateur d'allure : annonce 'avance', 'bon' ou 'retard' a chaque signal.",
+    "Compteur de coupelles : retient la distance exacte a l'arrivee.",
+    "Responsable du temps : donne les signaux et annonce la derniere minute."
+   ]
+  },
+  {
+   "number": 4,
+   "theme": "Conserver sa vitesse : frequence et amplitude",
+   "mainObjective": "Conserver la vitesse acquise jusqu'a la ligne, en relachant, au lieu de se crisper sur les derniers metres.",
+   "secondaryObjectives": [
+    "Sentir la difference entre courir plus vite et courir plus fort.",
+    "Regler son amplitude de foulee sur des reperes au sol.",
+    "Mesurer un gain sur 40 metres par rapport a la seance 1."
+   ],
+   "linkToPrevious": "Le depart est construit. Restent les trente metres suivants, ou beaucoup perdent ce qu'ils ont gagne.",
+   "prerequisiteForNext": "Chaque eleve franchit la ligne sans crispation visible et connait son nouveau temps.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "decametre",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Marquer une zone de 20 metres lances, precedee de 20 metres d'elan.",
+     "Poser une echelle de plots espaces de 1,30 m sur quinze metres, dans un couloir a part.",
+     "Marquer quatre couloirs de 40 metres avec 20 metres de ralentissement.",
+     "Verifier l'ecartement des plots au decametre : approximatif, l'exercice ne veut plus rien dire."
+    ],
+    "sketch": "Couloir 1 : echelle de plots a 1,30 m sur 15 m.\nCouloirs 2 a 4 : 20 m d'elan puis 20 m chronometres.\nZone de 40 m chronometres a part, avec 20 m de ralentissement."
+   },
+   "warmup": {
+    "rationale": "Gammes centrees sur la frequence et le relachement : ce sont les deux qualites travaillees ensuite.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Talons-fesses rapides sur quinze metres, deux fois.",
+       "Montees de genoux rapides sur quinze metres, deux fois.",
+       "Course en frequence sur l'echelle de plots, deux passages lents.",
+       "Deux accelerations progressives de trente metres, machoire et epaules relachees."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Vingt metres lances, epaules relachees",
+     "objective": "Faire l'experience qu'un relachement du haut du corps augmente la vitesse au lieu de la reduire.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois : un coureur, un chronometreur, un observateur du haut du corps. Vingt metres d'elan progressif puis vingt metres chronometres. Quatre passages : deux en 'serrant' volontairement les poings et la machoire, deux en relachant. Les temps sont compares.",
+     "studentGoal": "Courir mes vingt metres lances plus vite en relachant qu'en serrant.",
+     "instructions": [
+      "Mon elan est progressif : je ne pars pas a fond.",
+      "Sur les passages relaches, mes mains sont ouvertes et ma machoire libre.",
+      "Mon observateur regarde mes epaules et mes mains.",
+      "Je compare mes deux paires de temps."
+     ],
+     "success": [
+      "Le temps relache est meilleur ou egal au temps crispe, sur au moins un des deux passages.",
+      "L'observateur peut decrire l'etat des epaules a chaque passage.",
+      "Les quatre temps sont notes."
+     ],
+     "execution": [
+      "Mains ouvertes, doigts non serres.",
+      "Epaules basses, loin des oreilles.",
+      "Machoire libre, respiration audible."
+     ],
+     "watch": [
+      "Les epaules montent-elles dans les cinq derniers metres ?",
+      "Les poings se ferment-ils au moment de l'effort ?",
+      "L'elan est-il progressif ou explosif ?",
+      "Les eleves comprennent-ils la consigne de relachement ?"
+     ],
+     "errors": [
+      "Confondre relachement et ralentissement.",
+      "Prendre un elan a pleine vitesse, ce qui rend la comparaison inutile.",
+      "Serrer les poings des que la fatigue arrive."
+     ],
+     "feedback": [
+      "Relache tes mains : tes jambes iront plus vite.",
+      "Relacher, ce n'est pas ralentir.",
+      "Tes epaules remontent sur la fin : baisse-les et finis la course."
+     ],
+     "plus": [
+      "Passages avec une balle en mousse tenue sans la serrer dans chaque main."
+     ],
+     "minus": [
+      "Zone chronometree ramenee a quinze metres, elan raccourci."
+     ],
+     "diff": {
+      "facilitee": "Elan de 15 m, zone de 15 m, deux passages seulement.",
+      "normale": "Elan de 20 m, zone de 20 m, quatre passages compares.",
+      "complexifiee": "Passages avec balle en mousse a ne pas ecraser, temps compares au dixieme."
+     },
+     "safety": [
+      "Vingt metres de ralentissement apres la zone chronometree.",
+      "Un coureur a la fois par couloir.",
+      "Trois minutes de recuperation entre les passages.",
+      "Echauffement complet obligatoire avant les passages lances."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "L'echelle de plots : regler son amplitude",
+     "objective": "Faire sentir qu'une foulee trop grande freine, et qu'une frequence elevee se construit.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      }
+     ],
+     "organization": "Par groupes de quatre dans le couloir de l'echelle : un appui entre chaque plot, espaces de 1,30 m. Trois passages lents pour placer les appuis, puis trois passages rapides. Aucun chronometre : c'est la sensation qui compte.",
+     "studentGoal": "Poser un appui entre chaque plot, de plus en plus vite, sans en sauter un.",
+     "instructions": [
+      "Un appui entre deux plots, jamais deux.",
+      "Je regarde deux plots devant moi, pas mes pieds.",
+      "J'augmente la vitesse sans changer mes appuis."
+     ],
+     "success": [
+      "Aucun plot saute sur les trois passages rapides.",
+      "Les appuis restent devant le corps, pas sous le bassin.",
+      "Le regard reste porte devant."
+     ],
+     "execution": [
+      "Appui bref, sous le bassin, non traine.",
+      "Genou qui monte devant, cheville armee.",
+      "Buste droit, sans cassure a la hanche."
+     ],
+     "watch": [
+      "Qui saute des plots pour aller plus vite ?",
+      "Les regards descendent-ils sur les pieds ?",
+      "Les appuis sont-ils poses ou ecrases ?"
+     ],
+     "errors": [
+      "Allonger la foulee pour couvrir deux intervalles.",
+      "Regarder ses pieds, ce qui casse le buste.",
+      "Passer en force plutot qu'en frequence."
+     ],
+     "feedback": [
+      "Un plot, un appui : la vitesse vient apres.",
+      "Regarde loin, tes pieds savent ou ils vont.",
+      "Plus court et plus vite, pas plus grand."
+     ],
+     "plus": [
+      "Ecartement reduit a 1,10 m pour travailler la frequence pure."
+     ],
+     "minus": [
+      "Ecartement porte a 1,50 m, passages en marche rapide d'abord."
+     ],
+     "diff": {
+      "facilitee": "Plots a 1,50 m, deux passages marches puis deux passages courus lentement.",
+      "normale": "Plots a 1,30 m, trois passages lents puis trois rapides.",
+      "complexifiee": "Plots a 1,10 m, passages rapides avec comptage des appuis."
+     },
+     "safety": [
+      "Plots plats et souples, jamais de plots casses.",
+      "Un eleve a la fois sur l'echelle.",
+      "Cinq metres de ralentissement apres le dernier plot."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 14,
+     "title": "40 metres : ou j'en suis",
+     "objective": "Mesurer le gain obtenu depuis la seance 1 et le rapporter au projet ecrit.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois, comme a la seance 1 : deux passages de 40 metres chronometres, cinq minutes de recuperation entre les deux, le meilleur temps est retenu et compare a celui de la seance 1.",
+     "studentGoal": "Comparer mon temps d'aujourd'hui a celui de la premiere seance.",
+     "instructions": [
+      "Je pars comme travaille a la seance 2 : penche, trois appuis.",
+      "Je finis relache, comme aujourd'hui.",
+      "Je note mon temps et l'ecart avec la seance 1."
+     ],
+     "success": [
+      "Le temps est egal ou meilleur qu'a la seance 1.",
+      "Le depart montre au moins trois appuis penches.",
+      "L'ecart est calcule et ecrit."
+     ],
+     "execution": [
+      "Mise en action penchee sur trois appuis.",
+      "Haut du corps relache sur les vingt derniers metres.",
+      "Course poursuivie apres la ligne."
+     ],
+     "watch": [
+      "Le travail des seances 2 et 4 se voit-il dans la course ?",
+      "Qui ralentit encore avant la ligne ?",
+      "Les ecarts sont-ils calcules correctement ?"
+     ],
+     "errors": [
+      "Repartir sur l'ancien depart, buste droit d'emblee.",
+      "Se crisper des que le chronometre est annonce.",
+      "Comparer son temps a celui d'un camarade."
+     ],
+     "feedback": [
+      "Tu as gagne un dixieme : c'est ton depart qui l'a donne.",
+      "Le chrono ne change rien : cours comme a l'entrainement.",
+      "Ton ecart se compare au tien, pas au sien."
+     ],
+     "plus": [
+      "Troisieme passage pour ceux dont l'ecart entre les deux depasse trois dixiemes."
+     ],
+     "minus": [
+      "Un seul passage chronometre."
+     ],
+     "diff": {
+      "facilitee": "Un passage, comparaison faite avec le professeur.",
+      "normale": "Deux passages, meilleur temps retenu, ecart calcule par l'eleve.",
+      "complexifiee": "Trois passages, ecart moyen calcule, projet reajuste dans la foulee."
+     },
+     "safety": [
+      "Vingt metres de ralentissement apres l'arrivee.",
+      "Cinq minutes de recuperation entre les passages.",
+      "Un coureur par couloir."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Pourquoi serrer les poings et la machoire fait-il perdre de la vitesse ?",
+     "Vaut-il mieux allonger sa foulee ou augmenter sa frequence ?"
+    ],
+    "key": "On ne court pas plus vite en forcant : on court plus vite en relachant le haut du corps et en gardant des appuis brefs. La foulee trop grande freine a chaque pose."
+   },
+   "socialRoles": [
+    "Observateur du haut du corps : decrit les epaules, les mains et la machoire.",
+    "Chronometreur : mesure et annonce, sans commenter la performance.",
+    "Responsable de l'echelle : verifie l'ecartement des plots entre les passages."
+   ]
+  },
+  {
+   "number": 5,
+   "theme": "Mi-cycle evalue : 40 metres et six minutes",
+   "mainObjective": "Faire le point chiffre a mi-cycle sur les deux epreuves, et reajuster le projet en consequence.",
+   "secondaryObjectives": [
+    "Refaire les deux tests dans les conditions de la seance 1, pour que la comparaison soit juste.",
+    "Annoncer une performance avant de la realiser.",
+    "Reecrire un objectif de fin de cycle a partir de chiffres reels."
+   ],
+   "linkToPrevious": "Trois seances de travail ont eu lieu depuis les mesures de depart. On regarde ce qu'elles ont produit.",
+   "prerequisiteForNext": "Chaque eleve dispose de nouveaux chiffres et d'un objectif reecrit pour l'epreuve finale.",
+   "setup": {
+    "installationMinutes": 14,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "coupelles de marquage d'allure",
+      "fixed": 24
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "decametre",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Reproduire exactement le dispositif de la seance 1 : memes distances, memes reperes.",
+     "Verifier au decametre que la ligne de 40 metres est identique a celle de la seance 1.",
+     "Ressortir les fiches de suivi et les distribuer avant l'echauffement.",
+     "Prevoir un ordre de passage ecrit, pour ne pas perdre de temps entre les groupes."
+    ],
+    "sketch": "Dispositif identique a la seance 1 : ligne de 40 m avec 20 m de ralentissement,\ncircuit de duree de 200 m en huit coupelles.\nTable des fiches au centre, ordre de passage affiche."
+   },
+   "warmup": {
+    "rationale": "Echauffement d'evaluation : plus long et plus progressif, parce qu'on va chercher une performance maximale a froid dans la seance.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Talons-fesses et montees de genoux sur vingt metres, deux fois chacun.",
+       "Trois accelerations progressives de trente metres, la derniere proche du maximum.",
+       "Une minute a l'allure cible de duree.",
+       "Deux minutes de recuperation avant le premier passage chronometre."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 20,
+     "title": "40 metres evalues",
+     "objective": "Mesurer le temps de sprint dans les conditions exactes de la seance 1.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois, dans les conditions de la seance 1 : deux passages, cinq minutes de recuperation, meilleur temps retenu. Avant son premier passage, chaque eleve annonce a son groupe le temps qu'il vise.",
+     "studentGoal": "Annoncer mon temps, puis m'en approcher au plus pres.",
+     "instructions": [
+      "J'annonce mon temps avant de courir.",
+      "Je pars penche, trois appuis pousses.",
+      "Je finis relache et je passe la ligne sans ralentir.",
+      "Je note mon temps et l'ecart avec mon annonce."
+     ],
+     "success": [
+      "Le temps est egal ou meilleur qu'a la seance 1.",
+      "L'ecart entre le temps annonce et le temps realise est inferieur a trois dixiemes.",
+      "Le depart montre au moins trois appuis penches."
+     ],
+     "execution": [
+      "Mise en action penchee, poussee complete.",
+      "Haut du corps relache sur la seconde moitie.",
+      "Franchissement sans decroissance de vitesse."
+     ],
+     "watch": [
+      "Les annonces sont-elles realistes ?",
+      "Le depart travaille en seance 2 tient-il sous evaluation ?",
+      "Qui se crispe des que le chronometre apparait ?"
+     ],
+     "errors": [
+      "Annoncer un temps fantaisiste pour impressionner.",
+      "Oublier la mise en action penchee sous la pression de l'evaluation.",
+      "Ralentir dans les cinq derniers metres."
+     ],
+     "feedback": [
+      "Ton annonce t'engage : elle doit rester raisonnable.",
+      "Fais ce que tu as travaille : penche, puis relache.",
+      "La ligne est cinq metres plus loin."
+     ],
+     "plus": [
+      "Annonce au dixieme pres, ecart exige inferieur a deux dixiemes."
+     ],
+     "minus": [
+      "Annonce parmi trois propositions, un seul passage."
+     ],
+     "diff": {
+      "facilitee": "Un passage, annonce choisie parmi trois propositions.",
+      "normale": "Deux passages, annonce libre, ecart exige inferieur a trois dixiemes.",
+      "complexifiee": "Deux passages, annonce au dixieme, ecart exige inferieur a deux dixiemes."
+     },
+     "safety": [
+      "Echauffement long obligatoire avant tout passage evalue.",
+      "Vingt metres de ralentissement.",
+      "Cinq minutes de recuperation entre les deux passages.",
+      "Un coureur par couloir."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 20,
+     "title": "Six minutes evaluees",
+     "objective": "Mesurer la distance sur six minutes et l'ecart avec la distance annoncee.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Par deux, comme a la seance 1. Chaque coureur annonce sa distance avant le depart. L'observateur compte les tours et note la coupelle finale, ainsi que la distance a mi-course pour verifier la regularite.",
+     "studentGoal": "Tenir l'allure annoncee du debut a la fin, et le montrer par mes deux moities de course.",
+     "instructions": [
+      "J'annonce ma distance avant de partir.",
+      "Mon observateur note ma distance a trois minutes et a six minutes.",
+      "Je vise deux moities identiques.",
+      "Je note mon ecart d'annonce et mon ecart entre les deux moities."
+     ],
+     "success": [
+      "La distance est egale ou superieure a celle de la seance 1.",
+      "L'ecart entre les deux moities est inferieur a une coupelle.",
+      "L'ecart entre annonce et realise est inferieur a une coupelle."
+     ],
+     "execution": [
+      "Depart a l'allure annoncee, sans emballement.",
+      "Allure tenue, ajustee par petites touches.",
+      "Fin de course sans effondrement ni sprint final."
+     ],
+     "watch": [
+      "Les deux moities sont-elles equilibrees ?",
+      "Qui sprinte la derniere minute pour gonfler sa distance ?",
+      "Les observateurs notent-ils bien le passage a mi-course ?"
+     ],
+     "errors": [
+      "Partir vite puis s'effondrer, ce qui donne deux moities tres inegales.",
+      "Sprinter la derniere minute au lieu de tenir une allure.",
+      "Oublier de noter la mi-course."
+     ],
+     "feedback": [
+      "Deux moities egales valent mieux qu'un beau depart.",
+      "Le sprint final ne rattrape pas trois minutes trop lentes.",
+      "Ton annonce et ta mi-course te disent deja ou tu vas."
+     ],
+     "plus": [
+      "Course de huit minutes, avec passage note toutes les deux minutes."
+     ],
+     "minus": [
+      "Course de quatre minutes, sans annonce prealable."
+     ],
+     "diff": {
+      "facilitee": "Quatre minutes, sans annonce, distance simplement mesuree.",
+      "normale": "Six minutes, annonce prealable, mi-course notee.",
+      "complexifiee": "Huit minutes, annonce prealable, passage note toutes les deux minutes."
+     },
+     "safety": [
+      "Retour au calme d'une minute obligatoire.",
+      "Eau accessible avant et apres.",
+      "Sens de course unique, depassement par l'exterieur.",
+      "Eleves asthmatiques signales, inhalateur a portee."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Reecrire son projet",
+     "objective": "Transformer les mesures de mi-cycle en un objectif tenable pour l'epreuve finale.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Individuellement, assis : chaque eleve compare ses quatre chiffres - seance 1 et seance 5, sur les deux epreuves - puis reecrit son objectif pour la seance 8. Le professeur passe valider les objectifs manifestement irrealistes.",
+     "studentGoal": "Ecrire un objectif de fin de cycle que mes chiffres rendent credible.",
+     "instructions": [
+      "Je compare mes chiffres de la seance 1 et de la seance 5.",
+      "J'ecris ce que je vise a la seance 8, sur les deux epreuves.",
+      "Je m'appuie sur ma progression reelle, pas sur un souhait."
+     ],
+     "success": [
+      "Les quatre chiffres sont ecrits et compares.",
+      "L'objectif final tient compte de la progression constatee.",
+      "L'eleve sait dire pourquoi il vise ce chiffre-la."
+     ],
+     "execution": [
+      "Objectif ecrit en une phrase, avec les deux epreuves."
+     ],
+     "watch": [
+      "Les objectifs sont-ils cette fois appuyes sur des chiffres ?",
+      "Qui a progresse sans s'en rendre compte ?",
+      "Qui n'a pas progresse et se decourage ?"
+     ],
+     "errors": [
+      "Reprendre le meme objectif qu'a la seance 1 sans le reajuster.",
+      "Viser un gain aussi grand que celui deja obtenu, ce qui est rarement tenable.",
+      "Ne rien ecrire faute d'avoir progresse."
+     ],
+     "feedback": [
+      "Tu as gagne deux dixiemes en trois seances : vise-en un, pas cinq.",
+      "Une stagnation sur le sprint peut cacher un vrai progres sur la duree.",
+      "Regarde tes deux moities de course : c'est la que tu as progresse."
+     ],
+     "plus": [
+      "Ecrire aussi la strategie : allure de depart, moment ou accelerer."
+     ],
+     "minus": [
+      "Objectif propose par le professeur a partir des chiffres de l'eleve."
+     ],
+     "diff": {
+      "facilitee": "Objectif propose par le professeur, discute avec l'eleve.",
+      "normale": "Objectif ecrit par l'eleve a partir de ses quatre chiffres.",
+      "complexifiee": "Objectif plus strategie ecrite pour la course de duree."
+     },
+     "safety": [
+      "Temps assis apres retour au calme et hydratation."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Sur quelle epreuve avez-vous le plus progresse, et pourquoi selon vous ?",
+     "Qu'est-ce qu'une bonne annonce : ambitieuse ou tenue ?"
+    ],
+    "key": "A mi-cycle, chacun dispose de quatre chiffres. Ils disent ou l'on a progresse et ce qu'il reste a construire. Une annonce se juge a l'ecart, pas a l'ambition."
+   },
+   "socialRoles": [
+    "Chronometreur d'evaluation : mesure sans commenter, annonce le temps une seule fois.",
+    "Compteur de mi-course : note la distance a trois minutes et a six minutes.",
+    "Secretaire de groupe : verifie que toutes les fiches sont completes avant de partir."
+   ]
+  },
+  {
+   "number": 6,
+   "theme": "Gerer une course en deux temps",
+   "mainObjective": "Apprendre a repartir son effort sur une course de duree : partir juste, finir plus vite qu'on n'a commence.",
+   "secondaryObjectives": [
+    "Courir la seconde moitie d'une course plus vite que la premiere.",
+    "Supporter une alternance d'intensites sans marcher.",
+    "Choisir un moment d'acceleration et s'y tenir."
+   ],
+   "linkToPrevious": "Les chiffres de mi-cycle sont ecrits. On travaille maintenant ce qui separe une course subie d'une course pilotee : la repartition de l'effort.",
+   "prerequisiteForNext": "Chaque eleve a couru une course dont la seconde moitie est au moins egale a la premiere.",
+   "setup": {
+    "installationMinutes": 10,
+    "material": [
+     {
+      "label": "coupelles de marquage d'allure",
+      "fixed": 24
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Remettre le circuit de 200 metres avec ses huit coupelles.",
+     "Afficher le tableau des allures cibles, mis a jour avec les chiffres de la seance 5.",
+     "Prevoir un signal sonore distinct pour la mi-course.",
+     "Verifier l'acces a l'eau."
+    ],
+    "sketch": "Circuit de 200 m, huit coupelles numerotees.\nTableau des allures cibles a jour au depart.\nPoste du responsable du temps a la ligne de depart, visible de tout le circuit."
+   },
+   "warmup": {
+    "rationale": "Echauffement d'endurance, avec un passage a l'allure cible pour la retrouver avant de la faire varier.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train",
+      "details": [
+       "Course souple continue, allure de conversation.",
+       "Changements de direction au signal.",
+       "Mobilisation des bras en courant."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles : cercles et flexions, dix par pied.",
+       "Hanches : montees de genou tenues, balancements avant-arriere.",
+       "Epaules et nuque : cercles lents.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes athletiques",
+      "details": [
+       "Course souple trois minutes.",
+       "Talons-fesses et montees de genoux sur vingt metres.",
+       "Une minute a l'allure cible, puis trente secondes plus vite, pour sentir la difference.",
+       "Deux accelerations progressives de trente metres."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 24,
+     "title": "Deux fois cinq minutes, seconde moitie plus rapide",
+     "objective": "Faire l'experience qu'une course bien repartie finit plus vite qu'elle ne commence.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux, en alternance. Course de cinq minutes avec un signal a la mi-course : l'eleve doit parcourir la seconde moitie a une allure superieure d'une demi-coupelle par minute. L'observateur note les deux distances. Deux series, avec cinq minutes de recuperation active entre les deux.",
+     "studentGoal": "Courir ma deuxieme moitie plus vite que la premiere, sans marcher.",
+     "instructions": [
+      "Je pars volontairement en dessous de mon allure habituelle.",
+      "Au signal de mi-course, j'augmente d'une demi-coupelle par minute.",
+      "Je ne marche pas, meme dans la derniere minute.",
+      "Mon observateur note mes deux distances."
+     ],
+     "success": [
+      "La seconde moitie est superieure ou egale a la premiere.",
+      "Aucune marche sur les cinq minutes.",
+      "Les deux distances sont notees."
+     ],
+     "execution": [
+      "Depart contenu, plus lent que l'allure habituelle.",
+      "Acceleration progressive au signal, pas un sprint.",
+      "Foulee qui reste souple malgre l'augmentation."
+     ],
+     "watch": [
+      "Qui part quand meme trop vite malgre la consigne ?",
+      "L'acceleration au signal est-elle progressive ou brutale ?",
+      "Les observateurs notent-ils la mi-course ?",
+      "Qui marche dans la derniere minute ?"
+     ],
+     "errors": [
+      "Partir a l'allure habituelle, ce qui rend la seconde moitie impossible.",
+      "Sprinter au signal puis s'effondrer.",
+      "Confondre 'plus vite' et 'a fond'."
+     ],
+     "feedback": [
+      "Pars plus lentement que tu ne crois devoir : c'est tout l'exercice.",
+      "Une demi-coupelle de plus, pas un sprint.",
+      "Finir plus vite qu'on a commence, c'est la marque d'une course reussie."
+     ],
+     "plus": [
+      "Trois paliers au lieu de deux : lent, cible, plus rapide."
+     ],
+     "minus": [
+      "Course de trois minutes, acceleration sur la derniere minute seulement."
+     ],
+     "diff": {
+      "facilitee": "Trois minutes, acceleration demandee sur la derniere minute.",
+      "normale": "Cinq minutes, seconde moitie plus rapide d'une demi-coupelle par minute.",
+      "complexifiee": "Cinq minutes en trois paliers croissants, chacun note."
+     },
+     "safety": [
+      "Recuperation active de cinq minutes entre les deux series.",
+      "Eau accessible entre les series.",
+      "Retour au calme d'une minute apres la seconde serie.",
+      "Sens de course unique."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Trente secondes vite, trente secondes lentes",
+     "objective": "Elargir la palette d'allures et apprendre a revenir au calme en courant.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Tout le groupe sur le circuit, en vagues. Au sifflet, alternance de trente secondes rapides et trente secondes lentes, huit fois. Les allures lentes se courent, jamais en marchant.",
+     "studentGoal": "Recuperer en courant lentement, pas en marchant.",
+     "instructions": [
+      "Sur les trente secondes rapides, je cours vite mais pas a fond.",
+      "Sur les trente secondes lentes, je continue de courir.",
+      "Je respire fort et regulierement pendant la partie lente."
+     ],
+     "success": [
+      "Les huit alternances sont courues sans marcher.",
+      "La partie lente est reellement plus lente, pas un arret.",
+      "La derniere alternance rapide vaut la premiere."
+     ],
+     "execution": [
+      "Passage d'une allure a l'autre en deux ou trois foulees.",
+      "Respiration ample sur la partie lente.",
+      "Epaules relachees sur les deux allures."
+     ],
+     "watch": [
+      "Qui marche pendant les trente secondes lentes ?",
+      "Les allures rapides s'effondrent-elles apres la quatrieme repetition ?",
+      "Les transitions sont-elles nettes ?"
+     ],
+     "errors": [
+      "Marcher pendant la recuperation.",
+      "Partir a fond sur la premiere repetition et ne plus tenir.",
+      "Courir les deux allures a la meme vitesse."
+     ],
+     "feedback": [
+      "Lent veut dire lent, pas arrete.",
+      "Garde-en pour la huitieme : c'est elle qui compte.",
+      "On doit voir la difference entre tes deux allures depuis le bord."
+     ],
+     "plus": [
+      "Dix alternances, ou quarante-cinq secondes rapides."
+     ],
+     "minus": [
+      "Six alternances, vingt secondes rapides et quarante lentes."
+     ],
+     "diff": {
+      "facilitee": "Six alternances, vingt secondes rapides et quarante secondes lentes.",
+      "normale": "Huit alternances de trente secondes.",
+      "complexifiee": "Dix alternances, quarante-cinq secondes rapides et trente lentes."
+     },
+     "safety": [
+      "Depart en vagues pour eviter les bouchons au premier virage.",
+      "Retour au calme obligatoire apres la derniere alternance.",
+      "Eleves asthmatiques : intensite adaptee, inhalateur a portee."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ma strategie pour l'epreuve",
+     "objective": "Ecrire la strategie de course qui sera appliquee a l'epreuve finale.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux, assis : chacun ecrit sa strategie pour les huit minutes de la seance 8 - allure de depart, moment d'acceleration, distance visee - puis l'explique a son camarade, qui a le droit de la contester.",
+     "studentGoal": "Ecrire ma strategie en trois lignes et savoir la defendre.",
+     "instructions": [
+      "J'ecris a quelle allure je pars.",
+      "J'ecris quand j'accelere.",
+      "J'ecris la distance que je vise.",
+      "Je l'explique a mon camarade, qui peut me dire si c'est tenable."
+     ],
+     "success": [
+      "Les trois elements sont ecrits.",
+      "La strategie s'appuie sur les chiffres de la seance 5.",
+      "L'eleve sait defendre son choix en une phrase."
+     ],
+     "execution": [
+      "Strategie ecrite en trois lignes courtes, chiffrees."
+     ],
+     "watch": [
+      "Les strategies tiennent-elles compte des chiffres reels ?",
+      "Les camarades osent-ils contester ?",
+      "Qui recopie la strategie du voisin ?"
+     ],
+     "errors": [
+      "Ecrire 'je pars vite et je tiens', ce qui n'est pas une strategie.",
+      "Viser une distance sans rapport avec la seance 5.",
+      "Accepter la strategie du camarade sans la discuter."
+     ],
+     "feedback": [
+      "Une strategie, c'est trois chiffres, pas une intention.",
+      "Ton camarade a le droit de te dire que c'est intenable : ecoute-le.",
+      "Pars de ta seance 5, c'est le seul chiffre fiable que tu aies."
+     ],
+     "plus": [
+      "Ecrire aussi ce qu'on fera si l'on est en retard a mi-course."
+     ],
+     "minus": [
+      "Choisir sa strategie parmi deux, ecrites au tableau."
+     ],
+     "diff": {
+      "facilitee": "Strategie choisie parmi deux propositions ecrites au tableau.",
+      "normale": "Strategie ecrite en trois lignes chiffrees, discutee en binome.",
+      "complexifiee": "Strategie plus plan de secours en cas de retard a mi-course."
+     },
+     "safety": [
+      "Temps assis apres retour au calme."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Pourquoi finir plus vite qu'on a commence est-il le signe d'une course reussie ?",
+     "Pourquoi recuperer en courant plutot qu'en marchant ?"
+    ],
+    "key": "Une course de duree se pilote : on part contenu et on finit plus vite. Marcher pour recuperer casse l'effort ; courir lentement le prolonge."
+   },
+   "socialRoles": [
+    "Observateur de mi-course : note la distance a la moitie et a la fin.",
+    "Responsable du temps : donne les signaux de mi-course et d'alternance.",
+    "Conseiller de binome : conteste une strategie intenable, argument a l'appui."
+   ]
+  },
+  {
+   "number": 7,
+   "theme": "Repeter l'epreuve et preparer son echauffement",
+   "mainObjective": "Repeter l'epreuve finale dans ses conditions reelles et rendre les eleves autonomes sur leur echauffement.",
+   "secondaryObjectives": [
+    "Conduire seul un echauffement complet et adapte a l'epreuve.",
+    "Gerer la recuperation entre deux sprints.",
+    "Verifier sa strategie de course de duree avant l'evaluation."
+   ],
+   "linkToPrevious": "La strategie est ecrite. On la met a l'epreuve une fois, pour pouvoir la corriger avant qu'elle ne compte.",
+   "prerequisiteForNext": "Chaque eleve a conduit son echauffement seul et a repete les deux epreuves.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "coupelles de marquage d'allure",
+      "fixed": 24
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Installer le dispositif complet de l'epreuve finale : sprint et circuit de duree.",
+     "Afficher la trame d'echauffement en trois temps, sans le detail des exercices.",
+     "Preparer l'ordre de passage identique a celui de la seance 8.",
+     "Verifier le sol des deux zones."
+    ],
+    "sketch": "Dispositif complet de l'epreuve : ligne de 40 m avec ralentissement,\ncircuit de duree de 200 m en huit coupelles.\nTrame d'echauffement affichee au depart : mise en train, mobilisation, gammes."
+   },
+   "warmup": {
+    "rationale": "Echauffement conduit par les eleves eux-memes, en groupes de quatre : c'est un attendu du cycle 4, et l'occasion de verifier ce qu'ils en ont retenu.",
+    "steps": [
+     {
+      "dur": 6,
+      "title": "Mise en train conduite par un eleve",
+      "details": [
+       "Un eleve du groupe mene la course souple et les changements de direction.",
+       "Le professeur observe sans intervenir, sauf danger."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation conduite par un deuxieme eleve",
+      "details": [
+       "Chevilles, hanches, epaules, nuque.",
+       "Chaque articulation annoncee a voix haute avant d'etre mobilisee."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Gammes conduites par un troisieme eleve",
+      "details": [
+       "Talons-fesses, montees de genoux, foulees bondissantes.",
+       "Deux accelerations progressives.",
+       "Une minute a l'allure cible."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 20,
+     "title": "Trois fois 40 metres, recuperation geree",
+     "objective": "Apprendre a repeter un sprint sans perdre en qualite, en gerant sa recuperation.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois : trois passages de 40 metres chronometres, avec une recuperation choisie par le coureur lui-meme, entre trois et six minutes. Il annonce avant de partir combien de temps il prend. L'objectif est que le troisieme temps vaille le premier.",
+     "studentGoal": "Faire trois sprints de meme qualite, en choisissant bien ma recuperation.",
+     "instructions": [
+      "J'annonce ma recuperation avant chaque passage.",
+      "Je marche ou trottine pendant la recuperation, je ne m'assois pas.",
+      "Je vise trois temps identiques, pas un temps rapide suivi de deux mauvais."
+     ],
+     "success": [
+      "L'ecart entre le meilleur et le moins bon des trois temps est inferieur a trois dixiemes.",
+      "La recuperation annoncee est respectee.",
+      "Aucun eleve ne s'assoit entre deux passages."
+     ],
+     "execution": [
+      "Mise en action penchee sur les trois passages.",
+      "Recuperation active : marche ou trot leger.",
+      "Course poursuivie apres la ligne a chaque fois."
+     ],
+     "watch": [
+      "Les temps s'effondrent-ils au troisieme passage ?",
+      "Les recuperations annoncees sont-elles respectees ?",
+      "Qui s'assoit entre les passages ?"
+     ],
+     "errors": [
+      "Prendre une recuperation trop courte pour finir plus vite la seance.",
+      "S'asseoir des la fin du passage, ce qui refroidit.",
+      "Donner tout sur le premier passage."
+     ],
+     "feedback": [
+      "Trois temps egaux valent mieux qu'un bon et deux mauvais.",
+      "Reste debout et bouge : ton corps redemarrera plus vite.",
+      "Ta recuperation fait partie de ta performance."
+     ],
+     "plus": [
+      "Quatre passages, recuperation imposee de trois minutes."
+     ],
+     "minus": [
+      "Deux passages, recuperation libre."
+     ],
+     "diff": {
+      "facilitee": "Deux passages, recuperation libre et sans annonce.",
+      "normale": "Trois passages, recuperation annoncee entre trois et six minutes.",
+      "complexifiee": "Quatre passages, recuperation imposee de trois minutes."
+     },
+     "safety": [
+      "Recuperation minimale de trois minutes entre deux sprints.",
+      "Recuperation active obligatoire : jamais assis.",
+      "Vingt metres de ralentissement.",
+      "Arret immediat en cas de douleur musculaire."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 18,
+     "title": "Repetition de la course de duree",
+     "objective": "Verifier la strategie ecrite a la seance 6, dans les conditions de l'epreuve.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Par deux : course de huit minutes, dans les conditions exactes de la seance 8. L'observateur note la distance toutes les deux minutes. A l'arrivee, les deux comparent la course reelle a la strategie ecrite.",
+     "studentGoal": "Appliquer ma strategie et voir si elle tient sur huit minutes.",
+     "instructions": [
+      "Je relis ma strategie avant de partir.",
+      "Je l'applique meme si les autres partent plus vite.",
+      "Mon observateur note ma distance toutes les deux minutes.",
+      "A l'arrivee, je note ce qui a marche et ce qui n'a pas marche."
+     ],
+     "success": [
+      "La strategie ecrite est appliquee du debut a la fin.",
+      "Les quatre distances intermediaires sont notees.",
+      "L'eleve identifie au moins un point a corriger."
+     ],
+     "execution": [
+      "Allure de depart conforme a ce qui etait ecrit.",
+      "Acceleration au moment prevu.",
+      "Course terminee sans marche."
+     ],
+     "watch": [
+      "Les strategies sont-elles appliquees ou abandonnees au premier tour ?",
+      "Qui se laisse entrainer par le rythme des autres ?",
+      "Les observateurs relevent-ils les quatre passages ?"
+     ],
+     "errors": [
+      "Abandonner sa strategie des que quelqu'un double.",
+      "Accelerer avant le moment prevu.",
+      "Ne pas relire sa strategie avant de partir."
+     ],
+     "feedback": [
+      "Ta strategie ne vaut que si tu la suis jusqu'au bout.",
+      "Laisse-les partir : tu les reprendras a la sixieme minute.",
+      "Note ce qui n'a pas marche : c'est ce qu'on corrigera pour la prochaine."
+     ],
+     "plus": [
+      "Course sans coup de sifflet intermediaire : l'eleve gere seul son temps."
+     ],
+     "minus": [
+      "Course de six minutes, avec signal chaque minute."
+     ],
+     "diff": {
+      "facilitee": "Six minutes, signal chaque minute, strategie simplifiee a une allure.",
+      "normale": "Huit minutes, distances relevees toutes les deux minutes.",
+      "complexifiee": "Huit minutes sans signal intermediaire, gestion autonome du temps."
+     },
+     "safety": [
+      "Retour au calme d'une minute obligatoire.",
+      "Eau accessible avant et apres.",
+      "Course de duree placee apres les sprints, jamais avant.",
+      "Sens unique de course."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Corriger sa strategie",
+     "objective": "Ajuster une derniere fois le projet, a partir d'une repetition reelle.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux : chacun compare sa strategie ecrite et sa course reelle, puis corrige un seul element - l'allure de depart, le moment d'acceleration ou la distance visee.",
+     "studentGoal": "Corriger un seul point de ma strategie, celui qui compte le plus.",
+     "instructions": [
+      "Je compare ce que j'avais ecrit et ce que j'ai fait.",
+      "Je corrige un seul element, pas trois.",
+      "J'ecris pourquoi je le corrige."
+     ],
+     "success": [
+      "Un element est corrige et justifie.",
+      "La correction s'appuie sur les distances relevees.",
+      "La fiche est prete pour la seance 8."
+     ],
+     "execution": [
+      "Correction ecrite en une phrase, avec sa raison."
+     ],
+     "watch": [
+      "Les corrections s'appuient-elles sur les relevés ?",
+      "Qui veut tout changer d'un coup ?",
+      "Les fiches sont-elles pretes pour l'evaluation ?"
+     ],
+     "errors": [
+      "Tout changer, ce qui revient a n'avoir pas de strategie.",
+      "Ne rien changer alors que la course a montre un probleme.",
+      "Corriger sans regarder les distances relevées."
+     ],
+     "feedback": [
+      "Un seul changement : sinon tu ne sauras pas ce qui a marche.",
+      "Tes quatre distances te disent ou ca a lache.",
+      "Une correction se justifie, sinon c'est une intuition."
+     ],
+     "plus": [
+      "Ecrire aussi ce qu'on dira a son observateur pour etre aide pendant la course."
+     ],
+     "minus": [
+      "Correction faite oralement avec le professeur."
+     ],
+     "diff": {
+      "facilitee": "Correction discutee oralement avec le professeur et notee par lui.",
+      "normale": "Un element corrige et justifie par ecrit.",
+      "complexifiee": "Correction plus consignes donnees a son observateur pour l'epreuve."
+     },
+     "safety": [
+      "Temps assis apres retour au calme et hydratation."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Qu'avez-vous change dans votre echauffement quand vous l'avez conduit seuls ?",
+     "Pourquoi ne corriger qu'un seul point de sa strategie ?"
+    ],
+    "key": "Un echauffement se conduit seul a la fin d'un cycle : c'est un attendu, pas un supplement. Et une strategie se corrige par petites touches, sinon on ne sait plus ce qui l'a fait progresser."
+   },
+   "socialRoles": [
+    "Meneur d'echauffement : conduit une des trois parties pour son groupe.",
+    "Observateur de distances : releve la distance toutes les deux minutes.",
+    "Gardien du temps de recuperation : verifie que la recuperation annoncee est respectee."
+   ]
+  },
+  {
+   "number": 8,
+   "theme": "Epreuve finale : performance et projet",
+   "mainObjective": "Realiser la meilleure performance possible sur les deux epreuves, et rendre compte de l'ecart avec ce qui avait ete annonce.",
+   "isFinalEvaluation": true,
+   "secondaryObjectives": [
+    "Conduire seul son echauffement.",
+    "Tenir les roles de chronometreur et de compteur avec precision.",
+    "Comparer la performance realisee a la performance annoncee."
+   ],
+   "linkToPrevious": "L'epreuve a ete repetee et la strategie corrigee. Il ne reste qu'a la conduire.",
+   "prerequisiteForNext": "Le cycle est termine : chaque eleve dispose de sa progression chiffree sur les deux epreuves.",
+   "setup": {
+    "installationMinutes": 14,
+    "material": [
+     {
+      "label": "plots de marquage",
+      "fixed": 40
+     },
+     {
+      "label": "coupelles de marquage d'allure",
+      "fixed": 24
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "fiches de suivi individuelles",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "sifflet",
+      "fixed": 1
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "decametre",
+      "fixed": 1
+     },
+     {
+      "label": "fiche recapitulative de classe",
+      "fixed": 2
+     }
+    ],
+    "instructions": [
+     "Reproduire exactement le dispositif des seances 1 et 5, verifie au decametre.",
+     "Afficher l'ordre de passage et les roles de chacun.",
+     "Distribuer les fiches de suivi avant l'echauffement, pour que chacun relise sa strategie.",
+     "Preparer la fiche recapitulative de classe, remplie au fur et a mesure."
+    ],
+    "sketch": "Dispositif identique aux seances 1 et 5.\nOrdre de passage et roles affiches au depart.\nFiche recapitulative de classe tenue par le professeur, visible en fin de seance."
+   },
+   "warmup": {
+    "rationale": "Echauffement conduit par les eleves, comme a la seance 7 : c'est aussi ce qui est evalue.",
+    "steps": [
+     {
+      "dur": 7,
+      "title": "Mise en train conduite par le groupe",
+      "details": [
+       "Course souple et changements de direction, menes par un eleve.",
+       "Duree annoncee et tenue."
+      ]
+     },
+     {
+      "dur": 6,
+      "title": "Mobilisation articulaire",
+      "details": [
+       "Chevilles, hanches, epaules, nuque, annoncees a voix haute.",
+       "Fentes marchees sur vingt metres."
+      ]
+     },
+     {
+      "dur": 9,
+      "title": "Gammes et mise en action",
+      "details": [
+       "Talons-fesses, montees de genoux, foulees bondissantes.",
+       "Trois accelerations progressives, la derniere proche du maximum.",
+       "Une minute a l'allure cible de duree.",
+       "Trois minutes de recuperation avant le premier passage."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 24,
+     "title": "Epreuve de sprint : 40 metres",
+     "objective": "Realiser la meilleure performance possible sur 40 metres, dans les conditions des seances 1 et 5.",
+     "material": [
+      {
+       "label": "plots de marquage",
+       "fixed": 40
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois, dans l'ordre affiche : deux passages de 40 metres chronometres, six minutes de recuperation entre les deux, meilleur temps retenu. Chaque eleve annonce son temps avant le premier passage et tient le role de chronometreur pour son groupe.",
+     "studentGoal": "Realiser mon meilleur temps et m'approcher de ce que j'ai annonce.",
+     "instructions": [
+      "J'annonce mon temps avant de partir.",
+      "Je pars penche, sur trois appuis pousses.",
+      "Je finis relache, sans ralentir avant la ligne.",
+      "Je chronometre mes camarades avec la meme rigueur qu'on m'a chronometre."
+     ],
+     "success": [
+      "Le temps est egal ou meilleur qu'a la seance 1.",
+      "La mise en action se fait sur trois appuis penches.",
+      "L'ecart entre le temps annonce et le temps realise est inferieur a trois dixiemes.",
+      "Le role de chronometreur est tenu sans erreur de manipulation."
+     ],
+     "execution": [
+      "Poussee complete sur les trois premiers appuis, buste bas.",
+      "Redressement progressif entre le troisieme et le sixieme appui.",
+      "Haut du corps relache sur les vingt derniers metres.",
+      "Course poursuivie apres la ligne."
+     ],
+     "watch": [
+      "Le depart travaille tient-il sous evaluation ?",
+      "Les epaules montent-elles sur la fin ?",
+      "Les chronometreurs declenchent-ils au signal ?",
+      "Les recuperations de six minutes sont-elles respectees ?"
+     ],
+     "errors": [
+      "Se redresser des le premier appui sous l'effet du stress.",
+      "Se crisper des les vingt derniers metres.",
+      "Ecourter la recuperation pour en finir."
+     ],
+     "feedback": [
+      "Fais ce que tu as travaille : penche d'abord, relache ensuite.",
+      "Six minutes de recuperation, pas quatre : c'est ton deuxieme temps qui compte.",
+      "Ta ligne est cinq metres plus loin."
+     ],
+     "plus": [
+      "Depart accroupi mains au sol pour les eleves qui l'ont travaille."
+     ],
+     "minus": [
+      "Un seul passage chronometre, depart debout."
+     ],
+     "diff": {
+      "facilitee": "Un passage, depart debout, annonce choisie parmi trois propositions.",
+      "normale": "Deux passages, depart en fente, annonce libre.",
+      "complexifiee": "Deux passages, depart accroupi, annonce au dixieme pres."
+     },
+     "safety": [
+      "Echauffement complet et conduit obligatoire avant tout passage.",
+      "Vingt metres de ralentissement libre apres la ligne.",
+      "Six minutes de recuperation entre les deux passages.",
+      "Un coureur par couloir, aucun depassement.",
+      "Arret immediat en cas de douleur musculaire, sans discussion."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 22,
+     "title": "Epreuve de duree : huit minutes sur projet",
+     "objective": "Realiser la distance annoncee sur huit minutes, en tenant une allure reguliere.",
+     "material": [
+      {
+       "label": "coupelles de marquage d'allure",
+       "fixed": 24
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "sifflet",
+       "fixed": 1
+      }
+     ],
+     "organization": "Par deux : course de huit minutes, distance annoncee avant le depart. L'observateur releve la distance toutes les deux minutes et annonce la derniere minute. Les deux moities de course sont comparees a l'arrivee.",
+     "studentGoal": "Tenir mon allure huit minutes et finir au plus pres de ma distance annoncee.",
+     "instructions": [
+      "Je relis ma strategie corrigee avant de partir.",
+      "J'annonce ma distance a mon observateur.",
+      "Je pars a l'allure prevue, meme si les autres partent plus vite.",
+      "Je note mon ecart a l'arrivee."
+     ],
+     "success": [
+      "La distance est egale ou superieure a celle de la seance 5.",
+      "L'ecart entre les deux moities est inferieur a une coupelle.",
+      "L'ecart entre la distance annoncee et la distance realisee est inferieur a un demi-tour.",
+      "La course est terminee sans marcher."
+     ],
+     "execution": [
+      "Allure de depart conforme a la strategie ecrite.",
+      "Ajustements progressifs, jamais par a-coups.",
+      "Fin de course sans effondrement.",
+      "Retour au calme couru apres le signal final."
+     ],
+     "watch": [
+      "Les strategies sont-elles suivies sous evaluation ?",
+      "Qui part avec le groupe plutot qu'a son allure ?",
+      "Les observateurs relevent-ils les quatre passages ?",
+      "Qui s'arrete net au signal ?"
+     ],
+     "errors": [
+      "Abandonner sa strategie au premier tour.",
+      "Sprinter la derniere minute pour gonfler la distance.",
+      "S'arreter net au signal, sans retour au calme."
+     ],
+     "feedback": [
+      "Ta course, ton allure : laisse-les partir.",
+      "Deux moities egales, c'est ce qu'on evalue.",
+      "Continue a trottiner une minute apres le signal."
+     ],
+     "plus": [
+      "Course de dix minutes pour les eleves qui l'ont preparee."
+     ],
+     "minus": [
+      "Course de six minutes, distance annoncee parmi trois propositions."
+     ],
+     "diff": {
+      "facilitee": "Six minutes, distance annoncee parmi trois propositions, signal chaque minute.",
+      "normale": "Huit minutes, distance annoncee librement, relevés toutes les deux minutes.",
+      "complexifiee": "Dix minutes, distance annoncee a la demi-coupelle, gestion autonome du temps."
+     },
+     "safety": [
+      "Course de duree placee apres les sprints, jamais avant.",
+      "Retour au calme d'une minute obligatoire.",
+      "Eau accessible avant et apres la course.",
+      "Eleves asthmatiques signales, inhalateur a portee, allure adaptee.",
+      "Sens de course unique, depassement par l'exterieur."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Bilan chiffre du cycle",
+     "objective": "Rendre compte de sa progression sur les deux epreuves et de la justesse de ses annonces.",
+     "material": [
+      {
+       "label": "fiches de suivi individuelles",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "fiche recapitulative de classe",
+       "fixed": 2
+      }
+     ],
+     "organization": "Individuellement puis en groupe : chaque eleve reporte ses chiffres des seances 1, 5 et 8 sur sa fiche, calcule ses deux progressions et son ecart d'annonce. Un tour de parole permet a chacun de dire ce qu'il a le plus progresse.",
+     "studentGoal": "Dire en une phrase ce que ce cycle m'a fait gagner, chiffres a l'appui.",
+     "instructions": [
+      "Je reporte mes chiffres des trois seances de mesure.",
+      "Je calcule ma progression sur chacune des deux epreuves.",
+      "Je calcule l'ecart entre ce que j'avais annonce et ce que j'ai realise.",
+      "Je dis en une phrase ce que j'ai le plus progresse."
+     ],
+     "success": [
+      "Les six chiffres sont reportes et les deux progressions calculees.",
+      "L'ecart d'annonce est calcule.",
+      "L'eleve sait dire ou il a progresse, et pourquoi."
+     ],
+     "execution": [
+      "Fiche complete, chiffres lisibles, une phrase de bilan ecrite."
+     ],
+     "watch": [
+      "Toutes les fiches sont-elles completes ?",
+      "Qui a progresse sur la duree sans l'avoir remarque ?",
+      "Les eleves relient-ils leur progression a ce qui a ete travaille ?"
+     ],
+     "errors": [
+      "Ne regarder que le sprint et ignorer la course de duree.",
+      "Comparer sa progression a celle d'un camarade.",
+      "Laisser la fiche incomplete."
+     ],
+     "feedback": [
+      "Deux dixiemes sur 40 metres, c'est une vraie progression.",
+      "Regarde aussi ta duree : c'est souvent la que le cycle se voit.",
+      "Ta progression se compare a la tienne, pas a celle du voisin."
+     ],
+     "plus": [
+      "Rediger deux lignes sur ce qu'on garderait pour un prochain cycle."
+     ],
+     "minus": [
+      "Bilan rempli avec le professeur."
+     ],
+     "diff": {
+      "facilitee": "Bilan rempli avec le professeur, une seule progression calculee.",
+      "normale": "Six chiffres reportes, deux progressions et un ecart d'annonce calcules.",
+      "complexifiee": "Bilan complet plus deux lignes sur ce qu'on garderait pour la suite."
+     },
+     "safety": [
+      "Temps assis, apres retour au calme et hydratation."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Sur quelle epreuve avez-vous le plus progresse, et grace a quel travail ?",
+     "Qu'est-ce qui est le plus difficile : courir vite, ou courir a l'allure qu'on a annoncee ?"
+    ],
+    "key": "Le cycle se termine sur deux chiffres compares a ceux du premier jour, et sur un ecart d'annonce. Produire une performance, c'est courir vite ; la produire a une echeance donnee, c'est savoir ce qu'on va faire avant de le faire."
+   },
+   "socialRoles": [
+    "Chronometreur d'epreuve : mesure et annonce, sans commenter la performance.",
+    "Compteur de plots : releve la distance toutes les deux minutes et annonce la derniere minute.",
+    "Meneur d'echauffement : conduit une partie de l'echauffement du groupe.",
+    "Secretaire : verifie que toutes les fiches du groupe sont completes avant de quitter la zone."
+   ]
+  }
+ ]
+}
