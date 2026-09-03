@@ -84,8 +84,12 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       // c'est cette ponctuation qui porte la structure. Une date Postgres s'ecrit
       // 2026-09-01T10:00:00+00:00, et un "+" non encode se relit comme une espace dans une URL :
       // la date devenait invalide et le serveur refusait la requete.
-      const borne = encodeURIComponent(repere?.updatedAt ?? "");
-      const filtre = repere
+      // Un repere sans date ne vaut rien : la borne partait vide et le serveur refusait la
+      // requete entiere ("invalid input syntax for type timestamp"), table apres table, sans que
+      // rien n'indique laquelle. On repart alors du debut plutot que d'envoyer une date absente.
+      const depuis = repere?.updatedAt || null;
+      const borne = depuis ? encodeURIComponent(depuis) : null;
+      const filtre = borne
         ? `or=(updated_at.gt."${borne}",and(updated_at.eq."${borne}",id.gt."${encodeURIComponent(repere.id)}"))`
         : `updated_at=gte.1970-01-01T00%3A00%3A00Z`;
       const lignes = await lire(
@@ -97,7 +101,7 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       // garantie qu'une ligne n'est jamais rapportee deux fois, et elle ne doit pas dependre de
       // la bonne interpretation d'un filtre par le serveur.
       const nouvelles = lignes.filter(ligne =>
-        !(repere && ligne.updated_at === repere.updatedAt && String(ligne.id) <= String(repere.id)));
+        !(depuis && ligne.updated_at === depuis && String(ligne.id) <= String(repere.id)));
       nouvelles.forEach(ligne => records.push({
         entity: table,
         id: ligne.id,
@@ -107,8 +111,10 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
         data: ligne
       }));
 
+      // Un repere n'est enregistre que s'il est utilisable : une ligne sans date ne peut pas
+      // servir de point de reprise, et l'enregistrer condamnerait toutes les lectures suivantes.
       const dernier = lignes[lignes.length - 1];
-      if (dernier) suivants[table] = { updatedAt: dernier.updated_at, id: dernier.id };
+      if (dernier?.updated_at) suivants[table] = { updatedAt: dernier.updated_at, id: dernier.id };
     }
 
     records.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt) || String(a.id).localeCompare(String(b.id)));

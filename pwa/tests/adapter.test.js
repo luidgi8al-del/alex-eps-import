@@ -304,3 +304,26 @@ test("la borne de lecture est encodee, fuseau compris", async () => {
       "et se relire intact cote serveur");
   } finally { reseau.rendre(); }
 });
+
+/**
+ * Un repere sans date est inexploitable. Envoye tel quel, il produit une borne vide et Postgres
+ * refuse la requete entiere : "invalid input syntax for type timestamp with time zone". La
+ * lecture echouait alors a chaque passage, sans que le message dise quelle table etait en cause.
+ */
+test("un repere sans date fait repartir la lecture du debut", async () => {
+  const reseau = fauxReseau(() => reponse([]));
+  try {
+    await adaptateur().pullChanges({ cursor: { classes: { updatedAt: null, id: "c1" } }, limit: 10 });
+    const [appel] = reseau.appels;
+    assert(!appel.url.includes("or=("), "sans date utilisable, pas de filtre sur la borne");
+    assert(appel.url.includes("updated_at=gte.1970"), "on repart du debut");
+  } finally { reseau.rendre(); }
+});
+
+test("une ligne sans date ne devient pas le repere de reprise", async () => {
+  const reseau = fauxReseau(() => reponse([{ id: "c1", updated_at: null, version: 1 }]));
+  try {
+    const page = await adaptateur().pullChanges({ limit: 10 });
+    assertEgal(page.cursor.classes, undefined, "un repere inutilisable condamnerait les lectures suivantes");
+  } finally { reseau.rendre(); }
+});
