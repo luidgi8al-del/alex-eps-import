@@ -376,20 +376,24 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
     const className = creationClassName(grade, classNumber);
     const classId = crypto.randomUUID();
     const now = new Date().toISOString();
-    const classRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: classId, user_id: session.user_id, grade, class_number: classNumber,
-        school_year: schoolYear, name: className,
-        // Vide quand la classe est pour soi : le declencheur cote base refuse une attribution
-        // faite par un non-administrateur ou vers un professeur d'un autre etablissement.
-        assigned_teacher_id: (document.getElementById("assignedTeacher") || {}).value || null,
-        updated_at: now, deleted: false
-      })
-    });
-    if (!classRes.ok) {
-      const details = await classRes.text();
-      throw new Error(`Echec de creation de la classe${details ? ` : ${details}` : "."}`);
+    const nouvelleClasse = {
+      id: classId, user_id: session.user_id, grade, class_number: classNumber,
+      school_year: schoolYear, name: className,
+      // Vide quand la classe est pour soi : le declencheur cote base refuse une attribution
+      // faite par un non-administrateur ou vers un professeur d'un autre etablissement.
+      assigned_teacher_id: (document.getElementById("assignedTeacher") || {}).value || null,
+      updated_at: now, deleted: false
+    };
+    if (modeHorsConnexion) {
+      await modeHorsConnexion.enregistrer("classes", classId, nouvelleClasse);
+    } else {
+      const classRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, {
+        method: "POST", body: JSON.stringify(nouvelleClasse)
+      });
+      if (!classRes.ok) {
+        const details = await classRes.text();
+        throw new Error(`Echec de creation de la classe${details ? ` : ${details}` : "."}`);
+      }
     }
 
     if (parsedStudents.length > 0) {
@@ -403,11 +407,18 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
           updated_at: now, deleted: false
         };
       });
-      const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
-        method: "POST",
-        body: JSON.stringify(studentsPayload)
-      });
-      if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+      if (modeHorsConnexion) {
+        // Un eleve a la fois : la file d'attente raisonne par fiche, ce qui permet d'en renvoyer
+        // une seule si une autre est refusee, au lieu de perdre tout l'import.
+        for (const eleve of studentsPayload) {
+          await modeHorsConnexion.enregistrer("students", eleve.id, eleve);
+        }
+      } else {
+        const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+          method: "POST", body: JSON.stringify(studentsPayload)
+        });
+        if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+      }
     }
 
     sendOk.textContent = "Enregistre. Synchronisez l'application (bouton Synchroniser) pour la recuperer.";
@@ -492,9 +503,19 @@ async function loadImports() {
   listEl.innerHTML = '<div class="muted">Chargement...</div>';
   try {
     await chargerColleguesAttribuables();
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
-    const rows = await res.json();
-    if (!res.ok) throw new Error("Impossible de charger les classes.");
+    let rows;
+    if (modeHorsConnexion) {
+      // La copie locale fait foi a l'affichage, meme connecte : une classe creee dans un gymnase
+      // sans reseau doit rester visible jusqu'a son envoi.
+      const lecture = await modeHorsConnexion.lire("classes", {
+        trier: (a, b) => String(a.name || "").localeCompare(String(b.name || ""))
+      });
+      rows = lecture.rows;
+    } else {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
+      rows = await res.json();
+      if (!res.ok) throw new Error("Impossible de charger les classes.");
+    }
     if (rows.length === 0) {
       listEl.innerHTML = '<div class="muted">Aucune classe pour le moment.</div>';
       return;
@@ -542,12 +563,21 @@ async function loadImports() {
 // (indiscernable d'une ligne jamais recuperee) au lieu d'une suppression explicite a repercuter.
 async function deleteImport(id) {
   const now = new Date().toISOString();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${id}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
-  });
-  await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${id}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
-  });
+  if (modeHorsConnexion) {
+    // Le serveur sait supprimer tous les eleves d'une classe en une requete ; la file d'attente
+    // raisonne par fiche. On lit donc la classe localement pour poser une suppression par eleve :
+    // c'est plus verbeux, mais chaque suppression peut etre suivie, refusee ou rejouee seule.
+    const eleves = await modeHorsConnexion.lire("students", { ou: e => e.class_id === id });
+    for (const eleve of eleves.rows) await modeHorsConnexion.supprimer("students", eleve.id);
+    await modeHorsConnexion.supprimer("classes", id);
+  } else {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${id}`, {
+      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
+    });
+    await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${id}`, {
+      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
+    });
+  }
   loadImports();
 }
 
@@ -608,8 +638,18 @@ async function openEditImport(row) {
   document.getElementById("editError").textContent = "";
   document.getElementById("editImportPanel").style.display = "block";
   document.getElementById("editStudentsBody").innerHTML = '<tr><td colspan="7" class="muted">Chargement...</td></tr>';
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${row.id}&deleted=eq.false&select=*&order=last_name.asc`);
-  editStudents = res.ok ? await res.json() : [];
+  if (modeHorsConnexion) {
+    const lecture = await modeHorsConnexion.lire("students", {
+      ou: e => e.class_id === row.id,
+      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""))
+    });
+    // Une copie : l'ecran modifie les fiches en place, et la copie locale ne doit pas bouger
+    // avant l'enregistrement.
+    editStudents = lecture.rows.map(e => ({ ...e }));
+  } else {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${row.id}&deleted=eq.false&select=*&order=last_name.asc`);
+    editStudents = res.ok ? await res.json() : [];
+  }
   renderEditStudents();
 }
 
@@ -645,17 +685,25 @@ document.getElementById("saveEditBtn").addEventListener("click", async () => {
   try {
     const grade = document.getElementById("editGrade").value;
     const classNumber = parseInt(document.getElementById("editClassNumber").value, 10);
-    const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${editImportId}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        grade, class_number: classNumber,
-        school_year: document.getElementById("editSchoolYear").value.trim(),
-        name: creationClassName(grade, classNumber), updated_at: now
-      })
-    });
-    if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
+    const modifications = {
+      grade, class_number: classNumber,
+      school_year: document.getElementById("editSchoolYear").value.trim(),
+      name: creationClassName(grade, classNumber), updated_at: now
+    };
+    if (modeHorsConnexion) {
+      // La fusion se fait champ par champ : on renvoie la fiche complete, sinon les colonnes
+      // absentes seraient prises pour des effacements volontaires.
+      const actuelle = (await modeHorsConnexion.lire("classes", { ou: c => c.id === editImportId })).rows[0] || {};
+      await modeHorsConnexion.enregistrer("classes", editImportId, { ...actuelle, ...modifications });
+    } else {
+      const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${editImportId}`, {
+        method: "PATCH", body: JSON.stringify(modifications)
+      });
+      if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
+    }
 
     for (const id of editStudentsToDelete) {
+      if (modeHorsConnexion) { await modeHorsConnexion.supprimer("students", id); continue; }
       await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${id}`, {
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: now })
       });
@@ -670,18 +718,24 @@ document.getElementById("saveEditBtn").addEventListener("click", async () => {
 
     // Un eleve ajoute n'a pas encore d'identifiant : le mettre a jour comme les autres
     // n'aurait rien ecrit du tout. Il faut le creer.
-    const nouveaux = editStudents.filter(s => !s.id && (s.last_name || s.first_name));
+    const nouveaux = editStudents.filter(s => !s.id && (s.last_name || s.first_name))
+      .map(s => ({ id: crypto.randomUUID(), class_id: editImportId, user_id: session.user_id,
+                   ...champs(s), deleted: false }));
     if (nouveaux.length) {
-      const creationRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
-        method: "POST",
-        body: JSON.stringify(nouveaux.map(s => ({
-          id: crypto.randomUUID(), class_id: editImportId, user_id: session.user_id,
-          ...champs(s), deleted: false
-        })))
-      });
-      if (!creationRes.ok) throw new Error("Echec de l'ajout des nouveaux eleves.");
+      if (modeHorsConnexion) {
+        for (const eleve of nouveaux) await modeHorsConnexion.enregistrer("students", eleve.id, eleve);
+      } else {
+        const creationRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
+          method: "POST", body: JSON.stringify(nouveaux)
+        });
+        if (!creationRes.ok) throw new Error("Echec de l'ajout des nouveaux eleves.");
+      }
     }
     for (const s of editStudents.filter(s => s.id)) {
+      if (modeHorsConnexion) {
+        await modeHorsConnexion.enregistrer("students", s.id, { ...s, ...champs(s) });
+        continue;
+      }
       await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${s.id}`, {
         method: "PATCH", body: JSON.stringify(champs(s))
       });

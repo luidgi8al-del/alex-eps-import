@@ -407,41 +407,6 @@ async function addEpiInspection() {
   }
 }
 
-/**
- * Demarre le mode hors connexion (la partie "application installable" du site).
- *
- * Charge a la demande, et jamais bloquant : une panne de ce cote ne doit pas empecher
- * d'utiliser le site. D'ou le catch silencieux - chaque rubrique raccordee sait retomber sur
- * son fonctionnement d'avant, en direct avec Supabase.
- */
-let modeHorsConnexion = null;
-async function demarrerModeHorsConnexion() {
-  if (modeHorsConnexion) return modeHorsConnexion;
-  try {
-    const module = await import("./pwa/bootstrap.js");
-    modeHorsConnexion = await module.demarrerHorsConnexion({
-      url: SUPABASE_URL,
-      anonKey: SUPABASE_KEY,
-      // Relue a chaque appel : une bascule de compte ne doit pas figer le moteur sur l'ancien.
-      session: () => session,
-      statusElement: document.getElementById("syncStatus"),
-      conflictElement: document.getElementById("conflictPanel"),
-      // Miroir des regles de la base : ce qui sera refuse n'entre pas dans la file d'attente.
-      droits: droitEcriture,
-      // Une seule table pour commencer. Le reste du site continue de parler a Supabase en
-      // direct : on n'expose pas toutes les rubriques au premier essai.
-      tables: ["sport_installations"]
-    });
-    modeHorsConnexion?.surEtat(detail => {
-      if (detail.state === "synced" && currentWebTab === "equipement") loadInstallationsList();
-    });
-  } catch (e) {
-    console.warn("Mode hors connexion indisponible :", e.message);
-    modeHorsConnexion = null;
-  }
-  return modeHorsConnexion;
-}
-
 async function createInstallation() {
   const input = document.getElementById("installationName");
   const errorEl = document.getElementById("installationError");

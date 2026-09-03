@@ -55,7 +55,13 @@
       {
         nom: "Classe ouverte · tableau de bord",
         action: async () => {
-          f.document.querySelector("#importsList .classePuce").click();
+          // On ouvre explicitement la classe du jeu d'essai qui a une activite, un cycle et une
+          // dispense. Prendre "la premiere de la liste" faisait dependre le resultat de l'ordre
+          // d'affichage, et un vrai defaut pouvait passer inapercu derriere une classe vide.
+          const cible = [...f.document.querySelectorAll("#importsList .classePuce")]
+            .find(b => b.textContent.startsWith("3e6"));
+          if (!cible) throw new Error("la classe 3e6 du jeu d'essai est absente de la rangee");
+          cible.click();
           await attendre(() => visible($("classDashboardPanel")) && rempli($("classDashboardPanel")),
             "le tableau de bord ne s'ouvre pas");
           await attendre(() => f.document.querySelector(".dashSeance"), "la carte de seance manque");
@@ -86,8 +92,14 @@
         nom: "Tableau de bord · grilles d'evaluation proposees",
         action: async () => {
           $("dashEvalPonctuelle").click();
-          await attendre(() => f.document.querySelectorAll("#dashDetail [data-modele]").length >= 1,
-            "aucune grille ponctuelle proposee", 6000);
+          // Le panneau lit la fiche de cycle sur le disque : il peut mettre un moment. On attend
+          // qu'il ait fini de charger, puis on dit ce qu'il montre - un message precis vaut mieux
+          // qu'un delai depasse, qui ne distingue pas la lenteur de l'absence.
+          await attendre(() => !/Chargement/.test($("dashDetail").innerText),
+            "le panneau des grilles reste sur Chargement", 12000);
+          const proposees = f.document.querySelectorAll("#dashDetail [data-modele]").length;
+          if (proposees < 1) throw new Error("aucune grille proposee — le panneau affiche : "
+            + $("dashDetail").innerText.slice(0, 160));
         }
       },
       {

@@ -107,6 +107,20 @@
     }, lignes);
   }
 
+  /**
+   * Applique "order=colonne.asc". Sans cela le banc rendait les lignes dans l'ordre du jeu
+   * d'essai, et un ecran pouvait passer au vert uniquement parce que la premiere ligne n'etait
+   * pas celle que le site aurait vraiment affichee.
+   */
+  function trier(lignes, url) {
+    const m = String(url).match(/[?&]order=([a-z_0-9]+)\.(asc|desc)/i);
+    if (!m) return lignes;
+    const [, colonne, sens] = m;
+    const copie = [...lignes].sort((a, b) =>
+      String(a[colonne] ?? "").localeCompare(String(b[colonne] ?? ""), "fr", { numeric: true }));
+    return sens.toLowerCase() === "desc" ? copie.reverse() : copie;
+  }
+
   const appels = [];
   const vraiFetch = window.fetch.bind(window);
 
@@ -128,7 +142,7 @@
     const nom = table(url);
     if (!nom) return Promise.resolve(reponse([]));
     if (methode !== "GET") return Promise.resolve(reponse(options && options.body ? [].concat(JSON.parse(options.body)) : []));
-    return Promise.resolve(reponse(filtrer(DONNEES[nom] || [], url)));
+    return Promise.resolve(reponse(trier(filtrer(DONNEES[nom] || [], url), url)));
   }
 
   // Les erreurs du chargement, avant meme que le banc puisse ecouter.

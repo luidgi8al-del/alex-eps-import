@@ -102,10 +102,15 @@ export async function demarrerHorsConnexion({
      * saisie faite hors ligne reste visible : lire le serveur en direct la ferait disparaitre de
      * l'ecran jusqu'a son envoi, et personne ne comprendrait ou est passee sa ligne.
      */
-    async lire(entity) {
+    async lire(entity, { ou, trier } = {}) {
       const synchronise = await rapprocher();
       const locales = await listLocalRecords(entity);
-      return { source: synchronise ? "reseau" : "local", rows: locales.map(r => r.data) };
+      let rows = locales.map(r => r.data).filter(r => !r.deleted);
+      // Le filtre est applique ici plutot que sur le serveur : la copie locale porte toute la
+      // table, et une lecture par classe ne doit pas dependre du reseau pour se restreindre.
+      if (typeof ou === "function") rows = rows.filter(ou);
+      if (typeof trier === "function") rows = rows.sort(trier);
+      return { source: synchronise ? "reseau" : "local", rows };
     },
 
     /**
