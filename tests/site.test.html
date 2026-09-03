@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Banc d'essai du site EPS</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 22px;
+         background: #FAFAF7; color: #14181A; line-height: 1.5; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.intro { color: #6B7280; margin: 0 0 16px; max-width: 78ch; font-size: 14px; }
+  #bilan { font-weight: 700; padding: 10px 14px; border-radius: 8px; display: inline-block; }
+  #bilan.ok { background: #B7E4C7; color: #04240F; }
+  #bilan.ko { background: #FBE2E1; color: #5C1410; }
+  #bilan.encours { background: #E6EEF5; color: #14384F; }
+  ol { padding-left: 20px; margin: 14px 0 0; }
+  li { margin: 5px 0; font-size: 14px; }
+  li.vert::marker { color: #1B7F4B; }
+  li.rouge { color: #7A1710; }
+  li .quoi { color: #6B7280; }
+  pre { background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 9px;
+        overflow-x: auto; font-size: 12px; white-space: pre-wrap; margin: 4px 0 0; }
+  #cadre { width: 1280px; height: 900px; border: 1px solid #E5E7EB; border-radius: 8px;
+           margin-top: 18px; background: #fff; transform: scale(.5); transform-origin: top left;
+           margin-bottom: -430px; }
+</style>
+</head>
+<body>
+  <h1>Banc d'essai du site EPS</h1>
+  <p class="intro">Le site est charge dans un cadre, avec un faux serveur : aucune requete ne part,
+     et le vrai compte n'est ni connecte ni deconnecte. Le banc ouvre chaque onglet et chaque
+     panneau, et signale ceux qui ne se construisent plus. Il ne verifie pas les valeurs
+     affichees — il verifie que rien ne casse, ce qu'il faut pour decouper index.html sans
+     avancer a l'aveugle.</p>
+  <div id="bilan" class="encours">Chargement du site…</div>
+  <ol id="details"></ol>
+  <iframe id="cadre" title="site en cours de test"></iframe>
+
+<script src="parcours.js"></script>
+<script>
+(async function () {
+  const bilan = document.getElementById("bilan");
+  const details = document.getElementById("details");
+  const cadre = document.getElementById("cadre");
+
+  const echapper = v => String(v).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  /**
+   * Charge index.html dans le cadre, en glissant le faux serveur AVANT le code du site.
+   *
+   * On lit le vrai fichier plutot que d'en tenir une copie : le banc doit tester ce qui est
+   * publie, sinon il finirait par valider un site qui n'existe plus.
+   */
+  async function chargerSite() {
+    const source = await fetch("../index.html").then(r => r.text());
+    const prepare = source.replace(
+      /<head>/i,
+      `<head><base href="../"><script src="tests/faux-serveur.js"><\/script>`
+    );
+    const doc = cadre.contentDocument;
+    doc.open(); doc.write(prepare); doc.close();
+    await new Promise(resolve => {
+      if (cadre.contentDocument.readyState === "complete") return resolve();
+      cadre.contentWindow.addEventListener("load", resolve, { once: true });
+    });
+    // Le site termine son demarrage apres le chargement (session, etablissement, meteo).
+    await new Promise(r => setTimeout(r, 900));
+    return cadre.contentWindow;
+  }
+
+  /** Collecte tout ce que le site signale : erreurs console, exceptions, promesses rejetees. */
+  function surveiller(f) {
+    const journal = [];
+    const erreurOrigine = f.console.error;
+    f.console.error = function (...args) { journal.push(args.map(String).join(" ")); erreurOrigine.apply(f.console, args); };
+    f.addEventListener("error", e => journal.push("Exception : " + (e.message || e.error)));
+    f.addEventListener("unhandledrejection", e => journal.push("Promesse rejetee : " + (e.reason && e.reason.message || e.reason)));
+    return journal;
+  }
+
+  let f;
+  try {
+    f = await chargerSite();
+  } catch (e) {
+    bilan.className = "ko";
+    bilan.textContent = "Le site n'a pas pu etre charge";
+    details.innerHTML = `<li class="rouge"><pre>${echapper(e.stack || e.message)}</pre></li>`;
+    return;
+  }
+
+  const journal = surveiller(f);
+  const etapes = window.__parcours(f);
+  const echecs = [];
+
+  for (const etape of etapes) {
+    const li = document.createElement("li");
+    li.textContent = etape.nom + " …";
+    details.appendChild(li);
+    const avant = journal.length;
+    try {
+      await etape.action();
+      const nouvelles = journal.slice(avant).filter(m => !/favicon|manifest|service worker desactive/i.test(m));
+      if (nouvelles.length) throw new Error(nouvelles.join("\n"));
+      li.className = "vert";
+      li.innerHTML = `${echapper(etape.nom)}`;
+    } catch (e) {
+      li.className = "rouge";
+      li.innerHTML = `${echapper(etape.nom)}<pre>${echapper(e.message)}</pre>`;
+      echecs.push({ nom: etape.nom, message: e.message });
+    }
+  }
+
+  bilan.className = echecs.length ? "ko" : "ok";
+  bilan.textContent = echecs.length
+    ? `${echecs.length} ecran(s) en echec sur ${etapes.length}`
+    : `${etapes.length} ecrans au vert`;
+  window.__resultat = { total: etapes.length, echecs };
+  console.log(echecs.length ? echecs : `Banc d'essai du site : OK (${etapes.length})`);
+})();
+</script>
+</body>
+</html>
