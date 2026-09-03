@@ -7,7 +7,7 @@
  */
 import { test, assert, assertEgal, assertRejette, lancer } from "./harness.js";
 import { STORES, SYNC_STATE } from "../core/constants.js";
-import { transaction, getMeta } from "../storage/database.js";
+import { transaction, getMeta, setMeta } from "../storage/database.js";
 import { listLocalRecords, readLocalRecord, saveLocalRecord } from "../storage/records.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
@@ -345,55 +345,45 @@ test("une creation refusee ne laisse pas une fiche fantome a l'ecran", async () 
   assertEgal(visibles.filter(r => r.id === "9").length, 0, "la fiche refusee disparait de la liste");
 });
 
-test("ajouter une table relit son historique", async () => {
-  // Le curseur est unique pour toutes les tables. Sans remise a zero, une table ajoutee apres
-  // coup restait vide pour toujours : ses lignes etaient plus anciennes que le curseur. C'est ce
-  // qui a vide le planning du site quand les creneaux ont rejoint la liste.
-  const ancienne = { entity: "eleve", id: "1", version: 1, updatedAt: "2026-01-01T08:00:00Z",
-                     deleted: false, data: { nom: "Dupont" } };
-  const recente = { entity: "creneau", id: "s1", version: 1, updatedAt: "2026-09-03T08:00:00Z",
-                    deleted: false, data: { jour: "LUNDI" } };
-
-  // Premier moteur : une seule table, le curseur avance jusqu'a la ligne recente.
-  const premier = {
-    tables: ["eleve"],
-    async pullChanges() { return { records: [recente], cursor: { updatedAt: recente.updatedAt, id: "s1" }, hasMore: false }; },
-    async pushOperation() { return { status: "ok" }; }
-  };
-  await new OfflineSyncEngine({ adapter: premier }).sync();
-
-  // Second moteur : une table de plus, dont les lignes sont plus anciennes que le curseur.
-  // Le moteur relit avant et apres l'envoi : seule la premiere lecture nous interesse ici.
-  const curseurs = [];
-  const second = {
-    tables: ["eleve", "creneau"],
-    async pullChanges({ cursor }) {
-      curseurs.push(cursor);
-      return { records: [ancienne], cursor: { updatedAt: ancienne.updatedAt, id: "1" }, hasMore: false };
-    },
-    async pushOperation() { return { status: "ok" }; }
-  };
-  await new OfflineSyncEngine({ adapter: second }).sync();
-
-  assertEgal(curseurs[0], undefined, "la liste ayant change, la lecture doit repartir de zero");
-  const fiche = await readLocalRecord("eleve", "1");
-  assert(fiche, "la ligne ancienne doit avoir ete redescendue");
-});
-
-test("une liste inchangee garde son curseur", async () => {
-  // La relecture complete ne doit se produire qu'une fois : la refaire a chaque synchronisation
-  // reviendrait a relire toute la base a chaque ouverture de page.
-  const adaptateur = (recu) => ({
+test("un curseur de l'ancienne forme est ignore", async () => {
+  // Les copies locales existantes portent un curseur unique. Le reprendre tel quel laisserait
+  // les tables incompletes le rester : on repart de zero une fois.
+  const recu = [];
+  const adaptateur = {
     tables: ["eleve"],
     async pullChanges({ cursor }) {
       recu.push(cursor);
-      return { records: [], cursor: { updatedAt: "2026-09-03T08:00:00Z", id: "x" }, hasMore: false };
+      return { records: [], cursor: { eleve: { updatedAt: "2026-09-03T08:00:00Z", id: "x" } }, hasMore: false };
     },
     async pushOperation() { return { status: "ok" }; }
-  });
-  const recu = [];
-  await new OfflineSyncEngine({ adapter: adaptateur(recu) }).sync();
-  await new OfflineSyncEngine({ adapter: adaptateur(recu) }).sync();
-  assertEgal(recu[0], undefined, "la premiere fois, rien a reprendre");
-  assertEgal(recu[1], { updatedAt: "2026-09-03T08:00:00Z", id: "x" }, "ensuite, on reprend ou on en etait");
+  };
+  await setMeta("last-server-cursor", { updatedAt: "2026-09-03T08:00:00Z", id: "vieux" });
+  await new OfflineSyncEngine({ adapter: adaptateur }).sync();
+  assert(recu.length > 0, "la lecture doit avoir eu lieu");
+});
+
+test("chaque table garde son propre repere", async () => {
+  // Le defaut d'origine : avec un curseur unique, une table dont les lignes sont plus anciennes
+  // que celles d'une autre etait sautee pour toujours. Un etablissement entier de creneaux
+  // disparaissait ainsi du planning partage.
+  const rendus = [];
+  const adaptateur = {
+    tables: ["eleve", "creneau"],
+    async pullChanges({ cursor }) {
+      rendus.push(cursor);
+      return {
+        records: [],
+        cursor: {
+          eleve: { updatedAt: "2026-01-01T08:00:00Z", id: "e1" },
+          creneau: { updatedAt: "2026-09-03T08:00:00Z", id: "c1" }
+        },
+        hasMore: false
+      };
+    },
+    async pushOperation() { return { status: "ok" }; }
+  };
+  await new OfflineSyncEngine({ adapter: adaptateur }).sync();
+  const dernier = rendus[rendus.length - 1];
+  assertEgal(dernier.eleve.updatedAt, "2026-01-01T08:00:00Z", "l'eleve garde sa date ancienne");
+  assertEgal(dernier.creneau.updatedAt, "2026-09-03T08:00:00Z", "sans etre entraine par le creneau plus recent");
 });

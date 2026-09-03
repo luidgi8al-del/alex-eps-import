@@ -67,7 +67,8 @@ test("la lecture traduit les lignes pour le moteur", async () => {
     assertEgal(r.entity, "classes", "la table devient l'entite");
     assertEgal(r.version, 4, "la version est reprise");
     assertEgal(r.data.name, "6e1", "la ligne entiere est conservee");
-    assertEgal(page.cursor, { updatedAt: "2026-09-03T08:00:00Z", id: "c1" }, "curseur avance");
+    assertEgal(page.cursor, { classes: { updatedAt: "2026-09-03T08:00:00Z", id: "c1" } },
+      "le curseur est range par table");
   } finally { reseau.rendre(); }
 });
 
@@ -79,7 +80,9 @@ test("une ligne deja vue au meme instant n'est pas relue deux fois", async () =>
     { id: "c2", name: "B", version: 1, updated_at: "2026-09-03T08:00:00Z" }
   ]));
   try {
-    const page = await adaptateur().pullChanges({ cursor: { updatedAt: "2026-09-03T08:00:00Z", id: "c1" } });
+    const page = await adaptateur().pullChanges({
+      cursor: { classes: { updatedAt: "2026-09-03T08:00:00Z", id: "c1" } }
+    });
     assertEgal(page.records.map(r => r.id), ["c2"], "seule la suivante");
   } finally { reseau.rendre(); }
 });
@@ -221,5 +224,28 @@ test("un refus sans ligne lisible reste un refus", async () => {
     });
     assertEgal(resultat.status, "rejected", "le refus prime sur la lecture ratee");
     assertEgal(resultat.serverRecord, null, "sans version de reference");
+  } finally { reseau.rendre(); }
+});
+
+test("une table ne se fait pas entrainer par le curseur d'une autre", async () => {
+  // Le defaut d'origine : un curseur unique avancait jusqu'a la ligne la plus recente toutes
+  // tables confondues. La table dont les lignes etaient plus anciennes se retrouvait sautee, et
+  // les creneaux d'une partie des collegues disparaissaient du planning partage.
+  const demandes = [];
+  const reseau = fauxReseau(({ url }) => {
+    demandes.push(String(url));
+    return /eleves/.test(url)
+      ? reponse([{ id: "e1", version: 1, updated_at: "2026-01-01T08:00:00Z" }])
+      : reponse([{ id: "c1", version: 1, updated_at: "2026-09-03T08:00:00Z" }]);
+  });
+  try {
+    const deux = createSupabaseAdapter({ url: URL_FICTIVE, anonKey: "cle", session, tables: ["eleves", "classes"] });
+    const page = await deux.pullChanges({});
+    assertEgal(page.cursor.eleves.updatedAt, "2026-01-01T08:00:00Z", "l'eleve garde sa date");
+    assertEgal(page.cursor.classes.updatedAt, "2026-09-03T08:00:00Z", "la classe la sienne");
+
+    const suite = await deux.pullChanges({ cursor: page.cursor });
+    const depuisEleves = demandes.filter(u => /eleves/.test(u)).pop();
+    assert(depuisEleves.includes("2026-01-01"), "la seconde lecture des eleves repart de leur propre date");
   } finally { reseau.rendre(); }
 });

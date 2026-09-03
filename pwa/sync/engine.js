@@ -1,4 +1,4 @@
-import { DEFAULT_BATCH_SIZE, SYNC_STATE } from "../core/constants.js";
+import { DEFAULT_BATCH_SIZE, PAGE_LECTURE, SYNC_STATE } from "../core/constants.js";
 import { publishSyncState } from "../core/events.js";
 import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
@@ -7,8 +7,6 @@ import { acknowledgeOperation, countPendingOperations, deferOperation, operation
 import { countConflicts, storeConflict, storeRejection } from "./conflicts.js";
 import { mergeOfflineChange } from "./merge.js";
 const CURSOR_KEY = "last-server-cursor";
-/** Les tables que le curseur couvre. Voir #pullAndReconcile. */
-const TABLES_KEY = "cursor-tables";
 export class OfflineSyncEngine {
   #adapter; #batchSize; #running;
   constructor({ adapter, batchSize = DEFAULT_BATCH_SIZE }) {
@@ -34,26 +32,14 @@ export class OfflineSyncEngine {
     }
   }
   async #pullAndReconcile() {
-    // Le curseur est unique pour toutes les tables : il avance jusqu'a la ligne la plus recente
-    // vue, toutes tables confondues. Ajouter une table apres coup la condamnait donc au silence -
-    // ses lignes, plus anciennes que le curseur, n'etaient jamais redescendues. C'est ce qui a
-    // vide le planning quand les creneaux ont rejoint la liste.
-    //
-    // Des que la liste change, on repart de zero. Une relecture complete, une seule fois.
-    const signature = (this.#adapter.tables || []).join(",");
-    const couverte = await getMeta(TABLES_KEY);
-    const listeChangee = couverte !== signature;
-    if (listeChangee) await setMeta(CURSOR_KEY, undefined);
-
-    let cursor = listeChangee ? undefined : await getMeta(CURSOR_KEY), more = true;
+    // L'adaptateur tient un curseur par table : une table qui rejoint la liste n'a pas encore de
+    // repere, et se lit donc depuis le debut sans qu'on ait a le demander.
+    let cursor = await getMeta(CURSOR_KEY), more = true;
     while (more) {
-      const page = await this.#adapter.pullChanges({ cursor, limit: this.#batchSize });
+      const page = await this.#adapter.pullChanges({ cursor, limit: PAGE_LECTURE });
       for (const serverRecord of page.records || []) await this.#applyServerRecord(serverRecord);
       cursor = page.cursor ?? cursor; more = Boolean(page.hasMore); if (cursor) await setMeta(CURSOR_KEY, cursor);
     }
-    // Apres coup seulement : si la relecture echoue en route, la prochaine synchronisation la
-    // recommencera depuis le debut au lieu de croire la nouvelle table deja couverte.
-    if (listeChangee) await setMeta(TABLES_KEY, signature);
   }
   async #applyServerRecord(serverRecord) {
     const operations = await operationsForRecord(`${serverRecord.entity}:${serverRecord.id}`);

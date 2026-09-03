@@ -49,43 +49,54 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
   }
 
   /**
-   * Renvoie les lignes modifiees depuis le curseur, toutes tables confondues.
+   * Renvoie les lignes modifiees depuis le curseur, table par table.
    *
-   * Le curseur est un couple date + identifiant, et non une date seule : deux lignes enregistrees
-   * dans la meme milliseconde seraient sinon departagees au hasard, et la pagination en sauterait
-   * une a chaque tour.
+   * Un curseur PAR TABLE, et non un curseur global. Avec un curseur unique, il avancait jusqu'a
+   * la ligne la plus recente vue toutes tables confondues : des qu'une table portait des lignes
+   * plus recentes qu'une autre, le reste de la seconde etait saute pour toujours. C'est ce qui a
+   * vide le planning, puis fait disparaitre les creneaux d'une partie des collegues - une table
+   * partagee par tout un etablissement depasse la taille d'une page des le premier jour.
+   *
+   * Chaque curseur est un couple date + identifiant, et non une date seule : deux lignes
+   * enregistrees dans la meme milliseconde seraient sinon departagees au hasard, et la
+   * pagination en sauterait une a chaque tour.
    */
   async function pullChanges({ cursor, limit = TAILLE_PAGE } = {}) {
-    const depuis = cursor?.updatedAt || "1970-01-01T00:00:00Z";
+    // Un curseur de l'ancienne forme (une seule date pour tout) n'est pas rattrapable : on
+    // repart de zero une fois, ce qui repare au passage les copies locales incompletes.
+    const parTable = (cursor && typeof cursor === "object" && !cursor.updatedAt) ? cursor : {};
+    const suivants = { ...parTable };
     const records = [];
     let plusLoin = false;
 
     for (const table of tables) {
-      const filtre = `updated_at=gte.${encodeURIComponent(depuis)}`;
+      const repere = parTable[table];
+      const depuis = repere?.updatedAt || "1970-01-01T00:00:00Z";
       const lignes = await lire(
-        `/rest/v1/${table}?${filtre}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
+        `/rest/v1/${table}?updated_at=gte.${encodeURIComponent(depuis)}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
       );
       if (lignes.length > limit) { plusLoin = true; lignes.length = limit; }
+
       // Le curseur est inclusif sur la date : on ecarte ce qu'on a deja vu au meme instant.
-      lignes
-        .filter(ligne => !(cursor && ligne.updated_at === cursor.updatedAt && ligne.id <= cursor.id))
-        .forEach(ligne => records.push({
-          entity: table,
-          id: ligne.id,
-          version: ligne.version ?? 0,
-          updatedAt: ligne.updated_at,
-          deleted: Boolean(ligne.deleted),
-          data: ligne
-        }));
+      const nouvelles = lignes.filter(ligne =>
+        !(repere && ligne.updated_at === repere.updatedAt && String(ligne.id) <= String(repere.id)));
+      nouvelles.forEach(ligne => records.push({
+        entity: table,
+        id: ligne.id,
+        version: ligne.version ?? 0,
+        updatedAt: ligne.updated_at,
+        deleted: Boolean(ligne.deleted),
+        data: ligne
+      }));
+
+      // On avance meme quand tout etait deja vu : sans cela, une page entierement filtree ferait
+      // redemander la meme chose indefiniment.
+      const dernier = lignes[lignes.length - 1];
+      if (dernier) suivants[table] = { updatedAt: dernier.updated_at, id: dernier.id };
     }
 
     records.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt) || String(a.id).localeCompare(String(b.id)));
-    const dernier = records[records.length - 1];
-    return {
-      records,
-      cursor: dernier ? { updatedAt: dernier.updatedAt, id: dernier.id } : cursor,
-      hasMore: plusLoin
-    };
+    return { records, cursor: suivants, hasMore: plusLoin };
   }
 
   /**
