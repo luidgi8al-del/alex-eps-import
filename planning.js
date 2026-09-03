@@ -1569,9 +1569,11 @@ function renderPlanningEpsGrid() {
       const largeurColonne = 100 / Math.max(1, profsDuJour.length);
       const gauche = place.colonne * largeurColonne + place.sousIndex * largeurColonne / place.sousTotal;
       const largeur = largeurColonne / place.sousTotal;
-      // Toutes periodes : la case ne peut pas porter quatre activites - elle fait deux
-      // centimetres de large avec une colonne par enseignant. On y laisse la classe, et le detail
-      // passe dans l'infobulle, ou il reste consultable sans encombrer la grille.
+      // Toutes periodes : les quatre activites sont empilees, comme sur le planning personnel.
+      // La case est etroite - une colonne par enseignant - donc chaque ligne est reduite jusqu'a
+      // tenir (voir ajusterLibellesCases), en gardant toujours le numero de periode : "P2 · Esc"
+      // se lit encore, "Esc" seul ne dirait pas de quelle periode il s'agit. L'infobulle de la
+      // case porte le detail complet.
       const activitesDuCreneau = planningCommunityActivities
         .filter(a => a.slot_id === s.id)
         .sort((a, b) => Number(a.period_number) - Number(b.period_number));
@@ -1584,6 +1586,11 @@ function renderPlanningEpsGrid() {
       const detailPeriodes = planningPeriod === 0
         ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "A definir"}`).join(" — ")
         : "";
+      const lignesPeriodes = planningPeriod !== 0 ? "" : activitesDuCreneau.map(a => {
+        const nom = (a.apsa_name || "").trim() || "A definir";
+        const complet = `P${a.period_number} · ${nom}`;
+        return `<span class="apFit apPeriodeFit" data-periode="P${a.period_number}" data-full="${planningText(complet)}">${planningText(complet)}</span>`;
+      }).join("");
       // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
       const [fond, encre] = couleurEnseignant(s.teacher_label);
       const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
@@ -1593,7 +1600,7 @@ function renderPlanningEpsGrid() {
         detailPeriodes ? ` title="${planningText(s.class_label || "?")} — ${planningText(detailPeriodes)}"` : ""
       } style="top:${top}px; height:${height}px; left:calc(${gauche}% + 1px); right:auto; width:calc(${largeur}% - 2px); ${style}">
         <span class="cl clFit" data-full="${planningText(s.class_label || "?")}">${planningText(s.class_label || "?")}</span>
-        ${activity ? `<span class="apFit" data-full="${planningText(activity)}">${planningText(activity)}</span>` : ""}
+        ${activity ? `<span class="apFit" data-full="${planningText(activity)}">${planningText(activity)}</span>` : ""}${lignesPeriodes}
       </div>`;
     });
     html += `</div>`;
@@ -1730,6 +1737,16 @@ function variantesActivite(libelle) {
 }
 
 /**
+ * Comme variantesActivite, mais le numero de periode ne se perd jamais : c'est lui qui donne son
+ * sens a la ligne. "Esc" seul ne dit pas de quelle periode il s'agit, "P2 · Esc" si.
+ */
+function variantesActivitePeriode(prefixe, complet) {
+  const nom = String(complet || "").split(" · ").slice(1).join(" · ").trim();
+  return [...new Set([complet, `${prefixe} · ${nom.slice(0, 3)}`, `${prefixe} · ${nom.slice(0, 1)}`, prefixe]
+    .map(x => x.trim()).filter(Boolean))];
+}
+
+/**
  * Reduit chaque libelle jusqu'a ce qu'il tienne dans sa case.
  *
  * Les cases d'une meme journee se partagent la largeur entre les collegues qui se chevauchent :
@@ -1740,7 +1757,9 @@ function variantesActivite(libelle) {
 function ajusterLibellesCases(wrap) {
   wrap.querySelectorAll(".clFit, .apFit").forEach(el => {
     const complet = el.dataset.full || "";
-    const essais = el.classList.contains("clFit") ? variantesClasse(complet) : variantesActivite(complet);
+    const essais = el.classList.contains("clFit") ? variantesClasse(complet)
+      : el.classList.contains("apPeriodeFit") ? variantesActivitePeriode(el.dataset.periode || "", complet)
+      : variantesActivite(complet);
     el.title = complet;
     for (const essai of essais) {
       el.textContent = essai;
