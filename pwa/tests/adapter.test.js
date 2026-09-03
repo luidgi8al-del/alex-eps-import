@@ -285,3 +285,22 @@ test("des lignes ecrites au meme instant ne bloquent pas la lecture", async () =
     assertEgal(vues.join(","), "a,b,c,d,e", "et rapporter chaque ligne une seule fois");
   } finally { reseau.rendre(); }
 });
+
+/**
+ * Une date Postgres porte un fuseau : 2026-09-01T10:00:00+00:00. Le "+" laisse tel quel dans une
+ * URL se relit comme une espace, la date devient invalide, et le serveur refuse la requete
+ * entiere - "Lecture refusee (HTTP 400)", sans que rien ne dise laquelle des dix tables.
+ */
+test("la borne de lecture est encodee, fuseau compris", async () => {
+  const reseau = fauxReseau(() => reponse([]));
+  try {
+    await adaptateur().pullChanges({
+      cursor: { classes: { updatedAt: "2026-09-01T10:00:00+00:00", id: "c1" } }, limit: 10
+    });
+    const [appel] = reseau.appels;
+    assert(!/updated_at\.gt\."[^"]*\+/.test(appel.url), "un + non encode se relirait comme une espace");
+    assert(appel.url.includes("%2B00%3A00"), "le fuseau doit voyager encode");
+    assert(decodeURIComponent(appel.url).includes('updated_at.gt."2026-09-01T10:00:00+00:00"'),
+      "et se relire intact cote serveur");
+  } finally { reseau.rendre(); }
+});

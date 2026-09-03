@@ -80,9 +80,14 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       // synchronisation tournait sans fin : l'entete restait sur "Synchronisation..." et les
       // rubriques sur "Chargement". Demander ce qui vient strictement apres le couple lu fait
       // avancer le repere a chaque page, quel que soit le nombre de lignes partageant sa date.
+      // Les valeurs sont encodees, les guillemets et la ponctuation du filtre ne le sont pas :
+      // c'est cette ponctuation qui porte la structure. Une date Postgres s'ecrit
+      // 2026-09-01T10:00:00+00:00, et un "+" non encode se relit comme une espace dans une URL :
+      // la date devenait invalide et le serveur refusait la requete.
+      const borne = encodeURIComponent(repere?.updatedAt ?? "");
       const filtre = repere
-        ? `or=(updated_at.gt."${repere.updatedAt}",and(updated_at.eq."${repere.updatedAt}",id.gt."${repere.id}"))`
-        : `updated_at=gte.1970-01-01T00:00:00Z`;
+        ? `or=(updated_at.gt."${borne}",and(updated_at.eq."${borne}",id.gt."${encodeURIComponent(repere.id)}"))`
+        : `updated_at=gte.1970-01-01T00%3A00%3A00Z`;
       const lignes = await lire(
         `/rest/v1/${table}?${filtre}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
       );
