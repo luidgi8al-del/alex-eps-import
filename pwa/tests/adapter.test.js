@@ -249,3 +249,39 @@ test("une table ne se fait pas entrainer par le curseur d'une autre", async () =
     assert(depuisEleves.includes("2026-01-01"), "la seconde lecture des eleves repart de leur propre date");
   } finally { reseau.rendre(); }
 });
+
+/**
+ * Un import en masse ecrit toutes ses lignes au meme instant : dans une transaction Postgres,
+ * now() ne bouge pas. Un repertoire d'un millier d'eleves importe d'un coup, ce sont mille lignes
+ * portant la meme date. Tant que la pagination ne tenait qu'a cette date, le repere n'avancait
+ * plus des qu'une page etait pleine de lignes simultanees, et le serveur renvoyait indefiniment
+ * les memes : la synchronisation tournait sans fin, l'entete restait sur "Synchronisation..." et
+ * les rubriques sur "Chargement", sans le moindre message.
+ */
+test("des lignes ecrites au meme instant ne bloquent pas la lecture", async () => {
+  const MEME_INSTANT = "2026-09-01T10:00:00+00:00";
+  const base = ["a", "b", "c", "d", "e"].map(id => ({ id, updated_at: MEME_INSTANT, version: 1 }));
+
+  // Faux serveur fidele sur le seul point qui compte : il n'applique que le filtre demande.
+  const reseau = fauxReseau(({ url }) => {
+    const apres = decodeURIComponent(url).match(/id\.gt\."([^"]+)"/);
+    const limite = Number(decodeURIComponent(url).match(/limit=(\d+)/)[1]);
+    const restantes = apres ? base.filter(l => l.id > apres[1]) : base;
+    return reponse(restantes.slice(0, limite));
+  });
+
+  try {
+    const adapt = adaptateur();
+    const vues = [];
+    let curseur;
+    let tours = 0;
+    for (let encore = true; encore && tours < 10; tours++) {
+      const page = await adapt.pullChanges({ cursor: curseur, limit: 2 });
+      page.records.forEach(r => vues.push(r.id));
+      curseur = page.cursor;
+      encore = page.hasMore;
+    }
+    assert(tours < 10, "la lecture doit se terminer, pas tourner en rond");
+    assertEgal(vues.join(","), "a,b,c,d,e", "et rapporter chaque ligne une seule fois");
+  } finally { reseau.rendre(); }
+});

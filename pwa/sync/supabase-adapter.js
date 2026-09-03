@@ -71,13 +71,26 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
 
     for (const table of tables) {
       const repere = parTable[table];
-      const depuis = repere?.updatedAt || "1970-01-01T00:00:00Z";
+      // Pagination sur le couple (date, identifiant), et non sur la date seule.
+      //
+      // Un import en masse ecrit toutes ses lignes au meme instant : dans une transaction
+      // Postgres, now() ne bouge pas. Un repertoire d'un millier d'eleves importe d'un coup, ce
+      // sont mille lignes portant la meme date. Une page se remplissait alors sans que la date
+      // avance d'une seconde, le serveur renvoyait indefiniment les memes lignes, et la
+      // synchronisation tournait sans fin : l'entete restait sur "Synchronisation..." et les
+      // rubriques sur "Chargement". Demander ce qui vient strictement apres le couple lu fait
+      // avancer le repere a chaque page, quel que soit le nombre de lignes partageant sa date.
+      const filtre = repere
+        ? `or=(updated_at.gt."${repere.updatedAt}",and(updated_at.eq."${repere.updatedAt}",id.gt."${repere.id}"))`
+        : `updated_at=gte.1970-01-01T00:00:00Z`;
       const lignes = await lire(
-        `/rest/v1/${table}?updated_at=gte.${encodeURIComponent(depuis)}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
+        `/rest/v1/${table}?${filtre}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
       );
       if (lignes.length > limit) { plusLoin = true; lignes.length = limit; }
 
-      // Le curseur est inclusif sur la date : on ecarte ce qu'on a deja vu au meme instant.
+      // Le serveur a deja ecarte ce qui etait lu. On le revrifie tout de meme : c'est la
+      // garantie qu'une ligne n'est jamais rapportee deux fois, et elle ne doit pas dependre de
+      // la bonne interpretation d'un filtre par le serveur.
       const nouvelles = lignes.filter(ligne =>
         !(repere && ligne.updated_at === repere.updatedAt && String(ligne.id) <= String(repere.id)));
       nouvelles.forEach(ligne => records.push({
@@ -89,8 +102,6 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
         data: ligne
       }));
 
-      // On avance meme quand tout etait deja vu : sans cela, une page entierement filtree ferait
-      // redemander la meme chose indefiniment.
       const dernier = lignes[lignes.length - 1];
       if (dernier) suivants[table] = { updatedAt: dernier.updated_at, id: dernier.id };
     }

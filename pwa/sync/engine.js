@@ -63,10 +63,19 @@ export class OfflineSyncEngine {
       if (generationLocale() !== generationAuDepart) return;
       for (const serverRecord of page.records || []) await this.#applyServerRecord(serverRecord);
       if (generationLocale() !== generationAuDepart) return;
+      const precedent = JSON.stringify(cursor ?? null);
       cursor = page.cursor ?? cursor; more = Boolean(page.hasMore);
       if (cursor) {
         await setMeta(CURSOR_KEY, cursor);
         await setMeta(FICHES_KEY, await countLocalRecords());
+      }
+      // Une page qui annonce une suite sans faire avancer le repere demanderait la meme chose
+      // indefiniment. C'est arrive, et cela ne se voyait que comme une synchronisation qui ne
+      // finissait jamais - le pire des symptomes, puisque rien n'indique ou chercher. Mieux vaut
+      // s'arreter avec ce qu'on a : la lecture reprendra au prochain passage.
+      if (more && JSON.stringify(cursor ?? null) === precedent) {
+        console.warn("Synchronisation interrompue : le repere de lecture n'avance plus.");
+        return;
       }
     }
   }
