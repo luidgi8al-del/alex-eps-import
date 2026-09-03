@@ -20,7 +20,10 @@ const TABLES_HORS_CONNEXION = [
   // Creneaux et activites : lisibles hors connexion, modifiables seulement connecte. Leurs
   // ecritures portent deja un protocole de concurrence partage avec l'application, qu'on ne
   // double pas par celui du moteur.
-  "class_schedule_slots", "period_activities"
+  "class_schedule_slots", "period_activities",
+  // Cours : cycles, grilles, criteres et notes. C'est ici que le hors connexion sert le plus -
+  // on note une classe sur un terrain, pas devant un ordinateur.
+  "cycles", "evaluations", "evaluation_criteria", "evaluation_scores"
 ];
 
 /** Ce qu'il faut redessiner quand le retard est rattrape, selon l'onglet ouvert. */

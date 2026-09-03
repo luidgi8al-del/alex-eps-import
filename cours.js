@@ -503,12 +503,23 @@ async function openEvaluationPanel(cycleRow) {
   const panel = document.getElementById("evaluationPanel");
   panel.style.display = "block";
   panel.innerHTML = '<div class="muted">Chargement...</div>';
-  const [studentsRes, evalsRes] = await Promise.all([
-    apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${cycleRow.class_id}&deleted=eq.false&select=*&order=last_name.asc`),
-    apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?cycle_id=eq.${cycleRow.id}&deleted=eq.false&select=*&order=date_epoch_millis.asc`)
-  ]);
-  evalStudents = studentsRes.ok ? await studentsRes.json() : [];
-  evalList = evalsRes.ok ? await evalsRes.json() : [];
+  if (modeHorsConnexion) {
+    evalStudents = (await modeHorsConnexion.lire("students", {
+      ou: e => e.class_id === cycleRow.class_id,
+      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""))
+    })).rows;
+    evalList = (await modeHorsConnexion.lire("evaluations", {
+      ou: e => e.cycle_id === cycleRow.id,
+      trier: (a, b) => (a.date_epoch_millis || 0) - (b.date_epoch_millis || 0)
+    })).rows;
+  } else {
+    const [studentsRes, evalsRes] = await Promise.all([
+      apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${cycleRow.class_id}&deleted=eq.false&select=*&order=last_name.asc`),
+      apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?cycle_id=eq.${cycleRow.id}&deleted=eq.false&select=*&order=date_epoch_millis.asc`)
+    ]);
+    evalStudents = studentsRes.ok ? await studentsRes.json() : [];
+    evalList = evalsRes.ok ? await evalsRes.json() : [];
+  }
   renderEvaluationPanel();
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -562,7 +573,8 @@ function renderEvaluationPanel() {
   panel.querySelectorAll("[data-delete-eval]").forEach(el => {
     el.addEventListener("click", async (e) => {
       e.stopPropagation();
-      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?id=eq.${el.dataset.deleteEval}`, {
+      if (modeHorsConnexion) await modeHorsConnexion.supprimer("evaluations", el.dataset.deleteEval);
+      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?id=eq.${el.dataset.deleteEval}`, {
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
       });
       if (evalOpenedId === el.dataset.deleteEval) { evalOpenedId = null; document.getElementById("evalTableWrap").innerHTML = ""; }
@@ -580,24 +592,30 @@ async function createEvaluation(type) {
   const label = labelInput.value.trim() || EVAL_TYPES.find(t => t.value === type).label;
   const id = crypto.randomUUID();
   const now = new Date().toISOString();
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, {
-    method: "POST", headers: { "Prefer": "return=representation" },
-    body: JSON.stringify({
-      id, user_id: session.user_id, cycle_id: evalCourse.id, type, label,
-      date_epoch_millis: Date.now(), updated_at: now, deleted: false
-    })
-  });
-  if (!res.ok) return;
-  const rows = await res.json();
-  evalList.push(rows[0]);
+  const grille = {
+    id, user_id: session.user_id, cycle_id: evalCourse.id, type, label,
+    date_epoch_millis: Date.now(), updated_at: now, deleted: false
+  };
   // Deux criteres par defaut, pour arriver sur un tableau deja utilisable.
-  await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
-    method: "POST",
-    body: JSON.stringify([
-      { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Assurage", max_points: 5, order_index: 0, updated_at: now, deleted: false },
-      { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Technique", max_points: 10, order_index: 1, updated_at: now, deleted: false }
-    ])
-  });
+  const criteresDefaut = [
+    { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Assurage", max_points: 5, order_index: 0, updated_at: now, deleted: false },
+    { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id, label: "Technique", max_points: 10, order_index: 1, updated_at: now, deleted: false }
+  ];
+  if (modeHorsConnexion) {
+    await modeHorsConnexion.enregistrer("evaluations", id, grille);
+    for (const c of criteresDefaut) await modeHorsConnexion.enregistrer("evaluation_criteria", c.id, c);
+    evalList.push(grille);
+  } else {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, {
+      method: "POST", headers: { "Prefer": "return=representation" }, body: JSON.stringify(grille)
+    });
+    if (!res.ok) return;
+    const rows = await res.json();
+    evalList.push(rows[0]);
+    await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
+      method: "POST", body: JSON.stringify(criteresDefaut)
+    });
+  }
   evalOpenedId = id;
   renderEvaluationPanel();
 }
@@ -606,12 +624,22 @@ async function openEvaluationTable(evaluationId) {
   evalOpenedId = evaluationId;
   const wrap = document.getElementById("evalTableWrap");
   wrap.innerHTML = '<div class="muted">Chargement...</div>';
-  const [critRes, scoreRes] = await Promise.all([
-    apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?evaluation_id=eq.${evaluationId}&deleted=eq.false&select=*&order=order_index.asc`),
-    apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?select=*`)
-  ]);
-  evalCriteria = critRes.ok ? await critRes.json() : [];
-  const allScores = scoreRes.ok ? await scoreRes.json() : [];
+  let allScores;
+  if (modeHorsConnexion) {
+    evalCriteria = (await modeHorsConnexion.lire("evaluation_criteria", {
+      ou: c => c.evaluation_id === evaluationId,
+      trier: (a, b) => (a.order_index || 0) - (b.order_index || 0)
+    })).rows;
+    // Avec les lignes effacees : elles portent l'identifiant a reutiliser quand on resaisit.
+    allScores = (await modeHorsConnexion.lire("evaluation_scores", { avecSupprimes: true })).rows;
+  } else {
+    const [critRes, scoreRes] = await Promise.all([
+      apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?evaluation_id=eq.${evaluationId}&deleted=eq.false&select=*&order=order_index.asc`),
+      apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?select=*`)
+    ]);
+    evalCriteria = critRes.ok ? await critRes.json() : [];
+    allScores = scoreRes.ok ? await scoreRes.json() : [];
+  }
   const critIds = new Set(evalCriteria.map(c => c.id));
   // On garde aussi les lignes effacees (deleted=true) : elles servent a retrouver l'id/la ligne
   // existante quand on resaisit une note, plutot que d'en creer une nouvelle a chaque fois.
@@ -688,7 +716,9 @@ async function setScore(input) {
   const now = new Date().toISOString();
   if (raw === "") {
     if (existing) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
+      const efface = { ...existing, points: null, deleted: true, updated_at: now };
+      if (modeHorsConnexion) await modeHorsConnexion.enregistrer("evaluation_scores", existing.id, efface);
+      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
         method: "PATCH", body: JSON.stringify({ points: null, deleted: true, updated_at: now })
       });
       existing.points = null; existing.deleted = true;
@@ -697,15 +727,18 @@ async function setScore(input) {
     const value = parseFloat(raw);
     if (isNaN(value) || value > max) { input.value = scoreValue(existing) ?? ""; return; }
     if (existing) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
+      const notee = { ...existing, points: value, deleted: false, updated_at: now };
+      if (modeHorsConnexion) await modeHorsConnexion.enregistrer("evaluation_scores", existing.id, notee);
+      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
         method: "PATCH", body: JSON.stringify({ points: value, deleted: false, updated_at: now })
       });
       existing.points = value; existing.deleted = false;
     } else {
       const id = crypto.randomUUID();
-      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores`, {
-        method: "POST",
-        body: JSON.stringify({ id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, deleted: false, updated_at: now })
+      const ligne = { id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, deleted: false, updated_at: now };
+      if (modeHorsConnexion) await modeHorsConnexion.enregistrer("evaluation_scores", id, ligne);
+      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores`, {
+        method: "POST", body: JSON.stringify(ligne)
       });
       evalScores[key] = { id, points: value, deleted: false };
     }
@@ -720,12 +753,13 @@ async function addCriterion() {
   const max = parseInt(maxStr, 10);
   if (!max || max <= 0) return;
   const id = crypto.randomUUID();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
-    method: "POST",
-    body: JSON.stringify({
-      id, user_id: session.user_id, evaluation_id: evalOpenedId, label, max_points: max,
-      order_index: evalCriteria.length, updated_at: new Date().toISOString(), deleted: false
-    })
+  const critere = {
+    id, user_id: session.user_id, evaluation_id: evalOpenedId, label, max_points: max,
+    order_index: evalCriteria.length, updated_at: new Date().toISOString(), deleted: false
+  };
+  if (modeHorsConnexion) await modeHorsConnexion.enregistrer("evaluation_criteria", id, critere);
+  else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
+    method: "POST", body: JSON.stringify(critere)
   });
   openEvaluationTable(evalOpenedId);
 }
@@ -736,7 +770,8 @@ async function editCriterion(criterionId) {
   if (label === null) return;
   if (label.trim() === "") {
     if (confirm("Supprimer ce critere et toutes ses notes ?")) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
+      if (modeHorsConnexion) await modeHorsConnexion.supprimer("evaluation_criteria", criterionId);
+      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
       });
       openEvaluationTable(evalOpenedId);
@@ -746,9 +781,14 @@ async function editCriterion(criterionId) {
   const maxStr = prompt("Note sur combien ?", criterion.max_points);
   const max = parseInt(maxStr, 10);
   if (!max || max <= 0) return;
-  await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
-    method: "PATCH", body: JSON.stringify({ label, max_points: max, updated_at: new Date().toISOString() })
-  });
+  if (modeHorsConnexion) {
+    await modeHorsConnexion.enregistrer("evaluation_criteria", criterionId,
+      { ...criterion, label, max_points: max, updated_at: new Date().toISOString() });
+  } else {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
+      method: "PATCH", body: JSON.stringify({ label, max_points: max, updated_at: new Date().toISOString() })
+    });
+  }
   openEvaluationTable(evalOpenedId);
 }
 

@@ -198,7 +198,10 @@ async function openClassDashboard(cls, label) {
       slots.length
         ? apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${slots.map(s => s.id).join(",")})&select=*`)
         : Promise.resolve(null),
-      apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
+      modeHorsConnexion
+        ? modeHorsConnexion.lire("cycles", { ou: c => c.class_id === cls.id })
+            .then(r => ({ ok: true, json: async () => r.rows }))
+        : apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
       apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${cls.id}&select=id,first_name,last_name`),
       apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?class_id=eq.${cls.id}&select=*`),
       apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions?deleted=eq.false&class_id=eq.${cls.id}&select=*`)
@@ -217,8 +220,13 @@ async function openClassDashboard(cls, label) {
 
     dashboardEvaluations = [];
     if (dashboardCycles.length) {
-      const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
-      dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
+      if (modeHorsConnexion) {
+        const cycles = new Set(dashboardCycles.map(c => c.id));
+        dashboardEvaluations = (await modeHorsConnexion.lire("evaluations", { ou: e => cycles.has(e.cycle_id) })).rows;
+      } else {
+        const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
+        dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
+      }
     }
   } catch (e) {
     panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
@@ -437,7 +445,11 @@ async function changerSeance(cycle, delta) {
   // l'ecran suit le geste, mais on n'envoie rien qui serait refuse.
   if (!dashboardSeanceEnregistrable) return;
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${cycle.id}`, {
+    // La fiche entiere, et non le seul compteur : la fusion se fait champ par champ, et les
+    // colonnes absentes passeraient pour des effacements volontaires.
+    const maj = { ...cycle, current_session_number: apres, updated_at: new Date().toISOString() };
+    if (modeHorsConnexion) await modeHorsConnexion.enregistrer("cycles", cycle.id, maj);
+    else await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${cycle.id}`, {
       method: "PATCH",
       body: JSON.stringify({ current_session_number: apres, updated_at: new Date().toISOString() })
     });
@@ -470,7 +482,8 @@ async function creerCyclePourPeriode() {
       school_year: dashboardClass.row.school_year || "2026-2027",
       updated_at: new Date().toISOString(), deleted: false
     };
-    await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, { method: "POST", body: JSON.stringify(nouveau) });
+    if (modeHorsConnexion) await modeHorsConnexion.enregistrer("cycles", nouveau.id, nouveau);
+    else await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, { method: "POST", body: JSON.stringify(nouveau) });
     dashboardCycles.push(nouveau);
     renderClassDashboard();
   } catch (e) {
@@ -514,7 +527,10 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
 
   const [contenu, res] = await Promise.all([
     loadCycleContent(dashboardClass.row.grade, cycle.apsa_name),
-    apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=eq.${cycle.id}&type=eq.${type}&select=*`)
+    modeHorsConnexion
+      ? modeHorsConnexion.lire("evaluations", { ou: e => e.cycle_id === cycle.id && e.type === type })
+          .then(r => ({ ok: true, json: async () => r.rows }))
+      : apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=eq.${cycle.id}&type=eq.${type}&select=*`)
   ]);
   const existantes = res.ok ? await res.json() : [];
   const modeles = modelesEvaluation(contenu, dashboardClass.row.grade, cycle.apsa_name)
@@ -553,21 +569,22 @@ async function utiliserModele(cycle, modele, bouton) {
   const id = crypto.randomUUID();
   const maintenant = new Date().toISOString();
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, {
-      method: "POST",
-      body: JSON.stringify({
-        id, user_id: session.user_id, cycle_id: cycle.id, type: modele.type,
-        label: modele.titre, date_epoch_millis: Date.now(), updated_at: maintenant, deleted: false
-      })
-    });
-    await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
-      method: "POST",
-      body: JSON.stringify(modele.criteres.map((c, i) => ({
-        id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id,
-        label: c.label, max_points: c.max_points, order_index: i,
-        updated_at: maintenant, deleted: false
-      })))
-    });
+    const grille = {
+      id, user_id: session.user_id, cycle_id: cycle.id, type: modele.type,
+      label: modele.titre, date_epoch_millis: Date.now(), updated_at: maintenant, deleted: false
+    };
+    const criteres = modele.criteres.map((c, i) => ({
+      id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id,
+      label: c.label, max_points: c.max_points, order_index: i,
+      updated_at: maintenant, deleted: false
+    }));
+    if (modeHorsConnexion) {
+      await modeHorsConnexion.enregistrer("evaluations", id, grille);
+      for (const c of criteres) await modeHorsConnexion.enregistrer("evaluation_criteria", c.id, c);
+    } else {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, { method: "POST", body: JSON.stringify(grille) });
+      await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, { method: "POST", body: JSON.stringify(criteres) });
+    }
     evalExpandedType = modele.type;
     evalOpenedId = id;
     showTab("cours");
@@ -845,16 +862,18 @@ async function createCours() {
   if (!classId || !grade) { errorEl.textContent = "Creez d'abord une classe dans l'onglet Classes."; return; }
   if (!apsa) { errorEl.textContent = "Choisissez une activite."; return; }
   try {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
-        grade, apsa_name: apsa, session_count: sessions,
-        school_year: document.getElementById("schoolYear").value || "2026-2027",
-        updated_at: new Date().toISOString(), deleted: false
-      })
-    });
-    if (!res.ok) throw new Error("Echec de creation du cours.");
+    const nouveau = {
+      id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
+      grade, apsa_name: apsa, session_count: sessions, current_session_number: 1,
+      school_year: document.getElementById("schoolYear").value || "2026-2027",
+      updated_at: new Date().toISOString(), deleted: false
+    };
+    if (modeHorsConnexion) {
+      await modeHorsConnexion.enregistrer("cycles", nouveau.id, nouveau);
+    } else {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, { method: "POST", body: JSON.stringify(nouveau) });
+      if (!res.ok) throw new Error("Echec de creation du cours.");
+    }
     showCoursTab("cours");
   } catch (e) {
     errorEl.textContent = e.message;
@@ -865,12 +884,19 @@ async function loadCycles() {
   const listEl = document.getElementById("cyclesList");
   listEl.innerHTML = '<div class="muted">Chargement...</div>';
   try {
-    const [res, classesRes, slotsRes, activitiesRes] = await Promise.all([
-      apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&select=*&order=updated_at.desc`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=id,class_id`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name`)
-    ]);
+    const lireLocal = (table, options) => modeHorsConnexion.lire(table, options)
+      .then(r => ({ ok: true, json: async () => r.rows }));
+    const [res, classesRes, slotsRes, activitiesRes] = await Promise.all(modeHorsConnexion
+      ? [
+          lireLocal("cycles", { trier: (a, b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")) }),
+          lireLocal("classes"), lireLocal("class_schedule_slots"), lireLocal("period_activities")
+        ]
+      : [
+          apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&select=*&order=updated_at.desc`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=id,class_id`),
+          apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name`)
+        ]);
     const rows = await res.json();
     if (!res.ok) throw new Error("Impossible de charger les cycles.");
     const classes = classesRes.ok ? await classesRes.json() : [];
@@ -958,7 +984,8 @@ async function openCreatedCourse(course, classLabel) {
 }
 
 async function deleteCycle(id) {
-  await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${id}`, {
+  if (modeHorsConnexion) await modeHorsConnexion.supprimer("cycles", id);
+  else await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${id}`, {
     method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
   });
   loadCycles();

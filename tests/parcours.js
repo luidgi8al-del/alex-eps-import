@@ -158,8 +158,28 @@
           await attendre(() => f.document.querySelector('#cyclesList [data-action="evaluations"]:not([disabled])'),
             "aucun cours avec evaluations", 6000);
           f.document.querySelector('#cyclesList [data-action="evaluations"]').click();
-          await attendre(() => visible($("evaluationPanel")) && rempli($("evaluationPanel")),
-            "le panneau d'evaluations reste vide", 6000);
+          await attendre(() => visible($("evaluationPanel")) && f.document.querySelector(".accType"),
+            "le panneau d'evaluations n'affiche pas ses types de grille", 8000);
+        }
+      },
+      {
+        nom: "Onglet COURS · tableau de notes d'une grille",
+        action: async () => {
+          // Le chemin le plus utile hors connexion : ouvrir une grille et voir ses criteres.
+          // Il lit trois tables d'un coup, dont les notes effacees, qu'on garde pour reutiliser
+          // leur ligne au lieu d'en creer une nouvelle a chaque resaisie.
+          //
+          // Les grilles sont repliees par type : il faut deplier avant de pouvoir en ouvrir une.
+          await attendre(() => f.document.querySelector(".accType"),
+            "le panneau d'evaluations n'affiche aucun type de grille", 8000);
+          (f.document.querySelector('.accType[data-type="PONCTUELLE"]')
+            || f.document.querySelector(".accType")).click();
+          await attendre(() => f.document.querySelector("[data-open-eval]"),
+            "aucune grille a ouvrir dans le panneau d'evaluations", 6000);
+          f.document.querySelector("[data-open-eval]").click();
+          await attendre(() => rempli($("evalTableWrap")), "le tableau de notes reste vide", 6000);
+          await attendre(() => !/Chargement/.test($("evalTableWrap").innerText),
+            "le tableau de notes reste sur Chargement", 6000);
         }
       },
       {
