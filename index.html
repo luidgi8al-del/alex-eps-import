@@ -697,9 +697,23 @@
      * Elle n'est pas constante : les onglets passent sur deux lignes quand la fenetre retrecit, et
      * une hauteur codee en dur laisserait soit une barre de defilement, soit un vide en bas.
      */
+    /**
+     * Publie la hauteur du bandeau et celle des sous-onglets.
+     *
+     * Les deux servent a coller les barres les unes sous les autres. Elles changent avec la
+     * largeur de la fenetre - le bandeau passe sur deux lignes, les onglets se replient - donc
+     * une valeur codee en dur laisserait une bande vide ou masquerait la premiere ligne.
+     */
     function mesurerEntete() {
+      const racine = document.documentElement;
       const entete = document.querySelector(".header");
-      if (entete) document.documentElement.style.setProperty("--hauteurEntete", entete.offsetHeight + "px");
+      if (entete) racine.style.setProperty("--hauteurEntete", entete.offsetHeight + "px");
+
+      // Celle du sous-onglet visible : chaque rubrique a la sienne, et une seule est affichee.
+      const sousOnglets = [...document.querySelectorAll(
+        "#classesSubtabs, #coursSubtabs, #planningSubtabs, #unssSubtabs, #equipSubtabs, .healthTabs"
+      )].find(el => el.offsetParent !== null);
+      racine.style.setProperty("--hauteurSousOnglets", (sousOnglets ? sousOnglets.offsetHeight : 0) + "px");
     }
     window.addEventListener("resize", mesurerEntete);
 
@@ -714,6 +728,8 @@
       document.querySelectorAll(".tabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
+      // Apres l'affichage : la barre du nouvel onglet n'a pas de hauteur tant qu'elle est masquee.
+      mesurerEntete();
       if (name === "home") {
         mesurerEntete();
         const teacher = loadPrefs().teacherName || session?.email?.split("@")[0] || "";

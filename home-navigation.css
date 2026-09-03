@@ -167,3 +167,60 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
   #tab-home .homeGrid { grid-template-rows:none; }
   #tab-home .homeCard { min-height:150px; }
 }
+
+/* ---------------------------------------------------------------------------------------------
+   Barres de sous-onglets collantes.
+
+   Le bandeau bleu suit deja le defilement ; les sous-onglets, eux, disparaissaient. On perdait
+   donc de vue dans quelle vue on se trouvait des qu'on descendait un peu - un planning, une liste
+   d'eleves ou un cycle depassent tous l'ecran.
+
+   Seules les barres de premier niveau sont concernees, celles qui portent un identifiant. Les
+   barres imbriquees (types d'exercices dans une carte, periodes d'un test) restent ou elles sont :
+   les rendre collantes empilerait plusieurs bandeaux et mangerait l'ecran.
+
+   La hauteur du bandeau est mesuree, pas codee en dur : elle change avec la largeur de la fenetre,
+   et une valeur figee laisserait une bande vide ou masquerait la premiere ligne.
+--------------------------------------------------------------------------------------------- */
+body #classesSubtabs,
+body #coursSubtabs,
+body #planningSubtabs,
+body #unssSubtabs,
+body #equipSubtabs,
+body .healthTabs {
+  position: sticky;
+  top: var(--hauteurEntete, 210px);
+  z-index: 150;
+  background: var(--bg);
+  margin-bottom: 0;
+  padding: 12px 0 10px;
+}
+
+/* Les periodes forment une seconde ligne, sous les sous-onglets : elle se cale donc plus bas. */
+body #coursPeriodBar,
+body #planningPeriodBar {
+  position: sticky;
+  top: calc(var(--hauteurEntete, 210px) + var(--hauteurSousOnglets, 56px));
+  z-index: 149;
+  background: var(--bg);
+  padding: 0 0 10px;
+  margin-top: 0;
+}
+
+/* Une ombre courte marque la separation avec le contenu qui passe dessous, sans alourdir. */
+body #classesSubtabs::after,
+body #coursSubtabs::after,
+body #planningSubtabs::after,
+body #unssSubtabs::after,
+body #equipSubtabs::after,
+body .healthTabs::after,
+body #coursPeriodBar::after,
+body #planningPeriodBar::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 10px;
+  transform: translateY(100%);
+  background: linear-gradient(var(--bg), transparent);
+  pointer-events: none;
+}
