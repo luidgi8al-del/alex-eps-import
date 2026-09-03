@@ -195,7 +195,29 @@
         nom: "Onglet ASLVH",
         action: async () => {
           await onglet("unss");
-          await attendre(() => rempli($("tab-unss")), "l'ecran ASLVH reste vide", 6000);
+          // Sur son propre conteneur, et pas sur celui de "Liste eleve" sous Classe : les deux
+          // affichent le meme repertoire, et l'ecran restait vide quand la cible n'etait pas
+          // remise en place en ouvrant l'onglet.
+          await attendre(() => rempli($("unssList")), "la liste ASLVH reste vide", 6000);
+        }
+      },
+      {
+        nom: "ASLVH · l'import annonce ce qu'il va faire",
+        action: async () => {
+          // On va jusqu'au recapitulatif, puis on annule : le banc ne doit rien enregistrer.
+          await onglet("unss");
+          const lignes = [
+            "nom;prenom;date de naissance;division;email eleve",
+            "MARTIN;Lea;12/05/2011;3e6;lea.martin@lycee.fr",
+            "NOUVEAU;Eleve;01/01/2012;5e1;nouveau@lycee.fr"
+          ];
+          await f.importUnssCsv(lignes.join(String.fromCharCode(10)), false);
+          await attendre(() => $("importValider"), "le recapitulatif d'import ne s'affiche pas", 6000);
+          const texte = $("unssList").innerText;
+          if (!/doublon cree/.test(texte)) throw new Error("le recapitulatif ne compte pas les doublons");
+          if (!/eleve\(s\) reconnu\(s\)/.test(texte)) throw new Error("le recapitulatif ne compte pas les reconnus");
+          $("importAnnuler").click();
+          await attendre(() => !$("importValider"), "l'annulation ne referme pas le recapitulatif");
         }
       },
       {

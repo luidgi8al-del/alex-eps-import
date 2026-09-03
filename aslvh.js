@@ -76,6 +76,12 @@ let unssAppelPresence = {};
 var unssTabReady = false;
 
 async function initUnssTab() {
+  // Le repertoire s'affiche dans deux conteneurs : "Liste eleve" sous Classe et "Licencies AS"
+  // ici. Ouvrir cet onglet apres avoir consulte la liste sous Classe laissait la cible sur
+  // l'autre conteneur, masque : l'ecran restait vide sans la moindre explication. On la remet en
+  // place avant toute verification, sinon meme un message d'erreur atterrirait au mauvais endroit.
+  unssCibleRendu = "unssList";
+  viderAutreRendu("unssList");
   const asSchema = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_as_roster_version`);
   if (!asSchema.ok || await asSchema.json() !== 2) {
     document.getElementById("unssList").textContent="Mise à jour AS nécessaire : exécutez schema_as_roster.sql dans Supabase avant de gérer les groupes et appels.";
@@ -587,46 +593,244 @@ async function importUnssCsv(csv, markLicensed) {
       entetesRepetees++; continue;
     }
     const birthDate = iNaissance >= 0 ? parseFrDate(fields[iNaissance]) : null;
+    // Ni identifiant ni categorie ici : le premier depend du rapprochement (une fiche reconnue
+    // garde le sien), la seconde se deduit de la date de naissance au moment d'enregistrer.
     rows.push({
-      id: crypto.randomUUID(), user_id: session.user_id,
       last_name: lastName, first_name: firstName,
       birth_date_epoch_millis: birthDate,
-      category: computeUnssCategory(birthDate, schoolYear),
       sex: iSexe >= 0 ? normalizeSex(fields[iSexe]) : "",
       division: iDivision >= 0 ? (fields[iDivision] || "").trim() : "",
-      licensed: markLicensed,
       wish1: iVoeu1 >= 0 ? (fields[iVoeu1] || "") : "",
       wish2: iVoeu2 >= 0 ? (fields[iVoeu2] || "") : "",
       wish3: iVoeu3 >= 0 ? (fields[iVoeu3] || "") : "",
       student_email: iEmailEleve >= 0 ? (fields[iEmailEleve] || null) : null,
-      parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null,
-      updated_at: new Date().toISOString(), deleted: false
+      parent_email: iEmailParent >= 0 ? (fields[iEmailParent] || null) : null
     });
   }
 
-  // Un export d'etablissement fait facilement plus de mille lignes : une requete par eleve
-  // prendrait plusieurs minutes. On envoie par paquets, et on s'arrete au premier paquet
-  // refuse pour annoncer un total honnete plutot qu'un chiffre optimiste.
-  let count = 0;
-  const TAILLE_LOT = 200;
-  for (let i = 0; i < rows.length; i += TAILLE_LOT) {
-    const lot = rows.slice(i, i + TAILLE_LOT);
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-      method: "POST", body: JSON.stringify(lot)
+  // On ne cree plus a l'aveugle : on compare d'abord au repertoire, puis on montre ce qu'on
+  // compte faire. Un export d'etablissement arrive rarement complet, et il faut pouvoir le
+  // reimporter enrichi sans doubler tout le college.
+  const rapport = ImportEleves.rapprocherEleves(unssStudents, rows);
+  rapport.contexte = { markLicensed, schoolYear, ignorees, entetesRepetees };
+  importEnCours = rapport;
+  choixDivergences = {};
+  choixAmbigus = {};
+  renderRapportImport();
+}
+
+// ---- Import du repertoire : ce qu'on compte faire, avant de le faire ----
+//
+// Trois decisions restent au professeur, et aucune n'est prise a sa place : arbitrer une valeur
+// qui differe, dire qui est qui quand deux homonymes se ressemblent, et valider l'ensemble.
+// Tant qu'il n'a pas valide, rien n'est envoye.
+
+let importEnCours = null;
+let choixDivergences = {};   // "indexReconnu|champ" -> "nouvelle"
+let choixAmbigus = {};       // "indexAmbigu" -> id d'un eleve existant, ou "nouveau"
+
+function valeurLisible(champ, valeur) {
+  if (valeur === null || valeur === undefined || valeur === "") return "(vide)";
+  // Heure locale, comme partout ailleurs dans le repertoire : forcer UTC affichait la veille.
+  if (champ === "birth_date_epoch_millis") return formatFrDate(valeur) || String(valeur);
+  return String(valeur);
+}
+
+function nomComplet(e) {
+  return `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
+}
+
+function renderRapportImport() {
+  // Le repertoire s'affiche dans deux conteneurs selon l'onglet : "Liste eleve" sous Classe, et
+  // "Licencies AS" sous ASLVH. Le recapitulatif doit prendre la place de celui qui est visible,
+  // sinon il s'ecrit dans un element masque et le professeur ne voit rien se passer.
+  const wrap = document.getElementById(unssCibleRendu) || document.getElementById("unssList");
+  const r = importEnCours;
+  if (!r) return;
+  const chiffres = r.resume;
+
+  let html = `<div class="card">
+    <div class="top"><h2 style="margin:0">Import : ce qui va etre fait</h2>
+      <button class="secondary" id="importAnnuler" style="margin-top:0">Annuler</button></div>
+    <ul class="tight" style="margin:10px 0 0; padding-left:18px">
+      <li><strong>${chiffres.reconnus}</strong> eleve(s) reconnu(s)</li>
+      <li><strong>${chiffres.completes}</strong> fiche(s) completee(s)</li>
+      <li><strong>${chiffres.divergences}</strong> divergence(s) a verifier</li>
+      <li><strong>${chiffres.nouveaux}</strong> nouvel(s) eleve(s)</li>
+      <li><strong>${chiffres.ambigus}</strong> cas ambigu(s) a trancher</li>
+      <li><strong>0</strong> doublon cree</li>
+    </ul>
+    <div class="muted" style="margin-top:8px">${r.absentsDuFichier.length} eleve(s) du repertoire
+      ne figurent pas dans ce fichier : ils ne sont pas touches.</div>`;
+
+  if (r.contexte.ignorees || r.contexte.entetesRepetees) {
+    html += `<div class="muted" style="margin-top:6px">${r.contexte.ignorees} ligne(s) sans nom ni
+      prenom et ${r.contexte.entetesRepetees} ligne(s) d'entete ignorees dans le fichier.</div>`;
+  }
+  html += `</div>`;
+
+  // --- Les divergences : une valeur des deux cotes, mais pas la meme ---
+  const avecDesaccord = r.reconnus
+    .map((reconnu, index) => ({ reconnu, index }))
+    .filter(x => x.reconnu.divergences.length > 0);
+  if (avecDesaccord.length) {
+    html += `<div class="card" style="margin-top:12px">
+      <h3 style="margin:0 0 4px">Divergences</h3>
+      <div class="muted">Sans choix de votre part, l'ancienne valeur est conservee.</div>`;
+    avecDesaccord.forEach(({ reconnu, index }) => {
+      html += `<div class="card" style="margin-top:8px"><strong>${planningText(nomComplet(reconnu.existant))}</strong>`;
+      reconnu.divergences.forEach(d => {
+        const cle = `${index}|${d.champ}`;
+        html += `<div style="margin-top:6px">
+          <div class="muted" style="font-size:12px">${planningText(ImportEleves.LIBELLES[d.champ] || d.champ)}</div>
+          <label style="margin-right:14px"><input type="radio" name="div-${cle}" value="ancienne"
+            data-divergence="${cle}" ${choixDivergences[cle] === "nouvelle" ? "" : "checked"}>
+            ${planningText(valeurLisible(d.champ, d.ancienne))} <span class="muted">(actuelle)</span></label>
+          <label><input type="radio" name="div-${cle}" value="nouvelle"
+            data-divergence="${cle}" ${choixDivergences[cle] === "nouvelle" ? "checked" : ""}>
+            ${planningText(valeurLisible(d.champ, d.nouvelle))} <span class="muted">(fichier)</span></label>
+        </div>`;
+      });
+      html += `</div>`;
     });
-    if (!res.ok) {
-      await loadUnssStudents();
-      renderUnssTab();
-      alert(`${count} eleve(s) importe(s), puis l'envoi s'est interrompu. Attention : reimporter le meme fichier creerait un doublon pour ces ${count} eleves. Supprimez-les d'abord, ou retirez-les du fichier avant de relancer.`);
+    html += `</div>`;
+  }
+
+  // --- Les cas ambigus : on ne devine pas, on demande ---
+  if (r.ambigus.length) {
+    html += `<div class="card" style="margin-top:12px">
+      <h3 style="margin:0 0 4px">Cas ambigus</h3>
+      <div class="muted">Sans choix de votre part, ces lignes sont ignorees : mieux vaut les
+        reprendre plus tard qu'ecrire dans la mauvaise fiche.</div>`;
+    r.ambigus.forEach((cas, index) => {
+      html += `<div class="card" style="margin-top:8px">
+        <strong>${planningText(nomComplet(cas.importe))}</strong>
+        <div class="muted" style="font-size:12px">${planningText(cas.raison)}</div>
+        <div style="margin-top:6px">
+          <label style="display:block"><input type="radio" name="amb-${index}" value=""
+            data-ambigu="${index}" ${choixAmbigus[index] ? "" : "checked"}> Ignorer cette ligne</label>
+          ${cas.candidats.map(c => `<label style="display:block"><input type="radio" name="amb-${index}"
+            value="${planningText(c.id)}" data-ambigu="${index}"
+            ${choixAmbigus[index] === c.id ? "checked" : ""}> Completer ${planningText(nomComplet(c))}
+            <span class="muted">${planningText(valeurLisible("birth_date_epoch_millis", c.birth_date_epoch_millis))}
+            · ${planningText(c.division || "sans division")}</span></label>`).join("")}
+          <label style="display:block"><input type="radio" name="amb-${index}" value="nouveau"
+            data-ambigu="${index}" ${choixAmbigus[index] === "nouveau" ? "checked" : ""}>
+            Creer un nouvel eleve</label>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="card" style="margin-top:12px">
+    <button id="importValider">Valider l'import</button>
+    <button class="secondary" id="importAnnuler2">Annuler</button>
+    <div class="error" id="importErreur"></div>
+  </div>`;
+
+  wrap.innerHTML = html;
+
+  wrap.querySelectorAll("[data-divergence]").forEach(radio => radio.addEventListener("change", () => {
+    choixDivergences[radio.dataset.divergence] = radio.value;
+  }));
+  wrap.querySelectorAll("[data-ambigu]").forEach(radio => radio.addEventListener("change", () => {
+    choixAmbigus[radio.dataset.ambigu] = radio.value;
+  }));
+  const annuler = () => { importEnCours = null; renderUnssTab(); };
+  document.getElementById("importAnnuler").onclick = annuler;
+  document.getElementById("importAnnuler2").onclick = annuler;
+  document.getElementById("importValider").onclick = appliquerImport;
+}
+
+/**
+ * Enregistre ce que le recapitulatif annonce.
+ *
+ * Les fiches reconnues gardent leur identifiant : c'est ce qui evite le doublon. Les envois
+ * partent par paquets - un export d'etablissement depasse facilement le millier de lignes - et on
+ * s'arrete au premier paquet refuse pour annoncer un total honnete.
+ */
+async function appliquerImport() {
+  const r = importEnCours;
+  if (!r) return;
+  const bouton = document.getElementById("importValider");
+  const erreur = document.getElementById("importErreur");
+  bouton.disabled = true; bouton.textContent = "Enregistrement...";
+  erreur.textContent = "";
+
+  const { markLicensed, schoolYear } = r.contexte;
+  const maintenant = new Date().toISOString();
+
+  const preparer = (fiche, existant) => {
+    const complete = { ...fiche };
+    // La categorie se deduit de la date de naissance : elle se recalcule des que celle-ci arrive,
+    // au lieu d'etre arbitree comme une donnee.
+    complete.category = computeUnssCategory(complete.birth_date_epoch_millis, schoolYear);
+    // Un import de licencies rend licencie ; il ne retire jamais une licence.
+    complete.licensed = markLicensed || Boolean(existant && existant.licensed);
+    complete.user_id = complete.user_id || session.user_id;
+    complete.updated_at = maintenant;
+    complete.deleted = false;
+    return complete;
+  };
+
+  const aEnvoyer = [];
+  r.reconnus.forEach((reconnu, index) => {
+    const choix = {};
+    reconnu.divergences.forEach(d => {
+      if (choixDivergences[`${index}|${d.champ}`] === "nouvelle") choix[d.champ] = "nouvelle";
+    });
+    const fiche = ImportEleves.ficheFusionnee(reconnu, choix);
+    if (reconnu.aCompleter.length === 0 && Object.keys(choix).length === 0) return; // rien a ecrire
+    aEnvoyer.push(preparer(fiche, reconnu.existant));
+  });
+
+  r.ambigus.forEach((cas, index) => {
+    const decision = choixAmbigus[index];
+    if (!decision) return;                                    // ignore, comme annonce
+    if (decision === "nouveau") {
+      aEnvoyer.push(preparer({ ...cas.importe, id: crypto.randomUUID() }, null));
       return;
     }
-    count += lot.length;
+    const existant = cas.candidats.find(c => c.id === decision);
+    if (!existant) return;
+    const reconnu = { existant, importe: cas.importe,
+      aCompleter: ImportEleves.CHAMPS
+        .filter(([champ]) => !ImportEleves.estVide(cas.importe[champ]) && ImportEleves.estVide(existant[champ]))
+        .map(([champ]) => ({ champ, valeur: cas.importe[champ] })),
+      divergences: [] };
+    aEnvoyer.push(preparer(ImportEleves.ficheFusionnee(reconnu), existant));
+  });
+
+  r.nouveaux.forEach(nouveau => {
+    aEnvoyer.push(preparer({ ...nouveau, id: crypto.randomUUID() }, null));
+  });
+
+  let envoyes = 0;
+  const TAILLE_LOT = 200;
+  try {
+    for (let i = 0; i < aEnvoyer.length; i += TAILLE_LOT) {
+      const lot = aEnvoyer.slice(i, i + TAILLE_LOT);
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates" },
+        body: JSON.stringify(lot)
+      });
+      if (!res.ok) throw new Error(`Envoi interrompu apres ${envoyes} eleve(s).`);
+      envoyes += lot.length;
+    }
+  } catch (e) {
+    bouton.disabled = false; bouton.textContent = "Valider l'import";
+    // Reimporter le meme fichier ne creera pas de doublon : les fiches deja envoyees seront
+    // reconnues. C'est tout l'interet du rapprochement, et il faut le dire.
+    erreur.textContent = `${e.message} Vous pouvez relancer le meme fichier : les eleves deja enregistres seront reconnus, sans doublon.`;
+    return;
   }
-  if (ignorees > 0) console.warn(`Import AS : ${ignorees} ligne(s) sans nom ou prenom ignoree(s).`);
-  if (entetesRepetees > 0) console.warn(`Import AS : ${entetesRepetees} ligne(s) d'entete rencontree(s) au milieu du fichier, ignoree(s).`);
+
+  importEnCours = null;
   await loadUnssStudents();
   renderUnssTab();
-  alert(`${count} eleve(s) importe(s).`);
+  alert(`${r.resume.reconnus} eleve(s) reconnu(s), ${r.resume.nouveaux} ajoute(s), aucun doublon.`);
 }
 
 // ---- UNSS > Creneaux AS : l'offre d'activites parmi laquelle se formulent les voeux ----

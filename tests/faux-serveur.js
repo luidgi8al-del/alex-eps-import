@@ -136,6 +136,10 @@
 
     if (/\/auth\/v1\//.test(url)) return Promise.resolve(reponse({ access_token: "jeton-test", user: { id: "prof-test", email: "test@exemple.fr" } }));
     if (/\/functions\/v1\//.test(url)) return Promise.resolve(reponse({ ok: true, invites: [], members: [] }));
+    // Chaque fonction distante rend ce que le site attend d'elle : une version de schema est un
+    // nombre, pas un objet. Repondre a cote faisait tester un ecran d'erreur.
+    if (/\/rest\/v1\/rpc\/eps_as_roster_version/.test(url)) return Promise.resolve(reponse(2));
+    if (/\/rest\/v1\/rpc\/eps_team_context/.test(url)) return Promise.resolve(reponse({ institution_id: "etab-1", is_admin: true }));
     if (/\/rest\/v1\/rpc\//.test(url)) return Promise.resolve(reponse({ saved: true, revision: 2 }));
     if (/open-meteo/.test(url)) return Promise.resolve(reponse({ current: {}, daily: { time: [], weathercode: [] }, hourly: { time: [], temperature_2m: [] } }));
 
