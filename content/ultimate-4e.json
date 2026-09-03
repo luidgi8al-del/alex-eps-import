@@ -1,0 +1,2599 @@
+{
+  "apsa": "Ultimate",
+  "grades": [
+    "QUATRIEME"
+  ],
+  "champApprentissage": "CA4 - Conduire et maitriser un affrontement collectif ou interindividuel",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, programme en vigueur publie au BO n°31 du 30 juillet 2020.",
+  "attendus": [
+    "Realiser des actions decisives en situation favorable afin de faire basculer le rapport de force.",
+    "Adapter son engagement moteur en fonction de son etat physique et du rapport de force.",
+    "Etre solidaire de ses partenaires et respectueux de ses adversaires et de l'arbitre.",
+    "Observer et co-arbitrer ; accepter le resultat de la rencontre."
+  ],
+  "targetCompetence": "En 4 contre 4, lire le rapport de force, coordonner appui-soutien-profondeur, reagir au turn-over et reguler un projet de jeu dans le respect de l'esprit du jeu.",
+  "cycleObjectives": [
+    "Choisir le lancer selon le marquage.",
+    "Coordonner appui, soutien et profondeur.",
+    "Basculer vite au turn-over.",
+    "Construire un projet adapte.",
+    "Reguler loyalement les litiges."
+  ],
+  "plannedTitles": [
+    "Diagnostic : lire le rapport de force",
+    "Break et revers selon le defenseur",
+    "Coup droit sous pression",
+    "Appui, soutien et profondeur",
+    "Passe et va sous pression",
+    "Evaluation mi-cycle : progresser en continuite",
+    "Marquage individuel sans contact",
+    "Defendre en zone et communiquer",
+    "Attaquer la zone de marque",
+    "Reagir au turn-over",
+    "Construire et reguler un projet de jeu",
+    "Evaluation finale 4e"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Ressources EPS cycle 4 - Ultimate",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsultimateca4nd575978pdf-78366.pdf",
+      "consulted": "2026-09-03"
+    },
+    {
+      "type": "Academique",
+      "title": "Ultimate au college - formation continue",
+      "org": "Academie de Grenoble",
+      "url": "https://eps-pedagogie.web.ac-grenoble.fr/ressources/fc-ultimate-au-college",
+      "consulted": "2026-09-03"
+    },
+    {
+      "type": "Professionnelle",
+      "title": "Le Score Temps en Ultimate",
+      "org": "AEEPS",
+      "url": "https://www.aeeps.org/productions/1442-le-score-temps-en-ultimate-un-indicateur-source-de-transformations-revelateur-de-progres-et-support-pour-des-parcours-dapprentissages-adaptes-et-differencies.html",
+      "consulted": "2026-09-03"
+    }
+  ],
+  "protocoleLocal": [
+    "Utiliser des disques souples adaptes.",
+    "Verifier trois metres entre terrains.",
+    "Interdire tout contact et toute tentative d'arracher le disque.",
+    "Prevoir une zone de stockage des disques hors terrain."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Porteur presse",
+      "observed": "Lance vite et au hasard.",
+      "need": "Pivot, prise d'information et solution courte."
+    },
+    {
+      "label": "Non-porteur spectateur",
+      "observed": "Suit le disque sans creer de ligne de passe.",
+      "need": "Appel, changement de rythme et espace libre."
+    },
+    {
+      "label": "Defenseur au contact",
+      "observed": "Colle ou touche le porteur.",
+      "need": "Distance, orientation et interception de ligne."
+    },
+    {
+      "label": "Competiteur contestataire",
+      "observed": "Discute le resultat de chaque action.",
+      "need": "Protocole bref d'auto-arbitrage et responsabilite."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Tournoi 4 contre 4, matchs de 8 minutes ; projet annonce avant match, temps de regulation, statistiques de possessions et auto-arbitrage.",
+    "criteria": [
+      "Conserver et faire progresser le disque.",
+      "Offrir des solutions en appui et en profondeur.",
+      "Choisir une passe adaptee.",
+      "Defendre sans contact et se replier.",
+      "Participer au projet collectif.",
+      "Auto-arbitrer et accepter la decision partagee."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA4 et ressource Eduscol Ultimate."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Diagnostic : lire le rapport de force",
+      "mainObjective": "Identifier les choix du porteur et la repartition des non-porteurs.",
+      "isDiagnostic": true,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Premiere seance : installer les regles, observer les conduites initiales et constituer des reperes.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "4 terrains en largeur ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail diagnostic : lire le rapport de force.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Diagnostic : lire le rapport de force",
+          "objective": "Identifier les choix du porteur et la repartition des non-porteurs.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "3 contre 3 sur quatre terrains de 18 x 10 m, zones de 3 m ; matchs de 4 minutes.",
+          "studentGoal": "Atteindre la zone adverse par passes, sans courir avec le disque.",
+          "instructions": [
+            "Pied de pivot apres reception.",
+            "Turn-over sur chute, interception ou sortie."
+          ],
+          "success": [
+            "Trois passes consecutives au moins une fois.",
+            "Une reception dans la zone sur deux matchs."
+          ],
+          "execution": [
+            "Passe a hauteur de poitrine.",
+            "Receveur montre une cible loin du defenseur."
+          ],
+          "watch": [
+            "Qui court avec le disque ?",
+            "Qui reste cache derriere un defenseur ?"
+          ],
+          "errors": [
+            "Passe en cloche au hasard.",
+            "Tous autour du porteur."
+          ],
+          "feedback": [
+            "Fixe ton pivot avant de chercher.",
+            "Ecarte-toi pour ouvrir une ligne de passe."
+          ],
+          "plus": [
+            "Defense individuelle active."
+          ],
+          "minus": [
+            "Defense retardee de deux secondes."
+          ],
+          "diff": {
+            "facilitee": "3 contre 2, terrain large.",
+            "normale": "3 contre 3.",
+            "complexifiee": "Comptage de 5 secondes."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Diagnostic : lire le rapport de force en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Identifier les choix du porteur et la repartition des non-porteurs.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. 3 contre 3 sur quatre terrains de 18 x 10 m, zones de 3 m ; matchs de 4 minutes.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Trois passes consecutives au moins une fois. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Passe a hauteur de poitrine.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Break et revers selon le defenseur",
+      "mainObjective": "Choisir un lancer pour contourner le marquage.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 1 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "4 terrains en largeur ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail break et revers selon le defenseur.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Break et revers selon le defenseur",
+          "objective": "Choisir un lancer pour contourner le marquage.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Couloirs de 4 x 15 m, trinomes : passeur, receveur, observateur ; rotation apres six passes.",
+          "studentGoal": "Reussir cinq passes sur six dans la course du partenaire.",
+          "instructions": [
+            "Pied oppose vers la cible.",
+            "Receveur attaque le disque a deux mains."
+          ],
+          "success": [
+            "5 passes sur 6 arrivent devant le receveur.",
+            "Aucun disque ne traverse un couloir voisin."
+          ],
+          "execution": [
+            "Disque horizontal au depart.",
+            "Course acceleree vers l'espace libre."
+          ],
+          "watch": [
+            "Le disque flotte-t-il ?",
+            "Le receveur attend-il immobile ?"
+          ],
+          "errors": [
+            "Poignet bloque.",
+            "Passe derriere le coureur."
+          ],
+          "feedback": [
+            "Finis le geste vers la cible.",
+            "Pars avant la passe et montre tes mains."
+          ],
+          "plus": [
+            "Allonger a 20 m."
+          ],
+          "minus": [
+            "Reduire a 8 m et receveur marche."
+          ],
+          "diff": {
+            "facilitee": "8 m, receveur en marche.",
+            "normale": "12 m, reception en course.",
+            "complexifiee": "15 m avec defenseur passif."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Break et revers selon le defenseur en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Choisir un lancer pour contourner le marquage.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Couloirs de 4 x 15 m, trinomes : passeur, receveur, observateur ; rotation apres six passes.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « 5 passes sur 6 arrivent devant le receveur. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Disque horizontal au depart.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Coup droit sous pression",
+      "mainObjective": "Stabiliser une seconde passe face a un comptage.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 2 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "4 terrains en largeur ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail coup droit sous pression.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Coup droit sous pression",
+          "objective": "Stabiliser une seconde passe face a un comptage.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Couloirs de 5 x 12 m ; passeur avec marqueur passif, receveur dans une porte laterale.",
+          "studentGoal": "Choisir revers ou coup droit pour atteindre la porte libre.",
+          "instructions": [
+            "Pied de pivot stable.",
+            "Changer de cote sans changer de pied de pivot."
+          ],
+          "success": [
+            "8 passes sur 10 atteignent la bonne porte.",
+            "Le choix contourne effectivement le marqueur."
+          ],
+          "execution": [
+            "Prise stable du disque.",
+            "Trajectoire plate sous la hauteur des epaules."
+          ],
+          "watch": [
+            "Le pied de pivot bouge-t-il ?",
+            "Le choix est-il fait avant le geste ?"
+          ],
+          "errors": [
+            "Changer de main en courant.",
+            "Lancer au-dessus du defenseur."
+          ],
+          "feedback": [
+            "Pivote pour ouvrir l'angle.",
+            "Choisis la passe avant d'armer."
+          ],
+          "plus": [
+            "Marqueur actif, comptage a huit."
+          ],
+          "minus": [
+            "Marqueur symbolise par un plot."
+          ],
+          "diff": {
+            "facilitee": "Deux portes larges, defenseur-plot.",
+            "normale": "Marqueur passif et choix de passe.",
+            "complexifiee": "Marqueur actif, comptage a huit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Coup droit sous pression en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Stabiliser une seconde passe face a un comptage.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Couloirs de 5 x 12 m ; passeur avec marqueur passif, receveur dans une porte laterale.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « 8 passes sur 10 atteignent la bonne porte. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Prise stable du disque.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "Appui, soutien et profondeur",
+      "mainObjective": "Maintenir trois solutions coordonnees autour du porteur.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 3 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail appui, soutien et profondeur.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Appui, soutien et profondeur",
+          "objective": "Maintenir trois solutions coordonnees autour du porteur.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Carres de 12 x 12 m, 3 attaquants contre 1 defenseur ; un point pour cinq passes.",
+          "studentGoal": "Donner deux solutions au porteur en occupant des espaces differents.",
+          "instructions": [
+            "Apres la passe, quitter son couloir.",
+            "Ne pas rester derriere le defenseur."
+          ],
+          "success": [
+            "Cinq passes reussies deux fois.",
+            "Deux receveurs visibles au moment de chaque passe."
+          ],
+          "execution": [
+            "Appel court puis changement de direction.",
+            "Ecartement d'au moins quatre metres."
+          ],
+          "watch": [
+            "Les attaquants se deplacent-ils apres leur passe ?",
+            "Deux joueurs occupent-ils le meme espace ?"
+          ],
+          "errors": [
+            "Venir tous au disque.",
+            "Appel sans changement de rythme."
+          ],
+          "feedback": [
+            "Passe et change de fenetre.",
+            "Si ton partenaire vient court, pars long."
+          ],
+          "plus": [
+            "Ajouter un second defenseur."
+          ],
+          "minus": [
+            "Zone refuge laterale."
+          ],
+          "diff": {
+            "facilitee": "3 contre 1 sans comptage.",
+            "normale": "3 contre 1, cinq passes.",
+            "complexifiee": "3 contre 2."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Appui, soutien et profondeur en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Maintenir trois solutions coordonnees autour du porteur.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Carres de 12 x 12 m, 3 attaquants contre 1 defenseur ; un point pour cinq passes.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Cinq passes reussies deux fois. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Appel court puis changement de direction.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Passe et va sous pression",
+      "mainObjective": "Recreer une solution apres chaque transmission.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 4 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail passe et va sous pression.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Passe et va sous pression",
+          "objective": "Recreer une solution apres chaque transmission.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Triangles de 10 m, trois attaquants et un defenseur central ; changer de sommet apres chaque passe.",
+          "studentGoal": "Faire dix passes en changeant de place apres chacune.",
+          "instructions": [
+            "Passer puis accelerer vers le sommet libre.",
+            "Le troisieme joueur equilibre le triangle."
+          ],
+          "success": [
+            "10 passes sans deux joueurs au meme sommet.",
+            "Le passeur repart avant la reception suivante."
+          ],
+          "execution": [
+            "Course apres le lacher.",
+            "Orientation du corps vers deux solutions."
+          ],
+          "watch": [
+            "Le passeur admire-t-il sa passe ?",
+            "Le triangle s'ecrase-t-il ?"
+          ],
+          "errors": [
+            "Rester sur place.",
+            "Courir vers le receveur."
+          ],
+          "feedback": [
+            "Ta passe declenche ta course.",
+            "Va vers l'espace vide, pas vers le disque."
+          ],
+          "plus": [
+            "Deux defenseurs."
+          ],
+          "minus": [
+            "Defenseur fixe au centre."
+          ],
+          "diff": {
+            "facilitee": "Sans defenseur, rythme guide.",
+            "normale": "Un defenseur central.",
+            "complexifiee": "Deux defenseurs mobiles."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Passe et va sous pression en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Recreer une solution apres chaque transmission.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Triangles de 10 m, trois attaquants et un defenseur central ; changer de sommet apres chaque passe.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « 10 passes sans deux joueurs au meme sommet. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Course apres le lacher.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Evaluation mi-cycle : progresser en continuite",
+      "mainObjective": "Mesurer l'acces a la zone et les pertes evitables.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": true,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 5 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail evaluation mi-cycle : progresser en continuite.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Evaluation mi-cycle : progresser en continuite",
+          "objective": "Mesurer l'acces a la zone et les pertes evitables.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "3 contre 2 sur terrains de 20 x 12 m avec trois bandes longitudinales.",
+          "studentGoal": "Faire progresser le disque dans les trois bandes sans retour en arriere.",
+          "instructions": [
+            "Un joueur court, un joueur profond.",
+            "Le passeur devient soutien apres sa passe."
+          ],
+          "success": [
+            "Les trois bandes sont franchies sur trois possessions.",
+            "Au moins une passe est recue en mouvement."
+          ],
+          "execution": [
+            "Regarder loin avant l'appui court.",
+            "Conserver largeur et profondeur."
+          ],
+          "watch": [
+            "Le porteur voit-il la profondeur ?",
+            "Le soutien depasse-t-il le disque ?"
+          ],
+          "errors": [
+            "Multiplier les petites passes laterales.",
+            "Lancer long sans cible."
+          ],
+          "feedback": [
+            "Regarde d'abord la zone suivante.",
+            "Avance ensemble, pas en file indienne."
+          ],
+          "plus": [
+            "3 contre 3 avec comptage."
+          ],
+          "minus": [
+            "Defenseurs fixes dans leur bande."
+          ],
+          "diff": {
+            "facilitee": "3 contre 2, defenseurs de zone.",
+            "normale": "3 contre 2 libres.",
+            "complexifiee": "3 contre 3."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Evaluation mi-cycle : progresser en continuite en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Mesurer l'acces a la zone et les pertes evitables.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. 3 contre 2 sur terrains de 20 x 12 m avec trois bandes longitudinales.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Les trois bandes sont franchies sur trois possessions. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Regarder loin avant l'appui court.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Marquage individuel sans contact",
+      "mainObjective": "Orienter le porteur et fermer une ligne prioritaire.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 6 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail marquage individuel sans contact.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Marquage individuel sans contact",
+          "objective": "Orienter le porteur et fermer une ligne prioritaire.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Ateliers 1 contre 1 dans quatre couloirs puis 3 contre 3 ; rotation attaque-defense-observation.",
+          "studentGoal": "Gener le jeu sans toucher le porteur ni arracher le disque.",
+          "instructions": [
+            "Distance d'un disque entre marqueur et porteur.",
+            "Compter a voix haute jusqu'a huit."
+          ],
+          "success": [
+            "Zero contact sur trois sequences.",
+            "Le receveur est force a changer au moins une fois de direction."
+          ],
+          "execution": [
+            "Appuis flechis.",
+            "Voir adversaire et disque."
+          ],
+          "watch": [
+            "Le marqueur respecte-t-il la distance ?",
+            "Le defenseur tourne-t-il le dos au disque ?"
+          ],
+          "errors": [
+            "Coller le porteur.",
+            "Suivre uniquement le disque."
+          ],
+          "feedback": [
+            "Une longueur de bras, jamais moins.",
+            "Place-toi entre ton joueur et la zone."
+          ],
+          "plus": [
+            "Comptage reduit a six."
+          ],
+          "minus": [
+            "Receveur limite a une zone."
+          ],
+          "diff": {
+            "facilitee": "Defenseur accompagne sans intercepter.",
+            "normale": "Defense active sans contact.",
+            "complexifiee": "Comptage a six."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Marquage individuel sans contact en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Orienter le porteur et fermer une ligne prioritaire.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Ateliers 1 contre 1 dans quatre couloirs puis 3 contre 3 ; rotation attaque-defense-observation.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Zero contact sur trois sequences. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Appuis flechis.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Defendre en zone et communiquer",
+      "mainObjective": "Coordonner la couverture des espaces dangereux.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 7 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail defendre en zone et communiquer.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Defendre en zone et communiquer",
+          "objective": "Coordonner la couverture des espaces dangereux.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "3 attaquants contre 2 defenseurs dans un rectangle divise en deux couloirs ; defenseurs responsables d'un couloir.",
+          "studentGoal": "Forcer trois passes laterales avant toute progression.",
+          "instructions": [
+            "Rester dans son couloir.",
+            "Communiquer quand un attaquant change de zone."
+          ],
+          "success": [
+            "La progression directe est bloquee sur 3 possessions sur 5.",
+            "Aucun contact ni croisement des deux defenseurs."
+          ],
+          "execution": [
+            "Corps oriente vers disque et zone.",
+            "Distance permettant l'interception."
+          ],
+          "watch": [
+            "Les defenseurs se regroupent-ils ?",
+            "La ligne centrale reste-t-elle ouverte ?"
+          ],
+          "errors": [
+            "Courir tous les deux au porteur.",
+            "Defendre derriere les receveurs."
+          ],
+          "feedback": [
+            "Protege d'abord l'espace dangereux.",
+            "Annonce le changement de couloir."
+          ],
+          "plus": [
+            "Supprimer les couloirs visibles."
+          ],
+          "minus": [
+            "Couloirs larges et attaquants limites a trois secondes."
+          ],
+          "diff": {
+            "facilitee": "Couloirs marques, attaque ralentie.",
+            "normale": "Deux couloirs et defense active.",
+            "complexifiee": "Reperes retires."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Defendre en zone et communiquer en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Coordonner la couverture des espaces dangereux.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. 3 attaquants contre 2 defenseurs dans un rectangle divise en deux couloirs ; defenseurs responsables d'un couloir.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « La progression directe est bloquee sur 3 possessions sur 5. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Corps oriente vers disque et zone.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 9,
+      "theme": "Attaquer la zone de marque",
+      "mainObjective": "Synchroniser appel profond et passe decisive.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 8 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail attaquer la zone de marque.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Attaquer la zone de marque",
+          "objective": "Synchroniser appel profond et passe decisive.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "3 contre 3 sur terrains de 22 x 12 m, zone de marque de 4 m ; remise en jeu au plot.",
+          "studentGoal": "Recevoir dans la zone apres un appel depuis l'espace de jeu.",
+          "instructions": [
+            "Ne pas attendre dans la zone.",
+            "Changer de direction avant d'entrer."
+          ],
+          "success": [
+            "Trois tirs de marque construits.",
+            "Deux receveurs differents marquent."
+          ],
+          "execution": [
+            "Passe devant la course.",
+            "Appel declenche quand le porteur est stable."
+          ],
+          "watch": [
+            "Les joueurs stationnent-ils dans la zone ?",
+            "La passe arrive-t-elle trop tard ?"
+          ],
+          "errors": [
+            "Camper dans l'en-but.",
+            "Passe lobee sans lecture."
+          ],
+          "feedback": [
+            "Sors de la zone puis attaque-la.",
+            "Lance dans l'espace a atteindre."
+          ],
+          "plus": [
+            "Zone reduite a 2 m."
+          ],
+          "minus": [
+            "Zone de 6 m et defense retardee."
+          ],
+          "diff": {
+            "facilitee": "3 contre 2, zone large.",
+            "normale": "3 contre 3.",
+            "complexifiee": "Zone etroite, comptage a six."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Attaquer la zone de marque en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Synchroniser appel profond et passe decisive.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. 3 contre 3 sur terrains de 22 x 12 m, zone de marque de 4 m ; remise en jeu au plot.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Trois tirs de marque construits. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Passe devant la course.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 10,
+      "theme": "Reagir au turn-over",
+      "mainObjective": "Basculer collectivement attaque-defense en trois secondes.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 9 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail reagir au turn-over.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Reagir au turn-over",
+          "objective": "Basculer collectivement attaque-defense en trois secondes.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "4 contre 4 sur 25 x 15 m ; au turn-over, l'equipe a trois secondes pour retrouver une organisation.",
+          "studentGoal": "Apres chaque perte, proteger immediatement l'axe vers sa zone.",
+          "instructions": [
+            "Le plus proche marque le porteur.",
+            "Les autres reprennent un joueur ou une ligne."
+          ],
+          "success": [
+            "L'axe est protege en moins de trois secondes sur 4 turn-overs sur 5.",
+            "Aucun joueur ne reste spectateur."
+          ],
+          "execution": [
+            "Freinage puis changement de direction.",
+            "Communication breve : disque, axe, joueur."
+          ],
+          "watch": [
+            "Qui continue d'attaquer apres la perte ?",
+            "Le repli protege-t-il l'axe ?"
+          ],
+          "errors": [
+            "Lever les bras et s'arreter.",
+            "Courir tous vers le disque."
+          ],
+          "feedback": [
+            "Perdu : protege d'abord notre zone.",
+            "Le plus proche prend le disque, les autres s'ecartent."
+          ],
+          "plus": [
+            "Relance immediate sans pause."
+          ],
+          "minus": [
+            "Arret de deux secondes au turn-over pour se placer."
+          ],
+          "diff": {
+            "facilitee": "Pause pedagogique au changement.",
+            "normale": "Repli en trois secondes.",
+            "complexifiee": "Relance immediate et terrain elargi."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Reagir au turn-over en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Basculer collectivement attaque-defense en trois secondes.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. 4 contre 4 sur 25 x 15 m ; au turn-over, l'equipe a trois secondes pour retrouver une organisation.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « L'axe est protege en moins de trois secondes sur 4 turn-overs sur 5. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Freinage puis changement de direction.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 11,
+      "theme": "Construire et reguler un projet de jeu",
+      "mainObjective": "Adapter largeur, profondeur ou alternance a l'adversaire.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 10 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Le critere prioritaire est stabilise en jeu reduit.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail construire et reguler un projet de jeu.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Construire et reguler un projet de jeu",
+          "objective": "Adapter largeur, profondeur ou alternance a l'adversaire.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Equipes stables de quatre ; deux terrains de 28 x 16 m ; matchs de 6 minutes et observation croisee.",
+          "studentGoal": "Appliquer un projet annonce et regler les fautes sans arbitre exterieur.",
+          "instructions": [
+            "Projet choisi : largeur ou appui-profondeur.",
+            "Sur faute, arret, explication breve, reprise."
+          ],
+          "success": [
+            "Projet visible sur trois possessions.",
+            "Tous les litiges sont resolus calmement.",
+            "Trois joueurs differents touchent le disque avant un point."
+          ],
+          "execution": [
+            "Annonce collective avant le match.",
+            "Capitaine de fair-play identifie."
+          ],
+          "watch": [
+            "Le projet survit-il a la perte du disque ?",
+            "Qui prend la parole lors d'un litige ?"
+          ],
+          "errors": [
+            "Contester longtemps.",
+            "Projet oublie des la premiere interception."
+          ],
+          "feedback": [
+            "Une phrase pour expliquer, une phrase pour repondre.",
+            "Rappelez votre projet avant chaque remise."
+          ],
+          "plus": [
+            "Changer de projet a mi-match."
+          ],
+          "minus": [
+            "Carton rappel du projet dans chaque camp."
+          ],
+          "diff": {
+            "facilitee": "Projet impose et defense individuelle.",
+            "normale": "Projet choisi.",
+            "complexifiee": "Adapter le projet a mi-match."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Construire et reguler un projet de jeu en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Adapter largeur, profondeur ou alternance a l'adversaire.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Equipes stables de quatre ; deux terrains de 28 x 16 m ; matchs de 6 minutes et observation croisee.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « Projet visible sur trois possessions. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Annonce collective avant le match.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    },
+    {
+      "number": 12,
+      "theme": "Evaluation finale 4e",
+      "mainObjective": "Conduire un affrontement autonome, lucide et loyal.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Cooperer dans un projet collectif.",
+        "Respecter et faire respecter l'esprit du jeu."
+      ],
+      "competence": "Faire des choix pertinents pour conserver, progresser et marquer tout en assurant le repli et l'auto-arbitrage.",
+      "linkToPrevious": "Les acquis de la seance 11 sont reinvestis dans une opposition plus complexe.",
+      "prerequisiteForNext": "Cycle termine : resultats et bilan enregistres.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "disques souples",
+            "fixed": 10
+          },
+          {
+            "label": "plots",
+            "fixed": 30
+          },
+          {
+            "label": "chasubles",
+            "fixed": 20
+          }
+        ],
+        "instructions": [
+          "Installer des terrains separes par un couloir de securite de trois metres.",
+          "Orienter toutes les zones de marque dans le meme sens.",
+          "Attribuer un disque et des chasubles par terrain."
+        ],
+        "sketch": "2 grands terrains ; zones de marque aux extremites ; couloir central reserve aux rotations ; equipes en attente derriere leur plot."
+      },
+      "warmup": {
+        "rationale": "Elever la temperature corporelle, mobiliser epaules et poignets puis retrouver les reperes techniques utiles au travail evaluation finale 4e.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Course et changements d'appuis",
+            "details": [
+              "Courir dans les couloirs sans disque.",
+              "Freiner, pivoter puis repartir au signal."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Mobilisation articulaire",
+            "details": [
+              "Mobiliser chevilles, genoux, bassin, epaules et poignets.",
+              "Garder un espace de deux metres entre eleves."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Passes progressives",
+            "details": [
+              "Par deux, revers courts puis passes en mouvement.",
+              "Annoncer le prenom du receveur avant la passe."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Evaluation finale 4e",
+          "objective": "Conduire un affrontement autonome, lucide et loyal.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Equipes de quatre, matchs de 7 minutes ; une equipe joue, une observe possession, demarquage et fair-play.",
+          "studentGoal": "Faire progresser le disque jusqu'a la zone en respectant auto-arbitrage et partenaires.",
+          "instructions": [
+            "Appliquer toutes les regles stabilisees.",
+            "Changer de role apres chaque match."
+          ],
+          "success": [
+            "L'equipe atteint regulierement la zone.",
+            "Chaque eleve offre des solutions et defend sans contact.",
+            "Les litiges sont autonomes."
+          ],
+          "execution": [
+            "Passes adaptees a la distance.",
+            "Largeur, profondeur et replacement."
+          ],
+          "watch": [
+            "Qui contribue vraiment ?",
+            "Le projet reste-t-il lisible ?"
+          ],
+          "errors": [
+            "Confondre resultat et qualite du jeu.",
+            "Oublier les roles sociaux."
+          ],
+          "feedback": [
+            "Observe des actions, pas seulement le score.",
+            "Reviens au projet annonce."
+          ],
+          "plus": [
+            "Aucune variable en evaluation."
+          ],
+          "minus": [
+            "Amenagement valide avant la seance."
+          ],
+          "diff": {
+            "facilitee": "Amenagement individuel connu.",
+            "normale": "4 contre 4, regles completes.",
+            "complexifiee": "Non applicable."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Evaluation finale 4e en jeu reduit",
+          "objective": "Reinvestir sans guidage direct : Conduire un affrontement autonome, lucide et loyal.",
+          "material": [
+            {
+              "label": "disques souples",
+              "fixed": 8
+            },
+            {
+              "label": "plots",
+              "fixed": 24
+            },
+            {
+              "label": "chasubles",
+              "fixed": 16
+            }
+          ],
+          "organization": "Opposition de quatre minutes sur terrain reduit, puis changement des observateurs. Equipes de quatre, matchs de 7 minutes ; une equipe joue, une observe possession, demarquage et fair-play.",
+          "studentGoal": "Utiliser l'acquis du jour pour faire progresser le disque en opposition.",
+          "instructions": [
+            "Jouer sans interruption exterieure.",
+            "Annoncer calmement les fautes et reprendre vite."
+          ],
+          "success": [
+            "Le critere « L'equipe atteint regulierement la zone. » est obtenu au moins deux fois en match.",
+            "Aucun contact et litige regle par les joueurs."
+          ],
+          "execution": [
+            "Passes adaptees a la distance.",
+            "Se replacer des le changement de possession."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Oublier la contrainte des le debut du match.",
+            "Attendre l'arbitrage du professeur."
+          ],
+          "feedback": [
+            "Reviens au choix travaille aujourd'hui.",
+            "Reglez puis rejouez."
+          ],
+          "plus": [
+            "Terrain plus etroit ou comptage raccourci."
+          ],
+          "minus": [
+            "Surnombre offensif temporaire."
+          ],
+          "diff": {
+            "facilitee": "Surnombre offensif et terrain large.",
+            "normale": "Rapport numerique egal.",
+            "complexifiee": "Espace ou temps de decision reduit."
+          },
+          "safety": [
+            "Aucun contact : le defenseur reste a distance de bras.",
+            "Ramasser un disque au sol seulement apres avoir verifie l'espace autour."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a permis de progresser sans perdre le disque ?",
+          "Comment l'equipe a-t-elle gere le changement de possession ?"
+        ],
+        "key": "Le disque progresse parce que les non-porteurs creent des solutions avant que le porteur soit bloque."
+      },
+      "safety": [
+        "Rappeler l'absence de contact et le pied de pivot.",
+        "Espacer les terrains de trois metres."
+      ],
+      "socialRoles": [
+        "Joueur attaquant et defenseur.",
+        "Observateur des possessions.",
+        "Capitaine d'esprit du jeu et auto-arbitre."
+      ]
+    }
+  ]
+}

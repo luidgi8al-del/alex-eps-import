@@ -1,0 +1,2758 @@
+{
+ "apsa": "Musculation",
+ "grades": [
+  "TROISIEME"
+ ],
+ "champApprentissage": "CA5 - Realiser une activite physique pour developper ses ressources et s'entretenir",
+ "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, BO special n.11 du 26 novembre 2015.",
+ "targetCompetence": "Passer d'un eleve qui execute des exercices parce qu'on les lui demande a un eleve qui construit et conduit sa propre seance : il sait se placer, il sait souffler a l'effort, il choisit ses exercices en fonction d'un theme qu'il a retenu, et il sait dire ce que cette seance lui a fait.",
+ "attendus": [
+  "Realiser et reproduire des efforts en respectant un placement securitaire.",
+  "Utiliser des repertoires d'actions pour developper ses ressources.",
+  "Concevoir et conduire une sequence d'entrainement adaptee a un theme choisi.",
+  "Identifier les effets immediats de l'effort sur son corps et les mettre en mots.",
+  "Aider un camarade, l'observer et le corriger avec bienveillance."
+ ],
+ "cycleObjectives": [
+  "Tenir un placement de dos correct sur tous les exercices, debout comme au sol.",
+  "Souffler a l'effort et ne jamais bloquer sa respiration.",
+  "Connaitre six exercices de reference et savoir les faire executer a un camarade.",
+  "Choisir un theme de travail - tonification, renforcement, entretien - et l'assumer.",
+  "Construire une seance : ordre des exercices, series, repetitions, recuperation.",
+  "Conduire son echauffement et sa seance seul, en securite.",
+  "Ecrire dans son carnet ce qu'on a fait et ce qu'on a ressenti."
+ ],
+ "plannedTitles": [
+  "Reperes de depart : ce que je sais faire et comment je me place",
+  "Le dos avant tout : gainer avant de bouger",
+  "Pousser : les membres superieurs au poids du corps",
+  "Les membres inferieurs : squat, fente, montee",
+  "Mi-cycle evalue : refaire les tests et choisir son theme",
+  "Construire sa seance : series, repetitions, recuperation",
+  "Conduire sa seance et son echauffement",
+  "Seance personnelle conduite et justifiee"
+ ],
+ "sources": [
+  {
+   "type": "Officiel",
+   "title": "Realiser une activite physique pour developper ses ressources physiques et s'entretenir - champ d'apprentissage 5",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/6300/realiser-une-activite-physique-pour-developper-ses-ressources-physiques-et-s-entretenir",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Officiel",
+   "title": "Principes d'evaluation en EPS au cycle 4",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ev16c4epsprincipeeval690351pdf-78375.pdf",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Officiel",
+   "title": "Le carnet d'entrainement - projet interdisciplinaire EPS et mathematiques, cycle 4",
+   "org": "Eduscol",
+   "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epicarnetentrainementepsmaths555526pdf-77457.pdf",
+   "consulted": "2026-09-03"
+  },
+  {
+   "type": "Academique",
+   "title": "Renforcement musculaire au college - demarche et securite",
+   "org": "Academie de Bordeaux",
+   "url": "https://ent2d.ac-bordeaux.fr/disciplines/eps/wp-content/uploads/sites/33/2020/03/Renforcement-musculaire-EPS-Clg-La-garosse.pdf",
+   "consulted": "2026-09-03"
+  }
+ ],
+ "protocoleLocal": [
+  "AUCUNE CHARGE ADDITIONNELLE. Ce cycle se conduit integralement au poids du corps : ni halteres, ni barres chargees, ni machines. Au cycle 4, l'objet du travail est le placement et la respiration, pas la charge.",
+  "Materiel de l'etablissement : verifier la stabilite des bancs et la fixation des espaliers avant chaque seance. Un banc qui glisse est un banc qu'on retire.",
+  "Nombre de tapis : un par eleve. A defaut, organiser en ateliers tournants plutot que de faire travailler un eleve a meme le sol.",
+  "Eleves porteurs d'une pathologie du dos ou d'une dispense partielle : adapter les exercices avant la seance, jamais pendant. Le role d'observateur-correcteur garde l'eleve dans l'activite.",
+  "Temperature de la salle : un renforcement se fait dans une salle chauffee. Par temps froid, allonger l'echauffement articulaire plutot que de raccourcir la seance.",
+  "Affiches des postures de reference : les afficher a hauteur des yeux, pas au plafond. Elles servent aux observateurs pendant la seance."
+ ],
+ "studentProfiles": [
+  {
+   "label": "Profil 1 - enroule le dos des que ca devient dur",
+   "observed": "Tient bien les premieres repetitions, puis arrondit le dos pour finir la serie.",
+   "need": "Apprendre a arreter la serie au moment ou le placement se degrade, plutot qu'a la finir a tout prix."
+  },
+  {
+   "label": "Profil 2 - bloque sa respiration",
+   "observed": "Retient son souffle pendant tout l'effort, visage rouge, et souffle une fois l'exercice termine.",
+   "need": "Associer le souffle au moment de l'effort, sur chaque repetition."
+  },
+  {
+   "label": "Profil 3 - cherche la performance",
+   "observed": "Compte ses repetitions a voix haute et se compare au voisin, quitte a bacler le mouvement.",
+   "need": "Deplacer l'enjeu de la quantite vers la qualite du placement."
+  },
+  {
+   "label": "Profil 4 - n'ose pas et attend",
+   "observed": "Fait le minimum, s'arrete des qu'on ne le regarde plus, ne demande jamais d'aide.",
+   "need": "Trouver un niveau d'exercice reellement a sa portee, pour que l'effort devienne possible."
+  }
+ ],
+ "finalEvaluation": {
+  "format": "Chaque eleve conduit seul une seance de vingt minutes qu'il a construite : un echauffement, quatre exercices choisis parmi ceux du cycle, avec ses series, ses repetitions et ses temps de recuperation ecrits dans son carnet. Un camarade l'observe et corrige son placement a partir des affiches de reference. A la fin, l'eleve explique en trois phrases pourquoi il a choisi ces exercices-la pour son theme, et ce que la seance lui a fait.",
+  "criteria": [
+   "L'echauffement articulaire est conduit en entier avant le premier exercice.",
+   "Le dos reste correctement place sur les quatre exercices, du debut a la fin des series.",
+   "L'expiration accompagne l'effort a chaque repetition, sans blocage respiratoire.",
+   "Les series, repetitions et recuperations annoncees dans le carnet sont respectees.",
+   "Les exercices choisis correspondent au theme annonce par l'eleve.",
+   "L'eleve explique son choix et decrit les effets ressentis en trois phrases.",
+   "Le role d'observateur est tenu : au moins une correction de placement est formulee."
+  ],
+  "referential": "Attendus de fin de cycle 4 du CA5 - realiser une activite physique pour developper ses ressources et s'entretenir."
+ },
+ "sessions": [
+  {
+   "number": 1,
+   "theme": "Reperes de depart : ce que je sais faire et comment je me place",
+   "isDiagnostic": true,
+   "mainObjective": "Etablir des reperes chiffres et poser d'emblee la regle du cycle : un exercice mal place ne compte pas.",
+   "secondaryObjectives": [
+    "Decouvrir six exercices de reference au poids du corps.",
+    "Comprendre que la serie s'arrete quand le placement se degrade.",
+    "Ouvrir son carnet d'entrainement et y ecrire ses premiers chiffres."
+   ],
+   "linkToPrevious": "Premiere seance du cycle : on ne compare a rien, on mesure et on installe les regles.",
+   "prerequisiteForNext": "Chaque eleve a un chiffre pour chacun des quatre tests, et sait enoncer la regle du placement.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "crayons",
+      "per": 0.34,
+      "min": 10
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "barres fixes basses ou espaliers",
+      "fixed": 4
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Disposer quatre ateliers en carre, un tapis par eleve dans chacun.",
+     "Afficher a hauteur des yeux les postures de reference de chaque atelier.",
+     "Verifier la stabilite de chaque banc en s'appuyant dessus avant la seance.",
+     "Preparer les carnets d'entrainement, un par eleve, nom deja inscrit.",
+     "Prevoir un espace de circulation d'un metre entre deux tapis."
+    ],
+    "sketch": "Quatre ateliers en carre, affiche de reference a l'entree de chacun.\nAtelier 1 gainage, atelier 2 poussee, atelier 3 membres inferieurs, atelier 4 tirage.\nUn tapis par eleve, un metre de circulation entre deux tapis.\nTable des carnets au centre, accessible des quatre ateliers."
+   },
+   "warmup": {
+    "rationale": "Premier echauffement du cycle : on le nomme et on l'explique, puisque les eleves devront le conduire seuls a la seance 7.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Gainage ventral vingt secondes, deux fois, genoux au sol.",
+       "Squats a vide, dix repetitions lentes.",
+       "Poussees contre le mur, dix repetitions.",
+       "Enroulements de colonne debout, cinq fois."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 24,
+     "title": "Quatre tests, quatre chiffres",
+     "objective": "Mesurer un niveau de depart sur quatre exercices, avec le placement comme condition d'arret.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      }
+     ],
+     "organization": "Quatre ateliers, groupes de six a sept eleves, rotation toutes les cinq minutes. Par deux : un executant, un observateur muni de l'affiche. Gainage ventral tenu en secondes, poussees sur banc incline en repetitions, squats en repetitions, tirages en position inversee sous une barre basse en repetitions. L'observateur arrete la serie des que le placement se degrade et note le chiffre.",
+     "studentGoal": "Connaitre mon chiffre sur chacun des quatre exercices, en restant bien place.",
+     "instructions": [
+      "Je m'arrete quand mon dos ne tient plus, pas quand je n'en peux plus.",
+      "Je souffle a chaque effort, je ne bloque jamais.",
+      "Mon observateur compte a voix haute et m'arrete quand il faut.",
+      "J'ecris mes quatre chiffres dans mon carnet avant de changer d'atelier."
+     ],
+     "success": [
+      "Les quatre chiffres sont mesures et ecrits dans le carnet.",
+      "Chaque serie s'arrete sur une degradation du placement, pas sur l'epuisement.",
+      "L'expiration accompagne l'effort sur toutes les repetitions comptees."
+     ],
+     "execution": [
+      "Dos droit ou plaque selon l'exercice, jamais arrondi.",
+      "Bassin dans l'axe, sans cassure ni cambrure exageree.",
+      "Expiration au moment de l'effort, inspiration au retour.",
+      "Amplitude complete mais controlee, sans a-coup."
+     ],
+     "watch": [
+      "Les dos s'arrondissent-ils en fin de serie ?",
+      "Les observateurs osent-ils arreter leur camarade ?",
+      "Qui bloque sa respiration ?",
+      "Les chiffres sont-ils ecrits avant la rotation ?"
+     ],
+     "errors": [
+      "Continuer la serie en compensant avec le dos.",
+      "Compter des repetitions bâclees pour avoir un plus gros chiffre.",
+      "Retenir son souffle pendant tout l'exercice."
+     ],
+     "feedback": [
+      "Ton chiffre, c'est le nombre de repetitions bien placees. Pas une de plus.",
+      "Arrete-le : tu lui rends service.",
+      "Souffle quand tu pousses : ecoute-toi."
+     ],
+     "plus": [
+      "Poussees pieds sureleves, tirage avec le corps plus horizontal."
+     ],
+     "minus": [
+      "Gainage genoux au sol, poussees contre le mur, squats sur chaise."
+     ],
+     "diff": {
+      "facilitee": "Gainage genoux au sol, poussees contre un mur, squats jusqu'a une chaise, tirage debout incline.",
+      "normale": "Gainage sur les pieds, poussees sur banc incline, squats a vide, tirage inverse sous barre basse.",
+      "complexifiee": "Gainage pieds sureleves, poussees au sol, squats une jambe assistee, tirage corps horizontal."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Bancs et barres verifies avant la seance et entre deux rotations.",
+      "Un metre de circulation entre deux tapis."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "La regle du cycle : bien place ou rien",
+     "objective": "Faire vivre la difference entre une repetition bien placee et une repetition compensee.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Par deux, face a l'affiche : chacun realise volontairement cinq repetitions bien placees puis cinq repetitions compensees - dos rond, amplitude reduite, souffle bloque. L'observateur decrit ce qu'il voit dans chaque cas. Puis inversion.",
+     "studentGoal": "Voir et decrire la difference entre une repetition juste et une repetition compensee.",
+     "instructions": [
+      "Je fais d'abord cinq repetitions justes, lentement.",
+      "Je fais ensuite cinq repetitions compensees, volontairement.",
+      "Mon observateur me dit ce qu'il voit de different.",
+      "Nous nommons ensemble les deux ou trois signes qui trahissent la compensation."
+     ],
+     "success": [
+      "L'observateur cite au moins deux signes de compensation.",
+      "L'executant sent la difference et sait la dire.",
+      "Les signes cites correspondent a ceux de l'affiche."
+     ],
+     "execution": [
+      "Repetitions justes menees lentement, sans elan.",
+      "Regard porte devant, nuque dans l'axe du dos."
+     ],
+     "watch": [
+      "Les eleves distinguent-ils reellement les deux formes ?",
+      "Les observateurs regardent-ils le dos ou le visage ?",
+      "Qui trouve la compensation plus confortable et veut la garder ?"
+     ],
+     "errors": [
+      "Ne pas voir de difference entre les deux series.",
+      "Confondre 'plus dur' et 'moins bien place'.",
+      "Prendre l'exercice compense pour un exercice plus efficace."
+     ],
+     "feedback": [
+      "Compenser, c'est faire travailler autre chose que ce qu'on visait.",
+      "Ton dos rond, c'est le signal d'arret : il ne se negocie pas.",
+      "Le mouvement juste est souvent plus dur avec moins de repetitions. C'est normal."
+     ],
+     "plus": [
+      "Filmer une serie avec la tablette de l'etablissement et l'analyser a deux."
+     ],
+     "minus": [
+      "Comparaison faite par le professeur devant le groupe, avant la mise en binome."
+     ],
+     "diff": {
+      "facilitee": "Demonstration commentee par le professeur, puis un seul exercice compare a deux.",
+      "normale": "Deux series comparees par binome, deux signes de compensation nommes.",
+      "complexifiee": "Comparaison sur trois exercices differents, signes nommes et notes au carnet."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Les repetitions volontairement compensees se font a vide et lentement, jamais en charge ou en vitesse."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ouvrir son carnet d'entrainement",
+     "objective": "Installer l'outil qui portera tout le cycle : le carnet, ou l'on ecrit ce qu'on fait et ce qu'on ressent.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      }
+     ],
+     "organization": "Individuellement, assis : chaque eleve reporte ses quatre chiffres, puis ecrit une phrase sur ce qu'il a ressenti et une sur ce qu'il aimerait travailler.",
+     "studentGoal": "Ecrire mes quatre chiffres et dire ce que je veux travailler.",
+     "instructions": [
+      "Je reporte mes quatre chiffres.",
+      "J'ecris ou j'ai senti l'effort.",
+      "J'ecris ce que je voudrais travailler dans ce cycle."
+     ],
+     "success": [
+      "Les quatre chiffres sont ecrits.",
+      "L'eleve localise l'effort ressenti sur au moins un exercice.",
+      "Une intention de travail est formulee."
+     ],
+     "execution": [
+      "Ecriture lisible, une ligne par exercice."
+     ],
+     "watch": [
+      "Les eleves savent-ils dire ou ils ont senti l'effort ?",
+      "Qui laisse les cases vides ?",
+      "Les intentions sont-elles precises ou generiques ?"
+     ],
+     "errors": [
+      "Ecrire 'partout' pour localiser l'effort.",
+      "Formuler une intention vague du type 'etre plus fort'.",
+      "Oublier de reporter un chiffre."
+     ],
+     "feedback": [
+      "Ou exactement ? Montre-le avec ta main, puis ecris-le.",
+      "'Tenir mon dos plus longtemps' est un objectif ; 'etre plus fort' n'en est pas un.",
+      "Ce carnet te servira a la seance 8 : remplis-le pour toi."
+     ],
+     "plus": [
+      "Ecrire aussi une question a poser au professeur."
+     ],
+     "minus": [
+      "Localiser l'effort en montrant sur un schema du corps plutot qu'a l'ecrit."
+     ],
+     "diff": {
+      "facilitee": "Localisation montree sur un schema du corps, chiffres reportes avec le professeur.",
+      "normale": "Quatre chiffres, une phrase de ressenti, une intention de travail.",
+      "complexifiee": "Idem plus une question ecrite au professeur sur un exercice."
+     },
+     "safety": [
+      "Temps assis, apres retour au calme."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Quand doit-on arreter une serie ?",
+     "Pourquoi ne faut-il jamais bloquer sa respiration pendant l'effort ?"
+    ],
+    "key": "Une serie s'arrete quand le placement se degrade, pas quand on n'en peut plus. Et on souffle a l'effort : bloquer sa respiration fait monter la pression et n'apporte rien."
+   },
+   "socialRoles": [
+    "Observateur-correcteur : compte a voix haute et arrete la serie quand le placement se degrade.",
+    "Responsable d'atelier : verifie la stabilite du materiel avant chaque rotation.",
+    "Gardien du temps : annonce les rotations."
+   ]
+  },
+  {
+   "number": 2,
+   "theme": "Le dos avant tout : gainer avant de bouger",
+   "mainObjective": "Construire un maintien du tronc suffisant pour que tous les autres exercices du cycle soient realises en securite.",
+   "secondaryObjectives": [
+    "Tenir un gainage ventral, dorsal et lateral avec un bassin dans l'axe.",
+    "Reconnaitre sur un camarade une cassure ou une cambrure.",
+    "Comprendre que le gainage protege le dos sur tous les autres exercices."
+   ],
+   "linkToPrevious": "Les quatre chiffres sont ecrits et la regle est posee. On construit maintenant ce qui rend tout le reste possible : le maintien du tronc.",
+   "prerequisiteForNext": "Chaque eleve tient trente secondes de gainage ventral avec un bassin dans l'axe.",
+   "setup": {
+    "installationMinutes": 10,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "plots de marquage",
+      "fixed": 20
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "batons ou manches a balai",
+      "per": 0.5,
+      "min": 14
+     }
+    ],
+    "instructions": [
+     "Disposer les tapis en deux lignes face a face, pour que chacun voie son observateur.",
+     "Afficher les trois postures de gainage a hauteur des yeux.",
+     "Preparer les batons : poses le long du dos, ils rendent visible la cambrure.",
+     "Verifier que les tapis ne glissent pas sur le sol."
+    ],
+    "sketch": "Deux lignes de tapis face a face, un metre entre les lignes.\nAffiches des trois gainages entre les deux lignes, visibles des deux cotes.\nBatons repartis, un pour deux eleves."
+   },
+   "warmup": {
+    "rationale": "Preparation orientee vers le tronc : on reveille la sangle abdominale et les fessiers avant de leur demander de tenir.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Enroulements de colonne debout, cinq fois lentement.",
+       "Bascules de bassin allonge sur le dos, dix fois.",
+       "Pont fessier, dix repetitions lentes.",
+       "Gainage ventral quinze secondes, genoux au sol, deux fois."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Le baton dans le dos : trouver l'axe",
+     "objective": "Rendre visible et sensible l'alignement du dos, en gainage comme en mouvement.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "batons ou manches a balai",
+       "per": 0.5,
+       "min": 14
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Par deux : l'executant tient un gainage, l'observateur pose un baton le long de son dos. Le baton doit toucher la tete, le haut du dos et le sacrum. Trois series de trente secondes en ventral, deux en lateral de chaque cote, deux en dorsal. L'observateur annonce des que le contact est perdu.",
+     "studentGoal": "Garder les trois points de contact avec le baton pendant toute la serie.",
+     "instructions": [
+      "Je serre mon ventre et mes fessiers avant de decoller.",
+      "Je regarde le sol trente centimetres devant mes mains.",
+      "Mon observateur me dit quel point de contact j'ai perdu.",
+      "Je m'arrete des que je perds un contact : la serie est finie."
+     ],
+     "success": [
+      "Trente secondes tenues avec les trois points de contact en ventral.",
+      "Le bassin ne monte ni ne descend visiblement pendant la serie.",
+      "L'observateur sait nommer le point de contact perdu."
+     ],
+     "execution": [
+      "Tete dans l'axe du dos, regard vers le sol.",
+      "Ventre et fessiers contractes avant le decollage.",
+      "Bassin dans l'axe : ni cambrure ni bassin haut.",
+      "Respiration continue, jamais bloquee."
+     ],
+     "watch": [
+      "Les bassins montent-ils au bout de quinze secondes ?",
+      "Les tetes se relevent-elles ?",
+      "Les eleves respirent-ils pendant le gainage ?",
+      "Les observateurs annoncent-ils la perte de contact ?"
+     ],
+     "errors": [
+      "Monter le bassin pour tenir plus longtemps.",
+      "Relever la tete pour regarder devant.",
+      "Bloquer sa respiration pendant toute la serie.",
+      "Cambrer le bas du dos en gainage dorsal."
+     ],
+     "feedback": [
+      "Ton bassin est monte : ta serie est finie, c'est tout.",
+      "Regarde tes mains, pas ton camarade.",
+      "Tu peux parler en gainage : essaie, tu verras que tu respires."
+     ],
+     "plus": [
+      "Gainage ventral avec levee alternee d'un pied, cinq secondes chacun."
+     ],
+     "minus": [
+      "Gainage genoux au sol, quinze secondes, baton pose par le professeur."
+     ],
+     "diff": {
+      "facilitee": "Genoux au sol, quinze secondes, trois series, contact verifie par le professeur.",
+      "normale": "Sur les pieds, trente secondes, trois series ventrales et deux laterales par cote.",
+      "complexifiee": "Trente secondes avec levee alternee d'un pied, puis d'une main."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Aucun gainage tenu au-dela de la perte d'alignement : la serie s'arrete.",
+      "Batons poses le long du dos, jamais tenus au-dessus de quelqu'un.",
+      "Gainage dorsal realise sans cambrure : en cas de tirage lombaire, on passe au pont fessier."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Gainer en bougeant",
+     "objective": "Transferer le maintien du tronc a des exercices en mouvement, ou il sert reellement.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "plots de marquage",
+       "fixed": 20
+      }
+     ],
+     "organization": "Par deux, en ateliers : marche du bucheron sur les mains, planche avec touche d'epaule alternee, pont fessier une jambe. Trente secondes de travail, trente de pause, trois tours. L'observateur veille au bassin.",
+     "studentGoal": "Garder mon bassin fixe pendant que mes bras ou mes jambes bougent.",
+     "instructions": [
+      "Mon bassin ne doit pas tourner quand je leve une main.",
+      "Je vais lentement : la vitesse cache le relachement.",
+      "Mon observateur regarde mon bassin, pas mes bras."
+     ],
+     "success": [
+      "Le bassin reste fixe sur au moins huit touches d'epaule sur dix.",
+      "Aucune rotation visible du bassin pendant le mouvement.",
+      "Les trois ateliers sont realises sans arret premature."
+     ],
+     "execution": [
+      "Appuis larges pour stabiliser le bassin.",
+      "Mouvement des membres lent et controle.",
+      "Respiration continue pendant le maintien."
+     ],
+     "watch": [
+      "Les bassins tournent-ils au moment de la touche ?",
+      "Les eleves accelerent-ils pour finir la serie ?",
+      "Les observateurs regardent-ils le bon endroit ?"
+     ],
+     "errors": [
+      "Accelerer pour ne pas sentir la difficulte.",
+      "Ecarter les pieds au-dela de la largeur des epaules pour tricher.",
+      "Laisser tourner le bassin a chaque touche."
+     ],
+     "feedback": [
+      "Lentement : c'est la que ca travaille.",
+      "Ton bassin doit rester une planche, meme quand ta main part.",
+      "Regarde son bassin, il te dira tout."
+     ],
+     "plus": [
+      "Pieds rapproches, ce qui reduit la base d'appui."
+     ],
+     "minus": [
+      "Genoux au sol pour la planche avec touche d'epaule."
+     ],
+     "diff": {
+      "facilitee": "Genoux au sol, mouvements de bras seuls, vingt secondes par atelier.",
+      "normale": "Sur les pieds, trente secondes par atelier, trois tours.",
+      "complexifiee": "Pieds rapproches, quarante secondes, ajout d'une levee de jambe."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Espace d'un metre autour de chaque tapis pour les mouvements de bras et de jambes."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Corriger un camarade",
+     "objective": "Faire de l'observation un vrai role, pas une attente entre deux series.",
+     "material": [
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par trois : un executant, deux observateurs munis de l'affiche. Chacun doit formuler une correction utile, en une phrase, qui porte sur un point precis. L'executant dit si la correction lui a permis de changer quelque chose.",
+     "studentGoal": "Formuler une correction assez precise pour que mon camarade puisse la suivre.",
+     "instructions": [
+      "Ma correction porte sur un seul point.",
+      "Je dis ce qu'il faut faire, pas ce qui est rate.",
+      "J'attends que mon camarade essaie avant d'en dire une autre."
+     ],
+     "success": [
+      "La correction porte sur un point precis et non sur l'ensemble.",
+      "Elle est formulee positivement, en une phrase.",
+      "L'executant peut dire ce qu'il a change."
+     ],
+     "execution": [
+      "Correction courte, precise, formulee a la deuxieme personne."
+     ],
+     "watch": [
+      "Les corrections sont-elles utilisables ?",
+      "Les observateurs osent-ils corriger ?",
+      "Qui empile trois corrections d'un coup ?"
+     ],
+     "errors": [
+      "Dire 'c'est pas bon' sans dire quoi changer.",
+      "Donner trois corrections en meme temps.",
+      "Se moquer plutot que corriger."
+     ],
+     "feedback": [
+      "Dis-lui quoi faire, pas ce qui ne va pas.",
+      "Une correction a la fois : il ne peut pas en tenir trois.",
+      "Bien vu : c'est exactement le point qui bloquait."
+     ],
+     "plus": [
+      "Corriger sans parler, en montrant la posture."
+     ],
+     "minus": [
+      "Choisir sa correction parmi celles ecrites sur l'affiche."
+     ],
+     "diff": {
+      "facilitee": "Correction choisie parmi trois formulations ecrites sur l'affiche.",
+      "normale": "Correction formulee librement, sur un point precis.",
+      "complexifiee": "Correction donnee sans parler, en montrant, puis verifiee."
+     },
+     "safety": [
+      "Aucune correction par contact physique sans accord explicite du camarade."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "A quoi sert le gainage dans les autres exercices du cycle ?",
+     "Comment sait-on qu'un gainage n'est plus tenu correctement ?"
+    ],
+    "key": "Le gainage n'est pas un exercice de plus : c'est ce qui protege le dos sur tous les autres. Des que l'alignement se perd, la serie est terminee, quelle que soit la duree affichee."
+   },
+   "socialRoles": [
+    "Observateur au baton : annonce le point de contact perdu.",
+    "Correcteur : formule une correction utile, sur un seul point.",
+    "Gardien du temps : annonce les series et les pauses."
+   ]
+  },
+  {
+   "number": 3,
+   "theme": "Pousser : les membres superieurs au poids du corps",
+   "mainObjective": "Construire une poussee complete et bien placee, en trouvant le niveau d'exercice reellement adapte a chacun.",
+   "secondaryObjectives": [
+    "Choisir son niveau d'inclinaison plutot que subir un exercice unique.",
+    "Garder le gainage acquis a la seance 2 pendant la poussee.",
+    "Compter en repetitions bien placees, pas en repetitions faites."
+   ],
+   "linkToPrevious": "Le tronc tient. On peut maintenant lui demander de tenir pendant que les bras travaillent.",
+   "prerequisiteForNext": "Chaque eleve a trouve l'inclinaison ou il realise huit a douze repetitions bien placees.",
+   "setup": {
+    "installationMinutes": 10,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "espaliers ou mur degage",
+      "fixed": 4
+     }
+    ],
+    "instructions": [
+     "Preparer quatre niveaux de poussee : mur, espalier haut, banc, sol.",
+     "Afficher les quatre niveaux avec leur repere de choix.",
+     "Verifier la stabilite des bancs en s'appuyant dessus.",
+     "Degager le mur sur toute sa longueur."
+    ],
+    "sketch": "Quatre zones de poussee alignees : mur, espalier, banc, sol.\nAffiche du niveau a l'entree de chaque zone.\nTapis au sol dans la zone la plus basse."
+   },
+   "warmup": {
+    "rationale": "Preparation des epaules et des poignets, qui sont les articulations sollicitees et les plus fragiles sur ces exercices.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Cercles d'epaules amples, dix dans chaque sens.",
+       "Poussees contre le mur, dix repetitions lentes.",
+       "Appuis sur les mains au sol, poids transfere d'une main a l'autre, dix fois.",
+       "Gainage ventral vingt secondes, une fois."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Trouver son inclinaison",
+     "objective": "Faire choisir a chacun le niveau d'exercice ou l'effort est reel sans que le placement cede.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Quatre niveaux de poussee, du plus incline au plus horizontal. Par deux : l'executant essaie un niveau, l'observateur compte les repetitions bien placees et arrete des que le dos casse. Regle de choix : le bon niveau est celui ou l'on tient entre huit et douze repetitions. Trois series au niveau retenu.",
+     "studentGoal": "Trouver le niveau ou je fais entre huit et douze repetitions bien placees, et y faire mes trois series.",
+     "instructions": [
+      "Je descends jusqu'a ce que ma poitrine approche l'appui.",
+      "Mon corps reste une planche : ni bassin haut, ni bassin bas.",
+      "Je souffle en poussant.",
+      "Si je depasse douze repetitions, je passe au niveau plus difficile ; si je n'en fais pas huit, je remonte."
+     ],
+     "success": [
+      "Le niveau retenu permet huit a douze repetitions bien placees.",
+      "Le corps reste aligne pendant toute la serie, sans bassin qui monte ou qui creuse.",
+      "L'expiration accompagne chaque poussee.",
+      "Les trois series sont faites au meme niveau."
+     ],
+     "execution": [
+      "Mains a l'aplomb des epaules, doigts ecartes.",
+      "Coudes qui partent vers l'arriere, pas en croix.",
+      "Corps aligne des chevilles a la tete.",
+      "Descente controlee, remontee en soufflant."
+     ],
+     "watch": [
+      "Les bassins tiennent-ils pendant la serie ?",
+      "Les coudes partent-ils en croix ?",
+      "Qui reste sur un niveau trop dur par fierte ?",
+      "Qui reste sur un niveau trop facile pour ne pas se fatiguer ?"
+     ],
+     "errors": [
+      "Choisir le niveau du voisin plutot que le sien.",
+      "Descendre a moitie pour faire plus de repetitions.",
+      "Laisser le bassin s'affaisser en fin de serie."
+     ],
+     "feedback": [
+      "Huit a douze : c'est ta regle, pas celle du voisin.",
+      "Descends jusqu'a ce que ta poitrine approche : la moitie ne compte pas.",
+      "Ton bassin tombe : la serie est finie, tu la reprends au niveau au-dessus."
+     ],
+     "plus": [
+      "Poussees pieds sureleves sur un banc.",
+      "Tempo impose : trois secondes a la descente."
+     ],
+     "minus": [
+      "Poussees contre le mur, mains a hauteur d'epaules.",
+      "Series de six repetitions."
+     ],
+     "diff": {
+      "facilitee": "Poussee au mur ou a l'espalier haut, six a huit repetitions, deux series.",
+      "normale": "Niveau choisi selon la regle des huit a douze repetitions, trois series.",
+      "complexifiee": "Poussee au sol pieds sureleves, tempo de trois secondes a la descente."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Poignets echauffes avant toute poussee au sol.",
+      "Bancs verifies et stables, jamais poses sur un sol glissant.",
+      "Recuperation d'une minute trente entre les series."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Tirer : l'autre moitie du haut du corps",
+     "objective": "Equilibrer le travail : autant de tirage que de poussee, faute de quoi les epaules s'enroulent.",
+     "material": [
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      },
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Sous une barre basse ou aux espaliers : tirage en position inversee, corps plus ou moins horizontal selon le niveau. Par deux, meme regle des huit a douze repetitions. Trois series.",
+     "studentGoal": "Tirer en gardant mon corps aligne, autant de fois que j'ai pousse.",
+     "instructions": [
+      "Je serre mes omoplates avant de tirer avec les bras.",
+      "Mon corps reste une planche, comme en poussee.",
+      "Je souffle en tirant.",
+      "Je regle l'inclinaison de mon corps pour rester entre huit et douze."
+     ],
+     "success": [
+      "Huit a douze repetitions bien placees au niveau choisi.",
+      "Les omoplates se rapprochent avant que les bras ne plient.",
+      "Le corps reste aligne, sans bassin qui tombe."
+     ],
+     "execution": [
+      "Omoplates serrees en debut de mouvement.",
+      "Coudes le long du corps, non ecartes.",
+      "Corps aligne, talons au sol.",
+      "Expiration pendant la traction."
+     ],
+     "watch": [
+      "Les eleves tirent-ils avec les bras seuls, epaules enroulees ?",
+      "Les bassins tombent-ils ?",
+      "Le nombre de series de tirage egale-t-il celui de poussee ?"
+     ],
+     "errors": [
+      "Tirer sans serrer les omoplates.",
+      "Laisser tomber le bassin pour faciliter le mouvement.",
+      "Faire moins de tirage que de poussee parce que c'est plus dur."
+     ],
+     "feedback": [
+      "Serre tes omoplates d'abord : tes bras viennent apres.",
+      "Autant de tirage que de poussee : sinon tes epaules s'enroulent.",
+      "Redresse ton corps pour reduire la difficulte, ce n'est pas tricher."
+     ],
+     "plus": [
+      "Corps horizontal, pieds sureleves."
+     ],
+     "minus": [
+      "Tirage debout, corps tres incline, a l'espalier."
+     ],
+     "diff": {
+      "facilitee": "Tirage debout tres incline, six a huit repetitions, deux series.",
+      "normale": "Tirage inverse sous barre basse, huit a douze repetitions, trois series.",
+      "complexifiee": "Corps horizontal pieds sureleves, tempo controle."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Barres et espaliers verifies avant chaque serie : fixation, absence de jeu.",
+      "Tapis sous la zone de tirage.",
+      "Hauteur de barre adaptee a la taille de l'eleve."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Noter son niveau",
+     "objective": "Consigner le niveau retenu, pour le retrouver a la seance suivante sans le rechercher.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      }
+     ],
+     "organization": "Individuellement : chaque eleve note son niveau de poussee et de tirage, ainsi que le nombre de repetitions tenues.",
+     "studentGoal": "Ecrire mon niveau, pour ne pas le rechercher la prochaine fois.",
+     "instructions": [
+      "J'ecris mon niveau de poussee et le nombre de repetitions.",
+      "J'ecris mon niveau de tirage et le nombre de repetitions.",
+      "J'ecris si je pense pouvoir monter d'un niveau la prochaine fois."
+     ],
+     "success": [
+      "Les deux niveaux et les deux nombres sont ecrits.",
+      "L'eleve sait dire pourquoi il a retenu ce niveau.",
+      "Une intention est formulee pour la seance suivante."
+     ],
+     "execution": [
+      "Une ligne par exercice, niveau et repetitions."
+     ],
+     "watch": [
+      "Les niveaux sont-ils notes precisement ?",
+      "Qui note un niveau qu'il n'a pas tenu ?"
+     ],
+     "errors": [
+      "Noter le niveau essaye plutot que le niveau tenu.",
+      "Oublier de noter le nombre de repetitions."
+     ],
+     "feedback": [
+      "Note ce que tu as tenu, pas ce que tu aurais voulu tenir.",
+      "Ce chiffre te servira a la seance 5 : il doit etre juste."
+     ],
+     "plus": [
+      "Noter aussi le temps de recuperation utilise entre les series."
+     ],
+     "minus": [
+      "Niveau note par l'observateur pour son camarade."
+     ],
+     "diff": {
+      "facilitee": "Niveau note par l'observateur, verifie par le professeur.",
+      "normale": "Deux niveaux et deux nombres de repetitions notes par l'eleve.",
+      "complexifiee": "Idem plus le temps de recuperation utilise."
+     },
+     "safety": [
+      "Temps assis apres retour au calme."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Pourquoi choisit-on un niveau ou l'on tient entre huit et douze repetitions ?",
+     "Pourquoi faut-il tirer autant qu'on pousse ?"
+    ],
+    "key": "Le bon niveau n'est ni le plus dur ni le plus facile : c'est celui ou l'effort est reel et le placement tenu. Et le tirage equilibre la poussee : sans lui, les epaules s'enroulent."
+   },
+   "socialRoles": [
+    "Observateur-compteur : compte les repetitions bien placees et arrete la serie.",
+    "Responsable de niveau : verifie que le camarade a choisi selon la regle des huit a douze.",
+    "Verificateur de materiel : controle bancs et barres avant chaque serie."
+   ]
+  },
+  {
+   "number": 4,
+   "theme": "Les membres inferieurs : squat, fente, montee",
+   "mainObjective": "Construire une flexion de jambes complete et sure : genoux dans l'axe, dos droit, talons au sol.",
+   "secondaryObjectives": [
+    "Placer ses genoux dans l'axe des pieds sur tous les exercices.",
+    "Garder le dos droit malgre la flexion des hanches.",
+    "Reconnaitre chez un camarade un genou qui rentre vers l'interieur."
+   ],
+   "linkToPrevious": "Le tronc tient, le haut du corps est travaille. Restent les jambes, qui portent tout le reste.",
+   "prerequisiteForNext": "Chaque eleve realise dix squats a vide, dos droit et genoux dans l'axe.",
+   "setup": {
+    "installationMinutes": 10,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "chaises ou caisses stables",
+      "fixed": 8
+     },
+     {
+      "label": "batons ou manches a balai",
+      "per": 0.5,
+      "min": 14
+     }
+    ],
+    "instructions": [
+     "Disposer les chaises ou caisses en deux lignes, verifiees stables.",
+     "Afficher les trois exercices avec le repere du genou dans l'axe.",
+     "Marquer au sol des reperes de largeur de pieds.",
+     "Verifier que le sol n'est pas glissant."
+    ],
+    "sketch": "Deux lignes de postes : chaise ou caisse, tapis, espace de fente.\nReperes de largeur de pieds marques au sol devant chaque poste.\nAffiches des trois exercices, visibles de chaque poste."
+   },
+   "warmup": {
+    "rationale": "Preparation des hanches, genoux et chevilles, dans l'ordre ou ils seront sollicites.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Squats a vide, dix repetitions lentes, amplitude progressive.",
+       "Fentes marchees sur dix metres, aller et retour.",
+       "Montees sur la pointe des pieds, quinze fois.",
+       "Pont fessier, dix repetitions."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Le squat jusqu'a la chaise",
+     "objective": "Construire une flexion complete et securisee, avec un repere de profondeur qui evite l'a-peu-pres.",
+     "material": [
+      {
+       "label": "chaises ou caisses stables",
+       "fixed": 8
+      },
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      },
+      {
+       "label": "batons ou manches a balai",
+       "per": 0.5,
+       "min": 14
+      }
+     ],
+     "organization": "Par deux, face a face : l'executant descend jusqu'a effleurer la chaise puis remonte, sans s'asseoir. L'observateur se place de face et surveille les genoux, puis de profil et surveille le dos. Trois series de dix a quinze repetitions.",
+     "studentGoal": "Descendre jusqu'a effleurer la chaise, genoux dans l'axe, dos droit.",
+     "instructions": [
+      "Mes pieds sont ecartes de la largeur de mes epaules.",
+      "Je pousse mes fesses en arriere avant de plier les genoux.",
+      "Mes genoux restent dans l'axe de mes pieds, ils ne rentrent pas.",
+      "Je souffle en remontant."
+     ],
+     "success": [
+      "Dix repetitions au moins avec les genoux dans l'axe des pieds.",
+      "Le dos reste droit, sans arrondi au moment de la descente.",
+      "Les talons restent au sol pendant toute la serie.",
+      "L'expiration accompagne chaque remontee."
+     ],
+     "execution": [
+      "Fesses vers l'arriere avant flexion des genoux.",
+      "Genoux dans l'axe des pieds, jamais vers l'interieur.",
+      "Dos droit, regard porte devant.",
+      "Talons ancres au sol."
+     ],
+     "watch": [
+      "Les genoux rentrent-ils vers l'interieur en fin de serie ?",
+      "Les talons decollent-ils ?",
+      "Le dos s'arrondit-il en bas de la descente ?",
+      "Les observateurs changent-ils de place pour voir les deux choses ?"
+     ],
+     "errors": [
+      "Laisser les genoux rentrer vers l'interieur.",
+      "Decoller les talons pour descendre plus bas.",
+      "S'asseoir sur la chaise plutot que l'effleurer.",
+      "Arrondir le dos au point bas."
+     ],
+     "feedback": [
+      "Ecarte tes genoux vers l'exterieur : ils doivent suivre tes pieds.",
+      "Tes talons restent au sol : si tu decolles, descends moins bas.",
+      "Effleure, ne t'assois pas."
+     ],
+     "plus": [
+      "Squat sur une jambe assiste, avec appui leger d'une main."
+     ],
+     "minus": [
+      "Squat avec appui des mains sur un support, amplitude reduite."
+     ],
+     "diff": {
+      "facilitee": "Squat mains en appui sur un support, descente jusqu'a mi-course, huit repetitions.",
+      "normale": "Squat jusqu'a effleurer la chaise, dix a quinze repetitions, trois series.",
+      "complexifiee": "Squat sur une jambe assiste, ou tempo de trois secondes a la descente."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Chaises et caisses verifiees stables avant chaque serie.",
+      "Aucune charge sur les epaules ou la nuque : le squat se fait a vide.",
+      "Arret immediat en cas de douleur au genou, sans negociation.",
+      "Amplitude reduite plutot que talons decolles."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Fentes et montees : une jambe a la fois",
+     "objective": "Travailler chaque jambe separement, ce qui revele et corrige les desequilibres.",
+     "material": [
+      {
+       "label": "chaises ou caisses stables",
+       "fixed": 8
+      },
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Deux ateliers : fentes avant sur place, et montees sur une caisse basse. Huit repetitions par jambe, trois series. L'observateur compte separement pour chaque jambe et signale si l'une flanche avant l'autre.",
+     "studentGoal": "Faire le meme nombre de repetitions propres de chaque cote.",
+     "instructions": [
+      "Mon genou avant reste au-dessus de ma cheville, pas devant.",
+      "Mon buste reste droit, je ne me penche pas en avant.",
+      "Je pose tout mon pied sur la caisse, pas seulement la pointe.",
+      "Je compte separement pour chaque jambe."
+     ],
+     "success": [
+      "Huit repetitions propres de chaque cote.",
+      "Le genou avant reste a l'aplomb de la cheville.",
+      "Le buste reste droit pendant toute la serie.",
+      "L'ecart entre les deux jambes est identifie s'il existe."
+     ],
+     "execution": [
+      "Genou avant a l'aplomb de la cheville.",
+      "Buste droit, epaules au-dessus du bassin.",
+      "Pied entier pose sur la caisse a la montee.",
+      "Descente controlee, sans se laisser tomber."
+     ],
+     "watch": [
+      "Les genoux avancent-ils au-dela des chevilles ?",
+      "Les bustes se penchent-ils pour compenser ?",
+      "Une jambe flanche-t-elle avant l'autre ?"
+     ],
+     "errors": [
+      "Genou avant qui depasse largement la cheville.",
+      "Buste penche en avant pour aider la remontee.",
+      "Poser la pointe du pied seulement sur la caisse.",
+      "Ignorer le desequilibre entre les deux jambes."
+     ],
+     "feedback": [
+      "Ton genou reste au-dessus de ta cheville : recule ton pied avant.",
+      "Redresse ton buste : ce sont tes jambes qui travaillent.",
+      "Ta jambe gauche lache avant : c'est elle qu'il faudra travailler."
+     ],
+     "plus": [
+      "Fentes marchees, ou caisse plus haute."
+     ],
+     "minus": [
+      "Fentes avec appui d'une main sur un support, caisse tres basse."
+     ],
+     "diff": {
+      "facilitee": "Fentes avec appui d'une main, caisse basse, six repetitions par jambe.",
+      "normale": "Fentes sur place et montees sur caisse, huit repetitions par jambe, trois series.",
+      "complexifiee": "Fentes marchees et caisse plus haute, dix repetitions par jambe."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Caisses stables et non glissantes, hauteur adaptee a la taille.",
+      "Descente de la caisse controlee, jamais en sautant.",
+      "Un metre de degagement autour de chaque poste de fente."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ou j'ai senti l'effort",
+     "objective": "Relier un exercice a la zone du corps qu'il sollicite, ce qui rendra possible le choix de la seance 6.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      },
+      {
+       "label": "schema du corps",
+       "fixed": 6
+      }
+     ],
+     "organization": "Par deux : chacun situe sur un schema du corps ou il a senti l'effort pour chacun des trois exercices, puis le note dans son carnet.",
+     "studentGoal": "Savoir dire quel exercice travaille quelle partie du corps.",
+     "instructions": [
+      "Je montre sur le schema ou j'ai senti l'effort.",
+      "J'ecris le nom de la zone dans mon carnet, en face de l'exercice.",
+      "Je compare avec mon camarade : sentons-nous la meme chose ?"
+     ],
+     "success": [
+      "Les trois exercices sont relies a une zone du corps.",
+      "L'eleve distingue au moins deux zones differentes.",
+      "Les reponses sont coherentes avec l'exercice realise."
+     ],
+     "execution": [
+      "Une zone nommee par exercice, ecrite dans le carnet."
+     ],
+     "watch": [
+      "Les eleves distinguent-ils les zones ?",
+      "Qui repond 'partout' faute de savoir ?",
+      "Les reponses sont-elles coherentes avec l'exercice ?"
+     ],
+     "errors": [
+      "Repondre 'les jambes' pour les trois exercices.",
+      "Confondre courbature et douleur articulaire.",
+      "Recopier la reponse du camarade."
+     ],
+     "feedback": [
+      "Devant ou derriere la cuisse ? Les deux ne se travaillent pas pareil.",
+      "Une douleur au genou n'est pas un effort : previens-moi.",
+      "Vous ne sentez pas pareil : c'est normal, notez chacun le votre."
+     ],
+     "plus": [
+      "Classer les trois exercices selon la zone principale sollicitee."
+     ],
+     "minus": [
+      "Montrer la zone sans avoir a la nommer."
+     ],
+     "diff": {
+      "facilitee": "Zone montree sur le schema, nommee par le professeur.",
+      "normale": "Trois exercices relies chacun a une zone nommee et ecrite.",
+      "complexifiee": "Classement des exercices par zone, avec justification."
+     },
+     "safety": [
+      "Temps assis apres retour au calme.",
+      "Toute douleur articulaire signalee au professeur, jamais notee comme un effort."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "A quoi sert le repere de la chaise dans le squat ?",
+     "Pourquoi travailler chaque jambe separement ?"
+    ],
+    "key": "Le repere de profondeur evite l'a-peu-pres : sans lui, chacun descend comme il veut. Et le travail une jambe a la fois revele les desequilibres qu'un squat a deux jambes masque."
+   },
+   "socialRoles": [
+    "Observateur de face : surveille l'axe des genoux.",
+    "Observateur de profil : surveille le dos et les talons.",
+    "Compteur par jambe : compte separement a droite et a gauche."
+   ]
+  },
+  {
+   "number": 5,
+   "theme": "Mi-cycle evalue : refaire les tests et choisir son theme",
+   "mainObjective": "Mesurer la progression sur les quatre tests de la seance 1, et choisir le theme qui orientera la fin du cycle.",
+   "secondaryObjectives": [
+    "Refaire les quatre tests dans les conditions exactes de la seance 1.",
+    "Choisir un theme parmi trois et savoir le justifier.",
+    "Comprendre que le theme change les exercices, les series et la recuperation."
+   ],
+   "linkToPrevious": "Trois seances de travail ont eu lieu. On regarde ce qu'elles ont produit, et on decide de la suite.",
+   "prerequisiteForNext": "Chaque eleve a de nouveaux chiffres et un theme ecrit dans son carnet.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "crayons",
+      "per": 0.34,
+      "min": 10
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "barres fixes basses ou espaliers",
+      "fixed": 4
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "affiche des trois themes",
+      "fixed": 2
+     }
+    ],
+    "instructions": [
+     "Reproduire exactement le dispositif de la seance 1 : memes ateliers, memes reperes, meme ordre.",
+     "Afficher les trois themes avec leurs consequences sur les series et la recuperation.",
+     "Ressortir les carnets et les distribuer avant l'echauffement.",
+     "Verifier a nouveau la stabilite de tout le materiel."
+    ],
+    "sketch": "Dispositif identique a la seance 1 : quatre ateliers en carre.\nAffiche des trois themes au centre, lisible depuis les quatre ateliers.\nTable des carnets accessible."
+   },
+   "warmup": {
+    "rationale": "Echauffement d'evaluation : identique a celui de la seance 1, pour que la comparaison porte sur le travail et non sur la preparation.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Gainage ventral vingt secondes, deux fois, genoux au sol.",
+       "Squats a vide, dix repetitions lentes.",
+       "Poussees contre le mur, dix repetitions.",
+       "Enroulements de colonne debout, cinq fois."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 24,
+     "title": "Les quatre tests, a nouveau",
+     "objective": "Mesurer la progression avec la meme regle qu'a la seance 1 : seules comptent les repetitions bien placees.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      }
+     ],
+     "organization": "Dispositif et rotation identiques a la seance 1. Par deux, l'observateur compte et arrete la serie a la degradation du placement. Chaque eleve compare aussitot son chiffre a celui de la seance 1.",
+     "studentGoal": "Comparer mes quatre chiffres a ceux du premier jour.",
+     "instructions": [
+      "Je refais les tests dans le meme ordre qu'a la seance 1.",
+      "La regle n'a pas change : je m'arrete quand mon placement cede.",
+      "Je note mes chiffres et l'ecart avec la seance 1.",
+      "Je souffle a chaque effort."
+     ],
+     "success": [
+      "Les quatre chiffres sont mesures dans les memes conditions qu'a la seance 1.",
+      "Chaque serie s'arrete sur la degradation du placement.",
+      "Les quatre ecarts sont calcules et ecrits.",
+      "Le placement est meilleur qu'a la seance 1, meme quand le chiffre a peu bouge."
+     ],
+     "execution": [
+      "Placement conforme aux affiches de reference sur les quatre exercices.",
+      "Expiration a l'effort sur toutes les repetitions.",
+      "Amplitude complete et controlee."
+     ],
+     "watch": [
+      "Le placement est-il meilleur qu'a la seance 1, meme a chiffre egal ?",
+      "Les observateurs arretent-ils toujours aussi rigoureusement ?",
+      "Qui cherche le chiffre au detriment du placement ?"
+     ],
+     "errors": [
+      "Bacler le placement pour gagner des repetitions.",
+      "Changer de niveau d'exercice, ce qui rend la comparaison impossible.",
+      "Oublier de calculer l'ecart."
+     ],
+     "feedback": [
+      "Meme exercice qu'a la seance 1, sinon on ne compare rien.",
+      "Ton chiffre n'a pas bouge mais ton dos tient : c'est un vrai progres.",
+      "Ecris ton ecart : c'est lui qui compte, pas le chiffre brut."
+     ],
+     "plus": [
+      "Ajouter un cinquieme test au choix de l'eleve, note pour la seance 8."
+     ],
+     "minus": [
+      "Trois tests au lieu de quatre, celui qui pose le plus de difficulte etant retire."
+     ],
+     "diff": {
+      "facilitee": "Trois tests, aux memes niveaux qu'a la seance 1, ecarts calcules avec le professeur.",
+      "normale": "Quatre tests identiques a la seance 1, ecarts calcules par l'eleve.",
+      "complexifiee": "Quatre tests plus un cinquieme choisi par l'eleve, tous notes."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Materiel verifie avant la seance et entre les rotations.",
+      "Recuperation d'une minute trente entre deux ateliers."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 14,
+     "title": "Choisir son theme",
+     "objective": "Faire choisir un theme de travail, et comprendre ce qu'il change concretement.",
+     "material": [
+      {
+       "label": "affiche des trois themes",
+       "fixed": 2
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      }
+     ],
+     "organization": "En groupe devant l'affiche, puis individuellement. Trois themes : tonifier - series longues et recuperation courte ; renforcer - series moyennes et recuperation complete ; entretenir - volume modere et regularite. Chaque eleve choisit et ecrit sa justification.",
+     "studentGoal": "Choisir un theme et savoir dire pourquoi il me convient.",
+     "instructions": [
+      "Je lis les trois themes et ce qu'ils changent.",
+      "Je choisis celui qui correspond a ce que je veux.",
+      "J'ecris mon theme et une phrase pour le justifier.",
+      "Je note ce que mon theme change : series, repetitions, recuperation."
+     ],
+     "success": [
+      "Un theme est choisi et ecrit.",
+      "La justification s'appuie sur les chiffres ou sur un besoin ressenti.",
+      "L'eleve sait dire ce que son theme change sur les series et la recuperation."
+     ],
+     "execution": [
+      "Theme ecrit, justification en une phrase, consequences notees."
+     ],
+     "watch": [
+      "Les choix sont-ils personnels ou copies sur le groupe ?",
+      "Les eleves comprennent-ils ce que le theme change ?",
+      "Qui choisit au hasard faute d'avoir lu ?"
+     ],
+     "errors": [
+      "Choisir le theme du copain.",
+      "Choisir sans savoir ce qu'il change.",
+      "Vouloir les trois themes a la fois."
+     ],
+     "feedback": [
+      "Ton theme, c'est ce que tu veux pour toi : lis les trois avant de choisir.",
+      "Tonifier et renforcer, ce n'est pas la meme recuperation.",
+      "Un seul theme : c'est lui qui rendra ta seance coherente."
+     ],
+     "plus": [
+      "Justifier son choix en s'appuyant sur ses quatre ecarts."
+     ],
+     "minus": [
+      "Choix entre deux themes seulement, expliques oralement."
+     ],
+     "diff": {
+      "facilitee": "Choix entre deux themes, expliques oralement par le professeur.",
+      "normale": "Choix parmi trois themes, justifie par ecrit en une phrase.",
+      "complexifiee": "Choix justifie a partir des quatre ecarts mesures."
+     },
+     "safety": [
+      "Temps assis, apres les tests et le retour au calme."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Ce que mon theme change",
+     "objective": "Traduire le theme choisi en parametres concrets, qui serviront a construire la seance suivante.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      },
+      {
+       "label": "affiche des trois themes",
+       "fixed": 2
+      }
+     ],
+     "organization": "Par deux : chacun ecrit, pour son theme, le nombre de series, la fourchette de repetitions et le temps de recuperation. Le camarade verifie la coherence avec l'affiche.",
+     "studentGoal": "Ecrire les trois chiffres qui definissent ma facon de travailler.",
+     "instructions": [
+      "J'ecris mon nombre de series.",
+      "J'ecris ma fourchette de repetitions.",
+      "J'ecris mon temps de recuperation.",
+      "Mon camarade verifie que cela correspond bien a mon theme."
+     ],
+     "success": [
+      "Les trois parametres sont ecrits.",
+      "Ils correspondent au theme choisi.",
+      "Le camarade a verifie et valide."
+     ],
+     "execution": [
+      "Trois chiffres ecrits, verifies par un camarade."
+     ],
+     "watch": [
+      "Les parametres correspondent-ils au theme ?",
+      "Les verifications entre camarades sont-elles reelles ?",
+      "Qui ecrit des chiffres sans rapport avec l'affiche ?"
+     ],
+     "errors": [
+      "Ecrire une recuperation de trois minutes pour un theme de tonification.",
+      "Choisir des repetitions sans rapport avec le theme.",
+      "Valider sans avoir lu."
+     ],
+     "feedback": [
+      "Tonifier, c'est peu de recuperation : relis l'affiche.",
+      "Verifie vraiment : sinon ta validation ne sert a rien.",
+      "Ces trois chiffres seront ta seance : ils doivent tenir ensemble."
+     ],
+     "plus": [
+      "Ajouter le nombre d'exercices et leur ordre."
+     ],
+     "minus": [
+      "Parametres recopies depuis l'affiche du theme choisi."
+     ],
+     "diff": {
+      "facilitee": "Parametres recopies depuis l'affiche, verifies par le professeur.",
+      "normale": "Trois parametres ecrits et verifies par un camarade.",
+      "complexifiee": "Trois parametres plus le nombre d'exercices et leur ordre."
+     },
+     "safety": [
+      "Temps assis apres retour au calme."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Peut-on progresser sans que le chiffre augmente ?",
+     "Qu'est-ce que votre theme change concretement dans une seance ?"
+    ],
+    "key": "Un placement qui tient mieux est un progres, meme a chiffre egal. Et le theme choisi n'est pas une etiquette : il fixe les series, les repetitions et la recuperation."
+   },
+   "socialRoles": [
+    "Observateur-compteur : applique la meme regle d'arret qu'a la seance 1.",
+    "Verificateur de coherence : controle que les parametres correspondent au theme.",
+    "Gardien du temps : annonce les rotations et les recuperations."
+   ]
+  },
+  {
+   "number": 6,
+   "theme": "Construire sa seance : series, repetitions, recuperation",
+   "mainObjective": "Passer d'exercices imposes a une seance construite : choisir ses exercices, les ordonner, fixer ses parametres.",
+   "secondaryObjectives": [
+    "Ordonner les exercices du plus global au plus localise.",
+    "Fixer un nombre de series, de repetitions et un temps de recuperation coherents avec son theme.",
+    "Essayer sa seance et corriger ce qui ne tient pas."
+   ],
+   "linkToPrevious": "Le theme est choisi et ses parametres sont ecrits. On passe a la construction elle-meme.",
+   "prerequisiteForNext": "Chaque eleve dispose d'une seance ecrite de quatre exercices, deja essayee une fois.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "barres fixes basses ou espaliers",
+      "fixed": 4
+     },
+     {
+      "label": "chaises ou caisses stables",
+      "fixed": 8
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "crayons",
+      "per": 0.34,
+      "min": 10
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "affiche des six exercices de reference",
+      "fixed": 4
+     }
+    ],
+    "instructions": [
+     "Installer les six exercices de reference en postes libres, accessibles simultanement.",
+     "Afficher les six exercices avec leur zone principale sollicitee.",
+     "Afficher la regle d'ordre : du plus global au plus localise.",
+     "Verifier tout le materiel avant l'ouverture des postes."
+    ],
+    "sketch": "Six postes libres en peripherie : gainage, poussee, tirage, squat, fente, pont fessier.\nAffiche des six exercices et de leur zone au centre.\nAffiche de la regle d'ordre a cote.\nEspace central pour ecrire, carnets poses."
+   },
+   "warmup": {
+    "rationale": "Echauffement complet, car la seance construite mobilisera l'ensemble des groupes musculaires travailles depuis le debut du cycle.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train",
+      "details": [
+       "Course souple ou deplacements varies, cinq minutes.",
+       "Montees de bras et rotations d'epaules en marchant."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches : cercles et flexions, dix par articulation.",
+       "Colonne : enroulements et deroulements lents, debout.",
+       "Epaules et poignets : cercles, dix dans chaque sens.",
+       "Nuque : rotations lentes, jamais en cercle complet."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique",
+      "details": [
+       "Gainage ventral vingt secondes, deux fois.",
+       "Squats a vide, dix repetitions.",
+       "Poussees au niveau habituel, cinq repetitions.",
+       "Tirages au niveau habituel, cinq repetitions."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 22,
+     "title": "Ecrire sa seance",
+     "objective": "Construire une seance coherente : quatre exercices, un ordre, des parametres.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      },
+      {
+       "label": "affiche des six exercices de reference",
+       "fixed": 4
+      }
+     ],
+     "organization": "Individuellement, puis verification par un camarade. Chaque eleve choisit quatre exercices parmi les six, les ordonne du plus global au plus localise, et ecrit pour chacun ses series, ses repetitions et sa recuperation, conformement a son theme.",
+     "studentGoal": "Ecrire une seance de quatre exercices qui tient debout.",
+     "instructions": [
+      "Je choisis quatre exercices parmi les six.",
+      "Je les ordonne : les plus globaux d'abord, les plus localises ensuite.",
+      "J'ecris mes series, mes repetitions et ma recuperation pour chacun.",
+      "Je verifie que mes parametres correspondent a mon theme."
+     ],
+     "success": [
+      "Quatre exercices sont choisis et ordonnes du plus global au plus localise.",
+      "Chaque exercice porte ses trois parametres : series, repetitions, recuperation.",
+      "Les parametres correspondent au theme choisi a la seance 5.",
+      "Au moins un exercice de poussee et un de tirage figurent dans la seance."
+     ],
+     "execution": [
+      "Seance ecrite en quatre lignes, une par exercice, avec les trois parametres."
+     ],
+     "watch": [
+      "Les seances comportent-elles poussee et tirage ?",
+      "L'ordre respecte-t-il la regle du global vers le localise ?",
+      "Les parametres correspondent-ils au theme ?",
+      "Qui recopie la seance du voisin ?"
+     ],
+     "errors": [
+      "Choisir quatre exercices pour la meme zone du corps.",
+      "Commencer par le plus localise et finir par le squat.",
+      "Ecrire des parametres sans rapport avec son theme.",
+      "Oublier la recuperation."
+     ],
+     "feedback": [
+      "Quatre exercices pour les bras, ce n'est pas une seance : varie les zones.",
+      "Le squat en premier : c'est lui qui demande le plus.",
+      "Ta recuperation ne colle pas a ton theme : relis tes trois chiffres."
+     ],
+     "plus": [
+      "Construire deux seances differentes pour le meme theme, et justifier le choix de l'une."
+     ],
+     "minus": [
+      "Seance construite a partir de deux modeles proposes, en changeant deux exercices."
+     ],
+     "diff": {
+      "facilitee": "Seance construite a partir d'un modele propose, deux exercices remplaces au choix.",
+      "normale": "Quatre exercices choisis, ordonnes et parametres par l'eleve.",
+      "complexifiee": "Deux seances construites pour le meme theme, avec justification du choix."
+     },
+     "safety": [
+      "Temps d'ecriture assis, avant la mise en pratique."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 20,
+     "title": "Essayer sa seance",
+     "objective": "Confronter la seance ecrite a la realite, et decouvrir ce qui ne tient pas.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      },
+      {
+       "label": "chaises ou caisses stables",
+       "fixed": 8
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux, en alternance : l'un realise les deux premiers exercices de sa seance, l'autre observe le placement et tient le temps de recuperation annonce. Puis inversion. Les parametres qui ne tiennent pas sont barres et corriges aussitot.",
+     "studentGoal": "Essayer les deux premiers exercices de ma seance et corriger ce qui ne tient pas.",
+     "instructions": [
+      "Je respecte mes series, mes repetitions et ma recuperation.",
+      "Si je ne finis pas ma serie bien place, je corrige mon chiffre.",
+      "Mon observateur tient mon temps de recuperation.",
+      "Je barre et je reecris : un carnet rature est un carnet qui sert."
+     ],
+     "success": [
+      "Les deux premiers exercices sont realises aux parametres annonces.",
+      "Les parametres intenables sont corriges dans le carnet.",
+      "Le placement tient sur toutes les series realisees.",
+      "Les temps de recuperation annonces sont respectes."
+     ],
+     "execution": [
+      "Placement conforme aux affiches sur les deux exercices.",
+      "Expiration a l'effort.",
+      "Recuperation reellement tenue, chronometre a l'appui."
+     ],
+     "watch": [
+      "Les temps de recuperation sont-ils respectes ou ecourtes ?",
+      "Qui s'obstine sur un chiffre intenable ?",
+      "Les corrections sont-elles ecrites ?"
+     ],
+     "errors": [
+      "Ecourter la recuperation pour finir plus vite.",
+      "Refuser de corriger un chiffre trop ambitieux.",
+      "Corriger de tete sans l'ecrire."
+     ],
+     "feedback": [
+      "Ta recuperation fait partie de ta seance : tiens-la.",
+      "Corriger n'est pas echouer : c'est ajuster.",
+      "Ecris-le, sinon tu recommenceras la meme erreur la prochaine fois."
+     ],
+     "plus": [
+      "Essayer les quatre exercices plutot que deux."
+     ],
+     "minus": [
+      "Essayer un seul exercice, celui qui pose le plus de doute."
+     ],
+     "diff": {
+      "facilitee": "Un exercice essaye, parametres corriges avec le professeur.",
+      "normale": "Deux exercices essayes, parametres corriges par l'eleve.",
+      "complexifiee": "Les quatre exercices essayes, enchainement complet chronometre."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Materiel verifie avant l'ouverture des postes.",
+      "Recuperation reellement respectee : ecourter la recuperation degrade le placement."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 8,
+     "title": "Faire lire sa seance",
+     "objective": "Verifier qu'une seance ecrite est comprehensible par un autre que son auteur.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Par deux : chacun lit la seance de l'autre et doit pouvoir la conduire sans poser de question. Toute question posee signale une ligne a preciser.",
+     "studentGoal": "Ecrire une seance qu'un camarade peut conduire sans me demander d'explication.",
+     "instructions": [
+      "Je lis la seance de mon camarade sans rien lui demander.",
+      "Chaque fois que je dois poser une question, il precise sa ligne.",
+      "Nous echangeons les roles."
+     ],
+     "success": [
+      "La seance est lisible sans question de la part du camarade.",
+      "Les lignes ambigues sont precisees.",
+      "Les quatre exercices sont identifiables sans ambiguite."
+     ],
+     "execution": [
+      "Une ligne par exercice, nom de l'exercice, niveau, trois parametres."
+     ],
+     "watch": [
+      "Les seances sont-elles reellement lisibles ?",
+      "Les camarades osent-ils poser leurs questions ?",
+      "Les corrections sont-elles apportees ?"
+     ],
+     "errors": [
+      "Ecrire 'pompes' sans preciser le niveau.",
+      "Omettre la recuperation en la jugeant evidente.",
+      "Dire 'tu as compris' plutot que preciser."
+     ],
+     "feedback": [
+      "'Pompes' ne suffit pas : au mur, au banc ou au sol ?",
+      "S'il pose la question, c'est que ta ligne est incomplete.",
+      "Tu ecris pour toi dans deux semaines : sois precis."
+     ],
+     "plus": [
+      "Faire conduire une serie par le camarade, a partir de la seule fiche."
+     ],
+     "minus": [
+      "Relecture faite avec le professeur."
+     ],
+     "diff": {
+      "facilitee": "Relecture accompagnee par le professeur.",
+      "normale": "Relecture par un camarade, precisions apportees.",
+      "complexifiee": "Le camarade conduit une serie a partir de la seule fiche ecrite."
+     },
+     "safety": [
+      "Temps assis apres l'essai."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Pourquoi commencer par les exercices les plus globaux ?",
+     "Que faire quand un parametre ecrit ne tient pas a l'essai ?"
+    ],
+    "key": "On place les exercices globaux en premier, quand on est frais : ce sont eux qui demandent le plus de placement. Et un parametre qui ne tient pas se corrige, il ne se subit pas."
+   },
+   "socialRoles": [
+    "Lecteur de seance : lit la fiche d'un camarade et signale ce qui manque.",
+    "Gardien de recuperation : tient le temps annonce, sans l'ecourter.",
+    "Observateur de placement : arrete la serie quand le placement cede."
+   ]
+  },
+  {
+   "number": 7,
+   "theme": "Conduire sa seance et son echauffement",
+   "mainObjective": "Rendre l'eleve autonome : il conduit son echauffement et sa seance complete, en securite.",
+   "secondaryObjectives": [
+    "Conduire un echauffement articulaire complet sans modele affiche.",
+    "Enchainer les quatre exercices de sa seance en tenant ses parametres.",
+    "Observer un camarade et corriger son placement pendant sa seance."
+   ],
+   "linkToPrevious": "La seance est ecrite et partiellement essayee. On la conduit en entier, une fois, avant qu'elle ne soit evaluee.",
+   "prerequisiteForNext": "Chaque eleve a conduit son echauffement et sa seance complete au moins une fois.",
+   "setup": {
+    "installationMinutes": 12,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "barres fixes basses ou espaliers",
+      "fixed": 4
+     },
+     {
+      "label": "chaises ou caisses stables",
+      "fixed": 8
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     }
+    ],
+    "instructions": [
+     "Installer les six postes comme a la seance 6.",
+     "Retirer l'affiche de l'echauffement : les eleves le conduisent de memoire.",
+     "Garder les affiches de placement, qui servent aux observateurs.",
+     "Verifier tout le materiel, poste par poste."
+    ],
+    "sketch": "Six postes libres en peripherie, identiques a la seance 6.\nAffiches de placement conservees a chaque poste.\nAffiche d'echauffement retiree.\nHorloge ou chronometre central visible de tous."
+   },
+   "warmup": {
+    "rationale": "Echauffement conduit par les eleves eux-memes, sans modele affiche : c'est un attendu du cycle 4, et ce sera evalue a la seance suivante.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train conduite par un eleve",
+      "details": [
+       "Un eleve du binome mene cinq minutes de mise en train.",
+       "Le professeur observe sans intervenir, sauf danger."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation conduite par l'autre eleve",
+      "details": [
+       "Chaque articulation annoncee a voix haute avant d'etre mobilisee.",
+       "Ordre libre, mais aucune articulation oubliee."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique choisie",
+      "details": [
+       "Chacun prepare les groupes musculaires de sa propre seance.",
+       "Deux exercices legers au moins, avant la premiere serie."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 26,
+     "title": "Conduire sa seance en entier",
+     "objective": "Realiser l'enchainement complet de sa seance, en tenant ses parametres du debut a la fin.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      },
+      {
+       "label": "chaises ou caisses stables",
+       "fixed": 8
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Par deux : l'un conduit sa seance de quatre exercices, l'autre observe le placement et tient les temps de recuperation. Puis inversion. Aucune consigne du professeur pendant l'enchainement, sauf securite.",
+     "studentGoal": "Conduire mes quatre exercices en tenant mes series, mes repetitions et ma recuperation.",
+     "instructions": [
+      "Je suis ma fiche, ligne par ligne.",
+      "Je respecte mes temps de recuperation, meme s'ils me paraissent longs.",
+      "J'arrete ma serie quand mon placement cede.",
+      "Mon observateur corrige mon placement, il ne compte pas a ma place."
+     ],
+     "success": [
+      "Les quatre exercices sont realises dans l'ordre ecrit.",
+      "Les series, repetitions et recuperations annoncees sont tenues.",
+      "Le placement tient sur les quatre exercices, du debut a la fin des series.",
+      "L'expiration accompagne l'effort sur toutes les repetitions."
+     ],
+     "execution": [
+      "Placement conforme aux affiches sur les quatre exercices.",
+      "Amplitude complete et controlee.",
+      "Expiration a l'effort, sans blocage.",
+      "Recuperation reellement tenue entre les series."
+     ],
+     "watch": [
+      "Les recuperations sont-elles ecourtees en fin de seance ?",
+      "Le placement se degrade-t-il sur le dernier exercice ?",
+      "Les observateurs corrigent-ils ou se contentent-ils de compter ?",
+      "Qui abandonne sa fiche en cours de route ?"
+     ],
+     "errors": [
+      "Ecourter la recuperation quand la fatigue arrive.",
+      "Changer l'ordre en cours de seance pour finir plus vite.",
+      "Terminer les series au detriment du placement.",
+      "Ranger sa fiche et improviser."
+     ],
+     "feedback": [
+      "Ta fiche est ta seance : suis-la jusqu'au bout.",
+      "Ta recuperation n'est pas du temps perdu, c'est ce qui rend la serie suivante possible.",
+      "Ton dos cede : arrete la serie, c'est la regle depuis la seance 1."
+     ],
+     "plus": [
+      "Conduire la seance en autonomie complete, y compris la gestion du temps global."
+     ],
+     "minus": [
+      "Conduire trois exercices sur quatre, avec le professeur comme gardien du temps."
+     ],
+     "diff": {
+      "facilitee": "Trois exercices, temps de recuperation tenu par le professeur.",
+      "normale": "Quatre exercices conduits, temps tenus par l'observateur.",
+      "complexifiee": "Seance complete en autonomie, gestion du temps global comprise."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Materiel verifie poste par poste avant l'ouverture.",
+      "Le professeur reste en surveillance permanente, meme en autonomie.",
+      "Toute douleur articulaire interrompt la seance, sans discussion."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 12,
+     "title": "Observer et corriger pendant la seance",
+     "objective": "Faire de l'observation un role actif : corriger au bon moment, sans interrompre l'effort.",
+     "material": [
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Le meme binome, en continu : l'observateur formule au moins deux corrections pendant la seance de son camarade, entre les series et non pendant. Il note dans son carnet ce qu'il a corrige.",
+     "studentGoal": "Corriger mon camarade au bon moment, entre deux series.",
+     "instructions": [
+      "Je corrige entre les series, jamais pendant.",
+      "Je porte ma correction sur un seul point.",
+      "Je note ce que j'ai corrige dans mon carnet.",
+      "Je verifie a la serie suivante si la correction a ete prise."
+     ],
+     "success": [
+      "Au moins deux corrections formulees pendant la seance.",
+      "Les corrections sont donnees entre les series.",
+      "Au moins une correction est effectivement prise par l'executant.",
+      "Les corrections sont notees."
+     ],
+     "execution": [
+      "Correction courte, entre deux series, portant sur un point precis."
+     ],
+     "watch": [
+      "Les corrections interrompent-elles l'effort ?",
+      "Sont-elles utilisables ?",
+      "L'executant les prend-il en compte ?"
+     ],
+     "errors": [
+      "Corriger au milieu d'une serie, ce qui casse le placement.",
+      "Empiler trois corrections entre deux series.",
+      "Ne rien dire pour ne pas deranger."
+     ],
+     "feedback": [
+      "Attends la fin de la serie : le corriger en plein effort le desequilibre.",
+      "Une correction, puis on verifie qu'elle est prise.",
+      "Ne rien dire, ce n'est pas etre gentil : c'est le laisser se placer mal."
+     ],
+     "plus": [
+      "Formuler une correction et proposer une variante d'exercice adaptee."
+     ],
+     "minus": [
+      "Corrections choisies parmi celles ecrites sur l'affiche."
+     ],
+     "diff": {
+      "facilitee": "Corrections choisies parmi celles de l'affiche, une par exercice.",
+      "normale": "Deux corrections formulees librement, entre les series.",
+      "complexifiee": "Correction plus proposition d'une variante adaptee au camarade."
+     },
+     "safety": [
+      "Aucune correction par contact physique sans accord explicite."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 8,
+     "title": "Derniers ajustements",
+     "objective": "Corriger une derniere fois la seance avant qu'elle ne soit evaluee.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      }
+     ],
+     "organization": "Individuellement : chaque eleve corrige un seul element de sa seance, celui que l'essai complet a montre le plus fragile, et ecrit pourquoi.",
+     "studentGoal": "Corriger un seul point, celui qui compte le plus.",
+     "instructions": [
+      "Je repere ce qui n'a pas tenu.",
+      "Je corrige un seul element : un exercice, un chiffre ou un ordre.",
+      "J'ecris pourquoi je le corrige."
+     ],
+     "success": [
+      "Un element est corrige et justifie.",
+      "La correction s'appuie sur ce qui s'est passe pendant la seance.",
+      "La fiche est prete pour l'evaluation."
+     ],
+     "execution": [
+      "Correction ecrite, avec sa raison, en une phrase."
+     ],
+     "watch": [
+      "Les corrections s'appuient-elles sur l'essai reel ?",
+      "Qui veut tout changer ?",
+      "Les fiches sont-elles pretes ?"
+     ],
+     "errors": [
+      "Tout changer la veille de l'evaluation.",
+      "Ne rien changer alors que la seance n'a pas tenu.",
+      "Corriger sans justifier."
+     ],
+     "feedback": [
+      "Un seul changement : sinon tu ne sauras pas ce qui l'a rendue tenable.",
+      "Ta seance n'a pas tenu : ne la garde pas telle quelle par fierte.",
+      "Ecris pourquoi : c'est ce que tu expliqueras a la seance 8."
+     ],
+     "plus": [
+      "Preparer les trois phrases d'explication qui seront demandees a l'evaluation."
+     ],
+     "minus": [
+      "Correction decidee avec le professeur."
+     ],
+     "diff": {
+      "facilitee": "Correction decidee avec le professeur et notee par lui.",
+      "normale": "Un element corrige et justifie par ecrit.",
+      "complexifiee": "Correction plus preparation des trois phrases d'explication."
+     },
+     "safety": [
+      "Temps assis apres retour au calme."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Qu'avez-vous oublie dans votre echauffement quand vous l'avez conduit sans modele ?",
+     "A quel moment faut-il corriger un camarade, et pourquoi ?"
+    ],
+    "key": "Un echauffement se conduit de memoire a la fin d'un cycle, articulation par articulation. Et une correction se donne entre deux series : en plein effort, elle desequilibre au lieu d'aider."
+   },
+   "socialRoles": [
+    "Meneur d'echauffement : conduit une partie de l'echauffement sans modele affiche.",
+    "Observateur-correcteur : formule ses corrections entre les series et verifie leur prise en compte.",
+    "Gardien de recuperation : tient les temps annonces jusqu'au bout de la seance."
+   ]
+  },
+  {
+   "number": 8,
+   "theme": "Seance personnelle conduite et justifiee",
+   "isFinalEvaluation": true,
+   "mainObjective": "Conduire seul sa seance, en securite, et rendre compte de ses choix et de leurs effets.",
+   "secondaryObjectives": [
+    "Conduire son echauffement complet sans modele.",
+    "Tenir les parametres ecrits sur les quatre exercices.",
+    "Expliquer ses choix et decrire les effets ressentis."
+   ],
+   "linkToPrevious": "La seance a ete construite, essayee, conduite et corrigee. Il ne reste qu'a la mener et a l'expliquer.",
+   "prerequisiteForNext": "Le cycle est termine : chaque eleve dispose de sa progression et d'une seance qu'il sait conduire seul.",
+   "setup": {
+    "installationMinutes": 14,
+    "material": [
+     {
+      "label": "tapis de sol",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "bancs",
+      "fixed": 6
+     },
+     {
+      "label": "barres fixes basses ou espaliers",
+      "fixed": 4
+     },
+     {
+      "label": "chaises ou caisses stables",
+      "fixed": 8
+     },
+     {
+      "label": "chronometres",
+      "per": 0.34,
+      "min": 8
+     },
+     {
+      "label": "carnets d'entrainement individuels",
+      "per": 1.0,
+      "min": 28
+     },
+     {
+      "label": "crayons",
+      "per": 0.34,
+      "min": 10
+     },
+     {
+      "label": "affiches des postures de reference",
+      "fixed": 6
+     },
+     {
+      "label": "trousse de secours",
+      "fixed": 1
+     },
+     {
+      "label": "fiche recapitulative de classe",
+      "fixed": 2
+     }
+    ],
+    "instructions": [
+     "Installer les six postes, verifies un a un.",
+     "Distribuer les carnets avant l'echauffement, pour que chacun relise sa seance.",
+     "Afficher l'ordre de passage des binomes et les roles.",
+     "Preparer la fiche recapitulative de classe, remplie au fil de la seance."
+    ],
+    "sketch": "Six postes verifies, affiches de placement conservees.\nOrdre de passage et roles affiches a l'entree.\nEspace calme en peripherie pour le bilan ecrit."
+   },
+   "warmup": {
+    "rationale": "Echauffement conduit par l'eleve, evalue comme le reste : au cycle 4, savoir s'echauffer fait partie des attendus.",
+    "steps": [
+     {
+      "dur": 5,
+      "title": "Mise en train personnelle",
+      "details": [
+       "Chaque eleve conduit sa propre mise en train, cinq minutes.",
+       "Duree annoncee et tenue."
+      ]
+     },
+     {
+      "dur": 7,
+      "title": "Mobilisation articulaire complete",
+      "details": [
+       "Chevilles, genoux, hanches, colonne, epaules, poignets, nuque.",
+       "Aucune articulation oubliee : l'observateur verifie."
+      ]
+     },
+     {
+      "dur": 8,
+      "title": "Preparation specifique de sa seance",
+      "details": [
+       "Deux exercices legers ciblant les groupes de sa propre seance.",
+       "Une minute de repos avant la premiere serie."
+      ]
+     }
+    ]
+   },
+   "situations": [
+    {
+     "role": "NOYAU",
+     "dur": 26,
+     "title": "Epreuve : conduire sa seance",
+     "objective": "Realiser la seance construite, en securite et aux parametres annonces.",
+     "material": [
+      {
+       "label": "tapis de sol",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "bancs",
+       "fixed": 6
+      },
+      {
+       "label": "barres fixes basses ou espaliers",
+       "fixed": 4
+      },
+      {
+       "label": "chaises ou caisses stables",
+       "fixed": 8
+      },
+      {
+       "label": "chronometres",
+       "per": 0.34,
+       "min": 8
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      }
+     ],
+     "organization": "Par deux, dans l'ordre affiche : l'un conduit sa seance de quatre exercices pendant que l'autre observe le placement, tient les temps et note les corrections. Puis inversion. Le professeur observe et n'intervient que pour la securite.",
+     "studentGoal": "Conduire ma seance jusqu'au bout, bien place, aux chiffres que j'ai ecrits.",
+     "instructions": [
+      "Je relis ma fiche avant de commencer.",
+      "Je conduis mon echauffement en entier avant la premiere serie.",
+      "Je respecte mes series, mes repetitions et mes recuperations.",
+      "J'arrete une serie des que mon placement cede."
+     ],
+     "success": [
+      "L'echauffement articulaire est conduit en entier avant le premier exercice.",
+      "Les quatre exercices sont realises dans l'ordre ecrit, aux parametres annonces.",
+      "Le dos reste correctement place sur les quatre exercices, du debut a la fin des series.",
+      "L'expiration accompagne l'effort a chaque repetition, sans blocage respiratoire.",
+      "Les temps de recuperation annonces sont tenus."
+     ],
+     "execution": [
+      "Placement conforme aux affiches de reference sur les quatre exercices.",
+      "Genoux dans l'axe et talons au sol sur les exercices de jambes.",
+      "Corps aligne, bassin dans l'axe, sur poussee, tirage et gainage.",
+      "Amplitude complete et controlee, sans a-coup ni elan.",
+      "Expiration a l'effort sur chaque repetition."
+     ],
+     "watch": [
+      "L'echauffement est-il complet ou expedie sous la pression de l'evaluation ?",
+      "Les recuperations sont-elles tenues jusqu'au dernier exercice ?",
+      "Le placement cede-t-il sur le quatrieme exercice ?",
+      "Qui abandonne sa fiche pour improviser ?"
+     ],
+     "errors": [
+      "Expedier l'echauffement pour commencer plus vite.",
+      "Ecourter la recuperation en fin de seance.",
+      "Finir une serie dos rond pour atteindre son chiffre.",
+      "Improviser un exercice non prevu."
+     ],
+     "feedback": [
+      "Ton echauffement fait partie de ton evaluation : conduis-le en entier.",
+      "Tiens ta recuperation : c'est elle qui te permettra de finir bien place.",
+      "Arrete la serie : ton chiffre ne vaut rien si ton dos cede."
+     ],
+     "plus": [
+      "Seance de cinq exercices, ou gestion autonome du temps global."
+     ],
+     "minus": [
+      "Seance de trois exercices, temps tenu par l'observateur."
+     ],
+     "diff": {
+      "facilitee": "Trois exercices, temps de recuperation tenu par l'observateur, niveaux les plus accessibles.",
+      "normale": "Quatre exercices conduits aux parametres ecrits, echauffement conduit seul.",
+      "complexifiee": "Cinq exercices et gestion autonome du temps global de la seance."
+     },
+     "safety": [
+      "Aucune charge additionnelle : tout le cycle se fait au poids du corps.",
+      "Jamais de blocage respiratoire : on souffle a l'effort, toujours.",
+      "Dos maintenu droit ou plaque au sol selon l'exercice ; aucun exercice ne se poursuit dos rond.",
+      "Arret immediat en cas de douleur articulaire, sans discussion ni negociation.",
+      "Amplitude controlee : on ne cherche jamais l'amplitude maximale au detriment du placement.",
+      "Tapis obligatoire pour tout exercice au sol.",
+      "Materiel verifie poste par poste avant l'evaluation.",
+      "Surveillance permanente du professeur, meme en autonomie complete.",
+      "Toute douleur articulaire interrompt l'epreuve, qui sera reprise plus tard.",
+      "Aucun exercice hors de ceux du cycle : pas d'improvisation en evaluation."
+     ]
+    },
+    {
+     "role": "COMPLEMENT",
+     "dur": 12,
+     "title": "Tenir le role d'observateur",
+     "objective": "Evaluer aussi la capacite a observer et corriger, qui fait partie des attendus.",
+     "material": [
+      {
+       "label": "affiches des postures de reference",
+       "fixed": 6
+      },
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      }
+     ],
+     "organization": "Pendant la seance de son camarade : l'observateur tient les temps, surveille le placement, formule au moins une correction entre deux series et la note.",
+     "studentGoal": "Tenir les temps de mon camarade et lui donner au moins une correction utile.",
+     "instructions": [
+      "Je tiens ses temps de recuperation au chronometre.",
+      "Je surveille son dos et ses genoux.",
+      "Je formule au moins une correction, entre deux series.",
+      "Je note ce que j'ai corrige."
+     ],
+     "success": [
+      "Les temps de recuperation sont tenus avec precision.",
+      "Au moins une correction de placement est formulee entre deux series.",
+      "La correction porte sur un point precis et est notee.",
+      "Aucune serie dangereuse n'est laissee se poursuivre."
+     ],
+     "execution": [
+      "Correction courte, precise, donnee entre deux series et notee."
+     ],
+     "watch": [
+      "Les observateurs restent-ils attentifs pendant toute la seance ?",
+      "Les corrections sont-elles donnees au bon moment ?",
+      "Les temps sont-ils reellement tenus ?"
+     ],
+     "errors": [
+      "Discuter au lieu d'observer.",
+      "Laisser passer une serie dos rond.",
+      "Annoncer une recuperation sans avoir regarde le chronometre."
+     ],
+     "feedback": [
+      "Ton role compte autant que ta seance.",
+      "Tu l'as laisse finir dos rond : c'est a toi de l'arreter.",
+      "Une correction precise vaut mieux que dix encouragements."
+     ],
+     "plus": [
+      "Observer deux camarades successivement."
+     ],
+     "minus": [
+      "Se concentrer sur un seul critere : le dos."
+     ],
+     "diff": {
+      "facilitee": "Observation centree sur un seul critere, le dos, avec l'affiche en main.",
+      "normale": "Temps tenus et au moins une correction formulee et notee.",
+      "complexifiee": "Observation de deux camarades successifs, avec corrections notees pour chacun."
+     },
+     "safety": [
+      "L'observateur est aussi le garant de la securite : il interrompt une serie dangereuse."
+     ]
+    },
+    {
+     "role": "REINVESTISSEMENT",
+     "dur": 10,
+     "title": "Expliquer ses choix et ses effets",
+     "objective": "Rendre compte du projet : pourquoi ces exercices, et ce que la seance a produit.",
+     "material": [
+      {
+       "label": "carnets d'entrainement individuels",
+       "per": 1.0,
+       "min": 28
+      },
+      {
+       "label": "crayons",
+       "per": 0.34,
+       "min": 10
+      },
+      {
+       "label": "fiche recapitulative de classe",
+       "fixed": 2
+      }
+     ],
+     "organization": "Individuellement puis devant le professeur : chaque eleve ecrit trois phrases - pourquoi ces quatre exercices pour son theme, ce qu'il a ressenti pendant la seance, et ce qu'il changerait s'il devait la refaire.",
+     "studentGoal": "Expliquer en trois phrases pourquoi ma seance est la mienne.",
+     "instructions": [
+      "J'ecris pourquoi j'ai choisi ces quatre exercices pour mon theme.",
+      "J'ecris ce que j'ai ressenti, et ou.",
+      "J'ecris ce que je changerais si je la refaisais.",
+      "Je reporte ma progression depuis la seance 1."
+     ],
+     "success": [
+      "Les trois phrases sont ecrites.",
+      "Le lien entre les exercices choisis et le theme annonce est explicite.",
+      "Les effets ressentis sont localises et decrits.",
+      "La progression depuis la seance 1 est reportee."
+     ],
+     "execution": [
+      "Trois phrases ecrites, a la premiere personne, plus les chiffres de progression."
+     ],
+     "watch": [
+      "Le lien theme-exercices est-il compris ?",
+      "Les effets sont-ils decrits ou generalises ?",
+      "Les progressions sont-elles reportees ?"
+     ],
+     "errors": [
+      "Justifier par 'j'aime bien' sans lien avec le theme.",
+      "Decrire l'effort par 'c'etait dur' sans le localiser.",
+      "Oublier de reporter les chiffres de la seance 1."
+     ],
+     "feedback": [
+      "Relie tes exercices a ton theme : c'est ce qu'on evalue.",
+      "Ou exactement as-tu senti l'effort ? Montre, puis ecris.",
+      "Ta progression, meme faible, se lit dans tes chiffres : reporte-les."
+     ],
+     "plus": [
+      "Proposer la seance suivante, pour un theme different."
+     ],
+     "minus": [
+      "Explication donnee oralement au professeur, qui la note."
+     ],
+     "diff": {
+      "facilitee": "Explication orale au professeur, chiffres reportes avec lui.",
+      "normale": "Trois phrases ecrites plus la progression reportee.",
+      "complexifiee": "Idem plus une proposition de seance pour un autre theme."
+     },
+     "safety": [
+      "Temps assis, apres retour au calme et hydratation."
+     ]
+    }
+   ],
+   "closing": {
+    "dur": 5,
+    "questions": [
+     "Qu'est-ce qui a le plus change depuis la premiere seance : vos chiffres ou votre placement ?",
+     "Sauriez-vous refaire cette seance seul, chez vous, sans materiel ?"
+    ],
+    "key": "Le cycle se termine sur une seance qu'on sait conduire seul, expliquer et adapter. C'est ce qui reste quand le cycle s'arrete : pas un chiffre, une methode."
+   },
+   "socialRoles": [
+    "Observateur-correcteur : tient les temps, surveille le placement, interrompt une serie dangereuse.",
+    "Meneur d'echauffement : conduit son propre echauffement sans modele affiche.",
+    "Secretaire : verifie que les carnets du binome sont complets avant de quitter la salle."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2595 @@
+{
+  "apsa": "Danse",
+  "grades": [
+    "QUATRIEME"
+  ],
+  "champApprentissage": "CA3 - S'exprimer devant les autres par une prestation artistique et/ou acrobatique",
+  "programme": "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie, programme en vigueur publie au BO n°31 du 30 juillet 2020.",
+  "attendus": [
+    "Mobiliser les capacites expressives du corps pour imaginer, composer et interpreter une sequence artistique.",
+    "Participer activement au projet artistique d'un groupe.",
+    "Apprecier des prestations avec des supports d'observation et proposer une amelioration."
+  ],
+  "targetCompetence": "Elaborer et interpreter a quatre a six une choregraphie structuree en trois tableaux, dont les choix de gestuelle, espace, temps, energie et relations rendent une intention lisible ; analyser une prestation avec un vocabulaire adapte.",
+  "cycleObjectives": [
+    "Transformer une gestuelle pour servir une intention.",
+    "Composer trois tableaux relies.",
+    "Construire au moins deux relations entre danseurs.",
+    "Assumer une presence d'interprete.",
+    "Observer et argumenter une piste d'amelioration."
+  ],
+  "plannedTitles": [
+    "Diagnostic : transformer et montrer",
+    "Donner une intention par les contrastes",
+    "Stabiliser un motif",
+    "De l'individu au groupe",
+    "Evaluation de mi-cycle : trois tableaux",
+    "Lier les tableaux",
+    "Ecrire avec l'espace",
+    "Danser avec le monde sonore",
+    "Devenir interprete",
+    "Filage et regard du spectateur",
+    "Repetition generale",
+    "Presentation finale"
+  ],
+  "sources": [
+    {
+      "type": "Officiel",
+      "title": "Ressources EPS cycle 4 - Danse",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.gouv.fr/sites/default/files/document/ra16c4epsca3dansend570200pdf-78351.pdf",
+      "consulted": "2026-09-03"
+    },
+    {
+      "type": "Officiel",
+      "title": "Ressources d'accompagnement EPS cycle 4",
+      "org": "Eduscol",
+      "url": "https://eduscol.education.gouv.fr/5724/ressources-d-accompagnement-du-programme-d-education-physique-et-sportive-eps-au-cycle-4",
+      "consulted": "2026-09-03"
+    }
+  ],
+  "protocoleLocal": [
+    "Sol propre, sec et non glissant.",
+    "Scene et public clairement separes.",
+    "Captation seulement si elle est autorisee.",
+    "Aucun porte ni contact improvise."
+  ],
+  "studentProfiles": [
+    {
+      "label": "Motricite usuelle",
+      "observed": "Gestes quotidiens peu transformes.",
+      "need": "Contraintes precises sur espace, temps et energie."
+    },
+    {
+      "label": "Execute sans intention",
+      "observed": "Phrase apprise mais presence faible.",
+      "need": "Regard, tonicite et choix d'effet."
+    },
+    {
+      "label": "Compose par addition",
+      "observed": "Tableaux juxtaposes avec temps morts.",
+      "need": "Liaisons et fil conducteur."
+    },
+    {
+      "label": "Spectateur subjectif",
+      "observed": "Dit seulement j'aime ou je n'aime pas.",
+      "need": "Constat observable puis conseil."
+    }
+  ],
+  "finalEvaluation": {
+    "format": "Choregraphie de quatre a six eleves, 1 min 30 a 2 min, trois tableaux relies sur une intention annoncee. Chaque eleve est aussi spectateur analyste.",
+    "criteria": [
+      "Intention identifiable.",
+      "Gestuelle transformee et precise.",
+      "Trois tableaux relies sans temps mort.",
+      "Au moins deux procedes et deux relations entre danseurs.",
+      "Presence constante de chaque interprete.",
+      "Analyse de spectateur descriptive et argumentee."
+    ],
+    "referential": "Attendus de fin de cycle 4 du CA3 et reperes Eduscol Danse."
+  },
+  "sessions": [
+    {
+      "number": 1,
+      "theme": "Diagnostic : transformer et montrer",
+      "mainObjective": "Observer la capacite a transformer une gestuelle et a l'assumer devant autrui.",
+      "isDiagnostic": true,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "Premiere seance : installer les regles, observer les conduites initiales et constituer des reperes.",
+      "prerequisiteForNext": "Les acquis de diagnostic : transformer et montrer sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "6 zones autour d'une scene centrale ; public lateral."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail diagnostic : transformer et montrer.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Diagnostic : phrase transformee",
+          "objective": "Passer d'une gestuelle usuelle a une phrase volontaire.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Groupes de quatre dans six zones de 5 x 5 m ; chacun cree quatre actions, puis le groupe en retient huit.",
+          "studentGoal": "Produire une phrase de huit mouvements avec un debut et une fin nets.",
+          "instructions": [
+            "Transformer une action quotidienne.",
+            "Varier au moins deux parametres : espace, temps ou energie."
+          ],
+          "success": [
+            "Huit mouvements sont memorises.",
+            "Deux transformations sont reconnues par les observateurs.",
+            "Le groupe recommence sans discussion."
+          ],
+          "execution": [
+            "Amplitude lisible.",
+            "Regard place et fin tenue trois secondes."
+          ],
+          "watch": [
+            "Qui reste dans une motricite quotidienne ?",
+            "Qui oublie la phrase sous le regard ?"
+          ],
+          "errors": [
+            "Imiter sans transformer.",
+            "Rire ou parler pendant la prestation."
+          ],
+          "feedback": [
+            "Amplifie jusqu'a rendre le mouvement visible.",
+            "Fixe exactement ton debut et ta fin."
+          ],
+          "plus": [
+            "Ajouter une rupture d'energie."
+          ],
+          "minus": [
+            "Limiter la phrase a quatre mouvements guides."
+          ],
+          "diff": {
+            "facilitee": "Phrase de quatre mouvements imposee, musique lente.",
+            "normale": "Huit mouvements et deux transformations.",
+            "complexifiee": "Huit mouvements, trois transformations et changement d'orientation."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Diagnostic : phrase transformee en presentation",
+          "objective": "Reinvestir sans guidage direct : Passer d'une gestuelle usuelle a une phrase volontaire.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Groupes de quatre dans six zones de 5 x 5 m ; chacun cree quatre actions, puis le groupe en retient huit.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Huit mouvements sont memorises. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Amplitude lisible.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Transformer, c'est choisir."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 2,
+      "theme": "Donner une intention par les contrastes",
+      "mainObjective": "Utiliser espace, temps et energie pour produire un effet.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 1 a construit un premier outil ; celui-ci est reinvesti pour donner une intention par les contrastes.",
+      "prerequisiteForNext": "Les acquis de donner une intention par les contrastes sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Bandes paralleles ; binomes espaces ; public en fond."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail donner une intention par les contrastes.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Les contrastes qui donnent du sens",
+          "objective": "Rendre une intention visible par des contrastes corporels.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Binomes repartis en bandes de 3 x 8 m ; un danseur agit, l'autre observe, puis inversion.",
+          "studentGoal": "Faire reconnaitre calme/tension sans mimer une histoire.",
+          "instructions": [
+            "Danser la meme phrase en deux energies opposees.",
+            "Conserver les formes tout en changeant vitesse et tonicite."
+          ],
+          "success": [
+            "Le spectateur identifie les deux intentions.",
+            "La phrase reste reconnaissable dans les deux versions."
+          ],
+          "execution": [
+            "Tonicite differenciee.",
+            "Transitions sans marche ordinaire."
+          ],
+          "watch": [
+            "L'energie change-t-elle reellement ?",
+            "La transformation porte-t-elle un sens ?"
+          ],
+          "errors": [
+            "Seulement accelerer.",
+            "Ajouter des gestes explicatifs mimes."
+          ],
+          "feedback": [
+            "Change la tonicite, pas seulement la vitesse.",
+            "Fais vivre la transition entre les deux etats."
+          ],
+          "plus": [
+            "Ajouter silence puis musique."
+          ],
+          "minus": [
+            "Donner deux verbes d'action a transformer."
+          ],
+          "diff": {
+            "facilitee": "Deux energies montrées par le professeur.",
+            "normale": "Deux contrastes choisis et reconnus.",
+            "complexifiee": "Trois nuances progressives sans mime."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Les contrastes qui donnent du sens en presentation",
+          "objective": "Reinvestir sans guidage direct : Rendre une intention visible par des contrastes corporels.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Binomes repartis en bandes de 3 x 8 m ; un danseur agit, l'autre observe, puis inversion.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Le spectateur identifie les deux intentions. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Tonicite differenciee.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Un contraste doit etre percu."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 3,
+      "theme": "Stabiliser un motif",
+      "mainObjective": "Memoriser et transformer un motif sans perdre son identite.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 2 a construit un premier outil ; celui-ci est reinvesti pour stabiliser un motif.",
+      "prerequisiteForNext": "Les acquis de stabiliser un motif sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "4 carres de creation ; scene centrale pour montrer les motifs."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail stabiliser un motif.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Construire un motif et le faire evoluer",
+          "objective": "Stabiliser un motif personnel puis le transformer sans le rendre meconnaissable.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Groupes de quatre dans quatre zones ; chacun transmet son motif de six temps, puis le groupe choisit une transformation commune.",
+          "studentGoal": "Faire reconnaitre le motif dans trois versions.",
+          "instructions": [
+            "Repetition exacte deux fois.",
+            "Transformation par niveau puis par amplitude."
+          ],
+          "success": [
+            "Le motif initial est identifie dans les trois versions.",
+            "Chaque danseur reproduit les six temps sans suivre un camarade."
+          ],
+          "execution": [
+            "Points de depart et d'arrivee identiques.",
+            "Transformation continue, sans geste parasite."
+          ],
+          "watch": [
+            "Le motif est-il memorise ou copie en direct ?",
+            "Qu'est-ce qui demeure entre les versions ?"
+          ],
+          "errors": [
+            "Changer tous les mouvements.",
+            "Confondre transformation et ajout."
+          ],
+          "feedback": [
+            "Garde l'ossature et transforme un parametre a la fois.",
+            "Repete seul avant de remettre le groupe."
+          ],
+          "plus": [
+            "Combiner niveau et amplitude."
+          ],
+          "minus": [
+            "Motif commun de quatre temps."
+          ],
+          "diff": {
+            "facilitee": "Motif de quatre temps donne.",
+            "normale": "Motif de six temps, trois versions.",
+            "complexifiee": "Transformation progressive sans rupture."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Construire un motif et le faire evoluer en presentation",
+          "objective": "Reinvestir sans guidage direct : Stabiliser un motif personnel puis le transformer sans le rendre meconnaissable.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Groupes de quatre dans quatre zones ; chacun transmet son motif de six temps, puis le groupe choisit une transformation commune.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Le motif initial est identifie dans les trois versions. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Points de depart et d'arrivee identiques.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Un motif reste identifiable quand un parametre varie."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 4,
+      "theme": "De l'individu au groupe",
+      "mainObjective": "Construire des relations signifiantes entre danseurs.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 3 a construit un premier outil ; celui-ci est reinvesti pour de l'individu au groupe.",
+      "prerequisiteForNext": "Les acquis de de l'individu au groupe sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "4 zones dans les angles ; observateurs face a la scene."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail de l'individu au groupe.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Relations : individu et groupe",
+          "objective": "Construire deux formes de relation entre danseurs.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Groupes de cinq, chacun dans une zone ; trois danseurs actifs, deux observateurs, rotation toutes les six minutes.",
+          "studentGoal": "Faire lire qui est isole, meneur ou integre au groupe.",
+          "instructions": [
+            "Tester unisson, canon et contraste.",
+            "Choisir deux procedes au service de l'intention."
+          ],
+          "success": [
+            "Deux relations distinctes sont identifiees.",
+            "Chaque danseur a une place active."
+          ],
+          "execution": [
+            "Prises de reperes sans parler.",
+            "Distances et orientations choisies."
+          ],
+          "watch": [
+            "Un eleve reste-t-il suiveur ?",
+            "Le procede sert-il le propos ?"
+          ],
+          "errors": [
+            "Se placer en ligne sans raison.",
+            "Canon devenu succession d'oublis."
+          ],
+          "feedback": [
+            "Regarde ton partenaire avant de partir.",
+            "Explique l'effet recherche avant de choisir le procede."
+          ],
+          "plus": [
+            "Inserer une question-reponse."
+          ],
+          "minus": [
+            "Unisson puis canon imposes."
+          ],
+          "diff": {
+            "facilitee": "Deux procedes imposes et phrase commune.",
+            "normale": "Deux procedes choisis.",
+            "complexifiee": "Trois relations enchainees sans temps mort."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Relations : individu et groupe en presentation",
+          "objective": "Reinvestir sans guidage direct : Construire deux formes de relation entre danseurs.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Groupes de cinq, chacun dans une zone ; trois danseurs actifs, deux observateurs, rotation toutes les six minutes.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Deux relations distinctes sont identifiees. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Prises de reperes sans parler.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "La relation organise le groupe."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 5,
+      "theme": "Evaluation de mi-cycle : trois tableaux",
+      "mainObjective": "Formaliser une premiere composition lisible.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": true,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 4 a construit un premier outil ; celui-ci est reinvesti pour evaluation de mi-cycle : trois tableaux.",
+      "prerequisiteForNext": "Les acquis de evaluation de mi-cycle : trois tableaux sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "3 zones de creation ; scene centrale ; coin ecriture hors scene."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail evaluation de mi-cycle : trois tableaux.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Trois tableaux lisibles",
+          "objective": "Composer une structure avec debut, developpement et fin.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Groupes de quatre a six ; trois zones de creation et une scene centrale pour les passages.",
+          "studentGoal": "Presenter trois tableaux relies sur le theme individu/groupe.",
+          "instructions": [
+            "Donner un titre a chaque tableau.",
+            "Prevoir une liaison dansee entre les tableaux."
+          ],
+          "success": [
+            "Trois tableaux sont reconnaissables.",
+            "Aucun arret de concertation entre eux.",
+            "Tous participent."
+          ],
+          "execution": [
+            "Entree deja dansee.",
+            "Liaisons memorisees."
+          ],
+          "watch": [
+            "Ou apparaissent les longueurs ?",
+            "Le fil conducteur est-il visible ?"
+          ],
+          "errors": [
+            "Additionner trois morceaux sans liaison.",
+            "Parler pour se replacer."
+          ],
+          "feedback": [
+            "La fin d'un tableau declenche le suivant.",
+            "Supprime tout geste qui n'aide pas le propos."
+          ],
+          "plus": [
+            "Modifier l'ordre des tableaux pour renforcer l'effet."
+          ],
+          "minus": [
+            "Utiliser une trame ecrite en neuf cases."
+          ],
+          "diff": {
+            "facilitee": "Trame et procedes imposes.",
+            "normale": "Trois tableaux et deux liaisons dansees.",
+            "complexifiee": "Rupture volontaire entre deux tableaux et reprise d'un motif."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Trois tableaux lisibles en presentation",
+          "objective": "Reinvestir sans guidage direct : Composer une structure avec debut, developpement et fin.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Groupes de quatre a six ; trois zones de creation et une scene centrale pour les passages.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Trois tableaux sont reconnaissables. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Entree deja dansee.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Une composition relie ses tableaux."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 6,
+      "theme": "Lier les tableaux",
+      "mainObjective": "Supprimer les attentes et construire des transitions dansees.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 5 a construit un premier outil ; celui-ci est reinvesti pour lier les tableaux.",
+      "prerequisiteForNext": "Les acquis de lier les tableaux sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Bandes de liaison ; points de depart et d'arrivee marques."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail lier les tableaux.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Relier sans temps mort",
+          "objective": "Construire des transitions qui prolongent le sens des tableaux.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Chaque groupe travaille uniquement ses deux liaisons dans une bande de scene ; passage aller-retour devant un binome observateur.",
+          "studentGoal": "Enchainer les trois tableaux sans marche ni parole.",
+          "instructions": [
+            "La derniere forme d'un tableau declenche la liaison.",
+            "La liaison transforme formation, niveau ou energie."
+          ],
+          "success": [
+            "Aucun arret entre les trois tableaux.",
+            "Les deux liaisons sont dansees et reproductibles."
+          ],
+          "execution": [
+            "Signal de depart corporel.",
+            "Trajets anticipes par tous."
+          ],
+          "watch": [
+            "Qui attend le signal ?",
+            "La liaison a-t-elle une intention ?"
+          ],
+          "errors": [
+            "Courir a sa nouvelle place.",
+            "Dire maintenant pour repartir."
+          ],
+          "feedback": [
+            "Commence la liaison avant que l'image precedente ne disparaisse.",
+            "Donnez un signal visible, jamais verbal."
+          ],
+          "plus": [
+            "Une liaison en continuite, une en rupture."
+          ],
+          "minus": [
+            "Tracer les trajets et imposer un signal."
+          ],
+          "diff": {
+            "facilitee": "Trajets balises et signal impose.",
+            "normale": "Deux liaisons dansees.",
+            "complexifiee": "Deux modes de liaison opposes."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Relier sans temps mort en presentation",
+          "objective": "Reinvestir sans guidage direct : Construire des transitions qui prolongent le sens des tableaux.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Chaque groupe travaille uniquement ses deux liaisons dans une bande de scene ; passage aller-retour devant un binome observateur.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Aucun arret entre les trois tableaux. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Signal de depart corporel.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Une liaison se danse."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 7,
+      "theme": "Ecrire avec l'espace",
+      "mainObjective": "Mettre formations, trajets et niveaux au service du propos.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 6 a construit un premier outil ; celui-ci est reinvesti pour ecrire avec l'espace.",
+      "prerequisiteForNext": "Les acquis de ecrire avec l'espace sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Scene quadrillee en 9 zones ; entrees opposees."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail ecrire avec l'espace.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Composer avec l'espace scenique",
+          "objective": "Choisir formations, trajets et niveaux en fonction du propos.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Quatre groupes dans les angles ; un groupe a la fois sur la scene, public face a la diagonale principale.",
+          "studentGoal": "Transformer un tableau en utilisant espace proche et espace lointain.",
+          "instructions": [
+            "Tester ligne, cercle, dispersion et amas.",
+            "Choisir deux niveaux simultanes."
+          ],
+          "success": [
+            "Deux formations servent des effets differents.",
+            "La scene est occupee sans regroupement involontaire."
+          ],
+          "execution": [
+            "Trajets precis.",
+            "Niveaux tenus sans desequilibre."
+          ],
+          "watch": [
+            "Les bords restent-ils vides ?",
+            "Les changements sont-ils anticipes ?"
+          ],
+          "errors": [
+            "Tous au centre.",
+            "Changer de formation en marchant normalement."
+          ],
+          "feedback": [
+            "Trace ton trajet avant de danser.",
+            "Fais commencer la nouvelle formation avant la fin de l'ancienne."
+          ],
+          "plus": [
+            "Utiliser une entree par deux cotes opposes."
+          ],
+          "minus": [
+            "Marquer au sol quatre points de passage."
+          ],
+          "diff": {
+            "facilitee": "Formations imposees et trajets balises.",
+            "normale": "Deux formations et deux niveaux choisis.",
+            "complexifiee": "Transformation continue de la formation."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Composer avec l'espace scenique en presentation",
+          "objective": "Reinvestir sans guidage direct : Choisir formations, trajets et niveaux en fonction du propos.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Quatre groupes dans les angles ; un groupe a la fois sur la scene, public face a la diagonale principale.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Deux formations servent des effets differents. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Trajets precis.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "L'espace est un choix d'ecriture."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 8,
+      "theme": "Danser avec le monde sonore",
+      "mainObjective": "Choisir accents, silences et contrastes musicaux.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 7 a construit un premier outil ; celui-ci est reinvesti pour danser avec le monde sonore.",
+      "prerequisiteForNext": "Les acquis de danser avec le monde sonore sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "4 zones d'ecoute ; scene ; enceinte et cables hors circulation."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail danser avec le monde sonore.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Musicalite, silence et accents",
+          "objective": "Choisir comment la danse dialogue avec le monde sonore.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Groupes dans quatre zones avec une meme phrase sonore de 45 secondes ; trois ecoutes, essais, puis passage sur scene.",
+          "studentGoal": "Placer un silence, un accent et un contretemps volontaire.",
+          "instructions": [
+            "Reperer trois moments sonores.",
+            "Choisir de suivre ou de contraster la musique."
+          ],
+          "success": [
+            "L'accent corporel tombe au moment annonce.",
+            "Le silence est tenu sans perdre la presence."
+          ],
+          "execution": [
+            "Ecoute avant mise en mouvement.",
+            "Respiration commune pour repartir."
+          ],
+          "watch": [
+            "Le groupe subit-il seulement la pulsation ?",
+            "Le silence devient-il une pause relachee ?"
+          ],
+          "errors": [
+            "Faire un geste sur chaque temps.",
+            "Bouger pendant le silence par gene."
+          ],
+          "feedback": [
+            "Ecoute ce qui change, pas seulement le rythme.",
+            "Dans le silence, reste interprete."
+          ],
+          "plus": [
+            "Danser volontairement en contrepoint."
+          ],
+          "minus": [
+            "Accent et silence indiques sur une frise."
+          ],
+          "diff": {
+            "facilitee": "Accent et silence imposes.",
+            "normale": "Trois choix sonores memorises.",
+            "complexifiee": "Contraste entre deux sous-groupes."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Musicalite, silence et accents en presentation",
+          "objective": "Reinvestir sans guidage direct : Choisir comment la danse dialogue avec le monde sonore.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Groupes dans quatre zones avec une meme phrase sonore de 45 secondes ; trois ecoutes, essais, puis passage sur scene.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « L'accent corporel tombe au moment annonce. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Ecoute avant mise en mouvement.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Le silence fait partie du monde sonore."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 9,
+      "theme": "Devenir interprete",
+      "mainObjective": "Stabiliser regard, precision et engagement.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 8 a construit un premier outil ; celui-ci est reinvesti pour devenir interprete.",
+      "prerequisiteForNext": "Les acquis de devenir interprete sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Demi-scene active ; public proche hors limite."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail devenir interprete.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Interprete : regard, precision, engagement",
+          "objective": "Renforcer la presence et la precision individuelle.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Demi-classe en scene, demi-classe spectatrice ; binomes d'observation fixes.",
+          "studentGoal": "Danser toute la phrase avec une intention constante.",
+          "instructions": [
+            "Placer le regard.",
+            "Finir chaque mouvement avant d'enchainer le suivant."
+          ],
+          "success": [
+            "Intention nommee par le spectateur.",
+            "Aucune rupture de concentration.",
+            "Formes precises du debut a la fin."
+          ],
+          "execution": [
+            "Regard dirige.",
+            "Respiration utilisee pour soutenir le mouvement."
+          ],
+          "watch": [
+            "Qui marque au lieu de danser ?",
+            "Qui perd l'intention entre les temps forts ?"
+          ],
+          "errors": [
+            "Regard au sol permanent.",
+            "Mouvements raccourcis sous le regard."
+          ],
+          "feedback": [
+            "Choisis un point de regard.",
+            "Va au bout de l'amplitude avant de repartir."
+          ],
+          "plus": [
+            "Danser devant un public plus proche."
+          ],
+          "minus": [
+            "Passage en duo avant le groupe complet."
+          ],
+          "diff": {
+            "facilitee": "Duo, public eloigne, phrase raccourcie.",
+            "normale": "Piece complete et intention constante.",
+            "complexifiee": "Nuancer l'intention sans perdre le fil conducteur."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Interprete : regard, precision, engagement en presentation",
+          "objective": "Reinvestir sans guidage direct : Renforcer la presence et la precision individuelle.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Demi-classe en scene, demi-classe spectatrice ; binomes d'observation fixes.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Intention nommee par le spectateur. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Regard dirige.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "L'interprete rend l'intention visible."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 10,
+      "theme": "Filage et regard du spectateur",
+      "mainObjective": "Analyser pour choisir une amelioration efficace.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 9 a construit un premier outil ; celui-ci est reinvesti pour filage et regard du spectateur.",
+      "prerequisiteForNext": "Les acquis de filage et regard du spectateur sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Scene centrale ; deux bancs d'observateurs avec missions distinctes."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail filage et regard du spectateur.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Filage, observer et ameliorer",
+          "objective": "Utiliser un retour objectif pour transformer la piece.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Chaque groupe passe sur la scene ; deux groupes observent la structure, deux autres l'effet produit.",
+          "studentGoal": "Realiser deux filages et modifier un point precis entre les deux.",
+          "instructions": [
+            "Observer avec une fiche.",
+            "Formuler un constat puis une proposition."
+          ],
+          "success": [
+            "Deux criteres sont renseignes avec des faits.",
+            "La modification annoncee est visible au second passage."
+          ],
+          "execution": [
+            "Retour bref et descriptif.",
+            "Modification repetee avant le second filage."
+          ],
+          "watch": [
+            "Le conseil est-il concret ?",
+            "Le groupe transforme-t-il vraiment ?"
+          ],
+          "errors": [
+            "Dire seulement j'aime/j'aime pas.",
+            "Changer toute la piece au dernier moment."
+          ],
+          "feedback": [
+            "Decris ce que tu as vu avant de conseiller.",
+            "Modifie un seul point prioritaire."
+          ],
+          "plus": [
+            "Comparer une captation des deux filages si autorisee."
+          ],
+          "minus": [
+            "Une seule question d'observation."
+          ],
+          "diff": {
+            "facilitee": "Critere unique et conseil guide.",
+            "normale": "Deux criteres et une modification choisie.",
+            "complexifiee": "Hierarchiser deux modifications et justifier leur effet."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Filage, observer et ameliorer en presentation",
+          "objective": "Reinvestir sans guidage direct : Utiliser un retour objectif pour transformer la piece.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Chaque groupe passe sur la scene ; deux groupes observent la structure, deux autres l'effet produit.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Deux criteres sont renseignes avec des faits. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Retour bref et descriptif.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "Un retour decrit avant de conseiller."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 11,
+      "theme": "Repetition generale",
+      "mainObjective": "Stabiliser la piece dans les conditions finales.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": false,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 10 a construit un premier outil ; celui-ci est reinvesti pour repetition generale.",
+      "prerequisiteForNext": "Les acquis de repetition generale sont stabilises pour la seance suivante.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Scene aux dimensions finales ; zone de reprise separee."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail repetition generale.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Repetition generale",
+          "objective": "Stabiliser ordre, entrees, sorties et recuperation avant l'evaluation.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Conditions identiques a l'evaluation ; un passage chronometre par groupe, retour de deux minutes, second passage cible.",
+          "studentGoal": "Realiser deux fois la piece dans le meme ordre et la meme duree.",
+          "instructions": [
+            "Echauffement autonome avant appel.",
+            "Corriger uniquement le point prioritaire entre les passages."
+          ],
+          "success": [
+            "Ecart de duree inferieur a cinq secondes.",
+            "Aucun oubli de tableau ni de liaison.",
+            "Le point prioritaire progresse au second passage."
+          ],
+          "execution": [
+            "Placement initial anticipe.",
+            "Sortie maintenue jusqu'a la disparition de la scene."
+          ],
+          "watch": [
+            "Le groupe modifie-t-il encore la structure ?",
+            "La fatigue degrade-t-elle la precision ?"
+          ],
+          "errors": [
+            "Ajouter une idee nouvelle.",
+            "Enchainer les passages sans recuperation."
+          ],
+          "feedback": [
+            "Ne changez plus l'ecriture ; stabilisez l'interpretation.",
+            "Respirez, reprenez votre image de depart."
+          ],
+          "plus": [
+            "Public place comme le jour final."
+          ],
+          "minus": [
+            "Un seul passage suivi d'un retour guide."
+          ],
+          "diff": {
+            "facilitee": "Reperes visuels discrets autorises.",
+            "normale": "Deux filages complets.",
+            "complexifiee": "Second filage filme et auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Repetition generale en presentation",
+          "objective": "Reinvestir sans guidage direct : Stabiliser ordre, entrees, sorties et recuperation avant l'evaluation.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Conditions identiques a l'evaluation ; un passage chronometre par groupe, retour de deux minutes, second passage cible.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Ecart de duree inferieur a cinq secondes. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Placement initial anticipe.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "On stabilise avant d'evaluer."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    },
+    {
+      "number": 12,
+      "theme": "Presentation finale",
+      "mainObjective": "Interpreter la creation et argumenter comme spectateur.",
+      "isDiagnostic": false,
+      "isMidCycleEvaluation": false,
+      "isFinalEvaluation": true,
+      "secondaryObjectives": [
+        "Participer au projet collectif.",
+        "Employer un vocabulaire descriptif precis."
+      ],
+      "competence": "Elaborer et interpreter a plusieurs une prestation artistique produisant un effet sur des spectateurs.",
+      "linkToPrevious": "La seance 11 a construit un premier outil ; celui-ci est reinvesti pour presentation finale.",
+      "prerequisiteForNext": "Cycle termine : bilan individuel et collectif renseigne.",
+      "setup": {
+        "installationMinutes": 8,
+        "material": [
+          {
+            "label": "enceinte",
+            "fixed": 1
+          },
+          {
+            "label": "plots",
+            "fixed": 16
+          },
+          {
+            "label": "fiches",
+            "fixed": 30
+          }
+        ],
+        "instructions": [
+          "Delimiter clairement scene, zones de creation et espace public.",
+          "Tester la musique et placer les cables hors circulation.",
+          "Afficher le plan de rotation des groupes."
+        ],
+        "sketch": "Scene 10 x 8 m ; public frontal ; attente sur les cotes."
+      },
+      "warmup": {
+        "rationale": "Preparer progressivement les appuis, le rachis et l'engagement expressif avant le travail presentation finale.",
+        "steps": [
+          {
+            "dur": 4,
+            "title": "Disponibilite corporelle",
+            "details": [
+              "Marcher dans tout l'espace sans suivre un camarade.",
+              "Mobiliser chevilles, genoux, bassin, epaules et rachis."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Transformer la marche",
+            "details": [
+              "Changer niveau, direction et amplitude au signal.",
+              "Alterner fluide, saccade et suspension sans collision."
+            ]
+          },
+          {
+            "dur": 5,
+            "title": "Ecoute collective",
+            "details": [
+              "S'arreter ensemble sans parler.",
+              "Repartir en gardant deux metres entre danseurs."
+            ]
+          }
+        ]
+      },
+      "situations": [
+        {
+          "role": "NOYAU",
+          "dur": 18,
+          "title": "Evaluation finale",
+          "objective": "Interpreter une choregraphie collective et tenir le role de spectateur analyste.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Scene de 10 x 8 m, public assis a deux metres ; ordre de passage affiche, zone d'echauffement separee.",
+          "studentGoal": "Presenter la piece de 1 min 30 a 2 min sans interruption.",
+          "instructions": [
+            "Respecter l'ordre et le silence.",
+            "Remplir la fiche du groupe observe."
+          ],
+          "success": [
+            "Trois tableaux et les liaisons sont realises.",
+            "L'intention est identifiee par le public.",
+            "Chaque danseur reste engage.",
+            "Le spectateur justifie un effet observe."
+          ],
+          "execution": [
+            "Debut et fin tenus.",
+            "Gestuelle precise, relations et contrastes visibles."
+          ],
+          "watch": [
+            "Le propos est-il lisible ?",
+            "Tous les roles sont-ils tenus ?"
+          ],
+          "errors": [
+            "S'arreter apres une erreur.",
+            "Evaluer la personne au lieu de la production."
+          ],
+          "feedback": [
+            "Continue jusqu'au signal final.",
+            "Appuie ton appreciation sur un element observable."
+          ],
+          "plus": [
+            "Aucune variable : situation certificative stable."
+          ],
+          "minus": [
+            "Amenagement individuel decide avant l'evaluation."
+          ],
+          "diff": {
+            "facilitee": "Amenagement connu : espace ou duree reduits sans changer les criteres travailles.",
+            "normale": "Piece complete devant la classe.",
+            "complexifiee": "Non applicable pendant l'evaluation."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        },
+        {
+          "role": "REINVESTISSEMENT",
+          "dur": 12,
+          "title": "Evaluation finale en presentation",
+          "objective": "Reinvestir sans guidage direct : Interpreter une choregraphie collective et tenir le role de spectateur analyste.",
+          "material": [
+            {
+              "label": "enceinte",
+              "fixed": 1
+            },
+            {
+              "label": "plots de delimitation",
+              "fixed": 12
+            },
+            {
+              "label": "fiches d'observation",
+              "fixed": 16
+            }
+          ],
+          "organization": "Deux groupes reunis : l'un presente dans son espace, l'autre observe un critere precis, puis inversion. Scene de 10 x 8 m, public assis a deux metres ; ordre de passage affiche, zone d'echauffement separee.",
+          "studentGoal": "Rendre visible l'acquis du jour lors d'un passage unique.",
+          "instructions": [
+            "Presenter sans recommencer.",
+            "L'observateur note un fait precis."
+          ],
+          "success": [
+            "Le critere « Trois tableaux et les liaisons sont realises. » est retrouve pendant le passage.",
+            "Le groupe termine sans parole ni arret."
+          ],
+          "execution": [
+            "Debut et fin tenus.",
+            "Rester engage jusqu'a la fin tenue."
+          ],
+          "watch": [
+            "L'acquis subsiste-t-il quand le professeur ne guide plus ?",
+            "Tous les eleves participent-ils ?"
+          ],
+          "errors": [
+            "Recommencer apres une erreur.",
+            "Sortir de son role de spectateur."
+          ],
+          "feedback": [
+            "Continue : l'erreur ne doit pas casser la piece.",
+            "Decris ce que tu vois."
+          ],
+          "plus": [
+            "Public rapproche et passage filme si autorise."
+          ],
+          "minus": [
+            "Passage en demi-groupe et repere visuel autorise."
+          ],
+          "diff": {
+            "facilitee": "Demi-groupe et un seul critere observe.",
+            "normale": "Passage complet et observation croisee.",
+            "complexifiee": "Passage filme puis auto-analyse si autorise."
+          },
+          "safety": [
+            "Espace degage, sol sec et non glissant.",
+            "Deux metres entre groupes ; aucun porte ni contact improvise."
+          ]
+        }
+      ],
+      "closing": {
+        "dur": 6,
+        "questions": [
+          "Quel choix a produit l'effet le plus lisible ?",
+          "Quelle modification garderez-vous ?"
+        ],
+        "key": "On evalue la production, jamais la personne."
+      },
+      "safety": [
+        "Verifier le sol et degager la scene.",
+        "Interdire les contacts non prepares."
+      ],
+      "socialRoles": [
+        "Danseur-interprete.",
+        "Choregraphe : propose, teste et choisit.",
+        "Spectateur : decrit un effet et conseille."
+      ]
+    }
+  ]
+}
