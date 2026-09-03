@@ -22,7 +22,7 @@
   }
   function renderHealthTab(){
    const host=document.getElementById('healthBody');if(!host)return;
-   host.innerHTML=`<div class="healthHero"><div><span class="healthEyebrow">SUIVI DES ÉLÈVES</span><h1>Santé / Accident</h1><p>Dispenses, accidents et passages à l’infirmerie.</p></div><div class="healthHeroIcon">❤</div></div><div class="subtabbar healthTabs">${[['dispense','DISPENSE'],['accident','ACCIDENT'],['infirmerie','INFIRMERIE']].map(([id,label])=>`<button class="subtabbtn${healthMode===id?' active':''}" data-health-mode="${id}">${label}</button>`).join('')}</div><div id="healthModeBody"></div>`;
+   host.innerHTML=`<div class="subtabbar healthTabs">${[['dispense','DISPENSE'],['accident','ACCIDENT'],['infirmerie','INFIRMERIE']].map(([id,label])=>`<button class="subtabbtn${healthMode===id?' active':''}" data-health-mode="${id}">${label}</button>`).join('')}</div><div id="healthModeBody"></div>`;
    host.querySelectorAll('[data-health-mode]').forEach(button=>button.onclick=()=>{healthMode=button.dataset.healthMode;renderHealthTab();});
    if(healthMode==='dispense')renderDispenseMode();else if(healthMode==='accident')renderAccidentMode();else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Cette rubrique est prête. Son formulaire sera ajouté à l’étape suivante.</p></div>`;
   }

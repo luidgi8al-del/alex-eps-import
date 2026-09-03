@@ -496,7 +496,6 @@
         </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
-        <div class="toolsHero"><h2>Outils terrain</h2><div>Tout pour piloter votre séance, rapidement et lisiblement.</div></div>
         <div class="toolGrid">
           <button class="toolCard" data-tool="timers" style="background:#DFF3FF"><span class="toolIcon">⏱️</span><strong>Chronomètre</strong><span>Chrono, compte à rebours et intervalles</span></button>
           <button class="toolCard" data-tool="teams" style="background:#EEE8FF"><span class="toolIcon">👥</span><strong>Équipes</strong><span>Groupes et tirage au sort</span></button>
@@ -513,8 +512,6 @@
         <div id="toolPanel" class="card" style="display:none"></div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
-        <div class="placeholder" style="padding:18px 20px"><div class="big" id="planningModuleTitle" style="margin-bottom:2px">Programmation</div><span id="planningModuleSubtitle">Programmation annuelle, programmes et calendrier de l’établissement.</span></div>
-
         <div class="subtabbar" id="planningSubtabs">
           <button class="subtabbtn" data-planningtab="global">Planning global Alex</button>
           <button class="subtabbtn" data-planningtab="eps">Planning global EPS</button>
@@ -1250,8 +1247,6 @@
       if (name === "home") { applyHomeVisual(); renderHomeWeather(); }
       if (name === "planning" || name === "programmation") {
         const requestedTab = name;
-        document.getElementById("planningModuleTitle").textContent = name === "planning" ? "Planning" : "Programmation";
-        document.getElementById("planningModuleSubtitle").textContent = name === "planning" ? "Votre emploi du temps, le planning EPS et les périodes." : "Programmation annuelle, programmes et calendrier de l’établissement.";
         document.querySelectorAll("#planningSubtabs .subtabbtn").forEach(button => {
           const isSchedule = ["global", "eps", "periode", "installations"].includes(button.dataset.planningtab);
           button.hidden = requestedTab === "planning" ? !isSchedule : isSchedule;
@@ -2623,6 +2618,144 @@
     let dashboardDispenses = [];
     let dashboardStudents = [];
     let dashboardSeanceEnregistrable = true;
+    let dashboardSlots = [];
+    // Numero choisi a la main pendant cette visite. Le calendrier reprend la main au rechargement :
+    // un decalage ponctuel (seance annulee) ne doit pas figer l'affichage pour le reste du cycle.
+    let dashboardSeanceManuelle = null;
+
+    // ---- Calendrier des seances d'un cycle -------------------------------------------------
+    //
+    // Le professeur ne compte pas ses seances : il arrive un vendredi et veut la seance du
+    // vendredi. Les dates se deduisent du debut de periode et des creneaux de la classe - deux
+    // creneaux par semaine au college, un au lycee - sans rien demander de plus.
+
+    const JOURS_SEMAINE = ["DIMANCHE", "LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
+
+    /** Debut et fin de la periode affichee, en ISO. La Terminale a son propre decoupage. */
+    function bornesPeriode(grade, periode) {
+        const nombre = planningPeriodCount(grade);
+        if (grade === "TERMINALE") {
+            const p = (periodesTerminale || []).find(x => Number(x.number) === periode);
+            if (p) return { debut: p.start_date, fin: p.end_date };
+        }
+        const standard = PERIODES_STANDARD[Math.min(periode, PERIODES_STANDARD.length) - 1];
+        if (!standard) return null;
+        const ajustee = periodeStandard(periode, nombre);
+        return { debut: ajustee.start, fin: ajustee.end };
+    }
+
+    /**
+     * Les dates des seances, dans l'ordre.
+     *
+     * On avance semaine apres semaine sur les jours de cours de la classe, a partir du debut de
+     * periode, jusqu'a avoir le nombre de seances du cycle. Les vacances ne sont pas retirees :
+     * la fin de periode borne deja la plage, et une seance decalee se corrige avec les boutons.
+     */
+    function datesDesSeances(grade, periode, creneaux, nombreDeSeances) {
+        const bornes = bornesPeriode(grade, periode);
+        if (!bornes || !creneaux.length) return [];
+        const joursDeCours = [...new Set(creneaux
+            .map(c => JOURS_SEMAINE.indexOf(String(c.day_of_week || "").toUpperCase()))
+            .filter(i => i >= 0))].sort((a, b) => a - b);
+        if (!joursDeCours.length) return [];
+
+        const dates = [];
+        const curseur = new Date(bornes.debut + "T12:00:00");
+        const limite = new Date(bornes.debut + "T12:00:00");
+        limite.setFullYear(limite.getFullYear() + 1);   // garde-fou : jamais de boucle infinie
+        while (dates.length < nombreDeSeances && curseur <= limite) {
+            if (joursDeCours.includes(curseur.getDay())) dates.push(new Date(curseur));
+            curseur.setDate(curseur.getDate() + 1);
+        }
+        return dates;
+    }
+
+    /**
+     * La seance qui correspond a aujourd'hui : celle du jour s'il y a cours, sinon la prochaine,
+     * et la derniere quand le cycle est passe. Rend un numero 1-indexe, ou null.
+     */
+    function seanceDuJour(dates) {
+        if (!dates.length) return null;
+        const aujourdhui = new Date();
+        aujourdhui.setHours(12, 0, 0, 0);
+        const index = dates.findIndex(d => d.getTime() >= aujourdhui.getTime());
+        return index >= 0 ? index + 1 : dates.length;
+    }
+
+    function dateSeanceLisible(date) {
+        if (!date) return "";
+        return date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+    }
+
+    // ---- Modeles d'evaluation (portage de CycleEvaluationTemplates.kt) ----------------------
+    //
+    // Trois grilles ponctuelles prises sur trois moments du cycle, et deux grilles finales : le
+    // bilan du cycle et la maitrise technique en situation de reference. Elles ne sont que des
+    // propositions - les utiliser cree des lignes independantes, modifiables ensuite.
+
+    /** Repartit 20 points sur les observables, au plus juste. */
+    function bareme20(observables) {
+        const labels = [...new Set((observables || []).map(o => String(o).trim()).filter(Boolean))];
+        if (!labels.length || labels.length > 20) return [];
+        return labels.map((label, i) => ({
+            label,
+            max_points: Math.floor(20 / labels.length) + (i < 20 % labels.length ? 1 : 0)
+        }));
+    }
+
+    function modelesEvaluation(contenu, grade, apsa) {
+        if (!contenu || !contenu.sessions) return [];
+        const seances = contenu.sessions;
+        const pratique = seances
+            .map((s, index) => ({ s, index }))
+            .filter(x => !x.s.isDiagnostic && !x.s.isFinalEvaluation);
+        if (pratique.length < 3) return [];
+
+        const choisies = [pratique[0], pratique[Math.floor(pratique.length / 2)], pratique[pratique.length - 1]];
+        const noyau = seance => (seance.situations || []).find(x => x.role === "NOYAU");
+        const detail = situation => [
+            situation.organization || "",
+            ...(situation.instructions || []).map(i => "• " + i),
+            (situation.execution || []).length ? "Reperes de realisation :" : "",
+            ...(situation.execution || []).map(e => "• " + e)
+        ].filter(Boolean).join("\n");
+
+        const ponctuelles = choisies.map((x, i) => {
+            const situation = noyau(x.s);
+            if (!situation) return null;
+            return {
+                id: `${grade}:${apsa}:ponctuelle:${i}`, type: "PONCTUELLE",
+                titre: `${apsa} · ${situation.title}`,
+                source: `Cycle : S${x.index + 1} — ${x.s.theme}`,
+                organisation: detail(situation),
+                criteres: bareme20(situation.success)
+            };
+        }).filter(Boolean);
+
+        const derniere = [...seances].reverse().find(s => s.isFinalEvaluation) || seances[seances.length - 1];
+        const reference = noyau(derniere);
+        const finale = contenu.finalEvaluation || {};
+        const finales = [];
+        if (finale.criteria && finale.criteria.length) {
+            finales.push({
+                id: `${grade}:${apsa}:finale:0`, type: "FINALE",
+                titre: `${apsa} · Bilan du cycle`,
+                source: `Évaluation finale du cycle · ${finale.referential || ""}`.trim(),
+                organisation: finale.format || "",
+                criteres: bareme20(finale.criteria)
+            });
+        }
+        if (reference && (reference.execution || []).length) {
+            finales.push({
+                id: `${grade}:${apsa}:finale:1`, type: "FINALE",
+                titre: `${apsa} · Maîtrise technique en situation finale`,
+                source: `Grille technique — ${reference.title}`,
+                organisation: detail(reference),
+                criteres: bareme20(reference.execution)
+            });
+        }
+        return ponctuelles.concat(finales);
+    }
 
     /**
      * Tableau de bord d'une classe, calque sur celui de l'application (ClassPeriodDashboard.kt).
@@ -2634,6 +2767,7 @@
     async function openClassDashboard(cls, label) {
       dashboardClass = { row: cls, label };
       dashboardPeriod = 1;
+      dashboardSeanceManuelle = null;
       document.getElementById("classSchedulePanel").style.display = "none";
       const panel = document.getElementById("classDashboardPanel");
       panel.style.display = "block";
@@ -2642,8 +2776,13 @@
       try {
         // Les activites d'une classe passent par ses creneaux : period_activities pointe sur le
         // creneau, pas sur la classe.
-        const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id`);
+        // Le jour de la semaine sert a dater les seances : sans lui, impossible de dire que la
+        // seance 2 tombe le vendredi.
+        const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id,day_of_week,start_time`);
         const slots = slotsRes.ok ? await slotsRes.json() : [];
+        dashboardSlots = slots;
+        // Le decoupage de la Terminale ne suit pas le calendrier commun : il vit en base.
+        if (cls.grade === "TERMINALE" && !periodesTerminale.length) await loadPeriodDates().catch(() => {});
         const [actRes, cyclesRes, studentsRes, dispRes, testsRes] = await Promise.all([
           slots.length
             ? apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${slots.map(s => s.id).join(",")})&select=*`)
@@ -2793,7 +2932,7 @@
 
       document.getElementById("closeDashboardBtn").onclick = fermerTableauDeBord;
       panel.querySelectorAll("[data-dash-period]").forEach(b =>
-        b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); renderClassDashboard(); });
+        b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); dashboardSeanceManuelle = null; renderClassDashboard(); });
 
       panel.querySelector('[data-classe-action="schedule"]').onclick = () => openClassSchedule(row, label);
       panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
@@ -2808,6 +2947,22 @@
       renderDashboardExercises(activity);
     }
 
+    /**
+     * La seance a afficher, et sa date.
+     *
+     * Le calendrier fait foi : la seance du jour se deduit du debut de periode et des creneaux de
+     * la classe. Les boutons ne servent qu'a s'en ecarter ponctuellement, le temps de la visite.
+     */
+    function seanceAffichee(cycle) {
+        const total = Math.max(1, Number(cycle.session_count) || 8);
+        const dates = datesDesSeances(dashboardClass.row.grade, dashboardPeriod, dashboardSlots, total);
+        const duJour = seanceDuJour(dates);
+        const numero = dashboardSeanceManuelle
+            ?? duJour
+            ?? Math.min(total, Math.max(1, Number(cycle.current_session_number) || 1));
+        return { total, numero: Math.min(total, Math.max(1, numero)), dates, date: dates[numero - 1] || null, duJour };
+    }
+
     /** La carte "Seance x/y", avec sa jauge et ses deux boutons ronds. */
     function carteSeanceHtml(cycle) {
       if (!cycle) {
@@ -2820,16 +2975,20 @@
           ${activite ? `<button type="button" id="creerCycleBtn" style="margin-top:10px">Créer le cycle ${planningText(activite.apsa_name)}</button>` : ""}
         </div>`;
       }
-      const total = Math.max(1, Number(cycle.session_count) || 8);
-      const courante = Math.min(total, Math.max(1, Number(cycle.current_session_number) || 1));
-      const avancement = Math.round((courante / total) * 100);
+      const { total, numero, date, dates } = seanceAffichee(cycle);
+      const avancement = Math.round((numero / total) * 100);
+      const quand = date ? dateSeanceLisible(date)
+        : (dates.length ? "" : "Posez les créneaux de la classe pour dater les séances");
       return `<div class="card dashSeance" style="margin-top:8px">
-        <div class="dashTitre">Séance ${courante}/${total}</div>
-        <div class="dashSous">${planningText(cycle.apsa_name || "")} · Séance à préparer</div>
+        <button type="button" id="ouvrirSeanceBtn" style="all:unset; cursor:pointer; display:block; width:100%">
+          <div class="dashTitre">Séance ${numero}/${total}</div>
+          <div class="dashSous">${planningText(cycle.apsa_name || "")}${quand ? " · " + planningText(quand) : ""}</div>
+          <div class="dashSous" style="color:var(--primary); font-weight:600; margin-top:2px">Ouvrir la séance ›</div>
+        </button>
         <div style="display:flex; align-items:center; gap:12px; margin-top:10px">
-          <button type="button" class="dashRond" id="seanceMoins" ${courante <= 1 ? "disabled" : ""}>−</button>
+          <button type="button" class="dashRond" id="seanceMoins" ${numero <= 1 ? "disabled" : ""}>−</button>
           <div class="dashJauge"><div style="width:${avancement}%"></div></div>
-          <button type="button" class="dashRond" id="seancePlus" ${courante >= total ? "disabled" : ""}>+</button>
+          <button type="button" class="dashRond" id="seancePlus" ${numero >= total ? "disabled" : ""}>+</button>
         </div>
         ${dashboardSeanceEnregistrable ? "" :
           `<div class="muted" style="margin-top:8px">Compteur en lecture seule : appliquez schema_cycle_seance_en_cours.sql dans Supabase pour l'avancer depuis le site.</div>`}
@@ -2839,10 +2998,11 @@
     function brancherCarteSeance(cycle) {
       const creer = document.getElementById("creerCycleBtn");
       if (creer) creer.onclick = () => creerCyclePourPeriode();
+      const ouvrir = document.getElementById("ouvrirSeanceBtn");
+      if (ouvrir && cycle) ouvrir.onclick = () => ouvrirFicheSeance(cycle);
       const moins = document.getElementById("seanceMoins");
       const plus = document.getElementById("seancePlus");
       if (!moins || !plus) return;
-      if (!dashboardSeanceEnregistrable) { moins.disabled = true; plus.disabled = true; return; }
       moins.onclick = () => changerSeance(cycle, -1);
       plus.onclick = () => changerSeance(cycle, 1);
     }
@@ -2855,13 +3015,16 @@
      * afficherait une seance que l'application ne connaitrait pas.
      */
     async function changerSeance(cycle, delta) {
-      const total = Math.max(1, Number(cycle.session_count) || 8);
-      const avant = Math.min(total, Math.max(1, Number(cycle.current_session_number) || 1));
+      const { total, numero: avant } = seanceAffichee(cycle);
       const apres = Math.min(total, Math.max(1, avant + delta));
       if (apres === avant) return;
 
+      dashboardSeanceManuelle = apres;
       cycle.current_session_number = apres;
       renderClassDashboard();
+      // Le compteur reste en lecture seule tant que la colonne n'existe pas cote serveur :
+      // l'ecran suit le geste, mais on n'envoie rien qui serait refuse.
+      if (!dashboardSeanceEnregistrable) return;
       try {
         await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?id=eq.${cycle.id}`, {
           method: "PATCH",
@@ -2906,16 +3069,103 @@
       }
     }
 
-    /** Les deux boutons d'evaluation menent au meme ecran que l'application, dans COURS. */
-    function ouvrirEvaluationDepuisClasse(cycle, type) {
-      const detail = document.getElementById("dashDetail");
-      if (!cycle) {
-        if (detail) detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucun cycle sur cette période : créez-le dans COURS pour y attacher une évaluation.</div>`;
+    /**
+     * Ouvre la fiche de la seance affichee.
+     *
+     * La fiche vit dans l'onglet COURS : on y bascule plutot que de la dupliquer, comme
+     * l'application ouvre l'ecran de seance depuis la classe.
+     */
+    async function ouvrirFicheSeance(cycle) {
+      const { numero, total } = seanceAffichee(cycle);
+      const contenu = await loadCycleContent(dashboardClass.row.grade, cycle.apsa_name);
+      const ordonnees = orderedSessions(contenu, dashboardClass.row.grade, total);
+      const ecrite = ordonnees[numero - 1];
+      if (!ecrite) {
+        const detail = document.getElementById("dashDetail");
+        if (detail) detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucune fiche rédigée pour la séance ${numero} en ${planningText(GRADE_LABELS[dashboardClass.row.grade] || dashboardClass.row.grade)} · ${planningText(cycle.apsa_name)}.</div>`;
         return;
       }
-      evalExpandedType = type;
+      sessionSheetContext = `${dashboardClass.label} · ${cycle.apsa_name}`;
       showTab("cours");
-      openEvaluationPanel(cycle);
+      showCoursTab("cours");
+      showSessionSheet(contenu, ecrite, numero);
+    }
+
+    /** Les deux boutons d'evaluation menent au meme ecran que l'application, dans COURS. */
+    async function ouvrirEvaluationDepuisClasse(cycle, type) {
+      const detail = document.getElementById("dashDetail");
+      if (!detail) return;
+      if (!cycle) {
+        detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucun cycle sur cette période : créez-le d'abord ci-dessus.</div>`;
+        return;
+      }
+      detail.innerHTML = `<div class="muted" style="margin-top:10px">Chargement des grilles...</div>`;
+
+      const [contenu, res] = await Promise.all([
+        loadCycleContent(dashboardClass.row.grade, cycle.apsa_name),
+        apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=eq.${cycle.id}&type=eq.${type}&select=*`)
+      ]);
+      const existantes = res.ok ? await res.json() : [];
+      const modeles = modelesEvaluation(contenu, dashboardClass.row.grade, cycle.apsa_name)
+        .filter(m => m.type === type);
+      const libelle = type === "FINALE" ? "Évaluation finale" : "Évaluation ponctuelle";
+
+      detail.innerHTML = `
+        <div class="card" style="margin-top:10px">
+          <div class="top"><h3 style="margin:0">${libelle} · ${planningText(cycle.apsa_name)}</h3>
+            <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
+          ${existantes.length ? `<div class="muted" style="margin-top:8px">${existantes.length} grille(s) déjà créée(s) — ouvrez-les dans COURS.</div>` : ""}
+          ${modeles.length ? modeles.map(m => `
+            <div class="card" style="margin-top:8px">
+              <strong>${planningText(m.titre)}</strong>
+              <div class="muted" style="font-size:12px">${planningText(m.source)}</div>
+              <ul class="tight" style="margin:8px 0 0; padding-left:18px">${
+                m.criteres.map(c => `<li>${planningText(c.label)} <span class="muted">· ${c.max_points} pts</span></li>`).join("")}</ul>
+              <button class="secondary" data-modele="${m.id}" style="margin-top:8px">Utiliser cette grille</button>
+            </div>`).join("")
+            : `<div class="muted" style="margin-top:8px">Aucune grille proposée pour ce niveau et cette activité. Créez-en une dans COURS.</div>`}
+        </div>`;
+      document.getElementById("fermerDetail").onclick = () => { detail.innerHTML = ""; };
+      detail.querySelectorAll("[data-modele]").forEach(b =>
+        b.onclick = () => utiliserModele(cycle, modeles.find(m => m.id === b.dataset.modele), b));
+    }
+
+    /**
+     * Cree une grille a partir d'un modele.
+     *
+     * Le modele n'est qu'une proposition : ce qui est enregistre est une evaluation ordinaire,
+     * avec ses criteres, que le professeur pourra modifier ou supprimer comme les autres.
+     */
+    async function utiliserModele(cycle, modele, bouton) {
+      if (!modele) return;
+      bouton.disabled = true; bouton.textContent = "Création...";
+      const id = crypto.randomUUID();
+      const maintenant = new Date().toISOString();
+      try {
+        await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, {
+          method: "POST",
+          body: JSON.stringify({
+            id, user_id: session.user_id, cycle_id: cycle.id, type: modele.type,
+            label: modele.titre, date_epoch_millis: Date.now(), updated_at: maintenant, deleted: false
+          })
+        });
+        await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, {
+          method: "POST",
+          body: JSON.stringify(modele.criteres.map((c, i) => ({
+            id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: id,
+            label: c.label, max_points: c.max_points, order_index: i,
+            updated_at: maintenant, deleted: false
+          })))
+        });
+        evalExpandedType = modele.type;
+        evalOpenedId = id;
+        showTab("cours");
+        showCoursTab("cours");
+        await openEvaluationPanel(cycle);
+      } catch (e) {
+        bouton.disabled = false; bouton.textContent = "Utiliser cette grille";
+        bouton.insertAdjacentHTML("afterend", `<div class="error">Grille non créée : ${planningText(e.message)}</div>`);
+      }
     }
 
     function afficherRecapPeriode(evaluations, tests) {
