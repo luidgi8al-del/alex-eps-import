@@ -25,6 +25,8 @@ let dashboardDispenses = [];
 let dashboardStudents = [];
 let dashboardSeanceEnregistrable = true;
 let dashboardSlots = [];
+/** Jour choisi quand la periode porte deux activites differentes. Null = celui d'aujourd'hui. */
+let dashboardJour = null;
 // Numero choisi a la main pendant cette visite. Le calendrier reprend la main au rechargement :
 // un decalage ponctuel (seance annulee) ne doit pas figer l'affichage pour le reste du cycle.
 let dashboardSeanceManuelle = null;
@@ -263,6 +265,136 @@ function cyclePourPeriode(activity, periode) {
 }
 
 /**
+ * Les activites de la periode, regroupees par jour de la semaine.
+ *
+ * Un niveau peut porter deux activites differentes dans la meme periode : natation le mercredi,
+ * escalade le vendredi. Le tableau de bord n'en montrait qu'une, et enchainait les seances sur
+ * tous les jours confondus - la seance du vendredi s'affichait donc en natation.
+ *
+ * Rend une entree par jour ayant une activite. Quand les deux jours portent la meme activite,
+ * rend une seule entree portant les deux creneaux : c'est une continuite, un seul compteur.
+ *
+ * Les creneaux et activites sont des parametres, avec l'etat de l'ecran par defaut : c'est ce qui
+ * rend la regle verifiable sans ouvrir une classe.
+ */
+function groupesDuJour(periode, creneaux = dashboardSlots, activites = dashboardActivities) {
+  const parJour = new Map();
+  for (const creneau of creneaux) {
+    const jour = String(creneau.day_of_week || "").toUpperCase();
+    if (!JOURS_SEMAINE.includes(jour)) continue;
+    const activite = activites.find(a =>
+      a.period_number === periode && a.slot_id === creneau.id);
+    if (!activite || !String(activite.apsa_name || "").trim()) continue;
+    if (!parJour.has(jour)) parJour.set(jour, { jour, activite, creneaux: [] });
+    parJour.get(jour).creneaux.push(creneau);
+  }
+  const groupes = [...parJour.values()]
+    .sort((a, b) => JOURS_SEMAINE.indexOf(a.jour) - JOURS_SEMAINE.indexOf(b.jour));
+
+  // Meme activite partout : on n'a rien a separer. Les creneaux se rejoignent, le compteur reste
+  // unique, et les seances s'enchainent d'un jour a l'autre comme avant.
+  const nomsDistincts = new Set(groupes.map(g => texteNormaliseApsa(g.activite.apsa_name)));
+  if (nomsDistincts.size <= 1) {
+    return groupes.length
+      ? [{ jour: null, activite: groupes[0].activite, creneaux: groupes.flatMap(g => g.creneaux) }]
+      : [];
+  }
+  return groupes;
+}
+
+/** Le groupe a afficher : celui du jour s'il y a cours aujourd'hui, sinon le premier. */
+function groupeAffiche(groupes) {
+  if (!groupes.length) return null;
+  if (dashboardJour) {
+    const choisi = groupes.find(g => g.jour === dashboardJour);
+    if (choisi) return choisi;
+  }
+  const aujourdhui = JOURS_SEMAINE[new Date().getDay()];
+  return groupes.find(g => g.jour === aujourdhui) || groupes[0];
+}
+
+/**
+ * Les onglets par jour, quand la periode porte deux activites differentes.
+ *
+ * Rien du tout quand il n'y en a qu'une : un seul onglet n'apprend rien et prend de la place.
+ */
+function ongletsJourHtml(groupes, choisi) {
+  if (groupes.length < 2) return "";
+  const aujourdhui = JOURS_SEMAINE[new Date().getDay()];
+  return `<div class="dashJours">` + groupes.map(g => {
+    const actif = choisi && g.jour === choisi.jour;
+    const nom = (g.activite.apsa_name || "").trim();
+    return `<button type="button" class="dashJour${actif ? " actif" : ""}" data-dash-jour="${g.jour}">
+      <span class="dashJourIcone">${iconeApsa(nom)}</span>${planningText(libelleJour(g.jour))} · ${planningText(nom)}${
+      g.jour === aujourdhui ? `<span class="dashJourAujourdhui">aujourd'hui</span>` : ""}
+    </button>`;
+  }).join("") + `</div>`;
+}
+
+/**
+ * Un pictogramme par activite, dessine ici plutot que charge d'ailleurs.
+ *
+ * Une police d'icones venue d'Internet ne s'afficherait pas dans un gymnase sans reseau, ce qui
+ * est precisement l'endroit ou cet ecran sert. Le trait est volontairement simple : la carte doit
+ * se lire d'un coup d'oeil, pas s'admirer.
+ */
+function iconeApsa(nom) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${
+    tracePourApsa(texteNormaliseApsa(nom))}</svg>`;
+}
+
+function tracePourApsa(cle) {
+  const contient = (...mots) => mots.some(m => cle.includes(m));
+  // Nageur : la tete, le bras qui sort de l'eau, et la ligne d'eau.
+  if (contient("natation", "aquathlon", "sauvetage")) {
+    return `<circle cx="8" cy="6" r="1.8"/><path d="M4 12l4-2 4 3 3-4 5 2"/>
+            <path d="M2 17c2 0 2 1.5 4 1.5S8 17 10 17s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5"/>`;
+  }
+  // Escalade : la paroi et une prise.
+  if (contient("escalade")) {
+    return `<path d="M4 21V5l8-2v18"/><path d="M12 8l8 2v11h-8"/><circle cx="16" cy="14" r="1.2"/>`;
+  }
+  if (contient("course", "duree", "sprint", "relais", "athletisme", "500 m", "pentabond")) {
+    return `<circle cx="15" cy="4.5" r="1.8"/><path d="M13 9l-3 4 3 3 1 5"/><path d="M10 13l-4 1"/><path d="M16 12l4 2"/>`;
+  }
+  if (contient("musculation", "renforcement")) {
+    return `<path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/>`;
+  }
+  if (contient("danse")) {
+    return `<circle cx="12" cy="4.5" r="1.8"/><path d="M12 8v6l-4 7M12 14l4 7M7 10l10-1"/>`;
+  }
+  if (contient("gymnastique", "acrosport", "cirque")) {
+    return `<circle cx="12" cy="4.5" r="1.8"/><path d="M8 21l4-5 4 5M6 9h12M9 9l3 7 3-7"/>`;
+  }
+  if (contient("volley", "basket", "hand", "ultimate", "rugby", "football")) {
+    return `<circle cx="12" cy="12" r="8"/><path d="M12 4c3 3 3 13 0 16M4.5 9.5c4 1.5 11 1.5 15 0"/>`;
+  }
+  if (contient("badminton", "tennis")) {
+    return `<circle cx="8.5" cy="8.5" r="5"/><path d="M12 12l7 8"/><path d="M5 6l7 5M6.5 12l5-7"/>`;
+  }
+  if (contient("lutte")) {
+    return `<circle cx="8" cy="5" r="1.6"/><circle cx="16" cy="5" r="1.6"/><path d="M8 8l3 4 5-4M6 21l3-6M18 21l-3-6"/>`;
+  }
+  if (contient("golf")) {
+    return `<path d="M11 20V4l7 3-7 3"/><circle cx="8" cy="20" r="1.6"/>`;
+  }
+  // Sans correspondance : un chronometre, neutre et lisible.
+  return `<circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 1.5M10 2h4"/>`;
+}
+
+function libelleJour(jour) {
+  const j = String(jour || "").toLowerCase();
+  return j ? j.charAt(0).toUpperCase() + j.slice(1) : "";
+}
+
+/** Comparaison tolerante, comme memeActivite mais sur une seule chaine. */
+function texteNormaliseApsa(nom) {
+  return String(nom || "").toLowerCase().normalize("NFD")
+    .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+/**
  * Deux noms d'activite designent-ils la meme chose ?
  *
  * Le cycle est cree dans Cours, l'activite est posee dans Programmation : casse, accents et
@@ -286,7 +418,12 @@ function renderClassDashboard() {
   const periodCount = planningPeriodCount(row.grade);
   if (dashboardPeriod > periodCount) dashboardPeriod = periodCount;
 
-  const activity = dashboardActivities.find(a => a.period_number === dashboardPeriod);
+  const groupes = groupesDuJour(dashboardPeriod);
+  const groupe = groupeAffiche(groupes);
+  const activity = groupe ? groupe.activite
+    : dashboardActivities.find(a => a.period_number === dashboardPeriod);
+  // Les creneaux du groupe seul : sans cela les dates de seance melangeraient les deux jours.
+  const creneauxDuGroupe = groupe ? groupe.creneaux : dashboardSlots;
   const cycle = cyclePourPeriode(activity, dashboardPeriod);
   const chips = [];
   for (let p = 1; p <= periodCount; p++) {
@@ -308,13 +445,18 @@ function renderClassDashboard() {
 
     <div class="periodBar" style="display:flex; margin-top:12px">${chips.join("")}</div>
 
-    <div class="card" style="background:#DDF3FF; border:0">
-      <div class="muted" style="font-size:11px; text-transform:uppercase; letter-spacing:.06em">Période ${dashboardPeriod}</div>
-      <div style="font-size:22px; font-weight:800; color:#102F4A">${activity ? planningText(activity.apsa_name) : "Aucune activité renseignée"}</div>
-      <div class="muted">${activity && activity.installation_name ? planningText(activity.installation_name) : "Installation non renseignée"}</div>
+    ${ongletsJourHtml(groupes, groupe)}
+
+    <div class="card dashActivite">
+      <div class="dashActiviteIcone">${iconeApsa(activity ? activity.apsa_name : "")}</div>
+      <div>
+        <div class="dashActiviteEyebrow">Période ${dashboardPeriod}${groupe && groupe.jour ? " · " + planningText(libelleJour(groupe.jour)) : ""}</div>
+        <div class="dashActiviteNom">${activity ? planningText(activity.apsa_name) : "Aucune activité renseignée"}</div>
+        <div class="dashActiviteLieu">${activity && activity.installation_name ? planningText(activity.installation_name) : "Installation non renseignée"}</div>
+      </div>
     </div>
 
-    ${carteSeanceHtml(cycle)}
+    ${carteSeanceHtml(cycle, creneauxDuGroupe)}
 
     <div id="dashExercises"></div>
 
@@ -351,7 +493,22 @@ function renderClassDashboard() {
 
   document.getElementById("closeDashboardBtn").onclick = fermerTableauDeBord;
   panel.querySelectorAll("[data-dash-period]").forEach(b =>
-    b.onclick = () => { dashboardPeriod = Number(b.dataset.dashPeriod); dashboardSeanceManuelle = null; renderClassDashboard(); });
+    b.onclick = () => {
+      dashboardPeriod = Number(b.dataset.dashPeriod);
+      // Le jour choisi appartient a la periode qu'on quitte : le garder ferait afficher un jour
+      // qui n'a pas d'activite dans la nouvelle. On repart de celui d'aujourd'hui.
+      dashboardJour = null;
+      dashboardSeanceManuelle = null;
+      renderClassDashboard();
+    });
+  panel.querySelectorAll("[data-dash-jour]").forEach(b =>
+    b.onclick = () => {
+      dashboardJour = b.dataset.dashJour;
+      // Chaque jour porte son propre cycle, donc son propre compteur : l'ecart saisi a la main
+      // sur l'un n'a aucun sens sur l'autre.
+      dashboardSeanceManuelle = null;
+      renderClassDashboard();
+    });
 
   panel.querySelector('[data-classe-action="schedule"]').onclick = () => openClassSchedule(row, label);
   panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
@@ -372,9 +529,9 @@ function renderClassDashboard() {
  * Le calendrier fait foi : la seance du jour se deduit du debut de periode et des creneaux de
  * la classe. Les boutons ne servent qu'a s'en ecarter ponctuellement, le temps de la visite.
  */
-function seanceAffichee(cycle) {
+function seanceAffichee(cycle, creneaux) {
     const total = Math.max(1, Number(cycle.session_count) || 8);
-    const dates = datesDesSeances(dashboardClass.row.grade, dashboardPeriod, dashboardSlots, total);
+    const dates = datesDesSeances(dashboardClass.row.grade, dashboardPeriod, creneaux || dashboardSlots, total);
     const duJour = seanceDuJour(dates);
     const numero = dashboardSeanceManuelle
         ?? duJour
@@ -383,7 +540,7 @@ function seanceAffichee(cycle) {
 }
 
 /** La carte "Seance x/y", avec sa jauge et ses deux boutons ronds. */
-function carteSeanceHtml(cycle) {
+function carteSeanceHtml(cycle, creneaux) {
   if (!cycle) {
     const activite = dashboardActivities.find(a => a.period_number === dashboardPeriod);
     return `<div class="card dashSeance" style="margin-top:8px">
@@ -394,7 +551,7 @@ function carteSeanceHtml(cycle) {
       ${activite ? `<button type="button" id="creerCycleBtn" style="margin-top:10px">Créer le cycle ${planningText(activite.apsa_name)}</button>` : ""}
     </div>`;
   }
-  const { total, numero, date, dates } = seanceAffichee(cycle);
+  const { total, numero, date, dates } = seanceAffichee(cycle, creneaux);
   const avancement = Math.round((numero / total) * 100);
   const quand = date ? dateSeanceLisible(date)
     : (dates.length ? "" : "Posez les créneaux de la classe pour dater les séances");

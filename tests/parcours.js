@@ -349,6 +349,38 @@
         }
       },
       {
+        // Un niveau peut porter deux activites dans la meme periode : natation le mercredi,
+        // escalade le vendredi. Le tableau de bord n'en montrait qu'une et enchainait les seances
+        // sur tous les jours confondus, si bien que la seance du vendredi s'affichait en natation.
+        nom: "Tableau de bord · deux activites dans une periode",
+        action: async () => {
+          if (typeof f.groupesDuJour !== "function") throw new Error("groupesDuJour a disparu");
+          const creneaux = [{ id: "s1", day_of_week: "MERCREDI" }, { id: "s2", day_of_week: "VENDREDI" }];
+          const act = (a, b) => [{ slot_id: "s1", period_number: 1, apsa_name: a },
+                                 { slot_id: "s2", period_number: 1, apsa_name: b }];
+
+          const meme = f.groupesDuJour(1, creneaux, act("Natation", "Natation"));
+          if (meme.length !== 1) throw new Error("une seule activite doit rester un seul compteur");
+          if (meme[0].creneaux.length !== 2) throw new Error("les deux creneaux doivent se rejoindre");
+          if (f.ongletsJourHtml(meme, meme[0]) !== "") throw new Error("pas d'onglets pour une seule activite");
+
+          const deux = f.groupesDuJour(1, creneaux, act("Natation", "Escalade"));
+          if (deux.length !== 2) throw new Error("deux activites doivent donner deux groupes");
+          if (deux[0].jour !== "MERCREDI" || deux[1].jour !== "VENDREDI") throw new Error("groupes mal ordonnes");
+          if (deux[0].creneaux.length !== 1) throw new Error("chaque jour ne garde que son creneau");
+
+          // Le cycle est cree dans Cours, l'activite posee dans Programmation : casse et accents
+          // different sans que personne ait rien fait d'incoherent.
+          if (f.groupesDuJour(1, creneaux, act("Éducation", "education")).length !== 1) {
+            throw new Error("accents et casse ne doivent pas separer deux fois la meme activite");
+          }
+
+          const html = f.ongletsJourHtml(deux, deux[0]);
+          if (!html.includes("Mercredi") || !html.includes("Natation")) throw new Error("libelle d'onglet incomplet");
+          if ((html.match(/<svg/g) || []).length !== 2) throw new Error("il manque un pictogramme");
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();
