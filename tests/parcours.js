@@ -443,6 +443,30 @@
         }
       },
       {
+        // Licencier un eleve, ajouter un membre, ouvrir un groupe : sept panneaux partagent le
+        // meme conteneur et s'affichaient dans le flux de l'onglet, plus bas, hors de vue.
+        nom: "ASLVH · les panneaux s'ouvrent en fenetre",
+        action: async () => {
+          await onglet("unss");
+          if (typeof f.openUnssPickPanel !== "function") throw new Error("le choix d'un licencie a disparu");
+          f.openUnssPickPanel();
+          await attendre(() => f.document.getElementById("unssPanelOverlay")?.classList.contains("open"),
+            "la fenetre ASLVH ne s'ouvre pas", 6000);
+          const voile = f.document.getElementById("unssPanelOverlay");
+          if (!voile.contains(f.document.getElementById("unssPanel"))) {
+            throw new Error("le panneau n'est pas dans la fenetre");
+          }
+          if (f.getComputedStyle(voile).position !== "fixed") throw new Error("la fenetre ne recouvre pas la page");
+          // Le bandeau de recherche doit rester : c'est par lui qu'on retrouve un eleve.
+          if (!f.document.querySelector("#unssPanel input[type=search]")) {
+            throw new Error("le champ de recherche a disparu");
+          }
+          f.document.getElementById("unssPickCancel")?.click();
+          await attendre(() => !f.document.getElementById("unssPanelOverlay").classList.contains("open"),
+            "la fenetre ASLVH ne se ferme pas", 4000);
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

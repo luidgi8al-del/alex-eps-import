@@ -345,3 +345,10 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 #editImportPanel td:nth-child(6) input { min-width:170px; }
 #editImportPanel td:nth-child(7) input { min-width:140px; }
 #editImportPanel td:nth-child(8) input { min-width:130px; }
+
+
+/* ---- ASLVH : licence, membres, groupes et appel s'ouvrent en fenetre ---- */
+
+/* Plus large que la feuille de recherche, moins que le tableau des eleves : ces panneaux portent
+   des listes de noms avec des boutons a droite, pas neuf colonnes de saisie. */
+#unssPanelOverlay .searchSheet { max-width:min(900px, 96vw); }

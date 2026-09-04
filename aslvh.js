@@ -108,7 +108,7 @@ async function showUnssTab(mode) {
   // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
   unssPage = 1;
   document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
-  document.getElementById("unssPanel").style.display = "none";
+  fermerFenetreUnss();
   renderUnssTab();
 }
 
@@ -964,9 +964,9 @@ function openUnssSlotPanel(slot) {
     <button id="unssSlotSaveBtn">Enregistrer</button>
     <button class="secondary" id="unssSlotCancelBtn">Annuler</button>
     <div class="error" id="unssSlotError"></div>`;
-  panel.style.display = "block";
+  ouvrirFenetreUnss();
 
-  document.getElementById("unssSlotCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssSlotCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssSlotSaveBtn").addEventListener("click", async () => {
     const activite = document.getElementById("unssSlotActivity").value.trim();
     if (!activite) { document.getElementById("unssSlotError").textContent = "L'activite est obligatoire."; return; }
@@ -994,7 +994,7 @@ function openUnssSlotPanel(slot) {
         erreur.message || "Creneau non enregistre. Verifiez votre connexion.";
       return;
     }
-    panel.style.display = "none";
+    fermerFenetreUnss();
     await loadUnssSlots();
     renderUnssTab();
   });
@@ -1041,7 +1041,7 @@ function openUnssPickPanel() {
          <div id="unssPickResults"></div>`
     ) +
     `<button class="secondary" id="unssPickCancel" style="margin-top:14px">Annuler</button>`;
-  panel.style.display = "block";
+  ouvrirFenetreUnss();
 
   const resultats = document.getElementById("unssPickResults");
   if (resultats) {
@@ -1075,7 +1075,7 @@ function openUnssPickPanel() {
     afficher();
     champ.focus();
   }
-  document.getElementById("unssPickCancel").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssPickCancel").addEventListener("click", () => fermerFenetreUnss());
 }
 
 /** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
@@ -1116,7 +1116,7 @@ function openUnssStudentPanel(student, licensing) {
     <button id="unssSaveBtn">Enregistrer</button>
     <button class="secondary" id="unssCancelBtn">Annuler</button>
     <div class="error" id="unssError"></div>`;
-  panel.style.display = "block";
+  ouvrirFenetreUnss();
 
   document.getElementById("unssBirth").addEventListener("change", () => {
     if (!isNew) return;
@@ -1132,7 +1132,7 @@ function openUnssStudentPanel(student, licensing) {
       .map(c => `<option value="${c.value}"${c.value === choisie ? " selected" : ""}>${unssCategoryLabel(c.value, sexe)}</option>`)
       .join("");
   });
-  document.getElementById("unssCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssSaveBtn").addEventListener("click", async () => {
     const lastName = document.getElementById("unssLastName").value.trim();
     const firstName = document.getElementById("unssFirstName").value.trim();
@@ -1168,7 +1168,7 @@ function openUnssStudentPanel(student, licensing) {
     } else {
       await enregistrerLigne("unss_students", { ...student, ...body });
     }
-    panel.style.display = "none";
+    fermerFenetreUnss();
     await loadUnssStudents();
     renderUnssTab();
   });
@@ -1213,8 +1213,8 @@ function openUnssGroupEditPanel(group) {
     <input type="text" id="unssGroupResp" value="${group ? group.responsible_teacher : ""}">
     <button id="unssGroupSaveBtn">${group ? "Enregistrer" : "Creer"}</button>
     <button class="secondary" id="unssGroupCancelBtn">Annuler</button>`;
-  panel.style.display = "block";
-  document.getElementById("unssGroupCancelBtn").addEventListener("click", () => panel.style.display = "none");
+  ouvrirFenetreUnss();
+  document.getElementById("unssGroupCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssGroupSaveBtn").addEventListener("click", async () => {
     const activityName = document.getElementById("unssGroupActivity").value.trim();
     if (!activityName) return;
@@ -1232,7 +1232,7 @@ function openUnssGroupEditPanel(group) {
       await enregistrerLigne("unss_groups",
         { id: crypto.randomUUID(), user_id: session.user_id, active: true, deleted: false, ...body });
     }
-    panel.style.display = "none";
+    fermerFenetreUnss();
     await loadUnssGroups();
     renderUnssTab();
   });
@@ -1241,7 +1241,7 @@ function openUnssGroupEditPanel(group) {
 async function openUnssGroupDetailPanel(group) {
   const panel = document.getElementById("unssPanel");
   panel.innerHTML = `<h2>${group.activity_name}</h2><div class="muted">Chargement...</div>`;
-  panel.style.display = "block";
+  ouvrirFenetreUnss();
 
   const [memberships, sessions] = await Promise.all([
     lireTable("unss_memberships", `unss_memberships?group_id=eq.${group.id}&deleted=eq.false&select=*`,
@@ -1300,15 +1300,53 @@ async function openUnssGroupDetailPanel(group) {
   });
   document.getElementById("unssAddMemberBtn").addEventListener("click", () => openUnssAddMemberPanel(group, members.map(m => m.id)));
   document.getElementById("unssGroupEditBtn").addEventListener("click", () => openUnssGroupEditPanel(group));
-  document.getElementById("unssGroupCloseBtn").addEventListener("click", () => panel.style.display = "none");
+  document.getElementById("unssGroupCloseBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssGroupDeleteBtn").addEventListener("click", async () => {
     try { await supprimerLigne("unss_groups", group.id); }
     catch (erreur) { alert(erreur.message); return; }
-    panel.style.display = "none";
+    fermerFenetreUnss();
     await loadUnssGroups();
     renderUnssTab();
   });
 }
+
+/**
+ * Les panneaux ASLVH s'ouvrent par-dessus la page, comme Reglages et "Modifier la classe".
+ *
+ * Ils vivaient dans le flux de l'onglet : licencier un eleve, ajouter un membre ou ouvrir un
+ * groupe faisait apparaitre un bloc plus bas, qu'il fallait aller chercher. Sept panneaux
+ * partagent ce meme conteneur, et passent donc tous en fenetre d'un coup.
+ *
+ * Le noeud est deplace, pas refait : il garde ses identifiants et ses ecouteurs en changeant de
+ * parent, la ou reecrire son balisage aurait tout casse.
+ */
+function fenetreUnss() {
+  let voile = document.getElementById("unssPanelOverlay");
+  if (voile) return voile;
+  const panneau = document.getElementById("unssPanel");
+  if (!panneau) return null;
+
+  voile = document.createElement("div");
+  voile.className = "searchOverlay";
+  voile.id = "unssPanelOverlay";
+  const feuille = document.createElement("div");
+  feuille.className = "searchSheet";
+  voile.appendChild(feuille);
+  panneau.parentNode.insertBefore(voile, panneau);
+  feuille.appendChild(panneau);
+  panneau.style.display = "block";
+  panneau.style.margin = "0";
+  panneau.style.boxShadow = "none";
+
+  voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreUnss(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && voile.classList.contains("open")) fermerFenetreUnss();
+  });
+  return voile;
+}
+
+function ouvrirFenetreUnss() { fenetreUnss()?.classList.add("open"); }
+function fermerFenetreUnss() { document.getElementById("unssPanelOverlay")?.classList.remove("open"); }
 
 async function openUnssAddMemberPanel(group, excludeIds) {
   const panel = document.getElementById("unssPanel");
@@ -1474,7 +1512,7 @@ function renderUnssAppelBody() {
 
 async function openUnssStudentStats(group, student, sessions) {
   const panel = document.getElementById("unssPanel");
-  panel.style.display = "block";
+  ouvrirFenetreUnss();
   panel.innerHTML = '<div class="muted">Chargement des statistiques...</div>';
 
   const sessionIds = sessions.map(s => s.id);
