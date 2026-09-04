@@ -161,11 +161,11 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
 
       // Le refus de version est reconnu quel que soit le code HTTP.
       //
-      // Il ne l'etait que sur 400 et 409. Or le declencheur leve le code SQL 40001, que PostgREST
-      // rend en 500 : la reconnaissance ne se declenchait donc jamais. Un desaccord de version -
-      // situation normale, prevue, faite pour devenir un conflit a trancher - etait pris pour une
-      // panne serveur, remis dans la file, et repris sans fin. Cinquante-huit mille refus en une
-      // heure, et l'instance a genoux.
+      // Le declencheur rend desormais un 409 (voir schema_versions_hors_connexion.sql), mais on
+      // ne s'y fie pas : il a longtemps rendu un 500, que cette fonction ne savait pas lire. Un
+      // desaccord de version - situation normale, prevue, faite pour devenir un conflit a
+      // trancher - etait alors pris pour une panne serveur et repris sans fin. Une base ancienne
+      // peut encore porter l'ancien declencheur : le message suffit a decider.
       const texte = await reponse.text().catch(() => "");
       if (texte.includes("Version perimee") || texte.includes("40001")) {
         return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id) };

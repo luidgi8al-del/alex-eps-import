@@ -34,9 +34,19 @@ begin
   -- L'ecriture annonce la version sur laquelle elle s'appuie. Si elle ne correspond plus, c'est
   -- qu'un collegue est passe entre-temps : on refuse plutot que d'ecraser son travail. Le moteur
   -- hors connexion transforme ce refus en conflit a trancher, il ne perd rien.
+  --
+  -- Le code compte autant que le message. Ce refus a d'abord porte le code 40001, qui signifie en
+  -- Postgres "conflit temporaire de serialisation, reessayez" : une invitation a recommencer,
+  -- adressee a toutes les couches. Une seule requete entrante declenchait alors une rafale de
+  -- tentatives internes - plus de cent refus par seconde le 04/09/2026, l'instance a soixante
+  -- pour cent pendant huit heures, et une passerelle API qui n'enregistrait pourtant presque rien.
+  -- C'est ce qui a rendu la panne si difficile a nommer : nous cherchions un client fantome.
+  --
+  -- PT409 est la convention PostgREST pour imposer un code HTTP : le refus devient un 409
+  -- Conflict, ce qu'il est. Rien ne le reessaie, et tous les clients savent le lire.
   if new.version is not null and old.version is not null and new.version <> old.version then
     raise exception 'Version perimee : la ligne a ete modifiee ailleurs (attendu %, actuel %)',
-      new.version, old.version using errcode = '40001';
+      new.version, old.version using errcode = 'PT409';
   end if;
 
   new.version := coalesce(old.version, 0) + 1;
