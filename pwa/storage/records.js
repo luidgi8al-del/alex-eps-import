@@ -1,5 +1,5 @@
 import { recordKey, STORES } from "../core/constants.js";
-import { openOfflineDatabase, requestResult, transaction } from "./database.js";
+import { openOfflineDatabase, requestResult, transaction, marquerEffacement } from "./database.js";
 import { seal, unseal } from "./vault.js";
 export async function saveLocalRecord({ entity, id, data, version = 0, updatedAt, deleted = false }) {
   const key = recordKey(entity, id);
@@ -23,16 +23,15 @@ export async function countLocalRecords() {
 }
 
 /**
- * Numero de generation de la copie locale, incremente a chaque effacement.
+ * Numero de generation de la copie locale, incremente a chaque effacement ou bascule de compte.
  *
- * Il sert a une chose : une synchronisation commencee avant un effacement ne doit pas enregistrer
- * son curseur apres. Sinon le curseur affirme que tout a ete lu alors que la copie est vide, et
- * plus rien n'est jamais redescendu. C'est ce qui arrivait au changement de compte.
+ * Il sert a une chose : une synchronisation commencee avant ne doit pas enregistrer son curseur
+ * apres. Sinon le curseur affirme que tout a ete lu alors que la copie est vide, et plus rien
+ * n'est jamais redescendu. Il vit dans database.js, qui sait aussi quand la base change.
  */
-let generation = 0;
-export function generationLocale() { return generation; }
+export { generationLocale, utiliserCompte, supprimerToutesLesBases } from "./database.js";
 
 export async function removeAllLocalData() {
-  generation += 1;
+  marquerEffacement();
   return transaction(Object.values(STORES), "readwrite", stores => Object.values(STORES).forEach(name => stores[name].clear()));
 }

@@ -437,3 +437,46 @@ test("un effacement pendant une synchronisation n'avance pas le curseur", async 
     "aucun curseur ne doit survivre a l'effacement");
   assertEgal(await countLocalRecords(), 0, "et la copie reste vide, prete a etre relue entierement");
 });
+
+/**
+ * Une base locale par compte.
+ *
+ * La copie etait unique et effacee a chaque bascule : preparer trois comptes de collegues
+ * d'affilee, c'etait trois rapatriements complets de l'etablissement. Chaque compte a desormais
+ * sa base. Ce test couvre les deux garanties qui comptent : un compte ne voit jamais les donnees
+ * d'un autre, et revenir sur un compte deja visite retrouve sa copie intacte.
+ */
+test("chaque compte a sa propre copie locale", async () => {
+  const { utiliserCompte } = await import("../storage/database.js");
+  try {
+    utiliserCompte("prof-a");
+    await viderTout();
+    await saveLocalRecord({ entity: "classes", id: "c-a", data: { id: "c-a", name: "6e1" } });
+    assertEgal((await listLocalRecords("classes")).length, 1, "le compte A a bien sa classe");
+
+    utiliserCompte("prof-b");
+    await viderTout();
+    assertEgal((await listLocalRecords("classes")).length, 0,
+      "le compte B ne doit rien voir de ce qu'a saisi le compte A");
+    await saveLocalRecord({ entity: "classes", id: "c-b", data: { id: "c-b", name: "5e2" } });
+
+    utiliserCompte("prof-a");
+    const retour = await listLocalRecords("classes");
+    assertEgal(retour.length, 1, "revenir sur A retrouve sa copie, sans tout retelecharger");
+    assertEgal(retour[0].data.name, "6e1", "et c'est bien la sienne");
+  } finally {
+    // Sans quoi les cas suivants tourneraient sur la base d'un compte fictif.
+    utiliserCompte(null);
+  }
+});
+
+test("une bascule de compte interrompt la synchronisation en cours", async () => {
+  const { utiliserCompte, generationLocale } = await import("../storage/database.js");
+  try {
+    utiliserCompte("prof-a");
+    const avant = generationLocale();
+    utiliserCompte("prof-b");
+    assert(generationLocale() !== avant,
+      "la generation doit avancer : une lecture commencee sur A ne doit rien ecrire chez B");
+  } finally { utiliserCompte(null); }
+});

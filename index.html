@@ -498,10 +498,11 @@
     let parsedStudents = [];
 
     function saveSession(s) {
-      // Bascule de compte ou nouvelle connexion : sans cela, le collegue suivant sur cet
-      // ordinateur verrait la copie locale du precedent.
-      if (session && s && session.user_id !== s.user_id) {
-        modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
+      // Chaque compte a sa propre copie locale : on change de base, on n'efface plus rien.
+      // Preparer trois comptes de collegues d'affilee, c'etait sinon trois rapatriements
+      // complets de l'etablissement. Revenir sur un compte deja visite retrouve sa copie.
+      if (!session || !s || session.user_id !== s.user_id) {
+        modeHorsConnexion?.changerDeCompte(s?.user_id || null).catch(() => {});
       }
       session = s;
       localStorage.setItem("alex_eps_session", JSON.stringify(s));

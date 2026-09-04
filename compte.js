@@ -118,9 +118,9 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   // Sinon un retour serait propose au prochain visiteur de ce navigateur.
   localStorage.removeItem(ADMIN_SESSION_KEY);
   document.getElementById("impersonationBar").style.display = "none";
-  // Sans attente, l'effacement pouvait tomber au milieu d'une synchronisation en cours et lui
-  // laisser enregistrer un curseur apres coup : la copie restait vide, et plus rien ne se
-  // chargeait. Le moteur s'en protege desormais, mais attendre ici supprime la course elle-meme.
+  // Se deconnecter efface les copies locales de **tous** les comptes ouverts sur cet ordinateur.
+  // Une bascule de compte, elle, ne detruit rien : chacun a sa base. Mais quitter la session sur
+  // une machine partagee doit ne rien laisser derriere soi.
   modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
   clearSession();
   showAuthView();

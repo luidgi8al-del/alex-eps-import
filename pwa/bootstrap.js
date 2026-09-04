@@ -4,7 +4,7 @@ import { subscribeSyncState } from "./core/events.js";
 import { OfflineSyncEngine } from "./sync/engine.js";
 import { createSupabaseAdapter } from "./sync/supabase-adapter.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "./sync/local-edits.js";
-import { listLocalRecords, removeAllLocalData, countLocalRecords } from "./storage/records.js";
+import { listLocalRecords, countLocalRecords, utiliserCompte, supprimerToutesLesBases } from "./storage/records.js";
 import { mountSyncStatus } from "./ui/sync-status.js";
 import { mountConflictDialog } from "./ui/conflict-dialog.js";
 
@@ -41,6 +41,8 @@ export async function demarrerHorsConnexion({
     return null;
   }
 
+  // La base du compte connecte, avant toute lecture : sans cela on ouvrirait celle du precedent.
+  utiliserCompte(session()?.user_id || null);
   const adapter = createSupabaseAdapter({ url, anonKey, session, tables });
   const engine = new OfflineSyncEngine({ adapter });
 
@@ -176,10 +178,22 @@ export async function demarrerHorsConnexion({
     rafraichirConflits: () => afficherConflits?.(),
 
     /**
-     * A la deconnexion ou au changement de compte : sinon le collegue suivant, sur le meme
-     * ordinateur, verrait les donnees du precedent.
+     * Change de compte sans rien detruire.
+     *
+     * Chaque compte a sa propre base locale. Basculer sur un collegue n'efface donc plus rien, et
+     * revenir sur un compte deja visite retrouve sa copie intacte au lieu de rapatrier tout
+     * l'etablissement. L'isolement est meilleur qu'avant : les donnees ne se croisent jamais.
      */
-    async oublierDonneesLocales() { return removeAllLocalData(); },
+    async changerDeCompte(userId) {
+      utiliserCompte(userId || null);
+      rapprocher({ force: true });
+    },
+
+    /**
+     * A la deconnexion : quitter la session sur un ordinateur partage ne doit rien laisser
+     * derriere soi, pour aucun des comptes ouverts sur cette machine.
+     */
+    async oublierDonneesLocales() { return supprimerToutesLesBases(); },
 
     surEtat: subscribeSyncState
   };

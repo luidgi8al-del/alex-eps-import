@@ -15,15 +15,24 @@
  * ferait travailler le moteur pour rien, et une table raccordee mais non suivie ne recevrait
  * jamais les modifications des collegues.
  */
+/*
+ * L'ordre compte : les tables sont descendues l'une apres l'autre, et un ecran ne peut rien
+ * afficher avant que la sienne soit arrivee. Le repertoire des eleves passait avant les creneaux
+ * du planning : sur une copie neuve, il fallait attendre plus d'un millier de fiches pour voir
+ * apparaitre un emploi du temps qui en compte quelques dizaines.
+ *
+ * Les petites tables d'abord, donc, et les grosses a la fin. Le planning et les cours
+ * apparaissent en quelques secondes, le reste se remplit derriere sans qu'on l'attende.
+ */
 const TABLES_HORS_CONNEXION = [
-  "sport_installations", "classes", "students",
-  // Creneaux et activites : lisibles hors connexion, modifiables seulement connecte. Leurs
-  // ecritures portent deja un protocole de concurrence partage avec l'application, qu'on ne
-  // double pas par celui du moteur.
-  "class_schedule_slots", "period_activities",
-  // Cours : cycles, grilles, criteres et notes. C'est ici que le hors connexion sert le plus -
-  // on note une classe sur un terrain, pas devant un ordinateur.
-  "cycles", "evaluations", "evaluation_criteria", "evaluation_scores"
+  // Planning : peu de lignes, et c'est le premier ecran qu'on ouvre.
+  "sport_installations", "classes", "class_schedule_slots", "period_activities",
+  // Cours : cycles, grilles et criteres. C'est ici que le hors connexion sert le plus - on note
+  // une classe sur un terrain, pas devant un ordinateur.
+  "cycles", "evaluations", "evaluation_criteria",
+  // Les deux plus grosses, gardees pour la fin : un millier d'eleves, et une note par eleve et
+  // par critere.
+  "students", "evaluation_scores"
 ];
 
 /**
@@ -39,17 +48,14 @@ const TABLES_HORS_CONNEXION = [
  * Personne n'a a se souvenir de l'ordre des operations.
  */
 const TABLES_HORS_CONNEXION_VAGUE_2 = [
-  // ASLVH : licencies, groupes, creneaux, adhesions, seances et appel.
-  "unss_students", "unss_groups", "unss_slots", "unss_memberships",
-  "unss_sessions", "unss_attendance",
-  // Outils : seances de test et resultats. Se saisissent sur la piste.
-  "eps_test_sessions", "eps_test_results",
-  // Sante : dispenses et accidents. Un accident n'attend pas le reseau.
+  // Meme principe : les petites d'abord.
+  "unss_groups", "unss_slots", "unss_memberships", "unss_sessions",
+  "eps_test_sessions",
   "health_dispensations", "health_accidents",
-  // Equipement : materiel, EPI et leurs controles.
   "equipment", "epi_items", "epi_inspections", "installation_conflict_overrides",
-  // Programmation : programmes, blocs annuels, calendrier et dates de periodes.
-  "official_programs", "annual_plan_blocks", "institution_calendar_events", "eps_period_dates"
+  "official_programs", "annual_plan_blocks", "institution_calendar_events", "eps_period_dates",
+  // Les volumineuses en dernier : le repertoire AS, l'appel et les resultats de tests.
+  "unss_students", "unss_attendance", "eps_test_results"
 ];
 
 /** Vrai si schema_hors_connexion_2.sql a ete applique sur cette base. */
@@ -137,6 +143,9 @@ function rafraichirApresSynchro() {
  * son fonctionnement d'avant, en direct avec Supabase.
  */
 let modeHorsConnexion = null;
+/** Cadence de rafraichissement pendant une synchronisation en cours. */
+const DELAI_RAFRAICHISSEMENT_MS = 1500;
+let dernierRafraichissement = 0;
 async function demarrerModeHorsConnexion() {
   if (modeHorsConnexion) return modeHorsConnexion;
   try {
@@ -157,7 +166,16 @@ async function demarrerModeHorsConnexion() {
       tables: tablesSuivies
     });
     modeHorsConnexion?.surEtat(detail => {
-      if (detail.state === "synced") rafraichirApresSynchro();
+      if (detail.state === "synced") { dernierRafraichissement = 0; rafraichirApresSynchro(); return; }
+      // Pendant une longue premiere lecture, l'ecran restait vide jusqu'au bout, puis se
+      // remplissait d'un coup. On le redessine au fil de l'eau, sans le faire a chaque page :
+      // le rendu coute plus cher que la lecture qui vient de l'alimenter.
+      if (detail.state === "syncing" && detail.lues) {
+        const maintenant = Date.now();
+        if (maintenant - dernierRafraichissement < DELAI_RAFRAICHISSEMENT_MS) return;
+        dernierRafraichissement = maintenant;
+        rafraichirApresSynchro();
+      }
     });
   } catch (e) {
     console.warn("Mode hors connexion indisponible :", e.message);

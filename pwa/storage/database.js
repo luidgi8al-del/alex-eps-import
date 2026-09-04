@@ -1,9 +1,72 @@
 import { DB_NAME, DB_VERSION, STORES } from "../core/constants.js";
+
+/**
+ * Une base locale par compte.
+ *
+ * La copie locale etait unique et effacee a chaque changement de compte : sans quoi le collegue
+ * suivant, sur le meme ordinateur, aurait vu les donnees du precedent. Correct, mais couteux -
+ * preparer trois comptes de collegues d'affilee, c'etait trois rapatriements complets de
+ * l'etablissement, plusieurs milliers de fiches a chaque fois.
+ *
+ * Chaque compte a donc sa propre base, nommee par son identifiant. Basculer ne detruit plus rien
+ * et revenir sur un compte deja visite retrouve sa copie intacte. L'isolement est meilleur
+ * qu'avant, puisque les donnees ne se croisent jamais dans le meme espace.
+ *
+ * La deconnexion, elle, efface tout : quitter la session sur un ordinateur partage doit ne rien
+ * laisser derriere soi.
+ */
+let compteCourant = null;
+let generation = 0;
+
+function nomBase(compte) {
+  return compte ? `${DB_NAME}-${compte}` : DB_NAME;
+}
+
+/** Numero de generation de la copie locale, incremente a chaque effacement ou bascule. */
+export function generationLocale() { return generation; }
+
+/**
+ * Designe le compte dont la copie doit etre utilisee. Sans effet s'il n'a pas change.
+ *
+ * La generation avance a la bascule : une synchronisation commencee sur le compte precedent ne
+ * doit rien ecrire dans la base du suivant, ni y enregistrer son curseur.
+ */
+export function utiliserCompte(compte) {
+  const cible = compte || null;
+  if (cible === compteCourant) return;
+  compteCourant = cible;
+  generation += 1;
+  const ancienne = opening;
+  opening = undefined;
+  ancienne?.then(db => db.close()).catch(() => {});
+}
+
+export function marquerEffacement() { generation += 1; }
+
+/** Efface les copies locales de tous les comptes. Utilise a la deconnexion. */
+export async function supprimerToutesLesBases() {
+  generation += 1;
+  const ancienne = opening;
+  opening = undefined;
+  await ancienne?.then(db => db.close()).catch(() => {});
+  let noms = [];
+  try {
+    // indexedDB.databases() n'existe pas partout : sans elle on efface au moins la base courante.
+    noms = (await indexedDB.databases?.() || []).map(b => b.name).filter(Boolean);
+  } catch { noms = []; }
+  if (!noms.length) noms = [nomBase(compteCourant)];
+  const aSupprimer = noms.filter(n => n === DB_NAME || n.startsWith(`${DB_NAME}-`));
+  await Promise.all(aSupprimer.map(nom => new Promise(resolve => {
+    const demande = indexedDB.deleteDatabase(nom);
+    demande.onsuccess = demande.onerror = demande.onblocked = () => resolve();
+  })));
+}
+
 let opening;
 export function openOfflineDatabase() {
   if (opening) return opening;
   opening = new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = indexedDB.open(nomBase(compteCourant), DB_VERSION);
     request.onerror = () => reject(request.error);
     request.onblocked = () => reject(new Error("La base hors connexion est bloquee par un autre onglet"));
     request.onupgradeneeded = () => {
