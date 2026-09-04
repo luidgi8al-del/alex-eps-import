@@ -358,3 +358,33 @@ test("un refus que rien ne nomme reste une erreur", async () => {
     }), "une panne serveur doit rester une erreur, donc une reprise");
   } finally { reseau.rendre(); }
 });
+
+/**
+ * Un effacement doit dater la ligne, sinon il ne se propage pas.
+ *
+ * L'envoi ne portait que "deleted: true" : updated_at gardait sa valeur d'avant, la ligne
+ * paraissait inchangee, et la synchronisation - qui ne redescend que ce qui a change de date - ne
+ * la redescendait jamais. Le creneau restait affiche sur tous les autres appareils. Constate le
+ * 04/09/2026 sur un planning qui montrait trois creneaux la ou il n'en restait qu'un.
+ */
+test("un effacement porte une nouvelle date", async () => {
+  const reseau = fauxReseau(() => reponse([{ id: "c1", version: 3, updated_at: "2026-09-04T18:00:00+00:00", deleted: true }]));
+  try {
+    await adaptateur().pushOperation({ entity: "classes", id: "c1", action: "delete", baseVersion: 2 });
+    const [appel] = reseau.appels;
+    assertEgal(appel.body.deleted, true, "l'effacement doit etre marque");
+    assert(appel.body.updated_at, "sans date, l'effacement reste invisible aux autres appareils");
+  } finally { reseau.rendre(); }
+});
+
+test("une date deja posee par l'ecran n'est pas remplacee", async () => {
+  const reseau = fauxReseau(() => reponse([{ id: "c1", version: 3 }]));
+  try {
+    await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "update", baseVersion: 2,
+      data: { name: "6e1", updated_at: "2026-01-01T08:00:00+00:00" }
+    });
+    assertEgal(reseau.appels[0].body.updated_at, "2026-01-01T08:00:00+00:00",
+      "la date de la saisie fait foi : c'est elle qui arbitre les fusions");
+  } finally { reseau.rendre(); }
+});

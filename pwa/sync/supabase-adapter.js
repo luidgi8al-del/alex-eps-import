@@ -130,6 +130,15 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
     const corps = { ...operation.data, id: operation.id, version: operation.baseVersion || undefined };
     if (operation.action === "delete") { corps.deleted = true; corps.data = undefined; }
 
+    // Toute ecriture date la ligne, y compris un effacement.
+    //
+    // Un effacement n'envoyait que "deleted: true" : la colonne updated_at gardait donc sa
+    // valeur d'avant. Or la synchronisation ne redescend que ce qui a change de date. La ligne
+    // paraissait inchangee pour tous les autres appareils, et l'effacement ne se propageait
+    // jamais - le creneau restait affiche partout ailleurs, indefiniment. Un planning montrait
+    // ainsi trois creneaux la ou il n'en restait qu'un.
+    if (!corps.updated_at) corps.updated_at = new Date().toISOString();
+
     // Une version de depart a zero veut dire que la ligne n'existait pas quand elle a ete saisie.
     // Un PATCH ne toucherait alors aucune ligne et repartirait avec un acquittement trompeur : la
     // saisie serait sortie de la file sans jamais atteindre le serveur. On insere donc, en
