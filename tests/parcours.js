@@ -398,6 +398,42 @@
         }
       },
       {
+        // Les actions de la classe vivaient tout en bas du panneau : il fallait derouler pour
+        // ouvrir l'emploi du temps d'une classe qu'on venait d'ouvrir.
+        nom: "Classe · les actions sont sur la ligne du titre",
+        action: async () => {
+          await onglet("classes");
+          const puce = $("importsList")?.querySelector(".classePuce");
+          if (!puce) return; // aucune classe dans le jeu d'essai
+          puce.click();
+          await attendre(() => $("classDashboardPanel")?.querySelector(".dashActions"),
+            "les actions de la classe ont disparu", 6000);
+          const titre = $("classDashboardPanel").querySelector("h2").getBoundingClientRect();
+          const premier = $("classDashboardPanel").querySelector(".dashActions > button").getBoundingClientRect();
+          const memeLigne = Math.abs((titre.top + titre.height / 2) - (premier.top + premier.height / 2)) < 40;
+          if (!memeLigne) throw new Error("les actions ne sont plus sur la ligne du titre");
+          if (premier.left < titre.right) throw new Error("les actions chevauchent le nom de la classe");
+        }
+      },
+      {
+        nom: "Classe · Modifier s'ouvre en fenetre",
+        action: async () => {
+          const bouton = $("classDashboardPanel")?.querySelector('[data-classe-action="edit"]');
+          if (!bouton) return;
+          bouton.click();
+          await attendre(() => f.document.getElementById("editImportOverlay")?.classList.contains("open"),
+            "la fenetre de modification ne s'ouvre pas", 6000);
+          const voile = f.document.getElementById("editImportOverlay");
+          if (!voile.contains(f.document.getElementById("editImportPanel"))) {
+            throw new Error("le panneau n'est pas dans la fenetre");
+          }
+          if (f.getComputedStyle(voile).position !== "fixed") throw new Error("la fenetre ne recouvre pas la page");
+          f.document.getElementById("closeEditBtn")?.click();
+          await attendre(() => !f.document.getElementById("editImportOverlay").classList.contains("open"),
+            "la fenetre ne se ferme pas", 4000);
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

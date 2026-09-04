@@ -303,3 +303,16 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .dashJourIcone { width:17px; height:17px; flex:0 0 auto; color:#2E7BB5; }
 .dashJourIcone svg { width:100%; height:100%; display:block; }
 .dashJourAujourdhui { margin-left:4px; font-size:11px; font-weight:600; color:#2E7BB5; }
+
+
+/* ---- Tableau de bord : actions de la classe, sur la ligne du titre ---- */
+
+/* Elles vivaient tout en bas du panneau, apres les cartes : il fallait derouler pour ouvrir
+   l'emploi du temps d'une classe qu'on venait d'ouvrir. Elles sont desormais a cote du nom. */
+.dashEntete { align-items:flex-start; }
+.dashIdentite { display:flex; align-items:center; gap:18px; flex-wrap:wrap; min-width:0; }
+.dashActions { display:flex; gap:8px; flex-wrap:wrap; }
+/* Discretes : ce sont des actions de reglage, pas ce qu'on vient faire ici. D'ou une taille
+   inferieure au bouton courant, et une largeur qui suit le texte au lieu de s'etirer. */
+.dashActions > button { margin-top:0; padding:7px 13px; font-size:13px; font-weight:600;
+                        border-radius:8px; white-space:nowrap; }

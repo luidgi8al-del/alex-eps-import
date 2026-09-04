@@ -628,6 +628,44 @@ function renderEditStudents() {
   });
 }
 
+/**
+ * "Modifier la classe" s'ouvre par-dessus la page, comme Reglages.
+ *
+ * Le panneau vivait dans le flux de l'onglet : on le decouvrait plus bas, apres avoir deroule, et
+ * on perdait de vue la classe qu'on venait d'ouvrir. Le deplacer dans un voile evite de refaire
+ * son balisage - le noeud garde ses identifiants et ses ecouteurs en changeant de parent.
+ */
+function fenetreEdition() {
+  let voile = document.getElementById("editImportOverlay");
+  if (voile) return voile;
+  const panneau = document.getElementById("editImportPanel");
+  if (!panneau) return null;
+
+  voile = document.createElement("div");
+  voile.className = "searchOverlay";
+  voile.id = "editImportOverlay";
+  const feuille = document.createElement("div");
+  feuille.className = "searchSheet";
+  voile.appendChild(feuille);
+  panneau.parentNode.insertBefore(voile, panneau);
+  feuille.appendChild(panneau);
+  panneau.style.display = "block";
+  panneau.style.boxShadow = "none";
+  panneau.style.margin = "0";
+
+  // Cliquer a cote ferme, comme partout ailleurs sur le site. Le clic sur la feuille elle-meme
+  // ne doit rien fermer, sinon toute saisie deviendrait un piege.
+  voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreEdition(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && voile.classList.contains("open")) fermerFenetreEdition();
+  });
+  return voile;
+}
+
+function fermerFenetreEdition() {
+  document.getElementById("editImportOverlay")?.classList.remove("open");
+}
+
 async function openEditImport(row) {
   editImportId = row.id;
   editStudentsToDelete = [];
@@ -641,7 +679,7 @@ async function openEditImport(row) {
   }
   document.getElementById("editSchoolYear").value = row.school_year;
   document.getElementById("editError").textContent = "";
-  document.getElementById("editImportPanel").style.display = "block";
+  fenetreEdition()?.classList.add("open");
   document.getElementById("editStudentsBody").innerHTML = '<tr><td colspan="7" class="muted">Chargement...</td></tr>';
   if (modeHorsConnexion) {
     const lecture = await modeHorsConnexion.lire("students", {
@@ -659,7 +697,7 @@ async function openEditImport(row) {
 }
 
 document.getElementById("closeEditBtn").addEventListener("click", () => {
-  document.getElementById("editImportPanel").style.display = "none";
+  fermerFenetreEdition();
 });
 
 document.getElementById("addStudentBtn").addEventListener("click", () => {
@@ -745,7 +783,7 @@ document.getElementById("saveEditBtn").addEventListener("click", async () => {
         method: "PATCH", body: JSON.stringify(champs(s))
       });
     }
-    document.getElementById("editImportPanel").style.display = "none";
+    fermerFenetreEdition();
     loadImports();
   } catch (e) {
     errorEl.textContent = e.message;

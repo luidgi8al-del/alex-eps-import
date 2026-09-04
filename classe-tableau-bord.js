@@ -435,10 +435,17 @@ function renderClassDashboard() {
   const dispenses = dispensesEnCours();
 
   panel.innerHTML = `
-    <div class="top">
-      <div>
-        <h2 style="margin:0">${planningText(label)}</h2>
-        <div class="muted">${planningText(row.school_year || "")}</div>
+    <div class="top dashEntete">
+      <div class="dashIdentite">
+        <div>
+          <h2 style="margin:0">${planningText(label)}</h2>
+          <div class="muted">${planningText(row.school_year || "")}</div>
+        </div>
+        <div class="dashActions">
+          <button class="secondary" data-classe-action="schedule">Emploi du temps</button>
+          <button class="secondary" data-classe-action="edit">Modifier la classe</button>
+          <button class="danger" data-classe-action="delete">Supprimer</button>
+        </div>
       </div>
       <button class="secondary" id="closeDashboardBtn" style="margin-top:0">Fermer</button>
     </div>
@@ -482,12 +489,6 @@ function renderClassDashboard() {
       </span>
       <span class="dashFleche">›</span>
     </button>
-
-    <div class="row" style="margin-top:14px">
-      <button class="secondary" data-classe-action="schedule" style="margin-top:0">Emploi du temps</button>
-      <button class="secondary" data-classe-action="edit" style="margin-top:0">Modifier la classe</button>
-      <button class="danger" data-classe-action="delete" style="margin-top:0">Supprimer</button>
-    </div>
 
     <div id="dashDetail"></div>`;
 
