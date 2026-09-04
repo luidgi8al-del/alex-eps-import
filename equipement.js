@@ -53,8 +53,8 @@ async function loadEquipment() {
   const wrap = document.getElementById("equipTab-materiel");
   wrap.innerHTML = '<div class="card muted">Chargement du materiel...</div>';
   try {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/equipment?deleted=eq.false&select=*&order=name.asc`);
-    equipmentList = res.ok ? await res.json() : [];
+    equipmentList = await lireTable("equipment", "equipment?deleted=eq.false&select=*&order=name.asc",
+      { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
     renderEquipment();
   } catch (e) {
     wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
@@ -148,12 +148,9 @@ function renderEquipmentDetail() {
 
 async function addEquipment() {
   const id = crypto.randomUUID();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/equipment`, {
-    method: "POST",
-    body: JSON.stringify({
-      id, user_id: session.user_id, name: "Nouveau materiel", category: "AUTRE",
-      updated_at: new Date().toISOString(), deleted: false
-    })
+  await enregistrerLigne("equipment", {
+    id, user_id: session.user_id, name: "Nouveau materiel", category: "AUTRE",
+    updated_at: new Date().toISOString(), deleted: false
   });
   await loadEquipment();
   equipmentOpenedId = id;
@@ -173,17 +170,16 @@ async function saveEquipment() {
       payload[key] = el.value;
     }
   });
-  await apiFetch(`${SUPABASE_URL}/rest/v1/equipment?id=eq.${equipmentOpenedId}`, {
-    method: "PATCH", body: JSON.stringify(payload)
-  });
-  Object.assign(equipmentList.find(x => x.id === equipmentOpenedId), payload);
+  // La file d'attente porte des lignes entieres, pas des retouches : on part de la ligne connue
+  // et on applique la saisie dessus, sinon un envoi differe effacerait les champs absents.
+  const actuel = equipmentList.find(x => x.id === equipmentOpenedId) || { id: equipmentOpenedId };
+  await enregistrerLigne("equipment", { ...actuel, ...payload });
+  Object.assign(actuel, payload);
   document.getElementById("equipOk").textContent = "Materiel enregistre.";
 }
 
 async function deleteEquipment(id) {
-  await apiFetch(`${SUPABASE_URL}/rest/v1/equipment?id=eq.${id}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-  });
+  await supprimerLigne("equipment", id);
   await loadEquipment();
 }
 
@@ -213,8 +209,9 @@ async function loadEpiItems() {
   const wrap = document.getElementById("equipTab-epi");
   wrap.innerHTML = '<div class="card muted">Chargement des EPI...</div>';
   try {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/epi_items?deleted=eq.false&select=*&order=internal_id.asc`);
-    epiList = res.ok ? await res.json() : [];
+    epiList = await lireTable("epi_items",
+      "epi_items?deleted=eq.false&select=*&order=internal_id.asc",
+      { trier: (a, b) => String(a.internal_id || "").localeCompare(String(b.internal_id || "")) });
     renderEpi();
   } catch (e) {
     wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
@@ -278,8 +275,10 @@ async function renderEpiDetail() {
   const item = epiList.find(x => x.id === epiOpenedId);
   if (!item) { epiOpenedId = null; renderEpi(); return; }
 
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/epi_inspections?epi_id=eq.${item.id}&select=*&order=date_epoch_millis.desc`);
-  epiInspections = res.ok ? await res.json() : [];
+  epiInspections = await lireTable("epi_inspections",
+    `epi_inspections?epi_id=eq.${item.id}&select=*&order=date_epoch_millis.desc`,
+    { ou: i => i.epi_id === item.id,
+      trier: (a, b) => Number(b.date_epoch_millis || 0) - Number(a.date_epoch_millis || 0) });
 
   const text = (key, label, type = "text") =>
     `<div><label>${label}</label><input type="${type}" data-epi-field="${key}" value="${(item[key] ?? "").toString().replace(/"/g, "&quot;")}"></div>`;
@@ -344,13 +343,10 @@ async function renderEpiDetail() {
 
 async function addEpiItem() {
   const id = crypto.randomUUID();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/epi_items`, {
-    method: "POST",
-    body: JSON.stringify({
-      id, user_id: session.user_id, internal_id: "EPI-" + id.slice(0, 4).toUpperCase(),
-      category: "AUTRE", status: "EN_SERVICE", qr_code_value: id,
-      updated_at: new Date().toISOString(), deleted: false
-    })
+  await enregistrerLigne("epi_items", {
+    id, user_id: session.user_id, internal_id: "EPI-" + id.slice(0, 4).toUpperCase(),
+    category: "AUTRE", status: "EN_SERVICE", qr_code_value: id,
+    updated_at: new Date().toISOString(), deleted: false
   });
   await loadEpiItems();
   epiOpenedId = id;
@@ -364,10 +360,10 @@ async function saveEpiItem() {
   wrap.querySelectorAll("[data-epi-date]").forEach(el => {
     payload[el.dataset.epiDate] = el.value ? new Date(el.value).getTime() : null;
   });
-  await apiFetch(`${SUPABASE_URL}/rest/v1/epi_items?id=eq.${epiOpenedId}`, {
-    method: "PATCH", body: JSON.stringify(payload)
-  });
-  Object.assign(epiList.find(x => x.id === epiOpenedId), payload);
+  // Ligne entiere et non retouche : voir saveEquipment, meme raison.
+  const actuel = epiList.find(x => x.id === epiOpenedId) || { id: epiOpenedId };
+  await enregistrerLigne("epi_items", { ...actuel, ...payload });
+  Object.assign(actuel, payload);
   document.getElementById("epiOk").textContent = "Fiche enregistree.";
   renderEpi();
 }
@@ -383,24 +379,20 @@ async function addEpiInspection() {
   if (!date) { errorEl.textContent = "Indiquez la date du controle."; return; }
   const result = document.getElementById("inspResult").value;
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/epi_inspections`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: crypto.randomUUID(), user_id: session.user_id, epi_id: epiOpenedId,
-        date_epoch_millis: new Date(date).getTime(),
-        inspector: document.getElementById("inspBy").value,
-        result, observations: document.getElementById("inspNotes").value,
-        updated_at: new Date().toISOString(), deleted: false
-      })
+    await enregistrerLigne("epi_inspections", {
+      id: crypto.randomUUID(), user_id: session.user_id, epi_id: epiOpenedId,
+      date_epoch_millis: new Date(date).getTime(),
+      inspector: document.getElementById("inspBy").value,
+      result, observations: document.getElementById("inspNotes").value,
+      updated_at: new Date().toISOString(), deleted: false
     });
     const status = result === "QUARANTAINE" ? "QUARANTAINE"
                  : result === "REFORME" ? "REFORME"
                  : result === "A_SURVEILLER" ? "A_CONTROLER" : "EN_SERVICE";
     const patch = { status, last_inspection_date_epoch_millis: new Date(date).getTime(), updated_at: new Date().toISOString() };
-    await apiFetch(`${SUPABASE_URL}/rest/v1/epi_items?id=eq.${epiOpenedId}`, {
-      method: "PATCH", body: JSON.stringify(patch)
-    });
-    Object.assign(epiList.find(x => x.id === epiOpenedId), patch);
+    const fiche = epiList.find(x => x.id === epiOpenedId) || { id: epiOpenedId };
+    await enregistrerLigne("epi_items", { ...fiche, ...patch });
+    Object.assign(fiche, patch);
     renderEpiDetail();
   } catch (e) {
     errorEl.textContent = e.message;
@@ -420,7 +412,7 @@ async function createInstallation() {
     try { await modeHorsConnexion.enregistrer("sport_installations", ligne.id, ligne); }
     catch (e) { errorEl.textContent = e.message; return; }
   } else {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations`, { method: "POST", body: JSON.stringify(ligne) });
+    await enregistrerLigne("sport_installations", ligne);
   }
   input.value = "";
   await loadInstallationsList();
@@ -436,9 +428,7 @@ async function deleteInstallation(id) {
     try { await modeHorsConnexion.supprimer("sport_installations", id); }
     catch (e) { if (errorEl) errorEl.textContent = e.message; return; }
   } else {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?id=eq.${id}`, {
-      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-    });
+    await supprimerLigne("sport_installations", id);
   }
   await loadInstallationsList();
   await loadPlanningInstallations();
@@ -454,8 +444,7 @@ async function loadInstallationsList() {
     const lecture = await modeHorsConnexion.lire("sport_installations");
     rows = lecture.rows.filter(r => !r.deleted).sort((a, b) => (a.name || "").localeCompare(b.name || ""));
   } else {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
-    rows = res.ok ? await res.json() : [];
+    rows = await lireTable("sport_installations", "sport_installations?deleted=eq.false&select=*&order=name.asc");
   }
   if (rows.length === 0) {
     listEl.innerHTML = '<div class="muted">Aucune installation pour le moment.</div>';
@@ -470,3 +459,9 @@ async function loadInstallationsList() {
     listEl.appendChild(div);
   });
 }
+
+
+// Noms attendus par rafraichirApresSynchro : les listes se redessinent quand une synchronisation
+// ramene du materiel ou des EPI saisis sur un autre appareil.
+globalThis.loadEquipmentList = () => { if (document.getElementById("equipTab-materiel")) loadEquipment(); };
+globalThis.loadEpiList = () => { if (document.getElementById("equipTab-epi")) loadEpiItems(); };

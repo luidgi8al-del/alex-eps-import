@@ -50,18 +50,41 @@ let toolClasses = [];
 let toolStudents = [];
 let toolClassId = FREE_USE;
 
+// Les outils servent sur la piste, pas au bureau : classes et eleves viennent de la copie locale.
 async function loadToolClasses() {
   if (toolClasses.length) return toolClasses;
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade&order=name.asc`);
-  toolClasses = res.ok ? await res.json() : [];
+  toolClasses = await lireTable("classes",
+    "classes?deleted=eq.false&select=id,name,grade&order=name.asc",
+    { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
   return toolClasses;
 }
 
 async function loadToolStudents(classId) {
   if (!classId || classId === FREE_USE) { toolStudents = []; return toolStudents; }
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name&order=last_name.asc`);
-  toolStudents = res.ok ? await res.json() : [];
+  toolStudents = await lireTable("students",
+    `students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name&order=last_name.asc`,
+    { ou: e => e.class_id === classId,
+      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   return toolStudents;
+}
+
+/**
+ * Enregistre une seance de test et ses resultats.
+ *
+ * Un test se saisit sur la piste, souvent sans reseau. Chaque ligne part par la file d'attente :
+ * elle est retenue ici et envoyee des que la connexion revient, plutot que perdue.
+ *
+ * La seance est ecrite avant ses resultats. L'ordre compte : un resultat qui arriverait seul
+ * designerait une seance inexistante.
+ */
+async function enregistrerSeanceDeTest(seance, resultats) {
+  await enregistrerLigne("eps_test_sessions", seance);
+  for (const ligne of resultats) await enregistrerLigne("eps_test_results", ligne);
+}
+
+/** Redessine les tests quand une synchronisation ramene ceux d'un autre appareil. */
+function rafraichirOutilsApresSynchro() {
+  if (typeof drawEpsTests === "function" && document.getElementById("epsTestsPanel")) drawEpsTests();
 }
 
 function toolRosterHtml() {
@@ -237,23 +260,16 @@ async function saveEpsTest(key) {
   const cls = toolClasses.find(c => c.id === toolClassId);
   const sessionId = crypto.randomUUID();
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: sessionId, user_id: session.user_id, class_id: toolClassId,
-        period_number: epsTestPeriod, test_name: test.label, created_at: Date.now(),
-        class_label: cls ? cls.name : "", updated_at: new Date().toISOString(), deleted: false
-      })
-    });
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results`, {
-      method: "POST",
-      body: JSON.stringify(rows.map(r => ({
-        id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
-        student_id: r.studentId, input_value: r.input, result_value: r.value,
-        input_unit: test.inputLabel, result_unit: r.unit,
-        updated_at: new Date().toISOString(), deleted: false
-      })))
-    });
+    await enregistrerSeanceDeTest({
+      id: sessionId, user_id: session.user_id, class_id: toolClassId,
+      period_number: epsTestPeriod, test_name: test.label, created_at: Date.now(),
+      class_label: cls ? cls.name : "", updated_at: new Date().toISOString(), deleted: false
+    }, rows.map(r => ({
+      id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
+      student_id: r.studentId, input_value: r.input, result_value: r.value,
+      input_unit: test.inputLabel, result_unit: r.unit,
+      updated_at: new Date().toISOString(), deleted: false
+    })));
     document.getElementById("epsSaveMsg").textContent =
       `${test.label} enregistre pour ${rows.length} eleve(s) · P${epsTestPeriod}`;
     epsOpenTest = null;
@@ -330,23 +346,16 @@ async function saveVmaResults() {
   const sessionId = crypto.randomUUID();
   const unite = vmaProtocol.includes("Cooper") ? "Distance (m)" : "Palier";
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: sessionId, user_id: session.user_id, class_id: toolClassId,
-        period_number: epsTestPeriod, test_name: "Test VMA · " + vmaProtocol, created_at: Date.now(),
-        class_label: cls ? cls.name : "", updated_at: new Date().toISOString(), deleted: false
-      })
-    });
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results`, {
-      method: "POST",
-      body: JSON.stringify(rows.map(r => ({
-        id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
-        student_id: r.studentId, input_value: r.input, result_value: r.value,
-        input_unit: unite, result_unit: "km/h VMA",
-        updated_at: new Date().toISOString(), deleted: false
-      })))
-    });
+    await enregistrerSeanceDeTest({
+      id: sessionId, user_id: session.user_id, class_id: toolClassId,
+      period_number: epsTestPeriod, test_name: "Test VMA · " + vmaProtocol, created_at: Date.now(),
+      class_label: cls ? cls.name : "", updated_at: new Date().toISOString(), deleted: false
+    }, rows.map(r => ({
+      id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
+      student_id: r.studentId, input_value: r.input, result_value: r.value,
+      input_unit: unite, result_unit: "km/h VMA",
+      updated_at: new Date().toISOString(), deleted: false
+    })));
     document.getElementById("vmaSaveMsg").textContent = `${rows.length} resultat(s) enregistre(s).`;
   } catch (e) {
     document.getElementById("vmaSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
@@ -651,5 +660,5 @@ function drawSpeedResults(groupe) {
 }
 
 async function renderTeamsTool(){
-  toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<div class="muted">Chargement des classes...</div>`;bindToolClose();const res=await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`),classes=res.ok?await res.json():[];toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<label>Classe</label><select id="teamClass"><option value="">Choisir...</option>${classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select><label>Nombre d'équipes</label><input id="teamCount" type="number" min="2" value="2"><button id="generateTeams">Générer les équipes</button><div id="teamsResult"></div>`;bindToolClose();document.getElementById("generateTeams").onclick=async()=>{const id=document.getElementById("teamClass").value,n=Math.max(2,+document.getElementById("teamCount").value||2);if(!id)return;const r=await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${id}&deleted=eq.false&select=*&order=last_name.asc`),students=r.ok?await r.json():[];students.sort(()=>Math.random()-.5);const teams=Array.from({length:n},()=>[]);students.forEach((s,i)=>teams[i%n].push(s));document.getElementById("teamsResult").innerHTML=teams.map((team,i)=>`<div class="teamResult"><strong>Équipe ${i+1}</strong><div>${team.map(s=>`${s.last_name.toUpperCase()} ${s.first_name}`).join("<br>")}</div></div>`).join("");};
+  toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<div class="muted">Chargement des classes...</div>`;bindToolClose();const classes=await lireTable("classes","classes?deleted=eq.false&select=*&order=name.asc",{trier:(a,b)=>String(a.name||"").localeCompare(String(b.name||""))});toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<label>Classe</label><select id="teamClass"><option value="">Choisir...</option>${classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select><label>Nombre d'équipes</label><input id="teamCount" type="number" min="2" value="2"><button id="generateTeams">Générer les équipes</button><div id="teamsResult"></div>`;bindToolClose();document.getElementById("generateTeams").onclick=async()=>{const id=document.getElementById("teamClass").value,n=Math.max(2,+document.getElementById("teamCount").value||2);if(!id)return;const students=await lireTable("students",`students?class_id=eq.${id}&deleted=eq.false&select=*&order=last_name.asc`,{ou:e=>e.class_id===id,trier:(a,b)=>String(a.last_name||"").localeCompare(String(b.last_name||""))});students.sort(()=>Math.random()-.5);const teams=Array.from({length:n},()=>[]);students.forEach((s,i)=>teams[i%n].push(s));document.getElementById("teamsResult").innerHTML=teams.map((team,i)=>`<div class="teamResult"><strong>Équipe ${i+1}</strong><div>${team.map(s=>`${s.last_name.toUpperCase()} ${s.first_name}`).join("<br>")}</div></div>`).join("");};
 }

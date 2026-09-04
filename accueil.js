@@ -146,12 +146,14 @@ async function loadTodayCard() {
     // La lecture des creneaux est ouverte a tout l'etablissement (c'est ce qui fait vivre
     // Planning global EPS). Sans filtre sur le compte, cette carte comptait donc les cours de
     // tous les collegues reunis : il faut demander explicitement les siens.
-    const [slotsRes, classesRes] = await Promise.all([
-      apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name`)
+    // C'est le premier ecran, souvent ouvert en arrivant au gymnase : il doit repondre meme
+    // sans reseau. D'ou la copie locale.
+    const [slots, classes] = await Promise.all([
+      lireTable("class_schedule_slots",
+        `class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`,
+        { ou: c => c.user_id === session.user_id }),
+      lireTable("classes", "classes?deleted=eq.false&select=id,name")
     ]);
-    const slots = slotsRes.ok ? await slotsRes.json() : [];
-    const classes = classesRes.ok ? await classesRes.json() : [];
 
     const today = slots
       .filter(s => s.day_of_week === TODAY_DAY_KEY)

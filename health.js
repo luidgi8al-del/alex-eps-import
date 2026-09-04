@@ -12,10 +12,15 @@
     if(preselectedClassId)healthSelectedClassId=preselectedClassId;
     const host=document.getElementById('healthBody');if(!host)return;
     host.innerHTML='<div class="card muted">Chargement des données de santé…</div>';
+    // Une dispense se consulte au bord du terrain, un accident se declare sur place : tout passe
+    // par la copie locale, qui reste lisible sans reseau.
     [healthClasses,healthStudents,healthDispenses]=await Promise.all([
-      healthFetch('classes?deleted=eq.false&select=*&order=name'),
-      healthFetch('students?deleted=eq.false&select=*&order=last_name,first_name'),
-      healthFetch('health_dispensations?select=*&order=start_date.desc')
+      lireTable('classes','classes?deleted=eq.false&select=*&order=name',
+        {trier:(a,b)=>String(a.name||'').localeCompare(String(b.name||''))}),
+      lireTable('students','students?deleted=eq.false&select=*&order=last_name,first_name',
+        {trier:(a,b)=>String(a.last_name||'').localeCompare(String(b.last_name||''))}),
+      lireTable('health_dispensations','health_dispensations?deleted=eq.false&select=*&order=start_date.desc',
+        {trier:(a,b)=>String(b.start_date||'').localeCompare(String(a.start_date||''))})
     ]);
     if(!healthSelectedClassId||!healthClasses.some(c=>c.id===healthSelectedClassId))healthSelectedClassId=healthClasses[0]?.id||null;
     renderHealthTab();
@@ -39,8 +44,29 @@
    const history=healthDispenses.filter(d=>d.student_id===student.id);
    return `<h2>${healthEsc(student.last_name.toUpperCase())} ${healthEsc(student.first_name)}</h2><form id="dispenseForm"><label>Début de la dispense<input type="date" id="dispenseStart" value="${healthToday()}" required></label><label>Fin de la dispense<input type="date" id="dispenseEnd" value="${healthToday()}" required></label><button type="submit">Valider la dispense</button></form><h3>Historique de l’élève</h3>${history.length?history.map(d=>`<div class="healthHistory"><span>${healthEsc(d.start_date)} → ${healthEsc(d.end_date)}</span><strong>${healthActive(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune dispense enregistrée.</p>'}`;
   }
-  async function saveDispense(event){event.preventDefault();const start=document.getElementById('dispenseStart').value,end=document.getElementById('dispenseEnd').value;if(!start||!end||end<start){alert('La date de fin doit être postérieure ou égale à la date de début.');return;}const response=await apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations`,{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({user_id:session.user_id,class_id:healthSelectedClassId,student_id:healthSelectedStudentId,start_date:start,end_date:end})});const rows=await response.json();if(rows[0])healthDispenses.unshift(rows[0]);renderDispenseMode();}
-  async function deleteDispense(id){if(!confirm('Supprimer cette dispense ?'))return;await apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?id=eq.${encodeURIComponent(id)}`,{method:'DELETE'});healthDispenses=healthDispenses.filter(d=>d.id!==id);renderDispenseMode();}
+  // L'identifiant est tire ici et non par le serveur : une dispense saisie sans reseau doit
+  // pouvoir etre affichee, puis envoyee telle quelle quand la connexion revient.
+  async function saveDispense(event){
+    event.preventDefault();
+    const start=document.getElementById('dispenseStart').value,end=document.getElementById('dispenseEnd').value;
+    if(!start||!end||end<start){alert('La date de fin doit être postérieure ou égale à la date de début.');return;}
+    const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:healthSelectedClassId,
+      student_id:healthSelectedStudentId,start_date:start,end_date:end,
+      updated_at:new Date().toISOString(),deleted:false};
+    try{ await enregistrerLigne('health_dispensations',ligne); }
+    catch(e){ alert(e.message); return; }
+    healthDispenses.unshift(ligne);
+    renderDispenseMode();
+  }
+  // L'effacement laisse une trace au lieu de retirer la ligne : sans elle, la dispense, absente
+  // du serveur mais presente dans la copie locale, y reviendrait a la synchronisation suivante.
+  async function deleteDispense(id){
+    if(!confirm('Supprimer cette dispense ?'))return;
+    try{ await supprimerLigne('health_dispensations',id); }
+    catch(e){ alert(e.message); return; }
+    healthDispenses=healthDispenses.filter(d=>d.id!==id);
+    renderDispenseMode();
+  }
   function openClassDispenses(classId){healthSelectedClassId=classId;healthMode='dispense';showTab('health');}
 
   let accidentStep=0,accidentDraft={class_id:'',student_id:'',facts_nature:'',occurred_date:healthToday(),occurred_time:new Date().toTimeString().slice(0,5),damage_type:'',course_context:'EPS',course_other:'',time_context:'TEMPS_SCOLAIRE',activity_nature:'',responsible_name:'',diagram_data:'',witnesses:'',urgency_code:'VERT',decision_taken:''};
@@ -74,7 +100,7 @@
   }
   function captureAccidentStep(validate=false){const val=id=>document.getElementById(id)?.value||'',radio=name=>document.querySelector(`input[name="${name}"]:checked`)?.value||'';if(accidentStep===0)accidentDraft.student_id=radio('accStudent');if(accidentStep===1)accidentDraft.facts_nature=val('accFacts').trim();if(accidentStep===2){accidentDraft.occurred_date=val('accDate');accidentDraft.occurred_time=val('accTime');}if(accidentStep===3)accidentDraft.damage_type=radio('accDamage');if(accidentStep===4){accidentDraft.course_context=radio('accCourse');accidentDraft.course_other=val('accCourseOther').trim();}if(accidentStep===5)accidentDraft.time_context=radio('accWhen');if(accidentStep===6)accidentDraft.activity_nature=val('accActivity').trim();if(accidentStep===7)accidentDraft.responsible_name=val('accResponsible').trim();if(accidentStep===8){const c=document.getElementById('accCanvas');if(c)accidentDraft.diagram_data=c.toDataURL('image/png');}if(accidentStep===9)accidentDraft.witnesses=val('accWitnesses').trim();if(accidentStep===10){accidentDraft.urgency_code=radio('accUrgency');accidentDraft.decision_taken=val('accDecision').trim();}const required=[accidentDraft.student_id,accidentDraft.facts_nature,accidentDraft.occurred_date,accidentDraft.occurred_time,accidentDraft.damage_type,accidentDraft.course_context,accidentDraft.time_context,accidentDraft.activity_nature,accidentDraft.responsible_name,accidentDraft.urgency_code,accidentDraft.decision_taken];if(validate&&accidentStep<11&&!required.slice(0,[1,2,4,5,7,8,8,9,9,9,11][accidentStep]).every(Boolean)){alert('Complétez cette étape avant de continuer.');return false;}if(validate&&accidentStep===4&&accidentDraft.course_context==='AUTRE'&&!accidentDraft.course_other){alert('Précisez le cours concerné.');return false;}return true;}
   function setupAccidentCanvas(){const canvas=document.getElementById('accCanvas'),ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);if(accidentDraft.diagram_data){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,canvas.width,canvas.height);img.src=accidentDraft.diagram_data;}let drawing=false;const point=e=>{const r=canvas.getBoundingClientRect(),p=e.touches?.[0]||e;return [(p.clientX-r.left)*canvas.width/r.width,(p.clientY-r.top)*canvas.height/r.height]};canvas.onpointerdown=e=>{drawing=true;ctx.beginPath();ctx.moveTo(...point(e));};canvas.onpointermove=e=>{if(!drawing)return;ctx.lineWidth=4;ctx.lineCap='round';ctx.strokeStyle='#173a57';ctx.lineTo(...point(e));ctx.stroke();};canvas.onpointerup=canvas.onpointerleave=()=>drawing=false;document.getElementById('accClear').onclick=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);accidentDraft.diagram_data='';};document.getElementById('accImage').onchange=e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);};img.src=reader.result;};reader.readAsDataURL(f);};}
-  async function saveAccident(){const payload={user_id:session.user_id,class_id:accidentDraft.class_id,student_id:accidentDraft.student_id,facts_nature:accidentDraft.facts_nature,occurred_at:`${accidentDraft.occurred_date}T${accidentDraft.occurred_time}:00`,damage_type:accidentDraft.damage_type,course_context:accidentDraft.course_context,course_other:accidentDraft.course_other||null,time_context:accidentDraft.time_context,activity_nature:accidentDraft.activity_nature,responsible_name:accidentDraft.responsible_name,diagram_data:accidentDraft.diagram_data||null,witnesses:accidentDraft.witnesses||null,urgency_code:accidentDraft.urgency_code,decision_taken:accidentDraft.decision_taken};const res=await apiFetch(`${SUPABASE_URL}/rest/v1/health_accidents`,{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(payload)});if(!res.ok){alert('Enregistrement impossible. Vérifiez que le nouveau SQL Santé a été exécuté.');return;}openAccidentPrintable();}
+  async function saveAccident(){const payload={user_id:session.user_id,class_id:accidentDraft.class_id,student_id:accidentDraft.student_id,facts_nature:accidentDraft.facts_nature,occurred_at:`${accidentDraft.occurred_date}T${accidentDraft.occurred_time}:00`,damage_type:accidentDraft.damage_type,course_context:accidentDraft.course_context,course_other:accidentDraft.course_other||null,time_context:accidentDraft.time_context,activity_nature:accidentDraft.activity_nature,responsible_name:accidentDraft.responsible_name,diagram_data:accidentDraft.diagram_data||null,witnesses:accidentDraft.witnesses||null,urgency_code:accidentDraft.urgency_code,decision_taken:accidentDraft.decision_taken};try{ await enregistrerLigne('health_accidents',{id:crypto.randomUUID(),...payload,updated_at:new Date().toISOString(),deleted:false}); }catch(e){ alert(e.message||'Enregistrement impossible. Vérifiez que le nouveau SQL Santé a été exécuté.'); return; }openAccidentPrintable();}
   function openAccidentPrintable(){const s=healthStudents.find(x=>x.id===accidentDraft.student_id),c=healthClasses.find(x=>x.id===accidentDraft.class_id),w=open('','_blank');w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Déclaration accident</title><style>body{font-family:Arial;padding:35px;color:#173a57}h1{color:#087dca}.line{padding:10px;border-bottom:1px solid #ccd9e2}b{display:inline-block;width:190px}img{max-width:100%;border:1px solid #ccd9e2}@media print{button{display:none}}</style></head><body><h1>Déclaration d’accident</h1><div class="line"><b>Élève</b>${healthEsc(s?`${s.last_name} ${s.first_name}`:'')} · ${healthEsc(c?.name||'')}</div><div class="line"><b>Date et heure</b>${accidentDraft.occurred_date} ${accidentDraft.occurred_time}</div><div class="line"><b>Nature des faits</b>${healthEsc(accidentDraft.facts_nature)}</div><div class="line"><b>Dommage</b>${accidentDraft.damage_type}</div><div class="line"><b>Cadre</b>${accidentDraft.course_context} · ${accidentDraft.time_context}</div><div class="line"><b>Activité</b>${healthEsc(accidentDraft.activity_nature)}</div><div class="line"><b>Responsable</b>${healthEsc(accidentDraft.responsible_name)}</div><div class="line"><b>Témoins</b>${healthEsc(accidentDraft.witnesses||'Aucun indiqué')}</div><div class="line"><b>Gestion</b>Code ${accidentDraft.urgency_code.toLowerCase()} — ${healthEsc(accidentDraft.decision_taken)}</div>${accidentDraft.diagram_data?`<h2>Schéma</h2><img src="${accidentDraft.diagram_data}">`:''}<p><button onclick="print()">Enregistrer / imprimer en PDF</button></p></body></html>`);w.document.close();accidentStep=0;accidentDraft={...accidentDraft,student_id:'',facts_nature:'',damage_type:'',activity_nature:'',diagram_data:'',witnesses:'',decision_taken:''};renderAccidentMode();}
 
   // Surface publique du module.
@@ -83,6 +109,8 @@
   globalThis.healthActive = healthActive;
   globalThis.healthFetch = healthFetch;
   globalThis.initHealthTab = initHealthTab;
+  /** Redessine Sante quand une synchronisation ramene des dispenses saisies ailleurs. */
+  globalThis.rafraichirSanteApresSynchro = () => { if(document.getElementById('healthBody')) initHealthTab(); };
   globalThis.renderHealthTab = renderHealthTab;
   globalThis.renderDispenseMode = renderDispenseMode;
   globalThis.dispenseEditorHtml = dispenseEditorHtml;

@@ -143,8 +143,9 @@ async function loadOfficialPrograms() {
   const wrap = document.getElementById("programsWrap");
   wrap.innerHTML = '<div class="card muted">Chargement des programmes...</div>';
   try {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?deleted=eq.false&select=*&order=school_level.asc`);
-    programs = res.ok ? await res.json() : [];
+    programs = await lireTable("official_programs",
+      "official_programs?deleted=eq.false&select=*&order=school_level.asc",
+      { trier: (a, b) => String(a.school_level || "").localeCompare(String(b.school_level || "")) });
     renderOfficialPrograms();
   } catch (e) {
     wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
@@ -221,12 +222,9 @@ function renderProgramDetail() {
 
 async function addOfficialProgram() {
   const id = crypto.randomUUID();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs`, {
-    method: "POST",
-    body: JSON.stringify({
-      id, user_id: session.user_id, school_level: "COLLEGE", title: "Nouveau programme",
-      updated_at: new Date().toISOString(), deleted: false
-    })
+  await enregistrerLigne("official_programs", {
+    id, user_id: session.user_id, school_level: "COLLEGE", title: "Nouveau programme",
+    updated_at: new Date().toISOString(), deleted: false
   });
   await loadOfficialPrograms();
   programOpenedId = id;
@@ -237,17 +235,14 @@ async function saveOfficialProgram() {
   const wrap = document.getElementById("programsWrap");
   const payload = { school_level: document.getElementById("progLevel").value, updated_at: new Date().toISOString() };
   wrap.querySelectorAll("[data-prog-field]").forEach(el => { payload[el.dataset.progField] = el.value; });
-  await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?id=eq.${programOpenedId}`, {
-    method: "PATCH", body: JSON.stringify(payload)
-  });
-  Object.assign(programs.find(x => x.id === programOpenedId), payload);
+  const actuel = programs.find(x => x.id === programOpenedId) || { id: programOpenedId };
+  await enregistrerLigne("official_programs", { ...actuel, ...payload });
+  Object.assign(actuel, payload);
   document.getElementById("programOk").textContent = "Programme enregistre.";
 }
 
 async function deleteOfficialProgram(id) {
-  await apiFetch(`${SUPABASE_URL}/rest/v1/official_programs?id=eq.${id}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-  });
+  await supprimerLigne("official_programs", id);
   await loadOfficialPrograms();
 }
 
@@ -445,8 +440,9 @@ async function loadInstitutionCalendar() {
   const wrap = document.getElementById("calendarWrap");
   wrap.innerHTML = '<div class="card muted">Chargement du calendrier...</div>';
   try {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc`);
-    calendarEvents = res.ok ? await res.json() : [];
+    calendarEvents = await lireTable("institution_calendar_events",
+      "institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc",
+      { trier: (a, b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
     // Les epreuves du BAC se deduisent des periodes Terminale : il faut les avoir lues.
     await loadPeriodDates();
     renderInstitutionCalendar();
@@ -569,24 +565,23 @@ function ouvrirJourCalendrier(iso) {
       label, kind: document.getElementById("jourKind").value,
       updated_at: new Date().toISOString()
     };
-    let res;
-    if (saisi) {
-      // On ne touche pas aux dates : modifier l'intitule d'une plage ne doit pas la reduire
-      // a la seule journee cliquee.
-      res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?id=eq.${encodeURIComponent(saisi.id)}`,
-        { method: "PATCH", body: JSON.stringify(corps) });
-    } else {
-      const millis = new Date(iso + "T12:00:00").getTime();
-      res = await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events`, {
-        method: "POST",
-        body: JSON.stringify(Object.assign({
+    try {
+      if (saisi) {
+        // On ne touche pas aux dates : modifier l'intitule d'une plage ne doit pas la reduire
+        // a la seule journee cliquee.
+        await enregistrerLigne("institution_calendar_events", { ...saisi, ...corps });
+      } else {
+        const millis = new Date(iso + "T12:00:00").getTime();
+        await enregistrerLigne("institution_calendar_events", Object.assign({
           id: crypto.randomUUID(), user_id: session.user_id,
           start_date_epoch_millis: millis, end_date_epoch_millis: millis,
           comment: "", deleted: false
-        }, corps))
-      });
+        }, corps));
+      }
+    } catch (e) {
+      erreur.textContent = e.message || "Enregistrement impossible. Verifiez votre connexion.";
+      return;
     }
-    if (!res.ok) { erreur.textContent = "Enregistrement impossible. Verifiez votre connexion."; return; }
     panel.style.display = "none";
     await loadInstitutionCalendar();
   };
@@ -613,14 +608,11 @@ async function addCalendarEvent() {
   if (!start || !end) { errorEl.textContent = "Indiquez les dates de debut et de fin."; return; }
   if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le debut."; return; }
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: crypto.randomUUID(), user_id: session.user_id, label, kind,
-        start_date_epoch_millis: new Date(start).getTime(),
-        end_date_epoch_millis: new Date(end).getTime(),
-        comment: "", updated_at: new Date().toISOString(), deleted: false
-      })
+    await enregistrerLigne("institution_calendar_events", {
+      id: crypto.randomUUID(), user_id: session.user_id, label, kind,
+      start_date_epoch_millis: new Date(start).getTime(),
+      end_date_epoch_millis: new Date(end).getTime(),
+      comment: "", updated_at: new Date().toISOString(), deleted: false
     });
     await loadInstitutionCalendar();
   } catch (e) {
@@ -629,9 +621,7 @@ async function addCalendarEvent() {
 }
 
 async function deleteCalendarEvent(id) {
-  await apiFetch(`${SUPABASE_URL}/rest/v1/institution_calendar_events?id=eq.${id}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-  });
+  await supprimerLigne("institution_calendar_events", id);
   await loadInstitutionCalendar();
 }
 
@@ -650,8 +640,9 @@ async function loadAnnualPlan() {
   if (!planningClasses.length) await loadPlanningClasses();
 
   const filter = annualView === "mine" ? `&user_id=eq.${session.user_id}` : "";
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks?deleted=eq.false${filter}&select=*&order=start_date_epoch_millis.asc`);
-  annualBlocks = res.ok ? await res.json() : [];
+  annualBlocks = await lireTable("annual_plan_blocks",
+    `annual_plan_blocks?deleted=eq.false${filter}&select=*&order=start_date_epoch_millis.asc`,
+    { trier: (a, b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
 
   if (annualView === "mine" && !annualClassId && planningClasses.length) annualClassId = planningClasses[0].id;
   renderAnnualPlan();
@@ -778,17 +769,14 @@ async function addAnnualBlock() {
 
   const cls = planningClasses.find(c => c.id === annualClassId);
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: crypto.randomUUID(), user_id: session.user_id, class_id: annualClassId,
-        apsa_name: apsa,
-        start_date_epoch_millis: new Date(start).getTime(),
-        end_date_epoch_millis: new Date(end).getTime(),
-        session_count: sessions, champ_apprentissage: "",
-        class_label: cls ? cls.name : "", teacher_label: session.email || "?",
-        updated_at: new Date().toISOString(), deleted: false
-      })
+    await enregistrerLigne("annual_plan_blocks", {
+      id: crypto.randomUUID(), user_id: session.user_id, class_id: annualClassId,
+      apsa_name: apsa,
+      start_date_epoch_millis: new Date(start).getTime(),
+      end_date_epoch_millis: new Date(end).getTime(),
+      session_count: sessions, champ_apprentissage: "",
+      class_label: cls ? cls.name : "", teacher_label: session.email || "?",
+      updated_at: new Date().toISOString(), deleted: false
     });
     await loadAnnualPlan();
   } catch (e) {
@@ -797,10 +785,7 @@ async function addAnnualBlock() {
 }
 
 async function deleteAnnualBlock(id) {
-  await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks?id=eq.${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-  });
+  await supprimerLigne("annual_plan_blocks", id);
   await loadAnnualPlan();
 }
 
@@ -819,17 +804,14 @@ async function copyAnnualPlan() {
   const cls = others[index];
   const blocks = annualBlocks.filter(b => b.class_id === annualClassId);
   for (const b of blocks) {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/annual_plan_blocks`, {
-      method: "POST",
-      body: JSON.stringify({
-        id: crypto.randomUUID(), user_id: session.user_id, class_id: cls.id,
-        apsa_name: b.apsa_name,
-        start_date_epoch_millis: b.start_date_epoch_millis,
-        end_date_epoch_millis: b.end_date_epoch_millis,
-        session_count: b.session_count, champ_apprentissage: b.champ_apprentissage || "",
-        class_label: cls.name, teacher_label: session.email || "?",
-        updated_at: new Date().toISOString(), deleted: false
-      })
+    await enregistrerLigne("annual_plan_blocks", {
+      id: crypto.randomUUID(), user_id: session.user_id, class_id: cls.id,
+      apsa_name: b.apsa_name,
+      start_date_epoch_millis: b.start_date_epoch_millis,
+      end_date_epoch_millis: b.end_date_epoch_millis,
+      session_count: b.session_count, champ_apprentissage: b.champ_apprentissage || "",
+      class_label: cls.name, teacher_label: session.email || "?",
+      updated_at: new Date().toISOString(), deleted: false
     });
   }
   annualClassId = cls.id;
@@ -868,8 +850,9 @@ async function loadPlanningClasses() {
     planningClasses = lecture.rows;
     return;
   }
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
-  planningClasses = res.ok ? await res.json() : [];
+  planningClasses = await lireTable("classes",
+    "classes?deleted=eq.false&select=*&order=name.asc",
+    { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
 }
 /**
  * Recharge le planning apres une ecriture faite en direct chez Supabase.
@@ -895,8 +878,9 @@ async function loadPlanningSlots() {
     const lecture = await modeHorsConnexion.lire("class_schedule_slots", { ou: s => s.user_id === session.user_id });
     rows = lecture.rows;
   } else {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
-    rows = res.ok ? await res.json() : [];
+    rows = await lireTable("class_schedule_slots",
+      `class_schedule_slots?deleted=eq.false&user_id=eq.${session.user_id}&select=*`,
+      { ou: c => c.user_id === session.user_id });
   }
   // Display only: keep orphan/deleted-class records on the server for synchronization.
   planningSlots = visiblePersonalPlanningSlots(rows, planningClasses);
@@ -908,8 +892,9 @@ async function loadPlanningActivities() {
     planningActivities = lecture.rows;
     return;
   }
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&user_id=eq.${session.user_id}&select=*`);
-  planningActivities = res.ok ? await res.json() : [];
+  planningActivities = await lireTable("period_activities",
+    `period_activities?deleted=eq.false&user_id=eq.${session.user_id}&select=*`,
+    { ou: a => a.user_id === session.user_id });
 }
 async function loadPlanningInstallations() {
   // Meme source que la liste de l'onglet Equipement. Sans cela, ajouter une installation hors
@@ -922,8 +907,9 @@ async function loadPlanningInstallations() {
       .sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     return;
   }
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installations?deleted=eq.false&select=*&order=name.asc`);
-  planningInstallations = res.ok ? await res.json() : [];
+  planningInstallations = await lireTable("sport_installations",
+    "sport_installations?deleted=eq.false&select=*&order=name.asc",
+    { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
 }
 /** Planning global EPS : creneaux de TOUS les comptes (RLS ouverte en lecture sur cette table). */
 // Etat commun de finalisation du planning EPS : une ligne par etablissement, partagee par
@@ -988,8 +974,8 @@ async function loadPlanningCommunity() {
     // tous sur ces deux tables, c'est ce qui fait vivre le planning partage. On peut donc le
     // consulter dans un gymnase sans reseau, ce qui est precisement ou on en a besoin.
     let slotsRows, activitiesRows;
-    const overridesRes = await apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides?select=*`)
-      .catch(() => ({ ok: false }));
+    const derogations = await lireTable("installation_conflict_overrides",
+      "installation_conflict_overrides?deleted=eq.false&select=*").catch(() => null);
     if (modeHorsConnexion) {
       slotsRows = (await modeHorsConnexion.lire("class_schedule_slots")).rows;
       activitiesRows = (await modeHorsConnexion.lire("period_activities")).rows;
@@ -1004,7 +990,9 @@ async function loadPlanningCommunity() {
     }
     planningCommunitySlots = visibleCommunityPlanningSlots(slotsRows, planningClasses, session.user_id);
     planningCommunityActivities = activitiesRows;
-    planningConflictOverrides = overridesRes.ok ? await overridesRes.json() : [];
+    // Une derogation absente n'est pas une derogation vide : en cas d'echec de lecture on garde
+    // celles deja connues, sinon un conflit deja tranche se remettrait a clignoter en rouge.
+    if (derogations) planningConflictOverrides = derogations;
     // Deux lectures accessoires : l'etat de validation et les dates de periodes. Elles decoraient
     // le planning, mais leur echec faisait tomber tout le bloc et vidait les creneaux deja
     // charges - une coupure de trois secondes effacait le planning partage entier.
@@ -1118,9 +1106,12 @@ function dateFr(iso) {
 }
 
 async function loadPeriodDates() {
-  const res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?deleted=eq.false&school_year=eq."
-    + encodeURIComponent(ANNEE_PERIODES) + "&select=*&order=number.asc");
-  periodesTerminale = res.ok ? (await res.json()).filter(p => p.grade === "TERMINALE") : [];
+  const lignes = await lireTable("eps_period_dates",
+    "eps_period_dates?deleted=eq.false&school_year=eq." + encodeURIComponent(ANNEE_PERIODES)
+      + "&select=*&order=number.asc",
+    { ou: p => p.school_year === ANNEE_PERIODES,
+      trier: (a, b) => Number(a.number || 0) - Number(b.number || 0) });
+  periodesTerminale = lignes.filter(p => p.grade === "TERMINALE");
 }
 
 async function renderPeriodDatesTab() {
@@ -1203,16 +1194,15 @@ function openPeriodDatePanel(numero) {
 
     const corps = { school_year: ANNEE_PERIODES, grade: "TERMINALE", number: numero,
                     start_date: debut, end_date: fin, deleted: false, updated_at: new Date().toISOString() };
-    let res;
-    if (existante) {
-      res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?id=eq." + encodeURIComponent(existante.id),
-        { method: "PATCH", body: JSON.stringify(corps) });
-    } else {
+    try {
       // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
-      res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates",
-        { method: "POST", body: JSON.stringify(Object.assign({ id: crypto.randomUUID(), user_id: session.user_id }, corps)) });
+      await enregistrerLigne("eps_period_dates", existante
+        ? { ...existante, ...corps }
+        : Object.assign({ id: crypto.randomUUID(), user_id: session.user_id }, corps));
+    } catch (e) {
+      erreur.textContent = e.message || "Periode non enregistree. Verifiez votre connexion.";
+      return;
     }
-    if (!res.ok) { erreur.textContent = "Periode non enregistree. Verifiez votre connexion."; return; }
     panel.style.display = "none";
     await renderPeriodDatesTab();
     document.getElementById("periodDatesMsg").textContent = "Periode " + numero + " enregistree et partagee.";
@@ -1221,9 +1211,8 @@ function openPeriodDatePanel(numero) {
   const suppr = document.getElementById("periodDeleteBtn");
   if (suppr) suppr.addEventListener("click", async function () {
     if (!confirm("Supprimer les dates de la periode " + numero + " ?")) return;
-    const res = await apiFetch(SUPABASE_URL + "/rest/v1/eps_period_dates?id=eq." + encodeURIComponent(existante.id),
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) });
-    if (!res.ok) { document.getElementById("periodError").textContent = "Suppression impossible."; return; }
+    try { await supprimerLigne("eps_period_dates", existante.id); }
+    catch (e) { document.getElementById("periodError").textContent = e.message || "Suppression impossible."; return; }
     panel.style.display = "none";
     await renderPeriodDatesTab();
   });
@@ -2001,9 +1990,9 @@ function renderPlanningAnalysisPanel() {
     const idx = parseInt(b.dataset.validate, 10);
     const p = planningAnalysisConflicts[idx];
     const [a, bId] = conflictPairKey(p.slotA.id, p.slotB.id);
-    await apiFetch(`${SUPABASE_URL}/rest/v1/installation_conflict_overrides`, {
-      method: "POST",
-      body: JSON.stringify({ id: crypto.randomUUID(), slot_id_a: a, slot_id_b: bId, created_by: session.user_id })
+    await enregistrerLigne("installation_conflict_overrides", {
+      id: crypto.randomUUID(), slot_id_a: a, slot_id_b: bId, created_by: session.user_id,
+      updated_at: new Date().toISOString(), deleted: false
     });
     planningConflictOverrides.push({ slot_id_a: a, slot_id_b: bId });
     planningAnalysisConflicts.splice(idx, 1);
@@ -2178,7 +2167,7 @@ async function planningFindOrCreateClass(grade, classNumber) {
     school_year: schoolYear, name: creationClassName(grade, classNumber),
     updated_at: new Date().toISOString(), deleted: false
   };
-  await apiFetch(`${SUPABASE_URL}/rest/v1/classes`, { method: "POST", body: JSON.stringify(newClass) });
+  await enregistrerLigne("classes", newClass);
   await loadPlanningClasses();
   planningNewlyCreatedClasses = [...planningNewlyCreatedClasses, newClass];
   return newClass.id;
@@ -2233,8 +2222,9 @@ async function openPlanningEditSlotPanel(slot) {
   const cl = planningClassById(slot.class_id);
   let selectedDuration = slot.duration_minutes;
   let openStep = -1;
-  const activitiesRes = await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?slot_id=eq.${slot.id}&deleted=eq.false&select=*`);
-  const rows = activitiesRes.ok ? await activitiesRes.json() : [];
+  const rows = await lireTable("period_activities",
+    `period_activities?slot_id=eq.${slot.id}&deleted=eq.false&select=*`,
+    { ou: a => a.slot_id === slot.id });
   const plans = Object.fromEntries(rows.map(r => [r.period_number, { id:r.id, updated_at:r.updated_at, activity:r.apsa_name, installation:r.installation_name || null }]));
   function renderEdit() {
     panel.innerHTML = `
@@ -2253,19 +2243,22 @@ async function openPlanningEditSlotPanel(slot) {
     document.getElementById("planningSaveBtn").addEventListener("click", async () => {
     try {
     const cl2 = planningClassById(slot.class_id);
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        duration_minutes: selectedDuration,
-        class_label: planningClassLabel(cl2), teacher_label: planningTeacherLabel(),
-        updated_at: new Date().toISOString()
-      })
+    await enregistrerLigne("class_schedule_slots", {
+      ...slot,
+      duration_minutes: selectedDuration,
+      class_label: planningClassLabel(cl2), teacher_label: planningTeacherLabel(),
+      updated_at: new Date().toISOString()
     });
     for (const [period, plan] of Object.entries(plans)) {
       if (!plan.activity) continue;
       const body = { apsa_name:plan.activity, installation_name:plan.installation || null, updated_at:new Date().toISOString(), deleted:false };
-      if (plan.id) await patchPlanningActivity(plan, body);
-      else await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, { method:"POST", body:JSON.stringify({ ...body, id:crypto.randomUUID(), user_id:session.user_id, slot_id:slot.id, period_number:parseInt(period,10) }) });
+      // Le controle de concurrence n'est plus celui de patchPlanningActivity, qui comparait des
+      // dates posees par le client : c'est desormais le compteur de version tenu par la base, le
+      // meme que pour le reste. Une modification concurrente devient un conflit a trancher au
+      // lieu d'un message d'echec, et une saisie sans reseau attend au lieu d'etre refusee.
+      await enregistrerLigne("period_activities", plan.id
+        ? { ...plan, ...body, id: plan.id, user_id: session.user_id, slot_id: slot.id, period_number: parseInt(period, 10) }
+        : { ...body, id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id, period_number: parseInt(period, 10) });
     }
     panel.style.display = "none";
     await rechargerPlanningApresEcriture();
@@ -2273,9 +2266,7 @@ async function openPlanningEditSlotPanel(slot) {
   });
   document.getElementById("planningDeleteBtn").addEventListener("click", async () => {
     try {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?id=eq.${slot.id}`, {
-        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-      });
+      await supprimerLigne("class_schedule_slots", slot.id);
       panel.style.display = "none";
       await rechargerPlanningApresEcriture();
     } catch (e) { signalerPlanning(panel, e); }
@@ -2392,21 +2383,20 @@ async function planningCreateSlot(classId, day, startMinutes, durationMinutes, i
   const startTime = `${String(Math.floor(startMinutes / 60)).padStart(2, "0")}:${String(startMinutes % 60).padStart(2, "0")}`;
   const cl = planningClassById(classId);
   const newSlotId = crypto.randomUUID();
-  await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots`, {
-    method: "POST",
-    body: JSON.stringify({
-      id: newSlotId, user_id: session.user_id, class_id: classId,
-      day_of_week: day, start_time: startTime, duration_minutes: durationMinutes,
-      installation_name: installationName || null,
-      class_label: planningClassLabel(cl), teacher_label: planningTeacherLabel(),
-      updated_at: new Date().toISOString(), deleted: false
-    })
+  await enregistrerLigne("class_schedule_slots", {
+    id: newSlotId, user_id: session.user_id, class_id: classId,
+    day_of_week: day, start_time: startTime, duration_minutes: durationMinutes,
+    installation_name: installationName || null,
+    class_label: planningClassLabel(cl), teacher_label: planningTeacherLabel(),
+    updated_at: new Date().toISOString(), deleted: false
   });
   for (const [period, plan] of Object.entries(periodPlans)) {
     if (!plan.activity) continue;
-    await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, {
-      method: "POST",
-      body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, slot_id: newSlotId, period_number: parseInt(period, 10), apsa_name: plan.activity, installation_name: plan.installation || null, updated_at: new Date().toISOString(), deleted: false })
+    await enregistrerLigne("period_activities", {
+      id: crypto.randomUUID(), user_id: session.user_id, slot_id: newSlotId,
+      period_number: parseInt(period, 10), apsa_name: plan.activity,
+      installation_name: plan.installation || null,
+      updated_at: new Date().toISOString(), deleted: false
     });
   }
   try { await modeHorsConnexion?.synchroniser(); } catch { /* le rechargement vaut mieux que rien */ }
@@ -2425,15 +2415,13 @@ async function planningSetActivity(classGroup, slot, apsaName, onlyThisSlot) {
   for (const slotId of targetSlotIds) {
     const existing = planningActivities.find(a => a.slot_id === slotId && Number(a.period_number) === Number(planningPeriod));
     if (existing) {
-      await patchPlanningActivity(existing, { apsa_name: apsaName });
+      await enregistrerLigne("period_activities",
+        { ...existing, apsa_name: apsaName, updated_at: new Date().toISOString() });
     } else {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, {
-        method: "POST",
-        body: JSON.stringify({
-          id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
-          period_number: planningPeriod, apsa_name: apsaName,
-          updated_at: new Date().toISOString(), deleted: false
-        })
+      await enregistrerLigne("period_activities", {
+        id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
+        period_number: planningPeriod, apsa_name: apsaName,
+        updated_at: new Date().toISOString(), deleted: false
       });
     }
   }
@@ -2453,7 +2441,7 @@ async function planningClearActivity(classGroup, slot, onlyThisSlot) {
   for (const slotId of targetSlotIds) {
     const existing = planningActivities.find(a => a.slot_id === slotId && Number(a.period_number) === Number(planningPeriod));
     if (existing) {
-      await patchPlanningActivity(existing, { deleted: true });
+      await supprimerLigne("period_activities", existing.id);
     }
   }
   // Meme raison que rechargerPlanningApresEcriture : l'ecriture part en direct, la lecture vient

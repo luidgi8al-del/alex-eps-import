@@ -279,6 +279,62 @@
         }
       },
       {
+        // Tout le raccordement hors connexion passe desormais par ces trois fonctions. Le banc
+        // verifiait que les ecrans se construisent, pas qu'une saisie ressorte : c'est par ce
+        // trou que sont passees les regressions de la nuit du 3 au 4 septembre 2026.
+        nom: "Hors connexion · lecture d'une table non suivie",
+        action: async () => {
+          if (typeof f.lireTable !== "function") throw new Error("lireTable a disparu");
+          const appels = (f.__fauxServeur || {}).appels;
+          const avant = appels ? appels.length : null;
+          const lignes = await f.lireTable("table_inexistante", "classes?deleted=eq.false&select=*");
+          if (!Array.isArray(lignes)) throw new Error("lireTable doit rendre un tableau");
+          if (avant !== null && appels.length === avant) {
+            throw new Error("une table non suivie doit etre lue sur le serveur");
+          }
+        }
+      },
+      {
+        nom: "Hors connexion · une saisie part bien vers le serveur",
+        action: async () => {
+          if (typeof f.enregistrerLigne !== "function") throw new Error("enregistrerLigne a disparu");
+          const appels = (f.__fauxServeur || {}).appels;
+          const avant = appels ? appels.length : 0;
+          // Table volontairement non suivie : une table suivie partirait dans la file locale, et
+          // le faux serveur ne verrait rien - ce qui est justement le bon comportement.
+          await f.enregistrerLigne("table_inexistante", { id: "essai-banc", name: "Essai" });
+          if (appels && appels.length <= avant) throw new Error("rien n'a ete envoye");
+        }
+      },
+      {
+        nom: "Hors connexion · un effacement laisse une trace",
+        action: async () => {
+          if (typeof f.supprimerLigne !== "function") throw new Error("supprimerLigne a disparu");
+          await f.supprimerLigne("table_inexistante", "essai-banc");
+          const appels = ((f.__fauxServeur || {}).appels) || [];
+          const dernier = appels[appels.length - 1];
+          // Un DELETE effacerait la ligne pour de bon : elle reviendrait a la synchronisation
+          // suivante, puisque la copie locale la porte encore.
+          if (dernier && dernier.methode === "DELETE") {
+            throw new Error("l'effacement doit marquer la ligne, pas la retirer");
+          }
+        }
+      },
+      {
+        nom: "Hors connexion · une table suivie ne part pas en direct",
+        action: async () => {
+          if (typeof f.tableSuivie !== "function") throw new Error("tableSuivie a disparu");
+          if (!f.tableSuivie("classes")) return; // mode hors connexion absent : rien a verifier
+          const appels = (f.__fauxServeur || {}).appels || [];
+          const avant = appels.length;
+          await f.enregistrerLigne("classes", { id: "essai-suivi", name: "Essai" });
+          // Elle doit entrer dans la file locale. Un envoi direct court-circuiterait le moteur,
+          // et la saisie serait perdue des qu'il n'y a plus de reseau.
+          const envoisDirects = appels.slice(avant).filter(a => a.methode !== "GET");
+          if (envoisDirects.length) throw new Error("une table suivie doit passer par la file locale");
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

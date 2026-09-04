@@ -113,6 +113,16 @@ async function showUnssTab(mode) {
 }
 
 async function loadUnssStudents() {
+  if (tableSuivie("unss_students")) {
+    const lecture = await modeHorsConnexion.lire("unss_students", {
+      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""))
+        || String(a.first_name || "").localeCompare(String(b.first_name || ""))
+    });
+    unssStudents = lecture.rows;
+    return;
+  }
+  // Lecture paginee : le repertoire d'un etablissement depasse le millier de lignes, et
+  // PostgREST plafonne ce qu'il rend par requete.
   const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc,first_name.asc`);
   unssStudents = res.ok ? res.rows : [];
 }
@@ -125,8 +135,8 @@ let unssSlots = [];
  * inscrits une fois les voeux traites.
  */
 async function loadUnssSlots() {
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?deleted=eq.false&select=*&order=activity_name.asc`);
-  unssSlots = res.ok ? await res.json() : [];
+  unssSlots = await lireTable("unss_slots", "unss_slots?deleted=eq.false&select=*&order=activity_name.asc",
+    { trier: (a, b) => String(a.activity_name || "").localeCompare(String(b.activity_name || "")) });
 }
 
 const UNSS_SLOT_DAYS = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"];
@@ -168,8 +178,10 @@ function capitaliseJour(jour) {
 }
 
 async function loadUnssGroups() {
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc`);
-  unssGroups = res.ok ? await res.json() : [];
+  unssGroups = await lireTable("unss_groups",
+    "unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc",
+    { ou: g => g.active !== false,
+      trier: (a, b) => String(a.activity_name || "").localeCompare(String(b.activity_name || "")) });
 }
 
 /**
@@ -267,6 +279,9 @@ async function ouvrirChoixClassePourEleves() {
     })))
   });
   if (!creation.ok) { alert("Ajout non confirme. Rien n'a ete ajoute."); return; }
+  // Versement en lot direct, mais l'onglet Classe lit la copie locale : sans cette
+  // synchronisation, les eleves verses n'y apparaitraient qu'a la prochaine occasion.
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
 
   selectionEleves.clear();
   renderUnssTab();
@@ -450,9 +465,8 @@ function renderUnssTab() {
   wrap.querySelectorAll("[data-delete]").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       e.stopPropagation();
-      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${btn.dataset.delete}`, {
-        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-      });
+      try { await supprimerLigne("unss_students", btn.dataset.delete); }
+      catch (erreur) { alert(erreur.message); return; }
       await loadUnssStudents();
       renderUnssTab();
     });
@@ -501,9 +515,11 @@ function unssFileInput() {
  * prochaine synchro. Les lignes disparaissent partout, y compris sur Android.
  */
 async function viderRepertoireAs() {
-  const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?deleted=eq.false&select=student_id`);
-  if (!membershipsRes.ok) { alert("Impossible de verifier les inscriptions aux groupes. Rien n'a ete supprime."); return; }
-  const inscrits = new Set((await membershipsRes.json()).map(m => m.student_id));
+  let inscrits;
+  try {
+    const adhesions = await lireTable("unss_memberships", "unss_memberships?deleted=eq.false&select=student_id");
+    inscrits = new Set(adhesions.map(m => m.student_id));
+  } catch { alert("Impossible de verifier les inscriptions aux groupes. Rien n'a ete supprime."); return; }
 
   const aSupprimer = unssStudents.filter(s => !s.licensed && !inscrits.has(s.id));
   const preserves = unssStudents.length - aSupprimer.length;
@@ -539,6 +555,7 @@ Cette action est definitive.`
     }
     supprimes += lot.length;
   }
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
   await loadUnssStudents();
   renderUnssTab();
   alert(`${supprimes} eleve(s) supprime(s). ${preserves} conserve(s) (licencies AS et inscrits en groupe).`);
@@ -831,6 +848,11 @@ async function appliquerImport() {
       if (!res.ok) throw new Error(`Envoi interrompu apres ${envoyes} eleve(s).`);
       envoyes += lot.length;
     }
+    // L'import part en lots directs - mille fiches n'ont rien a faire dans une file d'attente
+    // pensee pour la saisie a l'unite, et il se fait devant un ordinateur, pas sur un terrain.
+    // Mais l'affichage, lui, lit la copie locale : sans synchronisation ici, la liste montrerait
+    // l'etat d'avant l'import.
+    try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
   } catch (e) {
     bouton.disabled = false; bouton.textContent = "Valider l'import";
     // Reimporter le meme fichier ne creera pas de doublon : les fiches deja envoyees seront
@@ -906,10 +928,8 @@ async function supprimerCreneau(slotId) {
 Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu restera lisible mais ne pointera plus sur un creneau.`
     : "";
   if (!confirm(`Supprimer le creneau "${slot ? slot.activity_name : ""}" ?${avertissement}`)) return;
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slotId)}`, {
-    method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-  });
-  if (!res.ok) { alert("Creneau non supprime. Verifiez votre connexion."); return; }
+  try { await supprimerLigne("unss_slots", slotId); }
+  catch (erreur) { alert(erreur.message || "Creneau non supprime. Verifiez votre connexion."); return; }
   await loadUnssSlots();
   renderUnssTab();
 }
@@ -956,19 +976,19 @@ function openUnssSlotPanel(slot) {
       comment: document.getElementById("unssSlotComment").value.trim(),
       updated_at: new Date().toISOString()
     };
-    let res;
-    if (isNew) {
+    try {
       // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
-      res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots`, {
-        method: "POST",
-        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, deleted: false, ...body })
-      });
-    } else {
-      res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_slots?id=eq.${encodeURIComponent(slot.id)}`, {
-        method: "PATCH", body: JSON.stringify(body)
-      });
+      if (isNew) {
+        await enregistrerLigne("unss_slots",
+          { id: crypto.randomUUID(), user_id: session.user_id, deleted: false, ...body });
+      } else {
+        await enregistrerLigne("unss_slots", { ...slot, ...body });
+      }
+    } catch (erreur) {
+      document.getElementById("unssSlotError").textContent =
+        erreur.message || "Creneau non enregistre. Verifiez votre connexion.";
+      return;
     }
-    if (!res.ok) { document.getElementById("unssSlotError").textContent = "Creneau non enregistre. Verifiez votre connexion."; return; }
     panel.style.display = "none";
     await loadUnssSlots();
     renderUnssTab();
@@ -1135,13 +1155,13 @@ function openUnssStudentPanel(student, licensing) {
       body.student_email = document.getElementById("unssEmailEleve").value || null;
       body.parent_email = document.getElementById("unssEmailParent").value || null;
     }
+    // Ligne entiere : la file d'attente ne porte pas de retouches, et un envoi differe qui
+    // n'emporterait que les champs saisis effacerait les autres.
     if (isNew) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-        method: "POST",
-        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body })
-      });
+      await enregistrerLigne("unss_students",
+        { id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body });
     } else {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${student.id}`, { method: "PATCH", body: JSON.stringify(body) });
+      await enregistrerLigne("unss_students", { ...student, ...body });
     }
     panel.style.display = "none";
     await loadUnssStudents();
@@ -1202,12 +1222,10 @@ function openUnssGroupEditPanel(group) {
       updated_at: new Date().toISOString()
     };
     if (group) {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, { method: "PATCH", body: JSON.stringify(body) });
+      await enregistrerLigne("unss_groups", { ...group, ...body });
     } else {
-      await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups`, {
-        method: "POST",
-        body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, active: true, deleted: false, ...body })
-      });
+      await enregistrerLigne("unss_groups",
+        { id: crypto.randomUUID(), user_id: session.user_id, active: true, deleted: false, ...body });
     }
     panel.style.display = "none";
     await loadUnssGroups();
@@ -1220,17 +1238,20 @@ async function openUnssGroupDetailPanel(group) {
   panel.innerHTML = `<h2>${group.activity_name}</h2><div class="muted">Chargement...</div>`;
   panel.style.display = "block";
 
-  const [membershipsRes, sessionsRes] = await Promise.all([
-    apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${group.id}&deleted=eq.false&select=*`),
-    apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions?group_id=eq.${group.id}&select=*&order=date_epoch_millis.desc`)
+  const [memberships, sessions] = await Promise.all([
+    lireTable("unss_memberships", `unss_memberships?group_id=eq.${group.id}&deleted=eq.false&select=*`,
+      { ou: m => m.group_id === group.id }),
+    lireTable("unss_sessions", `unss_sessions?group_id=eq.${group.id}&select=*&order=date_epoch_millis.desc`,
+      { ou: x => x.group_id === group.id,
+        trier: (a, b) => Number(b.date_epoch_millis || 0) - Number(a.date_epoch_millis || 0) })
   ]);
-  const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
-  const sessions = sessionsRes.ok ? await sessionsRes.json() : [];
   const studentIds = memberships.map(m => m.student_id);
   let members = [];
   if (studentIds.length > 0) {
-    const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
-    members = studentsRes.ok ? await studentsRes.json() : [];
+    members = await lireTable("unss_students",
+      `unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`,
+      { ou: e => studentIds.includes(e.id),
+        trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   }
 
   const schedule = [group.day_of_week, group.start_time, group.end_time].filter(Boolean).join(" · ");
@@ -1266,9 +1287,8 @@ async function openUnssGroupDetailPanel(group) {
     btn.addEventListener("click", async () => {
       const membership = memberships.find(m => m.student_id === btn.dataset.removeMember);
       if (membership) {
-        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?id=eq.${membership.id}`, {
-          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-        });
+        try { await supprimerLigne("unss_memberships", membership.id); }
+        catch (erreur) { alert(erreur.message); return; }
       }
       openUnssGroupDetailPanel(group);
     });
@@ -1277,9 +1297,8 @@ async function openUnssGroupDetailPanel(group) {
   document.getElementById("unssGroupEditBtn").addEventListener("click", () => openUnssGroupEditPanel(group));
   document.getElementById("unssGroupCloseBtn").addEventListener("click", () => panel.style.display = "none");
   document.getElementById("unssGroupDeleteBtn").addEventListener("click", async () => {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_groups?id=eq.${group.id}`, {
-      method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-    });
+    try { await supprimerLigne("unss_groups", group.id); }
+    catch (erreur) { alert(erreur.message); return; }
     panel.style.display = "none";
     await loadUnssGroups();
     renderUnssTab();
@@ -1289,8 +1308,9 @@ async function openUnssGroupDetailPanel(group) {
 async function openUnssAddMemberPanel(group, excludeIds) {
   const panel = document.getElementById("unssPanel");
   panel.innerHTML = `<h2>Ajouter un membre</h2><div class="muted">Chargement...</div>`;
-  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=*&order=last_name.asc`);
-  const students = res.ok ? await res.json() : [];
+  const students = await lireTable("unss_students",
+    "unss_students?deleted=eq.false&select=*&order=last_name.asc",
+    { trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   const candidates = students.filter(s => !excludeIds.includes(s.id));
   panel.innerHTML = `<h2>Ajouter un membre</h2>` +
     (candidates.length === 0
@@ -1323,10 +1343,12 @@ async function openUnssAddMemberPanel(group, excludeIds) {
       ).join("");
       zoneMembres.querySelectorAll("[data-add-member]").forEach(el => {
         el.addEventListener("click", async () => {
-          await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships`, {
-            method: "POST",
-            body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id, student_id: el.dataset.addMember, deleted: false })
-          });
+          try {
+            await enregistrerLigne("unss_memberships", {
+              id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id,
+              student_id: el.dataset.addMember, updated_at: new Date().toISOString(), deleted: false
+            });
+          } catch (erreur) { alert(erreur.message); return; }
           openUnssGroupDetailPanel(group);
         });
       });
@@ -1361,12 +1383,15 @@ async function loadUnssAppelMembers() {
   unssAppelMembers = [];
   unssAppelPresence = {};
   if (!unssAppelGroupId) return;
-  const membershipsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_memberships?group_id=eq.${unssAppelGroupId}&deleted=eq.false&select=*`);
-  const memberships = membershipsRes.ok ? await membershipsRes.json() : [];
+  const memberships = await lireTable("unss_memberships",
+    `unss_memberships?group_id=eq.${unssAppelGroupId}&deleted=eq.false&select=*`,
+    { ou: m => m.group_id === unssAppelGroupId });
   const studentIds = memberships.map(m => m.student_id);
   if (studentIds.length === 0) return;
-  const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`);
-  unssAppelMembers = studentsRes.ok ? await studentsRes.json() : [];
+  unssAppelMembers = await lireTable("unss_students",
+    `unss_students?id=in.(${studentIds.join(",")})&select=*&order=last_name.asc`,
+    { ou: e => studentIds.includes(e.id),
+      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   unssAppelMembers.forEach(s => { unssAppelPresence[s.id] = true; });
 }
 
@@ -1392,17 +1417,49 @@ function renderUnssAppelBody() {
   body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(); }));
   body.querySelectorAll("[data-absent]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.absent] = false; renderUnssAppelBody(); }));
   document.getElementById("unssAppelSaveBtn").addEventListener("click", async () => {
+    const saveButton = document.getElementById("unssAppelSaveBtn");
+    saveButton.disabled = true;
+    try {
+    // L'appel se fait dans un gymnase, c'est-a-dire souvent sans reseau. La seance et les
+    // presences sont retenues ici et partiront a la reconnexion ; la seance d'abord, car une
+    // presence qui arriverait seule designerait une seance inexistante.
     const sessionId = crypto.randomUUID();
-    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_sessions`, {
-      method: "POST",
-      body: JSON.stringify({ id: sessionId, user_id: session.user_id, group_id: unssAppelGroupId, date_epoch_millis: Date.now(), label: "" })
-    });
-    const rows = unssAppelMembers.map(s => ({
-      id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
-      student_id: s.id, present: !!unssAppelPresence[s.id]
-    }));
-    await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance`, { method: "POST", body: JSON.stringify(rows) });
-    document.getElementById("unssAppelOk").textContent = "Appel enregistre.";
+    const maintenant = new Date().toISOString();
+    try {
+      await enregistrerLigne("unss_sessions", {
+        id: sessionId, user_id: session.user_id, group_id: unssAppelGroupId,
+        date_epoch_millis: Date.now(), label: "", updated_at: maintenant, deleted: false
+      });
+      for (const eleve of unssAppelMembers) {
+        await enregistrerLigne("unss_attendance", {
+          id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
+          student_id: eleve.id, present: !!unssAppelPresence[eleve.id],
+          updated_at: maintenant, deleted: false
+        });
+      }
+    } catch (erreur) {
+      saveButton.disabled = false;
+      throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
+    }
+    // L'envoi des e-mails, lui, demande le reseau : sans lui l'appel est garde et les messages
+    // attendent. C'est exactement ce qu'il faut dire, plutot que d'annoncer un echec.
+    let dispatchResponse;
+    try {
+      dispatchResponse = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-absence-email`, { method: "POST", body: "{}" });
+    } catch (_) {
+      document.getElementById("unssAppelOk").textContent = "Appel enregistre. Les e-mails restent en attente et seront reessayes a la prochaine synchronisation.";
+      return;
+    }
+    const dispatch = await dispatchResponse.json().catch(() => ({}));
+    const message = !dispatchResponse.ok
+      ? "Appel enregistre. Les e-mails restent en attente et seront reessayes a la prochaine synchronisation."
+      : dispatch.failed > 0
+        ? `Appel enregistre. ${dispatch.sent || 0} e-mail(s) envoye(s), ${dispatch.failed} en attente.`
+        : `Appel enregistre. ${dispatch.sent || 0} e-mail(s) d'absence envoye(s).`;
+    document.getElementById("unssAppelOk").textContent = message;
+    } finally {
+      saveButton.disabled = false;
+    }
   });
 }
 
@@ -1418,8 +1475,9 @@ async function openUnssStudentStats(group, student, sessions) {
   const sessionIds = sessions.map(s => s.id);
   let attendance = [];
   if (sessionIds.length) {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_attendance?student_id=eq.${student.id}&session_id=in.(${sessionIds.join(",")})&select=*`);
-    attendance = res.ok ? await res.json() : [];
+    attendance = await lireTable("unss_attendance",
+      `unss_attendance?student_id=eq.${student.id}&session_id=in.(${sessionIds.join(",")})&select=*`,
+      { ou: a => a.student_id === student.id && sessionIds.includes(a.session_id) });
   }
 
   const presenceBySession = {};
@@ -1460,3 +1518,11 @@ async function openUnssStudentStats(group, student, sessions) {
   document.getElementById("closeStudentStats").onclick = () => openUnssGroupDetailPanel(group);
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+
+
+/** Redessine ASLVH quand une synchronisation ramene des saisies faites ailleurs. */
+globalThis.rafraichirAslvhApresSynchro = async () => {
+  if (!document.getElementById("unssList")) return;
+  await Promise.all([loadUnssStudents(), loadUnssSlots(), loadUnssGroups()]);
+  renderUnssTab();
+};
