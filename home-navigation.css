@@ -225,6 +225,3 @@ body #planningPeriodBar::after {
   pointer-events: none;
 }
 
-/* Toutes periodes sur le planning global EPS : quatre lignes dans une case etroite. Un cran plus
-   petit que le libelle de classe, qui doit rester ce qu'on lit en premier. */
-.planningWrap .planningBlock .apPeriodeFit { font-size:10px; line-height:1.25; opacity:0.9; }

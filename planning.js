@@ -1593,11 +1593,12 @@ function renderPlanningEpsGrid() {
       const detailPeriodes = planningPeriod === 0
         ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "A definir"}`).join(" — ")
         : "";
-      const lignesPeriodes = planningPeriod !== 0 ? "" : activitesDuCreneau.map(a => {
-        const nom = (a.apsa_name || "").trim() || "A definir";
-        const complet = `P${a.period_number} · ${nom}`;
-        return `<span class="apFit apPeriodeFit" data-periode="P${a.period_number}" data-full="${planningText(complet)}">${planningText(complet)}</span>`;
-      }).join("");
+      // "Toutes periodes" ne porte plus les quatre activites empilees. Essayees en usage, elles
+      // remplissaient la case de "P1 · B / P2 · A / P3 · E / P4 · R" - quatre lignes tronquees a
+      // une lettre, ou l'on ne lisait plus aucune activite. Une periode choisie en montre une,
+      // lisible ; "toutes periodes" sert a voir l'occupation, pas le contenu. Le detail des
+      // quatre reste dans l'infobulle de la case.
+      const lignesPeriodes = "";
       // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
       const [fond, encre] = couleurEnseignant(s.teacher_label);
       const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
@@ -1744,16 +1745,6 @@ function variantesActivite(libelle) {
 }
 
 /**
- * Comme variantesActivite, mais le numero de periode ne se perd jamais : c'est lui qui donne son
- * sens a la ligne. "Esc" seul ne dit pas de quelle periode il s'agit, "P2 · Esc" si.
- */
-function variantesActivitePeriode(prefixe, complet) {
-  const nom = String(complet || "").split(" · ").slice(1).join(" · ").trim();
-  return [...new Set([complet, `${prefixe} · ${nom.slice(0, 3)}`, `${prefixe} · ${nom.slice(0, 1)}`, prefixe]
-    .map(x => x.trim()).filter(Boolean))];
-}
-
-/**
  * Reduit chaque libelle jusqu'a ce qu'il tienne dans sa case.
  *
  * Les cases d'une meme journee se partagent la largeur entre les collegues qui se chevauchent :
@@ -1764,9 +1755,7 @@ function variantesActivitePeriode(prefixe, complet) {
 function ajusterLibellesCases(wrap) {
   wrap.querySelectorAll(".clFit, .apFit").forEach(el => {
     const complet = el.dataset.full || "";
-    const essais = el.classList.contains("clFit") ? variantesClasse(complet)
-      : el.classList.contains("apPeriodeFit") ? variantesActivitePeriode(el.dataset.periode || "", complet)
-      : variantesActivite(complet);
+    const essais = el.classList.contains("clFit") ? variantesClasse(complet) : variantesActivite(complet);
     el.title = complet;
     for (const essai of essais) {
       el.textContent = essai;
