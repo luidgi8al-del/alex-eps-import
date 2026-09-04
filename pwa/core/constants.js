@@ -13,6 +13,14 @@ export const DEFAULT_BATCH_SIZE = 40;
  */
 export const PAGE_LECTURE = 500;
 export const MAX_RETRY_DELAY_MS = 5 * 60 * 1000;
+/**
+ * Nombre de tentatives avant d'abandonner l'envoi d'une saisie.
+ *
+ * Sans plafond, un refus que l'adaptateur ne sait pas nommer revient indefiniment dans la file.
+ * C'est ce qui est arrive le 04/09/2026 : un desaccord de version rendu en HTTP 500 au lieu de
+ * 409, donc pris pour une panne passagere, et repris cinquante-huit mille fois en une heure.
+ */
+export const MAX_TENTATIVES_ENVOI = 6;
 export const SYNC_EVENT = "eps:pwa-sync-state";
 export function recordKey(entity, id) {
   if (!entity || id === undefined || id === null || id === "") throw new TypeError("Une entite et un identifiant sont obligatoires");

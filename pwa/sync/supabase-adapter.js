@@ -148,23 +148,30 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       body: JSON.stringify(nettoyer(corps))
     });
 
-    if (reponse.status === 409 || reponse.status === 400) {
-      const texte = await reponse.text();
+    if (!reponse.ok) {
+      if (reponse.status === 401) throw new Error("Session expiree.");
+
+      // Un droit refuse n'est pas une panne : reessayer ne changera rien. Traite comme une
+      // erreur, l'operation reviendrait indefiniment dans la file, et le professeur verrait une
+      // synchronisation qui ne finit jamais sans jamais savoir pourquoi.
+      if (reponse.status === 403) {
+        return { status: "rejected", reason: "droits insuffisants",
+                 serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
+      }
+
+      // Le refus de version est reconnu quel que soit le code HTTP.
+      //
+      // Il ne l'etait que sur 400 et 409. Or le declencheur leve le code SQL 40001, que PostgREST
+      // rend en 500 : la reconnaissance ne se declenchait donc jamais. Un desaccord de version -
+      // situation normale, prevue, faite pour devenir un conflit a trancher - etait pris pour une
+      // panne serveur, remis dans la file, et repris sans fin. Cinquante-huit mille refus en une
+      // heure, et l'instance a genoux.
+      const texte = await reponse.text().catch(() => "");
       if (texte.includes("Version perimee") || texte.includes("40001")) {
         return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id) };
       }
       throw new Error(`Enregistrement refuse (HTTP ${reponse.status}).`);
     }
-    if (reponse.status === 401) throw new Error("Session expiree.");
-
-    // Un droit refuse n'est pas une panne : reessayer ne changera rien. Traite comme une erreur,
-    // l'operation reviendrait indefiniment dans la file, et le professeur verrait une
-    // synchronisation qui ne finit jamais sans jamais savoir pourquoi.
-    if (reponse.status === 403) {
-      return { status: "rejected", reason: "droits insuffisants",
-               serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
-    }
-    if (!reponse.ok) throw new Error(`Enregistrement refuse (HTTP ${reponse.status}).`);
 
     const [ligne] = await reponse.json();
     // Une modification qui ne touche aucune ligne repond 200 avec une liste vide : soit la ligne

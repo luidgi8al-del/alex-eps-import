@@ -327,3 +327,34 @@ test("une ligne sans date ne devient pas le repere de reprise", async () => {
     assertEgal(page.cursor.classes, undefined, "un repere inutilisable condamnerait les lectures suivantes");
   } finally { reseau.rendre(); }
 });
+
+/**
+ * Un desaccord de version est un conflit, quel que soit le code HTTP.
+ *
+ * Le declencheur de la base leve le code SQL 40001, que PostgREST rend en HTTP 500. La
+ * reconnaissance ne portait que sur 400 et 409 : le refus etait donc pris pour une panne
+ * serveur, l'operation remise dans la file, et reprise sans fin. Cinquante-huit mille refus en
+ * une heure le 04/09/2026, et l'instance a genoux - pour une situation parfaitement normale.
+ */
+test("un refus de version est un conflit, meme rendu en HTTP 500", async () => {
+  const reseau = fauxReseau(({ url }) => url.includes("select=")
+    ? reponse([{ id: "c1", version: 8, updated_at: "2026-09-04T10:00:00+00:00" }])
+    : reponse({ message: "Version perimee : la ligne a ete modifiee ailleurs (attendu 5, actuel 8)",
+                code: "40001" }, 500));
+  try {
+    const resultat = await adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "update", baseVersion: 5, data: { name: "6e1" }
+    });
+    assertEgal(resultat.status, "conflict",
+      "sinon l'operation repart dans la file et y revient indefiniment");
+  } finally { reseau.rendre(); }
+});
+
+test("un refus que rien ne nomme reste une erreur", async () => {
+  const reseau = fauxReseau(() => reponse({ message: "boom" }, 500));
+  try {
+    await assertRejette(() => adaptateur().pushOperation({
+      entity: "classes", id: "c1", action: "update", baseVersion: 5, data: { name: "6e1" }
+    }), "une panne serveur doit rester une erreur, donc une reprise");
+  } finally { reseau.rendre(); }
+});

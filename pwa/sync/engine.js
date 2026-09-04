@@ -1,4 +1,4 @@
-import { DEFAULT_BATCH_SIZE, PAGE_LECTURE, SYNC_STATE } from "../core/constants.js";
+import { DEFAULT_BATCH_SIZE, MAX_TENTATIVES_ENVOI, PAGE_LECTURE, SYNC_STATE } from "../core/constants.js";
 import { publishSyncState } from "../core/events.js";
 import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
@@ -128,7 +128,22 @@ export class OfflineSyncEngine {
           }
           if (result.record) await saveLocalRecord(result.record);
           await acknowledgeOperation(operation.opId);
-        } catch (error) { await deferOperation(operation, error); }
+        } catch (error) {
+          // Une operation qui echoue sans fin doit finir par s'arreter.
+          //
+          // Un refus que l'adaptateur ne sait pas nommer etait repris indefiniment : chaque
+          // reprise echouait, en occupant le serveur, sans que personne l'apprenne jamais. Au
+          // bout de quelques tentatives on cesse, et le refus devient visible dans le panneau
+          // des conflits - avec son message. Mieux vaut un probleme qu'on voit qu'une boucle
+          // qu'on ne voit pas.
+          if (operation.attempts + 1 >= MAX_TENTATIVES_ENVOI) {
+            await storeRejection({ operation, serverRecord: null,
+              reason: `abandon apres ${operation.attempts + 1} tentatives : ${error?.message || error}` });
+            await acknowledgeOperation(operation.opId);
+            continue;
+          }
+          await deferOperation(operation, error);
+        }
       }
       batch = await pendingOperations(this.#batchSize);
     }
