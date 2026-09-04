@@ -316,3 +316,32 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
    inferieure au bouton courant, et une largeur qui suit le texte au lieu de s'etirer. */
 .dashActions > button { margin-top:0; padding:7px 13px; font-size:13px; font-weight:600;
                         border-radius:8px; white-space:nowrap; }
+
+
+/* ---- Modifier la classe : un tableau large dans une fenetre ---- */
+
+/* Le voile partage sa feuille avec la recherche, large de 620 px : le tableau des eleves y etait
+   ecrase au point de ne plus montrer qu'une lettre par nom. Cette fenetre-la prend la place
+   disponible, sans jamais deborder de l'ecran. */
+#editImportOverlay .searchSheet { max-width:min(1180px, 96vw); }
+
+/* Neuf colonnes ne tiennent pas sur un ecran etroit, et les serrer davantage ne rendrait rien
+   lisible. On les laisse a leur largeur utile et le tableau glisse lateralement. */
+.tableDefilante { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.tableDefilante > table { min-width:940px; }
+
+/* Un cran plus petit que le reste du site : c'est une grille de saisie, pas un texte a lire. */
+#editImportPanel th, #editImportPanel td { font-size:12px; padding:7px 5px; }
+#editImportPanel th { font-size:10px; }
+#editImportPanel td input, #editImportPanel td select { font-size:12px; padding:6px 8px; }
+
+/* Sans largeur minimale, une colonne se reduit a la taille de son contenu le plus court : c'est
+   ainsi qu'un nom devenait "A." et une adresse "Parer". */
+#editImportPanel td:nth-child(1) input { min-width:120px; }
+#editImportPanel td:nth-child(2) input { min-width:110px; }
+#editImportPanel td:nth-child(3) select { min-width:96px; }
+#editImportPanel td:nth-child(4) select { min-width:110px; }
+#editImportPanel td:nth-child(5) input { min-width:170px; }
+#editImportPanel td:nth-child(6) input { min-width:170px; }
+#editImportPanel td:nth-child(7) input { min-width:140px; }
+#editImportPanel td:nth-child(8) input { min-width:130px; }

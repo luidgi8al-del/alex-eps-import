@@ -428,6 +428,15 @@
             throw new Error("le panneau n'est pas dans la fenetre");
           }
           if (f.getComputedStyle(voile).position !== "fixed") throw new Error("la fenetre ne recouvre pas la page");
+
+          // Neuf colonnes dans une feuille de 620 px : les noms se reduisaient a une lettre. La
+          // fenetre prend la place disponible, et le tableau glisse au lieu d'etre ecrase.
+          const feuille = voile.querySelector(".searchSheet");
+          if (feuille.getBoundingClientRect().width < 700) throw new Error("la fenetre est restee etroite");
+          const zone = f.document.querySelector("#editImportPanel .tableDefilante");
+          if (!zone) throw new Error("le tableau n'a plus de zone de defilement");
+          if (f.getComputedStyle(zone).overflowX !== "auto") throw new Error("le tableau ne glisse pas");
+
           f.document.getElementById("closeEditBtn")?.click();
           await attendre(() => !f.document.getElementById("editImportOverlay").classList.contains("open"),
             "la fenetre ne se ferme pas", 4000);

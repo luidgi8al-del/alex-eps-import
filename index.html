@@ -359,10 +359,12 @@
             </div>
             <label for="editSchoolYear">Annee scolaire</label>
             <input type="text" id="editSchoolYear">
-            <table style="margin-top:16px">
-              <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th>Naissance</th><th>Téléphone parent</th><th></th></tr></thead>
-              <tbody id="editStudentsBody"></tbody>
-            </table>
+            <div class="tableDefilante">
+              <table style="margin-top:16px">
+                <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th><th>Naissance</th><th>Téléphone parent</th><th></th></tr></thead>
+                <tbody id="editStudentsBody"></tbody>
+              </table>
+            </div>
             <button type="button" class="secondary" id="addStudentBtn" style="margin-top:10px">Ajouter un eleve</button>
             <button id="saveEditBtn">Enregistrer</button>
             <button class="secondary" id="closeEditBtn">Fermer</button>
