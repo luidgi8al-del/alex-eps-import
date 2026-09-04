@@ -461,6 +461,14 @@
           if (!f.document.querySelector("#unssPanel input[type=search]")) {
             throw new Error("le champ de recherche a disparu");
           }
+          // Et le meme tableau que la Liste eleve : dans un repertoire de mille huit cents noms,
+          // une liste de noms seuls ne permet pas de distinguer deux homonymes.
+          const colonnes = [...f.document.querySelectorAll("#unssPanel .eleveTable thead th")]
+            .map(t => t.textContent.trim().replace(/[▲▼]/g, "").trim());
+          ["Nom", "Prenom", "Naissance", "Division", "Sexe"].forEach(attendue => {
+            if (!colonnes.includes(attendue)) throw new Error(`colonne ${attendue} absente du tableau de licence`);
+          });
+          if (!f.document.getElementById("unssPickCount")) throw new Error("le compteur a disparu");
           f.document.getElementById("unssPickCancel")?.click();
           await attendre(() => !f.document.getElementById("unssPanelOverlay").classList.contains("open"),
             "la fenetre ASLVH ne se ferme pas", 4000);

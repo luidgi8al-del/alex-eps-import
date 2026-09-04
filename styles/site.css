@@ -352,3 +352,9 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 /* Plus large que la feuille de recherche, moins que le tableau des eleves : ces panneaux portent
    des listes de noms avec des boutons a droite, pas neuf colonnes de saisie. */
 #unssPanelOverlay .searchSheet { max-width:min(900px, 96vw); }
+
+
+/* Une ligne du tableau de licence se clique entierement : c'est l'eleve qu'on choisit, pas un
+   bouton pose dessus. */
+.unssPickLigne { cursor:pointer; }
+.unssPickLigne:hover { background:#F3F6F8; }

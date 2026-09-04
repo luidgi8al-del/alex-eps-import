@@ -1030,14 +1030,29 @@ function chercherEleves(eleves, recherche) {
     .map(r => r.eleve);
 }
 
+/** Page courante de la fenetre de licence. Le repertoire depasse le millier de fiches. */
+let pageLicence = 1;
+
+/**
+ * Choisir un eleve a licencier, dans le meme tableau que la Liste eleve.
+ *
+ * La fenetre n'affichait qu'une liste de noms : dans un repertoire de mille huit cents eleves,
+ * deux "BENNANI Lina" ne se distinguent pas. On y retrouve donc les memes colonnes qu'ailleurs -
+ * naissance, division, sexe, adresses - et la meme pagination, pour reconnaitre l'eleve avant de
+ * le licencier plutot qu'apres.
+ *
+ * Sans case a cocher : licencier ouvre la fiche de l'eleve pour y saisir categorie, voeux et
+ * taille de maillot. C'est un geste par eleve, pas une selection multiple.
+ */
 function openUnssPickPanel() {
-  const panel = document.getElementById("unssPanel");
+  pageLicence = 1;
   const candidates = unssStudents.filter(s => !s.licensed);
+  const panel = document.getElementById("unssPanel");
   panel.innerHTML = `<h2>Choisir un eleve a licencier</h2>` +
     (candidates.length === 0
       ? `<div class="muted">Tous les eleves du repertoire sont deja licencies, ou le repertoire Eleve LVH est vide. Importez-le d'abord dans cet onglet.</div>`
       : `<input type="search" id="unssPickSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
-         <div class="muted" id="unssPickCount" style="margin:6px 0"></div>
+         <div class="muted" id="unssPickCount" style="margin:8px 0"></div>
          <div id="unssPickResults"></div>`
     ) +
     `<button class="secondary" id="unssPickCancel" style="margin-top:14px">Annuler</button>`;
@@ -1047,35 +1062,56 @@ function openUnssPickPanel() {
   if (resultats) {
     const champ = document.getElementById("unssPickSearch");
     const compteur = document.getElementById("unssPickCount");
-    // Au-dela de cette limite on n'affiche rien tant que rien n'est tape : peindre un millier
-    // de cartes fige la page, et une liste aussi longue ne se parcourt pas a l'oeil.
-    const LIMITE_AFFICHAGE = 50;
+
     const afficher = () => {
-      const recherche = champ.value.trim();
-      const trouves = chercherEleves(candidates, recherche);
-      if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
-        compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
-        resultats.innerHTML = "";
-        return;
-      }
-      const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
+      const trouves = trierEleves(chercherEleves(candidates, champ.value.trim()));
+      const totalPages = Math.max(1, Math.ceil(trouves.length / TAILLE_PAGE_LISTE));
+      if (pageLicence > totalPages) pageLicence = totalPages;
+      const debut = (pageLicence - 1) * TAILLE_PAGE_LISTE;
+      const page = trouves.slice(debut, debut + TAILLE_PAGE_LISTE);
+
       compteur.textContent = trouves.length === 0
         ? "Aucun eleve ne correspond."
-        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
-      resultats.innerHTML = affiches.map(s =>
-        `<div class="card unssPick" data-pick="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
-      ).join("");
-      resultats.querySelectorAll("[data-pick]").forEach(el => {
-        el.addEventListener("click", () => {
-          openUnssStudentPanel(unssStudents.find(s => s.id === el.dataset.pick), true);
-        });
-      });
+        : `${debut + 1}–${debut + page.length} sur ${trouves.length} eleve(s) a licencier`;
+      resultats.innerHTML = paginationHtml(pageLicence, totalPages, "licence")
+        + tableauLicenceHtml(page);
+
+      resultats.querySelectorAll("[data-licence-page]").forEach(b =>
+        b.addEventListener("click", () => { pageLicence = Number(b.dataset.licencePage); afficher(); }));
+      resultats.querySelectorAll("[data-licence-tri]").forEach(b =>
+        b.addEventListener("click", () => {
+          const cle = b.dataset.licenceTri;
+          triEleve = { cle, croissant: triEleve.cle === cle ? !triEleve.croissant : true };
+          afficher();
+        }));
+      resultats.querySelectorAll("[data-licence-eleve]").forEach(ligne =>
+        ligne.addEventListener("click", () => {
+          openUnssStudentPanel(unssStudents.find(s => s.id === ligne.dataset.licenceEleve), true);
+        }));
     };
-    champ.addEventListener("input", afficher);
+
+    champ.addEventListener("input", () => { pageLicence = 1; afficher(); });
     afficher();
     champ.focus();
   }
   document.getElementById("unssPickCancel").addEventListener("click", () => fermerFenetreUnss());
+}
+
+/** Le tableau de la fenetre de licence : memes colonnes que la Liste eleve, sans case a cocher. */
+function tableauLicenceHtml(eleves) {
+  let html = `<div class="tableDefilante"><table class="eleveTable"><thead><tr>`;
+  COLONNES_ELEVE.forEach(c => {
+    const actif = triEleve.cle === c.cle;
+    html += `<th><button type="button" class="eleveTri${actif ? " actif" : ""}" data-licence-tri="${c.cle}">`
+      + `${planningText(c.titre)}${actif ? (triEleve.croissant ? " ▲" : " ▼") : ""}</button></th>`;
+  });
+  html += `</tr></thead><tbody>`;
+  eleves.forEach(e => {
+    html += `<tr class="unssPickLigne" data-licence-eleve="${e.id}">`
+      + COLONNES_ELEVE.map(c => `<td>${planningText(c.texte ? c.texte(e) : c.valeur(e))}</td>`).join("")
+      + `</tr>`;
+  });
+  return html + `</tbody></table></div>`;
 }
 
 /** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
