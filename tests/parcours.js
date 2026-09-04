@@ -475,6 +475,30 @@
         }
       },
       {
+        // "Utiliser cette grille" designait la grille a ouvrir, et openEvaluationPanel effacait
+        // la demande une ligne plus loin : la grille creee se refermait aussitot, et l'ecran
+        // paraissait renvoyer sur une autre classe.
+        nom: "COURS · une grille creee s'ouvre depliee",
+        action: async () => {
+          await onglet("cours");
+          if (typeof f.openEvaluationPanel !== "function") throw new Error("openEvaluationPanel a disparu");
+          const cycle = { id: "cy-essai", class_id: "c1", apsa_name: "Natation" };
+          await f.openEvaluationPanel(cycle, { type: "FINALE", id: "grille-essai" });
+          await attendre(() => rempli($("evaluationPanel")), "le panneau d'evaluations reste vide", 6000);
+          const texte = $("evaluationPanel").innerText;
+          const finale = texte.indexOf("Evaluation finale");
+          const ponctuelle = texte.indexOf("Evaluation ponctuelle");
+          if (finale < 0 || ponctuelle < 0) throw new Error("les deux sections doivent etre listees");
+          // La section demandee est depliee : elle seule propose de creer une grille.
+          if (!texte.slice(finale).includes("Nouvelle grille")) {
+            throw new Error("la section demandee ne s'ouvre pas");
+          }
+          if (texte.slice(ponctuelle, finale).includes("Nouvelle grille")) {
+            throw new Error("une section non demandee ne doit pas s'ouvrir");
+          }
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

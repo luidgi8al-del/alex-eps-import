@@ -501,10 +501,15 @@ let evalOpenedId = null;
 let evalCriteria = [];
 let evalScores = {};         // "criterionId|studentId" -> {id, points}
 
-async function openEvaluationPanel(cycleRow) {
+/**
+ * @param {{type?: string, id?: string}} [ouverture] grille a deplier d'emblee. Sans cela, creer
+ *   une grille depuis un modele la refermait aussitot : utiliserModele designait la nouvelle,
+ *   et ce panneau effacait la demande une ligne plus loin.
+ */
+async function openEvaluationPanel(cycleRow, ouverture) {
   evalCourse = cycleRow;
-  evalExpandedType = null;
-  evalOpenedId = null;
+  evalExpandedType = ouverture?.type ?? null;
+  evalOpenedId = ouverture?.id ?? null;
   const panel = document.getElementById("evaluationPanel");
   panel.style.display = "block";
   panel.innerHTML = '<div class="muted">Chargement...</div>';

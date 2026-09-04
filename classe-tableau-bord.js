@@ -743,11 +743,13 @@ async function utiliserModele(cycle, modele, bouton) {
       await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, { method: "POST", body: JSON.stringify(grille) });
       await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, { method: "POST", body: JSON.stringify(criteres) });
     }
-    evalExpandedType = modele.type;
-    evalOpenedId = id;
     showTab("cours");
     showCoursTab("cours");
-    await openEvaluationPanel(cycle);
+    // La grille qu'on vient de creer, depliee. Et l'ecran amene dessus : la liste des cycles se
+    // redessine au-dessus du panneau, triee par date de modification, si bien qu'on se croyait
+    // renvoye sur une autre classe alors que la bonne grille etait plus bas.
+    await openEvaluationPanel(cycle, { type: modele.type, id });
+    document.getElementById("evaluationPanel")?.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) {
     bouton.disabled = false; bouton.textContent = "Utiliser cette grille";
     bouton.insertAdjacentHTML("afterend", `<div class="error">Grille non créée : ${planningText(e.message)}</div>`);
