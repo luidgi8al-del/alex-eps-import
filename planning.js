@@ -1593,12 +1593,18 @@ function renderPlanningEpsGrid() {
       const detailPeriodes = planningPeriod === 0
         ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "A definir"}`).join(" — ")
         : "";
-      // "Toutes periodes" ne porte plus les quatre activites empilees. Essayees en usage, elles
-      // remplissaient la case de "P1 · B / P2 · A / P3 · E / P4 · R" - quatre lignes tronquees a
-      // une lettre, ou l'on ne lisait plus aucune activite. Une periode choisie en montre une,
-      // lisible ; "toutes periodes" sert a voir l'occupation, pas le contenu. Le detail des
-      // quatre reste dans l'infobulle de la case.
-      const lignesPeriodes = "";
+      // "Toutes periodes" empile les activites de l'annee, sans leur numero de periode.
+      //
+      // Elles ont d'abord porte "P1 · ", "P2 · " devant chaque nom : dans une colonne de deux
+      // centimetres, ce prefixe mangeait toute la largeur et il ne restait qu'une lettre
+      // d'activite. Le numero n'apprenait rien de plus que l'ordre des lignes, qui le dit deja.
+      // Sans lui, chaque nom garde la place de s'abreger en quelque chose de lisible - "Rug",
+      // "Esc" - comme sur une periode choisie. L'infobulle de la case porte le detail complet,
+      // numeros compris.
+      const lignesPeriodes = planningPeriod !== 0 ? "" : activitesDuCreneau.map(a => {
+        const nom = (a.apsa_name || "").trim() || "A definir";
+        return `<span class="apFit apPeriodes" data-full="${planningText(nom)}">${planningText(nom)}</span>`;
+      }).join("");
       // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
       const [fond, encre] = couleurEnseignant(s.teacher_label);
       const style = conflict ? "" : `background:${fond}; border-left-color:${encre}; color:${encre};`;
