@@ -381,6 +381,23 @@
         }
       },
       {
+        // Le repertoire AS ecrit le sexe "M" ou "F", les eleves de classe "GARCON" ou "FILLE".
+        // Le versement recopiait tel quel : aucune option ne reconnaissait la valeur, et le
+        // navigateur affichait la premiere - "FILLE" - pour tous les eleves verses.
+        nom: "Le sexe se traduit entre le repertoire AS et les classes",
+        action: async () => {
+          if (typeof f.sexFromValue !== "function") throw new Error("sexFromValue a disparu");
+          if (f.sexFromValue("M") !== "GARCON") throw new Error("M doit devenir GARCON");
+          if (f.sexFromValue("F") !== "FILLE") throw new Error("F doit devenir FILLE");
+          if (f.sexFromValue("") !== null) throw new Error("une valeur vide n'est pas un sexe");
+
+          // Et l'affichage ne doit jamais faire passer une valeur inconnue pour la premiere option.
+          const ligne = f.editStudentRowHtml(0, { last_name: "X", first_name: "Y", sex: "M" });
+          const selectionne = (ligne.match(/<option value="(\w+)" selected>/) || [])[1];
+          if (selectionne === "FILLE") throw new Error("un garcon ne doit pas s'afficher en fille");
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

@@ -589,8 +589,13 @@ let editStudents = [];
 let editStudentsToDelete = [];
 
 function editStudentRowHtml(index, s) {
+  // Une valeur que la liste ne connait pas ne doit pas se faire passer pour la premiere option :
+  // c'est ainsi que des garcons verses depuis le repertoire AS, ou le sexe s'ecrit "M", se sont
+  // tous affiches en "FILLE". On la ramene a une valeur connue, ou a "non precise" a defaut.
+  const sexe = ["FILLE", "GARCON", "NON_PRECISE"].includes(s.sex)
+    ? s.sex : (sexFromValue(s.sex) || "NON_PRECISE");
   const sexOptions = ["FILLE", "GARCON", "NON_PRECISE"].map(v =>
-    `<option value="${v}"${v === s.sex ? " selected" : ""}>${v}</option>`
+    `<option value="${v}"${v === sexe ? " selected" : ""}>${v}</option>`
   ).join("");
   const levelOptions = LEVEL_OPTIONS.map(opt =>
     `<option value="${opt.value}"${opt.value === s.eps_level ? " selected" : ""}>${opt.label}</option>`

@@ -272,7 +272,12 @@ async function ouvrirChoixClassePourEleves() {
     method: "POST",
     body: JSON.stringify(aVerser.map(e => ({
       id: crypto.randomUUID(), class_id: classe.id, user_id: session.user_id,
-      last_name: e.last_name, first_name: e.first_name, sex: e.sex || "",
+      last_name: e.last_name, first_name: e.first_name,
+      // Les deux tables n'encodent pas le sexe pareil : le repertoire AS dit "M" ou "F", les
+      // eleves de classe disent "GARCON" ou "FILLE". Recopier tel quel produisait une valeur
+      // qu'aucune option de la liste ne reconnait - et le navigateur affichait alors la
+      // premiere, "FILLE", pour tout le monde.
+      sex: sexFromValue(e.sex) || "NON_PRECISE",
       birth_date_epoch_millis: e.birth_date_epoch_millis || null,
       student_email: e.student_email || null, parent1_email: e.parent_email || null,
       updated_at: maintenant, deleted: false
