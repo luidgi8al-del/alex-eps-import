@@ -745,11 +745,15 @@ async function utiliserModele(cycle, modele, bouton) {
     }
     showTab("cours");
     showCoursTab("cours");
-    // La grille qu'on vient de creer, depliee. Et l'ecran amene dessus : la liste des cycles se
-    // redessine au-dessus du panneau, triee par date de modification, si bien qu'on se croyait
-    // renvoye sur une autre classe alors que la bonne grille etait plus bas.
+    // L'ordre compte. showCoursTab lance le rechargement de la liste des cycles sans l'attendre :
+    // elle se redessinait donc apres coup, au-dessus du panneau, et repoussait la grille hors de
+    // vue - on se croyait renvoye sur une autre classe alors que la bonne grille etait plus bas.
+    // On attend la liste, puis on ouvre la grille creee, puis on amene l'ecran dessus, une fois
+    // la mise en page posee.
+    await loadCycles();
     await openEvaluationPanel(cycle, { type: modele.type, id });
-    document.getElementById("evaluationPanel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    requestAnimationFrame(() =>
+      document.getElementById("evaluationPanel")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   } catch (e) {
     bouton.disabled = false; bouton.textContent = "Utiliser cette grille";
     bouton.insertAdjacentHTML("afterend", `<div class="error">Grille non créée : ${planningText(e.message)}</div>`);
