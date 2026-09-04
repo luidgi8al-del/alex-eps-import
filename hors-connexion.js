@@ -144,7 +144,7 @@ function rafraichirApresSynchro() {
  */
 let modeHorsConnexion = null;
 /** Cadence de rafraichissement pendant une synchronisation en cours. */
-const DELAI_RAFRAICHISSEMENT_MS = 1500;
+const DELAI_RAFRAICHISSEMENT_MS = 3000;
 let dernierRafraichissement = 0;
 async function demarrerModeHorsConnexion() {
   if (modeHorsConnexion) return modeHorsConnexion;
@@ -170,6 +170,12 @@ async function demarrerModeHorsConnexion() {
       // Pendant une longue premiere lecture, l'ecran restait vide jusqu'au bout, puis se
       // remplissait d'un coup. On le redessine au fil de l'eau, sans le faire a chaque page :
       // le rendu coute plus cher que la lecture qui vient de l'alimenter.
+      //
+      // Ce rafraichissement doit rester local. Il ne l'etait pas : la liste des classes relisait
+      // le contexte d'equipe a chaque passage, soit une fonction SQL couteuse toutes les
+      // secondes et demie pendant plusieurs minutes. Le contexte est desormais retenu le temps
+      // de la session (voir loadTeamContext). Avant d'ajouter un ecran ici, verifier qu'il se
+      // redessine sans rien demander au serveur.
       if (detail.state === "syncing" && detail.lues) {
         const maintenant = Date.now();
         if (maintenant - dernierRafraichissement < DELAI_RAFRAICHISSEMENT_MS) return;

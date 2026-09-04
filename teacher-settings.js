@@ -51,7 +51,36 @@
   function settingsEscape(value) { return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
   function settingsSection(id,title,body) { return `<details class="card settingsSection" id="${id}"><summary>${title}</summary><div class="settingsContents">${body}</div></details>`; }
   function nestedSettingsSection(id,title,body) { return `<details class="settingsNested" id="${id}"><summary>${title}</summary><div class="settingsNestedContents">${body}</div></details>`; }
+  /**
+   * Contexte d'equipe du compte connecte, retenu le temps de la session.
+   *
+   * C'est une interrogation couteuse - une fonction SQL qui parcourt les profils et
+   * l'etablissement - et elle ne change pas d'une minute a l'autre. Elle etait pourtant relancee
+   * a chaque affichage de la liste des classes, donc a chaque rafraichissement d'ecran pendant
+   * une synchronisation : des dizaines d'appels pour une reponse identique, sur une instance qui
+   * n'en demandait pas tant.
+   *
+   * Le cache est indexe par compte : basculer sur un collegue redemande le sien.
+   */
+  let contexteEquipe = null;
+  let contexteEquipeCompte = null;
+  let contexteEquipeEnCours = null;
+
   async function loadTeamContext() {
+    if(!session?.user_id) return null;
+    if(contexteEquipe && contexteEquipeCompte === session.user_id) return contexteEquipe;
+    if(contexteEquipeEnCours && contexteEquipeCompte === session.user_id) return contexteEquipeEnCours;
+    contexteEquipeCompte = session.user_id;
+    contexteEquipeEnCours = lireContexteEquipe()
+      .then(v => { contexteEquipe = v; return v; })
+      .finally(() => { contexteEquipeEnCours = null; });
+    return contexteEquipeEnCours;
+  }
+
+  /** Force la relecture : apres une invitation ou un changement de droits. */
+  function oublierContexteEquipe() { contexteEquipe = null; contexteEquipeCompte = null; }
+
+  async function lireContexteEquipe() {
     if(!session?.user_id) return null;
     try {
       const res=await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_team_context`,{method:"POST",body:"{}"});
@@ -81,6 +110,9 @@
     let data={}; try { data=await res.json(); } catch {}
     if(res.status===401){sessionExpired();throw Error("Session expirée.");}
     if(!res.ok || !data.ok) throw Error(data.error || "Opération d’administration non confirmée.");
+    // Creer, inviter ou supprimer un collegue change la composition de l'equipe : le contexte
+    // retenu n'est plus a jour et doit etre relu au prochain affichage.
+    if(payload && payload.action !== "pending_invites") oublierContexteEquipe();
     return data;
   }
   async function openSettings() {
@@ -239,6 +271,7 @@
   globalThis.settingsSection = settingsSection;
   globalThis.nestedSettingsSection = nestedSettingsSection;
   globalThis.loadTeamContext = loadTeamContext;
+  globalThis.oublierContexteEquipe = oublierContexteEquipe;
   globalThis.teamAdminAction = teamAdminAction;
   globalThis.openSettings = openSettings;
   globalThis.saveSettings = saveSettings;

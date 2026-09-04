@@ -335,6 +335,20 @@
         }
       },
       {
+        // Le contexte d'equipe est une fonction SQL couteuse. Rejoue a chaque affichage de la
+        // liste des classes, il devenait un appel par rafraichissement d'ecran - donc toutes les
+        // secondes pendant une synchronisation. Il est retenu le temps de la session ; ce
+        // controle mesure qu'il l'est vraiment, sur un parcours qui ouvre tous les onglets.
+        nom: "Le contexte d'equipe n'est demande qu'une fois",
+        action: async () => {
+          const appels = ((f.__fauxServeur || {}).appels) || [];
+          if (!appels.length) return; // faux serveur absent : rien a mesurer
+          if (typeof f.loadTeamContext === "function") { await f.loadTeamContext(); await f.loadTeamContext(); }
+          const demandes = appels.filter(a => String(a.url).includes("eps_team_context")).length;
+          if (demandes > 1) throw new Error(`${demandes} appels au contexte d'equipe, un seul est attendu`);
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();
