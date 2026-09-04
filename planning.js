@@ -871,6 +871,24 @@ async function loadPlanningClasses() {
   const res = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=*&order=name.asc`);
   planningClasses = res.ok ? await res.json() : [];
 }
+/**
+ * Recharge le planning apres une ecriture faite en direct chez Supabase.
+ *
+ * Les ecritures du planning partent en direct, alors que l'affichage lit la copie locale. Entre
+ * les deux il faut une synchronisation, sinon on redessine la grille a partir d'un etat qui ne
+ * contient pas ce qui vient d'etre saisi : l'activite enregistree n'apparaissait pas, et il
+ * fallait rouvrir la case et enregistrer une seconde fois pour la voir.
+ *
+ * Un enregistrement est un geste explicite : il passe outre le delai qui separe deux
+ * synchronisations spontanees, parce que l'utilisateur attend son resultat maintenant.
+ */
+async function rechargerPlanningApresEcriture() {
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* le rechargement vaut mieux que rien */ }
+  await loadPlanningSlots();
+  if (planningMode === "eps" || planningMode === "installations") await loadPlanningCommunity();
+  renderPlanningTab();
+}
+
 async function loadPlanningSlots() {
   let rows;
   if (modeHorsConnexion) {
@@ -2250,8 +2268,7 @@ async function openPlanningEditSlotPanel(slot) {
       else await apiFetch(`${SUPABASE_URL}/rest/v1/period_activities`, { method:"POST", body:JSON.stringify({ ...body, id:crypto.randomUUID(), user_id:session.user_id, slot_id:slot.id, period_number:parseInt(period,10) }) });
     }
     panel.style.display = "none";
-    await loadPlanningSlots();
-    renderPlanningTab();
+    await rechargerPlanningApresEcriture();
     } catch (e) { signalerPlanning(panel, e); }
   });
   document.getElementById("planningDeleteBtn").addEventListener("click", async () => {
@@ -2260,8 +2277,7 @@ async function openPlanningEditSlotPanel(slot) {
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
       });
       panel.style.display = "none";
-      await loadPlanningSlots();
-      renderPlanningTab();
+      await rechargerPlanningApresEcriture();
     } catch (e) { signalerPlanning(panel, e); }
   });
   }
@@ -2393,9 +2409,11 @@ async function planningCreateSlot(classId, day, startMinutes, durationMinutes, i
       body: JSON.stringify({ id: crypto.randomUUID(), user_id: session.user_id, slot_id: newSlotId, period_number: parseInt(period, 10), apsa_name: plan.activity, installation_name: plan.installation || null, updated_at: new Date().toISOString(), deleted: false })
     });
   }
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* le rechargement vaut mieux que rien */ }
   await loadPlanningSlots();
   const slotCount = planningSlots.filter(s => s.class_id === classId).length;
   planningPendingClass = slotCount < planningWeeklySlotsNeeded(cl.grade) ? cl : null;
+  if (planningMode === "eps" || planningMode === "installations") await loadPlanningCommunity();
   renderPlanningTab();
 }
 
@@ -2419,6 +2437,10 @@ async function planningSetActivity(classGroup, slot, apsaName, onlyThisSlot) {
       });
     }
   }
+  // Meme raison que rechargerPlanningApresEcriture : l'ecriture part en direct, la lecture vient
+  // de la copie locale, et sans synchronisation entre les deux la grille afficherait l'etat
+  // d'avant la saisie.
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* le rechargement vaut mieux que rien */ }
   await loadPlanningActivities();
   renderPlanningTab();
 }
@@ -2434,6 +2456,10 @@ async function planningClearActivity(classGroup, slot, onlyThisSlot) {
       await patchPlanningActivity(existing, { deleted: true });
     }
   }
+  // Meme raison que rechargerPlanningApresEcriture : l'ecriture part en direct, la lecture vient
+  // de la copie locale, et sans synchronisation entre les deux la grille afficherait l'etat
+  // d'avant la saisie.
+  try { await modeHorsConnexion?.synchroniser(); } catch { /* le rechargement vaut mieux que rien */ }
   await loadPlanningActivities();
   renderPlanningTab();
 }
