@@ -442,9 +442,10 @@ function renderClassDashboard() {
   const activiteParCycle = Object.fromEntries(cyclesDeLaPeriode.map(c => [c.id, c.apsa_name || ""]));
   // L'activite accompagne chaque evaluation : avec deux activites dans la periode, "Grille 1" ne
   // dit pas si elle porte sur la natation ou l'escalade.
+  const cycleParId = Object.fromEntries(cyclesDeLaPeriode.map(c => [c.id, c]));
   const evalsPeriode = dashboardEvaluations
     .filter(e => Object.prototype.hasOwnProperty.call(activiteParCycle, e.cycle_id))
-    .map(e => ({ ...e, activite: activiteParCycle[e.cycle_id] }));
+    .map(e => ({ ...e, activite: activiteParCycle[e.cycle_id], cycle: cycleParId[e.cycle_id] }));
   const testsPeriode = dashboardTests.filter(t => (t.period_number || 1) === dashboardPeriod);
   const dispenses = dispensesEnCours();
 
@@ -730,7 +731,7 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
     </div>`;
   document.getElementById("fermerDetail").onclick = () => { detail.innerHTML = ""; };
   detail.querySelectorAll("[data-modele]").forEach(b =>
-    b.onclick = () => utiliserModele(cycle, modeles.find(m => m.id === b.dataset.modele), b));
+    b.onclick = () => utiliserModele(cycle, modeles.find(m => m.id === b.dataset.modele), b, existantes));
   // Ouvrir une grille existante sans quitter CLASSE : le tableau de notes vient par-dessus la
   // page, et le tableau de bord se redessine a la fermeture pour que le recapitulatif compte la
   // grille qu'on vient de remplir.
@@ -755,8 +756,16 @@ async function ouvrirTableauDeNotes(cycle, type, grilleId) {
  * Le modele n'est qu'une proposition : ce qui est enregistre est une evaluation ordinaire,
  * avec ses criteres, que le professeur pourra modifier ou supprimer comme les autres.
  */
-async function utiliserModele(cycle, modele, bouton) {
+async function utiliserModele(cycle, modele, bouton, existantes = []) {
   if (!modele) return;
+
+  // Utiliser deux fois le meme modele n'en cree pas deux grilles : on rouvre celle qui existe.
+  // Sans cela, revenir sur l'ecran et recliquer empilait des grilles identiques - six pour la
+  // meme natation - sans que rien ne le signale, et sans moyen de faire le tri ensuite.
+  const deja = existantes.find(e => e.type === modele.type
+    && String(e.label || "").trim() === String(modele.titre || "").trim());
+  if (deja) { await ouvrirTableauDeNotes(cycle, modele.type, deja.id); return; }
+
   bouton.disabled = true; bouton.textContent = "Création...";
   const id = crypto.randomUUID();
   const maintenant = new Date().toISOString();
@@ -801,10 +810,18 @@ function afficherRecapPeriode(evaluations, tests) {
         <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
       ${tests.length ? `<h4 style="margin:12px 0 4px">Tests</h4><ul class="tight" style="margin:0; padding-left:18px">${
         tests.map(t => `<li>${planningText(t.test_name || "Test")}</li>`).join("")}</ul>` : ""}
-      ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4><ul class="tight" style="margin:0; padding-left:18px">${
-        evaluations.map(e => `<li>${planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${e.activite ? " · " + planningText(e.activite) : ""}</span></li>`).join("")}</ul>` : ""}
+      ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4>${
+        evaluations.map(e => `<button class="secondary" data-recap-eval="${e.id}" style="margin-top:6px; width:100%; text-align:left">${
+          planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${
+          e.activite ? " · " + planningText(e.activite) : ""}</span></button>`).join("")}` : ""}
     </div>`;
   document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
+  // Depuis le recapitulatif, on ouvre la grille : la consulter, la corriger ou la supprimer se
+  // fait au meme endroit. Elle n'etait qu'une ligne de texte, sans aucun moyen d'y revenir.
+  hote.querySelectorAll("[data-recap-eval]").forEach(b => b.onclick = () => {
+    const e = evaluations.find(x => x.id === b.dataset.recapEval);
+    if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id);
+  });
 }
 
 /**
