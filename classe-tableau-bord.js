@@ -220,16 +220,7 @@ async function openClassDashboard(cls, label) {
     dashboardSeanceEnregistrable = dashboardCycles.length === 0
       || Object.prototype.hasOwnProperty.call(dashboardCycles[0], "current_session_number");
 
-    dashboardEvaluations = [];
-    if (dashboardCycles.length) {
-      if (modeHorsConnexion) {
-        const cycles = new Set(dashboardCycles.map(c => c.id));
-        dashboardEvaluations = (await modeHorsConnexion.lire("evaluations", { ou: e => cycles.has(e.cycle_id) })).rows;
-      } else {
-        const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
-        dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
-      }
-    }
+    await chargerEvaluationsDuTableauDeBord();
   } catch (e) {
     panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
     return;
@@ -746,6 +737,25 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
 }
 
 /**
+ * (Re)charge les evaluations des cycles de la classe.
+ *
+ * Elle n'etait lue qu'a l'ouverture du tableau de bord. Supprimer une grille depuis la fenetre
+ * ne changeait donc rien au recapitulatif : il continuait d'en compter quatre alors qu'il n'en
+ * restait que trois, et rien n'expliquait l'ecart.
+ */
+async function chargerEvaluationsDuTableauDeBord() {
+  dashboardEvaluations = [];
+  if (!dashboardCycles.length) return;
+  if (modeHorsConnexion) {
+    const cycles = new Set(dashboardCycles.map(c => c.id));
+    dashboardEvaluations = (await modeHorsConnexion.lire("evaluations", { ou: e => cycles.has(e.cycle_id) })).rows;
+  } else {
+    const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
+    dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
+  }
+}
+
+/**
  * Le detail du tableau de bord - recapitulatif, grilles proposees, dispenses - vient par-dessus
  * la page au lieu de s'ajouter en bas.
  *
@@ -793,7 +803,12 @@ function fermerDetailClasse() {
  * le recapitulatif de la periode, et met a jour le nombre d'evaluations annonce sur la carte.
  */
 async function ouvrirTableauDeNotes(cycle, type, grilleId) {
-  fermetureEvaluation = () => renderClassDashboard();
+  // Relire avant de redessiner : une grille supprimee doit disparaitre du recapitulatif, et le
+  // compte de la carte suivre. Redessiner seul repeindrait la meme liste peripee.
+  fermetureEvaluation = async () => {
+    await chargerEvaluationsDuTableauDeBord();
+    renderClassDashboard();
+  };
   await openEvaluationPanel(cycle, { type, id: grilleId });
 }
 

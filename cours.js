@@ -662,12 +662,27 @@ function renderEvaluationPanel() {
   panel.querySelectorAll("[data-delete-eval]").forEach(el => {
     el.addEventListener("click", async (e) => {
       e.stopPropagation();
-      if (modeHorsConnexion) await modeHorsConnexion.supprimer("evaluations", el.dataset.deleteEval);
-      else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?id=eq.${el.dataset.deleteEval}`, {
-        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
-      });
-      if (evalOpenedId === el.dataset.deleteEval) { evalOpenedId = null; document.getElementById("evalTableWrap").innerHTML = ""; }
-      evalList = evalList.filter(e => e.id !== el.dataset.deleteEval);
+      // Un second clic enverrait un deuxieme effacement, fonde sur une version deja depassee par
+      // le premier : la base le refuse, et le professeur se retrouve devant un conflit a trancher
+      // pour une grille qu'il voulait simplement supprimer. C'est arrive.
+      if (el.disabled) return;
+      el.disabled = true;
+      const id = el.dataset.deleteEval;
+      const etaitOuverte = evalOpenedId === id;
+      try {
+        if (modeHorsConnexion) await modeHorsConnexion.supprimer("evaluations", id);
+        else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?id=eq.${id}`, {
+          method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+        });
+      } catch (erreur) {
+        el.disabled = false;
+        el.insertAdjacentHTML("afterend", `<div class="error">Suppression refusée : ${erreur.message}</div>`);
+        return;
+      }
+      evalList = evalList.filter(x => x.id !== id);
+      // Supprimer la grille qu'on regardait ferme la fenetre : il ne reste rien a y voir, et la
+      // laisser ouverte sur un tableau vide laissait croire que la suppression avait echoue.
+      if (etaitOuverte) { evalOpenedId = null; fermerFenetreEvaluation(); return; }
       renderEvaluationPanel();
     });
   });
