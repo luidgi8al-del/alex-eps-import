@@ -523,8 +523,13 @@ function renderClassDashboard() {
 
   document.getElementById("dashEvalPonctuelle").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "PONCTUELLE");
   document.getElementById("dashEvalFinale").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "FINALE");
-  document.getElementById("dashRecapBtn").onclick = () => afficherRecapPeriode(evalsPeriode, testsPeriode);
-  document.getElementById("dashDispenseBtn").onclick = () => afficherDispenses(dispenses);
+  document.getElementById("dashRecapBtn").onclick = () => { detailOuvert = "recap"; afficherRecapPeriode(evalsPeriode, testsPeriode); };
+  document.getElementById("dashDispenseBtn").onclick = () => { detailOuvert = "dispenses"; afficherDispenses(dispenses); };
+  // Le detail ouvert se repeint avec le tableau de bord. Sans cela il gardait la liste d'avant :
+  // on supprimait une grille, le compte de la carte descendait, et la fenetre continuait de
+  // l'afficher - il fallait la fermer et la rouvrir pour voir la verite.
+  if (detailOuvert === "recap") afficherRecapPeriode(evalsPeriode, testsPeriode);
+  else if (detailOuvert === "dispenses") afficherDispenses(dispenses);
 
   brancherCarteSeance(cycle);
   renderDashboardExercises(activity);
@@ -684,6 +689,7 @@ async function ouvrirFicheSeance(cycle) {
 
 /** Les deux boutons d'evaluation menent au meme ecran que l'application, dans COURS. */
 async function ouvrirEvaluationDepuisClasse(cycle, type) {
+  detailOuvert = null;   // ce panneau-la se recharge par son propre chemin
   const detail = hoteDetail();
   if (!detail) return;
   if (!cycle) {
@@ -789,8 +795,12 @@ function hoteDetail() {
   return document.getElementById("dashDetailContenu");
 }
 
+/** Quel detail est affiche, pour le repeindre quand le tableau de bord change. */
+let detailOuvert = null;
+
 function ouvrirDetailClasse() { hoteDetail(); document.getElementById("dashDetailOverlay")?.classList.add("open"); }
 function fermerDetailClasse() {
+  detailOuvert = null;
   document.getElementById("dashDetailOverlay")?.classList.remove("open");
   const c = document.getElementById("dashDetailContenu");
   if (c) c.innerHTML = "";

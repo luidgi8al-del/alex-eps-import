@@ -95,6 +95,23 @@
             "la fenetre du detail ne se ferme pas", 4000);
           $("dashRecapBtn").click();
           await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre pas");
+
+          // Le detail ouvert se repeint quand le tableau de bord change. Sans cela il gardait la
+          // liste d'avant : on supprimait une grille, le compte de la carte descendait, et la
+          // fenetre continuait de l'afficher.
+          $("dashDetailContenu").innerHTML = "";
+          await f.renderClassDashboard();
+          await attendre(() => rempli($("dashDetailContenu")),
+            "le detail ouvert ne se repeint pas avec le tableau de bord", 5000);
+          $("dashDetailClose").click();
+          await attendre(() => !f.document.getElementById("dashDetailOverlay").classList.contains("open"),
+            "la fenetre ne se ferme pas", 4000);
+          await f.renderClassDashboard();
+          if (f.document.getElementById("dashDetailOverlay").classList.contains("open")) {
+            throw new Error("une fenetre fermee ne doit pas se rouvrir toute seule");
+          }
+          $("dashRecapBtn").click();
+          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre plus");
           $("dashDispenseBtn").click();
           await attendre(() => rempli($("dashDetailContenu")), "les dispenses restent vides");
         }
