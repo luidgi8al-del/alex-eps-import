@@ -430,7 +430,21 @@ function renderClassDashboard() {
     chips.push(`<button class="periodChip${p === dashboardPeriod ? " active" : ""}" data-dash-period="${p}">Période ${p}</button>`);
   }
 
-  const evalsPeriode = cycle ? dashboardEvaluations.filter(e => e.cycle_id === cycle.id) : [];
+  // Le recapitulatif couvre la periode entiere, pas seulement le jour affiche.
+  //
+  // Il ne regardait que le cycle en cours d'affichage. Depuis qu'une periode peut porter deux
+  // activites - natation le mercredi, escalade le vendredi - cela revenait a masquer la moitie du
+  // travail : un vendredi, les evaluations de natation devenaient introuvables. Un recapitulatif
+  // de periode doit montrer ce qui a ete fait dans la periode, quel que soit le jour ouvert.
+  const cyclesDeLaPeriode = groupes.length
+    ? groupes.map(g => cyclePourPeriode(g.activite, dashboardPeriod)).filter(Boolean)
+    : (cycle ? [cycle] : []);
+  const activiteParCycle = Object.fromEntries(cyclesDeLaPeriode.map(c => [c.id, c.apsa_name || ""]));
+  // L'activite accompagne chaque evaluation : avec deux activites dans la periode, "Grille 1" ne
+  // dit pas si elle porte sur la natation ou l'escalade.
+  const evalsPeriode = dashboardEvaluations
+    .filter(e => Object.prototype.hasOwnProperty.call(activiteParCycle, e.cycle_id))
+    .map(e => ({ ...e, activite: activiteParCycle[e.cycle_id] }));
   const testsPeriode = dashboardTests.filter(t => (t.period_number || 1) === dashboardPeriod);
   const dispenses = dispensesEnCours();
 
@@ -774,7 +788,7 @@ function afficherRecapPeriode(evaluations, tests) {
       ${tests.length ? `<h4 style="margin:12px 0 4px">Tests</h4><ul class="tight" style="margin:0; padding-left:18px">${
         tests.map(t => `<li>${planningText(t.test_name || "Test")}</li>`).join("")}</ul>` : ""}
       ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4><ul class="tight" style="margin:0; padding-left:18px">${
-        evaluations.map(e => `<li>${planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}</span></li>`).join("")}</ul>` : ""}
+        evaluations.map(e => `<li>${planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${e.activite ? " · " + planningText(e.activite) : ""}</span></li>`).join("")}</ul>` : ""}
     </div>`;
   document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
 }
