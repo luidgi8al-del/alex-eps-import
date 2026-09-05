@@ -316,6 +316,25 @@ const COLONNES_ELEVE = [
 let triEleve = { cle: "division", croissant: true };
 /** Eleves coches, conserves d'une page a l'autre : une selection ne doit pas s'evaporer. */
 let selectionEleves = new Set();
+/** Division affichee seule, "" pour toutes. Verser une classe entiere passe par la. */
+let divisionFiltre = "";
+
+/** Divisions presentes au repertoire, avec leur effectif, dans l'ordre ou on les lit. */
+function divisionsConnues(eleves) {
+  const compte = new Map();
+  eleves.forEach(e => {
+    const d = (e.division || "").trim();
+    if (d) compte.set(d, (compte.get(d) || 0) + 1);
+  });
+  return [...compte.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0], "fr", { numeric: true, sensitivity: "base" }))
+    .map(([nom, effectif]) => ({ nom, effectif }));
+}
+
+/** Eleves d'une division, quelle que soit la page affichee. */
+function elevesDeLaDivision(eleves, division) {
+  return eleves.filter(e => (e.division || "").trim() === division);
+}
 
 function trierEleves(eleves) {
   const colonne = COLONNES_ELEVE.find(c => c.cle === triEleve.cle) || COLONNES_ELEVE[0];
@@ -371,13 +390,41 @@ function renderUnssTab() {
   // Licencies AS garde ses cartes, ou l'on consulte les voeux et la taille de maillot.
   const enTableau = unssCibleRendu === "listeEleveList";
   const brut = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
-  const rows = enTableau ? trierEleves(brut) : brut;
+  // Le filtre par division n'a de sens que sur le tableau : c'est la qu'on vient chercher une
+  // classe entiere. Une division disparue du repertoire ne doit pas laisser un tableau vide.
+  const divisions = enTableau ? divisionsConnues(brut) : [];
+  if (divisionFiltre && !divisions.some(d => d.nom === divisionFiltre)) divisionFiltre = "";
+  const filtres = enTableau && divisionFiltre ? elevesDeLaDivision(brut, divisionFiltre) : brut;
+  const rows = enTableau ? trierEleves(filtres) : filtres;
   const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
   // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
   if (unssPage > totalPages) unssPage = totalPages;
   const debutPage = (unssPage - 1) * TAILLE_PAGE_LISTE;
   const rowsPage = rows.slice(debutPage, debutPage + TAILLE_PAGE_LISTE);
-  let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
+  let html = "";
+  // Verser une classe entiere : on choisit sa division, puis on coche tout d'un geste. Sans
+  // cela il fallait cliquer les eleves un par un, et une page de cent en melange plusieurs.
+  if (enTableau && divisions.length) {
+    const tousChoisis = rows.length > 0 && rows.every(e => selectionEleves.has(e.id));
+    html += `<div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap">
+      <label for="filtreDivision">Division</label>
+      <select id="filtreDivision" style="margin-top:0; width:auto">
+        <option value="">Toutes les divisions</option>
+        ${divisions.map(d => `<option value="${planningText(d.nom)}"${d.nom === divisionFiltre ? " selected" : ""}>`
+          + `${planningText(d.nom)} (${d.effectif})</option>`).join("")}
+      </select>`;
+    if (divisionFiltre) {
+      html += `<button class="secondary" id="cocherDivision" style="margin-top:0">`
+        + `${tousChoisis ? "Decocher" : "Cocher"} toute la division ${planningText(divisionFiltre)}`
+        + ` (${rows.length})</button>`;
+    }
+    if (selectionEleves.size) {
+      html += `<button class="secondary" id="viderSelection" style="margin-top:0">`
+        + `Vider la selection (${selectionEleves.size})</button>`;
+    }
+    html += `</div>`;
+  }
+  html += `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
   // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
   // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
   if (unssAdmin) {
@@ -435,6 +482,26 @@ function renderUnssTab() {
     if (box.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
     renderUnssTab();
   }));
+  const choixDivision = wrap.querySelector("#filtreDivision");
+  if (choixDivision) choixDivision.addEventListener("change", () => {
+    // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
+    // a partir de deux divisions sans repartir de zero.
+    divisionFiltre = choixDivision.value;
+    unssPage = 1;
+    renderUnssTab();
+  });
+  const cocherDivision = wrap.querySelector("#cocherDivision");
+  if (cocherDivision) cocherDivision.addEventListener("click", () => {
+    const dedans = elevesDeLaDivision(unssStudents, divisionFiltre);
+    const tousChoisis = dedans.length > 0 && dedans.every(e => selectionEleves.has(e.id));
+    dedans.forEach(e => { if (tousChoisis) selectionEleves.delete(e.id); else selectionEleves.add(e.id); });
+    renderUnssTab();
+  });
+  const viderSelection = wrap.querySelector("#viderSelection");
+  if (viderSelection) viderSelection.addEventListener("click", () => {
+    selectionEleves.clear();
+    renderUnssTab();
+  });
   const cocheTout = wrap.querySelector("#cocheToutesPages");
   if (cocheTout) cocheTout.addEventListener("change", () => {
     // Ne coche que la page affichee : cocher mille eleves d'un clic invisible serait piegeux.

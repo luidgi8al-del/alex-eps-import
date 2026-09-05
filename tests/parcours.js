@@ -151,6 +151,51 @@
         }
       },
       {
+        // Verser une classe entiere : sans filtre, il fallait cocher les eleves un par un, et
+        // une page de cent noms melange plusieurs divisions.
+        nom: "Liste eleve · on coche une division entiere d'un geste",
+        action: async () => {
+          await onglet("classes");
+          f.showSubtab("liste");
+          await attendre(() => rempli($("listeEleveList")), "la liste des eleves reste vide", 6000);
+
+          const choix = f.document.getElementById("filtreDivision");
+          if (!choix) throw new Error("le choix de la division a disparu");
+          const proposees = [...choix.options].map(o => o.value).filter(Boolean);
+          ["3e6", "6e1"].forEach(d => {
+            if (!proposees.includes(d)) throw new Error(`la division ${d} n'est pas proposee`);
+          });
+
+          // Choisir une division n'affiche qu'elle.
+          choix.value = "3e6";
+          choix.dispatchEvent(new f.Event("change"));
+          await attendre(() => f.document.getElementById("cocherDivision"),
+            "le bouton pour cocher la division n'apparait pas", 4000);
+          const divisions = [...f.document.querySelectorAll("#listeEleveList .eleveTable tbody tr")]
+            .map(tr => tr.children[4]?.textContent.trim());
+          if (divisions.length === 0) throw new Error("le tableau est vide apres le filtre");
+          if (divisions.some(d => d !== "3e6")) throw new Error("le filtre laisse passer une autre division");
+
+          // Un clic coche toute la division, et le bouton d'ajout compte le meme nombre.
+          f.document.getElementById("cocherDivision").click();
+          await attendre(() => f.document.getElementById("eleveVersClasseBtn")
+            && !f.document.getElementById("eleveVersClasseBtn").disabled,
+            "l'ajout a une classe reste inactif apres avoir coche la division", 4000);
+          const libelle = f.document.getElementById("eleveVersClasseBtn").textContent;
+          if (!/\(2\)/.test(libelle)) throw new Error(`deux eleves attendus, bouton : ${libelle}`);
+
+          // Recliquer decoche, sinon on ne peut pas revenir en arriere sans recharger.
+          f.document.getElementById("cocherDivision").click();
+          await attendre(() => f.document.getElementById("eleveVersClasseBtn").disabled,
+            "recliquer ne decoche pas la division", 4000);
+
+          choix.value = "";
+          choix.dispatchEvent(new f.Event("change"));
+          await attendre(() => !f.document.getElementById("cocherDivision"),
+            "le filtre ne se retire pas", 4000);
+        }
+      },
+      {
         nom: "Onglet CLASSE · creation de classe",
         action: async () => {
           f.showSubtab("newimport");
