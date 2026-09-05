@@ -937,10 +937,14 @@ function renderDashboardExercises(activity) {
   const all = QuickExercises.forActivity(activity.apsa_name, dashboardClass.row.grade);
   const list = all.filter(e => e.type === dashboardExerciseType);
 
+  // Changer de type redessine la carte : sans retenir son etat, elle repartait fermee et le
+  // clic sur "Exercice / Jeu" donnait l'impression que rien ne se passait - tout se repliait.
+  const deplie = host.querySelector("details")?.open === true;
+
   // Une carte repliee, comme dans l'application : deplie, le catalogue occupait tout l'ecran
   // et repoussait les evaluations et le recapitulatif hors de vue.
   host.innerHTML = `
-    <details class="card" style="background:#E5F7E9; border:0; margin-top:8px">
+    <details class="card"${deplie ? " open" : ""} style="background:#E5F7E9; border:0; margin-top:8px">
     <summary style="cursor:pointer; font-weight:700; color:#102F4A; list-style:none">
       Fiches Exercices / Jeux <span class="muted" style="font-weight:400">— ${planningText(activity.apsa_name)}</span>
     </summary>

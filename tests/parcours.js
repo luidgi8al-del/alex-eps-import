@@ -131,6 +131,40 @@
         }
       },
       {
+        // Changer de type redessinait la carte fermee : on cliquait "Exercice / Jeu" et tout
+        // se repliait, ce qui se lit comme "il ne se passe rien".
+        nom: "Tableau de bord · changer de type d'exercice ne replie pas la carte",
+        action: async () => {
+          if (typeof f.renderDashboardExercises !== "function") throw new Error("les fiches d'exercices ont disparu");
+          f.renderDashboardExercises({ apsa_name: "Natation" });
+          const hote = $("dashExercises");
+          const carte = hote.querySelector("details");
+          if (!carte) throw new Error("la carte des fiches ne se construit pas");
+          carte.open = true;
+          const echauffements = hote.querySelectorAll("details details").length;
+          if (echauffements === 0) throw new Error("aucune fiche d'echauffement");
+
+          hote.querySelector('[data-ex-type="GAME"]').click();
+          await attendre(() => {
+            const actif = [...$("dashExercises").querySelectorAll("[data-ex-type]")]
+              .find(b => b.classList.contains("active"));
+            return actif && actif.dataset.exType === "GAME";
+          }, "le type ne bascule pas sur Exercice / Jeu", 4000);
+
+          const apres = $("dashExercises").querySelector("details");
+          if (!apres.open) throw new Error("la carte s'est refermee en changeant de type");
+          if ($("dashExercises").querySelectorAll("details details").length === 0) {
+            throw new Error("aucun exercice apres la bascule");
+          }
+
+          // Et une fiche s'ouvre bien, avec son schema dessine.
+          const fiche = $("dashExercises").querySelector("details details");
+          fiche.open = true;
+          await attendre(() => fiche.querySelector("canvas[data-diagram]")?.dataset.drawn === "1",
+            "le schema de la fiche ne se dessine pas", 4000);
+        }
+      },
+      {
         nom: "Classe ouverte · emploi du temps",
         action: async () => {
           const bouton = f.document.querySelector('#classDashboardPanel [data-classe-action="schedule"]');
