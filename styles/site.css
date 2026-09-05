@@ -374,3 +374,4 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 /* Le bandeau de synchronisation devient un bouton quand il annonce un conflit. */
 .syncStatus.cliquable { cursor:pointer; text-decoration:underline; }
 #conflictOverlay .searchSheet { max-width:min(900px, 96vw); }
+#classPickOverlay .searchSheet { max-width:min(520px, 96vw); }

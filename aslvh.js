@@ -236,25 +236,76 @@ function wirePagination(wrap, nom, onPage) {
  * reconnait un eleve a son nom, son prenom et sa date de naissance, les trois seuls champs
  * fiables a ce stade.
  */
+/**
+ * Fenetre de choix de la classe, creee une fois et reutilisee.
+ *
+ * Le choix passait par un prompt() du navigateur : il ne sait afficher que du texte, donc les
+ * classes y etaient numerotees et il fallait taper un chiffre. On clique desormais la classe.
+ */
+function fenetreChoixClasse() {
+  let voile = document.getElementById("classPickOverlay");
+  if (voile) return voile;
+  voile = document.createElement("div");
+  voile.className = "searchOverlay";
+  voile.id = "classPickOverlay";
+  voile.innerHTML = `<div class="searchSheet">
+    <div class="top" style="margin-bottom:6px"><h2 style="margin:0" id="classPickTitre">Ajouter a une classe</h2>
+      <button class="secondary" id="classPickClose" style="margin-top:0">Fermer</button></div>
+    <div id="classPickBody"></div></div>`;
+  document.body.appendChild(voile);
+  voile.querySelector("#classPickClose").addEventListener("click", () => fermerFenetreChoixClasse());
+  voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreChoixClasse(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && voile.classList.contains("open")) fermerFenetreChoixClasse();
+  });
+  return voile;
+}
+
+function fermerFenetreChoixClasse() {
+  const voile = document.getElementById("classPickOverlay");
+  if (!voile) return;
+  // Un bouton encore focalise garderait le clavier dans une fenetre invisible.
+  if (voile.contains(document.activeElement)) document.activeElement.blur();
+  voile.classList.remove("open");
+}
+
 async function ouvrirChoixClassePourEleves() {
   if (selectionEleves.size === 0) return;
-  const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade,class_number&order=name.asc`);
-  if (!res.ok) { alert("Impossible de lire vos classes."); return; }
-  const classes = res.rows;
-  if (classes.length === 0) { alert("Aucune classe. Creez-en une d'abord dans Creation classe."); return; }
+  const voile = fenetreChoixClasse();
+  const corps = voile.querySelector("#classPickBody");
+  voile.querySelector("#classPickTitre").textContent =
+    `Ajouter ${selectionEleves.size} eleve(s) a une classe`;
+  corps.innerHTML = `<div class="muted">Chargement de vos classes...</div>`;
+  voile.classList.add("open");
 
-  const choix = prompt(
-    `Dans quelle classe verser les ${selectionEleves.size} eleve(s) selectionne(s) ?\n\n`
-    + classes.map((c, i) => `${i + 1} - ${c.name}`).join("\n")
-    + `\n\nTapez le numero de la classe.`
-  );
-  if (choix === null) return;
-  const classe = classes[parseInt(choix, 10) - 1];
-  if (!classe) { alert("Numero de classe inconnu. Rien n'a ete ajoute."); return; }
+  const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade,class_number&order=name.asc`);
+  if (!res.ok) { corps.innerHTML = `<div class="error">Impossible de lire vos classes.</div>`; return; }
+  const classes = res.rows;
+  if (classes.length === 0) {
+    corps.innerHTML = `<div class="muted">Aucune classe. Creez-en une d'abord dans Creation classe.</div>`;
+    return;
+  }
+  corps.innerHTML = `<div class="muted" style="margin-bottom:8px">Cliquez la classe qui doit les recevoir.</div>`
+    + `<div style="display:flex; flex-direction:column; gap:6px">`
+    + classes.map(c => `<button class="secondary" data-classe="${planningText(c.id)}"
+        style="margin-top:0; text-align:left">${planningText(c.name)}</button>`).join("")
+    + `</div>`;
+  corps.querySelectorAll("[data-classe]").forEach(btn => btn.addEventListener("click", () => {
+    const classe = classes.find(c => c.id === btn.dataset.classe);
+    // Deux clics de suite verseraient deux fois : on ferme la liste des l'appui.
+    corps.querySelectorAll("[data-classe]").forEach(b => { b.disabled = true; });
+    if (classe) verserDansClasse(classe, corps);
+  }));
+}
+
+/** Verse les eleves coches dans la classe choisie, en laissant de cote ceux qui y sont deja. */
+async function verserDansClasse(classe, corps) {
+  const echec = message => { corps.innerHTML = `<div class="error">${planningText(message)}</div>`; };
+  corps.innerHTML = `<div class="muted">Ajout en cours dans ${planningText(classe.name)}...</div>`;
 
   const existantsRes = await apiFetchAll(
     `${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${classe.id}&select=last_name,first_name,birth_date_epoch_millis`);
-  if (!existantsRes.ok) { alert("Impossible de lire les eleves de cette classe. Rien n'a ete ajoute."); return; }
+  if (!existantsRes.ok) { echec("Impossible de lire les eleves de cette classe. Rien n'a ete ajoute."); return; }
   const cle = e => [ (e.last_name || "").trim().toLowerCase(),
                      (e.first_name || "").trim().toLowerCase(),
                      e.birth_date_epoch_millis || "" ].join("|");
@@ -264,7 +315,8 @@ async function ouvrirChoixClassePourEleves() {
   const aVerser = unssStudents.filter(e => selectionEleves.has(e.id) && !deja.has(cle(e)));
   const ignores = selectionEleves.size - aVerser.length;
   if (aVerser.length === 0) {
-    alert(`Ces ${ignores} eleve(s) sont deja dans ${classe.name}. Rien n'a ete ajoute.`);
+    corps.innerHTML = `<div class="muted">Ces ${ignores} eleve(s) sont deja dans `
+      + `${planningText(classe.name)}. Rien n'a ete ajoute.</div>`;
     return;
   }
 
@@ -283,17 +335,19 @@ async function ouvrirChoixClassePourEleves() {
       updated_at: maintenant, deleted: false
     })))
   });
-  if (!creation.ok) { alert("Ajout non confirme. Rien n'a ete ajoute."); return; }
+  if (!creation.ok) { echec("Ajout non confirme. Rien n'a ete ajoute."); return; }
   // Versement en lot direct, mais l'onglet Classe lit la copie locale : sans cette
   // synchronisation, les eleves verses n'y apparaitraient qu'a la prochaine occasion.
   try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
 
   selectionEleves.clear();
   renderUnssTab();
-  alert(`${aVerser.length} eleve(s) ajoute(s) a ${classe.name}.`
-    + (ignores > 0 ? `\n${ignores} deja present(s), laisse(s) de cote.` : ""));
+  corps.innerHTML = `<div><strong>${aVerser.length} eleve(s) ajoute(s) a `
+    + `${planningText(classe.name)}.</strong></div>`
+    + (ignores > 0 ? `<div class="muted">${ignores} deja present(s), laisse(s) de cote.</div>` : "")
+    + `<button id="classPickFini" style="margin-top:10px">Fermer</button>`;
+  corps.querySelector("#classPickFini").addEventListener("click", () => fermerFenetreChoixClasse());
 }
-
 /**
  * Colonnes de la Liste eleve, dans un ordre fixe.
  *

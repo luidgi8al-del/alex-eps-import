@@ -184,6 +184,19 @@
           const libelle = f.document.getElementById("eleveVersClasseBtn").textContent;
           if (!/\(2\)/.test(libelle)) throw new Error(`deux eleves attendus, bouton : ${libelle}`);
 
+          // Le choix de la classe est une fenetre ou l'on clique, plus un prompt() du navigateur
+          // qui obligeait a taper un numero.
+          f.document.getElementById("eleveVersClasseBtn").click();
+          await attendre(() => f.document.getElementById("classPickOverlay")?.classList.contains("open"),
+            "la fenetre de choix de la classe ne s'ouvre pas", 6000);
+          await attendre(() => f.document.querySelectorAll("#classPickBody [data-classe]").length > 0,
+            "aucune classe cliquable dans la fenetre", 6000);
+          const titre = f.document.getElementById("classPickTitre").textContent;
+          if (!/2 eleve/.test(titre)) throw new Error(`le titre ne rappelle pas la selection : ${titre}`);
+          f.document.getElementById("classPickClose").click();
+          await attendre(() => !f.document.getElementById("classPickOverlay").classList.contains("open"),
+            "la fenetre de choix ne se ferme pas", 4000);
+
           // Recliquer decoche, sinon on ne peut pas revenir en arriere sans recharger.
           f.document.getElementById("cocherDivision").click();
           await attendre(() => f.document.getElementById("eleveVersClasseBtn").disabled,
