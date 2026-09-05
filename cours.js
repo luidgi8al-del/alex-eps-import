@@ -498,6 +498,14 @@ let evalStudents = [];       // eleves de la classe rattachee
 let evalList = [];           // evaluations du cycle
 let evalExpandedType = null;
 let evalOpenedId = null;
+/**
+ * Type d'evaluation demande a l'ouverture, ou null pour les deux.
+ *
+ * Cliquer sur "Evaluation ponctuelle" depuis une classe affichait quand meme la finale juste
+ * en dessous : on demandait une chose et on en obtenait deux, avec le risque de noter dans la
+ * mauvaise. Quand un type est demande, lui seul est montre.
+ */
+let evalTypeFiltre = null;
 let evalCriteria = [];
 let evalScores = {};         // "criterionId|studentId" -> {id, points}
 
@@ -560,7 +568,10 @@ function fermerFenetreEvaluation() {
  */
 async function openEvaluationPanel(cycleRow, ouverture) {
   evalCourse = cycleRow;
-  evalExpandedType = ouverture?.type ?? null;
+  evalTypeFiltre = ouverture?.type ?? null;
+  // L'accordeon s'ouvre ferme : quand une grille est demandee, c'est son tableau de notes qu'on
+  // vient voir, pas la liste. La liste reste a une clic, pour en choisir une autre.
+  evalExpandedType = null;
   evalOpenedId = ouverture?.id ?? null;
   const panel = document.getElementById("evaluationPanel");
   fenetreEvaluation()?.classList.add("open");
@@ -583,7 +594,8 @@ async function openEvaluationPanel(cycleRow, ouverture) {
     evalList = evalsRes.ok ? await evalsRes.json() : [];
   }
   renderEvaluationPanel();
-  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  // La grille demandee ouvre directement son tableau de notes : c'est pour lui qu'on est venu.
+  if (evalOpenedId && evalList.some(e => e.id === evalOpenedId)) await openEvaluationTable(evalOpenedId);
 }
 
 function renderEvaluationPanel() {
@@ -597,7 +609,7 @@ function renderEvaluationPanel() {
         <button class="secondary" id="closeEvalBtn" style="margin-top:0">Fermer</button>
       </div>
     </div>`;
-  EVAL_TYPES.forEach(t => {
+  EVAL_TYPES.filter(t => !evalTypeFiltre || t.value === evalTypeFiltre).forEach(t => {
     const count = evalList.filter(e => e.type === t.value).length;
     const expanded = evalExpandedType === t.value;
     html += `<div class="card accType ${expanded ? "expanded" : ""}" data-type="${t.value}" style="margin-top:10px">
@@ -635,7 +647,16 @@ function renderEvaluationPanel() {
     });
   });
   panel.querySelectorAll("[data-open-eval]").forEach(el => {
-    el.addEventListener("click", (e) => { e.stopPropagation(); openEvaluationTable(el.dataset.openEval); });
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      // La liste se referme : elle a servi a choisir, et le tableau de notes a besoin de la
+      // hauteur. Sans cela il fallait faire defiler la fenetre pour atteindre la premiere note.
+      const choisie = el.dataset.openEval;
+      evalExpandedType = null;
+      evalOpenedId = choisie;
+      renderEvaluationPanel();
+      openEvaluationTable(choisie);
+    });
   });
   panel.querySelectorAll("[data-delete-eval]").forEach(el => {
     el.addEventListener("click", async (e) => {

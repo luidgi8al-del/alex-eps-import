@@ -475,27 +475,22 @@
         }
       },
       {
-        // "Utiliser cette grille" designait la grille a ouvrir, et openEvaluationPanel effacait
-        // la demande une ligne plus loin : la grille creee se refermait aussitot, et l'ecran
-        // paraissait renvoyer sur une autre classe.
-        nom: "COURS · le tableau de notes s'ouvre en fenetre, depliee",
+        // Cliquer sur "Evaluation ponctuelle" depuis une classe affichait aussi la finale juste
+        // en dessous : on demandait une chose et on en obtenait deux, avec le risque de noter
+        // dans la mauvaise grille.
+        nom: "COURS · le tableau de notes s'ouvre en fenetre, sur le type demande",
         action: async () => {
           await onglet("cours");
           if (typeof f.openEvaluationPanel !== "function") throw new Error("openEvaluationPanel a disparu");
           const cycle = { id: "cy-essai", class_id: "c1", apsa_name: "Natation" };
-          await f.openEvaluationPanel(cycle, { type: "FINALE", id: "grille-essai" });
+          await f.openEvaluationPanel(cycle, { type: "FINALE" });
           await attendre(() => rempli($("evaluationPanel")), "le panneau d'evaluations reste vide", 6000);
+
           const texte = $("evaluationPanel").innerText;
-          const finale = texte.indexOf("Evaluation finale");
-          const ponctuelle = texte.indexOf("Evaluation ponctuelle");
-          if (finale < 0 || ponctuelle < 0) throw new Error("les deux sections doivent etre listees");
-          // La section demandee est depliee : elle seule propose de creer une grille.
-          if (!texte.slice(finale).includes("Nouvelle grille")) {
-            throw new Error("la section demandee ne s'ouvre pas");
-          }
-          if (texte.slice(ponctuelle, finale).includes("Nouvelle grille")) {
-            throw new Error("une section non demandee ne doit pas s'ouvrir");
-          }
+          if (!texte.includes("Evaluation finale")) throw new Error("le type demande doit etre affiche");
+          if (texte.includes("Evaluation ponctuelle")) throw new Error("l'autre type ne doit pas apparaitre");
+          // Accordeon ferme : on vient pour une grille, pas pour la liste. Elle reste a un clic.
+          if (texte.includes("Nouvelle grille")) throw new Error("l'accordeon doit s'ouvrir ferme");
 
           // Le tableau de notes vient par-dessus la page : on note pendant un cours, sans quitter
           // la classe qu'on regardait.
