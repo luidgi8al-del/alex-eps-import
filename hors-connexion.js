@@ -125,6 +125,46 @@ async function supprimerLigne(entite, id) {
   });
 }
 
+/**
+ * Les conflits s'ouvrent depuis le bandeau qui les annonce.
+ *
+ * Le panneau vivait dans Equipement > Installations - la premiere rubrique raccordee, et il n'en
+ * a jamais bouge. Le bandeau "Conflit a verifier" s'affichait donc dans l'en-tete, sans dire ou
+ * aller, et le panneau attendait dans un onglet sans rapport. Une saisie a trancher restait ainsi
+ * en suspens sans que personne la voie.
+ *
+ * Le voile est pose sur le corps du document : le bandeau est visible partout, la fenetre doit
+ * l'etre aussi.
+ */
+function fenetreConflits() {
+  let voile = document.getElementById("conflictOverlay");
+  if (voile) return voile;
+  const panneau = document.getElementById("conflictPanel");
+  if (!panneau) return null;
+
+  voile = document.createElement("div");
+  voile.className = "searchOverlay";
+  voile.id = "conflictOverlay";
+  voile.innerHTML = `<div class="searchSheet">
+    <div class="top" style="margin-bottom:6px"><h2 style="margin:0">Saisies à trancher</h2>
+      <button class="secondary" id="conflictClose" style="margin-top:0">Fermer</button></div></div>`;
+  document.body.appendChild(voile);
+  voile.querySelector(".searchSheet").appendChild(panneau);
+  voile.querySelector("#conflictClose").addEventListener("click", () => fermerFenetreConflits());
+  voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreConflits(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && voile.classList.contains("open")) fermerFenetreConflits();
+  });
+  return voile;
+}
+
+function fermerFenetreConflits() { document.getElementById("conflictOverlay")?.classList.remove("open"); }
+
+async function ouvrirFenetreConflits() {
+  fenetreConflits()?.classList.add("open");
+  try { await modeHorsConnexion?.rafraichirConflits(); } catch { /* le panneau dira ce qu'il sait */ }
+}
+
 /** Ce qu'il faut redessiner quand le retard est rattrape, selon l'onglet ouvert. */
 function rafraichirApresSynchro() {
   if (currentWebTab === "equipement") { loadInstallationsList(); loadEquipmentList?.(); loadEpiList?.(); }
@@ -166,6 +206,14 @@ async function demarrerModeHorsConnexion() {
       tables: tablesSuivies
     });
     modeHorsConnexion?.surEtat(detail => {
+      // Le bandeau devient un bouton quand il y a quelque chose a trancher : il annonce, il doit
+      // aussi mener.
+      const bandeau = document.getElementById("syncStatus");
+      if (bandeau) {
+        const aTrancher = Boolean(detail.conflicts);
+        bandeau.classList.toggle("cliquable", aTrancher);
+        bandeau.title = aTrancher ? "Cliquez pour trancher les saisies en conflit" : (bandeau.title || "");
+      }
       if (detail.state === "synced") { dernierRafraichissement = 0; rafraichirApresSynchro(); return; }
       // Pendant une longue premiere lecture, l'ecran restait vide jusqu'au bout, puis se
       // remplissait d'un coup. On le redessine au fil de l'eau, sans le faire a chaque page :
@@ -187,5 +235,8 @@ async function demarrerModeHorsConnexion() {
     console.warn("Mode hors connexion indisponible :", e.message);
     modeHorsConnexion = null;
   }
+  document.getElementById("syncStatus")?.addEventListener("click", () => {
+    if (document.getElementById("syncStatus").classList.contains("cliquable")) ouvrirFenetreConflits();
+  });
   return modeHorsConnexion;
 }

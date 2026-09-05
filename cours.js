@@ -673,7 +673,9 @@ function renderEvaluationPanel() {
   });
   const newBtn = document.getElementById("newEvalBtn");
   if (newBtn) newBtn.addEventListener("click", () => createEvaluation(newBtn.dataset.type));
-  if (evalOpenedId) openEvaluationTable(evalOpenedId);
+  // Seulement si elle existe encore : sinon on relancerait un rendu sur une grille disparue.
+  if (evalOpenedId && evalList.some(e => e.id === evalOpenedId)) openEvaluationTable(evalOpenedId);
+  else if (evalOpenedId) { evalOpenedId = null; }
 }
 
 async function createEvaluation(type) {
@@ -753,6 +755,14 @@ function evalIsComplete(studentId) {
 function renderEvaluationTable() {
   const wrap = document.getElementById("evalTableWrap");
   const evaluation = evalList.find(e => e.id === evalOpenedId);
+  // Une grille absente de la liste n'est pas une raison de tout arreter. Cela arrive apres une
+  // suppression, ou quand on arrive du recapitulatif sur une grille effacee ailleurs : le
+  // tableau plantait alors sur "Cannot read properties of undefined", et l'ecran restait fige.
+  if (!evaluation) {
+    evalOpenedId = null;
+    wrap.innerHTML = `<div class="muted" style="margin-top:10px">Cette grille n'existe plus.</div>`;
+    return;
+  }
   let html = `<div class="card">
     <div class="top">
       <h2 style="margin:0">${evaluation.label}</h2>

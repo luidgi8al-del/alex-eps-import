@@ -516,6 +516,24 @@
         }
       },
       {
+        // Le bandeau "Conflit a verifier" s'affiche dans l'en-tete, mais le panneau vivait dans
+        // Equipement > Installations : il annoncait sans dire ou aller, et une saisie a trancher
+        // restait en suspens sans que personne la voie.
+        nom: "Les conflits s'ouvrent depuis le bandeau",
+        action: async () => {
+          if (typeof f.ouvrirFenetreConflits !== "function") return; // mode hors connexion absent
+          await f.ouvrirFenetreConflits();
+          await attendre(() => f.document.getElementById("conflictOverlay")?.classList.contains("open"),
+            "la fenetre des conflits ne s'ouvre pas", 5000);
+          const voile = f.document.getElementById("conflictOverlay");
+          if (voile.parentElement !== f.document.body) throw new Error("elle doit s'ouvrir depuis n'importe quel onglet");
+          if (!voile.contains($("conflictPanel"))) throw new Error("le panneau des conflits n'est pas dedans");
+          $("conflictClose").click();
+          await attendre(() => !f.document.getElementById("conflictOverlay").classList.contains("open"),
+            "la fenetre des conflits ne se ferme pas", 4000);
+        }
+      },
+      {
         nom: "Reglages",
         action: async () => {
           f.openSettings();

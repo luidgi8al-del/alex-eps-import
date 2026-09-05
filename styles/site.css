@@ -370,3 +370,8 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 #dashDetailOverlay .card { box-shadow:none; margin-top:0; }
 /* Le panneau porte parfois son propre "Fermer" : deux boutons cote a cote diraient la meme chose. */
 #dashDetailContenu #fermerDetail { display:none; }
+
+
+/* Le bandeau de synchronisation devient un bouton quand il annonce un conflit. */
+.syncStatus.cliquable { cursor:pointer; text-decoration:underline; }
+#conflictOverlay .searchSheet { max-width:min(900px, 96vw); }
