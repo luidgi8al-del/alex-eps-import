@@ -23,6 +23,9 @@
         {trier:(a,b)=>String(b.start_date||'').localeCompare(String(a.start_date||''))})
     ]);
     if(!healthSelectedClassId||!healthClasses.some(c=>c.id===healthSelectedClassId))healthSelectedClassId=healthClasses[0]?.id||null;
+    // Le motif ne s'affiche que si la colonne existe : le marqueur le dit sans faire echouer
+    // un enregistrement pour l'apprendre.
+    await verifierMotifDisponible();
     renderHealthTab();
   }
   function renderHealthTab(){
@@ -31,18 +34,140 @@
    host.querySelectorAll('[data-health-mode]').forEach(button=>button.onclick=()=>{healthMode=button.dataset.healthMode;renderHealthTab();});
    if(healthMode==='dispense')renderDispenseMode();else if(healthMode==='accident')renderAccidentMode();else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Cette rubrique est prête. Son formulaire sera ajouté à l’étape suivante.</p></div>`;
   }
+  // Trois vues sous DISPENSE : la saisie, ses propres dispenses (en cours / passees), et celles
+  // de tout l'etablissement. Les deux dernieres servent de bilan et de suivi.
+  let dispenseVue='saisie';
+  /** Collegues de l'etablissement, pour nommer l'auteur d'une dispense. Lu une fois. */
+  let dispenseEquipe=null;
+  /** Le motif n'existe qu'une fois schema_sante_2.sql passe. Avant, on n'en parle pas. */
+  let dispenseMotifDispo=false;
+
+  const MOTIFS=[['BLESSURE','Blessure'],['MALADIE','Maladie'],['CERTIFICAT','Certificat médical'],
+    ['INAPTITUDE_PARTIELLE','Inaptitude partielle'],['AUTRE','Autre']];
+  const motifLibelle=kind=>(MOTIFS.find(m=>m[0]===kind)||[null,''])[1];
+
+  /** Le motif et ses onglets ne s'allument qu'une fois le SQL passe : sinon on ecrirait dans
+   *  une colonne qui n'existe pas, et l'enregistrement serait refuse sans explication. */
+  async function verifierMotifDisponible(){
+    try{
+      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.sante_2&select=name`);
+      dispenseMotifDispo=res.ok&&(await res.json()).length>0;
+    }catch{ dispenseMotifDispo=false; }
+    return dispenseMotifDispo;
+  }
+
+  async function nomEnseignant(userId){
+    if(!userId)return 'Inconnu';
+    if(userId===session?.user_id)return 'Vous';
+    if(dispenseEquipe===null){
+      try{ dispenseEquipe=(await loadTeamContext())?.members||[]; }catch{ dispenseEquipe=[]; }
+    }
+    const membre=dispenseEquipe.find(m=>m.id===userId);
+    return membre?(membre.name||membre.email):'Un collègue';
+  }
+
+  /** Deux periodes qui se recouvrent pour le meme eleve : c'est la double saisie a empecher. */
+  function chevauche(a,b){return a.start_date<=b.end_date&&b.start_date<=a.end_date;}
+
+  function eleveNomme(studentId){
+    const s=healthStudents.find(x=>x.id===studentId);
+    return s?`${String(s.last_name||'').toUpperCase()} ${s.first_name||''}`.trim():'Élève';
+  }
+  function classeNommee(classId){
+    const c=healthClasses.find(x=>x.id===classId);
+    return c?c.name:'';
+  }
+  const jourFr=d=>d?new Date(d+'T12:00:00').toLocaleDateString('fr-FR'):'';
+
   function renderDispenseMode(){
-   const body=document.getElementById('healthModeBody'),classStudents=healthStudents.filter(s=>s.class_id===healthSelectedClassId),current=healthDispenses.filter(d=>d.class_id===healthSelectedClassId&&healthActive(d));
+   const body=document.getElementById('healthModeBody');
+   const onglets=[['saisie','SAISIE'],['miennes','MES DISPENSÉS'],['toutes','TOUS LES DISPENSÉS']];
+   body.innerHTML=`<div class="subtabbar" style="margin-bottom:10px">${onglets.map(([id,label])=>
+     `<button class="subtabbtn${dispenseVue===id?' active':''}" data-dispense-vue="${id}">${label}</button>`).join('')}</div><div id="dispenseVueBody"></div>`;
+   body.querySelectorAll('[data-dispense-vue]').forEach(b=>b.onclick=()=>{
+     dispenseVue=b.dataset.dispenseVue; renderDispenseMode();
+   });
+   if(dispenseVue==='saisie')renderSaisieDispense();
+   else renderListeDispenses(dispenseVue==='miennes');
+  }
+
+  function renderSaisieDispense(){
+   const body=document.getElementById('dispenseVueBody');
+   const classStudents=healthStudents.filter(s=>s.class_id===healthSelectedClassId);
+   const current=healthDispenses.filter(d=>d.class_id===healthSelectedClassId&&healthActive(d));
    const selected=healthStudents.find(s=>s.id===healthSelectedStudentId);
-   body.innerHTML=`<div class="card healthControls"><label>Classe<select id="healthClassSelect">${healthClasses.map(c=>`<option value="${healthEsc(c.id)}" ${c.id===healthSelectedClassId?'selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label><span class="healthCount">${current.length} dispense(s) en cours</span></div>${healthClasses.length?`<div class="healthGrid"><section class="card"><h2>Élèves de la classe</h2><div class="healthStudentList">${classStudents.map(student=>{const active=healthDispenses.find(d=>d.student_id===student.id&&healthActive(d));return `<button class="healthStudent ${student.id===healthSelectedStudentId?'selected':''}" data-health-student="${healthEsc(student.id)}"><span>${healthEsc(student.last_name.toUpperCase())} ${healthEsc(student.first_name)}</span><small>${active?`Dispensé jusqu’au ${new Date(active.end_date+'T12:00:00').toLocaleDateString('fr-FR')}`:'Ajouter une dispense'}</small></button>`}).join('')||'<p class="muted">Aucun élève dans cette classe.</p>'}</div></section><section class="card" id="healthEditor">${selected&&selected.class_id===healthSelectedClassId?dispenseEditorHtml(selected):'<div class="healthEmpty"><h2>Nouvelle dispense</h2><p>Sélectionnez la ligne d’un élève.</p></div>'}</section></div><section class="card"><h2>Dispenses en cours</h2>${current.length?`<table><thead><tr><th>Élève</th><th>Début</th><th>Fin</th><th></th></tr></thead><tbody>${current.map(d=>{const s=healthStudents.find(x=>x.id===d.student_id);return `<tr><td>${healthEsc(s?`${s.last_name.toUpperCase()} ${s.first_name}`:'Élève')}</td><td>${healthEsc(d.start_date)}</td><td>${healthEsc(d.end_date)}</td><td><button class="secondary healthDelete" data-id="${d.id}">Supprimer</button></td></tr>`}).join('')}</tbody></table>`:'<p class="muted">Aucune dispense en cours.</p>'}</section>`:'<div class="card healthEmpty">Créez d’abord une classe.</div>'}`;
-   const select=document.getElementById('healthClassSelect');if(select)select.onchange=()=>{healthSelectedClassId=select.value;healthSelectedStudentId=null;renderDispenseMode();};
-   body.querySelectorAll('[data-health-student]').forEach(button=>button.onclick=()=>{healthSelectedStudentId=button.dataset.healthStudent;renderDispenseMode();});
+   body.innerHTML=`<div class="card healthControls"><label>Classe<select id="healthClassSelect">${healthClasses.map(c=>`<option value="${healthEsc(c.id)}" ${c.id===healthSelectedClassId?'selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label><span class="healthCount">${current.length} dispense(s) en cours</span></div>${healthClasses.length?`<div class="healthGrid"><section class="card"><h2>Élèves de la classe</h2><div class="healthStudentList">${classStudents.map(student=>{const active=healthDispenses.find(d=>d.student_id===student.id&&healthActive(d));return `<button class="healthStudent ${student.id===healthSelectedStudentId?'selected':''}" data-health-student="${healthEsc(student.id)}"><span>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</span><small>${active?`Dispensé jusqu’au ${jourFr(active.end_date)}${active.reason_kind?` · ${healthEsc(motifLibelle(active.reason_kind))}`:''}`:'Ajouter une dispense'}</small></button>`}).join('')||'<p class="muted">Aucun élève dans cette classe.</p>'}</div></section><section class="card" id="healthEditor">${selected&&selected.class_id===healthSelectedClassId?dispenseEditorHtml(selected):'<div class="healthEmpty"><h2>Nouvelle dispense</h2><p>Sélectionnez la ligne d’un élève.</p></div>'}</section></div>`:'<div class="card healthEmpty">Créez d’abord une classe.</div>'}`;
+   const select=document.getElementById('healthClassSelect');
+   if(select)select.onchange=()=>{healthSelectedClassId=select.value;healthSelectedStudentId=null;renderDispenseMode();};
+   body.querySelectorAll('[data-health-student]').forEach(button=>button.onclick=()=>{
+     healthSelectedStudentId=button.dataset.healthStudent;renderDispenseMode();});
    const form=document.getElementById('dispenseForm');if(form)form.onsubmit=saveDispense;
    body.querySelectorAll('.healthDelete').forEach(button=>button.onclick=()=>deleteDispense(button.dataset.id));
   }
+
+  /** Les listes de bilan : les miennes, ou celles de tout l'etablissement, en cours puis passees. */
+  function renderListeDispenses(seulementLesMiennes){
+   const body=document.getElementById('dispenseVueBody');
+   const today=healthToday();
+   const lignes=healthDispenses.filter(d=>!seulementLesMiennes||d.user_id===session?.user_id);
+   const enCours=lignes.filter(d=>d.end_date>=today).sort((a,b)=>a.end_date.localeCompare(b.end_date));
+   const passees=lignes.filter(d=>d.end_date<today).sort((a,b)=>b.end_date.localeCompare(a.end_date));
+   const tableau=(titre,rows,vide)=>`<section class="card"><h2>${titre} <span class="muted" style="font-weight:400">(${rows.length})</span></h2>`
+     +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th>${seulementLesMiennes?'':'<th>Saisie par</th>'}</tr></thead><tbody>`
+       +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id))}</button></td>`
+         +`<td>${healthEsc(classeNommee(d.class_id))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td>`
+         +`<td>${healthEsc(motifLibelle(d.reason_kind)||'—')}</td>`
+         +(seulementLesMiennes?'':`<td data-auteur="${healthEsc(d.user_id||'')}">…</td>`)
+         +`</tr>`).join('')+`</tbody></table></div>`
+      :`<p class="muted">${vide}</p>`)+`</section>`;
+   body.innerHTML=tableau('En cours',enCours,'Aucune dispense en cours.')
+     +tableau('Passées',passees,'Aucune dispense terminée.');
+   body.querySelectorAll('[data-fiche]').forEach(b=>b.onclick=()=>ouvrirFicheDispense(b.dataset.fiche));
+   // Les noms des collegues arrivent apres coup : la liste s'affiche sans attendre le reseau.
+   body.querySelectorAll('[data-auteur]').forEach(async cell=>{
+     cell.textContent=await nomEnseignant(cell.dataset.auteur);
+   });
+  }
+
+  /** La fiche d'une dispense : debut, fin, motif, et qui l'a saisie. */
+  function fenetreFicheDispense(){
+    let voile=document.getElementById('dispenseFicheOverlay');
+    if(voile)return voile;
+    voile=document.createElement('div');
+    voile.className='searchOverlay';
+    voile.id='dispenseFicheOverlay';
+    voile.innerHTML=`<div class="searchSheet"><div class="top" style="margin-bottom:6px"><h2 style="margin:0" id="dispenseFicheTitre">Dispense</h2><button class="secondary" id="dispenseFicheClose" style="margin-top:0">Fermer</button></div><div id="dispenseFicheBody"></div></div>`;
+    document.body.appendChild(voile);
+    voile.querySelector('#dispenseFicheClose').onclick=fermerFicheDispense;
+    voile.addEventListener('click',e=>{if(e.target===voile)fermerFicheDispense();});
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&voile.classList.contains('open'))fermerFicheDispense();});
+    return voile;
+  }
+  function fermerFicheDispense(){
+    const voile=document.getElementById('dispenseFicheOverlay');
+    if(!voile)return;
+    if(voile.contains(document.activeElement))document.activeElement.blur();
+    voile.classList.remove('open');
+  }
+  async function ouvrirFicheDispense(id){
+    const d=healthDispenses.find(x=>x.id===id);
+    if(!d)return;
+    const voile=fenetreFicheDispense();
+    voile.querySelector('#dispenseFicheTitre').textContent=eleveNomme(d.student_id);
+    const corps=voile.querySelector('#dispenseFicheBody');
+    const sienne=d.user_id===session?.user_id;
+    corps.innerHTML=`<div class="muted">${healthEsc(classeNommee(d.class_id))}</div><div style="margin-top:8px"><strong>Du ${jourFr(d.start_date)} au ${jourFr(d.end_date)}</strong>${healthActive(d)?' <span class="muted">· en cours</span>':' <span class="muted">· terminée</span>'}</div><div style="margin-top:8px"><strong>Motif</strong><div>${healthEsc(motifLibelle(d.reason_kind)||'Non précisé')}</div>${d.reason?`<div class="muted">${healthEsc(d.reason)}</div>`:''}</div><div class="muted" style="margin-top:8px">Saisie par <span id="dispenseFicheAuteur">…</span></div>${sienne?`<button class="danger" id="dispenseFicheSuppr" style="margin-top:12px">Supprimer cette dispense</button>`:`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`}`;
+    voile.classList.add('open');
+    corps.querySelector('#dispenseFicheAuteur').textContent=await nomEnseignant(d.user_id);
+    const suppr=corps.querySelector('#dispenseFicheSuppr');
+    if(suppr)suppr.onclick=async()=>{ suppr.disabled=true; await deleteDispense(d.id); fermerFicheDispense(); };
+  }
+
   function dispenseEditorHtml(student){
    const history=healthDispenses.filter(d=>d.student_id===student.id);
-   return `<h2>${healthEsc(student.last_name.toUpperCase())} ${healthEsc(student.first_name)}</h2><form id="dispenseForm"><label>Début de la dispense<input type="date" id="dispenseStart" value="${healthToday()}" required></label><label>Fin de la dispense<input type="date" id="dispenseEnd" value="${healthToday()}" required></label><button type="submit">Valider la dispense</button></form><h3>Historique de l’élève</h3>${history.length?history.map(d=>`<div class="healthHistory"><span>${healthEsc(d.start_date)} → ${healthEsc(d.end_date)}</span><strong>${healthActive(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune dispense enregistrée.</p>'}`;
+   const motifs=dispenseMotifDispo?`<label>Motif<select id="dispenseKind">${MOTIFS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label><label>Précision (facultatif)<input type="text" id="dispenseReason" maxlength="200" placeholder="ex : entorse cheville droite"></label>`:`<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
+   return `<h2>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</h2><form id="dispenseForm"><label>Début de la dispense<input type="date" id="dispenseStart" value="${healthToday()}" required></label><label>Fin de la dispense<input type="date" id="dispenseEnd" value="${healthToday()}" required></label>${motifs}<button type="submit">Valider la dispense</button></form><h3>Historique de l’élève</h3>${history.length?history.map(d=>`<div class="healthHistory"><span>${jourFr(d.start_date)} → ${jourFr(d.end_date)}${d.reason_kind?` · ${healthEsc(motifLibelle(d.reason_kind))}`:''}</span><strong>${healthActive(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune dispense enregistrée.</p>'}`;
   }
   // L'identifiant est tire ici et non par le serveur : une dispense saisie sans reseau doit
   // pouvoir etre affichee, puis envoyee telle quelle quand la connexion revient.
@@ -50,9 +175,21 @@
     event.preventDefault();
     const start=document.getElementById('dispenseStart').value,end=document.getElementById('dispenseEnd').value;
     if(!start||!end||end<start){alert('La date de fin doit être postérieure ou égale à la date de début.');return;}
+    // Le garde-fou : deux dispenses qui se recouvrent pour le meme eleve, c'est une double
+    // saisie. On le dit ici, et la base le refuse aussi - le site n'ecrit pas seul.
+    const conflit=healthDispenses.find(d=>d.student_id===healthSelectedStudentId&&!d.deleted
+      &&chevauche(d,{start_date:start,end_date:end}));
+    if(conflit){
+      alert(`Cet élève a déjà une dispense du ${jourFr(conflit.start_date)} au ${jourFr(conflit.end_date)}.\nModifiez-la ou supprimez-la plutôt que d’en créer une seconde.`);
+      return;
+    }
     const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:healthSelectedClassId,
       student_id:healthSelectedStudentId,start_date:start,end_date:end,
       updated_at:new Date().toISOString(),deleted:false};
+    if(dispenseMotifDispo){
+      ligne.reason_kind=document.getElementById('dispenseKind')?.value||'AUTRE';
+      ligne.reason=document.getElementById('dispenseReason')?.value.trim()||null;
+    }
     try{ await enregistrerLigne('health_dispensations',ligne); }
     catch(e){ alert(e.message); return; }
     healthDispenses.unshift(ligne);
@@ -117,6 +254,13 @@
   globalThis.saveDispense = saveDispense;
   globalThis.deleteDispense = deleteDispense;
   globalThis.openClassDispenses = openClassDispenses;
+  globalThis.renderSaisieDispense = renderSaisieDispense;
+  globalThis.renderListeDispenses = renderListeDispenses;
+  globalThis.ouvrirFicheDispense = ouvrirFicheDispense;
+  globalThis.fermerFicheDispense = fermerFicheDispense;
+  globalThis.verifierMotifDisponible = verifierMotifDisponible;
+  globalThis.motifLibelle = motifLibelle;
+  globalThis.chevaucheDispense = chevauche;
   globalThis.accidentSteps = accidentSteps;
   globalThis.renderAccidentMode = renderAccidentMode;
   globalThis.accidentStepHtml = accidentStepHtml;

@@ -390,6 +390,63 @@
         }
       },
       {
+        // Trois demandes d'un coup : pas deux fois la meme dispense, un motif, et un bilan
+        // separe "les miennes" / "toutes celles de l'etablissement".
+        nom: "SANTE · dispenses : motif, doublon refuse, bilan par onglet",
+        action: async () => {
+          await onglet("health");
+          await attendre(() => rempli($("healthBody")), "l'ecran sante reste vide", 6000);
+          await attendre(() => f.document.querySelector('[data-dispense-vue="miennes"]'),
+            "les onglets de bilan n'apparaissent pas", 4000);
+
+          // Le motif est propose des que le schema est marque comme applique.
+          await attendre(() => f.document.getElementById("healthClassSelect"), "la saisie ne s'affiche pas", 4000);
+          const eleve = f.document.querySelector("[data-health-student]");
+          if (!eleve) throw new Error("aucun eleve dans la classe de test");
+          eleve.click();
+          await attendre(() => f.document.getElementById("dispenseKind"),
+            "le choix du motif n'apparait pas alors que le schema est applique", 4000);
+
+          // Le garde-fou : reproposer une periode qui recouvre une dispense existante.
+          const dispenses = f.healthDispensesPourTest ? f.healthDispensesPourTest() : null;
+          if (typeof f.chevaucheDispense !== "function") throw new Error("la regle de chevauchement a disparu");
+          if (!f.chevaucheDispense({ start_date: "2026-09-01", end_date: "2026-12-01" },
+                                   { start_date: "2026-10-01", end_date: "2026-10-05" })) {
+            throw new Error("un chevauchement n'est pas reconnu");
+          }
+          if (f.chevaucheDispense({ start_date: "2026-09-01", end_date: "2026-09-10" },
+                                  { start_date: "2026-09-11", end_date: "2026-09-20" })) {
+            throw new Error("deux periodes qui ne se touchent pas sont vues comme un doublon");
+          }
+
+          // "Mes dispenses" ne montre que les siennes ; "Tous" ajoute celle du collegue.
+          f.document.querySelector('[data-dispense-vue="miennes"]').click();
+          await attendre(() => f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length > 0,
+            "le bilan personnel reste vide", 4000);
+          const miennes = f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length;
+          f.document.querySelector('[data-dispense-vue="toutes"]').click();
+          await attendre(() => f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length > miennes,
+            "les dispenses des collegues n'apparaissent pas dans \"Tous\"", 4000);
+
+          // En cours et Passees sont bien separees.
+          const titres = [...f.document.querySelectorAll("#dispenseVueBody h2")].map(h => h.textContent);
+          ["En cours", "Passées"].forEach(t => {
+            if (!titres.some(x => x.includes(t))) throw new Error(`la section ${t} manque`);
+          });
+
+          // Un clic sur un nom ouvre sa fiche, avec le motif.
+          f.document.querySelector("#dispenseVueBody [data-fiche]").click();
+          await attendre(() => f.document.getElementById("dispenseFicheOverlay")?.classList.contains("open"),
+            "la fiche ne s'ouvre pas", 4000);
+          const fiche = f.document.getElementById("dispenseFicheBody").innerText;
+          if (!/Motif/.test(fiche)) throw new Error("la fiche ne dit pas le motif");
+          f.document.getElementById("dispenseFicheClose").click();
+          await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
+            "la fiche ne se ferme pas", 4000);
+          f.document.querySelector('[data-dispense-vue="saisie"]').click();
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");

@@ -68,7 +68,17 @@
     annual_plan_blocks: [],
     eps_test_sessions: [{ id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT }],
     eps_test_results: [{ id: "tr-1", user_id: "prof-test", session_id: "ts-1", student_id: "el-0", input_value: 9, result_value: 15.5, input_unit: "palier", result_unit: "km/h", deleted: false, updated_at: MAINTENANT }],
-    health_dispensations: [{ id: "hd-1", user_id: "prof-test", class_id: "cl-3e6", student_id: "el-0", start_date: "2026-09-01", end_date: "2026-12-01", updated_at: MAINTENANT }],
+    // Trois dispenses : une a soi en cours, une a soi terminee, une saisie par un collegue.
+    // C'est le minimum pour verifier les onglets "Mes dispenses" / "Tous" et le partage En
+    // cours / Passees.
+    health_dispensations: [
+      { id: "hd-1", user_id: "prof-test", class_id: "cl-3e6", student_id: "el-0", start_date: "2026-09-01", end_date: "2026-12-01", reason_kind: "BLESSURE", reason: "Entorse cheville droite", deleted: false, updated_at: MAINTENANT },
+      { id: "hd-2", user_id: "prof-test", class_id: "cl-3e6", student_id: "el-1", start_date: "2026-01-05", end_date: "2026-01-20", reason_kind: "MALADIE", reason: null, deleted: false, updated_at: MAINTENANT },
+      { id: "hd-3", user_id: "prof-collegue", class_id: "cl-3e6", student_id: "el-2", start_date: "2026-09-02", end_date: "2026-11-30", reason_kind: "CERTIFICAT", reason: null, deleted: false, updated_at: MAINTENANT }
+    ],
+    // Le marqueur de schema : sans lui le site masque le motif, ce qui est justement la
+    // situation d'avant l'application du SQL.
+    eps_schema_marks: [{ name: "hors_connexion_2" }, { name: "sante_2" }],
     health_accidents: [],
     eps_period_dates: [{ id: "pd-1", user_id: "prof-test", institution_id: "etab-1", school_year: "2026-2027", grade: "TERMINALE", number: 1, start_date: "2026-09-01", end_date: "2026-11-20", deleted: false, updated_at: MAINTENANT }],
     planning_validations: [],
