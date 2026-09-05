@@ -539,7 +539,12 @@ async function loadImports() {
       const puce = document.createElement("button");
       puce.type = "button";
       puce.className = "classePuce" + (r.id === classeOuverteId ? " active" : "");
-      puce.innerHTML = `${label}<span class="annee">${planningText(r.school_year || "")}</span>`;
+      // L'annee scolaire est la meme pour toutes les classes : affichee sur chaque puce, elle
+      // doublait leur largeur et rejetait les dernieres classes hors de l'ecran. Elle reste
+      // lisible en survol, et le tableau de bord de la classe la rappelle.
+      puce.textContent = label;
+      const annee = planningText(r.school_year || "");
+      if (annee) puce.title = `${label} — ${annee}`;
       puce.addEventListener("click", () => {
         // Recliquer sur la classe ouverte la referme : c'est le seul moyen de revenir a un
         // ecran vide sans avoir a chercher un bouton "Fermer".

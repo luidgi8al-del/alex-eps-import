@@ -112,7 +112,6 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
               cursor:pointer; white-space:nowrap; }
 .classePuce:hover { background:#F3F6F8; }
 .classePuce.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-.classePuce .annee { font-weight:500; opacity:.7; font-size:12px; margin-left:6px; }
 
 /* Cartes du tableau de bord, calquees sur l'application : chacune annonce son contenu en une
    ligne et s'ouvre au clic, plutot que d'etaler ses details en permanence. */
