@@ -505,7 +505,7 @@ function renderClassDashboard() {
       <span class="dashFleche">›</span>
     </button>
 
-    <div id="dashDetail"></div>`;
+`;
 
   document.getElementById("closeDashboardBtn").onclick = fermerTableauDeBord;
   panel.querySelectorAll("[data-dash-period]").forEach(b =>
@@ -629,8 +629,9 @@ async function changerSeance(cycle, delta) {
   } catch (e) {
     cycle.current_session_number = avant;
     renderClassDashboard();
-    const detail = document.getElementById("dashDetail");
+    const detail = hoteDetail();
     if (detail) detail.innerHTML = `<div class="error">Séance non enregistrée : ${planningText(e.message)}</div>`;
+    ouvrirDetailClasse();
   }
 }
 
@@ -661,8 +662,9 @@ async function creerCyclePourPeriode() {
     renderClassDashboard();
   } catch (e) {
     if (bouton) { bouton.disabled = false; bouton.textContent = "Créer le cycle"; }
-    const detail = document.getElementById("dashDetail");
+    const detail = hoteDetail();
     if (detail) detail.innerHTML = `<div class="error">Cycle non créé : ${planningText(e.message)}</div>`;
+    ouvrirDetailClasse();
   }
 }
 
@@ -678,8 +680,9 @@ async function ouvrirFicheSeance(cycle) {
   const ordonnees = orderedSessions(contenu, dashboardClass.row.grade, total);
   const ecrite = ordonnees[numero - 1];
   if (!ecrite) {
-    const detail = document.getElementById("dashDetail");
+    const detail = hoteDetail();
     if (detail) detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucune fiche rédigée pour la séance ${numero} en ${planningText(GRADE_LABELS[dashboardClass.row.grade] || dashboardClass.row.grade)} · ${planningText(cycle.apsa_name)}.</div>`;
+    ouvrirDetailClasse();
     return;
   }
   sessionSheetContext = `${dashboardClass.label} · ${cycle.apsa_name}`;
@@ -690,13 +693,15 @@ async function ouvrirFicheSeance(cycle) {
 
 /** Les deux boutons d'evaluation menent au meme ecran que l'application, dans COURS. */
 async function ouvrirEvaluationDepuisClasse(cycle, type) {
-  const detail = document.getElementById("dashDetail");
+  const detail = hoteDetail();
   if (!detail) return;
   if (!cycle) {
     detail.innerHTML = `<div class="muted" style="margin-top:10px">Aucun cycle sur cette période : créez-le d'abord ci-dessus.</div>`;
+    ouvrirDetailClasse();
     return;
   }
   detail.innerHTML = `<div class="muted" style="margin-top:10px">Chargement des grilles...</div>`;
+  ouvrirDetailClasse();
 
   const [contenu, res] = await Promise.all([
     loadCycleContent(dashboardClass.row.grade, cycle.apsa_name),
@@ -729,7 +734,8 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
         </div>`).join("")
         : `<div class="muted" style="margin-top:8px">Aucune grille proposée pour ce niveau et cette activité. Créez-en une dans COURS.</div>`}
     </div>`;
-  document.getElementById("fermerDetail").onclick = () => { detail.innerHTML = ""; };
+  ouvrirDetailClasse();
+  document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
   detail.querySelectorAll("[data-modele]").forEach(b =>
     b.onclick = () => utiliserModele(cycle, modeles.find(m => m.id === b.dataset.modele), b, existantes));
   // Ouvrir une grille existante sans quitter CLASSE : le tableau de notes vient par-dessus la
@@ -737,6 +743,47 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
   // grille qu'on vient de remplir.
   detail.querySelectorAll("[data-grille]").forEach(b =>
     b.onclick = () => ouvrirTableauDeNotes(cycle, type, b.dataset.grille));
+}
+
+/**
+ * Le detail du tableau de bord - recapitulatif, grilles proposees, dispenses - vient par-dessus
+ * la page au lieu de s'ajouter en bas.
+ *
+ * Il s'affichait sous les cartes : cliquer sur "Recapitulatif" ne montrait rien tant qu'on
+ * n'avait pas fait defiler, et on perdait de vue ce qu'on venait de cliquer. Le voile est pose
+ * sur le corps du document, et non dans le tableau de bord, parce que celui-ci est entierement
+ * redessine a chaque changement de periode : un noeud place a l'interieur disparaitrait avec.
+ */
+function hoteDetail() {
+  let voile = document.getElementById("dashDetailOverlay");
+  if (!voile) {
+    voile = document.createElement("div");
+    voile.className = "searchOverlay";
+    voile.id = "dashDetailOverlay";
+    // Une fermeture propre a la fenetre, en plus des boutons "Fermer" que portent certains
+    // panneaux : les messages simples - "aucun cycle sur cette periode" - n'en ont pas, et
+    // laissaient la fenetre sans issue visible.
+    const feuille = document.createElement("div");
+    feuille.className = "searchSheet";
+    feuille.innerHTML = `<div class="top" style="margin-bottom:6px"><span></span>
+      <button class="secondary" id="dashDetailClose" style="margin-top:0">Fermer</button></div>
+      <div id="dashDetailContenu"></div>`;
+    voile.appendChild(feuille);
+    feuille.querySelector("#dashDetailClose").addEventListener("click", () => fermerDetailClasse());
+    document.body.appendChild(voile);
+    voile.addEventListener("click", e => { if (e.target === voile) fermerDetailClasse(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && voile.classList.contains("open")) fermerDetailClasse();
+    });
+  }
+  return document.getElementById("dashDetailContenu");
+}
+
+function ouvrirDetailClasse() { hoteDetail(); document.getElementById("dashDetailOverlay")?.classList.add("open"); }
+function fermerDetailClasse() {
+  document.getElementById("dashDetailOverlay")?.classList.remove("open");
+  const c = document.getElementById("dashDetailContenu");
+  if (c) c.innerHTML = "";
 }
 
 /**
@@ -798,10 +845,11 @@ async function utiliserModele(cycle, modele, bouton, existantes = []) {
 }
 
 function afficherRecapPeriode(evaluations, tests) {
-  const hote = document.getElementById("dashDetail");
+  const hote = hoteDetail();
   if (!hote) return;
   if (!evaluations.length && !tests.length) {
     hote.innerHTML = `<div class="muted" style="margin-top:10px">Aucun test ni évaluation sur cette période.</div>`;
+    ouvrirDetailClasse();
     return;
   }
   hote.innerHTML = `
@@ -815,7 +863,8 @@ function afficherRecapPeriode(evaluations, tests) {
           planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${
           e.activite ? " · " + planningText(e.activite) : ""}</span></button>`).join("")}` : ""}
     </div>`;
-  document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
+  ouvrirDetailClasse();
+  document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
   // Depuis le recapitulatif, on ouvre la grille : la consulter, la corriger ou la supprimer se
   // fait au meme endroit. Elle n'etait qu'une ligne de texte, sans aucun moyen d'y revenir.
   hote.querySelectorAll("[data-recap-eval]").forEach(b => b.onclick = () => {
@@ -829,10 +878,11 @@ function afficherRecapPeriode(evaluations, tests) {
  * nombre : le bouton appelait une fonction qui n'existait pas, et ne faisait donc rien.
  */
 function afficherDispenses(dispenses) {
-  const hote = document.getElementById("dashDetail");
+  const hote = hoteDetail();
   if (!hote) return;
   if (!dispenses.length) {
     hote.innerHTML = `<div class="muted" style="margin-top:10px">Aucun élève dispensé aujourd'hui.</div>`;
+    ouvrirDetailClasse();
     return;
   }
   const nom = id => {
@@ -846,7 +896,8 @@ function afficherDispenses(dispenses) {
       <ul class="tight" style="margin:10px 0 0; padding-left:18px">${
         dispenses.map(d => `<li>${nom(d.student_id)} <span class="muted">· du ${planningText(d.start_date)} au ${planningText(d.end_date)}</span></li>`).join("")}</ul>
     </div>`;
-  document.getElementById("fermerDetail").onclick = () => { hote.innerHTML = ""; };
+  ouvrirDetailClasse();
+  document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
 }
 
 /**

@@ -363,3 +363,10 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 /* ---- Tableau de notes : une fenetre large, car le tableau porte une colonne par critere ---- */
 #evaluationOverlay .searchSheet { max-width:min(1180px, 96vw); max-height:88vh; }
 #evaluationOverlay #evaluationPanel > .card { box-shadow:none; }
+
+
+/* Le detail du tableau de bord en fenetre : recapitulatif, grilles proposees, dispenses. */
+#dashDetailOverlay .searchSheet { max-width:min(860px, 96vw); }
+#dashDetailOverlay .card { box-shadow:none; margin-top:0; }
+/* Le panneau porte parfois son propre "Fermer" : deux boutons cote a cote diraient la meme chose. */
+#dashDetailContenu #fermerDetail { display:none; }

@@ -83,9 +83,20 @@
           f.document.querySelector('[data-dash-period="1"]').click();
           await new Promise(r => setTimeout(r, 250));
           $("dashRecapBtn").click();
-          await attendre(() => rempli($("dashDetail")), "le recapitulatif reste vide");
+          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif reste vide");
+          // Il vient par-dessus la page : affiche en bas, il fallait faire defiler pour voir ce
+          // qu'on venait de cliquer. Et il doit toujours pouvoir se refermer, y compris quand le
+          // panneau n'est qu'un message sans bouton.
+          const voileDetail = f.document.getElementById("dashDetailOverlay");
+          if (!voileDetail?.classList.contains("open")) throw new Error("le detail ne s'ouvre pas en fenetre");
+          if (voileDetail.parentElement !== f.document.body) throw new Error("la fenetre doit tenir hors du tableau de bord");
+          $("dashDetailClose").click();
+          await attendre(() => !f.document.getElementById("dashDetailOverlay").classList.contains("open"),
+            "la fenetre du detail ne se ferme pas", 4000);
+          $("dashRecapBtn").click();
+          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre pas");
           $("dashDispenseBtn").click();
-          await attendre(() => rempli($("dashDetail")), "les dispenses restent vides");
+          await attendre(() => rempli($("dashDetailContenu")), "les dispenses restent vides");
         }
       },
       {
@@ -95,11 +106,11 @@
           // Le panneau lit la fiche de cycle sur le disque : il peut mettre un moment. On attend
           // qu'il ait fini de charger, puis on dit ce qu'il montre - un message precis vaut mieux
           // qu'un delai depasse, qui ne distingue pas la lenteur de l'absence.
-          await attendre(() => !/Chargement/.test($("dashDetail").innerText),
+          await attendre(() => !/Chargement/.test($("dashDetailContenu").innerText),
             "le panneau des grilles reste sur Chargement", 12000);
-          const proposees = f.document.querySelectorAll("#dashDetail [data-modele]").length;
+          const proposees = f.document.querySelectorAll("#dashDetailContenu [data-modele]").length;
           if (proposees < 1) throw new Error("aucune grille proposee — le panneau affiche : "
-            + $("dashDetail").innerText.slice(0, 160));
+            + $("dashDetailContenu").innerText.slice(0, 160));
         }
       },
       {

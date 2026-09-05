@@ -606,6 +606,7 @@ function renderEvaluationPanel() {
       <h2 style="margin:0">Evaluations — ${evalCourse.apsa_name} (${label})</h2>
       <div class="no-print" style="display:flex; gap:8px">
         <button id="saveEvalBtn" style="margin-top:0">Enregistrer</button>
+        ${evalOpenedId ? `<button class="danger" data-delete-eval="${evalOpenedId}" style="margin-top:0">Supprimer</button>` : ""}
         <button class="secondary" id="closeEvalBtn" style="margin-top:0">Fermer</button>
       </div>
     </div>`;
