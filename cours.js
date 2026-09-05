@@ -502,6 +502,58 @@ let evalCriteria = [];
 let evalScores = {};         // "criterionId|studentId" -> {id, points}
 
 /**
+ * Le tableau de notes s'ouvre par-dessus la page, sans quitter l'onglet d'ou l'on vient.
+ *
+ * Il vivait dans le flux de l'onglet COURS : ouvrir une grille depuis une classe obligeait donc
+ * a changer d'onglet, puis a retrouver son chemin pour revenir. On note pendant un cours, entre
+ * deux passages d'eleves : le trajet doit etre le plus court possible.
+ *
+ * Le noeud est deplace, pas refait. Il garde ses identifiants et ses ecouteurs en changeant de
+ * parent, et le voile est pose sur le corps du document pour rester visible quel que soit
+ * l'onglet ouvert.
+ */
+let fermetureEvaluation = null;
+function fenetreEvaluation() {
+  let voile = document.getElementById("evaluationOverlay");
+  if (voile) return voile;
+  const panneau = document.getElementById("evaluationPanel");
+  if (!panneau) return null;
+
+  voile = document.createElement("div");
+  voile.className = "searchOverlay";
+  voile.id = "evaluationOverlay";
+  const feuille = document.createElement("div");
+  feuille.className = "searchSheet";
+  voile.appendChild(feuille);
+  document.body.appendChild(voile);
+  feuille.appendChild(panneau);
+  panneau.style.display = "block";
+  panneau.style.margin = "0";
+
+  voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreEvaluation(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && voile.classList.contains("open")) fermerFenetreEvaluation();
+  });
+  return voile;
+}
+
+/**
+ * Ferme la fenetre, en enregistrant d'abord la case en cours de saisie.
+ *
+ * Une note ne part qu'au moment ou l'on quitte sa case. Fermer sans cela perdrait la derniere
+ * valeur tapee - celle qu'on vient d'ecrire, donc la plus facile a croire enregistree.
+ */
+function fermerFenetreEvaluation() {
+  if (document.activeElement && document.activeElement.matches?.("#evaluationPanel input")) {
+    document.activeElement.blur();
+  }
+  document.getElementById("evaluationOverlay")?.classList.remove("open");
+  const apres = fermetureEvaluation;
+  fermetureEvaluation = null;
+  if (typeof apres === "function") apres();
+}
+
+/**
  * @param {{type?: string, id?: string}} [ouverture] grille a deplier d'emblee. Sans cela, creer
  *   une grille depuis un modele la refermait aussitot : utiliserModele designait la nouvelle,
  *   et ce panneau effacait la demande une ligne plus loin.
@@ -511,7 +563,7 @@ async function openEvaluationPanel(cycleRow, ouverture) {
   evalExpandedType = ouverture?.type ?? null;
   evalOpenedId = ouverture?.id ?? null;
   const panel = document.getElementById("evaluationPanel");
-  panel.style.display = "block";
+  fenetreEvaluation()?.classList.add("open");
   panel.innerHTML = '<div class="muted">Chargement...</div>';
   if (modeHorsConnexion) {
     evalStudents = (await modeHorsConnexion.lire("students", {
@@ -540,7 +592,10 @@ function renderEvaluationPanel() {
   let html = `<div class="card">
     <div class="top">
       <h2 style="margin:0">Evaluations — ${evalCourse.apsa_name} (${label})</h2>
-      <button class="secondary no-print" id="closeEvalBtn" style="margin-top:0">Fermer</button>
+      <div class="no-print" style="display:flex; gap:8px">
+        <button id="saveEvalBtn" style="margin-top:0">Enregistrer</button>
+        <button class="secondary" id="closeEvalBtn" style="margin-top:0">Fermer</button>
+      </div>
     </div>`;
   EVAL_TYPES.forEach(t => {
     const count = evalList.filter(e => e.type === t.value).length;
@@ -567,9 +622,11 @@ function renderEvaluationPanel() {
   html += `</div><div id="evalTableWrap"></div>`;
   panel.innerHTML = html;
 
-  document.getElementById("closeEvalBtn").addEventListener("click", () => {
-    panel.style.display = "none"; panel.innerHTML = "";
-  });
+  document.getElementById("closeEvalBtn").addEventListener("click", () => fermerFenetreEvaluation());
+  // Les notes s'enregistrent des qu'on quitte leur case : ce bouton ne fait donc que valider la
+  // derniere saisie et refermer. Il existe parce que rien ne disait que c'etait deja fait - on
+  // cherchait un bouton, et son absence donnait a croire que rien n'etait enregistre.
+  document.getElementById("saveEvalBtn").addEventListener("click", () => fermerFenetreEvaluation());
   panel.querySelectorAll(".accType").forEach(el => {
     el.addEventListener("click", () => {
       const type = el.dataset.type;

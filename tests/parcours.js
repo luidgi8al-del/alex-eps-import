@@ -478,7 +478,7 @@
         // "Utiliser cette grille" designait la grille a ouvrir, et openEvaluationPanel effacait
         // la demande une ligne plus loin : la grille creee se refermait aussitot, et l'ecran
         // paraissait renvoyer sur une autre classe.
-        nom: "COURS · une grille creee s'ouvre depliee",
+        nom: "COURS · le tableau de notes s'ouvre en fenetre, depliee",
         action: async () => {
           await onglet("cours");
           if (typeof f.openEvaluationPanel !== "function") throw new Error("openEvaluationPanel a disparu");
@@ -496,6 +496,17 @@
           if (texte.slice(ponctuelle, finale).includes("Nouvelle grille")) {
             throw new Error("une section non demandee ne doit pas s'ouvrir");
           }
+
+          // Le tableau de notes vient par-dessus la page : on note pendant un cours, sans quitter
+          // la classe qu'on regardait.
+          const voile = f.document.getElementById("evaluationOverlay");
+          if (!voile || !voile.classList.contains("open")) throw new Error("la fenetre ne s'ouvre pas");
+          if (voile.parentElement !== f.document.body) throw new Error("la fenetre doit tenir hors des onglets");
+          if (!voile.contains($("evaluationPanel"))) throw new Error("le panneau n'est pas dans la fenetre");
+          if (!$("saveEvalBtn")) throw new Error("le bouton Enregistrer a disparu");
+          $("saveEvalBtn").click();
+          await attendre(() => !f.document.getElementById("evaluationOverlay").classList.contains("open"),
+            "Enregistrer ne referme pas la fenetre", 4000);
         }
       },
       {

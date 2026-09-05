@@ -713,7 +713,11 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
     <div class="card" style="margin-top:10px">
       <div class="top"><h3 style="margin:0">${libelle} · ${planningText(cycle.apsa_name)}</h3>
         <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
-      ${existantes.length ? `<div class="muted" style="margin-top:8px">${existantes.length} grille(s) déjà créée(s) — ouvrez-les dans COURS.</div>` : ""}
+      ${existantes.length ? `<div style="margin-top:8px">
+        <div class="muted" style="margin-bottom:6px">${existantes.length} grille(s) déjà créée(s)</div>
+        ${existantes.map(e => `<button class="secondary" data-grille="${e.id}" style="margin-top:6px; width:100%; text-align:left">${
+          planningText(e.label || "Grille")} <span class="muted">· ouvrir le tableau de notes</span></button>`).join("")}
+      </div>` : ""}
       ${modeles.length ? modeles.map(m => `
         <div class="card" style="margin-top:8px">
           <strong>${planningText(m.titre)}</strong>
@@ -727,6 +731,22 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
   document.getElementById("fermerDetail").onclick = () => { detail.innerHTML = ""; };
   detail.querySelectorAll("[data-modele]").forEach(b =>
     b.onclick = () => utiliserModele(cycle, modeles.find(m => m.id === b.dataset.modele), b));
+  // Ouvrir une grille existante sans quitter CLASSE : le tableau de notes vient par-dessus la
+  // page, et le tableau de bord se redessine a la fermeture pour que le recapitulatif compte la
+  // grille qu'on vient de remplir.
+  detail.querySelectorAll("[data-grille]").forEach(b =>
+    b.onclick = () => ouvrirTableauDeNotes(cycle, type, b.dataset.grille));
+}
+
+/**
+ * Ouvre le tableau de notes d'une grille, par-dessus la page, sans quitter l'onglet CLASSE.
+ *
+ * A la fermeture, le tableau de bord est redessine : c'est ce qui fait apparaitre la grille dans
+ * le recapitulatif de la periode, et met a jour le nombre d'evaluations annonce sur la carte.
+ */
+async function ouvrirTableauDeNotes(cycle, type, grilleId) {
+  fermetureEvaluation = () => renderClassDashboard();
+  await openEvaluationPanel(cycle, { type, id: grilleId });
 }
 
 /**
@@ -757,17 +777,11 @@ async function utiliserModele(cycle, modele, bouton) {
       await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations`, { method: "POST", body: JSON.stringify(grille) });
       await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria`, { method: "POST", body: JSON.stringify(criteres) });
     }
-    showTab("cours");
-    showCoursTab("cours");
-    // L'ordre compte. showCoursTab lance le rechargement de la liste des cycles sans l'attendre :
-    // elle se redessinait donc apres coup, au-dessus du panneau, et repoussait la grille hors de
-    // vue - on se croyait renvoye sur une autre classe alors que la bonne grille etait plus bas.
-    // On attend la liste, puis on ouvre la grille creee, puis on amene l'ecran dessus, une fois
-    // la mise en page posee.
-    await loadCycles();
-    await openEvaluationPanel(cycle, { type: modele.type, id });
-    requestAnimationFrame(() =>
-      document.getElementById("evaluationPanel")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    // On ne quitte plus l'onglet CLASSE : le tableau de notes vient par-dessus la page. Avant, on
+    // basculait dans COURS, ou la liste des cycles se redessinait au-dessus du panneau et
+    // repoussait la grille hors de vue - on se croyait renvoye sur une autre classe.
+    bouton.disabled = false; bouton.textContent = "Utiliser cette grille";
+    await ouvrirTableauDeNotes(cycle, modele.type, id);
   } catch (e) {
     bouton.disabled = false; bouton.textContent = "Utiliser cette grille";
     bouton.insertAdjacentHTML("afterend", `<div class="error">Grille non créée : ${planningText(e.message)}</div>`);

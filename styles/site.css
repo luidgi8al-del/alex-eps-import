@@ -358,3 +358,8 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
    bouton pose dessus. */
 .unssPickLigne { cursor:pointer; }
 .unssPickLigne:hover { background:#F3F6F8; }
+
+
+/* ---- Tableau de notes : une fenetre large, car le tableau porte une colonne par critere ---- */
+#evaluationOverlay .searchSheet { max-width:min(1180px, 96vw); max-height:88vh; }
+#evaluationOverlay #evaluationPanel > .card { box-shadow:none; }
