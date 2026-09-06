@@ -37,6 +37,17 @@ function dateLisible(valeur) {
  * Un refus n'offre aucun choix : le serveur n'acceptera pas cette saisie de ce compte. On dit ce
  * qui a ete tente, pourquoi c'est refuse, et on laisse un seul geste possible.
  */
+/**
+ * Un refus de droits se dit autrement qu'un refus du serveur.
+ *
+ * Le message annoncait "reserve a l'administrateur" quel que soit le motif : un HTTP 400 du a
+ * une valeur invalide se lisait donc comme un probleme de droits, et envoyait chercher au
+ * mauvais endroit.
+ */
+function estRefusDeDroits(raison) {
+  return /administrateur|droits|403|Reserv/i.test(String(raison || ""));
+}
+
 function refusHtml(refus, libelles) {
   const champs = (refus.overlappingFields || [])
     .filter(champ => champ !== "__deleted__")
@@ -45,8 +56,9 @@ function refusHtml(refus, libelles) {
   return `
     <section class="conflit conflitRefus" data-refus="${echapper(refus.conflictId)}">
       <h3>${echapper(libelles[refus.entity] || refus.entity)} · ${echapper(refus.id)}</h3>
-      <p class="conflitQuand">${geste} refusée — ${echapper(refus.reason || "droits insuffisants")}.
-         Cette action est réservée à l'administrateur : votre saisie ne sera pas enregistrée.</p>
+      <p class="conflitQuand">${geste} refusée — ${echapper(refus.reason || "raison inconnue")}.
+         ${estRefusDeDroits(refus.reason) ? "Cette action est réservée à l'administrateur." : "Le serveur a refusé cette saisie."}
+         Elle ne sera pas enregistrée.</p>
       ${champs.length ? `<ul class="conflitChamps">${champs.map(c => `<li>${c}</li>`).join("")}</ul>` : ""}
       <div class="conflitActions">
         <button type="button" data-refus-ok="${echapper(refus.conflictId)}">J'ai compris</button>

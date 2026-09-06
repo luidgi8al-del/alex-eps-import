@@ -563,6 +563,25 @@
         }
       },
       {
+        // Un <option> sans value renvoie son texte : la phrase "Aucun creneau AS..." partait
+        // dans wish1_slot_id, et le serveur refusait la fiche entiere.
+        nom: "ASLVH · un choix vide n'envoie pas sa phrase d'explication",
+        action: async () => {
+          if (typeof f.menuCreneaux !== "function") throw new Error("le menu des creneaux a disparu");
+          // Sans creneau, le menu affiche une phrase d'explication. Elle ne doit jamais devenir
+          // la valeur envoyee : un <option> sans value renvoie son texte, et la phrase partait
+          // dans wish1_slot_id, faisant refuser la fiche entiere par le serveur.
+          const cadre = f.document.createElement("div");
+          cadre.innerHTML = f.menuCreneaux("essaiVoeu", null, null);
+          const options = [...cadre.querySelectorAll("option")];
+          if (options.length === 0) throw new Error("le menu ne propose rien du tout");
+          const fautives = options.filter(o => o.value.trim() !== "" && /creneau|Creez/i.test(o.value));
+          if (fautives.length) {
+            throw new Error(`un choix renvoie sa phrase au lieu d'une valeur vide : ${fautives[0].value}`);
+          }
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");

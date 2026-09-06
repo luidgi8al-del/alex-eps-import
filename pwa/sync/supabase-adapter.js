@@ -10,6 +10,17 @@
 /** Une page de lecture. Au-dela, PostgREST tronque en silence : la pagination n'est pas optionnelle. */
 const TAILLE_PAGE = 200;
 
+/** Ce que le serveur a repondu, ramene a une ligne lisible. */
+function explicationServeur(texte) {
+  if (!texte) return "le serveur n'a donne aucune raison";
+  try {
+    const detail = JSON.parse(texte);
+    return [detail.message, detail.details, detail.hint].filter(Boolean).join(" — ") || texte.slice(0, 200);
+  } catch {
+    return texte.slice(0, 200);
+  }
+}
+
 /**
  * Les tables suivies, et la maniere de reconnaitre une ligne.
  * L'ordre compte a la premiere synchronisation : une inscription ne veut rien dire avant que son
@@ -179,7 +190,10 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       if (texte.includes("Version perimee") || texte.includes("40001")) {
         return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id) };
       }
-      throw new Error(`Enregistrement refuse (HTTP ${reponse.status}).`);
+      // Le code seul ne dit rien : PostgREST explique le refus dans son corps de reponse
+      // (colonne inconnue, contrainte violee, valeur invalide). Sans le rapporter, un 400
+      // restait indechiffrable, y compris pour moi.
+      throw new Error(`Enregistrement refuse (HTTP ${reponse.status}) : ${explicationServeur(texte)}`);
     }
 
     const [ligne] = await reponse.json();

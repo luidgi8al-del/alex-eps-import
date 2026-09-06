@@ -183,7 +183,9 @@ function menuCreneaux(id, slotIdChoisi, ancienLibelle) {
     `<option value="${slot.id}"${slot.id === slotIdChoisi ? " selected" : ""}>${unssText(unssSlotLabel(slot))}</option>`
   ).join("");
   if (unssSlots.length === 0) {
-    return `<select id="${id}" disabled><option>Aucun creneau AS. Creez-en dans l'onglet Creneaux AS.</option></select>`;
+    // Sans value="", un <option> renvoie son texte : la phrase partait telle quelle dans
+    // wish1_slot_id, et le serveur refusait la ligne entiere sans qu'on comprenne pourquoi.
+    return `<select id="${id}" disabled><option value="">Aucun creneau AS. Creez-en dans l'onglet Creneaux AS.</option></select>`;
   }
   return `<select id="${id}">${orphelin}${vide}${options}</select>`;
 }
