@@ -205,6 +205,11 @@ async function demarrerModeHorsConnexion() {
       // Le reste du site continue de parler a Supabase en direct.
       tables: tablesSuivies
     });
+    // Le banc d'essai doit pouvoir reproduire une connexion fermee sous les pieds.
+    globalThis.__baseHorsConnexion = async () => {
+      const base = await import("./pwa/storage/database.js");
+      return { fermerConnexion: () => base.fermerConnexionPourEssai() };
+    };
     modeHorsConnexion?.surEtat(detail => {
       // Le bandeau devient un bouton quand il y a quelque chose a trancher : il annonce, il doit
       // aussi mener.

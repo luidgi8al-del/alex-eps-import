@@ -567,6 +567,23 @@
         }
       },
       {
+        // Le navigateur ferme la connexion IndexedDB des qu'une autre fenetre ouvre la base, ou
+        // a une bascule de compte. La connexion morte restait en cache : plus aucune lecture
+        // n'aboutissait, et l'ecran affichait "The database connection is closing" jusqu'au
+        // rechargement complet.
+        nom: "Hors connexion · une connexion fermee se rouvre toute seule",
+        action: async () => {
+          if (typeof f.tableSuivie !== "function") throw new Error("tableSuivie a disparu");
+          if (!f.tableSuivie("classes")) return; // mode hors connexion absent : rien a verifier
+          const base = await f.__baseHorsConnexion?.();
+          if (!base) return; // la base n'est pas exposee : rien a verifier ici
+          // On simule ce que fait le navigateur : la connexion se ferme sous les pieds.
+          await base.fermerConnexion();
+          const lues = await f.lireTable("classes", "classes?deleted=eq.false&select=*");
+          if (!Array.isArray(lues)) throw new Error("la lecture ne repart pas apres une fermeture");
+        }
+      },
+      {
         nom: "Hors connexion · une table suivie ne part pas en direct",
         action: async () => {
           if (typeof f.tableSuivie !== "function") throw new Error("tableSuivie a disparu");

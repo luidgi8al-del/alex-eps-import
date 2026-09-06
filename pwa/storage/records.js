@@ -7,19 +7,20 @@ export async function saveLocalRecord({ entity, id, data, version = 0, updatedAt
   await transaction([STORES.RECORDS], "readwrite", stores => stores[STORES.RECORDS].put(row)); return row;
 }
 export async function readLocalRecord(entity, id) {
-  const key = recordKey(entity, id); const db = await openOfflineDatabase();
-  const row = await requestResult(db.transaction(STORES.RECORDS, "readonly").objectStore(STORES.RECORDS).get(key));
+  const key = recordKey(entity, id);
+  const row = await transaction([STORES.RECORDS], "readonly",
+    stores => requestResult(stores[STORES.RECORDS].get(key)));
   return row ? { ...row, data: await unseal(row.envelope, key) } : null;
 }
 export async function listLocalRecords(entity, { includeDeleted = false } = {}) {
-  const db = await openOfflineDatabase();
-  const rows = await requestResult(db.transaction(STORES.RECORDS, "readonly").objectStore(STORES.RECORDS).index("byEntity").getAll(entity));
+  const rows = await transaction([STORES.RECORDS], "readonly",
+    stores => requestResult(stores[STORES.RECORDS].index("byEntity").getAll(entity)));
   return Promise.all((includeDeleted ? rows : rows.filter(row => !row.deleted)).map(async row => ({ ...row, data: await unseal(row.envelope, row.key) })));
 }
 /** Nombre de fiches en local, toutes tables confondues. Voir generationLocale. */
 export async function countLocalRecords() {
-  const db = await openOfflineDatabase();
-  return requestResult(db.transaction(STORES.RECORDS, "readonly").objectStore(STORES.RECORDS).count());
+  return transaction([STORES.RECORDS], "readonly",
+    stores => requestResult(stores[STORES.RECORDS].count()));
 }
 
 /**

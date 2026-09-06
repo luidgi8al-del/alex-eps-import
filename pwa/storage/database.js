@@ -43,6 +43,16 @@ export function utiliserCompte(compte) {
 
 export function marquerEffacement() { generation += 1; }
 
+/**
+ * Ferme la connexion sans vider le cache, comme le fait le navigateur quand une autre fenetre
+ * ouvre la base. Sert au banc d'essai a reproduire la panne "The database connection is
+ * closing" : sans elle, on ne pouvait verifier la reprise qu'en ouvrant deux fenetres.
+ */
+export async function fermerConnexionPourEssai() {
+  const db = await opening;
+  db?.close();
+}
+
 /** Efface les copies locales de tous les comptes. Utilise a la deconnexion. */
 export async function supprimerToutesLesBases() {
   generation += 1;
@@ -65,7 +75,7 @@ export async function supprimerToutesLesBases() {
 let opening;
 export function openOfflineDatabase() {
   if (opening) return opening;
-  opening = new Promise((resolve, reject) => {
+  const promesse = new Promise((resolve, reject) => {
     const request = indexedDB.open(nomBase(compteCourant), DB_VERSION);
     request.onerror = () => reject(request.error);
     request.onblocked = () => reject(new Error("La base hors connexion est bloquee par un autre onglet"));
@@ -89,11 +99,39 @@ export function openOfflineDatabase() {
       }
       if (!db.objectStoreNames.contains(STORES.META)) db.createObjectStore(STORES.META, { keyPath: "key" });
     };
-    request.onsuccess = () => { const db = request.result; db.onversionchange = () => db.close(); resolve(db); };
-  }).catch(error => { opening = undefined; throw error; });
+    request.onsuccess = () => {
+      const db = request.result;
+      // Le navigateur ferme cette connexion quand une autre fenetre ouvre la base dans une
+      // version differente, ou quand on la supprime. Sans oublier la promesse en cache, on
+      // continuait a distribuer une connexion morte : plus une seule lecture n'aboutissait,
+      // et l'ecran restait sur "The database connection is closing" jusqu'au rechargement.
+      db.onversionchange = () => { db.close(); if (opening === promesse) opening = undefined; };
+      db.onclose = () => { if (opening === promesse) opening = undefined; };
+      resolve(db);
+    };
+  }).catch(error => { if (opening === promesse) opening = undefined; throw error; });
+  opening = promesse;
   return opening;
 }
+/** Une connexion fermee entre l'ouverture et la transaction : on rouvre et on recommence. */
+function connexionFermee(erreur) {
+  const texte = String(erreur?.message || erreur || "");
+  return erreur?.name === "InvalidStateError" || /closing|clos/i.test(texte);
+}
+
 export async function transaction(storeNames, mode, action) {
+  try {
+    return await executerTransaction(storeNames, mode, action);
+  } catch (erreur) {
+    if (!connexionFermee(erreur)) throw erreur;
+    // Une seule reprise : si la base refuse encore, c'est autre chose qu'une fermeture en vol,
+    // et il vaut mieux le dire que boucler.
+    opening = undefined;
+    return executerTransaction(storeNames, mode, action);
+  }
+}
+
+async function executerTransaction(storeNames, mode, action) {
   const db = await openOfflineDatabase();
   return new Promise((resolve, reject) => {
     const tx = db.transaction(storeNames, mode, { durability: mode === "readwrite" ? "relaxed" : "default" });
@@ -109,7 +147,10 @@ export function requestResult(request) {
   return new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
 }
 export async function getMeta(key) {
-  const db = await openOfflineDatabase();
-  return requestResult(db.transaction(STORES.META, "readonly").objectStore(STORES.META).get(key)).then(row => row?.value);
+  // Passe par transaction() plutot que d'ouvrir la sienne : elle sait rouvrir la base si la
+  // connexion s'est fermee entre-temps, ce que ce chemin ne savait pas faire.
+  const row = await transaction([STORES.META], "readonly",
+    stores => requestResult(stores[STORES.META].get(key)));
+  return row?.value;
 }
 export async function setMeta(key, value) { return transaction([STORES.META], "readwrite", stores => stores[STORES.META].put({ key, value })); }

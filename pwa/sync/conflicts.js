@@ -34,9 +34,11 @@ export async function storeRejection({ operation, serverRecord, reason }) {
 }
 
 export async function listConflicts() {
-  const db = await openOfflineDatabase();
-  const rows = await requestResult(db.transaction(STORES.CONFLICTS, "readonly").objectStore(STORES.CONFLICTS).index("byDetectedAt").getAll());
+  const rows = await transaction([STORES.CONFLICTS], "readonly",
+    stores => requestResult(stores[STORES.CONFLICTS].index("byDetectedAt").getAll()));
   return Promise.all(rows.map(async row => ({ ...row, ...(await unseal(row.envelope, row.conflictId)) })));
 }
 export async function removeConflict(conflictId) { return transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].delete(conflictId)); }
-export async function countConflicts() { const db = await openOfflineDatabase(); return requestResult(db.transaction(STORES.CONFLICTS, "readonly").objectStore(STORES.CONFLICTS).count()); }
+export async function countConflicts() {
+  return transaction([STORES.CONFLICTS], "readonly", stores => requestResult(stores[STORES.CONFLICTS].count()));
+}

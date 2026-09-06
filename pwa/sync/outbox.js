@@ -9,17 +9,19 @@ export async function enqueueOperation({ entity, id, action = "upsert", baseVers
   await transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row)); return row;
 }
 export async function pendingOperations(limit = DEFAULT_BATCH_SIZE) {
-  const db = await openOfflineDatabase();
-  const rows = await requestResult(db.transaction(STORES.OUTBOX, "readonly").objectStore(STORES.OUTBOX).index("byCreatedAt").getAll());
+  const rows = await transaction([STORES.OUTBOX], "readonly",
+    stores => requestResult(stores[STORES.OUTBOX].index("byCreatedAt").getAll()));
   const ready = rows.filter(row => Date.parse(row.retryAt) <= Date.now()).slice(0, limit);
   return Promise.all(ready.map(async row => ({ ...row, ...(await unseal(row.envelope, `${row.recordKey}:${row.opId}`)) })));
 }
 export async function operationsForRecord(key) {
-  const db = await openOfflineDatabase();
-  const rows = await requestResult(db.transaction(STORES.OUTBOX, "readonly").objectStore(STORES.OUTBOX).index("byRecord").getAll(key));
+  const rows = await transaction([STORES.OUTBOX], "readonly",
+    stores => requestResult(stores[STORES.OUTBOX].index("byRecord").getAll(key)));
   return Promise.all(rows.map(async row => ({ ...row, ...(await unseal(row.envelope, `${row.recordKey}:${row.opId}`)) })));
 }
-export async function countPendingOperations() { const db = await openOfflineDatabase(); return requestResult(db.transaction(STORES.OUTBOX, "readonly").objectStore(STORES.OUTBOX).count()); }
+export async function countPendingOperations() {
+  return transaction([STORES.OUTBOX], "readonly", stores => requestResult(stores[STORES.OUTBOX].count()));
+}
 export async function acknowledgeOperation(opId) { return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].delete(opId)); }
 export async function deferOperation(operation, error) {
   const attempts = operation.attempts + 1;
