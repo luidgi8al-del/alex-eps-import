@@ -447,6 +447,41 @@
         }
       },
       {
+        // Un eleve dispense ne peut pas faire la seance : l'appel AS doit le dire avant qu'on
+        // le pointe. Les dispenses portent sur l'eleve de classe, l'appel sur le membre AS :
+        // c'est la meme personne, rapprochee par nom, prenom et date de naissance.
+        nom: "ASLVH · l'appel previent qu'un eleve est dispense",
+        action: async () => {
+          if (typeof f.dispensesDuJour !== "function") throw new Error("le rapprochement des dispenses a disparu");
+          const elevesDeClasse = [
+            { id: "el-0", last_name: "Martin", first_name: "Lea", birth_date_epoch_millis: 1070000000000 },
+            { id: "el-9", last_name: "Autre", first_name: "Personne", birth_date_epoch_millis: 999 }
+          ];
+          const dispenses = [
+            { student_id: "el-0", start_date: "2026-09-01", end_date: "2026-12-01", reason_kind: "BLESSURE", deleted: false },
+            { student_id: "el-9", start_date: "2026-01-01", end_date: "2026-01-31", reason_kind: "MALADIE", deleted: false }
+          ];
+          const index = f.dispensesDuJour(dispenses, elevesDeClasse, "2026-09-15");
+          const cle = f.cleEleve("MARTIN", " lea ", 1070000000000);
+          if (!index.get(cle)) throw new Error("la dispense en cours n'est pas retrouvee malgre la casse et les espaces");
+          if (index.get(f.cleEleve("Autre", "Personne", 999))) {
+            throw new Error("une dispense terminee est comptee comme en cours");
+          }
+          // Une dispense effacee ne doit plus rien signaler.
+          const efface = f.dispensesDuJour(
+            [{ student_id: "el-0", start_date: "2026-09-01", end_date: "2026-12-01", deleted: true }],
+            elevesDeClasse, "2026-09-15");
+          if (efface.size !== 0) throw new Error("une dispense supprimee previent encore");
+
+          // Et l'ecran d'appel se construit toujours.
+          await onglet("unss");
+          f.unssMode = "appel";
+          f.renderUnssAppelTab();
+          await attendre(() => f.document.getElementById("unssAppelGroupSelect"),
+            "l'ecran d'appel ne se construit plus", 4000);
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");

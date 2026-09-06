@@ -70,6 +70,34 @@ let unssGroups = [];
 let unssAppelGroupId = null;
 let unssAppelMembers = [];
 let unssAppelPresence = {};
+/** Dispenses en cours, rangees par eleve, pour prevenir a l'appel AS. */
+let unssAppelDispenses = new Map();
+
+/**
+ * Le repertoire AS et les eleves de classe sont deux tables sans lien : la dispense est posee
+ * sur l'eleve de classe, l'appel se fait sur le membre AS. On les rapproche par nom, prenom et
+ * date de naissance - la meme cle que le versement d'une division dans une classe.
+ */
+function cleEleve(nom, prenom, naissance) {
+  return [String(nom || "").trim().toLowerCase(),
+          String(prenom || "").trim().toLowerCase(),
+          naissance == null || naissance === "" ? "" : String(naissance)].join("|");
+}
+
+/** Les dispenses qui couvrent la date du jour, rangees par cle d'eleve. */
+function dispensesDuJour(dispenses, elevesDeClasse, jour) {
+  const parId = new Map();
+  elevesDeClasse.forEach(e => parId.set(e.id, e));
+  const index = new Map();
+  dispenses.forEach(d => {
+    if (d.deleted) return;
+    if (!(d.start_date <= jour && d.end_date >= jour)) return;
+    const eleve = parId.get(d.student_id);
+    if (!eleve) return;
+    index.set(cleEleve(eleve.last_name, eleve.first_name, eleve.birth_date_epoch_millis), d);
+  });
+  return index;
+}
 // `var` est volontaire ici : initUnssTab est appelable dès le premier affichage de la page.
 // Une déclaration `let` placée plus bas provoquait une zone morte temporelle lorsque l'onglet
 // ASLVH était restauré ou cliqué pendant l'initialisation asynchrone.
@@ -1593,6 +1621,21 @@ async function loadUnssAppelMembers() {
     { ou: e => studentIds.includes(e.id),
       trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   unssAppelMembers.forEach(s => { unssAppelPresence[s.id] = true; });
+
+  // Les dispenses arrivent de l'onglet Sante : un eleve dispense ne peut pas faire la seance,
+  // et l'appel doit le dire avant qu'on le pointe present.
+  try {
+    const jour = new Date().toISOString().slice(0, 10);
+    const [dispenses, elevesDeClasse] = await Promise.all([
+      lireTable("health_dispensations", "health_dispensations?deleted=eq.false&select=*"),
+      lireTable("students", "students?deleted=eq.false&select=id,last_name,first_name,birth_date_epoch_millis")
+    ]);
+    unssAppelDispenses = dispensesDuJour(dispenses, elevesDeClasse, jour);
+  } catch {
+    // Sans dispenses lisibles l'appel reste possible : mieux vaut un appel sans rappel qu'un
+    // ecran bloque au bord d'un gymnase.
+    unssAppelDispenses = new Map();
+  }
 }
 
 function renderUnssAppelBody() {
@@ -1603,15 +1646,31 @@ function renderUnssAppelBody() {
     return;
   }
   const todayLabel = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const dispenseDe = s => unssAppelDispenses.get(
+    cleEleve(s.last_name, s.first_name, s.birth_date_epoch_millis));
+  const dispenses = unssAppelMembers.filter(dispenseDe);
+  const dateFr = d => d ? new Date(d + "T12:00:00").toLocaleDateString("fr-FR") : "";
+  const motif = d => (typeof motifLibelle === "function" ? motifLibelle(d.reason_kind) : "") || "";
   body.innerHTML = `<div class="muted" style="margin-bottom:10px">Appel du ${todayLabel}</div>` +
-    unssAppelMembers.map(s => `
-      <div class="unssCard" style="padding:8px 0">
-        <div>${s.last_name.toUpperCase()} ${s.first_name}</div>
+    (dispenses.length
+      ? `<div class="card" style="border-left:3px solid var(--danger); margin-bottom:10px">
+           <strong>${dispenses.length} eleve(s) dispense(s) aujourd'hui</strong>
+           <div class="muted">Ils ne peuvent pas faire la seance. Pointez-les selon leur presence
+             au gymnase, mais ne les faites pas pratiquer.</div>
+         </div>`
+      : "") +
+    unssAppelMembers.map(s => {
+      const d = dispenseDe(s);
+      return `
+      <div class="unssCard" style="padding:8px 0${d ? "; background:#FDEEED" : ""}">
+        <div>${s.last_name.toUpperCase()} ${s.first_name}${d
+          ? `<div class="muted" style="font-size:12px; color:var(--danger)">Dispense jusqu'au ${dateFr(d.end_date)}${motif(d) ? ` · ${motif(d)}` : ""}${d.reason ? ` · ${d.reason}` : ""}</div>`
+          : ""}</div>
         <div>
           <button data-present="${s.id}" style="margin-top:0; ${unssAppelPresence[s.id] ? "" : "background:var(--surface); color:var(--text); border:1px solid var(--border)"}">Present</button>
           <button data-absent="${s.id}" class="${unssAppelPresence[s.id] ? "secondary" : "danger"}" style="margin-top:0">Absent</button>
         </div>
-      </div>`).join("") +
+      </div>`; }).join("") +
     `<button id="unssAppelSaveBtn" style="margin-top:14px; width:100%">Enregistrer l'appel</button>
      <div class="ok" id="unssAppelOk"></div>`;
   body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(); }));
