@@ -482,6 +482,40 @@
         }
       },
       {
+        // La carte Dispenses d'une classe listait sans rien permettre : il fallait repasser par
+        // l'onglet Sante pour corriger une date ou supprimer.
+        nom: "CLASSE · une dispense s'ouvre et se modifie depuis la classe",
+        action: async () => {
+          await onglet("classes");
+          f.showSubtab("classes");
+          await attendre(() => f.document.querySelector(".classePuce"), "la rangee des classes est vide", 6000);
+          // La classe qui porte les dispenses du faux serveur, pas la premiere venue.
+          const puce = [...f.document.querySelectorAll(".classePuce")].find(b => b.textContent.includes("3e6"));
+          if (!puce) throw new Error("la classe 3e6 n'est pas dans la rangee");
+          puce.click();
+          await attendre(() => rempli($("classDashboardPanel")), "le tableau de bord ne s'ouvre pas", 8000);
+          await attendre(() => $("dashDispenseBtn"), "la carte Dispenses a disparu", 6000);
+
+          $("dashDispenseBtn").click();
+          await attendre(() => rempli($("dashDetailContenu")), "la liste des dispenses ne s'ouvre pas", 4000);
+          const lignes = f.document.querySelectorAll("#dashDetailContenu [data-dispense]");
+          if (lignes.length === 0) throw new Error("les dispenses ne sont pas cliquables");
+
+          lignes[0].click();
+          await attendre(() => f.document.getElementById("dispenseFicheOverlay")?.classList.contains("open"),
+            "la fiche ne s'ouvre pas depuis la classe", 4000);
+          // Modifiable : dates, et suppression a portee de main.
+          await attendre(() => f.document.getElementById("ficheStart"), "la fiche n'est pas modifiable", 4000);
+          ["ficheEnd", "ficheSuppr"].forEach(id => {
+            if (!f.document.getElementById(id)) throw new Error(`${id} manque dans la fiche`);
+          });
+          f.document.getElementById("dispenseFicheClose").click();
+          await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
+            "la fiche ne se ferme pas", 4000);
+          $("dashDetailClose").click();
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");

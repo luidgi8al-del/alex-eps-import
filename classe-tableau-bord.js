@@ -205,7 +205,10 @@ async function openClassDashboard(cls, label) {
             .then(r => ({ ok: true, json: async () => r.rows }))
         : apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
       apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${cls.id}&select=id,first_name,last_name`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?class_id=eq.${cls.id}&select=*`),
+      // Un effacement laisse une trace au lieu de retirer la ligne : sans ce filtre, une
+      // dispense supprimee - un doublon nettoye, par exemple - continue d'etre comptee ici,
+      // et la carte annonce plus de dispenses que l'onglet Sante.
+      apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
       apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions?deleted=eq.false&class_id=eq.${cls.id}&select=*`)
     ]);
     dashboardActivities = actRes && actRes.ok ? await actRes.json() : [];
@@ -914,15 +917,46 @@ function afficherDispenses(dispenses) {
     const e = dashboardStudents.find(s => s.id === id);
     return e ? `${planningText((e.last_name || "").toUpperCase())} ${planningText(e.first_name || "")}` : "Élève";
   };
+  const jour = d => d ? new Date(d + "T12:00:00").toLocaleDateString("fr-FR") : "";
+  const motif = d => (typeof motifLibelle === "function" ? motifLibelle(d.reason_kind) : "") || "";
+  // Chaque ligne s'ouvre : consulter sans pouvoir corriger obligeait a repasser par l'onglet
+  // Sante pour changer une date ou supprimer une dispense.
   hote.innerHTML = `
     <div class="card" style="margin-top:10px">
       <div class="top"><h3 style="margin:0">Dispenses en cours</h3>
         <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
-      <ul class="tight" style="margin:10px 0 0; padding-left:18px">${
-        dispenses.map(d => `<li>${nom(d.student_id)} <span class="muted">· du ${planningText(d.start_date)} au ${planningText(d.end_date)}</span></li>`).join("")}</ul>
+      <div class="muted" style="margin-top:6px">Touchez une ligne pour modifier ou supprimer.</div>
+      <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px">${
+        dispenses.map(d => `<button class="secondary" data-dispense="${planningText(d.id)}"
+          style="margin-top:0; text-align:left">${nom(d.student_id)}
+          <span class="muted">· du ${jour(d.start_date)} au ${jour(d.end_date)}${motif(d) ? ` · ${planningText(motif(d))}` : ""}</span>
+        </button>`).join("")}</div>
     </div>`;
   ouvrirDetailClasse();
   document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
+  hote.querySelectorAll("[data-dispense]").forEach(bouton => bouton.onclick = () => {
+    const ligne = dispenses.find(d => d.id === bouton.dataset.dispense);
+    if (ligne && typeof ouvrirFichePourDispense === "function") {
+      ouvrirFichePourDispense(ligne, nom(ligne.student_id));
+    }
+  });
+}
+
+/**
+ * Relit les dispenses de la classe apres une correction faite dans la fiche.
+ *
+ * Sans cela, la carte continuait d'annoncer l'ancien nombre et la liste ouverte gardait la
+ * dispense qu'on venait de supprimer - il fallait quitter la classe et y revenir.
+ */
+async function rafraichirDispensesClasse() {
+  if (!dashboardClass) return;
+  try {
+    const res = await apiFetch(
+      `${SUPABASE_URL}/rest/v1/health_dispensations?deleted=eq.false&class_id=eq.${dashboardClass.row.id}&select=*`);
+    if (!res.ok) return;
+    dashboardDispenses = await res.json();
+  } catch { return; }
+  renderClassDashboard();
 }
 
 /**

@@ -150,18 +150,88 @@
     if(voile.contains(document.activeElement))document.activeElement.blur();
     voile.classList.remove('open');
   }
-  async function ouvrirFicheDispense(id){
-    const d=healthDispenses.find(x=>x.id===id);
+  /**
+   * La fiche d'une dispense, modifiable.
+   *
+   * Ouverte depuis le bilan Sante ou depuis la carte Dispenses d'une classe. Elle sert a
+   * corriger les dates et le motif, ou a supprimer : consulter sans pouvoir rien faire obligeait
+   * a repasser par l'onglet Sante pour la moindre correction.
+   *
+   * @param d la ligne de dispense
+   * @param libelleEleve nom affiche, fourni par l'appelant quand le repertoire Sante n'est pas charge
+   */
+  async function ouvrirFichePourDispense(d, libelleEleve){
     if(!d)return;
     const voile=fenetreFicheDispense();
-    voile.querySelector('#dispenseFicheTitre').textContent=eleveNomme(d.student_id);
+    voile.querySelector('#dispenseFicheTitre').textContent=libelleEleve||eleveNomme(d.student_id);
     const corps=voile.querySelector('#dispenseFicheBody');
     const sienne=d.user_id===session?.user_id;
-    corps.innerHTML=`<div class="muted">${healthEsc(classeNommee(d.class_id))}</div><div style="margin-top:8px"><strong>Du ${jourFr(d.start_date)} au ${jourFr(d.end_date)}</strong>${healthActive(d)?' <span class="muted">· en cours</span>':' <span class="muted">· terminée</span>'}</div><div style="margin-top:8px"><strong>Motif</strong><div>${healthEsc(motifLibelle(d.reason_kind)||'Non précisé')}</div>${d.reason?`<div class="muted">${healthEsc(d.reason)}</div>`:''}</div><div class="muted" style="margin-top:8px">Saisie par <span id="dispenseFicheAuteur">…</span></div>${sienne?`<button class="danger" id="dispenseFicheSuppr" style="margin-top:12px">Supprimer cette dispense</button>`:`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`}`;
+    const motifs=dispenseMotifDispo
+      ? `<label>Motif<select id="ficheKind">${MOTIFS.map(([v,l])=>`<option value="${v}"${v===d.reason_kind?' selected':''}>${l}</option>`).join('')}</select></label>`
+        +`<label>Précision (facultatif)<input type="text" id="ficheReason" maxlength="200" value="${healthEsc(d.reason||'')}"></label>`
+      : `<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
+    corps.innerHTML=`<div class="muted">${healthEsc(classeNommee(d.class_id))}</div>`
+      +`<div class="muted" style="margin-top:4px">${healthActive(d)?'En cours':'Terminée'} · saisie par <span id="dispenseFicheAuteur">…</span></div>`
+      +(sienne
+        ? `<form id="ficheForm" style="margin-top:10px">
+             <label>Début<input type="date" id="ficheStart" value="${healthEsc(d.start_date)}" required></label>
+             <label>Fin<input type="date" id="ficheEnd" value="${healthEsc(d.end_date)}" required></label>
+             ${motifs}
+             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px">
+               <button type="submit">Enregistrer</button>
+               <button type="button" class="danger" id="ficheSuppr" style="margin-top:0">Supprimer</button>
+             </div>
+             <div class="error" id="ficheErreur"></div>
+           </form>`
+        : `<div style="margin-top:10px"><strong>Du ${jourFr(d.start_date)} au ${jourFr(d.end_date)}</strong></div>`
+          +`<div style="margin-top:8px"><strong>Motif</strong><div>${healthEsc(motifLibelle(d.reason_kind)||'Non précisé')}</div>`
+          +`${d.reason?`<div class="muted">${healthEsc(d.reason)}</div>`:''}</div>`
+          +`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`);
     voile.classList.add('open');
     corps.querySelector('#dispenseFicheAuteur').textContent=await nomEnseignant(d.user_id);
-    const suppr=corps.querySelector('#dispenseFicheSuppr');
-    if(suppr)suppr.onclick=async()=>{ suppr.disabled=true; await deleteDispense(d.id); fermerFicheDispense(); };
+    if(!sienne)return;
+
+    corps.querySelector('#ficheSuppr').onclick=async()=>{
+      const bouton=corps.querySelector('#ficheSuppr');
+      bouton.disabled=true;
+      // On ferme d'abord : le bouton disparait avec la fenetre, donc un second clic ne peut
+      // pas partir pendant que l'effacement voyage.
+      fermerFicheDispense();
+      await deleteDispense(d.id);
+      if(typeof rafraichirDispensesClasse==='function')rafraichirDispensesClasse();
+    };
+    corps.querySelector('#ficheForm').onsubmit=async(event)=>{
+      event.preventDefault();
+      const debut=corps.querySelector('#ficheStart').value;
+      const fin=corps.querySelector('#ficheEnd').value;
+      const erreur=corps.querySelector('#ficheErreur');
+      erreur.textContent='';
+      if(!debut||!fin||fin<debut){ erreur.textContent="La date de fin doit être postérieure ou égale à la date de début."; return; }
+      // Le meme garde-fou qu'a la saisie, en s'ignorant soi-meme : corriger une dispense ne doit
+      // pas se heurter a sa propre periode.
+      const conflit=healthDispenses.find(x=>x.id!==d.id&&x.student_id===d.student_id&&!x.deleted
+        &&chevauche(x,{start_date:debut,end_date:fin}));
+      if(conflit){
+        erreur.textContent=`Cet élève a déjà une dispense du ${jourFr(conflit.start_date)} au ${jourFr(conflit.end_date)}.`;
+        return;
+      }
+      const ligne={...d,start_date:debut,end_date:fin,updated_at:new Date().toISOString(),deleted:false};
+      if(dispenseMotifDispo){
+        ligne.reason_kind=corps.querySelector('#ficheKind')?.value||'AUTRE';
+        ligne.reason=corps.querySelector('#ficheReason')?.value.trim()||null;
+      }
+      try{ await enregistrerLigne('health_dispensations',ligne); }
+      catch(e){ erreur.textContent=e.message; return; }
+      const place=healthDispenses.findIndex(x=>x.id===d.id);
+      if(place>=0)healthDispenses[place]=ligne; else healthDispenses.unshift(ligne);
+      fermerFicheDispense();
+      if(document.getElementById('healthModeBody'))renderDispenseMode();
+      if(typeof rafraichirDispensesClasse==='function')rafraichirDispensesClasse();
+    };
+  }
+
+  async function ouvrirFicheDispense(id){
+    await ouvrirFichePourDispense(healthDispenses.find(x=>x.id===id));
   }
 
   function dispenseEditorHtml(student){
@@ -257,6 +327,7 @@
   globalThis.renderSaisieDispense = renderSaisieDispense;
   globalThis.renderListeDispenses = renderListeDispenses;
   globalThis.ouvrirFicheDispense = ouvrirFicheDispense;
+  globalThis.ouvrirFichePourDispense = ouvrirFichePourDispense;
   globalThis.fermerFicheDispense = fermerFicheDispense;
   globalThis.verifierMotifDisponible = verifierMotifDisponible;
   globalThis.motifLibelle = motifLibelle;
