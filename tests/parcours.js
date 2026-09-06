@@ -582,6 +582,68 @@
         }
       },
       {
+        // L'AS s'organise autour du creneau : ses eleves, ses appels et son bilan y sont
+        // attaches. Il y avait deux objets, creneau et groupe, qu'il fallait saisir deux fois.
+        nom: "ASLVH · le creneau porte ses eleves, ses appels et son bilan",
+        action: async () => {
+          await onglet("unss");
+          f.showUnssTab("slots");
+          await attendre(() => f.document.querySelector("[data-slot-eleves]"),
+            "le creneau ne propose pas ses eleves", 6000);
+
+          // L'onglet Groupe doit avoir disparu de la barre.
+          if (f.document.querySelector('#unssSubtabs [data-unsstab="groups"]')) {
+            throw new Error("l'onglet Groupe est encore la alors que le creneau porte tout");
+          }
+
+          // Le creneau qui a des eleves, pas le premier venu : un autre controle a pu en creer.
+          const boutonEleves = [...f.document.querySelectorAll("[data-slot-eleves]")]
+            .find(b => !/\(0\)/.test(b.textContent)) || f.document.querySelector("[data-slot-eleves]");
+          const creneauId = boutonEleves.dataset.slotEleves;
+          boutonEleves.click();
+          await attendre(() => f.document.getElementById("unssCreneauEleves"),
+            "la liste des eleves du creneau ne s'ouvre pas", 4000);
+          if (!f.document.querySelector("[data-retirer]")) {
+            throw new Error("les eleves inscrits n'apparaissent pas");
+          }
+          if (!f.document.getElementById("unssCreneauAddBtn")) {
+            throw new Error("on ne peut pas ajouter d'eleve au creneau");
+          }
+          f.document.getElementById("unssCreneauCloseBtn").click();
+
+          // Le bilan de presence, sur le meme creneau.
+          f.document.querySelector(`[data-slot-bilan="${creneauId}"]`).click();
+          await attendre(() => f.document.querySelector("#unssPanel table tbody tr"),
+            "le bilan ne liste aucun eleve", 6000);
+          // Comparaison sans accent : ce fichier peut etre decode autrement que la page testee,
+          // et un "e" accentue ne doit pas faire echouer un controle qui porte sur autre chose.
+          const sansAccent = t => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+          const colonnes = [...f.document.querySelectorAll("#unssPanel th")].map(th => sansAccent(th.textContent));
+          ["eleve", "present", "absent"].forEach(attendue => {
+            if (!colonnes.some(c => c.includes(attendue))) {
+              throw new Error(`la colonne ${attendue} manque au bilan : ${colonnes.join(", ")}`);
+            }
+          });
+          f.document.getElementById("unssBilanClose").click();
+
+          // L'appel : les seances du creneau, datees.
+          f.showUnssTab("appel");
+          await attendre(() => f.document.getElementById("unssAppelSlotSelect"),
+            "l'appel ne propose pas les creneaux", 6000);
+          const choix = f.document.getElementById("unssAppelSlotSelect");
+          choix.value = creneauId;
+          choix.dispatchEvent(new f.Event("change"));
+          await attendre(() => f.document.querySelectorAll("[data-seance]").length >= 2,
+            "les seances deja pointees ne sont pas listees", 4000);
+          f.document.querySelector("[data-seance]").click();
+          await attendre(() => f.document.querySelectorAll("[data-present]").length > 0,
+            "rouvrir une seance ne montre pas ses eleves", 4000);
+          if (!/corrections/i.test(f.document.getElementById("unssAppelSaveBtn").textContent)) {
+            throw new Error("rouvrir une seance doit proposer de corriger, pas de recreer");
+          }
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");

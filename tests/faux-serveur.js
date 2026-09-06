@@ -61,9 +61,22 @@
       { id: "us-3", user_id: "prof-test", institution_id: "etab-1", first_name: "Ines", last_name: "Petit", category: "BENJAMIN", sex: "F", division: "6e1", deleted: false, updated_at: MAINTENANT }
     ],
     unss_groups: [{ id: "ug-1", user_id: "prof-test", institution_id: "etab-1", name: "Volley", deleted: false, updated_at: MAINTENANT }],
-    unss_memberships: [{ id: "um-1", user_id: "prof-test", group_id: "ug-1", student_id: "us-1", deleted: false, updated_at: MAINTENANT }],
-    unss_sessions: [],
-    unss_attendance: [],
+    // Le creneau porte ses eleves et ses seances : deux inscrits, deux seances pointees, de quoi
+    // verifier l'appel et le bilan de presence.
+    unss_memberships: [
+      { id: "um-1", user_id: "prof-test", group_id: "ug-1", slot_id: "usl-1", student_id: "us-1", deleted: false, updated_at: MAINTENANT },
+      { id: "um-2", user_id: "prof-test", slot_id: "usl-1", student_id: "us-2", deleted: false, updated_at: MAINTENANT }
+    ],
+    unss_sessions: [
+      { id: "use-1", user_id: "prof-test", slot_id: "usl-1", date_epoch_millis: Date.now() - 7 * 86400000, label: "", deleted: false, updated_at: MAINTENANT },
+      { id: "use-2", user_id: "prof-test", slot_id: "usl-1", date_epoch_millis: Date.now(), label: "", deleted: false, updated_at: MAINTENANT }
+    ],
+    unss_attendance: [
+      { id: "ua-1", user_id: "prof-test", session_id: "use-1", student_id: "us-1", present: true, deleted: false, updated_at: MAINTENANT },
+      { id: "ua-2", user_id: "prof-test", session_id: "use-1", student_id: "us-2", present: false, deleted: false, updated_at: MAINTENANT },
+      { id: "ua-3", user_id: "prof-test", session_id: "use-2", student_id: "us-1", present: true, deleted: false, updated_at: MAINTENANT },
+      { id: "ua-4", user_id: "prof-test", session_id: "use-2", student_id: "us-2", present: true, deleted: false, updated_at: MAINTENANT }
+    ],
     unss_slots: [{ id: "usl-1", user_id: "prof-test", institution_id: "etab-1", day_of_week: "MERCREDI", start_time: "13:00", label: "Volley", deleted: false, updated_at: MAINTENANT }],
     annual_plan_blocks: [],
     eps_test_sessions: [{ id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT }],
@@ -78,7 +91,7 @@
     ],
     // Le marqueur de schema : sans lui le site masque le motif, ce qui est justement la
     // situation d'avant l'application du SQL.
-    eps_schema_marks: [{ name: "hors_connexion_2" }, { name: "sante_2" }],
+    eps_schema_marks: [{ name: "hors_connexion_2" }, { name: "sante_2" }, { name: "as_creneaux" }],
     health_accidents: [],
     eps_period_dates: [{ id: "pd-1", user_id: "prof-test", institution_id: "etab-1", school_year: "2026-2027", grade: "TERMINALE", number: 1, start_date: "2026-09-01", end_date: "2026-11-20", deleted: false, updated_at: MAINTENANT }],
     planning_validations: [],

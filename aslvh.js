@@ -133,6 +133,18 @@ async function showUnssTab(mode) {
   unssCibleRendu = "unssList";
   viderAutreRendu("unssList");
   unssAdmin = await estAdministrateur();
+  // La reponse peut ne pas etre encore revenue quand on entre par un autre chemin que le
+  // chargement initial : sans cette attente, l'ecran se dessinait comme si le creneau ne
+  // portait rien, et les boutons Eleves / Appel / Bilan manquaient.
+  await verifierCreneauPorteTout();
+  if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
+    await loadUnssInscriptions();
+  }
+  if (creneauPorteTout) {
+    const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
+    if (ongletGroupe) ongletGroupe.remove();
+    if (unssMode === "groups") unssMode = "slots";
+  }
   // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
   unssPage = 1;
   document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
@@ -1040,13 +1052,25 @@ function renderUnssSlotsTab() {
         slot.location].filter(Boolean).join(" · ");
       const demandes = compterVoeux(slot.id);
       const places = slot.max_places ? ` / ${slot.max_places} places` : "";
-      return `<div class="card unssCard" data-slot="${slot.id}">
-        <div>
-          <div><strong>${unssText(slot.activity_name || "Creneau sans nom")}</strong></div>
-          <div class="muted">${unssText(detail) || "Horaire non renseigne"}</div>
-          <div class="muted" style="font-size:12px">${demandes} voeu(x)${places}</div>
+      // Le creneau porte ses eleves, ses appels et son bilan : les trois actions sont ici, la
+      // ou l'on vient de creer l'activite, au lieu d'un onglet Groupe separe a re-saisir.
+      const inscrits = creneauPorteTout ? elevesDuCreneau(slot.id).length : 0;
+      const actions = creneauPorteTout
+        ? `<button class="secondary" data-slot-eleves="${slot.id}" style="margin-top:0">Élèves (${inscrits})</button>
+           <button class="secondary" data-slot-appel="${slot.id}" style="margin-top:0">Appel</button>
+           <button class="secondary" data-slot-bilan="${slot.id}" style="margin-top:0">Bilan</button>`
+        : "";
+      return `<div class="card">
+        <div class="unssCard">
+          <div data-slot="${slot.id}" style="cursor:pointer">
+            <div><strong>${unssText(slot.activity_name || "Creneau sans nom")}</strong></div>
+            <div class="muted">${unssText(detail) || "Horaire non renseigne"}</div>
+            <div class="muted" style="font-size:12px">${demandes} voeu(x)${places}${
+              creneauPorteTout ? ` · ${inscrits} inscrit(s)` : ""}</div>
+          </div>
+          <button class="danger" data-slot-delete="${slot.id}" style="margin-top:0">Supprimer</button>
         </div>
-        <button class="danger" data-slot-delete="${slot.id}" style="margin-top:0">Supprimer</button>
+        ${actions ? `<div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px">${actions}</div>` : ""}
       </div>`;
     }).join("");
   }
@@ -1062,6 +1086,18 @@ function renderUnssSlotsTab() {
       await supprimerCreneau(btn.dataset.slotDelete);
     });
   });
+  const creneauDe = id => unssSlots.find(x => x.id === id);
+  wrap.querySelectorAll("[data-slot-eleves]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation(); ouvrirElevesCreneau(creneauDe(btn.dataset.slotEleves));
+  }));
+  wrap.querySelectorAll("[data-slot-bilan]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation(); ouvrirBilanCreneau(creneauDe(btn.dataset.slotBilan));
+  }));
+  wrap.querySelectorAll("[data-slot-appel]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation();
+    unssAppelSlotId = btn.dataset.slotAppel;
+    showUnssTab("appel");
+  }));
 }
 
 /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
@@ -1604,24 +1640,297 @@ async function openUnssAddMemberPanel(group, excludeIds) {
   document.getElementById("unssAddMemberCancel").addEventListener("click", () => openUnssGroupDetailPanel(group));
 }
 
+// ---- UNSS > le creneau porte ses eleves, ses seances et son bilan ----------------------------
+//
+// Il y avait deux objets qui disaient presque la meme chose : le creneau, qui ne servait qu'aux
+// voeux, et le groupe, qui portait les eleves et les appels. Creer une activite demandait de la
+// saisir deux fois. Le creneau porte desormais tout.
+//
+// La bascule attend schema_as_creneaux.sql : sans lui, la colonne slot_id n'existe pas et
+// l'ancien onglet Groupe reste en place plutot que de laisser un ecran qui refuse d'enregistrer.
+
+/** Inscriptions et seances de tous les creneaux, relues avec l'onglet. */
+let unssInscriptions = [];
+let unssSeances = [];
+let unssPresences = [];
+/** Creneau ouvert dans l'ecran Appel. */
+let unssAppelSlotId = null;
+/** Vrai une fois schema_as_creneaux.sql applique. Demande une seule fois. */
+let creneauPorteTout = false;
+let creneauPromesse = null;
+
+async function verifierCreneauPorteTout() {
+  if (!creneauPromesse) {
+    creneauPromesse = (async () => {
+      try {
+        const res = await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.as_creneaux&select=name`);
+        return res.ok && (await res.json()).length > 0;
+      } catch { return false; }
+    })();
+  }
+  creneauPorteTout = await creneauPromesse;
+  return creneauPorteTout;
+}
+
+async function loadUnssInscriptions() {
+  if (!creneauPorteTout) { unssInscriptions = []; unssSeances = []; unssPresences = []; return; }
+  [unssInscriptions, unssSeances] = await Promise.all([
+    lireTable("unss_memberships", "unss_memberships?deleted=eq.false&select=*"),
+    lireTable("unss_sessions", "unss_sessions?deleted=eq.false&select=*")
+  ]);
+  const idsSeances = unssSeances.map(s => s.id);
+  unssPresences = idsSeances.length
+    ? await lireTable("unss_attendance",
+        `unss_attendance?deleted=eq.false&session_id=in.(${idsSeances.join(",")})&select=*`,
+        { ou: a => idsSeances.includes(a.session_id) })
+    : [];
+}
+
+/** Eleves inscrits a un creneau, dans l'ordre alphabetique. */
+function elevesDuCreneau(slotId) {
+  const ids = unssInscriptions.filter(i => i.slot_id === slotId).map(i => i.student_id);
+  return unssStudents.filter(e => ids.includes(e.id))
+    .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr")
+      || String(a.first_name || "").localeCompare(String(b.first_name || ""), "fr"));
+}
+
+/** Seances d'un creneau, de la plus recente a la plus ancienne. */
+function seancesDuCreneau(slotId) {
+  return unssSeances.filter(s => s.slot_id === slotId)
+    .sort((a, b) => Number(b.date_epoch_millis || 0) - Number(a.date_epoch_millis || 0));
+}
+
+const dateSeance = ms => new Date(Number(ms || 0)).toLocaleDateString("fr-FR",
+  { weekday: "long", day: "numeric", month: "long" });
+
+/** Rien a afficher tant que les inscriptions ne sont pas revenues : on les attend. */
+async function assurerInscriptions() {
+  await verifierCreneauPorteTout();
+  if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
+    await loadUnssInscriptions();
+  }
+}
+
+/** Les eleves d'un creneau : ajouter, retirer. */
+async function ouvrirElevesCreneau(slot) {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  panel.innerHTML = `<div class="muted">Chargement…</div>`;
+  await assurerInscriptions();
+  const eleves = elevesDuCreneau(slot.id);
+  panel.innerHTML = `<h2>${unssText(slot.activity_name)} · élèves</h2>
+    <div class="muted">${unssText(unssSlotLabel(slot))}</div>
+    <div id="unssCreneauEleves" style="margin-top:10px">${
+      eleves.length === 0
+        ? `<div class="muted">Aucun élève inscrit. Ajoutez-en un.</div>`
+        : eleves.map(e => `<div class="unssCard" style="padding:6px 0">
+             <div>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>
+             <button class="danger" data-retirer="${e.id}" style="margin-top:0">Retirer</button>
+           </div>`).join("")
+    }</div>
+    <button id="unssCreneauAddBtn" style="margin-top:12px">Ajouter des élèves</button>
+    <button class="secondary" id="unssCreneauCloseBtn" style="margin-top:12px">Fermer</button>`;
+  panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", async () => {
+    const inscription = unssInscriptions.find(i => i.slot_id === slot.id && i.student_id === btn.dataset.retirer);
+    if (inscription) {
+      try { await supprimerLigne("unss_memberships", inscription.id); }
+      catch (erreur) { alert(erreur.message); return; }
+      unssInscriptions = unssInscriptions.filter(i => i.id !== inscription.id);
+    }
+    ouvrirElevesCreneau(slot);
+  }));
+  document.getElementById("unssCreneauAddBtn").addEventListener("click",
+    () => ouvrirAjoutElevesCreneau(slot));
+  document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => fermerFenetreUnss());
+}
+
+/** Le choix des eleves a inscrire : les licencies d'abord, comme pour les anciens groupes. */
+function ouvrirAjoutElevesCreneau(slot) {
+  const panel = document.getElementById("unssPanel");
+  const dejaLa = elevesDuCreneau(slot.id).map(e => e.id);
+  const candidats = unssStudents.filter(e => !dejaLa.includes(e.id));
+  const licencies = candidats.filter(e => e.licensed);
+  panel.innerHTML = `<h2>Ajouter des élèves · ${unssText(slot.activity_name)}</h2>` +
+    (candidats.length === 0
+      ? `<div class="muted">Tous les élèves du répertoire sont déjà inscrits à ce créneau.</div>`
+      : `${licencies.length === 0
+            ? `<div class="muted" style="margin-bottom:8px">Aucun licencié AS pour l'instant : licenciez un élève depuis
+                 <strong>Licenciés AS</strong>, ou cherchez ci-dessous dans tout le répertoire.</div>`
+            : `<label style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
+                 <input type="checkbox" id="creneauTous" style="width:auto">
+                 <span>Chercher dans tout le répertoire (${candidats.length} élèves), pas seulement les ${licencies.length} licencié(s)</span>
+               </label>`}
+         <input type="search" id="creneauRecherche" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+         <div class="muted" id="creneauCompte" style="margin:6px 0"></div>
+         <div id="creneauResultats"></div>`) +
+    `<button class="secondary" id="creneauRetour" style="margin-top:14px">Retour</button>`;
+
+  const zone = document.getElementById("creneauResultats");
+  if (zone) {
+    const champ = document.getElementById("creneauRecherche");
+    const compteur = document.getElementById("creneauCompte");
+    const caseTous = document.getElementById("creneauTous");
+    const LIMITE = 50;
+    const afficher = () => {
+      const recherche = champ.value.trim();
+      const source = (caseTous && !caseTous.checked && licencies.length) ? licencies : candidats;
+      const trouves = chercherEleves(source, recherche);
+      if (!recherche && source.length > LIMITE) {
+        compteur.textContent = `${source.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+        zone.innerHTML = "";
+        return;
+      }
+      const affiches = trouves.slice(0, LIMITE);
+      compteur.textContent = trouves.length === 0 ? "Aucun eleve ne correspond."
+        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+      zone.innerHTML = affiches.map(e =>
+        `<div class="card unssPick" data-inscrire="${e.id}" style="margin-top:6px">${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>`).join("");
+      zone.querySelectorAll("[data-inscrire]").forEach(el => el.addEventListener("click", async () => {
+        const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
+          student_id: el.dataset.inscrire, updated_at: new Date().toISOString(), deleted: false };
+        try { await enregistrerLigne("unss_memberships", ligne); }
+        catch (erreur) { alert(erreur.message); return; }
+        unssInscriptions.push(ligne);
+        ouvrirElevesCreneau(slot);
+      }));
+    };
+    champ.addEventListener("input", afficher);
+    if (caseTous) caseTous.addEventListener("change", afficher);
+    afficher();
+    champ.focus();
+  }
+  document.getElementById("creneauRetour").addEventListener("click", () => ouvrirElevesCreneau(slot));
+}
+
+/**
+ * Le bilan d'un creneau : qui est venu, combien de fois.
+ *
+ * C'est ce qu'on cherche en fin de trimestre, et il fallait jusqu'ici ouvrir la fiche de chaque
+ * eleve l'une apres l'autre pour le reconstituer.
+ */
+async function ouvrirBilanCreneau(slot) {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  panel.innerHTML = `<div class="muted">Chargement…</div>`;
+  await assurerInscriptions();
+  const seances = seancesDuCreneau(slot.id);
+  const idsSeances = seances.map(s => s.id);
+  const eleves = elevesDuCreneau(slot.id);
+  const lignes = eleves.map(e => {
+    const siennes = unssPresences.filter(p => p.student_id === e.id && idsSeances.includes(p.session_id));
+    const presents = siennes.filter(p => p.present).length;
+    return { eleve: e, presents, absents: siennes.length - presents, notees: siennes.length };
+  }).sort((a, b) => b.presents - a.presents
+    || String(a.eleve.last_name || "").localeCompare(String(b.eleve.last_name || ""), "fr"));
+  panel.innerHTML = `<h2>${unssText(slot.activity_name)} · bilan de présence</h2>
+    <div class="muted">${seances.length} séance(s) · ${eleves.length} élève(s) inscrit(s)</div>
+    ${eleves.length === 0
+      ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit à ce créneau.</div>`
+      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr>
+           <th>Élève</th><th>Présent</th><th>Absent</th><th>Séances pointées</th></tr></thead><tbody>${
+           lignes.map(l => `<tr><td>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</td>
+             <td>${l.presents}</td><td>${l.absents}</td><td>${l.notees} / ${seances.length}</td></tr>`).join("")
+         }</tbody></table></div>`}
+    <button class="secondary" id="unssBilanClose" style="margin-top:12px">Fermer</button>`;
+  document.getElementById("unssBilanClose").addEventListener("click", () => fermerFenetreUnss());
+}
+
 // ---- UNSS > Appel : choisir un groupe, cocher present/absent, enregistrer une seance ----
 
 function renderUnssAppelTab() {
   const wrap = document.getElementById("unssList");
-  let html = `<label for="unssAppelGroupSelect">Groupe</label>
+  // Tant que le creneau ne porte pas tout, l'appel reste sur les groupes : on ne change pas
+  // l'ecran sous les pieds d'une base qui n'a pas encore la colonne slot_id.
+  if (!creneauPorteTout) { renderUnssAppelGroupes(); return; }
+
+  const creneaux = unssSlots.filter(s => !s.deleted);
+  if (creneaux.length === 0) {
+    wrap.innerHTML = `<div class="muted">Aucun créneau AS. Créez-en un dans <strong>Créneaux AS</strong> :
+      c'est lui qui porte les élèves et les appels.</div>`;
+    return;
+  }
+  if (!creneaux.some(s => s.id === unssAppelSlotId)) unssAppelSlotId = creneaux[0].id;
+  const creneau = creneaux.find(s => s.id === unssAppelSlotId);
+  const seances = seancesDuCreneau(unssAppelSlotId);
+  const inscrits = elevesDuCreneau(unssAppelSlotId);
+
+  wrap.innerHTML = `<label for="unssAppelSlotSelect">Créneau</label>
+    <select id="unssAppelSlotSelect">${creneaux.map(s =>
+      `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select>
+    <div class="card" style="margin-top:12px">
+      <div class="top"><h3 style="margin:0">Séances</h3>
+        <button id="unssNouvelAppel" style="margin-top:0" ${inscrits.length ? "" : "disabled"}>Nouvel appel</button></div>
+      ${inscrits.length === 0
+        ? `<div class="muted" style="margin-top:8px">Aucun élève inscrit à ce créneau.
+             Ajoutez-en depuis <strong>Créneaux AS</strong>.</div>`
+        : seances.length === 0
+          ? `<div class="muted" style="margin-top:8px">Aucune séance pointée. Cliquez sur « Nouvel appel ».</div>`
+          : `<div style="display:flex; flex-direction:column; gap:6px; margin-top:8px">${
+              seances.map(s => {
+                const pointees = unssPresences.filter(p => p.session_id === s.id);
+                const presents = pointees.filter(p => p.present).length;
+                return `<button class="secondary" data-seance="${s.id}" style="margin-top:0; text-align:left">
+                  ${dateSeance(s.date_epoch_millis)}
+                  <span class="muted">· ${presents} présent(s) sur ${pointees.length}</span></button>`;
+              }).join("")}</div>`}
+    </div>
+    <div id="unssAppelBody" style="margin-top:14px"></div>`;
+
+  document.getElementById("unssAppelSlotSelect").addEventListener("change", (e) => {
+    unssAppelSlotId = e.target.value;
+    unssAppelPresence = {};
+    renderUnssAppelTab();
+  });
+  document.getElementById("unssNouvelAppel").addEventListener("click", () => {
+    unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
+    unssAppelPresence = {};
+    unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
+    chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, null));
+  });
+  wrap.querySelectorAll("[data-seance]").forEach(btn => btn.addEventListener("click", () => {
+    const seance = seances.find(s => s.id === btn.dataset.seance);
+    unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
+    unssAppelPresence = {};
+    unssAppelMembers.forEach(e => {
+      const pointee = unssPresences.find(p => p.session_id === seance.id && p.student_id === e.id);
+      unssAppelPresence[e.id] = pointee ? !!pointee.present : true;
+    });
+    chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, seance));
+  }));
+}
+
+/** Les dispenses du jour, pour prevenir qu'un eleve ne peut pas faire la seance. */
+async function chargerDispensesAppel() {
+  try {
+    const jour = new Date().toISOString().slice(0, 10);
+    const [dispenses, elevesDeClasse] = await Promise.all([
+      lireTable("health_dispensations", "health_dispensations?deleted=eq.false&select=*"),
+      lireTable("students", "students?deleted=eq.false&select=id,last_name,first_name,birth_date_epoch_millis")
+    ]);
+    unssAppelDispenses = dispensesDuJour(dispenses, elevesDeClasse, jour);
+  } catch {
+    unssAppelDispenses = new Map();
+  }
+}
+
+
+/** L'ancien appel, par groupe. Reste en place tant que schema_as_creneaux.sql n'est pas passe. */
+function renderUnssAppelGroupes() {
+  const wrap = document.getElementById("unssList");
+  wrap.innerHTML = `<label for="unssAppelGroupSelect">Groupe</label>
     <select id="unssAppelGroupSelect">
       <option value="">Choisir...</option>
-      ${unssGroups.map(g => `<option value="${g.id}"${g.id === unssAppelGroupId ? " selected" : ""}>${g.activity_name}</option>`).join("")}
+      ${unssGroups.map(g => `<option value="${g.id}"${g.id === unssAppelGroupId ? " selected" : ""}>${unssText(g.activity_name)}</option>`).join("")}
     </select>
     <div id="unssAppelBody" style="margin-top:14px"></div>`;
-  wrap.innerHTML = html;
   document.getElementById("unssAppelGroupSelect").addEventListener("change", async (e) => {
     unssAppelGroupId = e.target.value || null;
     await loadUnssAppelMembers();
-    renderUnssAppelBody();
+    renderUnssAppelBody(null, null);
   });
-  if (unssAppelGroupId) renderUnssAppelBody();
+  if (unssAppelGroupId) renderUnssAppelBody(null, null);
 }
+
 
 async function loadUnssAppelMembers() {
   unssAppelMembers = [];
@@ -1654,14 +1963,18 @@ async function loadUnssAppelMembers() {
   }
 }
 
-function renderUnssAppelBody() {
+function renderUnssAppelBody(creneau, seance) {
   const body = document.getElementById("unssAppelBody");
-  if (!unssAppelGroupId) { body.innerHTML = ""; return; }
+  if (!creneau && !unssAppelGroupId) { body.innerHTML = ""; return; }
   if (unssAppelMembers.length === 0) {
-    body.innerHTML = `<div class="muted">Ce groupe n'a aucun membre. Ajoutez-en depuis l'onglet Groupe.</div>`;
+    body.innerHTML = creneau
+      ? `<div class="muted">Aucun élève inscrit à ce créneau. Ajoutez-en depuis <strong>Créneaux AS</strong>.</div>`
+      : `<div class="muted">Ce groupe n'a aucun membre. Ajoutez-en depuis l'onglet Groupe.</div>`;
     return;
   }
-  const todayLabel = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  // Une seance deja pointee se rouvre pour correction : on garde sa date, on ne la recree pas.
+  const quand = seance ? Number(seance.date_epoch_millis) : Date.now();
+  const todayLabel = new Date(quand).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
   const dispenseDe = s => unssAppelDispenses.get(
     cleEleve(s.last_name, s.first_name, s.birth_date_epoch_millis));
   const dispenses = unssAppelMembers.filter(dispenseDe);
@@ -1687,10 +2000,10 @@ function renderUnssAppelBody() {
           <button data-absent="${s.id}" class="${unssAppelPresence[s.id] ? "secondary" : "danger"}" style="margin-top:0">Absent</button>
         </div>
       </div>`; }).join("") +
-    `<button id="unssAppelSaveBtn" style="margin-top:14px; width:100%">Enregistrer l'appel</button>
+    `<button id="unssAppelSaveBtn" style="margin-top:14px; width:100%">${seance ? "Enregistrer les corrections" : "Enregistrer l'appel"}</button>
      <div class="ok" id="unssAppelOk"></div>`;
-  body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(); }));
-  body.querySelectorAll("[data-absent]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.absent] = false; renderUnssAppelBody(); }));
+  body.querySelectorAll("[data-present]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.present] = true; renderUnssAppelBody(creneau, seance); }));
+  body.querySelectorAll("[data-absent]").forEach(btn => btn.addEventListener("click", () => { unssAppelPresence[btn.dataset.absent] = false; renderUnssAppelBody(creneau, seance); }));
   document.getElementById("unssAppelSaveBtn").addEventListener("click", async () => {
     const saveButton = document.getElementById("unssAppelSaveBtn");
     saveButton.disabled = true;
@@ -1698,19 +2011,28 @@ function renderUnssAppelBody() {
     // L'appel se fait dans un gymnase, c'est-a-dire souvent sans reseau. La seance et les
     // presences sont retenues ici et partiront a la reconnexion ; la seance d'abord, car une
     // presence qui arriverait seule designerait une seance inexistante.
-    const sessionId = crypto.randomUUID();
+    const sessionId = seance ? seance.id : crypto.randomUUID();
     const maintenant = new Date().toISOString();
     try {
-      await enregistrerLigne("unss_sessions", {
-        id: sessionId, user_id: session.user_id, group_id: unssAppelGroupId,
-        date_epoch_millis: Date.now(), label: "", updated_at: maintenant, deleted: false
-      });
+      const ligneSeance = {
+        id: sessionId, user_id: session.user_id,
+        date_epoch_millis: quand, label: seance ? (seance.label || "") : "",
+        updated_at: maintenant, deleted: false
+      };
+      if (creneau) ligneSeance.slot_id = creneau.id; else ligneSeance.group_id = unssAppelGroupId;
+      await enregistrerLigne("unss_sessions", ligneSeance);
+      if (creneau && !seance) unssSeances.unshift(ligneSeance);
       for (const eleve of unssAppelMembers) {
-        await enregistrerLigne("unss_attendance", {
-          id: crypto.randomUUID(), user_id: session.user_id, session_id: sessionId,
-          student_id: eleve.id, present: !!unssAppelPresence[eleve.id],
+        // Corriger un appel modifie la ligne existante : en creer une seconde ferait compter
+        // deux fois le meme eleve dans le bilan.
+        const dejaLa = unssPresences.find(p => p.session_id === sessionId && p.student_id === eleve.id);
+        const lignePresence = {
+          id: dejaLa ? dejaLa.id : crypto.randomUUID(), user_id: session.user_id,
+          session_id: sessionId, student_id: eleve.id, present: !!unssAppelPresence[eleve.id],
           updated_at: maintenant, deleted: false
-        });
+        };
+        await enregistrerLigne("unss_attendance", lignePresence);
+        if (dejaLa) Object.assign(dejaLa, lignePresence); else unssPresences.push(lignePresence);
       }
     } catch (erreur) {
       saveButton.disabled = false;
@@ -1798,6 +2120,15 @@ async function openUnssStudentStats(group, student, sessions) {
 /** Redessine ASLVH quand une synchronisation ramene des saisies faites ailleurs. */
 globalThis.rafraichirAslvhApresSynchro = async () => {
   if (!document.getElementById("unssList")) return;
+  await verifierCreneauPorteTout();
   await Promise.all([loadUnssStudents(), loadUnssSlots(), loadUnssGroups()]);
+  await loadUnssInscriptions();
+  // L'onglet Groupe ne sert plus une fois que le creneau porte tout : on le retire de la barre
+  // plutot que de laisser deux chemins pour la meme chose.
+  if (creneauPorteTout) {
+    const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
+    if (ongletGroupe) ongletGroupe.remove();
+    if (unssMode === "groups") unssMode = "slots";
+  }
   renderUnssTab();
 };
