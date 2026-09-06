@@ -230,6 +230,62 @@
     };
   }
 
+  /**
+   * Poser une dispense depuis une classe, sans passer par l'onglet Sante.
+   *
+   * Reutilise la fiche : les champs sont les memes, seul le bouton change. La ligne est creee
+   * ici avec son identifiant, comme a la saisie, pour qu'une dispense posee sans reseau
+   * s'affiche tout de suite et parte a la reconnexion.
+   */
+  async function ouvrirNouvelleDispense(classeId, eleves){
+    const voile=fenetreFicheDispense();
+    voile.querySelector('#dispenseFicheTitre').textContent='Nouvelle dispense';
+    const corps=voile.querySelector('#dispenseFicheBody');
+    const motifs=dispenseMotifDispo
+      ? `<label>Motif<select id="ficheKind">${MOTIFS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label>`
+        +`<label>Précision (facultatif)<input type="text" id="ficheReason" maxlength="200" placeholder="ex : entorse cheville droite"></label>`
+      : `<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
+    corps.innerHTML=`<form id="ficheForm">
+      <label>Élève<select id="ficheEleve" required><option value="">Choisir…</option>
+        ${eleves.map(e=>`<option value="${healthEsc(e.id)}">${healthEsc(String(e.last_name||'').toUpperCase())} ${healthEsc(e.first_name||'')}</option>`).join('')}
+      </select></label>
+      <label>Début<input type="date" id="ficheStart" value="${healthToday()}" required></label>
+      <label>Fin<input type="date" id="ficheEnd" value="${healthToday()}" required></label>
+      ${motifs}
+      <button type="submit" style="margin-top:10px">Valider la dispense</button>
+      <div class="error" id="ficheErreur"></div></form>`;
+    voile.classList.add('open');
+    corps.querySelector('#ficheForm').onsubmit=async(event)=>{
+      event.preventDefault();
+      const erreur=corps.querySelector('#ficheErreur');
+      erreur.textContent='';
+      const eleveId=corps.querySelector('#ficheEleve').value;
+      const debut=corps.querySelector('#ficheStart').value;
+      const fin=corps.querySelector('#ficheEnd').value;
+      if(!eleveId){ erreur.textContent="Choisissez l'élève."; return; }
+      if(!debut||!fin||fin<debut){ erreur.textContent="La date de fin doit être postérieure ou égale à la date de début."; return; }
+      const conflit=healthDispenses.find(x=>x.student_id===eleveId&&!x.deleted
+        &&chevauche(x,{start_date:debut,end_date:fin}));
+      if(conflit){
+        erreur.textContent=`Cet élève a déjà une dispense du ${jourFr(conflit.start_date)} au ${jourFr(conflit.end_date)}.`;
+        return;
+      }
+      const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:classeId,
+        student_id:eleveId,start_date:debut,end_date:fin,
+        updated_at:new Date().toISOString(),deleted:false};
+      if(dispenseMotifDispo){
+        ligne.reason_kind=corps.querySelector('#ficheKind')?.value||'AUTRE';
+        ligne.reason=corps.querySelector('#ficheReason')?.value.trim()||null;
+      }
+      try{ await enregistrerLigne('health_dispensations',ligne); }
+      catch(e){ erreur.textContent=e.message; return; }
+      healthDispenses.unshift(ligne);
+      fermerFicheDispense();
+      if(document.getElementById('healthModeBody'))renderDispenseMode();
+      if(typeof rafraichirDispensesClasse==='function')rafraichirDispensesClasse();
+    };
+  }
+
   async function ouvrirFicheDispense(id){
     await ouvrirFichePourDispense(healthDispenses.find(x=>x.id===id));
   }
@@ -328,6 +384,7 @@
   globalThis.renderListeDispenses = renderListeDispenses;
   globalThis.ouvrirFicheDispense = ouvrirFicheDispense;
   globalThis.ouvrirFichePourDispense = ouvrirFichePourDispense;
+  globalThis.ouvrirNouvelleDispense = ouvrirNouvelleDispense;
   globalThis.fermerFicheDispense = fermerFicheDispense;
   globalThis.verifierMotifDisponible = verifierMotifDisponible;
   globalThis.motifLibelle = motifLibelle;

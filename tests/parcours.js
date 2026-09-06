@@ -512,6 +512,19 @@
           f.document.getElementById("dispenseFicheClose").click();
           await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
             "la fiche ne se ferme pas", 4000);
+
+          // Et on doit pouvoir en poser une sans quitter la classe.
+          const ajout = f.document.getElementById("ajoutDispense");
+          if (!ajout) throw new Error("on ne peut pas creer une dispense depuis la classe");
+          ajout.click();
+          await attendre(() => f.document.getElementById("ficheEleve"),
+            "le choix de l'eleve n'apparait pas", 4000);
+          if (f.document.querySelectorAll("#ficheEleve option").length < 2) {
+            throw new Error("aucun eleve propose pour la nouvelle dispense");
+          }
+          f.document.getElementById("dispenseFicheClose").click();
+          await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
+            "la fenetre de creation ne se ferme pas", 4000);
           $("dashDetailClose").click();
         }
       },

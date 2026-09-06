@@ -908,9 +908,27 @@ function afficherRecapPeriode(evaluations, tests) {
 function afficherDispenses(dispenses) {
   const hote = hoteDetail();
   if (!hote) return;
+  // Meme quand personne n'est dispense, on doit pouvoir en poser une : on est deja dans la
+  // classe, avec ses eleves sous les yeux.
+  const boutonAjout = `<button id="ajoutDispense" style="margin-top:10px">Ajouter une dispense</button>`;
+  const brancherAjout = () => {
+    const bouton = document.getElementById("ajoutDispense");
+    if (!bouton) return;
+    bouton.onclick = () => {
+      if (typeof ouvrirNouvelleDispense === "function") {
+        ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents);
+      }
+    };
+  };
   if (!dispenses.length) {
-    hote.innerHTML = `<div class="muted" style="margin-top:10px">Aucun élève dispensé aujourd'hui.</div>`;
+    hote.innerHTML = `<div class="card" style="margin-top:10px">
+      <div class="top"><h3 style="margin:0">Dispenses</h3>
+        <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
+      <div class="muted" style="margin-top:6px">Aucun élève dispensé aujourd'hui.</div>
+      ${boutonAjout}</div>`;
     ouvrirDetailClasse();
+    document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
+    brancherAjout();
     return;
   }
   const nom = id => {
@@ -931,9 +949,11 @@ function afficherDispenses(dispenses) {
           style="margin-top:0; text-align:left">${nom(d.student_id)}
           <span class="muted">· du ${jour(d.start_date)} au ${jour(d.end_date)}${motif(d) ? ` · ${planningText(motif(d))}` : ""}</span>
         </button>`).join("")}</div>
+      ${boutonAjout}
     </div>`;
   ouvrirDetailClasse();
   document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
+  brancherAjout();
   hote.querySelectorAll("[data-dispense]").forEach(bouton => bouton.onclick = () => {
     const ligne = dispenses.find(d => d.id === bouton.dataset.dispense);
     if (ligne && typeof ouvrirFichePourDispense === "function") {
