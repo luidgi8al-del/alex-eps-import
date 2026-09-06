@@ -642,7 +642,17 @@
         throw new Error("Session expiree.");
       }
       if (!res.ok && options.method && !["GET", "HEAD"].includes(options.method.toUpperCase())) {
-        throw new Error(`Enregistrement non confirmé (HTTP ${res.status}). Vos saisies restent affichées ; vérifiez la connexion et les droits avant de réessayer.`);
+        // Le code seul n'apprend rien : PostgREST dit toujours ce qui l'a fait refuser
+        // (colonne inconnue, contrainte violee, valeur invalide). Sans le rapporter, un 400
+        // renvoyait chercher du cote de la connexion et des droits, ou il n'y a rien.
+        let raison = "";
+        try {
+          const detail = await res.clone().json();
+          raison = [detail.message, detail.details, detail.hint].filter(Boolean).join(" — ");
+        } catch { raison = (await res.clone().text().catch(() => "")).slice(0, 200); }
+        throw new Error(`Enregistrement non confirmé (HTTP ${res.status})`
+          + (raison ? ` : ${raison}` : "")
+          + `. Vos saisies restent affichées ; vérifiez avant de réessayer.`);
       }
       return res;
     }
