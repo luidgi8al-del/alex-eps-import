@@ -522,6 +522,12 @@
           if (f.document.querySelectorAll("#ficheEleve option").length < 2) {
             throw new Error("aucun eleve propose pour la nouvelle dispense");
           }
+          // Le motif doit etre propose ici aussi : il n'etait demande qu'a l'ouverture de
+          // l'onglet Sante, donc depuis une classe l'ecran annoncait a tort que le SQL
+          // n'etait pas applique.
+          if (!f.document.getElementById("ficheKind")) {
+            throw new Error("le motif n'est pas propose depuis la classe alors que le schema est applique");
+          }
           f.document.getElementById("dispenseFicheClose").click();
           await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
             "la fenetre de creation ne se ferme pas", 4000);

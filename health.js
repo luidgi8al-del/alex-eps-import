@@ -48,11 +48,21 @@
 
   /** Le motif et ses onglets ne s'allument qu'une fois le SQL passe : sinon on ecrirait dans
    *  une colonne qui n'existe pas, et l'enregistrement serait refuse sans explication. */
+  /** Demande memorisee : la reponse ne change pas d'une ouverture a l'autre. */
+  let motifPromesse=null;
   async function verifierMotifDisponible(){
-    try{
-      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.sante_2&select=name`);
-      dispenseMotifDispo=res.ok&&(await res.json()).length>0;
-    }catch{ dispenseMotifDispo=false; }
+    // Appele depuis chaque ecran qui propose le motif, pas seulement a l'ouverture de Sante :
+    // ouvrir une dispense depuis une classe n'y passe jamais, et le motif restait masque en
+    // annoncant a tort que le SQL n'etait pas applique.
+    if(!motifPromesse){
+      motifPromesse=(async()=>{
+        try{
+          const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.sante_2&select=name`);
+          return res.ok&&(await res.json()).length>0;
+        }catch{ return false; }
+      })();
+    }
+    dispenseMotifDispo=await motifPromesse;
     return dispenseMotifDispo;
   }
 
@@ -162,6 +172,7 @@
    */
   async function ouvrirFichePourDispense(d, libelleEleve){
     if(!d)return;
+    await verifierMotifDisponible();
     const voile=fenetreFicheDispense();
     voile.querySelector('#dispenseFicheTitre').textContent=libelleEleve||eleveNomme(d.student_id);
     const corps=voile.querySelector('#dispenseFicheBody');
@@ -238,6 +249,7 @@
    * s'affiche tout de suite et parte a la reconnexion.
    */
   async function ouvrirNouvelleDispense(classeId, eleves){
+    await verifierMotifDisponible();
     const voile=fenetreFicheDispense();
     voile.querySelector('#dispenseFicheTitre').textContent='Nouvelle dispense';
     const corps=voile.querySelector('#dispenseFicheBody');
