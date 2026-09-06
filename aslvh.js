@@ -1540,10 +1540,20 @@ async function openUnssAddMemberPanel(group, excludeIds) {
     "unss_students?deleted=eq.false&select=*&order=last_name.asc",
     { trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   const candidates = students.filter(s => !excludeIds.includes(s.id));
+  // Un groupe AS se compose de licencies : les proposer d'abord, et tout de suite, plutot que
+  // de noyer les quelques licencies dans les 1811 eleves du repertoire.
+  const licencies = candidates.filter(s => s.licensed);
   panel.innerHTML = `<h2>Ajouter un membre</h2>` +
     (candidates.length === 0
       ? `<div class="muted">Aucun élève disponible dans Élèves LVH / Licenciés AS. Ajoutez les élèves au répertoire AS.</div>`
-      : `<input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+      : `${licencies.length === 0
+            ? `<div class="muted" style="margin-bottom:8px">Aucun licencié AS pour l'instant : licenciez un élève depuis
+                 <strong>Licenciés AS</strong>, ou cherchez ci-dessous dans tout le répertoire.</div>`
+            : `<label style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
+                 <input type="checkbox" id="unssMemberTous" style="width:auto">
+                 <span>Chercher dans tout le répertoire (${candidates.length} élèves), pas seulement les ${licencies.length} licencié(s)</span>
+               </label>`}
+         <input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
          <div class="muted" id="unssMemberCount" style="margin:6px 0"></div>
          <div id="unssMemberResults"></div>`
     ) +
@@ -1554,11 +1564,14 @@ async function openUnssAddMemberPanel(group, excludeIds) {
     const champ = document.getElementById("unssMemberSearch");
     const compteur = document.getElementById("unssMemberCount");
     const LIMITE_AFFICHAGE = 50;
+    const caseTous = document.getElementById("unssMemberTous");
     const afficher = () => {
       const recherche = champ.value.trim();
-      const trouves = chercherEleves(candidates, recherche);
-      if (!recherche && candidates.length > LIMITE_AFFICHAGE) {
-        compteur.textContent = `${candidates.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+      // Sans licencie, ou si l'on a coche la case, on cherche dans tout le repertoire.
+      const source = (caseTous && !caseTous.checked && licencies.length) ? licencies : candidates;
+      const trouves = chercherEleves(source, recherche);
+      if (!recherche && source.length > LIMITE_AFFICHAGE) {
+        compteur.textContent = `${source.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
         zoneMembres.innerHTML = "";
         return;
       }
@@ -1582,6 +1595,7 @@ async function openUnssAddMemberPanel(group, excludeIds) {
       });
     };
     champ.addEventListener("input", afficher);
+    if (caseTous) caseTous.addEventListener("change", afficher);
     afficher();
     champ.focus();
   }

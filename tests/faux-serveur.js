@@ -57,7 +57,7 @@
     // peut isoler une division entiere et la cocher d'un geste.
     unss_students: [
       { id: "us-1", user_id: "prof-test", institution_id: "etab-1", first_name: "Lea", last_name: "Martin", category: "MINIME", sex: "F", division: "3e6", deleted: false, updated_at: MAINTENANT },
-      { id: "us-2", user_id: "prof-test", institution_id: "etab-1", first_name: "Noe", last_name: "Bernard", category: "MINIME", sex: "M", division: "3e6", deleted: false, updated_at: MAINTENANT },
+      { id: "us-2", user_id: "prof-test", institution_id: "etab-1", first_name: "Noe", last_name: "Bernard", category: "MINIME", sex: "M", division: "3e6", licensed: true, deleted: false, updated_at: MAINTENANT },
       { id: "us-3", user_id: "prof-test", institution_id: "etab-1", first_name: "Ines", last_name: "Petit", category: "BENJAMIN", sex: "F", division: "6e1", deleted: false, updated_at: MAINTENANT }
     ],
     unss_groups: [{ id: "ug-1", user_id: "prof-test", institution_id: "etab-1", name: "Volley", deleted: false, updated_at: MAINTENANT }],

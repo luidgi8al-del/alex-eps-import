@@ -535,6 +535,34 @@
         }
       },
       {
+        // Un groupe AS se compose de licencies : la fenetre proposait les 1811 eleves du
+        // repertoire sans distinction, et les licencies y etaient noyes.
+        nom: "ASLVH · ajouter un membre propose d'abord les licencies",
+        action: async () => {
+          await onglet("unss");
+          if (typeof f.openUnssAddMemberPanel !== "function") throw new Error("l'ajout de membre a disparu");
+          // unssGroups est un "let" de haut niveau : invisible depuis le banc. On fournit donc
+          // le groupe du faux serveur, la fonction n'a besoin que de son identifiant.
+          f.openUnssAddMemberPanel({ id: "ug-1", activity_name: "Volley" }, []);
+          await attendre(() => f.document.getElementById("unssMemberResults"),
+            "la fenetre d'ajout ne s'ouvre pas", 6000);
+          await attendre(() => f.document.querySelectorAll("[data-add-member]").length > 0,
+            "aucun licencie propose d'emblee", 4000);
+          const proposes = [...f.document.querySelectorAll("[data-add-member]")].map(e => e.textContent.trim());
+          if (proposes.some(t => /MARTIN/i.test(t))) {
+            throw new Error("un eleve non licencie est propose alors qu'on n'a pas elargi");
+          }
+          // La case doit permettre d'elargir a tout le repertoire.
+          const tous = f.document.getElementById("unssMemberTous");
+          if (!tous) throw new Error("on ne peut pas elargir au repertoire complet");
+          tous.checked = true;
+          tous.dispatchEvent(new f.Event("change"));
+          await attendre(() => [...f.document.querySelectorAll("[data-add-member]")]
+            .some(e => /MARTIN/i.test(e.textContent)), "elargir ne montre pas le reste du repertoire", 4000);
+          f.document.getElementById("unssAddMemberCancel").click();
+        }
+      },
+      {
         nom: "Recherche generale",
         action: async () => {
           const bouton = $("searchBtn");
