@@ -23,12 +23,38 @@
   const visible = el => !!el && el.offsetParent !== null;
   const rempli = el => !!el && el.innerHTML.trim().length > 0;
 
+
   /**
    * Construit le parcours pour une fenetre de site donnee.
    * @param {Window} f la fenetre du cadre qui porte le site
    */
   function parcours(f) {
     const $ = id => f.document.getElementById(id);
+    /**
+     * Ouvrir une classe mene a un menu de quatre entrees ; les seances sont derriere "Cours".
+     * Les controles qui parlent des seances passent donc par ici.
+     */
+    /** Revenir au menu depuis l'ecran Cours, la ou vivent Dispenses et Recapitulatif. */
+    async function entrerDansMenu() {
+      const retour = f.document.getElementById("retourMenuDepuisCours");
+      if (retour) retour.click();
+      await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="recap"]'),
+        "le menu de la classe ne revient pas", 6000);
+    }
+
+    async function entrerDansCours() {
+      // Le menu arrive apres la lecture du serveur : on l'attend, au lieu de conclure trop tot
+      // qu'il manque.
+      await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="cours"]')
+        || f.document.querySelector("#classDashboardPanel .periodBar"),
+        "le menu de la classe ne s'affiche pas", 8000);
+      const carte = f.document.querySelector('#classDashboardPanel [data-vue="cours"]');
+      if (carte) {
+        carte.click();
+        await attendre(() => f.document.querySelector("#classDashboardPanel .periodBar"),
+          "l'ecran Cours ne s'ouvre pas depuis le menu", 6000);
+      }
+    }
     const onglet = async (nom, controle) => {
       f.showTab(nom);
       await new Promise(r => setTimeout(r, 350));
@@ -63,7 +89,16 @@
           if (!cible) throw new Error("la classe 3e6 du jeu d'essai est absente de la rangee");
           cible.click();
           await attendre(() => visible($("classDashboardPanel")) && rempli($("classDashboardPanel")),
-            "le tableau de bord ne s'ouvre pas");
+            "le menu de la classe ne s'ouvre pas");
+          // Le menu d'abord : quatre entrees, dont Cours.
+          await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="cours"]'),
+            "le menu de la classe ne s'affiche pas", 8000);
+          ["bord", "cours", "dispenses", "recap"].forEach(vue => {
+            if (!f.document.querySelector(`#classDashboardPanel [data-vue="${vue}"]`)) {
+              throw new Error(`l'entree ${vue} manque au menu de la classe`);
+            }
+          });
+          await entrerDansCours();
           await attendre(() => f.document.querySelector(".dashSeance"), "la carte de seance manque");
         }
       },
@@ -82,7 +117,8 @@
         action: async () => {
           f.document.querySelector('[data-dash-period="1"]').click();
           await new Promise(r => setTimeout(r, 250));
-          $("dashRecapBtn").click();
+          await entrerDansMenu();
+          f.document.querySelector('[data-vue="recap"]').click();
           await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif reste vide");
           // Il vient par-dessus la page : affiche en bas, il fallait faire defiler pour voir ce
           // qu'on venait de cliquer. Et il doit toujours pouvoir se refermer, y compris quand le
@@ -93,7 +129,8 @@
           $("dashDetailClose").click();
           await attendre(() => !f.document.getElementById("dashDetailOverlay").classList.contains("open"),
             "la fenetre du detail ne se ferme pas", 4000);
-          $("dashRecapBtn").click();
+          await entrerDansMenu();
+          f.document.querySelector('[data-vue="recap"]').click();
           await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre pas");
 
           // Le detail ouvert se repeint quand le tableau de bord change. Sans cela il gardait la
@@ -110,15 +147,18 @@
           if (f.document.getElementById("dashDetailOverlay").classList.contains("open")) {
             throw new Error("une fenetre fermee ne doit pas se rouvrir toute seule");
           }
-          $("dashRecapBtn").click();
+          await entrerDansMenu();
+          f.document.querySelector('[data-vue="recap"]').click();
           await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre plus");
-          $("dashDispenseBtn").click();
+          await entrerDansMenu();
+          f.document.querySelector('[data-vue="dispenses"]').click();
           await attendre(() => rempli($("dashDetailContenu")), "les dispenses restent vides");
         }
       },
       {
         nom: "Tableau de bord · grilles d'evaluation proposees",
         action: async () => {
+          await entrerDansCours();
           $("dashEvalPonctuelle").click();
           // Le panneau lit la fiche de cycle sur le disque : il peut mettre un moment. On attend
           // qu'il ait fini de charger, puis on dit ce qu'il montre - un message precis vaut mieux
@@ -135,6 +175,7 @@
         // se repliait, ce qui se lit comme "il ne se passe rien".
         nom: "Tableau de bord · changer de type d'exercice ne replie pas la carte",
         action: async () => {
+          await entrerDansCours();
           if (typeof f.renderDashboardExercises !== "function") throw new Error("les fiches d'exercices ont disparu");
           f.renderDashboardExercises({ apsa_name: "Natation" });
           const hote = $("dashExercises");
@@ -167,6 +208,7 @@
       {
         nom: "Classe ouverte · emploi du temps",
         action: async () => {
+          await entrerDansCours();
           const bouton = f.document.querySelector('#classDashboardPanel [data-classe-action="schedule"]');
           if (!bouton) throw new Error("le bouton Emploi du temps a disparu du tableau de bord");
           bouton.click();
@@ -492,11 +534,20 @@
           // La classe qui porte les dispenses du faux serveur, pas la premiere venue.
           const puce = [...f.document.querySelectorAll(".classePuce")].find(b => b.textContent.includes("3e6"));
           if (!puce) throw new Error("la classe 3e6 n'est pas dans la rangee");
-          puce.click();
-          await attendre(() => rempli($("classDashboardPanel")), "le tableau de bord ne s'ouvre pas", 8000);
-          await attendre(() => $("dashDispenseBtn"), "la carte Dispenses a disparu", 6000);
+          // Recliquer la classe deja ouverte la referme : on s'assure d'etre bien dedans, sur son
+          // menu, plutot que de conclure a tort que l'entree a disparu.
+          if (!f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]')) {
+            puce.click();
+            await attendre(() => rempli($("classDashboardPanel")), "le tableau de bord ne s'ouvre pas", 8000);
+          }
+          if (!f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]')) {
+            puce.click();
+          }
+          await attendre(() => f.document.querySelector('[data-vue="dispenses"]'),
+            "l'entree Dispenses a disparu du menu", 8000);
 
-          $("dashDispenseBtn").click();
+          await entrerDansMenu();
+          f.document.querySelector('[data-vue="dispenses"]').click();
           await attendre(() => rempli($("dashDetailContenu")), "la liste des dispenses ne s'ouvre pas", 4000);
           const lignes = f.document.querySelectorAll("#dashDetailContenu [data-dispense]");
           if (lignes.length === 0) throw new Error("les dispenses ne sont pas cliquables");
@@ -797,6 +848,7 @@
           const puce = $("importsList")?.querySelector(".classePuce");
           if (!puce) return; // aucune classe dans le jeu d'essai
           puce.click();
+          await entrerDansCours();
           await attendre(() => $("classDashboardPanel")?.querySelector(".dashActions"),
             "les actions de la classe ont disparu", 6000);
           const titre = $("classDashboardPanel").querySelector("h2").getBoundingClientRect();

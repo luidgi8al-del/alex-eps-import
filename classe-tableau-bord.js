@@ -224,6 +224,9 @@ async function openClassDashboard(cls, label) {
       || Object.prototype.hasOwnProperty.call(dashboardCycles[0], "current_session_number");
 
     await chargerEvaluationsDuTableauDeBord();
+    // Ouvrir une classe repart du menu, et lit son bloc-notes et ses documents.
+    vueClasse = "menu";
+    await chargerTableauDeBordClasse();
   } catch (e) {
     panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
     return;
@@ -409,6 +412,10 @@ function dispensesEnCours() {
 function renderClassDashboard() {
   const panel = document.getElementById("classDashboardPanel");
   const { row, label } = dashboardClass;
+  // Un menu avant les seances : le tableau de bord, les cours, les dispenses, le recapitulatif.
+  // Les deux derniers vivaient dans l'ecran des cours, ou il fallait deja etre entre.
+  if (vueClasse === "menu") { renderMenuClasse(); return; }
+  if (vueClasse === "bord") { renderTableauDeBordClasse(); return; }
   const periodCount = planningPeriodCount(row.grade);
   if (dashboardPeriod > periodCount) dashboardPeriod = periodCount;
 
@@ -419,6 +426,8 @@ function renderClassDashboard() {
   // Les creneaux du groupe seul : sans cela les dates de seance melangeraient les deux jours.
   const creneauxDuGroupe = groupe ? groupe.creneaux : dashboardSlots;
   const cycle = cyclePourPeriode(activity, dashboardPeriod);
+  // Un retour vers le menu : sinon on ne sort de Cours qu'en refermant la classe.
+  const retour = `<button class="secondary" id="retourMenuDepuisCours" style="margin-top:0">‹ ${planningText(label)}</button>`;
   const chips = [];
   for (let p = 1; p <= periodCount; p++) {
     chips.push(`<button class="periodChip${p === dashboardPeriod ? " active" : ""}" data-dash-period="${p}">Période ${p}</button>`);
@@ -444,6 +453,7 @@ function renderClassDashboard() {
   const dispenses = dispensesEnCours();
 
   panel.innerHTML = `
+    ${retour}
     <div class="top dashEntete">
       <div class="dashIdentite">
         <div>
@@ -458,6 +468,8 @@ function renderClassDashboard() {
       </div>
       <button class="secondary" id="closeDashboardBtn" style="margin-top:0">Fermer</button>
     </div>
+
+    ${rappelDocumentsHtml()}
 
     <div class="periodBar" style="display:flex; margin-top:12px">${chips.join("")}</div>
 
@@ -481,23 +493,7 @@ function renderClassDashboard() {
       <button type="button" id="dashEvalFinale" style="background:#EDE6FF">Évaluation<br>finale</button>
     </div>
 
-    <button type="button" class="dashCarte" id="dashRecapBtn" style="background:#E8F1FF">
-      <span class="dashPastille">📋</span>
-      <span class="dashTexte">
-        <span class="dashTitre">Récapitulatif Tests / Évaluations</span><br>
-        <span class="dashSous">P${dashboardPeriod} · ${testsPeriode.length} test(s) · ${evalsPeriode.length} évaluation(s)</span>
-      </span>
-      <span class="dashFleche">›</span>
-    </button>
 
-    <button type="button" class="dashCarte" id="dashDispenseBtn" style="background:#E8F8F3">
-      <span class="dashPastille">🩺</span>
-      <span class="dashTexte">
-        <span class="dashTitre">Dispenses</span><br>
-        <span class="dashSous">${dispenses.length} élève(s) actuellement dispensé(s)</span>
-      </span>
-      <span class="dashFleche">›</span>
-    </button>
 
 `;
 
@@ -524,10 +520,10 @@ function renderClassDashboard() {
   panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
   panel.querySelector('[data-classe-action="delete"]').onclick = () => deleteImport(row.id);
 
+  const retourCours = document.getElementById("retourMenuDepuisCours");
+  if (retourCours) retourCours.onclick = () => retourMenuClasse();
   document.getElementById("dashEvalPonctuelle").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "PONCTUELLE");
   document.getElementById("dashEvalFinale").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "FINALE");
-  document.getElementById("dashRecapBtn").onclick = () => { detailOuvert = "recap"; afficherRecapPeriode(evalsPeriode, testsPeriode); };
-  document.getElementById("dashDispenseBtn").onclick = () => { detailOuvert = "dispenses"; afficherDispenses(dispenses); };
   // Le detail ouvert se repeint avec le tableau de bord. Sans cela il gardait la liste d'avant :
   // on supprimait une grille, le compte de la carte descendait, et la fenetre continuait de
   // l'afficher - il fallait la fermer et la rouvrir pour voir la verite.
@@ -1332,4 +1328,243 @@ async function deleteCycle(id) {
     method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
   });
   loadCycles();
+}
+
+// ---- Menu d'une classe : quatre entrees avant les seances -------------------------------------
+//
+// Ouvrir une classe menait droit a l'activite de la periode. Les dispenses et le recapitulatif y
+// etaient enfouis : il fallait deja etre entre pour les trouver.
+
+/** "menu" au premier abord, puis "cours", "bord", "dispenses" ou "recap". */
+let vueClasse = "menu";
+let notesClasse = [];
+let documentsClasse = [];
+let rendusClasse = [];
+
+function retourMenuClasse() {
+  vueClasse = "menu";
+  detailOuvert = null;
+  fermerDetailClasse();
+  renderClassDashboard();
+}
+
+function renderMenuClasse() {
+  const panel = document.getElementById("classDashboardPanel");
+  const { row, label } = dashboardClass;
+  const dispenses = dashboardDispenses.filter(d => !d.deleted && dispenseEnCours(d));
+  const evals = dashboardEvaluations.filter(e => e.period_number === dashboardPeriod);
+  const tests = dashboardTests.filter(t => t.period_number === dashboardPeriod);
+  const manquants = documentsClasse.reduce((total, doc) => {
+    const rendus = rendusClasse.filter(r => r.document_id === doc.id && r.returned && !r.deleted).length;
+    return total + Math.max(0, dashboardStudents.length - rendus);
+  }, 0);
+  const carte = (id, titre, sous, fond) => `
+    <button type="button" class="dashCarte" data-vue="${id}" style="background:${fond}">
+      <span class="dashTexte"><span class="dashTitre">${planningText(titre)}</span><br>
+        <span class="dashSous">${planningText(sous)}</span></span>
+      <span class="dashFleche">›</span>
+    </button>`;
+  panel.innerHTML = `
+    <div class="top"><div>
+      <h2 style="margin:0">${planningText(label)}</h2>
+      <div class="muted">${dashboardStudents.length} élève(s)</div>
+    </div>
+    <button class="secondary" id="fermerClasse" style="margin-top:0">Fermer</button></div>
+    ${carte("bord", "Tableau de bord",
+      manquants > 0 ? `${manquants} document(s) non rendu(s)` : "Bloc-notes et documents à rendre", "#E8F1FF")}
+    ${carte("cours", "Cours", "Cycles, séances, évaluations", "#EDE6FF")}
+    ${carte("dispenses", "Dispenses",
+      dispenses.length ? `${dispenses.length} élève(s) actuellement dispensé(s)` : "Aucun élève dispensé", "#E8F8F3")}
+    ${carte("recap", "Récapitulatif Tests / Évaluations",
+      `P${dashboardPeriod} · ${tests.length} test(s) · ${evals.length} évaluation(s)`, "#FFF3DC")}`;
+  panel.querySelectorAll("[data-vue]").forEach(bouton => bouton.onclick = () => {
+    const vue = bouton.dataset.vue;
+    if (vue === "dispenses") { vueClasse = "menu"; detailOuvert = "dispenses"; afficherDispenses(dispenses); return; }
+    if (vue === "recap") { vueClasse = "menu"; detailOuvert = "recap"; afficherRecapPeriode(evals, tests); return; }
+    vueClasse = vue;
+    renderClassDashboard();
+  });
+  document.getElementById("fermerClasse").onclick = () => fermerTableauDeBord();
+  // La fenetre ouverte par-dessus le menu se repeint avec lui : sinon elle garderait la liste
+  // d'avant apres une suppression, comme c'etait le cas dans l'ecran Cours.
+  if (detailOuvert === "recap") afficherRecapPeriode(evals, tests);
+  else if (detailOuvert === "dispenses") afficherDispenses(dispenses);
+}
+
+/** Une dispense qui couvre aujourd'hui. */
+function dispenseEnCours(d) {
+  const jour = new Date().toISOString().slice(0, 10);
+  return d.start_date <= jour && d.end_date >= jour;
+}
+
+async function chargerTableauDeBordClasse() {
+  const id = dashboardClass?.row?.id;
+  if (!id) return;
+  try {
+    const [notes, docs] = await Promise.all([
+      apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`),
+      apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`)
+    ]);
+    notesClasse = notes.ok ? await notes.json() : [];
+    documentsClasse = docs.ok ? await docs.json() : [];
+    const ids = documentsClasse.map(d => `"${d.id}"`).join(",");
+    const rendus = ids
+      ? await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns?deleted=eq.false&document_id=in.(${ids})&select=*`)
+      : null;
+    rendusClasse = rendus && rendus.ok ? await rendus.json() : [];
+  } catch {
+    // Sans reseau on laisse les listes vides plutot que de bloquer l'ecran.
+    notesClasse = []; documentsClasse = []; rendusClasse = [];
+  }
+}
+
+function renderTableauDeBordClasse() {
+  const panel = document.getElementById("classDashboardPanel");
+  const { label } = dashboardClass;
+  const jourFr = ms => ms ? new Date(ms).toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : "";
+  panel.innerHTML = `
+    <div class="top"><div>
+      <button class="secondary" id="retourMenu" style="margin-top:0">‹ ${planningText(label)}</button>
+      <h2 style="margin:8px 0 0">Tableau de bord</h2>
+    </div></div>
+
+    <div class="card" style="margin-top:10px">
+      <h3 style="margin:0 0 8px">Bloc-notes</h3>
+      ${notesClasse.length === 0
+        ? `<div class="muted">Aucune note. Ajoutez ce qui ne tient dans aucune case.</div>`
+        : notesClasse.map(n => `<div class="card" style="background:#FFF3DC; margin-top:6px">
+             <div>${planningText(n.content)}</div>
+             <div class="top" style="margin-top:4px">
+               <span class="muted" style="font-size:12px">${jourFr(Date.parse(n.created_at))}</span>
+               <button class="danger" data-note-suppr="${planningText(n.id)}" style="margin-top:0">Supprimer</button>
+             </div></div>`).join("")}
+      <button id="ajoutNote" style="margin-top:10px">Ajouter une note</button>
+    </div>
+
+    <div class="card" style="margin-top:10px">
+      <h3 style="margin:0 0 8px">Documents à rendre</h3>
+      ${documentsClasse.length === 0
+        ? `<div class="muted">Aucun document suivi. Créez-en un pour cocher qui a rendu.</div>`
+        : documentsClasse.map(d => {
+            const rendus = rendusClasse.filter(r => r.document_id === d.id && r.returned).length;
+            const complet = dashboardStudents.length > 0 && rendus >= dashboardStudents.length;
+            return `<button type="button" class="dashCarte" data-doc="${planningText(d.id)}"
+              style="background:${complet ? "#E8F8F3" : "#FDEEED"}; margin-top:6px">
+              <span class="dashTexte"><span class="dashTitre">${planningText(d.title)}</span><br>
+                <span class="dashSous">${complet
+                  ? `${dashboardStudents.length} rendus sur ${dashboardStudents.length} · complet`
+                  : `${rendus} rendus sur ${dashboardStudents.length} · ${dashboardStudents.length - rendus} manquants`}</span></span>
+              <span class="dashFleche">›</span></button>`;
+          }).join("")}
+      <button id="ajoutDocument" style="margin-top:10px">Nouveau document</button>
+    </div>`;
+
+  document.getElementById("retourMenu").onclick = () => retourMenuClasse();
+  document.getElementById("ajoutNote").onclick = () => ajouterNoteClasse();
+  document.getElementById("ajoutDocument").onclick = () => ajouterDocumentClasse();
+  panel.querySelectorAll("[data-note-suppr]").forEach(b => b.onclick = () => supprimerNoteClasse(b.dataset.noteSuppr));
+  panel.querySelectorAll("[data-doc]").forEach(b => b.onclick = () => ouvrirDocumentClasse(b.dataset.doc));
+}
+
+async function ajouterNoteClasse() {
+  const texte = prompt("Note sur la classe :");
+  if (!texte || !texte.trim()) return;
+  const maintenant = new Date().toISOString();
+  const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
+    content: texte.trim(), created_at: maintenant, updated_at: maintenant, deleted: false };
+  try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes`, { method: "POST", body: JSON.stringify(ligne) }); }
+  catch (e) { alert(e.message); return; }
+  notesClasse.unshift(ligne);
+  renderTableauDeBordClasse();
+}
+
+async function supprimerNoteClasse(id) {
+  if (!confirm("Supprimer cette note ?")) return;
+  try {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${id}`,
+      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) });
+  } catch (e) { alert(e.message); return; }
+  notesClasse = notesClasse.filter(n => n.id !== id);
+  renderTableauDeBordClasse();
+}
+
+async function ajouterDocumentClasse() {
+  const titre = prompt("Intitulé du document (ex : autorisation sortie AS) :");
+  if (!titre || !titre.trim()) return;
+  const maintenant = new Date().toISOString();
+  const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
+    title: titre.trim(), created_at: maintenant, updated_at: maintenant, deleted: false };
+  try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents`, { method: "POST", body: JSON.stringify(ligne) }); }
+  catch (e) { alert(e.message); return; }
+  documentsClasse.unshift(ligne);
+  renderTableauDeBordClasse();
+}
+
+/** La liste des eleves d'un document : on touche un nom pour marquer qu'il a rendu. */
+function ouvrirDocumentClasse(documentId) {
+  const doc = documentsClasse.find(d => d.id === documentId);
+  if (!doc) return;
+  const hote = hoteDetail();
+  if (!hote) return;
+  const rendu = eleveId => rendusClasse.find(r => r.document_id === documentId && r.student_id === eleveId && r.returned);
+  hote.innerHTML = `
+    <div class="card" style="margin-top:10px">
+      <div class="top"><h3 style="margin:0">${planningText(doc.title)}</h3>
+        <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
+      <div class="muted" style="margin-top:6px">Cliquez un élève pour marquer qu'il a rendu.</div>
+      <div style="display:flex; flex-direction:column; gap:4px; margin-top:8px">${
+        dashboardStudents.map(e => `<button type="button" class="secondary" data-rendu="${planningText(e.id)}"
+          style="margin-top:0; text-align:left">${rendu(e.id) ? "☑" : "☐"}
+          ${planningText(String(e.last_name || "").toUpperCase())} ${planningText(e.first_name || "")}</button>`).join("")}
+      </div>
+    </div>`;
+  ouvrirDetailClasse();
+  document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
+  hote.querySelectorAll("[data-rendu]").forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    await basculerRenduClasse(documentId, b.dataset.rendu);
+    ouvrirDocumentClasse(documentId);
+  });
+}
+
+/**
+ * Marque - ou demarque - qu'un eleve a rendu.
+ *
+ * Deux clics de suite ne doivent pas creer deux lignes : le compte des rendus serait faux. On
+ * modifie donc la ligne existante plutot que d'en ajouter une.
+ */
+async function basculerRenduClasse(documentId, studentId) {
+  const existante = rendusClasse.find(r => r.document_id === documentId && r.student_id === studentId);
+  const maintenant = new Date().toISOString();
+  try {
+    if (existante) {
+      const valeur = !existante.returned;
+      await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns?id=eq.${existante.id}`,
+        { method: "PATCH", body: JSON.stringify({ returned: valeur, returned_at: valeur ? maintenant : null, updated_at: maintenant }) });
+      existante.returned = valeur;
+    } else {
+      const ligne = { id: crypto.randomUUID(), user_id: session.user_id, document_id: documentId,
+        student_id: studentId, returned: true, returned_at: maintenant, updated_at: maintenant, deleted: false };
+      await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns`, { method: "POST", body: JSON.stringify(ligne) });
+      rendusClasse.push(ligne);
+    }
+  } catch (e) { alert(e.message); }
+}
+
+/**
+ * Le rappel des documents non rendus, en tete de l'ecran Cours.
+ *
+ * Une notification sonnerait a un moment ou la classe n'est pas la. Ce bandeau, lui, est sous les
+ * yeux au moment ou l'on peut reclamer.
+ */
+function rappelDocumentsHtml() {
+  if (!dashboardStudents.length) return "";
+  const manquants = documentsClasse.map(doc => {
+    const rendus = rendusClasse.filter(r => r.document_id === doc.id && r.returned && !r.deleted).length;
+    return { titre: doc.title, combien: dashboardStudents.length - rendus };
+  }).filter(d => d.combien > 0);
+  if (!manquants.length) return "";
+  return `<div class="card" style="border-left:3px solid var(--danger); background:#FDEEED; margin-top:10px">${
+    manquants.map(d => `<div><strong>${d.combien} élève(s) n'ont pas rendu</strong>
+      <div class="muted">${planningText(d.titre)}</div></div>`).join("")}</div>`;
 }
