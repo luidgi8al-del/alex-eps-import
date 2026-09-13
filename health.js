@@ -32,11 +32,15 @@
    const host=document.getElementById('healthBody');if(!host)return;
    host.innerHTML=`<div class="subtabbar healthTabs">${[['dispense','DISPENSE'],['accident','ACCIDENT'],['infirmerie','INFIRMERIE']].map(([id,label])=>`<button class="subtabbtn${healthMode===id?' active':''}" data-health-mode="${id}">${label}</button>`).join('')}</div><div id="healthModeBody"></div>`;
    host.querySelectorAll('[data-health-mode]').forEach(button=>button.onclick=()=>{healthMode=button.dataset.healthMode;renderHealthTab();});
-   if(healthMode==='dispense')renderDispenseMode();else if(healthMode==='accident')renderAccidentMode();else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Cette rubrique est prête. Son formulaire sera ajouté à l’étape suivante.</p></div>`;
+   if(healthMode==='dispense')renderDispenseMode();
+   else if(healthMode==='accident'&&globalThis.HealthIncidentPro)globalThis.HealthIncidentPro.mount(document.getElementById('healthModeBody'),{classes:healthClasses,students:healthStudents,session,escape:healthEsc,save:payload=>enregistrerLigne('health_accidents',payload)});
+   else if(healthMode==='accident')renderAccidentMode();
+   else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Cette rubrique est prête. Son formulaire sera ajouté à l’étape suivante.</p></div>`;
   }
   // Trois vues sous DISPENSE : la saisie, ses propres dispenses (en cours / passees), et celles
   // de tout l'etablissement. Les deux dernieres servent de bilan et de suivi.
   let dispenseVue='saisie';
+  let dispenseEtape=1;
   /** Collegues de l'etablissement, pour nommer l'auteur d'une dispense. Lu une fois. */
   let dispenseEquipe=null;
   /** Le motif n'existe qu'une fois schema_sante_2.sql passe. Avant, on n'en parle pas. */
@@ -104,13 +108,17 @@
   function renderSaisieDispense(){
    const body=document.getElementById('dispenseVueBody');
    const classStudents=healthStudents.filter(s=>s.class_id===healthSelectedClassId);
-   const current=healthDispenses.filter(d=>d.class_id===healthSelectedClassId&&healthActive(d));
    const selected=healthStudents.find(s=>s.id===healthSelectedStudentId);
-   body.innerHTML=`<div class="card healthControls"><label>Classe<select id="healthClassSelect">${healthClasses.map(c=>`<option value="${healthEsc(c.id)}" ${c.id===healthSelectedClassId?'selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label><span class="healthCount">${current.length} dispense(s) en cours</span></div>${healthClasses.length?`<div class="healthGrid"><section class="card"><h2>Élèves de la classe</h2><div class="healthStudentList">${classStudents.map(student=>{const active=healthDispenses.find(d=>d.student_id===student.id&&healthActive(d));return `<button class="healthStudent ${student.id===healthSelectedStudentId?'selected':''}" data-health-student="${healthEsc(student.id)}"><span>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</span><small>${active?`Dispensé jusqu’au ${jourFr(active.end_date)}${active.reason_kind?` · ${healthEsc(motifLibelle(active.reason_kind))}`:''}`:'Ajouter une dispense'}</small></button>`}).join('')||'<p class="muted">Aucun élève dans cette classe.</p>'}</div></section><section class="card" id="healthEditor">${selected&&selected.class_id===healthSelectedClassId?dispenseEditorHtml(selected):'<div class="healthEmpty"><h2>Nouvelle dispense</h2><p>Sélectionnez la ligne d’un élève.</p></div>'}</section></div>`:'<div class="card healthEmpty">Créez d’abord une classe.</div>'}`;
-   const select=document.getElementById('healthClassSelect');
-   if(select)select.onchange=()=>{healthSelectedClassId=select.value;healthSelectedStudentId=null;renderDispenseMode();};
+   const step=(n,label,icon,enabled)=>`<button class="dispense-step ${dispenseEtape===n?'active':''}" data-dispense-step="${n}" ${enabled?'':'disabled'}><i>${icon}</i><span>${n}. ${label}</span></button>`;
+   let content='';
+   if(dispenseEtape===1)content=`<h2>Choisir la classe</h2><div class="dispense-choice-grid">${healthClasses.map(c=>`<button data-health-class="${c.id}"><i>🏫</i><span><b>${healthEsc(c.name)}</b><small>${healthStudents.filter(s=>s.class_id===c.id).length} élèves</small></span><strong>›</strong></button>`).join('')}</div>`;
+   else if(dispenseEtape===2)content=`<div class="top"><div><h2>Choisir l’élève</h2><p class="muted">${healthEsc(classeNommee(healthSelectedClassId))}</p></div></div><div class="healthStudentList">${classStudents.map(student=>{const active=healthDispenses.find(d=>d.student_id===student.id&&healthActive(d));return `<button class="healthStudent" data-health-student="${student.id}"><span><b>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</b><small>${active?`Dispensé jusqu’au ${jourFr(active.end_date)}`:'Créer une dispense'}</small></span><strong>›</strong></button>`}).join('')||'<p class="muted">Aucun élève dans cette classe.</p>'}</div>`;
+   else content=selected?dispenseEditorHtml(selected):'<p class="muted">Sélectionnez un élève.</p>';
+   body.innerHTML=`<section class="dispense-wizard"><div class="dispense-steps">${step(1,'Classe','🏫',true)}${step(2,'Élève','👤',!!healthSelectedClassId)}${step(3,'Dispense','🛡️',!!selected)}</div><div class="card dispense-step-body">${content}</div></section>`;
+   body.querySelectorAll('[data-dispense-step]').forEach(b=>b.onclick=()=>{dispenseEtape=+b.dataset.dispenseStep;renderSaisieDispense()});
+   body.querySelectorAll('[data-health-class]').forEach(button=>button.onclick=()=>{healthSelectedClassId=button.dataset.healthClass;healthSelectedStudentId=null;dispenseEtape=2;renderSaisieDispense()});
    body.querySelectorAll('[data-health-student]').forEach(button=>button.onclick=()=>{
-     healthSelectedStudentId=button.dataset.healthStudent;renderDispenseMode();});
+     healthSelectedStudentId=button.dataset.healthStudent;dispenseEtape=3;renderSaisieDispense();});
    const form=document.getElementById('dispenseForm');if(form)form.onsubmit=saveDispense;
    body.querySelectorAll('.healthDelete').forEach(button=>button.onclick=()=>deleteDispense(button.dataset.id));
   }
@@ -331,6 +339,7 @@
     try{ await enregistrerLigne('health_dispensations',ligne); }
     catch(e){ alert(e.message); return; }
     healthDispenses.unshift(ligne);
+    dispenseEtape=1;healthSelectedStudentId=null;
     renderDispenseMode();
   }
   // L'effacement laisse une trace au lieu de retirer la ligne : sans elle, la dispense, absente

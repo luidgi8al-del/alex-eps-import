@@ -141,6 +141,23 @@ const EpsTests = (function () {
       inputLabel: "Distance atteinte (cm)",
       compute: v => ({ value: v, unit: "cm" }),
       freeText: v => `Mesure relevee : ${fr(v, 1)} cm`
+    },
+    ARRET_COURSE: {
+      label: "Arrêt course",
+      protocol: "Touchez le nom de l’élève à chaque arrêt. Deux arrêts retirent 0,5 point à partir de 20.",
+      fieldLabel: "Nombre d’arrêts",
+      inputLabel: "Arrêts",
+      compute: v => ({ value: Math.max(0, 20 - Math.floor(v / 2) * 0.5), unit: "/20" }),
+      freeText: v => `Note : ${fr(Math.max(0, 20 - Math.floor(v / 2) * 0.5), 1)} / 20`,
+      special: "stops"
+    },
+    TROIS_500: {
+      label: "3 × 500 m",
+      protocol: "Saisissez 315 pour 3 min 15 s. La moyenne utilise toutes les courses et la régularité additionne les écarts successifs.",
+      fieldLabel: "Temps",
+      inputLabel: "Temps",
+      compute: v => ({ value: v, unit: "/12" }),
+      special: "running-series"
     }
   };
 
@@ -156,7 +173,8 @@ const EpsTests = (function () {
       subtitle: "Vitesse, demi-fond, force, coordination, haies et relais",
       color: "#FFF0DD",
       tests: ["SPRINT_30", "SPRINT_50", "COURSE_1000", "COURSE_1500",
-              "HAIES_INDEX", "RELAIS_INDEX", "SAUT_LONGUEUR", "NAVETTE_4X10", "SOUPLESSE"]
+              "HAIES_INDEX", "RELAIS_INDEX", "SAUT_LONGUEUR", "NAVETTE_4X10", "SOUPLESSE",
+              "ARRET_COURSE", "TROIS_500"]
     }
   ];
 

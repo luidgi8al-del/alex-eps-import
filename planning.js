@@ -99,6 +99,7 @@ function showPlanningTab(mode) {
   });
   document.getElementById("planningPanel").style.display = "none";
   if (mode === "annuelle") { renderPlanningTab(); loadAnnualPlan(); return; }
+  if (mode === "bac" && globalThis.renderBacReference) { renderPlanningTab(); globalThis.renderBacReference(); return; }
   if (mode === "programmes") { renderPlanningTab(); loadOfficialPrograms(); return; }
   if (mode === "calendrier") { renderPlanningTab(); loadInstitutionCalendar(); return; }
   if (mode === "periode") {
@@ -1222,9 +1223,10 @@ function renderPlanningTab() {
   // Programmation annuelle, programmes officiels et calendrier n'utilisent pas la grille
   // horaire : on bascule l'affichage.
   const annualMode = planningMode === "annuelle";
-  const listMode = ["annuelle", "programmes", "calendrier", "periodes"].includes(planningMode);
+  const listMode = ["annuelle", "programmes", "bac", "calendrier", "periodes"].includes(planningMode);
   document.getElementById("annualPlanWrap").style.display = annualMode ? "block" : "none";
   document.getElementById("programsWrap").style.display = planningMode === "programmes" ? "block" : "none";
+  document.getElementById("bacReferenceWrap").style.display = planningMode === "bac" ? "block" : "none";
   document.getElementById("calendarWrap").style.display = planningMode === "calendrier" ? "block" : "none";
   document.getElementById("periodDatesWrap").style.display = planningMode === "periodes" ? "block" : "none";
   if (planningMode === "periodes") renderPeriodDatesTab();

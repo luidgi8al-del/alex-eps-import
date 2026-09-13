@@ -38,6 +38,13 @@ function openTool(name, target) {
   if (name === "vma") renderVmaTest();
   if (name === "swim") renderSwimCertificate();
   if (name === "aptitudes") renderAptitudes();
+  if (name === "multi-chrono") renderMultiChronoWeb();
+  if (name === "tournament") renderTournamentWeb();
+  if (name === "observer") renderObserverWeb();
+  if (name === "rotations") renderRotationsWeb();
+  if (name === "random") renderRandomWeb();
+  if (name === "effort") renderEffortWeb();
+  if (name === "acrosport") renderAcrosportWeb();
   toolPanel.scrollIntoView({behavior:"smooth", block:"start"});
 }
 document.querySelectorAll("#tab-outils [data-tool]").forEach(button => button.addEventListener("click", () => openTool(button.dataset.tool)));
@@ -62,7 +69,7 @@ async function loadToolClasses() {
 async function loadToolStudents(classId) {
   if (!classId || classId === FREE_USE) { toolStudents = []; return toolStudents; }
   toolStudents = await lireTable("students",
-    `students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name&order=last_name.asc`,
+    `students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name,sex&order=last_name.asc`,
     { ou: e => e.class_id === classId,
       trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
   return toolStudents;
@@ -190,6 +197,8 @@ function drawEpsTestBody(key) {
   const host = document.getElementById("epsTestBody");
   if (!host) return;
   const test = EpsTests.TESTS[key];
+  if (test.special === "stops") { drawStopCourseTest(test); return; }
+  if (test.special === "running-series") { drawRunningSeriesTest(test); return; }
 
   if (!onRealClass()) {
     // Usage libre : soit deux temps a comparer (haies, relais), soit une seule valeur.
@@ -244,6 +253,40 @@ function drawEpsTestBody(key) {
   refresh();
   document.getElementById("epsSaveBtn").onclick = () => saveEpsTest(key);
 }
+
+const stopCourseCounts = {};
+function drawStopCourseTest(test) {
+  const host=document.getElementById("epsTestBody");
+  if(!onRealClass()){
+    host.innerHTML=`<div class="muted">${test.protocol}</div><label>Nombre d’arrêts</label><input id="stopFree" type="number" min="0" value="0"><div class="ok" id="stopFreeOut">Note : 20 / 20</div>`;
+    stopFree.oninput=()=>stopFreeOut.textContent=test.freeText(Math.max(0,+stopFree.value||0));return;
+  }
+  host.innerHTML=`<div class="test-protocol">${test.protocol}</div><div class="stop-student-list">${toolStudents.map(s=>{const n=stopCourseCounts[s.id]||0,r=test.compute(n);return `<button class="stop-student" data-stop-student="${s.id}"><span><b>${studentLabel(s)}</b><small>${n} arrêt${n>1?'s':''}</small></span><strong>${EpsTests.fr(r.value,1)} / 20</strong><i>+1</i></button>`}).join('')}</div><button id="stopSave">Enregistrer dans la classe</button>`;
+  host.querySelectorAll('[data-stop-student]').forEach(b=>b.onclick=()=>{stopCourseCounts[b.dataset.stopStudent]=(stopCourseCounts[b.dataset.stopStudent]||0)+1;drawStopCourseTest(test)});
+  stopSave.onclick=async()=>{const cls=toolClasses.find(c=>c.id===toolClassId),id=crypto.randomUUID(),now=new Date().toISOString(),rows=toolStudents.map(s=>{const n=stopCourseCounts[s.id]||0;return{id:crypto.randomUUID(),user_id:session.user_id,session_id:id,student_id:s.id,input_value:n,result_value:test.compute(n).value,input_unit:'Arrêts',result_unit:'/20',updated_at:now,deleted:false}});await enregistrerSeanceDeTest({id,user_id:session.user_id,class_id:toolClassId,period_number:epsTestPeriod,test_name:test.label,created_at:Date.now(),class_label:cls?.name||'',updated_at:now,deleted:false},rows);epsOpenTest=null;drawEpsTests()};
+}
+
+let runningDistance=500,runningCount=3;
+const runningValues={};
+function compactRunningSeconds(raw){const clean=String(raw||'').replace(/\D/g,'');if(!clean)return null;const n=+clean,m=Math.floor(n/100),s=n%100;return s<60?m*60+s:null}
+function runningRegularity(total){if(total<=2)return 6;if(total<=4)return 5.7;if(total<=6)return 5.4;if(total<=8)return 5.1;if(total<=10)return 4.8;if(total===11)return 4.5;if(total>25)return 0;return Math.max(0,4.2-(total-12)*.3)}
+const runningGirls=[270,255,240,226,214,202,190,180,170,164,156,148,140,137,135,133,131,128,125,122,120,118,116,114,112];
+const runningBoys=[240,230,214,200,188,174,162,152,140,133,125,118,112,110,109,108,107,106,104,102,100,98,95,92,89];
+function runningPerformance(avg,sex){const cuts=String(sex||'').toUpperCase().includes('F')?runningGirls:String(sex||'').toUpperCase().includes('G')?runningBoys:null;if(!cuts)return null;const equivalent=runningDistance===250?avg*2:avg;let score=0;cuts.forEach((c,i)=>{if(equivalent<=c)score=i*.25});return Math.min(6,score)}
+function runningSummary(s){const raw=runningValues[s.id]||Array(runningCount).fill(''),valid=raw.map(compactRunningSeconds);if(valid.some(v=>v==null))return null;const avg=valid.reduce((a,b)=>a+b,0)/valid.length,gaps=valid.slice(1).map((v,i)=>Math.abs(v-valid[i])),reg=valid.length>1?runningRegularity(gaps.reduce((a,b)=>a+b,0)):null,perf=runningPerformance(avg,s.sex),total=perf==null?null:(reg==null?perf:reg+perf);return{raw,valid,avg,gaps,reg,perf,total}}
+function drawRunningSeriesTest(test){
+  const host=document.getElementById('epsTestBody');if(!onRealClass()){host.innerHTML='<div class="muted">Choisissez une classe pour enregistrer cette épreuve.</div>';return}
+  toolStudents.forEach(s=>{const old=runningValues[s.id]||[];runningValues[s.id]=old.slice(0,runningCount).concat(Array(Math.max(0,runningCount-old.length)).fill(''))});
+  host.innerHTML=`<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details><div class="running-settings"><label>Format<select id="runDistance"><option value="500" ${runningDistance===500?'selected':''}>500 m</option><option value="250" ${runningDistance===250?'selected':''}>250 m</option></select></label><label>Nombre de courses<select id="runCount">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${runningCount===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label></div><div class="running-roster">${toolStudents.map(s=>{const summary=runningSummary(s);return `<details class="running-student"><summary><span>${studentLabel(s)}</span><b>Note : ${summary?.total!=null?EpsTests.fr(summary.total,2):'—'} ${runningCount>1?'/ 12':'/ 6'}</b></summary><div class="running-inputs">${runningValues[s.id].map((v,i)=>`<label>Course ${i+1}<input inputmode="numeric" maxlength="3" data-run-student="${s.id}" data-run-index="${i}" value="${v}"></label>`).join('')}</div>${summary?`<div class="running-result">Moyenne ${Math.floor(summary.avg/60)}:${String(Math.round(summary.avg)%60).padStart(2,'0')} · Régularité ${summary.reg==null?'—':EpsTests.fr(summary.reg,1)}/6 · Performance ${summary.perf==null?'sexe non renseigné':EpsTests.fr(summary.perf,2)+'/6'}</div>`:''}</details>`}).join('')}</div><button id="runningSave">Enregistrer les résultats complets</button><div class="running-export-actions"><button class="secondary" id="runningExcel">▦ Excel</button><button class="secondary" id="runningPdf">▤ PDF</button></div><div id="runningMsg" class="ok"></div>`;
+  runDistance.onchange=()=>{runningDistance=+runDistance.value;drawRunningSeriesTest(test)};runCount.onchange=()=>{runningCount=+runCount.value;drawRunningSeriesTest(test)};
+  host.querySelectorAll('[data-run-student]').forEach(input=>{input.oninput=()=>{const clean=input.value.replace(/\D/g,'').slice(0,3);input.value=clean;runningValues[input.dataset.runStudent][+input.dataset.runIndex]=clean};input.onchange=()=>drawRunningSeriesTest(test)});
+  runningSave.onclick=()=>saveRunningSeries(test);
+  runningExcel.onclick=exportRunningCsv;runningPdf.onclick=printRunningPdf;
+}
+async function saveRunningSeries(test){const complete=toolStudents.map(s=>[s,runningSummary(s)]).filter(x=>x[1]);if(!complete.length){runningMsg.textContent='Saisissez toutes les courses d’au moins un élève.';return}const cls=toolClasses.find(c=>c.id===toolClassId),id=crypto.randomUUID(),now=new Date().toISOString();await enregistrerSeanceDeTest({id,user_id:session.user_id,class_id:toolClassId,period_number:epsTestPeriod,test_name:test.label,created_at:Date.now(),class_label:cls?.name||'',updated_at:now,deleted:false},complete.map(([s,r])=>({id:crypto.randomUUID(),user_id:session.user_id,session_id:id,student_id:s.id,input_value:r.avg,result_value:r.total||0,input_unit:`runs:${runningDistance}:${runningCount}:times:${r.raw.join('|')}`,result_unit:runningCount>1?'/12':'/6',updated_at:now,deleted:false})));runningMsg.textContent=`${complete.length} résultat(s) enregistré(s) dans ${cls?.name||'la classe'}.`}
+function runningExportData(){return toolStudents.map(s=>({student:s,summary:runningSummary(s)})).filter(x=>x.summary)}
+function exportRunningCsv(){const headers=['Nom','Prénom',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité /6','Performance /6',`Note /${runningCount>1?12:6}`],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,...r.raw,`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),r.reg??'',r.perf??'',r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`resultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
+function printRunningPdf(){const rows=runningExportData(),w=open('','_blank');if(!w)return alert('Autorisez les fenêtres surgissantes.');w.document.write(`<html><head><title>Résultats ${runningCount} × ${runningDistance} m</title><style>body{font:12px Arial;color:#173a57;padding:24px}h1{color:#087dca}table{width:100%;border-collapse:collapse}th,td{border:1px solid #cad8e3;padding:6px;text-align:center}th:first-child,td:first-child{text-align:left}@media print{button{display:none}}</style></head><body><h1>${runningCount} × ${runningDistance} m · ${toolClasses.find(c=>c.id===toolClassId)?.name||''}</h1><table><tr><th>Élève</th>${Array.from({length:runningCount},(_,i)=>`<th>C${i+1}</th>`).join('')}<th>Moyenne</th><th>Régularité</th><th>Performance</th><th>Note</th></tr>${rows.map(({student:s,summary:r})=>`<tr><td>${studentLabel(s)}</td>${r.raw.map(v=>`<td>${v}</td>`).join('')}<td>${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}</td><td>${r.reg??'—'}</td><td>${r.perf??'—'}</td><td>${r.total??'—'} / ${runningCount>1?12:6}</td></tr>`).join('')}</table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);w.document.close()}
 
 async function saveEpsTest(key) {
   const test = EpsTests.TESTS[key];

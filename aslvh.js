@@ -1060,25 +1060,18 @@ function renderUnssSlotsTab() {
            <button class="secondary" data-slot-appel="${slot.id}" style="margin-top:0">Appel</button>
            <button class="secondary" data-slot-bilan="${slot.id}" style="margin-top:0">Bilan</button>`
         : "";
-      return `<div class="card">
-        <div class="unssCard">
-          <div data-slot="${slot.id}" style="cursor:pointer">
-            <div><strong>${unssText(slot.activity_name || "Creneau sans nom")}</strong></div>
-            <div class="muted">${unssText(detail) || "Horaire non renseigne"}</div>
-            <div class="muted" style="font-size:12px">${demandes} voeu(x)${places}${
-              creneauPorteTout ? ` · ${inscrits} inscrit(s)` : ""}</div>
-          </div>
-          <button class="danger" data-slot-delete="${slot.id}" style="margin-top:0">Supprimer</button>
-        </div>
-        ${actions ? `<div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px">${actions}</div>` : ""}
-      </div>`;
+      return `<button class="as-slot-tile" data-slot="${slot.id}">
+        <span class="as-sport-icon">${iconeActiviteAS(slot.activity_name)}</span>
+        <span><strong>${unssText(slot.activity_name || "Créneau sans nom")}</strong>
+        <small>⌖ ${unssText(slot.location || "Lieu non renseigné")} · ◷ ${unssText(detail) || "Horaire non renseigné"}</small>
+        <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button>`;
     }).join("");
   }
   wrap.innerHTML = html;
 
   document.getElementById("unssSlotAddBtn").addEventListener("click", () => openUnssSlotPanel(null));
   wrap.querySelectorAll("[data-slot]").forEach(el => {
-    el.addEventListener("click", () => openUnssSlotPanel(unssSlots.find(x => x.id === el.dataset.slot)));
+    el.addEventListener("click", () => ouvrirFicheCreneau(unssSlots.find(x => x.id === el.dataset.slot)));
   });
   wrap.querySelectorAll("[data-slot-delete]").forEach(btn => {
     btn.addEventListener("click", async (e) => {
@@ -1098,6 +1091,24 @@ function renderUnssSlotsTab() {
     unssAppelSlotId = btn.dataset.slotAppel;
     showUnssTab("appel");
   }));
+}
+
+function iconeActiviteAS(nom) {
+  const n = String(nom || "").toLowerCase();
+  if (n.includes("bad")) return "🏸"; if (n.includes("basket")) return "🏀";
+  if (n.includes("foot")) return "⚽"; if (n.includes("volley")) return "🏐";
+  if (n.includes("escal")) return "🧗"; if (n.includes("natation") || n.includes("sauvetage")) return "🏊";
+  if (n.includes("vélo") || n.includes("vtt") || n.includes("route")) return "🚴";
+  if (n.includes("athl") || n.includes("course")) return "🏃"; if (n.includes("danse")) return "💃";
+  if (n.includes("gym")) return "🤸"; if (n.includes("pad")) return "🎾"; if (n.includes("aquathlon")) return "🏊‍♂️";
+  return "🏆";
+}
+
+async function ouvrirFicheCreneau(slot) {
+  if (!slot) return;
+  const panel = document.getElementById("unssPanel"); ouvrirFenetreUnss();
+  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button><button id="asCall">☑<b>Appel</b></button><button id="asBalance">▥<b>Bilan</b></button></div><section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
+  asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); asCall.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
 }
 
 /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
@@ -1569,7 +1580,10 @@ function fenetreUnss() {
 }
 
 function ouvrirFenetreUnss() { fenetreUnss()?.classList.add("open"); }
-function fermerFenetreUnss() { document.getElementById("unssPanelOverlay")?.classList.remove("open"); }
+function fermerFenetreUnss() {
+  document.getElementById("unssPanelOverlay")?.classList.remove("open");
+  document.getElementById("unssPanel")?.classList.remove("as-full-panel");
+}
 
 async function openUnssAddMemberPanel(group, excludeIds) {
   const panel = document.getElementById("unssPanel");
@@ -1718,7 +1732,8 @@ async function ouvrirElevesCreneau(slot) {
   panel.innerHTML = `<div class="muted">Chargement…</div>`;
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
-  panel.innerHTML = `<h2>${unssText(slot.activity_name)} · élèves</h2>
+  panel.classList.add("as-full-panel");
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
     <div class="muted">${unssText(unssSlotLabel(slot))}</div>
     <div id="unssCreneauEleves" style="margin-top:10px">${
       eleves.length === 0
@@ -1729,7 +1744,7 @@ async function ouvrirElevesCreneau(slot) {
            </div>`).join("")
     }</div>
     <button id="unssCreneauAddBtn" style="margin-top:12px">Ajouter des élèves</button>
-    <button class="secondary" id="unssCreneauCloseBtn" style="margin-top:12px">Fermer</button>`;
+    `;
   panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", async () => {
     const inscription = unssInscriptions.find(i => i.slot_id === slot.id && i.student_id === btn.dataset.retirer);
     if (inscription) {
@@ -1822,17 +1837,28 @@ async function ouvrirBilanCreneau(slot) {
     return { eleve: e, presents, absents: siennes.length - presents, notees: siennes.length };
   }).sort((a, b) => b.presents - a.presents
     || String(a.eleve.last_name || "").localeCompare(String(b.eleve.last_name || ""), "fr"));
-  panel.innerHTML = `<h2>${unssText(slot.activity_name)} · bilan de présence</h2>
-    <div class="muted">${seances.length} séance(s) · ${eleves.length} élève(s) inscrit(s)</div>
+  panel.classList.add("as-full-panel");
+  const tauxGlobal = lignes.reduce((a,l)=>a+l.presents,0);
+  const totalPointe = lignes.reduce((a,l)=>a+l.notees,0);
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssBilanClose">←</button><div><h2>Bilan de présence</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
+    <div class="as-bilan-metrics"><article><b>${seances.length}</b><span>appels</span></article><article><b>${eleves.length}</b><span>élèves</span></article><article><b>${totalPointe?Math.round(tauxGlobal*100/totalPointe):0} %</b><span>présence</span></article></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit à ce créneau.</div>`
-      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr>
-           <th>Élève</th><th>Présent</th><th>Absent</th><th>Séances pointées</th></tr></thead><tbody>${
-           lignes.map(l => `<tr><td>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</td>
-             <td>${l.presents}</td><td>${l.absents}</td><td>${l.notees} / ${seances.length}</td></tr>`).join("")
+      : `<div class="as-bilan-table"><table class="eleveTable"><thead><tr>
+           <th>Élève</th>${seances.map(s=>`<th>${dateSeance(s.date_epoch_millis).slice(0,5)}</th>`).join('')}<th>%</th></tr></thead><tbody>${
+           lignes.map(l => `<tr><td>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</td>${seances.map(s=>{const p=unssPresences.find(x=>x.student_id===l.eleve.id&&x.session_id===s.id);return `<td><i class="as-presence-dot ${!p?'none':p.present?'yes':'no'}">${!p?'–':p.present?'P':'A'}</i></td>`}).join('')}<td><b>${l.notees?Math.round(l.presents*100/l.notees):0}%</b></td></tr>`).join("")
          }</tbody></table></div>`}
-    <button class="secondary" id="unssBilanClose" style="margin-top:12px">Fermer</button>`;
+    `;
   document.getElementById("unssBilanClose").addEventListener("click", () => fermerFenetreUnss());
+}
+
+/** Appel plein écran depuis la fiche du créneau, comme dans l'application mobile. */
+async function ouvrirAppelCreneau(slot, seance = null) {
+  const panel=document.getElementById('unssPanel'); ouvrirFenetreUnss();
+  panel.classList.add('as-full-panel'); panel.innerHTML=`<div class="as-panel-title"><button class="as-back" id="asCallBack">←</button><div><h2>Appel</h2><small>${unssText(slot.activity_name)} · ${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</small></div><b>☑</b></div><div class="as-call-wrap"><div id="unssAppelBody"></div></div>`;
+  unssAppelSlotId=slot.id;unssAppelMembers=elevesDuCreneau(slot.id);unssAppelPresence={};
+  unssAppelMembers.forEach(e=>{const p=seance&&unssPresences.find(x=>x.session_id===seance.id&&x.student_id===e.id);unssAppelPresence[e.id]=p?!!p.present:true});
+  await chargerDispensesAppel();renderUnssAppelBody(slot,seance);asCallBack.onclick=()=>ouvrirFicheCreneau(slot);
 }
 
 // ---- UNSS > Appel : choisir un groupe, cocher present/absent, enregistrer une seance ----
@@ -2037,6 +2063,11 @@ function renderUnssAppelBody(creneau, seance) {
     } catch (erreur) {
       saveButton.disabled = false;
       throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
+    }
+    // L'enseignant choisit après la sauvegarde s'il souhaite déclencher les e-mails.
+    if (!confirm("Appel enregistré. Voulez-vous envoyer maintenant un e-mail aux parents des élèves absents ?")) {
+      document.getElementById("unssAppelOk").textContent = "Appel enregistré sans envoi d’e-mail.";
+      return;
     }
     // L'envoi des e-mails, lui, demande le reseau : sans lui l'appel est garde et les messages
     // attendent. C'est exactement ce qu'il faut dire, plutot que d'annoncer un echec.

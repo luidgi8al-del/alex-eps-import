@@ -1340,6 +1340,7 @@ let vueClasse = "menu";
 let notesClasse = [];
 let documentsClasse = [];
 let rendusClasse = [];
+let documentsArchivesOuverts = false;
 
 function retourMenuClasse() {
   vueClasse = "menu";
@@ -1367,7 +1368,7 @@ function renderMenuClasse() {
   panel.innerHTML = `
     <div class="top"><div>
       <h2 style="margin:0">${planningText(label)}</h2>
-      <div class="muted">${dashboardStudents.length} élève(s)</div>
+      <button class="class-student-count" id="ouvrirDossiersEleves">👥 ${dashboardStudents.length} élève(s) · ouvrir les dossiers</button>
     </div>
     <button class="secondary" id="fermerClasse" style="margin-top:0">Fermer</button></div>
     ${carte("bord", "Tableau de bord",
@@ -1385,11 +1386,39 @@ function renderMenuClasse() {
     renderClassDashboard();
   });
   document.getElementById("fermerClasse").onclick = () => fermerTableauDeBord();
+  document.getElementById("ouvrirDossiersEleves").onclick = () => ouvrirListeDossiersEleves();
   // La fenetre ouverte par-dessus le menu se repeint avec lui : sinon elle garderait la liste
   // d'avant apres une suppression, comme c'etait le cas dans l'ecran Cours.
   if (detailOuvert === "recap") afficherRecapPeriode(evals, tests);
   else if (detailOuvert === "dispenses") afficherDispenses(dispenses);
 }
+
+function ouvrirListeDossiersEleves() {
+  const hote=hoteDetail();if(!hote)return;
+  hote.innerHTML=`<section class="student-folder-screen"><div class="top"><div><h2>Dossiers des élèves</h2><p class="muted">${planningText(dashboardClass.label)}</p></div><button class="secondary" id="fermerDetail">Fermer</button></div><label class="student-folder-search">🔎<input id="rechercheDossierEleve" placeholder="Rechercher un nom ou un prénom"></label><div id="listeDossiersEleves"></div></section>`;
+  ouvrirDetailClasse();document.getElementById('fermerDetail').onclick=fermerDetailClasse;
+  const draw=()=>{const q=String(rechercheDossierEleve.value||'').trim().toLowerCase();const list=dashboardStudents.filter(s=>!q||`${s.last_name} ${s.first_name}`.toLowerCase().includes(q));listeDossiersEleves.innerHTML=list.map(s=>{const disp=dashboardDispenses.some(d=>d.student_id===s.id&&!d.deleted&&dispenseEnCours(d));const returned=rendusClasse.filter(r=>r.student_id===s.id&&r.returned&&!r.deleted).length;return `<button class="student-folder-row" data-student-folder="${planningText(s.id)}"><i>${planningText((s.first_name||'?')[0])}${planningText((s.last_name||'?')[0])}</i><span><b>${planningText(String(s.last_name||'').toUpperCase())} ${planningText(s.first_name||'')}</b><small>${disp?'Dispensé actuellement':`${returned}/${documentsClasse.filter(d=>!d.archived).length} document(s) rendu(s)`}</small></span><strong>›</strong></button>`}).join('')||'<div class="muted">Aucun élève trouvé.</div>';listeDossiersEleves.querySelectorAll('[data-student-folder]').forEach(b=>b.onclick=()=>ouvrirDossierEleve(b.dataset.studentFolder))};
+  rechercheDossierEleve.oninput=draw;draw();
+}
+
+async function ouvrirDossierEleve(studentId) {
+  const student=dashboardStudents.find(s=>s.id===studentId);if(!student)return;
+  const hote=hoteDetail();hote.innerHTML='<div class="card muted">Chargement du dossier…</div>';
+  let testResults=[];
+  try{const r=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results?student_id=eq.${studentId}&deleted=eq.false&select=*`);if(r.ok)testResults=await r.json()}catch{}
+  const dispenses=dashboardDispenses.filter(d=>d.student_id===studentId&&!d.deleted);
+  const actifs=dispenses.filter(d=>dispenseEnCours(d));
+  const documents=documentsClasse.map(d=>({doc:d,returned:!!rendusClasse.find(r=>r.document_id===d.id&&r.student_id===studentId&&r.returned&&!r.deleted)}));
+  const notes=testResults.map(r=>Number(r.result_value)).filter(Number.isFinite),average=notes.length?notes.reduce((a,b)=>a+b,0)/notes.length:null;
+  const birth=student.birth_date?new Date(student.birth_date+'T12:00:00').toLocaleDateString('fr-FR'):'Non renseignée';
+  hote.innerHTML=`<section class="student-folder-screen"><header class="student-folder-hero"><button id="retourListeDossiers">←</button><i>${planningText((student.first_name||'?')[0])}${planningText((student.last_name||'?')[0])}</i><div><small>DOSSIER ÉLÈVE</small><h2>${planningText(String(student.last_name||'').toUpperCase())} ${planningText(student.first_name||'')}</h2><p>${planningText(dashboardClass.label)} · né(e) le ${birth}</p></div></header><div class="student-folder-metrics"><article><b>${average==null?'—':average.toFixed(1).replace('.',',')}</b><span>moyenne tests</span></article><article><b>${documents.filter(x=>x.returned).length}/${documents.length}</b><span>documents</span></article><article><b>${actifs.length}</b><span>dispense en cours</span></article></div><div class="student-folder-grid"><article><h3>📋 Évaluations et tests</h3>${testResults.length?testResults.slice(0,12).map(r=>`<p><span>${planningText(r.input_unit||'Test EPS')}</span><b>${Number(r.result_value).toFixed(2).replace('.',',')} ${planningText(r.result_unit||'')}</b></p>`).join(''):'<div class="muted">Aucun résultat enregistré.</div>'}</article><article><h3>🛡️ Dispenses</h3>${dispenses.length?dispenses.map(d=>`<p><span>${new Date(d.start_date+'T12:00:00').toLocaleDateString('fr-FR')} → ${new Date(d.end_date+'T12:00:00').toLocaleDateString('fr-FR')}</span><b>${dispenseEnCours(d)?'En cours':'Terminée'}</b></p>`).join(''):'<div class="muted">Aucune dispense.</div>'}</article><article><h3>📄 Documents</h3>${documents.length?documents.map(x=>`<p><span>${planningText(x.doc.title)}</span><b class="${x.returned?'ok-text':'missing-text'}">${x.returned?'Rendu':'Manquant'}</b></p>`).join(''):'<div class="muted">Aucun document suivi.</div>'}</article></div><div class="student-folder-exports"><button id="exportDossierExcel">▦ Enregistrer Excel</button><button id="exportDossierPdf">▤ Enregistrer PDF</button></div></section>`;
+  document.getElementById('retourListeDossiers').onclick=ouvrirListeDossiersEleves;
+  document.getElementById('exportDossierExcel').onclick=()=>exporterDossierEleveCsv(student,documents,dispenses,testResults);
+  document.getElementById('exportDossierPdf').onclick=()=>imprimerDossierEleve(student,documents,dispenses,testResults);
+}
+
+function exporterDossierEleveCsv(student,documents,dispenses,tests){const rows=[['Dossier élève',`${student.last_name} ${student.first_name}`],['Classe',dashboardClass.label],[],['TESTS'],['Valeur','Résultat'],...tests.map(t=>[t.input_value,`${t.result_value} ${t.result_unit||''}`]),[],['DOCUMENTS'],['Document','État'],...documents.map(x=>[x.doc.title,x.returned?'Rendu':'Manquant']),[],['DISPENSES'],['Début','Fin'],...dispenses.map(d=>[d.start_date,d.end_date])];const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`dossier-${student.last_name}-${student.first_name}.csv`;a.click();URL.revokeObjectURL(a.href)}
+function imprimerDossierEleve(student,documents,dispenses,tests){const w=open('','_blank');if(!w)return alert('Autorisez les fenêtres surgissantes.');const birth=student.birth_date?new Date(student.birth_date+'T12:00:00').toLocaleDateString('fr-FR'):'Non renseignée';w.document.write(`<html><head><meta charset="utf-8"><title>Dossier élève</title><style>@page{size:A4;margin:14mm}*{box-sizing:border-box}body{font:12px Arial;color:#173a57;margin:0}.head{display:flex;align-items:center;border-bottom:3px solid #087dca;padding-bottom:10px}.head img{width:245px;max-height:82px;object-fit:contain}.head div{margin-left:auto;text-align:right;line-height:1.5}.identity{background:#edf6ff;border-radius:14px;padding:14px;margin:18px 0}.identity h1{font-size:23px;color:#087dca;margin:0 0 7px}.identity p{margin:3px 0}h2{font-size:16px;color:#173a57;border-left:5px solid #087dca;padding-left:8px;margin-top:20px}table{width:100%;border-collapse:collapse;margin:9px 0}td,th{border:1px solid #ccd9e2;padding:8px;text-align:left}th{background:#087dca;color:white}.empty{color:#607b8d;padding:9px;border:1px dashed #ccd9e2}.foot{margin-top:28px;border-top:1px solid #ccd9e2;padding-top:8px;color:#607b8d}@media print{button{display:none}}</style></head><body><header class="head"><img src="assets/lvh.jpeg"><div><b>Lycée Victor Hugo</b><br>Lycée français de Marrakech<br>Service EPS</div></header><section class="identity"><h1>DOSSIER INDIVIDUEL DE L’ÉLÈVE</h1><p><b>${planningText(String(student.last_name||'').toUpperCase())} ${planningText(student.first_name)}</b></p><p>Classe : ${planningText(dashboardClass.label)} · Date de naissance : ${birth}</p></section><h2>Évaluations et tests</h2>${tests.length?`<table><tr><th>Épreuve</th><th>Résultat</th></tr>${tests.map(t=>`<tr><td>${planningText(t.input_unit||'Test')}</td><td>${t.result_value} ${planningText(t.result_unit||'')}</td></tr>`).join('')}</table>`:'<div class="empty">Aucun résultat enregistré.</div>'}<h2>Documents à rendre</h2>${documents.length?`<table><tr><th>Document</th><th>État</th></tr>${documents.map(x=>`<tr><td>${planningText(x.doc.title)}</td><td>${x.returned?'Rendu':'Manquant'}</td></tr>`).join('')}</table>`:'<div class="empty">Aucun document suivi.</div>'}<h2>Dispenses</h2>${dispenses.length?`<table><tr><th>Début</th><th>Fin</th></tr>${dispenses.map(d=>`<tr><td>${d.start_date}</td><td>${d.end_date}</td></tr>`).join('')}</table>`:'<div class="empty">Aucune dispense.</div>'}<p class="foot">Document généré le ${new Date().toLocaleDateString('fr-FR')} depuis l’espace EPS LVH.</p><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);w.document.close()}
 
 /** Une dispense qui couvre aujourd'hui. */
 function dispenseEnCours(d) {
@@ -1422,6 +1451,8 @@ function renderTableauDeBordClasse() {
   const panel = document.getElementById("classDashboardPanel");
   const { label } = dashboardClass;
   const jourFr = ms => ms ? new Date(ms).toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : "";
+  const documentsActifs = documentsClasse.filter(d => !d.archived);
+  const documentsArchives = documentsClasse.filter(d => d.archived);
   panel.innerHTML = `
     <div class="top"><div>
       <button class="secondary" id="retourMenu" style="margin-top:0">‹ ${planningText(label)}</button>
@@ -1442,10 +1473,11 @@ function renderTableauDeBordClasse() {
     </div>
 
     <div class="card" style="margin-top:10px">
-      <h3 style="margin:0 0 8px">Documents à rendre</h3>
-      ${documentsClasse.length === 0
+      <div class="top"><h3 style="margin:0 0 8px">Documents à rendre</h3>
+        <button class="secondary" id="ouvrirArchivesDocuments" style="margin-top:0">Archives (${documentsArchives.length})</button></div>
+      ${documentsActifs.length === 0
         ? `<div class="muted">Aucun document suivi. Créez-en un pour cocher qui a rendu.</div>`
-        : documentsClasse.map(d => {
+        : documentsActifs.map(d => {
             const rendus = rendusClasse.filter(r => r.document_id === d.id && r.returned).length;
             const complet = dashboardStudents.length > 0 && rendus >= dashboardStudents.length;
             return `<button type="button" class="dashCarte" data-doc="${planningText(d.id)}"
@@ -1457,11 +1489,14 @@ function renderTableauDeBordClasse() {
               <span class="dashFleche">›</span></button>`;
           }).join("")}
       <button id="ajoutDocument" style="margin-top:10px">Nouveau document</button>
+      ${documentsArchivesOuverts ? `<section class="document-archives"><div class="top"><h3>Documents classés</h3><button class="secondary" id="fermerArchivesDocuments">Fermer</button></div>${documentsArchives.length ? documentsArchives.map(d=>`<button type="button" class="dashCarte" data-doc="${planningText(d.id)}"><span class="dashTexte"><span class="dashTitre">${planningText(d.title)}</span><br><span class="dashSous">Archivé le ${jourFr(Date.parse(d.archived_at||d.updated_at||d.created_at))}</span></span><span class="dashFleche">›</span></button>`).join('') : '<div class="muted">Aucun document archivé.</div>'}</section>` : ''}
     </div>`;
 
   document.getElementById("retourMenu").onclick = () => retourMenuClasse();
   document.getElementById("ajoutNote").onclick = () => ajouterNoteClasse();
   document.getElementById("ajoutDocument").onclick = () => ajouterDocumentClasse();
+  document.getElementById("ouvrirArchivesDocuments").onclick = () => { documentsArchivesOuverts = true; renderTableauDeBordClasse(); };
+  document.getElementById("fermerArchivesDocuments")?.addEventListener("click", () => { documentsArchivesOuverts = false; renderTableauDeBordClasse(); });
   panel.querySelectorAll("[data-note-suppr]").forEach(b => b.onclick = () => supprimerNoteClasse(b.dataset.noteSuppr));
   panel.querySelectorAll("[data-doc]").forEach(b => b.onclick = () => ouvrirDocumentClasse(b.dataset.doc));
 }
@@ -1517,6 +1552,10 @@ function ouvrirDocumentClasse(documentId) {
           style="margin-top:0; text-align:left">${rendu(e.id) ? "☑" : "☐"}
           ${planningText(String(e.last_name || "").toUpperCase())} ${planningText(e.first_name || "")}</button>`).join("")}
       </div>
+      <div class="document-actions">
+        <button id="classerDocument">${doc.archived ? 'Restaurer dans les documents à rendre' : 'Archiver ce document'}</button>
+        ${doc.archived ? '<button class="danger" id="supprimerDocument">Supprimer</button>' : ''}
+      </div>
     </div>`;
   ouvrirDetailClasse();
   document.getElementById("fermerDetail").onclick = () => fermerDetailClasse();
@@ -1525,6 +1564,27 @@ function ouvrirDocumentClasse(documentId) {
     await basculerRenduClasse(documentId, b.dataset.rendu);
     ouvrirDocumentClasse(documentId);
   });
+  document.getElementById("classerDocument").onclick = () => basculerArchiveDocument(doc);
+  document.getElementById("supprimerDocument")?.addEventListener("click", () => supprimerDocumentClasse(doc));
+}
+
+async function basculerArchiveDocument(doc) {
+  const maintenant = new Date().toISOString();
+  try {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`, {
+      method:"PATCH", body:JSON.stringify({archived:!doc.archived,archived_at:doc.archived?null:maintenant,updated_at:maintenant})
+    });
+    doc.archived=!doc.archived;doc.archived_at=doc.archived?maintenant:null;
+    fermerDetailClasse();renderTableauDeBordClasse();
+  } catch(e) { alert(e.message || "Archivage impossible. Exécutez schema_rattrapage_web.sql."); }
+}
+
+async function supprimerDocumentClasse(doc) {
+  if (!confirm(`Supprimer définitivement « ${doc.title} » ?`)) return;
+  try {
+    await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`, {method:"PATCH",body:JSON.stringify({deleted:true,updated_at:new Date().toISOString()})});
+    documentsClasse=documentsClasse.filter(d=>d.id!==doc.id);fermerDetailClasse();renderTableauDeBordClasse();
+  } catch(e) { alert(e.message); }
 }
 
 /**
@@ -1559,7 +1619,7 @@ async function basculerRenduClasse(documentId, studentId) {
  */
 function rappelDocumentsHtml() {
   if (!dashboardStudents.length) return "";
-  const manquants = documentsClasse.map(doc => {
+  const manquants = documentsClasse.filter(doc => !doc.archived).map(doc => {
     const rendus = rendusClasse.filter(r => r.document_id === doc.id && r.returned && !r.deleted).length;
     return { titre: doc.title, combien: dashboardStudents.length - rendus };
   }).filter(d => d.combien > 0);

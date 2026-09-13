@@ -6,6 +6,7 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="home-navigation.css">
+<link rel="stylesheet" href="styles/tools-workspace.css">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -222,19 +223,7 @@
         </div>
       </div>
       <div id="tab-outils" class="tabpanel" style="display:none">
-        <div class="toolGrid">
-          <button class="toolCard" data-tool="timers" style="background:#DFF3FF"><span class="toolIcon">⏱️</span><strong>Chronomètre</strong><span>Chrono, compte à rebours et intervalles</span></button>
-          <button class="toolCard" data-tool="teams" style="background:#EEE8FF"><span class="toolIcon">👥</span><strong>Équipes</strong><span>Groupes et tirage au sort</span></button>
-          <button class="toolCard" data-tool="score" style="background:#E5F7E9"><span class="toolIcon">🏆</span><strong>Tableau de score</strong><span>Points et équipes</span></button>
-          <button class="toolCard" data-tool="tests" style="background:#FFE8EE"><span class="toolIcon">📋</span><strong>Tests EPS</strong><span>VMA et tests d'athlétisme</span></button>
-          <button class="toolCard" data-tool="signals" style="background:#FFF0DD"><span class="toolIcon">🔊</span><strong>Signaux sonores</strong><span>Départs et rotations</span></button>
-          <button class="toolCard" data-tool="measures" style="background:#FFF7CE"><span class="toolIcon">📏</span><strong>Mesures</strong><span>Distance, vitesse et allure</span></button>
-          <button class="toolCard" data-tool="speed" style="background:#DDF3FF"><span class="toolIcon">🏃</span><strong>Vitesse – passages</strong><span>Groupes, départ commun et courbe</span></button>
-          <button class="toolCard" data-tool="impacts" style="background:#EAF6E4"><span class="toolIcon">🎯</span><strong>Marqueur d'impacts</strong><span>Zones jouées sur le terrain</span></button>
-          <button class="toolCard" data-tool="vma" style="background:#F2F8FF"><span class="toolIcon">💓</span><strong>Tests VMA</strong><span>VAMEVAL, Léger, Cooper</span></button>
-          <button class="toolCard" data-tool="swim" style="background:#D9F4FF"><span class="toolIcon">🏊</span><strong>Savoir Nager</strong><span>Les 10 étapes du parcours</span></button>
-          <button class="toolCard" data-tool="aptitudes" style="background:#FFF7E8"><span class="toolIcon">📊</span><strong>Aptitudes 6e</strong><span>Sprint, endurance et saut</span></button>
-        </div>
+        <div id="toolsWorkspace"></div>
         <div id="toolPanel" class="card" style="display:none"></div>
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
@@ -245,6 +234,7 @@
           <button class="subtabbtn" data-planningtab="installations">Installations</button>
           <button class="subtabbtn" data-planningtab="annuelle">Programmation annuelle</button>
           <button class="subtabbtn" data-planningtab="programmes">Programmes officiels</button>
+          <button class="subtabbtn" data-planningtab="bac">Référentiel BAC EPS</button>
           <button class="subtabbtn" data-planningtab="calendrier">Calendrier etablissement</button>
           <button class="subtabbtn" data-planningtab="periodes">Dates des periodes</button>
         </div>
@@ -269,6 +259,7 @@
         <div id="planningAnalysisPanel" class="card" style="display:none; margin-top:14px"></div>
         <div id="annualPlanWrap" style="display:none"></div>
         <div id="programsWrap" style="display:none"></div>
+        <div id="bacReferenceWrap" style="display:none"></div>
         <div id="calendarWrap" style="display:none"></div>
         <div id="periodDatesWrap" style="display:none"></div>
       </div>
@@ -476,6 +467,7 @@
   <script src="sync-safety.js"></script>
   <script src="school-levels.js"></script>
   <script src="period-settings.js"></script>
+  <script src="health-incident-pro.js"></script>
   <script src="health.js"></script>
   <script src="student-fields.js"></script>
   <script src="import-eleves.js"></script>
@@ -486,11 +478,14 @@
   <script src="compte.js"></script>
   <script src="classes.js"></script>
   <script src="planning.js"></script>
+  <script src="bac-reference.js"></script>
   <script src="cours.js"></script>
   <script src="classe-tableau-bord.js"></script>
   <script src="equipement.js"></script>
   <script src="aslvh.js"></script>
   <script src="outils.js"></script>
+  <script src="teams-saved-web.js"></script>
+  <script src="tools-workspace.js"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
