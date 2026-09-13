@@ -204,6 +204,21 @@ const EPI_RESULTS = [
 let epiList = [];
 let epiOpenedId = null;
 let epiInspections = [];
+let epiSearch = "";
+
+function epiPrefix(category) {
+  return ({ BAUDRIER:"BAU", CORDE:"COR", LONGE:"LON", MOUSQUETON:"MOU", DEGAINE:"DEG",
+    CASQUE:"CAS", SYSTEME_ASSURAGE:"ASS", SANGLE:"SAN", ANNEAU:"ANN", AUTRE:"EPI" })[category] || "EPI";
+}
+
+function nextEpiReference(category) {
+  const prefix = epiPrefix(category);
+  const max = epiList.reduce((n, item) => {
+    const match = String(item.internal_id || "").toUpperCase().match(new RegExp(`^${prefix}-(\\d+)$`));
+    return match ? Math.max(n, Number(match[1])) : n;
+  }, 0);
+  return `${prefix}-${String(max + 1).padStart(3, "0")}`;
+}
 
 async function loadEpiItems() {
   const wrap = document.getElementById("equipTab-epi");
@@ -236,9 +251,11 @@ function renderEpi() {
   if (epiOpenedId) { renderEpiDetail(); return; }
 
   const alerts = epiList.map(i => [i, epiAlert(i)]).filter(([, a]) => a);
-  const rows = epiList.length === 0
+  const visible = epiList.filter(item => !epiSearch || [item.internal_id, item.category, item.manufacturer, item.model, item.location]
+    .some(value => String(value || "").toLowerCase().includes(epiSearch.toLowerCase())));
+  const rows = visible.length === 0
     ? '<div class="muted" style="margin-top:12px">Aucun EPI enregistre.</div>'
-    : epiList.map(item => {
+    : visible.map(item => {
         const cat = (EPI_CATEGORIES.find(c => c[0] === item.category) || ["", item.category])[1];
         const st = EPI_STATUSES.find(s => s[0] === item.status) || EPI_STATUSES[0];
         const alert = epiAlert(item);
@@ -262,10 +279,12 @@ function renderEpi() {
       <button id="addEpiBtn" style="margin-top:0">+ EPI</button>
     </div>
     ${alerts.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${alerts.length} EPI a traiter : ${alerts.map(([i, a]) => `${i.internal_id} (${a})`).join(", ")}.</div>` : ""}
+    <div class="row" style="margin-top:12px"><div><label for="epiSearchInput">Rechercher</label><input id="epiSearchInput" value="${epiSearch.replace(/"/g,"&quot;")}" placeholder="Numero, categorie, modele ou rangement"></div></div>
     ${rows}
   </div>`;
 
   document.getElementById("addEpiBtn").onclick = addEpiItem;
+  document.getElementById("epiSearchInput").oninput = event => { epiSearch = event.target.value; renderEpi(); const input=document.getElementById("epiSearchInput"); input?.focus(); input?.setSelectionRange(epiSearch.length,epiSearch.length); };
   wrap.querySelectorAll("[data-open-epi]").forEach(b =>
     b.onclick = () => { epiOpenedId = b.dataset.openEpi; renderEpi(); });
 }
@@ -300,6 +319,12 @@ async function renderEpiDetail() {
     <div class="top">
       <h2 style="margin:0">${item.internal_id || "EPI"}</h2>
       <button class="secondary" id="backEpiBtn" style="margin-top:0">Retour</button>
+    </div>
+    <div class="card" style="text-align:center;background:#f5faff">
+      <div id="epiQrCanvas" style="display:flex;justify-content:center;margin:8px"></div>
+      <div style="font-size:28px;font-weight:900;color:#123a59">${item.internal_id || "EPI"}</div>
+      <div class="muted">Scannez pour ouvrir la fiche et son historique</div>
+      <div class="row"><button id="printEpiLabelBtn">Imprimer l'etiquette</button><button class="secondary" id="saveEpiLabelBtn">Enregistrer l'etiquette</button></div>
     </div>
     <div class="row">
       ${text("internal_id", "Identifiant interne")}
@@ -339,18 +364,38 @@ async function renderEpiDetail() {
   document.getElementById("backEpiBtn").onclick = () => { epiOpenedId = null; renderEpi(); };
   document.getElementById("saveEpiBtn").onclick = saveEpiItem;
   document.getElementById("addInspBtn").onclick = addEpiInspection;
+  renderEpiQr(item);
 }
 
 async function addEpiItem() {
+  const wrap = document.getElementById("equipTab-epi");
+  wrap.innerHTML = `<div class="card" style="max-width:680px;margin:auto"><div class="top"><div><h2 style="margin:0">Nouvel EPI</h2><div class="muted">La reference et le QR code seront lies a la meme fiche.</div></div><button class="secondary" id="cancelNewEpi">Annuler</button></div><div class="row"><div><label>Categorie</label><select id="newEpiCategory">${EPI_CATEGORIES.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select></div><div><label>Reference unique</label><input id="newEpiReference"></div></div><button id="confirmNewEpi">Creer la fiche et le QR code</button></div>`;
+  const category=document.getElementById("newEpiCategory"),reference=document.getElementById("newEpiReference");
+  const suggest=()=>reference.value=nextEpiReference(category.value);suggest();category.onchange=suggest;
+  document.getElementById("cancelNewEpi").onclick=renderEpi;
+  document.getElementById("confirmNewEpi").onclick=async()=>{
+    const internalId=reference.value.trim().toUpperCase();if(!internalId)return;
+    if(epiList.some(x=>String(x.internal_id).toUpperCase()===internalId))return alert("Cette reference existe deja.");
   const id = crypto.randomUUID();
   await enregistrerLigne("epi_items", {
-    id, user_id: session.user_id, internal_id: "EPI-" + id.slice(0, 4).toUpperCase(),
-    category: "AUTRE", status: "EN_SERVICE", qr_code_value: id,
+    id, user_id: session.user_id, internal_id: internalId,
+    category: category.value, status: "EN_SERVICE", qr_code_value: internalId,
     updated_at: new Date().toISOString(), deleted: false
   });
   await loadEpiItems();
   epiOpenedId = id;
   renderEpi();
+  };
+}
+
+function renderEpiQr(item) {
+  const host=document.getElementById("epiQrCanvas"),value=item.qr_code_value||item.internal_id;
+  if(!host)return;
+  if(typeof QRCode!=="function"){host.innerHTML='<div class="error">Generateur QR indisponible hors connexion.</div>';return;}
+  new QRCode(host,{text:value,width:190,height:190,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+  const openLabel=print=>{const canvas=host.querySelector("canvas"),img=host.querySelector("img"),src=canvas?.toDataURL("image/png")||img?.src;if(!src)return;const w=open("","_blank");w.document.write(`<html><head><title>Etiquette ${item.internal_id}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial;text-align:center;color:#123a59}.label{width:90mm;border:3px solid #123a59;border-radius:18px;padding:0 0 18px;margin:auto;overflow:hidden}.head{background:#087dca;color:white;padding:18px;font-size:20px;font-weight:800}.ref{font-size:34px;font-weight:900}.cat{font-size:18px}img{width:58mm;height:58mm}</style></head><body><div class="label"><div class="head">EPS · LYCEE VICTOR HUGO</div><img src="${src}"><div class="ref">${item.internal_id}</div><div class="cat">${(EPI_CATEGORIES.find(x=>x[0]===item.category)||[0,item.category])[1]}</div></div><script>${print?'onload=()=>print()':''}<\/script></body></html>`);w.document.close()};
+  document.getElementById("printEpiLabelBtn").onclick=()=>openLabel(true);
+  document.getElementById("saveEpiLabelBtn").onclick=()=>openLabel(false);
 }
 
 async function saveEpiItem() {
