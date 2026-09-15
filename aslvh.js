@@ -810,9 +810,11 @@ async function importUnssCsv(csv, markLicensed) {
   // reimporter enrichi sans doubler tout le college.
   const rapport = ImportEleves.rapprocherEleves(unssStudents, rows);
   rapport.contexte = { markLicensed, schoolYear, ignorees, entetesRepetees };
+  rapport.affectations = await analyserChangementsDeDivision(rapport);
   importEnCours = rapport;
   choixDivergences = {};
   choixAmbigus = {};
+  choixAffectations = {};
   renderRapportImport();
 }
 
@@ -825,6 +827,51 @@ async function importUnssCsv(csv, markLicensed) {
 let importEnCours = null;
 let choixDivergences = {};   // "indexReconnu|champ" -> "nouvelle"
 let choixAmbigus = {};       // "indexAmbigu" -> id d'un eleve existant, ou "nouveau"
+let choixAffectations = {};  // index reconnu -> conserver, deplacer, retirer ou ajouter
+
+function divisionVersClasse(division) {
+  const brut = ImportEleves.texteNormalise(division).replace(/\s+/g, "");
+  const morceaux = brut.match(/^(6|5|4|3|2|1|t)(?:e|eme|nde|ere|le)?[.\-_]?(\d{1,2})$/i);
+  if (!morceaux) return null;
+  const grades = { "6": "SIXIEME", "5": "CINQUIEME", "4": "QUATRIEME", "3": "TROISIEME",
+    "2": "SECONDE", "1": "PREMIERE", t: "TERMINALE" };
+  return { grade: grades[morceaux[1].toLowerCase()], numero: Number(morceaux[2]) };
+}
+
+function memeEleveDeClasse(repertoire, eleve) {
+  return ImportEleves.texteNormalise(repertoire.last_name) === ImportEleves.texteNormalise(eleve.last_name)
+    && ImportEleves.texteNormalise(repertoire.first_name) === ImportEleves.texteNormalise(eleve.first_name)
+    && (ImportEleves.estVide(repertoire.birth_date_epoch_millis)
+      || ImportEleves.estVide(eleve.birth_date_epoch_millis)
+      || ImportEleves.memeValeur("birth_date_epoch_millis", repertoire.birth_date_epoch_millis,
+        eleve.birth_date_epoch_millis));
+}
+
+/** Prepare les propositions, sans changer la moindre affectation. */
+async function analyserChangementsDeDivision(rapport) {
+  const changements = rapport.reconnus.map((reconnu, index) => ({ reconnu, index,
+    divergence: reconnu.divergences.find(d => d.champ === "division") })).filter(x => x.divergence);
+  if (!changements.length) return [];
+  try {
+    const [classesRes, elevesRes] = await Promise.all([
+      apiFetchAll(`${SUPABASE_URL}/rest/v1/classes?deleted=eq.false&select=id,name,grade,class_number`),
+      apiFetchAll(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&select=*`)
+    ]);
+    if (!classesRes.ok || !elevesRes.ok) return [];
+    const classes = classesRes.rows;
+    return changements.map(({ reconnu, index, divergence }) => {
+      const correspondance = divisionVersClasse(divergence.nouvelle);
+      const destinations = correspondance ? classes.filter(c =>
+        baseSchoolLevel(c.grade) === correspondance.grade && Number(c.class_number) === correspondance.numero) : [];
+      const fiches = elevesRes.rows.filter(e => memeEleveDeClasse(reconnu.existant, e));
+      const classeParId = new Map(classes.map(c => [c.id, c]));
+      return { index, eleve: reconnu.existant, ancienne: divergence.ancienne, nouvelle: divergence.nouvelle,
+        fiches, classesActuelles: [...new Set(fiches.map(e => classeParId.get(e.class_id)?.name).filter(Boolean))],
+        destination: destinations.length === 1 ? destinations[0] : null,
+        destinationAmbigue: destinations.length > 1 };
+    }).filter(a => a.fiches.length || a.destination);
+  } catch { return []; }
+}
 
 function valeurLisible(champ, valeur) {
   if (valeur === null || valeur === undefined || valeur === "") return "(vide)";
@@ -893,6 +940,30 @@ function renderRapportImport() {
     html += `</div>`;
   }
 
+  if (r.affectations?.length) {
+    html += `<div class="card" style="margin-top:12px">
+      <h3 style="margin:0 0 4px">Affectation dans vos classes EPS</h3>
+      <div class="muted">Ces actions ne seront appliquées que si vous retenez la nouvelle division du fichier.</div>`;
+    r.affectations.forEach(a => {
+      const choix = choixAffectations[a.index] || "conserver";
+      const actuelle = a.classesActuelles.length ? a.classesActuelles.join(", ") : "aucune classe EPS";
+      html += `<div class="card" style="margin-top:8px">
+        <strong>${planningText(nomComplet(a.eleve))}</strong>
+        <div class="muted">Division ${planningText(a.ancienne || "inconnue")} → ${planningText(a.nouvelle)} · Classe actuelle : ${planningText(actuelle)}</div>
+        <label style="display:block;margin-top:7px"><input type="radio" name="aff-${a.index}" value="conserver" data-affectation="${a.index}" ${choix === "conserver" ? "checked" : ""}> Conserver l’affectation actuelle</label>`;
+      if (a.fiches.length === 1 && a.destination && a.fiches[0].class_id !== a.destination.id) {
+        html += `<label style="display:block"><input type="radio" name="aff-${a.index}" value="deplacer" data-affectation="${a.index}" ${choix === "deplacer" ? "checked" : ""}> Déplacer vers ${planningText(a.destination.name)}</label>`;
+      } else if (!a.fiches.length && a.destination) {
+        html += `<label style="display:block"><input type="radio" name="aff-${a.index}" value="ajouter" data-affectation="${a.index}" ${choix === "ajouter" ? "checked" : ""}> Ajouter à ${planningText(a.destination.name)}</label>`;
+      }
+      if (a.fiches.length) html += `<label style="display:block"><input type="radio" name="aff-${a.index}" value="retirer" data-affectation="${a.index}" ${choix === "retirer" ? "checked" : ""}> Retirer de ${planningText(actuelle)}</label>`;
+      if (!a.destination && !a.destinationAmbigue) html += `<div class="muted" style="margin-top:6px">Aucune classe EPS ${planningText(a.nouvelle)} n’existe actuellement.</div>`;
+      if (a.destinationAmbigue) html += `<div class="error" style="margin-top:6px">Plusieurs classes correspondent à ${planningText(a.nouvelle)} : affectation conservée.</div>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+  }
+
   // --- Les cas ambigus : on ne devine pas, on demande ---
   if (r.ambigus.length) {
     html += `<div class="card" style="margin-top:12px">
@@ -933,6 +1004,9 @@ function renderRapportImport() {
   }));
   wrap.querySelectorAll("[data-ambigu]").forEach(radio => radio.addEventListener("change", () => {
     choixAmbigus[radio.dataset.ambigu] = radio.value;
+  }));
+  wrap.querySelectorAll("[data-affectation]").forEach(radio => radio.addEventListener("change", () => {
+    choixAffectations[radio.dataset.affectation] = radio.value;
   }));
   const annuler = () => { importEnCours = null; renderUnssTab(); };
   document.getElementById("importAnnuler").onclick = annuler;
@@ -1035,6 +1109,49 @@ async function appliquerImport() {
     });
   }
 
+  async function appliquerAffectationsDeClasse() {
+    for (const affectation of r.affectations || []) {
+      if (choixDivergences[`${affectation.index}|division`] !== "nouvelle") continue;
+      const decision = choixAffectations[affectation.index] || "conserver";
+      if (decision === "conserver") continue;
+      if (decision === "deplacer" && affectation.fiches.length === 1 && affectation.destination) {
+        const ficheRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${encodeURIComponent(affectation.fiches[0].id)}&select=*`);
+        const [ficheRecente] = ficheRes.ok ? await ficheRes.json() : [];
+        if (!ficheRecente) throw new Error(`Impossible de retrouver ${nomComplet(affectation.eleve)} dans son ancienne classe.`);
+        await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${encodeURIComponent(ficheRecente.id)}`, {
+          method: "PATCH", body: JSON.stringify({ ...ficheRecente, class_id: affectation.destination.id,
+            updated_at: new Date().toISOString() })
+        });
+      } else if (decision === "retirer" && affectation.fiches.length) {
+        for (const ancienneFiche of affectation.fiches) {
+          const ficheRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${encodeURIComponent(ancienneFiche.id)}&select=*`);
+          const [ficheRecente] = ficheRes.ok ? await ficheRes.json() : [];
+          if (ficheRecente) await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${encodeURIComponent(ficheRecente.id)}`, {
+            method: "PATCH", body: JSON.stringify({ ...ficheRecente, deleted: true, updated_at: new Date().toISOString() })
+          });
+        }
+      } else if (decision === "ajouter" && affectation.destination) {
+        const reconnu = r.reconnus[affectation.index];
+        const choix = {};
+        reconnu.divergences.forEach(d => {
+          if (choixDivergences[`${affectation.index}|${d.champ}`] === "nouvelle") choix[d.champ] = "nouvelle";
+        });
+        const source = ImportEleves.ficheFusionnee(reconnu, choix);
+        const dejaRes = await apiFetchAll(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${encodeURIComponent(affectation.destination.id)}&select=*`);
+        if (!dejaRes.rows.some(e => memeEleveDeClasse(source, e))) {
+          await apiFetch(`${SUPABASE_URL}/rest/v1/students`, { method: "POST", body: JSON.stringify({
+            id: crypto.randomUUID(), class_id: affectation.destination.id, user_id: session.user_id,
+            last_name: source.last_name, first_name: source.first_name,
+            birth_date_epoch_millis: source.birth_date_epoch_millis || null,
+            sex: sexFromValue(source.sex) || "NON_PRECISE", eps_level: "3",
+            student_email: source.student_email || null, parent1_email: source.parent_email || null,
+            updated_at: new Date().toISOString(), deleted: false
+          }) });
+        }
+      }
+    }
+  }
+
   let envoyes = 0;
   const TAILLE_LOT = 200;
   try {
@@ -1061,6 +1178,7 @@ async function appliquerImport() {
       if (!res.ok) throw new Error(`Envoi interrompu apres ${envoyes} eleve(s).`);
       envoyes += lot.length;
     }
+    await appliquerAffectationsDeClasse();
     // L'import part en lots directs - mille fiches n'ont rien a faire dans une file d'attente
     // pensee pour la saisie a l'unite, et il se fait devant un ordinateur, pas sur un terrain.
     // Mais l'affichage, lui, lit la copie locale : sans synchronisation ici, la liste montrerait
