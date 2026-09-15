@@ -1156,27 +1156,42 @@ async function appliquerImport() {
   const TAILLE_LOT = 200;
   try {
     for (let i = 0; i < aEnvoyer.length; i += TAILLE_LOT) {
-      let lot = await lotSurVersionsRecentes(aEnvoyer.slice(i, i + TAILLE_LOT));
-      let res;
-      try {
-        res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-          method: "POST",
-          headers: { Prefer: "resolution=merge-duplicates" },
-          body: JSON.stringify(lot)
+      const originaux = aEnvoyer.slice(i, i + TAILLE_LOT);
+      const lot = await lotSurVersionsRecentes(originaux);
+      const nouveaux = lot.filter(fiche => !basesParId.has(fiche.id));
+      const existants = lot.filter(fiche => basesParId.has(fiche.id));
+
+      // Un POST avec resolution=merge-duplicates passe d'abord par le declencheur INSERT, qui
+      // remet la version a 1 avant l'UPDATE. Toute fiche deja en version 2 ou plus est alors
+      // refusee. Les nouvelles fiches restent groupees, les existantes passent par PATCH.
+      if (nouveaux.length) {
+        const aCreer = nouveaux.map(({ version, ...fiche }) => fiche);
+        await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+          method: "POST", body: JSON.stringify(aCreer)
         });
-      } catch (e) {
-        // Une modification peut tomber entre lecture et ecriture. Un seul nouvel essai evite
-        // le conflit sans creer de boucle de synchronisation.
-        if (!/HTTP 409|Version perimee/i.test(String(e.message || e))) throw e;
-        lot = await lotSurVersionsRecentes(aEnvoyer.slice(i, i + TAILLE_LOT));
-        res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-          method: "POST",
-          headers: { Prefer: "resolution=merge-duplicates" },
-          body: JSON.stringify(lot)
-        });
+        envoyes += nouveaux.length;
       }
-      if (!res.ok) throw new Error(`Envoi interrompu apres ${envoyes} eleve(s).`);
-      envoyes += lot.length;
+
+      // Douze mises a jour simultanees gardent l'import fluide sans envoyer plusieurs centaines
+      // de requetes d'un seul coup a Supabase.
+      for (let debut = 0; debut < existants.length; debut += 12) {
+        const tranche = existants.slice(debut, debut + 12);
+        await Promise.all(tranche.map(async fiche => {
+          const original = originaux.find(x => x.id === fiche.id) || fiche;
+          try {
+            await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${encodeURIComponent(fiche.id)}`, {
+              method: "PATCH", body: JSON.stringify(fiche)
+            });
+          } catch (e) {
+            if (!/HTTP 409|Version perimee/i.test(String(e.message || e))) throw e;
+            const [actualisee] = await lotSurVersionsRecentes([original]);
+            await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students?id=eq.${encodeURIComponent(fiche.id)}`, {
+              method: "PATCH", body: JSON.stringify(actualisee)
+            });
+          }
+        }));
+        envoyes += tranche.length;
+      }
     }
     await appliquerAffectationsDeClasse();
     // L'import part en lots directs - mille fiches n'ont rien a faire dans une file d'attente
