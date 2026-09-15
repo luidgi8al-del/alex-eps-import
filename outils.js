@@ -45,6 +45,7 @@ function openTool(name, target) {
   if (name === "random") renderRandomWeb();
   if (name === "effort") renderEffortWeb();
   if (name === "acrosport") renderAcrosportWeb();
+  if (name === "condition-fitness") renderConditionFitnessWeb();
   toolPanel.scrollIntoView({behavior:"smooth", block:"start"});
 }
 document.querySelectorAll("#tab-outils [data-tool]").forEach(button => button.addEventListener("click", () => openTool(button.dataset.tool)));

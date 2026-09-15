@@ -11,6 +11,7 @@
     ["observer","Observateur","Compter et analyser les actions","👁️","Observer",["Sports collectifs","Raquettes","Gymnastique","Escalade"]],
     ["random","Tirage au sort","Choisir rapidement un élève","🎲","Organiser",["Tous"]],
     ["tests","Tests EPS","Tests et suivi des progrès","📋","Évaluer",["Athlétisme"]],
+    ["condition-fitness","Condition physique générale","Six ateliers, groupes et note sur 5","💪","Évaluer",["Athlétisme","Gymnastique","Tous"]],
     ["vma","Tests VMA","VAMEVAL, Léger et Cooper","💓","Évaluer",["Athlétisme"]],
     ["aptitudes","Aptitudes 6e","Sprint, endurance et saut","📊","Évaluer",["Athlétisme"]],
     ["swim","Savoir Nager","Parcours et attestations","🏊","Évaluer",["Natation"]],

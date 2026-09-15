@@ -52,7 +52,16 @@ dans son fichier, charge avant le script principal :
 | `equipement.js` | installations sportives, materiel EPS, EPI escalade |
 | `aslvh.js` | licencies, creneaux, groupes, appels, statistiques |
 | `outils.js` | outils de terrain, tests EPS, VMA, savoir-nager, chronos |
+| `condition-fitness-web.js` | condition physique générale : groupes, six ateliers, reprise, calculs et exports grand écran |
 | `health.js` | Sante / Accident (deja separe auparavant) |
+
+## Répartition site / application
+
+Le site privilégie les travaux de bureau et les grands écrans : imports massifs, programmation,
+cycles, tableaux d'évaluation, planning, administration, inventaire, comparaisons, impressions et
+archives. L'application Android reste l'outil prioritaire sur le terrain pour l'appel, les saisies
+rapides et les actions nécessitant une utilisation immédiate au téléphone. Les résultats partagés
+utilisent les mêmes tables Supabase afin d'éviter les doubles fichiers et les divergences.
 
 Ce sont des **scripts classiques**, pas des modules : les fonctions y restent globales et
 visibles des autres fichiers sans rien exporter. C'est le meme fonctionnement que les dix
