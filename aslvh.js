@@ -972,6 +972,15 @@ async function appliquerImport() {
   };
 
   const aEnvoyer = [];
+  // La page peut rester ouverte pendant qu'une synchronisation mobile actualise une fiche.
+  // On garde l'etat qui a servi au rapprochement afin de ne reporter ensuite que les apports
+  // du fichier sur la version la plus recente de chaque eleve.
+  const basesParId = new Map();
+  const ajouter = (fiche, existant) => {
+    const complete = preparer(fiche, existant);
+    if (existant?.id) basesParId.set(existant.id, existant);
+    aEnvoyer.push(complete);
+  };
   r.reconnus.forEach((reconnu, index) => {
     const choix = {};
     reconnu.divergences.forEach(d => {
@@ -979,14 +988,14 @@ async function appliquerImport() {
     });
     const fiche = ImportEleves.ficheFusionnee(reconnu, choix);
     if (reconnu.aCompleter.length === 0 && Object.keys(choix).length === 0) return; // rien a ecrire
-    aEnvoyer.push(preparer(fiche, reconnu.existant));
+    ajouter(fiche, reconnu.existant);
   });
 
   r.ambigus.forEach((cas, index) => {
     const decision = choixAmbigus[index];
     if (!decision) return;                                    // ignore, comme annonce
     if (decision === "nouveau") {
-      aEnvoyer.push(preparer({ ...cas.importe, id: crypto.randomUUID() }, null));
+      ajouter({ ...cas.importe, id: crypto.randomUUID() }, null);
       return;
     }
     const existant = cas.candidats.find(c => c.id === decision);
@@ -996,23 +1005,59 @@ async function appliquerImport() {
         .filter(([champ]) => !ImportEleves.estVide(cas.importe[champ]) && ImportEleves.estVide(existant[champ]))
         .map(([champ]) => ({ champ, valeur: cas.importe[champ] })),
       divergences: [] };
-    aEnvoyer.push(preparer(ImportEleves.ficheFusionnee(reconnu), existant));
+    ajouter(ImportEleves.ficheFusionnee(reconnu), existant);
   });
 
   r.nouveaux.forEach(nouveau => {
-    aEnvoyer.push(preparer({ ...nouveau, id: crypto.randomUUID() }, null));
+    ajouter({ ...nouveau, id: crypto.randomUUID() }, null);
   });
+
+  /** Recharge le lot et reporte seulement les apports de cet import sur les fiches recentes. */
+  async function lotSurVersionsRecentes(lot) {
+    const ids = lot.filter(fiche => basesParId.has(fiche.id)).map(fiche => fiche.id);
+    if (!ids.length) return lot;
+    const lecture = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_students?id=in.(${ids.map(encodeURIComponent).join(",")})&select=*`);
+    if (!lecture.ok) throw new Error("Impossible d'actualiser les fiches avant l'import.");
+    const recentes = new Map(lecture.rows.map(fiche => [fiche.id, fiche]));
+    return lot.map(fiche => {
+      const base = basesParId.get(fiche.id);
+      const recente = recentes.get(fiche.id);
+      if (!base || !recente) return fiche;
+      const fusion = { ...recente };
+      for (const [champ] of ImportEleves.CHAMPS) {
+        if (!ImportEleves.memeValeur(champ, fiche[champ], base[champ])) fusion[champ] = fiche[champ];
+      }
+      if (fiche.licensed && !base.licensed) fusion.licensed = true;
+      fusion.category = computeUnssCategory(fusion.birth_date_epoch_millis, schoolYear);
+      fusion.updated_at = new Date().toISOString();
+      fusion.deleted = false;
+      return fusion;
+    });
+  }
 
   let envoyes = 0;
   const TAILLE_LOT = 200;
   try {
     for (let i = 0; i < aEnvoyer.length; i += TAILLE_LOT) {
-      const lot = aEnvoyer.slice(i, i + TAILLE_LOT);
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
-        method: "POST",
-        headers: { Prefer: "resolution=merge-duplicates" },
-        body: JSON.stringify(lot)
-      });
+      let lot = await lotSurVersionsRecentes(aEnvoyer.slice(i, i + TAILLE_LOT));
+      let res;
+      try {
+        res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+          method: "POST",
+          headers: { Prefer: "resolution=merge-duplicates" },
+          body: JSON.stringify(lot)
+        });
+      } catch (e) {
+        // Une modification peut tomber entre lecture et ecriture. Un seul nouvel essai evite
+        // le conflit sans creer de boucle de synchronisation.
+        if (!/HTTP 409|Version perimee/i.test(String(e.message || e))) throw e;
+        lot = await lotSurVersionsRecentes(aEnvoyer.slice(i, i + TAILLE_LOT));
+        res = await apiFetch(`${SUPABASE_URL}/rest/v1/unss_students`, {
+          method: "POST",
+          headers: { Prefer: "resolution=merge-duplicates" },
+          body: JSON.stringify(lot)
+        });
+      }
       if (!res.ok) throw new Error(`Envoi interrompu apres ${envoyes} eleve(s).`);
       envoyes += lot.length;
     }
