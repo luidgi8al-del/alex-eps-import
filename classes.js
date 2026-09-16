@@ -7,7 +7,7 @@
  */
 
 // ---- Sous-onglets du module Classes : "Classes" (creees, modifiables) / "Nouvel import classe" ----
-const SUBTAB_NAMES = ["liste", "newimport", "classes"];
+const SUBTAB_NAMES = ["newimport", "classes"];
 function showSubtab(name) {
   SUBTAB_NAMES.forEach(sub => {
     document.getElementById("subtab-" + sub).style.display = sub === name ? "block" : "none";
@@ -16,7 +16,6 @@ function showSubtab(name) {
     btn.classList.toggle("active", btn.dataset.subtab === name);
   });
   if (name === "classes") loadImports();
-  if (name === "liste") ouvrirListeEleve();
 }
 
 /**
@@ -80,26 +79,17 @@ function droitEcriture(entite, geste) {
 }
 
 /**
- * Le repertoire s'affiche dans deux onglets : Liste eleve (sous Classe) et Licencies AS.
+ * Le repertoire s'affiche dans l'onglet principal Eleves et dans Licencies AS.
  * C'est la meme liste, filtree differemment - il ne doit donc en rester qu'un rendu a la fois,
  * sinon deux boutons de meme identifiant coexisteraient et le mauvais recevrait les clics.
  */
 let unssCibleRendu = "unssList";
 function viderAutreRendu(cible) {
-  ["unssList", "listeEleveList", "studentsDirectoryList"]
+  ["unssList", "studentsDirectoryList"]
     .filter(id => id !== cible)
     .forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ""; });
 }
 
-async function ouvrirListeEleve() {
-  unssCibleRendu = "listeEleveList";
-  unssMode = "all";
-  unssPage = 1;
-  viderAutreRendu("listeEleveList");
-  unssAdmin = await estAdministrateur();
-  await loadUnssStudents();
-  renderUnssTab();
-}
 
 /** Nouvel accès principal : même répertoire et mêmes identifiants, sans copie de données. */
 async function ouvrirRepertoireEleves() {
