@@ -86,9 +86,9 @@ function droitEcriture(entite, geste) {
  */
 let unssCibleRendu = "unssList";
 function viderAutreRendu(cible) {
-  const autre = cible === "unssList" ? "listeEleveList" : "unssList";
-  const el = document.getElementById(autre);
-  if (el) el.innerHTML = "";
+  ["unssList", "listeEleveList", "studentsDirectoryList"]
+    .filter(id => id !== cible)
+    .forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ""; });
 }
 
 async function ouvrirListeEleve() {
@@ -96,6 +96,17 @@ async function ouvrirListeEleve() {
   unssMode = "all";
   unssPage = 1;
   viderAutreRendu("listeEleveList");
+  unssAdmin = await estAdministrateur();
+  await loadUnssStudents();
+  renderUnssTab();
+}
+
+/** Nouvel accès principal : même répertoire et mêmes identifiants, sans copie de données. */
+async function ouvrirRepertoireEleves() {
+  unssCibleRendu = "studentsDirectoryList";
+  unssMode = "all";
+  unssPage = 1;
+  viderAutreRendu("studentsDirectoryList");
   unssAdmin = await estAdministrateur();
   await loadUnssStudents();
   renderUnssTab();

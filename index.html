@@ -24,6 +24,7 @@
       <button class="tabbtn" data-tab="unss">ASLVH</button>
       <button class="tabbtn" data-tab="outils">OUTILS</button>
       <button class="tabbtn" data-tab="health">SANTÉ / ACCIDENT</button>
+      <button class="tabbtn" data-tab="students">ÉLÈVES</button>
       <button class="tabbtn" data-tab="settings">REGLAGE</button>
     </div>
     <div class="headerRight">
@@ -301,6 +302,14 @@
 
         <div id="equipTab-materiel" style="display:none"></div>
         <div id="equipTab-epi" style="display:none"></div>
+      </div>
+
+      <div id="tab-students" class="tabpanel" style="display:none">
+        <div class="card">
+          <h2>Répertoire des élèves</h2>
+          <div class="muted" style="margin-bottom:12px">Liste commune aux classes, aux dispenses et à l’ASLVH.</div>
+          <div id="studentsDirectoryList"></div>
+        </div>
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
@@ -691,7 +700,7 @@
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
-    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health"];
+    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health", "students"];
     let currentWebTab = "home";
     let epsPageFullyReady = false;
     let pendingModuleTab = null;
@@ -711,6 +720,7 @@
       if (!epsPageFullyReady) { pendingModuleTab = name; return; }
       try {
         if (name === "classes") showSubtab("classes");
+        if (name === "students") ouvrirRepertoireEleves();
         if (name === "health") initHealthTab();
         if (name === "cours") initCoursTab();
         if (name === "equipement") initInstallationsTab();
