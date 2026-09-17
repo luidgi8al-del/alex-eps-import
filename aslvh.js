@@ -418,6 +418,8 @@ let triEleve = { cle: "division", croissant: true };
 let selectionEleves = new Set();
 /** Division affichee seule, "" pour toutes. Verser une classe entiere passe par la. */
 let divisionFiltre = "";
+/** Recherche conservee pendant que l'on coche plusieurs eleves successivement. */
+let rechercheEleveFiltre = "";
 
 /** Divisions presentes au repertoire, avec leur effectif, dans l'ordre ou on les lit. */
 function divisionsConnues(eleves) {
@@ -488,13 +490,17 @@ function renderUnssTab() {
   if (!wrap) return;
   // Liste eleve se lit en tableau : on y cherche une division entiere, pas une fiche.
   // Licencies AS garde ses cartes, ou l'on consulte les voeux et la taille de maillot.
-  const enTableau = unssCibleRendu === "listeEleveList";
+  const enTableau = unssCibleRendu === "listeEleveList" || unssCibleRendu === "studentsDirectoryList";
   const brut = unssMode === "licensed" ? unssStudents.filter(s => s.licensed) : unssStudents;
   // Le filtre par division n'a de sens que sur le tableau : c'est la qu'on vient chercher une
   // classe entiere. Une division disparue du repertoire ne doit pas laisser un tableau vide.
   const divisions = enTableau ? divisionsConnues(brut) : [];
   if (divisionFiltre && !divisions.some(d => d.nom === divisionFiltre)) divisionFiltre = "";
-  const filtres = enTableau && divisionFiltre ? elevesDeLaDivision(brut, divisionFiltre) : brut;
+  const parDivision = enTableau && divisionFiltre ? elevesDeLaDivision(brut, divisionFiltre) : brut;
+  const rechercheNormalisee = chaineRecherche(rechercheEleveFiltre);
+  const filtres = enTableau && rechercheNormalisee
+    ? parDivision.filter(e => chaineRecherche(`${e.last_name || ""} ${e.first_name || ""}`).includes(rechercheNormalisee))
+    : parDivision;
   const rows = enTableau ? trierEleves(filtres) : filtres;
   const totalPages = Math.max(1, Math.ceil(rows.length / TAILLE_PAGE_LISTE));
   // Supprimer des eleves peut faire disparaitre la page courante sous les pieds.
@@ -504,9 +510,10 @@ function renderUnssTab() {
   let html = "";
   // Verser une classe entiere : on choisit sa division, puis on coche tout d'un geste. Sans
   // cela il fallait cliquer les eleves un par un, et une page de cent en melange plusieurs.
-  if (enTableau && divisions.length) {
+  if (enTableau) {
     const tousChoisis = rows.length > 0 && rows.every(e => selectionEleves.has(e.id));
-    html += `<div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap">
+    html += `<div class="student-directory-filters">
+      <label class="student-directory-search">🔎<input id="rechercheEleveRepertoire" value="${planningText(rechercheEleveFiltre)}" placeholder="Rechercher un nom ou un prénom"></label>
       <label for="filtreDivision">Division</label>
       <select id="filtreDivision" style="margin-top:0; width:auto">
         <option value="">Toutes les divisions</option>
@@ -537,12 +544,12 @@ function renderUnssTab() {
   }
   // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
   if (unssAdmin || unssMode === "licensed") {
-    html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter"}</button>`;
+    html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter un élève"}</button>`;
   }
   // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
-  if (unssCibleRendu === "listeEleveList") {
+  if (enTableau) {
     html += `<button id="eleveVersClasseBtn" style="margin-top:0" ${selectionEleves.size ? "" : "disabled"}>`
-      + `Ajouter a une classe${selectionEleves.size ? ` (${selectionEleves.size})` : ""}</button>`;
+      + `Ajouter dans une classe${selectionEleves.size ? ` (${selectionEleves.size})` : ""}</button>`;
   }
   html += `</div>`;
 
@@ -589,6 +596,17 @@ function renderUnssTab() {
     divisionFiltre = choixDivision.value;
     unssPage = 1;
     renderUnssTab();
+  });
+  const rechercheEleve = wrap.querySelector("#rechercheEleveRepertoire");
+  if (rechercheEleve) rechercheEleve.addEventListener("input", () => {
+    rechercheEleveFiltre = rechercheEleve.value;
+    unssPage = 1;
+    // Conserver le focus et le curseur pendant le redessin complet de la liste.
+    const position = rechercheEleve.selectionStart;
+    renderUnssTab();
+    const nouveau = document.getElementById("rechercheEleveRepertoire");
+    nouveau?.focus();
+    nouveau?.setSelectionRange(position, position);
   });
   const cocherDivision = wrap.querySelector("#cocherDivision");
   if (cocherDivision) cocherDivision.addEventListener("click", () => {
@@ -1748,7 +1766,10 @@ function fenetreUnss() {
   const feuille = document.createElement("div");
   feuille.className = "searchSheet";
   voile.appendChild(feuille);
-  panneau.parentNode.insertBefore(voile, panneau);
+  // Le même formulaire s'ouvre depuis ASLVH et depuis l'onglet principal Élèves. S'il reste
+  // enfant de l'onglet ASLVH, `display:none` sur cet onglet masque aussi la fenêtre pourtant
+  // ouverte. La fenêtre appartient donc au document, indépendamment de l'onglet de départ.
+  document.body.appendChild(voile);
   feuille.appendChild(panneau);
   panneau.style.display = "block";
   panneau.style.margin = "0";
