@@ -426,6 +426,9 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
     document.getElementById("csvFile").value = "";
     document.getElementById("previewWrap").style.display = "none";
     showSubtab("classes");
+    // La classe existe deja : proposer tout de suite de la remplir depuis le repertoire
+    // general evite un aller-retour par l'onglet Eleves et une nouvelle recherche de classe.
+    await proposerAjoutElevesApresCreation(nouvelleClasse);
   } catch (e) {
     sendError.textContent = e.message;
   }

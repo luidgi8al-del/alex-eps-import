@@ -344,6 +344,86 @@ async function ouvrirChoixClassePourEleves() {
   }));
 }
 
+/**
+ * Etape facultative proposee juste apres la creation d'une classe.
+ *
+ * La classe cible est deja connue : on ne redemande donc pas de la choisir. L'enseignant
+ * choisit une division du repertoire, peut retirer quelques eleves, puis verse la selection.
+ * La copie vers `students` passe par verserDansClasse(), qui elimine deja les doublons.
+ */
+async function proposerAjoutElevesApresCreation(classe) {
+  const voile = fenetreChoixClasse();
+  const corps = voile.querySelector("#classPickBody");
+  voile.querySelector("#classPickTitre").textContent = `Classe ${classe.name} créée`;
+  corps.innerHTML = `<div class="post-create-class-prompt">
+    <span aria-hidden="true">👥</span>
+    <h3>Voulez-vous ajouter des élèves maintenant ?</h3>
+    <p>Choisissez une division du répertoire, puis gardez toute la division ou seulement certains élèves.</p>
+    <div><button id="postClassYes">Ajouter des élèves</button>
+    <button class="secondary" id="postClassNo">Plus tard</button></div>
+  </div>`;
+  voile.classList.add("open");
+  corps.querySelector("#postClassNo").addEventListener("click", fermerFenetreChoixClasse);
+  corps.querySelector("#postClassYes").addEventListener("click", async () => {
+    corps.innerHTML = `<div class="muted">Chargement du répertoire des élèves...</div>`;
+    try { await loadUnssStudents(); }
+    catch { corps.innerHTML = `<div class="error">Impossible de lire le répertoire des élèves.</div>`; return; }
+    afficherChoixDivisionApresCreation(classe, corps);
+  });
+}
+
+function afficherChoixDivisionApresCreation(classe, corps) {
+  const divisions = divisionsConnues(unssStudents);
+  if (divisions.length === 0) {
+    corps.innerHTML = `<div class="post-create-empty"><b>Aucune division disponible</b>
+      <p>Importez d’abord les élèves dans l’onglet Élèves, puis utilisez « Ajouter dans une classe ».</p>
+      <button class="secondary" id="postClassDone">Fermer</button></div>`;
+    corps.querySelector("#postClassDone").addEventListener("click", fermerFenetreChoixClasse);
+    return;
+  }
+  let division = divisions[0].nom;
+  let coches = new Set();
+  const dessiner = () => {
+    const eleves = trierEleves(elevesDeLaDivision(unssStudents, division));
+    corps.innerHTML = `<div class="post-create-students">
+      <label>Division<select id="postClassDivision">${divisions.map(d =>
+        `<option value="${planningText(d.nom)}"${d.nom === division ? " selected" : ""}>${planningText(d.nom)} (${d.effectif})</option>`
+      ).join("")}</select></label>
+      <div class="post-create-toolbar"><button class="secondary" id="postClassAll">${eleves.every(e => coches.has(e.id)) ? "Tout décocher" : "Toute la division"}</button>
+        <span>${coches.size} élève(s) sélectionné(s)</span></div>
+      <div class="post-create-roster">${eleves.map(e => `<label class="${coches.has(e.id) ? "selected" : ""}">
+        <input type="checkbox" data-post-student="${e.id}"${coches.has(e.id) ? " checked" : ""}>
+        <span><b>${planningText(e.last_name)} ${planningText(e.first_name)}</b>
+        <small>${planningText(e.division || "Division non renseignée")} · ${formatFrDate(e.birth_date_epoch_millis) || "Naissance non renseignée"}</small></span>
+      </label>`).join("")}</div>
+      <div class="post-create-actions"><button id="postClassAdd"${coches.size ? "" : " disabled"}>Ajouter à ${planningText(classe.name)} (${coches.size})</button>
+      <button class="secondary" id="postClassCancel">Annuler</button></div>
+    </div>`;
+    corps.querySelector("#postClassDivision").addEventListener("change", e => {
+      division = e.target.value;
+      // Une nouvelle division remplace la selection precedente : l'intention ici est de
+      // remplir une classe depuis une division, pas de composer plusieurs groupes invisibles.
+      coches = new Set();
+      dessiner();
+    });
+    corps.querySelector("#postClassAll").addEventListener("click", () => {
+      const tous = eleves.length > 0 && eleves.every(e => coches.has(e.id));
+      eleves.forEach(e => { if (tous) coches.delete(e.id); else coches.add(e.id); });
+      dessiner();
+    });
+    corps.querySelectorAll("[data-post-student]").forEach(box => box.addEventListener("change", () => {
+      if (box.checked) coches.add(box.dataset.postStudent); else coches.delete(box.dataset.postStudent);
+      dessiner();
+    }));
+    corps.querySelector("#postClassCancel").addEventListener("click", fermerFenetreChoixClasse);
+    corps.querySelector("#postClassAdd").addEventListener("click", async () => {
+      selectionEleves = new Set(coches);
+      await verserDansClasse(classe, corps);
+    });
+  };
+  dessiner();
+}
+
 /** Verse les eleves coches dans la classe choisie, en laissant de cote ceux qui y sont deja. */
 async function verserDansClasse(classe, corps) {
   const echec = message => { corps.innerHTML = `<div class="error">${planningText(message)}</div>`; };
