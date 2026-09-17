@@ -137,6 +137,10 @@ async function showUnssTab(mode) {
   // chargement initial : sans cette attente, l'ecran se dessinait comme si le creneau ne
   // portait rien, et les boutons Eleves / Appel / Bilan manquaient.
   await verifierCreneauPorteTout();
+  // Un créneau peut avoir été créé depuis l'application pendant que le site restait ouvert.
+  // Relire cette petite table à chaque ouverture de l'onglet évite de conserver l'ancienne
+  // liste jusqu'à une synchronisation manuelle ou un rechargement complet.
+  if (mode === "slots" || mode === "appel") await loadUnssSlots();
   if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
     await loadUnssInscriptions();
   }

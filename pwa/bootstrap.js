@@ -98,6 +98,17 @@ export async function demarrerHorsConnexion({
   });
   setInterval(() => { if (enRetard) rapprocher(); }, RELANCE_MS);
 
+  // Recevoir aussi les changements faits depuis l'application ou le compte d'un collègue.
+  // Les écritures du site partent déjà immédiatement ; auparavant, une page laissée ouverte ne
+  // relisait le serveur que si elle avait elle-même quelque chose en attente. Elle pouvait donc
+  // rester visuellement en retard jusqu'au prochain clic sur « Synchroniser ».
+  setInterval(() => {
+    if (document.visibilityState === "visible") rapprocher();
+  }, INTERVALLE_MIN_SYNCHRO_MS);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") rapprocher({ force: true });
+  });
+
   /**
    * Leve si le compte n'a pas le droit d'ecrire, avec le message a afficher.
    *
