@@ -223,6 +223,15 @@ function capitaliseJour(jour) {
   return jour.charAt(0) + jour.slice(1).toLowerCase();
 }
 
+/** Supabase ou une ancienne saisie peuvent rendre HH:MM:SS ; input[type=time] attend HH:MM. */
+function normaliserHeureCreneau(valeur) {
+  const trouve = String(valeur || "").trim().match(/^(\d{1,2}):(\d{2})/);
+  if (!trouve) return "";
+  const heure = Math.min(23, Math.max(0, Number(trouve[1])));
+  const minute = Math.min(59, Math.max(0, Number(trouve[2])));
+  return `${String(heure).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+}
+
 async function loadUnssGroups() {
   unssGroups = await lireTable("unss_groups",
     "unss_groups?deleted=eq.false&active=eq.true&select=*&order=activity_name.asc",
@@ -1443,9 +1452,16 @@ Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu 
   renderUnssTab();
 }
 
-function openUnssSlotPanel(slot) {
+async function openUnssSlotPanel(slot) {
   const panel = document.getElementById("unssPanel");
   const isNew = !slot;
+  const contexte = await loadTeamContext().catch(() => null);
+  const professeurs = contexte?.members || [];
+  const responsableActuel = slot?.responsible_teacher || "";
+  // Une ancienne valeur saisie librement doit rester sélectionnable même si le compte associé
+  // n'est plus dans l'établissement : la modifier ne doit pas l'effacer silencieusement.
+  const nomsProfesseurs = [...new Set(professeurs.map(p => p.name || p.email).filter(Boolean))];
+  if (responsableActuel && !nomsProfesseurs.includes(responsableActuel)) nomsProfesseurs.unshift(responsableActuel);
   panel.innerHTML = `
     <h2>${isNew ? "Nouveau creneau AS" : "Modifier le creneau"}</h2>
     <label for="unssSlotActivity">Activite</label>
@@ -1456,13 +1472,19 @@ function openUnssSlotPanel(slot) {
       ${UNSS_SLOT_DAYS.map(j => `<option value="${j}"${slot && slot.day_of_week === j ? " selected" : ""}>${capitaliseJour(j)}</option>`).join("")}
     </select>
     <label for="unssSlotStart">Heure de debut</label>
-    <input type="time" id="unssSlotStart" value="${slot ? slot.start_time || "" : ""}">
+    <input type="time" id="unssSlotStart" value="${normaliserHeureCreneau(slot?.start_time)}">
     <label for="unssSlotEnd">Heure de fin</label>
-    <input type="time" id="unssSlotEnd" value="${slot ? slot.end_time || "" : ""}">
+    <input type="time" id="unssSlotEnd" value="${normaliserHeureCreneau(slot?.end_time)}">
     <label for="unssSlotLocation">Lieu</label>
     <input type="text" id="unssSlotLocation" value="${slot ? unssText(slot.location) : ""}" placeholder="Gymnase, stade...">
     <label for="unssSlotPlaces">Places (facultatif)</label>
     <input type="number" id="unssSlotPlaces" min="1" value="${slot && slot.max_places ? slot.max_places : ""}">
+    <label for="unssSlotTeacher">Professeur responsable</label>
+    <select id="unssSlotTeacher">
+      <option value="">Non attribué</option>
+      ${nomsProfesseurs.map(nom => `<option value="${unssText(nom)}"${nom === responsableActuel ? " selected" : ""}>${unssText(nom)}</option>`).join("")}
+    </select>
+    ${nomsProfesseurs.length === 0 ? `<div class="muted">Aucun autre compte professeur n’est disponible dans cet établissement.</div>` : ""}
     <label for="unssSlotComment">Commentaire</label>
     <input type="text" id="unssSlotComment" value="${slot ? unssText(slot.comment) : ""}">
     <button id="unssSlotSaveBtn">Enregistrer</button>
@@ -1478,10 +1500,11 @@ function openUnssSlotPanel(slot) {
     const body = {
       activity_name: activite,
       day_of_week: document.getElementById("unssSlotDay").value,
-      start_time: document.getElementById("unssSlotStart").value,
-      end_time: document.getElementById("unssSlotEnd").value,
+      start_time: normaliserHeureCreneau(document.getElementById("unssSlotStart").value),
+      end_time: normaliserHeureCreneau(document.getElementById("unssSlotEnd").value),
       location: document.getElementById("unssSlotLocation").value.trim(),
       max_places: Number.isFinite(places) && places > 0 ? places : null,
+      responsible_teacher: document.getElementById("unssSlotTeacher").value,
       comment: document.getElementById("unssSlotComment").value.trim(),
       updated_at: new Date().toISOString()
     };
