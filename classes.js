@@ -33,10 +33,14 @@ let estAdminCache = null;
 /** La cle est propre au compte : deux professeurs sur le meme ordinateur n'heritent pas l'un de l'autre. */
 function cleAdmin() { return `eps_admin:${session?.user_id || "inconnu"}`; }
 
-async function estAdministrateur() {
-  if (estAdminCache !== null) return estAdminCache;
+async function estAdministrateur(force = false) {
+  // Une reponse "non" peut provenir d'une lecture interrompue du profil. Seul un "oui" est
+  // conserve sans relecture ; l'ouverture suivante retente ainsi le serveur au lieu de masquer
+  // durablement les actions d'administration.
+  if (!force && estAdminCache === true) return true;
+  if (force && typeof oublierContexteEquipe === "function") oublierContexteEquipe();
   const contexte = await loadTeamContext().catch(() => null);
-  if (contexte && typeof contexte.is_admin === "boolean") {
+  if (contexte && typeof contexte.is_admin === "boolean" && (contexte.institution_id || contexte.is_admin)) {
     estAdminCache = contexte.is_admin;
     try { localStorage.setItem(cleAdmin(), String(estAdminCache)); } catch { /* stockage indisponible */ }
     return estAdminCache;

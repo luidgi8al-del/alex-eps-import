@@ -618,7 +618,7 @@ function renderUnssTab() {
   html += `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
   // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
   // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
-  if (unssAdmin) {
+  if (unssAdmin || unssCibleRendu === "studentsDirectoryList") {
     html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
   }
   // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
@@ -627,7 +627,7 @@ function renderUnssTab() {
     html += `<button class="secondary" id="unssClearBtn" style="margin-top:0">Supprimer toute la liste</button>`;
   }
   // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
-  if (unssAdmin || unssMode === "licensed") {
+  if (unssAdmin || unssMode === "licensed" || unssCibleRendu === "studentsDirectoryList") {
     html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter un élève"}</button>`;
   }
   // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
@@ -727,12 +727,15 @@ function renderUnssTab() {
   });
 
   const addBtn = document.getElementById("unssAddBtn");
-  if (addBtn) addBtn.addEventListener("click", () => {
+  if (addBtn) addBtn.addEventListener("click", async () => {
     if (unssMode === "licensed") openUnssPickPanel();
-    else openUnssStudentPanel(null, false, unssCibleRendu === "studentsDirectoryList");
+    else if (await autoriserGestionRepertoire())
+      openUnssStudentPanel(null, false, unssCibleRendu === "studentsDirectoryList");
   });
   const importBtn = document.getElementById("unssImportBtn");
-  if (importBtn) importBtn.addEventListener("click", () => unssFileInput().click());
+  if (importBtn) importBtn.addEventListener("click", async () => {
+    if (await autoriserGestionRepertoire()) unssFileInput().click();
+  });
   const clearBtn = document.getElementById("unssClearBtn");
   if (clearBtn) clearBtn.addEventListener("click", () => viderRepertoireAs());
   wrap.querySelectorAll("[data-edit]").forEach(el => {
@@ -751,6 +754,19 @@ function renderUnssTab() {
       renderUnssTab();
     });
   });
+}
+
+/**
+ * Les boutons restent visibles dans le repertoire : si le contrôle du profil a échoué, les
+ * faire disparaître ressemble à une suppression de fonction. Au clic, on relit les droits et
+ * on explique clairement un refus réel. La base conserve dans tous les cas le dernier mot.
+ */
+async function autoriserGestionRepertoire() {
+  const autorise = await estAdministrateur(true);
+  unssAdmin = autorise;
+  if (autorise) return true;
+  alert("L’import CSV et l’ajout manuel sont réservés à l’administrateur de l’établissement. Si vous êtes administrateur, vérifiez la connexion puis réessayez.");
+  return false;
 }
 
 /**
