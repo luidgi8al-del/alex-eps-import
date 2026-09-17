@@ -467,11 +467,15 @@ function tableauElevesHtml(eleves) {
     html += `<th><button type="button" class="eleveTri${actif ? " actif" : ""}" data-tri="${c.cle}">`
       + `${planningText(c.titre)}${actif ? (triEleve.croissant ? " \u25B2" : " \u25BC") : ""}</button></th>`;
   });
+  if (unssCibleRendu === "studentsDirectoryList") html += `<th class="eleveActionTitre">Action</th>`;
   html += `</tr></thead><tbody>`;
   eleves.forEach(e => {
     html += `<tr data-eleve="${e.id}"${selectionEleves.has(e.id) ? ' class="choisi"' : ""}>`
       + `<td class="eleveCoche"><input type="checkbox" data-coche="${e.id}"${selectionEleves.has(e.id) ? " checked" : ""}></td>`
       + COLONNES_ELEVE.map(c => `<td>${planningText(c.texte ? c.texte(e) : c.valeur(e))}</td>`).join("")
+      + (unssCibleRendu === "studentsDirectoryList"
+        ? `<td class="eleveAction"><button type="button" class="student-edit-button" data-directory-edit="${e.id}">✎ Modifier</button></td>`
+        : "")
       + `</tr>`;
   });
   return html + `</tbody></table></div>`;
@@ -589,6 +593,11 @@ function renderUnssTab() {
     if (box.checked) selectionEleves.add(box.dataset.coche); else selectionEleves.delete(box.dataset.coche);
     renderUnssTab();
   }));
+  wrap.querySelectorAll("[data-directory-edit]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const student = unssStudents.find(s => s.id === btn.dataset.directoryEdit);
+    if (student) openUnssStudentPanel(student, false, true);
+  }));
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
@@ -639,7 +648,8 @@ function renderUnssTab() {
 
   const addBtn = document.getElementById("unssAddBtn");
   if (addBtn) addBtn.addEventListener("click", () => {
-    if (unssMode === "licensed") openUnssPickPanel(); else openUnssStudentPanel(null, false);
+    if (unssMode === "licensed") openUnssPickPanel();
+    else openUnssStudentPanel(null, false, unssCibleRendu === "studentsDirectoryList");
   });
   const importBtn = document.getElementById("unssImportBtn");
   if (importBtn) importBtn.addEventListener("click", () => unssFileInput().click());
@@ -1513,18 +1523,24 @@ function tableauLicenceHtml(eleves) {
 }
 
 /** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
-function openUnssStudentPanel(student, licensing) {
+function openUnssStudentPanel(student, licensing, directoryEditing = false) {
   const panel = document.getElementById("unssPanel");
   const isNew = !student;
   const category = student ? student.category : "MINIME";
   panel.innerHTML = `
-    <h2>${licensing ? "Licencier " + (student.first_name || "") : (isNew ? "Nouvel eleve" : "Modifier l'eleve")}</h2>
+    <div class="student-editor-hero"><span aria-hidden="true">👤</span><div>
+      <small>RÉPERTOIRE DES ÉLÈVES</small>
+      <h2>${licensing ? "Licencier " + planningText(student.first_name || "") : (isNew ? "Nouvel élève" : "Modifier l’élève")}</h2>
+      <p>${isNew ? "Complétez l’identité et les coordonnées." : "Les changements seront synchronisés avec l’application."}</p>
+    </div></div>
+    <div class="student-editor-section"><h3>Identité</h3>
+    <div class="student-editor-grid">
     <label for="unssLastName">Nom</label>
-    <input type="text" id="unssLastName" value="${student ? student.last_name : ""}">
+    <input type="text" id="unssLastName" value="${student ? planningText(student.last_name) : ""}">
     <label for="unssFirstName">Prenom</label>
-    <input type="text" id="unssFirstName" value="${student ? student.first_name : ""}">
+    <input type="text" id="unssFirstName" value="${student ? planningText(student.first_name) : ""}">
     <label for="unssDivision">Division (classe d'origine)</label>
-    <input type="text" id="unssDivision" placeholder="ex : 2.1, 6e3" value="${student ? (student.division || "") : ""}">
+    <input type="text" id="unssDivision" placeholder="ex : 2.1, 6e3" value="${student ? planningText(student.division || "") : ""}">
     <label for="unssBirth">Date de naissance (JJ/MM/AAAA)</label>
     <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
     <label for="unssSex">Sexe</label>
@@ -1535,20 +1551,29 @@ function openUnssStudentPanel(student, licensing) {
     </select>
     <label for="unssCategory">Categorie</label>
     <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${unssCategoryLabel(c.value, student ? student.sex : "")}</option>`).join("")}</select>
+    </div></div>
     ${licensing || (student && student.licensed) ? `
+      <div class="student-editor-section"><h3>Association sportive</h3>
+      <div class="student-editor-grid">
       ${[1, 2, 3].map(n => `
         <label for="unssWish${n}">Voeu ${n}</label>
         ${menuCreneaux(`unssWish${n}`, student ? student[`wish${n}_slot_id`] : null, student ? student[`wish${n}`] : "")}
       `).join("")}
       <label for="unssJersey">Taille maillot</label>
-      <input type="text" id="unssJersey" value="${student ? student.jersey_size || "" : ""}">
-      <label for="unssEmailEleve">Email eleve</label>
-      <input type="text" id="unssEmailEleve" value="${student ? student.student_email || "" : ""}">
-      <label for="unssEmailParent">Email parent</label>
-      <input type="text" id="unssEmailParent" value="${student ? student.parent_email || "" : ""}">
+      <input type="text" id="unssJersey" value="${student ? planningText(student.jersey_size || "") : ""}">
+      </div></div>
     ` : ""}
-    <button id="unssSaveBtn">Enregistrer</button>
-    <button class="secondary" id="unssCancelBtn">Annuler</button>
+    ${directoryEditing || licensing || (student && student.licensed) ? `
+      <div class="student-editor-section"><h3>Coordonnées</h3>
+      <div class="student-editor-grid">
+      <label for="unssEmailEleve">Email eleve</label>
+      <input type="email" id="unssEmailEleve" value="${student ? planningText(student.student_email || "") : ""}">
+      <label for="unssEmailParent">Email parent</label>
+      <input type="email" id="unssEmailParent" value="${student ? planningText(student.parent_email || "") : ""}">
+      </div></div>
+    ` : ""}
+    <div class="student-editor-actions"><button id="unssSaveBtn">✓ Enregistrer</button>
+    <button class="secondary" id="unssCancelBtn">Annuler</button></div>
     <div class="error" id="unssError"></div>`;
   ouvrirFenetreUnss();
 
@@ -1579,6 +1604,10 @@ function openUnssStudentPanel(student, licensing) {
       division: document.getElementById("unssDivision").value.trim(),
       updated_at: new Date().toISOString()
     };
+    const emailEleveField = document.getElementById("unssEmailEleve");
+    const emailParentField = document.getElementById("unssEmailParent");
+    if (emailEleveField) body.student_email = emailEleveField.value.trim() || null;
+    if (emailParentField) body.parent_email = emailParentField.value.trim() || null;
     const wishField = document.getElementById("unssWish1");
     if (wishField) {
       body.licensed = true;
@@ -1591,16 +1620,22 @@ function openUnssStudentPanel(student, licensing) {
         body[`wish${n}`] = slot ? unssSlotLabel(slot) : "";
       }
       body.jersey_size = document.getElementById("unssJersey").value;
-      body.student_email = document.getElementById("unssEmailEleve").value || null;
-      body.parent_email = document.getElementById("unssEmailParent").value || null;
     }
     // Ligne entiere : la file d'attente ne porte pas de retouches, et un envoi differe qui
     // n'emporterait que les champs saisis effacerait les autres.
-    if (isNew) {
-      await enregistrerLigne("unss_students",
-        { id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body });
-    } else {
-      await enregistrerLigne("unss_students", { ...student, ...body });
+    try {
+      if (isNew) {
+        await enregistrerLigne("unss_students",
+          { id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body });
+      } else {
+        // L'identifiant reste identique : une correction de division ne duplique pas l'eleve
+        // et conserve ses licences, ses voeux et ses inscriptions AS.
+        await enregistrerLigne("unss_students", { ...student, ...body });
+      }
+    } catch (erreur) {
+      document.getElementById("unssError").textContent =
+        erreur.message || "Élève non enregistré. Vérifiez la connexion.";
+      return;
     }
     fermerFenetreUnss();
     await loadUnssStudents();
