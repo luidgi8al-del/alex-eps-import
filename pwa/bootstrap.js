@@ -21,7 +21,7 @@ import { mountConflictDialog } from "./ui/conflict-dialog.js";
 /** Intervalle des reprises automatiques quand il reste quelque chose a envoyer. */
 const RELANCE_MS = 15000;
 /** Delai minimal entre deux synchronisations qu'aucun geste de l'utilisateur n'a demandees. */
-const INTERVALLE_MIN_SYNCHRO_MS = 30000;
+const INTERVALLE_MIN_SYNCHRO_MS = 60000;
 
 let etat = null;
 
