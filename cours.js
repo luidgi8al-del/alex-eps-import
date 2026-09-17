@@ -963,9 +963,9 @@ function exportEvaluationCsv() {
 })();
 
 function toolHeader(title, subtitle) {
-  return `<div class="top"><div><h2 style="margin-bottom:3px">${title}</h2><div class="muted">${subtitle}</div></div><button class="secondary" id="closeToolBtn" style="margin-top:0">Fermer</button></div>`;
+  return `<div class="modern-tool-hero"><button class="modern-tool-back" id="closeToolBtn" aria-label="Retour aux outils">←</button><div><h2>${title}</h2><p>${subtitle}</p></div></div>`;
 }
-function bindToolClose() { document.getElementById("closeToolBtn").onclick = () => { stopToolTimer(); toolPanel.style.display = "none"; }; }
+function bindToolClose() { const button=document.getElementById("closeToolBtn");if(button)button.onclick = () => { stopToolTimer(); toolPanel.style.display = "none"; toolPanel.innerHTML=""; document.getElementById("toolsWorkspace")?.scrollIntoView({behavior:"smooth",block:"start"}); }; }
 
 function renderTimersHub() {
   toolPanel.innerHTML = toolHeader("Chronomètre", "Choisissez le mode") + `<div class="toolActions"><button data-timer-mode="chrono">Chronomètre</button><button data-timer-mode="countdown">Compte à rebours</button><button data-timer-mode="interval">Timer intervalles</button></div><div id="timerBody"></div>`;

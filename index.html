@@ -714,6 +714,7 @@
       try {
         if (name === "classes") showSubtab("classes");
         if (name === "students") ouvrirRepertoireEleves();
+        if (name === "outils" && typeof resetToolsWorkspace === "function") resetToolsWorkspace();
         if (name === "health") initHealthTab();
         if (name === "cours") initCoursTab();
         if (name === "equipement") initInstallationsTab();

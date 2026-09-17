@@ -881,9 +881,7 @@ function afficherRecapPeriode(evaluations, tests) {
       <div class="top"><h3 style="margin:0">Récapitulatif · P${dashboardPeriod}</h3>
         <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
       ${tests.length ? `<h4 style="margin:12px 0 4px">Tests</h4><div style="display:grid;gap:7px">${
-        tests.map(t => t.test_name === "3 × 500 m"
-          ? `<button class="secondary" data-recap-3x500="${planningText(t.id)}" data-test-period="${t.period_number || 1}" style="margin:0;text-align:left"><b>3 × 500 m</b><span class="muted"> · ${new Date(t.created_at).toLocaleString("fr-FR")} · ouvrir cette session</span></button>`
-          : `<div class="card" style="padding:9px">${planningText(t.test_name || "Test")}</div>`).join("")}</div>` : ""}
+        tests.map(t => `<button class="secondary" data-recap-test="${planningText(t.id)}" data-test-name="${planningText(t.test_name||'Test')}" data-test-period="${t.period_number || 1}" style="margin:0;text-align:left"><b>${planningText(t.test_name||'Test')}</b><span class="muted"> · ${new Date(t.created_at).toLocaleString("fr-FR")} · ouvrir, modifier ou supprimer</span></button>`).join("")}</div>` : ""}
       ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4>${
         evaluations.map(e => `<button class="secondary" data-recap-eval="${e.id}" style="margin-top:6px; width:100%; text-align:left">${
           planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${
@@ -897,8 +895,8 @@ function afficherRecapPeriode(evaluations, tests) {
     const e = evaluations.find(x => x.id === b.dataset.recapEval);
     if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id);
   });
-  hote.querySelectorAll("[data-recap-3x500]").forEach(b => b.onclick = () =>
-    ouvrirSessionTrois500DepuisClasse(b.dataset.recap3x500, dashboardClass.row.id, b.dataset.testPeriod));
+  hote.querySelectorAll("[data-recap-test]").forEach(b => b.onclick = () =>
+    ouvrirSessionTestDepuisClasse(b.dataset.recapTest, dashboardClass.row.id, b.dataset.testPeriod, b.dataset.testName));
 }
 
 /**

@@ -163,12 +163,6 @@ const EpsTests = (function () {
 
   const CATEGORIES = [
     {
-      name: "VMA",
-      subtitle: "Endurance aerobie et vitesse maximale",
-      color: "#DFF3FF",
-      tests: ["DEMI_COOPER", "COOPER", "VAMEVAL", "LUC_LEGER"]
-    },
-    {
       name: "Athle",
       subtitle: "Vitesse, demi-fond, force, coordination, haies et relais",
       color: "#FFF0DD",
