@@ -486,7 +486,9 @@
   <script src="classe-tableau-bord.js"></script>
   <script src="qrcode.min.js"></script>
   <script src="equipement.js"></script>
-  <script src="aslvh.js"></script>
+  <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
+       l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
+  <script src="aslvh.js?v=20260918-1"></script>
   <script src="outils.js"></script>
   <script src="teams-saved-web.js"></script>
   <script src="tools-workspace.js"></script>

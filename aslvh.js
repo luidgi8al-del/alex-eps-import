@@ -225,10 +225,12 @@ function capitaliseJour(jour) {
 
 /** Supabase ou une ancienne saisie peuvent rendre HH:MM:SS ; input[type=time] attend HH:MM. */
 function normaliserHeureCreneau(valeur) {
-  const trouve = String(valeur || "").trim().match(/^(\d{1,2}):(\d{2})/);
+  // Accepte les formes deja rencontrees dans les anciennes donnees : 13:00:00, 13h00,
+  // 13.00 et 13h. Le formulaire HTML, lui, recoit toujours la forme stricte HH:MM.
+  const trouve = String(valeur || "").trim().match(/^(\d{1,2})(?:\s*[:hH.]\s*(\d{2}))?/);
   if (!trouve) return "";
   const heure = Math.min(23, Math.max(0, Number(trouve[1])));
-  const minute = Math.min(59, Math.max(0, Number(trouve[2])));
+  const minute = Math.min(59, Math.max(0, Number(trouve[2] || 0)));
   return `${String(heure).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
 }
 

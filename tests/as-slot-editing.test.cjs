@@ -7,6 +7,8 @@ const aslvh = fs.readFileSync(path.join(root, "aslvh.js"), "utf8");
 
 assert(aslvh.includes("function normaliserHeureCreneau(valeur)"),
   "les horaires venant du serveur doivent être normalisés");
+assert(aslvh.includes("trouve[2] || 0"),
+  "une ancienne heure écrite 13h doit être conservée comme 13:00");
 assert(aslvh.includes('value="${normaliserHeureCreneau(slot?.start_time)}"'),
   "l'heure de début existante doit rester visible en modification");
 assert(aslvh.includes('value="${normaliserHeureCreneau(slot?.end_time)}"'),
