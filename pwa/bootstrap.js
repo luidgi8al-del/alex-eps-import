@@ -22,6 +22,8 @@ import { mountConflictDialog } from "./ui/conflict-dialog.js";
 const RELANCE_MS = 15000;
 /** Delai minimal entre deux synchronisations qu'aucun geste de l'utilisateur n'a demandees. */
 const INTERVALLE_MIN_SYNCHRO_MS = 60000;
+/** Regroupe les saisies rapprochees avant leur envoi, sans les laisser attendre une minute. */
+const DELAI_ENVOI_APRES_SAISIE_MS = 1500;
 
 let etat = null;
 
@@ -71,6 +73,8 @@ export async function demarrerHorsConnexion({
    */
   let synchroEnCours = null;
   let finDerniereSynchro = 0;
+  let envoiApresSaisie = null;
+  let revisionSaisie = 0;
 
   /**
    * @param {boolean} force geste explicite de l'utilisateur : on y va sans attendre le delai.
@@ -87,6 +91,29 @@ export async function demarrerHorsConnexion({
     synchroEnCours = engine.sync().then(() => true, () => false);
     synchroEnCours.finally(() => { finDerniereSynchro = Date.now(); synchroEnCours = null; });
     return synchroEnCours;
+  }
+
+  /**
+   * Envoie les ecritures recentes en priorite, sans lancer une synchronisation a chaque frappe.
+   *
+   * Le delai d'une minute protege les simples relectures automatiques, mais ne doit pas retenir
+   * une saisie de l'utilisateur. Plusieurs enregistrements successifs sont regroupes pendant
+   * 1,5 seconde. Si une synchronisation est deja en cours, on attend sa fin puis on en lance une
+   * nouvelle : la derniere ligne ajoutee peut ne pas faire partie du lot que le moteur avait
+   * deja commence a examiner.
+   */
+  function programmerEnvoiApresSaisie() {
+    revisionSaisie += 1;
+    const revisionDemandee = revisionSaisie;
+    if (envoiApresSaisie) clearTimeout(envoiApresSaisie);
+    envoiApresSaisie = setTimeout(async () => {
+      envoiApresSaisie = null;
+      const dejaEnCours = synchroEnCours;
+      if (dejaEnCours) await dejaEnCours.catch(() => false);
+      // Une saisie plus recente possede deja son propre minuteur : elle enverra le lot complet.
+      if (revisionDemandee !== revisionSaisie) return;
+      await rapprocher({ force: true });
+    }, DELAI_ENVOI_APRES_SAISIE_MS);
   }
 
   // Filet de securite : dans une fenetre installee, couper puis retablir le wifi ne declenche pas
@@ -174,14 +201,14 @@ export async function demarrerHorsConnexion({
     async enregistrer(entity, id, data) {
       verifierDroit(entity, "creer", "modifier");
       const resultat = await saveOfflineEdit({ entity, id, data, authorId: session()?.user_id });
-      rapprocher();
+      programmerEnvoiApresSaisie();
       return resultat;
     },
 
     async supprimer(entity, id) {
       verifierDroit(entity, "supprimer");
       const resultat = await saveOfflineDeletion({ entity, id, authorId: session()?.user_id });
-      rapprocher();
+      programmerEnvoiApresSaisie();
       return resultat;
     },
 
