@@ -25,7 +25,7 @@
     if(!healthSelectedClassId||!healthClasses.some(c=>c.id===healthSelectedClassId))healthSelectedClassId=healthClasses[0]?.id||null;
     // Le motif ne s'affiche que si la colonne existe : le marqueur le dit sans faire echouer
     // un enregistrement pour l'apprendre.
-    await verifierMotifDisponible();
+    await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible()]);
     renderHealthTab();
   }
   function renderHealthTab(){
@@ -45,6 +45,7 @@
   let dispenseEquipe=null;
   /** Le motif n'existe qu'une fois schema_sante_2.sql passe. Avant, on n'en parle pas. */
   let dispenseMotifDispo=false;
+  let dispenseIdentiteDispo=false;
 
   const MOTIFS=[['BLESSURE','Blessure'],['MALADIE','Maladie'],['CERTIFICAT','Certificat médical'],
     ['INAPTITUDE_PARTIELLE','Inaptitude partielle'],['AUTRE','Autre']];
@@ -70,6 +71,14 @@
     return dispenseMotifDispo;
   }
 
+  async function verifierIdentiteDisponible(){
+    try{
+      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.sante_3&select=name`);
+      dispenseIdentiteDispo=res.ok&&(await res.json()).length>0;
+    }catch{ dispenseIdentiteDispo=false; }
+    return dispenseIdentiteDispo;
+  }
+
   async function nomEnseignant(userId){
     if(!userId)return 'Inconnu';
     if(userId===session?.user_id)return 'Vous';
@@ -83,13 +92,14 @@
   /** Deux periodes qui se recouvrent pour le meme eleve : c'est la double saisie a empecher. */
   function chevauche(a,b){return a.start_date<=b.end_date&&b.start_date<=a.end_date;}
 
-  function eleveNomme(studentId){
+  function eleveNomme(studentId,row=null){
     const s=healthStudents.find(x=>x.id===studentId);
-    return s?`${String(s.last_name||'').toUpperCase()} ${s.first_name||''}`.trim():'Élève';
+    if(s)return `${String(s.last_name||'').toUpperCase()} ${s.first_name||''}`.trim();
+    return `${String(row?.student_last_name||'').toUpperCase()} ${row?.student_first_name||''}`.trim()||'Élève';
   }
-  function classeNommee(classId){
+  function classeNommee(classId,row=null){
     const c=healthClasses.find(x=>x.id===classId);
-    return c?c.name:'';
+    return c?c.name:(row?.class_name||'');
   }
   const jourFr=d=>d?new Date(d+'T12:00:00').toLocaleDateString('fr-FR'):'';
 
@@ -132,8 +142,8 @@
    const passees=lignes.filter(d=>d.end_date<today).sort((a,b)=>b.end_date.localeCompare(a.end_date));
    const tableau=(titre,rows,vide)=>`<section class="card"><h2>${titre} <span class="muted" style="font-weight:400">(${rows.length})</span></h2>`
      +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th>${seulementLesMiennes?'':'<th>Saisie par</th>'}</tr></thead><tbody>`
-       +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id))}</button></td>`
-         +`<td>${healthEsc(classeNommee(d.class_id))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td>`
+       +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id,d))}</button></td>`
+         +`<td>${healthEsc(classeNommee(d.class_id,d))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td>`
          +`<td>${healthEsc(motifLibelle(d.reason_kind)||'—')}</td>`
          +(seulementLesMiennes?'':`<td data-auteur="${healthEsc(d.user_id||'')}">…</td>`)
          +`</tr>`).join('')+`</tbody></table></div>`
@@ -182,14 +192,14 @@
     if(!d)return;
     await verifierMotifDisponible();
     const voile=fenetreFicheDispense();
-    voile.querySelector('#dispenseFicheTitre').textContent=libelleEleve||eleveNomme(d.student_id);
+    voile.querySelector('#dispenseFicheTitre').textContent=libelleEleve||eleveNomme(d.student_id,d);
     const corps=voile.querySelector('#dispenseFicheBody');
     const sienne=d.user_id===session?.user_id;
     const motifs=dispenseMotifDispo
       ? `<label>Motif<select id="ficheKind">${MOTIFS.map(([v,l])=>`<option value="${v}"${v===d.reason_kind?' selected':''}>${l}</option>`).join('')}</select></label>`
         +`<label>Précision (facultatif)<input type="text" id="ficheReason" maxlength="200" value="${healthEsc(d.reason||'')}"></label>`
       : `<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
-    corps.innerHTML=`<div class="muted">${healthEsc(classeNommee(d.class_id))}</div>`
+    corps.innerHTML=`<div class="muted">${healthEsc(classeNommee(d.class_id,d))}</div>`
       +`<div class="muted" style="margin-top:4px">${healthActive(d)?'En cours':'Terminée'} · saisie par <span id="dispenseFicheAuteur">…</span></div>`
       +(sienne
         ? `<form id="ficheForm" style="margin-top:10px">
@@ -332,6 +342,13 @@
     const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:healthSelectedClassId,
       student_id:healthSelectedStudentId,start_date:start,end_date:end,
       updated_at:new Date().toISOString(),deleted:false};
+    if(dispenseIdentiteDispo){
+      const eleve=healthStudents.find(s=>s.id===healthSelectedStudentId);
+      const classe=healthClasses.find(c=>c.id===healthSelectedClassId);
+      ligne.student_last_name=eleve?.last_name||null;
+      ligne.student_first_name=eleve?.first_name||null;
+      ligne.class_name=classe?.name||null;
+    }
     if(dispenseMotifDispo){
       ligne.reason_kind=document.getElementById('dispenseKind')?.value||'AUTRE';
       ligne.reason=document.getElementById('dispenseReason')?.value.trim()||null;
