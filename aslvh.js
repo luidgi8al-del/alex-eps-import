@@ -140,7 +140,10 @@ async function showUnssTab(mode) {
   // Un créneau peut avoir été créé depuis l'application pendant que le site restait ouvert.
   // Relire cette petite table à chaque ouverture de l'onglet évite de conserver l'ancienne
   // liste jusqu'à une synchronisation manuelle ou un rechargement complet.
-  if (mode === "slots" || mode === "appel") await loadUnssSlots();
+  if (mode === "slots" || mode === "appel") {
+    await verifierAffectationCreneaux();
+    await loadUnssSlots();
+  }
   if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
     await loadUnssInscriptions();
   }
@@ -172,6 +175,19 @@ async function loadUnssStudents() {
 }
 
 let unssSlots = [];
+let affectationCreneauxActive = false;
+
+async function verifierAffectationCreneaux() {
+  try {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.as_slot_assignments&select=name`);
+    affectationCreneauxActive = res.ok && (await res.json()).length > 0;
+  } catch { affectationCreneauxActive = false; }
+  return affectationCreneauxActive;
+}
+
+function peutFaireAppelCreneau(slot) {
+  return !affectationCreneauxActive || slot?.assigned_teacher_id === session?.user_id;
+}
 
 /**
  * Creneaux AS : l'offre d'activites de l'association sportive, parmi laquelle l'eleve
@@ -1381,6 +1397,7 @@ function renderUnssSlotsTab() {
         <span class="as-sport-icon">${iconeActiviteAS(slot.activity_name)}</span>
         <span><strong>${unssText(slot.activity_name || "Créneau sans nom")}</strong>
         <small>⌖ ${unssText(slot.location || "Lieu non renseigné")} · ◷ ${unssText(detail) || "Horaire non renseigné"}</small>
+        <small>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</small>
         <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button>`;
     }).join("");
   }
@@ -1424,8 +1441,9 @@ function iconeActiviteAS(nom) {
 async function ouvrirFicheCreneau(slot) {
   if (!slot) return;
   const panel = document.getElementById("unssPanel"); ouvrirFenetreUnss();
-  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button><button id="asCall">☑<b>Appel</b></button><button id="asBalance">▥<b>Bilan</b></button></div><section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
-  asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); asCall.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
+  const appelAutorise = peutFaireAppelCreneau(slot);
+  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
+  asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); const boutonAppel=document.getElementById("asCall"); if (boutonAppel) boutonAppel.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
 }
 
 /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
@@ -1460,6 +1478,8 @@ async function openUnssSlotPanel(slot) {
   const contexte = await loadTeamContext().catch(() => null);
   const professeurs = contexte?.members || [];
   const responsableActuel = slot?.responsible_teacher || "";
+  const responsableIdActuel = slot?.assigned_teacher_id ||
+    professeurs.find(p => (p.name || p.email) === responsableActuel)?.id || "";
   // Une ancienne valeur saisie librement doit rester sélectionnable même si le compte associé
   // n'est plus dans l'établissement : la modifier ne doit pas l'effacer silencieusement.
   const nomsProfesseurs = [...new Set(professeurs.map(p => p.name || p.email).filter(Boolean))];
@@ -1484,7 +1504,10 @@ async function openUnssSlotPanel(slot) {
     <label for="unssSlotTeacher">Professeur responsable</label>
     <select id="unssSlotTeacher">
       <option value="">Non attribué</option>
-      ${nomsProfesseurs.map(nom => `<option value="${unssText(nom)}"${nom === responsableActuel ? " selected" : ""}>${unssText(nom)}</option>`).join("")}
+      ${professeurs.map(prof => {
+        const nom = prof.name || prof.email;
+        return `<option value="${unssText(prof.id)}"${prof.id === responsableIdActuel ? " selected" : ""}>${unssText(nom)}</option>`;
+      }).join("")}
     </select>
     ${nomsProfesseurs.length === 0 ? `<div class="muted">Aucun autre compte professeur n’est disponible dans cet établissement.</div>` : ""}
     <label for="unssSlotComment">Commentaire</label>
@@ -1499,6 +1522,7 @@ async function openUnssSlotPanel(slot) {
     const activite = document.getElementById("unssSlotActivity").value.trim();
     if (!activite) { document.getElementById("unssSlotError").textContent = "L'activite est obligatoire."; return; }
     const places = parseInt(document.getElementById("unssSlotPlaces").value, 10);
+    const professeurChoisi = document.getElementById("unssSlotTeacher");
     const body = {
       activity_name: activite,
       day_of_week: document.getElementById("unssSlotDay").value,
@@ -1506,10 +1530,12 @@ async function openUnssSlotPanel(slot) {
       end_time: normaliserHeureCreneau(document.getElementById("unssSlotEnd").value),
       location: document.getElementById("unssSlotLocation").value.trim(),
       max_places: Number.isFinite(places) && places > 0 ? places : null,
-      responsible_teacher: document.getElementById("unssSlotTeacher").value,
+      responsible_teacher: professeurChoisi.selectedOptions[0]?.textContent === "Non attribué"
+        ? "" : professeurChoisi.selectedOptions[0]?.textContent || "",
       comment: document.getElementById("unssSlotComment").value.trim(),
       updated_at: new Date().toISOString()
     };
+    if (affectationCreneauxActive) body.assigned_teacher_id = professeurChoisi.value || null;
     try {
       // institution_id est pose par le declencheur cote base : ne pas l'envoyer d'ici.
       if (isNew) {
@@ -2213,6 +2239,10 @@ async function ouvrirBilanCreneau(slot) {
 
 /** Appel plein écran depuis la fiche du créneau, comme dans l'application mobile. */
 async function ouvrirAppelCreneau(slot, seance = null) {
+  if (!peutFaireAppelCreneau(slot)) {
+    alert(`L’appel de ce créneau est réservé à ${slot.responsible_teacher || "son professeur responsable"}.`);
+    return;
+  }
   const panel=document.getElementById('unssPanel'); ouvrirFenetreUnss();
   panel.classList.add('as-full-panel'); panel.innerHTML=`<div class="as-panel-title"><button class="as-back" id="asCallBack">←</button><div><h2>Appel</h2><small>${unssText(slot.activity_name)} · ${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</small></div><b>☑</b></div><div class="as-call-wrap"><div id="unssAppelBody"></div></div>`;
   unssAppelSlotId=slot.id;unssAppelMembers=elevesDuCreneau(slot.id);unssAppelPresence={};
@@ -2228,10 +2258,12 @@ function renderUnssAppelTab() {
   // l'ecran sous les pieds d'une base qui n'a pas encore la colonne slot_id.
   if (!creneauPorteTout) { renderUnssAppelGroupes(); return; }
 
-  const creneaux = unssSlots.filter(s => !s.deleted);
+  // Même l'administrateur ne fait l'appel que de ses propres créneaux : son rôle lui permet
+  // d'organiser et d'affecter, pas d'encombrer son écran avec les activités des collègues.
+  const creneaux = unssSlots.filter(s => !s.deleted && peutFaireAppelCreneau(s));
   if (creneaux.length === 0) {
-    wrap.innerHTML = `<div class="muted">Aucun créneau AS. Créez-en un dans <strong>Créneaux AS</strong> :
-      c'est lui qui porte les élèves et les appels.</div>`;
+    wrap.innerHTML = `<div class="muted">Aucun créneau AS ne vous est affecté. Un administrateur peut vous
+      attribuer un créneau depuis <strong>Créneaux AS → Modifier le créneau</strong>.</div>`;
     return;
   }
   if (!creneaux.some(s => s.id === unssAppelSlotId)) unssAppelSlotId = creneaux[0].id;

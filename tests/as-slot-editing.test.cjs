@@ -17,7 +17,7 @@ assert(aslvh.includes('id="unssSlotTeacher"'),
   "le formulaire doit proposer un professeur responsable");
 assert(aslvh.includes("const professeurs = contexte?.members || []"),
   "les professeurs doivent venir des comptes de l'établissement");
-assert(aslvh.includes('responsible_teacher: document.getElementById("unssSlotTeacher").value'),
-  "le professeur choisi doit être enregistré dans le créneau partagé");
+assert(aslvh.includes("body.assigned_teacher_id = professeurChoisi.value || null"),
+  "le compte professeur choisi doit être enregistré dans le créneau partagé");
 
 console.log("as-slot-editing: OK");
