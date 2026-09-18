@@ -878,10 +878,10 @@ function afficherRecapPeriode(evaluations, tests) {
   }
   hote.innerHTML = `
     <div class="card" style="margin-top:10px">
-      <div class="top"><h3 style="margin:0">Récapitulatif · P${dashboardPeriod}</h3>
+      <div class="top"><h3 style="margin:0">Tests de la classe · Évaluations P${dashboardPeriod}</h3>
         <button class="secondary" id="fermerDetail" style="margin-top:0">Fermer</button></div>
       ${tests.length ? `<h4 style="margin:12px 0 4px">Tests</h4><div style="display:grid;gap:7px">${
-        tests.map(t => `<button class="secondary" data-recap-test="${planningText(t.id)}" data-test-name="${planningText(t.test_name||'Test')}" data-test-period="${t.period_number || 1}" style="margin:0;text-align:left"><b>${planningText(t.test_name||'Test')}</b><span class="muted"> · ${new Date(t.created_at).toLocaleString("fr-FR")} · ouvrir, modifier ou supprimer</span></button>`).join("")}</div>` : ""}
+        tests.map(t => `<button class="secondary" data-recap-test="${planningText(t.id)}" data-test-name="${planningText(t.test_name||'Test')}" data-test-period="${t.period_number || 1}" style="margin:0;text-align:left"><b>${planningText(t.test_name||'Test')}</b><span class="muted"> · P${t.period_number || 1} · ${new Date(t.created_at).toLocaleString("fr-FR")} · ouvrir, modifier ou supprimer</span></button>`).join("")}</div>` : ""}
       ${evaluations.length ? `<h4 style="margin:12px 0 4px">Évaluations</h4>${
         evaluations.map(e => `<button class="secondary" data-recap-eval="${e.id}" style="margin-top:6px; width:100%; text-align:left">${
           planningText(e.label || "Évaluation")} <span class="muted">· ${e.type === "FINALE" ? "finale" : "ponctuelle"}${
@@ -1356,7 +1356,9 @@ function renderMenuClasse() {
   const { row, label } = dashboardClass;
   const dispenses = dashboardDispenses.filter(d => !d.deleted && dispenseEnCours(d));
   const evals = dashboardEvaluations.filter(e => e.period_number === dashboardPeriod);
-  const tests = dashboardTests.filter(t => t.period_number === dashboardPeriod);
+  // Les Tests EPS restent accessibles quelle que soit la periode actuellement ouverte.
+  const tests = dashboardTests.filter(t => !t.deleted)
+    .sort((a,b)=>(b.created_at||0)-(a.created_at||0));
   const manquants = documentsClasse.reduce((total, doc) => {
     const rendus = rendusClasse.filter(r => r.document_id === doc.id && r.returned && !r.deleted).length;
     return total + Math.max(0, dashboardStudents.length - rendus);
@@ -1379,7 +1381,7 @@ function renderMenuClasse() {
     ${carte("dispenses", "Dispenses",
       dispenses.length ? `${dispenses.length} élève(s) actuellement dispensé(s)` : "Aucun élève dispensé", "#E8F8F3")}
     ${carte("recap", "Récapitulatif Tests / Évaluations",
-      `P${dashboardPeriod} · ${tests.length} test(s) · ${evals.length} évaluation(s)`, "#FFF3DC")}`;
+      `${tests.length} test(s) dans la classe · P${dashboardPeriod} : ${evals.length} évaluation(s)`, "#FFF3DC")}`;
   panel.querySelectorAll("[data-vue]").forEach(bouton => bouton.onclick = () => {
     const vue = bouton.dataset.vue;
     if (vue === "dispenses") { vueClasse = "menu"; detailOuvert = "dispenses"; afficherDispenses(dispenses); return; }
