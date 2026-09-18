@@ -159,53 +159,59 @@ function drawEpsTests() {
   const cls = toolClasses.find(c => c.id === toolClassId);
   const periodCount = cls ? planningPeriodCount(cls.grade) : 5;
   if (epsTestPeriod > periodCount) epsTestPeriod = periodCount;
-
   const periods = [];
-  for (let p = 1; p <= periodCount; p++) {
-    periods.push(`<button class="periodChip${p === epsTestPeriod ? " active" : ""}" data-eps-period="${p}">P${p}</button>`);
+  for (let p = 1; p <= periodCount; p++) periods.push(`<button class="periodChip${p === epsTestPeriod ? " active" : ""}" data-eps-period="${p}">P${p}</button>`);
+
+  if (epsOpenTest) {
+    const test = EpsTests.TESTS[epsOpenTest];
+    const category = EpsTests.CATEGORIES.find(cat => cat.tests.includes(epsOpenTest));
+    toolPanel.innerHTML = toolHeader(test.label, `${category?.name || "Tests EPS"}${cls ? ` · ${cls.name} · P${epsTestPeriod}` : " · utilisation libre"}`)
+      + `<main class="eps-test-fullscreen"><div class="ok" id="epsSaveMsg"></div><div id="epsTestBody"></div></main>`;
+    bindToolClose();
+    const back = document.getElementById("closeToolBtn");
+    if (back) back.onclick = () => { epsOpenTest = null; resetGenericTestState(); drawEpsTests(); };
+    drawEpsTestBody(epsOpenTest);
+    return;
   }
 
   const categories = EpsTests.CATEGORIES.map(cat => {
-    const open = epsOpenCategory === cat.name;
     const tests = cat.tests.map(key => {
       const test = EpsTests.TESTS[key];
-      const testOpen = epsOpenTest === key;
-      const favoriteId=`eps-test:${key}`;
-      const favorite=typeof isToolFavorite==="function"&&isToolFavorite(favoriteId);
-      return `<div class="card" style="background:rgba(255,255,255,.82); margin-top:7px">
-        <div class="top" style="cursor:pointer" data-eps-test="${key}">
-          <strong>${test.label}</strong><span class="eps-test-card-actions"><button class="eps-test-favorite ${favorite?"active":""}" data-eps-favorite="${key}" aria-label="${favorite?"Retirer des favoris":"Ajouter aux favoris"}">${favorite?"★":"☆"}</button><i>${testOpen ? "▲" : "▼"}</i></span>
-        </div>
-        ${testOpen ? `<div id="epsTestBody" style="margin-top:10px"></div>` : ""}
-      </div>`;
+      const favorite = typeof isToolFavorite === "function" && isToolFavorite(`eps-test:${key}`);
+      return `<article class="eps-modern-test-card" data-eps-test="${key}">
+        <div class="eps-modern-test-icon">${epsTestCardIcon(key)}</div>
+        <div class="eps-modern-test-copy"><strong>${test.label}</strong><small>${test.protocol || cat.subtitle}</small></div>
+        <button class="eps-test-favorite ${favorite ? "active" : ""}" data-eps-favorite="${key}" aria-label="${favorite ? "Retirer des favoris" : "Ajouter aux favoris"}">${favorite ? "★" : "☆"}</button>
+        <span class="eps-modern-test-open">›</span>
+      </article>`;
     }).join("");
-    return `<div class="card" style="background:${cat.color}">
-      <div class="top" style="cursor:pointer" data-eps-cat="${cat.name}">
-        <div><strong>${cat.name}</strong><div class="muted">${cat.subtitle}</div></div>
-        <span>${open ? "▲" : "▼"}</span>
-      </div>
-      ${open ? tests : ""}
-    </div>`;
+    return `<section class="eps-modern-category" style="--eps-category-color:${cat.color}">
+      <header><div><strong>${cat.name}</strong><small>${cat.subtitle}</small></div><span>${cat.tests.length} test${cat.tests.length > 1 ? "s" : ""}</span></header>
+      <div class="eps-modern-test-grid">${tests}</div>
+    </section>`;
   }).join("");
 
-  toolPanel.innerHTML = toolHeader("Tests EPS", "Calculs et protocoles terrain")
-    + toolRosterHtml()
-    + (onRealClass() ? `<label>Periode du test</label><div class="periodBar" style="display:flex">${periods.join("")}</div>` : "")
-    + `<div class="ok" id="epsSaveMsg"></div>`
-    + categories
-    + `<div class="muted" style="margin-top:10px">Ces resultats sont des reperes pedagogiques. Ils ne generent pas automatiquement une note.</div>`;
+  toolPanel.innerHTML = toolHeader("Tests EPS", "Calculs, groupes et protocoles terrain")
+    + `<main class="eps-tests-setup">${toolRosterHtml()}
+      ${onRealClass() ? `<label>Période du test</label><div class="periodBar" style="display:flex">${periods.join("")}</div>` : ""}
+      <div class="eps-modern-categories">${categories}</div>
+      <div class="muted eps-tests-note">Les résultats sont des repères pédagogiques et restent modifiables après enregistrement.</div>
+    </main>`;
 
   bindToolClose();
   bindToolRoster(drawEpsTests);
-  toolPanel.querySelectorAll("[data-eps-period]").forEach(b =>
-    b.onclick = () => { epsTestPeriod = Number(b.dataset.epsPeriod); drawEpsTests(); });
-  toolPanel.querySelectorAll("[data-eps-cat]").forEach(b =>
-    b.onclick = () => { epsOpenCategory = epsOpenCategory === b.dataset.epsCat ? null : b.dataset.epsCat; epsOpenTest = null; drawEpsTests(); });
-  toolPanel.querySelectorAll("[data-eps-test]").forEach(b =>
-    b.onclick = e => { if(e.target.closest("[data-eps-favorite]"))return;const next=epsOpenTest === b.dataset.epsTest ? null : b.dataset.epsTest;if(next!==epsOpenTest)resetGenericTestState();epsOpenTest = next; drawEpsTests(); });
-  toolPanel.querySelectorAll("[data-eps-favorite]").forEach(b=>b.onclick=e=>{e.stopPropagation();if(typeof toggleToolFavorite==="function")toggleToolFavorite(`eps-test:${b.dataset.epsFavorite}`);drawEpsTests()});
+  toolPanel.querySelectorAll("[data-eps-period]").forEach(b => b.onclick = () => { epsTestPeriod = Number(b.dataset.epsPeriod); drawEpsTests(); });
+  toolPanel.querySelectorAll("[data-eps-test]").forEach(b => b.onclick = e => { if (e.target.closest("[data-eps-favorite]")) return; resetGenericTestState(); epsOpenTest = b.dataset.epsTest; drawEpsTests(); toolPanel.scrollIntoView({block:"start"}); });
+  toolPanel.querySelectorAll("[data-eps-favorite]").forEach(b => b.onclick = e => { e.stopPropagation(); if (typeof toggleToolFavorite === "function") toggleToolFavorite(`eps-test:${b.dataset.epsFavorite}`); drawEpsTests(); });
+}
 
-  if (epsOpenTest) drawEpsTestBody(epsOpenTest);
+function epsTestCardIcon(key) {
+  if (key.includes("500") || key.includes("sprint") || key.includes("vma") || key.includes("course")) return "🏃";
+  if (key.includes("saut") || key.includes("pentabond")) return "↗";
+  if (key.includes("lancer")) return "🥏";
+  if (key.includes("nat") || key.includes("nage")) return "🏊";
+  if (key.includes("force") || key.includes("traction") || key.includes("pompe")) return "💪";
+  return "📋";
 }
 
 async function drawEpsTestBody(key) {

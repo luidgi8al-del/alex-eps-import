@@ -21,7 +21,7 @@
   function ensureValues(){toolStudents.forEach(s=>state.values[s.id]??=empty(1))}
   const groups=()=>[...new Set(toolStudents.map(s=>state.values[s.id]?.group||1))].sort((a,b)=>a-b);
   function resetForClass(){state.values={};state.sessionId=null;state.resultIds={};state.createdAt=null;state.activeGroup=0}
-  const hero=sub=>`<div class="tools-hero"><h2>💪 Condition physique générale</h2><p>${esc(sub)}</p></div>`;
+  const hero=sub=>toolHeader("💪 Condition physique générale",esc(sub));
 
   async function renderConditionFitnessWeb(){await loadToolClasses();await loadSaved();toolPanel=document.getElementById("toolPanel");toolPanel.style.display="block";drawSetup()}
   function contextHtml(){return `<section class="field-tool-card"><div class="tool-context"><label>Utilisation<select id="fitnessMode"><option value="class">Avec une classe</option><option value="free">Utilisation libre</option></select></label><label>Classe<select id="fitnessClass"><option value="">Choisir la classe</option>${toolClasses.map(c=>`<option value="${c.id}" ${String(c.id)===String(state.classId)?"selected":""}>${esc(c.name)}</option>`).join("")}</select></label></div><div class="field-tool-row"><label>Période<select id="fitnessPeriod">${periodNumbers().map(p=>`<option value="${p}" ${p===state.period?"selected":""}>Période ${p}</option>`).join("")}</select></label><label>Organisation<select id="fitnessGrouping"><option value="groups" ${state.groupsEnabled?"selected":""}>Constituer des groupes</option><option value="alpha" ${!state.groupsEnabled?"selected":""}>Ordre alphabétique</option></select></label></div></section>`}

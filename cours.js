@@ -964,9 +964,10 @@ function exportEvaluationCsv() {
 
 function toolHeader(title, subtitle) {
   document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
-  return `<div class="modern-tool-hero"><button class="modern-tool-back" id="closeToolBtn" aria-label="Retour aux outils">←</button><div><h2>${title}</h2><p>${subtitle}</p></div></div>`;
+  return `<div class="modern-tool-hero"><button class="modern-tool-back" id="closeToolBtn" onclick="closeModernTool()" aria-label="Retour aux outils">←</button><div><h2>${title}</h2><p>${subtitle}</p></div></div>`;
 }
-function bindToolClose() { const button=document.getElementById("closeToolBtn");if(button)button.onclick = () => { stopToolTimer(); toolPanel.style.display = "none"; toolPanel.innerHTML=""; const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");workspace?.scrollIntoView({behavior:"smooth",block:"start"}); }; }
+function closeModernTool(){stopToolTimer();toolPanel.style.display="none";toolPanel.innerHTML="";const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");workspace?.scrollIntoView({behavior:"smooth",block:"start"})}
+function bindToolClose() { const button=document.getElementById("closeToolBtn");if(button)button.onclick = closeModernTool; }
 
 function renderTimersHub() {
   toolPanel.innerHTML = toolHeader("Chronomètre", "Choisissez le mode") + `<div class="toolActions"><button data-timer-mode="chrono">Chronomètre</button><button data-timer-mode="countdown">Compte à rebours</button><button data-timer-mode="interval">Timer intervalles</button></div><div id="timerBody"></div>`;
