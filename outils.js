@@ -26,6 +26,7 @@ function formatToolTime(ms) {
 function openTool(name, target) {
   stopToolTimer();
   toolPanel = target || document.getElementById("toolPanel");
+  document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
   toolPanel.style.display = "block";
   toolPanel.classList.add("modern-tool-panel");
   if (name === "timers") renderTimersHub();
@@ -169,9 +170,11 @@ function drawEpsTests() {
     const tests = cat.tests.map(key => {
       const test = EpsTests.TESTS[key];
       const testOpen = epsOpenTest === key;
+      const favoriteId=`eps-test:${key}`;
+      const favorite=typeof isToolFavorite==="function"&&isToolFavorite(favoriteId);
       return `<div class="card" style="background:rgba(255,255,255,.82); margin-top:7px">
         <div class="top" style="cursor:pointer" data-eps-test="${key}">
-          <strong>${test.label}</strong><span>${testOpen ? "▲" : "▼"}</span>
+          <strong>${test.label}</strong><span class="eps-test-card-actions"><button class="eps-test-favorite ${favorite?"active":""}" data-eps-favorite="${key}" aria-label="${favorite?"Retirer des favoris":"Ajouter aux favoris"}">${favorite?"★":"☆"}</button><i>${testOpen ? "▲" : "▼"}</i></span>
         </div>
         ${testOpen ? `<div id="epsTestBody" style="margin-top:10px"></div>` : ""}
       </div>`;
@@ -199,7 +202,8 @@ function drawEpsTests() {
   toolPanel.querySelectorAll("[data-eps-cat]").forEach(b =>
     b.onclick = () => { epsOpenCategory = epsOpenCategory === b.dataset.epsCat ? null : b.dataset.epsCat; epsOpenTest = null; drawEpsTests(); });
   toolPanel.querySelectorAll("[data-eps-test]").forEach(b =>
-    b.onclick = () => { const next=epsOpenTest === b.dataset.epsTest ? null : b.dataset.epsTest;if(next!==epsOpenTest)resetGenericTestState();epsOpenTest = next; drawEpsTests(); });
+    b.onclick = e => { if(e.target.closest("[data-eps-favorite]"))return;const next=epsOpenTest === b.dataset.epsTest ? null : b.dataset.epsTest;if(next!==epsOpenTest)resetGenericTestState();epsOpenTest = next; drawEpsTests(); });
+  toolPanel.querySelectorAll("[data-eps-favorite]").forEach(b=>b.onclick=e=>{e.stopPropagation();if(typeof toggleToolFavorite==="function")toggleToolFavorite(`eps-test:${b.dataset.epsFavorite}`);drawEpsTests()});
 
   if (epsOpenTest) drawEpsTestBody(epsOpenTest);
 }
