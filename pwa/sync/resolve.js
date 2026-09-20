@@ -115,6 +115,16 @@ export async function retryRejection(conflictId) {
   return publierEtat({ refusRelance: conflictId, envoye: true });
 }
 
+/** Relance tous les refus en respectant leurs dépendances : séance avant présences. */
+export async function retryAllRejections() {
+  const refus = (await listConflicts()).filter(item => item.kind === "refus").sort((a, b) => {
+    const priorite = entity => entity === "unss_sessions" ? 0 : entity === "unss_attendance" ? 1 : 2;
+    return priorite(a.entity) - priorite(b.entity) || String(a.detectedAt).localeCompare(String(b.detectedAt));
+  });
+  for (const item of refus) await retryRejection(item.conflictId);
+  return { relances: refus.length };
+}
+
 /** Abandonne un conflit sans rien renvoyer : la version du serveur fait foi. */
 export async function discardConflict(conflictId) {
   return resolveConflict(conflictId, "server");

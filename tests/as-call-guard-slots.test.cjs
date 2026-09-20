@@ -6,4 +6,6 @@ const dialog = fs.readFileSync(path.join(root, 'pwa', 'ui', 'conflict-dialog.js'
 const resolve = fs.readFileSync(path.join(root, 'pwa', 'sync', 'resolve.js'), 'utf8');
 if (!sql.includes('new.slot_id is not null') || !sql.includes('eps_call_slot(new.slot_id)')) throw new Error('Le garde-fou doit accepter les appels du créneau affecté.');
 if (!dialog.includes('data-refus-retry') || !resolve.includes('retryRejection')) throw new Error('Une saisie refusée doit pouvoir être relancée après correction serveur.');
+if (!dialog.includes('data-refus-retry-all') || !resolve.includes('retryAllRejections')) throw new Error('Les présences refusées doivent pouvoir être relancées ensemble après leur séance.');
+if (!resolve.includes('entity === "unss_sessions" ? 0') || !resolve.includes('entity === "unss_attendance" ? 1')) throw new Error('La séance doit repartir avant ses présences.');
 console.log('as-call-guard-slots: créneaux acceptés et refus relançables OK');

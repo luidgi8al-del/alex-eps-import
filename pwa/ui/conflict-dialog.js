@@ -1,5 +1,5 @@
 import { listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections } from "../sync/resolve.js";
 
 /**
  * L'ecran de resolution des conflits.
@@ -53,11 +53,16 @@ function refusHtml(refus, libelles) {
     .filter(champ => champ !== "__deleted__")
     .map(champ => `${echapper(libelles[champ] || champ)} : ${echapper(texte(refus.localData?.[champ]))}`);
   const geste = (refus.overlappingFields || []).includes("__deleted__") ? "Suppression" : "Modification";
+  const explication = refus.entity === "unss_attendance"
+    ? "Cette présence dépend de l’appel refusé. Relancez toutes les saisies pour envoyer d’abord l’appel, puis ses présences."
+    : estRefusDeDroits(refus.reason)
+      ? "Le serveur a refusé cette action avec les droits actuels."
+      : "Le serveur a refusé cette saisie.";
   return `
     <section class="conflit conflitRefus" data-refus="${echapper(refus.conflictId)}">
       <h3>${echapper(libelles[refus.entity] || refus.entity)} · ${echapper(refus.id)}</h3>
       <p class="conflitQuand">${geste} refusée — ${echapper(refus.reason || "raison inconnue")}.
-         ${estRefusDeDroits(refus.reason) ? "Cette action est réservée à l'administrateur." : "Le serveur a refusé cette saisie."}
+         ${explication}
          Elle ne sera pas enregistrée.</p>
       ${champs.length ? `<ul class="conflitChamps">${champs.map(c => `<li>${c}</li>`).join("")}</ul>` : ""}
       <div class="conflitActions">
@@ -111,7 +116,8 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
     const refuses = conflits.filter(c => c.kind === "refus");
     const arbitrer = conflits.filter(c => c.kind !== "refus");
     element.innerHTML =
-      (refuses.length ? `<p class="conflitIntro">${refuses.length} saisie(s) refusée(s) par le serveur.</p>`
+      (refuses.length ? `<p class="conflitIntro">${refuses.length} saisie(s) refusée(s) par le serveur.</p>
+        <div class="conflitActions"><button type="button" data-refus-retry-all>Réessayer toutes les saisies</button></div>`
         + refuses.map(r => refusHtml(r, libelles)).join("") : "")
       + (arbitrer.length ? `<p class="conflitIntro">${arbitrer.length} fiche(s) modifiee(s) des deux cotes.
         Choisissez la version a conserver : rien ne sera envoye avant votre decision.</p>`
@@ -142,6 +148,18 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
         onResolved?.({ conflictId: bouton.dataset.refusRetry }, "retry");
         await afficher();
       });
+    });
+    element.querySelector("[data-refus-retry-all]")?.addEventListener("click", async event => {
+      const bouton = event.currentTarget;
+      bouton.disabled = true;
+      try { await retryAllRejections(); }
+      catch (error) {
+        bouton.disabled = false;
+        bouton.insertAdjacentHTML("afterend", `<p class="conflitErreur">${echapper(error.message)}</p>`);
+        return;
+      }
+      onResolved?.({}, "retry-all");
+      await afficher();
     });
 
     element.querySelectorAll("[data-conflit]").forEach(bloc => {
