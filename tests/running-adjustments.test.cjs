@@ -6,4 +6,6 @@ assert(code.includes(":difficulty:${runningDifficulty}:mode:${walk?'walk':'run'}
 assert(code.includes("e<=225?3:e<=240?3-(e-225)*.1:e<260?1.5-(e-240)*.075:0"));
 assert(code.includes("regMax:walking?9:6,perfMax:walking?3:6"));
 assert(code.includes('running-walk-badge'));
+assert(code.includes('data-run-score'), 'la note doit être actualisée sans redessiner tout le tableau');
+assert(!code.includes("input.onchange=()=>paintRunningSeriesTest(test)"), 'la fin de saisie ne doit pas déclencher un faux appui prolongé');
 console.log('running-adjustments: slider, marche rapide, sauvegarde et barèmes OK');
