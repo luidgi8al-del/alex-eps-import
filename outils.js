@@ -166,8 +166,24 @@ function drawEpsTests() {
     const test = EpsTests.TESTS[epsOpenTest];
     const category = EpsTests.CATEGORIES.find(cat => cat.tests.includes(epsOpenTest));
     toolPanel.innerHTML = toolHeader(test.label, `${category?.name || "Tests EPS"}${cls ? ` · ${cls.name} · P${epsTestPeriod}` : " · utilisation libre"}`)
-      + `<main class="eps-test-fullscreen"><div class="ok" id="epsSaveMsg"></div><div id="epsTestBody"></div></main>`;
+      + `<main class="eps-test-fullscreen">
+          <section class="eps-test-context">${toolRosterHtml()}
+            ${onRealClass() ? `<label>Période du test</label><div class="periodBar" style="display:flex">${periods.join("")}</div>` : ""}
+          </section>
+          <div class="ok" id="epsSaveMsg"></div><div id="epsTestBody"></div>
+        </main>`;
     bindToolClose();
+    bindToolRoster(() => {
+      resetGenericTestState();
+      resetRunningSession();
+      drawEpsTests();
+    });
+    toolPanel.querySelectorAll("[data-eps-period]").forEach(b => b.onclick = () => {
+      epsTestPeriod = Number(b.dataset.epsPeriod);
+      resetGenericTestState();
+      resetRunningSession();
+      drawEpsTests();
+    });
     const back = document.getElementById("closeToolBtn");
     if (back) back.onclick = () => { epsOpenTest = null; resetGenericTestState(); drawEpsTests(); };
     drawEpsTestBody(epsOpenTest);
@@ -339,7 +355,12 @@ function paintRunningSeriesTest(test){
   const rows=displayedStudents.map(s=>{const summary=runningSummary(s),values=runningValues[s.id],walk=runningWalking.has(String(s.id));return `<tr><th class="running-sticky"><button class="running-name" data-run-name="${s.id}"><b>${studentLabel(s)}${walk?' <span class="running-walk-badge">M.R</span>':''}</b><small>Note : ${summary?.total!=null?EpsTests.fr(summary.total,2):'—'}</small></button></th>${values.map((v,i)=>`<td>${v===RUNNING_REMOVED?`<button class="running-removed" data-run-student="${s.id}" data-run-index="${i}">Retirée</button>`:`<input inputmode="numeric" maxlength="3" placeholder="315" data-run-student="${s.id}" data-run-index="${i}" value="${v}">`}</td>`).join('')}</tr>`}).join('');
   const detailStudent=toolStudents.find(s=>String(s.id)===String(runningExpandedStudent)),detail=detailStudent?runningSummary(detailStudent):null;
   host.innerHTML=`<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details><div class="running-settings"><label>Format<select id="runDistance"><option value="500" ${runningDistance===500?'selected':''}>500 m</option><option value="250" ${runningDistance===250?'selected':''}>250 m</option></select></label><label>Nombre de courses<select id="runCount">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${runningCount===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label><label class="running-difficulty">Difficulté <b id="runningDifficultyLabel">${runningDifficulty>0?'+'+runningDifficulty:runningDifficulty} %</b><input id="runningDifficulty" type="range" min="-30" max="30" step="1" value="${runningDifficulty}"><small>−30 % plus facile · +30 % plus difficile</small></label></div>${onRealClass()?groupTabs:''}${onRealClass()?groupEditor:''}<div class="running-session-toolbar"><button class="secondary" id="runningBlank">＋ Nouvelle saisie</button>${onRealClass()?`<div class="running-session-list">${sessions||'<span class="muted">Aucune session enregistrée</span>'}</div>`:'<span class="muted">Utilisation libre · aucun enregistrement dans une classe</span>'}</div><div class="running-grid-wrap"><table class="running-grid"><thead><tr><th class="running-sticky">Nom et prénom</th>${heads}</tr></thead><tbody>${rows}</tbody></table></div>${detailStudent?`<div class="running-result"><b>${studentLabel(detailStudent)}${detail?.walking?' · M.R':''}</b>${detail?`<span>Moyenne de ${detail.valid.length} course(s) : ${runningTimeLabel(detail.avg)} · Régularité ${detail.reg==null?'—':EpsTests.fr(detail.reg,1)}/${detail.regMax} · Performance ${detail.perf==null?'sexe non renseigné':EpsTests.fr(detail.perf,2)+'/'+detail.perfMax}</span>`:'<span>Renseignez au moins un temps.</span>'}</div>`:''}${onRealClass()?`<div class="running-save-actions"><button id="runningSave">${runningSessionId?'Enregistrer les modifications':'Enregistrer la session'}</button><button class="secondary" id="runningSaveAs">Enregistrer comme nouvelle session</button></div>`:''}<div class="running-export-actions"><button class="secondary" id="runningExcel">▦ Excel</button><button class="secondary" id="runningPdf">▤ PDF</button></div><div id="runningMsg" class="ok"></div>`;
-  runDistance.onchange=()=>{runningDistance=+runDistance.value;paintRunningSeriesTest(test)};runCount.onchange=()=>{runningCount=+runCount.value;paintRunningSeriesTest(test)};runningDifficulty.oninput=()=>{runningDifficulty=+runningDifficulty.value;runningDifficultyLabel.textContent=`${runningDifficulty>0?'+':''}${runningDifficulty} %`};runningDifficulty.onchange=()=>paintRunningSeriesTest(test);runningBlank.onclick=()=>{resetRunningSession();paintRunningSeriesTest(test)};
+  const distanceSelect=document.getElementById('runDistance'),countSelect=document.getElementById('runCount'),difficultySlider=document.getElementById('runningDifficulty'),difficultyLabel=document.getElementById('runningDifficultyLabel'),blankButton=document.getElementById('runningBlank');
+  distanceSelect.onchange=()=>{runningDistance=+distanceSelect.value;paintRunningSeriesTest(test)};
+  countSelect.onchange=()=>{runningCount=+countSelect.value;paintRunningSeriesTest(test)};
+  difficultySlider.oninput=()=>{runningDifficulty=+difficultySlider.value;difficultyLabel.textContent=`${runningDifficulty>0?'+':''}${runningDifficulty} %`};
+  difficultySlider.onchange=()=>paintRunningSeriesTest(test);
+  blankButton.onclick=()=>{resetRunningSession();paintRunningSeriesTest(test)};
   host.querySelectorAll('[data-running-group]').forEach(b=>b.onclick=()=>{runningActiveGroup=+b.dataset.runningGroup;runningManageGroups=false;runningExpandedStudent=null;paintRunningSeriesTest(test)});
   const manageGroups=document.getElementById('runningManageGroups');if(manageGroups)manageGroups.onclick=()=>{runningManageGroups=true;runningEditingGroup=null;runningGroupSelection=new Set();paintRunningSeriesTest(test)};
   if(runningManageGroups){document.getElementById('runningCloseGroups').onclick=()=>{runningManageGroups=false;paintRunningSeriesTest(test)};host.querySelectorAll('[data-running-group-student]').forEach(box=>box.onchange=()=>{if(box.checked)runningGroupSelection.add(String(box.dataset.runningGroupStudent));else runningGroupSelection.delete(String(box.dataset.runningGroupStudent));paintRunningSeriesTest(test)});host.querySelectorAll('[data-running-edit-group]').forEach(b=>b.onclick=()=>{runningEditingGroup=+b.dataset.runningEditGroup;runningGroupSelection=new Set(runningGroups[runningEditingGroup]||[]);paintRunningSeriesTest(test)});document.getElementById('runningSaveGroup').onclick=()=>{const ids=[...runningGroupSelection];if(!ids.length)return;if(runningEditingGroup==null)runningGroups.push(ids);else runningGroups[runningEditingGroup]=ids;runningActiveGroup=runningEditingGroup==null?runningGroups.length-1:runningEditingGroup;runningManageGroups=false;runningEditingGroup=null;runningGroupSelection=new Set();paintRunningSeriesTest(test)};const deleteGroup=document.getElementById('runningDeleteGroup');if(deleteGroup)deleteGroup.onclick=()=>{if(!confirm(`Supprimer le groupe ${runningEditingGroup+1} ? Les temps saisis restent conservés.`))return;runningGroups.splice(runningEditingGroup,1);runningActiveGroup=runningGroups.length?Math.min(runningEditingGroup,runningGroups.length-1):-1;runningManageGroups=false;runningEditingGroup=null;runningGroupSelection=new Set();paintRunningSeriesTest(test)}}
