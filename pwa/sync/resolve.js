@@ -94,6 +94,27 @@ export async function acknowledgeRejection(conflictId) {
   return publierEtat({ refusPrisEnCompte: conflictId, envoye: false });
 }
 
+/** Remet une saisie refusée dans la file après correction d'une règle serveur. */
+export async function retryRejection(conflictId) {
+  const refus = (await listConflicts()).find(item => item.conflictId === conflictId && item.kind === "refus");
+  if (!refus) throw new Error("Refus introuvable : il a peut-être déjà été traité.");
+  await saveLocalRecord({
+    entity: refus.entity, id: refus.id, data: refus.localData,
+    version: refus.serverVersion || refus.baseVersion || 0,
+    updatedAt: new Date().toISOString(), deleted: false
+  });
+  await enqueueOperation({
+    entity: refus.entity, id: refus.id, action: "upsert",
+    baseVersion: refus.serverVersion || refus.baseVersion || 0,
+    baseData: refus.serverData || refus.baseData || null,
+    data: refus.localData,
+    changedFields: refus.overlappingFields || Object.keys(refus.localData || {}),
+    authorId: refus.localAuthorId
+  });
+  await removeConflict(conflictId);
+  return publierEtat({ refusRelance: conflictId, envoye: true });
+}
+
 /** Abandonne un conflit sans rien renvoyer : la version du serveur fait foi. */
 export async function discardConflict(conflictId) {
   return resolveConflict(conflictId, "server");

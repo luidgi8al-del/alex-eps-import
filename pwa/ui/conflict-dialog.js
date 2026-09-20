@@ -1,5 +1,5 @@
 import { listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice, acknowledgeRejection } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection } from "../sync/resolve.js";
 
 /**
  * L'ecran de resolution des conflits.
@@ -61,6 +61,7 @@ function refusHtml(refus, libelles) {
          Elle ne sera pas enregistrée.</p>
       ${champs.length ? `<ul class="conflitChamps">${champs.map(c => `<li>${c}</li>`).join("")}</ul>` : ""}
       <div class="conflitActions">
+        <button type="button" data-refus-retry="${echapper(refus.conflictId)}">Réessayer</button>
         <button type="button" data-refus-ok="${echapper(refus.conflictId)}">J'ai compris</button>
       </div>
     </section>`;
@@ -126,6 +127,19 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
           return;
         }
         onResolved?.({ conflictId: bouton.dataset.refusOk }, "refus");
+        await afficher();
+      });
+    });
+    element.querySelectorAll("[data-refus-retry]").forEach(bouton => {
+      bouton.addEventListener("click", async () => {
+        bouton.disabled = true;
+        try { await retryRejection(bouton.dataset.refusRetry); }
+        catch (error) {
+          bouton.disabled = false;
+          bouton.insertAdjacentHTML("afterend", `<p class="conflitErreur">${echapper(error.message)}</p>`);
+          return;
+        }
+        onResolved?.({ conflictId: bouton.dataset.refusRetry }, "retry");
         await afficher();
       });
     });
