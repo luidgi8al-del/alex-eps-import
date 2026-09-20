@@ -2054,6 +2054,7 @@ let unssSeances = [];
 let unssPresences = [];
 /** Creneau ouvert dans l'ecran Appel. */
 let unssAppelSlotId = null;
+let unssAppelVue = "historique";
 /** Vrai une fois schema_as_creneaux.sql applique. Demande une seule fois. */
 let creneauPorteTout = false;
 let creneauPromesse = null;
@@ -2270,35 +2271,48 @@ function renderUnssAppelTab() {
   const creneau = creneaux.find(s => s.id === unssAppelSlotId);
   const seances = seancesDuCreneau(unssAppelSlotId);
   const inscrits = elevesDuCreneau(unssAppelSlotId);
-
-  wrap.innerHTML = `<label for="unssAppelSlotSelect">Créneau</label>
-    <select id="unssAppelSlotSelect">${creneaux.map(s =>
-      `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select>
-    <div class="card" style="margin-top:12px">
-      <div class="top"><h3 style="margin:0">Séances</h3>
+  const idsSeances = new Set(seances.map(s => String(s.id)));
+  const bilanEleves = inscrits.map(e => {
+    const lignes = unssPresences.filter(p => String(p.student_id) === String(e.id) && idsSeances.has(String(p.session_id)));
+    const presents = lignes.filter(p => p.present).length;
+    return { eleve: e, presents, absents: lignes.length - presents, total: lignes.length,
+      taux: lignes.length ? Math.round(presents * 100 / lignes.length) : 0 };
+  }).sort((a,b) => String(a.eleve.last_name || "").localeCompare(String(b.eleve.last_name || ""), "fr"));
+  const contenuHistorique = `<div class="card as-call-history" style="margin-top:12px">
+      <div class="top"><h3 style="margin:0">Appels enregistrés</h3>
         <button id="unssNouvelAppel" style="margin-top:0" ${inscrits.length ? "" : "disabled"}>Nouvel appel</button></div>
       ${inscrits.length === 0
         ? `<div class="muted" style="margin-top:8px">Aucun élève inscrit à ce créneau.
              Ajoutez-en depuis <strong>Créneaux AS</strong>.</div>`
         : seances.length === 0
           ? `<div class="muted" style="margin-top:8px">Aucune séance pointée. Cliquez sur « Nouvel appel ».</div>`
-          : `<div style="display:flex; flex-direction:column; gap:6px; margin-top:8px">${
+          : `<div class="as-call-session-list">${
               seances.map(s => {
-                const pointees = unssPresences.filter(p => p.session_id === s.id);
+                const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
-                return `<button class="secondary" data-seance="${s.id}" style="margin-top:0; text-align:left">
-                  ${dateSeance(s.date_epoch_millis)}
-                  <span class="muted">· ${presents} présent(s) sur ${pointees.length}</span></button>`;
+                const absents = pointees.length - presents;
+                return `<button class="as-call-session" data-seance="${s.id}"><span><b>${dateSeance(s.date_epoch_millis)}</b><small>Cliquer pour consulter ou modifier</small></span><span class="as-call-count yes">${presents} P</span><span class="as-call-count no">${absents} A</span><i>›</i></button>`;
               }).join("")}</div>`}
-    </div>
-    <div id="unssAppelBody" style="margin-top:14px"></div>`;
+    </div><div id="unssAppelBody" style="margin-top:14px"></div>`;
+  const contenuBilan = `<div class="as-attendance-summary">
+      <div class="as-attendance-heading"><div><h3>Taux de présence</h3><p>${unssText(creneau.activity_name)} uniquement · ${seances.length} appel(s)</p></div><b>${inscrits.length}</b></div>
+      ${bilanEleves.length ? `<div class="as-attendance-list">${bilanEleves.map(l => `<article><div><strong>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</strong><small>${unssText(l.eleve.school_class_label || l.eleve.class_label || "")}</small></div><span>${l.presents} présent${l.presents>1?"s":""} · ${l.absents} absent${l.absents>1?"s":""}</span><b class="${l.taux < 60 ? "low" : l.taux < 80 ? "mid" : "good"}">${l.taux} %</b></article>`).join("")}</div>` : `<div class="muted">Aucun élève inscrit à ce créneau.</div>`}
+    </div>`;
+
+  wrap.innerHTML = `<label for="unssAppelSlotSelect">Créneau</label>
+    <select id="unssAppelSlotSelect">${creneaux.map(s =>
+      `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select>
+    <div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>
+    ${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}`;
 
   document.getElementById("unssAppelSlotSelect").addEventListener("change", (e) => {
     unssAppelSlotId = e.target.value;
+    unssAppelVue = "historique";
     unssAppelPresence = {};
     renderUnssAppelTab();
   });
-  document.getElementById("unssNouvelAppel").addEventListener("click", () => {
+  wrap.querySelectorAll("[data-appel-vue]").forEach(b => b.addEventListener("click", () => { unssAppelVue = b.dataset.appelVue; renderUnssAppelTab(); }));
+  document.getElementById("unssNouvelAppel")?.addEventListener("click", () => {
     unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
     unssAppelPresence = {};
     unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
