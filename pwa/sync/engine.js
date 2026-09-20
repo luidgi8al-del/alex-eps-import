@@ -23,7 +23,10 @@ export class OfflineSyncEngine {
   async #run() {
     publishSyncState(SYNC_STATE.SYNCING);
     try {
-      await this.#pullAndReconcile(); await this.#pushPending(); await this.#pullAndReconcile();
+      await this.#pullAndReconcile();
+      const sent = await this.#pushPending();
+      // No writes: the first pull is sufficient. Do not read every table twice per refresh.
+      if (sent) await this.#pullAndReconcile();
       const pending = await countPendingOperations(), conflicts = await countConflicts();
       return publishSyncState(conflicts ? SYNC_STATE.CONFLICT : pending ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED, { pending, conflicts });
     } catch (error) {
@@ -107,6 +110,7 @@ export class OfflineSyncEngine {
     }
   }
   async #pushPending() {
+    let sent = 0;
     let batch = await pendingOperations(this.#batchSize);
     while (batch.length) {
       for (const operation of batch) {
@@ -128,7 +132,14 @@ export class OfflineSyncEngine {
           }
           if (result.record) await saveLocalRecord(result.record);
           await acknowledgeOperation(operation.opId);
+          sent++;
         } catch (error) {
+          // Connectivity failures are temporary, even after a long outage. Never move a
+          // pending edit to permanent rejection just because the network failed repeatedly.
+          if (estPanneReseau(error)) {
+            await deferOperation(operation, error);
+            throw error;
+          }
           // Une operation qui echoue sans fin doit finir par s'arreter.
           //
           // Un refus que l'adaptateur ne sait pas nommer etait repris indefiniment : chaque
@@ -147,5 +158,6 @@ export class OfflineSyncEngine {
       }
       batch = await pendingOperations(this.#batchSize);
     }
+    return sent;
   }
 }

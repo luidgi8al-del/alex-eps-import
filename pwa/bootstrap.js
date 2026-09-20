@@ -1,12 +1,14 @@
 import { registerServiceWorker } from "./core/register.js";
 import { startConnectivityMonitor, isOnline } from "./core/connectivity.js";
-import { subscribeSyncState } from "./core/events.js";
+import { subscribeSyncState, publishSyncState } from "./core/events.js";
+import { countPendingOperations } from "./sync/outbox.js";
 import { OfflineSyncEngine } from "./sync/engine.js";
 import { createSupabaseAdapter } from "./sync/supabase-adapter.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "./sync/local-edits.js";
 import { listLocalRecords, countLocalRecords, utiliserCompte, supprimerToutesLesBases } from "./storage/records.js";
 import { mountSyncStatus } from "./ui/sync-status.js";
 import { mountConflictDialog } from "./ui/conflict-dialog.js";
+import { createAutoSync } from "./sync/auto-sync.js";
 
 /**
  * Point d'entree unique du mode hors connexion.
@@ -48,12 +50,14 @@ export async function demarrerHorsConnexion({
   const adapter = createSupabaseAdapter({ url, anonKey, session, tables });
   const engine = new OfflineSyncEngine({ adapter });
 
-  startConnectivityMonitor({ onReconnect: () => engine.sync().catch(() => {}) });
+  const automatique = createAutoSync({ run: () => engine.sync(), online: isOnline,
+    debounceMs: DELAI_ENVOI_APRES_SAISIE_MS, refreshMs: INTERVALLE_MIN_SYNCHRO_MS });
+  startConnectivityMonitor({ onReconnect: () => automatique.request({ force: true }) });
   if (statusElement) mountSyncStatus(statusElement);
   // mountConflictDialog rend la fonction qui redessine la liste : on la garde pour pouvoir
   // reafficher les conflits sans remonter tout le dialogue.
   const afficherConflits = conflictElement
-    ? mountConflictDialog(conflictElement, { onResolved: () => engine.sync().catch(() => {}) })
+    ? mountConflictDialog(conflictElement, { onResolved: () => automatique.changed() })
     : null;
   registerServiceWorker("./service-worker.js").catch(() => {});
 
@@ -71,26 +75,17 @@ export async function demarrerHorsConnexion({
    * ecrans declenchaient six synchronisations qui s'enchainaient l'une apres l'autre, et le
    * dernier ecran attendait la somme des cinq autres.
    */
-  let synchroEnCours = null;
-  let finDerniereSynchro = 0;
-  let envoiApresSaisie = null;
-  let revisionSaisie = 0;
 
   /**
    * @param {boolean} force geste explicite de l'utilisateur : on y va sans attendre le delai.
    */
   function rapprocher({ force = false } = {}) {
-    if (!isOnline()) return Promise.resolve(false);
-    if (synchroEnCours) return synchroEnCours;
     // Delai minimal entre deux synchronisations spontanees, sans quoi elles se declenchent
     // l'une l'autre : une synchronisation terminee rafraichit les ecrans, un ecran rafraichi
     // relit ses donnees, et une lecture demande une synchronisation. La boucle etait complete
     // et tournait tant qu'une page restait ouverte - des milliers de lectures par heure, pour
     // rien. Un geste de l'utilisateur, lui, passe outre : il attend un resultat tout de suite.
-    if (!force && Date.now() - finDerniereSynchro < INTERVALLE_MIN_SYNCHRO_MS) return Promise.resolve(false);
-    synchroEnCours = engine.sync().then(() => true, () => false);
-    synchroEnCours.finally(() => { finDerniereSynchro = Date.now(); synchroEnCours = null; });
-    return synchroEnCours;
+    return automatique.request({ force });
   }
 
   /**
@@ -103,17 +98,7 @@ export async function demarrerHorsConnexion({
    * deja commence a examiner.
    */
   function programmerEnvoiApresSaisie() {
-    revisionSaisie += 1;
-    const revisionDemandee = revisionSaisie;
-    if (envoiApresSaisie) clearTimeout(envoiApresSaisie);
-    envoiApresSaisie = setTimeout(async () => {
-      envoiApresSaisie = null;
-      const dejaEnCours = synchroEnCours;
-      if (dejaEnCours) await dejaEnCours.catch(() => false);
-      // Une saisie plus recente possede deja son propre minuteur : elle enverra le lot complet.
-      if (revisionDemandee !== revisionSaisie) return;
-      await rapprocher({ force: true });
-    }, DELAI_ENVOI_APRES_SAISIE_MS);
+    automatique.changed();
   }
 
   // Filet de securite : dans une fenetre installee, couper puis retablir le wifi ne declenche pas
@@ -133,7 +118,7 @@ export async function demarrerHorsConnexion({
     if (document.visibilityState === "visible") rapprocher();
   }, INTERVALLE_MIN_SYNCHRO_MS);
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") rapprocher({ force: true });
+    if (document.visibilityState === "visible") rapprocher();
   });
 
   /**
@@ -201,14 +186,20 @@ export async function demarrerHorsConnexion({
     async enregistrer(entity, id, data) {
       verifierDroit(entity, "creer", "modifier");
       const resultat = await saveOfflineEdit({ entity, id, data, authorId: session()?.user_id });
-      programmerEnvoiApresSaisie();
+      if (resultat.changed) {
+        programmerEnvoiApresSaisie();
+        publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
+      }
       return resultat;
     },
 
     async supprimer(entity, id) {
       verifierDroit(entity, "supprimer");
       const resultat = await saveOfflineDeletion({ entity, id, authorId: session()?.user_id });
-      programmerEnvoiApresSaisie();
+      if (resultat.changed) {
+        programmerEnvoiApresSaisie();
+        publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
+      }
       return resultat;
     },
 

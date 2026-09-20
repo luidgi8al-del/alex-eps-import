@@ -24,7 +24,7 @@ export async function countPendingOperations() {
 }
 export async function acknowledgeOperation(opId) { return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].delete(opId)); }
 export async function deferOperation(operation, error) {
-  const attempts = operation.attempts + 1;
+  const attempts = operation.attempts + (estPanneReseau(error) ? 0 : 1);
   // L'espacement croissant protege un serveur en difficulte. Une coupure reseau ne lui doit rien :
   // sans cette distinction, revenir sur le wifi apres quelques essais laissait la saisie attendre
   // cinq minutes de plus, sans raison.

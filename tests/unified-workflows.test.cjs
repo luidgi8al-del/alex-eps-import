@@ -1,0 +1,17 @@
+const fs=require('node:fs'),assert=require('node:assert');
+const path=require('node:path'),root=path.join(__dirname,'..');
+const web=fs.readFileSync(path.join(root,'tools-workspace.js'),'utf8');
+const css=fs.readFileSync(path.join(root,'styles','tools-workspace.css'),'utf8');
+const android=fs.readFileSync(path.join(root,'..','AlexEpsOutils','app','src','main','java','com','alex','epsoutils','ui','tools','SavedToolWork.kt'),'utf8');
+const dashboard=fs.readFileSync(path.join(root,'..','AlexEpsOutils','app','src','main','java','com','alex','epsoutils','ui','classes','ClassDashboardDetailScreens.kt'),'utf8');
+assert(web.includes('function openWorkLibrary(type,title,load)'));
+assert(web.includes('Ouvrir et modifier'));
+assert(web.includes('Dupliquer'));
+assert(web.includes('Supprimer définitivement'));
+assert(css.includes('.tool-work-overlay'));
+assert(css.includes('safe-area-inset-bottom'));
+assert(android.includes('UnifiedActionCard("Retrouver"'));
+assert(android.includes('UnifiedActionCard("Ouvrir et modifier"'));
+assert(dashboard.includes('UnifiedActionCard("Ouvrir et modifier"'));
+assert(dashboard.includes('UnifiedActionCard("Supprimer"'));
+console.log('unified-workflows: OK');

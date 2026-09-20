@@ -9,10 +9,10 @@ assert(bootstrap.includes("const DELAI_ENVOI_APRES_SAISIE_MS = 1500"),
   "les saisies rapprochées doivent être regroupées brièvement");
 assert(bootstrap.includes("function programmerEnvoiApresSaisie()"),
   "un envoi prioritaire doit être programmé après une saisie");
-assert(bootstrap.includes("if (dejaEnCours) await dejaEnCours"),
-  "une saisie arrivée pendant une synchronisation doit attendre puis repartir");
-assert(bootstrap.includes("await rapprocher({ force: true })"),
-  "l'envoi d'une saisie doit contourner la temporisation des simples lectures");
+assert(bootstrap.includes("createAutoSync({ run: () => engine.sync()"),
+  "toutes les demandes doivent utiliser le coordinateur testé dans auto-sync.test.cjs");
+assert(bootstrap.includes("automatique.changed()"),
+  "les écritures doivent emprunter le chemin prioritaire du coordinateur");
 assert((bootstrap.match(/programmerEnvoiApresSaisie\(\);/g) || []).length >= 2,
   "les enregistrements et suppressions doivent déclencher l'envoi prioritaire");
 
