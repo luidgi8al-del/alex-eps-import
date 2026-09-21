@@ -31,15 +31,21 @@
   function parcours(f) {
     const $ = id => f.document.getElementById(id);
     /**
-     * Ouvrir une classe mene a un menu de quatre entrees ; les seances sont derriere "Cours".
-     * Les controles qui parlent des seances passent donc par ici.
+     * Ouvrir une classe mene a son tableau de bord, comme dans l'application ; les seances sont
+     * derriere la carte "Progression du cycle" (data-vue="cours").
      */
-    /** Revenir au menu depuis l'ecran Cours, la ou vivent Dispenses et Recapitulatif. */
+    /** Revenir au tableau de bord, depuis l'ecran Cours ou depuis l'un de ses ecrans. */
     async function entrerDansMenu() {
-      const retour = f.document.getElementById("retourMenuDepuisCours");
-      if (retour) retour.click();
-      await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="recap"]'),
-        "le menu de la classe ne revient pas", 6000);
+      const surLeTableauDeBord = () => f.document.querySelector('#classDashboardPanel [data-vue="evaluations"].ec-indic');
+      // Depuis le tableau de bord, la fleche ferme la classe : on ne la touche qu'ailleurs.
+      for (let i = 0; i < 3 && !surLeTableauDeBord(); i++) {
+        const retour = f.document.getElementById("retourMenuDepuisCours")
+          || f.document.querySelector("#classDashboardPanel [data-ec-retour]");
+        if (!retour) break;
+        retour.click();
+        await new Promise(r => setTimeout(r, 150));
+      }
+      await attendre(surLeTableauDeBord, "le tableau de bord de la classe ne revient pas", 6000);
     }
 
     async function entrerDansCours() {
@@ -89,15 +95,17 @@
           if (!cible) throw new Error("la classe 3e6 du jeu d'essai est absente de la rangee");
           cible.click();
           await attendre(() => visible($("classDashboardPanel")) && rempli($("classDashboardPanel")),
-            "le menu de la classe ne s'ouvre pas");
-          // Le menu d'abord : quatre entrees, dont Cours.
+            "le tableau de bord de la classe ne s'ouvre pas");
+          // Le tableau de bord d'abord, comme dans l'application : ses cartes menent aux ecrans.
           await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="cours"]'),
-            "le menu de la classe ne s'affiche pas", 8000);
-          ["bord", "cours", "dispenses", "recap"].forEach(vue => {
+            "le tableau de bord de la classe ne s'affiche pas", 8000);
+          ["eleves", "cours", "evaluations", "documents", "dispenses"].forEach(vue => {
             if (!f.document.querySelector(`#classDashboardPanel [data-vue="${vue}"]`)) {
-              throw new Error(`l'entree ${vue} manque au menu de la classe`);
+              throw new Error(`la carte ${vue} manque au tableau de bord`);
             }
           });
+          await attendre(() => f.document.querySelector("#classDashboardPanel [data-ec-note]"), "le bloc-notes ne montre pas la note", 4000);
+          await attendre(() => f.document.querySelector("#classDashboardPanel [data-ec-equipe]"), "les equipes enregistrees manquent", 4000);
           await entrerDansCours();
           await attendre(() => f.document.querySelector(".dashSeance"), "la carte de seance manque");
         }
@@ -118,41 +126,84 @@
           f.document.querySelector('[data-dash-period="1"]').click();
           await new Promise(r => setTimeout(r, 250));
           await entrerDansMenu();
-          f.document.querySelector('[data-vue="recap"]').click();
-          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif reste vide");
-          // Il vient par-dessus la page : affiche en bas, il fallait faire defiler pour voir ce
-          // qu'on venait de cliquer. Et il doit toujours pouvoir se refermer, y compris quand le
-          // panneau n'est qu'un message sans bouton.
-          const voileDetail = f.document.getElementById("dashDetailOverlay");
-          if (!voileDetail?.classList.contains("open")) throw new Error("le detail ne s'ouvre pas en fenetre");
-          if (voileDetail.parentElement !== f.document.body) throw new Error("la fenetre doit tenir hors du tableau de bord");
-          $("dashDetailClose").click();
-          await attendre(() => !f.document.getElementById("dashDetailOverlay").classList.contains("open"),
-            "la fenetre du detail ne se ferme pas", 4000);
-          await entrerDansMenu();
-          f.document.querySelector('[data-vue="recap"]').click();
-          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre pas");
+          const panneau = $("classDashboardPanel");
+          // Le recapitulatif vit dans Evaluations / Tests : le tableau de bord de l'application
+          // a remplace le menu qui y menait.
+          panneau.querySelector('[data-vue="evaluations"]').click();
+          await attendre(() => f.document.getElementById("ecCreerPonctuelle"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
+          await attendre(() => /1 \/ \d+ élèves évalués/.test(panneau.innerText),
+            "la jauge de la grille ne compte pas l'eleve note", 6000);
+          panneau.querySelector('[data-vue="recap"]').click();
+          await attendre(() => f.document.querySelector("#ecRecap [data-ec-recap-test]"), "le recapitulatif ne liste pas le test", 6000);
+          f.document.querySelector("[data-ec-recap-test]").click();
+          await attendre(() => f.document.getElementById("ecExportCsv"), "le test ne s'ouvre pas avec ses exports", 4000);
+          ["ecExportPdf", "ecExportMail"].forEach(id => {
+            if (!f.document.getElementById(id)) throw new Error(`l'export ${id} manque`);
+          });
+          if (!f.document.querySelectorAll("#ecRecap tbody tr").length) throw new Error("le tableau du test est vide");
 
-          // Le detail ouvert se repeint quand le tableau de bord change. Sans cela il gardait la
-          // liste d'avant : on supprimait une grille, le compte de la carte descendait, et la
-          // fenetre continuait de l'afficher.
-          $("dashDetailContenu").innerHTML = "";
+          // Les evaluations, dans le second onglet, eleve par eleve avec leur note.
+          f.document.querySelector('[data-ec-onglet-recap="evaluations"]').click();
+          await attendre(() => f.document.querySelector("[data-ec-recap-eval]"), "l'onglet Evaluations est vide", 4000);
+          f.document.querySelector("[data-ec-recap-eval]").click();
+          await attendre(() => [...f.document.querySelectorAll("#ecRecap th")].some(th => /note/i.test(th.textContent)),
+            "la grille ne s'affiche pas avec ses notes", 4000);
+
+          // Redessiner garde l'ecran ouvert, sur ce qu'on regardait.
+          panneau.innerHTML = "";
           await f.renderClassDashboard();
-          await attendre(() => rempli($("dashDetailContenu")),
-            "le detail ouvert ne se repeint pas avec le tableau de bord", 5000);
-          $("dashDetailClose").click();
-          await attendre(() => !f.document.getElementById("dashDetailOverlay").classList.contains("open"),
-            "la fenetre ne se ferme pas", 4000);
-          await f.renderClassDashboard();
-          if (f.document.getElementById("dashDetailOverlay").classList.contains("open")) {
-            throw new Error("une fenetre fermee ne doit pas se rouvrir toute seule");
-          }
+          await attendre(() => f.document.querySelector("#ecRecap th"), "le recapitulatif ne se redessine pas", 4000);
+
+          // Le retour ramene a Evaluations / Tests, puis au tableau de bord.
+          panneau.querySelector("[data-ec-retour]").click();
+          await attendre(() => f.document.getElementById("ecCreerPonctuelle"), "le retour ne ramene pas a Evaluations / Tests", 4000);
           await entrerDansMenu();
-          f.document.querySelector('[data-vue="recap"]').click();
-          await attendre(() => rempli($("dashDetailContenu")), "le recapitulatif ne se rouvre plus");
+          panneau.querySelector('[data-vue="dispenses"]').click();
+          await attendre(() => panneau.querySelector("[data-dispense]"), "les dispenses restent vides", 4000);
+        }
+      },
+      {
+        // Une colonne par document, un eleve par ligne : un clic sur la case le marque rendu.
+        nom: "Tableau de bord · documents a rendre en grille",
+        action: async () => {
           await entrerDansMenu();
-          f.document.querySelector('[data-vue="dispenses"]').click();
-          await attendre(() => rempli($("dashDetailContenu")), "les dispenses restent vides");
+          const panneau = $("classDashboardPanel");
+          panneau.querySelector('[data-vue="documents"]').click();
+          await attendre(() => panneau.querySelector("[data-ec-case]"), "la grille des documents ne s'affiche pas", 4000);
+          const avant = panneau.querySelector(".ec-grille-doc small").textContent;
+          const manquant = panneau.querySelector("[data-ec-case].ko");
+          if (!manquant) throw new Error("aucune case manquante dans le jeu d'essai");
+          manquant.click();
+          await attendre(() => panneau.querySelector(".ec-grille-doc small").textContent !== avant,
+            "cocher une case ne change pas le compte des rendus", 4000);
+          panneau.querySelector('[data-ec-onglet-docs="archives"]').click();
+          await attendre(() => panneau.querySelector(".ec-ligne[data-ec-doc]"), "les archives ne listent pas le document classe", 4000);
+          panneau.querySelector(".ec-ligne[data-ec-doc]").click();
+          await attendre(() => panneau.querySelector("[data-ec-rendu]"), "le suivi d'un document archive ne s'ouvre pas", 4000);
+          if (!f.document.getElementById("ecArchiverSuivi")) throw new Error("on ne peut pas restaurer un document archive");
+          panneau.querySelector("[data-ec-retour]").click();
+          await attendre(() => panneau.querySelector("[data-ec-onglet-docs]"), "le retour ne ramene pas aux documents", 4000);
+          panneau.querySelector('[data-ec-onglet-docs="rendre"]').click();
+        }
+      },
+      {
+        nom: "Tableau de bord · liste des eleves et bloc-notes",
+        action: async () => {
+          await entrerDansMenu();
+          const panneau = $("classDashboardPanel");
+          // Le bloc-notes s'ecrit dans une fenetre du site, pas dans un prompt du navigateur.
+          f.document.getElementById("ajoutNote").click();
+          await attendre(() => f.document.getElementById("ecDialogueChamp"), "la fenetre de saisie de note ne s'ouvre pas", 4000);
+          f.document.getElementById("ecDialogueAnnuler").click();
+          panneau.querySelector('[data-vue="eleves"]').click();
+          await attendre(() => panneau.querySelector("[data-ec-dossier]"), "la liste des eleves ne s'affiche pas", 4000);
+          const tous = panneau.querySelectorAll("[data-ec-dossier]").length;
+          panneau.querySelector('[data-ec-filtre-eleves="DISPENSES"]').click();
+          await attendre(() => panneau.querySelectorAll("[data-ec-dossier]").length < tous,
+            "le filtre Dispenses ne retient pas seulement les dispenses", 4000);
+          if (!panneau.querySelector("[data-ec-niveau]")) throw new Error("le niveau EPS n'est plus modifiable");
+          panneau.querySelector('[data-ec-filtre-eleves="TOUS"]').click();
+          await entrerDansMenu();
         }
       },
       {
@@ -551,9 +602,10 @@
             "l'entree Dispenses a disparu du menu", 8000);
 
           await entrerDansMenu();
-          f.document.querySelector('[data-vue="dispenses"]').click();
-          await attendre(() => rempli($("dashDetailContenu")), "la liste des dispenses ne s'ouvre pas", 4000);
-          const lignes = f.document.querySelectorAll("#dashDetailContenu [data-dispense]");
+          f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]').click();
+          await attendre(() => f.document.querySelector("#classDashboardPanel [data-dispense]"), "la liste des dispenses ne s'ouvre pas", 4000);
+          // Une des siennes : la fiche d une dispense saisie par un collegue est en lecture seule.
+          const lignes = [...f.document.querySelectorAll("#classDashboardPanel [data-dispense]")].filter(b => !b.querySelector("em"));
           if (lignes.length === 0) throw new Error("les dispenses ne sont pas cliquables");
 
           lignes[0].click();
@@ -586,7 +638,7 @@
           f.document.getElementById("dispenseFicheClose").click();
           await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
             "la fenetre de creation ne se ferme pas", 4000);
-          $("dashDetailClose").click();
+          $("dashDetailClose")?.click();
         }
       },
       {

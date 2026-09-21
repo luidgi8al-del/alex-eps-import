@@ -97,7 +97,19 @@
     planning_validations: [],
     institution_calendar: [],
     assigned_classes: [],
-    eps_team_context: [{ institution_id: "etab-1", is_admin: true }]
+    eps_team_context: [{ institution_id: "etab-1", is_admin: true }],
+    // Le tableau de bord de la classe : une note, un document rendu par un eleve, une equipe.
+    class_notes: [{ id: "cn-1", user_id: "prof-test", class_id: "cl-3e6", content: "Salle B indisponible jeudi", created_at: MAINTENANT, deleted: false, updated_at: MAINTENANT }],
+    class_documents: [
+      { id: "cd-1", user_id: "prof-test", class_id: "cl-3e6", title: "Autorisation de sortie", archived: false, created_at: MAINTENANT, deleted: false, updated_at: MAINTENANT },
+      { id: "cd-2", user_id: "prof-test", class_id: "cl-3e6", title: "Fiche santé", archived: true, created_at: MAINTENANT, deleted: false, updated_at: MAINTENANT }
+    ],
+    class_document_returns: [{ id: "cr-r1", user_id: "prof-test", document_id: "cd-1", student_id: "el-0", returned: true, returned_at: MAINTENANT, deleted: false, updated_at: MAINTENANT }],
+    saved_teams: [{ id: "st-1", user_id: "prof-test", class_id: "cl-3e6", name: "Équipes rugby", mode: "BALANCED", created_at: MAINTENANT, deleted: false, updated_at: MAINTENANT }],
+    saved_team_members: [
+      { id: "stm-1", user_id: "prof-test", saved_team_id: "st-1", student_id: "el-0", team_index: 0, deleted: false, updated_at: MAINTENANT },
+      { id: "stm-2", user_id: "prof-test", saved_team_id: "st-1", student_id: "el-1", team_index: 1, deleted: false, updated_at: MAINTENANT }
+    ]
   };
 
   /** Le nom de la table visee, quelle que soit la forme de la requete. */
@@ -126,7 +138,8 @@
       if (!valeur || !/^(eq|in)\./.test(valeur)) return restantes;
       const attendu = decodeURIComponent(valeur.slice(3));
       if (valeur.startsWith("in.")) {
-        const liste = attendu.replace(/^\(|\)$/g, "").split(",");
+        // PostgREST accepte des valeurs entre guillemets : in.("a","b").
+        const liste = attendu.replace(/^\(|\)$/g, "").split(",").map(v => v.replace(/^"|"$/g, ""));
         return restantes.filter(l => liste.includes(String(l[colonne])));
       }
       if (attendu === "true" || attendu === "false") {

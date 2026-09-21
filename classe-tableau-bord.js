@@ -204,7 +204,8 @@ async function openClassDashboard(cls, label) {
         ? modeHorsConnexion.lire("cycles", { ou: c => c.class_id === cls.id })
             .then(r => ({ ok: true, json: async () => r.rows }))
         : apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${cls.id}&select=id,first_name,last_name`),
+      // Tout l'eleve : l'ecran Eleves affiche et modifie son niveau EPS.
+      apiFetch(`${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
       // Un effacement laisse une trace au lieu de retirer la ligne : sans ce filtre, une
       // dispense supprimee - un doublon nettoye, par exemple - continue d'etre comptee ici,
       // et la carte annonce plus de dispenses que l'onglet Sante.
@@ -224,9 +225,15 @@ async function openClassDashboard(cls, label) {
       || Object.prototype.hasOwnProperty.call(dashboardCycles[0], "current_session_number");
 
     await chargerEvaluationsDuTableauDeBord();
-    // Ouvrir une classe repart du menu, et lit son bloc-notes et ses documents.
-    vueClasse = "menu";
+    // Ouvrir une classe mene a son tableau de bord, comme dans l'application, sur la periode en
+    // cours plutot que sur la premiere de l'annee.
+    vueClasse = "bord";
+    if (typeof ecPeriodeDuJour === "function") dashboardPeriod = ecPeriodeDuJour(cls.grade);
+    if (typeof ecCreneauChoisi !== "undefined") {
+      ecCreneauChoisi = null; ecDocumentSuivi = null; ecRecapChoix = null; ecNotesChargees = false;
+    }
     await chargerTableauDeBordClasse();
+    if (typeof ecChargerEquipes === "function") await ecChargerEquipes();
   } catch (e) {
     panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
     return;
@@ -412,10 +419,10 @@ function dispensesEnCours() {
 function renderClassDashboard() {
   const panel = document.getElementById("classDashboardPanel");
   const { row, label } = dashboardClass;
-  // Un menu avant les seances : le tableau de bord, les cours, les dispenses, le recapitulatif.
-  // Les deux derniers vivaient dans l'ecran des cours, ou il fallait deja etre entre.
-  if (vueClasse === "menu") { renderMenuClasse(); return; }
-  if (vueClasse === "bord") { renderTableauDeBordClasse(); return; }
+  // Le tableau de bord et ses ecrans (eleves, evaluations, documents, dispenses) vivent dans
+  // classe-ecrans.js ; ici ne reste que l'ecran Cours.
+  panel.classList.remove("ec-panneau");
+  if (typeof renderEcranClasse === "function" && renderEcranClasse()) return;
   const periodCount = planningPeriodCount(row.grade);
   if (dashboardPeriod > periodCount) dashboardPeriod = periodCount;
 
@@ -758,6 +765,8 @@ async function chargerEvaluationsDuTableauDeBord() {
     const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
     dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
   }
+  // Les jauges et le recapitulatif relisent leurs notes : une grille vient peut-etre de changer.
+  if (typeof ecNotesChargees !== "undefined") ecNotesChargees = false;
 }
 
 /**
@@ -1338,63 +1347,17 @@ async function deleteCycle(id) {
 // etaient enfouis : il fallait deja etre entre pour les trouver.
 
 /** "menu" au premier abord, puis "cours", "bord", "dispenses" ou "recap". */
-let vueClasse = "menu";
+let vueClasse = "bord";
 let notesClasse = [];
 let documentsClasse = [];
 let rendusClasse = [];
 let documentsArchivesOuverts = false;
 
 function retourMenuClasse() {
-  vueClasse = "menu";
+  vueClasse = "bord";
   detailOuvert = null;
   fermerDetailClasse();
   renderClassDashboard();
-}
-
-function renderMenuClasse() {
-  const panel = document.getElementById("classDashboardPanel");
-  const { row, label } = dashboardClass;
-  const dispenses = dashboardDispenses.filter(d => !d.deleted && dispenseEnCours(d));
-  const evals = dashboardEvaluations.filter(e => e.period_number === dashboardPeriod);
-  // Les Tests EPS restent accessibles quelle que soit la periode actuellement ouverte.
-  const tests = dashboardTests.filter(t => !t.deleted)
-    .sort((a,b)=>(b.created_at||0)-(a.created_at||0));
-  const manquants = documentsClasse.reduce((total, doc) => {
-    const rendus = rendusClasse.filter(r => r.document_id === doc.id && r.returned && !r.deleted).length;
-    return total + Math.max(0, dashboardStudents.length - rendus);
-  }, 0);
-  const carte = (id, titre, sous, fond) => `
-    <button type="button" class="dashCarte" data-vue="${id}" style="background:${fond}">
-      <span class="dashTexte"><span class="dashTitre">${planningText(titre)}</span><br>
-        <span class="dashSous">${planningText(sous)}</span></span>
-      <span class="dashFleche">›</span>
-    </button>`;
-  panel.innerHTML = `
-    <div class="top"><div>
-      <h2 style="margin:0">${planningText(label)}</h2>
-      <button class="class-student-count" id="ouvrirDossiersEleves">👥 ${dashboardStudents.length} élève(s) · ouvrir les dossiers</button>
-    </div>
-    <button class="secondary" id="fermerClasse" style="margin-top:0">Fermer</button></div>
-    ${carte("bord", "Tableau de bord",
-      manquants > 0 ? `${manquants} document(s) non rendu(s)` : "Bloc-notes et documents à rendre", "#E8F1FF")}
-    ${carte("cours", "Cours", "Cycles, séances, évaluations", "#EDE6FF")}
-    ${carte("dispenses", "Dispenses",
-      dispenses.length ? `${dispenses.length} élève(s) actuellement dispensé(s)` : "Aucun élève dispensé", "#E8F8F3")}
-    ${carte("recap", "Récapitulatif Tests / Évaluations",
-      `${tests.length} test(s) dans la classe · P${dashboardPeriod} : ${evals.length} évaluation(s)`, "#FFF3DC")}`;
-  panel.querySelectorAll("[data-vue]").forEach(bouton => bouton.onclick = () => {
-    const vue = bouton.dataset.vue;
-    if (vue === "dispenses") { vueClasse = "menu"; detailOuvert = "dispenses"; afficherDispenses(dispenses); return; }
-    if (vue === "recap") { vueClasse = "menu"; detailOuvert = "recap"; afficherRecapPeriode(evals, tests); return; }
-    vueClasse = vue;
-    renderClassDashboard();
-  });
-  document.getElementById("fermerClasse").onclick = () => fermerTableauDeBord();
-  document.getElementById("ouvrirDossiersEleves").onclick = () => ouvrirListeDossiersEleves();
-  // La fenetre ouverte par-dessus le menu se repeint avec lui : sinon elle garderait la liste
-  // d'avant apres une suppression, comme c'etait le cas dans l'ecran Cours.
-  if (detailOuvert === "recap") afficherRecapPeriode(evals, tests);
-  else if (detailOuvert === "dispenses") afficherDispenses(dispenses);
 }
 
 function ouvrirListeDossiersEleves() {
@@ -1451,62 +1414,8 @@ async function chargerTableauDeBordClasse() {
   }
 }
 
-function renderTableauDeBordClasse() {
-  const panel = document.getElementById("classDashboardPanel");
-  const { label } = dashboardClass;
-  const jourFr = ms => ms ? new Date(ms).toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : "";
-  const documentsActifs = documentsClasse.filter(d => !d.archived);
-  const documentsArchives = documentsClasse.filter(d => d.archived);
-  panel.innerHTML = `
-    <div class="top"><div>
-      <button class="secondary" id="retourMenu" style="margin-top:0">‹ ${planningText(label)}</button>
-      <h2 style="margin:8px 0 0">Tableau de bord</h2>
-    </div></div>
-
-    <div class="card" style="margin-top:10px">
-      <h3 style="margin:0 0 8px">Bloc-notes</h3>
-      ${notesClasse.length === 0
-        ? `<div class="muted">Aucune note. Ajoutez ce qui ne tient dans aucune case.</div>`
-        : notesClasse.map(n => `<div class="card" style="background:#FFF3DC; margin-top:6px">
-             <div>${planningText(n.content)}</div>
-             <div class="top" style="margin-top:4px">
-               <span class="muted" style="font-size:12px">${jourFr(Date.parse(n.created_at))}</span>
-               <button class="danger" data-note-suppr="${planningText(n.id)}" style="margin-top:0">Supprimer</button>
-             </div></div>`).join("")}
-      <button id="ajoutNote" style="margin-top:10px">Ajouter une note</button>
-    </div>
-
-    <div class="card" style="margin-top:10px">
-      <div class="top"><h3 style="margin:0 0 8px">Documents à rendre</h3>
-        <button class="secondary" id="ouvrirArchivesDocuments" style="margin-top:0">Archives (${documentsArchives.length})</button></div>
-      ${documentsActifs.length === 0
-        ? `<div class="muted">Aucun document suivi. Créez-en un pour cocher qui a rendu.</div>`
-        : documentsActifs.map(d => {
-            const rendus = rendusClasse.filter(r => r.document_id === d.id && r.returned).length;
-            const complet = dashboardStudents.length > 0 && rendus >= dashboardStudents.length;
-            return `<button type="button" class="dashCarte" data-doc="${planningText(d.id)}"
-              style="background:${complet ? "#E8F8F3" : "#FDEEED"}; margin-top:6px">
-              <span class="dashTexte"><span class="dashTitre">${planningText(d.title)}</span><br>
-                <span class="dashSous">${complet
-                  ? `${dashboardStudents.length} rendus sur ${dashboardStudents.length} · complet`
-                  : `${rendus} rendus sur ${dashboardStudents.length} · ${dashboardStudents.length - rendus} manquants`}</span></span>
-              <span class="dashFleche">›</span></button>`;
-          }).join("")}
-      <button id="ajoutDocument" style="margin-top:10px">Nouveau document</button>
-      ${documentsArchivesOuverts ? `<section class="document-archives"><div class="top"><h3>Documents classés</h3><button class="secondary" id="fermerArchivesDocuments">Fermer</button></div>${documentsArchives.length ? documentsArchives.map(d=>`<button type="button" class="dashCarte" data-doc="${planningText(d.id)}"><span class="dashTexte"><span class="dashTitre">${planningText(d.title)}</span><br><span class="dashSous">Archivé le ${jourFr(Date.parse(d.archived_at||d.updated_at||d.created_at))}</span></span><span class="dashFleche">›</span></button>`).join('') : '<div class="muted">Aucun document archivé.</div>'}</section>` : ''}
-    </div>`;
-
-  document.getElementById("retourMenu").onclick = () => retourMenuClasse();
-  document.getElementById("ajoutNote").onclick = () => ajouterNoteClasse();
-  document.getElementById("ajoutDocument").onclick = () => ajouterDocumentClasse();
-  document.getElementById("ouvrirArchivesDocuments").onclick = () => { documentsArchivesOuverts = true; renderTableauDeBordClasse(); };
-  document.getElementById("fermerArchivesDocuments")?.addEventListener("click", () => { documentsArchivesOuverts = false; renderTableauDeBordClasse(); });
-  panel.querySelectorAll("[data-note-suppr]").forEach(b => b.onclick = () => supprimerNoteClasse(b.dataset.noteSuppr));
-  panel.querySelectorAll("[data-doc]").forEach(b => b.onclick = () => ouvrirDocumentClasse(b.dataset.doc));
-}
-
 async function ajouterNoteClasse() {
-  const texte = prompt("Note sur la classe :");
+  const texte = await ecDemanderTexte({ titre: "Nouvelle note", etiquette: "Note", multiligne: true });
   if (!texte || !texte.trim()) return;
   const maintenant = new Date().toISOString();
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
@@ -1514,7 +1423,7 @@ async function ajouterNoteClasse() {
   try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes`, { method: "POST", body: JSON.stringify(ligne) }); }
   catch (e) { alert(e.message); return; }
   notesClasse.unshift(ligne);
-  renderTableauDeBordClasse();
+  renderClassDashboard();
 }
 
 async function supprimerNoteClasse(id) {
@@ -1524,11 +1433,12 @@ async function supprimerNoteClasse(id) {
       { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) });
   } catch (e) { alert(e.message); return; }
   notesClasse = notesClasse.filter(n => n.id !== id);
-  renderTableauDeBordClasse();
+  renderClassDashboard();
 }
 
 async function ajouterDocumentClasse() {
-  const titre = prompt("Intitulé du document (ex : autorisation sortie AS) :");
+  const titre = await ecDemanderTexte({ titre: "Nouveau document à rendre", etiquette: "Nom du document",
+    indication: "Ex. Autorisation de sortie", bouton: "Créer le document" });
   if (!titre || !titre.trim()) return;
   const maintenant = new Date().toISOString();
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
@@ -1536,7 +1446,7 @@ async function ajouterDocumentClasse() {
   try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents`, { method: "POST", body: JSON.stringify(ligne) }); }
   catch (e) { alert(e.message); return; }
   documentsClasse.unshift(ligne);
-  renderTableauDeBordClasse();
+  renderClassDashboard();
 }
 
 /** La liste des eleves d'un document : on touche un nom pour marquer qu'il a rendu. */
@@ -1579,7 +1489,7 @@ async function basculerArchiveDocument(doc) {
       method:"PATCH", body:JSON.stringify({archived:!doc.archived,archived_at:doc.archived?null:maintenant,updated_at:maintenant})
     });
     doc.archived=!doc.archived;doc.archived_at=doc.archived?maintenant:null;
-    fermerDetailClasse();renderTableauDeBordClasse();
+    fermerDetailClasse();renderClassDashboard();
   } catch(e) { alert(e.message || "Archivage impossible. Exécutez schema_rattrapage_web.sql."); }
 }
 
@@ -1587,7 +1497,7 @@ async function supprimerDocumentClasse(doc) {
   if (!confirm(`Supprimer définitivement « ${doc.title} » ?`)) return;
   try {
     await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`, {method:"PATCH",body:JSON.stringify({deleted:true,updated_at:new Date().toISOString()})});
-    documentsClasse=documentsClasse.filter(d=>d.id!==doc.id);fermerDetailClasse();renderTableauDeBordClasse();
+    documentsClasse=documentsClasse.filter(d=>d.id!==doc.id);fermerDetailClasse();renderClassDashboard();
   } catch(e) { alert(e.message); }
 }
 
