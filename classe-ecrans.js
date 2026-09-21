@@ -464,18 +464,233 @@ async function ecOuvrirEquipe(equipe) {
   } catch { membres = []; }
   const groupes = [];
   membres.forEach(m => { (groupes[Number(m.team_index) || 0] ??= []).push(m); });
+  const { cycle } = ecCoursRetenu();
   hote.innerHTML = `<div class="ec-feuille">
     <h3>${ecTexte(equipe.name)}</h3>
     <p class="muted">${ecDateCourte(equipe.created_at)} · ${ecPluriel(groupes.filter(Boolean).length, "équipe")}</p>
     ${membres.length ? groupes.map((g, i) => g ? `<div class="ec-groupe"><b>Équipe ${i + 1}</b>${
       g.map(m => `<span>${ecTexte(ecNomEleve(ecEleve(m.student_id)))}</span>`).join("")}</div>` : "").join("")
       : `<p class="ec-vide">Cette composition ne contient aucun élève.</p>`}
+    ${cycle ? "" : `<p class="ec-aide">Créer une évaluation demande un cycle pour la période : créez-le depuis Progression du cycle.</p>`}
     <div class="ec-dialogue-actions">
       <button type="button" class="danger" id="ecSupprimerEquipe">Supprimer</button>
+      <button type="button" class="secondary" id="ecModifierGroupes">Modifier les groupes</button>
+      <button type="button" id="ecEvaluerEquipe"${cycle && membres.length ? "" : " disabled"}>Créer une évaluation</button>
       <button type="button" class="secondary" id="ecFermerEquipe">Fermer</button>
     </div></div>`;
   document.getElementById("ecFermerEquipe").onclick = () => fermerDetailClasse();
   document.getElementById("ecSupprimerEquipe").onclick = () => ecSupprimerEquipe(equipe);
+  document.getElementById("ecModifierGroupes").onclick = () => ecModifierGroupes(equipe, membres);
+  document.getElementById("ecEvaluerEquipe").onclick = () => ecEvaluerEquipe(equipe, membres, cycle);
+}
+
+/**
+ * Ecrit une ligne, dans la copie hors connexion quand la table y est suivie, sinon en direct :
+ * la meme regle que les grilles creees depuis la classe.
+ */
+async function ecEnregistrer(table, ligne) {
+  const suivie = typeof TABLES_HORS_CONNEXION !== "undefined" && TABLES_HORS_CONNEXION.includes(table);
+  if (suivie && typeof modeHorsConnexion !== "undefined" && modeHorsConnexion) {
+    await modeHorsConnexion.enregistrer(table, ligne.id, ligne);
+    return;
+  }
+  const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${table}`, { method: "POST", body: JSON.stringify(ligne) });
+  if (res && res.ok === false) throw new Error(`Enregistrement refusé (${table}).`);
+}
+
+/**
+ * Deplacer des eleves d'une equipe a l'autre, en ajouter ou en retirer.
+ *
+ * On modifie les lignes existantes plutot que de tout recreer : l'effacement doit voyager
+ * jusqu'a l'application, et une evaluation d'equipe deja faite garde ses eleves.
+ */
+function ecModifierGroupes(equipe, membres) {
+  const hote = hoteDetail();
+  const choix = new Map(membres.map(m => [m.student_id, Number(m.team_index) || 0]));
+  let nombre = Math.max(2, ...membres.map(m => (Number(m.team_index) || 0) + 1));
+  const eleves = [...dashboardStudents].sort((a, b) => ecNomEleve(a).localeCompare(ecNomEleve(b), "fr"));
+  const dessiner = () => {
+    hote.innerHTML = `<div class="ec-feuille">
+      <h3>Modifier les groupes · ${ecTexte(equipe.name)}</h3>
+      <p class="muted">Choisissez l’équipe de chaque élève. « Aucune » le retire de la composition.</p>
+      <div class="ec-repartition">${Array.from({ length: nombre }, (_, i) =>
+        `<span class="ec-puce">Équipe ${i + 1} · ${[...choix.values()].filter(v => v === i).length}</span>`).join("")}</div>
+      <div class="ec-liste">${eleves.map(e => `<label class="ec-ligne-groupe"><span>${ecTexte(ecNomEleve(e))}</span>
+        <select data-ec-groupe="${ecTexte(e.id)}">
+          <option value="">Aucune</option>
+          ${Array.from({ length: nombre }, (_, i) => `<option value="${i}"${choix.get(e.id) === i ? " selected" : ""}>Équipe ${i + 1}</option>`).join("")}
+        </select></label>`).join("")}</div>
+      <div class="ec-dialogue-actions">
+        <button type="button" class="secondary" id="ecAjouterGroupe">+ Ajouter une équipe</button>
+        <button type="button" class="secondary" id="ecAnnulerGroupes">Annuler</button>
+        <button type="button" id="ecEnregistrerGroupes">Enregistrer</button>
+      </div></div>`;
+    hote.querySelectorAll("[data-ec-groupe]").forEach(s => s.onchange = () => {
+      if (s.value === "") choix.delete(s.dataset.ecGroupe); else choix.set(s.dataset.ecGroupe, Number(s.value));
+      dessiner();
+    });
+    document.getElementById("ecAjouterGroupe").onclick = () => { nombre++; dessiner(); };
+    document.getElementById("ecAnnulerGroupes").onclick = () => ecOuvrirEquipe(equipe);
+    document.getElementById("ecEnregistrerGroupes").onclick = async bouton => {
+      bouton.target.disabled = true;
+      const maintenant = new Date().toISOString();
+      try {
+        for (const e of eleves) {
+          const ligne = membres.find(m => m.student_id === e.id);
+          const voulu = choix.has(e.id) ? choix.get(e.id) : null;
+          if (ligne && voulu === null) {
+            await apiFetch(`${SUPABASE_URL}/rest/v1/saved_team_members?id=eq.${ligne.id}`,
+              { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
+          } else if (ligne && voulu !== (Number(ligne.team_index) || 0)) {
+            await apiFetch(`${SUPABASE_URL}/rest/v1/saved_team_members?id=eq.${ligne.id}`,
+              { method: "PATCH", body: JSON.stringify({ team_index: voulu, updated_at: maintenant }) });
+          } else if (!ligne && voulu !== null) {
+            await ecEnregistrer("saved_team_members", { id: crypto.randomUUID(), user_id: session.user_id,
+              saved_team_id: equipe.id, student_id: e.id, team_index: voulu, updated_at: maintenant, deleted: false });
+          }
+        }
+        await apiFetch(`${SUPABASE_URL}/rest/v1/saved_teams?id=eq.${equipe.id}`,
+          { method: "PATCH", body: JSON.stringify({ updated_at: maintenant }) });
+      } catch (err) {
+        alert(err.message || "Les groupes n’ont pas été enregistrés.");
+        bouton.target.disabled = false;
+        return;
+      }
+      ecOuvrirEquipe(equipe);
+    };
+  };
+  dessiner();
+}
+
+/**
+ * Evaluer une composition d'equipes : une note par groupe et par critere, reportee sur chacun de
+ * ses eleves dans une grille ordinaire du cycle (TeamEvaluationScreen.kt). Des groupes peuvent
+ * etre associes le temps de l'evaluation, sans toucher a la composition enregistree.
+ */
+function ecEvaluerEquipe(equipe, membres, cycle) {
+  if (!cycle) return;
+  const hote = hoteDetail();
+  const sources = new Map();
+  membres.forEach(m => { const i = Number(m.team_index) || 0; if (!sources.has(i)) sources.set(i, []); sources.get(i).push(m); });
+  const indices = [...sources.keys()].sort((a, b) => a - b);
+  const etat = { titre: `Évaluation · ${equipe.name}`, criteres: [{ label: "Technique", max: "8" }],
+    associer: false, choisis: new Set(), associations: [], notes: {} };
+  const groupesEvalues = () => {
+    if (!etat.associer) return indices.map(i => [i]);
+    const utilises = new Set(etat.associations.flat());
+    return [...etat.associations, ...indices.filter(i => !utilises.has(i)).map(i => [i])];
+  };
+  const prenoms = liste => liste.flatMap(i => sources.get(i) || []).map(m => ecEleve(m.student_id)?.first_name || "Élève").join(" · ");
+  // Relire ce qui est saisi avant de redessiner : sinon ajouter un critere effacerait les notes.
+  const relire = () => {
+    const titre = document.getElementById("ecEqTitre");
+    if (titre) etat.titre = titre.value;
+    hote.querySelectorAll("[data-ec-crit-label]").forEach(c => { etat.criteres[+c.dataset.ecCritLabel].label = c.value; });
+    hote.querySelectorAll("[data-ec-crit-max]").forEach(c => { etat.criteres[+c.dataset.ecCritMax].max = c.value; });
+    hote.querySelectorAll("[data-ec-note-groupe]").forEach(c => { etat.notes[c.dataset.ecNoteGroupe] = c.value; });
+  };
+  const dessiner = (erreur = "") => {
+    const groupes = groupesEvalues();
+    const utilises = new Set(etat.associations.flat());
+    const maximum = etat.criteres.reduce((t, c) => t + (parseInt(c.max, 10) || 0), 0);
+    hote.innerHTML = `<div class="ec-feuille ec-eval-equipe">
+      <h3>Évaluation d’équipe</h3>
+      <p class="muted">${ecTexte(cycle.apsa_name)} · enregistrée dans Évaluations / Tests comme évaluation ponctuelle</p>
+      <label for="ecEqTitre">Nom de l’évaluation</label><input id="ecEqTitre" value="${ecTexte(etat.titre)}">
+      <section class="ec-eq-bloc violet"><b>Organisation</b>
+        ${ecPastilles("ec-eq-mode", [["origine", "Groupes d’origine"], ["associer", "Associer"]], etat.associer ? "associer" : "origine")}
+        ${etat.associer ? `<small>Les associations ne modifient jamais les groupes enregistrés.</small>
+          ${indices.map(i => `<label class="ec-ligne-groupe${utilises.has(i) ? " pris" : ""}"><span><b>Groupe ${i + 1}</b> · ${ecTexte(prenoms([i]))}</span>
+            <input type="checkbox" data-ec-choix="${i}"${etat.choisis.has(i) ? " checked" : ""}${utilises.has(i) ? " disabled" : ""}></label>`).join("")}
+          <button type="button" id="ecEqAssocier"${etat.choisis.size >= 2 ? "" : " disabled"}>Créer l’association</button>
+          ${etat.associations.map((a, n) => `<div class="ec-ligne-groupe"><b>Association ${n + 1} · ${a.map(i => `G${i + 1}`).join(" + ")}</b>
+            <button type="button" class="secondary" data-ec-defaire="${n}">Défaire</button></div>`).join("")}` : ""}
+      </section>
+      <section class="ec-eq-bloc"><b>Critères et barèmes</b>
+        ${etat.criteres.map((c, i) => `<div class="ec-eq-critere">
+          <input data-ec-crit-label="${i}" value="${ecTexte(c.label)}" placeholder="Critère" aria-label="Critère ${i + 1}">
+          <input data-ec-crit-max="${i}" value="${ecTexte(c.max)}" inputmode="numeric" placeholder="Sur" aria-label="Barème du critère ${i + 1}">
+        </div>`).join("")}
+        <button type="button" class="secondary" id="ecEqCritere">+ Ajouter un critère</button>
+      </section>
+      ${groupes.map((g, n) => {
+        const cle = g.join("+");
+        const total = etat.criteres.reduce((t, _, i) => t + (parseFloat(String(etat.notes[`${cle}|${i}`] || "").replace(",", ".")) || 0), 0);
+        return `<section class="ec-eq-bloc blanc"><b>${g.length === 1 ? `Groupe ${g[0] + 1}` : `Association · ${g.map(i => `G${i + 1}`).join(" + ")}`}</b>
+          <small>${ecTexte(prenoms(g))}</small>
+          ${etat.criteres.map((c, i) => `<label class="ec-eq-note">${ecTexte(c.label || "Critère")} / ${ecTexte(c.max)}
+            <input data-ec-note-groupe="${cle}|${i}" value="${ecTexte(etat.notes[`${cle}|${i}`] || "")}" inputmode="decimal"></label>`).join("")}
+          <strong>Total : ${ecNombre(total)} / ${maximum}</strong></section>`;
+      }).join("")}
+      ${erreur ? `<div class="error">${ecTexte(erreur)}</div>` : ""}
+      <div class="ec-dialogue-actions">
+        <button type="button" class="secondary" id="ecEqAnnuler">Annuler</button>
+        <button type="button" id="ecEqEnregistrer">Enregistrer dans Évaluations / Tests</button>
+      </div></div>`;
+
+    hote.querySelectorAll("[data-ec-eq-mode]").forEach(b => b.onclick = () => {
+      relire(); etat.associer = b.dataset.ecEqMode === "associer"; etat.choisis.clear(); dessiner();
+    });
+    hote.querySelectorAll("[data-ec-choix]").forEach(c => c.onchange = () => {
+      relire(); const i = +c.dataset.ecChoix; c.checked ? etat.choisis.add(i) : etat.choisis.delete(i); dessiner();
+    });
+    document.getElementById("ecEqAssocier")?.addEventListener("click", () => {
+      relire(); etat.associations.push([...etat.choisis].sort((a, b) => a - b)); etat.choisis.clear(); dessiner();
+    });
+    hote.querySelectorAll("[data-ec-defaire]").forEach(b => b.onclick = () => {
+      relire(); etat.associations.splice(+b.dataset.ecDefaire, 1); dessiner();
+    });
+    document.getElementById("ecEqCritere").onclick = () => { relire(); etat.criteres.push({ label: "", max: "" }); dessiner(); };
+    hote.querySelectorAll("[data-ec-note-groupe]").forEach(c => c.onchange = () => { relire(); dessiner(); });
+    document.getElementById("ecEqAnnuler").onclick = () => ecOuvrirEquipe(equipe);
+    document.getElementById("ecEqEnregistrer").onclick = () => { relire(); enregistrer(); };
+  };
+
+  const enregistrer = async () => {
+    const criteres = etat.criteres.map(c => ({ label: c.label.trim(), max: parseInt(c.max, 10) }));
+    if (!etat.titre.trim() || criteres.some(c => !c.label || !(c.max > 0))) {
+      dessiner("Complétez le nom, les critères et les barèmes.");
+      return;
+    }
+    for (const [cle, valeur] of Object.entries(etat.notes)) {
+      const n = parseFloat(String(valeur).replace(",", "."));
+      const max = criteres[+cle.split("|")[1]]?.max;
+      if (String(valeur).trim() && (!Number.isFinite(n) || n < 0 || n > max)) {
+        dessiner(`Une note dépasse son barème ou n’est pas un nombre (${valeur}).`);
+        return;
+      }
+    }
+    const bouton = document.getElementById("ecEqEnregistrer");
+    bouton.disabled = true; bouton.textContent = "Enregistrement…";
+    const maintenant = new Date().toISOString();
+    const evaluationId = crypto.randomUUID();
+    try {
+      await ecEnregistrer("evaluations", { id: evaluationId, user_id: session.user_id, cycle_id: cycle.id, type: "PONCTUELLE",
+        label: etat.titre.trim(), date_epoch_millis: Date.now(), updated_at: maintenant, deleted: false });
+      const lignesCriteres = criteres.map((c, i) => ({ id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: evaluationId,
+        label: c.label, max_points: c.max, order_index: i, updated_at: maintenant, deleted: false }));
+      for (const c of lignesCriteres) await ecEnregistrer("evaluation_criteria", c);
+      for (const g of groupesEvalues()) {
+        const cle = g.join("+");
+        const eleves = [...new Set(g.flatMap(i => sources.get(i) || []).map(m => m.student_id))];
+        for (let i = 0; i < lignesCriteres.length; i++) {
+          const valeur = parseFloat(String(etat.notes[`${cle}|${i}`] || "").replace(",", "."));
+          if (!Number.isFinite(valeur)) continue;   // une case vide n'est pas un zero
+          for (const eleve of eleves) {
+            await ecEnregistrer("evaluation_scores", { id: crypto.randomUUID(), user_id: session.user_id,
+              criterion_id: lignesCriteres[i].id, student_id: eleve, points: valeur, deleted: false, updated_at: maintenant });
+          }
+        }
+      }
+    } catch (e) {
+      dessiner(`Évaluation non enregistrée : ${e.message}`);
+      return;
+    }
+    await chargerEvaluationsDuTableauDeBord();
+    fermerDetailClasse();
+    ecAller("evaluations");
+  };
+  dessiner();
 }
 
 async function ecSupprimerEquipe(equipe) {
@@ -618,6 +833,7 @@ function ecDessinerEvaluations(panel) {
             <small>${ecDateCourte(e.date_epoch_millis)}</small></span>
           <strong class="${complet ? "vert" : ""}">${ecNotesChargees ? `${evalues} / ${eleves} élèves évalués` : "…"}</strong>
           ${ecJauge(eleves ? evalues / eleves : 0, "#2E7CC4")}
+          <small class="ec-aide">Appui prolongé : dupliquer vers une classe</small>
         </button>`;
       }).join("") : `<div class="ec-vide-carte"><b>Aucune évaluation enregistrée</b>
           <span>Utilisez l’un des deux premiers boutons pour créer la première évaluation.</span></div>`}</div>
@@ -630,9 +846,10 @@ function ecDessinerEvaluations(panel) {
   document.getElementById("ecCreerFinale").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "FINALE");
   document.getElementById("ecTests").onclick = () => ecOuvrirTests(tests);
   document.getElementById("ecDivers").onclick = () => ecOuvrirDivers();
-  panel.querySelectorAll("[data-ec-grille]").forEach(b => b.onclick = () => {
+  panel.querySelectorAll("[data-ec-grille]").forEach(b => {
     const e = evaluations.find(x => x.id === b.dataset.ecGrille);
-    if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id);
+    b.onclick = () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); };
+    ecAppuiLong(b, () => ecChoisirClassePourCopie(e));
   });
   // Les jauges se remplissent une fois les notes relues.
   if (!ecNotesChargees) ecChargerNotes().then(() => { if (vueClasse === "evaluations") renderClassDashboard(); });
@@ -680,6 +897,105 @@ async function ecSupprimerTest(t) {
   renderClassDashboard();
 }
 
+/** Choisir la classe qui recoit la copie d'une grille. */
+function ecChoisirClassePourCopie(evaluation) {
+  if (!evaluation) return;
+  const hote = hoteDetail();
+  const cibles = (classesConnues || []).filter(c => !c.deleted && c.id !== dashboardClass.row.id)
+    .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "fr", { numeric: true }));
+  hote.innerHTML = `<div class="ec-feuille">
+    <h3>Dupliquer vers une classe</h3>
+    <p class="muted">« ${ecTexte(evaluation.label || "Évaluation")} » et ses critères, sans les notes. La copie rejoint le cycle
+      ${ecTexte(evaluation.activite || "de la même activité")} de la classe choisie, créé au besoin.</p>
+    <div class="ec-liste">${cibles.length ? cibles.map(c => `<button type="button" class="ec-ligne" data-ec-cible="${ecTexte(c.id)}">
+      <span><b>${ecTexte(c.name || "Classe")}</b></span><em>›</em></button>`).join("")
+      : `<p class="ec-vide">Aucune autre classe.</p>`}</div>
+    <div class="ec-dialogue-actions"><button type="button" class="secondary" id="ecAnnulerCopie">Annuler</button></div>
+  </div>`;
+  ouvrirDetailClasse();
+  document.getElementById("ecAnnulerCopie").onclick = () => fermerDetailClasse();
+  hote.querySelectorAll("[data-ec-cible]").forEach(b => b.onclick = () =>
+    ecDupliquerEvaluation(evaluation, cibles.find(c => c.id === b.dataset.ecCible)));
+}
+
+/**
+ * Copie une grille et ses criteres dans une autre classe, comme duplicateEvaluation de
+ * l'application : le cycle d'enseignement de la meme activite s'il existe, sinon celui de la
+ * periode 1 cree depuis le planning, cree ici au besoin. Les notes ne suivent pas.
+ */
+async function ecDupliquerEvaluation(evaluation, cible) {
+  if (!evaluation || !cible) return;
+  const hote = hoteDetail();
+  hote.innerHTML = `<div class="ec-feuille"><p class="muted">Copie vers ${ecTexte(cible.name)}…</p></div>`;
+  const source = evaluation.cycle || dashboardCycles.find(c => c.id === evaluation.cycle_id);
+  const maintenant = new Date().toISOString();
+  const fin = html => {
+    hote.innerHTML = `<div class="ec-feuille">${html}
+      <div class="ec-dialogue-actions"><button type="button" id="ecFinCopie">Fermer</button></div></div>`;
+    document.getElementById("ecFinCopie").onclick = () => fermerDetailClasse();
+  };
+  try {
+    if (!source) throw new Error("le cycle de la grille est introuvable");
+    if (!ecNotesChargees) await ecChargerNotes();
+    const cycles = typeof modeHorsConnexion !== "undefined" && modeHorsConnexion
+      ? (await modeHorsConnexion.lire("cycles", { ou: c => c.class_id === cible.id })).rows
+      : await (await apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cible.id}&select=*`)).json();
+    const memes = cycles.filter(c => !c.deleted && memeActivite(c.apsa_name, source.apsa_name));
+    let cycle = memes.find(c => !String(c.priority_objective || "").startsWith("planning-period-"))
+      || memes.find(c => c.priority_objective === "planning-period-1");
+    if (!cycle) {
+      cycle = { id: crypto.randomUUID(), user_id: session.user_id, class_id: cible.id, grade: cible.grade,
+        apsa_name: source.apsa_name, session_count: 8, current_session_number: 1, priority_objective: "planning-period-1",
+        installation: source.installation || null, school_year: cible.school_year || dashboardClass.row.school_year || null,
+        updated_at: maintenant, deleted: false };
+      await ecEnregistrer("cycles", cycle);
+    }
+    const copieId = crypto.randomUUID();
+    await ecEnregistrer("evaluations", { id: copieId, user_id: session.user_id, cycle_id: cycle.id, type: evaluation.type,
+      label: `${evaluation.label || "Évaluation"} (copie)`, date_epoch_millis: Number(evaluation.date_epoch_millis) || Date.now(),
+      updated_at: maintenant, deleted: false });
+    const criteres = ecCriteres.filter(c => c.evaluation_id === evaluation.id && !c.deleted)
+      .sort((a, b) => (Number(a.order_index) || 0) - (Number(b.order_index) || 0));
+    for (let i = 0; i < criteres.length; i++) {
+      await ecEnregistrer("evaluation_criteria", { id: crypto.randomUUID(), user_id: session.user_id, evaluation_id: copieId,
+        label: criteres[i].label, max_points: criteres[i].max_points, order_index: i, updated_at: maintenant, deleted: false });
+    }
+    fin(`<h3>Copie créée</h3><p id="ecCopieFaite">« ${ecTexte(evaluation.label || "Évaluation")} (copie) » est dans ${ecTexte(cible.name)},
+      cycle ${ecTexte(source.apsa_name)}, avec ${ecPluriel(criteres.length, "critère")}.</p>`);
+  } catch (e) {
+    fin(`<div class="error">Copie impossible : ${ecTexte(e.message)}</div>`);
+  }
+}
+
+/**
+ * Rouvre un travail d'outil enregistre, avec son contenu et sa classe.
+ *
+ * Les outils savent reprendre un travail (renderTournamentWeb(travail)...), mais repartaient en
+ * « Utilisation libre » : on repose la classe et la periode, comme au moment de l'enregistrement.
+ */
+async function ecRouvrirTravail(travail) {
+  const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
+    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb" };
+  const dessin = globalThis[outils[travail.type]];
+  fermerDetailClasse();
+  showTab("outils");
+  if (typeof dessin !== "function") { openTool(travail.type); return; }
+  stopToolTimer();
+  toolPanel = document.getElementById("toolPanel");
+  document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
+  toolPanel.style.display = "block";
+  toolPanel.classList.add("modern-tool-panel");
+  await dessin(travail);
+  const mode = document.getElementById("modernMode"), classe = document.getElementById("modernClass");
+  const periode = document.getElementById("modernPeriod");
+  if (periode) periode.value = String(travail.period || 1);
+  if (mode && classe && travail.classId) {
+    mode.value = "class"; mode.dispatchEvent(new Event("change"));
+    classe.disabled = false; classe.value = travail.classId; classe.dispatchEvent(new Event("change"));
+  }
+  toolPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 /** Les travaux d'outils enregistres pour cette classe dans ce navigateur (tools-workspace.js). */
 function ecTravauxDeLaClasse() {
   const compte = typeof session !== "undefined" && session?.user_id ? session.user_id : "local";
@@ -695,7 +1011,7 @@ function ecOuvrirDivers() {
   const travaux = ecTravauxDeLaClasse();
   hote.innerHTML = `<div class="ec-feuille">
     <h3>${ecTexte(dashboardClass.label)} · Divers EPS</h3>
-    <p class="muted">Clic : ouvrir l’outil · appui prolongé : supprimer</p>
+    <p class="muted">Clic : ouvrir et modifier · appui prolongé : supprimer</p>
     <div class="ec-liste">
       ${acro.map(t => `<button type="button" class="ec-test vert" data-ec-acro="${ecTexte(t.id)}"><b>${ecTexte(t.name)}</b>
         <small>Période ${ecTexte(String(t.mode).replace("ACROSPORT_P", "").split("_")[0])} · créé le ${ecJour(t.created_at)}</small>
@@ -709,15 +1025,16 @@ function ecOuvrirDivers() {
   </div>`;
   ouvrirDetailClasse();
   document.getElementById("ecFermerDivers").onclick = () => fermerDetailClasse();
-  const ouvrirOutil = id => { fermerDetailClasse(); showTab("outils"); openTool(id); };
   hote.querySelectorAll("[data-ec-acro]").forEach(b => {
     const t = acro.find(x => x.id === b.dataset.ecAcro);
-    b.onclick = () => ouvrirOutil("acrosport");
+    // Les groupes Acrosport enregistres par l'application sont des compositions : elles
+    // s'ouvrent comme les autres equipes, pour les consulter ou les modifier.
+    b.onclick = () => ecOuvrirEquipe(t);
     ecAppuiLong(b, () => ecSupprimerEquipe(t));
   });
   hote.querySelectorAll("[data-ec-travail]").forEach(b => {
     const w = travaux.find(x => x.id === b.dataset.ecTravail);
-    b.onclick = () => ouvrirOutil(w.type);
+    b.onclick = () => ecRouvrirTravail(w);
     ecAppuiLong(b, () => {
       if (!confirm(`Supprimer « ${w.title || "Travail"} » ?`)) return;
       const compte = typeof session !== "undefined" && session?.user_id ? session.user_id : "local";

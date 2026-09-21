@@ -207,6 +207,37 @@
         }
       },
       {
+        // Les trois gestes de l'application : evaluer une composition, en modifier les groupes,
+        // et dupliquer une grille vers une autre classe.
+        nom: "Tableau de bord · equipes et copie d'une grille",
+        action: async () => {
+          await entrerDansMenu();
+          const panneau = $("classDashboardPanel");
+          panneau.querySelector("[data-ec-equipe]").click();
+          await attendre(() => f.document.getElementById("ecEvaluerEquipe"), "la composition ne s'ouvre pas", 4000);
+          if (f.document.getElementById("ecEvaluerEquipe").disabled) throw new Error("Créer une évaluation est grisé alors que la classe a un cycle");
+          f.document.getElementById("ecModifierGroupes").click();
+          await attendre(() => f.document.querySelector("[data-ec-groupe]"), "la modification des groupes ne s'ouvre pas", 4000);
+          f.document.getElementById("ecAnnulerGroupes").click();
+          await attendre(() => f.document.getElementById("ecEvaluerEquipe"), "annuler ne ramene pas a la composition", 4000);
+          f.document.getElementById("ecEvaluerEquipe").click();
+          await attendre(() => f.document.querySelector("[data-ec-note-groupe]"), "l'evaluation d'equipe ne propose pas les groupes", 4000);
+          f.document.getElementById("ecEqAnnuler").click();
+          await attendre(() => f.document.getElementById("ecFermerEquipe"), "annuler l'evaluation ne ramene pas a la composition", 4000);
+          f.document.getElementById("ecFermerEquipe").click();
+
+          panneau.querySelector('[data-vue="evaluations"]').click();
+          await attendre(() => panneau.querySelector("[data-ec-grille]"), "aucune grille a dupliquer", 4000);
+          panneau.querySelector("[data-ec-grille]").dispatchEvent(new f.MouseEvent("contextmenu", { bubbles: true }));
+          await attendre(() => f.document.querySelector("[data-ec-cible]"), "la copie ne propose aucune classe", 4000);
+          f.document.querySelector("[data-ec-cible]").click();
+          await attendre(() => f.document.getElementById("ecCopieFaite"), "la copie n'aboutit pas : "
+            + (f.document.getElementById("dashDetailContenu")?.innerText || "").slice(0, 120), 6000);
+          f.document.getElementById("ecFinCopie").click();
+          await entrerDansMenu();
+        }
+      },
+      {
         nom: "Tableau de bord · grilles d'evaluation proposees",
         action: async () => {
           await entrerDansCours();
