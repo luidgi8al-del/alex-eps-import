@@ -2,13 +2,19 @@ import { DEFAULT_BATCH_SIZE, MAX_TENTATIVES_ENVOI, PAGE_LECTURE, SYNC_STATE } fr
 import { publishSyncState } from "../core/events.js";
 import { estPanneReseau } from "../core/connectivity.js";
 import { getMeta, setMeta } from "../storage/database.js";
-import { saveLocalRecord, countLocalRecords, generationLocale } from "../storage/records.js";
+import { saveLocalRecord, countLocalRecords, generationLocale, readLocalRecordMeta } from "../storage/records.js";
 import { acknowledgeOperation, countPendingOperations, deferOperation, operationsForRecord, pendingOperations, replaceOperation } from "./outbox.js";
 import { countConflicts, storeConflict, storeRejection } from "./conflicts.js";
 import { mergeOfflineChange } from "./merge.js";
 const CURSOR_KEY = "last-server-cursor";
 /** Nombre de fiches locales au moment ou le curseur a ete ecrit. Voir #pullAndReconcile. */
 const FICHES_KEY = "records-at-cursor";
+/** Derniere fois que les lignes arrivees tard ont ete rattrapees. */
+const RATTRAPAGE_KEY = "dernier-rattrapage";
+/** Au plus un rattrapage toutes les dix minutes : c'est une lecture d'identifiants, pas gratuite. */
+const RATTRAPAGE_INTERVALLE_MS = 10 * 60 * 1000;
+/** Fenetre du rattrapage : une saisie plus ancienne que cela est deja arrivee, ou ne le sera jamais. */
+const RATTRAPAGE_JOURS = 30;
 export class OfflineSyncEngine {
   #adapter; #batchSize; #running;
   constructor({ adapter, batchSize = DEFAULT_BATCH_SIZE }) {
@@ -24,6 +30,7 @@ export class OfflineSyncEngine {
     publishSyncState(SYNC_STATE.SYNCING);
     try {
       await this.#pullAndReconcile();
+      await this.#rattraper();
       const sent = await this.#pushPending();
       // No writes: the first pull is sufficient. Do not read every table twice per refresh.
       if (sent) await this.#pullAndReconcile();
@@ -88,6 +95,44 @@ export class OfflineSyncEngine {
       }
     }
   }
+  /**
+   * Rattrape les lignes recentes que la lecture par date a laissees passer.
+   *
+   * Voir TABLES_RATTRAPAGE dans l'adaptateur : une ligne saisie ailleurs et envoyee tard arrive
+   * avec une date anterieure au curseur. On compare les identifiants et dates recentes du serveur a
+   * la copie locale, et on lit ce qui manque ou ce qui est plus recent ailleurs.
+   * Ne fait jamais echouer la synchronisation : elle reessaiera au prochain passage.
+   * @param {{force?: boolean}} [options] force : sans attendre l'intervalle (ouverture d'un ecran)
+   */
+  async rattraper({ force = false } = {}) {
+    if (!this.#adapter.identifiantsRecents || !this.#adapter.tablesRattrapables?.length) return 0;
+    const dernier = await getMeta(RATTRAPAGE_KEY);
+    if (!force && dernier && Date.now() - dernier < RATTRAPAGE_INTERVALLE_MS) return 0;
+    const generation = generationLocale();
+    const depuis = new Date(Date.now() - RATTRAPAGE_JOURS * 86400000).toISOString();
+    let recuperees = 0;
+    try {
+      for (const table of this.#adapter.tablesRattrapables) {
+        const recentes = await this.#adapter.identifiantsRecents(table, depuis);
+        const manquantes = [];
+        for (const r of recentes) {
+          const local = await readLocalRecordMeta(table, r.id);
+          if (!local || Date.parse(local.updatedAt) < Date.parse(r.updated_at)) manquantes.push(r.id);
+        }
+        for (let i = 0; i < manquantes.length; i += 50) {
+          const records = await this.#adapter.lireParIdentifiants(table, manquantes.slice(i, i + 50));
+          if (generationLocale() !== generation) return recuperees;
+          for (const record of records) { await this.#applyServerRecord(record); recuperees++; }
+        }
+      }
+      if (generationLocale() === generation) await setMeta(RATTRAPAGE_KEY, Date.now());
+    } catch (error) {
+      if (estPanneReseau(error)) throw error;
+      console.warn("Rattrapage des lignes recentes interrompu :", error?.message || error);
+    }
+    return recuperees;
+  }
+  async #rattraper() { return this.rattraper(); }
   async #applyServerRecord(serverRecord) {
     const operations = await operationsForRecord(`${serverRecord.entity}:${serverRecord.id}`);
     if (!operations.length) return saveLocalRecord(serverRecord);

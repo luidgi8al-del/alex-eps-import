@@ -229,6 +229,43 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
     return Object.fromEntries(Object.entries(objet).filter(([, valeur]) => valeur !== undefined));
   }
 
+  /**
+   * Les tables dont une ligne peut arriver AVEC UNE DATE ANCIENNE.
+   *
+   * La lecture avance par date de modification : elle ne redescend que ce qui est plus recent que
+   * la derniere ligne vue. Or l'application date ses lignes a l'instant de la saisie, pas de
+   * l'envoi. Un test fait a 15 h et envoye a 1 h du matin - parce que la synchronisation etait
+   * bloquee, ou le telephone sans reseau - arrive avec une date deja depassee par le curseur du
+   * site, qui ne le lit alors jamais. C'est ce qui rendait invisibles sur le site des tests, des
+   * inscriptions ou des appels enregistres dans l'application.
+   */
+  const TABLES_RATTRAPAGE = [
+    "eps_test_sessions", "eps_test_results", "health_dispensations", "health_accidents",
+    "unss_slots", "unss_memberships", "unss_sessions", "unss_attendance"
+  ];
+  const tablesRattrapables = tables.filter(t => TABLES_RATTRAPAGE.includes(t));
+
+  /** Les identifiants et dates des lignes recentes d'une table : de quoi comparer, sans tout lire. */
+  async function identifiantsRecents(table, depuis) {
+    const borne = encodeURIComponent(depuis);
+    const trouves = [];
+    for (let debut = 0; ; debut += 1000) {
+      const page = await lire(`/rest/v1/${table}?updated_at=gte.${borne}&select=id,updated_at&order=updated_at.asc,id.asc&limit=1000&offset=${debut}`);
+      trouves.push(...page);
+      if (page.length < 1000) break;
+    }
+    return trouves;
+  }
+
+  /** Les lignes completes de ces identifiants, dans la meme forme que pullChanges. */
+  async function lireParIdentifiants(table, ids) {
+    const lignes = await lire(`/rest/v1/${table}?id=in.(${ids.map(i => `"${encodeURIComponent(i)}"`).join(",")})&select=*`);
+    return lignes.map(ligne => ({
+      entity: table, id: ligne.id, version: ligne.version ?? 0, updatedAt: ligne.updated_at,
+      deleted: Boolean(ligne.deleted), data: ligne
+    }));
+  }
+
   // Le moteur a besoin de connaitre la liste : elle determine ce que le curseur couvre.
-  return { pullChanges, pushOperation, lireLigne, tables };
+  return { pullChanges, pushOperation, lireLigne, tables, tablesRattrapables, identifiantsRecents, lireParIdentifiants };
 }

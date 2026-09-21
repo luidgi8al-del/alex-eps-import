@@ -954,7 +954,19 @@ async function ecEnFenetreOutil(lancer) {
 
 /** Reprend un test enregistre, par-dessus la classe. */
 function ecOuvrirTestEnFenetre(t) {
-  return ecEnFenetreOutil(() => ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name));
+  return ecEnFenetreOutil(async () => {
+    // La classe lit ses tests sur le serveur, les outils sur la copie locale : un test fait dans
+    // l'application peut ne pas y etre encore. On la complete avant d'ouvrir, au lieu de laisser
+    // l'outil se dessiner sur rien.
+    const mode = typeof modeHorsConnexion !== "undefined" ? modeHorsConnexion : null;
+    if (mode?.rattraper) {
+      try {
+        const locale = await mode.lire("eps_test_sessions", { ou: x => x.id === t.id });
+        if (!locale.rows.length) await mode.rattraper();
+      } catch { /* l'outil tentera sa propre lecture */ }
+    }
+    await ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name);
+  });
 }
 
 async function ecSupprimerTest(t) {

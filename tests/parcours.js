@@ -266,6 +266,28 @@
         }
       },
       {
+        // Une ligne saisie dans l'application et envoyee tard arrive avec une date deja depassee
+        // par le curseur de lecture : sans rattrapage, elle n'apparait jamais sur le site.
+        nom: "Hors connexion · une ligne arrivee tard est rattrapee",
+        action: async () => {
+          const mode = f.eval("typeof modeHorsConnexion !== 'undefined' && modeHorsConnexion");
+          if (!mode || typeof mode.rattraper !== "function") throw new Error("le rattrapage des lignes tardives a disparu");
+          const bases = await f.indexedDB.databases();
+          const nom = bases.map(b => b.name).find(n => /eps-lvh-offline/.test(n));
+          if (!nom) return;
+          const base = await new Promise((ok, ko) => { const q = f.indexedDB.open(nom); q.onsuccess = () => ok(q.result); q.onerror = () => ko(q.error); });
+          const present = cle => new Promise(ok => { const q = base.transaction("records").objectStore("records").get(cle); q.onsuccess = () => ok(!!q.result); });
+          const retirer = cle => new Promise((ok, ko) => { const t = base.transaction("records", "readwrite"); t.objectStore("records").delete(cle); t.oncomplete = ok; t.onerror = () => ko(t.error); });
+          await attendre(() => present("eps_test_sessions:ts-2"), "le test du jeu d'essai n'est pas dans la copie locale", 8000);
+          await retirer("eps_test_sessions:ts-2");
+          await retirer("health_dispensations:hd-1");
+          const n = await mode.rattraper();
+          if (!(await present("eps_test_sessions:ts-2"))) throw new Error("un test absent de la copie locale n'est pas rattrape");
+          if (!(await present("health_dispensations:hd-1"))) throw new Error("une dispense absente de la copie locale n'est pas rattrapee");
+          if (n < 2) throw new Error(`le rattrapage annonce ${n} ligne(s) au lieu de 2`);
+        }
+      },
+      {
         nom: "Tableau de bord · grilles d'evaluation proposees",
         action: async () => {
           await entrerDansCours();

@@ -12,6 +12,16 @@ export async function readLocalRecord(entity, id) {
     stores => requestResult(stores[STORES.RECORDS].get(key)));
   return row ? { ...row, data: await unseal(row.envelope, key) } : null;
 }
+/**
+ * L'etat d'une fiche locale (date, effacement) sans dechiffrer son contenu : le rattrapage compare
+ * des milliers de lignes, dechiffrer chacune serait du temps perdu.
+ */
+export async function readLocalRecordMeta(entity, id) {
+  const key = recordKey(entity, id);
+  const row = await transaction([STORES.RECORDS], "readonly",
+    stores => requestResult(stores[STORES.RECORDS].get(key)));
+  return row ? { updatedAt: row.updatedAt, deleted: row.deleted, version: row.version } : null;
+}
 export async function listLocalRecords(entity, { includeDeleted = false } = {}) {
   const rows = await transaction([STORES.RECORDS], "readonly",
     stores => requestResult(stores[STORES.RECORDS].index("byEntity").getAll(entity)));

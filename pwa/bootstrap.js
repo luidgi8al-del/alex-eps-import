@@ -203,6 +203,13 @@ export async function demarrerHorsConnexion({
       return resultat;
     },
 
+    /**
+     * Va chercher maintenant les lignes recentes que la lecture par date aurait laissees passer,
+     * puis rend le nombre de lignes recuperees. Utilise a l'ouverture d'un test dont la classe
+     * annonce l'existence : la copie locale peut ne pas l'avoir encore.
+     */
+    rattraper: () => engine.rattraper({ force: true }),
+
     /** Reaffiche les conflits en attente (apres un retour sur l'onglet, par exemple). */
     rafraichirConflits: () => afficherConflits?.(),
 
