@@ -2102,6 +2102,10 @@ function seancesDuCreneau(slotId) {
 
 const dateSeance = ms => new Date(Number(ms || 0)).toLocaleDateString("fr-FR",
   { weekday: "long", day: "numeric", month: "long" });
+// En-tete de colonne du bilan : couper la date longue ne gardait que le jour, et deux
+// seances d'un meme creneau s'affichaient toutes deux « lundi ».
+const dateSeanceCourte = ms => new Date(Number(ms || 0)).toLocaleDateString("fr-FR",
+  { day: "2-digit", month: "2-digit" });
 
 /** Rien a afficher tant que les inscriptions ne sont pas revenues : on les attend. */
 async function assurerInscriptions() {
@@ -2231,7 +2235,7 @@ async function ouvrirBilanCreneau(slot) {
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit à ce créneau.</div>`
       : `<div class="as-bilan-table"><table class="eleveTable"><thead><tr>
-           <th>Élève</th>${seances.map(s=>`<th>${dateSeance(s.date_epoch_millis).slice(0,5)}</th>`).join('')}<th>%</th></tr></thead><tbody>${
+           <th>Élève</th>${seances.map(s=>`<th>${dateSeanceCourte(s.date_epoch_millis)}</th>`).join('')}<th>%</th></tr></thead><tbody>${
            lignes.map(l => `<tr><td>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</td>${seances.map(s=>{const p=unssPresences.find(x=>x.student_id===l.eleve.id&&x.session_id===s.id);return `<td><i class="as-presence-dot ${!p?'none':p.present?'yes':'no'}">${!p?'–':p.present?'P':'A'}</i></td>`}).join('')}<td><b>${l.notees?Math.round(l.presents*100/l.notees):0}%</b></td></tr>`).join("")
          }</tbody></table></div>`}
     `;

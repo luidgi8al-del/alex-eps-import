@@ -941,16 +941,22 @@ function exportEvaluationCsv() {
   const grid = document.getElementById("liveToolGrid");
   const panel = document.getElementById("liveToolPanel");
 
-  grid.innerHTML = document.querySelector("#tab-outils .toolGrid").innerHTML;
-  grid.querySelectorAll("[data-tool]").forEach(b =>
-    b.addEventListener("click", () => openTool(b.dataset.tool, panel))
-  );
+  // La grille statique de l'onglet Outils a disparu le 13/09 : l'onglet est desormais dessine
+  // par tools-workspace.js. La copier plantait au chargement et arretait le demarrage du site.
+  // On reprend donc la meme liste d'outils, au moment ou la boite a outils s'ouvre.
+  function remplirBoiteOutils() {
+    const liste = globalThis.EpsToolsCatalog || [];
+    grid.innerHTML = liste.map(t => `<button class="toolCard" data-tool="${t.id}"><span class="toolIcon">${t.icon}</span><strong>${t.title}</strong><span>${t.subtitle}</span></button>`).join("");
+    grid.querySelectorAll("[data-tool]").forEach(b =>
+      b.addEventListener("click", () => openTool(b.dataset.tool, panel))
+    );
+  }
 
   document.getElementById("livePrev").onclick = () => { if (liveIndex > 0) { liveIndex--; renderLiveStep(); } };
   document.getElementById("liveNext").onclick = () => { if (liveIndex < liveSteps.length - 1) { liveIndex++; renderLiveStep(); } };
   document.getElementById("liveCloseBtn").onclick = closeLiveLesson;
 
-  document.getElementById("liveToolsBtn").onclick = () => tools.classList.add("open");
+  document.getElementById("liveToolsBtn").onclick = () => { remplirBoiteOutils(); tools.classList.add("open"); };
   document.getElementById("liveToolsClose").onclick = () => { stopToolTimer(); tools.classList.remove("open"); };
   tools.addEventListener("click", e => { if (e.target === tools) { stopToolTimer(); tools.classList.remove("open"); } });
 

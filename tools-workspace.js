@@ -11,7 +11,7 @@
     ["observer","Observateur","Compter et analyser les actions","👁️","Observer",["Sports collectifs","Raquettes","Gymnastique","Escalade"]],
     ["random","Tirage au sort","Choisir rapidement un élève","🎲","Organiser",["Tous"]],
     ["tests","Tests EPS","Tests et suivi des progrès","📋","Évaluer",["Athlétisme"]],
-    ["condition-fitness","Condition physique générale","Six ateliers, groupes et note sur 5","💪","Évaluer",["Athlétisme","Gymnastique","Tous"]],
+    ["condition-fitness","Condition physique générale","Six ateliers, groupes et note sur 20","💪","Évaluer",["Athlétisme","Gymnastique","Tous"]],
     ["vma","Tests VMA","VAMEVAL, Léger et Cooper","💓","Évaluer",["Athlétisme"]],
     ["aptitudes","Aptitudes 6e","Sprint, endurance et saut","📊","Évaluer",["Athlétisme"]],
     ["swim","Savoir Nager","Parcours et attestations","🏊","Évaluer",["Natation"]],
@@ -22,6 +22,8 @@
     ["signals","Signaux sonores","Départs et rotations","🔊","Terrain",["Tous"]],
     ["acrosport","Groupes Acrosport","Binômes, trinômes et groupes","🤸","Organiser",["Gymnastique"]]
   ].map(x=>({id:x[0],title:x[1],subtitle:x[2],icon:x[3],fn:x[4],activities:x[5]}));
+  // Le mode cours (cours.js) propose les memes outils dans sa boite a outils.
+  globalThis.EpsToolsCatalog=tools;
   const activityMeta={"Athlétisme":["🏃","Chronos · 3×500 · VMA · passages"],"Natation":["🏊","Chronos · attestations · tests"],"Sports collectifs":["🏀","Scores · tournois · observations"],"Raquettes":["🏸","Scores · tournois · impacts"],"Gymnastique":["🤸","Groupes · observation · rotations"],"Escalade":["🧗","Groupes · rotations · observation"],"Tous":["🧰","Outils transversaux"]};
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const prefKey="eps_tools_layout";

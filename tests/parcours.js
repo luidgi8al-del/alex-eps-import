@@ -219,11 +219,11 @@
         }
       },
       {
-        nom: "Onglet CLASSE · liste des eleves",
+        nom: "Onglet REPERTOIRE · liste des eleves",
         action: async () => {
-          await onglet("classes");
-          f.showSubtab("liste");
-          await attendre(() => rempli($("listeEleveList")), "la liste des eleves reste vide", 6000);
+          // Depuis le 16/09, la liste des eleves vit dans son propre onglet, le Repertoire.
+          await onglet("students");
+          await attendre(() => rempli($("studentsDirectoryList")), "la liste des eleves reste vide", 6000);
         }
       },
       {
@@ -231,9 +231,9 @@
         // une page de cent noms melange plusieurs divisions.
         nom: "Liste eleve · on coche une division entiere d'un geste",
         action: async () => {
-          await onglet("classes");
-          f.showSubtab("liste");
-          await attendre(() => rempli($("listeEleveList")), "la liste des eleves reste vide", 6000);
+          // Depuis le 16/09, la liste des eleves vit dans son propre onglet, le Repertoire.
+          await onglet("students");
+          await attendre(() => rempli($("studentsDirectoryList")), "la liste des eleves reste vide", 6000);
 
           const choix = f.document.getElementById("filtreDivision");
           if (!choix) throw new Error("le choix de la division a disparu");
@@ -247,7 +247,7 @@
           choix.dispatchEvent(new f.Event("change"));
           await attendre(() => f.document.getElementById("cocherDivision"),
             "le bouton pour cocher la division n'apparait pas", 4000);
-          const divisions = [...f.document.querySelectorAll("#listeEleveList .eleveTable tbody tr")]
+          const divisions = [...f.document.querySelectorAll("#studentsDirectoryList .eleveTable tbody tr")]
             .map(tr => tr.children[4]?.textContent.trim());
           if (divisions.length === 0) throw new Error("le tableau est vide apres le filtre");
           if (divisions.some(d => d !== "3e6")) throw new Error("le filtre laisse passer une autre division");
@@ -287,6 +287,7 @@
       {
         nom: "Onglet CLASSE · creation de classe",
         action: async () => {
+          await onglet("classes");
           f.showSubtab("newimport");
           await attendre(() => visible($("subtab-newimport")), "l'ecran de creation ne s'affiche pas");
         }
@@ -442,7 +443,10 @@
             "les onglets de bilan n'apparaissent pas", 4000);
 
           // Le motif est propose des que le schema est marque comme applique.
-          await attendre(() => f.document.getElementById("healthClassSelect"), "la saisie ne s'affiche pas", 4000);
+          // La saisie se fait en trois etapes : carte de la classe, puis eleve, puis dispense.
+          await attendre(() => f.document.querySelector("[data-health-class]"), "la saisie ne s'affiche pas", 4000);
+          f.document.querySelector("[data-health-class]").click();
+          await attendre(() => f.document.querySelector("[data-health-student]"), "la classe ne montre pas ses eleves", 4000);
           const eleve = f.document.querySelector("[data-health-student]");
           if (!eleve) throw new Error("aucun eleve dans la classe de test");
           eleve.click();
@@ -639,7 +643,8 @@
         action: async () => {
           await onglet("unss");
           f.showUnssTab("slots");
-          await attendre(() => f.document.querySelector("[data-slot-eleves]"),
+          // Chaque creneau est une carte ; un clic ouvre sa fiche, qui porte Eleves, Appel et Bilan.
+          await attendre(() => f.document.querySelector(".as-slot-tile[data-slot]"),
             "le creneau ne propose pas ses eleves", 6000);
 
           // L'onglet Groupe doit avoir disparu de la barre.
@@ -648,10 +653,15 @@
           }
 
           // Le creneau qui a des eleves, pas le premier venu : un autre controle a pu en creer.
-          const boutonEleves = [...f.document.querySelectorAll("[data-slot-eleves]")]
-            .find(b => !/\(0\)/.test(b.textContent)) || f.document.querySelector("[data-slot-eleves]");
-          const creneauId = boutonEleves.dataset.slotEleves;
-          boutonEleves.click();
+          const carte = [...f.document.querySelectorAll(".as-slot-tile[data-slot]")]
+            .find(b => !/(^|\D)0 inscrit/.test(b.textContent)) || f.document.querySelector(".as-slot-tile[data-slot]");
+          const creneauId = carte.dataset.slot;
+          const ouvrirFiche = async () => {
+            f.document.querySelector(`.as-slot-tile[data-slot="${creneauId}"]`).click();
+            await attendre(() => f.document.getElementById("asStudents"), "la fiche du creneau ne s'ouvre pas", 4000);
+          };
+          await ouvrirFiche();
+          f.document.getElementById("asStudents").click();
           await attendre(() => f.document.getElementById("unssCreneauEleves"),
             "la liste des eleves du creneau ne s'ouvre pas", 4000);
           if (!f.document.querySelector("[data-retirer]")) {
@@ -663,18 +673,22 @@
           f.document.getElementById("unssCreneauCloseBtn").click();
 
           // Le bilan de presence, sur le meme creneau.
-          f.document.querySelector(`[data-slot-bilan="${creneauId}"]`).click();
+          await ouvrirFiche();
+          f.document.getElementById("asBalance").click();
           await attendre(() => f.document.querySelector("#unssPanel table tbody tr"),
             "le bilan ne liste aucun eleve", 6000);
           // Comparaison sans accent : ce fichier peut etre decode autrement que la page testee,
           // et un "e" accentue ne doit pas faire echouer un controle qui porte sur autre chose.
           const sansAccent = t => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
           const colonnes = [...f.document.querySelectorAll("#unssPanel th")].map(th => sansAccent(th.textContent));
-          ["eleve", "present", "absent"].forEach(attendue => {
-            if (!colonnes.some(c => c.includes(attendue))) {
-              throw new Error(`la colonne ${attendue} manque au bilan : ${colonnes.join(", ")}`);
-            }
-          });
+          // Depuis le 21/09, le bilan est une grille : l'eleve, une colonne datee par appel, le taux.
+          if (!colonnes.some(c => c.includes("eleve"))) throw new Error(`la colonne eleve manque au bilan : ${colonnes.join(", ")}`);
+          if (!colonnes.includes("%")) throw new Error(`le taux de presence manque au bilan : ${colonnes.join(", ")}`);
+          const dates = colonnes.filter(c => /^\d{2}\/\d{2}$/.test(c));
+          if (dates.length === 0) throw new Error(`aucune colonne datee dans le bilan : ${colonnes.join(", ")}`);
+          if (colonnes.some(c => /^(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)$/.test(c))) {
+            throw new Error(`un en-tete donne le jour au lieu de la date : ${colonnes.join(", ")}`);
+          }
           f.document.getElementById("unssBilanClose").click();
 
           // L'appel : les seances du creneau, datees.
