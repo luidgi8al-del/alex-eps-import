@@ -80,7 +80,7 @@
     unss_slots: [{ id: "usl-1", user_id: "prof-test", institution_id: "etab-1", day_of_week: "MERCREDI", start_time: "13:00", label: "Volley", deleted: false, updated_at: MAINTENANT }],
     annual_plan_blocks: [],
     eps_test_sessions: [
-      { id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT },
+      { id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger · navette 20 m", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT },
       { id: "ts-2", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Condition physique générale", class_label: "3e6", created_at: Date.now() - 1000, deleted: false, updated_at: MAINTENANT }
     ],
     eps_test_results: [

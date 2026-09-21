@@ -258,9 +258,14 @@
             && f.document.getElementById("ecOutilFenetre").contains($("toolPanel"))
             && /Condition physique/.test($("toolPanel").innerText), "le test ne s'ouvre pas par-dessus la classe", 8000);
           if (onglet() !== avant) throw new Error("ouvrir le test a fait quitter l'onglet de la classe");
-          f.document.getElementById("ecOutilRetour").click();
+          // La fleche de l'outil (et pas seulement celle de la fenetre) ramene a la liste des tests
+          // de la classe, pas aux ecrans de l'onglet Outils.
+          f.document.getElementById("closeToolBtn").click();
           await attendre(() => !f.document.getElementById("ecOutilFenetre") && $("tab-outils").contains($("toolPanel")),
-            "le retour ne referme pas la fenetre du test", 4000);
+            "la fleche de l'outil ne referme pas la fenetre du test", 4000);
+          await attendre(() => f.document.querySelector("[data-ec-test]"),
+            "la fleche de l'outil ne ramene pas a la liste des tests de la classe", 4000);
+          if (onglet() !== avant) throw new Error("le retour a fait quitter l'onglet de la classe");
           if (f.eval("vueClasse") !== "evaluations") throw new Error("le retour ne ramene pas a la classe");
           await entrerDansMenu();
         }

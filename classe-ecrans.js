@@ -896,8 +896,9 @@ function ecOuvrirTests(tests) {
  * neutralise pendant l'ouverture : les fonctions d'ouverture l'appellent pour basculer sur Outils,
  * ce qui nous ferait quitter la classe.
  * @param {() => Promise<void>} lancer  ouvre l'outil dans #toolPanel
+ * @param {() => void} [retour]  ce qu'on rouvre a la fermeture : la liste d'ou l'on vient
  */
-async function ecEnFenetreOutil(lancer) {
+async function ecEnFenetreOutil(lancer, retour) {
   fermerDetailClasse();
   document.getElementById("ecOutilFenetre")?.remove();
   const panneau = document.getElementById("toolPanel");
@@ -929,11 +930,20 @@ async function ecEnFenetreOutil(lancer) {
       await chargerEvaluationsDuTableauDeBord();
     } catch { /* on garde ce qu'on avait */ }
     if (dashboardClass) renderClassDashboard();
+    if (retour) retour();
   };
   // La fleche de l'outil lui-meme (closeModernTool) vide et cache le panneau : la fenetre suit.
   const observateur = new MutationObserver(() => { if (panneau.style.display === "none") fermer(); });
   observateur.observe(panneau, { attributes: true, attributeFilter: ["style"] });
   document.getElementById("ecOutilRetour").onclick = fermer;
+  // Les fleches de l'outil menent a SES ecrans (la liste des tests d'Outils, ses parametres) :
+  // depuis la classe, elles doivent ramener a la classe. On les intercepte avant l'outil.
+  fenetre.addEventListener("click", e => {
+    if (e.target.closest("#closeToolBtn, #fitnessBack, #fitnessReturn")) {
+      e.stopImmediatePropagation(); e.preventDefault();
+      fermer();
+    }
+  }, true);
 
   const showTabOrigine = globalThis.showTab;
   globalThis.showTab = () => {};
@@ -966,7 +976,7 @@ function ecOuvrirTestEnFenetre(t) {
       } catch { /* l'outil tentera sa propre lecture */ }
     }
     await ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name);
-  });
+  }, () => ecOuvrirTests(ecEvaluationsSuivies().tests));
 }
 
 async function ecSupprimerTest(t) {
@@ -1083,7 +1093,7 @@ async function ecRouvrirTravail(travail) {
       mode.value = "class"; mode.dispatchEvent(new Event("change"));
       classe.disabled = false; classe.value = travail.classId; classe.dispatchEvent(new Event("change"));
     }
-  });
+  }, () => ecOuvrirDivers());
 }
 
 /** Les travaux d'outils enregistres pour cette classe dans ce navigateur (tools-workspace.js). */
