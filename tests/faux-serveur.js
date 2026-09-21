@@ -79,8 +79,14 @@
     ],
     unss_slots: [{ id: "usl-1", user_id: "prof-test", institution_id: "etab-1", day_of_week: "MERCREDI", start_time: "13:00", label: "Volley", deleted: false, updated_at: MAINTENANT }],
     annual_plan_blocks: [],
-    eps_test_sessions: [{ id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT }],
-    eps_test_results: [{ id: "tr-1", user_id: "prof-test", session_id: "ts-1", student_id: "el-0", input_value: 9, result_value: 15.5, input_unit: "palier", result_unit: "km/h", deleted: false, updated_at: MAINTENANT }],
+    eps_test_sessions: [
+      { id: "ts-1", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Luc Leger", class_label: "3e6", created_at: Date.now(), deleted: false, updated_at: MAINTENANT },
+      { id: "ts-2", user_id: "prof-test", class_id: "cl-3e6", period_number: 1, test_name: "Condition physique générale", class_label: "3e6", created_at: Date.now() - 1000, deleted: false, updated_at: MAINTENANT }
+    ],
+    eps_test_results: [
+      { id: "tr-1", user_id: "prof-test", session_id: "ts-1", student_id: "el-0", input_value: 9, result_value: 15.5, input_unit: "palier", result_unit: "km/h", deleted: false, updated_at: MAINTENANT },
+      { id: "tr-2", user_id: "prof-test", session_id: "ts-2", student_id: "el-0", input_value: 20, result_value: 3.5, input_unit: "incomplet · 1/6 ateliers", result_unit: "incomplet · 1/6 ateliers", deleted: false, updated_at: MAINTENANT }
+    ],
     // Trois dispenses : une a soi en cours, une a soi terminee, une saisie par un collegue.
     // C'est le minimum pour verifier les onglets "Mes dispenses" / "Tous" et le partage En
     // cours / Passees.

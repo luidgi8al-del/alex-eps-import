@@ -238,6 +238,34 @@
         }
       },
       {
+        // Un test se reprend par-dessus la classe, comme dans l'application : il ouvrait l'onglet
+        // Outils, et on perdait la classe de vue. Et chaque test a un vrai bouton Supprimer.
+        nom: "Tableau de bord · un test s'ouvre par-dessus la classe, avec Supprimer",
+        action: async () => {
+          await entrerDansMenu();
+          const panneau = $("classDashboardPanel");
+          panneau.querySelector('[data-vue="evaluations"]').click();
+          await attendre(() => f.document.getElementById("ecTests"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
+          f.document.getElementById("ecTests").click();
+          await attendre(() => f.document.querySelector("[data-ec-test]"), "la liste des tests ne s'ouvre pas", 4000);
+          if (!f.document.querySelector("[data-ec-test-suppr]")) throw new Error("les tests n'ont pas de bouton Supprimer");
+          const onglet = () => f.document.querySelector(".tabbtn.active")?.textContent;
+          const avant = onglet();
+          const condition = [...f.document.querySelectorAll("[data-ec-test]")].find(b => /Condition physique/.test(b.textContent));
+          if (!condition) throw new Error("le test de condition physique du jeu d'essai est absent");
+          condition.click();
+          await attendre(() => f.document.getElementById("ecOutilFenetre")
+            && f.document.getElementById("ecOutilFenetre").contains($("toolPanel"))
+            && /Condition physique/.test($("toolPanel").innerText), "le test ne s'ouvre pas par-dessus la classe", 8000);
+          if (onglet() !== avant) throw new Error("ouvrir le test a fait quitter l'onglet de la classe");
+          f.document.getElementById("ecOutilRetour").click();
+          await attendre(() => !f.document.getElementById("ecOutilFenetre") && $("tab-outils").contains($("toolPanel")),
+            "le retour ne referme pas la fenetre du test", 4000);
+          if (f.eval("vueClasse") !== "evaluations") throw new Error("le retour ne ramene pas a la classe");
+          await entrerDansMenu();
+        }
+      },
+      {
         nom: "Tableau de bord · grilles d'evaluation proposees",
         action: async () => {
           await entrerDansCours();

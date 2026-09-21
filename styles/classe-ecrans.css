@@ -278,3 +278,19 @@
 .ec-feuille .ec-ligne span { flex: 1; }
 .ec-feuille .ec-ligne em { font-style: normal; color: #2E7CC4; font-size: 20px; }
 .ec-evaluation .ec-aide { font-size: 11px; }
+
+/* Un test ou un travail ouvert par-dessus la classe */
+.ec-outil-fenetre { position: fixed; inset: 0; z-index: 950; background: #F4F7FA; display: flex; flex-direction: column; }
+.ec-outil-barre { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #2E7CC4; color: #fff; }
+.ec-outil-barre button { margin: 0; background: rgba(255,255,255,.16); color: #fff; border-radius: 999px; padding: 8px 14px; font-size: 14px; }
+.ec-outil-barre button:hover { background: rgba(255,255,255,.28); }
+.ec-outil-barre span { font-weight: 700; }
+.ec-outil-corps { flex: 1; overflow: auto; padding: 0 0 24px; }
+.ec-outil-corps #toolPanel { margin: 0 auto; max-width: 1180px; }
+body.ec-outil-ouvert { overflow: hidden; }
+
+/* Une ligne de la liste des tests : le test, et son bouton Supprimer */
+.ec-test-ligne { display: flex; align-items: stretch; gap: 8px; }
+.ec-test-ligne .ec-test { flex: 1; min-width: 0; margin: 0; }
+.ec-feuille .ec-test-suppr { flex: 0 0 auto; margin: 0; align-self: center; background: #FFE8E7; color: #A32D2D; border: 0; border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 700; }
+.ec-feuille .ec-test-suppr:hover { background: #FBD0CE; }

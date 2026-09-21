@@ -860,12 +860,15 @@ function ecOuvrirTests(tests) {
   const resultats = id => new Set(ecResultatsTests.filter(r => r.session_id === id).map(r => r.student_id)).size;
   hote.innerHTML = `<div class="ec-feuille">
     <h3>Tests EPS enregistrés</h3>
-    <p class="muted">Période ${dashboardPeriod} · clic : reprendre · appui prolongé : supprimer</p>
+    <p class="muted">Période ${dashboardPeriod} · cliquez un test pour le reprendre ou le modifier</p>
     <div class="ec-liste">${tests.length ? tests.map(t => {
       const n = resultats(t.id);
-      return `<button type="button" class="ec-test" data-ec-test="${ecTexte(t.id)}"><b>${ecTexte(t.test_name || "Test")}</b>
-        <small>Période ${Number(t.period_number) || 1} · ${new Date(Number(t.created_at) || Date.parse(t.created_at)).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })} · ${n ? ecPluriel(n, "élève") : "aucun résultat"}</small>
-        <em>Cliquez pour consulter ou modifier</em></button>`;
+      return `<div class="ec-test-ligne">
+        <button type="button" class="ec-test" data-ec-test="${ecTexte(t.id)}"><b>${ecTexte(t.test_name || "Test")}</b>
+          <small>Période ${Number(t.period_number) || 1} · ${new Date(Number(t.created_at) || Date.parse(t.created_at)).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })} · ${n ? ecPluriel(n, "élève") : "aucun résultat"}</small>
+          <em>Cliquez pour consulter ou modifier</em></button>
+        <button type="button" class="danger ec-test-suppr" data-ec-test-suppr="${ecTexte(t.id)}" aria-label="Supprimer ${ecTexte(t.test_name || "ce test")}">Supprimer</button>
+      </div>`;
     }).join("") : `<p class="ec-vide">Aucun test EPS enregistré pour cette classe sur la période.</p>`}</div>
     <div class="ec-dialogue-actions"><button type="button" class="secondary" id="ecFermerTests">Fermer</button></div>
   </div>`;
@@ -873,27 +876,99 @@ function ecOuvrirTests(tests) {
   document.getElementById("ecFermerTests").onclick = () => fermerDetailClasse();
   hote.querySelectorAll("[data-ec-test]").forEach(b => {
     const t = tests.find(x => x.id === b.dataset.ecTest);
-    const ouvrir = () => { fermerDetailClasse(); ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name); };
+    const ouvrir = () => ecOuvrirTestEnFenetre(t);
     b.onclick = ouvrir;
     ecAppuiLong(b, () => ecActions(t.test_name || "Test", `Période ${Number(t.period_number) || 1}`, [
       { libelle: "Ouvrir et modifier", action: ouvrir },
       { libelle: "Supprimer", danger: true, action: () => ecSupprimerTest(t) }
     ]));
   });
+  hote.querySelectorAll("[data-ec-test-suppr]").forEach(b =>
+    b.onclick = () => ecSupprimerTest(tests.find(x => x.id === b.dataset.ecTestSuppr)));
+}
+
+/**
+ * Ouvre un outil PAR-DESSUS la classe, comme l'application : on reprend le test sans quitter
+ * l'ecran, et la fleche ramene a la classe.
+ *
+ * Les outils dessinent dans #toolPanel, qui vit dans l'onglet Outils. On le deplace le temps de
+ * l'ouverture dans une fenetre plein ecran, et on le remet a sa place a la fermeture. showTab est
+ * neutralise pendant l'ouverture : les fonctions d'ouverture l'appellent pour basculer sur Outils,
+ * ce qui nous ferait quitter la classe.
+ * @param {() => Promise<void>} lancer  ouvre l'outil dans #toolPanel
+ */
+async function ecEnFenetreOutil(lancer) {
+  fermerDetailClasse();
+  document.getElementById("ecOutilFenetre")?.remove();
+  const panneau = document.getElementById("toolPanel");
+  const origine = { parent: panneau.parentNode, suivant: panneau.nextSibling };
+  const fenetre = document.createElement("div");
+  fenetre.id = "ecOutilFenetre";
+  fenetre.className = "ec-outil-fenetre";
+  fenetre.innerHTML = `<div class="ec-outil-barre"><button type="button" id="ecOutilRetour">← Retour à la classe</button>
+    <span>${ecTexte(dashboardClass.label)}</span></div><div class="ec-outil-corps"></div>`;
+  document.body.appendChild(fenetre);
+  document.body.classList.add("ec-outil-ouvert");
+  fenetre.querySelector(".ec-outil-corps").appendChild(panneau);
+
+  let ferme = false;
+  const fermer = async () => {
+    if (ferme) return;
+    ferme = true;
+    observateur.disconnect();
+    try { stopToolTimer(); } catch { /* aucun chrono en cours */ }
+    panneau.style.display = "none";
+    panneau.innerHTML = "";
+    origine.parent.insertBefore(panneau, origine.suivant);
+    fenetre.remove();
+    document.body.classList.remove("ec-outil-ouvert");
+    document.getElementById("toolsWorkspace")?.removeAttribute("hidden");
+    // Ce qui vient d'etre saisi doit se voir : les tests de la classe sont relus.
+    try {
+      dashboardTests = await ecLire("eps_test_sessions", `class_id=eq.${dashboardClass.row.id}`, t => t.class_id === dashboardClass.row.id);
+      await chargerEvaluationsDuTableauDeBord();
+    } catch { /* on garde ce qu'on avait */ }
+    if (dashboardClass) renderClassDashboard();
+  };
+  // La fleche de l'outil lui-meme (closeModernTool) vide et cache le panneau : la fenetre suit.
+  const observateur = new MutationObserver(() => { if (panneau.style.display === "none") fermer(); });
+  observateur.observe(panneau, { attributes: true, attributeFilter: ["style"] });
+  document.getElementById("ecOutilRetour").onclick = fermer;
+
+  const showTabOrigine = globalThis.showTab;
+  globalThis.showTab = () => {};
+  try {
+    await lancer();
+  } catch (e) {
+    panneau.innerHTML = `<div class="error" style="margin:14px">Ouverture impossible : ${ecTexte(e.message)}</div>`;
+  } finally {
+    globalThis.showTab = showTabOrigine;
+  }
+  panneau.style.display = "block";
+  fenetre.scrollTop = 0;
+}
+
+/** Reprend un test enregistre, par-dessus la classe. */
+function ecOuvrirTestEnFenetre(t) {
+  return ecEnFenetreOutil(() => ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name));
 }
 
 async function ecSupprimerTest(t) {
-  if (!confirm(`Supprimer la session « ${t.test_name || "Test"} » et ses résultats ?`)) return;
+  if (!t) return;
+  if (!confirm(`Supprimer le test « ${t.test_name || "Test"} » et ses résultats ?`)) return;
   const maintenant = new Date().toISOString();
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results?session_id=eq.${t.id}`,
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
-    await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions?id=eq.${t.id}`,
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
-  } catch (e) { alert(e.message); return; }
+    // Effacement = ligne marquee, jamais une suppression SQL : c'est ce qui le fait aussi
+    // disparaitre de l'application a la synchronisation suivante.
+    await enregistrerLigne("eps_test_sessions", { ...t, deleted: true, updated_at: maintenant });
+    try {
+      await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results?session_id=eq.${t.id}`,
+        { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
+    } catch { /* la session effacee suffit a les masquer */ }
+  } catch (e) { alert(e.message || "Suppression impossible."); return; }
   dashboardTests = dashboardTests.filter(x => x.id !== t.id);
   ecResultatsTests = ecResultatsTests.filter(r => r.session_id !== t.id);
-  fermerDetailClasse();
+  ecOuvrirTests(ecEvaluationsSuivies().tests);
   renderClassDashboard();
 }
 
@@ -977,23 +1052,22 @@ async function ecRouvrirTravail(travail) {
   const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
     rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb" };
   const dessin = globalThis[outils[travail.type]];
-  fermerDetailClasse();
-  showTab("outils");
-  if (typeof dessin !== "function") { openTool(travail.type); return; }
-  stopToolTimer();
-  toolPanel = document.getElementById("toolPanel");
-  document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
-  toolPanel.style.display = "block";
-  toolPanel.classList.add("modern-tool-panel");
-  await dessin(travail);
-  const mode = document.getElementById("modernMode"), classe = document.getElementById("modernClass");
-  const periode = document.getElementById("modernPeriod");
-  if (periode) periode.value = String(travail.period || 1);
-  if (mode && classe && travail.classId) {
-    mode.value = "class"; mode.dispatchEvent(new Event("change"));
-    classe.disabled = false; classe.value = travail.classId; classe.dispatchEvent(new Event("change"));
-  }
-  toolPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  return ecEnFenetreOutil(async () => {
+    stopToolTimer();
+    toolPanel = document.getElementById("toolPanel");
+    document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
+    toolPanel.style.display = "block";
+    toolPanel.classList.add("modern-tool-panel");
+    if (typeof dessin !== "function") { openTool(travail.type); return; }
+    await dessin(travail);
+    const mode = document.getElementById("modernMode"), classe = document.getElementById("modernClass");
+    const periode = document.getElementById("modernPeriod");
+    if (periode) periode.value = String(travail.period || 1);
+    if (mode && classe && travail.classId) {
+      mode.value = "class"; mode.dispatchEvent(new Event("change"));
+      classe.disabled = false; classe.value = travail.classId; classe.dispatchEvent(new Event("change"));
+    }
+  });
 }
 
 /** Les travaux d'outils enregistres pour cette classe dans ce navigateur (tools-workspace.js). */
