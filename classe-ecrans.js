@@ -945,6 +945,10 @@ async function ecEnFenetreOutil(lancer) {
     globalThis.showTab = showTabOrigine;
   }
   panneau.style.display = "block";
+  // Un panneau resté vide ne doit jamais s'afficher sans un mot.
+  if (!panneau.innerText.trim() && !panneau.querySelector("*")) {
+    panneau.innerHTML = `<div class="error" style="margin:14px">Cet outil ne s'est pas ouvert. Rechargez la page (Ctrl+F5) puis réessayez.</div>`;
+  }
   fenetre.scrollTop = 0;
 }
 
