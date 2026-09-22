@@ -294,3 +294,16 @@ body.ec-outil-ouvert { overflow: hidden; }
 .ec-test-ligne .ec-test { flex: 1; min-width: 0; margin: 0; }
 .ec-feuille .ec-test-suppr { flex: 0 0 auto; margin: 0; align-self: center; background: #FFE8E7; color: #A32D2D; border: 0; border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 700; }
 .ec-feuille .ec-test-suppr:hover { background: #FBD0CE; }
+
+/* Selecteur de classe : replie sous le bandeau bleu, ouvert par un clic sur son titre */
+.classe-accordeon { background: #F5F8FC; border-bottom: 1px solid #E0E6EC; padding: 10px 14px; }
+.classe-accordeon .classeBarre { padding: 0; }
+.classePuceAjout { background: #E6F1FB !important; color: #185FA5 !important; border-color: #B7D3EC !important; font-weight: 700; }
+
+/* Le rond de synchronisation, a cote de "Modifier la classe" dans le bandeau de la classe */
+.ec-ecran .ec-bandeau-actions .ec-sync-rond { width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 17px; line-height: 1;
+  background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); }
+.ec-ecran .ec-bandeau-actions .ec-sync-rond:hover { background: rgba(255,255,255,.16); }
+.ec-ecran .ec-sync-rond.tournant { animation: ec-tourner 1s linear infinite; }
+@keyframes ec-tourner { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ec-ecran .ec-sync-rond.tournant { animation: none; } }

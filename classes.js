@@ -7,13 +7,14 @@
  */
 
 // ---- Sous-onglets du module Classes : "Classes" (creees, modifiables) / "Nouvel import classe" ----
+//
+// Il n'y a plus de barre de boutons pour choisir entre les deux : le bandeau bleu du tableau de
+// bord fait office d'entete, et son titre ouvre la liste des classes (voir toggleClasseAccordeon
+// dans ecDessinerTableauDeBord). Le "+" en bas de cette liste mene a la creation.
 const SUBTAB_NAMES = ["newimport", "classes"];
 function showSubtab(name) {
   SUBTAB_NAMES.forEach(sub => {
     document.getElementById("subtab-" + sub).style.display = sub === name ? "block" : "none";
-  });
-  document.querySelectorAll("#classesSubtabs .subtabbtn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.subtab === name);
   });
   if (name === "classes") loadImports();
 }
@@ -105,10 +106,7 @@ async function ouvrirRepertoireEleves() {
   await loadUnssStudents();
   renderUnssTab();
 }
-document.getElementById("classesSubtabs").addEventListener("click", (e) => {
-  const btn = e.target.closest(".subtabbtn");
-  if (btn) showSubtab(btn.dataset.subtab);
-});
+document.getElementById("backToClassesBtn").addEventListener("click", () => showSubtab("classes"));
 let classCreationMode = null;
 function selectClassCreationMode(mode) {
   classCreationMode = mode;
@@ -127,12 +125,31 @@ function selectClassCreationMode(mode) {
 }
 document.getElementById("manualClassMode").addEventListener("click", () => selectClassCreationMode("manual"));
 document.getElementById("fileClassMode").addEventListener("click", () => selectClassCreationMode("file"));
-document.getElementById("syncBtn").addEventListener("click", async () => {
-  const btn = document.getElementById("syncBtn");
-  btn.disabled = true; btn.textContent = "Synchronisation...";
-  await loadImports();
-  btn.disabled = false; btn.textContent = "Synchroniser";
-});
+
+/**
+ * Ouvre ou ferme la liste des classes, sous le bandeau bleu du tableau de bord.
+ *
+ * Repliee des qu'une classe est ouverte : le bandeau existant fait office d'entete, la rangee
+ * de puces qui trainait en permanence au-dessus n'a plus de raison d'etre affichee tout le
+ * temps. Un clic sur le titre du bandeau (ecDessinerTableauDeBord) l'ouvre pour en choisir une
+ * autre ; un clic sur une puce la referme aussitot apres avoir ouvert la classe choisie.
+ */
+function toggleClasseAccordeon(force) {
+  const el = document.getElementById("classeAccordeon");
+  if (!el) return;
+  const ouvrir = typeof force === "boolean" ? force : el.style.display === "none";
+  el.style.display = ouvrir ? "block" : "none";
+}
+
+/** Le bouton rond du bandeau : refletee la synchronisation en cours par sa rotation. */
+async function synchroniserClasses() {
+  const bouton = document.getElementById("ecSyncRond");
+  bouton?.classList.add("tournant");
+  bouton?.setAttribute("aria-busy", "true");
+  try { await loadImports(); }
+  finally { bouton?.classList.remove("tournant"); bouton?.removeAttribute("aria-busy"); }
+}
+Object.assign(globalThis, { toggleClasseAccordeon, synchroniserClasses });
 
 // ---- CSV parsing (memes regles que l'app Android) ----
 function normalizeHeader(v) {
@@ -524,24 +541,27 @@ async function loadImports() {
       rows = await res.json();
       if (!res.ok) throw new Error("Impossible de charger les classes.");
     }
+    classesConnues = rows;
     if (rows.length === 0) {
-      listEl.innerHTML = '<div class="muted">Aucune classe pour le moment.</div>';
-      return;
-    }
-    // Une rangee de noms, comme dans l'application : la liste verticale tenait sur trois
-    // ecrans des qu'un etablissement complet etait saisi, et chaque classe y montrait ses
-    // quatre boutons en permanence. Ici on ne voit que les noms, et rien n'est ouvert tant
-    // qu'on n'a pas choisi.
-    if (!rows.some(r => r.id === classeOuverteId)) classeOuverteId = null;
-    // Aucune classe retenue : le panneau d'une classe supprimee ou d'une autre session ne
-    // doit pas rester ouvert sous une rangee ou plus rien n'est selectionne.
-    if (!classeOuverteId) {
+      classeOuverteId = null;
       document.getElementById("classDashboardPanel").style.display = "none";
       document.getElementById("classSchedulePanel").style.display = "none";
+      listEl.innerHTML = '<div class="muted">Aucune classe pour le moment.</div>';
+      listEl.appendChild(boutonNouvelleClasse());
+      toggleClasseAccordeon(true);
+      return;
     }
+    if (!rows.some(r => r.id === classeOuverteId)) classeOuverteId = null;
     const barre = document.createElement("div");
     barre.className = "classeBarre";
-    classesConnues = rows;
+    const choisir = (r, label, puce) => {
+      classeOuverteId = r.id;
+      barre.querySelectorAll(".classePuce").forEach(b => b.classList.remove("active"));
+      puce?.classList.add("active");
+      openClassDashboard(r, label);
+      // La classe est ouverte : la liste n'a plus a rester affichee au-dessus.
+      toggleClasseAccordeon(false);
+    };
     rows.forEach(r => {
       const label = planningText(planningClassLabel(r));
       const puce = document.createElement("button");
@@ -554,21 +574,41 @@ async function loadImports() {
       const annee = planningText(r.school_year || "");
       if (annee) puce.title = `${label} — ${annee}`;
       puce.addEventListener("click", () => {
-        // Recliquer sur la classe ouverte la referme : c'est le seul moyen de revenir a un
-        // ecran vide sans avoir a chercher un bouton "Fermer".
-        if (r.id === classeOuverteId) { fermerTableauDeBord(); return; }
-        classeOuverteId = r.id;
-        barre.querySelectorAll(".classePuce").forEach(b => b.classList.remove("active"));
-        puce.classList.add("active");
-        openClassDashboard(r, label);
+        // La classe est deja ouverte : un second clic ferme la liste et ramene a son tableau de
+        // bord, quel que soit l'ecran ou l'on se trouvait (Documents, Cours...) - c'est ce qui
+        // permet aussi de revenir au tableau de bord depuis n'importe quel ecran de la classe,
+        // en repassant par le titre du bandeau.
+        toggleClasseAccordeon(false);
+        if (r.id === classeOuverteId) { if (typeof ecAller === "function") ecAller("bord"); return; }
+        choisir(r, label, puce);
       });
       barre.appendChild(puce);
     });
+    barre.appendChild(boutonNouvelleClasse());
     listEl.innerHTML = "";
     listEl.appendChild(barre);
+    // Toujours une classe ouverte : sans cela, le bandeau bleu qui sert d'entete et de bouton
+    // pour choisir une autre classe n'aurait rien a afficher a la premiere visite.
+    if (!classeOuverteId) {
+      const premiere = rows[0];
+      choisir(premiere, planningText(planningClassLabel(premiere)),
+        barre.querySelector(".classePuce"));
+    } else {
+      toggleClasseAccordeon(false);
+    }
   } catch (e) {
     listEl.innerHTML = `<div class="error">${e.message}</div>`;
   }
+}
+
+/** Le "+" en bas de la liste des classes : ouvre l'ecran de creation. */
+function boutonNouvelleClasse() {
+  const bouton = document.createElement("button");
+  bouton.type = "button";
+  bouton.className = "classePuce classePuceAjout";
+  bouton.textContent = "+ Nouvelle classe";
+  bouton.addEventListener("click", () => showSubtab("newimport"));
+  return bouton;
 }
 
 // Suppression douce (tombstone), pas un DELETE SQL : sinon la suppression ne se propagerait

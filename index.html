@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="home-navigation.css">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260920-1">
-<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260922-3">
+<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260922-4">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -314,16 +314,13 @@
       </div>
 
       <div id="tab-classes" class="tabpanel" style="display:none">
-        <div class="subtabbar" id="classesSubtabs" style="justify-content:space-between; align-items:center;">
-          <div style="display:flex; gap:6px;">
-            <button class="subtabbtn" data-subtab="newimport">Création classe</button>
-            <button class="subtabbtn" data-subtab="classes">Classe</button>
-          </div>
-          <button class="secondary" id="syncBtn" style="margin-top:0">Synchroniser</button>
-        </div>
-
         <div id="subtab-classes">
-          <div id="importsList"></div>
+          <!-- Repliee par defaut : le bandeau bleu du tableau de bord fait office d'entete, et
+               un clic sur son titre l'ouvre pour choisir une autre classe. Visible quand aucune
+               classe n'est retenue (premiere visite, ou la seule classe vient d'etre supprimee). -->
+          <div id="classeAccordeon" class="classe-accordeon" style="display:none">
+            <div id="importsList"></div>
+          </div>
 
           <div id="classDashboardPanel" class="card" style="display:none"></div>
           <div id="classSchedulePanel" class="card" style="display:none"></div>
@@ -368,6 +365,7 @@
 
         <div id="subtab-newimport" style="display:none">
           <div class="card">
+            <button type="button" class="secondary" id="backToClassesBtn" style="margin-top:0">‹ Retour aux classes</button>
             <h2>Création classe</h2>
             <div class="row" style="margin-bottom:16px">
               <button type="button" id="manualClassMode">Création manuelle</button>
@@ -485,7 +483,7 @@
   <script src="bac-reference.js"></script>
   <script src="cours.js?v=20260921-1"></script>
   <script src="classe-tableau-bord.js?v=20260922-1"></script>
-  <script src="classe-ecrans.js?v=20260922-7"></script>
+  <script src="classe-ecrans.js?v=20260922-9"></script>
   <script src="qrcode.min.js"></script>
   <script src="equipement.js"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser

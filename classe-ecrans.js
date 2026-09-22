@@ -360,6 +360,7 @@ function ecDessinerTableauDeBord(panel) {
       actions: `<div class="ec-bandeau-actions">
         <button type="button" data-classe-action="schedule">Emploi du temps</button>
         <button type="button" data-classe-action="edit">Modifier la classe</button>
+        <button type="button" id="ecSyncRond" class="ec-sync-rond" aria-label="Synchroniser">⟳</button>
       </div>` })}
     <div class="ec-corps">
       <div class="ec-resume">
@@ -414,9 +415,18 @@ function ecDessinerTableauDeBord(panel) {
     </div>
   </section>`;
 
-  panel.querySelector("[data-ec-retour]").onclick = () => fermerTableauDeBord();
+  // Une classe est toujours ouverte : la fleche et le titre du bandeau n'ont plus a "revenir"
+  // nulle part, ils ouvrent la liste des classes pour en choisir une autre - comme dans
+  // l'application, ou le bandeau porte deja ce role.
+  const ouvrirChoixClasse = () => { if (typeof toggleClasseAccordeon === "function") toggleClasseAccordeon(); };
+  panel.querySelector("[data-ec-retour]").onclick = ouvrirChoixClasse;
+  const titre = panel.querySelector(".ec-bandeau-titre");
+  if (titre) { titre.style.cursor = "pointer"; titre.onclick = ouvrirChoixClasse; }
   panel.querySelector('[data-classe-action="schedule"]').onclick = () => openClassSchedule(row, label);
   panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
+  panel.querySelector("#ecSyncRond")?.addEventListener("click", () => {
+    if (typeof synchroniserClasses === "function") synchroniserClasses();
+  });
   panel.querySelectorAll("[data-vue]").forEach(b => b.onclick = () => ecAller(b.dataset.vue));
   panel.querySelectorAll("[data-ec-creneau]").forEach(b => b.onclick = () => {
     ecCreneauChoisi = b.dataset.ecCreneau;

@@ -672,19 +672,17 @@
           await onglet("classes");
           f.showSubtab("classes");
           await attendre(() => f.document.querySelector(".classePuce"), "la rangee des classes est vide", 6000);
-          // La classe qui porte les dispenses du faux serveur, pas la premiere venue.
+          // La classe qui porte les dispenses du faux serveur, pas la premiere venue. Une autre
+          // classe est deja ouverte a l'arrivee sur l'onglet (la premiere de la rangee, choisie
+          // automatiquement) : "data-vue=dispenses" existe donc deja, mais sur le mauvais tableau
+          // de bord. Seule la puce active dit vraiment quelle classe est ouverte.
           const puce = [...f.document.querySelectorAll(".classePuce")].find(b => b.textContent.includes("3e6"));
           if (!puce) throw new Error("la classe 3e6 n'est pas dans la rangee");
-          // Recliquer la classe deja ouverte la referme : on s'assure d'etre bien dedans, sur son
-          // menu, plutot que de conclure a tort que l'entree a disparu.
-          if (!f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]')) {
-            puce.click();
-            await attendre(() => rempli($("classDashboardPanel")), "le tableau de bord ne s'ouvre pas", 8000);
-          }
-          if (!f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]')) {
-            puce.click();
-          }
-          await attendre(() => f.document.querySelector('[data-vue="dispenses"]'),
+          // Cliquer la puce ramene toujours au tableau de bord ('bord'), meme quand la classe
+          // etait deja ouverte sur un autre ecran (Cours...) laisse par un test precedent.
+          puce.click();
+          await attendre(() => puce.classList.contains("active")
+            && f.document.querySelector('#classDashboardPanel [data-vue="dispenses"]'),
             "l'entree Dispenses a disparu du menu", 8000);
 
           await entrerDansMenu();
