@@ -46,7 +46,58 @@
       return tools.find(t=>t.id===id);
     }).filter(Boolean);
   }
-  function toggleFavoriteId(id){const favorites=readFavorites();favorites.has(id)?favorites.delete(id):favorites.add(id);writeFavorites(favorites);return favorites.has(id)}
+  function toggleFavoriteId(id){const favorites=readFavorites();favorites.has(id)?favorites.delete(id):favorites.add(id);writeFavorites(favorites);pousserFavorisPartages(favorites);return favorites.has(id)}
+
+  // ---- Favoris partages avec l'application (tool_favorites, schema_tool_favorites.sql) ----
+  // Meme principe que le profil professeur : une ligne par compte, une revision qui empeche un
+  // enregistrement en retard d'ecraser un ajout plus recent fait depuis l'autre appareil. Le
+  // navigateur garde sa copie locale (readFavorites/writeFavorites) pour un affichage immediat ;
+  // le serveur est ce qui fait circuler la liste entre le telephone et le site.
+  let favorisRevision=0;
+  let favorisChargementFait=false;
+  async function chargerFavorisPartages(){
+    if(typeof session==="undefined"||!session?.user_id)return;
+    try{
+      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/tool_favorites?user_id=eq.${session.user_id}&select=favorites,revision`);
+      if(!res.ok)return;
+      const lignes=await res.json();
+      const locaux=readFavorites();
+      if(lignes.length===0){
+        // Rien cote serveur : si le navigateur a deja des favoris (ancienne liste locale), on
+        // les publie pour amorcer le partage plutot que d'attendre un prochain clic.
+        favorisRevision=0;
+        if(locaux.size)await pousserFavorisPartages(locaux);
+        favorisChargementFait=true;
+        return;
+      }
+      favorisRevision=lignes[0].revision||0;
+      const distants=new Set(Array.isArray(lignes[0].favorites)?lignes[0].favorites:[]);
+      // Union des deux cotes : un favori ajoute hors connexion sur l'un ne doit pas disparaitre
+      // parce que l'autre etait ouvert au meme moment.
+      const fusion=new Set([...locaux,...distants]);
+      const identique=fusion.size===locaux.size&&[...fusion].every(id=>locaux.has(id));
+      writeFavorites(fusion);
+      favorisChargementFait=true;
+      if(fusion.size!==distants.size)await pousserFavorisPartages(fusion);
+      if(!identique&&typeof draw==="function")draw();
+    }catch{ /* Hors connexion : la liste locale reste valable, on reessaiera a la prochaine ouverture. */ }
+  }
+  async function pousserFavorisPartages(favorisSet){
+    if(typeof session==="undefined"||!session?.user_id)return;
+    try{
+      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/save_tool_favorites`,{method:"POST",
+        body:JSON.stringify({p_revision:favorisRevision,p_favorites:[...favorisSet]})});
+      if(!res.ok)return;
+      const out=await res.json();
+      if(out?.saved)favorisRevision=out.revision;
+      else if(favorisChargementFait){
+        // Une autre session a ecrit entre-temps : on relit sa version et on refusionne au lieu
+        // d'echouer silencieusement.
+        favorisRevision=0;
+        await chargerFavorisPartages();
+      }
+    }catch{ /* Retente au prochain changement de favori ou a la prochaine ouverture. */ }
+  }
   const worksKey=()=>`eps_tool_works:${account()}`;
   const readWorks=()=>{try{return JSON.parse(localStorage.getItem(worksKey())||"[]")}catch{return[]}};
   const writeWorks=v=>localStorage.setItem(worksKey(),JSON.stringify(v.slice(0,250)));
@@ -70,7 +121,7 @@
     // et affichait le milieu ou la fin de la liste suivante au lieu de son debut.
     window.scrollTo(0,0);
   }
-  function resetToolsWorkspace(){activity=null;query="";showFavorites=false;const panel=document.getElementById("toolPanel");if(panel){panel.style.display="none";panel.innerHTML=""}const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");draw();workspace?.scrollIntoView({block:"start"})}
+  function resetToolsWorkspace(){activity=null;query="";showFavorites=false;const panel=document.getElementById("toolPanel");if(panel){panel.style.display="none";panel.innerHTML=""}const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");draw();workspace?.scrollIntoView({block:"start"});if(!favorisChargementFait)chargerFavorisPartages()}
   function grouped(rows,key,subtitle){const groups=[...new Set(rows.map(key))];return `<div class="tools-hero"><h2>Outils</h2><p>${subtitle}</p></div>${groups.map(g=>`<section class="tools-section"><div class="tools-section-head"><h3>${esc(g)}</h3><span>${rows.filter(x=>key(x)===g).length}</span></div><div class="tools-layout-grid">${rows.filter(x=>key(x)===g).map(toolCard).join("")}</div></section>`).join("")}`}
   function openWorkspaceTool(id){if(id.startsWith("eps-test:")){const key=id.slice(9),category=globalThis.EpsTests?.CATEGORIES?.find(c=>c.tests.includes(key));epsOpenCategory=category?.name||"Athle";epsOpenTest=key;openTool("tests");return}if(id==="tests"){epsOpenCategory=null;epsOpenTest=null}openTool(id)}
   function bind(host){host.querySelectorAll("[data-activity]").forEach(b=>b.onclick=()=>{activity=b.dataset.activity;draw()});host.querySelector("#toolsActivityBack")?.addEventListener("click",()=>{activity=null;draw()});host.querySelector("#toolsFavoritesBack")?.addEventListener("click",()=>{showFavorites=false;draw()});host.querySelector("#toolsFavoritesShortcut")?.addEventListener("click",()=>{showFavorites=true;activity=null;draw()});host.querySelectorAll("[data-favorite-tool]").forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFavoriteId(b.dataset.favoriteTool);draw()});host.querySelectorAll("[data-open-modern]").forEach(b=>b.onclick=()=>openWorkspaceTool(b.dataset.openModern));host.querySelector("#toolsSearch")?.addEventListener("input",e=>{query=e.target.value;draw()})}
