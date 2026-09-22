@@ -19,7 +19,9 @@
   function decode(raw){try{const parsed=JSON.parse(String(raw||"").replace(/^fitness:/,""));return {...empty(),...parsed,group:+parsed.group||1}}catch{return empty()}}
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   const state={classId:"",period:1,values:{},groupsEnabled:true,activeGroup:0,sessionId:null,resultIds:{},createdAt:null,saved:[],busy:false};
-  async function loadSaved(){const all=await lireTable("eps_test_sessions",`eps_test_sessions?deleted=eq.false&test_name=eq.${encodeURIComponent(TEST_NAME)}&select=*&order=created_at.desc`,{ou:r=>!r.deleted&&r.test_name===TEST_NAME,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});state.saved=all.filter(r=>!session?.user_id||r.user_id===session.user_id)}
+  // Une panne reseau d'une fraction de seconde ne doit pas vider la liste : on garde ce qu'on
+  // avait deja plutot que de faire echouer toute l'ouverture pour un blip passager.
+  async function loadSaved(){try{const all=await lireTable("eps_test_sessions",`eps_test_sessions?deleted=eq.false&test_name=eq.${encodeURIComponent(TEST_NAME)}&select=*&order=created_at.desc`,{ou:r=>!r.deleted&&r.test_name===TEST_NAME,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});state.saved=all.filter(r=>!session?.user_id||r.user_id===session.user_id)}catch(e){if(!state.saved.length)throw e}}
   const className=id=>toolClasses.find(c=>String(c.id)===String(id))?.name||state.saved.find(s=>String(s.class_id)===String(id))?.class_label||"Classe";
   function periodNumbers(){const cls=toolClasses.find(c=>String(c.id)===String(state.classId)),n=cls&&typeof planningPeriodCount==="function"?planningPeriodCount(cls.grade):5;return Array.from({length:n},(_,i)=>i+1)}
   function ensureValues(){toolStudents.forEach(s=>state.values[s.id]??=empty(1))}

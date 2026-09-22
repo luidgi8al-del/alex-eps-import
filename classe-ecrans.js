@@ -945,21 +945,32 @@ async function ecEnFenetreOutil(lancer, retour) {
     }
   }, true);
 
-  const showTabOrigine = globalThis.showTab;
-  globalThis.showTab = () => {};
-  try {
-    await lancer();
-  } catch (e) {
-    panneau.innerHTML = `<div class="error" style="margin:14px">Ouverture impossible : ${ecTexte(e.message)}</div>`;
-  } finally {
-    globalThis.showTab = showTabOrigine;
-  }
-  panneau.style.display = "block";
-  // Un panneau resté vide ne doit jamais s'afficher sans un mot.
-  if (!panneau.innerText.trim() && !panneau.querySelector("*")) {
-    panneau.innerHTML = `<div class="error" style="margin:14px">Cet outil ne s'est pas ouvert. Rechargez la page (Ctrl+F5) puis réessayez.</div>`;
-  }
-  fenetre.scrollTop = 0;
+  // Un blip reseau d'une fraction de seconde (Wifi, veille) ne doit pas laisser la fenetre bloquee
+  // sur une erreur sans issue : on propose de reessayer sans avoir a fermer et rouvrir.
+  const essayer = async () => {
+    const showTabOrigine = globalThis.showTab;
+    globalThis.showTab = () => {};
+    panneau.innerHTML = `<p class="muted" style="margin:14px">Ouverture…</p>`;
+    try {
+      await lancer();
+    } catch (e) {
+      panneau.innerHTML = `<div class="error" style="margin:14px">Ouverture impossible : ${ecTexte(e.message)}</div>
+        <button type="button" id="ecOutilReessayer" style="margin:0 14px 14px">Réessayer</button>`;
+      document.getElementById("ecOutilReessayer").onclick = essayer;
+      return;
+    } finally {
+      globalThis.showTab = showTabOrigine;
+    }
+    panneau.style.display = "block";
+    // Un panneau resté vide ne doit jamais s'afficher sans un mot.
+    if (!panneau.innerText.trim() && !panneau.querySelector("*")) {
+      panneau.innerHTML = `<div class="error" style="margin:14px">Cet outil ne s'est pas ouvert. Rechargez la page (Ctrl+F5) puis réessayez.</div>
+        <button type="button" id="ecOutilReessayer" style="margin:0 14px 14px">Réessayer</button>`;
+      document.getElementById("ecOutilReessayer").onclick = essayer;
+    }
+    fenetre.scrollTop = 0;
+  };
+  await essayer();
 }
 
 /** Reprend un test enregistre, par-dessus la classe. */
