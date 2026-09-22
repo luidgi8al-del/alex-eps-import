@@ -593,6 +593,59 @@ let unssPage = 1;
 /** Connu avant le rendu : le tableau se construit d'un bloc, il ne peut pas attendre. */
 let unssAdmin = false;
 
+/**
+ * Telecharger les inscrits a l'AS : Excel (CSV, tableur) ou PDF (aperçu imprimable). Meme
+ * choix Excel/PDF que Condition physique, pour ne pas reapprendre un geste different a
+ * chaque outil du site.
+ */
+function showLicenciesExport(rows) {
+  document.getElementById("unssExportDialog")?.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "unssExportDialog";
+  overlay.className = "unified-export-overlay";
+  overlay.innerHTML = `<section class="unified-export-dialog"><header><i>🏆</i><div><h3>Inscrits à l'AS</h3><p>${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
+    <h4>Format</h4>
+    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Fichier .csv, s'ouvre dans un tableur</small></span><em>›</em></button>
+    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Aperçu imprimable, à enregistrer en PDF</small></span><em>›</em></button>
+    <button class="export-cancel" data-export-close>Annuler</button>
+  </main></section>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll("[data-export-close]").forEach(b => b.onclick = () => overlay.remove());
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove() };
+  overlay.querySelector('[data-format="csv"]').onclick = () => { overlay.remove(); exportLicenciesCsv(rows) };
+  overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); printLicenciesPdf(rows) };
+}
+
+function exportLicenciesCsv(rows) {
+  const lignes = [["Nom", "Prénom", "Classe / Division", "Taille maillot"],
+    ...rows.map(s => [String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || "", s.jersey_size || ""])];
+  const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `inscrits-as-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function printLicenciesPdf(rows) {
+  const w = open("", "_blank");
+  if (!w) { alert("Autorisez les fenêtres surgissantes."); return; }
+  w.document.write(`<html><head><meta charset=utf-8><title>Inscrits à l'AS</title><style>
+    body{font:12px Arial;color:#123a59;padding:24px}
+    header{background:#087dca;color:white;padding:18px;border-radius:12px}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{border:1px solid #cad8e3;padding:6px;text-align:left}
+    @media print{button{display:none}}
+  </style></head><body>
+    <header><h1>Inscrits à l'association sportive</h1><p>${rows.length} élève(s) · ${new Date().toLocaleDateString("fr-FR")}</p></header>
+    <table><tr><th>Nom</th><th>Prénom</th><th>Classe / Division</th><th>Taille maillot</th></tr>
+    ${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || "")}</td><td>${unssText(s.jersey_size || "")}</td></tr>`).join("")}
+    </table>
+    <button onclick="print()">Enregistrer / imprimer en PDF</button>
+  </body></html>`);
+  w.document.close();
+}
+
 function renderUnssTab() {
   if (unssMode === "slots") { renderUnssSlotsTab(); return; }
   if (unssMode === "groups") { renderUnssGroupsTab(); return; }
@@ -657,6 +710,11 @@ function renderUnssTab() {
   if (unssAdmin || unssMode === "licensed" || unssCibleRendu === "studentsDirectoryList") {
     html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter un élève"}</button>`;
   }
+  // Telecharger la liste des inscrits : nom, prenom, classe/division, taille de maillot -
+  // ce qu'on redonne au secretariat ou au club en fin d'annee.
+  if (unssMode === "licensed" && rows.length > 0) {
+    html += `<button class="secondary" id="unssExportBtn" style="margin-top:0">Télécharger</button>`;
+  }
   // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
   if (enTableau) {
     html += `<button id="eleveVersClasseBtn" style="margin-top:0" ${selectionEleves.size ? "" : "disabled"}>`
@@ -705,6 +763,7 @@ function renderUnssTab() {
     const student = unssStudents.find(s => s.id === btn.dataset.directoryEdit);
     if (student) openUnssStudentPanel(student, false, true);
   }));
+  wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
