@@ -645,6 +645,32 @@ let editImportId = null;
 let editStudents = [];
 let editStudentsToDelete = [];
 
+/** Complete les coordonnees absentes d'une ancienne copie de classe depuis le repertoire. */
+function enrichirElevesClasseDepuisRepertoire(eleves, repertoire) {
+  const normaliser = valeur => typeof ImportEleves !== "undefined"
+    ? ImportEleves.texteNormalise(valeur)
+    : String(valeur || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const memeDate = (a, b) => {
+    if (a == null || b == null) return true;
+    const jour = valeur => new Date(Number(valeur)).toISOString().slice(0, 10);
+    return jour(a) === jour(b);
+  };
+  return eleves.map(eleve => {
+    const source = repertoire.find(fiche =>
+      normaliser(eleve.last_name) === normaliser(fiche.last_name) &&
+      normaliser(eleve.first_name) === normaliser(fiche.first_name) &&
+      memeDate(eleve.birth_date_epoch_millis, fiche.birth_date_epoch_millis));
+    if (!source) return eleve;
+    const [parent1, parent2] = splitParentEmailsField(source.parent_email);
+    return {
+      ...eleve,
+      student_email: eleve.student_email || source.student_email || null,
+      parent1_email: eleve.parent1_email || parent1,
+      parent2_email: eleve.parent2_email || parent2
+    };
+  });
+}
+
 function editStudentRowHtml(index, s) {
   // Une valeur que la liste ne connait pas ne doit pas se faire passer pour la premiere option :
   // c'est ainsi que des garcons verses depuis le repertoire AS, ou le sexe s'ecrit "M", se sont
@@ -750,6 +776,18 @@ async function openEditImport(row) {
     const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${row.id}&deleted=eq.false&select=*&order=last_name.asc`);
     editStudents = res.ok ? await res.json() : [];
   }
+  // Les mails sont parfois importes apres la creation de la classe. On complete uniquement les
+  // champs vides ; une valeur propre a la classe n'est jamais ecrasee.
+  try {
+    let repertoire = [];
+    if (modeHorsConnexion) {
+      repertoire = (await modeHorsConnexion.lire("unss_students", { ou: e => !e.deleted })).rows;
+    } else {
+      const lecture = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_students?deleted=eq.false&select=last_name,first_name,birth_date_epoch_millis,student_email,parent_email`);
+      if (lecture.ok) repertoire = lecture.rows;
+    }
+    editStudents = enrichirElevesClasseDepuisRepertoire(editStudents, repertoire);
+  } catch { /* l'edition reste disponible si le repertoire est momentanement indisponible */ }
   renderEditStudents();
 }
 
