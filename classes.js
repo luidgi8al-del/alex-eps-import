@@ -167,10 +167,13 @@ const HEADER_ALIASES = {
   emailEleve: ["email eleve", "emails eleve", "mail eleve", "email eleve(s)", "email"],
   emailsParents: ["emails parents", "email parents", "email parent", "emails parent", "mail parents", "mails parents"]
 };
-function detectDelimiter(line) {
-  const semi = (line.match(/;/g) || []).length;
-  const comma = (line.match(/,/g) || []).length;
-  return semi > comma ? ";" : ",";
+function detectDelimiter(sample) {
+  // Une seule ligne peut contenir une virgule dans un nom ou une remarque. Comparer les cinq
+  // premieres lignes rend la detection stable, et accepte aussi les exports TSV de Pronote.
+  const lines = String(sample || "").split(/\r?\n/).filter(line => line.trim()).slice(0, 5);
+  const candidates = [";", ",", "\t"];
+  const score = delimiter => lines.reduce((total, line) => total + parseCsvLine(line, delimiter).length - 1, 0);
+  return candidates.reduce((best, candidate) => score(candidate) > score(best) ? candidate : best, ";");
 }
 function parseCsvLine(line, delimiter) {
   const fields = [];
@@ -233,9 +236,10 @@ function looksLikeNameColumn(values) {
 }
 
 function parseCsv(text) {
+  text = String(text || "").replace(/^\uFEFF/, "");
   const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
   if (lines.length === 0) return { students: [], niveauDetected: false };
-  const delimiter = detectDelimiter(lines[0]);
+  const delimiter = detectDelimiter(lines.slice(0, 5).join("\n"));
   const headerFields = parseCsvLine(lines[0], delimiter).map(normalizeHeader);
   const colIndex = key => headerFields.findIndex(h => HEADER_ALIASES[key].includes(h));
   const idx = { nom: colIndex("nom"), prenom: colIndex("prenom"), sexe: colIndex("sexe"), niveau: colIndex("niveau"), emailEleve: colIndex("emailEleve"), emailsParents: colIndex("emailsParents") };

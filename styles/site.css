@@ -6,16 +6,32 @@
  */
 
 :root {
-  --primary: #1B4332;
-  --primary-light: #2D6A4F;
-  --accent-container: #B7E4C7;
-  --accent-text: #04240F;
-  --bg: #FAFAF7;
+  /* Socle commun avec les ecrans recents de l'application. Les anciens composants continuent
+     d'utiliser les noms historiques ci-dessous, mais ils recoivent desormais la meme identite. */
+  --primary: #087DCA;
+  --primary-hover: #066DAF;
+  --primary-active: #075B91;
+  --primary-light: #126EE8;
+  --primary-soft: #E8F4FC;
+  --accent-container: #DFF3FF;
+  --accent-text: #0C447C;
+  --success: #168B6D;
+  --success-soft: #DFF6EC;
+  --warning: #986617;
+  --warning-soft: #FFF1D2;
+  --bg: #F4F7FA;
   --surface: #FFFFFF;
-  --text: #14181A;
-  --text-secondary: #6B7280;
-  --border: #E5E7EB;
-  --danger: #B3261E;
+  --surface-muted: #F8FBFD;
+  --text: #173A57;
+  --text-secondary: #61798C;
+  --border: #DCE6EE;
+  --danger: #C62828;
+  --danger-soft: #FFF0F0;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --shadow-card: 0 5px 18px rgba(18,58,85,.08);
+  --focus-ring: 0 0 0 3px rgba(8,125,202,.24);
 }
 * { box-sizing: border-box; }
 /* 100vw (bandeau plein largeur d'une classe) compte la largeur de la barre de defilement, que
@@ -24,7 +40,7 @@
    defiler horizontalement au niveau de la page - les zones qui glissent (rangee de classes,
    tableau...) le font sur elles-memes, pas sur le corps entier. */
 html { overflow-x: hidden; }
-body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; overflow-x: hidden; }
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; overflow-x: hidden; }
 .header { background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:14px 24px; flex-wrap:wrap; gap:10px; }
 .header .brand { font-weight:700; font-size:16px; white-space:nowrap; }
 .tabbar { display:flex; gap:4px; overflow-x:auto; }
@@ -37,14 +53,16 @@ h1 { font-size: 20px; margin: 0 0 4px; }
 h2 { font-size: 16px; margin-top: 0; margin-bottom: 14px; color:var(--text); }
 .sub { color:var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
 label { display:block; font-size: 13px; color:var(--text-secondary); font-weight:600; margin: 12px 0 5px; }
-input, select { width:100%; box-sizing:border-box; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:14px; }
-input:focus, select:focus { outline:none; border-color:var(--primary-light); }
-button { background:var(--primary); color:#fff; border:none; border-radius:8px; padding:11px 18px; font-size:14px; font-weight:600; cursor:pointer; margin-top:14px; }
-button:hover { background:var(--primary-light); }
+input, select, textarea { width:100%; box-sizing:border-box; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 12px; font:inherit; font-size:14px; transition:border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--primary); box-shadow:var(--focus-ring); }
+button { background:var(--primary); color:#fff; border:none; border-radius:var(--radius-sm); padding:10px 18px; font-size:14px; font-weight:700; cursor:pointer; margin-top:14px; transition:background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+button:hover { background:var(--primary-hover); }
+button:active { background:var(--primary-active); transform:translateY(1px); }
+button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary); outline-offset:3px; box-shadow:var(--focus-ring); }
 button.secondary { background:transparent; color:var(--primary); border:1px solid var(--border); }
 button.secondary:hover { background:#F3F4F6; }
 button.danger { background:transparent; border:1px solid var(--danger); color:var(--danger); margin-top:0; }
-button.danger:hover { background:#FDEEED; }
+button.danger:hover { background:var(--danger-soft); }
 button:disabled { opacity:0.5; cursor:default; }
 .levelSelect { width:auto; padding:4px 6px; font-size:12px; }
 table { width:100%; border-collapse: collapse; margin-top: 12px; }
@@ -52,7 +70,7 @@ th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--bord
 th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; }
 .error { color:var(--danger); font-size: 13px; margin-top: 8px; }
 .ok { color:var(--primary); font-weight:600; font-size: 13px; margin-top: 8px; }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-top:16px; box-shadow:var(--shadow-card); }
 .row { display:flex; gap:10px; }
 .row > * { flex:1; }
 .muted { color:var(--text-secondary); font-size:13px; }
