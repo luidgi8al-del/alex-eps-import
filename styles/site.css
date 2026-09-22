@@ -18,7 +18,13 @@
   --danger: #B3261E;
 }
 * { box-sizing: border-box; }
-body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; }
+/* 100vw (bandeau plein largeur d'une classe) compte la largeur de la barre de defilement, que
+   window.innerWidth exclut : la page se retrouvait quelques pixels plus large qu'elle-meme et
+   affichait une barre de defilement horizontale pour ce reliquat. Rien sur le site ne doit
+   defiler horizontalement au niveau de la page - les zones qui glissent (rangee de classes,
+   tableau...) le font sur elles-memes, pas sur le corps entier. */
+html { overflow-x: hidden; }
+body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; overflow-x: hidden; }
 .header { background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:14px 24px; flex-wrap:wrap; gap:10px; }
 .header .brand { font-weight:700; font-size:16px; white-space:nowrap; }
 .tabbar { display:flex; gap:4px; overflow-x:auto; }
