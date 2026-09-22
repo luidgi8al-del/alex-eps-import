@@ -11,7 +11,11 @@
     ["observer","Observateur","Compter et analyser les actions","👁️","Observer",["Sports collectifs","Raquettes","Gymnastique","Escalade"]],
     ["random","Tirage au sort","Choisir rapidement un élève","🎲","Organiser",["Tous"]],
     ["tests","Tests EPS","Tests et suivi des progrès","📋","Évaluer",["Athlétisme"]],
-    ["condition-fitness","Condition physique générale","Six ateliers, groupes et note sur 20","💪","Évaluer",["Athlétisme","Gymnastique","Tous"]],
+    // Seulement "Tous" : le tag "Tous" fait deja apparaitre l'outil dans chaque activite (voir
+    // le filtre plus bas, qui garde un outil des que sa liste contient l'activite choisie OU
+    // "Tous") - l'ajouter en plus pour Athletisme et Gymnastique le faisait ressortir partout,
+    // sans pouvoir le retrouver seulement dans "Tous".
+    ["condition-fitness","Condition physique générale","Six ateliers, groupes et note sur 20","💪","Évaluer",["Tous"]],
     ["vma","Tests VMA","VAMEVAL, Léger et Cooper","💓","Évaluer",["Athlétisme"]],
     ["aptitudes","Aptitudes 6e","Sprint, endurance et saut","📊","Évaluer",["Athlétisme"]],
     ["swim","Savoir Nager","Parcours et attestations","🏊","Évaluer",["Natation"]],
@@ -54,7 +58,10 @@
     const layout=localStorage.getItem(prefKey)||"activities";
     let content="";
     if(showFavorites){const rows=favoriteTools();content=`<div class="tools-hero"><h2>Favoris</h2><p>Vos outils en accès rapide</p></div><section class="tools-section"><div class="tools-section-head tools-section-head-with-back"><button class="tools-section-back" id="toolsFavoritesBack">←</button><h3>Mes favoris</h3><span>${rows.length} outil${rows.length>1?"s":""}</span></div>${rows.length?`<div class="tools-layout-grid">${rows.map(toolCard).join("")}</div>`:`<div class="tools-favorites-empty"><i>☆</i><strong>Aucun favori</strong><span>Cliquez sur la petite étoile d’un outil pour le retrouver ici.</span></div>`}</section>`}
-    else if(activity){const rows=tools.filter(t=>t.activities.includes(activity)||t.activities.includes("Tous"));content=`${favoritesShortcut()}<section class="tools-section"><div class="tools-section-head tools-section-head-with-back"><button class="tools-section-back" id="toolsActivityBack">←</button><h3>${esc(activity)}</h3><span>${rows.length} outils</span></div><div class="tools-layout-grid">${rows.map(toolCard).join("")}</div></section>`}
+    // Condition physique est tague "Tous" : sans cette exception, la regle "Tous" -> visible
+    // dans chaque activite le faisait ressortir sous Natation, Escalade, etc. On le garde
+    // reserve a sa propre categorie "Tous", ou la carte "Tous" continue de le montrer.
+    else if(activity){const rows=tools.filter(t=>(activity==="Tous"||t.id!=="condition-fitness") && (t.activities.includes(activity)||t.activities.includes("Tous")));content=`${favoritesShortcut()}<section class="tools-section"><div class="tools-section-head tools-section-head-with-back"><button class="tools-section-back" id="toolsActivityBack">←</button><h3>${esc(activity)}</h3><span>${rows.length} outils</span></div><div class="tools-layout-grid">${rows.map(toolCard).join("")}</div></section>`}
     else if(layout==="activities")content=`${favoritesShortcut()}<section class="tools-section"><div class="tools-section-head"><h3>Choisir une activité</h3><span>outils adaptés</span></div><div class="tools-layout-grid">${Object.entries(activityMeta).map(([n,m])=>`<button class="tools-activity-card" data-activity="${esc(n)}"><i>${m[0]}</i><span><strong>${esc(n)}</strong><small>${esc(m[1])}</small></span></button>`).join("")}</div></section>`;
     else {let rows=tools.filter(t=>!query||`${t.title} ${t.subtitle}`.toLowerCase().includes(query.toLowerCase()));if(layout==="functions")content=grouped(rows,t=>t.fn,"Outils classés par fonction");else if(layout==="moments")content=grouped(rows,t=>t.fn==="Terrain"?"Pendant la séance":t.fn==="Organiser"?"Avant la séance":"Observer et évaluer","Outils classés par moment");else content=`<div class="tools-hero"><h2>Mes outils</h2><p>Accès rapide et familles</p></div>${favoritesShortcut()}<div class="tools-toolbar"><input id="toolsSearch" placeholder="Rechercher un outil" value="${esc(query)}"></div><section class="tools-section"><div class="tools-layout-grid">${rows.map(toolCard).join("")}</div></section>`;if(layout==="functions"||layout==="moments")content=content.replace('</div>',`</div>${favoritesShortcut()}`)}
     host.className="tools-workspace";host.innerHTML=content;bind(host);
