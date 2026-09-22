@@ -2149,13 +2149,38 @@ async function ouvrirElevesCreneau(slot) {
   document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => fermerFenetreUnss());
 }
 
+/**
+ * Les licencies ayant classe cette activite parmi leurs voeux : ce sont les candidats les plus
+ * probables pour ce creneau, donc on les propose groupes par rang avant la recherche libre, avec
+ * une case a cocher pour les inscrire plusieurs a la fois. Le voeu 1 est precoche : c'est le choix
+ * prioritaire de l'eleve, il n'y a qu'a confirmer pour l'y placer automatiquement.
+ */
+function groupeVoeuHtml(rang, eleves, medaille) {
+  if (eleves.length === 0) return "";
+  return `<div style="margin-bottom:10px">
+    <div class="muted" style="font-weight:600;margin-bottom:4px">${medaille} Ont classé cette activité en vœu ${rang} (${eleves.length})</div>
+    ${eleves.map(e => `<label style="display:flex;align-items:center;gap:8px;padding:4px 0">
+      <input type="checkbox" data-voeu-pick="${e.id}" style="width:auto"${rang === 1 ? " checked" : ""}>
+      <span>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</span>
+    </label>`).join("")}
+  </div>`;
+}
+
 /** Le choix des eleves a inscrire : les licencies d'abord, comme pour les anciens groupes. */
 function ouvrirAjoutElevesCreneau(slot) {
   const panel = document.getElementById("unssPanel");
   const dejaLa = elevesDuCreneau(slot.id).map(e => e.id);
   const candidats = unssStudents.filter(e => !dejaLa.includes(e.id));
   const licencies = candidats.filter(e => e.licensed);
-  panel.innerHTML = `<h2>Ajouter des élèves · ${unssText(slot.activity_name)}</h2>` +
+  const voeu1 = licencies.filter(e => e.wish1_slot_id === slot.id);
+  const voeu2 = licencies.filter(e => e.wish2_slot_id === slot.id);
+  const voeu3 = licencies.filter(e => e.wish3_slot_id === slot.id);
+  const voeuxHtml = (voeu1.length + voeu2.length + voeu3.length) === 0 ? "" : `
+    <div class="card" style="margin-bottom:12px">
+      ${groupeVoeuHtml(1, voeu1, "🥇")}${groupeVoeuHtml(2, voeu2, "🥈")}${groupeVoeuHtml(3, voeu3, "🥉")}
+      <button id="creneauInscrireVoeux">Inscrire la sélection</button>
+    </div>`;
+  panel.innerHTML = `<h2>Ajouter des élèves · ${unssText(slot.activity_name)}</h2>` + voeuxHtml +
     (candidats.length === 0
       ? `<div class="muted">Tous les élèves du répertoire sont déjà inscrits à ce créneau.</div>`
       : `${licencies.length === 0
@@ -2169,6 +2194,24 @@ function ouvrirAjoutElevesCreneau(slot) {
          <div class="muted" id="creneauCompte" style="margin:6px 0"></div>
          <div id="creneauResultats"></div>`) +
     `<button class="secondary" id="creneauRetour" style="margin-top:14px">Retour</button>`;
+
+  const inscrireEleves = async ids => {
+    for (const id of ids) {
+      const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
+        student_id: id, updated_at: new Date().toISOString(), deleted: false };
+      try { await enregistrerLigne("unss_memberships", ligne); }
+      catch (erreur) { alert(erreur.message); return false; }
+      unssInscriptions.push(ligne);
+    }
+    return true;
+  };
+
+  const btnVoeux = document.getElementById("creneauInscrireVoeux");
+  if (btnVoeux) btnVoeux.addEventListener("click", async () => {
+    const ids = [...panel.querySelectorAll("[data-voeu-pick]:checked")].map(x => x.dataset.voeuPick);
+    if (!ids.length) { alert("Cochez au moins un élève."); return; }
+    if (await inscrireEleves(ids)) ouvrirElevesCreneau(slot);
+  });
 
   const zone = document.getElementById("creneauResultats");
   if (zone) {
@@ -2191,12 +2234,7 @@ function ouvrirAjoutElevesCreneau(slot) {
       zone.innerHTML = affiches.map(e =>
         `<div class="card unssPick" data-inscrire="${e.id}" style="margin-top:6px">${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>`).join("");
       zone.querySelectorAll("[data-inscrire]").forEach(el => el.addEventListener("click", async () => {
-        const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
-          student_id: el.dataset.inscrire, updated_at: new Date().toISOString(), deleted: false };
-        try { await enregistrerLigne("unss_memberships", ligne); }
-        catch (erreur) { alert(erreur.message); return; }
-        unssInscriptions.push(ligne);
-        ouvrirElevesCreneau(slot);
+        if (await inscrireEleves([el.dataset.inscrire])) ouvrirElevesCreneau(slot);
       }));
     };
     champ.addEventListener("input", afficher);
