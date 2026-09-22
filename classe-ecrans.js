@@ -417,11 +417,17 @@ function ecDessinerTableauDeBord(panel) {
 
   // Une classe est toujours ouverte : la fleche et le titre du bandeau n'ont plus a "revenir"
   // nulle part, ils ouvrent la liste des classes pour en choisir une autre - comme dans
-  // l'application, ou le bandeau porte deja ce role.
+  // l'application, ou le bandeau porte deja ce role. Bandeau plein ecran : c'etait la carte du
+  // site (bordure, marge, coin arrondi) qui laissait un liseret vide de chaque cote.
+  panel.querySelector(".ec-bandeau")?.classList.add("ec-bandeau-pleine-largeur");
   const ouvrirChoixClasse = () => { if (typeof toggleClasseAccordeon === "function") toggleClasseAccordeon(); };
   panel.querySelector("[data-ec-retour]").onclick = ouvrirChoixClasse;
   const titre = panel.querySelector(".ec-bandeau-titre");
-  if (titre) { titre.style.cursor = "pointer"; titre.onclick = ouvrirChoixClasse; }
+  if (titre) {
+    titre.style.cursor = "pointer";
+    titre.onclick = ouvrirChoixClasse;
+    titre.querySelector("h2")?.insertAdjacentHTML("beforeend", ` <span aria-hidden="true" style="font-size:14px">▾</span>`);
+  }
   panel.querySelector('[data-classe-action="schedule"]').onclick = () => openClassSchedule(row, label);
   panel.querySelector('[data-classe-action="edit"]').onclick = () => openEditImport(row);
   panel.querySelector("#ecSyncRond")?.addEventListener("click", () => {

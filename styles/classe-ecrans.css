@@ -14,9 +14,27 @@
   --ec-vert: #0F6E56;
   --ec-rouge: #A32D2D;
   padding: 0 !important;
-  overflow: hidden;
+  overflow: visible;
   background: var(--ec-fond) !important;
   font-variant-numeric: tabular-nums;
+  /* La carte du site (bordure, ombre, coin arrondi, marge) ne convient pas a un ecran plein
+     largeur : c'etait ce cadre-la qui laissait un liseret vide de chaque cote, sur un ecran ou
+     tout le reste (l'ancienne rangee de classes) allait bord a bord. */
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+}
+/* Le bandeau du tableau de bord seul va d'un bord a l'autre de la fenetre, quelle que soit la
+   largeur de .container (1180px, centre). Les autres bandeaux (Eleves, Documents...) restent
+   dans le contenu : eux n'ont pas ete signales comme trop etroits. */
+.ec-bandeau-pleine-largeur {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
 }
 .ec-ecran { color: var(--ec-marine); font-size: 14px; line-height: 1.35; }
 .ec-ecran button { margin-top: 0; font: inherit; }
@@ -295,9 +313,7 @@ body.ec-outil-ouvert { overflow: hidden; }
 .ec-feuille .ec-test-suppr { flex: 0 0 auto; margin: 0; align-self: center; background: #FFE8E7; color: #A32D2D; border: 0; border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 700; }
 .ec-feuille .ec-test-suppr:hover { background: #FBD0CE; }
 
-/* Selecteur de classe : replie sous le bandeau bleu, ouvert par un clic sur son titre */
-.classe-accordeon { background: #F5F8FC; border-bottom: 1px solid #E0E6EC; padding: 10px 14px; }
-.classe-accordeon .classeBarre { padding: 0; }
+/* Selecteur de classe : la liste, dans la fenetre #classeSelecteurOverlay (styles/site.css) */
 .classePuceAjout { background: #E6F1FB !important; color: #185FA5 !important; border-color: #B7D3EC !important; font-weight: 700; }
 
 /* Le rond de synchronisation, a cote de "Modifier la classe" dans le bandeau de la classe */

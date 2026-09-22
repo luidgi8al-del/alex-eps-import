@@ -107,6 +107,10 @@ async function ouvrirRepertoireEleves() {
   renderUnssTab();
 }
 document.getElementById("backToClassesBtn").addEventListener("click", () => showSubtab("classes"));
+document.getElementById("classeSelecteurFermer").addEventListener("click", () => toggleClasseAccordeon(false));
+document.getElementById("classeSelecteurOverlay").addEventListener("click", e => {
+  if (e.target.id === "classeSelecteurOverlay") toggleClasseAccordeon(false);
+});
 let classCreationMode = null;
 function selectClassCreationMode(mode) {
   classCreationMode = mode;
@@ -127,18 +131,18 @@ document.getElementById("manualClassMode").addEventListener("click", () => selec
 document.getElementById("fileClassMode").addEventListener("click", () => selectClassCreationMode("file"));
 
 /**
- * Ouvre ou ferme la liste des classes, sous le bandeau bleu du tableau de bord.
+ * Ouvre ou ferme la fenetre de choix de classe, par-dessus la page.
  *
- * Repliee des qu'une classe est ouverte : le bandeau existant fait office d'entete, la rangee
- * de puces qui trainait en permanence au-dessus n'a plus de raison d'etre affichee tout le
- * temps. Un clic sur le titre du bandeau (ecDessinerTableauDeBord) l'ouvre pour en choisir une
- * autre ; un clic sur une puce la referme aussitot apres avoir ouvert la classe choisie.
+ * Fermee des qu'une classe est ouverte : le bandeau bleu du tableau de bord fait deja office
+ * d'entete. Un clic sur son titre (ecDessinerTableauDeBord) l'ouvre pour en choisir une autre ;
+ * un clic sur une puce la referme aussitot apres avoir ouvert la classe choisie. Une fenetre
+ * plutot qu'une liste qui pousserait le reste de la page vers le bas.
  */
 function toggleClasseAccordeon(force) {
-  const el = document.getElementById("classeAccordeon");
+  const el = document.getElementById("classeSelecteurOverlay");
   if (!el) return;
-  const ouvrir = typeof force === "boolean" ? force : el.style.display === "none";
-  el.style.display = ouvrir ? "block" : "none";
+  const ouvrir = typeof force === "boolean" ? force : !el.classList.contains("open");
+  el.classList.toggle("open", ouvrir);
 }
 
 /** Le bouton rond du bandeau : refletee la synchronisation en cours par sa rotation. */

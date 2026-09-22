@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="home-navigation.css">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260920-1">
-<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260922-4">
+<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260922-5">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -315,11 +315,18 @@
 
       <div id="tab-classes" class="tabpanel" style="display:none">
         <div id="subtab-classes">
-          <!-- Repliee par defaut : le bandeau bleu du tableau de bord fait office d'entete, et
-               un clic sur son titre l'ouvre pour choisir une autre classe. Visible quand aucune
-               classe n'est retenue (premiere visite, ou la seule classe vient d'etre supprimee). -->
-          <div id="classeAccordeon" class="classe-accordeon" style="display:none">
-            <div id="importsList"></div>
+          <!-- Le bandeau bleu du tableau de bord fait office d'entete : un clic sur son titre
+               ouvre cette fenetre pour choisir une autre classe, sans faire descendre la page.
+               Ouverte d'office quand aucune classe n'est retenue (premiere visite, ou la seule
+               classe vient d'etre supprimee). -->
+          <div class="searchOverlay" id="classeSelecteurOverlay">
+            <div class="searchSheet">
+              <div class="top" style="margin-bottom:8px">
+                <h2 style="margin:0">Changer de classe</h2>
+                <button class="secondary" id="classeSelecteurFermer" style="margin-top:0">Fermer</button>
+              </div>
+              <div id="importsList"></div>
+            </div>
           </div>
 
           <div id="classDashboardPanel" class="card" style="display:none"></div>
@@ -483,7 +490,7 @@
   <script src="bac-reference.js"></script>
   <script src="cours.js?v=20260921-1"></script>
   <script src="classe-tableau-bord.js?v=20260922-1"></script>
-  <script src="classe-ecrans.js?v=20260922-9"></script>
+  <script src="classe-ecrans.js?v=20260922-10"></script>
   <script src="qrcode.min.js"></script>
   <script src="equipement.js"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
