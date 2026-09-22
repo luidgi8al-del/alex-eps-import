@@ -773,6 +773,10 @@
       document.querySelectorAll(".tabbtn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === name);
       });
+      // Changer de menu doit repartir du haut. Sans cela, le nouvel onglet s'ouvrait a la meme
+      // position de defilement que celui qu'on quittait - en bas d'un ecran plus long, on
+      // atterrissait au milieu ou en bas du suivant, sans rien voir de son debut.
+      window.scrollTo(0, 0);
       // Apres l'affichage : la barre du nouvel onglet n'a pas de hauteur tant qu'elle est masquee.
       mesurerEntete();
       if (name === "home") {
