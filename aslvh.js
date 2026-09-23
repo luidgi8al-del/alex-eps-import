@@ -1779,6 +1779,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       </div></div>
     ` : ""}
     <div class="student-editor-actions"><button id="unssSaveBtn">✓ Enregistrer</button>
+    ${!isNew && student.licensed ? `<button class="secondary" id="unssUnlicenseBtn">Retirer la licence AS</button>` : ""}
     <button class="secondary" id="unssCancelBtn">Annuler</button></div>
     <div class="error" id="unssError"></div>`;
   ouvrirFenetreUnss();
@@ -1798,6 +1799,26 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       .join("");
   });
   document.getElementById("unssCancelBtn").addEventListener("click", () => fermerFenetreUnss());
+  // Retirer la licence sans effacer la fiche : l'eleve redevient un simple eleve du repertoire,
+  // ses voeux et sa taille de maillot n'ont plus de raison d'etre gardes. A distinguer de
+  // "Supprimer", qui efface toute la fiche (identite comprise) et n'a rien a voir avec cette
+  // demande frequente : ne plus le voir dans les licencies AS sans perdre son dossier eleve.
+  document.getElementById("unssUnlicenseBtn")?.addEventListener("click", async () => {
+    if (!confirm(`Retirer la licence AS de ${student.first_name} ${student.last_name} ? L'eleve reste dans le repertoire, mais disparait des licencies AS.`)) return;
+    try {
+      await enregistrerLigne("unss_students", {
+        ...student, licensed: false,
+        wish1_slot_id: null, wish1: "", wish2_slot_id: null, wish2: "", wish3_slot_id: null, wish3: "",
+        jersey_size: "", updated_at: new Date().toISOString()
+      });
+    } catch (erreur) {
+      document.getElementById("unssError").textContent = erreur.message || "Licence non retiree. Verifiez la connexion.";
+      return;
+    }
+    fermerFenetreUnss();
+    await loadUnssStudents();
+    renderUnssTab();
+  });
   document.getElementById("unssSaveBtn").addEventListener("click", async () => {
     const lastName = document.getElementById("unssLastName").value.trim();
     const firstName = document.getElementById("unssFirstName").value.trim();
