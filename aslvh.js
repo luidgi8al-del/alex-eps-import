@@ -2609,17 +2609,18 @@ function renderUnssAppelTab() {
     unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
     chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, null));
   });
-  // Supprimer un appel pointe par erreur (mauvaise date, doublon) : ses presences partent avec
-  // lui, sinon elles resteraient comptees dans le taux de presence sans seance pour les porter.
+  // Supprimer un appel pointe par erreur (mauvaise date, doublon).
+  //
+  // Seule la seance est effacee, pas ses presences une par une : une presence dont la seance
+  // n'est plus la n'est de toute facon jamais lue (bilans et taux partent des seances non
+  // supprimees). Les effacer aussi envoyait une suppression par eleve, refusee des que la ligne
+  // n'etait pas encore arrivee au serveur - et remplissait "Saisies a trancher" de refus.
   wrap.querySelectorAll("[data-supprimer-seance]").forEach(btn => btn.addEventListener("click", async () => {
     const seance = seances.find(s => s.id === btn.dataset.supprimerSeance);
     if (!seance) return;
-    if (!confirm(`Supprimer l'appel du ${dateSeance(seance.date_epoch_millis)} ? Les présences pointées ce jour-là seront effacées.`)) return;
+    if (!confirm(`Supprimer l'appel du ${dateSeance(seance.date_epoch_millis)} ? Les présences pointées ce jour-là ne seront plus comptées.`)) return;
     btn.disabled = true;
     try {
-      for (const p of unssPresences.filter(x => String(x.session_id) === String(seance.id))) {
-        await supprimerLigne("unss_attendance", p.id);
-      }
       await supprimerLigne("unss_sessions", seance.id);
     } catch (erreur) {
       btn.disabled = false;
