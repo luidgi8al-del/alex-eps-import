@@ -1850,15 +1850,21 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     }
     // Ligne entiere : la file d'attente ne porte pas de retouches, et un envoi differe qui
     // n'emporterait que les champs saisis effacerait les autres.
+    const studentId = isNew ? crypto.randomUUID() : student.id;
     try {
       if (isNew) {
         await enregistrerLigne("unss_students",
-          { id: crypto.randomUUID(), user_id: session.user_id, licensed: false, deleted: false, ...body });
+          { id: studentId, user_id: session.user_id, licensed: false, deleted: false, ...body });
       } else {
         // L'identifiant reste identique : une correction de division ne duplique pas l'eleve
         // et conserve ses licences, ses voeux et ses inscriptions AS.
         await enregistrerLigne("unss_students", { ...student, ...body });
       }
+      // Le voeu 1 est le choix prioritaire de l'eleve : l'inscrire tout de suite au creneau
+      // correspondant evite un aller-retour ("Ajouter des eleves" > le retrouver > confirmer)
+      // pour ce qui est deja decide. Les voeux 2 et 3 restent proposes (precoches) depuis le
+      // creneau, au cas ou la place manque sur le premier choix.
+      if (body.wish1_slot_id) await inscrireAutomatiquementVoeu1(studentId, body.wish1_slot_id);
     } catch (erreur) {
       document.getElementById("unssError").textContent =
         erreur.message || "Élève non enregistré. Vérifiez la connexion.";
@@ -1868,6 +1874,32 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     await loadUnssStudents();
     renderUnssTab();
   });
+}
+
+/**
+ * Inscrit l'eleve a son creneau de voeu 1, sans doublon si une inscription existe deja (voeu
+ * modifie deux fois, ou saisi hors ligne puis rejoue). Silencieuse en cas d'echec reseau : la
+ * fiche eleve est deja enregistree, l'inscription se rattrapera au prochain "Ajouter des eleves"
+ * plutot que de faire echouer toute la licence pour cette seule etape.
+ */
+async function inscrireAutomatiquementVoeu1(studentId, slotId) {
+  try {
+    // unss_memberships est une table suivie (hors-connexion.js) : le filtre s'applique en JS via
+    // "ou", pas dans la requete - le chemin direct ci-dessous ne sert qu'au repli non suivi.
+    const existantes = await lireTable("unss_memberships",
+      `unss_memberships?slot_id=eq.${encodeURIComponent(slotId)}&student_id=eq.${encodeURIComponent(studentId)}&deleted=eq.false&select=id`,
+      { ou: r => r.slot_id === slotId && r.student_id === studentId });
+    if (existantes.length) return;
+    const ligne = {
+      id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
+      student_id: studentId, updated_at: new Date().toISOString(), deleted: false
+    };
+    await enregistrerLigne("unss_memberships", ligne);
+    // unss_memberships n'est relue qu'une fois par session (chargement paresseux, voir
+    // loadUnssInscriptions) : sans ce push, l'eleve resterait absent de l'ecran "Eleves inscrits"
+    // tant que l'onglet Creneaux AS n'est pas rouvert depuis zero.
+    unssInscriptions.push(ligne);
+  } catch { /* la fiche eleve reste enregistree ; l'inscription se fera manuellement si besoin */ }
 }
 
 // ---- UNSS > Groupe : liste des groupes, detail (membres + historique des seances) ----
