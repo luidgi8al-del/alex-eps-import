@@ -38,21 +38,30 @@
     const eleve=toolStudents.find(s=>String(s.id)===String(sId));
     const overlay=document.createElement("div");overlay.id="gymObsCellDialog";overlay.className="unified-export-overlay";
     document.body.appendChild(overlay);
-    const render=()=>{
-      const f=(state.values[sId]||[])[i]||figureVide(),score=scoreFigure(f);
-      overlay.innerHTML=`<section class="unified-export-dialog"><header><i>🤸</i><div><h3>${esc(studentLabel(eleve))}</h3><p>Figure ${i+1} · ${fr(score,1)} point${score>1?"s":""}</p></div><button data-gym-cell-close>×</button></header><main>
-        <h4>Difficulté</h4>
-        ${Object.entries(DIFFICULTES).map(([lettre,val])=>`<button type="button" class="export-choice ${f.difficulte===lettre?"save":""}" data-gym-diff="${lettre}"><b>${lettre}</b><span><strong>Difficulté ${lettre}</strong><small>${fr(val,1)} point${val>1?"s":""}</small></span></button>`).join("")}
-        <h4>Erreur</h4>
-        ${Object.keys(ERREUR_LABEL).map(code=>`<button type="button" class="export-choice ${f.erreur===code?"share":""}" data-gym-err="${code}"><b>${code==="chute"?"⤵":code==="aucune"?"✓":"−"}</b><span><strong>${ERREUR_LABEL[code]}</strong></span></button>`).join("")}
-        <button class="export-cancel" data-gym-cell-close>Fermer</button>
-      </main></section>`;
-      overlay.querySelectorAll("[data-gym-cell-close]").forEach(b=>b.onclick=()=>{overlay.remove();drawGrid()});
-      overlay.onclick=e=>{if(e.target===overlay){overlay.remove();drawGrid()}};
-      overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],difficulte:b.dataset.gymDiff};state.values[sId]=arr;render()});
-      overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],erreur:b.dataset.gymErr};state.values[sId]=arr;render()});
+    const lire=()=>(state.values[sId]||[])[i]||figureVide();
+    // Deux colonnes cote a cote (difficulte, erreur) au lieu d'une longue liste qui obligeait a
+    // faire defiler pour tout voir. Et un choix ne redessine plus toute la fenetre : il ne fait
+    // que basculer la classe "active" et le score en tete - reconstruire le contenu a chaque
+    // clic deplacait les boutons sous le doigt, si bien que le second choix retombait parfois
+    // sur le fond et refermait la fenetre toute seule.
+    overlay.innerHTML=`<section class="unified-export-dialog gym-cell-dialog"><header><i>🤸</i><div><h3>${esc(studentLabel(eleve))}</h3><p data-gym-cell-score></p></div><button data-gym-cell-close>×</button></header><main>
+      <div class="gym-cell-columns">
+        <div class="gym-cell-col"><h4>Difficulté</h4>${Object.entries(DIFFICULTES).map(([lettre,val])=>`<button type="button" class="gym-cell-choice" data-gym-diff="${lettre}"><b>${lettre}</b><small>${fr(val,1)}</small></button>`).join("")}</div>
+        <div class="gym-cell-col"><h4>Erreur</h4>${Object.keys(ERREUR_LABEL).map(code=>`<button type="button" class="gym-cell-choice" data-gym-err="${code}"><b>${code==="chute"?"⤵":code==="aucune"?"✓":"−"}</b><small>${esc(ERREUR_LABEL[code].replace(/ *\(.*\)/,""))}</small></button>`).join("")}</div>
+      </div>
+      <button class="export-cancel" data-gym-cell-close style="margin-top:14px">Fermer</button>
+    </main></section>`;
+    const majAffichage=()=>{
+      const f=lire(),score=scoreFigure(f);
+      overlay.querySelector("[data-gym-cell-score]").textContent=`Figure ${i+1} · ${fr(score,1)} point${score>1?"s":""}`;
+      overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.classList.toggle("active",b.dataset.gymDiff===f.difficulte));
+      overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.classList.toggle("active",b.dataset.gymErr===f.erreur));
     };
-    render();
+    overlay.querySelectorAll("[data-gym-cell-close]").forEach(b=>b.onclick=()=>{overlay.remove();drawGrid()});
+    overlay.onclick=e=>{if(e.target===overlay){overlay.remove();drawGrid()}};
+    overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],difficulte:b.dataset.gymDiff};state.values[sId]=arr;majAffichage()});
+    overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],erreur:b.dataset.gymErr};state.values[sId]=arr;majAffichage()});
+    majAffichage();
   }
   // Enregistrer meme si toutes les figures n'ont pas ete jugees : chaque case garde son etat tel
   // quel (une figure jamais touchee vaut 0), sans obliger a finir la classe entiere.
