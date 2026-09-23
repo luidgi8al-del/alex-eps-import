@@ -746,6 +746,8 @@ function renderUnssTab() {
           <div class="muted">${[unssCategoryLabel(s.category, s.sex), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
           ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
           ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
+          ${unssMode === "licensed" && s.host_available ? `<div class="muted" style="font-size:12px">🏠 Peut héberger${s.host_capacity ? ` (${s.host_capacity})` : ""}${s.host_age_min || s.host_age_max ? ` · ${s.host_age_min || "?"}-${s.host_age_max || "?"} ans` : ""}${s.host_sex_pref ? ` · ${s.host_sex_pref === "F" ? "filles" : "garçons"}` : ""}</div>` : ""}
+          ${unssMode === "licensed" && (s.payment_missing || s.medical_certificate_missing) ? `<div style="font-size:12px; color:#B3261E; font-weight:600">${[s.payment_missing ? "⚠ Paiement manquant" : "", s.medical_certificate_missing ? "⚠ Certificat manquant" : ""].filter(Boolean).join(" · ")}</div>` : ""}
         </div>
         ${unssAdmin ? `<button class="danger" data-delete="${s.id}" style="margin-top:0">Supprimer</button>` : ""}
       </div>`;
@@ -1775,6 +1777,36 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       <label for="unssJersey">Taille maillot</label>
       <input type="text" id="unssJersey" value="${student ? planningText(student.jersey_size || "") : ""}">
       </div></div>
+      <div class="student-editor-section"><h3>Hébergement</h3>
+      <div class="student-editor-grid">
+      <label for="unssHostAvailable">Peut héberger un(e) camarade</label>
+      <select id="unssHostAvailable">
+        <option value="non"${!student || !student.host_available ? " selected" : ""}>Non</option>
+        <option value="oui"${student && student.host_available ? " selected" : ""}>Oui</option>
+      </select>
+      </div>
+      <div class="student-editor-grid" id="unssHostDetails" style="${student && student.host_available ? "" : "display:none"}">
+      <label for="unssHostCapacity">Nombre de places</label>
+      <input type="number" id="unssHostCapacity" min="1" value="${student && student.host_capacity ? student.host_capacity : ""}">
+      <label for="unssHostAgeMin">Âge souhaité (si possible)</label>
+      <div style="display:flex; gap:8px">
+        <input type="number" id="unssHostAgeMin" min="0" max="25" placeholder="de" value="${student && student.host_age_min ? student.host_age_min : ""}" style="width:80px">
+        <input type="number" id="unssHostAgeMax" min="0" max="25" placeholder="à" value="${student && student.host_age_max ? student.host_age_max : ""}" style="width:80px">
+      </div>
+      <label for="unssHostSexPref">Sexe souhaité</label>
+      <select id="unssHostSexPref">
+        <option value=""${!student || !student.host_sex_pref ? " selected" : ""}>Indifférent</option>
+        <option value="F"${student && student.host_sex_pref === "F" ? " selected" : ""}>Fille</option>
+        <option value="M"${student && student.host_sex_pref === "M" ? " selected" : ""}>Garçon</option>
+      </select>
+      </div></div>
+      <div class="student-editor-section"><h3>Dossier administratif</h3>
+      <div class="student-editor-grid">
+      <label for="unssMissingPayment">Il manque le paiement</label>
+      <input type="checkbox" id="unssMissingPayment" style="width:auto; justify-self:start"${student && student.payment_missing ? " checked" : ""}>
+      <label for="unssMissingCertificate">Il manque le certificat médical</label>
+      <input type="checkbox" id="unssMissingCertificate" style="width:auto; justify-self:start"${student && student.medical_certificate_missing ? " checked" : ""}>
+      </div></div>
     ` : ""}
     ${directoryEditing || licensing || (student && student.licensed) ? `
       <div class="student-editor-section"><h3>Coordonnées</h3>
@@ -1805,6 +1837,10 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       .map(c => `<option value="${c.value}"${c.value === choisie ? " selected" : ""}>${unssCategoryLabel(c.value, sexe)}</option>`)
       .join("");
   });
+  document.getElementById("unssHostAvailable")?.addEventListener("change", () => {
+    const details = document.getElementById("unssHostDetails");
+    if (details) details.style.display = document.getElementById("unssHostAvailable").value === "oui" ? "" : "none";
+  });
   document.getElementById("unssCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   // Retirer la licence sans effacer la fiche : l'eleve redevient un simple eleve du repertoire,
   // ses voeux et sa taille de maillot n'ont plus de raison d'etre gardes. A distinguer de
@@ -1816,7 +1852,9 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       await enregistrerLigne("unss_students", {
         ...student, licensed: false,
         wish1_slot_id: null, wish1: "", wish2_slot_id: null, wish2: "", wish3_slot_id: null, wish3: "",
-        jersey_size: "", updated_at: new Date().toISOString()
+        jersey_size: "", host_available: false, host_capacity: null, host_age_min: null, host_age_max: null,
+        host_sex_pref: null, payment_missing: false, medical_certificate_missing: false,
+        updated_at: new Date().toISOString()
       });
     } catch (erreur) {
       document.getElementById("unssError").textContent = erreur.message || "Licence non retiree. Verifiez la connexion.";
@@ -1854,6 +1892,14 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
         body[`wish${n}`] = slot ? unssSlotLabel(slot) : "";
       }
       body.jersey_size = document.getElementById("unssJersey").value;
+      const hebergeOui = document.getElementById("unssHostAvailable").value === "oui";
+      body.host_available = hebergeOui;
+      body.host_capacity = hebergeOui ? (+document.getElementById("unssHostCapacity").value || null) : null;
+      body.host_age_min = hebergeOui ? (+document.getElementById("unssHostAgeMin").value || null) : null;
+      body.host_age_max = hebergeOui ? (+document.getElementById("unssHostAgeMax").value || null) : null;
+      body.host_sex_pref = hebergeOui ? (document.getElementById("unssHostSexPref").value || null) : null;
+      body.payment_missing = document.getElementById("unssMissingPayment").checked;
+      body.medical_certificate_missing = document.getElementById("unssMissingCertificate").checked;
     }
     // Ligne entiere : la file d'attente ne porte pas de retouches, et un envoi differe qui
     // n'emporterait que les champs saisis effacerait les autres.
