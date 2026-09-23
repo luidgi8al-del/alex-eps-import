@@ -1510,8 +1510,9 @@ async function ouvrirFicheCreneau(slot) {
   if (!slot) return;
   const panel = document.getElementById("unssPanel"); ouvrirFenetreUnss();
   const appelAutorise = peutFaireAppelCreneau(slot);
-  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
+  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span id="asMetricInscrits" style="cursor:pointer"><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
   asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); const boutonAppel=document.getElementById("asCall"); if (boutonAppel) boutonAppel.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
+  document.getElementById("asMetricInscrits").onclick=()=>ouvrirElevesCreneau(slot);
 }
 
 /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
@@ -2302,12 +2303,26 @@ async function assurerInscriptions() {
 }
 
 /** Les eleves d'un creneau : ajouter, retirer. */
+/** Une section vœu 2 ou vœu 3 : chaque candidat avec son propre bouton Ajouter, pas une case a
+ * cocher - on veut pouvoir en ajouter un sans manipuler les autres. */
+function sectionVoeuHtml(rang, eleves) {
+  if (eleves.length === 0) return "";
+  return `<div class="muted" style="font-weight:600;margin:12px 0 4px">Ont classé cette activité en vœu ${rang} (${eleves.length})</div>
+    ${eleves.map(e => `<div class="unssCard" style="padding:6px 0">
+         <div>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>
+         <button data-ajouter-voeu="${e.id}" style="margin-top:0">Ajouter</button>
+       </div>`).join("")}`;
+}
+
 async function ouvrirElevesCreneau(slot) {
   const panel = document.getElementById("unssPanel");
   ouvrirFenetreUnss();
   panel.innerHTML = `<div class="muted">Chargement…</div>`;
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
+  const dejaLa = eleves.map(e => e.id);
+  const voeu2 = unssStudents.filter(s => s.licensed && s.wish2_slot_id === slot.id && !dejaLa.includes(s.id));
+  const voeu3 = unssStudents.filter(s => s.licensed && s.wish3_slot_id === slot.id && !dejaLa.includes(s.id));
   panel.classList.add("as-full-panel");
   panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
     <div class="muted">${unssText(unssSlotLabel(slot))}</div>
@@ -2319,7 +2334,8 @@ async function ouvrirElevesCreneau(slot) {
              <button class="danger" data-retirer="${e.id}" style="margin-top:0">Retirer</button>
            </div>`).join("")
     }</div>
-    <button id="unssCreneauAddBtn" style="margin-top:12px">Ajouter des élèves</button>
+    <div id="unssCreneauVoeux">${sectionVoeuHtml(2, voeu2)}${sectionVoeuHtml(3, voeu3)}</div>
+    <button class="secondary" id="unssCreneauAddBtn" style="margin-top:12px">Chercher un autre élève</button>
     `;
   panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", async () => {
     const inscription = unssInscriptions.find(i => i.slot_id === slot.id && i.student_id === btn.dataset.retirer);
@@ -2330,43 +2346,33 @@ async function ouvrirElevesCreneau(slot) {
     }
     ouvrirElevesCreneau(slot);
   }));
+  panel.querySelectorAll("[data-ajouter-voeu]").forEach(btn => btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
+      student_id: btn.dataset.ajouterVoeu, updated_at: new Date().toISOString(), deleted: false };
+    try { await enregistrerLigne("unss_memberships", ligne); }
+    catch (erreur) { btn.disabled = false; alert(erreur.message); return; }
+    unssInscriptions.push(ligne);
+    ouvrirElevesCreneau(slot);
+  }));
   document.getElementById("unssCreneauAddBtn").addEventListener("click",
     () => ouvrirAjoutElevesCreneau(slot));
   document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => fermerFenetreUnss());
 }
 
-/**
- * Les licencies ayant classe cette activite parmi leurs voeux : ce sont les candidats les plus
- * probables pour ce creneau, donc on les propose groupes par rang avant la recherche libre, avec
- * une case a cocher pour les inscrire plusieurs a la fois. Le voeu 1 est precoche : c'est le choix
- * prioritaire de l'eleve, il n'y a qu'a confirmer pour l'y placer automatiquement.
- */
-function groupeVoeuHtml(rang, eleves, medaille) {
-  if (eleves.length === 0) return "";
-  return `<div style="margin-bottom:10px">
-    <div class="muted" style="font-weight:600;margin-bottom:4px">${medaille} Ont classé cette activité en vœu ${rang} (${eleves.length})</div>
-    ${eleves.map(e => `<label style="display:flex;align-items:center;gap:8px;padding:4px 0">
-      <input type="checkbox" data-voeu-pick="${e.id}" style="width:auto"${rang === 1 ? " checked" : ""}>
-      <span>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</span>
-    </label>`).join("")}
-  </div>`;
-}
 
-/** Le choix des eleves a inscrire : les licencies d'abord, comme pour les anciens groupes. */
+/**
+ * Recherche libre dans tout le repertoire : le vœu 1 s'inscrit tout seul a la licence
+ * (inscrireAutomatiquementVoeu1), et les vœux 2/3 s'ajoutent d'un bouton directement depuis
+ * "Élèves inscrits" (sectionVoeuHtml) - ce panneau ne sert donc plus qu'a chercher un eleve qui
+ * n'a pas classe cette activite dans ses vœux.
+ */
 function ouvrirAjoutElevesCreneau(slot) {
   const panel = document.getElementById("unssPanel");
   const dejaLa = elevesDuCreneau(slot.id).map(e => e.id);
   const candidats = unssStudents.filter(e => !dejaLa.includes(e.id));
   const licencies = candidats.filter(e => e.licensed);
-  const voeu1 = licencies.filter(e => e.wish1_slot_id === slot.id);
-  const voeu2 = licencies.filter(e => e.wish2_slot_id === slot.id);
-  const voeu3 = licencies.filter(e => e.wish3_slot_id === slot.id);
-  const voeuxHtml = (voeu1.length + voeu2.length + voeu3.length) === 0 ? "" : `
-    <div class="card" style="margin-bottom:12px">
-      ${groupeVoeuHtml(1, voeu1, "🥇")}${groupeVoeuHtml(2, voeu2, "🥈")}${groupeVoeuHtml(3, voeu3, "🥉")}
-      <button id="creneauInscrireVoeux">Inscrire la sélection</button>
-    </div>`;
-  panel.innerHTML = `<h2>Ajouter des élèves · ${unssText(slot.activity_name)}</h2>` + voeuxHtml +
+  panel.innerHTML = `<h2>Chercher un élève · ${unssText(slot.activity_name)}</h2>` +
     (candidats.length === 0
       ? `<div class="muted">Tous les élèves du répertoire sont déjà inscrits à ce créneau.</div>`
       : `${licencies.length === 0
@@ -2391,13 +2397,6 @@ function ouvrirAjoutElevesCreneau(slot) {
     }
     return true;
   };
-
-  const btnVoeux = document.getElementById("creneauInscrireVoeux");
-  if (btnVoeux) btnVoeux.addEventListener("click", async () => {
-    const ids = [...panel.querySelectorAll("[data-voeu-pick]:checked")].map(x => x.dataset.voeuPick);
-    if (!ids.length) { alert("Cochez au moins un élève."); return; }
-    if (await inscrireEleves(ids)) ouvrirElevesCreneau(slot);
-  });
 
   const zone = document.getElementById("creneauResultats");
   if (zone) {
