@@ -239,6 +239,30 @@ function capitaliseJour(jour) {
   return jour.charAt(0) + jour.slice(1).toLowerCase();
 }
 
+/** Calcule la prochaine occurrence du créneau sans dépendre du planning général. */
+function prochaineSeanceCreneau(slot) {
+  const jours = { dimanche:0, lundi:1, mardi:2, mercredi:3, jeudi:4, vendredi:5, samedi:6 };
+  const cle = String(slot?.day_of_week || "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const cible = jours[cle];
+  if (cible === undefined) return null;
+  const maintenant = new Date();
+  let ecart = (cible - maintenant.getDay() + 7) % 7;
+  const heure = normaliserHeureCreneau(slot.start_time);
+  if (ecart === 0 && heure) {
+    const [h, m] = heure.split(":").map(Number);
+    if (maintenant.getHours() * 60 + maintenant.getMinutes() >= h * 60 + m) ecart = 7;
+  }
+  const date = new Date(maintenant);
+  date.setHours(12, 0, 0, 0);
+  date.setDate(date.getDate() + ecart);
+  return {
+    date,
+    jour: new Intl.DateTimeFormat("fr-FR", { weekday:"long", day:"numeric", month:"long" }).format(date),
+    annee: date.getFullYear()
+  };
+}
+
 /** Supabase ou une ancienne saisie peuvent rendre HH:MM:SS ; input[type=time] attend HH:MM. */
 function normaliserHeureCreneau(valeur) {
   // Accepte les formes deja rencontrees dans les anciennes donnees : 13:00:00, 13h00,
@@ -2569,32 +2593,42 @@ function renderUnssAppelTab() {
     return { eleve: e, presents, absents: lignes.length - presents, total: lignes.length,
       taux: lignes.length ? Math.round(presents * 100 / lignes.length) : 0 };
   }).sort((a,b) => String(a.eleve.last_name || "").localeCompare(String(b.eleve.last_name || ""), "fr"));
-  const contenuHistorique = `<div class="card as-call-history" style="margin-top:12px">
-      <div class="top"><h3 style="margin:0">Appels enregistrés</h3>
-        <button id="unssNouvelAppel" style="margin-top:0" ${inscrits.length ? "" : "disabled"}>Nouvel appel</button></div>
+  const totalPointages = bilanEleves.reduce((total, ligne) => total + ligne.total, 0);
+  const totalPresents = bilanEleves.reduce((total, ligne) => total + ligne.presents, 0);
+  const tauxGlobal = totalPointages ? Math.round(totalPresents * 100 / totalPointages) : 0;
+  const prochaine = prochaineSeanceCreneau(creneau);
+  const professeur = creneau.responsible_teacher || creneau.teacher_name || creneau.assigned_teacher_name || "Non renseigné";
+  const horaire = [normaliserHeureCreneau(creneau.start_time), normaliserHeureCreneau(creneau.end_time)].filter(Boolean).join(" – ");
+  const contenuHistorique = `<section class="as-call-panel">
+      <div class="as-call-panel-head"><div><span class="as-call-eyebrow">HISTORIQUE</span><h2>Appels enregistrés</h2></div>
+        <button id="unssNouvelAppel" class="as-call-primary" ${inscrits.length ? "" : "disabled"}><span>＋</span> Faire l’appel</button></div>
       ${inscrits.length === 0
-        ? `<div class="muted" style="margin-top:8px">Aucun élève inscrit à ce créneau.
+        ? `<div class="as-call-empty">Aucun élève inscrit à ce créneau.
              Ajoutez-en depuis <strong>Créneaux AS</strong>.</div>`
         : seances.length === 0
-          ? `<div class="muted" style="margin-top:8px">Aucune séance pointée. Cliquez sur « Nouvel appel ».</div>`
-          : `<div class="as-call-session-list">${
+          ? `<div class="as-call-empty">Aucun appel enregistré. Cliquez sur « Faire l’appel » pour commencer.</div>`
+          : `<div class="as-history-table"><div class="as-history-row as-history-head"><span>Date</span><span>Créneau</span><span>Présents</span><span>Absents</span><span>Actions</span></div>${
               seances.map(s => {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<div style="display:flex; align-items:center; gap:6px"><button class="as-call-session" data-seance="${s.id}" style="flex:1"><span><b>${dateSeance(s.date_epoch_millis)}</b><small>Cliquer pour consulter ou modifier</small></span><span class="as-call-count yes">${presents} P</span><span class="as-call-count no">${absents} A</span><i>›</i></button><button class="danger" data-supprimer-seance="${s.id}" style="margin-top:0">Supprimer</button></div>`;
+                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><span class="as-history-actions"><button class="secondary" data-seance="${s.id}">Ouvrir</button><button class="as-delete-icon" data-supprimer-seance="${s.id}" title="Supprimer cet appel" aria-label="Supprimer cet appel">×</button></span></div>`;
               }).join("")}</div>`}
-    </div><div id="unssAppelBody" style="margin-top:14px"></div>`;
-  const contenuBilan = `<div class="as-attendance-summary">
-      <div class="as-attendance-heading"><div><h3>Taux de présence</h3><p>${unssText(creneau.activity_name)} uniquement · ${seances.length} appel(s)</p></div><b>${inscrits.length}</b></div>
+    </section><div id="unssAppelBody" class="as-call-editor"></div>`;
+  const contenuBilan = `<section class="as-attendance-summary as-call-panel">
+      <div class="as-attendance-heading"><div><span class="as-call-eyebrow">ASSIDUITÉ</span><h2>Taux de présence</h2><p>${unssText(creneau.activity_name)} uniquement · ${seances.length} appel(s)</p></div><b>${inscrits.length}</b></div>
       ${bilanEleves.length ? `<div class="as-attendance-list">${bilanEleves.map(l => `<article><div><strong>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</strong><small>${unssText(l.eleve.school_class_label || l.eleve.class_label || "")}</small></div><span>${l.presents} présent${l.presents>1?"s":""} · ${l.absents} absent${l.absents>1?"s":""}</span><b class="${l.taux < 60 ? "low" : l.taux < 80 ? "mid" : "good"}">${l.taux} %</b></article>`).join("")}</div>` : `<div class="muted">Aucun élève inscrit à ce créneau.</div>`}
-    </div>`;
+    </section>`;
 
-  wrap.innerHTML = `<label for="unssAppelSlotSelect">Créneau</label>
-    <select id="unssAppelSlotSelect">${creneaux.map(s =>
-      `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select>
-    <div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>
-    ${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}`;
+  wrap.innerHTML = `<div class="as-call-page">
+    <nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Appels</b></nav>
+    <header class="as-call-heading"><h1>Appels de l’AS</h1><p>Gérez les appels, consultez la présence de vos élèves et suivez l’assiduité aux activités.</p></header>
+    <section class="as-slot-hero"><div class="as-slot-icon">♟</div><div class="as-slot-copy"><small>CRÉNEAU SÉLECTIONNÉ</small><h2>${unssText(creneau.activity_name)} · ${unssText(capitaliseJour(creneau.day_of_week))}</h2><p><span>◷ ${unssText(horaire || "Horaire non renseigné")}</span><span>⌖ ${unssText(creneau.location || "Lieu non renseigné")}</span><span>♙ ${unssText(professeur)}</span></p></div><label class="as-slot-picker"><span>Changer de créneau</span><select id="unssAppelSlotSelect">${creneaux.map(s =>
+      `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select></label></section>
+    <section class="as-call-kpis"><article><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
+    <div class="as-call-layout"><main class="as-call-main"><div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}</main>
+      <aside class="as-next-card"><span class="as-call-eyebrow">PROCHAINE SÉANCE</span>${prochaine ? `<div class="as-next-date"><b>${unssText(prochaine.jour)}</b><span>${prochaine.annee}</span></div>` : `<div class="as-next-date"><b>Date à définir</b></div>`}<dl><div><dt>◷ Horaire</dt><dd>${unssText(horaire || "Non renseigné")}</dd></div><div><dt>⌖ Lieu</dt><dd>${unssText(creneau.location || "Non renseigné")}</dd></div><div><dt>♙ Enseignant</dt><dd>${unssText(professeur)}</dd></div></dl><p class="as-next-note"><b>✓ Pense-bête</b><span>L’appel pourra être créé dès le début de la séance.</span></p></aside>
+    </div></div>`;
 
   document.getElementById("unssAppelSlotSelect").addEventListener("change", (e) => {
     unssAppelSlotId = e.target.value;

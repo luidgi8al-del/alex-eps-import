@@ -13,4 +13,19 @@ if (!code.includes('idsSeances.has(String(p.session_id))')) {
 if (!css.includes('.as-attendance-list')) {
   throw new Error('Le récapitulatif individuel doit garder son affichage harmonisé.');
 }
-console.log('as-attendance-tabs: historique par créneau et taux individuels OK');
+[
+  'Appels de l’AS',
+  'CRÉNEAU SÉLECTIONNÉ',
+  'Élèves inscrits',
+  'Présence moyenne',
+  'PROCHAINE SÉANCE',
+  'id="unssNouvelAppel"',
+  'data-seance=',
+  'data-supprimer-seance='
+].forEach(marker => {
+  if (!code.includes(marker)) throw new Error(`La nouvelle page d’appel doit conserver : ${marker}`);
+});
+['.as-call-page', '.as-slot-hero', '.as-call-kpis', '.as-history-table', '.as-next-card'].forEach(marker => {
+  if (!css.includes(marker)) throw new Error(`Style manquant pour la nouvelle page : ${marker}`);
+});
+console.log('as-attendance-tabs: tableau de bord, historique, actions et taux individuels OK');
