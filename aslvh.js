@@ -671,6 +671,31 @@ function ouvrirDocumentsManquants() {
   document.getElementById("unssDocsManquantsCloseBtn").addEventListener("click", () => fermerFenetreUnss());
 }
 
+/** Les familles qui ont propose d'heberger, pour organiser un deplacement (competition, sortie).
+ * Chaque carte ouvre la fiche pour voir/corriger la capacite, l'age et le sexe souhaites. */
+function ouvrirHebergement() {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  const concernes = unssStudents.filter(s => s.licensed && s.host_available)
+    .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
+  panel.classList.add("as-full-panel");
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssHebergementCloseBtn">←</button><div><h2>Hébergement</h2><small>${concernes.length} élève(s)</small></div></div>
+    <div style="margin-top:10px">${concernes.length === 0
+      ? `<div class="muted">Aucune famille n'a proposé d'héberger pour l'instant.</div>`
+      : concernes.map(s => `<div class="unssCard" data-fiche="${s.id}" style="padding:8px 0; cursor:pointer">
+           <div>
+             <div><strong>${unssText(String(s.last_name || "").toUpperCase())} ${unssText(s.first_name || "")}</strong></div>
+             <div class="muted" style="font-size:12px">🏠${s.host_capacity ? ` ${s.host_capacity} place(s)` : ""}${s.host_age_min || s.host_age_max ? ` · ${s.host_age_min || "?"}-${s.host_age_max || "?"} ans` : ""}${s.host_sex_pref ? ` · ${s.host_sex_pref === "F" ? "filles" : "garçons"}` : ""}</div>
+           </div>
+         </div>`).join("")
+    }</div>`;
+  panel.querySelectorAll("[data-fiche]").forEach(el => el.addEventListener("click", () => {
+    const student = unssStudents.find(s => s.id === el.dataset.fiche);
+    if (student) openUnssStudentPanel(student, true);
+  }));
+  document.getElementById("unssHebergementCloseBtn").addEventListener("click", () => fermerFenetreUnss());
+}
+
 function renderUnssTab() {
   if (unssMode === "slots") { renderUnssSlotsTab(); return; }
   if (unssMode === "groups") { renderUnssGroupsTab(); return; }
@@ -725,7 +750,7 @@ function renderUnssTab() {
   // absente des vues en cartes (Licencies AS, Tous les eleves) faute de place dans la barre.
   // Retrouver un licencie precis sans faire defiler toute la page.
   if (!enTableau) {
-    html += `<label class="student-directory-search" style="flex:1; min-width:180px; margin-right:auto">🔎<input id="rechercheEleveRepertoire" value="${planningText(rechercheEleveFiltre)}" placeholder="Rechercher un nom ou un prénom"></label>`;
+    html += `<label class="student-directory-search" style="flex:0 1 220px; margin-right:auto">🔎<input id="rechercheEleveRepertoire" value="${planningText(rechercheEleveFiltre)}" placeholder="Rechercher un nom ou un prénom"></label>`;
   }
   // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
   // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
@@ -747,6 +772,10 @@ function renderUnssTab() {
   // sans avoir a rouvrir chaque fiche pour le voir.
   if (unssMode === "licensed" && rows.some(s => s.payment_missing || s.medical_certificate_missing)) {
     html += `<button class="secondary" id="unssDocsManquantsBtn" style="margin-top:0">Document manquant</button>`;
+  }
+  // Retrouver d'un coup les familles qui ont propose d'heberger, pour un deplacement a organiser.
+  if (unssMode === "licensed" && rows.some(s => s.host_available)) {
+    html += `<button class="secondary" id="unssHebergementBtn" style="margin-top:0">Hébergement</button>`;
   }
   // Telecharger la liste des inscrits : nom, prenom, classe/division, taille de maillot -
   // ce qu'on redonne au secretariat ou au club en fin d'annee.
@@ -805,6 +834,7 @@ function renderUnssTab() {
   }));
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
+  wrap.querySelector("#unssHebergementBtn")?.addEventListener("click", () => ouvrirHebergement());
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
