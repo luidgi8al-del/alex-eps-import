@@ -64,7 +64,7 @@ function formatFrDate(epochMillis) {
 }
 
 // "all" ne s'atteint plus depuis ASLVH : le repertoire complet vit dans Classe > Liste eleve.
-let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel"
+let unssMode = "licensed"; // "all" | "licensed" | "slots" | "groups" | "appel" | "dates"
 let unssStudents = [];
 let unssGroups = [];
 let unssAppelGroupId = null;
@@ -144,6 +144,7 @@ async function showUnssTab(mode) {
     await verifierAffectationCreneaux();
     await loadUnssSlots();
   }
+  if (mode === "dates") await loadUnssDates();
   if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
     await loadUnssInscriptions();
   }
@@ -724,6 +725,7 @@ function renderUnssTab() {
   if (unssMode === "slots") { renderUnssSlotsTab(); return; }
   if (unssMode === "groups") { renderUnssGroupsTab(); return; }
   if (unssMode === "appel") { renderUnssAppelTab(); return; }
+  if (unssMode === "dates") { renderUnssDatesTab(); return; }
   const wrap = document.getElementById(unssCibleRendu);
   if (!wrap) return;
   // Liste eleve se lit en tableau : on y cherche une division entiere, pas une fiche.
@@ -2927,11 +2929,91 @@ async function openUnssStudentStats(group, student, sessions) {
 }
 
 
+// ---- ASLVH > Dates AS : même fiche sur le site et dans l'application -----------------
+
+const AS_DETAILS_PREFIX = "EPS_AS_DETAILS:";
+let unssDateEvents = [];
+
+function lireDetailsDateAs(commentaire) {
+  const brut = String(commentaire || "");
+  if (!brut.startsWith(AS_DETAILS_PREFIX)) return {};
+  try { return JSON.parse(brut.slice(AS_DETAILS_PREFIX.length)) || {}; } catch { return {}; }
+}
+
+function ecrireDetailsDateAs(details) {
+  return AS_DETAILS_PREFIX + JSON.stringify(details || {});
+}
+
+function dateAsComplete(details) {
+  const commun = details.activity && details.accompanyingTeacher && details.exactLocation
+    && details.schoolNeeds && details.asNeeds;
+  if (!commun) return false;
+  return details.travelRequired
+    ? !!(details.departureLocation && details.departureTime && details.returnTime && details.transportMethod)
+    : !!(details.meetingTime && details.endTime);
+}
+
+async function loadUnssDates() {
+  unssDateEvents = await lireTable("institution_calendar_events",
+    "institution_calendar_events?deleted=eq.false&kind=eq.SORTIE&select=*&order=start_date_epoch_millis.asc",
+    { ou: e => !e.deleted && e.kind === "SORTIE",
+      trier: (a, b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
+}
+
+function renderUnssDatesTab() {
+  const wrap = document.getElementById("unssList");
+  const maintenant = new Date(); maintenant.setHours(0, 0, 0, 0);
+  const aVenir = unssDateEvents.filter(e => Number(e.end_date_epoch_millis || e.start_date_epoch_millis) >= maintenant.getTime());
+  const passees = unssDateEvents.filter(e => Number(e.end_date_epoch_millis || e.start_date_epoch_millis) < maintenant.getTime());
+  const cartes = rows => rows.map(e => {
+    const d = new Date(Number(e.start_date_epoch_millis));
+    const details = lireDetailsDateAs(e.comment);
+    const complete = dateAsComplete(details);
+    return `<button class="as-date-card" data-as-date="${e.id}"><span class="as-date-day"><b>${d.getDate()}</b><small>${d.toLocaleDateString("fr-FR", { month:"short" }).replace(".", "")}</small></span><span><b>${unssText(e.label || "Sortie AS")}</b><small>${unssText(d.toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long", year:"numeric" }))}</small>${details.activity ? `<em>${unssText(details.activity)}${details.exactLocation ? ` · ${unssText(details.exactLocation)}` : ""}</em>` : ""}</span><i class="${complete ? "complete" : "pending"}">${complete ? "Fiche complétée" : "À remplir"}</i><strong>›</strong></button>`;
+  }).join("");
+  wrap.innerHTML = `<div class="as-dates-page"><header class="as-dates-hero"><div><small>CALENDRIER DE L’ASSOCIATION SPORTIVE</small><h1>Dates AS</h1><p>Préparez les rencontres, déplacements et besoins. Les fiches sont partagées avec l’application.</p></div><button id="asDateAdd">＋ Ajouter une date AS</button></header><section class="as-dates-summary"><article><b>${aVenir.length}</b><span>À venir</span></article><article><b>${unssDateEvents.filter(e => dateAsComplete(lireDetailsDateAs(e.comment))).length}</b><span>Fiches complétées</span></article><article><b>${unssDateEvents.length}</b><span>Dates partagées</span></article></section><section class="as-dates-section"><div class="as-dates-heading"><div><span>PROCHAINES DATES</span><h2>Événements à préparer</h2></div></div>${aVenir.length ? `<div class="as-date-list">${cartes(aVenir)}</div>` : `<div class="as-call-empty">Aucune date AS à venir.</div>`}</section>${passees.length ? `<details class="as-dates-past"><summary>Dates passées (${passees.length})</summary><div class="as-date-list">${cartes(passees.reverse())}</div></details>` : ""}</div>`;
+  document.getElementById("asDateAdd").onclick = () => openUnssDatePanel(null);
+  wrap.querySelectorAll("[data-as-date]").forEach(btn => btn.onclick = () => {
+    const event = unssDateEvents.find(e => e.id === btn.dataset.asDate);
+    if (event) openUnssDatePanel(event);
+  });
+}
+
+function openUnssDatePanel(event) {
+  const nouveau = !event;
+  const details = lireDetailsDateAs(event?.comment);
+  const dateIso = event ? new Date(Number(event.start_date_epoch_millis)).toISOString().slice(0, 10) : "";
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss(); panel.classList.add("as-full-panel", "as-date-panel");
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="asDateClose">←</button><div><small>DATE AS</small><h2>${nouveau ? "Nouvelle date AS" : unssText(event.label)}</h2></div><b>📅</b></div><div class="as-date-form"><section class="as-date-form-card"><h3>🏆 L’événement</h3><div class="as-form-grid"><label>Date<input id="asDateValue" type="date" value="${dateIso}"></label><label>Intitulé<input id="asDateLabel" value="${unssText(event?.label || "")}" placeholder="Ex : Cross départemental"></label><label>Activité<input id="asDateActivity" value="${unssText(details.activity || "")}" placeholder="Ex : Cross-country"></label><label>Professeurs accompagnants<textarea id="asDateTeachers" rows="2" placeholder="Un nom par ligne">${unssText(details.accompanyingTeacher || "")}</textarea></label></div></section><section class="as-date-form-card"><h3>⌖ Destination</h3><label>Lieu exact de la sortie<input id="asDateLocation" value="${unssText(details.exactLocation || "")}"></label></section><section class="as-date-form-card"><h3>🚌 Déplacement</h3><label class="as-travel-toggle"><input id="asDateTravel" type="checkbox" ${details.travelRequired ? "checked" : ""}><span>Un déplacement est nécessaire</span></label><div id="asDateTravelFields" class="as-form-grid"><label>Lieu de départ<input id="asDateDepartureLocation" value="${unssText(details.departureLocation || "")}"></label><label>Départ<input id="asDateDeparture" type="time" value="${unssText(details.departureTime || "")}"></label><label>Retour<input id="asDateReturn" type="time" value="${unssText(details.returnTime || "")}"></label><label>Moyen de déplacement<input id="asDateTransport" value="${unssText(details.transportMethod || "")}"></label></div><div id="asDateNoTravelFields" class="as-form-grid"><label>Heure de rendez-vous<input id="asDateMeeting" type="time" value="${unssText(details.meetingTime || "")}"></label><label>Heure de fin<input id="asDateEnd" type="time" value="${unssText(details.endTime || "")}"></label></div></section><div class="as-needs-grid"><section class="as-date-form-card"><h3>🏫 Besoins établissement</h3><textarea id="asDateSchoolNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.schoolNeeds || "")}</textarea></section><section class="as-date-form-card needs"><h3>⭐ Besoins AS</h3><textarea id="asDateAsNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.asNeeds || "")}</textarea></section></div><div class="as-date-actions"><button id="asDateSave">Enregistrer la fiche</button>${nouveau ? "" : `<button class="danger" id="asDateDelete">Supprimer la date</button>`}<button class="secondary" id="asDateCancel">Annuler</button></div><div class="error" id="asDateError"></div></div>`;
+  const travel = document.getElementById("asDateTravel");
+  const toggleTravel = () => { document.getElementById("asDateTravelFields").style.display = travel.checked ? "grid" : "none"; document.getElementById("asDateNoTravelFields").style.display = travel.checked ? "none" : "grid"; };
+  travel.onchange = toggleTravel; toggleTravel();
+  document.getElementById("asDateClose").onclick = fermerFenetreUnss;
+  document.getElementById("asDateCancel").onclick = fermerFenetreUnss;
+  document.getElementById("asDateSave").onclick = async () => {
+    const error = document.getElementById("asDateError");
+    const date = document.getElementById("asDateValue").value;
+    const label = document.getElementById("asDateLabel").value.trim();
+    if (!date || !label) { error.textContent = "Indiquez la date et l’intitulé."; return; }
+    const valeur = id => document.getElementById(id).value.trim();
+    const nouveauxDetails = { activity:valeur("asDateActivity"), accompanyingTeacher:valeur("asDateTeachers"), exactLocation:valeur("asDateLocation"), travelRequired:travel.checked, departureLocation:valeur("asDateDepartureLocation"), departureTime:valeur("asDateDeparture"), returnTime:valeur("asDateReturn"), transportMethod:valeur("asDateTransport"), meetingTime:valeur("asDateMeeting"), endTime:valeur("asDateEnd"), schoolNeeds:valeur("asDateSchoolNeeds"), asNeeds:valeur("asDateAsNeeds") };
+    const millis = new Date(date + "T12:00:00").getTime();
+    const ligne = Object.assign({}, event || {}, { id:event?.id || crypto.randomUUID(), user_id:event?.user_id || session.user_id, label, kind:"SORTIE", start_date_epoch_millis:millis, end_date_epoch_millis:millis, comment:ecrireDetailsDateAs(nouveauxDetails), deleted:false, updated_at:new Date().toISOString() });
+    try { await enregistrerLigne("institution_calendar_events", ligne); await loadUnssDates(); fermerFenetreUnss(); renderUnssDatesTab(); }
+    catch (e) { error.textContent = e.message || "Enregistrement impossible."; }
+  };
+  document.getElementById("asDateDelete")?.addEventListener("click", async () => {
+    if (!confirm(`Supprimer la date AS « ${event.label} » ?`)) return;
+    await supprimerLigne("institution_calendar_events", event.id); await loadUnssDates(); fermerFenetreUnss(); renderUnssDatesTab();
+  });
+}
+
 /** Redessine ASLVH quand une synchronisation ramene des saisies faites ailleurs. */
 globalThis.rafraichirAslvhApresSynchro = async () => {
   if (!document.getElementById("unssList")) return;
   await verifierCreneauPorteTout();
-  await Promise.all([loadUnssStudents(), loadUnssSlots(), loadUnssGroups()]);
+  await Promise.all([loadUnssStudents(), loadUnssSlots(), loadUnssGroups(), loadUnssDates()]);
   await loadUnssInscriptions();
   // L'onglet Groupe ne sert plus une fois que le creneau porte tout : on le retire de la barre
   // plutot que de laisser deux chemins pour la meme chose.
