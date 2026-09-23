@@ -56,9 +56,9 @@
       const libres=nonAffectes();
       overlay.innerHTML=`<section class="unified-export-dialog"><header><i>🏊</i><div><h3>${esc(nom)}</h3><p>${membres.length} élève${membres.length>1?"s":""}</p></div><button data-swim-group-close>×</button></header><main>
         <h4>Dans ce groupe</h4>
-        ${membres.length?membres.map(s=>`<button type="button" class="export-choice save" data-swim-group-retirer="${s.id}"><b>−</b><span><strong>${esc(studentLabel(s))}</strong><small>Retirer du groupe</small></span></button>`).join(""):`<p class="muted">Ce groupe est vide.</p>`}
+        ${membres.length?`<div class="swim-group-pick">${membres.map(s=>`<button type="button" class="retirer" data-swim-group-retirer="${s.id}"><b>−</b><span>${esc(studentLabel(s))}</span></button>`).join("")}</div>`:`<p class="muted">Ce groupe est vide.</p>`}
         <h4>Ajouter un élève</h4>
-        ${libres.length?libres.map(s=>`<button type="button" class="export-choice share" data-swim-group-ajouter="${s.id}"><b>+</b><span><strong>${esc(studentLabel(s))}</strong><small>Rejoindra ${esc(nom)}</small></span></button>`).join(""):`<p class="muted">Aucun élève disponible - tous sont déjà dans un groupe.</p>`}
+        ${libres.length?`<div class="swim-group-pick">${libres.map(s=>`<button type="button" class="ajouter" data-swim-group-ajouter="${s.id}"><b>+</b><span>${esc(studentLabel(s))}</span></button>`).join("")}</div>`:`<p class="muted">Aucun élève disponible - tous sont déjà dans un groupe.</p>`}
         <button type="button" class="export-choice" data-swim-group-supprimer style="border-color:#d32f2f"><b>🗑</b><span><strong>Supprimer ce groupe</strong><small>Tous ses élèves redeviennent non affectés</small></span></button>
         <button class="export-cancel" data-swim-group-close>Fermer</button>
       </main></section>`;
