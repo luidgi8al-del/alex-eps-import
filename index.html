@@ -269,7 +269,10 @@
         <div class="subtabbar" id="unssSubtabs">
           <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
           <button class="subtabbtn" data-unsstab="slots">Creneaux AS</button>
-          <button class="subtabbtn" data-unsstab="groups">Groupe</button>
+          <!-- Cache par defaut : l'onglet Groupe ne ressert que si schema_as_creneaux.sql n'est pas
+               applique (verifierCreneauPorteTout). Rester cache d'emblee evite l'apparition breve
+               au chargement, avant que ce controle asynchrone n'ait eu le temps de repondre. -->
+          <button class="subtabbtn" data-unsstab="groups" style="display:none">Groupe</button>
           <button class="subtabbtn" data-unsstab="appel">Appel AS</button>
         </div>
 
@@ -497,7 +500,7 @@
   <script src="equipement.js"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
-  <script src="aslvh.js?v=20260923-6"></script>
+  <script src="aslvh.js?v=20260923-7"></script>
   <script src="outils.js?v=20260923-4"></script>
   <script src="teams-saved-web.js"></script>
   <script src="tools-workspace.js?v=20260923-6"></script>

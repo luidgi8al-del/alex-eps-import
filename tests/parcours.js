@@ -783,9 +783,12 @@
           await attendre(() => f.document.querySelector(".as-slot-tile[data-slot]"),
             "le creneau ne propose pas ses eleves", 6000);
 
-          // L'onglet Groupe doit avoir disparu de la barre.
-          if (f.document.querySelector('#unssSubtabs [data-unsstab="groups"]')) {
-            throw new Error("l'onglet Groupe est encore la alors que le creneau porte tout");
+          // L'onglet Groupe doit rester cache (il ne sert plus une fois que le creneau porte
+          // tout) - cache d'emblee dans le HTML plutot que retire apres coup, pour eviter une
+          // apparition breve au chargement le temps que ce controle asynchrone reponde.
+          const ongletGroupe = f.document.querySelector('#unssSubtabs [data-unsstab="groups"]');
+          if (ongletGroupe && ongletGroupe.style.display !== "none") {
+            throw new Error("l'onglet Groupe est encore visible alors que le creneau porte tout");
           }
 
           // Le creneau qui a des eleves, pas le premier venu : un autre controle a pu en creer.

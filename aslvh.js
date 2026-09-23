@@ -147,11 +147,11 @@ async function showUnssTab(mode) {
   if (creneauPorteTout && unssInscriptions.length === 0 && unssSeances.length === 0) {
     await loadUnssInscriptions();
   }
-  if (creneauPorteTout) {
-    const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
-    if (ongletGroupe) ongletGroupe.remove();
-    if (unssMode === "groups") unssMode = "slots";
-  }
+  // Cache par defaut dans le HTML : ne le montrer que si la migration n'est pas encore
+  // appliquee, plutot que de le retirer apres coup (evite l'apparition breve au chargement).
+  const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
+  if (ongletGroupe) ongletGroupe.style.display = creneauPorteTout ? "none" : "";
+  if (creneauPorteTout && unssMode === "groups") unssMode = "slots";
   // Changer de liste change son contenu : rester en page 7 n'aurait aucun sens.
   unssPage = 1;
   document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b => b.classList.toggle("active", b.dataset.unsstab === mode));
@@ -2810,10 +2810,10 @@ globalThis.rafraichirAslvhApresSynchro = async () => {
   await loadUnssInscriptions();
   // L'onglet Groupe ne sert plus une fois que le creneau porte tout : on le retire de la barre
   // plutot que de laisser deux chemins pour la meme chose.
-  if (creneauPorteTout) {
-    const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
-    if (ongletGroupe) ongletGroupe.remove();
-    if (unssMode === "groups") unssMode = "slots";
-  }
+  // Cache par defaut dans le HTML : ne le montrer que si la migration n'est pas encore
+  // appliquee, plutot que de le retirer apres coup (evite l'apparition breve au chargement).
+  const ongletGroupe = document.querySelector('#unssSubtabs [data-unsstab="groups"]');
+  if (ongletGroupe) ongletGroupe.style.display = creneauPorteTout ? "none" : "";
+  if (creneauPorteTout && unssMode === "groups") unssMode = "slots";
   renderUnssTab();
 };
