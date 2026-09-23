@@ -240,7 +240,10 @@ async function openClassDashboard(cls, label) {
   }
 
   renderClassDashboard();
-  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Vrai haut de page, pas scrollIntoView sur le panneau : a l'ouverture de l'onglet CLASSE,
+  // showTab() vient deja de remettre la page a (0,0), et scrollIntoView l'ecrasait en recalant
+  // sur la position du panneau - le meme defaut que celui corrige dans Outils (resetToolsWorkspace).
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function fermerTableauDeBord() {
