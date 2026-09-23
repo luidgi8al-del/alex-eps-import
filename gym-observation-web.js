@@ -4,6 +4,9 @@
   const DIFFICULTES={A:0.4,B:0.6,C:0.8,D:1};
   const ERREURS={aucune:0,petite:0.2,moyenne:0.4,grosse:0.6,chute:"chute"};
   const ERREUR_LABEL={aucune:"Aucune erreur",petite:"Petite erreur (−0,2)",moyenne:"Erreur moyenne (−0,4)",grosse:"Grosse erreur (−0,6)",chute:"Chute (0 point)"};
+  // Nom court + perte de points, affiches sur deux lignes dans la case compacte du choix -
+  // ERREUR_LABEL garde le texte complet pour le tableau et l'export.
+  const ERREUR_COURT={aucune:["Aucune","—"],petite:["Petite","−0,2"],moyenne:["Moyenne","−0,4"],grosse:["Grosse","−0,6"],chute:["Chute","0 pt"]};
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   const figureVide=()=>({difficulte:null,erreur:"aucune"});
@@ -33,35 +36,46 @@
     toolPanel.querySelectorAll("[data-gym-cell]").forEach(b=>b.onclick=()=>{const [sId,i]=b.dataset.gymCell.split("|");ouvrirCelluleGym(sId,+i)});
     document.getElementById("gymObsSave").onclick=saveGymObservation;document.getElementById("gymObsExcel").onclick=()=>showGymObsExport("Excel");document.getElementById("gymObsPdf").onclick=()=>showGymObsExport("PDF");document.getElementById("gymObsLeave").onclick=drawSetup}
   /** Choisir la difficulte puis l'erreur d'une figure pour un eleve, sans quitter le tableau. */
-  function ouvrirCelluleGym(sId,i){
+  function ouvrirCelluleGym(sId,depart){
     document.getElementById("gymObsCellDialog")?.remove();
     const eleve=toolStudents.find(s=>String(s.id)===String(sId));
     const overlay=document.createElement("div");overlay.id="gymObsCellDialog";overlay.className="unified-export-overlay";
     document.body.appendChild(overlay);
-    const lire=()=>(state.values[sId]||[])[i]||figureVide();
+    let index=depart;
+    const lire=()=>(state.values[sId]||[])[index]||figureVide();
     // Deux colonnes cote a cote (difficulte, erreur) au lieu d'une longue liste qui obligeait a
-    // faire defiler pour tout voir. Et un choix ne redessine plus toute la fenetre : il ne fait
-    // que basculer la classe "active" et le score en tete - reconstruire le contenu a chaque
-    // clic deplacait les boutons sous le doigt, si bien que le second choix retombait parfois
-    // sur le fond et refermait la fenetre toute seule.
-    overlay.innerHTML=`<section class="unified-export-dialog gym-cell-dialog"><header><i>🤸</i><div><h3>${esc(studentLabel(eleve))}</h3><p data-gym-cell-score></p></div><button data-gym-cell-close>×</button></header><main>
-      <div class="gym-cell-columns">
-        <div class="gym-cell-col"><h4>Difficulté</h4>${Object.entries(DIFFICULTES).map(([lettre,val])=>`<button type="button" class="gym-cell-choice" data-gym-diff="${lettre}"><b>${lettre}</b><small>${fr(val,1)}</small></button>`).join("")}</div>
-        <div class="gym-cell-col"><h4>Erreur</h4>${Object.keys(ERREUR_LABEL).map(code=>`<button type="button" class="gym-cell-choice" data-gym-err="${code}"><b>${code==="chute"?"⤵":code==="aucune"?"✓":"−"}</b><small>${esc(ERREUR_LABEL[code].replace(/ *\(.*\)/,""))}</small></button>`).join("")}</div>
-      </div>
-      <button class="export-cancel" data-gym-cell-close style="margin-top:14px">Fermer</button>
-    </main></section>`;
+    // faire defiler pour tout voir, et des fleches pour passer d'une figure a l'autre sans
+    // rouvrir la fenetre a chaque fois. Un choix de difficulte/erreur ne redessine que le score
+    // et la case active - changer de figure redessine tout, mais c'est un geste delibere donc
+    // sans risque de retomber sur le fond et refermer la fenetre.
+    const construire=()=>{
+      overlay.innerHTML=`<section class="unified-export-dialog gym-cell-dialog"><header><i>🤸</i><div><h3>${esc(studentLabel(eleve))}</h3><p data-gym-cell-score></p></div><button data-gym-cell-close>×</button></header><main>
+        <div class="fitness-tabs" style="justify-content:center;align-items:center;margin:0 0 4px">
+          <button type="button" id="gymCellPrev" ${index<=0?"disabled":""}>‹ Précédente</button>
+          <span class="muted">Figure ${index+1} / ${state.numFigures}</span>
+          <button type="button" id="gymCellNext" ${index>=state.numFigures-1?"disabled":""}>Suivante ›</button>
+        </div>
+        <div class="gym-cell-columns">
+          <div class="gym-cell-col"><h4>Difficulté</h4>${Object.entries(DIFFICULTES).map(([lettre,val])=>`<button type="button" class="gym-cell-choice" data-gym-diff="${lettre}"><b>${lettre}</b><small>${fr(val,1)}</small></button>`).join("")}</div>
+          <div class="gym-cell-col"><h4>Erreur</h4>${Object.keys(ERREUR_LABEL).map(code=>`<button type="button" class="gym-cell-choice" data-gym-err="${code}" title="${esc(ERREUR_LABEL[code])}"><b>${esc(ERREUR_COURT[code][0])}</b><small>${esc(ERREUR_COURT[code][1])}</small></button>`).join("")}</div>
+        </div>
+        <button class="export-cancel" data-gym-cell-close style="margin-top:14px">Fermer</button>
+      </main></section>`;
+      overlay.querySelectorAll("[data-gym-cell-close]").forEach(b=>b.onclick=()=>{overlay.remove();drawGrid()});
+      document.getElementById("gymCellPrev").onclick=()=>{if(index>0){index--;construire()}};
+      document.getElementById("gymCellNext").onclick=()=>{if(index<state.numFigures-1){index++;construire()}};
+      overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[index]={...arr[index],difficulte:b.dataset.gymDiff};state.values[sId]=arr;majAffichage()});
+      overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[index]={...arr[index],erreur:b.dataset.gymErr};state.values[sId]=arr;majAffichage()});
+      majAffichage();
+    };
     const majAffichage=()=>{
       const f=lire(),score=scoreFigure(f);
-      overlay.querySelector("[data-gym-cell-score]").textContent=`Figure ${i+1} · ${fr(score,1)} point${score>1?"s":""}`;
+      overlay.querySelector("[data-gym-cell-score]").textContent=`${fr(score,1)} point${score>1?"s":""}`;
       overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.classList.toggle("active",b.dataset.gymDiff===f.difficulte));
       overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.classList.toggle("active",b.dataset.gymErr===f.erreur));
     };
-    overlay.querySelectorAll("[data-gym-cell-close]").forEach(b=>b.onclick=()=>{overlay.remove();drawGrid()});
     overlay.onclick=e=>{if(e.target===overlay){overlay.remove();drawGrid()}};
-    overlay.querySelectorAll("[data-gym-diff]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],difficulte:b.dataset.gymDiff};state.values[sId]=arr;majAffichage()});
-    overlay.querySelectorAll("[data-gym-err]").forEach(b=>b.onclick=()=>{const arr=state.values[sId]||[];arr[i]={...arr[i],erreur:b.dataset.gymErr};state.values[sId]=arr;majAffichage()});
-    majAffichage();
+    construire();
   }
   // Enregistrer meme si toutes les figures n'ont pas ete jugees : chaque case garde son etat tel
   // quel (une figure jamais touchee vaut 0), sans obliger a finir la classe entiere.
