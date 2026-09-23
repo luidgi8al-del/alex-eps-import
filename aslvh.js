@@ -646,6 +646,31 @@ function printLicenciesPdf(rows) {
   w.document.close();
 }
 
+/** Ceux dont le dossier n'est pas complet, tous ensemble : chaque carte ouvre la fiche pour
+ * corriger (encaisser le paiement, recevoir le certificat), sans passer par la liste entiere. */
+function ouvrirDocumentsManquants() {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  const concernes = unssStudents.filter(s => s.licensed && (s.payment_missing || s.medical_certificate_missing))
+    .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
+  panel.classList.add("as-full-panel");
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssDocsManquantsCloseBtn">←</button><div><h2>Document manquant</h2><small>${concernes.length} élève(s)</small></div></div>
+    <div style="margin-top:10px">${concernes.length === 0
+      ? `<div class="muted">Plus aucun dossier incomplet.</div>`
+      : concernes.map(s => `<div class="unssCard" data-fiche="${s.id}" style="padding:8px 0; cursor:pointer">
+           <div>
+             <div><strong>${unssText(String(s.last_name || "").toUpperCase())} ${unssText(s.first_name || "")}</strong></div>
+             <div style="font-size:12px; color:#B3261E; font-weight:600">${[s.payment_missing ? "⚠ Paiement manquant" : "", s.medical_certificate_missing ? "⚠ Certificat manquant" : ""].filter(Boolean).join(" · ")}</div>
+           </div>
+         </div>`).join("")
+    }</div>`;
+  panel.querySelectorAll("[data-fiche]").forEach(el => el.addEventListener("click", () => {
+    const student = unssStudents.find(s => s.id === el.dataset.fiche);
+    if (student) openUnssStudentPanel(student, true);
+  }));
+  document.getElementById("unssDocsManquantsCloseBtn").addEventListener("click", () => fermerFenetreUnss());
+}
+
 function renderUnssTab() {
   if (unssMode === "slots") { renderUnssSlotsTab(); return; }
   if (unssMode === "groups") { renderUnssGroupsTab(); return; }
@@ -698,7 +723,9 @@ function renderUnssTab() {
   html += `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
   // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
   // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
-  if (unssAdmin || unssCibleRendu === "studentsDirectoryList") {
+  // Un import CSV cree ou complete des fiches du repertoire general : il n'a pas sa place sur
+  // Licencies AS, qui n'en est qu'un sous-ensemble filtre.
+  if ((unssAdmin || unssCibleRendu === "studentsDirectoryList") && unssMode !== "licensed") {
     html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
   }
   // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
@@ -709,6 +736,11 @@ function renderUnssTab() {
   // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
   if (unssAdmin || unssMode === "licensed" || unssCibleRendu === "studentsDirectoryList") {
     html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter un élève"}</button>`;
+  }
+  // Retrouver d'un coup ceux dont le dossier n'est pas complet (paiement ou certificat manquant),
+  // sans avoir a rouvrir chaque fiche pour le voir.
+  if (unssMode === "licensed" && rows.some(s => s.payment_missing || s.medical_certificate_missing)) {
+    html += `<button class="secondary" id="unssDocsManquantsBtn" style="margin-top:0">Document manquant</button>`;
   }
   // Telecharger la liste des inscrits : nom, prenom, classe/division, taille de maillot -
   // ce qu'on redonne au secretariat ou au club en fin d'annee.
@@ -773,6 +805,7 @@ function renderUnssTab() {
   }));
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   wrap.querySelector("#unssRattraperVoeuxBtn")?.addEventListener("click", () => rattraperVoeuxUn());
+  wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
