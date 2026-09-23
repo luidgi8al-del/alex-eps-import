@@ -2537,7 +2537,7 @@ async function ouvrirAppelCreneau(slot, seance = null) {
   }
   const panel=document.getElementById('unssPanel'); ouvrirFenetreUnss();
   panel.classList.add('as-full-panel'); panel.innerHTML=`<div class="as-panel-title"><button class="as-back" id="asCallBack">←</button><div><h2>Appel</h2><small>${unssText(slot.activity_name)} · ${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</small></div><b>☑</b></div><div class="as-call-wrap"><div id="unssAppelBody"></div></div>`;
-  unssAppelSlotId=slot.id;unssAppelMembers=elevesDuCreneau(slot.id);unssAppelPresence={};
+  unssAppelSlotId=slot.id;unssAppelMembers=membresPourSeance(slot.id,seance);unssAppelPresence={};
   unssAppelMembers.forEach(e=>{const p=seance&&unssPresences.find(x=>x.session_id===seance.id&&x.student_id===e.id);unssAppelPresence[e.id]=p?!!p.present:true});
   await chargerDispensesAppel();renderUnssAppelBody(slot,seance);asCallBack.onclick=()=>ouvrirFicheCreneau(slot);
 }
@@ -2582,7 +2582,7 @@ function renderUnssAppelTab() {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<button class="as-call-session" data-seance="${s.id}"><span><b>${dateSeance(s.date_epoch_millis)}</b><small>Cliquer pour consulter ou modifier</small></span><span class="as-call-count yes">${presents} P</span><span class="as-call-count no">${absents} A</span><i>›</i></button>`;
+                return `<div style="display:flex; align-items:center; gap:6px"><button class="as-call-session" data-seance="${s.id}" style="flex:1"><span><b>${dateSeance(s.date_epoch_millis)}</b><small>Cliquer pour consulter ou modifier</small></span><span class="as-call-count yes">${presents} P</span><span class="as-call-count no">${absents} A</span><i>›</i></button><button class="danger" data-supprimer-seance="${s.id}" style="margin-top:0">Supprimer</button></div>`;
               }).join("")}</div>`}
     </div><div id="unssAppelBody" style="margin-top:14px"></div>`;
   const contenuBilan = `<div class="as-attendance-summary">
@@ -2609,9 +2609,30 @@ function renderUnssAppelTab() {
     unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
     chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, null));
   });
+  // Supprimer un appel pointe par erreur (mauvaise date, doublon) : ses presences partent avec
+  // lui, sinon elles resteraient comptees dans le taux de presence sans seance pour les porter.
+  wrap.querySelectorAll("[data-supprimer-seance]").forEach(btn => btn.addEventListener("click", async () => {
+    const seance = seances.find(s => s.id === btn.dataset.supprimerSeance);
+    if (!seance) return;
+    if (!confirm(`Supprimer l'appel du ${dateSeance(seance.date_epoch_millis)} ? Les présences pointées ce jour-là seront effacées.`)) return;
+    btn.disabled = true;
+    try {
+      for (const p of unssPresences.filter(x => String(x.session_id) === String(seance.id))) {
+        await supprimerLigne("unss_attendance", p.id);
+      }
+      await supprimerLigne("unss_sessions", seance.id);
+    } catch (erreur) {
+      btn.disabled = false;
+      alert(erreur.message || "Appel non supprimé. Vérifiez la connexion.");
+      return;
+    }
+    unssPresences = unssPresences.filter(p => String(p.session_id) !== String(seance.id));
+    unssSeances = unssSeances.filter(s => String(s.id) !== String(seance.id));
+    renderUnssAppelTab();
+  }));
   wrap.querySelectorAll("[data-seance]").forEach(btn => btn.addEventListener("click", () => {
     const seance = seances.find(s => s.id === btn.dataset.seance);
-    unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
+    unssAppelMembers = membresPourSeance(unssAppelSlotId, seance);
     unssAppelPresence = {};
     unssAppelMembers.forEach(e => {
       const pointee = unssPresences.find(p => p.session_id === seance.id && p.student_id === e.id);
@@ -2619,6 +2640,33 @@ function renderUnssAppelTab() {
     });
     chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, seance));
   }));
+}
+
+/**
+ * Les eleves a pointer sur une seance deja enregistree.
+ *
+ * Un eleve inscrit cette semaine n'a rien a faire dans l'appel du mois dernier : il n'etait pas
+ * la. On ne garde donc que ceux qui etaient deja inscrits a la date de la seance (l'inscription
+ * porte sa date dans updated_at, posee a la creation et jamais retouchee ensuite), plus ceux qui
+ * y ont deja ete pointes - un eleve retire du creneau depuis ne doit pas disparaitre d'un appel
+ * passe qu'il faudrait corriger.
+ */
+function membresPourSeance(slotId, seance) {
+  const tous = elevesDuCreneau(slotId);
+  if (!seance) return tous;
+  const quand = Number(seance.date_epoch_millis) || 0;
+  const dateInscription = id => {
+    const ligne = unssInscriptions.find(i => i.slot_id === slotId && i.student_id === id);
+    return ligne ? new Date(ligne.updated_at || 0).getTime() : 0;
+  };
+  const dejaPointes = new Set(unssPresences
+    .filter(p => String(p.session_id) === String(seance.id))
+    .map(p => String(p.student_id)));
+  const retenus = tous.filter(e => dejaPointes.has(String(e.id)) || dateInscription(e.id) <= quand);
+  // Un eleve pointe a l'epoque mais retire du creneau depuis reste corrigeable.
+  const manquants = unssStudents.filter(e => dejaPointes.has(String(e.id)) && !retenus.some(r => r.id === e.id));
+  return [...retenus, ...manquants].sort((a, b) =>
+    String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
 }
 
 /** Les dispenses du jour, pour prevenir qu'un eleve ne peut pas faire la seance. */
