@@ -715,6 +715,12 @@ function renderUnssTab() {
   if (unssMode === "licensed" && rows.length > 0) {
     html += `<button class="secondary" id="unssExportBtn" style="margin-top:0">Télécharger</button>`;
   }
+  // Rattrapage ponctuel pour les licences saisies avant l'inscription automatique au voeu 1
+  // (voir inscrireAutomatiquementVoeu1) : reserve a l'administrateur, comme les autres actions
+  // qui ecrivent en masse sur le repertoire de l'etablissement.
+  if (unssAdmin && unssMode === "licensed" && creneauPorteTout && rows.length > 0) {
+    html += `<button class="secondary" id="unssRattraperVoeuxBtn" style="margin-top:0">Rattraper les vœux 1</button>`;
+  }
   // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
   if (enTableau) {
     html += `<button id="eleveVersClasseBtn" style="margin-top:0" ${selectionEleves.size ? "" : "disabled"}>`
@@ -764,6 +770,7 @@ function renderUnssTab() {
     if (student) openUnssStudentPanel(student, false, true);
   }));
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
+  wrap.querySelector("#unssRattraperVoeuxBtn")?.addEventListener("click", () => rattraperVoeuxUn());
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
@@ -1889,7 +1896,7 @@ async function inscrireAutomatiquementVoeu1(studentId, slotId) {
     const existantes = await lireTable("unss_memberships",
       `unss_memberships?slot_id=eq.${encodeURIComponent(slotId)}&student_id=eq.${encodeURIComponent(studentId)}&deleted=eq.false&select=id`,
       { ou: r => r.slot_id === slotId && r.student_id === studentId });
-    if (existantes.length) return;
+    if (existantes.length) return false;
     const ligne = {
       id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
       student_id: studentId, updated_at: new Date().toISOString(), deleted: false
@@ -1899,7 +1906,28 @@ async function inscrireAutomatiquementVoeu1(studentId, slotId) {
     // loadUnssInscriptions) : sans ce push, l'eleve resterait absent de l'ecran "Eleves inscrits"
     // tant que l'onglet Creneaux AS n'est pas rouvert depuis zero.
     unssInscriptions.push(ligne);
-  } catch { /* la fiche eleve reste enregistree ; l'inscription se fera manuellement si besoin */ }
+    return true;
+  } catch { return false; /* la fiche eleve reste enregistree ; l'inscription se fera manuellement si besoin */ }
+}
+
+/**
+ * Rattrapage une fois pour toutes : les eleves licencies avant l'inscription automatique au
+ * voeu 1 (voir inscrireAutomatiquementVoeu1) avaient un voeu enregistre mais aucune inscription
+ * au creneau. Reste sans effet sur ceux deja inscrits - relancer ce bouton plusieurs fois ne
+ * cree jamais de doublon.
+ */
+async function rattraperVoeuxUn() {
+  if (!confirm("Inscrire au créneau tous les élèves déjà licenciés dont le vœu 1 n'est pas encore dans la liste des inscrits ?")) return;
+  await loadUnssInscriptions();
+  const candidats = unssStudents.filter(s => s.licensed && s.wish1_slot_id);
+  let ajoutes = 0;
+  for (const s of candidats) {
+    if (await inscrireAutomatiquementVoeu1(s.id, s.wish1_slot_id)) ajoutes++;
+  }
+  alert(ajoutes > 0
+    ? `${ajoutes} élève(s) inscrit(s) à leur créneau de vœu 1.`
+    : "Rien à rattraper : tous les vœux 1 étaient déjà dans la liste des inscrits.");
+  renderUnssTab();
 }
 
 // ---- UNSS > Groupe : liste des groupes, detail (membres + historique des seances) ----
