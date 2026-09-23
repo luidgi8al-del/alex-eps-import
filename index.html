@@ -6,7 +6,7 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="home-navigation.css">
-<link rel="stylesheet" href="styles/tools-workspace.css?v=20260922-2">
+<link rel="stylesheet" href="styles/tools-workspace.css?v=20260924-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20260922-5">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
@@ -475,6 +475,8 @@
        (15 packs de sports) et le dessin des schemas. -->
   <script src="quick-exercises.js"></script>
   <script src="eps-tests.js"></script>
+  <!-- Socle commun des outils : chargé avant eux, ils s'y branchent tous. -->
+  <script src="outils-socle.js?v=20260924-1"></script>
   <script src="condition-fitness-web.js?v=20260922-5"></script>
   <script src="swim-observation-web.js?v=20260923-5"></script>
   <script src="gym-observation-web.js?v=20260923-4"></script>
@@ -502,7 +504,7 @@
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20260924-3"></script>
-  <script src="outils.js?v=20260923-4"></script>
+  <script src="outils.js?v=20260924-5"></script>
   <script src="teams-saved-web.js"></script>
   <script src="tools-workspace.js?v=20260923-6"></script>
 
