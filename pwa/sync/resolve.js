@@ -130,6 +130,20 @@ export async function discardConflict(conflictId) {
   return resolveConflict(conflictId, "server");
 }
 
+/**
+ * Tranche d'un coup toutes les fiches a arbitrer, avec le meme choix ("local" ou "server").
+ *
+ * Reste une decision explicite - un seul geste, mais pris consciemment, pas une case cochee
+ * d'avance qui filerait en silence. Utile quand une meme cause (ex. un appareil qui n'avait pas
+ * synchronise depuis un moment) fait apparaitre plusieurs fiches a trancher d'un coup : les
+ * reprendre une par une n'apporte rien de plus qu'un choix repete identique a chaque fois.
+ */
+export async function resolveAllConflicts(choice) {
+  const items = (await listConflicts()).filter(item => item.kind !== "refus");
+  for (const item of items) await resolveConflict(item.conflictId, choice);
+  return { resolus: items.length };
+}
+
 async function publierEtat(detail) {
   const conflicts = await countConflicts();
   const pending = await countPendingOperations();

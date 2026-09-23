@@ -1,5 +1,5 @@
 import { listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections, resolveAllConflicts } from "../sync/resolve.js";
 
 /**
  * L'ecran de resolution des conflits.
@@ -8,8 +8,10 @@ import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection
  * professeur, qui seul sait laquelle des deux versions est juste. L'ecran montre donc les deux
  * cote a cote, champ par champ, plutot que de trancher a sa place.
  *
- * Il n'y a pas de bouton "tout ignorer" : chaque conflit se decide, sinon une saisie disparait en
- * silence - ce que ce module existe justement pour empecher.
+ * Pas de case cochee d'avance qui filerait tout en silence : mais quand plusieurs fiches
+ * s'accumulent pour la meme raison (un appareil qui n'avait pas synchronise depuis un moment),
+ * les boutons "pour toutes" en haut appliquent un seul choix explicite a chacune, plutot que de
+ * faire rejouer le meme geste une fois par fiche.
  */
 const LIBELLES_DEFAUT = {
   nom: "Nom", first_name: "Prenom", last_name: "Nom", division: "Division",
@@ -121,6 +123,10 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
         + refuses.map(r => refusHtml(r, libelles)).join("") : "")
       + (arbitrer.length ? `<p class="conflitIntro">${arbitrer.length} fiche(s) modifiee(s) des deux cotes.
         Choisissez la version a conserver : rien ne sera envoye avant votre decision.</p>`
+        + (arbitrer.length > 1 ? `<div class="conflitActions">
+            <button type="button" data-tout-choix="local">Garder ma version pour les ${arbitrer.length} fiches</button>
+            <button type="button" data-tout-choix="server">Garder la version enregistree pour les ${arbitrer.length} fiches</button>
+          </div>` : "")
         + arbitrer.map(c => conflitHtml(c, libelles)).join("") : "");
 
     element.querySelectorAll("[data-refus-ok]").forEach(bouton => {
@@ -160,6 +166,20 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
       }
       onResolved?.({}, "retry-all");
       await afficher();
+    });
+
+    element.querySelectorAll("[data-tout-choix]").forEach(bouton => {
+      bouton.addEventListener("click", async () => {
+        element.querySelectorAll("[data-tout-choix], [data-conflit] button").forEach(b => { b.disabled = true; });
+        try { await resolveAllConflicts(bouton.dataset.toutChoix); }
+        catch (error) {
+          element.querySelectorAll("[data-tout-choix], [data-conflit] button").forEach(b => { b.disabled = false; });
+          bouton.insertAdjacentHTML("afterend", `<p class="conflitErreur">${echapper(error.message)}</p>`);
+          return;
+        }
+        onResolved?.({}, `${bouton.dataset.toutChoix}-all`);
+        await afficher();
+      });
     });
 
     element.querySelectorAll("[data-conflit]").forEach(bloc => {

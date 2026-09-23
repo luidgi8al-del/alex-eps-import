@@ -12,7 +12,7 @@ import { listLocalRecords, readLocalRecord, saveLocalRecord, removeAllLocalData,
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
 import { countConflicts, listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice, acknowledgeRejection } from "../sync/resolve.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection, resolveAllConflicts } from "../sync/resolve.js";
 import { OfflineSyncEngine } from "../sync/engine.js";
 import { currentSyncState } from "../core/events.js";
 
@@ -252,6 +252,45 @@ test("le choix champ par champ ne retient que ce qui est coche", async () => {
   await resolveConflict(conflit.conflictId, "merged", retenu);
   const local = await readLocalRecord("eleve", "1");
   assertEgal(local.data, { ...eleve, division: "2.4", mail: "serveur@ex.fr" }, "fiche resultante");
+});
+
+/** Deux fiches en conflit d'un coup : le cas qui rend le tranchage un par un fastidieux. */
+async function provoquerDeuxConflits() {
+  await saveLocalRecord({ entity: "eleve", id: "1", data: eleve, version: 1 });
+  await saveLocalRecord({ entity: "eleve", id: "2", data: eleve, version: 1 });
+  await saveOfflineEdit({ entity: "eleve", id: "1", data: { ...eleve, division: "2.4" }, authorId: "moi" });
+  await saveOfflineEdit({ entity: "eleve", id: "2", data: { ...eleve, division: "3.1" }, authorId: "moi" });
+  const serveur = serveurFactice({
+    pages: [{ records: [
+      { entity: "eleve", id: "1", version: 2, updatedAt: new Date().toISOString(), data: { ...eleve, division: "2.9" } },
+      { entity: "eleve", id: "2", version: 2, updatedAt: new Date().toISOString(), data: { ...eleve, division: "3.9" } }
+    ], hasMore: false }]
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  return listConflicts();
+}
+
+test("garder ma version pour toutes les fiches tranche chacune sans en oublier", async () => {
+  await provoquerDeuxConflits();
+  assertEgal(await countConflicts(), 2, "les deux fiches attendent un choix");
+  const { resolus } = await resolveAllConflicts("local");
+  assertEgal(resolus, 2, "les deux ont ete tranchees");
+  assertEgal(await countConflicts(), 0, "plus rien a trancher");
+  const un = await readLocalRecord("eleve", "1"), deux = await readLocalRecord("eleve", "2");
+  assertEgal(un.data.division, "2.4", "ma version pour la premiere");
+  assertEgal(deux.data.division, "3.1", "ma version pour la seconde aussi");
+  assertEgal(await countPendingOperations(), 2, "les deux repartent vers le serveur");
+});
+
+test("garder la version enregistree pour toutes les fiches n'envoie rien", async () => {
+  await provoquerDeuxConflits();
+  const { resolus } = await resolveAllConflicts("server");
+  assertEgal(resolus, 2, "les deux ont ete tranchees");
+  assertEgal(await countConflicts(), 0, "plus rien a trancher");
+  assertEgal(await countPendingOperations(), 0, "rien a renvoyer : le serveur les a deja");
+  const un = await readLocalRecord("eleve", "1"), deux = await readLocalRecord("eleve", "2");
+  assertEgal(un.data.division, "2.9", "la version du serveur fait foi pour la premiere");
+  assertEgal(deux.data.division, "3.9", "et pour la seconde");
 });
 
 test("la saisie resolue part vraiment au serveur, sans reconflit", async () => {
