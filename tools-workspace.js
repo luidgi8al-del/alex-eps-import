@@ -25,7 +25,8 @@
     ["impacts","Marqueur d’impacts","Zones jouées sur le terrain","🎯","Observer",["Sports collectifs","Raquettes"]],
     ["effort","Effort","Ressenti et zones d’intensité","❤️","Évaluer",["Athlétisme"]],
     ["signals","Signaux sonores","Départs et rotations","🔊","Terrain",["Tous"]],
-    ["acrosport","Groupes Acrosport","Binômes, trinômes et groupes","🤸","Organiser",["Gymnastique"]]
+    ["acrosport","Groupes Acrosport","Binômes, trinômes et groupes","🤸","Organiser",["Gymnastique"]],
+    ["gym-observation","Observation Gymnastique","Difficulté par figure et erreurs","🤸","Évaluer",["Gymnastique"]]
   ].map(x=>({id:x[0],title:x[1],subtitle:x[2],icon:x[3],fn:x[4],activities:x[5]}));
   // Le mode cours (cours.js) propose les memes outils dans sa boite a outils.
   globalThis.EpsToolsCatalog=tools;
