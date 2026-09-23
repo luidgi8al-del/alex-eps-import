@@ -3,10 +3,27 @@
   const TEST_NAME="Observation Natation";
   const DEFAULT_INDICATORS=["Brasse bras","Brasse jambes","Crawl bras","Crawl jambes","Plongeon","Apnée"];
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   const empty=()=>({group:"",validated:{}});
-  function encode(v){return "natation:"+JSON.stringify({version:1,group:v.group||"",validated:Object.keys(v.validated||{}).filter(k=>v.validated[k])})}
-  function decode(raw){try{const parsed=JSON.parse(String(raw||"").replace(/^natation:/,""));const validated={};(parsed.validated||[]).forEach(l=>validated[l]=true);return {group:parsed.group||"",validated}}catch{return empty()}}
-  const state={classId:"",period:1,indicators:[...DEFAULT_INDICATORS],values:{},activeGroup:"",sessionId:null,resultIds:{},createdAt:null,saved:[],busy:false};
+  // Deux notations possibles par indicateur : une case cochee (note), ou quatre niveaux de
+  // couleur (couleur) - plus lisibles en 6e, ou ce reglage s'applique par defaut. "validated"
+  // porte soit un booleen (note), soit un code couleur (couleur) selon state.mode au moment de
+  // l'enregistrement ; le mode utilise est garde avec chaque test pour rouvrir a l'identique.
+  const COULEUR_NIVEAUX=[["vert-plus","Vert +","#0e9f5f",1],["vert","Vert","#4caf50",0.75],["orange","Orange","#f39c12",0.5],["rouge","Rouge","#e74c3c",0.25]];
+  const COULEUR_PAR_CODE=Object.fromEntries(COULEUR_NIVEAUX.map(([code,label,color,valeur])=>[code,{label,color,valeur}]));
+  function encode(v){return "natation:"+JSON.stringify({version:2,mode:state.mode,group:v.group||"",validated:v.validated||{}})}
+  function decode(raw){
+    try{
+      const parsed=JSON.parse(String(raw||"").replace(/^natation:/,""));
+      let validated={};
+      if(Array.isArray(parsed.validated))parsed.validated.forEach(l=>validated[l]=true);
+      else if(parsed.validated&&typeof parsed.validated==="object")validated={...parsed.validated};
+      return {group:parsed.group||"",validated,mode:parsed.mode||"note"};
+    }catch{return {...empty(),mode:"note"}}
+  }
+  function valeurIndicateur(val){if(state.mode==="couleur")return val?(COULEUR_PAR_CODE[val]?.valeur||0):0;return val?1:0}
+  const scoreEleve=v=>state.indicators.reduce((s,label)=>s+valeurIndicateur((v?.validated||{})[label]),0);
+  const state={classId:"",period:1,indicators:[...DEFAULT_INDICATORS],values:{},activeGroup:"",mode:"note",sessionId:null,resultIds:{},createdAt:null,saved:[],busy:false};
   async function loadSaved(){try{const all=await lireTable("eps_test_sessions",`eps_test_sessions?deleted=eq.false&test_name=eq.${encodeURIComponent(TEST_NAME)}&select=*&order=created_at.desc`,{ou:r=>!r.deleted&&r.test_name===TEST_NAME,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});state.saved=all.filter(r=>!session?.user_id||r.user_id===session.user_id)}catch(e){if(!state.saved.length)throw e}}
   const className=id=>toolClasses.find(c=>String(c.id)===String(id))?.name||state.saved.find(s=>String(s.class_id)===String(id))?.class_label||"Classe";
   function periodNumbers(){const cls=toolClasses.find(c=>String(c.id)===String(state.classId)),n=cls&&typeof planningPeriodCount==="function"?planningPeriodCount(cls.grade):5;return Array.from({length:n},(_,i)=>i+1)}
@@ -17,14 +34,19 @@
   const groupNames=()=>[...new Set(toolStudents.map(s=>state.values[s.id]?.group).filter(Boolean))];
   const nonAffectes=()=>toolStudents.filter(s=>!state.values[s.id]?.group);
   const membresDuGroupe=nom=>toolStudents.filter(s=>state.values[s.id]?.group===nom);
-  function resetForClass(){state.values={};state.sessionId=null;state.resultIds={};state.createdAt=null;state.activeGroup="";state.indicators=[...DEFAULT_INDICATORS]}
+  function resetForClass(){state.values={};state.sessionId=null;state.resultIds={};state.createdAt=null;state.activeGroup="";state.indicators=[...DEFAULT_INDICATORS];state.mode="note"}
   const hero=sub=>toolHeader("🏊 Observation Natation",esc(sub));
 
   async function renderSwimObservationWeb(){await loadToolClasses();await loadSaved();toolPanel=document.getElementById("toolPanel");toolPanel.style.display="block";drawSetup()}
   function contextHtml(){return `<section class="field-tool-card"><div class="tool-context"><input type="hidden" id="swimObsMode" value="${state.classId&&state.classId!=="free"?"class":"free"}"><select id="swimObsClass"><option value="" ${!state.classId||state.classId==="free"?"selected":""}>Usage libre (sans classe)</option>${toolClasses.map(c=>`<option value="${c.id}" ${String(c.id)===String(state.classId)?"selected":""}>${esc(c.name)}</option>`).join("")}</select></div><div class="field-tool-row"><label>Période<select id="swimObsPeriod">${periodNumbers().map(p=>`<option value="${p}" ${p===state.period?"selected":""}>Période ${p}</option>`).join("")}</select></label></div></section>`}
   function savedHtml(){return `<section class="field-tool-card"><h3>Observations enregistrées</h3>${state.saved.length?state.saved.map(s=>`<div class="fitness-saved-row"><span><strong>${esc(s.class_label||className(s.class_id))}</strong><small>Période ${s.period_number} · ${new Date(s.created_at||s.updated_at).toLocaleDateString("fr-FR")} · modifiable</small></span><div><button data-swim-open="${s.id}">Ouvrir</button><button class="secondary" data-swim-copy="${s.id}">Dupliquer</button><button class="danger" data-swim-delete="${s.id}">Supprimer</button></div></div>`).join(""):"<p class=muted>Aucune observation enregistrée.</p>"}</section>`}
   function drawSetup(){toolPanel.innerHTML=`<div class="fitness-web">${hero("Groupes de niveau et indicateurs de natation")}${contextHtml()}<button id="swimObsStart">Ouvrir l’observation</button>${savedHtml()}<p class="muted">Les observations enregistrées sont automatiquement rangées dans Tests EPS de la classe concernée.</p></div>`;
-    const mode=document.getElementById("swimObsMode"),cls=document.getElementById("swimObsClass");cls.onchange=async()=>{state.classId=cls.value;mode.value=cls.value?"class":"free";resetForClass();await loadToolStudents(state.classId);ensureValues();drawSetup()};document.getElementById("swimObsPeriod").onchange=e=>state.period=+e.target.value;
+    const mode=document.getElementById("swimObsMode"),cls=document.getElementById("swimObsClass");cls.onchange=async()=>{state.classId=cls.value;mode.value=cls.value?"class":"free";resetForClass();
+      // En 6e, la couleur remplace la case cochee par defaut - plus lisible a cet age - mais
+      // reste modifiable depuis le tableau d'observation.
+      const niveau=toolClasses.find(c=>String(c.id)===String(state.classId))?.grade;
+      state.mode=niveau==="SIXIEME"?"couleur":"note";
+      await loadToolStudents(state.classId);ensureValues();drawSetup()};document.getElementById("swimObsPeriod").onchange=e=>state.period=+e.target.value;
     document.getElementById("swimObsStart").onclick=async()=>{if(mode.value==="class"){if(!state.classId)return alert("Choisissez une classe.");await loadToolStudents(state.classId)}else{state.classId="free";toolStudents=[{id:"free",first_name:"Participant",last_name:"libre",sex:"GARCON"}]}ensureValues();drawGroups()};bindSaved()}
   /** Une carte pour un groupe de niveau, avec ses membres - vide, elle invite quand meme a l'appui long. */
   function groupCardHtml(nom){const membres=membresDuGroupe(nom);return `<div class="fitness-group-card" data-swim-group-card="${esc(nom)}"><h4>${esc(nom)}</h4>${membres.map(s=>`<div>${esc(studentLabel(s))}</div>`).join("")||"<span class=muted>Vide</span>"}</div>`}
@@ -70,22 +92,41 @@
     };
     render();
   }
-  const validatedCount=v=>Object.values(v?.validated||{}).filter(Boolean).length;
-  function rowHtml(s){const v=state.values[s.id]||empty();return `<tr><td><strong>${esc((s.last_name||"").toUpperCase())} ${esc(s.first_name||"")}</strong></td>${state.indicators.map(label=>`<td><button type="button" class="swim-obs-chip ${v.validated[label]?"active":""}" data-swim-toggle="${s.id}|${esc(label)}">${v.validated[label]?"✓":""}</button></td>`).join("")}<td class="fitness-score">${validatedCount(v)}/${state.indicators.length}</td></tr>`}
+  /** Case a cocher (note) ou pastille a 4 couleurs (couleur), selon le mode courant. */
+  function chipHtml(sId,label){
+    const v=state.values[sId]||empty(),val=v.validated[label];
+    if(state.mode==="couleur"){
+      const info=val?COULEUR_PAR_CODE[val]:null;
+      return `<button type="button" class="swim-obs-dot" data-swim-toggle="${sId}|${esc(label)}" style="${info?`background:${info.color};border-color:${info.color}`:""}" title="${info?esc(info.label):"Touchez pour noter"}"></button>`;
+    }
+    return `<button type="button" class="swim-obs-chip ${val?"active":""}" data-swim-toggle="${sId}|${esc(label)}">${val?"✓":""}</button>`;
+  }
+  function rowHtml(s){const v=state.values[s.id]||empty(),total=scoreEleve(v);return `<tr><td><strong>${esc((s.last_name||"").toUpperCase())} ${esc(s.first_name||"")}</strong></td>${state.indicators.map(label=>`<td>${chipHtml(s.id,label)}</td>`).join("")}<td class="fitness-score">${fr(total,1)}/${state.indicators.length}</td></tr>`}
   function drawGrid(){ensureValues();const noms=groupNames();const visible=membresDuGroupe(state.activeGroup);const tabs=`<div class="fitness-tabs"><button id="swimObsEditGroups">Modifier les groupes</button>${noms.map(n=>`<button data-swim-group="${esc(n)}" class="${n===state.activeGroup?"active":""}">${esc(n)}</button>`).join("")}</div>`;
-    toolPanel.innerHTML=`<div class="fitness-web">${hero("Tableau d’observation grand écran")}${tabs}<div class="fitness-summary"><div class="fitness-kpi"><strong>${toolStudents.length}</strong><small>élèves</small></div><div class="fitness-kpi"><strong>${noms.length}</strong><small>groupe(s)</small></div><div class="fitness-kpi"><strong>${state.indicators.length}</strong><small>indicateur(s)</small></div><div class="fitness-kpi"><strong>P${state.period}</strong><small>${esc(className(state.classId))}</small></div></div><div class="fitness-table-wrap"><table><thead><tr><th>Nom et prénom</th>${state.indicators.map(l=>`<th>${esc(l)}</th>`).join("")}<th>Validés</th></tr></thead><tbody>${visible.map(rowHtml).join("")||`<tr><td colspan="${state.indicators.length+2}" class="muted">Aucun élève dans ce groupe.</td></tr>`}</tbody></table></div><div class="field-tool-row"><input id="swimObsNewIndicator" placeholder="Nouvel indicateur (ex : Virage culbute)"><button id="swimObsAddIndicator">Ajouter</button></div><div class="fitness-actions"><button id="swimObsSave">💾 ${state.sessionId?"Enregistrer les modifications":"Enregistrer dans Tests EPS"}</button><button class="secondary" id="swimObsExcel">▦ Excel</button><button class="secondary" id="swimObsPdf">▤ PDF</button><button class="secondary" id="swimObsLeave">← Retour</button></div><div class="ok" id="swimObsMsg"></div></div>`;
-    toolPanel.querySelectorAll("[data-swim-toggle]").forEach(b=>b.onclick=()=>{const [id,label]=b.dataset.swimToggle.split("|");const v=state.values[id]||empty();v.validated={...v.validated,[label]:!v.validated[label]};state.values[id]=v;drawGrid()});
+    toolPanel.innerHTML=`<div class="fitness-web">${hero("Tableau d’observation grand écran")}${tabs}<div class="field-tool-row"><label>Notation<select id="swimObsModeSelect"><option value="note" ${state.mode==="note"?"selected":""}>Case cochée</option><option value="couleur" ${state.mode==="couleur"?"selected":""}>Couleur (Vert + · Vert · Orange · Rouge)</option></select></label></div><div class="fitness-summary"><div class="fitness-kpi"><strong>${toolStudents.length}</strong><small>élèves</small></div><div class="fitness-kpi"><strong>${noms.length}</strong><small>groupe(s)</small></div><div class="fitness-kpi"><strong>${state.indicators.length}</strong><small>indicateur(s)</small></div><div class="fitness-kpi"><strong>P${state.period}</strong><small>${esc(className(state.classId))}</small></div></div><div class="fitness-table-wrap"><table><thead><tr><th>Nom et prénom</th>${state.indicators.map(l=>`<th>${esc(l)}</th>`).join("")}<th>Note</th></tr></thead><tbody>${visible.map(rowHtml).join("")||`<tr><td colspan="${state.indicators.length+2}" class="muted">Aucun élève dans ce groupe.</td></tr>`}</tbody></table></div><div class="field-tool-row"><input id="swimObsNewIndicator" placeholder="Nouvel indicateur (ex : Virage culbute)"><button id="swimObsAddIndicator">Ajouter</button></div><div class="fitness-actions"><button id="swimObsSave">💾 ${state.sessionId?"Enregistrer les modifications":"Enregistrer dans Tests EPS"}</button><button class="secondary" id="swimObsExcel">▦ Excel</button><button class="secondary" id="swimObsPdf">▤ PDF</button><button class="secondary" id="swimObsLeave">← Retour</button></div><div class="ok" id="swimObsMsg"></div></div>`;
+    document.getElementById("swimObsModeSelect").onchange=e=>{state.mode=e.target.value;drawGrid()};
+    toolPanel.querySelectorAll("[data-swim-toggle]").forEach(b=>b.onclick=()=>{
+      const [id,label]=b.dataset.swimToggle.split("|");
+      const v=state.values[id]||empty();
+      if(state.mode==="couleur"){
+        const codes=COULEUR_NIVEAUX.map(x=>x[0]),actuel=codes.indexOf(v.validated[label]);
+        v.validated={...v.validated,[label]:actuel===-1?codes[0]:(actuel+1<codes.length?codes[actuel+1]:null)};
+      }else{
+        v.validated={...v.validated,[label]:!v.validated[label]};
+      }
+      state.values[id]=v;drawGrid()
+    });
     toolPanel.querySelectorAll("[data-swim-group]").forEach(b=>b.onclick=()=>{state.activeGroup=b.dataset.swimGroup;drawGrid()});
     document.getElementById("swimObsEditGroups").onclick=drawGroups;
     document.getElementById("swimObsAddIndicator").onclick=()=>{const nom=document.getElementById("swimObsNewIndicator").value.trim();if(!nom)return;if(state.indicators.some(l=>l.toLowerCase()===nom.toLowerCase()))return alert("Cet indicateur existe déjà.");state.indicators=[...state.indicators,nom];drawGrid()};
     document.getElementById("swimObsSave").onclick=saveSwimObservation;document.getElementById("swimObsExcel").onclick=()=>showSwimObsExport("Excel");document.getElementById("swimObsPdf").onclick=()=>showSwimObsExport("PDF");document.getElementById("swimObsLeave").onclick=drawSetup}
   // Enregistrer meme si tout le monde n'a pas ete observe : chaque eleve garde son groupe et ses
   // indicateurs valides tels quels, sans obliger a finir la classe entiere en une seance.
-  async function saveSwimObservation(){if(state.busy||!state.classId||state.classId==="free")return alert("Choisissez une classe pour enregistrer.");state.busy=true;const msg=document.getElementById("swimObsMsg");if(msg)msg.textContent="Enregistrement…";try{const now=new Date().toISOString(),id=state.sessionId||crypto.randomUUID(),created=state.createdAt||Date.now();await enregistrerLigne("eps_test_sessions",{id,user_id:session.user_id,class_id:state.classId,period_number:state.period,test_name:TEST_NAME,created_at:created,class_label:className(state.classId),updated_at:now,deleted:false});for(const s of toolStudents){const v=state.values[s.id]||empty(),n=validatedCount(v),resultId=state.resultIds[s.id]||crypto.randomUUID();state.resultIds[s.id]=resultId;await enregistrerLigne("eps_test_results",{id:resultId,user_id:session.user_id,session_id:id,student_id:s.id,input_value:n,result_value:n,input_unit:encode(v),result_unit:v.group?`${n}/${state.indicators.length} indicateurs · ${v.group}`:"non affecté",updated_at:now,deleted:false})}state.sessionId=id;state.createdAt=created;await loadSaved();if(msg)msg.textContent=`Enregistré dans Tests EPS · ${className(state.classId)} · période ${state.period}.`}catch(e){if(msg)msg.textContent="Échec de l’enregistrement : "+e.message}finally{state.busy=false}}
+  async function saveSwimObservation(){if(state.busy||!state.classId||state.classId==="free")return alert("Choisissez une classe pour enregistrer.");state.busy=true;const msg=document.getElementById("swimObsMsg");if(msg)msg.textContent="Enregistrement…";try{const now=new Date().toISOString(),id=state.sessionId||crypto.randomUUID(),created=state.createdAt||Date.now();await enregistrerLigne("eps_test_sessions",{id,user_id:session.user_id,class_id:state.classId,period_number:state.period,test_name:TEST_NAME,created_at:created,class_label:className(state.classId),updated_at:now,deleted:false});for(const s of toolStudents){const v=state.values[s.id]||empty(),n=scoreEleve(v),resultId=state.resultIds[s.id]||crypto.randomUUID();state.resultIds[s.id]=resultId;await enregistrerLigne("eps_test_results",{id:resultId,user_id:session.user_id,session_id:id,student_id:s.id,input_value:n,result_value:n,input_unit:encode(v),result_unit:v.group?`${fr(n,1)}/${state.indicators.length} indicateurs · ${v.group}`:"non affecté",updated_at:now,deleted:false})}state.sessionId=id;state.createdAt=created;await loadSaved();if(msg)msg.textContent=`Enregistré dans Tests EPS · ${className(state.classId)} · période ${state.period}.`}catch(e){if(msg)msg.textContent="Échec de l’enregistrement : "+e.message}finally{state.busy=false}}
   async function openSaved(id,duplicate=false){const saved=state.saved.find(s=>String(s.id)===String(id));if(!saved)throw new Error("Cette observation est introuvable sur cet appareil : rechargez la page, elle n’a peut-être pas encore été reçue.");state.classId=saved.class_id;state.period=+saved.period_number||1;state.sessionId=duplicate?null:saved.id;state.createdAt=duplicate?null:saved.created_at;state.resultIds={};state.values={};await loadToolStudents(state.classId);let rows=await lireTable("eps_test_results",`eps_test_results?session_id=eq.${saved.id}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(saved.id)&&!r.deleted});
     if(!rows.length){try{const r=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results?session_id=eq.${saved.id}&deleted=eq.false&select=*`);if(r.ok)rows=await r.json()}catch{}}
     const indicateursVus=new Set(DEFAULT_INDICATORS);
-    rows.forEach(r=>{const v=decode(r.input_unit);state.values[r.student_id]=v;Object.keys(v.validated).forEach(l=>indicateursVus.add(l));if(!duplicate)state.resultIds[r.student_id]=r.id});
+    rows.forEach(r=>{const v=decode(r.input_unit);state.values[r.student_id]={group:v.group,validated:v.validated};state.mode=v.mode;Object.keys(v.validated).forEach(l=>indicateursVus.add(l));if(!duplicate)state.resultIds[r.student_id]=r.id});
     state.indicators=[...indicateursVus];ensureValues();state.activeGroup=groupNames()[0]||"";
     toolPanel=document.getElementById("toolPanel");toolPanel.style.display="block";toolPanel.classList.add("modern-tool-panel");drawGrid()}
   async function deleteSaved(id){if(!confirm("Supprimer cette observation et ses résultats ?"))return;const saved=state.saved.find(s=>String(s.id)===String(id));if(!saved)return;await enregistrerLigne("eps_test_sessions",{...saved,deleted:true,updated_at:new Date().toISOString()});await loadSaved();drawSetup()}
@@ -94,7 +135,7 @@
     await openSaved(id)}
   function bindSaved(){document.querySelectorAll("[data-swim-open]").forEach(b=>b.onclick=()=>{toolPanel.classList.add("modern-tool-panel");openSaved(b.dataset.swimOpen)});document.querySelectorAll("[data-swim-copy]").forEach(b=>b.onclick=()=>{toolPanel.classList.add("modern-tool-panel");openSaved(b.dataset.swimCopy,true)});document.querySelectorAll("[data-swim-delete]").forEach(b=>b.onclick=()=>deleteSaved(b.dataset.swimDelete))}
   function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-  const exportRows=()=>toolStudents.map(s=>{const v=state.values[s.id]||empty();return [s.last_name||"",s.first_name||"",v.group||"Non affecté",...state.indicators.map(l=>v.validated[l]?"Oui":"Non"),`${validatedCount(v)}/${state.indicators.length}`]});
+  const exportRows=()=>toolStudents.map(s=>{const v=state.values[s.id]||empty();return [s.last_name||"",s.first_name||"",v.group||"Non affecté",...state.indicators.map(l=>{const val=v.validated[l];if(state.mode==="couleur")return val?COULEUR_PAR_CODE[val]?.label||"":"";return val?"Oui":"Non"}),`${fr(scoreEleve(v),1)}/${state.indicators.length}`]});
   function exportSwimObsCsv(){const rows=[["Nom","Prénom","Groupe",...state.indicators,"Validés"],...exportRows()];download(`observation-natation-${className(state.classId)}.csv`,`﻿${rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n")}`,"text/csv;charset=utf-8")}
   function swimObsCsvFile(){const rows=[["Nom","Prénom","Groupe",...state.indicators,"Validés"],...exportRows()],name=`observation-natation-${className(state.classId)}.csv`;return new File([`﻿${rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n")}`],name,{type:"text/csv;charset=utf-8"})}
   async function shareSwimObsCsv(){const file=swimObsCsvFile();if(navigator.share&&navigator.canShare?.({files:[file]}))await navigator.share({title:"Observation natation",files:[file]});else exportSwimObsCsv()}

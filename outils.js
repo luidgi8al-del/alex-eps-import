@@ -316,7 +316,7 @@ let stopSessionId=null,stopSessionRecord=null,stopResultRecords={},stopSessions=
 // (dans input_unit de chaque resultat), pour qu'une reouverture retrouve le meme reglage.
 const STOP_BANDS=["Vert +","Vert","Orange","Rouge"];
 const STOP_BAND_COLORS={"Vert +":"#0e9f5f","Vert":"#4caf50","Orange":"#f39c12","Rouge":"#e74c3c"};
-let stopMode="note",stopSeuil=2;
+let stopMode="note",stopSeuil=2,stopAutoAppliedFor=null;
 function stopPalier(n){return Math.floor(n/Math.max(1,stopSeuil))}
 function stopNote(n){return Math.max(0,20-stopPalier(n)*0.5)}
 function stopBande(n){return STOP_BANDS[Math.min(STOP_BANDS.length-1,stopPalier(n))]}
@@ -329,6 +329,14 @@ async function drawStopCourseTest(test) {
     document.getElementById("stopMode").onchange=e=>{stopMode=e.target.value;drawStopCourseTest(test)};
     document.getElementById("stopSeuil").onchange=e=>{stopSeuil=Math.max(1,+e.target.value||1);drawStopCourseTest(test)};
     stopFree.oninput=()=>stopFreeOut.innerHTML=stopBadge(Math.max(0,+stopFree.value||0));return;
+  }
+  // En 6e, la couleur remplace la note par defaut - plus lisible a cet age - mais reste
+  // modifiable, et ne s'impose qu'une fois par classe choisie tant qu'aucun test n'est
+  // enregistre (une seance rouverte garde le reglage avec lequel elle a ete notee).
+  if(!stopSessionId&&stopAutoAppliedFor!==toolClassId){
+    const niveau=toolClasses.find(c=>String(c.id)===String(toolClassId))?.grade;
+    stopMode=niveau==="SIXIEME"?"couleur":"note";
+    stopAutoAppliedFor=toolClassId;
   }
   stopSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=eq.${encodeURIComponent(test.label)}&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&r.test_name===test.label&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});
   const groupOf=s=>stopGroupCount>1?(stopGroupAssignments[s.id]||((toolStudents.findIndex(x=>String(x.id)===String(s.id))%stopGroupCount)+1)):1,visible=stopActiveGroup?toolStudents.filter(s=>groupOf(s)===stopActiveGroup):toolStudents;
