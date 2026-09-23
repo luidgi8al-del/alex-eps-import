@@ -10,7 +10,7 @@
  * afficher un index.html neuf avec des scripts perimes. Une equipe qui corrige son planning le
  * matin doit voir la correction le matin.
  */
-const PWA_VERSION = "eps-lvh-pwa-2026-09-23-observation-natation";
+const PWA_VERSION = "eps-lvh-pwa-2026-09-23-arret-course-modes";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 
