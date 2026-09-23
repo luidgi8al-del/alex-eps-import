@@ -687,7 +687,7 @@ function renderUnssTab() {
   if (divisionFiltre && !divisions.some(d => d.nom === divisionFiltre)) divisionFiltre = "";
   const parDivision = enTableau && divisionFiltre ? elevesDeLaDivision(brut, divisionFiltre) : brut;
   const rechercheNormalisee = chaineRecherche(rechercheEleveFiltre);
-  const filtres = enTableau && rechercheNormalisee
+  const filtres = rechercheNormalisee
     ? parDivision.filter(e => chaineRecherche(`${e.last_name || ""} ${e.first_name || ""}`).includes(rechercheNormalisee))
     : parDivision;
   const rows = enTableau ? trierEleves(filtres) : filtres;
@@ -720,7 +720,13 @@ function renderUnssTab() {
     }
     html += `</div>`;
   }
-  html += `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">`;
+  html += `<div style="display:flex; justify-content:flex-end; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap">`;
+  // Recherche par nom/prenom : deja disponible sur la liste complete (filtres au-dessus), mais
+  // absente des vues en cartes (Licencies AS, Tous les eleves) faute de place dans la barre.
+  // Retrouver un licencie precis sans faire defiler toute la page.
+  if (!enTableau) {
+    html += `<label class="student-directory-search" style="flex:1; min-width:180px; margin-right:auto">🔎<input id="rechercheEleveRepertoire" value="${planningText(rechercheEleveFiltre)}" placeholder="Rechercher un nom ou un prénom"></label>`;
+  }
   // Importer, ajouter et supprimer sont reserves a l'administrateur : ces actions touchent le
   // repertoire de tout l'etablissement. Corriger une fiche reste ouvert a chacun.
   // Un import CSV cree ou complete des fiches du repertoire general : il n'a pas sa place sur
@@ -746,12 +752,6 @@ function renderUnssTab() {
   // ce qu'on redonne au secretariat ou au club en fin d'annee.
   if (unssMode === "licensed" && rows.length > 0) {
     html += `<button class="secondary" id="unssExportBtn" style="margin-top:0">Télécharger</button>`;
-  }
-  // Rattrapage ponctuel pour les licences saisies avant l'inscription automatique au voeu 1
-  // (voir inscrireAutomatiquementVoeu1) : reserve a l'administrateur, comme les autres actions
-  // qui ecrivent en masse sur le repertoire de l'etablissement.
-  if (unssAdmin && unssMode === "licensed" && creneauPorteTout && rows.length > 0) {
-    html += `<button class="secondary" id="unssRattraperVoeuxBtn" style="margin-top:0">Rattraper les vœux 1</button>`;
   }
   // Verser une selection dans une classe : c'est le geste que le tableau doit rendre facile.
   if (enTableau) {
@@ -804,7 +804,6 @@ function renderUnssTab() {
     if (student) openUnssStudentPanel(student, false, true);
   }));
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
-  wrap.querySelector("#unssRattraperVoeuxBtn")?.addEventListener("click", () => rattraperVoeuxUn());
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
@@ -1988,26 +1987,6 @@ async function inscrireAutomatiquementVoeu1(studentId, slotId) {
     unssInscriptions.push(ligne);
     return true;
   } catch { return false; /* la fiche eleve reste enregistree ; l'inscription se fera manuellement si besoin */ }
-}
-
-/**
- * Rattrapage une fois pour toutes : les eleves licencies avant l'inscription automatique au
- * voeu 1 (voir inscrireAutomatiquementVoeu1) avaient un voeu enregistre mais aucune inscription
- * au creneau. Reste sans effet sur ceux deja inscrits - relancer ce bouton plusieurs fois ne
- * cree jamais de doublon.
- */
-async function rattraperVoeuxUn() {
-  if (!confirm("Inscrire au créneau tous les élèves déjà licenciés dont le vœu 1 n'est pas encore dans la liste des inscrits ?")) return;
-  await loadUnssInscriptions();
-  const candidats = unssStudents.filter(s => s.licensed && s.wish1_slot_id);
-  let ajoutes = 0;
-  for (const s of candidats) {
-    if (await inscrireAutomatiquementVoeu1(s.id, s.wish1_slot_id)) ajoutes++;
-  }
-  alert(ajoutes > 0
-    ? `${ajoutes} élève(s) inscrit(s) à leur créneau de vœu 1.`
-    : "Rien à rattraper : tous les vœux 1 étaient déjà dans la liste des inscrits.");
-  renderUnssTab();
 }
 
 // ---- UNSS > Groupe : liste des groupes, detail (membres + historique des seances) ----
