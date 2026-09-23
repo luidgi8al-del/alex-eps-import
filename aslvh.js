@@ -2933,6 +2933,7 @@ async function openUnssStudentStats(group, student, sessions) {
 
 const AS_DETAILS_PREFIX = "EPS_AS_DETAILS:";
 let unssDateEvents = [];
+let unssCalendarEvents = [];
 
 function lireDetailsDateAs(commentaire) {
   const brut = String(commentaire || "");
@@ -2954,10 +2955,30 @@ function dateAsComplete(details) {
 }
 
 async function loadUnssDates() {
-  unssDateEvents = await lireTable("institution_calendar_events",
-    "institution_calendar_events?deleted=eq.false&kind=eq.SORTIE&select=*&order=start_date_epoch_millis.asc",
-    { ou: e => !e.deleted && e.kind === "SORTIE",
+  unssCalendarEvents = await lireTable("institution_calendar_events",
+    "institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc",
+    { ou: e => !e.deleted,
       trier: (a, b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
+  unssDateEvents = unssCalendarEvents.filter(e => e.kind === "SORTIE");
+}
+
+/** Signale tout ce qui occupe déjà la journée, y compris les repères calculés du calendrier. */
+function conflitsDateAs(millis, idIgnore) {
+  const debutJour = new Date(millis); debutJour.setHours(0, 0, 0, 0);
+  const finJour = new Date(millis); finJour.setHours(23, 59, 59, 999);
+  const conflits = unssCalendarEvents
+    .filter(e => e.id !== idIgnore && !e.deleted
+      && Number(e.start_date_epoch_millis || 0) <= finJour.getTime()
+      && Number(e.end_date_epoch_millis || e.start_date_epoch_millis || 0) >= debutJour.getTime())
+    .map(e => e.label || "Événement sans titre");
+  const iso = new Date(millis).toISOString().slice(0, 10);
+  if (typeof CAL_FIXES !== "undefined" && CAL_FIXES[iso]) conflits.push(CAL_FIXES[iso][0]);
+  if (typeof calEnVacances === "function" && calEnVacances(iso)) conflits.push("Vacances scolaires");
+  if (typeof datesCcfBac === "function") {
+    datesCcfBac().filter(e => e.lundi === iso || e.jeudi === iso)
+      .forEach(e => conflits.push(`BAC EPS CCF${e.numero || ""}`));
+  }
+  return [...new Set(conflits.filter(Boolean))];
 }
 
 function renderUnssDatesTab() {
@@ -2999,13 +3020,18 @@ function openUnssDatePanel(event) {
     const valeur = id => document.getElementById(id).value.trim();
     const nouveauxDetails = { activity:valeur("asDateActivity"), accompanyingTeacher:valeur("asDateTeachers"), exactLocation:valeur("asDateLocation"), travelRequired:travel.checked, departureLocation:valeur("asDateDepartureLocation"), departureTime:valeur("asDateDeparture"), returnTime:valeur("asDateReturn"), transportMethod:valeur("asDateTransport"), meetingTime:valeur("asDateMeeting"), endTime:valeur("asDateEnd"), schoolNeeds:valeur("asDateSchoolNeeds"), asNeeds:valeur("asDateAsNeeds") };
     const millis = new Date(date + "T12:00:00").getTime();
+    const conflits = conflitsDateAs(millis, event?.id);
+    if (conflits.length && !confirm(`Conflit de calendrier le ${new Date(millis).toLocaleDateString("fr-FR")} :\n\n• ${conflits.join("\n• ")}\n\nEnregistrer quand même cette date AS ?`)) {
+      error.textContent = "Enregistrement annulé : choisissez une autre date ou confirmez le conflit.";
+      return;
+    }
     const ligne = Object.assign({}, event || {}, { id:event?.id || crypto.randomUUID(), user_id:event?.user_id || session.user_id, label, kind:"SORTIE", start_date_epoch_millis:millis, end_date_epoch_millis:millis, comment:ecrireDetailsDateAs(nouveauxDetails), deleted:false, updated_at:new Date().toISOString() });
-    try { await enregistrerLigne("institution_calendar_events", ligne); await loadUnssDates(); fermerFenetreUnss(); renderUnssDatesTab(); }
+    try { await enregistrerLigne("institution_calendar_events", ligne); await loadUnssDates(); if (typeof loadInstitutionCalendar === "function") await loadInstitutionCalendar(); fermerFenetreUnss(); renderUnssDatesTab(); }
     catch (e) { error.textContent = e.message || "Enregistrement impossible."; }
   };
   document.getElementById("asDateDelete")?.addEventListener("click", async () => {
     if (!confirm(`Supprimer la date AS « ${event.label} » ?`)) return;
-    await supprimerLigne("institution_calendar_events", event.id); await loadUnssDates(); fermerFenetreUnss(); renderUnssDatesTab();
+    await supprimerLigne("institution_calendar_events", event.id); await loadUnssDates(); if (typeof loadInstitutionCalendar === "function") await loadInstitutionCalendar(); fermerFenetreUnss(); renderUnssDatesTab();
   });
 }
 

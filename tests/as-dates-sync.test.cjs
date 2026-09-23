@@ -20,7 +20,10 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'institution_calendar_events',
   'travelRequired',
   'schoolNeeds',
-  'asNeeds'
+  'asNeeds',
+  'function conflitsDateAs(millis, idIgnore)',
+  'loadInstitutionCalendar()',
+  'Enregistrer quand même cette date AS ?'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Fonction Dates AS manquante : ${marker}`);
 });
