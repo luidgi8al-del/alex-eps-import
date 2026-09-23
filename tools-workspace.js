@@ -19,6 +19,7 @@
     ["vma","Tests VMA","VAMEVAL, Léger et Cooper","💓","Évaluer",["Athlétisme"]],
     ["aptitudes","Aptitudes 6e","Sprint, endurance et saut","📊","Évaluer",["Athlétisme"]],
     ["swim","Savoir Nager","Parcours et attestations","🏊","Évaluer",["Natation"]],
+    ["swim-observation","Observation Natation","Groupes de niveau et indicateurs techniques","🤿","Évaluer",["Natation"]],
     ["measures","Mesures","Distance, vitesse et allure","📏","Évaluer",["Athlétisme"]],
     ["speed","Vitesse – passages","Groupes, passages et courbe","🏃","Observer",["Athlétisme"]],
     ["impacts","Marqueur d’impacts","Zones jouées sur le terrain","🎯","Observer",["Sports collectifs","Raquettes"]],
