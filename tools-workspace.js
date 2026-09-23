@@ -156,7 +156,88 @@
   function download(name,text,type="text/plain"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
   async function renderMultiChronoWeb(){const ctx=await contextHtml();let timers=[{name:"Élève 1",ms:0,running:false,start:0}];toolPanel.innerHTML=header("Multi-chrono","Plusieurs chronos simultanés","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiRows"></div><button id="multiAdd">＋ Ajouter un chrono</button></main>`;const drawRows=()=>multiRows.innerHTML=timers.map((t,i)=>`<div class="field-tool-counter"><input data-name="${i}" value="${esc(t.name)}"><b>${formatToolTime(t.ms+(t.running?Date.now()-t.start:0))}</b><button data-toggle="${i}">${t.running?"Pause":"Départ"}</button><button data-reset="${i}">↺</button></div>`).join("");drawRows();setInterval(()=>{if(document.getElementById("multiRows")&&timers.some(x=>x.running))drawRows()},100);multiAdd.onclick=()=>{timers.push({name:`Élève ${timers.length+1}`,ms:0,running:false,start:0});drawRows()};multiRows.onclick=e=>{let i=+e.target.dataset.toggle;if(Number.isInteger(i)){let t=timers[i];if(t.running){t.ms+=Date.now()-t.start;t.running=false}else{t.start=Date.now();t.running=true}drawRows()}i=+e.target.dataset.reset;if(Number.isInteger(i)){timers[i].ms=0;timers[i].running=false;drawRows()}};multiRows.onchange=e=>{if(e.target.dataset.name!==undefined)timers[+e.target.dataset.name].name=e.target.value};bindContext()}
   async function renderTournamentWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{teams:"Équipe 1\nÉquipe 2\nÉquipe 3\nÉquipe 4",scores:{}};toolPanel.innerHTML=header("Tournois","Rencontres, scores et classement","🏆")+`<main class="field-tool-card">${ctx}<label>Équipes<textarea id="tourTeams" rows="5">${esc(state.teams)}</textarea></label><button id="tourBuild">Créer les rencontres</button><div id="tourMatches"></div></main><div class="tool-savebar"><button id="tourSave">💾 Enregistrer</button><button id="tourExport">▦ Exporter</button><button id="tourResume">↻ Reprendre</button></div><div id="tourSaved"></div>`;let id=saved?.id;const build=()=>{const names=tourTeams.value.split(/\n/).map(x=>x.trim()).filter(Boolean),matches=[];names.forEach((a,i)=>names.slice(i+1).forEach(b=>matches.push([a,b])));tourMatches.innerHTML=matches.map((m,i)=>`<div class="field-tool-counter"><span>${esc(m[0])} — ${esc(m[1])}</span><input type=number data-side="0" data-match="${i}" value="${state.scores[i]?.[0]||0}"><input type=number data-side="1" data-match="${i}" value="${state.scores[i]?.[1]||0}"></div>`).join("")};build();tourBuild.onclick=build;tourSave.onclick=()=>{document.querySelectorAll("#tourMatches input").forEach(x=>(state.scores[x.dataset.match]??=[0,0])[+x.dataset.side]=+x.value);const w=saveWork("tournament",prompt("Nom du tournoi",saved?.title||"Tournoi")||"Tournoi",{id,teams:tourTeams.value,scores:state.scores});id=w.id;renderTournamentWeb(w)};tourExport.onclick=()=>download("tournoi.txt",tourTeams.value+"\n\n"+tourMatches.innerText);tourResume.onclick=()=>{tourSaved.innerHTML=workList("tournament");bindWorks("tournament",()=>renderTournamentWeb(),renderTournamentWeb)};bindContext()}
-  async function renderObserverWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{labels:["Réussite","Erreur","Récupération"],values:{}};toolPanel.innerHTML=header("Observateur","Compter les actions sans quitter le jeu","👁️")+`<main class="field-tool-card">${ctx}<div id="obsRows">${state.labels.map(l=>`<button class="field-tool-counter" data-obs="${esc(l)}"><b>${esc(l)}</b><strong>${state.values[l]||0}</strong><span>＋</span></button>`).join("")}</div><div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><button id="obsAdd">Ajouter</button></div></main><div class="tool-savebar"><button id="obsSave">💾 Enregistrer</button><button id="obsExport">▦ Exporter</button><button id="obsResume">↻ Reprendre</button></div><div id="obsSaved"></div>`;let id=saved?.id;obsRows.onclick=e=>{const b=e.target.closest("[data-obs]");if(b){state.values[b.dataset.obs]=(state.values[b.dataset.obs]||0)+1;renderObserverWeb({...saved,id,payload:state,title:saved?.title})}};obsAdd.onclick=()=>{if(obsNew.value.trim()){state.labels.push(obsNew.value.trim());renderObserverWeb({...saved,id,payload:state,title:saved?.title})}};obsSave.onclick=()=>{const w=saveWork("observer",prompt("Nom de l’observation",saved?.title||"Observation")||"Observation",{...state,id});renderObserverWeb(w)};obsExport.onclick=()=>download("observation.txt",state.labels.map(l=>`${l} : ${state.values[l]||0}`).join("\n"));obsResume.onclick=()=>{obsSaved.innerHTML=workList("observer");bindWorks("observer",()=>renderObserverWeb(),renderObserverWeb)};bindContext()}
+  const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
+  // Chaque indicateur rapporte (+1) ou retire (-1) un point ; l'eleve part du milieu du bareme
+  // choisi, plafonne entre 0 et le bareme - un jeu reussi fait monter la note, une succession
+  // de fautes la fait descendre, sans jamais sortir de l'intervalle.
+  const OBS_PRESETS={
+    "Basket-ball":[["Tir réussi",1],["Tir raté",-1],["Passe décisive",1],["Balle perdue",-1],["Récupération",1]],
+    "Football / Handball":[["But",1],["Tir cadré",1],["Passe réussie",1],["Perte de balle",-1],["Récupération",1]],
+    "Volley-ball":[["Service réussi",1],["Réception réussie",1],["Renvoi",1],["Point direct",1],["Faute",-1]],
+    "Badminton":[["Service réussi",1],["Varié",1],["Faute directe",-1],["Smash / amorti",1],["Variation de jeu",1],["Pas de replacement",-1]],
+    "Rugby":[["Plaquage réussi",1],["Plaquage raté",-1],["Passe réussie",1],["Perte de balle",-1],["Balle en avant",-1]],
+    "Gymnastique / Acrosport":[["Figure réussie",1],["Figure non validée",-1],["Liaison fluide",1],["Aide / parade efficace",1],["Déséquilibre ou chute",-1],["Consigne de sécurité respectée",1]]
+  };
+  function obsRaw(state,studentId){const v=state.values[studentId]||{};return state.indicators.reduce((somme,[label,pol])=>somme+(v[label]||0)*pol,0)}
+  function obsNote(state,studentId){return Math.min(state.bareme,Math.max(0,state.bareme/2+obsRaw(state,studentId)))}
+  async function renderObserverWeb(saved){
+    const ctx=await contextHtml();
+    // Une ancienne observation (avant ce redessin) comptait un seul total global, sans eleve ni
+    // bareme : on ne peut pas la relire telle quelle, mais on garde son titre et on repart d'un
+    // etat neuf plutot que de planter sur un format qui n'existe plus.
+    const compatible=saved?.payload&&Array.isArray(saved.payload.indicators);
+    const state=compatible?saved.payload:{sport:"Basket-ball",bareme:20,indicators:OBS_PRESETS["Basket-ball"],values:{},activeId:null};
+    let id=saved?.id;
+    const eleves=()=>onRealClass()?toolStudents:[{id:FREE_USE,first_name:"Participant",last_name:"libre"}];
+    const studentsHtml=()=>eleves().map(e=>`<div class="card unssPick" data-obs-student="${e.id}" style="margin-top:6px;cursor:pointer;${String(state.activeId)===String(e.id)?"border:2px solid #087dca":""}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>${esc(studentLabel(e))}</strong><span>${fr(obsNote(state,e.id))} / ${state.bareme}</span>
+      </div></div>`).join("")||`<p class="muted">Choisissez une classe pour observer ses élèves, ou restez en usage libre pour un seul participant.</p>`;
+    const indicatorsHtml=()=>{
+      if(state.activeId==null)return `<p class="muted">Touchez un élève ci-dessus pour noter ses actions.</p>`;
+      const v=state.values[state.activeId]||{};
+      return state.indicators.map(([label,pol])=>`<div class="field-tool-counter">
+        <b>${pol>0?"➕":"➖"} ${esc(label)}</b>
+        <span style="display:flex;align-items:center;gap:8px">
+          <button type="button" data-obs-dec="${esc(label)}" style="width:auto;margin:0;padding:4px 12px">−</button>
+          <strong>${v[label]||0}</strong>
+          <button type="button" data-obs-inc="${esc(label)}" style="width:auto;margin:0;padding:4px 12px">＋</button>
+        </span>
+      </div>`).join("");
+    };
+    toolPanel.innerHTML=header("Observateur","Compter les actions sans quitter le jeu, par élève","👁️")+
+      `<main class="field-tool-card">${ctx}
+        <div class="field-tool-row">
+          <label>Sport<select id="obsSport">${Object.keys(OBS_PRESETS).map(s=>`<option value="${esc(s)}"${s===state.sport?" selected":""}>${esc(s)}</option>`).join("")}</select></label>
+          <label>Barème<select id="obsBareme">${[5,10,20].map(b=>`<option value="${b}"${b===state.bareme?" selected":""}>/${b}</option>`).join("")}</select></label>
+        </div>
+        <h4 style="margin:10px 0 4px">Élèves</h4>
+        <div id="obsStudents">${studentsHtml()}</div>
+        <h4 style="margin:10px 0 4px">Indicateurs</h4>
+        <div id="obsIndicators">${indicatorsHtml()}</div>
+        <div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><select id="obsNewPol"><option value="1">Positif (+1)</option><option value="-1">Négatif (−1)</option></select><button id="obsAdd">Ajouter</button></div>
+      </main>
+      <div class="tool-savebar"><button id="obsSave">💾 Enregistrer</button><button id="obsExport">▦ Exporter</button><button id="obsResume">↻ Reprendre</button></div>
+      <div id="obsSaved"></div>`;
+    const redrawStudents=()=>{document.getElementById("obsStudents").innerHTML=studentsHtml();bindStudents()};
+    const redrawIndicators=()=>{document.getElementById("obsIndicators").innerHTML=indicatorsHtml();bindIndicators()};
+    function bindStudents(){
+      document.querySelectorAll("[data-obs-student]").forEach(el=>el.onclick=()=>{state.activeId=el.dataset.obsStudent;redrawStudents();redrawIndicators()});
+    }
+    function bindIndicators(){
+      document.querySelectorAll("[data-obs-inc]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsInc;state.values[state.activeId]=state.values[state.activeId]||{};state.values[state.activeId][l]=(state.values[state.activeId][l]||0)+1;redrawIndicators();redrawStudents()});
+      document.querySelectorAll("[data-obs-dec]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsDec;const v=state.values[state.activeId]||{};v[l]=Math.max(0,(v[l]||0)-1);state.values[state.activeId]=v;redrawIndicators();redrawStudents()});
+    }
+    bindStudents();bindIndicators();
+    document.getElementById("obsSport").onchange=e=>{state.sport=e.target.value;state.indicators=OBS_PRESETS[state.sport];state.values={};state.activeId=null;redrawStudents();redrawIndicators()};
+    document.getElementById("obsBareme").onchange=e=>{state.bareme=+e.target.value;redrawStudents()};
+    document.getElementById("obsAdd").onclick=()=>{
+      const nom=document.getElementById("obsNew").value.trim();if(!nom)return;
+      state.indicators=[...state.indicators,[nom,+document.getElementById("obsNewPol").value]];
+      document.getElementById("obsNew").value="";redrawIndicators()
+    };
+    document.getElementById("obsSave").onclick=()=>{
+      const w=saveWork("observer",prompt("Nom de l’observation",saved?.title||`Observation ${state.sport}`)||"Observation",{...state,id});
+      id=w.id;renderObserverWeb(w)
+    };
+    document.getElementById("obsExport").onclick=()=>{
+      const lignes=[["Élève",...state.indicators.map(([l])=>l),"Note"],
+        ...eleves().map(e=>[studentLabel(e),...state.indicators.map(([l])=>String((state.values[e.id]||{})[l]||0)),`${fr(obsNote(state,e.id))}/${state.bareme}`])];
+      download(`observation-${state.sport}.csv`,"\ufeff"+lignes.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(";")).join("\r\n"),"text/csv;charset=utf-8");
+    };
+    document.getElementById("obsResume").onclick=()=>{document.getElementById("obsSaved").innerHTML=workList("observer");bindWorks("observer",()=>renderObserverWeb(),renderObserverWeb)};
+    bindContext(()=>{redrawStudents();redrawIndicators()});
+  }
   async function renderRotationsWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{stations:"Échauffement\nTechnique\nJeu réduit\nDéfi",groups:4,step:0};toolPanel.innerHTML=header("Rotations d’ateliers","Chaque groupe au bon atelier","🔄")+`<main class="field-tool-card">${ctx}<label>Ateliers<textarea id="rotStations" rows=5>${esc(state.stations)}</textarea></label><div class="field-tool-row"><label>Groupes<input id="rotGroups" type=number min=2 value="${state.groups}"></label><button id="rotNext">Rotation suivante</button></div><div id="rotRows"></div></main><div class="tool-savebar"><button id="rotSave">💾 Enregistrer</button><button id="rotExport">▦ Exporter</button><button id="rotResume">↻ Reprendre</button></div><div id="rotSaved"></div>`;let id=saved?.id;const drawRot=()=>{const a=rotStations.value.split(/\n/).filter(Boolean),n=Math.max(2,+rotGroups.value||2);rotRows.innerHTML=Array.from({length:n},(_,i)=>`<div class="field-tool-counter"><b>Groupe ${i+1}</b><span>${esc(a[(i+state.step)%a.length]||"Atelier")}</span></div>`).join("")};drawRot();rotNext.onclick=()=>{state.step++;drawRot()};rotStations.oninput=rotGroups.oninput=drawRot;rotSave.onclick=()=>{const w=saveWork("rotations",prompt("Nom",saved?.title||"Rotations d’ateliers")||"Rotations",{id,stations:rotStations.value,groups:+rotGroups.value,step:state.step});renderRotationsWeb(w)};rotExport.onclick=()=>download("rotations.txt",rotRows.innerText);rotResume.onclick=()=>{rotSaved.innerHTML=workList("rotations");bindWorks("rotations",()=>renderRotationsWeb(),renderRotationsWeb)};bindContext()}
   async function renderRandomWeb(){const ctx=await contextHtml();toolPanel.innerHTML=header("Tirage au sort","Un élève en un toucher","🎲")+`<main class="field-tool-card">${ctx}<div class="field-tool-card" id="randomResult" style="font-size:28px;text-align:center">Prêt</div><button id="randomGo">Tirer un élève</button></main>`;bindContext();document.getElementById("randomGo").onclick=async()=>{const mode=document.getElementById("modernMode"),cls=document.getElementById("modernClass"),result=document.getElementById("randomResult");if(mode.value==="class"&&!cls.value)return alert("Choisissez une classe.");await loadToolStudents(cls.value);result.textContent=toolStudents.length?studentLabel(toolStudents[Math.floor(Math.random()*toolStudents.length)]):`Participant ${1+Math.floor(Math.random()*99)}`}}
   async function renderEffortWeb(){const ctx=await contextHtml();toolPanel.innerHTML=header("Effort et intensité","Ressenti et zones cardiaques indicatives","❤️")+`<main class="field-tool-card">${ctx}<div class="field-tool-row"><label>Âge<input id="effAge" type=number min=5 max=100></label><label>Effort ressenti<input id="effRpe" type=range min=0 max=10 value=5></label></div><div class="field-tool-card" id="effResult">Complétez l’âge.</div></main>`;const calc=()=>{const age=+effAge.value,max=age?Math.round(208-.7*age):0;effResult.innerHTML=max?`<b>Effort ressenti : ${effRpe.value}/10</b><p>Zone modérée : ${Math.round(max*.6)}–${Math.round(max*.75)} bpm</p><p>Zone soutenue : ${Math.round(max*.75)}–${Math.round(max*.9)} bpm</p><small>Repères pédagogiques, sans valeur d’avis médical.</small>`:"Complétez l’âge."};effAge.oninput=effRpe.oninput=calc;bindContext()}
