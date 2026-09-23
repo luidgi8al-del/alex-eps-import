@@ -1512,7 +1512,7 @@ async function ouvrirFicheCreneau(slot) {
   const appelAutorise = peutFaireAppelCreneau(slot);
   panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span id="asMetricInscrits" style="cursor:pointer"><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
   asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); const boutonAppel=document.getElementById("asCall"); if (boutonAppel) boutonAppel.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
-  document.getElementById("asMetricInscrits").onclick=()=>ouvrirElevesCreneau(slot);
+  document.getElementById("asMetricInscrits").onclick=()=>ouvrirListeInscritsCreneau(slot);
 }
 
 /** Nombre d'eleves ayant place ce creneau dans l'un de leurs trois voeux. */
@@ -2314,6 +2314,28 @@ function sectionVoeuHtml(rang, eleves) {
        </div>`).join("")}`;
 }
 
+/**
+ * "Inscrits" (le chiffre sur la fiche du créneau) : juste la liste, en lecture seule - nom,
+ * prénom, classe, catégorie. Ajouter ou retirer un élève reste réservé au bouton "+ Élèves"
+ * (ouvrirElevesCreneau), pour ne pas mélanger consultation rapide et modification.
+ */
+async function ouvrirListeInscritsCreneau(slot) {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  panel.innerHTML = `<div class="muted">Chargement…</div>`;
+  await assurerInscriptions();
+  const eleves = elevesDuCreneau(slot.id);
+  panel.classList.add("as-full-panel");
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
+    ${eleves.length === 0
+      ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
+      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${
+          eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td></tr>`).join("")
+        }</tbody></table></div>`
+    }`;
+  document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => ouvrirFicheCreneau(slot));
+}
+
 async function ouvrirElevesCreneau(slot) {
   const panel = document.getElementById("unssPanel");
   ouvrirFenetreUnss();
@@ -2357,7 +2379,7 @@ async function ouvrirElevesCreneau(slot) {
   }));
   document.getElementById("unssCreneauAddBtn").addEventListener("click",
     () => ouvrirAjoutElevesCreneau(slot));
-  document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => fermerFenetreUnss());
+  document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => ouvrirFicheCreneau(slot));
 }
 
 
