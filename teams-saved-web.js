@@ -42,6 +42,33 @@
   function teamCards(teams) {
     return `<div class="saved-team-grid">${teams.map((team,i)=>`<article class="saved-team-card"><header><i>👥</i><b>Équipe ${i+1}</b><small>${team.length} élève${team.length>1?'s':''}</small></header>${team.map(s=>`<span>${esc(labelStudent(s))}</span>`).join('')}</article>`).join('')}</div>`;
   }
+  /**
+   * Le tableau du socle sous les cartes : une ligne par eleve, sa colonne Equipe modifiable.
+   * Le tirage au sort proposait une composition qu'il fallait accepter telle quelle - deplacer
+   * un eleve obligeait a relancer le tirage entier, qui rebattait tout le reste.
+   */
+  function teamTable(teams) {
+    if (typeof socleTableauHtml !== 'function') return '';
+    const equipeDe = id => teams.findIndex(g => g.some(s => String(s.id) === String(id))) + 1;
+    const tous = teams.flat();
+    return `<div class="fitness-web">${socleTableauHtml(
+      [{ titre: 'Équipe', aide: 'Modifiable' }],
+      tous.map(s => ({ eleve: s, sousTitre: `Équipe ${equipeDe(s.id)}`,
+        cellules: [`<select data-team-move="${s.id}">${teams.map((_, i) =>
+          `<option value="${i}"${equipeDe(s.id) === i + 1 ? ' selected' : ''}>Équipe ${i + 1}</option>`).join('')}</select>`],
+        total: null })),
+      null)}</div>`;
+  }
+  /** Deplace un eleve d'une equipe a l'autre sans toucher aux autres. */
+  function bindTeamMoves(redraw) {
+    document.querySelectorAll('[data-team-move]').forEach(sel => sel.onchange = () => {
+      const id = sel.dataset.teamMove, cible = +sel.value;
+      let eleve = null;
+      generated.forEach(g => { const i = g.findIndex(s => String(s.id) === String(id)); if (i >= 0) eleve = g.splice(i, 1)[0]; });
+      if (eleve) generated[cible].push(eleve);
+      redraw();
+    });
+  }
   function criterionRow(c){return `<div class="team-criterion-row"><input data-criterion-name="${c.id}" value="${esc(c.name)}"><label>sur <input data-criterion-max="${c.id}" type="number" min="0.25" step="0.25" value="${Number(c.max)||1}"></label><button class="danger" data-remove-criterion>×</button></div>`}
   function readCriteria(){return [...document.querySelectorAll('[data-criterion-name]')].map(n=>({id:n.dataset.criterionName,name:n.value.trim()||'Critère',max:Number(document.querySelector(`[data-criterion-max="${n.dataset.criterionName}"]`).value)||1}))}
   function collectScores(){const out={};document.querySelectorAll('[data-team-score]').forEach(i=>{(out[i.dataset.teamScore]??={})[i.dataset.criterion]=i.value});return out}
@@ -60,7 +87,14 @@
   function bind() {
     twUsage.onchange=()=>{twClassWrap.style.display=twUsage.value==='free'?'none':'';selectedClass=twUsage.value==='free'?'':twClass.value;renderSaved()};
     twClass.onchange=async()=>{selectedClass=twClass.value;students=selectedClass?await read(`students?class_id=eq.${selectedClass}&deleted=eq.false&select=*&order=last_name.asc`):[];await loadSaved();renderSaved()};
-    twGenerate.onclick=async()=>{try{twError.textContent='';if(twUsage.value==='class'&&!selectedClass)throw Error('Choisissez une classe.');if(twUsage.value==='free')throw Error('Le mode libre nécessite une liste manuelle, ajoutée lors de la prochaine étape.');if(!students.length)throw Error('Cette classe ne contient aucun élève.');generated=distribute(students,Math.max(2,Math.min(20,+twCount.value||2)),twMode.value);twGenerated.innerHTML=`<section class="team-generated-head"><div><h3>Composition proposée</h3><p>${students.length} élèves · ${generated.length} équipes</p></div><button id="twSave">Enregistrer dans la classe</button></section>${teamCards(generated)}`;twSave.onclick=save;}catch(e){twError.textContent=e.message}};
+    twGenerate.onclick=async()=>{try{twError.textContent='';if(twUsage.value==='class'&&!selectedClass)throw Error('Choisissez une classe.');if(twUsage.value==='free')throw Error('Le mode libre nécessite une liste manuelle, ajoutée lors de la prochaine étape.');if(!students.length)throw Error('Cette classe ne contient aucun élève.');generated=distribute(students,Math.max(2,Math.min(20,+twCount.value||2)),twMode.value);dessinerComposition();}catch(e){twError.textContent=e.message}};
+  }
+  /** Redessine la composition en cours : cartes, tableau modifiable, enregistrer et remise a zero. */
+  function dessinerComposition(){
+    twGenerated.innerHTML=`<section class="team-generated-head"><div><h3>Composition proposée</h3><p>${students.length} élèves · ${generated.length} équipes</p></div><div><button id="twSave">Enregistrer dans la classe</button> <button class="secondary" id="twReset">↺ Réinitialiser</button></div></section>${teamCards(generated)}${teamTable(generated)}`;
+    document.getElementById('twSave').onclick=save;
+    document.getElementById('twReset').onclick=()=>{if(!confirm('Défaire cette composition et repartir de zéro ?'))return;generated=[];twGenerated.innerHTML=''};
+    bindTeamMoves(dessinerComposition);
   }
   async function loadSaved(){saved=selectedClass?await read(`saved_teams?class_id=eq.${selectedClass}&deleted=eq.false&select=*&order=created_at.desc`):[]}
   function renderSaved(){const host=document.getElementById('twSaved');if(!host)return;host.innerHTML=!selectedClass?'':`<div class="saved-team-title"><h3>Équipes enregistrées</h3><small>${saved.length} composition${saved.length>1?'s':''}</small></div>${saved.length?saved.map(t=>`<article class="saved-composition"><i>👥</i><span><b>${esc(t.name)}</b><small>${new Date(t.created_at).toLocaleDateString('fr-FR')} · ${esc(modes.find(m=>m[0]===t.mode)?.[1]||t.mode)}</small></span><button data-open-team="${t.id}">Ouvrir</button><button class="danger" data-delete-team="${t.id}">Supprimer</button></article>`).join(''):'<div class="card muted">Aucune composition enregistrée pour cette classe.</div>'}`;host.querySelectorAll('[data-open-team]').forEach(b=>b.onclick=()=>openSaved(b.dataset.openTeam));host.querySelectorAll('[data-delete-team]').forEach(b=>b.onclick=()=>removeSaved(b.dataset.deleteTeam));}

@@ -596,23 +596,18 @@ async function renderSwimCertificate() {
 function drawSwimCertificate() {
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
 
+  // Dix etapes, donc dix colonnes : c'est exactement le cas ou la colonne des noms doit rester
+  // en vue pendant qu'on fait defiler le parcours.
   toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 etapes du parcours en securite")
     + toolRosterHtml()
-    + cible.map(s => {
-        const done = swimValidations[s.id] || [];
-        const score = done.length;
-        return `<div class="card">
-          <strong>${studentLabel(s)}</strong>
-          ${EpsTests.SWIM_STEPS.map((label, i) => `<label style="display:flex; gap:8px; align-items:center; font-weight:400; color:var(--text); margin:6px 0 0">
-            <input type="checkbox" data-swim="${s.id}" data-step="${i}" ${done.includes(i) ? "checked" : ""} style="width:auto">
-            ${i + 1}. ${label}
-          </label>`).join("")}
-          <div style="margin-top:8px; font-weight:700; color:${score === 10 ? "#2E8B57" : "#E67E22"}">
-            ${score}/10 · ${score === 10 ? "Attestation validee" : "Parcours a completer"}
-          </div>
-        </div>`;
-      }).join("")
-    + `<button class="secondary" id="swimPrintBtn">Attestation (impression / PDF)</button>`;
+    + `<div class="fitness-web">${socleTableauHtml(
+        EpsTests.SWIM_STEPS.map((label,i)=>({titre:`${i+1}`,aide:label})),
+        cible.map(s=>{const done=swimValidations[s.id]||[],score=done.length;return {eleve:s,
+          sousTitre:score===10?"Attestation validée":`${score}/10 étapes`,
+          cellules:EpsTests.SWIM_STEPS.map((_,i)=>`<input type="checkbox" data-swim="${s.id}" data-step="${i}" ${done.includes(i)?"checked":""} style="width:auto">`),
+          total:`<span style="color:${score===10?"#2E8B57":"#E67E22"}">${score}/10</span>`}}),
+        "Parcours")}</div>`
+    + `<div class="running-save-actions"><button class="secondary" id="swimPrintBtn">Attestation (impression / PDF)</button><button class="secondary" id="swimResetBtn">↺ Réinitialiser</button></div>`;
 
   bindToolClose();
   bindToolRoster(drawSwimCertificate);
@@ -623,6 +618,11 @@ function drawSwimCertificate() {
     drawSwimCertificate();
   });
   document.getElementById("swimPrintBtn").onclick = () => window.print();
+  document.getElementById("swimResetBtn").onclick = () => {
+    if (!confirm("Effacer toutes les étapes validées et repartir de zéro ?")) return;
+    Object.keys(swimValidations).forEach(k => delete swimValidations[k]);
+    drawSwimCertificate();
+  };
 }
 
 // ---- Aptitudes physiques 6e (miroir de Grade6AptitudesScreen) ----
@@ -686,20 +686,42 @@ function drawAptitudes() {
 let impactSport = "Badminton";
 let impactPoints = [];
 let impactDeleteMode = false;
+// Les impacts se relevaient sans jamais dire de qui : l'outil n'avait aucun choix de classe.
+// Chaque eleve a desormais son propre releve, qu'on retrouve en le choisissant dans la liste.
+let impactEleveId = null, impactParEleve = {};
 
-function renderImpactMarker() {
+async function renderImpactMarker() {
+  await loadToolClasses();
+  await loadToolStudents(toolClassId);
+  drawImpactMarker();
+}
+
+function drawImpactMarker() {
+  // Le releve affiche est celui de l'eleve choisi ; sans classe, c'est un releve unique.
+  if (onRealClass()) {
+    if (!toolStudents.some(s => String(s.id) === String(impactEleveId))) impactEleveId = toolStudents[0]?.id || null;
+    impactPoints = impactParEleve[impactEleveId] = impactParEleve[impactEleveId] || [];
+  }
   toolPanel.innerHTML = toolHeader("Marqueur d'impacts", "Visualiser precisement les zones jouees")
+    + toolRosterHtml()
+    + (onRealClass() && toolStudents.length
+      ? `<div class="field-tool-row"><label>Élève<select id="impactEleve">${toolStudents.map(s =>
+          `<option value="${s.id}"${String(s.id) === String(impactEleveId) ? " selected" : ""}>${studentLabel(s)} · ${(impactParEleve[s.id]||[]).length} impact(s)</option>`).join("")}</select></label></div>`
+      : "")
     + `<div class="toolActions">${["Badminton", "Tennis", "Tennis de table"].map(s =>
         `<button class="${s === impactSport ? "" : "secondary"}" data-impact-sport="${s}">${s}</button>`).join("")}</div>
       <canvas id="impactCanvas" width="640" height="360" style="width:100%; margin-top:12px; border-radius:12px; cursor:crosshair; background:#EAF6E4"></canvas>
       <div class="toolActions" style="margin-top:10px">
         <button class="${impactDeleteMode ? "" : "secondary"}" id="impactDelete">${impactDeleteMode ? "Fin suppression" : "Supprimer un point"}</button>
         <button class="secondary" id="impactUndo">Annuler</button>
-        <button class="secondary" id="impactClear">Effacer</button>
+        <button class="secondary" id="impactClear">↺ Réinitialiser</button>
       </div>
       <div class="muted" id="impactCount" style="margin-top:8px"></div>`;
 
   bindToolClose();
+  bindToolRoster(() => { impactEleveId = null; drawImpactMarker(); });
+  const choixEleve = document.getElementById("impactEleve");
+  if (choixEleve) choixEleve.onchange = () => { impactEleveId = choixEleve.value; drawImpactMarker(); };
   const canvas = document.getElementById("impactCanvas");
   const ctx = canvas.getContext("2d");
 
@@ -741,10 +763,17 @@ function renderImpactMarker() {
   };
 
   toolPanel.querySelectorAll("[data-impact-sport]").forEach(b =>
-    b.onclick = () => { impactSport = b.dataset.impactSport; impactPoints = []; renderImpactMarker(); });
-  document.getElementById("impactDelete").onclick = () => { impactDeleteMode = !impactDeleteMode; renderImpactMarker(); };
+    b.onclick = () => { impactSport = b.dataset.impactSport; viderReleve(); drawImpactMarker(); });
+  document.getElementById("impactDelete").onclick = () => { impactDeleteMode = !impactDeleteMode; drawImpactMarker(); };
   document.getElementById("impactUndo").onclick = () => { impactPoints.pop(); draw(); };
-  document.getElementById("impactClear").onclick = () => { impactPoints = []; draw(); };
+  document.getElementById("impactClear").onclick = () => {
+    if (!confirm(onRealClass() ? "Effacer les impacts de cet élève ?" : "Effacer tous les impacts relevés ?")) return;
+    viderReleve(); drawImpactMarker();
+  };
+  function viderReleve() {
+    impactPoints.length = 0;
+    if (onRealClass() && impactEleveId) impactParEleve[impactEleveId] = impactPoints;
+  }
   draw();
 }
 
@@ -901,6 +930,8 @@ function drawSpeedResults(groupe) {
   });
 }
 
-async function renderTeamsTool(){
-  toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<div class="muted">Chargement des classes...</div>`;bindToolClose();const classes=await lireTable("classes","classes?deleted=eq.false&select=*&order=name.asc",{trier:(a,b)=>String(a.name||"").localeCompare(String(b.name||""))});toolPanel.innerHTML=toolHeader("Équipes","Groupes et tirage au sort")+`<label>Classe</label><select id="teamClass"><option value="">Choisir...</option>${classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select><label>Nombre d'équipes</label><input id="teamCount" type="number" min="2" value="2"><button id="generateTeams">Générer les équipes</button><div id="teamsResult"></div>`;bindToolClose();document.getElementById("generateTeams").onclick=async()=>{const id=document.getElementById("teamClass").value,n=Math.max(2,+document.getElementById("teamCount").value||2);if(!id)return;const students=await lireTable("students",`students?class_id=eq.${id}&deleted=eq.false&select=*&order=last_name.asc`,{ou:e=>e.class_id===id,trier:(a,b)=>String(a.last_name||"").localeCompare(String(b.last_name||""))});students.sort(()=>Math.random()-.5);const teams=Array.from({length:n},()=>[]);students.forEach((s,i)=>teams[i%n].push(s));document.getElementById("teamsResult").innerHTML=teams.map((team,i)=>`<div class="teamResult"><strong>Équipe ${i+1}</strong><div>${team.map(s=>`${s.last_name.toUpperCase()} ${s.first_name}`).join("<br>")}</div></div>`).join("");};
-}
+// ---- Equipes ----
+// L'outil vit dans teams-saved-web.js, charge apres ce fichier : c'est lui qui pose
+// globalThis.renderTeamsTool. Une version existait aussi ici, mais elle etait ecrasee au
+// chargement et n'a donc jamais rien affiche - elle est retiree plutot que laissee a tromper
+// la prochaine lecture.
