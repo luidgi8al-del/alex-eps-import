@@ -417,7 +417,9 @@ function ecDessinerTableauDeBord(panel) {
   // nulle part, ils ouvrent la liste des classes pour en choisir une autre - comme dans
   // l'application, ou le bandeau porte deja ce role. Bandeau plein ecran : c'etait la carte du
   // site (bordure, marge, coin arrondi) qui laissait un liseret vide de chaque cote.
-  panel.querySelector(".ec-bandeau")?.classList.add("ec-bandeau-pleine-largeur");
+  // Sur le tableau de bord, chaque commande est une petite bulle blanche : le grand bandeau
+  // bleu reste reserve aux vrais sous-ecrans (eleves, documents, dispenses, groupes).
+  panel.querySelector(".ec-bandeau")?.classList.add("ec-bandeau-bulles");
   const ouvrirChoixClasse = () => { if (typeof toggleClasseAccordeon === "function") toggleClasseAccordeon(); };
   panel.querySelector("[data-ec-retour]").onclick = ouvrirChoixClasse;
   const titre = panel.querySelector(".ec-bandeau-titre");
