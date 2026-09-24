@@ -56,15 +56,40 @@
 .ec-corps { padding: 12px 14px 18px; display: flex; flex-direction: column; gap: 10px; }
 .ec-aide, .ec-vide { color: var(--ec-gris); font-size: 12px; margin: 0; }
 
-/* Resume : eleves, dispenses, seance */
-.ec-resume { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.ec-ecran .ec-resume > * { display: flex; flex-direction: column; align-items: center; gap: 1px; background: transparent;
-  color: var(--ec-bleu-fonce); padding: 4px; border-radius: 12px; }
-.ec-ecran .ec-resume > button:hover { background: #fff; }
+/* Resume : les quatre portes d'entree de la classe */
+.ec-resume { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+@media (min-width: 900px) { .ec-resume-quatre { grid-template-columns: repeat(4, 1fr); } }
+.ec-ecran .ec-resume > * { display: flex; flex-direction: row; align-items: center; gap: 10px; background: #fff;
+  color: var(--ec-bleu-fonce); padding: 12px; border-radius: 15px; text-align: left; box-shadow: 0 1px 3px #123a5515; }
+.ec-ecran .ec-resume > button:hover { background: var(--ec-bleu-pale); transform: translateY(-1px); }
 .ec-resume i { font-style: normal; font-size: 20px; }
-.ec-resume b { font-size: 19px; font-weight: 800; }
+.ec-resume span { display: grid; min-width: 0; }
+.ec-resume b { font-size: 14px; font-weight: 800; }
 .ec-resume small { color: var(--ec-gris); font-size: 11px; font-weight: 500; }
 .ec-ecran .ec-resume .vert { color: #159447; }
+.ec-ecran .ec-resume .orange { color: #C76A19; }
+
+/* Centre du tableau de bord : le prochain cours, puis les trois actions de travail. */
+.ec-tableau-principal { display: grid; gap: 10px; align-items: stretch; }
+@media (min-width: 900px) { .ec-tableau-principal { grid-template-columns: minmax(0, 1.55fr) minmax(280px, .8fr); } }
+.ec-prochain-cours { gap: 10px; }
+.ec-carte-tete small { color: var(--ec-gris); font-size: 12px; }
+.ec-ecran .ec-progression { display: grid; grid-template-columns: auto minmax(80px, 1fr) auto; align-items: center; gap: 12px;
+  width: 100%; padding: 8px 2px 2px; color: var(--ec-marine); background: transparent; text-align: left; }
+.ec-progression span:first-child { display: grid; }
+.ec-progression small { color: var(--ec-gris); }
+.ec-progression .ec-barre { height: 8px; overflow: hidden; border-radius: 99px; background: #E5EEF6; }
+.ec-progression .ec-barre i { display: block; height: 100%; border-radius: inherit; background: var(--ec-bleu); }
+.ec-progression strong { color: var(--ec-bleu-fonce); white-space: nowrap; }
+.ec-actions-rapides { gap: 7px; }
+.ec-ecran .ec-actions-rapides > button { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px;
+  width: 100%; padding: 10px; border-radius: 13px; color: var(--ec-marine); background: #F5F8FC; text-align: left; }
+.ec-actions-rapides > button:hover { background: var(--ec-bleu-pale); }
+.ec-actions-rapides > button > i { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 11px;
+  color: var(--ec-bleu-fonce); background: var(--ec-bleu-pale); font-style: normal; }
+.ec-actions-rapides > button span { display: grid; }
+.ec-actions-rapides > button small { color: var(--ec-gris); }
+.ec-actions-rapides > button strong { color: var(--ec-bleu); font-size: 20px; }
 
 /* Cours de la semaine */
 .ec-semaine { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 7px; }
@@ -109,6 +134,18 @@
 .ec-equipes { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
 .ec-equipes h3 { font-size: 13px; font-weight: 800; margin-right: 4px; }
 .ec-ecran .ec-puce { background: var(--ec-bleu-pale); color: var(--ec-bleu-fonce); border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 600; }
+
+/* Historique des compositions : une entree lisible par date et activite, puis le detail. */
+.ec-groupes-historique { display: grid; gap: 8px; }
+.ec-ecran .ec-groupe-date { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; width: 100%;
+  padding: 13px; border-radius: 16px; color: var(--ec-marine); background: #fff; text-align: left; box-shadow: 0 1px 3px #123a5515; }
+.ec-ecran .ec-groupe-date:hover { background: var(--ec-bleu-pale); }
+.ec-groupe-calendrier { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; background: var(--ec-bleu-pale); }
+.ec-groupe-date > span:nth-child(2) { display: grid; gap: 2px; }
+.ec-groupe-date small { color: var(--ec-bleu-fonce); font-weight: 700; text-transform: capitalize; }
+.ec-groupe-date b { font-size: 14px; }
+.ec-groupe-date em { color: var(--ec-gris); font-size: 11px; font-style: normal; }
+.ec-groupe-date > strong { color: var(--ec-bleu); font-size: 22px; }
 
 /* Pastilles de filtre et chiffres */
 .ec-pastilles { display: flex; gap: 6px; overflow-x: auto; }
@@ -182,11 +219,15 @@
 .ec-titre-liste { display: flex; justify-content: space-between; align-items: baseline; }
 .ec-titre-liste h3 { font-size: 13px; font-weight: 800; letter-spacing: .02em; }
 .ec-titre-liste small { color: var(--ec-gris); font-size: 12px; }
-.ec-eleve { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 8px 10px 8px 4px; box-shadow: 0 1px 2px #123a5512; }
+.ec-eleve { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px; box-shadow: 0 1px 2px #123a5512; }
 .ec-ecran .ec-eleve-nom { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; background: none; color: var(--ec-marine); padding: 4px 8px; text-align: left; }
 .ec-ecran .ec-eleve-nom:hover { background: none; }
 .ec-eleve-nom b { font-weight: 700; }
 .ec-eleve-nom small { color: var(--ec-gris); font-size: 12px; }
+.ec-eleve-infos { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 8px 14px; width: 100%; margin-top: 8px; }
+.ec-eleve-infos small { display: grid; min-width: 0; overflow-wrap: anywhere; }
+.ec-eleve-infos strong { color: var(--ec-marine); font-size: 10px; text-transform: uppercase; letter-spacing: .03em; }
+.ec-eleve-nom .ec-eleve-etat { margin-top: 7px; font-weight: 700; }
 .ec-eleve-nom small.rouge { color: #C93030; }
 .ec-niveau { width: auto; min-width: 0; max-width: 46%; border-radius: 13px; color: #0876D1; font-weight: 700; border-color: #b7d3ec; padding: 7px 8px; font-size: 13px; }
 .ec-ecran .ec-bouton-large { width: 100%; background: var(--ec-bleu); color: #fff; border-radius: 16px; padding: 14px; font-weight: 700; }
@@ -265,7 +306,9 @@
 @media (max-width: 600px) {
   .ec-bandeau-actions { display: none; }
   .ec-corps { padding: 10px 10px 16px; }
-  .ec-niveau { max-width: 52%; }
+  .ec-eleve { align-items: stretch; flex-direction: column; }
+  .ec-eleve-infos { grid-template-columns: 1fr 1fr; }
+  .ec-niveau { width: 100%; max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) { .ec-ecran * { transition: none !important; } }
 

@@ -34,7 +34,7 @@ let ecNotes = [];
 let ecResultatsTests = [];
 let ecNotesChargees = false;
 
-const EC_VUES = ["bord", "eleves", "evaluations", "recap", "documents", "dispenses"];
+const EC_VUES = ["bord", "eleves", "evaluations", "recap", "documents", "dispenses", "groupes"];
 
 // ---- Petits outils ----------------------------------------------------------------------
 
@@ -44,6 +44,15 @@ const ecNomEleve = e => e ? `${String(e.last_name || "").toUpperCase()} ${e.firs
 const ecEleve = id => dashboardStudents.find(s => s.id === id);
 const ecJour = iso => iso ? new Date(String(iso).slice(0, 10) + "T12:00:00").toLocaleDateString("fr-FR") : "";
 const ecDateCourte = ms => ms ? new Date(Number(ms) || Date.parse(ms)).toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : "";
+const ecDateLongue = ms => ms ? new Date(Number(ms) || Date.parse(ms)).toLocaleDateString("fr-FR", {
+  weekday: "long", day: "numeric", month: "long"
+}) : "Date non renseignée";
+const ecDateNaissance = valeur => {
+  if (valeur == null || valeur === "") return "Non renseignée";
+  const nombre = Number(valeur);
+  const date = Number.isFinite(nombre) ? new Date(nombre) : new Date(String(valeur).slice(0, 10) + "T12:00:00");
+  return Number.isNaN(date.getTime()) ? "Non renseignée" : date.toLocaleDateString("fr-FR");
+};
 const ecNombre = v => {
   const n = Number(v);
   if (!Number.isFinite(n)) return "";
@@ -319,6 +328,7 @@ function renderEcranClasse() {
   else if (vueClasse === "recap") ecDessinerRecap(panel);
   else if (vueClasse === "documents") ecDessinerDocuments(panel);
   else if (vueClasse === "dispenses") ecDessinerDispenses(panel);
+  else if (vueClasse === "groupes") ecDessinerGroupes(panel);
   return true;
 }
 
@@ -363,37 +373,31 @@ function ecDessinerTableauDeBord(panel) {
         <button type="button" id="ecSyncRond" class="ec-sync-rond" aria-label="Synchroniser">⟳</button>
       </div>` })}
     <div class="ec-corps">
-      <div class="ec-resume">
-        <button type="button" data-vue="eleves"><i>👥</i><b>${dashboardStudents.length}</b><small>élèves</small></button>
-        <button type="button" data-vue="dispenses" class="vert"><i>🛡️</i><b>${dispenses.length}</b><small>dispense${dispenses.length > 1 ? "s" : ""}</small></button>
-        <button type="button" data-vue="cours"><i>📅</i><b>${total ? `${numero} / ${total}` : "—"}</b><small>séance</small></button>
+      <div class="ec-resume ec-resume-quatre">
+        <button type="button" data-vue="eleves"><i>👥</i><span><b>${dashboardStudents.length} élèves</b><small>Effectif complet</small></span></button>
+        <button type="button" data-vue="dispenses" class="vert"><i>🛡️</i><span><b>${dispenses.length} dispense${dispenses.length > 1 ? "s" : ""}</b><small>En cours dans la classe</small></span></button>
+        <button type="button" data-vue="evaluations"><i>📝</i><span><b>${nbEval} évaluation${nbEval > 1 ? "s" : ""}</b><small>Tests et résultats</small></span></button>
+        <button type="button" data-vue="documents" class="orange"><i>📄</i><span><b>${manquants} document${manquants > 1 ? "s" : ""}</b><small>À rendre</small></span></button>
       </div>
 
-      <div class="ec-semaine">${cours.length ? cours.slice(0, 2).map(carteCours).join("")
-        : `<div class="ec-cours vide"><span class="ec-cours-jour">📅 Cours</span><b>Aucun cours programmé</b>
-            <small>Renseignez l’activité de la période dans PROGRAMMATION.</small></div>`}</div>
+      <div class="ec-tableau-principal">
+        <section class="ec-carte ec-prochain-cours">
+          <div class="ec-carte-tete"><div><h3>Prochain cours</h3><small>${choisi ? ecTexte(libelleJour(JOURS_SEMAINE[choisi.jour])) : "Programmation"}</small></div><small>${total ? `${numero} / ${total} séances` : "Cycle à compléter"}</small></div>
+          <div class="ec-semaine">${cours.length ? cours.slice(0, 2).map(carteCours).join("")
+            : `<div class="ec-cours vide"><span class="ec-cours-jour">📅 Cours</span><b>Aucun cours programmé</b>
+                <small>Renseignez l’activité de la période dans PROGRAMMATION.</small></div>`}</div>
+          <button type="button" class="ec-progression" data-vue="cours">
+            <span><b>Progression du cycle</b><small>${total ? `${ecPluriel(numero, "séance")} sur ${total}` : (cycle ? "Cycle sans séance" : "Aucun cycle")}</small></span>
+            <span class="ec-barre"><i style="width:${Math.round(part * 100)}%"></i></span><strong>${Math.round(part * 100)} %</strong>
+          </button>
+        </section>
 
-      <div class="ec-indicateurs">
-        <button type="button" class="ec-indic" data-vue="cours" style="--fond:#E6F1FB;--accent:#185FA5">
-          <span class="ec-indic-titre">Progression du cycle</span>
-          <span class="ec-anneau" style="--part:${Math.round(part * 100)}"><b>${Math.round(part * 100)}%</b></span>
-          <span class="ec-indic-valeur">${total ? `${ecPluriel(numero, "séance")} sur ${total}` : (cycle ? "Cycle sans séance" : "Aucun cycle")}</span>
-        </button>
-        <button type="button" class="ec-indic" data-vue="evaluations" style="--fond:#EEEDFE;--accent:#534AB7">
-          <span class="ec-indic-titre">Évaluations / Tests</span>
-          <span class="ec-indic-icone">📝</span>
-          <span class="ec-indic-valeur">${nbEval ? `${ecPluriel(nbEval, "enregistrée")}` : "Aucun résultat"}</span>
-        </button>
-        <button type="button" class="ec-indic" data-vue="documents" style="--fond:#FCEBEB;--accent:#C62828">
-          <span class="ec-indic-titre">Documents à rendre</span>
-          <span class="ec-indic-icone">📄</span>
-          <span class="ec-indic-valeur">${manquants ? ecPluriel(manquants, "manquant") : (documentsClasse.some(d => !d.archived) ? "Tout est rendu" : "Aucun document")}</span>
-        </button>
-        <button type="button" class="ec-indic" data-vue="dispenses" style="--fond:#E1F5EE;--accent:#0F7A45">
-          <span class="ec-indic-titre">Dispenses</span>
-          <span class="ec-indic-icone">🛡️</span>
-          <span class="ec-indic-valeur">${dispenses.length ? `${dispenses.length} en cours` : "Aucune en cours"}</span>
-        </button>
+        <section class="ec-carte ec-actions-rapides">
+          <div class="ec-carte-tete"><div><h3>Actions rapides</h3><small>Tout ce qui concerne cette classe</small></div></div>
+          <button type="button" data-vue="evaluations"><i>📝</i><span><b>Évaluations et tests</b><small>Créer, reprendre ou consulter</small></span><strong>›</strong></button>
+          <button type="button" data-vue="documents"><i>📁</i><span><b>Documents</b><small>Donnés, rendus et manquants</small></span><strong>›</strong></button>
+          <button type="button" data-vue="groupes"><i>👥</i><span><b>Groupes</b><small>Compositions classées par date et activité</small></span><strong>›</strong></button>
+        </section>
       </div>
 
       <section class="ec-carte">
@@ -406,12 +410,6 @@ function ecDessinerTableauDeBord(panel) {
         ${notesClasse.length > 2 ? `<button type="button" class="ec-lien" id="ecToutesNotes">${ecToutesLesNotes ? "Réduire" : `Voir les ${notesClasse.length} notes`}</button>` : ""}
         ${notesClasse.length ? `<p class="ec-aide">Clic : modifier · appui prolongé : supprimer</p>` : ""}
       </section>
-
-      <div class="ec-equipes"><h3>Équipes enregistrées</h3>
-        ${ecEquipes.length ? ecEquipes.slice(0, 6).map(t =>
-          `<button type="button" class="ec-puce" data-ec-equipe="${ecTexte(t.id)}">👥 ${ecTexte(t.name)}</button>`).join("")
-          : `<span class="ec-vide">Aucune</span>`}
-      </div>
     </div>
   </section>`;
 
@@ -448,11 +446,6 @@ function ecDessinerTableauDeBord(panel) {
     const note = notesClasse.find(n => n.id === b.dataset.ecNote);
     b.onclick = () => modifierNoteClasse(note);
     ecAppuiLong(b, () => supprimerNoteClasse(note.id));
-  });
-  panel.querySelectorAll("[data-ec-equipe]").forEach(b => {
-    const equipe = ecEquipes.find(t => t.id === b.dataset.ecEquipe);
-    b.onclick = () => ecOuvrirEquipe(equipe);
-    ecAppuiLong(b, () => ecSupprimerEquipe(equipe));
   });
 }
 
@@ -724,6 +717,31 @@ async function ecSupprimerEquipe(equipe) {
   renderClassDashboard();
 }
 
+// ---- Groupes ---------------------------------------------------------------------------
+
+function ecDessinerGroupes(panel) {
+  const { label } = dashboardClass;
+  const equipes = [...ecEquipes].filter(e => !e.deleted).sort((a, b) =>
+    (Number(b.created_at) || Date.parse(b.created_at) || 0) - (Number(a.created_at) || Date.parse(a.created_at) || 0));
+  panel.innerHTML = `<section class="ec-ecran">
+    ${ecBandeau(`${label} · Groupes`, { sous: `${ecPluriel(equipes.length, "composition")} enregistrée${equipes.length > 1 ? "s" : ""}` })}
+    <div class="ec-corps">
+      <div class="ec-titre-liste"><h3>Groupes créés</h3><small>Classés par date et activité</small></div>
+      <div class="ec-groupes-historique">${equipes.length ? equipes.map(equipe => `
+        <button type="button" class="ec-groupe-date" data-ec-equipe="${ecTexte(equipe.id)}">
+          <span class="ec-groupe-calendrier">📅</span><span><small>${ecTexte(ecDateLongue(equipe.created_at))}</small>
+          <b>${ecTexte(equipe.name || "Groupes")}</b><em>Cliquez pour afficher la composition</em></span><strong>›</strong>
+        </button>`).join("") : `<div class="ec-carte"><p class="ec-vide">Aucun groupe enregistré pour cette classe.</p></div>`}</div>
+      <p class="ec-aide">Clic : afficher les groupes · appui prolongé : supprimer la composition</p>
+    </div></section>`;
+  panel.querySelector("[data-ec-retour]").onclick = () => ecAller("bord");
+  panel.querySelectorAll("[data-ec-equipe]").forEach(b => {
+    const equipe = ecEquipes.find(t => t.id === b.dataset.ecEquipe);
+    b.onclick = () => ecOuvrirEquipe(equipe);
+    ecAppuiLong(b, () => ecSupprimerEquipe(equipe));
+  });
+}
+
 // ---- Eleves -----------------------------------------------------------------------------
 
 const EC_NIVEAUX = ["Débutant", "Fragile", "Moyen", "Bon", "Très bon"];
@@ -759,9 +777,15 @@ function ecDessinerEleves(panel) {
         const dispense = idsDispenses.has(e.id), manque = manquantsDe(e);
         const etat = dispense ? "Dispensé actuellement" : manque ? `${ecPluriel(manque, "document")} manquant${manque > 1 ? "s" : ""}` : "Dossier à jour";
         const niveau = ecNiveau(e);
+        const parent = e.parent_email || e.parent1_email || e.parent_1_email || "Non renseigné";
+        const parent2 = e.parent2_email || e.parent_2_email || "";
         return `<div class="ec-eleve">
           <button type="button" class="ec-eleve-nom" data-ec-dossier="${ecTexte(e.id)}"><b>${ecTexte(ecNomEleve(e))}</b>
-            <small class="${dispense ? "rouge" : ""}">${ecTexte(etat)}</small></button>
+            <span class="ec-eleve-infos"><small><strong>Naissance</strong>${ecTexte(ecDateNaissance(e.birth_date_epoch_millis || e.birth_date))}</small>
+            <small><strong>Sexe</strong>${ecTexte(e.sex || "Non renseigné")}</small>
+            <small><strong>Mail élève</strong>${ecTexte(e.student_email || "Non renseigné")}</small>
+            <small><strong>Mail parent</strong>${ecTexte(parent)}${parent2 ? `<br>${ecTexte(parent2)}` : ""}</small></span>
+            <small class="ec-eleve-etat ${dispense ? "rouge" : ""}">${ecTexte(etat)}</small></button>
           <select class="ec-niveau" data-ec-niveau="${ecTexte(e.id)}" aria-label="Niveau EPS de ${ecTexte(ecNomEleve(e))}">${
             EC_NIVEAUX.map((n, i) => `<option value="${i + 1}"${i + 1 === niveau ? " selected" : ""}>Niveau ${i + 1} · ${n}</option>`).join("")}</select>
         </div>`;
