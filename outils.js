@@ -149,7 +149,11 @@ let epsGenericGroupCount = 1;
 let epsGenericActiveGroup = 0;
 let epsGenericSessions = [];
 let epsGenericGroupAssignments = {};
-function resetGenericTestState(){epsGenericSessionId=null;epsGenericSessionRecord=null;epsGenericResultRecords={};epsGenericValues={};epsGenericGroupAssignments={};epsGenericGroupCount=1;epsGenericActiveGroup=0;epsGenericSessions=[]}
+// Notation en couleurs : la mesure se releve toujours (on chronometre), mais l'appreciation
+// portee a cote peut etre une pastille plutot qu'un calcul. Aucun seuil n'est invente - c'est
+// l'enseignant qui pose la couleur, comme en observation natation ou gymnastique.
+let epsGenericMode = "note", epsGenericColors = {}, epsGenericModeChoisi = false, epsGenericModeClasse = null;
+function resetGenericTestState(){epsGenericSessionId=null;epsGenericSessionRecord=null;epsGenericResultRecords={};epsGenericValues={};epsGenericGroupAssignments={};epsGenericGroupCount=1;epsGenericActiveGroup=0;epsGenericSessions=[];epsGenericColors={};epsGenericModeChoisi=false;epsGenericModeClasse=null}
 
 async function renderEpsTests() {
   await loadToolClasses();
@@ -272,16 +276,24 @@ async function drawEpsTestBody(key) {
   const displayed=epsGenericActiveGroup>0?toolStudents.filter(s=>groupOf(s)===epsGenericActiveGroup):toolStudents;
   const groupTabs=`<div class="running-group-tabs"><button class="${epsGenericActiveGroup===0?'':'secondary'}" data-generic-group="0">Tous · ordre alphabétique</button>${Array.from({length:epsGenericGroupCount},(_,i)=>`<button class="${epsGenericActiveGroup===i+1?'':'secondary'}" data-generic-group="${i+1}">Groupe ${i+1}</button>`).join('')}<label>Groupes<select id="genericGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===epsGenericGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label></div>`;
   const sessions=epsGenericSessions.map(s=>`<div class="running-session-card ${String(s.id)===String(epsGenericSessionId)?'active':''}"><button data-generic-session="${s.id}"><b>${test.label}</b><small>${new Date(s.created_at).toLocaleString('fr-FR')} · modifiable</small></button><button class="danger" data-delete-generic-session="${s.id}">Supprimer</button></div>`).join('');
-  host.innerHTML = `<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details>${groupTabs}
+  // Couleur d'office en 6e, comme partout ailleurs, tant que l'enseignant n'a pas choisi.
+  if(!epsGenericSessionId&&!epsGenericModeChoisi&&epsGenericModeClasse!==toolClassId){epsGenericMode=socleModeParDefaut(toolClassId);epsGenericModeClasse=toolClassId}
+  // Tableau du socle : les noms restent en vue pendant que les colonnes defilent.
+  const colonnes=[...(epsGenericGroupCount>1?[{titre:"Groupe"}]:[]),{titre:test.inputLabel,aide:"Mesure relevée"}];
+  const lignes=displayed.map(s=>({eleve:s,
+    sousTitre:epsGenericGroupCount>1?`Groupe ${groupOf(s)}`:"",
+    cellules:[
+      ...(epsGenericGroupCount>1?[`<select data-generic-student-group="${s.id}">${Array.from({length:epsGenericGroupCount},(_,i)=>`<option value="${i+1}" ${groupOf(s)===i+1?'selected':''}>${i+1}</option>`).join('')}</select>`]:[]),
+      `<input type="text" inputmode="decimal" data-eps-input="${s.id}" value="${epsGenericValues[s.id]??''}">`
+    ],
+    total:epsGenericMode==="couleur"
+      ? socleCouleurCelluleHtml(epsGenericColors[s.id],`data-eps-couleur="${s.id}"`)
+      : `<span data-eps-out="${s.id}">—</span>`}));
+  host.innerHTML = `<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details>
+    <div class="field-tool-row">${socleSelecteurModeHtml(epsGenericMode,"epsGenericMode")}</div>${groupTabs}
     <div class="modern-test-summary"><b>${toolStudents.length}</b><span>élèves · saisie partielle autorisée · P${epsTestPeriod}</span></div>
-    ${displayed.map(s => `<div class="modern-test-student">
-      <div class="modern-test-student-head"><strong>${studentLabel(s)}</strong>${epsGenericGroupCount>1?`<label>Groupe<select data-generic-student-group="${s.id}">${Array.from({length:epsGenericGroupCount},(_,i)=>`<option value="${i+1}" ${groupOf(s)===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label>`:''}</div>
-      <div class="row" style="align-items:center">
-        <div><label>${test.inputLabel}</label><input type="text" inputmode="decimal" data-eps-input="${s.id}" value="${epsGenericValues[s.id]??''}"></div>
-        <div style="color:var(--primary); font-weight:700; padding-top:22px" data-eps-out="${s.id}">—</div>
-      </div>
-    </div>`).join("")}
-    <div class="running-save-actions"><button id="epsSaveBtn">${epsGenericSessionId?'Enregistrer les modifications':'Enregistrer dans Tests EPS'}</button><button class="secondary" id="epsSaveAsBtn">Enregistrer comme nouveau test</button></div>
+    <div class="fitness-web">${socleTableauHtml(colonnes,lignes,epsGenericMode==="couleur"?"Appréciation":"Résultat")}</div>
+    <div class="running-save-actions"><button id="epsSaveBtn">${epsGenericSessionId?'Enregistrer les modifications':'Enregistrer dans Tests EPS'}</button><button class="secondary" id="epsSaveAsBtn">Enregistrer comme nouveau test</button><button class="secondary" id="epsResetBtn">↺ Réinitialiser</button></div>
     <section class="field-tool-card"><h3>Tests enregistrés</h3><div class="running-session-list">${sessions||'<span class="muted">Aucun test enregistré.</span>'}</div></section>`;
 
   const refresh = () => {
@@ -289,9 +301,9 @@ async function drawEpsTestBody(key) {
     host.querySelectorAll("[data-eps-input]").forEach(input => {
       const v = toolNumber(input.value);
       const out = host.querySelector(`[data-eps-out="${input.dataset.epsInput}"]`);
-      if (v == null) { out.textContent = "—"; return; }
+      if (v == null) { if (out) out.textContent = "—"; return; }
       const r = test.compute(v);
-      out.textContent = `${EpsTests.fr(r.value, 1)} ${r.unit}`;
+      if (out) out.textContent = `${EpsTests.fr(r.value, 1)} ${r.unit}`;
       ready++;
     });
     document.getElementById("epsSaveBtn").disabled = ready === 0;
@@ -304,6 +316,11 @@ async function drawEpsTestBody(key) {
   document.getElementById("genericGroupCount").onchange=e=>{epsGenericGroupCount=+e.target.value;epsGenericActiveGroup=0;drawEpsTestBody(key)};
   host.querySelectorAll("[data-generic-student-group]").forEach(select=>select.onchange=()=>{epsGenericGroupAssignments[select.dataset.genericStudentGroup]=+select.value;drawEpsTestBody(key)});
   host.querySelectorAll("[data-generic-group]").forEach(b=>b.onclick=()=>{epsGenericActiveGroup=+b.dataset.genericGroup;drawEpsTestBody(key)});
+  // La pastille passe au niveau suivant a chaque appui, puis revient au vide : c'est le meme
+  // geste qu'en observation natation, pour ne pas avoir a reapprendre.
+  host.querySelectorAll("[data-eps-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.epsCouleur;epsGenericColors[id]=socleCouleurSuivante(epsGenericColors[id]);drawEpsTestBody(key)});
+  document.getElementById("epsGenericMode").onchange=e=>{epsGenericMode=e.target.value;epsGenericModeChoisi=true;drawEpsTestBody(key)};
+  document.getElementById("epsResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies de ce test et repartir de zéro ?"))return;epsGenericValues={};epsGenericColors={};drawEpsTestBody(key)};
   host.querySelectorAll("[data-generic-session]").forEach(b=>b.onclick=()=>openGenericTestSession(b.dataset.genericSession,key));
   host.querySelectorAll("[data-delete-generic-session]").forEach(b=>b.onclick=()=>deleteGenericTestSession(b.dataset.deleteGenericSession,key));
 }
@@ -444,8 +461,8 @@ async function saveEpsTest(key, asNew=false) {
     for(const r of rows){const old=!asNew?epsGenericResultRecords[r.studentId]:null,resultId=old?.id||crypto.randomUUID();kept.add(String(resultId));await enregistrerLigne("eps_test_results",{
       ...(old||{}),id:resultId, user_id: old?.user_id||session.user_id, session_id: sessionId,
       student_id: r.studentId, input_value: r.input??0, result_value: r.value,
-      input_unit: `group:${epsGenericGroupCount>1?(epsGenericGroupAssignments[r.studentId]||((toolStudents.findIndex(s=>String(s.id)===String(r.studentId))%epsGenericGroupCount)+1)):1}|${test.inputLabel}`,
-      result_unit: r.draft?"brouillon":r.unit,
+      input_unit: `group:${epsGenericGroupCount>1?(epsGenericGroupAssignments[r.studentId]||((toolStudents.findIndex(s=>String(s.id)===String(r.studentId))%epsGenericGroupCount)+1)):1}|${test.inputLabel}|mode:${epsGenericMode}${epsGenericColors[r.studentId]?`|couleur:${epsGenericColors[r.studentId]}`:""}`,
+      result_unit: r.draft?"brouillon":(epsGenericMode==="couleur"&&epsGenericColors[r.studentId]?socleCouleurParCode(epsGenericColors[r.studentId]).libelle:r.unit),
       updated_at: now, deleted: false
     })}
     if(!asNew)for(const old of Object.values(epsGenericResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne("eps_test_results",{...old,deleted:true,updated_at:now});
@@ -457,12 +474,15 @@ async function saveEpsTest(key, asNew=false) {
   }
 }
 
-async function openGenericTestSession(sessionId,key){const test=EpsTests.TESTS[key],saved=epsGenericSessions.find(s=>String(s.id)===String(sessionId))||await lireTable("eps_test_sessions",`eps_test_sessions?id=eq.${sessionId}&select=*`).then(r=>r[0]);if(!saved)return;const rows=await lireTable("eps_test_results",`eps_test_results?session_id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(sessionId)&&!r.deleted});epsGenericSessionId=saved.id;epsGenericSessionRecord=saved;epsGenericResultRecords={};epsGenericValues={};epsGenericGroupAssignments={};let maxGroup=1;rows.forEach(r=>{epsGenericResultRecords[r.student_id]=r;epsGenericValues[r.student_id]=String(r.result_unit||'').includes('brouillon')?'':String(r.input_value??'');const g=+String(r.input_unit||'').match(/^group:(\d+)/)?.[1]||1;epsGenericGroupAssignments[r.student_id]=g;maxGroup=Math.max(maxGroup,g)});epsGenericGroupCount=maxGroup;epsGenericActiveGroup=0;await drawEpsTestBody(key)}
+async function openGenericTestSession(sessionId,key){const test=EpsTests.TESTS[key],saved=epsGenericSessions.find(s=>String(s.id)===String(sessionId))||await lireTable("eps_test_sessions",`eps_test_sessions?id=eq.${sessionId}&select=*`).then(r=>r[0]);if(!saved)return;const rows=await lireTable("eps_test_results",`eps_test_results?session_id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(sessionId)&&!r.deleted});epsGenericSessionId=saved.id;epsGenericSessionRecord=saved;epsGenericResultRecords={};epsGenericValues={};epsGenericGroupAssignments={};epsGenericColors={};let maxGroup=1;rows.forEach(r=>{epsGenericResultRecords[r.student_id]=r;epsGenericValues[r.student_id]=String(r.result_unit||'').includes('brouillon')?'':String(r.input_value??'');const g=+String(r.input_unit||'').match(/^group:(\d+)/)?.[1]||1;epsGenericGroupAssignments[r.student_id]=g;maxGroup=Math.max(maxGroup,g);const u=String(r.input_unit||'');const modeVu=u.match(/mode:(note|couleur)/)?.[1];if(modeVu){epsGenericMode=modeVu;epsGenericModeChoisi=true}const couleurVue=u.match(/couleur:([a-z-]+)/)?.[1];if(couleurVue)epsGenericColors[r.student_id]=couleurVue});epsGenericGroupCount=maxGroup;epsGenericActiveGroup=0;await drawEpsTestBody(key)}
 async function deleteGenericTestSession(sessionId,key){if(!confirm("Supprimer ce test et ses résultats ?"))return;const saved=epsGenericSessions.find(s=>String(s.id)===String(sessionId));if(saved)await enregistrerLigne("eps_test_sessions",{...saved,deleted:true,updated_at:new Date().toISOString()});if(String(epsGenericSessionId)===String(sessionId)){epsGenericSessionId=null;epsGenericSessionRecord=null;epsGenericResultRecords={};epsGenericValues={}}await drawEpsTestBody(key)}
 
 // ---- Tests VMA (miroir de VmaTestScreen) ----
 let vmaProtocol = "VAMEVAL";
 let vmaSessionId=null,vmaSessionRecord=null,vmaResultRecords={},vmaValues={},vmaGroupCount=1,vmaActiveGroup=0,vmaGroupAssignments={},vmaSessions=[];
+// Meme principe que les autres tests : la mesure se releve toujours, l'appreciation peut etre
+// une pastille de couleur plutot qu'une VMA chiffree (couleur d'office en 6e).
+let vmaMode="note",vmaColors={},vmaModeChoisi=false,vmaModeClasse=null;
 
 async function renderVmaTest() {
   await loadToolClasses();
@@ -472,6 +492,7 @@ async function renderVmaTest() {
 
 async function drawVmaTest() {
   const proto = EpsTests.VMA_PROTOCOLS.find(p => p.key === vmaProtocol);
+  if(!vmaSessionId&&!vmaModeChoisi&&vmaModeClasse!==toolClassId){vmaMode=socleModeParDefaut(toolClassId);vmaModeClasse=toolClassId}
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
   if(onRealClass())vmaSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=like.Test%20VMA*&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&String(r.test_name||'').startsWith('Test VMA')&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});else vmaSessions=[];
   const groupOf=s=>vmaGroupCount>1?(vmaGroupAssignments[s.id]||((toolStudents.findIndex(x=>String(x.id)===String(s.id))%vmaGroupCount)+1)):1;
@@ -484,15 +505,20 @@ async function drawVmaTest() {
     + `<div class="toolActions" style="margin-top:10px">${EpsTests.VMA_PROTOCOLS.map(p =>
         `<button class="${p.key === vmaProtocol ? "" : "secondary"}" data-vma-proto="${p.key}">${p.label}</button>`).join("")}</div>
       <div class="card" style="background:#F2F8FF"><strong>${proto.label}</strong><div class="muted">${proto.hint}</div></div>
-      ${groups}${visible.map(s => `<div class="modern-test-student">
-        <div class="modern-test-student-head"><strong>${studentLabel(s)}</strong>${onRealClass()&&vmaGroupCount>1?`<label>Groupe<select data-vma-student-group="${s.id}">${Array.from({length:vmaGroupCount},(_,i)=>`<option value="${i+1}" ${groupOf(s)===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label>`:''}</div>
-        <div class="row" style="align-items:center">
-          <div><label>${vmaProtocol.includes("Cooper") ? "Distance (m)" : "Palier"}</label>
-            <input type="text" inputmode="decimal" data-vma-input="${s.id}" value="${vmaValues[s.id]??''}"></div>
-          <div style="color:var(--primary); font-weight:700; padding-top:22px" data-vma-out="${s.id}">—</div>
-        </div>
-      </div>`).join("")}
-      ${onRealClass() ? `<div class="running-save-actions"><button id="vmaSaveBtn">${vmaSessionId?'Enregistrer les modifications':'Enregistrer dans Tests EPS'}</button><button class="secondary" id="vmaSaveAsBtn">Enregistrer comme nouveau test</button></div>` : ""}
+      <div class="field-tool-row">${socleSelecteurModeHtml(vmaMode,"vmaMode")}</div>
+      ${groups}<div class="fitness-web">${socleTableauHtml(
+        [...(onRealClass()&&vmaGroupCount>1?[{titre:"Groupe"}]:[]),{titre:vmaProtocol.includes("Cooper")?"Distance (m)":"Palier",aide:"Mesure relevée"}],
+        visible.map(s=>({eleve:s,
+          sousTitre:onRealClass()&&vmaGroupCount>1?`Groupe ${groupOf(s)}`:"",
+          cellules:[
+            ...(onRealClass()&&vmaGroupCount>1?[`<select data-vma-student-group="${s.id}">${Array.from({length:vmaGroupCount},(_,i)=>`<option value="${i+1}" ${groupOf(s)===i+1?'selected':''}>${i+1}</option>`).join('')}</select>`]:[]),
+            `<input type="text" inputmode="decimal" data-vma-input="${s.id}" value="${vmaValues[s.id]??''}">`
+          ],
+          total:vmaMode==="couleur"
+            ? socleCouleurCelluleHtml(vmaColors[s.id],`data-vma-couleur="${s.id}"`)
+            : `<span data-vma-out="${s.id}">—</span>`})),
+        vmaMode==="couleur"?"Appréciation":"VMA")}</div>
+      ${onRealClass() ? `<div class="running-save-actions"><button id="vmaSaveBtn">${vmaSessionId?'Enregistrer les modifications':'Enregistrer dans Tests EPS'}</button><button class="secondary" id="vmaSaveAsBtn">Enregistrer comme nouveau test</button><button class="secondary" id="vmaResetBtn">↺ Réinitialiser</button></div>` : ""}
       <div class="ok" id="vmaSaveMsg"></div>${saved}`;
 
   bindToolClose();
@@ -505,9 +531,9 @@ async function drawVmaTest() {
     toolPanel.querySelectorAll("[data-vma-input]").forEach(input => {
       const v = toolNumber(input.value);
       const out = toolPanel.querySelector(`[data-vma-out="${input.dataset.vmaInput}"]`);
-      if (v == null) { out.textContent = "—"; return; }
+      if (v == null) { if (out) out.textContent = "—"; return; }
       const vma = EpsTests.computeVma(vmaProtocol, v);
-      out.textContent = `VMA : ${EpsTests.fr(vma, 1)} km/h · VO₂max ${EpsTests.fr(vma * 3.5, 0)}`;
+      if (out) out.textContent = `VMA : ${EpsTests.fr(vma, 1)} km/h · VO₂max ${EpsTests.fr(vma * 3.5, 0)}`;
       ready++;
     });
     const btn = document.getElementById("vmaSaveBtn");
@@ -522,6 +548,10 @@ async function drawVmaTest() {
   const count=document.getElementById('vmaGroupCount');if(count)count.onchange=()=>{vmaGroupCount=+count.value;vmaActiveGroup=0;drawVmaTest()};
   toolPanel.querySelectorAll('[data-vma-group]').forEach(b=>b.onclick=()=>{vmaActiveGroup=+b.dataset.vmaGroup;drawVmaTest()});
   toolPanel.querySelectorAll('[data-vma-student-group]').forEach(s=>s.onchange=()=>{vmaGroupAssignments[s.dataset.vmaStudentGroup]=+s.value;drawVmaTest()});
+  // Pastille de couleur et remise a zero, comme dans les autres tests.
+  toolPanel.querySelectorAll('[data-vma-couleur]').forEach(b=>b.onclick=()=>{const id=b.dataset.vmaCouleur;vmaColors[id]=socleCouleurSuivante(vmaColors[id]);drawVmaTest()});
+  const modeSel=document.getElementById('vmaMode');if(modeSel)modeSel.onchange=e=>{vmaMode=e.target.value;vmaModeChoisi=true;drawVmaTest()};
+  const raz=document.getElementById('vmaResetBtn');if(raz)raz.onclick=()=>{if(!confirm('Effacer toutes les saisies de ce test et repartir de zéro ?'))return;vmaValues={};vmaColors={};drawVmaTest()};
   toolPanel.querySelectorAll('[data-vma-session]').forEach(b=>b.onclick=()=>openVmaSession(b.dataset.vmaSession));toolPanel.querySelectorAll('[data-vma-delete]').forEach(b=>b.onclick=()=>deleteVmaSession(b.dataset.vmaDelete));
 }
 
