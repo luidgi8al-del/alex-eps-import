@@ -137,6 +137,10 @@ Deno.serve(async (req) => {
       .from("health_dispensations")
       .select("id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, updated_at")
       .eq("user_id", SHEET_USER_ID)
+      // Une suppression ne retire pas la ligne, elle la marque effacee : c'est ce qui fait
+      // disparaitre la dispense sur tous les appareils. Sans ce filtre, le Sheet ressuscitait
+      // ce que l'on venait d'effacer.
+      .eq("deleted", false)
       .order("start_date", { ascending: false });
     if (error) return repondre({ error: error.message }, 500);
 
@@ -159,17 +163,24 @@ Deno.serve(async (req) => {
     }
 
     return repondre({
-      lignes: (data || []).map(d => ({
-        id: d.id,
-        eleve: eleves.get(d.student_id)?.nom || "(élève retiré)",
-        classe: classes.get(d.class_id) || eleves.get(d.student_id)?.classe || "",
-        naissance: eleves.get(d.student_id)?.naissance || "",
-        debut: d.start_date, fin: d.end_date,
-        famille: d.reason_kind || "", motif: d.reason || "",
-        aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
-        adapte: d.adapted_activities || "",
-        modifie: d.updated_at
-      }))
+      lignes: (data || []).map(d => {
+        const nom = eleves.get(d.student_id)?.nom || "(élève retiré)";
+        const classe = classes.get(d.class_id) || eleves.get(d.student_id)?.classe || "";
+        return {
+          id: d.id,
+          // Le Sheet ecrit le libelle, pas le nom seul : c'est ce que propose sa liste deroulante,
+          // et une cellule qui n'y figure pas se couvre d'un avertissement a chaque ligne.
+          eleve: classe ? `${nom} — ${classe}` : nom,
+          nom,
+          classe,
+          naissance: eleves.get(d.student_id)?.naissance || "",
+          debut: d.start_date, fin: d.end_date,
+          famille: d.reason_kind || "", motif: d.reason || "",
+          aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
+          adapte: d.adapted_activities || "",
+          modifie: d.updated_at
+        };
+      })
     });
   }
 

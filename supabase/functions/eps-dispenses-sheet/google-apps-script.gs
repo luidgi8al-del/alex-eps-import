@@ -156,6 +156,9 @@ function rafraichirListeEleves_() {
   var lignes = (appeler_({ action: 'eleves' }).lignes) || [];
   var feuille = feuilleEleves_();
   feuille.clear();
+  // Meme precaution que pour le tableau : "6e1" ne doit pas devenir 60 dans la liste non plus,
+  // sinon le libelle ecrit par l'actualisation ne correspondrait plus a celui de la liste.
+  feuille.getRange(1, 1, Math.max(lignes.length + 1, 2), 4).setNumberFormat('@');
   feuille.getRange(1, 1, 1, 4).setValues([['libellé', 'nom', 'classe', 'naissance']]);
   if (lignes.length) {
     feuille.getRange(2, 1, lignes.length, 4).setValues(lignes.map(function (e) {
@@ -209,6 +212,15 @@ function actualiser() {
   if (dernier >= PREMIERE_LIGNE) {
     feuille.getRange(PREMIERE_LIGNE, 1, dernier - PREMIERE_LIGNE + 1, COLONNES.length).clearContent();
   }
+
+  // Tout le tableau est du texte, pose AVANT l'ecriture.
+  //
+  // Une classe nommee "6e1" ou "3e2" est lue par Google comme de la notation scientifique :
+  // elle s'affichait 6,00E+01 et 3,00E+02. Les dates subissent le meme sort selon la langue du
+  // compte. Le format se declare avant setValues, sinon la conversion a deja eu lieu.
+  feuille.getRange(PREMIERE_LIGNE, 1, DERNIERE_LIGNE_LISTE - 1, COLONNES.length)
+    .setNumberFormat('@');
+
   if (lignes.length) {
     var valeurs = lignes.map(function (l) {
       return [l.id, l.eleve, l.classe, l.naissance, l.debut, l.fin,
