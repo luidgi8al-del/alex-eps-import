@@ -9,8 +9,9 @@ La base reste la référence : le Sheet se réécrit à partir d'elle.
 
 ## Ce qui circule
 
-Élève, classe, dates, famille du motif et motif. Le motif médical en fait partie — c'est ce que
-l'infirmerie a besoin de connaître. **Le Sheet ne doit donc être partagé qu'avec elle.**
+Élève, classe, date de naissance, dates de dispense, famille du motif, motif, aptitude et sport
+adapté. Le motif médical en fait partie — c'est ce que l'infirmerie a besoin de connaître.
+**Le Sheet ne doit donc être partagé qu'avec elle.**
 
 ## Mise en place, une seule fois
 
@@ -21,7 +22,9 @@ il ne donne accès ni à votre compte, ni au reste de la base.
 
 ### 2. Côté Supabase
 
-Déployer la fonction, puis poser deux secrets dans **Edge Functions > Secrets** :
+Lancer `schema_sante_4_sport_adapte.sql` dans l'éditeur SQL (colonnes *aptitude* et *sport
+adapté*), déployer la fonction, désactiver **Verify JWT** dessus, puis poser deux secrets dans
+**Edge Functions > Secrets** :
 
 | Secret | Valeur |
 |---|---|
@@ -64,9 +67,15 @@ Déployer la fonction, puis poser deux secrets dans **Edge Functions > Secrets**
 
 ### Ce qu'il faut savoir
 
-- **L'élève est retrouvé par son nom.** Accents, casse et ordre (« DUPONT Léa » ou « Léa Dupont »)
-  n'ont pas d'importance. En revanche, si deux élèves portent le même nom, il faut renseigner la
-  classe — sinon la ligne est refusée plutôt que posée sur le mauvais élève.
+- **La colonne Élève est une liste déroulante.** On tape quelques lettres du nom *ou* du prénom,
+  la liste se filtre, on choisit — et la **classe** et la **date de naissance** se remplissent
+  toutes seules. La liste se met à jour à chaque actualisation.
+- **On peut aussi taper un nom à la main**, pour un élève arrivé en cours d'année et pas encore
+  synchronisé. Accents, casse et ordre (« DUPONT Léa » ou « Léa Dupont ») n'ont pas d'importance.
+  En revanche, si deux élèves portent le même nom, il faut renseigner la classe — sinon la ligne
+  est refusée plutôt que posée sur le mauvais élève.
+- **L'onglet `Élèves` est masqué** : il porte la liste qui alimente le menu déroulant. Ne pas le
+  remplir à la main, il est réécrit à chaque actualisation.
 - **Le sens base → Sheet n'est pas instantané.** Google ne permet pas de pousser vers un Sheet :
   c'est le Sheet qui vient lire, toutes les 5 minutes. L'autre sens, lui, est immédiat.
 - **La colonne `id` est masquée** et ne doit pas être modifiée : c'est elle qui relie une ligne du

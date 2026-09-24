@@ -58,6 +58,43 @@ function familleMotif(valeur: string) {
   return FAMILLES.find(f => v.includes(f)) || null;
 }
 
+/** Idem pour l'aptitude (voir schema_sante_4_sport_adapte.sql). Vide = non renseigne. */
+function aptitudeDepuis(valeur: string) {
+  const v = String(valeur || "").toUpperCase();
+  if (!v.trim()) return null;
+  return v.includes("ADAPT") ? "SPORT_ADAPTE" : "INAPTE_TOTAL";
+}
+const APTITUDE_LISIBLE: Record<string, string> = {
+  INAPTE_TOTAL: "Inapte à toute pratique",
+  SPORT_ADAPTE: "Sport adapté possible"
+};
+
+/** La naissance est stockee en millisecondes : le Sheet, lui, veut une date lisible. */
+function jourDepuisMillis(millis: unknown) {
+  const n = Number(millis);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  return new Date(n).toISOString().slice(0, 10);
+}
+
+/**
+ * Les eleves du compte configure, et eux seuls.
+ *
+ * Le filtre par user_id compte autant ici que pour les dispenses : la fonction travaille avec la
+ * cle de service, qui ignore les regles de la base. Sans lui, une homonymie avec l'eleve d'un
+ * collegue suffirait a poser la dispense sur le mauvais dossier.
+ */
+async function elevesDuCompte() {
+  const { data: eleves, error } = await admin
+    .from("students")
+    .select("id, last_name, first_name, class_id, birth_date_epoch_millis")
+    .eq("user_id", SHEET_USER_ID).eq("deleted", false);
+  if (error) throw new Error(error.message);
+  const { data: classes } = await admin.from("classes")
+    .select("id, name").eq("user_id", SHEET_USER_ID).eq("deleted", false);
+  const nomClasse = new Map<string, string>((classes || []).map(c => [c.id, c.name]));
+  return { eleves: eleves || [], nomClasse };
+}
+
 Deno.serve(async (req) => {
   const repondre = (corps: unknown, status = 200) =>
     new Response(JSON.stringify(corps), { status, headers: entetes });
@@ -74,11 +111,31 @@ Deno.serve(async (req) => {
 
   const action = String(requete.action || "");
 
+  // ---- Eleves : de quoi remplir la liste deroulante du Sheet ----------------------------------
+  // Taper un nom et le choisir vaut mieux que le saisir : l'infirmerie n'a pas a deviner
+  // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.
+  if (action === "eleves") {
+    let contenu;
+    try { contenu = await elevesDuCompte(); }
+    catch (e) { return repondre({ error: (e as Error).message }, 500); }
+    const lignes = contenu.eleves.map(e => {
+      const nom = `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
+      const classe = contenu.nomClasse.get(e.class_id) || "";
+      return {
+        // Le libelle est ce qui s'affiche dans la liste : nom ET classe, pour departager
+        // deux eleves qui portent le meme nom.
+        libelle: classe ? `${nom} — ${classe}` : nom,
+        nom, classe, naissance: jourDepuisMillis(e.birth_date_epoch_millis)
+      };
+    }).sort((a, b) => a.libelle.localeCompare(b.libelle, "fr"));
+    return repondre({ lignes });
+  }
+
   // ---- Lister : le Sheet se reecrit avec l'etat de la base -------------------------------------
   if (action === "lister") {
     const { data, error } = await admin
       .from("health_dispensations")
-      .select("id, class_id, student_id, start_date, end_date, reason, reason_kind, updated_at")
+      .select("id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, updated_at")
       .eq("user_id", SHEET_USER_ID)
       .order("start_date", { ascending: false });
     if (error) return repondre({ error: error.message }, 500);
@@ -86,17 +143,18 @@ Deno.serve(async (req) => {
     const idsClasses = [...new Set((data || []).map(d => d.class_id))];
     const idsEleves = [...new Set((data || []).map(d => d.student_id))];
     const classes = new Map<string, string>();
-    const eleves = new Map<string, { nom: string; classe: string }>();
+    const eleves = new Map<string, { nom: string; classe: string; naissance: string }>();
     if (idsClasses.length) {
       const { data: cs } = await admin.from("classes").select("id, name").in("id", idsClasses);
       (cs || []).forEach(c => classes.set(c.id, c.name));
     }
     if (idsEleves.length) {
       const { data: es } = await admin.from("students")
-        .select("id, last_name, first_name, class_id").in("id", idsEleves);
+        .select("id, last_name, first_name, class_id, birth_date_epoch_millis").in("id", idsEleves);
       (es || []).forEach(e => eleves.set(e.id, {
         nom: `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim(),
-        classe: classes.get(e.class_id) || ""
+        classe: classes.get(e.class_id) || "",
+        naissance: jourDepuisMillis(e.birth_date_epoch_millis)
       }));
     }
 
@@ -105,8 +163,11 @@ Deno.serve(async (req) => {
         id: d.id,
         eleve: eleves.get(d.student_id)?.nom || "(élève retiré)",
         classe: classes.get(d.class_id) || eleves.get(d.student_id)?.classe || "",
+        naissance: eleves.get(d.student_id)?.naissance || "",
         debut: d.start_date, fin: d.end_date,
         famille: d.reason_kind || "", motif: d.reason || "",
+        aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
+        adapte: d.adapted_activities || "",
         modifie: d.updated_at
       }))
     });
@@ -125,11 +186,11 @@ Deno.serve(async (req) => {
     // Retrouver l'eleve par son nom, dans la classe indiquee quand elle l'est. Sans identifiant
     // c'est le seul rattachement possible - et il doit echouer clairement plutot qu'a moitie,
     // sinon une dispense se poserait sur le mauvais eleve sans que personne le voie.
-    const { data: eleves, error: erreurEleves } = await admin
-      .from("students").select("id, last_name, first_name, class_id").eq("deleted", false);
-    if (erreurEleves) return repondre({ error: erreurEleves.message }, 500);
-    const { data: classes } = await admin.from("classes").select("id, name").eq("deleted", false);
-    const nomClasse = (id: string) => (classes || []).find(c => c.id === id)?.name || "";
+    let contenu;
+    try { contenu = await elevesDuCompte(); }
+    catch (e) { return repondre({ error: (e as Error).message }, 500); }
+    const { eleves } = contenu;
+    const nomClasse = (id: string) => contenu.nomClasse.get(id) || "";
 
     const cherche = cleNom(ligne.eleve || "");
     const classeVoulue = cleNom(ligne.classe || "");
@@ -155,6 +216,8 @@ Deno.serve(async (req) => {
       end_date: fin,
       reason: String(ligne.motif || "") || null,
       reason_kind: familleMotif(String(ligne.famille || ligne.motif || "")),
+      aptitude: aptitudeDepuis(String(ligne.aptitude || "")),
+      adapted_activities: String(ligne.adapte || "") || null,
       updated_at: maintenant
     };
 

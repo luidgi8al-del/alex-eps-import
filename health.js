@@ -25,7 +25,7 @@
     if(!healthSelectedClassId||!healthClasses.some(c=>c.id===healthSelectedClassId))healthSelectedClassId=healthClasses[0]?.id||null;
     // Le motif ne s'affiche que si la colonne existe : le marqueur le dit sans faire echouer
     // un enregistrement pour l'apprendre.
-    await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible()]);
+    await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible(),verifierAdapteDisponible()]);
     renderHealthTab();
   }
   function renderHealthTab(){
@@ -46,10 +46,43 @@
   /** Le motif n'existe qu'une fois schema_sante_2.sql passe. Avant, on n'en parle pas. */
   let dispenseMotifDispo=false;
   let dispenseIdentiteDispo=false;
+  /** Le sport adapte n'existe qu'une fois schema_sante_4_sport_adapte.sql passe. */
+  let dispenseAdapteDispo=false;
 
   const MOTIFS=[['BLESSURE','Blessure'],['MALADIE','Maladie'],['CERTIFICAT','Certificat médical'],
     ['INAPTITUDE_PARTIELLE','Inaptitude partielle'],['AUTRE','Autre']];
   const motifLibelle=kind=>(MOTIFS.find(m=>m[0]===kind)||[null,''])[1];
+
+  /**
+   * Sport adapte : ce que l'eleve peut encore faire, a cote du motif qui dit pourquoi.
+   *
+   * C'est volontairement un champ separe du motif : un eleve peut avoir une entorse ET pouvoir
+   * nager. Une seule liste obligerait a choisir entre dire la cause et dire ce qui reste
+   * possible - or c'est la seconde qui sert au bord du terrain.
+   */
+  const APTITUDES=[['INAPTE_TOTAL','Inapte à toute pratique'],['SPORT_ADAPTE','Sport adapté possible']];
+  const aptitudeLibelle=v=>(APTITUDES.find(a=>a[0]===v)||[null,''])[1];
+
+  /**
+   * Les champs, identiques dans les trois formulaires de dispense. `d` absent = nouvelle saisie.
+   *
+   * Le prefixe distingue l'assistant de la fiche en surimpression : les deux peuvent etre dans
+   * la page en meme temps, et un identifiant partage ferait lire le mauvais champ.
+   */
+  function adapteChampsHtml(d,prefixe='fiche'){
+    if(!dispenseAdapteDispo)return '';
+    const courant=d?.aptitude||'INAPTE_TOTAL';
+    return `<label>Aptitude<select id="${prefixe}Aptitude">${APTITUDES.map(([v,l])=>
+        `<option value="${v}"${v===courant?' selected':''}>${l}</option>`).join('')}</select></label>`
+      +`<label>Ce qui reste possible (facultatif)<input type="text" id="${prefixe}Adapte" maxlength="200"`
+      +` value="${healthEsc(d?.adapted_activities||'')}" placeholder="ex : course interdite, natation possible"></label>`;
+  }
+  /** Recopie la saisie dans la ligne. Ne touche a rien tant que le SQL n'est pas passe. */
+  function adapteLire(racine,ligne,prefixe='fiche'){
+    if(!dispenseAdapteDispo)return;
+    ligne.aptitude=racine.querySelector(`#${prefixe}Aptitude`)?.value||'INAPTE_TOTAL';
+    ligne.adapted_activities=racine.querySelector(`#${prefixe}Adapte`)?.value.trim()||null;
+  }
 
   /** Le motif et ses onglets ne s'allument qu'une fois le SQL passe : sinon on ecrirait dans
    *  une colonne qui n'existe pas, et l'enregistrement serait refuse sans explication. */
@@ -69,6 +102,21 @@
     }
     dispenseMotifDispo=await motifPromesse;
     return dispenseMotifDispo;
+  }
+
+  /** Meme precaution que pour le motif : ne pas proposer un champ que la base refuserait. */
+  let adaptePromesse=null;
+  async function verifierAdapteDisponible(){
+    if(!adaptePromesse){
+      adaptePromesse=(async()=>{
+        try{
+          const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.sante_4&select=name`);
+          return res.ok&&(await res.json()).length>0;
+        }catch{ return false; }
+      })();
+    }
+    dispenseAdapteDispo=await adaptePromesse;
+    return dispenseAdapteDispo;
   }
 
   async function verifierIdentiteDisponible(){
@@ -190,7 +238,7 @@
    */
   async function ouvrirFichePourDispense(d, libelleEleve){
     if(!d)return;
-    await verifierMotifDisponible();
+    await Promise.all([verifierMotifDisponible(),verifierAdapteDisponible()]);
     const voile=fenetreFicheDispense();
     voile.querySelector('#dispenseFicheTitre').textContent=libelleEleve||eleveNomme(d.student_id,d);
     const corps=voile.querySelector('#dispenseFicheBody');
@@ -206,6 +254,7 @@
              <label>Début<input type="date" id="ficheStart" value="${healthEsc(d.start_date)}" required></label>
              <label>Fin<input type="date" id="ficheEnd" value="${healthEsc(d.end_date)}" required></label>
              ${motifs}
+             ${adapteChampsHtml(d)}
              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px">
                <button type="submit">Enregistrer</button>
                <button type="button" class="danger" id="ficheSuppr" style="margin-top:0">Supprimer</button>
@@ -215,6 +264,8 @@
         : `<div style="margin-top:10px"><strong>Du ${jourFr(d.start_date)} au ${jourFr(d.end_date)}</strong></div>`
           +`<div style="margin-top:8px"><strong>Motif</strong><div>${healthEsc(motifLibelle(d.reason_kind)||'Non précisé')}</div>`
           +`${d.reason?`<div class="muted">${healthEsc(d.reason)}</div>`:''}</div>`
+          +(d.aptitude?`<div style="margin-top:8px"><strong>Aptitude</strong><div>${healthEsc(aptitudeLibelle(d.aptitude))}</div>`
+            +`${d.adapted_activities?`<div class="muted">${healthEsc(d.adapted_activities)}</div>`:''}</div>`:'')
           +`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`);
     voile.classList.add('open');
     corps.querySelector('#dispenseFicheAuteur').textContent=await nomEnseignant(d.user_id);
@@ -249,6 +300,7 @@
         ligne.reason_kind=corps.querySelector('#ficheKind')?.value||'AUTRE';
         ligne.reason=corps.querySelector('#ficheReason')?.value.trim()||null;
       }
+      adapteLire(corps,ligne);
       try{ await enregistrerLigne('health_dispensations',ligne); }
       catch(e){ erreur.textContent=e.message; return; }
       const place=healthDispenses.findIndex(x=>x.id===d.id);
@@ -267,7 +319,7 @@
    * s'affiche tout de suite et parte a la reconnexion.
    */
   async function ouvrirNouvelleDispense(classeId, eleves){
-    await verifierMotifDisponible();
+    await Promise.all([verifierMotifDisponible(),verifierAdapteDisponible()]);
     const voile=fenetreFicheDispense();
     voile.querySelector('#dispenseFicheTitre').textContent='Nouvelle dispense';
     const corps=voile.querySelector('#dispenseFicheBody');
@@ -282,6 +334,7 @@
       <label>Début<input type="date" id="ficheStart" value="${healthToday()}" required></label>
       <label>Fin<input type="date" id="ficheEnd" value="${healthToday()}" required></label>
       ${motifs}
+      ${adapteChampsHtml(null)}
       <button type="submit" style="margin-top:10px">Valider la dispense</button>
       <div class="error" id="ficheErreur"></div></form>`;
     voile.classList.add('open');
@@ -307,6 +360,7 @@
         ligne.reason_kind=corps.querySelector('#ficheKind')?.value||'AUTRE';
         ligne.reason=corps.querySelector('#ficheReason')?.value.trim()||null;
       }
+      adapteLire(corps,ligne);
       try{ await enregistrerLigne('health_dispensations',ligne); }
       catch(e){ erreur.textContent=e.message; return; }
       healthDispenses.unshift(ligne);
@@ -323,7 +377,7 @@
   function dispenseEditorHtml(student){
    const history=healthDispenses.filter(d=>d.student_id===student.id);
    const motifs=dispenseMotifDispo?`<label>Motif<select id="dispenseKind">${MOTIFS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label><label>Précision (facultatif)<input type="text" id="dispenseReason" maxlength="200" placeholder="ex : entorse cheville droite"></label>`:`<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
-   return `<h2>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</h2><form id="dispenseForm"><label>Début de la dispense<input type="date" id="dispenseStart" value="${healthToday()}" required></label><label>Fin de la dispense<input type="date" id="dispenseEnd" value="${healthToday()}" required></label>${motifs}<button type="submit">Valider la dispense</button></form><h3>Historique de l’élève</h3>${history.length?history.map(d=>`<div class="healthHistory"><span>${jourFr(d.start_date)} → ${jourFr(d.end_date)}${d.reason_kind?` · ${healthEsc(motifLibelle(d.reason_kind))}`:''}</span><strong>${healthActive(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune dispense enregistrée.</p>'}`;
+   return `<h2>${healthEsc(String(student.last_name||'').toUpperCase())} ${healthEsc(student.first_name)}</h2><form id="dispenseForm"><label>Début de la dispense<input type="date" id="dispenseStart" value="${healthToday()}" required></label><label>Fin de la dispense<input type="date" id="dispenseEnd" value="${healthToday()}" required></label>${motifs}${adapteChampsHtml(null,'dispense')}<button type="submit">Valider la dispense</button></form><h3>Historique de l’élève</h3>${history.length?history.map(d=>`<div class="healthHistory"><span>${jourFr(d.start_date)} → ${jourFr(d.end_date)}${d.reason_kind?` · ${healthEsc(motifLibelle(d.reason_kind))}`:''}</span><strong>${healthActive(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune dispense enregistrée.</p>'}`;
   }
   // L'identifiant est tire ici et non par le serveur : une dispense saisie sans reseau doit
   // pouvoir etre affichee, puis envoyee telle quelle quand la connexion revient.
@@ -353,6 +407,7 @@
       ligne.reason_kind=document.getElementById('dispenseKind')?.value||'AUTRE';
       ligne.reason=document.getElementById('dispenseReason')?.value.trim()||null;
     }
+    adapteLire(document,ligne,'dispense');
     try{ await enregistrerLigne('health_dispensations',ligne); }
     catch(e){ alert(e.message); return; }
     healthDispenses.unshift(ligne);
