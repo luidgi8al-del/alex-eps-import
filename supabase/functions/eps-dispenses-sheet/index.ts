@@ -15,9 +15,13 @@
  * Le motif medical fait partie de ce qui transite : c'est ce que l'infirmerie a besoin de
  * connaitre, c'est son role. Le Sheet doit donc rester partage avec elle seule.
  *
+ * Le perimetre est l'etablissement, pas un professeur : les dispenses se partagent entre
+ * collegues, chacun voyant celles de tous. Le Sheet couvre donc les memes eleves et les memes
+ * dispenses, sinon l'infirmerie ne pourrait rien saisir pour l'eleve d'un autre professeur.
+ *
  * Secrets a poser (Supabase > Edge Functions > Secrets) :
  *   EPS_SHEET_SECRET   un mot de passe long, invente, partage avec le script du Sheet
- *   EPS_SHEET_USER_ID  l'identifiant du compte enseignant dont les dispenses sont miroitees
+ *   EPS_SHEET_USER_ID  un compte de l'etablissement : il sert a designer lequel, rien de plus
  */
 import { createClient } from "npm:@supabase/supabase-js@2";
 
@@ -77,20 +81,42 @@ function jourDepuisMillis(millis: unknown) {
 }
 
 /**
- * Les eleves du compte configure, et eux seuls.
+ * Les comptes de l'etablissement, EPS_SHEET_USER_ID compris.
  *
- * Le filtre par user_id compte autant ici que pour les dispenses : la fonction travaille avec la
- * cle de service, qui ignore les regles de la base. Sans lui, une homonymie avec l'eleve d'un
- * collegue suffirait a poser la dispense sur le mauvais dossier.
+ * Les dispenses se partagent entre collegues : chacun voit celles de tous. Le Sheet doit donc
+ * couvrir le meme perimetre, sinon l'infirmerie ne pourrait rien saisir pour l'eleve d'un autre
+ * professeur - alors que c'est precisement ce qu'on attend d'elle.
+ *
+ * C'est l'etablissement qui delimite, pas le compte : EPS_SHEET_USER_ID ne sert plus qu'a le
+ * designer. Relu a chaque appel, sans memoire : un collegue qui arrive doit etre vu tout de
+ * suite, pas au prochain redeploiement.
  */
-async function elevesDuCompte() {
+async function comptesEtablissement(): Promise<string[]> {
+  const { data: moi } = await admin
+    .from("profiles").select("institution_id").eq("id", SHEET_USER_ID).maybeSingle();
+  const etablissement = moi?.institution_id;
+  if (!etablissement) return [SHEET_USER_ID];
+  const { data: membres } = await admin
+    .from("profiles").select("id").eq("institution_id", etablissement);
+  const ids = (membres || []).map(m => m.id as string);
+  return ids.includes(SHEET_USER_ID) ? ids : ids.concat(SHEET_USER_ID);
+}
+
+/**
+ * Les eleves de l'etablissement.
+ *
+ * Le filtre compte autant ici que pour les dispenses : la fonction travaille avec la cle de
+ * service, qui ignore les regles de la base. Sans lui, elle verrait les eleves de tous les
+ * etablissements clients.
+ */
+async function elevesDeLEtablissement(comptes: string[]) {
   const { data: eleves, error } = await admin
     .from("students")
-    .select("id, last_name, first_name, class_id, birth_date_epoch_millis")
-    .eq("user_id", SHEET_USER_ID).eq("deleted", false);
+    .select("id, user_id, last_name, first_name, class_id, birth_date_epoch_millis")
+    .in("user_id", comptes).eq("deleted", false);
   if (error) throw new Error(error.message);
   const { data: classes } = await admin.from("classes")
-    .select("id, name").eq("user_id", SHEET_USER_ID).eq("deleted", false);
+    .select("id, name").in("user_id", comptes).eq("deleted", false);
   const nomClasse = new Map<string, string>((classes || []).map(c => [c.id, c.name]));
   return { eleves: eleves || [], nomClasse };
 }
@@ -116,7 +142,7 @@ Deno.serve(async (req) => {
   // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.
   if (action === "eleves") {
     let contenu;
-    try { contenu = await elevesDuCompte(); }
+    try { contenu = await elevesDeLEtablissement(await comptesEtablissement()); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const lignes = contenu.eleves.map(e => {
       const nom = `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
@@ -133,10 +159,11 @@ Deno.serve(async (req) => {
 
   // ---- Lister : le Sheet se reecrit avec l'etat de la base -------------------------------------
   if (action === "lister") {
+    const comptes = await comptesEtablissement();
     const { data, error } = await admin
       .from("health_dispensations")
       .select("id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, updated_at")
-      .eq("user_id", SHEET_USER_ID)
+      .in("user_id", comptes)
       // Une suppression ne retire pas la ligne, elle la marque effacee : c'est ce qui fait
       // disparaitre la dispense sur tous les appareils. Sans ce filtre, le Sheet ressuscitait
       // ce que l'on venait d'effacer.
@@ -197,8 +224,9 @@ Deno.serve(async (req) => {
     // Retrouver l'eleve par son nom, dans la classe indiquee quand elle l'est. Sans identifiant
     // c'est le seul rattachement possible - et il doit echouer clairement plutot qu'a moitie,
     // sinon une dispense se poserait sur le mauvais eleve sans que personne le voie.
+    const comptes = await comptesEtablissement();
     let contenu;
-    try { contenu = await elevesDuCompte(); }
+    try { contenu = await elevesDeLEtablissement(comptes); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const { eleves } = contenu;
     const nomClasse = (id: string) => contenu.nomClasse.get(id) || "";
@@ -220,7 +248,10 @@ Deno.serve(async (req) => {
 
     const maintenant = new Date().toISOString();
     const corps = {
-      user_id: SHEET_USER_ID,
+      // La dispense revient au professeur de l'eleve, pas au compte de la passerelle : c'est chez
+      // lui qu'elle doit apparaitre dans "Mes dispenses", et lui seul peut la corriger depuis
+      // l'application.
+      user_id: eleve.user_id || SHEET_USER_ID,
       class_id: eleve.class_id,
       student_id: eleve.id,
       start_date: debut,
@@ -237,7 +268,7 @@ Deno.serve(async (req) => {
     const id = String(ligne.id || "").trim();
     if (id) {
       const { error } = await admin.from("health_dispensations")
-        .update(corps).eq("id", id).eq("user_id", SHEET_USER_ID);
+        .update(corps).eq("id", id).in("user_id", comptes);
       if (error) return repondre({ error: error.message }, 500);
       return repondre({ id, statut: "corrigée" });
     }
@@ -251,8 +282,11 @@ Deno.serve(async (req) => {
   if (action === "supprimer") {
     const id = String(requete.id || "").trim();
     if (!id) return repondre({ error: "Identifiant manquant" }, 400);
+    // L'effacement laisse une trace au lieu de retirer la ligne : une suppression reelle
+    // reviendrait a la synchronisation suivante, la copie locale du site la reproposant.
     const { error } = await admin.from("health_dispensations")
-      .delete().eq("id", id).eq("user_id", SHEET_USER_ID);
+      .update({ deleted: true, updated_at: new Date().toISOString() })
+      .eq("id", id).in("user_id", await comptesEtablissement());
     if (error) return repondre({ error: error.message }, 500);
     return repondre({ statut: "supprimée" });
   }

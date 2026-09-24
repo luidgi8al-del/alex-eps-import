@@ -29,7 +29,13 @@ adapté*), déployer la fonction, désactiver **Verify JWT** dessus, puis poser 
 | Secret | Valeur |
 |---|---|
 | `EPS_SHEET_SECRET` | le mot de passe inventé à l'étape 1 |
-| `EPS_SHEET_USER_ID` | l'identifiant de votre compte (Supabase > Authentication > Users) |
+| `EPS_SHEET_USER_ID` | l'identifiant d'un compte de l'établissement (Supabase > Authentication > Users) |
+
+`EPS_SHEET_USER_ID` sert uniquement à **désigner l'établissement**. Le Sheet couvre ensuite les
+élèves et les dispenses de **tous les collègues** : c'est déjà ce que chacun voit dans
+« Tous les dispensés », et l'infirmerie doit pouvoir saisir pour n'importe quel élève.
+Une dispense saisie dans le Sheet est attribuée **au professeur de l'élève**, pas au compte
+ci-dessus : elle apparaît dans *ses* dispenses, et lui seul peut la corriger depuis l'application.
 
 `SUPABASE_URL` et `SUPABASE_SERVICE_ROLE_KEY` sont déjà fournis automatiquement.
 
@@ -82,6 +88,7 @@ l'application ou le site — la supprimer reste possible depuis l'onglet **Pass�
 - **La colonne Élève est une liste déroulante.** On tape quelques lettres du nom *ou* du prénom,
   la liste se filtre, on choisit — et la **classe** et la **date de naissance** se remplissent
   toutes seules. La liste se met à jour à chaque actualisation.
+- **La liste couvre tout l'établissement**, pas seulement vos classes.
 - **On peut aussi taper un nom à la main**, pour un élève arrivé en cours d'année et pas encore
   synchronisé. Accents, casse et ordre (« DUPONT Léa » ou « Léa Dupont ») n'ont pas d'importance.
   En revanche, si deux élèves portent le même nom, il faut renseigner la classe — sinon la ligne
