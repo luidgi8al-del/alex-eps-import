@@ -630,8 +630,8 @@ function showLicenciesExport(rows) {
   overlay.className = "unified-export-overlay";
   overlay.innerHTML = `<section class="unified-export-dialog"><header><i>🏆</i><div><h3>Inscrits à l'AS</h3><p>${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
     <h4>Format</h4>
-    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Fichier .csv, s'ouvre dans un tableur</small></span><em>›</em></button>
-    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Aperçu imprimable, à enregistrer en PDF</small></span><em>›</em></button>
+    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Identité, classe, maillot et trois vœux</small></span><em>›</em></button>
+    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Liste complète avec les trois vœux</small></span><em>›</em></button>
     <button class="export-cancel" data-export-close>Annuler</button>
   </main></section>`;
   document.body.appendChild(overlay);
@@ -641,9 +641,16 @@ function showLicenciesExport(rows) {
   overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); printLicenciesPdf(rows) };
 }
 
+function libelleVoeuExport(student, rang) {
+  const texte = student[`wish${rang}`];
+  if (texte) return texte;
+  const slot = unssSlots.find(s => s.id === student[`wish${rang}_slot_id`]);
+  return slot ? unssSlotLabel(slot) : "";
+}
+
 function exportLicenciesCsv(rows) {
-  const lignes = [["Nom", "Prénom", "Classe / Division", "Taille maillot"],
-    ...rows.map(s => [String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || "", s.jersey_size || ""])];
+  const lignes = [["Nom", "Prénom", "Classe / Division", "Taille maillot", "Vœu 1", "Vœu 2", "Vœu 3"],
+    ...rows.map(s => [String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || s.school_class_label || s.class_label || "", s.jersey_size || "", libelleVoeuExport(s, 1), libelleVoeuExport(s, 2), libelleVoeuExport(s, 3)])];
   const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
@@ -660,11 +667,12 @@ function printLicenciesPdf(rows) {
     header{background:#087dca;color:white;padding:18px;border-radius:12px}
     table{width:100%;border-collapse:collapse;margin-top:16px}
     th,td{border:1px solid #cad8e3;padding:6px;text-align:left}
+    @page{size:landscape;margin:12mm}
     @media print{button{display:none}}
   </style></head><body>
     <header><h1>Inscrits à l'association sportive</h1><p>${rows.length} élève(s) · ${new Date().toLocaleDateString("fr-FR")}</p></header>
-    <table><tr><th>Nom</th><th>Prénom</th><th>Classe / Division</th><th>Taille maillot</th></tr>
-    ${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || "")}</td><td>${unssText(s.jersey_size || "")}</td></tr>`).join("")}
+    <table><tr><th>Nom</th><th>Prénom</th><th>Classe / Division</th><th>Taille maillot</th><th>Vœu 1</th><th>Vœu 2</th><th>Vœu 3</th></tr>
+    ${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || s.school_class_label || s.class_label || "")}</td><td>${unssText(s.jersey_size || "")}</td><td>${unssText(libelleVoeuExport(s, 1))}</td><td>${unssText(libelleVoeuExport(s, 2))}</td><td>${unssText(libelleVoeuExport(s, 3))}</td></tr>`).join("")}
     </table>
     <button onclick="print()">Enregistrer / imprimer en PDF</button>
   </body></html>`);
