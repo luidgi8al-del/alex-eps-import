@@ -671,6 +671,50 @@ function printLicenciesPdf(rows) {
   w.document.close();
 }
 
+/** Exporte la liste du seul créneau affiché, avec les informations utiles au professeur. */
+function showCreneauExport(slot, rows) {
+  document.getElementById("unssExportDialog")?.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "unssExportDialog";
+  overlay.className = "unified-export-overlay";
+  overlay.innerHTML = `<section class="unified-export-dialog"><header><i>${iconeActiviteAS(slot.activity_name)}</i><div><h3>${unssText(slot.activity_name)}</h3><p>${unssText(unssSlotLabel(slot))} · ${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
+    <h4>Télécharger la liste du créneau</h4>
+    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Nom, prénom, classe et catégorie</small></span><em>›</em></button>
+    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Liste prête à imprimer ou enregistrer</small></span><em>›</em></button>
+    <button class="export-cancel" data-export-close>Annuler</button>
+  </main></section>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll("[data-export-close]").forEach(b => b.onclick = () => overlay.remove());
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.querySelector('[data-format="csv"]').onclick = () => { overlay.remove(); exportCreneauCsv(slot, rows); };
+  overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); printCreneauPdf(slot, rows); };
+}
+
+function exportCreneauCsv(slot, rows) {
+  const lignes = [["Nom", "Prénom", "Classe", "Catégorie"], ...rows.map(s => [
+    String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || s.school_class_label || s.class_label || "",
+    unssCategoryLabel(s.category, s.sex)
+  ])];
+  const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
+  const nom = String(slot.activity_name || "creneau-as").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `liste-${nom || "creneau-as"}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function printCreneauPdf(slot, rows) {
+  const w = open("", "_blank");
+  if (!w) { alert("Autorisez les fenêtres surgissantes."); return; }
+  const professeur = slot.responsible_teacher || "Professeur non attribué";
+  w.document.write(`<html><head><meta charset=utf-8><title>Liste ${unssText(slot.activity_name)}</title><style>
+    body{font:12px Arial;color:#123a59;padding:24px}header{background:#087dca;color:#fff;padding:18px;border-radius:12px}header h1{margin:0 0 6px}header p{margin:3px 0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #cad8e3;padding:7px;text-align:left}th{background:#edf6fd}@media print{button{display:none}}
+  </style></head><body><header><h1>${unssText(slot.activity_name)}</h1><p>${unssText(unssSlotLabel(slot))}</p><p>Enseignant : ${unssText(professeur)} · ${rows.length} élève(s)</p></header>
+    <table><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || s.school_class_label || s.class_label || "")}</td><td>${unssText(unssCategoryLabel(s.category, s.sex))}</td></tr>`).join("")}</tbody></table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);
+  w.document.close();
+}
+
 /** Ceux dont le dossier n'est pas complet, tous ensemble : chaque carte ouvre la fiche pour
  * corriger (encaisser le paiement, recevoir le certificat), sans passer par la liste entiere. */
 function ouvrirDocumentsManquants() {
@@ -2397,7 +2441,7 @@ async function ouvrirListeInscritsCreneau(slot) {
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
   panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
       : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${
@@ -2405,6 +2449,7 @@ async function ouvrirListeInscritsCreneau(slot) {
         }</tbody></table></div>`
     }`;
   document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => ouvrirFicheCreneau(slot));
+  document.getElementById("unssListeInscritsExportBtn").addEventListener("click", () => showCreneauExport(slot, eleves));
 }
 
 async function ouvrirElevesCreneau(slot) {
@@ -2417,7 +2462,7 @@ async function ouvrirElevesCreneau(slot) {
   const voeu2 = unssStudents.filter(s => s.licensed && s.wish2_slot_id === slot.id && !dejaLa.includes(s.id));
   const voeu3 = unssStudents.filter(s => s.licensed && s.wish3_slot_id === slot.id && !dejaLa.includes(s.id));
   panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssCreneauExportBtn">⇩ Télécharger</button></div>
     <div class="muted">${unssText(unssSlotLabel(slot))}</div>
     <div id="unssCreneauEleves" style="margin-top:10px">${
       eleves.length === 0
@@ -2450,6 +2495,7 @@ async function ouvrirElevesCreneau(slot) {
   }));
   document.getElementById("unssCreneauAddBtn").addEventListener("click",
     () => ouvrirAjoutElevesCreneau(slot));
+  document.getElementById("unssCreneauExportBtn").addEventListener("click", () => showCreneauExport(slot, eleves));
   document.getElementById("unssCreneauCloseBtn").addEventListener("click", () => ouvrirFicheCreneau(slot));
 }
 
