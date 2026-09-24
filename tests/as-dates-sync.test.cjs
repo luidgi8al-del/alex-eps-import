@@ -14,6 +14,7 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
 
 [
   'EPS_AS_DETAILS:',
+  'as-dates-compact',
   'function loadUnssDates()',
   'function renderUnssDatesTab()',
   'function openUnssDatePanel(event)',
@@ -28,7 +29,7 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   if (!code.includes(marker)) throw new Error(`Fonction Dates AS manquante : ${marker}`);
 });
 
-['.as-dates-page', '.as-date-card', '.as-date-form', '.as-needs-grid'].forEach(marker => {
+['.as-dates-page', '.as-dates-compact', '.as-date-card', '.as-date-form', '.as-needs-grid'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style Dates AS manquant : ${marker}`);
 });
 
