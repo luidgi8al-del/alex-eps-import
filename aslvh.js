@@ -1655,12 +1655,140 @@ function iconeActiviteAS(nom) {
   return "🏆";
 }
 
+function emailsAS(value) {
+  return [...new Set(String(value || "").split(/[;,\s]+/).map(v => v.trim().toLowerCase())
+    .filter(v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)))];
+}
+
+function lirePieceJointeAS(file) {
+  if (!file) return Promise.resolve(null);
+  const autorises = ["application/pdf", "image/png", "image/jpeg"];
+  if (!autorises.includes(file.type)) throw new Error("La pièce jointe doit être un PDF, une image PNG ou JPEG.");
+  if (file.size > 3 * 1024 * 1024) throw new Error("La pièce jointe ne doit pas dépasser 3 Mo.");
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Impossible de lire la pièce jointe."));
+    reader.onload = () => resolve({ name: file.name, type: file.type, content: String(reader.result || "").split(",")[1] || "" });
+    reader.readAsDataURL(file);
+  });
+}
+
+/** Fenêtre d'envoi confidentiel aux inscrits d'un créneau. Le serveur relit lui-même le créneau
+ * et ses inscriptions : le navigateur ne décide jamais seul des destinataires. */
+async function ouvrirEmailCreneau(slot) {
+  await assurerInscriptions();
+  const eleves = elevesDuCreneau(slot.id);
+  document.getElementById("asSlotEmailOverlay")?.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "asSlotEmailOverlay";
+  overlay.className = "as-slot-email-overlay";
+  overlay.innerHTML = `<section class="as-slot-email-dialog" role="dialog" aria-modal="true" aria-labelledby="asEmailTitle">
+    <header><div><small>CRÉNEAU AS</small><h2 id="asEmailTitle">Envoyer un e-mail</h2><p>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
+    <main>
+      <details open><summary>1. Destinataires</summary><div class="as-email-section">
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students" checked><span><b>Aux élèves</b><small>Adresse e-mail de chaque élève</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents"><span><b>Aux parents</b><small>Adresses parentales, envois confidentiels</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux parents</b><small>Personne ne voit les autres adresses</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Message personnalisé aux parents</b><small>Un e-mail par enfant avec son nom</small></span></label>
+        <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
+      </div></details>
+      <details open><summary>2. Message</summary><div class="as-email-section">
+        <label>Modèle<select id="asEmailTemplate"><option value="confirmation">Confirmation d’inscription</option><option value="cancellation">Séance annulée</option><option value="information">Information importante</option><option value="free">Message libre</option></select></label>
+        <label id="asEmailDateLine" hidden>Date de la séance annulée<input id="asEmailDate" type="date"></label>
+        <label>Objet<input id="asEmailSubject" maxlength="180"></label>
+        <label>Message<textarea id="asEmailMessage" rows="9" maxlength="8000"></textarea></label>
+        <p class="as-email-help">Les champs {prenom}, {nom} et {enfant} sont remplacés automatiquement pour les envois personnalisés.</p>
+      </div></details>
+      <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>Document de confirmation, PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      <div class="as-email-result" id="asEmailResult"></div>
+    </main>
+    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend">Envoyer</button></footer>
+  </section>`;
+  document.body.appendChild(overlay);
+
+  const heure = [slot.start_time, slot.end_time].filter(Boolean).join("–") || "horaire à préciser";
+  const jour = capitaliseJour(slot.day_of_week || "");
+  const professeur = slot.responsible_teacher || "Le professeur EPS";
+  const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked').value;
+  const compteur = mode => {
+    const adresses = new Set(), manquants = [];
+    eleves.forEach(e => {
+      const mailsEleve = emailsAS(e.student_email);
+      const mailsParent = emailsAS(e.parent_email);
+      const mails = mode === "students" ? mailsEleve : mode === "parents" || mode === "parents_personalized" ? mailsParent : [...mailsEleve, ...mailsParent];
+      if (!mails.length) manquants.push(`${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim());
+      mails.forEach(m => adresses.add(mode === "parents_personalized" ? `${e.id}|${m}` : m));
+    });
+    return { nombre: adresses.size, manquants };
+  };
+  const actualiserDestinataires = () => {
+    const c = compteur(audience());
+    const manque = c.manquants.length ? `<span>${c.manquants.length} sans adresse : ${unssText(c.manquants.slice(0, 4).join(", "))}${c.manquants.length > 4 ? "…" : ""}</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`;
+    overlay.querySelector("#asEmailRecipientSummary").innerHTML = `<b>${c.nombre} e-mail(s) seront envoyés séparément</b>${manque}`;
+  };
+  const appliquerModele = () => {
+    const mode = overlay.querySelector("#asEmailTemplate").value;
+    const typeDestinataire = audience();
+    const dateInput = overlay.querySelector("#asEmailDate");
+    overlay.querySelector("#asEmailDateLine").hidden = mode !== "cancellation";
+    const date = dateInput.value ? new Date(`${dateInput.value}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "[date à sélectionner]";
+    let objet = "", message = "";
+    if (mode === "confirmation") {
+      objet = `Confirmation d’inscription – ${slot.activity_name}`;
+      message = typeDestinataire === "parents_personalized"
+        ? `Bonjour,\n\nVotre enfant {enfant} est retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+        : typeDestinataire === "students"
+          ? `Bonjour {prenom},\n\nCe message vous confirme que vous êtes retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+          : `Bonjour,\n\nCe message confirme l’inscription de l’élève concerné(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`;
+    } else if (mode === "cancellation") {
+      objet = `Séance d’AS ${slot.activity_name} annulée – ${date}`;
+      message = `Bonjour,\n\nLa séance d’AS ${slot.activity_name} du ${date}, prévue de ${heure}, est annulée.\n\nCordialement,\n${professeur}`;
+    } else if (mode === "information") {
+      objet = `Information AS – ${slot.activity_name}`;
+      message = `Bonjour,\n\nNous vous transmettons une information concernant l’activité ${slot.activity_name} du ${jour} de ${heure} :\n\n[Votre information]\n\nCordialement,\n${professeur}`;
+    }
+    overlay.querySelector("#asEmailSubject").value = objet;
+    overlay.querySelector("#asEmailMessage").value = message;
+  };
+  overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = () => overlay.remove());
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => { actualiserDestinataires(); appliquerModele(); });
+  overlay.querySelector("#asEmailTemplate").onchange = appliquerModele;
+  overlay.querySelector("#asEmailDate").onchange = appliquerModele;
+  actualiserDestinataires(); appliquerModele();
+
+  overlay.querySelector("#asEmailSend").onclick = async () => {
+    const bouton = overlay.querySelector("#asEmailSend");
+    const resultat = overlay.querySelector("#asEmailResult");
+    const subject = overlay.querySelector("#asEmailSubject").value.trim();
+    const message = overlay.querySelector("#asEmailMessage").value.trim();
+    const c = compteur(audience());
+    if (!c.nombre) { resultat.textContent = "Aucune adresse utilisable pour ce choix."; return; }
+    if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
+    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés et confidentiels ?`)) return;
+    bouton.disabled = true; resultat.textContent = "Envoi en cours…";
+    try {
+      const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
+      const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
+        requestId: crypto.randomUUID(), slotId: slot.id, audience: audience(), subject, message,
+        template: overlay.querySelector("#asEmailTemplate").value, selectedDate: overlay.querySelector("#asEmailDate").value || null,
+        attachment
+      }) });
+      resultat.innerHTML = `<b>${response.sent || 0} e-mail(s) envoyé(s).</b>${response.failed ? `<span>${response.failed} échec(s).</span>` : ""}${response.missing?.length ? `<span>${response.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
+      if (!response.failed) bouton.textContent = "Envoyé";
+    } catch (error) {
+      resultat.textContent = error.message || "L’envoi a échoué.";
+      bouton.disabled = false;
+    }
+  };
+}
+
 async function ouvrirFicheCreneau(slot) {
   if (!slot) return;
   const panel = document.getElementById("unssPanel"); ouvrirFenetreUnss();
   const appelAutorise = peutFaireAppelCreneau(slot);
-  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span id="asMetricInscrits" style="cursor:pointer"><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button><button id="asExport">⇩<b>Télécharger</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
-  asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); asExport.onclick=()=>showCreneauExport(slot,elevesDuCreneau(slot.id)); const boutonAppel=document.getElementById("asCall"); if (boutonAppel) boutonAppel.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
+  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span id="asMetricInscrits" style="cursor:pointer"><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button>${appelAutorise ? `<button id="asCall">☑<b>Appel</b></button>` : ""}<button id="asBalance">▥<b>Bilan</b></button><button id="asExport">⇩<b>Télécharger</b></button><button id="asEmail">✉<b>E-mail</b></button></div>${appelAutorise ? "" : `<div class="muted">L’appel est réservé à ${unssText(slot.responsible_teacher || "la personne affectée à ce créneau")}.</div>`}<section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
+  asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); asExport.onclick=()=>showCreneauExport(slot,elevesDuCreneau(slot.id)); asEmail.onclick=()=>ouvrirEmailCreneau(slot); const boutonAppel=document.getElementById("asCall"); if (boutonAppel) boutonAppel.onclick=()=>ouvrirAppelCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
   document.getElementById("asMetricInscrits").onclick=()=>ouvrirListeInscritsCreneau(slot);
 }
 
