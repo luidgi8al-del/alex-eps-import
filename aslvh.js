@@ -678,16 +678,17 @@ function ouvrirDocumentsManquants() {
   ouvrirFenetreUnss();
   const concernes = unssStudents.filter(s => s.licensed && (s.payment_missing || s.medical_certificate_missing))
     .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
-  panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssDocsManquantsCloseBtn">←</button><div><h2>Document manquant</h2><small>${concernes.length} élève(s)</small></div></div>
-    <div style="margin-top:10px">${concernes.length === 0
+  panel.classList.remove("as-full-panel");
+  panel.classList.add("as-list-modal");
+  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>Documents manquants</h2><small>${concernes.length} élève(s) concerné(s)</small></div><button type="button" id="unssDocsManquantsCloseBtn" aria-label="Fermer">×</button></div>
+    <div class="as-list-modal-body">${concernes.length === 0
       ? `<div class="muted">Plus aucun dossier incomplet.</div>`
-      : concernes.map(s => `<div class="unssCard" data-fiche="${s.id}" style="padding:8px 0; cursor:pointer">
+      : concernes.map(s => `<button type="button" class="as-list-modal-row" data-fiche="${s.id}">
            <div>
              <div><strong>${unssText(String(s.last_name || "").toUpperCase())} ${unssText(s.first_name || "")}</strong></div>
-             <div style="font-size:12px; color:#B3261E; font-weight:600">${[s.payment_missing ? "⚠ Paiement manquant" : "", s.medical_certificate_missing ? "⚠ Certificat manquant" : ""].filter(Boolean).join(" · ")}</div>
+             <small class="missing">${[s.payment_missing ? "⚠ Paiement manquant" : "", s.medical_certificate_missing ? "⚠ Certificat manquant" : ""].filter(Boolean).join(" · ")}</small>
            </div>
-         </div>`).join("")
+           <b>›</b></button>`).join("")
     }</div>`;
   panel.querySelectorAll("[data-fiche]").forEach(el => el.addEventListener("click", () => {
     const student = unssStudents.find(s => s.id === el.dataset.fiche);
@@ -703,16 +704,18 @@ function ouvrirHebergement() {
   ouvrirFenetreUnss();
   const concernes = unssStudents.filter(s => s.licensed && s.host_available)
     .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
-  panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssHebergementCloseBtn">←</button><div><h2>Hébergement</h2><small>${concernes.length} élève(s)</small></div></div>
-    <div style="margin-top:10px">${concernes.length === 0
+  panel.classList.remove("as-full-panel");
+  panel.classList.add("as-list-modal");
+  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>Hébergement</h2><small>${concernes.length} famille(s) disponible(s)</small></div><button type="button" id="unssHebergementCloseBtn" aria-label="Fermer">×</button></div>
+    <div class="as-list-modal-body">${concernes.length === 0
       ? `<div class="muted">Aucune famille n'a proposé d'héberger pour l'instant.</div>`
-      : concernes.map(s => `<div class="unssCard" data-fiche="${s.id}" style="padding:8px 0; cursor:pointer">
+      : concernes.map(s => `<button type="button" class="as-list-modal-row" data-fiche="${s.id}">
            <div>
              <div><strong>${unssText(String(s.last_name || "").toUpperCase())} ${unssText(s.first_name || "")}</strong></div>
-             <div class="muted" style="font-size:12px">🏠${s.host_capacity ? ` ${s.host_capacity} place(s)` : ""}${s.host_age_min || s.host_age_max ? ` · ${s.host_age_min || "?"}-${s.host_age_max || "?"} ans` : ""}${s.host_sex_pref ? ` · ${s.host_sex_pref === "F" ? "filles" : "garçons"}` : ""}</div>
+             <small class="identity-meta">${unssText(s.division || s.school_class_label || s.class_label || "Classe non renseignée")} · ${unssText(unssCategoryLabel(s.category, s.sex))}</small>
+             <small>🏠${s.host_capacity ? ` ${s.host_capacity} place(s)` : ""}${s.host_age_min || s.host_age_max ? ` · ${s.host_age_min || "?"}-${s.host_age_max || "?"} ans` : ""}${s.host_sex_pref ? ` · ${s.host_sex_pref === "F" ? "filles" : "garçons"}` : ""}</small>
            </div>
-         </div>`).join("")
+           <b>›</b></button>`).join("")
     }</div>`;
   panel.querySelectorAll("[data-fiche]").forEach(el => el.addEventListener("click", () => {
     const student = unssStudents.find(s => s.id === el.dataset.fiche);
@@ -2222,7 +2225,7 @@ function fenetreUnss() {
 function ouvrirFenetreUnss() { fenetreUnss()?.classList.add("open"); }
 function fermerFenetreUnss() {
   document.getElementById("unssPanelOverlay")?.classList.remove("open");
-  document.getElementById("unssPanel")?.classList.remove("as-full-panel");
+  document.getElementById("unssPanel")?.classList.remove("as-full-panel", "as-list-modal");
 }
 
 async function openUnssAddMemberPanel(group, excludeIds) {
