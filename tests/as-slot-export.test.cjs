@@ -11,6 +11,7 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'unssListeInscritsExportBtn',
   'unssCreneauExportBtn',
   'data-slot-export=',
+  'id="asExport"',
   '["Nom", "Prénom", "Classe", "Catégorie"]',
   'Enseignant :'
 ].forEach(marker => {
