@@ -81,6 +81,61 @@ function dateTexte_(valeur) {
   return String(valeur || '').trim().slice(0, 10);
 }
 
+/**
+ * Verification de la mise en place, a lancer une fois depuis l'editeur (bouton Executer).
+ *
+ * Elle dit dans le journal ce qui va et ce qui manque, au lieu de laisser deviner : un script
+ * non rattache a un Sheet, un reglage oublie ou un secret qui ne correspond pas donnent tous
+ * trois la meme impression a l'usage - "rien ne se passe".
+ */
+function verifier() {
+  var lignes = [];
+
+  // Un script attache au Sheet voit sa feuille ; un script independant n'en a aucune, et rien
+  // de ce qui suit ne pourrait fonctionner.
+  var classeur = null;
+  try { classeur = classeur_(); } catch (e) { classeur = null; }
+  if (classeur) {
+    lignes.push('✓ Rattaché au Sheet : « ' + classeur.getName() + ' »');
+  } else {
+    lignes.push('✗ Ce script n’est rattaché à AUCUN Sheet.');
+    lignes.push('  Ouvrez votre Google Sheet, puis Extensions > Apps Script, et recollez-y ce script.');
+    Logger.log(lignes.join('\n'));
+    return;
+  }
+
+  var manque = false;
+  ['URL_PASSERELLE', 'SECRET'].forEach(function (nom) {
+    var v = PropertiesService.getScriptProperties().getProperty(nom);
+    if (v) {
+      // On confirme la presence sans reafficher la valeur : le journal se relit et se partage.
+      lignes.push('✓ Réglage ' + nom + ' : renseigné' +
+        (nom === 'URL_PASSERELLE' ? ' (' + v + ')' : ''));
+    } else {
+      lignes.push('✗ Réglage ' + nom + ' : MANQUANT (Paramètres du projet > Propriétés du script)');
+      manque = true;
+    }
+  });
+  if (manque) { Logger.log(lignes.join('\n')); return; }
+
+  try {
+    var eleves = (appeler_({ action: 'eleves' }).lignes) || [];
+    lignes.push('✓ Passerelle joignable, et le secret est accepté.');
+    lignes.push('✓ ' + eleves.length + ' élève(s) trouvés pour la liste déroulante.');
+    if (!eleves.length) {
+      lignes.push('  Aucun élève : vérifiez EPS_SHEET_USER_ID côté Supabase.');
+    }
+    lignes.push('');
+    lignes.push('Tout est en place. Lancez maintenant « actualiser » pour remplir le tableau.');
+  } catch (erreur) {
+    lignes.push('✗ Appel refusé : ' + erreur.message);
+    if (String(erreur.message).indexOf('Secret') >= 0) {
+      lignes.push('  Le SECRET ici et EPS_SHEET_SECRET côté Supabase ne sont pas identiques.');
+    }
+  }
+  Logger.log(lignes.join('\n'));
+}
+
 /** Le menu du Sheet. */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Dispenses EPS')
