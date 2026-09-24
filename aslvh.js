@@ -1594,14 +1594,15 @@ function renderUnssSlotsTab() {
       const actions = creneauPorteTout
         ? `<button class="secondary" data-slot-eleves="${slot.id}" style="margin-top:0">Élèves (${inscrits})</button>
            <button class="secondary" data-slot-appel="${slot.id}" style="margin-top:0">Appel</button>
-           <button class="secondary" data-slot-bilan="${slot.id}" style="margin-top:0">Bilan</button>`
+           <button class="secondary" data-slot-bilan="${slot.id}" style="margin-top:0">Bilan</button>
+           <button class="secondary as-slot-download" data-slot-export="${slot.id}" style="margin-top:0">⇩ Télécharger</button>`
         : "";
-      return `<button class="as-slot-tile" data-slot="${slot.id}">
+      return `<div class="as-slot-entry"><button class="as-slot-tile" data-slot="${slot.id}">
         <span class="as-sport-icon">${iconeActiviteAS(slot.activity_name)}</span>
         <span><strong>${unssText(slot.activity_name || "Créneau sans nom")}</strong>
         <small>⌖ ${unssText(slot.location || "Lieu non renseigné")} · ◷ ${unssText(detail) || "Horaire non renseigné"}</small>
         <small>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</small>
-        <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button>`;
+        <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button><div class="as-slot-actions">${actions}</div></div>`;
     }).join("");
   }
   wrap.innerHTML = html;
@@ -1622,6 +1623,11 @@ function renderUnssSlotsTab() {
   }));
   wrap.querySelectorAll("[data-slot-bilan]").forEach(btn => btn.addEventListener("click", e => {
     e.stopPropagation(); ouvrirBilanCreneau(creneauDe(btn.dataset.slotBilan));
+  }));
+  wrap.querySelectorAll("[data-slot-export]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const slot = creneauDe(btn.dataset.slotExport);
+    if (slot) showCreneauExport(slot, elevesDuCreneau(slot.id));
   }));
   wrap.querySelectorAll("[data-slot-appel]").forEach(btn => btn.addEventListener("click", e => {
     e.stopPropagation();
