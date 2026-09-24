@@ -28,6 +28,15 @@ var PREMIERE_LIGNE = 2;
 /** L'onglet masque qui porte la liste des eleves, et jusqu'ou la liste deroulante s'applique. */
 var ONGLET_ELEVES = 'Élèves';
 var DERNIERE_LIGNE_LISTE = 1000;
+/**
+ * Les dispenses terminees vont dans leur propre onglet.
+ *
+ * La saisie reste sur le premier onglet, et lui seul : une dispense passee se corrige depuis
+ * l'application ou le site, pas ici. C'est aussi ce qui garde l'onglet de travail court - on y
+ * voit ce qui est en cours, pas l'annee entiere.
+ */
+var ONGLET_EN_COURS = 'En cours';
+var ONGLET_PASSEES = 'Passées';
 /** Ce qui separe le nom de la classe dans un libelle : absent des noms d'eleves. */
 var SEPARATEUR = ' — ';
 
@@ -71,6 +80,24 @@ function feuilleEleves_() {
     feuille.hideSheet();
   }
   return feuille;
+}
+
+/**
+ * L'onglet des dispenses terminees, cree au besoin, juste apres celui de saisie.
+ *
+ * Il est place en deuxieme et jamais en premier : feuille_() designe le premier onglet, et c'est
+ * lui qui recoit la saisie.
+ */
+function feuillePassees_() {
+  var classeur = classeur_();
+  var feuille = classeur.getSheetByName(ONGLET_PASSEES);
+  if (!feuille) feuille = classeur.insertSheet(ONGLET_PASSEES, 1);
+  return feuille;
+}
+
+/** La date du jour, dans le fuseau du classeur. */
+function aujourdHui_() {
+  return Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
 }
 
 /** Une date de cellule (objet Date ou texte) ramenee au format attendu par la base. */
@@ -194,19 +221,10 @@ function eleveDepuisLibelle_(libelle) {
   return null;
 }
 
-/**
- * Reecrit le tableau avec l'etat de la base.
- *
- * Le tableau est reconstruit en entier : la base fait foi. Une saisie faite ici est deja partie
- * (voir auSurEdition) au moment ou elle est reecrite, elle n'est donc jamais perdue.
- */
-function actualiser() {
-  var reponse = appeler_({ action: 'lister' });
-  var lignes = reponse.lignes || [];
-  var feuille = feuille_();
-
+/** Ecrit un jeu de dispenses dans un onglet, en-tetes comprises. Les deux onglets passent ici. */
+function ecrireTableau_(feuille, lignes, couleurEntete) {
   feuille.getRange(1, 1, 1, COLONNES.length).setValues([COLONNES])
-    .setFontWeight('bold').setBackground('#0876d1').setFontColor('#ffffff');
+    .setFontWeight('bold').setBackground(couleurEntete).setFontColor('#ffffff');
 
   var dernier = feuille.getLastRow();
   if (dernier >= PREMIERE_LIGNE) {
@@ -232,10 +250,35 @@ function actualiser() {
   // La colonne des identifiants ne sert qu'a retrouver la ligne : elle n'a rien a dire a l'oeil.
   feuille.hideColumns(COL_ID);
   feuille.setFrozenRows(1);
+}
+
+/**
+ * Reecrit les deux onglets avec l'etat de la base.
+ *
+ * Les tableaux sont reconstruits en entier : la base fait foi. Une saisie faite ici est deja
+ * partie (voir auSurEdition) au moment ou elle est reecrite, elle n'est donc jamais perdue.
+ *
+ * Le partage en cours / passees se fait ici et non en base : une dispense passe de l'un a l'autre
+ * toute seule le jour ou elle se termine, sans que personne ait rien a deplacer.
+ */
+function actualiser() {
+  var reponse = appeler_({ action: 'lister' });
+  var lignes = reponse.lignes || [];
+  var jour = aujourdHui_();
+
+  var enCours = [], passees = [];
+  lignes.forEach(function (l) {
+    if (String(l.fin || '') < jour) passees.push(l); else enCours.push(l);
+  });
+
+  var principale = feuille_();
+  if (principale.getName() !== ONGLET_EN_COURS) principale.setName(ONGLET_EN_COURS);
+  ecrireTableau_(principale, enCours, '#0876d1');
+  ecrireTableau_(feuillePassees_(), passees, '#7a8a99');
 
   var nbEleves = rafraichirListeEleves_();
-  classeur_().toast(lignes.length + ' dispense(s) · ' + nbEleves + ' élèves dans la liste',
-                    'Actualisé', 4);
+  classeur_().toast(enCours.length + ' en cours · ' + passees.length + ' passée(s) · '
+                    + nbEleves + ' élèves dans la liste', 'Actualisé', 4);
 }
 
 /**
@@ -247,7 +290,9 @@ function actualiser() {
 function auSurEdition(e) {
   if (!e || !e.range) return;
   var feuille = e.range.getSheet();
-  if (feuille.getName() === ONGLET_ELEVES) return; // L'onglet masque ne declenche rien.
+  // Seul l'onglet de saisie envoie. Les deux autres sont reecrits a chaque actualisation : y
+  // repondre ferait partir la reecriture elle-meme comme si c'etait une saisie.
+  if (feuille.getSheetId() !== feuille_().getSheetId()) return;
   var ligne = e.range.getRow();
   if (ligne < PREMIERE_LIGNE) return;
   // Une modification de la colonne État est la notre : ne pas repartir en boucle.
@@ -298,9 +343,13 @@ function auSurEdition(e) {
 
 /** Supprime la dispense de la ligne ou se trouve le curseur. */
 function supprimerLigneSelectionnee() {
-  var feuille = feuille_();
-  var ligne = feuille.getActiveRange().getRow();
+  // L'onglet actif, pas le premier : une dispense terminee se supprime aussi, depuis "Passées".
+  var feuille = classeur_().getActiveSheet();
   var ui = SpreadsheetApp.getUi();
+  if (feuille.getName() === ONGLET_ELEVES) {
+    ui.alert('Cet onglet ne contient pas de dispenses.'); return;
+  }
+  var ligne = feuille.getActiveRange().getRow();
   if (ligne < PREMIERE_LIGNE) { ui.alert('Placez-vous sur la ligne à supprimer.'); return; }
 
   var id = String(feuille.getRange(ligne, COL_ID).getValue() || '').trim();

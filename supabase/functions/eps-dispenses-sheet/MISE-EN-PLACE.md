@@ -56,6 +56,18 @@ adapté*), déployer la fonction, désactiver **Verify JWT** dessus, puis poser 
 
 5. Recharger le Sheet : un menu **Dispenses EPS** apparaît. Cliquer sur **Actualiser maintenant**.
 
+## Les trois onglets
+
+| Onglet | À quoi il sert |
+|---|---|
+| **En cours** | La saisie. Les dispenses en cours ou à venir. Seul onglet où écrire. |
+| **Passées** | Les dispenses terminées. Rempli tout seul, en lecture. |
+| `Élèves` | Masqué. La liste qui alimente le menu déroulant. Ne pas y toucher. |
+
+Une dispense passe de **En cours** à **Passées** toute seule le jour où elle se termine :
+personne n'a rien à déplacer. Pour corriger une dispense déjà terminée, passer par
+l'application ou le site — la supprimer reste possible depuis l'onglet **Passées**.
+
 ## À l'usage
 
 - **Vous saisissez une dispense** → elle apparaît dans le Sheet à la prochaine actualisation
