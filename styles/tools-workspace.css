@@ -46,3 +46,6 @@
 .socle-dot{width:32px;height:32px;min-width:32px;border-radius:50%;border:2px dashed #c3d3de;background:white;color:#8aa0b0;font-size:16px;font-weight:700;line-height:1;margin:0 auto;padding:0;cursor:pointer;display:grid;place-items:center}
 .socle-dot.rempli{border-style:solid;color:white}
 .socle-contexte .tool-context{margin:0 0 10px}
+.fitness-web .obs-cell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fitness-web .obs-cell button{width:auto;min-width:30px;margin:0;padding:3px 9px}
+.fitness-web .obs-cell b{min-width:18px;display:inline-block}

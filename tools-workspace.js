@@ -182,7 +182,14 @@
     document.getElementById("toolSaveOverlay")?.remove();const overlay=document.createElement("div");overlay.id="toolSaveOverlay";overlay.className="tool-work-overlay";overlay.innerHTML=`<section class="tool-save-sheet"><header><i>💾</i><div><small>ENREGISTRER</small><h2>Nommer le travail</h2></div><button id="toolSaveClose">×</button></header><label>Nom du travail<input id="toolSaveName" value="${esc(defaultValue)}" maxlength="80"></label><div><button id="toolSaveConfirm">Enregistrer</button><button class="secondary" id="toolSaveCancel">Annuler</button></div></section>`;document.body.appendChild(overlay);requestAnimationFrame(()=>overlay.classList.add("open"));const close=()=>overlay.remove();toolSaveClose.onclick=toolSaveCancel.onclick=close;toolSaveConfirm.onclick=()=>{const name=toolSaveName.value.trim();if(!name){toolSaveName.focus();return}close();onSave(name)};toolSaveName.focus();toolSaveName.select();toolSaveName.onkeydown=e=>{if(e.key==="Enter")toolSaveConfirm.click()}
   }
   function download(name,text,type="text/plain"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-  async function renderMultiChronoWeb(){const ctx=await contextHtml();let timers=[{name:"Élève 1",ms:0,running:false,start:0}];toolPanel.innerHTML=header("Multi-chrono","Plusieurs chronos simultanés","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiRows"></div><button id="multiAdd">＋ Ajouter un chrono</button></main>`;const drawRows=()=>multiRows.innerHTML=timers.map((t,i)=>`<div class="field-tool-counter"><input data-name="${i}" value="${esc(t.name)}"><b>${formatToolTime(t.ms+(t.running?Date.now()-t.start:0))}</b><button data-toggle="${i}">${t.running?"Pause":"Départ"}</button><button data-reset="${i}">↺</button></div>`).join("");drawRows();setInterval(()=>{if(document.getElementById("multiRows")&&timers.some(x=>x.running))drawRows()},100);multiAdd.onclick=()=>{timers.push({name:`Élève ${timers.length+1}`,ms:0,running:false,start:0});drawRows()};multiRows.onclick=e=>{let i=+e.target.dataset.toggle;if(Number.isInteger(i)){let t=timers[i];if(t.running){t.ms+=Date.now()-t.start;t.running=false}else{t.start=Date.now();t.running=true}drawRows()}i=+e.target.dataset.reset;if(Number.isInteger(i)){timers[i].ms=0;timers[i].running=false;drawRows()}};multiRows.onchange=e=>{if(e.target.dataset.name!==undefined)timers[+e.target.dataset.name].name=e.target.value};bindContext()}
+  async function renderMultiChronoWeb(){const ctx=await contextHtml();
+    // Choisir une classe ne faisait rien : les chronos restaient "Élève 1, Élève 2…". Ils portent
+    // desormais les noms de la classe, et l'on retombe sur un chrono anonyme en usage libre.
+    const chronosDeLaClasse=()=>onRealClass()&&toolStudents.length
+      ? toolStudents.map(e=>({name:studentLabel(e),ms:0,running:false,start:0}))
+      : [{name:"Élève 1",ms:0,running:false,start:0}];
+    let timers=chronosDeLaClasse();toolPanel.innerHTML=header("Multi-chrono","Plusieurs chronos simultanés","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiRows"></div><button id="multiAdd">＋ Ajouter un chrono</button></main>`;const drawRows=()=>multiRows.innerHTML=timers.map((t,i)=>`<div class="field-tool-counter"><input data-name="${i}" value="${esc(t.name)}"><b>${formatToolTime(t.ms+(t.running?Date.now()-t.start:0))}</b><button data-toggle="${i}">${t.running?"Pause":"Départ"}</button><button data-reset="${i}">↺</button></div>`).join("");drawRows();setInterval(()=>{if(document.getElementById("multiRows")&&timers.some(x=>x.running))drawRows()},100);multiAdd.onclick=()=>{timers.push({name:`Élève ${timers.length+1}`,ms:0,running:false,start:0});drawRows()};multiRows.onclick=e=>{let i=+e.target.dataset.toggle;if(Number.isInteger(i)){let t=timers[i];if(t.running){t.ms+=Date.now()-t.start;t.running=false}else{t.start=Date.now();t.running=true}drawRows()}i=+e.target.dataset.reset;if(Number.isInteger(i)){timers[i].ms=0;timers[i].running=false;drawRows()}};multiRows.onchange=e=>{if(e.target.dataset.name!==undefined)timers[+e.target.dataset.name].name=e.target.value};
+    bindContext(()=>{timers=chronosDeLaClasse();drawRows()})}
   async function renderTournamentWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{teams:"Équipe 1\nÉquipe 2\nÉquipe 3\nÉquipe 4",scores:{}};toolPanel.innerHTML=header("Tournois","Rencontres, scores et classement","🏆")+`<main class="field-tool-card">${ctx}<label>Équipes<textarea id="tourTeams" rows="5">${esc(state.teams)}</textarea></label><button id="tourBuild">Créer les rencontres</button><div id="tourMatches"></div></main><div class="tool-savebar"><button id="tourSave">💾 Enregistrer</button><button id="tourExport">▦ Exporter</button><button id="tourResume">↻ Reprendre</button></div><div id="tourSaved"></div>`;let id=saved?.id;const build=()=>{const names=tourTeams.value.split(/\n/).map(x=>x.trim()).filter(Boolean),matches=[];names.forEach((a,i)=>names.slice(i+1).forEach(b=>matches.push([a,b])));tourMatches.innerHTML=matches.map((m,i)=>`<div class="field-tool-counter"><span>${esc(m[0])} — ${esc(m[1])}</span><input type=number data-side="0" data-match="${i}" value="${state.scores[i]?.[0]||0}"><input type=number data-side="1" data-match="${i}" value="${state.scores[i]?.[1]||0}"></div>`).join("")};build();tourBuild.onclick=build;tourSave.onclick=async()=>{document.querySelectorAll("#tourMatches input").forEach(x=>(state.scores[x.dataset.match]??=[0,0])[+x.dataset.side]=+x.value);const w=await saveWork("tournament",prompt("Nom du tournoi",saved?.title||"Tournoi")||"Tournoi",{id,teams:tourTeams.value,scores:state.scores});id=w.id;renderTournamentWeb(w)};tourExport.onclick=()=>download("tournoi.txt",tourTeams.value+"\n\n"+tourMatches.innerText);tourResume.onclick=()=>{tourSaved.innerHTML=workList("tournament");bindWorks("tournament",()=>renderTournamentWeb(),renderTournamentWeb)};bindContext()}
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   // Chaque indicateur rapporte (+1) ou retire (-1) un point ; l'eleve part du milieu du bareme
@@ -207,21 +214,18 @@
     const state=compatible?saved.payload:{sport:"Basket-ball",bareme:20,indicators:OBS_PRESETS["Basket-ball"],values:{},activeId:null};
     let id=saved?.id;
     const eleves=()=>onRealClass()?toolStudents:[{id:FREE_USE,first_name:"Participant",last_name:"libre"}];
-    const studentsHtml=()=>eleves().map(e=>`<div class="card unssPick" data-obs-student="${e.id}" style="margin-top:6px;cursor:pointer;${String(state.activeId)===String(e.id)?"border:2px solid #087dca":""}">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <strong>${esc(studentLabel(e))}</strong><span>${fr(obsNote(state,e.id))} / ${state.bareme}</span>
-      </div></div>`).join("")||`<p class="muted">Choisissez une classe pour observer ses élèves, ou restez en usage libre pour un seul participant.</p>`;
-    const indicatorsHtml=()=>{
-      if(state.activeId==null)return `<p class="muted">Touchez un élève ci-dessus pour noter ses actions.</p>`;
-      const v=state.values[state.activeId]||{};
-      return state.indicators.map(([label,pol])=>`<div class="field-tool-counter">
-        <b>${pol>0?"➕":"➖"} ${esc(label)}</b>
-        <span style="display:flex;align-items:center;gap:8px">
-          <button type="button" data-obs-dec="${esc(label)}" style="width:auto;margin:0;padding:4px 12px">−</button>
-          <strong>${v[label]||0}</strong>
-          <button type="button" data-obs-inc="${esc(label)}" style="width:auto;margin:0;padding:4px 12px">＋</button>
-        </span>
-      </div>`).join("");
+    // Tout se lit d'un coup : la colonne des eleves reste en vue, un indicateur par colonne.
+    // Auparavant il fallait choisir un eleve pour voir ses indicateurs apparaitre plus bas, et
+    // l'on perdait de vue le reste de la classe a chaque changement.
+    const tableauHtml=()=>{
+      const liste=eleves();
+      if(!liste.length)return `<p class="muted">Choisissez une classe pour observer ses élèves, ou restez en usage libre pour un seul participant.</p>`;
+      return `<div class="fitness-web">${socleTableauHtml(
+        state.indicators.map(([label,pol])=>({titre:label,aide:pol>0?"+1":"−1"})),
+        liste.map(e=>{const v=state.values[e.id]||{};return {eleve:e,
+          cellules:state.indicators.map(([label])=>`<span class="obs-cell"><button type="button" data-obs-dec="${esc(label)}" data-obs-for="${e.id}">−</button><b>${v[label]||0}</b><button type="button" data-obs-inc="${esc(label)}" data-obs-for="${e.id}">＋</button></span>`),
+          total:`${fr(obsNote(state,e.id))} / ${state.bareme}`}}),
+        "Note")}</div>`;
     };
     toolPanel.innerHTML=header("Observateur","Compter les actions sans quitter le jeu, par élève","👁️")+
       `<main class="field-tool-card">${ctx}
@@ -229,31 +233,26 @@
           <label>Sport<select id="obsSport">${Object.keys(OBS_PRESETS).map(s=>`<option value="${esc(s)}"${s===state.sport?" selected":""}>${esc(s)}</option>`).join("")}</select></label>
           <label>Barème<select id="obsBareme">${[5,10,20].map(b=>`<option value="${b}"${b===state.bareme?" selected":""}>/${b}</option>`).join("")}</select></label>
         </div>
-        <h4 style="margin:10px 0 4px">Élèves</h4>
-        <div id="obsStudents">${studentsHtml()}</div>
-        <h4 style="margin:10px 0 4px">Indicateurs</h4>
-        <div id="obsIndicators">${indicatorsHtml()}</div>
-        <div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><select id="obsNewPol"><option value="1">Positif (+1)</option><option value="-1">Négatif (−1)</option></select><button id="obsAdd">Ajouter</button></div>
+        <div id="obsTable">${tableauHtml()}</div>
+        <div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><select id="obsNewPol"><option value="1">Positif (+1)</option><option value="-1">Négatif (−1)</option></select><button id="obsAdd">Ajouter</button><button class="secondary" id="obsReset">↺ Réinitialiser</button></div>
       </main>
       <div class="tool-savebar"><button id="obsSave">💾 Enregistrer</button><button id="obsExport">▦ Exporter</button><button id="obsResume">↻ Reprendre</button></div>
       <div id="obsSaved"></div>`;
-    const redrawStudents=()=>{document.getElementById("obsStudents").innerHTML=studentsHtml();bindStudents()};
-    const redrawIndicators=()=>{document.getElementById("obsIndicators").innerHTML=indicatorsHtml();bindIndicators()};
-    function bindStudents(){
-      document.querySelectorAll("[data-obs-student]").forEach(el=>el.onclick=()=>{state.activeId=el.dataset.obsStudent;redrawStudents();redrawIndicators()});
+    const redraw=()=>{document.getElementById("obsTable").innerHTML=tableauHtml();bindTable()};
+    function bindTable(){
+      // Chaque bouton porte son eleve : plus besoin d'en designer un "actif" au prealable.
+      document.querySelectorAll("[data-obs-inc]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsInc,id=el.dataset.obsFor;const v=state.values[id]=state.values[id]||{};v[l]=(v[l]||0)+1;redraw()});
+      document.querySelectorAll("[data-obs-dec]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsDec,id=el.dataset.obsFor;const v=state.values[id]=state.values[id]||{};v[l]=Math.max(0,(v[l]||0)-1);redraw()});
     }
-    function bindIndicators(){
-      document.querySelectorAll("[data-obs-inc]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsInc;state.values[state.activeId]=state.values[state.activeId]||{};state.values[state.activeId][l]=(state.values[state.activeId][l]||0)+1;redrawIndicators();redrawStudents()});
-      document.querySelectorAll("[data-obs-dec]").forEach(el=>el.onclick=()=>{const l=el.dataset.obsDec;const v=state.values[state.activeId]||{};v[l]=Math.max(0,(v[l]||0)-1);state.values[state.activeId]=v;redrawIndicators();redrawStudents()});
-    }
-    bindStudents();bindIndicators();
-    document.getElementById("obsSport").onchange=e=>{state.sport=e.target.value;state.indicators=OBS_PRESETS[state.sport];state.values={};state.activeId=null;redrawStudents();redrawIndicators()};
-    document.getElementById("obsBareme").onchange=e=>{state.bareme=+e.target.value;redrawStudents()};
+    bindTable();
+    document.getElementById("obsSport").onchange=e=>{state.sport=e.target.value;state.indicators=OBS_PRESETS[state.sport];state.values={};state.activeId=null;redraw()};
+    document.getElementById("obsBareme").onchange=e=>{state.bareme=+e.target.value;redraw()};
     document.getElementById("obsAdd").onclick=()=>{
       const nom=document.getElementById("obsNew").value.trim();if(!nom)return;
       state.indicators=[...state.indicators,[nom,+document.getElementById("obsNewPol").value]];
-      document.getElementById("obsNew").value="";redrawIndicators()
+      document.getElementById("obsNew").value="";redraw()
     };
+    document.getElementById("obsReset").onclick=()=>{if(!confirm("Effacer toutes les actions comptées et repartir de zéro ?"))return;state.values={};redraw()};
     document.getElementById("obsSave").onclick=async()=>{
       const w=await saveWork("observer",prompt("Nom de l’observation",saved?.title||`Observation ${state.sport}`)||"Observation",{...state,id});
       id=w.id;renderObserverWeb(w)
@@ -264,7 +263,7 @@
       download(`observation-${state.sport}.csv`,"\ufeff"+lignes.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(";")).join("\r\n"),"text/csv;charset=utf-8");
     };
     document.getElementById("obsResume").onclick=()=>{document.getElementById("obsSaved").innerHTML=workList("observer");bindWorks("observer",()=>renderObserverWeb(),renderObserverWeb)};
-    bindContext(()=>{redrawStudents();redrawIndicators()});
+    bindContext(redraw);
   }
   async function renderRotationsWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{stations:"Échauffement\nTechnique\nJeu réduit\nDéfi",groups:4,step:0};toolPanel.innerHTML=header("Rotations d’ateliers","Chaque groupe au bon atelier","🔄")+`<main class="field-tool-card">${ctx}<label>Ateliers<textarea id="rotStations" rows=5>${esc(state.stations)}</textarea></label><div class="field-tool-row"><label>Groupes<input id="rotGroups" type=number min=2 value="${state.groups}"></label><button id="rotNext">Rotation suivante</button></div><div id="rotRows"></div></main><div class="tool-savebar"><button id="rotSave">💾 Enregistrer</button><button id="rotExport">▦ Exporter</button><button id="rotResume">↻ Reprendre</button></div><div id="rotSaved"></div>`;let id=saved?.id;const drawRot=()=>{const a=rotStations.value.split(/\n/).filter(Boolean),n=Math.max(2,+rotGroups.value||2);rotRows.innerHTML=Array.from({length:n},(_,i)=>`<div class="field-tool-counter"><b>Groupe ${i+1}</b><span>${esc(a[(i+state.step)%a.length]||"Atelier")}</span></div>`).join("")};drawRot();rotNext.onclick=()=>{state.step++;drawRot()};rotStations.oninput=rotGroups.oninput=drawRot;rotSave.onclick=async()=>{const w=await saveWork("rotations",prompt("Nom",saved?.title||"Rotations d’ateliers")||"Rotations",{id,stations:rotStations.value,groups:+rotGroups.value,step:state.step});renderRotationsWeb(w)};rotExport.onclick=()=>download("rotations.txt",rotRows.innerText);rotResume.onclick=()=>{rotSaved.innerHTML=workList("rotations");bindWorks("rotations",()=>renderRotationsWeb(),renderRotationsWeb)};bindContext()}
   async function renderRandomWeb(){const ctx=await contextHtml();toolPanel.innerHTML=header("Tirage au sort","Un élève en un toucher","🎲")+`<main class="field-tool-card">${ctx}<div class="field-tool-card" id="randomResult" style="font-size:28px;text-align:center">Prêt</div><button id="randomGo">Tirer un élève</button></main>`;bindContext();document.getElementById("randomGo").onclick=async()=>{const mode=document.getElementById("modernMode"),cls=document.getElementById("modernClass"),result=document.getElementById("randomResult");if(mode.value==="class"&&!cls.value)return alert("Choisissez une classe.");await loadToolStudents(cls.value);result.textContent=toolStudents.length?studentLabel(toolStudents[Math.floor(Math.random()*toolStudents.length)]):`Participant ${1+Math.floor(Math.random()*99)}`}}
