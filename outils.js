@@ -627,6 +627,8 @@ function drawSwimCertificate() {
 
 // ---- Aptitudes physiques 6e (miroir de Grade6AptitudesScreen) ----
 const aptitudeValues = {};
+// Outil de 6e : la couleur est le mode naturel ici, mais reste modifiable.
+let aptitudeMode = "couleur", aptitudeColors = {}, aptitudeModeChoisi = false;
 
 async function renderAptitudes() {
   await loadToolClasses();
@@ -637,24 +639,27 @@ async function renderAptitudes() {
 function drawAptitudes() {
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
 
+  // Tableau du socle : trois criteres en colonnes, les noms restent en vue.
+  const champs = [["sprint","30 m","secondes"],["endurance","Palier","endurance"],["jump","Saut","cm"]];
   toolPanel.innerHTML = toolHeader("Aptitudes physiques 6e", "Sprint 30 m, endurance et saut sans elan")
     + toolRosterHtml()
     + `<div class="card" style="background:#FFF7E8"><div class="muted">Baremes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
-    + cible.map(s => {
-        const v = aptitudeValues[s.id] || {};
-        return `<div class="card">
-          <strong>${studentLabel(s)}</strong>
-          <div class="row">
-            <div><label>30 m (s)</label><input type="text" inputmode="decimal" data-apt="${s.id}" data-field="sprint" value="${v.sprint || ""}"></div>
-            <div><label>Palier</label><input type="text" inputmode="decimal" data-apt="${s.id}" data-field="endurance" value="${v.endurance || ""}"></div>
-            <div><label>Saut (cm)</label><input type="text" inputmode="decimal" data-apt="${s.id}" data-field="jump" value="${v.jump || ""}"></div>
-          </div>
-          <div style="margin-top:8px; color:var(--primary); font-weight:700" data-apt-out="${s.id}"></div>
-        </div>`;
-      }).join("");
+    + `<div class="field-tool-row">${socleSelecteurModeHtml(aptitudeMode,"aptitudeMode")}</div>`
+    + `<div class="fitness-web">${socleTableauHtml(
+        champs.map(([,titre,aide])=>({titre,aide})),
+        cible.map(s=>{const v=aptitudeValues[s.id]||{};return {eleve:s,
+          cellules:champs.map(([cle])=>`<input type="text" inputmode="decimal" data-apt="${s.id}" data-field="${cle}" value="${v[cle]||""}">`),
+          total:aptitudeMode==="couleur"
+            ? socleCouleurCelluleHtml(aptitudeColors[s.id],`data-apt-couleur="${s.id}"`)
+            : `<span data-apt-out="${s.id}">—</span>`}}),
+        aptitudeMode==="couleur"?"Appréciation":"Niveaux")}</div>`
+    + `<div class="running-save-actions"><button class="secondary" id="aptResetBtn">↺ Réinitialiser</button></div>`;
 
   bindToolClose();
   bindToolRoster(drawAptitudes);
+  document.getElementById("aptitudeMode").onchange=e=>{aptitudeMode=e.target.value;aptitudeModeChoisi=true;drawAptitudes()};
+  document.getElementById("aptResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies et repartir de zéro ?"))return;Object.keys(aptitudeValues).forEach(k=>delete aptitudeValues[k]);aptitudeColors={};drawAptitudes()};
+  toolPanel.querySelectorAll("[data-apt-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.aptCouleur;aptitudeColors[id]=socleCouleurSuivante(aptitudeColors[id]);drawAptitudes()});
 
   const niveau = (champ, brut) => {
     const n = toolNumber(brut);
@@ -664,7 +669,7 @@ function drawAptitudes() {
     cible.forEach(s => {
       const v = aptitudeValues[s.id] || {};
       const out = toolPanel.querySelector(`[data-apt-out="${s.id}"]`);
-      if (out) out.textContent = `Vitesse : ${niveau("sprint", v.sprint)} · Endurance : ${niveau("endurance", v.endurance)} · Force : ${niveau("jump", v.jump)}`;
+      if (out) out.textContent = `${niveau("sprint", v.sprint)} · ${niveau("endurance", v.endurance)} · ${niveau("jump", v.jump)}`;
     });
   };
   toolPanel.querySelectorAll("[data-apt]").forEach(input => input.oninput = () => {
@@ -750,6 +755,8 @@ let speedGroups = {};
 let speedGroupCount = 2;
 let speedActiveGroup = 1;
 let speedDistance = 30;
+// Appreciation en couleur, comme dans les autres outils (d'office en 6e, modifiable).
+let speedMode = "note", speedColors = {}, speedModeChoisi = false, speedModeClasse = null;
 let speedRunning = false;
 let speedStartedAt = 0;
 let speedTimes = {};
@@ -776,21 +783,28 @@ function drawSpeedTracker() {
         <div><label>Distance (m)</label><input type="number" id="speedDistance" value="${speedDistance}" min="1"></div>
         <div><label>Nombre de groupes</label><input type="number" id="speedGroupCount" value="${speedGroupCount}" min="1"></div>
       </div>
+      <div class="field-tool-row">${socleSelecteurModeHtml(speedMode,"speedMode")}</div>
       <label>Repartir les eleves</label>
-      ${cible.map(s => `<div class="top" style="padding:5px 0">
-        <div>${studentLabel(s)}</div>
-        <select data-speed-assign="${s.id}" style="width:auto">
-          ${Array.from({ length: speedGroupCount }, (_, i) => i + 1).map(g =>
-            `<option value="${g}"${speedGroups[s.id] === g ? " selected" : ""}>G${g}</option>`).join("")}
-        </select>
-      </div>`).join("")}
+      <div class="fitness-web">${socleTableauHtml(
+        [{titre:"Groupe"},{titre:"Passages",aide:"Relevés"}],
+        cible.map(s=>{const t=speedTimes[s.id]||[];return {eleve:s,
+          sousTitre:`Groupe ${speedGroups[s.id]||1}`,
+          cellules:[
+            `<select data-speed-assign="${s.id}">${Array.from({length:speedGroupCount},(_,i)=>i+1).map(g=>`<option value="${g}"${speedGroups[s.id]===g?" selected":""}>G${g}</option>`).join("")}</select>`,
+            t.length?t.map(x=>x.toFixed(2)+" s").join("<br>"):"—"
+          ],
+          total:speedMode==="couleur"
+            ? socleCouleurCelluleHtml(speedColors[s.id],`data-speed-couleur="${s.id}"`)
+            : (t.length?`${(speedDistance/Math.min(...t)*3.6).toFixed(1)} km/h`:"—")}}),
+        speedMode==="couleur"?"Appréciation":"Vitesse max")}</div>
       <label>Groupe a chronometrer</label>
       <div class="periodBar" style="display:flex">${chips.join("")}</div>
       <button id="speedStartBtn" ${speedRunning ? "disabled" : ""}>Demarrer le groupe ${speedActiveGroup}</button>
       ${speedRunning ? `<div class="toolDisplay" id="speedClock">0.00 s</div>
         <div class="toolActions">${groupe.map(s => `<button data-speed-hit="${s.id}">${studentLabel(s)} · passage ${(speedTimes[s.id] || []).length + 1}</button>`).join("")}</div>
         <button class="secondary" id="speedStopBtn">Arreter</button>` : ""}
-      <div id="speedResults" style="margin-top:12px"></div>`;
+      <div id="speedResults" style="margin-top:12px"></div>
+      <div class="running-save-actions"><button class="secondary" id="speedResetBtn">↺ Réinitialiser</button></div>`;
 
   bindToolClose();
   bindToolRoster(drawSpeedTracker);
@@ -826,6 +840,12 @@ function drawSpeedTracker() {
     (speedTimes[id] = speedTimes[id] || []).push(seconds);
     drawSpeedTracker();
   });
+
+  // Couleur d'office en 6e tant que rien n'a ete choisi a la main.
+  if(!speedModeChoisi&&speedModeClasse!==toolClassId){speedMode=socleModeParDefaut(toolClassId);speedModeClasse=toolClassId}
+  document.getElementById("speedMode").onchange=e=>{speedMode=e.target.value;speedModeChoisi=true;drawSpeedTracker()};
+  toolPanel.querySelectorAll("[data-speed-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.speedCouleur;speedColors[id]=socleCouleurSuivante(speedColors[id]);drawSpeedTracker()});
+  document.getElementById("speedResetBtn").onclick=()=>{if(!confirm("Effacer tous les passages relevés et repartir de zéro ?"))return;speedTimes={};speedColors={};speedRunning=false;drawSpeedTracker()};
 
   drawSpeedResults(groupe);
 }
