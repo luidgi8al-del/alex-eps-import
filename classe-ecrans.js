@@ -113,7 +113,7 @@ function ecAppuiLong(el, action) {
 
 /** Le bandeau bleu d'un ecran : retour, titre, et "+" quand on peut ajouter. */
 function ecBandeau(titre, { sous = "", ajout = false, actions = "" } = {}) {
-  return `<header class="ec-bandeau">
+  return `<header class="ec-bandeau ec-bandeau-bulles">
     <button type="button" class="ec-retour" data-ec-retour aria-label="Retour">←</button>
     <div class="ec-bandeau-titre"><h2>${ecTexte(titre)}</h2>${sous ? `<small>${ecTexte(sous)}</small>` : ""}</div>
     ${actions}
@@ -417,9 +417,7 @@ function ecDessinerTableauDeBord(panel) {
   // nulle part, ils ouvrent la liste des classes pour en choisir une autre - comme dans
   // l'application, ou le bandeau porte deja ce role. Bandeau plein ecran : c'etait la carte du
   // site (bordure, marge, coin arrondi) qui laissait un liseret vide de chaque cote.
-  // Sur le tableau de bord, chaque commande est une petite bulle blanche : le grand bandeau
-  // bleu reste reserve aux vrais sous-ecrans (eleves, documents, dispenses, groupes).
-  panel.querySelector(".ec-bandeau")?.classList.add("ec-bandeau-bulles");
+  // Le tableau de bord et tous ses sous-ecrans partagent maintenant les memes bulles blanches.
   const ouvrirChoixClasse = () => { if (typeof toggleClasseAccordeon === "function") toggleClasseAccordeon(); };
   panel.querySelector("[data-ec-retour]").onclick = ouvrirChoixClasse;
   const titre = panel.querySelector(".ec-bandeau-titre");
