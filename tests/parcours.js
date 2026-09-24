@@ -36,7 +36,10 @@
      */
     /** Revenir au tableau de bord, depuis l'ecran Cours ou depuis l'un de ses ecrans. */
     async function entrerDansMenu() {
-      const surLeTableauDeBord = () => f.document.querySelector('#classDashboardPanel [data-vue="evaluations"].ec-indic');
+      // La refonte en bulles blanches a retire la classe .ec-indic sur laquelle ce reperage
+      // s'appuyait. La carte "groupes" n'apparait que sur le tableau de bord : elle le distingue
+      // sans dependre d'une classe CSS, qui change avec l'habillage.
+      const surLeTableauDeBord = () => f.document.querySelector('#classDashboardPanel [data-vue="groupes"]');
       // Depuis le tableau de bord, la fleche ferme la classe : on ne la touche qu'ailleurs.
       for (let i = 0; i < 3 && !surLeTableauDeBord(); i++) {
         const retour = f.document.getElementById("retourMenuDepuisCours")
@@ -99,13 +102,12 @@
           // Le tableau de bord d'abord, comme dans l'application : ses cartes menent aux ecrans.
           await attendre(() => f.document.querySelector('#classDashboardPanel [data-vue="cours"]'),
             "le tableau de bord de la classe ne s'affiche pas", 8000);
-          ["eleves", "cours", "evaluations", "documents", "dispenses"].forEach(vue => {
+          ["eleves", "cours", "evaluations", "documents", "dispenses", "groupes"].forEach(vue => {
             if (!f.document.querySelector(`#classDashboardPanel [data-vue="${vue}"]`)) {
               throw new Error(`la carte ${vue} manque au tableau de bord`);
             }
           });
           await attendre(() => f.document.querySelector("#classDashboardPanel [data-ec-note]"), "le bloc-notes ne montre pas la note", 4000);
-          await attendre(() => f.document.querySelector("#classDashboardPanel [data-ec-equipe]"), "les equipes enregistrees manquent", 4000);
           await entrerDansCours();
           await attendre(() => f.document.querySelector(".dashSeance"), "la carte de seance manque");
         }
@@ -213,6 +215,9 @@
         action: async () => {
           await entrerDansMenu();
           const panneau = $("classDashboardPanel");
+          // Les compositions ont quitte le tableau de bord pour leur propre vue.
+          panneau.querySelector('[data-vue="groupes"]').click();
+          await attendre(() => panneau.querySelector("[data-ec-equipe]"), "les equipes enregistrees manquent dans la vue Groupes", 4000);
           panneau.querySelector("[data-ec-equipe]").click();
           await attendre(() => f.document.getElementById("ecEvaluerEquipe"), "la composition ne s'ouvre pas", 4000);
           if (f.document.getElementById("ecEvaluerEquipe").disabled) throw new Error("Créer une évaluation est grisé alors que la classe a un cycle");
@@ -226,6 +231,9 @@
           await attendre(() => f.document.getElementById("ecFermerEquipe"), "annuler l'evaluation ne ramene pas a la composition", 4000);
           f.document.getElementById("ecFermerEquipe").click();
 
+          // Fermer une composition ramene a la vue Groupes, pas au tableau de bord : il faut y
+          // remonter avant de viser une de ses cartes.
+          await entrerDansMenu();
           panneau.querySelector('[data-vue="evaluations"]').click();
           await attendre(() => panneau.querySelector("[data-ec-grille]"), "aucune grille a dupliquer", 4000);
           panneau.querySelector("[data-ec-grille]").dispatchEvent(new f.MouseEvent("contextmenu", { bubbles: true }));
