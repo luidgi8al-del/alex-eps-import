@@ -170,8 +170,44 @@ export class OfflineSyncEngine {
             await acknowledgeOperation(operation.opId);
             continue;
           }
+          // Un desaccord de version ne veut pas dire un desaccord de contenu.
+          //
+          // Toute ligne dont le numero de version avait bouge depuis la saisie devenait une
+          // "saisie a trancher", meme quand personne n'avait touche aux memes champs. Or
+          // l'application Android ecrit ces memes tables sans annoncer de version : chacune de
+          // ses synchronisations incremente le compteur, et la modification suivante faite sur
+          // le site arrivait donc perimee. Le professeur se retrouvait a arbitrer, plusieurs
+          // fois par jour, des desaccords qui n'existaient pas.
+          //
+          // On refait donc ici le rapprochement champ par champ deja fait a la descente (voir
+          // #applyServerRecord) : si le serveur n'a pas touche a ce que l'on modifie, on repart
+          // de sa version et on renvoie sans rien demander. La question n'est posee que lorsqu'un
+          // meme champ a change des deux cotes - ce pour quoi cet ecran existe.
           if (result.status === "conflict") {
-            await storeConflict({ operation, serverRecord: result.serverRecord, overlappingFields: result.overlappingFields || operation.changedFields });
+            const distant = result.serverRecord;
+            const rapprochement = distant && !distant.deleted && operation.action !== "delete"
+              ? mergeOfflineChange({
+                  baseData: operation.baseData, localData: operation.data,
+                  serverData: distant.data, declaredLocalFields: operation.changedFields
+                })
+              : { kind: "conflict", overlappingFields: result.overlappingFields || operation.changedFields };
+
+            if (rapprochement.kind === "merged") {
+              // Une seule reprise, tout de suite : si elle bute encore, c'est que la ligne bouge
+              // vraiment sous nos pieds, et la question merite alors d'etre posee.
+              const reprise = await this.#adapter.pushOperation({
+                ...operation, baseVersion: distant.version, baseData: distant.data,
+                data: rapprochement.data, changedFields: rapprochement.localFields
+              });
+              if (reprise.status === "ok") {
+                if (reprise.record) await saveLocalRecord(reprise.record);
+                await acknowledgeOperation(operation.opId);
+                sent++;
+                continue;
+              }
+            }
+            await storeConflict({ operation, serverRecord: distant,
+              overlappingFields: rapprochement.overlappingFields || result.overlappingFields || operation.changedFields });
             await acknowledgeOperation(operation.opId);
             continue;
           }

@@ -135,6 +135,49 @@ test("une modification du serveur sur un autre champ fusionne sans conflit", asy
   assertEgal(await countConflicts(), 0, "aucun conflit attendu");
 });
 
+test("une version perimee sans desaccord de contenu se renvoie toute seule", async () => {
+  // C'est le cas courant quand l'application Android ecrit les memes tables : elle n'annonce pas
+  // de version, chacune de ses synchronisations incremente le compteur, et la saisie faite
+  // ensuite sur le site arrive perimee. Tant que le champ modifie n'a pas bouge cote serveur,
+  // rien ne doit etre demande au professeur.
+  await saveLocalRecord({ entity: "eleve", id: "1", data: eleve, version: 1 });
+  await saveOfflineEdit({ entity: "eleve", id: "1", data: { ...eleve, mail: "nouveau@ex.fr" }, authorId: "moi" });
+  let premiere = true;
+  const serveur = serveurFactice({
+    reponsePush: () => {
+      if (premiere) {
+        premiere = false;
+        // Le serveur a bouge : version 3, mais sur un autre champ que le mien.
+        return { status: "conflict", serverRecord: { entity: "eleve", id: "1", version: 3,
+          updatedAt: new Date().toISOString(), deleted: false, data: { ...eleve, division: "2.9" } } };
+      }
+      return { status: "ok", record: { entity: "eleve", id: "1", version: 4,
+        updatedAt: new Date().toISOString(), deleted: false, data: { ...eleve, division: "2.9", mail: "nouveau@ex.fr" } } };
+    }
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 0, "rien a trancher : les champs ne se recouvrent pas");
+  assertEgal(serveur.recu.length, 2, "la saisie doit etre renvoyee une fois, avec la version fraiche");
+  assertEgal(serveur.recu[1].baseVersion, 3, "et repartir de la version du serveur");
+  const local = await readLocalRecord("eleve", "1");
+  assertEgal(local.data.mail, "nouveau@ex.fr", "ma saisie est conservee");
+  assertEgal(local.data.division, "2.9", "celle du serveur aussi");
+  assertEgal(await countPendingOperations(), 0, "et la file se vide");
+});
+
+test("une version perimee avec le meme champ modifie reste a trancher", async () => {
+  await saveLocalRecord({ entity: "eleve", id: "1", data: eleve, version: 1 });
+  await saveOfflineEdit({ entity: "eleve", id: "1", data: { ...eleve, division: "2.4" }, authorId: "moi" });
+  const serveur = serveurFactice({
+    reponsePush: () => ({ status: "conflict", serverRecord: { entity: "eleve", id: "1", version: 3,
+      updatedAt: new Date().toISOString(), deleted: false, data: { ...eleve, division: "2.9" } } })
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 1, "le meme champ des deux cotes : la question se pose");
+  const [conflit] = await listConflicts();
+  assertEgal(conflit.overlappingFields, ["division"], "et elle porte sur le bon champ");
+});
+
 test("une modification du serveur sur le meme champ leve un conflit", async () => {
   await saveLocalRecord({ entity: "eleve", id: "1", data: eleve, version: 1 });
   await saveOfflineEdit({ entity: "eleve", id: "1", data: { ...eleve, division: "2.4" } });
