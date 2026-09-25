@@ -1,17 +1,24 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import nodemailer from "npm:nodemailer@6.9.16";
+import { Buffer } from "node:buffer";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
-const EMAIL_FROM = Deno.env.get("EPS_EMAIL_FROM")!;
-const REPLY_TO = Deno.env.get("EPS_EMAIL_REPLY_TO") || undefined;
+const GMAIL_USER = Deno.env.get("EPS_GMAIL_USER")!;
+const GMAIL_APP_PASSWORD = Deno.env.get("EPS_GMAIL_APP_PASSWORD")!;
 const WEB_ORIGIN = Deno.env.get("EPS_WEB_ORIGIN") || "";
 
-if (!RESEND_API_KEY || !EMAIL_FROM) throw new Error("RESEND_API_KEY et EPS_EMAIL_FROM sont obligatoires");
+if (!GMAIL_USER || !GMAIL_APP_PASSWORD) throw new Error("EPS_GMAIL_USER et EPS_GMAIL_APP_PASSWORD sont obligatoires");
 
 const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const auth = createClient(SUPABASE_URL, ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+const mailer = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD.replace(/\s+/g, "") }
+});
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AUDIENCES = new Set(["students", "parents", "both", "parents_personalized"]);
 
@@ -65,7 +72,6 @@ Deno.serve(async req => {
   const audience = String(input.audience || "");
   const subject = String(input.subject || "").trim();
   const message = String(input.message || "").trim();
-  const requestId = String(input.requestId || crypto.randomUUID()).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 80);
   if (!slotId || !AUDIENCES.has(audience) || !subject || !message) return reply({ error: "Créneau, destinataires, objet et message sont obligatoires" }, 400);
   if (subject.length > 180 || message.length > 8000) return reply({ error: "Message trop long" }, 400);
 
@@ -82,6 +88,7 @@ Deno.serve(async req => {
   if (!slot || slot.deleted) return reply({ error: "Créneau introuvable" }, 404);
   const autorise = slot.assigned_teacher_id ? slot.assigned_teacher_id === user.id : slot.user_id === user.id;
   if (!autorise) return reply({ error: "Ce créneau est attribué à un autre professeur" }, 403);
+  const teacherEmail = EMAIL.test(String(user.email || "").trim()) ? String(user.email).trim().toLowerCase() : GMAIL_USER;
 
   const { data: memberships, error: membershipError } = await admin.from("unss_memberships")
     .select("student_id").eq("slot_id", slotId).eq("deleted", false);
@@ -109,23 +116,23 @@ Deno.serve(async req => {
   const failures: Array<{recipient:string,error:string}> = [];
   for (let start = 0; start < deliveries.length; start += 2) {
     const batch = deliveries.slice(start, start + 2);
-    await Promise.all(batch.map(async (delivery, offset) => {
-      const index = start + offset;
+    await Promise.all(batch.map(async delivery => {
       try {
         const personalizedSubject = replaceTokens(subject, delivery.student, slot);
         const personalizedMessage = replaceTokens(message, delivery.student, slot);
         const html = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#173a57">${personalizedMessage.split(/\r?\n/).map(line => line ? `<p style="margin:0 0 10px">${escapeHtml(line)}</p>` : `<div style="height:6px"></div>`).join("")}</div>`;
-        const payload: Record<string,unknown> = {
-          from: EMAIL_FROM, to: [delivery.recipient], ...(REPLY_TO ? { reply_to: REPLY_TO } : {}),
-          subject: personalizedSubject, html
-        };
-        if (attachment) payload.attachments = [{ filename: String(attachment.name || "document"), content: String(attachment.content) }];
-        const resend = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json", "Idempotency-Key": `${requestId}-${index}` },
-          body: JSON.stringify(payload)
+        await mailer.sendMail({
+          from: `"ASLVH" <${GMAIL_USER}>`,
+          to: delivery.recipient,
+          replyTo: teacherEmail,
+          subject: personalizedSubject,
+          html,
+          attachments: attachment ? [{
+            filename: String(attachment.name || "document"),
+            content: Buffer.from(String(attachment.content), "base64"),
+            contentType: String(attachment.type)
+          }] : undefined
         });
-        if (!resend.ok) throw new Error((await resend.text()).slice(0, 300));
         sent++;
       } catch (error) {
         failed++; failures.push({ recipient: delivery.recipient, error: String(error).slice(0, 300) });

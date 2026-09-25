@@ -15,6 +15,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 });
 [
   'assigned_teacher_id', 'unss_memberships', 'student_email,parent_email', 'parents_personalized',
-  'attachments', 'Idempotency-Key', 'deliveries.length > 150'
+  'attachments', 'smtp.gmail.com', 'EPS_GMAIL_APP_PASSWORD', 'replyTo: teacherEmail',
+  'deliveries.length > 150'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');
