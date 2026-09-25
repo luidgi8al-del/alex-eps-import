@@ -1678,6 +1678,15 @@ function lirePieceJointeAS(file) {
 
 /** Fenêtre d'envoi confidentiel aux inscrits d'un créneau. Le serveur relit lui-même le créneau
  * et ses inscriptions : le navigateur ne décide jamais seul des destinataires. */
+function signatureProfesseurAS(value) {
+  const nom = String(value || "").trim();
+  if (!nom) return "Le professeur EPS";
+  if (/^(?:M\.?|Monsieur)\s+/i.test(nom)) return nom.replace(/^(?:M\.?|Monsieur)\s+/i, "M. ");
+  if (/^(?:Mme\.?|Madame)\s+/i.test(nom)) return nom.replace(/^(?:Mme\.?|Madame)\s+/i, "Mme ");
+  if (/^(?:Mlle\.?|Mademoiselle)\s+/i.test(nom)) return nom.replace(/^(?:Mlle\.?|Mademoiselle)\s+/i, "Mlle ");
+  return `M. ${nom}`;
+}
+
 async function ouvrirEmailCreneau(slot) {
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
@@ -1711,7 +1720,7 @@ async function ouvrirEmailCreneau(slot) {
 
   const heure = [slot.start_time, slot.end_time].filter(Boolean).join("–") || "horaire à préciser";
   const jour = capitaliseJour(slot.day_of_week || "");
-  const professeur = slot.responsible_teacher || "Le professeur EPS";
+  const professeur = signatureProfesseurAS(slot.responsible_teacher);
   const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
   const compteur = mode => {
     const adresses = new Set(), manquants = [];
@@ -1743,16 +1752,16 @@ async function ouvrirEmailCreneau(slot) {
     overlay.querySelector("#asEmailDateLine").hidden = mode !== "cancellation";
     const date = dateInput.value ? new Date(`${dateInput.value}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "[date à sélectionner]";
     const introduction = typeDestinataire === "students"
-      ? `Bonjour {prenom} {nom},\n\nClasse : {classe}\n\n`
-      : `Bonjour,\n\nCe message concerne {prenom} {nom}, classe {classe}.\n\n`;
+      ? `Bonjour {nom} {prenom},\n\nClasse : {classe}\n\n`
+      : `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n`;
     let objet = "", message = "";
     if (mode === "confirmation") {
       objet = `Confirmation d’inscription – ${slot.activity_name}`;
       message = typeDestinataire === "parents" || typeDestinataire === "parents_personalized"
-        ? `Bonjour,\n\nVotre enfant {prenom} {nom}, classe {classe}, est retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+        ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
         : typeDestinataire === "students"
-          ? `Bonjour {prenom} {nom},\n\nClasse : {classe}\n\nCe message vous confirme que vous êtes retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
-          : `Bonjour,\n\nCe message confirme l’inscription de {prenom} {nom}, classe {classe}, dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`;
+          ? `Bonjour {nom} {prenom},\n\nClasse : {classe}\n\nCe message vous confirme que vous êtes retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+          : `Bonjour,\n\nCe message confirme l’inscription de {nom} {prenom}, classe {classe}, dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`;
     } else if (mode === "cancellation") {
       objet = `Séance d’AS ${slot.activity_name} annulée – ${date}`;
       message = `${introduction}La séance d’AS ${slot.activity_name} du ${date}, prévue de ${heure}, est annulée.\n\nCordialement,\n${professeur}`;

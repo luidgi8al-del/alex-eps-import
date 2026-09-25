@@ -41,10 +41,17 @@ function emails(value: unknown) {
   return [...new Set(String(value || "").split(/[;,\s]+/).map(v => v.trim().toLowerCase()).filter(v => EMAIL.test(v)))];
 }
 
+function formatFirstName(value: unknown) {
+  return String(value || "")
+    .trim()
+    .toLocaleLowerCase("fr-FR")
+    .replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g, (_match, separator, letter) => `${separator}${letter.toLocaleUpperCase("fr-FR")}`);
+}
+
 function replaceTokens(text: string, student: Record<string,unknown>, slot: Record<string,unknown>) {
-  const first = String(student.first_name || "").trim();
-  const last = String(student.last_name || "").trim();
-  const child = `${first} ${last}`.trim();
+  const first = formatFirstName(student.first_name);
+  const last = String(student.last_name || "").trim().toLocaleUpperCase("fr-FR");
+  const child = `${last} ${first}`.trim();
   const schoolClass = String(student.division || student.school_class_label || student.class_label || "Classe non renseignée").trim();
   const time = [slot.start_time, slot.end_time].filter(Boolean).join("–");
   return text
