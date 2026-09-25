@@ -2742,7 +2742,7 @@ async function assurerInscriptions() {
 }
 
 /** Les eleves d'un creneau : ajouter, retirer. */
-/** Une section vœu 2 ou vœu 3 : chaque candidat avec son propre bouton Ajouter, pas une case a
+/** Une section par rang de vœu : chaque candidat avec son propre bouton Ajouter, pas une case a
  * cocher - on veut pouvoir en ajouter un sans manipuler les autres. */
 function sectionVoeuHtml(rang, eleves) {
   if (eleves.length === 0) return "";
@@ -2783,6 +2783,7 @@ async function ouvrirElevesCreneau(slot) {
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
   const dejaLa = eleves.map(e => e.id);
+  const voeu1 = unssStudents.filter(s => s.licensed && s.wish1_slot_id === slot.id && !dejaLa.includes(s.id));
   const voeu2 = unssStudents.filter(s => s.licensed && s.wish2_slot_id === slot.id && !dejaLa.includes(s.id));
   const voeu3 = unssStudents.filter(s => s.licensed && s.wish3_slot_id === slot.id && !dejaLa.includes(s.id));
   panel.classList.add("as-full-panel");
@@ -2796,7 +2797,7 @@ async function ouvrirElevesCreneau(slot) {
              <button class="danger" data-retirer="${e.id}" style="margin-top:0">Retirer</button>
            </div>`).join("")
     }</div>
-    <div id="unssCreneauVoeux">${sectionVoeuHtml(2, voeu2)}${sectionVoeuHtml(3, voeu3)}</div>
+    <div id="unssCreneauVoeux">${sectionVoeuHtml(1, voeu1)}${sectionVoeuHtml(2, voeu2)}${sectionVoeuHtml(3, voeu3)}</div>
     <button class="secondary" id="unssCreneauAddBtn" style="margin-top:12px">Chercher un autre élève</button>
     `;
   panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", async () => {
