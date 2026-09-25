@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
       const teacher = teacherName && /^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i.test(teacherName)
         ? teacherName : teacherName ? `M. ${teacherName}` : "Le professeur EPS";
       const subject = `Absence AS - ${studentName} - ${date}`;
-      const html = `<p>Bonjour,</p><p>Nous vous informons que <strong>${escapeHtml(studentName)}</strong> a ete declare(e) absent(e) a la seance <strong>${escapeHtml(activity)}</strong> du <strong>${escapeHtml(date)}</strong>${group?.start_time ? ` a <strong>${escapeHtml(group.start_time)}</strong>` : ""}.</p><p>Si cette absence vous parait incorrecte, merci de contacter l'etablissement.</p><p>Cordialement,<br>${escapeHtml(teacher)}<br>Association Sportive - Cite scolaire Victor-Hugo</p>`;
+      const html = `<p>Bonjour,</p><p>Nous vous informons que <strong>${escapeHtml(studentName)}</strong> a été déclaré(e) absent(e) à la séance <strong>${escapeHtml(activity)}</strong> du <strong>${escapeHtml(date)}</strong>${group?.start_time ? ` à <strong>${escapeHtml(group.start_time)}</strong>` : ""}.</p><p>Ce message est à vocation informative. Merci de ne pas y répondre.</p><p>Cordialement,<br>${escapeHtml(teacher)}<br>Association Sportive – Cité scolaire Victor-Hugo</p>`;
       await mailer.sendMail({
         from: `"ASLVH" <${GMAIL_USER}>`, to: item.recipient, replyTo: teacherEmail, subject, html,
         headers: { "X-ASLVH-Queue-ID": String(item.id) }
