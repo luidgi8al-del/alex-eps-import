@@ -20,9 +20,10 @@
 
 /** L'ordre des colonnes. Le tableau est reecrit a chaque actualisation : ne pas en intercaler. */
 var COLONNES = ['id', 'Élève', 'Classe', 'Naissance', 'Début', 'Fin', 'Famille', 'Motif',
-                'Aptitude', 'Sport adapté', 'État'];
+                'Aptitude', 'Sport adapté', 'État', 'Fait par'];
 var COL_ID = 1, COL_ELEVE = 2, COL_CLASSE = 3, COL_NAISSANCE = 4, COL_DEBUT = 5, COL_FIN = 6,
-    COL_FAMILLE = 7, COL_MOTIF = 8, COL_APTITUDE = 9, COL_ADAPTE = 10, COL_ETAT = 11;
+    COL_FAMILLE = 7, COL_MOTIF = 8, COL_APTITUDE = 9, COL_ADAPTE = 10, COL_ETAT = 11,
+    COL_AUTEUR = 12;
 var PREMIERE_LIGNE = 2;
 
 /** L'onglet masque qui porte la liste des eleves, et jusqu'ou la liste deroulante s'applique. */
@@ -242,7 +243,7 @@ function ecrireTableau_(feuille, lignes, couleurEntete) {
   if (lignes.length) {
     var valeurs = lignes.map(function (l) {
       return [l.id, l.eleve, l.classe, l.naissance, l.debut, l.fin,
-              l.famille, l.motif, l.aptitude, l.adapte, ''];
+              l.famille, l.motif, l.aptitude, l.adapte, '', l.auteur || ''];
     });
     feuille.getRange(PREMIERE_LIGNE, 1, valeurs.length, COLONNES.length).setValues(valeurs);
   }
@@ -296,7 +297,7 @@ function auSurEdition(e) {
   var ligne = e.range.getRow();
   if (ligne < PREMIERE_LIGNE) return;
   // Une modification de la colonne État est la notre : ne pas repartir en boucle.
-  if (e.range.getColumn() === COL_ETAT) return;
+  if (e.range.getColumn() === COL_ETAT || e.range.getColumn() === COL_AUTEUR) return;
 
   // Un eleve choisi dans la liste porte sa classe avec lui : on separe les deux et on complete
   // la naissance, pour que l'infirmerie n'ait plus que les dates et le motif a saisir.

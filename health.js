@@ -189,11 +189,15 @@
    const enCours=lignes.filter(d=>d.end_date>=today).sort((a,b)=>a.end_date.localeCompare(b.end_date));
    const passees=lignes.filter(d=>d.end_date<today).sort((a,b)=>b.end_date.localeCompare(a.end_date));
    const tableau=(titre,rows,vide)=>`<section class="card"><h2>${titre} <span class="muted" style="font-weight:400">(${rows.length})</span></h2>`
-     +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th>${seulementLesMiennes?'':'<th>Saisie par</th>'}</tr></thead><tbody>`
+     +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th><th>Saisie par</th></tr></thead><tbody>`
        +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id,d))}</button></td>`
          +`<td>${healthEsc(classeNommee(d.class_id,d))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td>`
          +`<td>${healthEsc(motifLibelle(d.reason_kind)||'—')}</td>`
-         +(seulementLesMiennes?'':`<td data-auteur="${healthEsc(d.user_id||'')}">…</td>`)
+         // La colonne s'affiche aussi dans "Mes dispensés" : une dispense posee par l'infirmerie
+         // y arrive sous votre nom, et rien ne le disait.
+         +(d.entered_by==='INFIRMERIE'
+           ? `<td>Infirmerie</td>`
+           : `<td data-auteur="${healthEsc(d.user_id||'')}">…</td>`)
          +`</tr>`).join('')+`</tbody></table></div>`
       :`<p class="muted">${vide}</p>`)+`</section>`;
    body.innerHTML=tableau('En cours',enCours,'Aucune dispense en cours.')
@@ -268,7 +272,8 @@
             +`${d.adapted_activities?`<div class="muted">${healthEsc(d.adapted_activities)}</div>`:''}</div>`:'')
           +`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`);
     voile.classList.add('open');
-    corps.querySelector('#dispenseFicheAuteur').textContent=await nomEnseignant(d.user_id);
+    corps.querySelector('#dispenseFicheAuteur').textContent=
+      d.entered_by==='INFIRMERIE' ? 'l’infirmerie' : await nomEnseignant(d.user_id);
     if(!sienne)return;
 
     corps.querySelector('#ficheSuppr').onclick=async()=>{

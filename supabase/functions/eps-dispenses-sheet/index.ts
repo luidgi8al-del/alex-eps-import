@@ -73,6 +73,24 @@ const APTITUDE_LISIBLE: Record<string, string> = {
   SPORT_ADAPTE: "Sport adapté possible"
 };
 
+/**
+ * Le nom des professeurs, par identifiant de compte.
+ *
+ * Le nom vit dans teacher_profiles, l'e-mail dans profiles : on prend le premier et on retombe
+ * sur le second, pour qu'une colonne "Fait par" ne reste jamais vide.
+ */
+async function nomsEnseignants(): Promise<Map<string, string>> {
+  const noms = new Map<string, string>();
+  const { data: comptes } = await admin.from("profiles").select("id, email");
+  (comptes || []).forEach(p => noms.set(p.id, p.email || ""));
+  const { data: fiches } = await admin.from("teacher_profiles").select("user_id, profile");
+  (fiches || []).forEach(f => {
+    const nom = (f.profile as Record<string, unknown> | null)?.teacherName;
+    if (typeof nom === "string" && nom.trim()) noms.set(f.user_id, nom.trim());
+  });
+  return noms;
+}
+
 /** La naissance est stockee en millisecondes : le Sheet, lui, veut une date lisible. */
 function jourDepuisMillis(millis: unknown) {
   const n = Number(millis);
@@ -81,42 +99,24 @@ function jourDepuisMillis(millis: unknown) {
 }
 
 /**
- * Les comptes de l'etablissement, EPS_SHEET_USER_ID compris.
+ * Tous les eleves du repertoire, sans filtre de compte.
  *
- * Les dispenses se partagent entre collegues : chacun voit celles de tous. Le Sheet doit donc
- * couvrir le meme perimetre, sinon l'infirmerie ne pourrait rien saisir pour l'eleve d'un autre
- * professeur - alors que c'est precisement ce qu'on attend d'elle.
+ * Choix de l'administrateur de la base : le Sheet couvre le meme repertoire que celui qui sert
+ * aux classes et aux licences AS. Les dispenses se partagent deja entre collegues - chacun voit
+ * celles de tous - et l'infirmerie doit pouvoir saisir pour n'importe quel eleve, sans avoir a
+ * savoir de quel professeur il depend.
  *
- * C'est l'etablissement qui delimite, pas le compte : EPS_SHEET_USER_ID ne sert plus qu'a le
- * designer. Relu a chaque appel, sans memoire : un collegue qui arrive doit etre vu tout de
- * suite, pas au prochain redeploiement.
+ * A savoir si la base venait a heberger un second etablissement : il faudrait revenir a un
+ * filtre, sinon ce Sheet verrait ses eleves aussi.
  */
-async function comptesEtablissement(): Promise<string[]> {
-  const { data: moi } = await admin
-    .from("profiles").select("institution_id").eq("id", SHEET_USER_ID).maybeSingle();
-  const etablissement = moi?.institution_id;
-  if (!etablissement) return [SHEET_USER_ID];
-  const { data: membres } = await admin
-    .from("profiles").select("id").eq("institution_id", etablissement);
-  const ids = (membres || []).map(m => m.id as string);
-  return ids.includes(SHEET_USER_ID) ? ids : ids.concat(SHEET_USER_ID);
-}
-
-/**
- * Les eleves de l'etablissement.
- *
- * Le filtre compte autant ici que pour les dispenses : la fonction travaille avec la cle de
- * service, qui ignore les regles de la base. Sans lui, elle verrait les eleves de tous les
- * etablissements clients.
- */
-async function elevesDeLEtablissement(comptes: string[]) {
+async function tousLesEleves() {
   const { data: eleves, error } = await admin
     .from("students")
     .select("id, user_id, last_name, first_name, class_id, birth_date_epoch_millis")
-    .in("user_id", comptes).eq("deleted", false);
+    .eq("deleted", false);
   if (error) throw new Error(error.message);
   const { data: classes } = await admin.from("classes")
-    .select("id, name").in("user_id", comptes).eq("deleted", false);
+    .select("id, name").eq("deleted", false);
   const nomClasse = new Map<string, string>((classes || []).map(c => [c.id, c.name]));
   return { eleves: eleves || [], nomClasse };
 }
@@ -142,7 +142,7 @@ Deno.serve(async (req) => {
   // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.
   if (action === "eleves") {
     let contenu;
-    try { contenu = await elevesDeLEtablissement(await comptesEtablissement()); }
+    try { contenu = await tousLesEleves(); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const lignes = contenu.eleves.map(e => {
       const nom = `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
@@ -159,11 +159,9 @@ Deno.serve(async (req) => {
 
   // ---- Lister : le Sheet se reecrit avec l'etat de la base -------------------------------------
   if (action === "lister") {
-    const comptes = await comptesEtablissement();
     const { data, error } = await admin
       .from("health_dispensations")
-      .select("id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, updated_at")
-      .in("user_id", comptes)
+      .select("id, user_id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, entered_by, updated_at")
       // Une suppression ne retire pas la ligne, elle la marque effacee : c'est ce qui fait
       // disparaitre la dispense sur tous les appareils. Sans ce filtre, le Sheet ressuscitait
       // ce que l'on venait d'effacer.
@@ -171,6 +169,7 @@ Deno.serve(async (req) => {
       .order("start_date", { ascending: false });
     if (error) return repondre({ error: error.message }, 500);
 
+    const noms = await nomsEnseignants();
     const idsClasses = [...new Set((data || []).map(d => d.class_id))];
     const idsEleves = [...new Set((data || []).map(d => d.student_id))];
     const classes = new Map<string, string>();
@@ -205,6 +204,8 @@ Deno.serve(async (req) => {
           famille: d.reason_kind || "", motif: d.reason || "",
           aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
           adapte: d.adapted_activities || "",
+          // Qui l'a saisie : l'infirmerie depuis ce Sheet, ou le professeur lui-meme.
+          auteur: d.entered_by === "INFIRMERIE" ? "Infirmerie" : (noms.get(d.user_id) || ""),
           modifie: d.updated_at
         };
       })
@@ -224,9 +225,8 @@ Deno.serve(async (req) => {
     // Retrouver l'eleve par son nom, dans la classe indiquee quand elle l'est. Sans identifiant
     // c'est le seul rattachement possible - et il doit echouer clairement plutot qu'a moitie,
     // sinon une dispense se poserait sur le mauvais eleve sans que personne le voie.
-    const comptes = await comptesEtablissement();
     let contenu;
-    try { contenu = await elevesDeLEtablissement(comptes); }
+    try { contenu = await tousLesEleves(); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const { eleves } = contenu;
     const nomClasse = (id: string) => contenu.nomClasse.get(id) || "";
@@ -268,12 +268,15 @@ Deno.serve(async (req) => {
     const id = String(ligne.id || "").trim();
     if (id) {
       const { error } = await admin.from("health_dispensations")
-        .update(corps).eq("id", id).in("user_id", comptes);
+        .update(corps).eq("id", id);
       if (error) return repondre({ error: error.message }, 500);
       return repondre({ id, statut: "corrigée" });
     }
+    // La provenance ne se pose qu'a la creation : corriger une dispense du professeur ne doit pas
+    // la faire passer pour une saisie de l'infirmerie.
     const { data, error } = await admin.from("health_dispensations")
-      .insert({ ...corps, created_at: maintenant }).select("id").single();
+      .insert({ ...corps, entered_by: "INFIRMERIE", created_at: maintenant })
+      .select("id").single();
     if (error) return repondre({ error: error.message }, 500);
     return repondre({ id: data.id, statut: "ajoutée" });
   }
@@ -286,7 +289,7 @@ Deno.serve(async (req) => {
     // reviendrait a la synchronisation suivante, la copie locale du site la reproposant.
     const { error } = await admin.from("health_dispensations")
       .update({ deleted: true, updated_at: new Date().toISOString() })
-      .eq("id", id).in("user_id", await comptesEtablissement());
+      .eq("id", id);
     if (error) return repondre({ error: error.message }, 500);
     return repondre({ statut: "supprimée" });
   }
