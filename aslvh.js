@@ -861,6 +861,11 @@ function renderUnssTab() {
   if (unssMode === "licensed" && rows.some(s => s.host_available)) {
     html += `<button class="secondary" id="unssHebergementBtn" style="margin-top:0">Hébergement</button>`;
   }
+  // L'administrateur confirme toutes les affectations en une seule opération : le serveur
+  // regroupe les créneaux par élève et envoie un message distinct à chaque destinataire.
+  if (unssMode === "licensed" && unssAdmin && rows.length > 0) {
+    html += `<button class="secondary" id="unssGlobalEmailBtn" style="margin-top:0">E-mail</button>`;
+  }
   // Telecharger la liste des inscrits : nom, prenom, classe/division, taille de maillot -
   // ce qu'on redonne au secretariat ou au club en fin d'annee.
   if (unssMode === "licensed" && rows.length > 0) {
@@ -919,6 +924,7 @@ function renderUnssTab() {
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   wrap.querySelector("#unssHebergementBtn")?.addEventListener("click", () => ouvrirHebergement());
+  wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", () => ouvrirEmailGlobalLicencies(rows));
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
@@ -1685,6 +1691,100 @@ function signatureProfesseurAS(value) {
   if (/^(?:Mme\.?|Madame)\s+/i.test(nom)) return nom.replace(/^(?:Mme\.?|Madame)\s+/i, "Mme ");
   if (/^(?:Mlle\.?|Mademoiselle)\s+/i.test(nom)) return nom.replace(/^(?:Mlle\.?|Mademoiselle)\s+/i, "Mlle ");
   return `M. ${nom}`;
+}
+
+async function ouvrirEmailGlobalLicencies(rows) {
+  await assurerInscriptions();
+  const idsRetenus = new Set(unssInscriptions.map(i => i.student_id));
+  const eleves = rows.filter(e => idsRetenus.has(e.id));
+  if (!eleves.length) {
+    alert("Aucun élève n’est encore retenu dans un créneau AS.");
+    return;
+  }
+  document.getElementById("asSlotEmailOverlay")?.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "asSlotEmailOverlay";
+  overlay.className = "as-slot-email-overlay";
+  overlay.innerHTML = `<section class="as-slot-email-dialog" role="dialog" aria-modal="true" aria-labelledby="asGlobalEmailTitle">
+    <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Confirmer les inscriptions</h2><p>Un seul message regroupant tous les créneaux de chaque élève</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
+    <main>
+      <details id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section">
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students"><span><b>Aux élèves</b><small>Un message personnalisé par élève</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Aux familles</b><small>Un message personnalisé par enfant</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Envois séparés et confidentiels</small></span></label>
+        <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
+      </div></details>
+      <details id="asEmailMessageStep"><summary><span>2. Message</span><small>Confirmation globale</small></summary><div class="as-email-section">
+        <label>Objet<input id="asEmailSubject" maxlength="180" value="Confirmation de vos inscriptions à l’AS"></label>
+        <label>Message<textarea id="asEmailMessage" rows="11" maxlength="8000"></textarea></label>
+        <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
+      </div></details>
+      <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      <div class="as-email-result" id="asEmailResult"></div>
+    </main>
+    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend" disabled>Envoyer</button></footer>
+  </section>`;
+  document.body.appendChild(overlay);
+
+  const nomProfil = typeof loadPrefs === "function" ? loadPrefs().teacherName : "";
+  const professeur = signatureProfesseurAS(nomProfil || session?.email?.split("@")[0]);
+  const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
+  const compteur = mode => {
+    let nombre = 0, manquants = 0;
+    eleves.forEach(e => {
+      const mailsEleve = emailsAS(e.student_email), mailsParent = emailsAS(e.parent_email);
+      const mails = mode === "students" ? mailsEleve : mode === "parents_personalized" ? mailsParent : [...mailsEleve, ...mailsParent];
+      if (!mails.length) manquants++; else nombre += new Set(mails).size;
+    });
+    return { nombre, manquants };
+  };
+  const remplirMessage = () => {
+    const famille = audience() === "parents_personalized";
+    overlay.querySelector("#asEmailMessage").value = famille
+      ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
+      : `Bonjour,\n\nNous vous confirmons que {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`;
+  };
+  const actualiser = () => {
+    const c = compteur(audience());
+    overlay.querySelector("#asEmailRecipientSummary").innerHTML = audience()
+      ? `<b>${c.nombre} e-mail(s) personnalisé(s)</b>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
+      : `<span>Choisissez les destinataires.</span>`;
+    overlay.querySelector("#asEmailSend").disabled = !c.nombre;
+  };
+  const libelles = { students: "Élèves", parents_personalized: "Familles", both: "Élèves + familles" };
+  overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = () => overlay.remove());
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
+    overlay.querySelector("#asEmailAudienceChoice").textContent = libelles[audience()] || "À choisir";
+    remplirMessage(); actualiser();
+    overlay.querySelector("#asEmailRecipients").open = false;
+    overlay.querySelector("#asEmailMessageStep").open = true;
+  });
+  remplirMessage(); actualiser();
+
+  overlay.querySelector("#asEmailSend").onclick = async () => {
+    const bouton = overlay.querySelector("#asEmailSend");
+    const resultat = overlay.querySelector("#asEmailResult");
+    const subject = overlay.querySelector("#asEmailSubject").value.trim();
+    const message = overlay.querySelector("#asEmailMessage").value.trim();
+    const c = compteur(audience());
+    if (!audience() || !c.nombre) { resultat.textContent = "Choisissez des destinataires disposant d’une adresse."; return; }
+    if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
+    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés avec tous les créneaux de chaque élève ?`)) return;
+    bouton.disabled = true; resultat.textContent = "Envoi en cours…";
+    try {
+      const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
+      const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
+        requestId: crypto.randomUUID(), mode: "global_confirmations", audience: audience(), subject, message, attachment
+      }) });
+      const bilan = await response.json();
+      resultat.innerHTML = `<b>${bilan.sent || 0} e-mail(s) envoyé(s).</b>${bilan.failed ? `<span>${bilan.failed} échec(s).</span>` : ""}${bilan.missing?.length ? `<span>${bilan.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
+      if (!bilan.failed) bouton.textContent = "Envoyé"; else bouton.disabled = false;
+    } catch (error) {
+      resultat.textContent = error.message || "L’envoi a échoué.";
+      bouton.disabled = false;
+    }
+  };
 }
 
 async function ouvrirEmailCreneau(slot) {

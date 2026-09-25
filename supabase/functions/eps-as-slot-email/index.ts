@@ -48,7 +48,7 @@ function formatFirstName(value: unknown) {
     .replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g, (_match, separator, letter) => `${separator}${letter.toLocaleUpperCase("fr-FR")}`);
 }
 
-function replaceTokens(text: string, student: Record<string,unknown>, slot: Record<string,unknown>) {
+function replaceTokens(text: string, student: Record<string,unknown>, slot: Record<string,unknown>, activityList = "") {
   const first = formatFirstName(student.first_name);
   const last = String(student.last_name || "").trim().toLocaleUpperCase("fr-FR");
   const child = `${last} ${first}`.trim();
@@ -57,8 +57,25 @@ function replaceTokens(text: string, student: Record<string,unknown>, slot: Reco
   return text
     .replaceAll("{prenom}", first).replaceAll("{nom}", last).replaceAll("{enfant}", child)
     .replaceAll("{classe}", schoolClass)
+    .replaceAll("{creneaux}", activityList)
     .replaceAll("{activité}", String(slot.activity_name || "Association Sportive"))
     .replaceAll("{horaire}", time).replaceAll("{professeur}", String(slot.responsible_teacher || "Professeur EPS"));
+}
+
+function frenchTime(value: unknown) {
+  const raw = String(value || "").trim();
+  const match = /^(\d{1,2}):(\d{2})/.exec(raw);
+  if (!match) return raw;
+  return `${Number(match[1])}h${match[2] === "00" ? "" : match[2]}`;
+}
+
+function activityLine(slot: Record<string,unknown>) {
+  const activity = String(slot.activity_name || "Activité AS").trim();
+  const rawDay = String(slot.day_of_week || "").trim().toLocaleLowerCase("fr-FR");
+  const day = rawDay ? rawDay.charAt(0).toLocaleUpperCase("fr-FR") + rawDay.slice(1) : "Jour à préciser";
+  const start = frenchTime(slot.start_time), end = frenchTime(slot.end_time);
+  const hours = start && end ? ` de ${start} à ${end}` : start ? ` à ${start}` : "";
+  return `• ${activity} — ${day}${hours}`;
 }
 
 Deno.serve(async req => {
@@ -81,13 +98,84 @@ Deno.serve(async req => {
   const audience = String(input.audience || "");
   const subject = String(input.subject || "").trim();
   const message = String(input.message || "").trim();
-  if (!slotId || !AUDIENCES.has(audience) || !subject || !message) return reply({ error: "Créneau, destinataires, objet et message sont obligatoires" }, 400);
+  const globalMode = String(input.mode || "") === "global_confirmations";
+  if ((!globalMode && !slotId) || !AUDIENCES.has(audience) || !subject || !message) return reply({ error: "Destinataires, objet et message sont obligatoires" }, 400);
   if (subject.length > 180 || message.length > 8000) return reply({ error: "Message trop long" }, 400);
 
   const attachment = input.attachment || null;
   if (attachment) {
     if (!["application/pdf", "image/png", "image/jpeg"].includes(String(attachment.type))) return reply({ error: "Type de pièce jointe refusé" }, 400);
     if (!attachment.content || String(attachment.content).length > 4_300_000) return reply({ error: "Pièce jointe trop volumineuse" }, 400);
+  }
+
+  const teacherEmail = EMAIL.test(String(user.email || "").trim()) ? String(user.email).trim().toLowerCase() : GMAIL_USER;
+  if (globalMode) {
+    const { data: adminContext, error: adminError } = await admin.rpc("eps_admin_target", { p_actor: user.id });
+    const institutionId = adminContext?.institution_id;
+    if (adminError || !institutionId) return reply({ error: "L’envoi global est réservé à l’administrateur de l’établissement" }, 403);
+
+    const { data: slots, error: slotsError } = await admin.from("unss_slots")
+      .select("id,activity_name,day_of_week,start_time,end_time,responsible_teacher")
+      .eq("institution_id", institutionId).eq("deleted", false);
+    if (slotsError) return reply({ error: slotsError.message }, 500);
+    const slotById = new Map((slots || []).map(slot => [slot.id, slot]));
+    const slotIds = [...slotById.keys()];
+    if (!slotIds.length) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
+
+    const { data: memberships, error: membershipsError } = await admin.from("unss_memberships")
+      .select("student_id,slot_id").in("slot_id", slotIds).eq("deleted", false);
+    if (membershipsError) return reply({ error: membershipsError.message }, 500);
+    const slotsByStudent = new Map<string,Array<Record<string,unknown>>>();
+    for (const membership of memberships || []) {
+      const slot = slotById.get(membership.slot_id);
+      if (!slot || !membership.student_id) continue;
+      const list = slotsByStudent.get(membership.student_id) || [];
+      if (!list.some(item => item.id === slot.id)) list.push(slot);
+      slotsByStudent.set(membership.student_id, list);
+    }
+    const studentIds = [...slotsByStudent.keys()];
+    if (!studentIds.length) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
+    const { data: students, error: studentsError } = await admin.from("unss_students")
+      .select("id,last_name,first_name,division,student_email,parent_email")
+      .eq("institution_id", institutionId).eq("deleted", false).in("id", studentIds);
+    if (studentsError) return reply({ error: studentsError.message }, 500);
+
+    type GlobalDelivery = { recipient: string; student: Record<string,unknown>; slots: Array<Record<string,unknown>> };
+    const deliveries: GlobalDelivery[] = [], missing: Array<{id:unknown,name:string}> = [], seen = new Set<string>();
+    for (const student of students || []) {
+      const studentEmails = emails(student.student_email), parentEmails = emails(student.parent_email);
+      const chosen = audience === "students" ? studentEmails : audience === "parents" || audience === "parents_personalized" ? parentEmails : [...studentEmails, ...parentEmails];
+      if (!chosen.length) missing.push({ id: student.id, name: `${student.first_name || ""} ${student.last_name || ""}`.trim() });
+      for (const recipient of chosen) {
+        const key = `${student.id}|${recipient}`;
+        if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, student, slots: slotsByStudent.get(String(student.id)) || [] }); }
+      }
+    }
+    if (deliveries.length > 150) return reply({ error: "Plus de 150 e-mails : réduisez le nombre de destinataires" }, 400);
+
+    let sent = 0, failed = 0;
+    const failures: Array<{recipient:string,error:string}> = [];
+    for (let start = 0; start < deliveries.length; start += 2) {
+      const batch = deliveries.slice(start, start + 2);
+      await Promise.all(batch.map(async delivery => {
+        try {
+          const orderedSlots = [...delivery.slots].sort((a, b) => activityLine(a).localeCompare(activityLine(b), "fr"));
+          const activityList = orderedSlots.map(activityLine).join("\n");
+          const referenceSlot = orderedSlots[0] || {};
+          const personalizedSubject = replaceTokens(subject, delivery.student, referenceSlot, activityList);
+          const personalizedMessage = replaceTokens(message, delivery.student, referenceSlot, activityList);
+          const html = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#173a57">${personalizedMessage.split(/\r?\n/).map(line => line ? `<p style="margin:0 0 10px">${escapeHtml(line)}</p>` : `<div style="height:6px"></div>`).join("")}</div>`;
+          await mailer.sendMail({
+            from: `"ASLVH" <${GMAIL_USER}>`, to: delivery.recipient, replyTo: teacherEmail,
+            subject: personalizedSubject, html,
+            attachments: attachment ? [{ filename: String(attachment.name || "document"), content: Buffer.from(String(attachment.content), "base64"), contentType: String(attachment.type) }] : undefined
+          });
+          sent++;
+        } catch (error) { failed++; failures.push({ recipient: delivery.recipient, error: String(error).slice(0, 300) }); }
+      }));
+      if (start + 2 < deliveries.length) await new Promise(resolve => setTimeout(resolve, 550));
+    }
+    return reply({ ok: failed === 0, sent, failed, missing, failures });
   }
 
   const { data: slot, error: slotError } = await admin.from("unss_slots")
@@ -97,8 +185,6 @@ Deno.serve(async req => {
   if (!slot || slot.deleted) return reply({ error: "Créneau introuvable" }, 404);
   const autorise = slot.assigned_teacher_id ? slot.assigned_teacher_id === user.id : slot.user_id === user.id;
   if (!autorise) return reply({ error: "Ce créneau est attribué à un autre professeur" }, 403);
-  const teacherEmail = EMAIL.test(String(user.email || "").trim()) ? String(user.email).trim().toLowerCase() : GMAIL_USER;
-
   const { data: memberships, error: membershipError } = await admin.from("unss_memberships")
     .select("student_id").eq("slot_id", slotId).eq("deleted", false);
   if (membershipError) return reply({ error: membershipError.message }, 500);
