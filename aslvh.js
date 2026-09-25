@@ -924,7 +924,7 @@ function renderUnssTab() {
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   wrap.querySelector("#unssHebergementBtn")?.addEventListener("click", () => ouvrirHebergement());
-  wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", () => ouvrirEmailGlobalLicencies(rows));
+  wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", () => ouvrirEmailGlobalLicencies(brut));
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
@@ -1696,9 +1696,8 @@ function signatureProfesseurAS(value) {
 async function ouvrirEmailGlobalLicencies(rows) {
   await assurerInscriptions();
   const idsRetenus = new Set(unssInscriptions.map(i => i.student_id));
-  const eleves = rows.filter(e => idsRetenus.has(e.id));
-  if (!eleves.length) {
-    alert("Aucun élève n’est encore retenu dans un créneau AS.");
+  if (!rows.length) {
+    alert("Aucun élève licencié à contacter.");
     return;
   }
   document.getElementById("asSlotEmailOverlay")?.remove();
@@ -1709,6 +1708,12 @@ async function ouvrirEmailGlobalLicencies(rows) {
     <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Confirmer les inscriptions</h2><p>Un seul message regroupant tous les créneaux de chaque élève</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
       <details id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section">
+        <b>Groupe à contacter</b>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_certificate"><span><b>Certificat manquant</b><small>Tous les dossiers où le certificat manque</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_payment"><span><b>Paiement manquant</b><small>Tous les dossiers où le paiement manque</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="host_available"><span><b>Peuvent héberger</b><small>Toutes les familles ayant proposé un hébergement</small></span></label>
+        <b>Adresses utilisées</b>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students"><span><b>Aux élèves</b><small>Un message personnalisé par élève</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Aux familles</b><small>Un message personnalisé par enfant</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Envois séparés et confidentiels</small></span></label>
@@ -1729,9 +1734,17 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const nomProfil = typeof loadPrefs === "function" ? loadPrefs().teacherName : "";
   const professeur = signatureProfesseurAS(nomProfil || session?.email?.split("@")[0]);
   const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
+  const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
+  const elevesFiltres = () => {
+    if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
+    if (filtre() === "missing_certificate") return rows.filter(e => e.medical_certificate_missing);
+    if (filtre() === "missing_payment") return rows.filter(e => e.payment_missing);
+    if (filtre() === "host_available") return rows.filter(e => e.host_available);
+    return [];
+  };
   const compteur = mode => {
     let nombre = 0, manquants = 0;
-    eleves.forEach(e => {
+    elevesFiltres().forEach(e => {
       const mailsEleve = emailsAS(e.student_email), mailsParent = emailsAS(e.parent_email);
       const mails = mode === "students" ? mailsEleve : mode === "parents_personalized" ? mailsParent : [...mailsEleve, ...mailsParent];
       if (!mails.length) manquants++; else nombre += new Set(mails).size;
@@ -1740,22 +1753,46 @@ async function ouvrirEmailGlobalLicencies(rows) {
   };
   const remplirMessage = () => {
     const famille = audience() === "parents_personalized";
-    overlay.querySelector("#asEmailMessage").value = famille
-      ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
-      : `Bonjour,\n\nNous vous confirmons que {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`;
+    let objet = "Information – Association sportive";
+    let message = `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n[Votre message]\n\nCordialement,\n${professeur}`;
+    if (filtre() === "all_retained") {
+      objet = "Confirmation de vos inscriptions à l’AS";
+      message = famille
+        ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
+        : `Bonjour,\n\nNous vous confirmons que {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`;
+    } else if (filtre() === "missing_certificate") {
+      objet = "Dossier AS – certificat médical manquant";
+      message = `Bonjour,\n\nLe certificat médical de {nom} {prenom}, classe {classe}, est indiqué comme manquant dans son dossier AS.\n\nMerci de nous le transmettre afin de compléter le dossier.\n\nCordialement,\n${professeur}`;
+    } else if (filtre() === "missing_payment") {
+      objet = "Dossier AS – paiement à régulariser";
+      message = `Bonjour,\n\nLe paiement de l’inscription AS de {nom} {prenom}, classe {classe}, est indiqué comme manquant.\n\nMerci de régulariser la situation ou de nous signaler si le règlement a déjà été remis.\n\nCordialement,\n${professeur}`;
+    } else if (filtre() === "host_available") {
+      objet = "Hébergement – Association sportive";
+      message = `Bonjour,\n\nVous avez indiqué pouvoir héberger dans le cadre de l’association sportive pour {nom} {prenom}, classe {classe}.\n\n[Précisez ici votre demande concernant l’hébergement.]\n\nCordialement,\n${professeur}`;
+    }
+    overlay.querySelector("#asEmailSubject").value = objet;
+    overlay.querySelector("#asEmailMessage").value = message;
   };
   const actualiser = () => {
     const c = compteur(audience());
-    overlay.querySelector("#asEmailRecipientSummary").innerHTML = audience()
-      ? `<b>${c.nombre} e-mail(s) personnalisé(s)</b>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
-      : `<span>Choisissez les destinataires.</span>`;
-    overlay.querySelector("#asEmailSend").disabled = !c.nombre;
+    overlay.querySelector("#asEmailRecipientSummary").innerHTML = filtre() && audience()
+      ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
+      : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
+    overlay.querySelector("#asEmailSend").disabled = !filtre() || !c.nombre;
   };
   const libelles = { students: "Élèves", parents_personalized: "Familles", both: "Élèves + familles" };
+  const libellesFiltres = { all_retained: "Inscriptions confirmées", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
   overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = () => overlay.remove());
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.querySelectorAll('input[name="asEmailFilter"]').forEach(r => r.onchange = () => {
+    overlay.querySelector('input[name="asEmailAudience"][value="both"]').checked = true;
+    overlay.querySelector("#asEmailAudienceChoice").textContent = `${libellesFiltres[filtre()]} · Élèves + familles`;
+    remplirMessage(); actualiser();
+    overlay.querySelector("#asEmailRecipients").open = false;
+    overlay.querySelector("#asEmailMessageStep").open = true;
+  });
   overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
-    overlay.querySelector("#asEmailAudienceChoice").textContent = libelles[audience()] || "À choisir";
+    overlay.querySelector("#asEmailAudienceChoice").textContent = filtre() ? `${libellesFiltres[filtre()]} · ${libelles[audience()]}` : libelles[audience()] || "À choisir";
     remplirMessage(); actualiser();
     overlay.querySelector("#asEmailRecipients").open = false;
     overlay.querySelector("#asEmailMessageStep").open = true;
@@ -1768,14 +1805,14 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const subject = overlay.querySelector("#asEmailSubject").value.trim();
     const message = overlay.querySelector("#asEmailMessage").value.trim();
     const c = compteur(audience());
-    if (!audience() || !c.nombre) { resultat.textContent = "Choisissez des destinataires disposant d’une adresse."; return; }
+    if (!filtre() || !audience() || !c.nombre) { resultat.textContent = "Choisissez un groupe et des destinataires disposant d’une adresse."; return; }
     if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
-    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés avec tous les créneaux de chaque élève ?`)) return;
+    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés au groupe « ${libellesFiltres[filtre()]} » ?`)) return;
     bouton.disabled = true; resultat.textContent = "Envoi en cours…";
     try {
       const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
       const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-        requestId: crypto.randomUUID(), mode: "global_confirmations", audience: audience(), subject, message, attachment
+        requestId: crypto.randomUUID(), mode: "global_confirmations", recipientFilter: filtre(), audience: audience(), subject, message, attachment
       }) });
       const bilan = await response.json();
       resultat.innerHTML = `<b>${bilan.sent || 0} e-mail(s) envoyé(s).</b>${bilan.failed ? `<span>${bilan.failed} échec(s).</span>` : ""}${bilan.missing?.length ? `<span>${bilan.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
