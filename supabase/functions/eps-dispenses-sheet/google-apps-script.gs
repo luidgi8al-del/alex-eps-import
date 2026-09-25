@@ -448,6 +448,13 @@ function auSurEdition(e) {
   // Un eleve choisi dans la liste porte sa classe avec lui : on separe les deux et on complete
   // la naissance, pour que l'infirmerie n'ait plus que les dates et le motif a saisir.
   if (e.range.getColumn() === COL_ELEVE) {
+    // Nom efface : la classe et la naissance qui en decoulaient partent avec lui. Les laisser
+    // afficherait l'identite d'un eleve sous le nom d'un autre des qu'on en saisit un nouveau.
+    if (!String(e.range.getValue() || '').trim()) {
+      feuille.getRange(ligne, COL_CLASSE).clearContent();
+      feuille.getRange(ligne, COL_NAISSANCE).clearContent();
+      return;
+    }
     var trouve = eleveDepuisLibelle_(e.range.getValue());
     if (trouve) {
       feuille.getRange(ligne, COL_ELEVE).setValue(trouve.nom);
