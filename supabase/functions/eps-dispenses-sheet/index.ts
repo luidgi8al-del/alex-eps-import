@@ -159,8 +159,17 @@ Deno.serve(async (req) => {
       parCompte[c] = (parCompte[c] || 0) + 1;
     });
 
+    // Les autres tables ou vivent des eleves. Une dispense se rattache a un eleve de "students"
+    // et a sa classe : un eleve qui n'existe que dans l'une de celles-ci ne peut pas en recevoir,
+    // et c'est la seule explication qui reste quand la requete rend deja toute la table.
+    const ailleurs: Record<string, unknown> = {};
+    for (const t of ["unss_students", "pending_students"]) {
+      ailleurs[t] = await compter(t).catch(() => "table absente");
+    }
+
     return repondre({
       eleves_total_toutes_lignes: await compter("students"),
+      ailleurs,
       // deno-lint-ignore no-explicit-any
       eleves_non_supprimes: await compter("students", ((q: any) => q.eq("deleted", false)) as never),
       eleves_rendus_par_la_requete: rendus,

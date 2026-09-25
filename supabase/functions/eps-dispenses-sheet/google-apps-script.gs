@@ -189,6 +189,11 @@ function diagnostic() {
     lignes.push('  Les élèves manquants sont soit marqués supprimés, soit absents de la table.');
   }
   lignes.push('');
+  lignes.push('Élèves dans les AUTRES tables (ils ne peuvent pas recevoir de dispense) :');
+  Object.keys(d.ailleurs || {}).forEach(function (t) {
+    lignes.push('  ' + t + ' : ' + d.ailleurs[t]);
+  });
+  lignes.push('');
   lignes.push('Répartition par compte :');
   Object.keys(d.eleves_par_compte || {}).forEach(function (c) {
     lignes.push('  ' + c + ' : ' + d.eleves_par_compte[c]);
