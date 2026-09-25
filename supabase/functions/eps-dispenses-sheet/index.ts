@@ -338,6 +338,20 @@ Deno.serve(async (req) => {
       }));
     }
 
+    // Les fiches du repertoire, pour les dispenses posees sur un eleve sans classe. Le nom et la
+    // division sont recopies sur la dispense, la naissance non : elle se relit ici, sinon la
+    // colonne repartirait vide a chaque actualisation alors qu'elle etait remplie a la saisie.
+    const fiches = new Map<string, { classe: string; naissance: string }>();
+    const idsFiches = [...new Set((data || []).map(d => d.unss_student_id).filter(Boolean))];
+    if (idsFiches.length) {
+      const { data: fs } = await admin.from("unss_students")
+        .select("id, division, birth_date_epoch_millis").in("id", idsFiches);
+      (fs || []).forEach(f => fiches.set(f.id, {
+        classe: String(f.division || "").trim(),
+        naissance: jourDepuisMillis(f.birth_date_epoch_millis)
+      }));
+    }
+
     return repondre({
       lignes: (data || []).map(d => {
         // Une dispense posee sur un eleve du repertoire n'a ni classe ni eleve de classe : son
@@ -345,7 +359,7 @@ Deno.serve(async (req) => {
         const recopie = `${String(d.student_last_name || "").toUpperCase()} ${d.student_first_name || ""}`.trim();
         const nom = eleves.get(d.student_id)?.nom || recopie || "(élève retiré)";
         const classe = classes.get(d.class_id) || eleves.get(d.student_id)?.classe
-          || d.class_name || "";
+          || fiches.get(d.unss_student_id)?.classe || d.class_name || "";
         return {
           id: d.id,
           // Le Sheet ecrit le libelle, pas le nom seul : c'est ce que propose sa liste deroulante,
@@ -353,7 +367,8 @@ Deno.serve(async (req) => {
           eleve: classe ? `${nom} — ${classe}` : nom,
           nom,
           classe,
-          naissance: eleves.get(d.student_id)?.naissance || "",
+          naissance: eleves.get(d.student_id)?.naissance
+            || fiches.get(d.unss_student_id)?.naissance || "",
           debut: d.start_date, fin: d.end_date,
           famille: MOTIF_LISIBLE[d.reason_kind || ""] || "", motif: d.reason || "",
           aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
