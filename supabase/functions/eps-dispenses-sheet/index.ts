@@ -99,7 +99,34 @@ function jourDepuisMillis(millis: unknown) {
 }
 
 /**
- * Tous les eleves du repertoire, sans filtre de compte.
+ * Le repertoire des eleves : tout l'etablissement, classe ou non.
+ *
+ * Un eleve n'entre dans "students" que le jour ou un professeur verse sa division dans sa classe.
+ * Le repertoire, lui, les porte tous - avec leur division, c'est-a-dire leur vraie classe. C'est
+ * donc lui qui alimente la liste deroulante.
+ *
+ * Lecture par tranches : PostgREST plafonne ce qu'il rend par requete, et le repertoire depasse
+ * le millier de lignes. Sans cela la liste s'arreterait en silence au millieme eleve.
+ */
+async function repertoireComplet() {
+  const taille = 1000;
+  // deno-lint-ignore no-explicit-any
+  const tout: any[] = [];
+  for (let debut = 0; ; debut += taille) {
+    const { data, error } = await admin
+      .from("unss_students")
+      .select("id, last_name, first_name, division, birth_date_epoch_millis")
+      .eq("deleted", false)
+      .order("last_name", { ascending: true }).order("first_name", { ascending: true })
+      .range(debut, debut + taille - 1);
+    if (error) throw new Error(error.message);
+    tout.push(...(data || []));
+    if (!data || data.length < taille) return tout;
+  }
+}
+
+/**
+ * Tous les eleves de classe, sans filtre de compte.
  *
  * Choix de l'administrateur de la base : le Sheet couvre le meme repertoire que celui qui sert
  * aux classes et aux licences AS. Les dispenses se partagent deja entre collegues - chacun voit
@@ -187,12 +214,13 @@ Deno.serve(async (req) => {
   // Taper un nom et le choisir vaut mieux que le saisir : l'infirmerie n'a pas a deviner
   // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.
   if (action === "eleves") {
-    let contenu;
-    try { contenu = await tousLesEleves(); }
+    let repertoire;
+    try { repertoire = await repertoireComplet(); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
-    const lignes = contenu.eleves.map(e => {
+    const lignes = repertoire.map(e => {
       const nom = `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
-      const classe = contenu.nomClasse.get(e.class_id) || "";
+      // La division EST la classe de l'eleve : il n'attend qu'un professeur pour l'y verser.
+      const classe = String(e.division || "").trim();
       return {
         // Le libelle est ce qui s'affiche dans la liste : nom ET classe, pour departager
         // deux eleves qui portent le meme nom.
@@ -207,7 +235,7 @@ Deno.serve(async (req) => {
   if (action === "lister") {
     const { data, error } = await admin
       .from("health_dispensations")
-      .select("id, user_id, class_id, student_id, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, entered_by, updated_at")
+      .select("id, user_id, class_id, student_id, unss_student_id, student_last_name, student_first_name, class_name, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, entered_by, updated_at")
       // Une suppression ne retire pas la ligne, elle la marque effacee : c'est ce qui fait
       // disparaitre la dispense sur tous les appareils. Sans ce filtre, le Sheet ressuscitait
       // ce que l'on venait d'effacer.
@@ -236,8 +264,12 @@ Deno.serve(async (req) => {
 
     return repondre({
       lignes: (data || []).map(d => {
-        const nom = eleves.get(d.student_id)?.nom || "(élève retiré)";
-        const classe = classes.get(d.class_id) || eleves.get(d.student_id)?.classe || "";
+        // Une dispense posee sur un eleve du repertoire n'a ni classe ni eleve de classe : son
+        // nom et sa division ont ete recopies au moment de l'ecriture, et servent de repli.
+        const recopie = `${String(d.student_last_name || "").toUpperCase()} ${d.student_first_name || ""}`.trim();
+        const nom = eleves.get(d.student_id)?.nom || recopie || "(élève retiré)";
+        const classe = classes.get(d.class_id) || eleves.get(d.student_id)?.classe
+          || d.class_name || "";
         return {
           id: d.id,
           // Le Sheet ecrit le libelle, pas le nom seul : c'est ce que propose sa liste deroulante,
@@ -271,35 +303,58 @@ Deno.serve(async (req) => {
     // Retrouver l'eleve par son nom, dans la classe indiquee quand elle l'est. Sans identifiant
     // c'est le seul rattachement possible - et il doit echouer clairement plutot qu'a moitie,
     // sinon une dispense se poserait sur le mauvais eleve sans que personne le voie.
-    let contenu;
-    try { contenu = await tousLesEleves(); }
-    catch (e) { return repondre({ error: (e as Error).message }, 500); }
+    let contenu, repertoire;
+    try {
+      contenu = await tousLesEleves();
+      repertoire = await repertoireComplet();
+    } catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const { eleves } = contenu;
     const nomClasse = (id: string) => contenu.nomClasse.get(id) || "";
 
     const cherche = cleNom(ligne.eleve || "");
     const classeVoulue = cleNom(ligne.classe || "");
-    const candidats = (eleves || []).filter(e => {
-      // "DUPONT Lea" comme "Lea DUPONT" : on accepte les deux ordres.
-      const direct = cleNom(`${e.last_name || ""} ${e.first_name || ""}`);
-      const inverse = cleNom(`${e.first_name || ""} ${e.last_name || ""}`);
-      if (cherche !== direct && cherche !== inverse) return false;
-      return !classeVoulue || cleNom(nomClasse(e.class_id)) === classeVoulue;
-    });
-    if (!candidats.length) return repondre({ error: `Élève introuvable : « ${ligne.eleve || ""} »` }, 404);
-    if (candidats.length > 1) {
+    /** "DUPONT Lea" comme "Lea DUPONT" : on accepte les deux ordres. */
+    const memeNom = (nom: unknown, prenom: unknown) => {
+      const direct = cleNom(`${nom || ""} ${prenom || ""}`);
+      const inverse = cleNom(`${prenom || ""} ${nom || ""}`);
+      return cherche === direct || cherche === inverse;
+    };
+
+    // On cherche d'abord parmi les eleves de classe : quand l'eleve y est, la dispense se rattache
+    // a sa classe et apparait sur la carte Dispenses de celle-ci, comme une dispense ordinaire.
+    const candidats = (eleves || []).filter(e =>
+      memeNom(e.last_name, e.first_name)
+      && (!classeVoulue || cleNom(nomClasse(e.class_id)) === classeVoulue));
+
+    // A defaut, l'eleve du repertoire : il a une division - sa vraie classe - mais aucun
+    // professeur ne l'a encore versee dans la sienne. La dispense est posee quand meme.
+    const duRepertoire = candidats.length ? [] : repertoire.filter(e =>
+      memeNom(e.last_name, e.first_name)
+      && (!classeVoulue || cleNom(String(e.division || "")) === classeVoulue));
+
+    const trouves = candidats.length ? candidats.length : duRepertoire.length;
+    if (!trouves) return repondre({ error: `Élève introuvable : « ${ligne.eleve || ""} »` }, 404);
+    if (trouves > 1) {
       return repondre({ error: "Plusieurs élèves portent ce nom : précisez la classe" }, 409);
     }
-    const eleve = candidats[0];
+    const eleve = candidats.length ? candidats[0] : null;
+    const fiche = eleve ? null : duRepertoire[0];
 
     const maintenant = new Date().toISOString();
     const corps = {
       // La dispense revient au professeur de l'eleve, pas au compte de la passerelle : c'est chez
       // lui qu'elle doit apparaitre dans "Mes dispenses", et lui seul peut la corriger depuis
-      // l'application.
-      user_id: eleve.user_id || SHEET_USER_ID,
-      class_id: eleve.class_id,
-      student_id: eleve.id,
+      // l'application. Un eleve du repertoire n'a pas encore de professeur : elle revient alors
+      // au compte de reference.
+      user_id: eleve?.user_id || SHEET_USER_ID,
+      class_id: eleve ? eleve.class_id : null,
+      student_id: eleve ? eleve.id : null,
+      unss_student_id: fiche ? fiche.id : null,
+      // Le nom et la division sont recopies : ils font tenir la ligne debout tant qu'aucune
+      // classe ne la porte, et l'affichage les utilise deja en repli (voir schema_sante_3).
+      student_last_name: (eleve || fiche)?.last_name || null,
+      student_first_name: (eleve || fiche)?.first_name || null,
+      class_name: eleve ? nomClasse(eleve.class_id) : (String(fiche?.division || "") || null),
       start_date: debut,
       end_date: fin,
       reason: String(ligne.motif || "") || null,

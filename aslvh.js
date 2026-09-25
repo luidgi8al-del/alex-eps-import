@@ -92,6 +92,9 @@ function dispensesDuJour(dispenses, elevesDeClasse, jour) {
   dispenses.forEach(d => {
     if (d.deleted) return;
     if (!(d.start_date <= jour && d.end_date >= jour)) return;
+    // Une dispense posee depuis le repertoire designe directement le membre AS : elle n'a pas
+    // d'eleve de classe, et le rapprochement par nom ne s'applique donc pas.
+    if (d.unss_student_id) { index.set("unss:" + d.unss_student_id, d); return; }
     const eleve = parId.get(d.student_id);
     if (!eleve) return;
     index.set(cleEleve(eleve.last_name, eleve.first_name, eleve.birth_date_epoch_millis), d);
@@ -1774,8 +1777,9 @@ async function ouvrirEmailCreneau(slot) {
         template: overlay.querySelector("#asEmailTemplate").value, selectedDate: overlay.querySelector("#asEmailDate").value || null,
         attachment
       }) });
-      resultat.innerHTML = `<b>${response.sent || 0} e-mail(s) envoyé(s).</b>${response.failed ? `<span>${response.failed} échec(s).</span>` : ""}${response.missing?.length ? `<span>${response.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
-      if (!response.failed) bouton.textContent = "Envoyé";
+      const bilan = await response.json();
+      resultat.innerHTML = `<b>${bilan.sent || 0} e-mail(s) envoyé(s).</b>${bilan.failed ? `<span>${bilan.failed} échec(s).</span>` : ""}${bilan.missing?.length ? `<span>${bilan.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
+      if (!bilan.failed) bouton.textContent = "Envoyé";
     } catch (error) {
       resultat.textContent = error.message || "L’envoi a échoué.";
       bouton.disabled = false;
@@ -2972,8 +2976,8 @@ function renderUnssAppelBody(creneau, seance) {
   // Une seance deja pointee se rouvre pour correction : on garde sa date, on ne la recree pas.
   const quand = seance ? Number(seance.date_epoch_millis) : Date.now();
   const todayLabel = new Date(quand).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-  const dispenseDe = s => unssAppelDispenses.get(
-    cleEleve(s.last_name, s.first_name, s.birth_date_epoch_millis));
+  const dispenseDe = s => unssAppelDispenses.get("unss:" + s.id)
+    || unssAppelDispenses.get(cleEleve(s.last_name, s.first_name, s.birth_date_epoch_millis));
   const dispenses = unssAppelMembers.filter(dispenseDe);
   const dateFr = d => d ? new Date(d + "T12:00:00").toLocaleDateString("fr-FR") : "";
   const motif = d => (typeof motifLibelle === "function" ? motifLibelle(d.reason_kind) : "") || "";
