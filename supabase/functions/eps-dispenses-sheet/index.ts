@@ -167,6 +167,28 @@ Deno.serve(async (req) => {
   // ---- Diagnostic : d'ou vient l'ecart entre ce qu'on attend et ce qu'on voit -------------------
   // PostgREST plafonne le nombre de lignes rendues par defaut : une liste incomplete ressemble
   // alors a un filtre trop strict. Ce releve separe les deux causes au lieu de les confondre.
+  // Recherche ciblee : ce que la passerelle voit reellement pour un nom donne, colonne par
+  // colonne. Quand un eleve parait sans classe alors que le site lui en montre une, c'est la
+  // seule facon de savoir si la difference vient de la base ou de ce qui a ete ecrit dans le Sheet.
+  if (action === "cherche") {
+    const quoi = cleNom(String(requete.nom || ""));
+    if (!quoi) return repondre({ error: "Nom attendu" }, 400);
+    let repertoire;
+    try { repertoire = await repertoireComplet(); }
+    catch (e) { return repondre({ error: (e as Error).message }, 500); }
+    const trouves = repertoire
+      .filter(e => cleNom(`${e.last_name} ${e.first_name}`).includes(quoi)
+        || cleNom(`${e.first_name} ${e.last_name}`).includes(quoi))
+      .slice(0, 10)
+      .map(e => ({
+        id: e.id,
+        nom: `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim(),
+        division_brute: e.division === null ? "(null)" : `"${e.division}"`,
+        naissance: jourDepuisMillis(e.birth_date_epoch_millis)
+      }));
+    return repondre({ trouves, total_repertoire: repertoire.length });
+  }
+
   if (action === "diagnostic") {
     const compter = async (table: string, filtres: (q: never) => never = (q) => q) => {
       // deno-lint-ignore no-explicit-any

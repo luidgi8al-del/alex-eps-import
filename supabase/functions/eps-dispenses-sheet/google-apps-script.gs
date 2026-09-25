@@ -207,6 +207,43 @@ function diagnostic() {
   Logger.log(lignes.join('\n'));
 }
 
+/**
+ * Ce que la passerelle voit pour un eleve donne, et ce que le Sheet en a fait.
+ *
+ * A lancer quand un eleve parait sans classe alors que le site lui en montre une : les deux
+ * moities du trajet sont affichees cote a cote, ce qui dit laquelle des deux se trompe.
+ */
+function chercherEleve() {
+  var ui = SpreadsheetApp.getUi();
+  var reponse = ui.prompt('Chercher un élève', 'Nom ou prénom :', ui.ButtonSet.OK_CANCEL);
+  if (reponse.getSelectedButton() !== ui.Button.OK) return;
+  var quoi = reponse.getResponseText();
+
+  var d = appeler_({ action: 'cherche', nom: quoi });
+  var lignes = ['Ce que la BASE contient (' + d.total_repertoire + ' fiches au total) :'];
+  (d.trouves || []).forEach(function (e) {
+    lignes.push('  ' + e.nom + ' · division ' + e.division_brute + ' · naissance "' + e.naissance + '"');
+  });
+  if (!(d.trouves || []).length) lignes.push('  (aucune fiche trouvée)');
+
+  // L'autre moitie du trajet : ce que l'onglet masque porte aujourd'hui.
+  lignes.push('');
+  lignes.push('Ce que l’onglet Élèves du Sheet contient :');
+  var feuille = feuilleEleves_();
+  var dernier = feuille.getLastRow();
+  var vues = 0;
+  if (dernier >= 2) {
+    feuille.getRange(2, 1, dernier - 1, 4).getValues().forEach(function (l) {
+      if (vues >= 10) return;
+      if (String(l[0]).toLowerCase().indexOf(String(quoi).toLowerCase()) < 0) return;
+      vues++;
+      lignes.push('  libellé "' + l[0] + '" · classe "' + l[2] + '" · naissance "' + l[3] + '"');
+    });
+  }
+  if (!vues) lignes.push('  (rien dans l’onglet — relancez « actualiser »)');
+  Logger.log(lignes.join('\n'));
+}
+
 /** Le menu du Sheet. */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Dispenses EPS')
