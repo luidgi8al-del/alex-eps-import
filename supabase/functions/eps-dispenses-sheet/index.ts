@@ -137,6 +137,43 @@ Deno.serve(async (req) => {
 
   const action = String(requete.action || "");
 
+  // ---- Diagnostic : d'ou vient l'ecart entre ce qu'on attend et ce qu'on voit -------------------
+  // PostgREST plafonne le nombre de lignes rendues par defaut : une liste incomplete ressemble
+  // alors a un filtre trop strict. Ce releve separe les deux causes au lieu de les confondre.
+  if (action === "diagnostic") {
+    const compter = async (table: string, filtres: (q: never) => never = (q) => q) => {
+      // deno-lint-ignore no-explicit-any
+      let q: any = admin.from(table).select("id", { count: "exact", head: true });
+      q = filtres(q as never);
+      const { count, error } = await q;
+      return error ? `erreur : ${error.message}` : count;
+    };
+
+    const { data: page, error: erreurPage } = await admin
+      .from("students").select("id, user_id").eq("deleted", false);
+    const rendus = erreurPage ? -1 : (page || []).length;
+
+    const parCompte: Record<string, number> = {};
+    (page || []).forEach(e => {
+      const c = String(e.user_id || "(sans compte)");
+      parCompte[c] = (parCompte[c] || 0) + 1;
+    });
+
+    return repondre({
+      eleves_total_toutes_lignes: await compter("students"),
+      // deno-lint-ignore no-explicit-any
+      eleves_non_supprimes: await compter("students", ((q: any) => q.eq("deleted", false)) as never),
+      eleves_rendus_par_la_requete: rendus,
+      classes_non_supprimees:
+        // deno-lint-ignore no-explicit-any
+        await compter("classes", ((q: any) => q.eq("deleted", false)) as never),
+      comptes: Object.keys(parCompte).length,
+      eleves_par_compte: parCompte,
+      // Si "rendus" est inferieur a "non supprimes", c'est le plafond de lignes, pas un filtre.
+      plafond_atteint: typeof rendus === "number" && rendus > 0 && rendus % 1000 === 0
+    });
+  }
+
   // ---- Eleves : de quoi remplir la liste deroulante du Sheet ----------------------------------
   // Taper un nom et le choisir vaut mieux que le saisir : l'infirmerie n'a pas a deviner
   // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.

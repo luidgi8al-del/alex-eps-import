@@ -164,6 +164,38 @@ function verifier() {
   Logger.log(lignes.join('\n'));
 }
 
+/**
+ * Releve de ce que contient reellement la base, quand la liste parait incomplete.
+ *
+ * A lancer depuis l'editeur et lire dans le journal. Il separe les deux causes possibles d'une
+ * liste trop courte - un filtre trop strict, ou le plafond de lignes de PostgREST - qui donnent
+ * a l'oeil exactement le meme resultat.
+ */
+function diagnostic() {
+  var d = appeler_({ action: 'diagnostic' });
+  var lignes = [
+    'Élèves, toutes lignes confondues (supprimés compris) : ' + d.eleves_total_toutes_lignes,
+    'Élèves non supprimés : ' + d.eleves_non_supprimes,
+    'Élèves réellement rendus par la requête : ' + d.eleves_rendus_par_la_requete,
+    'Classes non supprimées : ' + d.classes_non_supprimees,
+    'Comptes enseignants concernés : ' + d.comptes,
+    ''
+  ];
+  if (d.eleves_rendus_par_la_requete < d.eleves_non_supprimes) {
+    lignes.push('→ La requête rend MOINS que ce que contient la table : c’est le plafond de');
+    lignes.push('  lignes de PostgREST, pas un filtre. Il faut lire par tranches.');
+  } else {
+    lignes.push('→ La requête rend tout ce que la table contient de non supprimé.');
+    lignes.push('  Les élèves manquants sont soit marqués supprimés, soit absents de la table.');
+  }
+  lignes.push('');
+  lignes.push('Répartition par compte :');
+  Object.keys(d.eleves_par_compte || {}).forEach(function (c) {
+    lignes.push('  ' + c + ' : ' + d.eleves_par_compte[c]);
+  });
+  Logger.log(lignes.join('\n'));
+}
+
 /** Le menu du Sheet. */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Dispenses EPS')
