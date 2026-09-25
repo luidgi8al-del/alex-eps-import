@@ -9,14 +9,14 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="asEmail"', 'function ouvrirEmailCreneau(slot)', 'value="students"', 'value="parents"',
   'value="both"', 'value="parents_personalized"', 'Confirmation d’inscription', 'Séance annulée',
   'Message libre', 'asEmailAttachment', 'eps-as-slot-email', 'const bilan = await response.json()',
-  'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker'
+  'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker', '{classe}'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 ['.as-slot-email-overlay', '.as-email-choice', '.as-email-recipient-summary'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style e-mail manquant : ${marker}`);
 });
 [
   'assigned_teacher_id', 'unss_memberships', 'student_email,parent_email', 'parents_personalized',
-  'attachments', 'smtp.gmail.com', 'EPS_GMAIL_APP_PASSWORD', 'replyTo: teacherEmail',
+  'attachments', 'smtp.gmail.com', 'EPS_GMAIL_APP_PASSWORD', 'replyTo: teacherEmail', 'division',
   'deliveries.length > 150'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');

@@ -45,9 +45,11 @@ function replaceTokens(text: string, student: Record<string,unknown>, slot: Reco
   const first = String(student.first_name || "").trim();
   const last = String(student.last_name || "").trim();
   const child = `${first} ${last}`.trim();
+  const schoolClass = String(student.division || student.school_class_label || student.class_label || "Classe non renseignée").trim();
   const time = [slot.start_time, slot.end_time].filter(Boolean).join("–");
   return text
     .replaceAll("{prenom}", first).replaceAll("{nom}", last).replaceAll("{enfant}", child)
+    .replaceAll("{classe}", schoolClass)
     .replaceAll("{activité}", String(slot.activity_name || "Association Sportive"))
     .replaceAll("{horaire}", time).replaceAll("{professeur}", String(slot.responsible_teacher || "Professeur EPS"));
 }
@@ -96,7 +98,7 @@ Deno.serve(async req => {
   const ids = [...new Set((memberships || []).map(m => m.student_id).filter(Boolean))];
   if (!ids.length) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
   const { data: students, error: studentError } = await admin.from("unss_students")
-    .select("id,last_name,first_name,student_email,parent_email").in("id", ids).eq("deleted", false);
+    .select("id,last_name,first_name,division,student_email,parent_email").in("id", ids).eq("deleted", false);
   if (studentError) return reply({ error: studentError.message }, 500);
 
   type Delivery = { recipient: string; student: Record<string,unknown> };

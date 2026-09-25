@@ -1700,7 +1700,7 @@ async function ouvrirEmailCreneau(slot) {
         <label id="asEmailDateLine" hidden>Date de la séance annulée<input id="asEmailDate" type="date"></label>
         <label>Objet<input id="asEmailSubject" maxlength="180"></label>
         <label>Message<textarea id="asEmailMessage" rows="9" maxlength="8000"></textarea></label>
-        <p class="as-email-help">Les champs {prenom}, {nom} et {enfant} sont remplacés automatiquement pour les envois personnalisés.</p>
+        <p class="as-email-help">Les champs {prenom}, {nom}, {enfant} et {classe} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
       <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>Document de confirmation, PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
       <div class="as-email-result" id="asEmailResult"></div>
@@ -1742,20 +1742,23 @@ async function ouvrirEmailCreneau(slot) {
     const dateInput = overlay.querySelector("#asEmailDate");
     overlay.querySelector("#asEmailDateLine").hidden = mode !== "cancellation";
     const date = dateInput.value ? new Date(`${dateInput.value}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "[date à sélectionner]";
+    const introduction = typeDestinataire === "students"
+      ? `Bonjour {prenom} {nom},\n\nClasse : {classe}\n\n`
+      : `Bonjour,\n\nCe message concerne {prenom} {nom}, classe {classe}.\n\n`;
     let objet = "", message = "";
     if (mode === "confirmation") {
       objet = `Confirmation d’inscription – ${slot.activity_name}`;
-      message = typeDestinataire === "parents_personalized"
-        ? `Bonjour,\n\nVotre enfant {enfant} est retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+      message = typeDestinataire === "parents" || typeDestinataire === "parents_personalized"
+        ? `Bonjour,\n\nVotre enfant {prenom} {nom}, classe {classe}, est retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
         : typeDestinataire === "students"
-          ? `Bonjour {prenom},\n\nCe message vous confirme que vous êtes retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
-          : `Bonjour,\n\nCe message confirme l’inscription de l’élève concerné(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`;
+          ? `Bonjour {prenom} {nom},\n\nClasse : {classe}\n\nCe message vous confirme que vous êtes retenu(e) dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`
+          : `Bonjour,\n\nCe message confirme l’inscription de {prenom} {nom}, classe {classe}, dans l’activité ${slot.activity_name} du ${jour} de ${heure}.\n\nCordialement,\n${professeur}`;
     } else if (mode === "cancellation") {
       objet = `Séance d’AS ${slot.activity_name} annulée – ${date}`;
-      message = `Bonjour,\n\nLa séance d’AS ${slot.activity_name} du ${date}, prévue de ${heure}, est annulée.\n\nCordialement,\n${professeur}`;
+      message = `${introduction}La séance d’AS ${slot.activity_name} du ${date}, prévue de ${heure}, est annulée.\n\nCordialement,\n${professeur}`;
     } else if (mode === "information") {
       objet = `Information AS – ${slot.activity_name}`;
-      message = `Bonjour,\n\nNous vous transmettons une information concernant l’activité ${slot.activity_name} du ${jour} de ${heure} :\n\n[Votre information]\n\nCordialement,\n${professeur}`;
+      message = `${introduction}Nous vous transmettons une information concernant l’activité ${slot.activity_name} du ${jour} de ${heure} :\n\n[Votre information]\n\nCordialement,\n${professeur}`;
     }
     overlay.querySelector("#asEmailSubject").value = objet;
     overlay.querySelector("#asEmailMessage").value = message;
