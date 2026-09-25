@@ -22,8 +22,15 @@ il ne donne accès ni à votre compte, ni au reste de la base.
 
 ### 2. Côté Supabase
 
-Lancer `schema_sante_4_sport_adapte.sql` dans l'éditeur SQL (colonnes *aptitude* et *sport
-adapté*), déployer la fonction, désactiver **Verify JWT** dessus, puis poser deux secrets dans
+Lancer dans l'éditeur SQL, dans cet ordre :
+
+| Fichier | Ce qu'il apporte |
+|---|---|
+| `schema_sante_4_sport_adapte.sql` | aptitude et sport adapté |
+| `schema_sante_5_saisie_infirmerie.sql` | la colonne « Fait par » |
+| `schema_sante_6_dispense_repertoire.sql` | la dispense pour un élève sans classe |
+
+Puis déployer la fonction, désactiver **Verify JWT** dessus, et poser deux secrets dans
 **Edge Functions > Secrets** :
 
 | Secret | Valeur |
@@ -50,17 +57,19 @@ ci-dessus : elle apparaît dans *ses* dispenses, et lui seul peut la corriger de
    | `URL_PASSERELLE` | `https://<votre-projet>.supabase.co/functions/v1/eps-dispenses-sheet` |
    | `SECRET` | le même mot de passe qu'à l'étape 1 |
 
-4. **Déclencheurs** (l'icône réveil), ajouter deux déclencheurs :
+4. Exécuter la fonction **`installerDeclencheurs`** depuis l'éditeur. Google demande alors une
+   autorisation — l'accorder : c'est celle qui permet au script de tourner sans vous.
 
-   | Fonction | Source | Type |
-   |---|---|---|
-   | `auSurEdition` | Depuis la feuille de calcul | **Sur modification** |
-   | `actualiser` | Déclencheur horaire | Toutes les 5 minutes |
+   Elle pose les deux déclencheurs elle-même, et ce n'est pas un raccourci : le menu de Google
+   propose « Lors de la modification » et « Lors d'un changement », qui se ressemblent alors que
+   seul le premier dit quelle cellule a changé. Choisir le second donne un Sheet qui ne réagit à
+   rien, **sans erreur nulle part** — une demi-heure perdue à chercher.
 
-   Le déclencheur « Sur modification » est indispensable : le `onEdit` simple de Google n'a pas
-   le droit d'appeler un service extérieur.
+5. Exécuter **`verifier`** : le journal doit être tout en `✓`. Puis **`actualiser`**.
 
-5. Recharger le Sheet : un menu **Dispenses EPS** apparaît. Cliquer sur **Actualiser maintenant**.
+En cas de doute plus tard, deux relevés répondent sans qu'il faille deviner :
+`diagnostic` (ce que contient la base, et si les déclencheurs sont posés) et `chercherEleve`
+(ce que la base sait d'un élève, face à ce que le Sheet en a fait).
 
 ## Les trois onglets
 
@@ -88,7 +97,12 @@ l'application ou le site — la supprimer reste possible depuis l'onglet **Pass�
 - **La colonne Élève est une liste déroulante.** On tape quelques lettres du nom *ou* du prénom,
   la liste se filtre, on choisit — et la **classe** et la **date de naissance** se remplissent
   toutes seules. La liste se met à jour à chaque actualisation.
-- **La liste couvre tout l'établissement**, pas seulement vos classes.
+- **La liste couvre tout le répertoire des élèves** (onglet ÉLÈVES), pas seulement ceux déjà
+  versés dans une classe. La classe affichée est la **division** de l'élève ; à défaut, la classe
+  du professeur qui l'a pris. Un élève sans ni l'une ni l'autre reste sans classe — la dispense se
+  pose quand même, et la classe apparaîtra le jour où l'information existera.
+- **Début et Fin ouvrent un calendrier** (double-clic). **Famille** et **Aptitude** sont des
+  listes de choix, les mêmes que dans l'application et le site.
 - **On peut aussi taper un nom à la main**, pour un élève arrivé en cours d'année et pas encore
   synchronisé. Accents, casse et ordre (« DUPONT Léa » ou « Léa Dupont ») n'ont pas d'importance.
   En revanche, si deux élèves portent le même nom, il faut renseigner la classe — sinon la ligne
