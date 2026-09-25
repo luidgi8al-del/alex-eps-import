@@ -1688,14 +1688,14 @@ async function ouvrirEmailCreneau(slot) {
   overlay.innerHTML = `<section class="as-slot-email-dialog" role="dialog" aria-modal="true" aria-labelledby="asEmailTitle">
     <header><div><small>CRÉNEAU AS</small><h2 id="asEmailTitle">Envoyer un e-mail</h2><p>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
-      <details open><summary>1. Destinataires</summary><div class="as-email-section">
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students" checked><span><b>Aux élèves</b><small>Adresse e-mail de chaque élève</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents"><span><b>Aux parents</b><small>Adresses parentales, envois confidentiels</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux parents</b><small>Personne ne voit les autres adresses</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Message personnalisé aux parents</b><small>Un e-mail par enfant avec son nom</small></span></label>
+      <details id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section">
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students"><span><b>Aux élèves</b><small>Adresse e-mail de chaque élève</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents"><span><b>Aux familles</b><small>Adresses parentales, envois confidentiels</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Personne ne voit les autres adresses</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Message personnalisé aux familles</b><small>Un e-mail par enfant avec son nom</small></span></label>
         <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
       </div></details>
-      <details open><summary>2. Message</summary><div class="as-email-section">
+      <details id="asEmailMessageStep"><summary><span>2. Message</span><small id="asEmailTemplateChoice">À compléter</small></summary><div class="as-email-section">
         <label>Modèle<select id="asEmailTemplate"><option value="confirmation">Confirmation d’inscription</option><option value="cancellation">Séance annulée</option><option value="information">Information importante</option><option value="free">Message libre</option></select></label>
         <label id="asEmailDateLine" hidden>Date de la séance annulée<input id="asEmailDate" type="date"></label>
         <label>Objet<input id="asEmailSubject" maxlength="180"></label>
@@ -1705,14 +1705,14 @@ async function ouvrirEmailCreneau(slot) {
       <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>Document de confirmation, PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
       <div class="as-email-result" id="asEmailResult"></div>
     </main>
-    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend">Envoyer</button></footer>
+    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend" disabled>Envoyer</button></footer>
   </section>`;
   document.body.appendChild(overlay);
 
   const heure = [slot.start_time, slot.end_time].filter(Boolean).join("–") || "horaire à préciser";
   const jour = capitaliseJour(slot.day_of_week || "");
   const professeur = slot.responsible_teacher || "Le professeur EPS";
-  const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked').value;
+  const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
   const compteur = mode => {
     const adresses = new Set(), manquants = [];
     eleves.forEach(e => {
@@ -1725,9 +1725,16 @@ async function ouvrirEmailCreneau(slot) {
     return { nombre: adresses.size, manquants };
   };
   const actualiserDestinataires = () => {
+    const bouton = overlay.querySelector("#asEmailSend");
+    if (!audience()) {
+      overlay.querySelector("#asEmailRecipientSummary").innerHTML = `<span>Choisissez les destinataires de ce message.</span>`;
+      bouton.disabled = true;
+      return;
+    }
     const c = compteur(audience());
     const manque = c.manquants.length ? `<span>${c.manquants.length} sans adresse : ${unssText(c.manquants.slice(0, 4).join(", "))}${c.manquants.length > 4 ? "…" : ""}</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`;
     overlay.querySelector("#asEmailRecipientSummary").innerHTML = `<b>${c.nombre} e-mail(s) seront envoyés séparément</b>${manque}`;
+    bouton.disabled = !c.nombre;
   };
   const appliquerModele = () => {
     const mode = overlay.querySelector("#asEmailTemplate").value;
@@ -1752,11 +1759,25 @@ async function ouvrirEmailCreneau(slot) {
     }
     overlay.querySelector("#asEmailSubject").value = objet;
     overlay.querySelector("#asEmailMessage").value = message;
+    overlay.querySelector("#asEmailTemplateChoice").textContent = overlay.querySelector("#asEmailTemplate").selectedOptions[0]?.textContent || "À compléter";
   };
   overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = () => overlay.remove());
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-  overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => { actualiserDestinataires(); appliquerModele(); });
-  overlay.querySelector("#asEmailTemplate").onchange = appliquerModele;
+  const libellesAudience = { students: "Élèves", parents: "Familles", both: "Élèves + familles", parents_personalized: "Familles · personnalisé" };
+  overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
+    overlay.querySelector("#asEmailAudienceChoice").textContent = libellesAudience[audience()] || "À choisir";
+    actualiserDestinataires(); appliquerModele();
+    overlay.querySelector("#asEmailRecipients").open = false;
+    overlay.querySelector("#asEmailMessageStep").open = true;
+  });
+  overlay.querySelector("#asEmailTemplate").onchange = () => {
+    appliquerModele();
+    if (overlay.querySelector("#asEmailTemplate").value === "cancellation") {
+      const dateInput = overlay.querySelector("#asEmailDate");
+      dateInput.focus();
+      try { dateInput.showPicker?.(); } catch { /* Le champ reste visible et focalisé. */ }
+    }
+  };
   overlay.querySelector("#asEmailDate").onchange = appliquerModele;
   actualiserDestinataires(); appliquerModele();
 
@@ -1765,8 +1786,16 @@ async function ouvrirEmailCreneau(slot) {
     const resultat = overlay.querySelector("#asEmailResult");
     const subject = overlay.querySelector("#asEmailSubject").value.trim();
     const message = overlay.querySelector("#asEmailMessage").value.trim();
+    if (!audience()) { resultat.textContent = "Choisissez d’abord les destinataires."; overlay.querySelector("#asEmailRecipients").open = true; return; }
     const c = compteur(audience());
     if (!c.nombre) { resultat.textContent = "Aucune adresse utilisable pour ce choix."; return; }
+    if (overlay.querySelector("#asEmailTemplate").value === "cancellation" && !overlay.querySelector("#asEmailDate").value) {
+      resultat.textContent = "Choisissez la date de la séance annulée.";
+      overlay.querySelector("#asEmailMessageStep").open = true;
+      const dateInput = overlay.querySelector("#asEmailDate"); dateInput.focus();
+      try { dateInput.showPicker?.(); } catch { /* Le champ reste visible et focalisé. */ }
+      return;
+    }
     if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
     if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés et confidentiels ?`)) return;
     bouton.disabled = true; resultat.textContent = "Envoi en cours…";

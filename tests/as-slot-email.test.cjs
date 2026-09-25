@@ -8,7 +8,8 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 [
   'id="asEmail"', 'function ouvrirEmailCreneau(slot)', 'value="students"', 'value="parents"',
   'value="both"', 'value="parents_personalized"', 'Confirmation d’inscription', 'Séance annulée',
-  'Message libre', 'asEmailAttachment', 'eps-as-slot-email'
+  'Message libre', 'asEmailAttachment', 'eps-as-slot-email', 'const bilan = await response.json()',
+  'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 ['.as-slot-email-overlay', '.as-email-choice', '.as-email-recipient-summary'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style e-mail manquant : ${marker}`);
