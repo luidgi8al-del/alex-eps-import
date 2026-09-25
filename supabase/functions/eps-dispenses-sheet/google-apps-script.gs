@@ -38,6 +38,16 @@ var DERNIERE_LIGNE_LISTE = 1000;
  */
 var ONGLET_EN_COURS = 'En cours';
 var ONGLET_PASSEES = 'Passées';
+
+/**
+ * Les choix proposes dans les colonnes Famille et Aptitude.
+ *
+ * Ce sont les libelles de l'application et du site, pas les codes de la base : "Inaptitude
+ * partielle" veut dire quelque chose pour l'infirmerie, "INAPTITUDE_PARTIELLE" non. La
+ * passerelle fait la conversion dans les deux sens.
+ */
+var FAMILLES_MOTIF = ['Blessure', 'Maladie', 'Certificat médical', 'Inaptitude partielle', 'Autre'];
+var APTITUDES = ['Inapte à toute pratique', 'Sport adapté possible'];
 /** Ce qui separe le nom de la classe dans un libelle : absent des noms d'eleves. */
 var SEPARATEUR = ' — ';
 
@@ -181,6 +191,16 @@ function diagnostic() {
     'Comptes enseignants concernés : ' + d.comptes,
     ''
   ];
+  // Un Sheet qui ne reagit a rien vient neuf fois sur dix d'un declencheur absent.
+  var poses = ScriptApp.getProjectTriggers()
+    .map(function (t) { return t.getHandlerFunction(); });
+  lignes.splice(5, 0,
+    (poses.indexOf('auSurEdition') >= 0 ? '✓' : '✗') + ' Déclencheur « auSurEdition »'
+      + (poses.indexOf('auSurEdition') >= 0 ? '' : ' MANQUANT — lancez « installerDeclencheurs »'),
+    (poses.indexOf('actualiser') >= 0 ? '✓' : '✗') + ' Déclencheur « actualiser »'
+      + (poses.indexOf('actualiser') >= 0 ? '' : ' MANQUANT — lancez « installerDeclencheurs »'),
+    '');
+
   if (d.eleves_rendus_par_la_requete < d.eleves_non_supprimes) {
     lignes.push('→ La requête rend MOINS que ce que contient la table : c’est le plafond de');
     lignes.push('  lignes de PostgREST, pas un filtre. Il faut lire par tranches.');
@@ -242,6 +262,33 @@ function chercherEleve() {
   }
   if (!vues) lignes.push('  (rien dans l’onglet — relancez « actualiser »)');
   Logger.log(lignes.join('\n'));
+}
+
+/**
+ * Pose les deux declencheurs, a lancer une fois depuis l'editeur.
+ *
+ * Le menu de Google propose "Lors de la modification" et "Lors d'un changement", qui se
+ * ressemblent : seul le premier dit quelle cellule a change, et c'est de cela que depend le
+ * remplissage automatique. Choisir le second donne un Sheet qui ne reagit a rien, sans erreur
+ * nulle part. On ne laisse donc pas ce choix a faire a la main.
+ */
+function installerDeclencheurs() {
+  var classeur = classeur_();
+  // On retire d'abord les notres : relancer cette fonction ne doit pas empiler les doublons.
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    var f = t.getHandlerFunction();
+    if (f === 'auSurEdition' || f === 'actualiser') ScriptApp.deleteTrigger(t);
+  });
+
+  ScriptApp.newTrigger('auSurEdition').forSpreadsheet(classeur).onEdit().create();
+  ScriptApp.newTrigger('actualiser').timeBased().everyMinutes(5).create();
+
+  Logger.log([
+    '✓ Déclencheur « auSurEdition » posé (à chaque modification de cellule).',
+    '✓ Déclencheur « actualiser » posé (toutes les 5 minutes).',
+    '',
+    'La saisie de l’infirmerie part désormais toute seule, et le tableau se relit sans vous.'
+  ].join('\n'));
 }
 
 /** Le menu du Sheet. */
@@ -312,13 +359,32 @@ function ecrireTableau_(feuille, lignes, couleurEntete) {
     feuille.getRange(PREMIERE_LIGNE, 1, dernier - PREMIERE_LIGNE + 1, COLONNES.length).clearContent();
   }
 
-  // Tout le tableau est du texte, pose AVANT l'ecriture.
+  var hauteur = DERNIERE_LIGNE_LISTE - 1;
+
+  // Le texte, pose AVANT l'ecriture.
   //
   // Une classe nommee "6e1" ou "3e2" est lue par Google comme de la notation scientifique :
-  // elle s'affichait 6,00E+01 et 3,00E+02. Les dates subissent le meme sort selon la langue du
-  // compte. Le format se declare avant setValues, sinon la conversion a deja eu lieu.
-  feuille.getRange(PREMIERE_LIGNE, 1, DERNIERE_LIGNE_LISTE - 1, COLONNES.length)
-    .setNumberFormat('@');
+  // elle s'affichait 6,00E+01 et 3,00E+02. Le format se declare avant setValues, sinon la
+  // conversion a deja eu lieu.
+  feuille.getRange(PREMIERE_LIGNE, 1, hauteur, COLONNES.length).setNumberFormat('@');
+
+  // Les deux colonnes de dates font exception : de vraies dates, pour que Google ouvre son
+  // calendrier au lieu d'obliger a taper "2026-09-25" a la main. Le format reste AAAA-MM-JJ,
+  // celui qu'attend la base - et la regle de validation est ce qui fait apparaitre le calendrier.
+  var calendrier = SpreadsheetApp.newDataValidation().requireDate()
+    .setAllowInvalid(false).setHelpText('Choisissez une date dans le calendrier.').build();
+  [COL_DEBUT, COL_FIN].forEach(function (colonne) {
+    feuille.getRange(PREMIERE_LIGNE, colonne, hauteur, 1)
+      .setNumberFormat('yyyy-mm-dd').setDataValidation(calendrier);
+  });
+
+  // Les listes de choix : les memes que dans l'application et le site.
+  var liste = function (valeurs) {
+    return SpreadsheetApp.newDataValidation().requireValueInList(valeurs, true)
+      .setAllowInvalid(false).build();
+  };
+  feuille.getRange(PREMIERE_LIGNE, COL_FAMILLE, hauteur, 1).setDataValidation(liste(FAMILLES_MOTIF));
+  feuille.getRange(PREMIERE_LIGNE, COL_APTITUDE, hauteur, 1).setDataValidation(liste(APTITUDES));
 
   if (lignes.length) {
     var valeurs = lignes.map(function (l) {

@@ -55,11 +55,34 @@ function cleNom(valeur: string) {
     .toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-/** Un motif libre, ramene a l'une des familles acceptees par la base (voir schema_sante_2.sql). */
-const FAMILLES = ["BLESSURE", "MALADIE", "CERTIFICAT", "AUTRE"];
+/**
+ * Les familles de motif, telles que la base les accepte (voir schema_sante_2.sql), avec le
+ * libelle que voient l'application et le site.
+ *
+ * Le Sheet affiche et propose le libelle : "INAPTITUDE_PARTIELLE" dans une case ne veut rien
+ * dire pour l'infirmerie. La conversion se fait ici, dans les deux sens.
+ */
+const MOTIF_LISIBLE: Record<string, string> = {
+  BLESSURE: "Blessure",
+  MALADIE: "Maladie",
+  CERTIFICAT: "Certificat médical",
+  INAPTITUDE_PARTIELLE: "Inaptitude partielle",
+  AUTRE: "Autre"
+};
+
+/** Un motif saisi - libelle, code, ou texte approchant - ramene a l'une des familles. */
 function familleMotif(valeur: string) {
-  const v = String(valeur || "").toUpperCase();
-  return FAMILLES.find(f => v.includes(f)) || null;
+  const v = cleNom(valeur);
+  if (!v) return null;
+  // Le libelle d'abord : c'est ce que le Sheet propose. Le code ensuite, pour rester tolerant
+  // envers une saisie a la main ou une ancienne ligne.
+  for (const [code, libelle] of Object.entries(MOTIF_LISIBLE)) {
+    if (v === cleNom(libelle) || v === cleNom(code)) return code;
+  }
+  for (const code of Object.keys(MOTIF_LISIBLE)) {
+    if (v.includes(cleNom(code))) return code;
+  }
+  return "AUTRE";
 }
 
 /** Idem pour l'aptitude (voir schema_sante_4_sport_adapte.sql). Vide = non renseigne. */
@@ -332,7 +355,7 @@ Deno.serve(async (req) => {
           classe,
           naissance: eleves.get(d.student_id)?.naissance || "",
           debut: d.start_date, fin: d.end_date,
-          famille: d.reason_kind || "", motif: d.reason || "",
+          famille: MOTIF_LISIBLE[d.reason_kind || ""] || "", motif: d.reason || "",
           aptitude: APTITUDE_LISIBLE[d.aptitude || ""] || "",
           adapte: d.adapted_activities || "",
           // Qui l'a saisie : l'infirmerie depuis ce Sheet, ou le professeur lui-meme.
