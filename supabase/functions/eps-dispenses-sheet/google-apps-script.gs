@@ -418,6 +418,12 @@ function actualiser() {
     if (String(l.fin || '') < jour) passees.push(l); else enCours.push(l);
   });
 
+  // Les deux onglets se lisent dans des sens opposes : en cours, on suit le fil des dispenses
+  // depuis la plus ancienne ; passees, on veut les dernieres terminees en haut.
+  var parDebut = function (a, b) { return String(a.debut || '').localeCompare(String(b.debut || '')); };
+  enCours.sort(parDebut);
+  passees.sort(function (a, b) { return parDebut(b, a); });
+
   var principale = feuille_();
   if (principale.getName() !== ONGLET_EN_COURS) principale.setName(ONGLET_EN_COURS);
   ecrireTableau_(principale, enCours, '#0876d1');
