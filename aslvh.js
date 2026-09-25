@@ -3218,27 +3218,46 @@ function renderUnssAppelBody(creneau, seance) {
       saveButton.disabled = false;
       throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
     }
-    // L'enseignant choisit après la sauvegarde s'il souhaite déclencher les e-mails.
-    if (!confirm("Appel enregistré. Voulez-vous envoyer maintenant un e-mail aux parents des élèves absents ?")) {
-      document.getElementById("unssAppelOk").textContent = "Appel enregistré sans envoi d’e-mail.";
+    const absents = unssAppelMembers.filter(eleve => !unssAppelPresence[eleve.id]);
+    const confirmation = document.getElementById("unssAppelOk");
+    if (!absents.length) {
+      confirmation.textContent = "Appel enregistré. Aucun élève absent.";
       return;
     }
-    // L'envoi des e-mails, lui, demande le reseau : sans lui l'appel est garde et les messages
-    // attendent. C'est exactement ce qu'il faut dire, plutot que d'annoncer un echec.
-    let dispatchResponse;
-    try {
-      dispatchResponse = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-absence-email`, { method: "POST", body: "{}" });
-    } catch (_) {
-      document.getElementById("unssAppelOk").textContent = "Appel enregistre. Les e-mails restent en attente et seront reessayes a la prochaine synchronisation.";
-      return;
-    }
-    const dispatch = await dispatchResponse.json().catch(() => ({}));
-    const message = !dispatchResponse.ok
-      ? "Appel enregistre. Les e-mails restent en attente et seront reessayes a la prochaine synchronisation."
-      : dispatch.failed > 0
-        ? `Appel enregistre. ${dispatch.sent || 0} e-mail(s) envoye(s), ${dispatch.failed} en attente.`
-        : `Appel enregistre. ${dispatch.sent || 0} e-mail(s) d'absence envoye(s).`;
-    document.getElementById("unssAppelOk").textContent = message;
+    // L'appel est déjà sauvegardé. L'e-mail reste une seconde action volontaire : rien ne part
+    // tant que l'enseignant n'appuie pas sur le bouton ci-dessous.
+    confirmation.innerHTML = `<div class="card" style="margin-top:12px; text-align:left">
+      <strong>Appel enregistré · ${absents.length} absent${absents.length > 1 ? "s" : ""}</strong>
+      <p class="muted">Souhaitez-vous prévenir maintenant les parents des élèves notés absents ?</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <button type="button" id="unssSendAbsenceEmails" style="margin-top:0">Envoyer un e-mail aux parents</button>
+        <button type="button" class="secondary" id="unssSkipAbsenceEmails" style="margin-top:0">Pas maintenant</button>
+      </div>
+      <div id="unssAbsenceEmailResult" class="muted" style="margin-top:8px"></div>
+    </div>`;
+    document.getElementById("unssSkipAbsenceEmails").onclick = () => {
+      confirmation.textContent = "Appel enregistré sans envoi d’e-mail.";
+    };
+    document.getElementById("unssSendAbsenceEmails").onclick = async event => {
+      const bouton = event.currentTarget;
+      const resultat = document.getElementById("unssAbsenceEmailResult");
+      bouton.disabled = true;
+      resultat.textContent = "Envoi en cours…";
+      try {
+        const dispatchResponse = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-absence-email`, {
+          method: "POST", body: JSON.stringify({ sessionId })
+        });
+        const dispatch = await dispatchResponse.json().catch(() => ({}));
+        if (!dispatchResponse.ok) throw new Error(dispatch.error || "Envoi impossible");
+        resultat.textContent = dispatch.failed > 0
+          ? `${dispatch.sent || 0} e-mail(s) envoyé(s), ${dispatch.failed} échec(s). Vous pourrez réessayer en rouvrant cet appel.`
+          : `${dispatch.sent || 0} e-mail(s) envoyé(s) aux parents.`;
+        if (!dispatch.failed) bouton.remove(); else bouton.disabled = false;
+      } catch (erreur) {
+        resultat.textContent = `L’appel est enregistré, mais les e-mails n’ont pas été envoyés : ${erreur.message || "connexion indisponible"}.`;
+        bouton.disabled = false;
+      }
+    };
     } finally {
       saveButton.disabled = false;
     }

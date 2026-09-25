@@ -1,18 +1,23 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import nodemailer from "npm:nodemailer@6.9.16";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
-const EMAIL_FROM = Deno.env.get("EPS_EMAIL_FROM")!;
-const REPLY_TO = Deno.env.get("EPS_EMAIL_REPLY_TO") || undefined;
+const GMAIL_USER = Deno.env.get("EPS_GMAIL_USER")!;
+const GMAIL_APP_PASSWORD = Deno.env.get("EPS_GMAIL_APP_PASSWORD")!;
 const WEB_ORIGIN = Deno.env.get("EPS_WEB_ORIGIN") || "";
 const TIME_ZONE = Deno.env.get("EPS_TIME_ZONE") || "Africa/Casablanca";
 
-if (!RESEND_API_KEY || !EMAIL_FROM) throw new Error("RESEND_API_KEY et EPS_EMAIL_FROM sont obligatoires");
+if (!GMAIL_USER || !GMAIL_APP_PASSWORD) throw new Error("EPS_GMAIL_USER et EPS_GMAIL_APP_PASSWORD sont obligatoires");
 
 const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const auth = createClient(SUPABASE_URL, ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+const mailer = nodemailer.createTransport({
+  host: "smtp.gmail.com", port: 465, secure: true,
+  auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD.replace(/\s+/g, "") }
+});
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const escapeHtml = (value: unknown) => String(value ?? "")
   .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
@@ -43,9 +48,15 @@ Deno.serve(async (req) => {
   const user = userData?.user;
   if (userError || !user) return reply({ error: "Connexion expiree" }, 401);
 
+  let input: Record<string,unknown>;
+  try { input = await req.json(); } catch { return reply({ error: "Corps JSON invalide" }, 400); }
+  const sessionId = String(input.sessionId || "").trim();
+  if (!sessionId) return reply({ error: "Séance obligatoire" }, 400);
+  const teacherEmail = EMAIL.test(String(user.email || "").trim()) ? String(user.email).trim().toLowerCase() : GMAIL_USER;
+
   const { data: queue, error: queueError } = await admin.from("unss_absence_email_queue")
     .select("*").eq("user_id", user.id).in("status", ["pending", "failed"])
-    .lt("attempts", 4).order("created_at").limit(50);
+    .eq("session_id", sessionId).lt("attempts", 4).order("created_at").limit(50);
   if (queueError) return reply({ error: queueError.message }, 500);
 
   let sent = 0, failed = 0, cancelled = 0;
@@ -54,7 +65,7 @@ Deno.serve(async (req) => {
     try {
       const [{ data: attendance }, { data: session }, { data: student }] = await Promise.all([
         admin.from("unss_attendance").select("id,present,session_id,student_id,user_id").eq("id", item.attendance_id).maybeSingle(),
-        admin.from("unss_sessions").select("id,group_id,date_epoch_millis").eq("id", item.session_id).maybeSingle(),
+        admin.from("unss_sessions").select("id,group_id,slot_id,date_epoch_millis").eq("id", item.session_id).maybeSingle(),
         admin.from("unss_students").select("id,last_name,first_name").eq("id", item.student_id).maybeSingle()
       ]);
       if (!attendance || attendance.present || attendance.user_id !== user.id || !session || !student) {
@@ -62,19 +73,24 @@ Deno.serve(async (req) => {
         cancelled++;
         continue;
       }
-      const { data: group } = await admin.from("unss_groups").select("activity_name,start_time,responsible_teacher").eq("id", session.group_id).maybeSingle();
+      const source = session.slot_id
+        ? await admin.from("unss_slots").select("activity_name,start_time,responsible_teacher").eq("id", session.slot_id).maybeSingle()
+        : await admin.from("unss_groups").select("activity_name,start_time,responsible_teacher").eq("id", session.group_id).maybeSingle();
+      const group = source.data;
       const date = new Intl.DateTimeFormat("fr-FR", { timeZone: TIME_ZONE, dateStyle: "full" }).format(new Date(Number(session.date_epoch_millis)));
-      const studentName = `${student.first_name} ${student.last_name}`.trim();
+      const firstName = String(student.first_name || "").trim().toLocaleLowerCase("fr-FR")
+        .replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g, (_match, separator, letter) => `${separator}${letter.toLocaleUpperCase("fr-FR")}`);
+      const studentName = `${String(student.last_name || "").trim().toLocaleUpperCase("fr-FR")} ${firstName}`.trim();
       const activity = group?.activity_name || "Association Sportive";
-      const teacher = group?.responsible_teacher || user.email || "Professeur EPS";
+      const teacherName = String(group?.responsible_teacher || "").trim();
+      const teacher = teacherName && /^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i.test(teacherName)
+        ? teacherName : teacherName ? `M. ${teacherName}` : "Le professeur EPS";
       const subject = `Absence AS - ${studentName} - ${date}`;
       const html = `<p>Bonjour,</p><p>Nous vous informons que <strong>${escapeHtml(studentName)}</strong> a ete declare(e) absent(e) a la seance <strong>${escapeHtml(activity)}</strong> du <strong>${escapeHtml(date)}</strong>${group?.start_time ? ` a <strong>${escapeHtml(group.start_time)}</strong>` : ""}.</p><p>Si cette absence vous parait incorrecte, merci de contacter l'etablissement.</p><p>Cordialement,<br>${escapeHtml(teacher)}<br>Association Sportive - Cite scolaire Victor-Hugo</p>`;
-      const resend = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json", "Idempotency-Key": String(item.id) },
-        body: JSON.stringify({ from: EMAIL_FROM, to: [item.recipient], ...(REPLY_TO ? { reply_to: REPLY_TO } : {}), subject, html })
+      await mailer.sendMail({
+        from: `"ASLVH" <${GMAIL_USER}>`, to: item.recipient, replyTo: teacherEmail, subject, html,
+        headers: { "X-ASLVH-Queue-ID": String(item.id) }
       });
-      if (!resend.ok) throw new Error((await resend.text()).slice(0, 500));
       await admin.from("unss_absence_email_queue").update({ status: "sent", sent_at: new Date().toISOString(), last_error: null }).eq("id", item.id);
       sent++;
     } catch (error) {
