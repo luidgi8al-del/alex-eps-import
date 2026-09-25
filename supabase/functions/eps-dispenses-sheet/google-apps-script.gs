@@ -189,6 +189,12 @@ function diagnostic() {
     lignes.push('  Les élèves manquants sont soit marqués supprimés, soit absents de la table.');
   }
   lignes.push('');
+  lignes.push('Répertoire : ' + d.repertoire_avec_division + ' élève(s) avec une division, '
+    + d.repertoire_sans_division + ' sans.');
+  if ((d.exemples_sans_division || []).length) {
+    lignes.push('  Exemples sans division : ' + d.exemples_sans_division.join(', '));
+  }
+  lignes.push('');
   lignes.push('Élèves dans les AUTRES tables (ils ne peuvent pas recevoir de dispense) :');
   Object.keys(d.ailleurs || {}).forEach(function (t) {
     lignes.push('  ' + t + ' : ' + d.ailleurs[t]);

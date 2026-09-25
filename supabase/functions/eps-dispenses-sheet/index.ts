@@ -194,6 +194,20 @@ Deno.serve(async (req) => {
       ailleurs[t] = await compter(t).catch(() => "table absente");
     }
 
+    // La division fait office de classe pour un eleve que personne n'a encore verse. Savoir
+    // combien l'ont renseignee dit combien resteront sans classe dans la liste deroulante.
+    let avecDivision = 0, sansDivision = 0;
+    const exemplesSansDivision: string[] = [];
+    try {
+      (await repertoireComplet()).forEach(e => {
+        if (String(e.division || "").trim()) { avecDivision++; return; }
+        sansDivision++;
+        if (exemplesSansDivision.length < 5) {
+          exemplesSansDivision.push(`${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim());
+        }
+      });
+    } catch { /* le releve doit rendre ce qu'il peut, pas echouer en entier */ }
+
     return repondre({
       eleves_total_toutes_lignes: await compter("students"),
       ailleurs,
@@ -203,6 +217,9 @@ Deno.serve(async (req) => {
       classes_non_supprimees:
         // deno-lint-ignore no-explicit-any
         await compter("classes", ((q: any) => q.eq("deleted", false)) as never),
+      repertoire_avec_division: avecDivision,
+      repertoire_sans_division: sansDivision,
+      exemples_sans_division: exemplesSansDivision,
       comptes: Object.keys(parCompte).length,
       eleves_par_compte: parCompte,
       // Si "rendus" est inferieur a "non supprimes", c'est le plafond de lignes, pas un filtre.
@@ -214,13 +231,27 @@ Deno.serve(async (req) => {
   // Taper un nom et le choisir vaut mieux que le saisir : l'infirmerie n'a pas a deviner
   // l'orthographe exacte, et la classe comme la naissance se remplissent d'elles-memes.
   if (action === "eleves") {
-    let repertoire;
-    try { repertoire = await repertoireComplet(); }
-    catch (e) { return repondre({ error: (e as Error).message }, 500); }
+    let repertoire, contenuEleves;
+    try {
+      repertoire = await repertoireComplet();
+      contenuEleves = await tousLesEleves();
+    } catch (e) { return repondre({ error: (e as Error).message }, 500); }
+
+    // La division n'est pas renseignee pour tout le monde. Quand elle manque, la classe du
+    // professeur fait l'affaire : les deux tables se rapprochent par nom + prenom + naissance,
+    // la meme cle que partout ailleurs dans l'application.
+    const classeParEleve = new Map<string, string>();
+    contenuEleves.eleves.forEach(e => {
+      const cle = `${cleNom(`${e.last_name} ${e.first_name}`)}|${e.birth_date_epoch_millis ?? ""}`;
+      const nomDeClasse = contenuEleves.nomClasse.get(e.class_id) || "";
+      if (nomDeClasse) classeParEleve.set(cle, nomDeClasse);
+    });
+
     const lignes = repertoire.map(e => {
       const nom = `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim();
       // La division EST la classe de l'eleve : il n'attend qu'un professeur pour l'y verser.
-      const classe = String(e.division || "").trim();
+      const cle = `${cleNom(`${e.last_name} ${e.first_name}`)}|${e.birth_date_epoch_millis ?? ""}`;
+      const classe = String(e.division || "").trim() || classeParEleve.get(cle) || "";
       return {
         // Le libelle est ce qui s'affiche dans la liste : nom ET classe, pour departager
         // deux eleves qui portent le meme nom.
