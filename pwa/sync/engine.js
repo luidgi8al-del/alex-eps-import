@@ -35,7 +35,8 @@ export class OfflineSyncEngine {
       // No writes: the first pull is sufficient. Do not read every table twice per refresh.
       if (sent) await this.#pullAndReconcile();
       const pending = await countPendingOperations(), conflicts = await countConflicts();
-      return publishSyncState(conflicts ? SYNC_STATE.CONFLICT : pending ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED, { pending, conflicts });
+      return publishSyncState(conflicts ? SYNC_STATE.CONFLICT : pending ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED,
+        { pending, conflicts, lastSuccessfulAt: new Date().toISOString() });
     } catch (error) {
       const pending = await countPendingOperations();
       // Une coupure n'est pas une panne : les saisies sont en securite, elles attendent le reseau.

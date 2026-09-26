@@ -14,13 +14,40 @@ import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection
  * faire rejouer le meme geste une fois par fiche.
  */
 const LIBELLES_DEFAUT = {
-  nom: "Nom", first_name: "Prenom", last_name: "Nom", division: "Division",
-  sex: "Sexe", student_email: "Mail eleve", parent_email: "Mail parent",
+  classes: "Classe", class_schedule_slots: "Créneau de la classe", period_activities: "Programmation",
+  cycles: "Cycle", evaluations: "Évaluation", evaluation_criteria: "Critère d’évaluation",
+  students: "Fiche de l’élève", evaluation_scores: "Résultat d’évaluation",
+  unss_students: "Fiche AS de l’élève", unss_groups: "Groupe AS", unss_slots: "Créneau AS",
+  unss_memberships: "Inscription AS", unss_sessions: "Appel AS", unss_attendance: "Présence AS",
+  eps_test_sessions: "Test EPS", eps_test_results: "Résultat de test EPS",
+  health_dispensations: "Dispense", health_accidents: "Accident",
+  equipment: "Matériel", epi_items: "EPI", epi_inspections: "Contrôle EPI",
+  sport_installations: "Installation sportive", installation_conflict_overrides: "Occupation d’installation",
+  official_programs: "Programme officiel", annual_plan_blocks: "Programmation annuelle",
+  institution_calendar_events: "Événement du calendrier", eps_period_dates: "Dates de période",
+  nom: "Nom", first_name: "Prénom", last_name: "Nom", division: "Classe", school_class_label: "Classe",
+  class_label: "Classe", sex: "Sexe", student_email: "Adresse e-mail de l’élève",
+  parent_email: "Adresse e-mail des parents", parent_phone: "Téléphone des parents",
+  birth_date_epoch_millis: "Date de naissance", category: "Catégorie", licensed: "Licence AS",
+  jersey_size: "Taille du maillot", wish1: "Vœu 1", wish2: "Vœu 2", wish3: "Vœu 3",
+  wish1_slot_id: "Créneau du vœu 1", wish2_slot_id: "Créneau du vœu 2", wish3_slot_id: "Créneau du vœu 3",
+  host_available: "Peut héberger", host_capacity: "Nombre de places proposées",
+  host_age_min: "Âge minimum pour l’hébergement", host_age_max: "Âge maximum pour l’hébergement",
+  host_sex_pref: "Préférence d’hébergement", payment_missing: "Paiement manquant",
+  medical_certificate_missing: "Certificat médical manquant", present: "Présence",
+  label: "Intitulé", name: "Nom", activity_name: "Activité", responsible_teacher: "Professeur responsable",
+  start_time: "Heure de début", end_time: "Heure de fin", location: "Lieu", date_epoch_millis: "Date",
+  HOST_AVAILABLE: "Peut héberger", HOST_CAPACITY: "Nombre de places proposées",
+  HOST_AGE_MIN: "Âge minimum pour l’hébergement", HOST_AGE_MAX: "Âge maximum pour l’hébergement",
+  HOST_SEX_PREF: "Préférence d’hébergement",
   __deleted__: "Suppression de la fiche"
 };
 
 function texte(valeur) {
   if (valeur === undefined || valeur === null || valeur === "") return "(vide)";
+  if (valeur === true) return "Oui";
+  if (valeur === false) return "Non";
+  if (Array.isArray(valeur)) return valeur.length ? valeur.join(", ") : "(vide)";
   return typeof valeur === "object" ? JSON.stringify(valeur) : String(valeur);
 }
 
@@ -33,6 +60,31 @@ function dateLisible(valeur) {
   if (!valeur) return "";
   const d = new Date(valeur);
   return isNaN(d) ? "" : d.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+}
+
+function motsLisibles(valeur) {
+  const texte = String(valeur || "").replaceAll("_", " ").trim().toLocaleLowerCase("fr-FR");
+  return texte ? texte.charAt(0).toLocaleUpperCase("fr-FR") + texte.slice(1) : "Information";
+}
+
+function libelleChamp(champ, libelles) { return libelles[champ] || motsLisibles(champ); }
+
+function identite(conflit) {
+  const donnees = conflit.localData || conflit.serverData || {};
+  const nom = String(donnees.last_name || donnees.nom || "").trim().toLocaleUpperCase("fr-FR");
+  const prenomBrut = String(donnees.first_name || donnees.prenom || "").trim().toLocaleLowerCase("fr-FR");
+  const prenom = prenomBrut.replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g,
+    (_match, separateur, lettre) => `${separateur}${lettre.toLocaleUpperCase("fr-FR")}`);
+  return `${nom} ${prenom}`.trim();
+}
+
+function titreFiche(conflit, libelles) {
+  const personne = identite(conflit);
+  if (personne && ["students", "unss_students"].includes(conflit.entity)) return `Fiche de ${personne}`;
+  const donnees = conflit.localData || conflit.serverData || {};
+  const precision = donnees.label || donnees.name || donnees.activity_name || donnees.title || "";
+  const type = libelles[conflit.entity] || motsLisibles(conflit.entity);
+  return precision ? `${type} · ${precision}` : type;
 }
 
 /**
@@ -53,7 +105,7 @@ function estRefusDeDroits(raison) {
 function refusHtml(refus, libelles) {
   const champs = (refus.overlappingFields || [])
     .filter(champ => champ !== "__deleted__")
-    .map(champ => `${echapper(libelles[champ] || champ)} : ${echapper(texte(refus.localData?.[champ]))}`);
+    .map(champ => `${echapper(libelleChamp(champ, libelles))} : ${echapper(texte(refus.localData?.[champ]))}`);
   const geste = (refus.overlappingFields || []).includes("__deleted__") ? "Suppression" : "Modification";
   const explication = refus.entity === "unss_attendance"
     ? "Cette présence dépend de l’appel refusé. Relancez toutes les saisies pour envoyer d’abord l’appel, puis ses présences."
@@ -62,7 +114,7 @@ function refusHtml(refus, libelles) {
       : "Le serveur a refusé cette saisie.";
   return `
     <section class="conflit conflitRefus" data-refus="${echapper(refus.conflictId)}">
-      <h3>${echapper(libelles[refus.entity] || refus.entity)} · ${echapper(refus.id)}</h3>
+      <h3>${echapper(titreFiche(refus, libelles))}</h3>
       <p class="conflitQuand">${geste} refusée — ${echapper(refus.reason || "raison inconnue")}.
          ${explication}
          Elle ne sera pas enregistrée.</p>
@@ -75,9 +127,11 @@ function refusHtml(refus, libelles) {
 }
 
 function conflitHtml(conflit, libelles) {
+  const titre = titreFiche(conflit, libelles);
+  const heureServeur = dateLisible(conflit.serverModifiedAt);
   const lignes = conflit.overlappingFields.map(champ => `
     <tr data-champ="${echapper(champ)}">
-      <th>${echapper(libelles[champ] || champ)}</th>
+      <th>${echapper(libelleChamp(champ, libelles))}</th>
       <td><label><input type="radio" name="c-${echapper(conflit.conflictId)}-${echapper(champ)}" value="local" checked>
         ${echapper(texte(conflit.localData?.[champ]))}</label></td>
       <td><label><input type="radio" name="c-${echapper(conflit.conflictId)}-${echapper(champ)}" value="server">
@@ -86,11 +140,13 @@ function conflitHtml(conflit, libelles) {
 
   return `
     <section class="conflit" data-conflit="${echapper(conflit.conflictId)}">
-      <h3>${echapper(libelles[conflit.entity] || conflit.entity)} · ${echapper(conflit.id)}</h3>
-      <p class="conflitQuand">Votre version : ${echapper(dateLisible(conflit.localModifiedAt))}
-         — celle du serveur : ${echapper(dateLisible(conflit.serverModifiedAt))}</p>
+      <h3>${echapper(titre)}</h3>
+      <p class="conflitExplication">Cette fiche a été modifiée sur deux appareils. Pour chaque information,
+         choisissez celle qui doit être conservée.</p>
+      <p class="conflitQuand">Votre saisie : ${echapper(dateLisible(conflit.localModifiedAt))}
+         · version enregistrée : ${echapper(heureServeur)}</p>
       <table class="conflitTable">
-        <thead><tr><th></th><th>Ma version</th><th>Version enregistree</th></tr></thead>
+        <thead><tr><th>Information</th><th>Ma saisie</th><th>Version enregistrée${heureServeur ? ` à ${echapper(heureServeur)}` : ""}</th></tr></thead>
         <tbody>${lignes}</tbody>
       </table>
       <div class="conflitActions">
@@ -121,8 +177,8 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
       (refuses.length ? `<p class="conflitIntro">${refuses.length} saisie(s) refusée(s) par le serveur.</p>
         <div class="conflitActions"><button type="button" data-refus-retry-all>Réessayer toutes les saisies</button></div>`
         + refuses.map(r => refusHtml(r, libelles)).join("") : "")
-      + (arbitrer.length ? `<p class="conflitIntro">${arbitrer.length} fiche(s) modifiee(s) des deux cotes.
-        Choisissez la version a conserver : rien ne sera envoye avant votre decision.</p>`
+      + (arbitrer.length ? `<p class="conflitIntro"><strong>${arbitrer.length} ${arbitrer.length > 1 ? "fiches ont" : "fiche a"} été modifiée${arbitrer.length > 1 ? "s" : ""} sur deux appareils.</strong><br>
+        Rien ne sera envoyé avant votre décision.</p>`
         + (arbitrer.length > 1 ? `<div class="conflitActions">
             <button type="button" data-tout-choix="local">Garder ma version pour les ${arbitrer.length} fiches</button>
             <button type="button" data-tout-choix="server">Garder la version enregistree pour les ${arbitrer.length} fiches</button>

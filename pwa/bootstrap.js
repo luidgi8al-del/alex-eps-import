@@ -53,7 +53,9 @@ export async function demarrerHorsConnexion({
   const automatique = createAutoSync({ run: () => engine.sync(), online: isOnline,
     debounceMs: DELAI_ENVOI_APRES_SAISIE_MS, refreshMs: INTERVALLE_MIN_SYNCHRO_MS });
   startConnectivityMonitor({ onReconnect: () => automatique.request({ force: true }) });
-  if (statusElement) mountSyncStatus(statusElement);
+  if (statusElement) mountSyncStatus(statusElement, {
+    onRetry: () => automatique.request({ force: true })
+  });
   // mountConflictDialog rend la fonction qui redessine la liste : on la garde pour pouvoir
   // reafficher les conflits sans remonter tout le dialogue.
   const afficherConflits = conflictElement
@@ -105,8 +107,17 @@ export async function demarrerHorsConnexion({
   // toujours l'evenement "online". Sans cette relance, une saisie pouvait rester en attente
   // jusqu'au prochain geste de l'utilisateur, qui n'avait aucune raison de le deviner.
   let enRetard = false;
+  let nombreEnAttente = 0;
   subscribeSyncState(detail => {
+    nombreEnAttente = Number(detail.pending || 0);
     enRetard = Boolean(detail.pending) || detail.state === "offline" || detail.state === "error";
+  });
+  // Le navigateur impose son propre texte, mais la confirmation est declenchee uniquement
+  // quand des saisies n'ont pas encore rejoint le serveur.
+  window.addEventListener("beforeunload", event => {
+    if (!nombreEnAttente) return;
+    event.preventDefault();
+    event.returnValue = "";
   });
   setInterval(() => { if (enRetard) rapprocher(); }, RELANCE_MS);
 
