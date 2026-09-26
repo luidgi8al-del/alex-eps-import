@@ -4,6 +4,7 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const code = fs.readFileSync(path.join(root, 'aslvh.js'), 'utf8');
 const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-absence-email', 'index.ts'), 'utf8');
+const schema = fs.readFileSync(path.join(root, 'schema_as_absence_emails.sql'), 'utf8');
 
 [
   'const absents = unssAppelMembers.filter', 'Aucun élève absent',
@@ -24,4 +25,5 @@ if (code.includes('id="asCall"')) throw new Error('La fiche créneau ne doit plu
 
 if (edge.includes('RESEND_API_KEY')) throw new Error('L’ancien service Resend ne doit plus être utilisé.');
 if (edge.includes('Si cette absence vous parait incorrecte')) throw new Error('L’ancien texte de réponse ne doit plus apparaître.');
+if (!schema.includes("@[A-Z0-9.-]+[.][A-Z]{2,}$")) throw new Error('La validation SQL doit accepter les adresses parentales valides.');
 console.log('as-absence-email: confirmation après appel, parents absents et Gmail OK');

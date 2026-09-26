@@ -51,7 +51,9 @@ begin
   for v_recipient in
     select lower(trim(value))
       from regexp_split_to_table(coalesce(v_parent_emails,''), E'\\s*[;,]\\s*|\\s+') value
-     where trim(value) ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$'
+     -- [.] exprime le point litteral sans ambiguite avec le traitement des antislashs
+     -- par PostgreSQL. L'ancien \\. rejetait silencieusement toutes les adresses valides.
+     where trim(value) ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+[.][A-Z]{2,}$'
   loop
     insert into public.unss_absence_email_queue(
       attendance_id,user_id,session_id,student_id,recipient,status
