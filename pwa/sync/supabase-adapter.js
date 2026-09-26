@@ -39,9 +39,14 @@ export const TABLES_SUIVIES = [
  * @param {string} options.anonKey      cle publique
  * @param {() => object} options.session compte connecte, relu a chaque appel : un jeton expire ou
  *                                       une bascule de compte ne doit pas figer l'adaptateur.
+ * @param {() => Promise<boolean>} [options.renouveler] renouvelle le jeton expire et dit si
+ *                                       c'est reussi. Sans elle, une session perimee bloquerait
+ *                                       la synchronisation jusqu'a une reconnexion manuelle -
+ *                                       au retour du reseau, precisement quand la file d'attente
+ *                                       a quelque chose a envoyer.
  * @param {string[]} [options.tables]
  */
-export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_SUIVIES }) {
+export function createSupabaseAdapter({ url, anonKey, session, renouveler = null, tables = TABLES_SUIVIES }) {
   if (!url || !anonKey || typeof session !== "function") {
     throw new TypeError("Adaptateur Supabase : url, cle et session sont obligatoires");
   }
@@ -52,8 +57,21 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
     return { apikey: anonKey, Authorization: `Bearer ${jeton}`, "Content-Type": "application/json" };
   }
 
+  /**
+   * Un appel, rejoue une seule fois si le jeton vient d'expirer.
+   *
+   * Une seule reprise : si le 401 ne vient pas du jeton, boucler ne ferait que retarder le
+   * message d'erreur.
+   */
+  async function appeler(construire) {
+    const reponse = await construire();
+    if (reponse.status !== 401 || !renouveler) return reponse;
+    if (!(await renouveler())) return reponse;
+    return construire();
+  }
+
   async function lire(chemin) {
-    const reponse = await fetch(`${url}${chemin}`, { headers: entetes() });
+    const reponse = await appeler(() => fetch(`${url}${chemin}`, { headers: entetes() }));
     if (reponse.status === 401) throw new Error("Session expiree.");
     if (!reponse.ok) throw new Error(`Lecture refusee (HTTP ${reponse.status}).`);
     return reponse.json();
@@ -159,14 +177,17 @@ export function createSupabaseAdapter({ url, anonKey, session, tables = TABLES_S
       ? `${url}/rest/v1/${operation.entity}`
       : `${url}/rest/v1/${operation.entity}?id=eq.${encodeURIComponent(operation.id)}`;
 
-    const reponse = await fetch(cible, {
+    const corpsEnvoye = JSON.stringify(nettoyer(corps));
+    const reponse = await appeler(() => fetch(cible, {
       method: creation ? "POST" : "PATCH",
+      // Les en-tetes sont reconstruits a chaque essai : apres un renouvellement, le second doit
+      // partir avec le nouveau jeton, pas avec celui qui vient d'etre refuse.
       headers: {
         ...entetes(),
         Prefer: creation ? "resolution=merge-duplicates,return=representation" : "return=representation"
       },
-      body: JSON.stringify(nettoyer(corps))
-    });
+      body: corpsEnvoye
+    }));
 
     if (!reponse.ok) {
       if (reponse.status === 401) throw new Error("Session expiree.");

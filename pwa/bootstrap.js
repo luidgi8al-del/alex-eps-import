@@ -30,7 +30,10 @@ const DELAI_ENVOI_APRES_SAISIE_MS = 1500;
 let etat = null;
 
 export async function demarrerHorsConnexion({
-  url, anonKey, session, statusElement, conflictElement, tables, onConflitsChanges, droits
+  url, anonKey, session, statusElement, conflictElement, tables, onConflitsChanges, droits,
+  // Renouvelle le jeton expire. Facultative : sans elle le moteur se comporte comme avant, une
+  // session perimee arretant la synchronisation jusqu'a une reconnexion manuelle.
+  renouveler = null
 } = {}) {
   if (etat) return etat;
 
@@ -47,7 +50,7 @@ export async function demarrerHorsConnexion({
 
   // La base du compte connecte, avant toute lecture : sans cela on ouvrirait celle du precedent.
   utiliserCompte(session()?.user_id || null);
-  const adapter = createSupabaseAdapter({ url, anonKey, session, tables });
+  const adapter = createSupabaseAdapter({ url, anonKey, session, renouveler, tables });
   const engine = new OfflineSyncEngine({ adapter });
 
   const automatique = createAutoSync({ run: () => engine.sync(), online: isOnline,

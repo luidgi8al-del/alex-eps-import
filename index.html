@@ -630,6 +630,56 @@
       document.getElementById("authError").textContent = "Votre session a expire. Reconnectez-vous pour continuer.";
     }
 
+    /**
+     * Renouveler la session avec le jeton de rafraichissement, garde depuis le debut mais
+     * jamais utilise.
+     *
+     * Le jeton d'acces expire au bout d'une heure. Sans ce renouvellement, le premier appel
+     * suivant renvoyait a l'ecran de connexion - et au pire moment : au retour du reseau apres
+     * une periode hors connexion, quand on veut justement envoyer ce qui a ete saisi.
+     *
+     * Une seule demande a la fois. Une page qui repart lance plusieurs appels d'un coup et
+     * chacun recevrait 401 : les laisser tous renouveler userait le jeton, puisque Supabase en
+     * delivre un nouveau a chaque fois et perime le precedent. Les suivants echoueraient, et on
+     * se retrouverait deconnecte pour avoir voulu rester connecte.
+     */
+    let renouvellementSession = null;
+    function renouvelerSession() {
+      if (!session || !session.refresh_token) return Promise.resolve(false);
+      if (renouvellementSession) return renouvellementSession;
+      renouvellementSession = (async () => {
+        try {
+          // Sans l'en-tete Authorization : le jeton qu'elle porterait est justement celui qui
+          // vient d'etre refuse.
+          const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+            method: "POST",
+            headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({ refresh_token: session.refresh_token })
+          });
+          if (!res.ok) return false;
+          const donnees = await res.json();
+          if (!donnees || !donnees.access_token) return false;
+          saveSession({
+            ...session,
+            access_token: donnees.access_token,
+            // Supabase renvoie un nouveau jeton de rafraichissement : garder l'ancien rendrait
+            // le renouvellement suivant impossible.
+            refresh_token: donnees.refresh_token || session.refresh_token,
+            user_id: (donnees.user && donnees.user.id) || session.user_id,
+            email: (donnees.user && donnees.user.email) || session.email
+          });
+          return true;
+        } catch {
+          // Pas de reseau : ce n'est pas une session perimee, et il ne faut surtout pas
+          // deconnecter - la copie locale serait perdue au prochain menage.
+          return false;
+        } finally {
+          renouvellementSession = null;
+        }
+      })();
+      return renouvellementSession;
+    }
+
     /** fetch() avec les en-tetes d'auth, qui redirige vers la connexion si le token a expire. */
     /**
      * Une requete qui ne part pas n'est pas une panne du site : c'est le reseau.
@@ -648,12 +698,16 @@
       return new Error("Requete non partie" + ou + " : reseau indisponible ou requete bloquee. Vos saisies deja enregistrees sont conservees.");
     }
 
-    async function apiFetch(url, options = {}) {
+    async function apiFetch(url, options = {}, dejaRejoue = false) {
       let res;
       try {
         res = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
       } catch (erreur) { throw erreurReseau(erreur, url); }
       if (res.status === 401) {
+        // Un jeton expire se renouvelle. On ne renvoie a l'ecran de connexion que si le
+        // renouvellement echoue vraiment - et une seule reprise, pour ne pas boucler sur un
+        // refus qui ne viendrait pas du jeton.
+        if (!dejaRejoue && await renouvelerSession()) return apiFetch(url, options, true);
         sessionExpired();
         throw new Error("Session expiree.");
       }

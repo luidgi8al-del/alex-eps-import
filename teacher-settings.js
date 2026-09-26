@@ -103,9 +103,14 @@
   async function teamAdminAction(payload) {
     // La bascule de compte et les invitations passent par une fonction serveur : elles ne
     // peuvent pas aboutir hors connexion. Autant le dire, plutot que "Failed to fetch".
+    // Un seul renouvellement, comme dans apiFetch : le jeton expire ne doit pas coûter une
+    // reconnexion au milieu d'une action d'administration.
+    const appeler=()=>fetch(`${SUPABASE_URL}/functions/v1/eps-team-admin`,
+      {method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
     let res;
     try {
-      res=await fetch(`${SUPABASE_URL}/functions/v1/eps-team-admin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+      res=await appeler();
+      if(res.status===401 && await renouvelerSession()) res=await appeler();
     } catch { throw Error("Pas de réseau. Cette action d'administration a besoin d'une connexion."); }
     let data={}; try { data=await res.json(); } catch {}
     if(res.status===401){sessionExpired();throw Error("Session expirée.");}

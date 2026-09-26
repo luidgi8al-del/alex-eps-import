@@ -198,6 +198,9 @@ async function demarrerModeHorsConnexion() {
       anonKey: SUPABASE_KEY,
       // Relue a chaque appel : une bascule de compte ne doit pas figer le moteur sur l'ancien.
       session: () => session,
+      // Au retour du reseau, la file d'attente a justement quelque chose a envoyer : c'est le
+      // pire moment pour qu'un jeton expire arrete tout.
+      renouveler: () => (typeof renouvelerSession === "function" ? renouvelerSession() : Promise.resolve(false)),
       statusElement: document.getElementById("syncStatus"),
       conflictElement: document.getElementById("conflictPanel"),
       // Miroir des regles de la base : ce qui sera refuse n'entre pas dans la file d'attente.
