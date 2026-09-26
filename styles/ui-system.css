@@ -1,0 +1,50 @@
+:root{
+  --ui-navy:#15334b;
+  --ui-blue:#087dca;
+  --ui-muted:#668095;
+  --ui-border:#dce7ef;
+  --ui-surface:#fff;
+  --ui-soft:#f4f8fb;
+  --ui-danger:#c83737;
+  --ui-shadow:0 22px 70px rgba(10,43,67,.25);
+}
+
+/* 1. Un seul modèle de fenêtre centrale pour créer, modifier ou consulter. */
+.ui-modal-overlay{position:fixed;inset:0;z-index:10020;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(12,33,50,.52);backdrop-filter:blur(2px)}
+.ui-modal-overlay.open{display:flex}
+.ui-modal{width:min(680px,100%);max-height:min(88vh,900px);overflow:auto;padding:0;border-radius:24px;background:var(--ui-surface);box-shadow:var(--ui-shadow)}
+.ui-modal.ui-modal-wide{width:min(980px,100%)}
+.ui-modal-panel{overflow:hidden!important;padding:0!important;border:0!important;border-radius:24px!important;background:var(--ui-surface)!important;box-shadow:none!important}
+.ui-modal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;border-bottom:1px solid var(--ui-border);background:#fff}
+.ui-modal-head>div{min-width:0;flex:1}.ui-modal-head h2{margin:0;color:var(--ui-navy);font-size:22px}.ui-modal-head small{display:block;margin-top:3px;color:var(--ui-muted)}
+.ui-modal-close{display:grid;place-items:center;width:40px;height:40px;margin:0;padding:0;border:1px solid var(--ui-border);border-radius:50%;background:var(--ui-soft);color:var(--ui-navy);font-size:24px}
+.ui-modal-body{padding:18px 20px;overflow:auto}.ui-modal-footer{position:sticky;bottom:0;display:flex;justify-content:flex-end;gap:9px;padding:14px 20px;border-top:1px solid var(--ui-border);background:#fff}.ui-modal-footer button{width:auto;margin:0}
+
+/* 2. Un accordéon commun pour les options et détails secondaires. */
+.ui-accordion{margin:10px 0;border:1px solid var(--ui-border);border-radius:17px;background:#fff;overflow:hidden}
+.ui-accordion>summary{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none;color:var(--ui-navy);font-weight:800}.ui-accordion>summary::-webkit-details-marker{display:none}.ui-accordion>summary::after{content:"⌄";margin-left:auto;color:var(--ui-blue);font-size:18px}.ui-accordion[open]>summary::after{content:"⌃"}.ui-accordion>summary small{margin-left:auto;color:var(--ui-muted);font-weight:600}.ui-accordion[open]>summary small{margin-left:0}.ui-accordion>.ui-accordion-body,.ui-accordion>div{padding:0 16px 16px}
+
+/* 3. Les chiffres clés sont toujours de petites bulles blanches. */
+.ui-indicator-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:11px;margin:12px 0}
+.ui-indicator{display:flex;align-items:center;gap:12px;min-height:82px;padding:14px 16px;border:1px solid var(--ui-border);border-radius:19px;background:#fff;box-shadow:0 4px 14px rgba(18,58,85,.08);color:var(--ui-navy);text-align:left}
+button.ui-indicator{width:100%;margin:0}.ui-indicator>i{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border-radius:14px;background:#e6f3ff;color:var(--ui-blue);font-style:normal;font-size:22px}.ui-indicator>span{display:grid;gap:2px}.ui-indicator b{font-size:23px;line-height:1;color:var(--ui-navy)}.ui-indicator small{color:var(--ui-muted)}
+
+/* 4. Toutes les commandes d'une fiche vivent dans un seul menu Actions. */
+.ui-actions{position:relative;display:inline-block}.ui-actions>summary{cursor:pointer;list-style:none;padding:9px 14px;border:1px solid #cce3f4;border-radius:12px;background:#edf6fd;color:var(--ui-blue);font-weight:850}.ui-actions>summary::-webkit-details-marker{display:none}.ui-actions>summary::after{content:"⌄";margin-left:8px}.ui-actions[open]>summary::after{content:"⌃"}
+.ui-actions-menu{position:absolute;right:0;z-index:40;display:grid;gap:5px;width:max-content;min-width:210px;margin-top:7px;padding:7px;border:1px solid var(--ui-border);border-radius:15px;background:#fff;box-shadow:0 15px 36px rgba(18,58,85,.18)}
+.ui-actions-menu button{width:100%;margin:0;padding:10px 12px;border:0;border-radius:10px;background:#fff;color:var(--ui-navy);text-align:left}.ui-actions-menu button:hover{background:#edf6fd}.ui-actions-menu button.danger{border-top:1px solid #f1d1cf;border-radius:0 0 10px 10px;color:var(--ui-danger);background:#fff}
+
+/* Les anciens conteneurs adoptent le nouveau modèle sans changer leur logique métier. */
+.searchOverlay.ui-modal-overlay{align-items:center;padding:20px}.searchSheet.ui-modal{max-height:min(88vh,900px);padding:0;border-radius:24px;background:#fff}
+.as-list-modal-head{padding:18px 20px}.as-list-modal-body{padding:14px 20px 20px}
+.as-history-actions-menu{position:relative}.as-history-actions-menu>div{position:absolute;right:0;z-index:30;width:230px;padding:7px;border:1px solid var(--ui-border);border-radius:14px;background:#fff;box-shadow:0 15px 36px rgba(18,58,85,.18)}
+.as-date-panel{width:100%!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border-radius:24px!important;background:#f4f7fa!important}.as-date-panel .as-panel-title{padding:17px 20px}.as-date-panel .as-date-form{max-height:calc(88vh - 82px);overflow-y:auto;padding-bottom:24px}
+.as-date-panel .ui-modal-head{background:#fff;color:var(--ui-navy)}.as-date-panel .ui-modal-head h2{color:var(--ui-navy)}.as-date-panel .ui-modal-head small{color:var(--ui-muted)}.as-date-panel .ui-modal-head>b{font-size:26px}
+.as-date-selection-summary .ui-indicator,.as-dates-summary .ui-indicator,.as-bilan-metrics .ui-indicator{display:flex;padding:14px 16px;background:#fff;text-align:left}.as-date-selection-summary .ui-indicator b,.as-dates-summary .ui-indicator b{color:var(--ui-navy)}
+#unssPanel.ui-modal-panel .as-action-grid{grid-template-columns:1fr 1fr}
+.as-panel-title.ui-modal-head{background:#fff;color:var(--ui-navy)}.as-panel-title.ui-modal-head h2{color:var(--ui-navy)}.as-panel-title.ui-modal-head small{color:var(--ui-muted)}
+#unssPanel.ui-modal-panel>:not(.ui-modal-head):not(.ui-modal-body):not(.ui-modal-footer){margin-left:20px!important;margin-right:20px!important}#unssPanel.ui-modal-panel>.ui-modal-head+div{margin-top:14px}
+
+@media(max-width:700px){
+  .ui-modal-overlay{align-items:flex-end;padding:0}.ui-modal{width:100%!important;max-height:94vh;border-radius:24px 24px 0 0}.ui-modal-panel{border-radius:24px 24px 0 0!important}.ui-modal-head{padding:16px}.ui-modal-body{padding:14px 16px}.ui-modal-footer{padding:12px 16px max(12px,env(safe-area-inset-bottom))}.ui-indicator-grid{grid-template-columns:1fr 1fr}.ui-indicator{min-height:74px;padding:11px}.ui-indicator b{font-size:20px}.ui-actions-menu{position:fixed;left:12px;right:12px;bottom:12px;width:auto;padding:10px;border-radius:18px}.as-history-actions-menu>div{position:fixed;left:12px;right:12px;bottom:12px;width:auto}.as-date-panel .as-date-form{max-height:calc(94vh - 76px)}
+}

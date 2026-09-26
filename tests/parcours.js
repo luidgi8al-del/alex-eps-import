@@ -1013,10 +1013,10 @@
           await attendre(() => $("classDashboardPanel")?.querySelector(".dashActions"),
             "les actions de la classe ont disparu", 6000);
           const titre = $("classDashboardPanel").querySelector("h2").getBoundingClientRect();
-          const premier = $("classDashboardPanel").querySelector(".dashActions > button").getBoundingClientRect();
-          const memeLigne = Math.abs((titre.top + titre.height / 2) - (premier.top + premier.height / 2)) < 40;
+          const actions = $("classDashboardPanel").querySelector(".dashActions > summary").getBoundingClientRect();
+          const memeLigne = Math.abs((titre.top + titre.height / 2) - (actions.top + actions.height / 2)) < 40;
           if (!memeLigne) throw new Error("les actions ne sont plus sur la ligne du titre");
-          if (premier.left < titre.right) throw new Error("les actions chevauchent le nom de la classe");
+          if (actions.left < titre.right) throw new Error("les actions chevauchent le nom de la classe");
         }
       },
       {

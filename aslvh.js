@@ -349,12 +349,12 @@ function fenetreChoixClasse() {
   let voile = document.getElementById("classPickOverlay");
   if (voile) return voile;
   voile = document.createElement("div");
-  voile.className = "searchOverlay";
+  voile.className = "searchOverlay ui-modal-overlay";
   voile.id = "classPickOverlay";
-  voile.innerHTML = `<div class="searchSheet">
-    <div class="top" style="margin-bottom:6px"><h2 style="margin:0" id="classPickTitre">Ajouter a une classe</h2>
-      <button class="secondary" id="classPickClose" style="margin-top:0">Fermer</button></div>
-    <div id="classPickBody"></div></div>`;
+  voile.innerHTML = `<div class="searchSheet ui-modal">
+    <div class="ui-modal-head"><div><small>ÉLÈVES</small><h2 id="classPickTitre">Ajouter à une classe</h2></div>
+      <button class="ui-modal-close" id="classPickClose" aria-label="Fermer">×</button></div>
+    <div class="ui-modal-body" id="classPickBody"></div></div>`;
   document.body.appendChild(voile);
   voile.querySelector("#classPickClose").addEventListener("click", () => fermerFenetreChoixClasse());
   voile.addEventListener("click", e => { if (e.target === voile) fermerFenetreChoixClasse(); });
@@ -736,9 +736,9 @@ function ouvrirDocumentsManquants() {
   const concernes = unssStudents.filter(s => s.licensed && (s.payment_missing || s.medical_certificate_missing))
     .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
   panel.classList.remove("as-full-panel");
-  panel.classList.add("as-list-modal");
-  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>Documents manquants</h2><small>${concernes.length} élève(s) concerné(s)</small></div><button type="button" id="unssDocsManquantsCloseBtn" aria-label="Fermer">×</button></div>
-    <div class="as-list-modal-body">${concernes.length === 0
+  panel.classList.add("as-list-modal", "ui-modal-panel");
+  panel.innerHTML = `<div class="as-list-modal-head ui-modal-head"><div><h2>Documents manquants</h2><small>${concernes.length} élève(s) concerné(s)</small></div><button type="button" class="ui-modal-close" id="unssDocsManquantsCloseBtn" aria-label="Fermer">×</button></div>
+    <div class="as-list-modal-body ui-modal-body">${concernes.length === 0
       ? `<div class="muted">Plus aucun dossier incomplet.</div>`
       : concernes.map(s => `<button type="button" class="as-list-modal-row" data-fiche="${s.id}">
            <div>
@@ -762,9 +762,9 @@ function ouvrirHebergement() {
   const concernes = unssStudents.filter(s => s.licensed && s.host_available)
     .sort((a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr"));
   panel.classList.remove("as-full-panel");
-  panel.classList.add("as-list-modal");
-  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>Hébergement</h2><small>${concernes.length} famille(s) disponible(s)</small></div><button type="button" id="unssHebergementCloseBtn" aria-label="Fermer">×</button></div>
-    <div class="as-list-modal-body">${concernes.length === 0
+  panel.classList.add("as-list-modal", "ui-modal-panel");
+  panel.innerHTML = `<div class="as-list-modal-head ui-modal-head"><div><h2>Hébergement</h2><small>${concernes.length} famille(s) disponible(s)</small></div><button type="button" class="ui-modal-close" id="unssHebergementCloseBtn" aria-label="Fermer">×</button></div>
+    <div class="as-list-modal-body ui-modal-body">${concernes.length === 0
       ? `<div class="muted">Aucune famille n'a proposé d'héberger pour l'instant.</div>`
       : concernes.map(s => `<button type="button" class="as-list-modal-row" data-fiche="${s.id}">
            <div>
@@ -1682,11 +1682,11 @@ async function ouvrirEmailGlobalLicencies(rows) {
   document.getElementById("asSlotEmailOverlay")?.remove();
   const overlay = document.createElement("div");
   overlay.id = "asSlotEmailOverlay";
-  overlay.className = "as-slot-email-overlay";
-  overlay.innerHTML = `<section class="as-slot-email-dialog" role="dialog" aria-modal="true" aria-labelledby="asGlobalEmailTitle">
+  overlay.className = "as-slot-email-overlay ui-modal-overlay open";
+  overlay.innerHTML = `<section class="as-slot-email-dialog ui-modal" role="dialog" aria-modal="true" aria-labelledby="asGlobalEmailTitle">
     <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Confirmer les inscriptions</h2><p>Un seul message regroupant tous les créneaux de chaque élève</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
-      <details id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section">
+      <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
         <b>Groupe à contacter</b>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_certificate"><span><b>Certificat manquant</b><small>Tous les dossiers où le certificat manque</small></span></label>
@@ -1698,12 +1698,12 @@ async function ouvrirEmailGlobalLicencies(rows) {
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Envois séparés et confidentiels</small></span></label>
         <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
       </div></details>
-      <details id="asEmailMessageStep"><summary><span>2. Message</span><small>Confirmation globale</small></summary><div class="as-email-section">
+      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>2. Message</span><small>Confirmation globale</small></summary><div class="as-email-section ui-accordion-body">
         <label>Objet<input id="asEmailSubject" maxlength="180" value="Confirmation de vos inscriptions à l’AS"></label>
         <label>Message<textarea id="asEmailMessage" rows="11" maxlength="8000"></textarea></label>
         <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
-      <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
       <div class="as-email-result" id="asEmailResult"></div>
     </main>
     <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend" disabled>Envoyer</button></footer>
@@ -1809,25 +1809,25 @@ async function ouvrirEmailCreneau(slot) {
   document.getElementById("asSlotEmailOverlay")?.remove();
   const overlay = document.createElement("div");
   overlay.id = "asSlotEmailOverlay";
-  overlay.className = "as-slot-email-overlay";
-  overlay.innerHTML = `<section class="as-slot-email-dialog" role="dialog" aria-modal="true" aria-labelledby="asEmailTitle">
+  overlay.className = "as-slot-email-overlay ui-modal-overlay open";
+  overlay.innerHTML = `<section class="as-slot-email-dialog ui-modal" role="dialog" aria-modal="true" aria-labelledby="asEmailTitle">
     <header><div><small>CRÉNEAU AS</small><h2 id="asEmailTitle">Envoyer un e-mail</h2><p>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
-      <details id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section">
+      <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students"><span><b>Aux élèves</b><small>Adresse e-mail de chaque élève</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents"><span><b>Aux familles</b><small>Adresses parentales, envois confidentiels</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Personne ne voit les autres adresses</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Message personnalisé aux familles</b><small>Un e-mail par enfant avec son nom</small></span></label>
         <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
       </div></details>
-      <details id="asEmailMessageStep"><summary><span>2. Message</span><small id="asEmailTemplateChoice">À compléter</small></summary><div class="as-email-section">
+      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>2. Message</span><small id="asEmailTemplateChoice">À compléter</small></summary><div class="as-email-section ui-accordion-body">
         <label>Modèle<select id="asEmailTemplate"><option value="confirmation">Confirmation d’inscription</option><option value="cancellation">Séance annulée</option><option value="information">Information importante</option><option value="free">Message libre</option></select></label>
         <label id="asEmailDateLine" hidden>Date de la séance annulée<input id="asEmailDate" type="date"></label>
         <label>Objet<input id="asEmailSubject" maxlength="180"></label>
         <label>Message<textarea id="asEmailMessage" rows="9" maxlength="8000"></textarea></label>
         <p class="as-email-help">Les champs {prenom}, {nom}, {enfant} et {classe} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
-      <details><summary>3. Pièce jointe facultative</summary><div class="as-email-section"><label>Document de confirmation, PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>Document de confirmation, PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
       <div class="as-email-result" id="asEmailResult"></div>
     </main>
     <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend" disabled>Envoyer</button></footer>
@@ -1947,7 +1947,9 @@ async function ouvrirEmailCreneau(slot) {
 async function ouvrirFicheCreneau(slot) {
   if (!slot) return;
   const panel = document.getElementById("unssPanel"); ouvrirFenetreUnss();
-  panel.classList.add("as-full-panel"); panel.innerHTML = `<div class="as-detail-hero"><button class="as-back" id="asClose">←</button><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><span>${iconeActiviteAS(slot.activity_name)}</span></div><div class="as-detail-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>♟ ${elevesDuCreneau(slot.id).length} inscrits</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div><div class="as-metrics"><span id="asMetricInscrits" style="cursor:pointer"><b>${elevesDuCreneau(slot.id).length}</b> inscrits</span><span><b>${seancesDuCreneau(slot.id).length}</b> appels</span></div></section><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button><button id="asBalance">▥<b>Bilan</b></button><button id="asExport">⇩<b>Télécharger</b></button><button id="asEmail">✉<b>E-mail</b></button></div><div class="muted">Les appels se créent et se modifient uniquement depuis l’onglet <strong>Appel AS</strong>.</div><section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section><button class="secondary" id="asEdit">Modifier le créneau</button><button class="danger" id="asDelete">Supprimer ce créneau</button></div>`;
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
+  panel.innerHTML = `<div class="ui-modal-head"><div><small>CRÉNEAU AS</small><h2>${unssText(slot.activity_name)}</h2></div><button class="ui-modal-close" id="asClose" aria-label="Fermer">×</button></div><div class="ui-modal-body"><section class="as-main-card"><div class="as-main-title"><i>${iconeActiviteAS(slot.activity_name)}</i><div><h2>${unssText(slot.activity_name)}</h2><p>⌖ ${unssText(slot.location || "Lieu non renseigné")}</p><p>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</p><p>▣ ${unssText(capitaliseJour(slot.day_of_week))} · ${unssText(slot.start_time || "")}–${unssText(slot.end_time || "")}</p></div></div></section><div class="ui-indicator-grid"><button class="ui-indicator" id="asMetricInscrits"><i>♟</i><span><b>${elevesDuCreneau(slot.id).length}</b><small>élèves inscrits</small></span></button><div class="ui-indicator"><i>▣</i><span><b>${seancesDuCreneau(slot.id).length}</b><small>appels enregistrés</small></span></div></div><div class="as-action-grid"><button id="asStudents">♟＋<b>Élèves</b></button><button id="asBalance">▥<b>Bilan</b></button></div><div class="top" style="margin:12px 0"><div class="muted">Les appels se créent et se modifient uniquement depuis l’onglet <strong>Appel AS</strong>.</div><details class="ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button id="asEmail">✉ Envoyer un e-mail</button><button id="asExport">⇩ Télécharger</button><button id="asEdit">✎ Modifier le créneau</button><button class="danger" id="asDelete">⌫ Supprimer ce créneau</button></div></details></div><section class="as-about"><h3>▤ À propos</h3><p>${unssText(slot.notes || "Créneau ouvert aux élèves inscrits. Pensez à vérifier le matériel et les dispenses avant l’appel.")}</p></section></div>`;
   asClose.onclick=()=>fermerFenetreUnss(); asStudents.onclick=()=>ouvrirElevesCreneau(slot); asBalance.onclick=()=>ouvrirBilanCreneau(slot); asExport.onclick=()=>showCreneauExport(slot,elevesDuCreneau(slot.id)); asEmail.onclick=()=>ouvrirEmailCreneau(slot);asEdit.onclick=()=>openUnssSlotPanel(slot);asDelete.onclick=()=>supprimerCreneau(slot.id);
   document.getElementById("asMetricInscrits").onclick=()=>ouvrirListeInscritsCreneau(slot);
 }
@@ -1990,8 +1992,9 @@ async function openUnssSlotPanel(slot) {
   // n'est plus dans l'établissement : la modifier ne doit pas l'effacer silencieusement.
   const nomsProfesseurs = [...new Set(professeurs.map(p => p.name || p.email).filter(Boolean))];
   if (responsableActuel && !nomsProfesseurs.includes(responsableActuel)) nomsProfesseurs.unshift(responsableActuel);
-  panel.innerHTML = `
-    <h2>${isNew ? "Nouveau creneau AS" : "Modifier le creneau"}</h2>
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
+  panel.innerHTML = `<div class="ui-modal-head"><div><small>CRÉNEAU AS</small><h2>${isNew ? "Nouveau créneau AS" : "Modifier le créneau"}</h2></div><button type="button" class="ui-modal-close" id="unssSlotCloseBtn" aria-label="Fermer">×</button></div><div class="ui-modal-body">
     <label for="unssSlotActivity">Activite</label>
     <input type="text" id="unssSlotActivity" value="${slot ? unssText(slot.activity_name) : ""}" placeholder="Badminton, Cross, Futsal...">
     <label for="unssSlotDay">Jour</label>
@@ -2018,11 +2021,10 @@ async function openUnssSlotPanel(slot) {
     ${nomsProfesseurs.length === 0 ? `<div class="muted">Aucun autre compte professeur n’est disponible dans cet établissement.</div>` : ""}
     <label for="unssSlotComment">Commentaire</label>
     <input type="text" id="unssSlotComment" value="${slot ? unssText(slot.comment) : ""}">
-    <button id="unssSlotSaveBtn">Enregistrer</button>
-    <button class="secondary" id="unssSlotCancelBtn">Annuler</button>
-    <div class="error" id="unssSlotError"></div>`;
+    <div class="error" id="unssSlotError"></div></div><div class="ui-modal-footer"><button class="secondary" id="unssSlotCancelBtn">Annuler</button><button id="unssSlotSaveBtn">Enregistrer</button></div>`;
   ouvrirFenetreUnss();
 
+  document.getElementById("unssSlotCloseBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssSlotCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssSlotSaveBtn").addEventListener("click", async () => {
     const activite = document.getElementById("unssSlotActivity").value.trim();
@@ -2180,6 +2182,8 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
   const panel = document.getElementById("unssPanel");
   const isNew = !student;
   const category = student ? student.category : "MINIME";
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
   panel.innerHTML = `
     <div class="student-editor-hero"><span aria-hidden="true">👤</span><div>
       <small>RÉPERTOIRE DES ÉLÈVES</small>
@@ -2260,6 +2264,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     <button class="secondary" id="unssCancelBtn">Annuler</button></div>
     <div class="error" id="unssError"></div>`;
   ouvrirFenetreUnss();
+  panel.closest(".searchSheet")?.classList.add("ui-modal-wide");
 
   document.getElementById("unssBirth").addEventListener("change", () => {
     if (!isNew) return;
@@ -2547,10 +2552,10 @@ function fenetreUnss() {
   if (!panneau) return null;
 
   voile = document.createElement("div");
-  voile.className = "searchOverlay";
+  voile.className = "searchOverlay ui-modal-overlay";
   voile.id = "unssPanelOverlay";
   const feuille = document.createElement("div");
-  feuille.className = "searchSheet";
+  feuille.className = "searchSheet ui-modal";
   voile.appendChild(feuille);
   // Le même formulaire s'ouvre depuis ASLVH et depuis l'onglet principal Élèves. S'il reste
   // enfant de l'onglet ASLVH, `display:none` sur cet onglet masque aussi la fenêtre pourtant
@@ -2571,7 +2576,8 @@ function fenetreUnss() {
 function ouvrirFenetreUnss() { fenetreUnss()?.classList.add("open"); }
 function fermerFenetreUnss() {
   document.getElementById("unssPanelOverlay")?.classList.remove("open");
-  document.getElementById("unssPanel")?.classList.remove("as-full-panel", "as-list-modal", "as-call-modal");
+  document.getElementById("unssPanel")?.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel", "ui-modal-panel");
+  document.querySelector("#unssPanelOverlay .searchSheet")?.classList.remove("ui-modal-wide");
 }
 
 async function openUnssAddMemberPanel(group, excludeIds) {
@@ -2742,8 +2748,10 @@ async function ouvrirListeInscritsCreneau(slot, fermerDepuisAppel = null) {
   panel.innerHTML = `<div class="muted">Chargement…</div>`;
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
-  panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn" aria-label="${fermerDepuisAppel ? "Fermer" : "Retour"}">${fermerDepuisAppel ? "×" : "←"}</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
+  panel.closest(".searchSheet")?.classList.add("ui-modal-wide");
+  panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="unssListeInscritsCloseBtn" aria-label="${fermerDepuisAppel ? "Fermer" : "Retour"}">${fermerDepuisAppel ? "×" : "←"}</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
       : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${
@@ -2764,8 +2772,10 @@ async function ouvrirElevesCreneau(slot) {
   const voeu1 = unssStudents.filter(s => s.licensed && s.wish1_slot_id === slot.id && !dejaLa.includes(s.id));
   const voeu2 = unssStudents.filter(s => s.licensed && s.wish2_slot_id === slot.id && !dejaLa.includes(s.id));
   const voeu3 = unssStudents.filter(s => s.licensed && s.wish3_slot_id === slot.id && !dejaLa.includes(s.id));
-  panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssCreneauExportBtn">⇩ Télécharger</button></div>
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
+  panel.closest(".searchSheet")?.classList.add("ui-modal-wide");
+  panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="unssCreneauCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssCreneauExportBtn">⇩ Télécharger</button></div>
     <div class="muted">${unssText(unssSlotLabel(slot))}</div>
     <div id="unssCreneauEleves" style="margin-top:10px">${
       eleves.length === 0
@@ -2892,11 +2902,13 @@ async function ouvrirBilanCreneau(slot) {
     return { eleve: e, presents, absents: siennes.length - presents, notees: siennes.length };
   }).sort((a, b) => b.presents - a.presents
     || String(a.eleve.last_name || "").localeCompare(String(b.eleve.last_name || ""), "fr"));
-  panel.classList.add("as-full-panel");
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
+  panel.classList.add("ui-modal-panel");
+  panel.closest(".searchSheet")?.classList.add("ui-modal-wide");
   const tauxGlobal = lignes.reduce((a,l)=>a+l.presents,0);
   const totalPointe = lignes.reduce((a,l)=>a+l.notees,0);
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssBilanClose">←</button><div><h2>Bilan de présence</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
-    <div class="as-bilan-metrics"><article><b>${seances.length}</b><span>appels</span></article><article><b>${eleves.length}</b><span>élèves</span></article><article><b>${totalPointe?Math.round(tauxGlobal*100/totalPointe):0} %</b><span>présence</span></article></div>
+  panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="unssBilanClose">×</button><div><h2>Bilan de présence</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div></div>
+    <div class="as-bilan-metrics ui-indicator-grid"><article class="ui-indicator"><i>▣</i><span><b>${seances.length}</b><small>appels</small></span></article><article class="ui-indicator"><i>♟</i><span><b>${eleves.length}</b><small>élèves</small></span></article><article class="ui-indicator"><i>%</i><span><b>${totalPointe?Math.round(tauxGlobal*100/totalPointe):0} %</b><small>présence</small></span></article></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit à ce créneau.</div>`
       : `<div class="as-bilan-table"><table class="eleveTable"><thead><tr>
@@ -2937,8 +2949,8 @@ function ouvrirEditeurAppel(creneau, seance = null) {
   const panel = document.getElementById("unssPanel");
   ouvrirFenetreUnss();
   panel.classList.remove("as-full-panel");
-  panel.classList.add("as-list-modal", "as-call-modal");
-  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>${seance ? "Modifier l’appel" : "Nouvel appel"}</h2><small>${unssText(creneau.activity_name)} · ${seance ? dateSeance(seance.date_epoch_millis) : "Aujourd’hui"}</small></div><button type="button" id="unssCallModalClose" aria-label="Fermer">×</button></div><div id="unssAppelBody" class="as-list-modal-body as-call-modal-body"></div>`;
+  panel.classList.add("as-list-modal", "as-call-modal", "ui-modal-panel");
+  panel.innerHTML = `<div class="as-list-modal-head ui-modal-head"><div><h2>${seance ? "Modifier l’appel" : "Nouvel appel"}</h2><small>${unssText(creneau.activity_name)} · ${seance ? dateSeance(seance.date_epoch_millis) : "Aujourd’hui"}</small></div><button type="button" class="ui-modal-close" id="unssCallModalClose" aria-label="Fermer">×</button></div><div id="unssAppelBody" class="as-list-modal-body as-call-modal-body ui-modal-body"></div>`;
   document.getElementById("unssCallModalClose").addEventListener("click", () => fermerFenetreUnss());
   renderUnssAppelBody(creneau, seance);
 }
@@ -2987,7 +2999,7 @@ function renderUnssAppelTab() {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><details class="as-history-actions-menu"><summary>Actions</summary><div><button type="button" data-seance="${s.id}">Modifier</button>${absents > 0 ? `<span class="as-email-absence-action"><button type="button" data-email-absents="${s.id}">Envoyer le mail aux absents</button><small data-absence-email-result></small></span>` : ""}<button type="button" class="danger" data-supprimer-seance="${s.id}">Supprimer l’appel</button></div></details></div></div>`;
+                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><details class="as-history-actions-menu ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button type="button" data-seance="${s.id}">Modifier</button>${absents > 0 ? `<span class="as-email-absence-action"><button type="button" data-email-absents="${s.id}">Envoyer le mail aux absents</button><small data-absence-email-result></small></span>` : ""}<button type="button" class="danger" data-supprimer-seance="${s.id}">Supprimer l’appel</button></div></details></div></div>`;
               }).join("")}</div>`}
     </section>`;
   const contenuBilan = `<section class="as-attendance-summary as-call-panel">
@@ -2999,7 +3011,7 @@ function renderUnssAppelTab() {
     <nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Appels</b></nav>
     <section class="as-slot-compact"><div class="as-slot-summary"><h1>${unssText(creneau.activity_name)} · ${unssText(capitaliseJour(creneau.day_of_week))}</h1><p><span>◷ ${unssText(horaire || "Horaire non renseigné")}</span><span>⌖ ${unssText(creneau.location || "Lieu non renseigné")}</span><span>♙ ${unssText(professeur)}</span></p></div><label class="as-slot-picker"><span>Changer de créneau</span><select id="unssAppelSlotSelect">${creneaux.map(s =>
       `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select></label></section>
-    <section class="as-call-kpis"><article id="unssAppelStudents" class="as-call-kpi-link" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
+    <section class="as-call-kpis ui-indicator-grid"><article id="unssAppelStudents" class="as-call-kpi-link ui-indicator" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article class="ui-indicator"><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article class="ui-indicator"><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
     <div class="as-call-layout"><main class="as-call-main"><div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}</main>
       <aside class="as-next-card"><span class="as-call-eyebrow">PROCHAINE SÉANCE</span>${prochaine ? `<div class="as-next-date"><b>${unssText(prochaine.jour)}</b><span>${prochaine.annee}</span></div>` : `<div class="as-next-date"><b>Date à définir</b></div>`}<dl><div><dt>◷ Horaire</dt><dd>${unssText(horaire || "Non renseigné")}</dd></div><div><dt>⌖ Lieu</dt><dd>${unssText(creneau.location || "Non renseigné")}</dd></div><div><dt>♙ Enseignant</dt><dd>${unssText(professeur)}</dd></div></dl><p class="as-next-note"><b>✓ Pense-bête</b><span>L’appel pourra être créé dès le début de la séance.</span></p></aside>
     </div></div>`;
@@ -3372,7 +3384,7 @@ function renderUnssDatesTab() {
     const complete = dateAsComplete(details);
     return `<button class="as-date-card" data-as-date="${e.id}"><span class="as-date-day"><b>${d.getDate()}</b><small>${d.toLocaleDateString("fr-FR", { month:"short" }).replace(".", "")}</small></span><span><b>${unssText(e.label || "Sortie AS")}</b><small>${unssText(d.toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long", year:"numeric" }))}</small>${details.activity ? `<em>${unssText(details.activity)}${details.exactLocation ? ` · ${unssText(details.exactLocation)}` : ""}</em>` : ""}</span><i class="${complete ? "complete" : "pending"}">${complete ? "Fiche complétée" : "À remplir"}</i><strong>›</strong></button>`;
   }).join("");
-  wrap.innerHTML = `<div class="as-dates-page"><nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Dates AS</b></nav><header class="as-dates-compact"><div><h1>Dates AS</h1><p>Rencontres, déplacements et besoins partagés avec l’application.</p></div><button id="asDateAdd">＋ Ajouter une date AS</button></header><section class="as-dates-summary"><article><b>${aVenir.length}</b><span>À venir</span></article><article><b>${unssDateEvents.filter(e => dateAsComplete(lireDetailsDateAs(e.comment))).length}</b><span>Fiches complétées</span></article><article><b>${unssDateEvents.length}</b><span>Dates partagées</span></article></section><section class="as-dates-section"><div class="as-dates-heading"><div><span>PROCHAINES DATES</span><h2>Événements à préparer</h2></div></div>${aVenir.length ? `<div class="as-date-list">${cartes(aVenir)}</div>` : `<div class="as-call-empty">Aucune date AS à venir.</div>`}</section>${passees.length ? `<details class="as-dates-past"><summary>Dates passées (${passees.length})</summary><div class="as-date-list">${cartes(passees.reverse())}</div></details>` : ""}</div>`;
+  wrap.innerHTML = `<div class="as-dates-page"><nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Dates AS</b></nav><header class="as-dates-compact"><div><h1>Dates AS</h1><p>Rencontres, déplacements et besoins partagés avec l’application.</p></div><button id="asDateAdd">＋ Ajouter une date AS</button></header><section class="as-dates-summary ui-indicator-grid"><article class="ui-indicator"><i>📅</i><span><b>${aVenir.length}</b><small>À venir</small></span></article><article class="ui-indicator"><i>✓</i><span><b>${unssDateEvents.filter(e => dateAsComplete(lireDetailsDateAs(e.comment))).length}</b><small>Fiches complétées</small></span></article><article class="ui-indicator"><i>↻</i><span><b>${unssDateEvents.length}</b><small>Dates partagées</small></span></article></section><section class="as-dates-section"><div class="as-dates-heading"><div><span>PROCHAINES DATES</span><h2>Événements à préparer</h2></div></div>${aVenir.length ? `<div class="as-date-list">${cartes(aVenir)}</div>` : `<div class="as-call-empty">Aucune date AS à venir.</div>`}</section>${passees.length ? `<details class="as-dates-past ui-accordion"><summary>Dates passées (${passees.length})</summary><div class="as-date-list ui-accordion-body">${cartes(passees.reverse())}</div></details>` : ""}</div>`;
   document.getElementById("asDateAdd").onclick = () => openUnssDatePanel(null);
   wrap.querySelectorAll("[data-as-date]").forEach(btn => btn.onclick = () => {
     const event = unssDateEvents.find(e => e.id === btn.dataset.asDate);
@@ -3412,8 +3424,11 @@ async function openUnssDatePanel(event) {
     .sort((a,b) => a.localeCompare(b, "fr", { numeric:true }));
   const dateIso = event ? new Date(Number(event.start_date_epoch_millis)).toISOString().slice(0, 10) : "";
   const panel = document.getElementById("unssPanel");
-  ouvrirFenetreUnss(); panel.classList.add("as-full-panel", "as-date-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="asDateClose">←</button><div><small>DATE AS</small><h2>${nouveau ? "Nouvelle date AS" : unssText(event.label)}</h2></div><b>📅</b></div><div class="as-date-form"><section class="as-date-selection-summary"><article><b id="asDateTeacherSummary">0</b><span>accompagnateur</span></article><article><b id="asDateStudentSummary">0</b><span>participant</span></article></section><section class="as-date-form-card"><h3>🏆 L’événement</h3><div class="as-form-grid"><label>Date<input id="asDateValue" type="date" value="${dateIso}"></label><label>Intitulé<input id="asDateLabel" value="${unssText(event?.label || "")}" placeholder="Ex : Cross départemental"></label><label>Activité<input id="asDateActivity" value="${unssText(details.activity || "")}" placeholder="Ex : Cross-country"></label></div><details class="as-date-picker" id="asDateTeacherPicker"><summary><span>Professeurs accompagnants</span><small id="asDateTeacherCount"></small></summary><div class="as-date-choice-list">${professeurs.length ? professeurs.map(prof => { const nom=prof.name || prof.email; const choisi=idsProfesseurs.has(String(prof.id)) || nomsEnregistres.includes(nom); return `<label><input type="checkbox" data-date-teacher value="${unssText(prof.id)}" data-name="${unssText(nom)}" ${choisi ? "checked" : ""}><span>${unssText(nom)}</span></label>`; }).join("") : `<div class="muted">Aucun compte professeur enregistré dans cet établissement.</div>`}</div></details></section><section class="as-date-form-card"><div class="as-date-card-title"><h3>👥 Élèves participants</h3><button type="button" class="secondary" id="asDateExportStudents" ${participantsSelectionnes.size ? "" : "disabled"}>⇩ Télécharger la liste</button></div><div id="asDateSelectedStudents" class="as-date-selected-students"></div><details class="as-date-picker" id="asDateStudentPicker"><summary><span>Ajouter des élèves de l’AS</span><small id="asDateStudentCount"></small></summary><div><div class="as-date-student-filters"><select id="asDateSlotFilter"><option value="">Tous les créneaux AS</option>${creneauxDisponibles.map(slot => `<option value="${slot.id}">${unssText(unssSlotLabel(slot))}</option>`).join("")}</select><select id="asDateClassFilter"><option value="">Toutes les classes</option>${classesDisponibles.map(classe => `<option value="${unssText(classe)}">${unssText(classe)}</option>`).join("")}</select><button type="button" id="asDateAddSlot" disabled>Ajouter tout le créneau</button></div><input type="search" id="asDateStudentSearch" placeholder="Rechercher un nom ou un prénom" autocomplete="off"><div id="asDateStudentResults" class="as-date-choice-list"></div></div></details></section><section class="as-date-form-card"><h3>⌖ Destination</h3><label>Lieu exact de la sortie<input id="asDateLocation" value="${unssText(details.exactLocation || "")}"></label></section><section class="as-date-form-card"><h3>🚌 Déplacement</h3><label class="as-travel-toggle"><input id="asDateTravel" type="checkbox" ${details.travelRequired ? "checked" : ""}><span>Un déplacement est nécessaire</span></label><div id="asDateTravelFields" class="as-form-grid"><label>Lieu de départ<input id="asDateDepartureLocation" value="${unssText(details.departureLocation || "")}"></label><label>Départ<input id="asDateDeparture" type="time" value="${unssText(details.departureTime || "")}"></label><label>Retour<input id="asDateReturn" type="time" value="${unssText(details.returnTime || "")}"></label><label>Moyen de déplacement<input id="asDateTransport" value="${unssText(details.transportMethod || "")}"></label></div><div id="asDateNoTravelFields" class="as-form-grid"><label>Heure de rendez-vous<input id="asDateMeeting" type="time" value="${unssText(details.meetingTime || "")}"></label><label>Heure de fin<input id="asDateEnd" type="time" value="${unssText(details.endTime || "")}"></label></div></section><div class="as-needs-grid"><section class="as-date-form-card"><h3>🏫 Besoins établissement</h3><textarea id="asDateSchoolNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.schoolNeeds || "")}</textarea></section><section class="as-date-form-card needs"><h3>⭐ Besoins AS</h3><textarea id="asDateAsNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.asNeeds || "")}</textarea></section></div><div class="as-date-actions"><button id="asDateSave">Enregistrer la fiche</button>${nouveau ? "" : `<button class="danger" id="asDateDelete">Supprimer la date</button>`}<button class="secondary" id="asDateCancel">Annuler</button></div><div class="error" id="asDateError"></div></div>`;
+  ouvrirFenetreUnss();
+  panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal");
+  panel.classList.add("as-date-panel", "ui-modal-panel");
+  panel.closest(".searchSheet")?.classList.add("ui-modal-wide");
+  panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="asDateClose" aria-label="Fermer">×</button><div><small>DATE AS</small><h2>${nouveau ? "Nouvelle date AS" : unssText(event.label)}</h2></div><b>📅</b></div><div class="as-date-form ui-modal-body"><section class="as-date-selection-summary ui-indicator-grid"><article class="ui-indicator"><i>👤</i><span><b id="asDateTeacherSummary">0</b><small>accompagnateur</small></span></article><article class="ui-indicator"><i>👥</i><span><b id="asDateStudentSummary">0</b><small>participant</small></span></article></section><section class="as-date-form-card"><h3>🏆 L’événement</h3><div class="as-form-grid"><label>Date<input id="asDateValue" type="date" value="${dateIso}"></label><label>Intitulé<input id="asDateLabel" value="${unssText(event?.label || "")}" placeholder="Ex : Cross départemental"></label><label>Activité<input id="asDateActivity" value="${unssText(details.activity || "")}" placeholder="Ex : Cross-country"></label></div><details class="as-date-picker ui-accordion" id="asDateTeacherPicker"><summary><span>Professeurs accompagnants</span><small id="asDateTeacherCount"></small></summary><div class="as-date-choice-list ui-accordion-body">${professeurs.length ? professeurs.map(prof => { const nom=prof.name || prof.email; const choisi=idsProfesseurs.has(String(prof.id)) || nomsEnregistres.includes(nom); return `<label><input type="checkbox" data-date-teacher value="${unssText(prof.id)}" data-name="${unssText(nom)}" ${choisi ? "checked" : ""}><span>${unssText(nom)}</span></label>`; }).join("") : `<div class="muted">Aucun compte professeur enregistré dans cet établissement.</div>`}</div></details></section><section class="as-date-form-card"><div class="as-date-card-title"><h3>👥 Élèves participants</h3><button type="button" class="secondary" id="asDateExportStudents" ${participantsSelectionnes.size ? "" : "disabled"}>⇩ Télécharger la liste</button></div><div id="asDateSelectedStudents" class="as-date-selected-students"></div><details class="as-date-picker ui-accordion" id="asDateStudentPicker"><summary><span>Ajouter des élèves de l’AS</span><small id="asDateStudentCount"></small></summary><div class="ui-accordion-body"><div class="as-date-student-filters"><select id="asDateSlotFilter"><option value="">Tous les créneaux AS</option>${creneauxDisponibles.map(slot => `<option value="${slot.id}">${unssText(unssSlotLabel(slot))}</option>`).join("")}</select><select id="asDateClassFilter"><option value="">Toutes les classes</option>${classesDisponibles.map(classe => `<option value="${unssText(classe)}">${unssText(classe)}</option>`).join("")}</select><button type="button" id="asDateAddSlot" disabled>Ajouter tout le créneau</button></div><input type="search" id="asDateStudentSearch" placeholder="Rechercher un nom ou un prénom" autocomplete="off"><div id="asDateStudentResults" class="as-date-choice-list"></div></div></details></section><section class="as-date-form-card"><h3>⌖ Destination</h3><label>Lieu exact de la sortie<input id="asDateLocation" value="${unssText(details.exactLocation || "")}"></label></section><section class="as-date-form-card"><h3>🚌 Déplacement</h3><label class="as-travel-toggle"><input id="asDateTravel" type="checkbox" ${details.travelRequired ? "checked" : ""}><span>Un déplacement est nécessaire</span></label><div id="asDateTravelFields" class="as-form-grid"><label>Lieu de départ<input id="asDateDepartureLocation" value="${unssText(details.departureLocation || "")}"></label><label>Départ<input id="asDateDeparture" type="time" value="${unssText(details.departureTime || "")}"></label><label>Retour<input id="asDateReturn" type="time" value="${unssText(details.returnTime || "")}"></label><label>Moyen de déplacement<input id="asDateTransport" value="${unssText(details.transportMethod || "")}"></label></div><div id="asDateNoTravelFields" class="as-form-grid"><label>Heure de rendez-vous<input id="asDateMeeting" type="time" value="${unssText(details.meetingTime || "")}"></label><label>Heure de fin<input id="asDateEnd" type="time" value="${unssText(details.endTime || "")}"></label></div></section><div class="as-needs-grid"><section class="as-date-form-card"><h3>🏫 Besoins établissement</h3><textarea id="asDateSchoolNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.schoolNeeds || "")}</textarea></section><section class="as-date-form-card needs"><h3>⭐ Besoins AS</h3><textarea id="asDateAsNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.asNeeds || "")}</textarea></section></div><div class="as-date-actions ui-modal-footer"><button id="asDateSave">Enregistrer la fiche</button>${nouveau ? "" : `<button class="danger" id="asDateDelete">Supprimer la date</button>`}<button class="secondary" id="asDateCancel">Annuler</button></div><div class="error" id="asDateError"></div></div>`;
   const actualiserProfesseurs = () => {
     const total = panel.querySelectorAll("[data-date-teacher]:checked").length;
     document.getElementById("asDateTeacherCount").textContent = total ? `${total} sélectionné${total > 1 ? "s" : ""}` : "À choisir";

@@ -470,11 +470,14 @@ function renderClassDashboard() {
           <h2 style="margin:0">${planningText(label)}</h2>
           <div class="muted">${planningText(row.school_year || "")}</div>
         </div>
-        <div class="dashActions">
-          <button class="secondary" data-classe-action="schedule">Emploi du temps</button>
-          <button class="secondary" data-classe-action="edit">Modifier la classe</button>
-          <button class="danger" data-classe-action="delete">Supprimer</button>
-        </div>
+        <details class="dashActions ui-actions">
+          <summary>Actions</summary>
+          <div class="ui-actions-menu">
+            <button data-classe-action="schedule">▣ Emploi du temps</button>
+            <button data-classe-action="edit">✎ Modifier la classe</button>
+            <button class="danger" data-classe-action="delete">⌫ Supprimer la classe</button>
+          </div>
+        </details>
       </div>
       <button class="secondary" id="closeDashboardBtn" style="margin-top:0">Fermer</button>
     </div>
@@ -785,16 +788,16 @@ function hoteDetail() {
   let voile = document.getElementById("dashDetailOverlay");
   if (!voile) {
     voile = document.createElement("div");
-    voile.className = "searchOverlay";
+    voile.className = "searchOverlay ui-modal-overlay";
     voile.id = "dashDetailOverlay";
     // Une fermeture propre a la fenetre, en plus des boutons "Fermer" que portent certains
     // panneaux : les messages simples - "aucun cycle sur cette periode" - n'en ont pas, et
     // laissaient la fenetre sans issue visible.
     const feuille = document.createElement("div");
-    feuille.className = "searchSheet";
-    feuille.innerHTML = `<div class="top" style="margin-bottom:6px"><span></span>
-      <button class="secondary" id="dashDetailClose" style="margin-top:0">Fermer</button></div>
-      <div id="dashDetailContenu"></div>`;
+    feuille.className = "searchSheet ui-modal ui-modal-wide";
+    feuille.innerHTML = `<div class="ui-modal-head"><div><small>CLASSE</small><h2>Détail</h2></div>
+      <button class="ui-modal-close" id="dashDetailClose" aria-label="Fermer">×</button></div>
+      <div class="ui-modal-body" id="dashDetailContenu"></div>`;
     voile.appendChild(feuille);
     feuille.querySelector("#dashDetailClose").addEventListener("click", () => fermerDetailClasse());
     document.body.appendChild(voile);
@@ -1381,7 +1384,7 @@ async function ouvrirDossierEleve(studentId) {
   const documents=documentsClasse.map(d=>({doc:d,returned:!!rendusClasse.find(r=>r.document_id===d.id&&r.student_id===studentId&&r.returned&&!r.deleted)}));
   const notes=testResults.map(r=>Number(r.result_value)).filter(Number.isFinite),average=notes.length?notes.reduce((a,b)=>a+b,0)/notes.length:null;
   const birth=student.birth_date?new Date(student.birth_date+'T12:00:00').toLocaleDateString('fr-FR'):'Non renseignée';
-  hote.innerHTML=`<section class="student-folder-screen"><header class="student-folder-hero"><button id="retourListeDossiers">←</button><i>${planningText((student.first_name||'?')[0])}${planningText((student.last_name||'?')[0])}</i><div><small>DOSSIER ÉLÈVE</small><h2>${planningText(String(student.last_name||'').toUpperCase())} ${planningText(student.first_name||'')}</h2><p>${planningText(dashboardClass.label)} · né(e) le ${birth}</p></div></header><div class="student-folder-metrics"><article><b>${average==null?'—':average.toFixed(1).replace('.',',')}</b><span>moyenne tests</span></article><article><b>${documents.filter(x=>x.returned).length}/${documents.length}</b><span>documents</span></article><article><b>${actifs.length}</b><span>dispense en cours</span></article></div><div class="student-folder-grid"><article><h3>📋 Évaluations et tests</h3>${testResults.length?testResults.slice(0,12).map(r=>`<p><span>${planningText(r.input_unit||'Test EPS')}</span><b>${Number(r.result_value).toFixed(2).replace('.',',')} ${planningText(r.result_unit||'')}</b></p>`).join(''):'<div class="muted">Aucun résultat enregistré.</div>'}</article><article><h3>🛡️ Dispenses</h3>${dispenses.length?dispenses.map(d=>`<p><span>${new Date(d.start_date+'T12:00:00').toLocaleDateString('fr-FR')} → ${new Date(d.end_date+'T12:00:00').toLocaleDateString('fr-FR')}</span><b>${dispenseEnCours(d)?'En cours':'Terminée'}</b></p>`).join(''):'<div class="muted">Aucune dispense.</div>'}</article><article><h3>📄 Documents</h3>${documents.length?documents.map(x=>`<p><span>${planningText(x.doc.title)}</span><b class="${x.returned?'ok-text':'missing-text'}">${x.returned?'Rendu':'Manquant'}</b></p>`).join(''):'<div class="muted">Aucun document suivi.</div>'}</article></div><div class="student-folder-exports"><button id="exportDossierExcel">▦ Enregistrer Excel</button><button id="exportDossierPdf">▤ Enregistrer PDF</button></div></section>`;
+  hote.innerHTML=`<section class="student-folder-screen"><header class="student-folder-hero"><button id="retourListeDossiers">←</button><i>${planningText((student.first_name||'?')[0])}${planningText((student.last_name||'?')[0])}</i><div><small>DOSSIER ÉLÈVE</small><h2>${planningText(String(student.last_name||'').toUpperCase())} ${planningText(student.first_name||'')}</h2><p>${planningText(dashboardClass.label)} · né(e) le ${birth}</p></div></header><div class="student-folder-metrics ui-indicator-grid"><article class="ui-indicator"><i>📋</i><span><b>${average==null?'—':average.toFixed(1).replace('.',',')}</b><small>moyenne tests</small></span></article><article class="ui-indicator"><i>📄</i><span><b>${documents.filter(x=>x.returned).length}/${documents.length}</b><small>documents</small></span></article><article class="ui-indicator"><i>🛡️</i><span><b>${actifs.length}</b><small>dispense en cours</small></span></article></div><div class="student-folder-grid"><article><h3>📋 Évaluations et tests</h3>${testResults.length?testResults.slice(0,12).map(r=>`<p><span>${planningText(r.input_unit||'Test EPS')}</span><b>${Number(r.result_value).toFixed(2).replace('.',',')} ${planningText(r.result_unit||'')}</b></p>`).join(''):'<div class="muted">Aucun résultat enregistré.</div>'}</article><article><h3>🛡️ Dispenses</h3>${dispenses.length?dispenses.map(d=>`<p><span>${new Date(d.start_date+'T12:00:00').toLocaleDateString('fr-FR')} → ${new Date(d.end_date+'T12:00:00').toLocaleDateString('fr-FR')}</span><b>${dispenseEnCours(d)?'En cours':'Terminée'}</b></p>`).join(''):'<div class="muted">Aucune dispense.</div>'}</article><article><h3>📄 Documents</h3>${documents.length?documents.map(x=>`<p><span>${planningText(x.doc.title)}</span><b class="${x.returned?'ok-text':'missing-text'}">${x.returned?'Rendu':'Manquant'}</b></p>`).join(''):'<div class="muted">Aucun document suivi.</div>'}</article></div><details class="ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button id="exportDossierExcel">▦ Enregistrer Excel</button><button id="exportDossierPdf">▤ Enregistrer PDF</button></div></details></section>`;
   document.getElementById('retourListeDossiers').onclick=ouvrirListeDossiersEleves;
   document.getElementById('exportDossierExcel').onclick=()=>exporterDossierEleveCsv(student,documents,dispenses,testResults);
   document.getElementById('exportDossierPdf').onclick=()=>imprimerDossierEleve(student,documents,dispenses,testResults);

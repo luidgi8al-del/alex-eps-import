@@ -214,9 +214,9 @@
     let voile=document.getElementById('dispenseFicheOverlay');
     if(voile)return voile;
     voile=document.createElement('div');
-    voile.className='searchOverlay';
+    voile.className='searchOverlay ui-modal-overlay';
     voile.id='dispenseFicheOverlay';
-    voile.innerHTML=`<div class="searchSheet"><div class="top" style="margin-bottom:6px"><h2 style="margin:0" id="dispenseFicheTitre">Dispense</h2><button class="secondary" id="dispenseFicheClose" style="margin-top:0">Fermer</button></div><div id="dispenseFicheBody"></div></div>`;
+    voile.innerHTML=`<div class="searchSheet ui-modal"><div class="ui-modal-head"><div><small>DISPENSE</small><h2 id="dispenseFicheTitre">Dispense</h2></div><button class="ui-modal-close" id="dispenseFicheClose" aria-label="Fermer">×</button></div><div class="ui-modal-body" id="dispenseFicheBody"></div></div>`;
     document.body.appendChild(voile);
     voile.querySelector('#dispenseFicheClose').onclick=fermerFicheDispense;
     voile.addEventListener('click',e=>{if(e.target===voile)fermerFicheDispense();});
@@ -259,9 +259,9 @@
              <label>Fin<input type="date" id="ficheEnd" value="${healthEsc(d.end_date)}" required></label>
              ${motifs}
              ${adapteChampsHtml(d)}
-             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px">
+             <div class="ui-modal-footer">
+               <details class="ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button type="button" class="danger" id="ficheSuppr">⌫ Supprimer la dispense</button></div></details>
                <button type="submit">Enregistrer</button>
-               <button type="button" class="danger" id="ficheSuppr" style="margin-top:0">Supprimer</button>
              </div>
              <div class="error" id="ficheErreur"></div>
            </form>`
