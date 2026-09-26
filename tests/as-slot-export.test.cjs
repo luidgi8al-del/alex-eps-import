@@ -10,12 +10,14 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'function printCreneauPdf(slot, rows)',
   'unssListeInscritsExportBtn',
   'unssCreneauExportBtn',
-  'data-slot-export=',
   'id="asExport"',
   '["Nom", "Prénom", "Classe", "Catégorie"]',
   'Enseignant :'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Export de créneau incomplet : ${marker}`);
+});
+['data-slot-eleves=', 'data-slot-appel=', 'data-slot-bilan=', 'data-slot-export='].forEach(marker => {
+  if (code.includes(marker)) throw new Error(`Action encore affichée sous une carte de créneau : ${marker}`);
 });
 if (!css.includes('.as-panel-export')) throw new Error('Style du bouton Télécharger manquant.');
 [

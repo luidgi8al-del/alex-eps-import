@@ -1607,21 +1607,15 @@ function renderUnssSlotsTab() {
         slot.location].filter(Boolean).join(" · ");
       const demandes = compterVoeux(slot.id);
       const places = slot.max_places ? ` / ${slot.max_places} places` : "";
-      // Le creneau porte ses eleves, ses appels et son bilan : les trois actions sont ici, la
-      // ou l'on vient de creer l'activite, au lieu d'un onglet Groupe separe a re-saisir.
+      // La carte reste une entree simple vers la fiche de l'activite. Les actions detaillees
+      // (eleves, bilan, export, e-mail) vivent dans cette fiche, pas en double sous chaque carte.
       const inscrits = creneauPorteTout ? elevesDuCreneau(slot.id).length : 0;
-      const actions = creneauPorteTout
-        ? `<button class="secondary" data-slot-eleves="${slot.id}" style="margin-top:0">Élèves (${inscrits})</button>
-           <button class="secondary" data-slot-appel="${slot.id}" style="margin-top:0">Appel</button>
-           <button class="secondary" data-slot-bilan="${slot.id}" style="margin-top:0">Bilan</button>
-           <button class="secondary as-slot-download" data-slot-export="${slot.id}" style="margin-top:0">⇩ Télécharger</button>`
-        : "";
       return `<div class="as-slot-entry"><button class="as-slot-tile" data-slot="${slot.id}">
         <span class="as-sport-icon">${iconeActiviteAS(slot.activity_name)}</span>
         <span><strong>${unssText(slot.activity_name || "Créneau sans nom")}</strong>
         <small>⌖ ${unssText(slot.location || "Lieu non renseigné")} · ◷ ${unssText(detail) || "Horaire non renseigné"}</small>
         <small>👤 ${unssText(slot.responsible_teacher || "Professeur non attribué")}</small>
-        <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button><div class="as-slot-actions">${actions}</div></div>`;
+        <small>${inscrits} inscrit(s) · ${demandes} vœu(x)${places}</small></span><b>›</b></button></div>`;
     }).join("");
   }
   wrap.innerHTML = html;
@@ -1636,23 +1630,6 @@ function renderUnssSlotsTab() {
       await supprimerCreneau(btn.dataset.slotDelete);
     });
   });
-  const creneauDe = id => unssSlots.find(x => x.id === id);
-  wrap.querySelectorAll("[data-slot-eleves]").forEach(btn => btn.addEventListener("click", e => {
-    e.stopPropagation(); ouvrirElevesCreneau(creneauDe(btn.dataset.slotEleves));
-  }));
-  wrap.querySelectorAll("[data-slot-bilan]").forEach(btn => btn.addEventListener("click", e => {
-    e.stopPropagation(); ouvrirBilanCreneau(creneauDe(btn.dataset.slotBilan));
-  }));
-  wrap.querySelectorAll("[data-slot-export]").forEach(btn => btn.addEventListener("click", e => {
-    e.stopPropagation();
-    const slot = creneauDe(btn.dataset.slotExport);
-    if (slot) showCreneauExport(slot, elevesDuCreneau(slot.id));
-  }));
-  wrap.querySelectorAll("[data-slot-appel]").forEach(btn => btn.addEventListener("click", e => {
-    e.stopPropagation();
-    unssAppelSlotId = btn.dataset.slotAppel;
-    showUnssTab("appel");
-  }));
 }
 
 function iconeActiviteAS(nom) {
