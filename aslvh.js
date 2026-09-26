@@ -2594,7 +2594,7 @@ function fenetreUnss() {
 function ouvrirFenetreUnss() { fenetreUnss()?.classList.add("open"); }
 function fermerFenetreUnss() {
   document.getElementById("unssPanelOverlay")?.classList.remove("open");
-  document.getElementById("unssPanel")?.classList.remove("as-full-panel", "as-list-modal");
+  document.getElementById("unssPanel")?.classList.remove("as-full-panel", "as-list-modal", "as-call-modal");
 }
 
 async function openUnssAddMemberPanel(group, excludeIds) {
@@ -2682,8 +2682,6 @@ let unssPresences = [];
 /** Creneau ouvert dans l'ecran Appel. */
 let unssAppelSlotId = null;
 let unssAppelVue = "historique";
-/** Confirmation affichee dans l'historique juste apres la fermeture de l'editeur. */
-let unssAppelApresEnregistrement = null;
 /** Vrai une fois schema_as_creneaux.sql applique. Demande une seule fois. */
 let creneauPorteTout = false;
 let creneauPromesse = null;
@@ -2949,10 +2947,23 @@ async function envoyerEmailsParentsAbsents(sessionId, bouton, resultat) {
         ? `${bilan.sent} e-mail(s) envoyé(s) aux parents.`
         : "Aucun nouvel e-mail à envoyer : message déjà envoyé ou adresse parentale absente.";
     if (!bilan.failed) bouton.remove(); else bouton.disabled = false;
+    return !bilan.failed;
   } catch (erreur) {
     resultat.textContent = `L’appel reste enregistré, mais les e-mails n’ont pas été envoyés : ${erreur.message || "connexion indisponible"}.`;
     bouton.disabled = false;
+    return false;
   }
+}
+
+/** Ouvre un nouvel appel ou une correction dans une vraie fenetre, jamais sous l'historique. */
+function ouvrirEditeurAppel(creneau, seance = null) {
+  const panel = document.getElementById("unssPanel");
+  ouvrirFenetreUnss();
+  panel.classList.remove("as-full-panel");
+  panel.classList.add("as-list-modal", "as-call-modal");
+  panel.innerHTML = `<div class="as-list-modal-head"><div><h2>${seance ? "Modifier l’appel" : "Nouvel appel"}</h2><small>${unssText(creneau.activity_name)} · ${seance ? dateSeance(seance.date_epoch_millis) : "Aujourd’hui"}</small></div><button type="button" id="unssCallModalClose" aria-label="Fermer">×</button></div><div id="unssAppelBody" class="as-list-modal-body as-call-modal-body"></div>`;
+  document.getElementById("unssCallModalClose").addEventListener("click", () => fermerFenetreUnss());
+  renderUnssAppelBody(creneau, seance);
 }
 
 function renderUnssAppelTab() {
@@ -2986,21 +2997,9 @@ function renderUnssAppelTab() {
   const prochaine = prochaineSeanceCreneau(creneau);
   const professeur = creneau.responsible_teacher || creneau.teacher_name || creneau.assigned_teacher_name || "Non renseigné";
   const horaire = [normaliserHeureCreneau(creneau.start_time), normaliserHeureCreneau(creneau.end_time)].filter(Boolean).join(" – ");
-  const dernierAppel = unssAppelApresEnregistrement && String(unssAppelApresEnregistrement.slotId) === String(creneau.id)
-    ? unssAppelApresEnregistrement : null;
-  const confirmationAppel = dernierAppel ? `<div class="card" style="margin-bottom:14px; text-align:left">
-      <strong>Appel enregistré · ${dernierAppel.absentCount} absent${dernierAppel.absentCount > 1 ? "s" : ""}</strong>
-      ${dernierAppel.absentCount > 0 ? `<p class="muted">Vous pouvez prévenir maintenant les parents, ou le faire plus tard depuis cet appel.</p>
-        <span class="as-email-absence-action" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
-          <button type="button" data-email-absents="${dernierAppel.sessionId}" style="margin-top:0">Envoyer un e-mail aux parents</button>
-          <small data-absence-email-result></small>
-        </span>` : `<p class="muted">Aucun élève absent.</p>`}
-      <button type="button" class="secondary" data-fermer-confirmation-appel style="margin-top:8px">Fermer ce message</button>
-    </div>` : "";
   const contenuHistorique = `<section class="as-call-panel">
       <div class="as-call-panel-head"><div><span class="as-call-eyebrow">HISTORIQUE</span><h2>Appels enregistrés</h2></div>
         <button id="unssNouvelAppel" class="as-call-primary" ${inscrits.length ? "" : "disabled"}><span>＋</span> Nouvel appel</button></div>
-      ${confirmationAppel}
       ${inscrits.length === 0
         ? `<div class="as-call-empty">Aucun élève inscrit à ce créneau.
              Ajoutez-en depuis <strong>Créneaux AS</strong>.</div>`
@@ -3011,9 +3010,9 @@ function renderUnssAppelTab() {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><span class="as-history-actions"><button class="secondary" data-seance="${s.id}">Modifier</button>${absents > 0 ? `<span class="as-email-absence-action"><button class="secondary" data-email-absents="${s.id}">E-mail absents</button><small data-absence-email-result></small></span>` : ""}<button class="as-delete-icon" data-supprimer-seance="${s.id}" title="Supprimer cet appel" aria-label="Supprimer cet appel">×</button></span></div>`;
+                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><details class="as-history-actions-menu"><summary>Actions</summary><div><button type="button" data-seance="${s.id}">Modifier</button>${absents > 0 ? `<span class="as-email-absence-action"><button type="button" data-email-absents="${s.id}">Envoyer le mail aux absents</button><small data-absence-email-result></small></span>` : ""}<button type="button" class="danger" data-supprimer-seance="${s.id}">Supprimer l’appel</button></div></details></div></div>`;
               }).join("")}</div>`}
-    </section><div id="unssAppelBody" class="as-call-editor"></div>`;
+    </section>`;
   const contenuBilan = `<section class="as-attendance-summary as-call-panel">
       <div class="as-attendance-heading"><div><span class="as-call-eyebrow">ASSIDUITÉ</span><h2>Taux de présence</h2><p>${unssText(creneau.activity_name)} uniquement · ${seances.length} appel(s)</p></div><b>${inscrits.length}</b></div>
       ${bilanEleves.length ? `<div class="as-attendance-list">${bilanEleves.map(l => `<article><div><strong>${unssText(String(l.eleve.last_name || "").toUpperCase())} ${unssText(l.eleve.first_name || "")}</strong><small>${unssText(l.eleve.school_class_label || l.eleve.class_label || "")}</small></div><span>${l.presents} présent${l.presents>1?"s":""} · ${l.absents} absent${l.absents>1?"s":""}</span><b class="${l.taux < 60 ? "low" : l.taux < 80 ? "mid" : "good"}">${l.taux} %</b></article>`).join("")}</div>` : `<div class="muted">Aucun élève inscrit à ce créneau.</div>`}
@@ -3035,10 +3034,6 @@ function renderUnssAppelTab() {
     renderUnssAppelTab();
   });
   wrap.querySelectorAll("[data-appel-vue]").forEach(b => b.addEventListener("click", () => { unssAppelVue = b.dataset.appelVue; renderUnssAppelTab(); }));
-  wrap.querySelector("[data-fermer-confirmation-appel]")?.addEventListener("click", () => {
-    unssAppelApresEnregistrement = null;
-    renderUnssAppelTab();
-  });
   wrap.querySelectorAll("[data-email-absents]").forEach(btn => btn.addEventListener("click", () => {
     const resultat = btn.closest(".as-email-absence-action")?.querySelector("[data-absence-email-result]");
     if (resultat) envoyerEmailsParentsAbsents(btn.dataset.emailAbsents, btn, resultat);
@@ -3047,7 +3042,7 @@ function renderUnssAppelTab() {
     unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
     unssAppelPresence = {};
     unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
-    chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, null));
+    chargerDispensesAppel().then(() => ouvrirEditeurAppel(creneau, null));
   });
   // Supprimer un appel pointe par erreur (mauvaise date, doublon).
   //
@@ -3080,7 +3075,7 @@ function renderUnssAppelTab() {
       const pointee = unssPresences.find(p => String(p.session_id) === String(seance.id) && String(p.student_id) === String(e.id));
       unssAppelPresence[e.id] = pointee ? !!pointee.present : true;
     });
-    chargerDispensesAppel().then(() => renderUnssAppelBody(creneau, seance));
+    chargerDispensesAppel().then(() => ouvrirEditeurAppel(creneau, seance));
   }));
 }
 
@@ -3251,17 +3246,24 @@ function renderUnssAppelBody(creneau, seance) {
       throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
     }
     const absents = unssAppelMembers.filter(eleve => !unssAppelPresence[eleve.id]);
-    // Fermer l'editeur des que les lignes sont sauvegardees et ranger l'appel dans l'historique.
-    // L'action d'e-mail reste disponible immediatement dans la confirmation et plus tard sur la
-    // ligne de l'appel enregistre.
-    unssAppelApresEnregistrement = {
-      slotId: creneau?.id || unssAppelSlotId,
-      sessionId,
-      absentCount: absents.length
+    const fermerEtRafraichir = () => {
+      unssAppelPresence = {};
+      unssAppelVue = "historique";
+      fermerFenetreUnss();
+      if (creneau) renderUnssAppelTab();
     };
-    unssAppelPresence = {};
-    unssAppelVue = "historique";
-    if (creneau) renderUnssAppelTab();
+    if (!absents.length) {
+      fermerEtRafraichir();
+      return;
+    }
+    // L'appel est deja range. La fenetre demande maintenant si le professeur souhaite envoyer
+    // les messages, puis se ferme quelle que soit l'option choisie.
+    body.innerHTML = `<div class="as-call-save-choice"><strong>Appel enregistré · ${absents.length} absent${absents.length > 1 ? "s" : ""}</strong><p>Souhaitez-vous prévenir les parents des élèves absents maintenant ?</p><div><button type="button" id="unssCallSendAbsence">Envoyer le mail aux absents</button><button type="button" class="secondary" id="unssCallSkipAbsence">Pas maintenant</button></div><small id="unssCallEmailResult"></small></div>`;
+    document.getElementById("unssCallSkipAbsence").addEventListener("click", fermerEtRafraichir);
+    document.getElementById("unssCallSendAbsence").addEventListener("click", async event => {
+      const reussi = await envoyerEmailsParentsAbsents(sessionId, event.currentTarget, document.getElementById("unssCallEmailResult"));
+      if (reussi) window.setTimeout(fermerEtRafraichir, 650);
+    });
     } finally {
       saveButton.disabled = false;
     }

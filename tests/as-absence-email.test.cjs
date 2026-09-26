@@ -7,10 +7,10 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-ab
 const schema = fs.readFileSync(path.join(root, 'schema_as_absence_emails.sql'), 'utf8');
 
 [
-  'const absents = unssAppelMembers.filter', 'Aucun élève absent',
-  'data-email-absents=', 'Envoyer un e-mail aux parents',
-  'JSON.stringify({ sessionId })', 'unssAppelApresEnregistrement',
-  '>Modifier</button>', 'Nouvel appel',
+  'const absents = unssAppelMembers.filter',
+  'data-email-absents=', 'Envoyer le mail aux absents',
+  'JSON.stringify({ sessionId })', 'unssCallSendAbsence',
+  '>Modifier</button>', 'Pas maintenant', 'Nouvel appel',
   'String(p.session_id) === String(seance.id)',
   'Les appels se créent et se modifient uniquement depuis l’onglet <strong>Appel AS</strong>.'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Étape après appel incomplète : ${marker}`); });
