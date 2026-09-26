@@ -7,9 +7,14 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-ab
 
 [
   'const absents = unssAppelMembers.filter', 'Aucun élève absent',
-  'id="unssSendAbsenceEmails"', 'Envoyer un e-mail aux parents',
-  'JSON.stringify({ sessionId })', 'id="unssSkipAbsenceEmails"'
+  'data-email-absents=', 'Envoyer un e-mail aux parents',
+  'JSON.stringify({ sessionId })', 'unssAppelApresEnregistrement',
+  '>Modifier</button>', 'Nouvel appel',
+  'String(p.session_id) === String(seance.id)',
+  'Les appels se créent et se modifient uniquement depuis l’onglet <strong>Appel AS</strong>.'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Étape après appel incomplète : ${marker}`); });
+
+if (code.includes('id="asCall"')) throw new Error('La fiche créneau ne doit plus permettre de lancer un appel.');
 
 [
   'smtp.gmail.com', 'EPS_GMAIL_APP_PASSWORD', '.eq("session_id", sessionId)',
