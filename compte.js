@@ -122,6 +122,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 });
 
 function showAuthView() {
+  document.getElementById('connectionIssueNotice').hidden = true;
   document.getElementById("authView").style.display = "flex";
   document.getElementById("mainView").style.display = "none";
   document.getElementById("logoutBtn").style.display = "none";
@@ -139,6 +140,7 @@ function showMainView() {
   showTab("home");
   renderImpersonationBar();
   demarrerModeHorsConnexion();
+  startAutomaticOfflinePreparation({force:true});
   refreshTeacherSettings().then(() => { if(currentWebTab === "home") showTab("home"); }).catch(e => console.warn(e.message));
   loadInstitution();
   maybeLock();

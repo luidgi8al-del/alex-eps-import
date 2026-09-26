@@ -1,6 +1,8 @@
 # Utilisation sans connexion
 
-Depuis Réglage → Utiliser sans connexion, lancer « Préparer cet appareil pour le mode hors connexion » avec Internet et attendre la confirmation. Cette préparation est propre à l'appareil, au navigateur et au compte utilisés. Vérifier cet état avant de partir ; une mise à jour des outils ou un nettoyage du navigateur peut nécessiter une nouvelle préparation.
+La préparation démarre automatiquement après connexion au compte. Elle reprend après une coupure réseau, avec des tentatives espacées en cas d'échec, sans télécharger à nouveau les ressources déjà présentes pour cette version. Elle est propre à l'appareil, au navigateur et au compte utilisés. Garder Internet le temps du premier téléchargement.
+
+Dans Réglage, un voyant discret à droite de « Utiliser sans connexion » devient vert quand l'appareil est prêt. Celui de « Compte web / synchronisation » devient vert quand la synchronisation est à jour. Un voyant en attente n'affirme pas que la copie est prête. Seule une erreur ou un conflit déclenche une notification invitant à ouvrir les réglages et la rubrique concernée. Le bouton secondaire « Vérifier / relancer » reste disponible dans l'accordéon hors connexion.
 
 Le cache du service worker contient uniquement des ressources publiques. Les données autorisées par le serveur sont conservées dans la base IndexedDB du compte. Les tables raccordées couvrent notamment classes, élèves, planning, cycles, évaluations, AS, santé et équipement. Les écritures passant par le moteur local restent en attente puis sont synchronisées au retour du réseau. Les conflits doivent être tranchés avant une confirmation de préparation complète.
 

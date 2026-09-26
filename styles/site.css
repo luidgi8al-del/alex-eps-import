@@ -104,6 +104,14 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .syncStatus { display:flex;align-items:center;gap:9px;min-height:42px;max-width:440px;padding:6px 8px 6px 11px;
   border:1px solid #ffffff42;border-radius:15px;background:#ffffff1c;color:#fff;font-size:11px;line-height:1.2; }
 .syncStatusDot{width:10px;height:10px;flex:0 0 auto;border:2px solid #ffffffb8;border-radius:50%;background:#49d39b;box-shadow:0 0 0 3px #ffffff18}
+.syncStatus[hidden],.connectionIssueNotice[hidden]{display:none!important}
+.connectionIssueNotice{margin:0!important;max-width:360px;font-size:12px!important;background:#fff4e7!important;color:#804100!important;border:1px solid #efcda7!important}
+.settingsSummaryWithStatus{position:relative;padding-right:32px!important}
+.settingsStateDot{position:absolute;right:0;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#bdc5cd;box-shadow:0 0 0 3px #f2f5f7}
+.settingsStateDot[data-state="ready"]{background:#1eaa66}
+.settingsStateDot[data-state="error"]{background:#d43a3a}
+.settingsStateDot[data-state="preparing"],.settingsStateDot[data-state="waiting"]{background:#d2a244}
+.settingsConnectionDetails{margin-bottom:16px}.settingsConnectionDetails [hidden]{display:none!important}
 .syncStatusInfo{display:grid;gap:2px;min-width:0}.syncStatusLabel{font-size:12px}.syncStatusDetails{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#eaf6ff}
 .syncStatusRetry{width:auto!important;min-width:max-content;margin:0!important;padding:7px 10px!important;border:1px solid #ffffff6b!important;border-radius:10px!important;background:#fff!important;color:#0d68a7!important;font-size:11px!important}
 .syncStatusRetry[hidden]{display:none!important}.syncStatus[data-sync-state="syncing"] .syncStatusDot{background:#ffcf55;animation:syncPulse 1s infinite alternate}

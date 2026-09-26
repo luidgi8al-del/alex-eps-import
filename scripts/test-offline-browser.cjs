@@ -22,8 +22,22 @@ const fixture=fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8');
   await page.goto('http://127.0.0.1:8879/index.html');
   await page.evaluate(()=>demarrerModeHorsConnexion());
   await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
-  await page.evaluate(()=>prepareOfflineDevice());
-  console.log('PASS: preparation completed');
+  await page.waitForFunction(()=>automaticOfflineState==='ready');
+  console.log('PASS: automatic preparation completed without opening settings or pressing a button');
+  await page.evaluate(async()=>{
+   await openSettings();
+   if(document.querySelector('#offlineSection .settingsStateDot')?.dataset.state!=='ready')throw Error('Offline green dot missing');
+   if(document.querySelector('#accountSection .settingsStateDot')?.dataset.state!=='ready')throw Error('Sync green dot missing');
+   if(!document.getElementById('connectionIssueNotice').hidden)throw Error('Unexpected healthy notification');
+   if(getComputedStyle(document.getElementById('syncStatus')).display!=='none')throw Error('Header sync status remains visible');
+   const {publishSyncState}=await import('./pwa/core/events.js');
+   publishSyncState('error',{message:'Erreur simulée',pending:0,conflicts:0});
+   if(document.getElementById('connectionIssueNotice').hidden)throw Error('Error notification missing');
+   if(document.querySelector('#accountSection .settingsStateDot')?.dataset.state!=='error')throw Error('Error dot missing');
+   publishSyncState('synced',{pending:0,conflicts:0,lastSuccessfulAt:new Date().toISOString()});
+   if(!document.getElementById('connectionIssueNotice').hidden)throw Error('Error notification not cleared');
+  });
+  await page.screenshot({path:path.join(root,'tests/offline-verification.png')});
   await context.setOffline(true);
   await page.evaluate(async()=>{
    const e=await demarrerModeHorsConnexion();
@@ -47,7 +61,6 @@ const fixture=fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8');
    return status;
   });
   console.log('PASS: real offline reload, AS tables, absence, class roster, settings.',result);
-  await page.screenshot({path:path.join(root,'tests/offline-verification.png')});
   await page.evaluate(()=>{
    const previous=window.fetch;
    window.fetch=(url,options={})=>{

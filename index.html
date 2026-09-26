@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20260926-6">
+<link rel="stylesheet" href="styles/site.css?v=20260927-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260926-2">
 <link rel="stylesheet" href="home-navigation.css">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260924-2">
@@ -32,7 +32,8 @@
     <div class="headerRight">
       <!-- Etat de la synchronisation. Vide donc invisible tant que le mode hors connexion n'a pas
            demarre : un bandeau qui n'annonce rien inquiete plus qu'il n'informe. -->
-      <span id="syncStatus" class="syncStatus"></span>
+      <span id="syncStatus" class="syncStatus" hidden></span>
+      <button id="connectionIssueNotice" class="secondary connectionIssueNotice" hidden type="button" aria-live="polite"></button>
       <button class="secondary" id="searchBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Rechercher</button>
       <button class="secondary" id="settingsBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Reglages</button>
       <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se deconnecter</button>
@@ -490,13 +491,13 @@
   <script src="health.js?v=20260918-2"></script>
   <script src="student-fields.js"></script>
   <script src="import-eleves.js"></script>
-  <script src="teacher-settings.js"></script>
+  <script src="teacher-settings.js?v=20260927-1"></script>
   <script src="home-weather.js"></script>
   <script src="hors-connexion.js"></script>
-  <script src="offline-preparation.js"></script>
+  <script src="offline-preparation.js?v=20260927-1"></script>
   <script src="offline-read.js"></script>
   <script src="accueil.js"></script>
-  <script src="compte.js"></script>
+  <script src="compte.js?v=20260927-1"></script>
   <script src="classes.js"></script>
   <script src="planning.js"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
