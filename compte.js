@@ -106,20 +106,47 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
   }
 });
 
-document.getElementById("logoutBtn").addEventListener("click", () => {
+async function deconnecterEnSecurite() {
+  const bouton = document.getElementById("logoutBtn");
+  bouton.disabled = true;
+  try {
+    if (modeHorsConnexion) {
+      // Un dernier envoi est tenté quand Internet est disponible. La décision repose ensuite sur
+      // le contenu réel de la file locale, pas sur un voyant qui pourrait dater de quelques secondes.
+      if (navigator.onLine) await modeHorsConnexion.synchroniser();
+      const [{countPendingOperations},{countConflicts}] = await Promise.all([
+        import('./pwa/sync/outbox.js'), import('./pwa/sync/conflicts.js')
+      ]);
+      const pending = await countPendingOperations(), conflicts = await countConflicts();
+      if (pending || conflicts) {
+        const details = [
+          pending ? `${pending} modification${pending > 1 ? 's' : ''} à envoyer` : '',
+          conflicts ? `${conflicts} conflit${conflicts > 1 ? 's' : ''} à régler` : ''
+        ].filter(Boolean).join(' et ');
+        alert(`Déconnexion annulée : ${details}.\n\nVos saisies restent conservées sur cet appareil. ${navigator.onLine ? 'Ouvrez Réglage → Compte web / synchronisation pour terminer.' : 'Reconnectez Internet, puis attendez le voyant vert avant de vous déconnecter.'}`);
+        return false;
+      }
+      // On attend réellement l'effacement. Une erreur ne doit pas laisser des données d'élèves
+      // accessibles derrière un écran qui prétendrait que le professeur est déconnecté.
+      await modeHorsConnexion.oublierDonneesLocales();
+    }
+  } catch (error) {
+    alert(`Déconnexion annulée : la copie locale n’a pas pu être vérifiée.\n\nVos données sont conservées. Réessayez ou vérifiez Réglage → Compte web / synchronisation.`);
+    return false;
+  } finally { bouton.disabled = false; }
   // Sinon un retour serait propose au prochain visiteur de ce navigateur.
   localStorage.removeItem(ADMIN_SESSION_KEY);
   document.getElementById("impersonationBar").style.display = "none";
-  // Se deconnecter efface les copies locales de **tous** les comptes ouverts sur cet ordinateur.
-  // Une bascule de compte, elle, ne detruit rien : chacun a sa base. Mais quitter la session sur
-  // une machine partagee doit ne rien laisser derriere soi.
-  modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
+  // Les données synchronisées restent au serveur. Seules les copies locales, désormais vérifiées,
+  // sont retirées de cet ordinateur pour que le visiteur suivant ne voie aucun élève.
   for (const key of Object.keys(localStorage)) {
     if (/^eps:offline-(team|institution|schema)/.test(key)) localStorage.removeItem(key);
   }
   clearSession();
   showAuthView();
-});
+  return true;
+}
+document.getElementById("logoutBtn").addEventListener("click", deconnecterEnSecurite);
 
 function showAuthView() {
   document.getElementById('connectionIssueNotice').hidden = true;

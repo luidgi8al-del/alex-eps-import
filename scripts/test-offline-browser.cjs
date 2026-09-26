@@ -95,5 +95,21 @@ const fixture=fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8');
    throw Error('The AS licensing form cannot scroll: '+JSON.stringify(editorScroll));
   }
   console.log('PASS: the complete AS licensing form scrolls inside the central window.');
+  await page.evaluate(()=>fermerFenetreUnss());
+  await context.setOffline(true);
+  const safeLogout=await page.evaluate(async()=>{
+   const e=await demarrerModeHorsConnexion();
+   const row=(await e.lire('unss_attendance')).rows.find(r=>r.id==='ua-3');
+   await enregistrerLigne('unss_attendance',{...row,present:true,updated_at:new Date().toISOString()});
+   let warning='';window.alert=message=>{warning=message;};
+   document.getElementById('logoutBtn').click();
+   await new Promise(resolve=>setTimeout(resolve,150));
+   const {countPendingOperations}=await import('./pwa/sync/outbox.js');
+   return {warning,connected:!!session,pending:await countPendingOperations(),authVisible:document.getElementById('authView').style.display};
+  });
+  if(!safeLogout.connected || safeLogout.pending!==1 || !safeLogout.warning.includes('Déconnexion annulée') || safeLogout.authVisible==='flex'){
+   throw Error('Unsafe logout guard failed: '+JSON.stringify(safeLogout));
+  }
+  console.log('PASS: logout is blocked while an offline edit is waiting; the local entry is retained.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

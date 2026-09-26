@@ -23,7 +23,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./classe-tableau-bord.js?v=20260923-1",
   "./classes.js",
   "./compte.js",
-  "./compte.js?v=20260927-1",
+  "./compte.js?v=20260927-2",
   "./condition-fitness-web.js",
   "./condition-fitness-web.js?v=20260922-5",
   "./content/3x500m-cycle-terminal.json",
