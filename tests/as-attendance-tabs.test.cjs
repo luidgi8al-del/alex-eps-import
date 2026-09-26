@@ -20,6 +20,8 @@ if (!css.includes('.as-attendance-list')) {
   'Présence moyenne',
   'PROCHAINE SÉANCE',
   'id="unssNouvelAppel"',
+  'id="unssAppelStudents"',
+  'ouvrirListeInscritsCreneau(creneau',
   'data-seance=',
   'data-supprimer-seance=',
   'ouvrirEditeurAppel(creneau, null)',
@@ -28,7 +30,7 @@ if (!css.includes('.as-attendance-list')) {
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`La nouvelle page d’appel doit conserver : ${marker}`);
 });
-['.as-call-page', '.as-slot-compact', '.as-call-kpis', '.as-history-table', '.as-next-card', '.as-call-modal', '.as-history-actions-menu'].forEach(marker => {
+['.as-call-page', '.as-slot-compact', '.as-call-kpis', '.as-call-kpi-link', '.as-history-table', '.as-next-card', '.as-call-modal', '.as-history-actions-menu'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style manquant pour la nouvelle page : ${marker}`);
 });
 console.log('as-attendance-tabs: tableau de bord, historique, actions et taux individuels OK');

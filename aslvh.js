@@ -2736,21 +2736,21 @@ function sectionVoeuHtml(rang, eleves) {
  * prénom, classe, catégorie. Ajouter ou retirer un élève reste réservé au bouton "+ Élèves"
  * (ouvrirElevesCreneau), pour ne pas mélanger consultation rapide et modification.
  */
-async function ouvrirListeInscritsCreneau(slot) {
+async function ouvrirListeInscritsCreneau(slot, fermerDepuisAppel = null) {
   const panel = document.getElementById("unssPanel");
   ouvrirFenetreUnss();
   panel.innerHTML = `<div class="muted">Chargement…</div>`;
   await assurerInscriptions();
   const eleves = elevesDuCreneau(slot.id);
   panel.classList.add("as-full-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn">←</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="unssListeInscritsCloseBtn" aria-label="${fermerDepuisAppel ? "Fermer" : "Retour"}">${fermerDepuisAppel ? "×" : "←"}</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
       : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${
           eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td></tr>`).join("")
         }</tbody></table></div>`
     }`;
-  document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => ouvrirFicheCreneau(slot));
+  document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => fermerDepuisAppel ? fermerDepuisAppel() : ouvrirFicheCreneau(slot));
   document.getElementById("unssListeInscritsExportBtn").addEventListener("click", () => showCreneauExport(slot, eleves));
 }
 
@@ -2999,7 +2999,7 @@ function renderUnssAppelTab() {
     <nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Appels</b></nav>
     <section class="as-slot-compact"><div class="as-slot-summary"><h1>${unssText(creneau.activity_name)} · ${unssText(capitaliseJour(creneau.day_of_week))}</h1><p><span>◷ ${unssText(horaire || "Horaire non renseigné")}</span><span>⌖ ${unssText(creneau.location || "Lieu non renseigné")}</span><span>♙ ${unssText(professeur)}</span></p></div><label class="as-slot-picker"><span>Changer de créneau</span><select id="unssAppelSlotSelect">${creneaux.map(s =>
       `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select></label></section>
-    <section class="as-call-kpis"><article><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
+    <section class="as-call-kpis"><article id="unssAppelStudents" class="as-call-kpi-link" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
     <div class="as-call-layout"><main class="as-call-main"><div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}</main>
       <aside class="as-next-card"><span class="as-call-eyebrow">PROCHAINE SÉANCE</span>${prochaine ? `<div class="as-next-date"><b>${unssText(prochaine.jour)}</b><span>${prochaine.annee}</span></div>` : `<div class="as-next-date"><b>Date à définir</b></div>`}<dl><div><dt>◷ Horaire</dt><dd>${unssText(horaire || "Non renseigné")}</dd></div><div><dt>⌖ Lieu</dt><dd>${unssText(creneau.location || "Non renseigné")}</dd></div><div><dt>♙ Enseignant</dt><dd>${unssText(professeur)}</dd></div></dl><p class="as-next-note"><b>✓ Pense-bête</b><span>L’appel pourra être créé dès le début de la séance.</span></p></aside>
     </div></div>`;
@@ -3009,6 +3009,11 @@ function renderUnssAppelTab() {
     unssAppelVue = "historique";
     unssAppelPresence = {};
     renderUnssAppelTab();
+  });
+  const ouvrirInscrits = () => ouvrirListeInscritsCreneau(creneau, () => fermerFenetreUnss());
+  document.getElementById("unssAppelStudents").addEventListener("click", ouvrirInscrits);
+  document.getElementById("unssAppelStudents").addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ouvrirInscrits(); }
   });
   wrap.querySelectorAll("[data-appel-vue]").forEach(b => b.addEventListener("click", () => { unssAppelVue = b.dataset.appelVue; renderUnssAppelTab(); }));
   wrap.querySelectorAll("[data-email-absents]").forEach(btn => btn.addEventListener("click", () => {
