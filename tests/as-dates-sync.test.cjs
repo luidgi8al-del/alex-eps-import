@@ -29,11 +29,16 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   ,'asDateStudentSearch'
   ,'participantStudentIds'
   ,'accompanyingTeacherIds'
+  ,'asDateSlotFilter'
+  ,'asDateClassFilter'
+  ,'asDateAddSlot'
+  ,'exporterParticipantsDateAs'
+  ,'aucun professeur accompagnateur'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Fonction Dates AS manquante : ${marker}`);
 });
 
-['.as-dates-page', '.as-dates-compact', '.as-date-card', '.as-date-form', '.as-needs-grid', '.as-date-picker', '.as-date-selected-students'].forEach(marker => {
+['.as-dates-page', '.as-dates-compact', '.as-date-card', '.as-date-form', '.as-needs-grid', '.as-date-picker', '.as-date-selected-students', '.as-date-selection-summary', '.as-date-student-filters'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style Dates AS manquant : ${marker}`);
 });
 

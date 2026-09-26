@@ -3380,6 +3380,19 @@ function renderUnssDatesTab() {
   });
 }
 
+function exporterParticipantsDateAs(label, eleves) {
+  const cellule = valeur => `"${String(valeur ?? "").replaceAll('"', '""')}"`;
+  const lignes = [["Nom", "Prénom", "Classe", "Catégorie"], ...eleves.map(e => [
+    String(e.last_name || "").toUpperCase(), e.first_name || "",
+    e.division || e.school_class_label || e.class_label || "", unssCategoryLabel(e.category, e.sex)
+  ])];
+  const csv = "\uFEFF" + lignes.map(ligne => ligne.map(cellule).join(";")).join("\r\n");
+  const lien = document.createElement("a");
+  lien.href = URL.createObjectURL(new Blob([csv], { type:"text/csv;charset=utf-8" }));
+  lien.download = `participants-${chaineRecherche(label || "date-as").replace(/\s+/g, "-") || "date-as"}.csv`;
+  lien.click(); URL.revokeObjectURL(lien.href);
+}
+
 async function openUnssDatePanel(event) {
   const nouveau = !event;
   const details = lireDetailsDateAs(event?.comment);
@@ -3393,26 +3406,53 @@ async function openUnssDatePanel(event) {
   const elevesAs = unssStudents.filter(s => s.licensed && !s.deleted)
     .sort((a,b) => String(a.last_name || "").localeCompare(String(b.last_name || ""), "fr") || String(a.first_name || "").localeCompare(String(b.first_name || ""), "fr"));
   const participantsSelectionnes = new Set((details.participantStudentIds || []).map(String));
+  await assurerInscriptions();
+  const creneauxDisponibles = unssSlots.filter(s => !s.deleted);
+  const classesDisponibles = [...new Set(elevesAs.map(e => e.division || e.school_class_label || e.class_label || "").filter(Boolean))]
+    .sort((a,b) => a.localeCompare(b, "fr", { numeric:true }));
   const dateIso = event ? new Date(Number(event.start_date_epoch_millis)).toISOString().slice(0, 10) : "";
   const panel = document.getElementById("unssPanel");
   ouvrirFenetreUnss(); panel.classList.add("as-full-panel", "as-date-panel");
-  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="asDateClose">←</button><div><small>DATE AS</small><h2>${nouveau ? "Nouvelle date AS" : unssText(event.label)}</h2></div><b>📅</b></div><div class="as-date-form"><section class="as-date-form-card"><h3>🏆 L’événement</h3><div class="as-form-grid"><label>Date<input id="asDateValue" type="date" value="${dateIso}"></label><label>Intitulé<input id="asDateLabel" value="${unssText(event?.label || "")}" placeholder="Ex : Cross départemental"></label><label>Activité<input id="asDateActivity" value="${unssText(details.activity || "")}" placeholder="Ex : Cross-country"></label></div><details class="as-date-picker" id="asDateTeacherPicker"><summary><span>Professeurs accompagnants</span><small id="asDateTeacherCount"></small></summary><div class="as-date-choice-list">${professeurs.length ? professeurs.map(prof => { const nom=prof.name || prof.email; const choisi=idsProfesseurs.has(String(prof.id)) || nomsEnregistres.includes(nom); return `<label><input type="checkbox" data-date-teacher value="${unssText(prof.id)}" data-name="${unssText(nom)}" ${choisi ? "checked" : ""}><span>${unssText(nom)}</span></label>`; }).join("") : `<div class="muted">Aucun compte professeur enregistré dans cet établissement.</div>`}</div></details></section><section class="as-date-form-card"><h3>👥 Élèves participants</h3><div id="asDateSelectedStudents" class="as-date-selected-students"></div><details class="as-date-picker" id="asDateStudentPicker"><summary><span>Ajouter des élèves de l’AS</span><small id="asDateStudentCount"></small></summary><div><input type="search" id="asDateStudentSearch" placeholder="Rechercher un nom, un prénom ou une classe" autocomplete="off"><div id="asDateStudentResults" class="as-date-choice-list"></div></div></details></section><section class="as-date-form-card"><h3>⌖ Destination</h3><label>Lieu exact de la sortie<input id="asDateLocation" value="${unssText(details.exactLocation || "")}"></label></section><section class="as-date-form-card"><h3>🚌 Déplacement</h3><label class="as-travel-toggle"><input id="asDateTravel" type="checkbox" ${details.travelRequired ? "checked" : ""}><span>Un déplacement est nécessaire</span></label><div id="asDateTravelFields" class="as-form-grid"><label>Lieu de départ<input id="asDateDepartureLocation" value="${unssText(details.departureLocation || "")}"></label><label>Départ<input id="asDateDeparture" type="time" value="${unssText(details.departureTime || "")}"></label><label>Retour<input id="asDateReturn" type="time" value="${unssText(details.returnTime || "")}"></label><label>Moyen de déplacement<input id="asDateTransport" value="${unssText(details.transportMethod || "")}"></label></div><div id="asDateNoTravelFields" class="as-form-grid"><label>Heure de rendez-vous<input id="asDateMeeting" type="time" value="${unssText(details.meetingTime || "")}"></label><label>Heure de fin<input id="asDateEnd" type="time" value="${unssText(details.endTime || "")}"></label></div></section><div class="as-needs-grid"><section class="as-date-form-card"><h3>🏫 Besoins établissement</h3><textarea id="asDateSchoolNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.schoolNeeds || "")}</textarea></section><section class="as-date-form-card needs"><h3>⭐ Besoins AS</h3><textarea id="asDateAsNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.asNeeds || "")}</textarea></section></div><div class="as-date-actions"><button id="asDateSave">Enregistrer la fiche</button>${nouveau ? "" : `<button class="danger" id="asDateDelete">Supprimer la date</button>`}<button class="secondary" id="asDateCancel">Annuler</button></div><div class="error" id="asDateError"></div></div>`;
+  panel.innerHTML = `<div class="as-panel-title"><button class="as-back" id="asDateClose">←</button><div><small>DATE AS</small><h2>${nouveau ? "Nouvelle date AS" : unssText(event.label)}</h2></div><b>📅</b></div><div class="as-date-form"><section class="as-date-selection-summary"><article><b id="asDateTeacherSummary">0</b><span>accompagnateur</span></article><article><b id="asDateStudentSummary">0</b><span>participant</span></article></section><section class="as-date-form-card"><h3>🏆 L’événement</h3><div class="as-form-grid"><label>Date<input id="asDateValue" type="date" value="${dateIso}"></label><label>Intitulé<input id="asDateLabel" value="${unssText(event?.label || "")}" placeholder="Ex : Cross départemental"></label><label>Activité<input id="asDateActivity" value="${unssText(details.activity || "")}" placeholder="Ex : Cross-country"></label></div><details class="as-date-picker" id="asDateTeacherPicker"><summary><span>Professeurs accompagnants</span><small id="asDateTeacherCount"></small></summary><div class="as-date-choice-list">${professeurs.length ? professeurs.map(prof => { const nom=prof.name || prof.email; const choisi=idsProfesseurs.has(String(prof.id)) || nomsEnregistres.includes(nom); return `<label><input type="checkbox" data-date-teacher value="${unssText(prof.id)}" data-name="${unssText(nom)}" ${choisi ? "checked" : ""}><span>${unssText(nom)}</span></label>`; }).join("") : `<div class="muted">Aucun compte professeur enregistré dans cet établissement.</div>`}</div></details></section><section class="as-date-form-card"><div class="as-date-card-title"><h3>👥 Élèves participants</h3><button type="button" class="secondary" id="asDateExportStudents" ${participantsSelectionnes.size ? "" : "disabled"}>⇩ Télécharger la liste</button></div><div id="asDateSelectedStudents" class="as-date-selected-students"></div><details class="as-date-picker" id="asDateStudentPicker"><summary><span>Ajouter des élèves de l’AS</span><small id="asDateStudentCount"></small></summary><div><div class="as-date-student-filters"><select id="asDateSlotFilter"><option value="">Tous les créneaux AS</option>${creneauxDisponibles.map(slot => `<option value="${slot.id}">${unssText(unssSlotLabel(slot))}</option>`).join("")}</select><select id="asDateClassFilter"><option value="">Toutes les classes</option>${classesDisponibles.map(classe => `<option value="${unssText(classe)}">${unssText(classe)}</option>`).join("")}</select><button type="button" id="asDateAddSlot" disabled>Ajouter tout le créneau</button></div><input type="search" id="asDateStudentSearch" placeholder="Rechercher un nom ou un prénom" autocomplete="off"><div id="asDateStudentResults" class="as-date-choice-list"></div></div></details></section><section class="as-date-form-card"><h3>⌖ Destination</h3><label>Lieu exact de la sortie<input id="asDateLocation" value="${unssText(details.exactLocation || "")}"></label></section><section class="as-date-form-card"><h3>🚌 Déplacement</h3><label class="as-travel-toggle"><input id="asDateTravel" type="checkbox" ${details.travelRequired ? "checked" : ""}><span>Un déplacement est nécessaire</span></label><div id="asDateTravelFields" class="as-form-grid"><label>Lieu de départ<input id="asDateDepartureLocation" value="${unssText(details.departureLocation || "")}"></label><label>Départ<input id="asDateDeparture" type="time" value="${unssText(details.departureTime || "")}"></label><label>Retour<input id="asDateReturn" type="time" value="${unssText(details.returnTime || "")}"></label><label>Moyen de déplacement<input id="asDateTransport" value="${unssText(details.transportMethod || "")}"></label></div><div id="asDateNoTravelFields" class="as-form-grid"><label>Heure de rendez-vous<input id="asDateMeeting" type="time" value="${unssText(details.meetingTime || "")}"></label><label>Heure de fin<input id="asDateEnd" type="time" value="${unssText(details.endTime || "")}"></label></div></section><div class="as-needs-grid"><section class="as-date-form-card"><h3>🏫 Besoins établissement</h3><textarea id="asDateSchoolNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.schoolNeeds || "")}</textarea></section><section class="as-date-form-card needs"><h3>⭐ Besoins AS</h3><textarea id="asDateAsNeeds" rows="5" placeholder="Un besoin par ligne">${unssText(details.asNeeds || "")}</textarea></section></div><div class="as-date-actions"><button id="asDateSave">Enregistrer la fiche</button>${nouveau ? "" : `<button class="danger" id="asDateDelete">Supprimer la date</button>`}<button class="secondary" id="asDateCancel">Annuler</button></div><div class="error" id="asDateError"></div></div>`;
   const actualiserProfesseurs = () => {
     const total = panel.querySelectorAll("[data-date-teacher]:checked").length;
     document.getElementById("asDateTeacherCount").textContent = total ? `${total} sélectionné${total > 1 ? "s" : ""}` : "À choisir";
+    document.getElementById("asDateTeacherSummary").textContent = total;
+    document.getElementById("asDateTeacherSummary").nextElementSibling.textContent = `accompagnateur${total > 1 ? "s" : ""}`;
   };
   panel.querySelectorAll("[data-date-teacher]").forEach(input => input.addEventListener("change", actualiserProfesseurs));
   actualiserProfesseurs();
   const afficherElevesDate = () => {
     const recherche = chaineRecherche(document.getElementById("asDateStudentSearch").value);
-    const trouves = elevesAs.filter(e => !recherche || chaineRecherche(`${e.last_name} ${e.first_name} ${e.division || e.school_class_label || ""}`).includes(recherche));
+    const slotId = document.getElementById("asDateSlotFilter").value;
+    const classe = document.getElementById("asDateClassFilter").value;
+    const idsCreneau = slotId ? new Set(elevesDuCreneau(slotId).map(e => String(e.id))) : null;
+    const trouves = elevesAs.filter(e => (!idsCreneau || idsCreneau.has(String(e.id)))
+      && (!classe || (e.division || e.school_class_label || e.class_label || "") === classe)
+      && (!recherche || chaineRecherche(`${e.last_name} ${e.first_name} ${e.division || e.school_class_label || ""}`).includes(recherche)));
     document.getElementById("asDateStudentResults").innerHTML = trouves.length ? trouves.slice(0,100).map(e => `<label><input type="checkbox" data-date-student="${e.id}" ${participantsSelectionnes.has(String(e.id)) ? "checked" : ""}><span><b>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</b><small>${unssText(e.division || e.school_class_label || e.class_label || "Classe non renseignée")}</small></span></label>`).join("") : `<div class="muted">Aucun licencié AS trouvé.</div>`;
-    document.getElementById("asDateSelectedStudents").innerHTML = participantsSelectionnes.size ? elevesAs.filter(e => participantsSelectionnes.has(String(e.id))).map(e => `<button type="button" data-remove-date-student="${e.id}">${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")} <b>×</b></button>`).join("") : `<span class="muted">Aucun élève ajouté.</span>`;
+    document.getElementById("asDateSelectedStudents").innerHTML = participantsSelectionnes.size ? elevesAs.filter(e => participantsSelectionnes.has(String(e.id))).map(e => `<div class="as-date-selected-row"><span><b>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</b><small>${unssText(e.division || e.school_class_label || e.class_label || "Classe non renseignée")}</small></span><button type="button" data-remove-date-student="${e.id}" aria-label="Retirer ${unssText(e.first_name || "")}">×</button></div>`).join("") : `<span class="muted">Aucun élève ajouté.</span>`;
     document.getElementById("asDateStudentCount").textContent = `${participantsSelectionnes.size} ajouté${participantsSelectionnes.size > 1 ? "s" : ""}`;
+    document.getElementById("asDateStudentSummary").textContent = participantsSelectionnes.size;
+    document.getElementById("asDateStudentSummary").nextElementSibling.textContent = `participant${participantsSelectionnes.size > 1 ? "s" : ""}`;
+    document.getElementById("asDateExportStudents").disabled = participantsSelectionnes.size === 0;
+    const boutonTout = document.getElementById("asDateAddSlot");
+    boutonTout.disabled = !slotId || !idsCreneau?.size;
+    boutonTout.textContent = slotId ? `Ajouter tout le créneau (${idsCreneau?.size || 0})` : "Ajouter tout le créneau";
     panel.querySelectorAll("[data-date-student]").forEach(input => input.addEventListener("change", () => { if (input.checked) participantsSelectionnes.add(String(input.dataset.dateStudent)); else participantsSelectionnes.delete(String(input.dataset.dateStudent)); afficherElevesDate(); }));
     panel.querySelectorAll("[data-remove-date-student]").forEach(btn => btn.addEventListener("click", () => { participantsSelectionnes.delete(String(btn.dataset.removeDateStudent)); afficherElevesDate(); }));
   };
   document.getElementById("asDateStudentSearch").addEventListener("input", afficherElevesDate);
+  document.getElementById("asDateSlotFilter").addEventListener("change", afficherElevesDate);
+  document.getElementById("asDateClassFilter").addEventListener("change", afficherElevesDate);
+  document.getElementById("asDateAddSlot").addEventListener("click", () => {
+    elevesDuCreneau(document.getElementById("asDateSlotFilter").value).filter(e => e.licensed)
+      .forEach(e => participantsSelectionnes.add(String(e.id)));
+    afficherElevesDate();
+  });
+  document.getElementById("asDateExportStudents").addEventListener("click", () => {
+    exporterParticipantsDateAs(document.getElementById("asDateLabel").value, elevesAs.filter(e => participantsSelectionnes.has(String(e.id))));
+  });
   afficherElevesDate();
   const travel = document.getElementById("asDateTravel");
   const toggleTravel = () => { document.getElementById("asDateTravelFields").style.display = travel.checked ? "grid" : "none"; document.getElementById("asDateNoTravelFields").style.display = travel.checked ? "none" : "grid"; };
@@ -3426,6 +3466,13 @@ async function openUnssDatePanel(event) {
     if (!date || !label) { error.textContent = "Indiquez la date et l’intitulé."; return; }
     const valeur = id => document.getElementById(id).value.trim();
     const accompagnateurs = [...panel.querySelectorAll("[data-date-teacher]:checked")];
+    const elementsManquants = [];
+    if (!accompagnateurs.length) elementsManquants.push("aucun professeur accompagnateur");
+    if (!participantsSelectionnes.size) elementsManquants.push("aucun élève participant");
+    if (elementsManquants.length && !confirm(`Cette fiche comporte ${elementsManquants.join(" et ")}.\n\nL’enregistrer quand même ?`)) {
+      error.textContent = "Complétez les accompagnateurs ou les participants avant d’enregistrer.";
+      return;
+    }
     const nomsParticipants = elevesAs.filter(e => participantsSelectionnes.has(String(e.id)))
       .map(e => `${String(e.last_name || "").toUpperCase()} ${e.first_name || ""}`.trim());
     const nouveauxDetails = {
