@@ -91,7 +91,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
   "./offline-preparation.js",
-  "./offline-preparation.js?v=20260927-1",
+  "./offline-preparation.js?v=20260927-2",
   "./offline-read.js",
   "./offline.html",
   "./outils-socle.js",

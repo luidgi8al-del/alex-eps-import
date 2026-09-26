@@ -1,8 +1,20 @@
 /* Readiness requires both public resources and account data. */
-function offlineWorkerRequest(type, onProgress) {
+async function offlineServiceWorker(timeoutMs = 20000) {
+  const service = navigator.serviceWorker;
+  if (!service) throw Error("Ce navigateur ne permet pas la préparation hors connexion.");
+  if (service.controller) return service.controller;
+  let timer;
+  const registration = await Promise.race([
+    service.ready,
+    new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error("Le service hors connexion n’a pas pu démarrer.")),timeoutMs);})
+  ]).finally(()=>clearTimeout(timer));
+  const worker = service.controller || registration?.active || registration?.waiting;
+  if (!worker) throw Error("Le service hors connexion n’a pas pu démarrer.");
+  return worker;
+}
+async function offlineWorkerRequest(type, onProgress) {
+  const worker = await offlineServiceWorker();
   return new Promise((resolve,reject) => {
-    const worker = navigator.serviceWorker?.controller;
-    if (!worker) return reject(Error("Rechargez la page une fois pour activer le mode hors connexion."));
     const channel = new MessageChannel();
     let timer;
     const stop = () => { clearTimeout(timer); channel.port1.close(); };
@@ -121,18 +133,6 @@ function showOfflinePreparationState(state, message, owner) {
   if (retry) retry.disabled = state === 'preparing';
   renderConnectionSettings();
 }
-function waitForOfflineWorker() {
-  if (navigator.serviceWorker?.controller) return Promise.resolve();
-  return new Promise((resolve,reject)=>{
-    const worker = navigator.serviceWorker;
-    if (!worker) return reject(Error("Ce navigateur ne permet pas la préparation hors connexion."));
-    const done = error => { clearTimeout(timer); worker.removeEventListener('controllerchange',changed); error ? reject(error) : resolve(); };
-    const changed = () => { if (worker.controller) done(); };
-    const timer = setTimeout(()=>done(Error("Le mode hors connexion n’est pas encore prêt. Nouvelle tentative automatique dès que possible.")),20000);
-    worker.addEventListener('controllerchange',changed);
-    changed();
-  });
-}
 function startAutomaticOfflinePreparation({force=false, refresh=false}={}) {
   const owner = session?.user_id;
   if (!owner) return Promise.resolve();
@@ -155,7 +155,7 @@ function startAutomaticOfflinePreparation({force=false, refresh=false}={}) {
     const engine = await demarrerModeHorsConnexion();
     if (!current()) return;
     if (!engine) throw Error("Stockage hors connexion indisponible sur cet appareil.");
-    await waitForOfflineWorker();
+    await offlineServiceWorker();
     const {getMeta} = await import('./pwa/storage/database.js');
     const saved = await getMeta('offline-preparation');
     const cache = await offlineWorkerRequest('CHECK_OFFLINE');
