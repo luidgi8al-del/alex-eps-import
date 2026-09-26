@@ -17,7 +17,7 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'as-dates-compact',
   'function loadUnssDates()',
   'function renderUnssDatesTab()',
-  'function openUnssDatePanel(event)',
+  'async function openUnssDatePanel(event)',
   'institution_calendar_events',
   'travelRequired',
   'schoolNeeds',
@@ -25,11 +25,15 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'function conflitsDateAs(millis, idIgnore)',
   'loadInstitutionCalendar()',
   'Enregistrer quand même cette date AS ?'
+  ,'asDateTeacherPicker'
+  ,'asDateStudentSearch'
+  ,'participantStudentIds'
+  ,'accompanyingTeacherIds'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Fonction Dates AS manquante : ${marker}`);
 });
 
-['.as-dates-page', '.as-dates-compact', '.as-date-card', '.as-date-form', '.as-needs-grid'].forEach(marker => {
+['.as-dates-page', '.as-dates-compact', '.as-date-card', '.as-date-form', '.as-needs-grid', '.as-date-picker', '.as-date-selected-students'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style Dates AS manquant : ${marker}`);
 });
 
