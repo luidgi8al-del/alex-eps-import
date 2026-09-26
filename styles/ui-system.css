@@ -41,6 +41,7 @@ button.ui-indicator{width:100%;margin:0}.ui-indicator>i{display:grid;place-items
 
 /* Les anciens conteneurs adoptent le nouveau modèle sans changer leur logique métier. */
 .searchOverlay.ui-modal-overlay{align-items:center;padding:20px}.searchSheet.ui-modal{max-height:min(88vh,900px);padding:0;border-radius:24px;background:#fff}
+.searchSheet.ui-modal>#unssPanel.ui-modal-panel{position:static!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important;margin:0!important}
 .as-list-modal-head{padding:18px 20px}.as-list-modal-body{padding:14px 20px 20px}
 .as-history-actions-menu{position:relative}.as-history-actions-menu>div{position:absolute;right:0;z-index:30;width:230px;padding:7px;border:1px solid var(--ui-border);border-radius:14px;background:#fff;box-shadow:0 15px 36px rgba(18,58,85,.18)}
 .as-date-panel{width:100%!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border-radius:24px!important;background:#f4f7fa!important}.as-date-panel .as-panel-title{padding:17px 20px}.as-date-panel .as-date-form{max-height:calc(88vh - 82px);overflow-y:auto;padding-bottom:24px}

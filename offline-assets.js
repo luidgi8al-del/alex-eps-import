@@ -131,7 +131,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./styles/tools-workspace.css",
   "./styles/tools-workspace.css?v=20260924-2",
   "./styles/ui-system.css",
-  "./styles/ui-system.css?v=20260926-2",
+  "./styles/ui-system.css?v=20260927-3",
   "./swim-observation-web.js",
   "./swim-observation-web.js?v=20260924-1",
   "./sync-safety.js",

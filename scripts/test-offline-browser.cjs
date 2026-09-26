@@ -80,5 +80,20 @@ const fixture=fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8');
    if(await countPendingOperations())throw Error('Edit still pending after reconnect');
   });
   console.log('PASS: saved absence reaches the simulated server on reconnection; no pending edits.');
+  const editorScroll=await page.evaluate(async()=>{
+   await loadUnssSlots();
+   openUnssStudentPanel(__fauxServeur.DONNEES.unss_students[0],true);
+   const modal=document.querySelector('#unssPanelOverlay .searchSheet');
+   const panel=document.getElementById('unssPanel');
+   const position=getComputedStyle(panel).position;
+   const overflow=getComputedStyle(modal).overflowY;
+   const before=modal.scrollTop;
+   modal.scrollTop=modal.scrollHeight;
+   return {position,overflow,before,after:modal.scrollTop,client:modal.clientHeight,scroll:modal.scrollHeight};
+  });
+  if(editorScroll.position!=='static' || editorScroll.scroll<=editorScroll.client || editorScroll.after<=editorScroll.before){
+   throw Error('The AS licensing form cannot scroll: '+JSON.stringify(editorScroll));
+  }
+  console.log('PASS: the complete AS licensing form scrolls inside the central window.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
