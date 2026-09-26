@@ -110,10 +110,11 @@ async function deconnecterEnSecurite() {
   const bouton = document.getElementById("logoutBtn");
   bouton.disabled = true;
   try {
-    if (modeHorsConnexion) {
+    const copieLocale = modeHorsConnexion || await demarrerModeHorsConnexion();
+    if (copieLocale) {
       // Un dernier envoi est tenté quand Internet est disponible. La décision repose ensuite sur
       // le contenu réel de la file locale, pas sur un voyant qui pourrait dater de quelques secondes.
-      if (navigator.onLine) await modeHorsConnexion.synchroniser();
+      if (navigator.onLine) await copieLocale.synchroniser();
       const [{countPendingOperations},{countConflicts}] = await Promise.all([
         import('./pwa/sync/outbox.js'), import('./pwa/sync/conflicts.js')
       ]);
@@ -126,27 +127,50 @@ async function deconnecterEnSecurite() {
         alert(`Déconnexion annulée : ${details}.\n\nVos saisies restent conservées sur cet appareil. ${navigator.onLine ? 'Ouvrez Réglage → Compte web / synchronisation pour terminer.' : 'Reconnectez Internet, puis attendez le voyant vert avant de vous déconnecter.'}`);
         return false;
       }
-      // On attend réellement l'effacement. Une erreur ne doit pas laisser des données d'élèves
-      // accessibles derrière un écran qui prétendrait que le professeur est déconnecté.
-      await modeHorsConnexion.oublierDonneesLocales();
     }
   } catch (error) {
     alert(`Déconnexion annulée : la copie locale n’a pas pu être vérifiée.\n\nVos données sont conservées. Réessayez ou vérifiez Réglage → Compte web / synchronisation.`);
     return false;
   } finally { bouton.disabled = false; }
-  // Sinon un retour serait propose au prochain visiteur de ce navigateur.
+  // La session est fermée, mais la copie hors connexion propre à ce compte reste sur l'appareil.
+  // Elle ne devient de nouveau accessible qu'après l'authentification de ce même compte.
   localStorage.removeItem(ADMIN_SESSION_KEY);
   document.getElementById("impersonationBar").style.display = "none";
-  // Les données synchronisées restent au serveur. Seules les copies locales, désormais vérifiées,
-  // sont retirées de cet ordinateur pour que le visiteur suivant ne voie aucun élève.
-  for (const key of Object.keys(localStorage)) {
-    if (/^eps:offline-(team|institution|schema)/.test(key)) localStorage.removeItem(key);
-  }
   clearSession();
   showAuthView();
   return true;
 }
 document.getElementById("logoutBtn").addEventListener("click", deconnecterEnSecurite);
+
+async function deconnecterEtEffacerCetAppareil() {
+  if (!confirm("Effacer toutes les copies hors connexion enregistrées sur cet appareil ?\n\nLes données déjà synchronisées resteront sur le serveur. Cette action est destinée à un ordinateur perdu, prêté ou partagé.")) return false;
+  try {
+    const copieLocale = modeHorsConnexion || await demarrerModeHorsConnexion();
+    if (copieLocale) {
+      if (navigator.onLine) await copieLocale.synchroniser();
+      const [{countPendingOperations},{countConflicts}] = await Promise.all([
+        import('./pwa/sync/outbox.js'), import('./pwa/sync/conflicts.js')
+      ]);
+      const pending = await countPendingOperations(), conflicts = await countConflicts();
+      if (pending || conflicts) {
+        alert("Effacement annulé : certaines saisies ne sont pas encore envoyées ou un conflit reste à régler. Vos données sont conservées.");
+        return false;
+      }
+      await copieLocale.oublierDonneesLocales();
+    }
+    for (const key of Object.keys(localStorage)) {
+      if (/^eps:offline-(team|institution|schema)/.test(key)) localStorage.removeItem(key);
+    }
+    localStorage.removeItem(ADMIN_SESSION_KEY);
+    document.getElementById("impersonationBar").style.display = "none";
+    clearSession();
+    showAuthView();
+    return true;
+  } catch (error) {
+    alert("L’effacement n’a pas pu être vérifié. Par sécurité, le compte reste ouvert et les données sont conservées.");
+    return false;
+  }
+}
 
 function showAuthView() {
   document.getElementById('connectionIssueNotice').hidden = true;
@@ -158,6 +182,7 @@ function showAuthView() {
   document.getElementById("tabbar").style.display = "none";
 }
 function showMainView() {
+  const activeUserId = session.user_id;
   document.getElementById("authView").style.display = "none";
   document.getElementById("mainView").style.display = "block";
   document.getElementById("logoutBtn").style.display = "inline-block";
@@ -166,7 +191,7 @@ function showMainView() {
   document.getElementById("tabbar").style.display = "flex";
   showTab("home");
   renderImpersonationBar();
-  demarrerModeHorsConnexion();
+  demarrerModeHorsConnexion().then(engine => engine?.changerDeCompte(activeUserId)).catch(error => console.warn(error.message));
   startAutomaticOfflinePreparation({force:true});
   refreshTeacherSettings().then(() => { if(currentWebTab === "home") showTab("home"); }).catch(e => console.warn(e.message));
   loadInstitution();

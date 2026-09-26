@@ -12,8 +12,8 @@ import { DB_NAME, DB_VERSION, STORES } from "../core/constants.js";
  * et revenir sur un compte deja visite retrouve sa copie intacte. L'isolement est meilleur
  * qu'avant, puisque les donnees ne se croisent jamais dans le meme espace.
  *
- * La deconnexion, elle, efface tout : quitter la session sur un ordinateur partage doit ne rien
- * laisser derriere soi.
+ * La deconnexion conserve ces bases afin qu'un compte retrouve sa copie locale à sa prochaine
+ * connexion. Leur effacement est une action volontaire réservée aux appareils perdus ou partagés.
  */
 let compteCourant = null;
 let generation = 0;
@@ -53,7 +53,7 @@ export async function fermerConnexionPourEssai() {
   db?.close();
 }
 
-/** Efface les copies locales de tous les comptes. Utilise a la deconnexion. */
+/** Efface volontairement les copies locales de tous les comptes de cet appareil. */
 export async function supprimerToutesLesBases() {
   generation += 1;
   const ancienne = opening;

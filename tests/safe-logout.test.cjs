@@ -2,7 +2,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..');
 const account=fs.readFileSync(path.join(root,'compte.js'),'utf8');
 const settings=fs.readFileSync(path.join(root,'teacher-settings.js'),'utf8');
-for(const marker of ['deconnecterEnSecurite','countPendingOperations','countConflicts','Déconnexion annulée','await modeHorsConnexion.oublierDonneesLocales()'])assert(account.includes(marker),marker);
-assert(!account.includes('modeHorsConnexion?.oublierDonneesLocales().catch'));
-assert(settings.includes('la déconnexion est automatiquement bloquée'));
-console.log('safe-logout: pending edits and conflicts block logout; verified local cleanup is awaited OK');
+for(const marker of ['deconnecterEnSecurite','deconnecterEtEffacerCetAppareil','countPendingOperations','countConflicts','Déconnexion annulée','await copieLocale.oublierDonneesLocales()'])assert(account.includes(marker),marker);
+const standardLogout=account.slice(account.indexOf('async function deconnecterEnSecurite'),account.indexOf('document.getElementById("logoutBtn")'));
+assert(!standardLogout.includes('oublierDonneesLocales'), 'standard logout must retain offline copies');
+assert(settings.includes('même après une déconnexion du compte'));
+assert(settings.includes('Déconnecter et effacer les copies de cet appareil'));
+console.log('safe-logout: standard logout retains local data; explicit verified device wipe remains available OK');

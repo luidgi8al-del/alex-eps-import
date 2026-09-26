@@ -239,10 +239,7 @@ export async function demarrerHorsConnexion({
       rapprocher({ force: true });
     },
 
-    /**
-     * A la deconnexion : quitter la session sur un ordinateur partage ne doit rien laisser
-     * derriere soi, pour aucun des comptes ouverts sur cette machine.
-     */
+    /** Effacement volontaire réservé à la commande explicite « déconnecter et effacer ». */
     async oublierDonneesLocales() { return supprimerToutesLesBases(); },
 
     surEtat: subscribeSyncState

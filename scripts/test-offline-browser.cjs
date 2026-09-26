@@ -111,5 +111,18 @@ const fixture=fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8');
    throw Error('Unsafe logout guard failed: '+JSON.stringify(safeLogout));
   }
   console.log('PASS: logout is blocked while an offline edit is waiting; the local entry is retained.');
+  await context.setOffline(false);
+  const retainedLogout=await page.evaluate(async()=>{
+   const e=await demarrerModeHorsConnexion();
+   await e.synchroniser();
+   const before=(await e.lire('unss_attendance')).rows.length;
+   const loggedOut=await deconnecterEnSecurite();
+   const after=(await e.lire('unss_attendance')).rows.length;
+   return {loggedOut,connected:!!session,before,after,authVisible:document.getElementById('authView').style.display};
+  });
+  if(!retainedLogout.loggedOut || retainedLogout.connected || retainedLogout.before<1 || retainedLogout.after!==retainedLogout.before || retainedLogout.authVisible!=='flex'){
+   throw Error('Standard logout erased the offline copy: '+JSON.stringify(retainedLogout));
+  }
+  console.log('PASS: standard logout closes the session while retaining the account offline copy.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
