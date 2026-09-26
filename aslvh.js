@@ -2279,7 +2279,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       </div></div>
     ` : ""}
     <div class="student-editor-actions"><button id="unssSaveBtn">✓ Enregistrer</button>
-    ${!isNew && student.licensed ? `<button class="secondary" id="unssUnlicenseBtn">Retirer la licence AS</button>` : ""}
+    ${!isNew && student.licensed && unssAdmin ? `<button class="secondary" id="unssUnlicenseBtn">Retirer la licence AS</button>` : ""}
     <button class="secondary" id="unssCancelBtn">Annuler</button></div>
     <div class="error" id="unssError"></div>`;
   ouvrirFenetreUnss();
