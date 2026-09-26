@@ -7,7 +7,6 @@
  */
 
 // ---- Auth ----
-let isSignup = false;
 let passwordLinkSession = null;
 async function sendPasswordSetupLink(email) {
   const redirectTo = `${location.origin}${location.pathname}`;
@@ -40,16 +39,20 @@ async function preparePasswordLink() {
   document.getElementById("password").value = "";
   document.getElementById("password").autocomplete = "new-password";
   document.getElementById("authSubmitBtn").textContent = "Enregistrer mon mot de passe";
-  document.getElementById("authToggleBtn").style.display = "none";
+  document.getElementById("authRecoverBtn").style.display = "none";
   showAuthView();
   return true;
 }
-document.getElementById("authToggleBtn").addEventListener("click", () => {
-  isSignup = !isSignup;
-  document.getElementById("authTitle").textContent = isSignup ? "Creer un compte" : "Connexion";
-  document.getElementById("authSubmitBtn").textContent = isSignup ? "Creer le compte" : "Se connecter";
-  document.getElementById("authToggleBtn").textContent = isSignup ? "Deja un compte ? Se connecter" : "Pas encore de compte ? Creer un compte";
-  document.getElementById("authError").textContent = "";
+document.getElementById("authRecoverBtn").addEventListener("click", async () => {
+  const email = document.getElementById("email").value.trim();
+  const feedback = document.getElementById("authError");
+  feedback.className = "error";
+  if (!email) { feedback.textContent = "Saisissez votre adresse e-mail pour recevoir un lien."; return; }
+  try {
+    await sendPasswordSetupLink(email);
+    feedback.className = "ok";
+    feedback.textContent = "Si cette adresse correspond à un compte, un lien de mot de passe vous sera envoyé.";
+  } catch (error) { feedback.textContent = error.message; }
 });
 
 document.getElementById("authSubmitBtn").addEventListener("click", async () => {
@@ -79,7 +82,7 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
     errorEl.textContent = "Email requis, mot de passe d'au moins 6 caracteres.";
     return;
   }
-  const path = isSignup ? "/auth/v1/signup" : "/auth/v1/token?grant_type=password";
+  const path = "/auth/v1/token?grant_type=password";
   try {
     const res = await fetch(SUPABASE_URL + path, {
       method: "POST",
@@ -89,24 +92,13 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
     const data = await res.json();
     if (!res.ok) {
       const rawMessage = data.error_description || data.msg || data.message || "Echec de l'authentification.";
-      if (isSignup && /already registered|already exists|déjà enregistré/i.test(rawMessage)) {
-        await sendPasswordSetupLink(email);
-        isSignup = false;
-        document.getElementById("authTitle").textContent = "Compte déjà invité";
-        document.getElementById("authSubmitBtn").textContent = "Se connecter";
-        document.getElementById("authToggleBtn").textContent = "Pas encore de compte ? Créer un compte";
-        errorEl.className = "ok";
-        errorEl.textContent = "Cette adresse a déjà été invitée. Un nouveau lien vient d’être envoyé : ouvrez-le pour choisir votre mot de passe. Vous ne devez pas recréer le compte.";
-        return;
-      }
       throw new Error(rawMessage);
     }
     if (!data.access_token) {
-      errorEl.textContent = isSignup ? "Compte cree. Verifiez vos emails si une confirmation est requise, puis connectez-vous." : "Reponse inattendue du serveur.";
+      errorEl.textContent = "Réponse inattendue du serveur.";
       return;
     }
-    saveSession({ access_token: data.access_token, user_id: data.user.id, email: data.user.email });
-    justSignedUp = isSignup;
+    saveSession({ access_token: data.access_token, refresh_token: data.refresh_token, user_id: data.user.id, email: data.user.email });
     showMainView();
   } catch (e) {
     errorEl.className = "error";
@@ -122,6 +114,9 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   // Une bascule de compte, elle, ne detruit rien : chacun a sa base. Mais quitter la session sur
   // une machine partagee doit ne rien laisser derriere soi.
   modeHorsConnexion?.oublierDonneesLocales().catch(() => {});
+  for (const key of Object.keys(localStorage)) {
+    if (/^eps:offline-(team|institution|schema)/.test(key)) localStorage.removeItem(key);
+  }
   clearSession();
   showAuthView();
 });
@@ -165,6 +160,14 @@ let currentInstitution = null;
  */
 let rattachementIncertain = false;
 async function loadInstitution() {
+  const owner = session?.user_id;
+  const key = `eps:offline-institution:${owner}`;
+  if (navigator.onLine === false) {
+    try { currentInstitution = JSON.parse(localStorage.getItem(key) || "null"); } catch { currentInstitution = null; }
+    rattachementIncertain = !currentInstitution;
+    renderInstitutionCard();
+    return;
+  }
   let res;
   try {
     res = await apiFetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user_id}&select=institution_id,institutions(name,code)`);
@@ -180,7 +183,9 @@ async function loadInstitution() {
   }
   rattachementIncertain = false;
   const rows = await res.json();
+  if (session?.user_id !== owner) return;
   currentInstitution = rows[0]?.institutions || null;
+  try { localStorage.setItem(key, JSON.stringify(currentInstitution)); } catch {}
   renderInstitutionCard();
   if (justSignedUp) {
     justSignedUp = false;

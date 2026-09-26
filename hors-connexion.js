@@ -60,14 +60,19 @@ const TABLES_HORS_CONNEXION_VAGUE_2 = [
 
 /** Vrai si schema_hors_connexion_2.sql a ete applique sur cette base. */
 async function schemaVague2Applique() {
+  const key = `eps:offline-schema:${SUPABASE_URL}:${session?.user_id || ""}`;
+  const cached = () => { try { return localStorage.getItem(key) === "2"; } catch { return false; } };
+  if (navigator.onLine === false) return cached();
   try {
     const res = await apiFetch(
       `${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.hors_connexion_2&select=name`);
-    if (!res.ok) return false;
-    return (await res.json()).length > 0;
+    if (!res.ok) return cached();
+    const available = (await res.json()).length > 0;
+    try { if (available) localStorage.setItem(key, "2"); else localStorage.removeItem(key); } catch {}
+    return available;
   } catch {
     // Pas de reseau, pas de table, pas de droit : dans le doute on n'allume pas.
-    return false;
+    return cached();
   }
 }
 
@@ -186,8 +191,13 @@ let modeHorsConnexion = null;
 /** Cadence de rafraichissement pendant une synchronisation en cours. */
 const DELAI_RAFRAICHISSEMENT_MS = 3000;
 let dernierRafraichissement = 0;
+let demarrageHorsConnexion = null;
 async function demarrerModeHorsConnexion() {
   if (modeHorsConnexion) return modeHorsConnexion;
+  if (!demarrageHorsConnexion) demarrageHorsConnexion = initialiserModeHorsConnexion().finally(() => { demarrageHorsConnexion = null; });
+  return demarrageHorsConnexion;
+}
+async function initialiserModeHorsConnexion() {
   try {
     const tablesSuivies = (await schemaVague2Applique())
       ? [...TABLES_HORS_CONNEXION, ...TABLES_HORS_CONNEXION_VAGUE_2]

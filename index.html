@@ -89,7 +89,8 @@
         <label for="password">Mot de passe</label>
         <input type="password" id="password" autocomplete="current-password">
         <button id="authSubmitBtn" style="width:100%">Se connecter</button>
-        <button class="secondary" id="authToggleBtn" style="width:100%">Pas encore de compte ? Creer un compte</button>
+        <button class="secondary" id="authRecoverBtn" style="width:100%">Recevoir un lien de mot de passe</button>
+        <p class="muted">L’accès est réservé aux professeurs invités. Pour obtenir un compte, contactez l’administrateur de votre établissement.</p>
         <div class="error" id="authError"></div>
       </div>
     </div>
@@ -492,6 +493,8 @@
   <script src="teacher-settings.js"></script>
   <script src="home-weather.js"></script>
   <script src="hors-connexion.js"></script>
+  <script src="offline-preparation.js"></script>
+  <script src="offline-read.js"></script>
   <script src="accueil.js"></script>
   <script src="compte.js"></script>
   <script src="classes.js"></script>
@@ -700,10 +703,22 @@
     }
 
     async function apiFetch(url, options = {}, dejaRejoue = false) {
+      const readOnly = !options.method || options.method.toUpperCase() === "GET";
+      if (readOnly && navigator.onLine === false) {
+        const local = await offlineReadResponse(url, options);
+        if (local) return local;
+      }
       let res;
       try {
         res = await fetch(url, { ...options, headers: { ...authHeaders(), ...(options.headers || {}) } });
-      } catch (erreur) { throw erreurReseau(erreur, url); }
+      } catch (erreur) {
+        if (readOnly && erreur.name === "TypeError") {
+          const local = await offlineReadResponse(url, options);
+          if (local) return local;
+        }
+        throw erreurReseau(erreur, url);
+      }
+      if (readOnly && res.ok) await rememberOfflineSchema(url, res);
       if (res.status === 401) {
         // Un jeton expire se renouvelle. On ne renvoie a l'ecran de connexion que si le
         // renouvellement echoue vraiment - et une seule reprise, pour ne pas boucler sur un

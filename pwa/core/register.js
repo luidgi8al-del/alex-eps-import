@@ -16,8 +16,11 @@ let rechargementEnCours = false;
 
 export async function registerServiceWorker(chemin = "./service-worker.js") {
   if (!("serviceWorker" in navigator)) return null;
+  const dejaControle = Boolean(navigator.serviceWorker.controller);
 
   navigator.serviceWorker.addEventListener("controllerchange", () => {
+    // First installation can take control without discarding the page or an ongoing edit.
+    if (!dejaControle) return;
     // Une seule fois : sans ce garde-fou, deux workers qui se succedent boucleraient les
     // rechargements et l'application deviendrait inutilisable.
     if (rechargementEnCours) return;

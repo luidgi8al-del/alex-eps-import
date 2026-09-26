@@ -1,5 +1,5 @@
 /*
- * Socle PWA EPS LVH — volontairement inactif tant qu'index.html ne l'enregistre pas.
+ * Socle PWA EPS LVH — ressources publiques et préparation explicite hors connexion.
  *
  * Politique prudente : l'interface peut fonctionner hors ligne, mais aucune reponse Supabase,
  * requete POST, donnee d'eleve ou information authentifiee n'est mise en cache.
@@ -10,7 +10,8 @@
  * afficher un index.html neuf avec des scripts perimes. Une equipe qui corrige son planning le
  * matin doit voir la correction le matin.
  */
-const PWA_VERSION = "eps-lvh-pwa-2026-09-26-unified-ui-2";
+importScripts("./offline-assets.js");
+const PWA_VERSION = "eps-lvh-pwa-2026-09-26-offline-prepare-1";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 
@@ -36,6 +37,7 @@ function isPrivateOrRemoteApi(url) {
 function isAppCode(request, url) {
   if (request.method !== "GET" || url.origin !== self.location.origin) return false;
   return ["style", "script"].includes(request.destination) ||
+    self.EPS_OFFLINE_ASSETS.some(asset => new URL(asset, self.registration.scope).pathname === url.pathname) ||
     /\/content\/[^/]+\.json$/i.test(url.pathname);
 }
 
@@ -62,7 +64,7 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))))
+      .then(keys => Promise.all(keys.filter(key => key.startsWith("eps-lvh-pwa-") && ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
@@ -89,7 +91,7 @@ self.addEventListener("fetch", event => {
     event.respondWith(
       fetch(request)
         .then(response => cacheResponse(RUNTIME_CACHE, request, response))
-        .catch(() => caches.match(request))
+        .catch(async () => (await caches.match(request)) || caches.match(request, { ignoreSearch: true }))
     );
     return;
   }
@@ -105,5 +107,32 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener("message", event => {
   if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
-  if (event.data?.type === "PWA_VERSION") event.source?.postMessage({ type: "PWA_VERSION", version: PWA_VERSION });
+  if (event.data?.type === "PWA_VERSION") (event.ports?.[0] || event.source)?.postMessage({ type: "PWA_VERSION", version: PWA_VERSION });
+  if (event.data?.type === "PREPARE_OFFLINE") {
+    const port = event.ports?.[0];
+    if (!port) return;
+    event.waitUntil((async () => {
+      try {
+        const cache = await caches.open(RUNTIME_CACHE);
+        let completed = 0;
+        for (const asset of self.EPS_OFFLINE_ASSETS) {
+          const url = new URL(asset, self.registration.scope);
+          if (url.origin !== self.location.origin) throw Error("Ressource externe non autorisée.");
+          const response = await fetch(url, {cache:"reload"});
+          if (!response.ok || response.redirected) throw Error(`Téléchargement incomplet : ${url.pathname}`);
+          await cache.put(url, response);
+          port.postMessage({progress:++completed,total:self.EPS_OFFLINE_ASSETS.length});
+        }
+        port.postMessage({done:true,version:PWA_VERSION});
+      } catch (error) { port.postMessage({error:error.message}); }
+    })());
+  }
+  if (event.data?.type === "CHECK_OFFLINE") {
+    event.waitUntil((async () => {
+      const cache = await caches.open(RUNTIME_CACHE);
+      let missing = 0;
+      for (const asset of self.EPS_OFFLINE_ASSETS) if (!await cache.match(new URL(asset,self.registration.scope))) missing++;
+      event.ports?.[0]?.postMessage({ready:missing===0,missing,version:PWA_VERSION});
+    })());
+  }
 });

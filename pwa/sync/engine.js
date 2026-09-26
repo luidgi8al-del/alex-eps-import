@@ -91,8 +91,7 @@ export class OfflineSyncEngine {
       // finissait jamais - le pire des symptomes, puisque rien n'indique ou chercher. Mieux vaut
       // s'arreter avec ce qu'on a : la lecture reprendra au prochain passage.
       if (more && JSON.stringify(cursor ?? null) === precedent) {
-        console.warn("Synchronisation interrompue : le repere de lecture n'avance plus.");
-        return;
+        throw new Error("Téléchargement incomplet : la synchronisation doit être relancée.");
       }
     }
   }

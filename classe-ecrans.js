@@ -79,7 +79,7 @@ function ecPeriodeDuJour(grade) {
 async function ecLire(table, filtre, ou) {
   // La copie locale ne vaut que pour les tables qu'elle recopie a coup sur (premiere vague de
   // hors-connexion.js). Pour une autre, elle repond "aucune ligne" : on lirait une classe vide.
-  const suivie = typeof TABLES_HORS_CONNEXION !== "undefined" && TABLES_HORS_CONNEXION.includes(table);
+  const suivie = tableSuivie(table);
   if (suivie && typeof modeHorsConnexion !== "undefined" && modeHorsConnexion) {
     try { return (await modeHorsConnexion.lire(table, { ou })).rows; } catch { /* lecture reseau */ }
   }
