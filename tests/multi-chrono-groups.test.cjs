@@ -13,12 +13,21 @@ const expected = [
   'Les chronos restent conservés',
   'Nom et prénom',
   'data-multi-time',
+  'Enregistrer dans Tests EPS',
+  "test_name:'Multi-chrono'",
+  "enregistrerLigne('eps_test_sessions'",
+  "enregistrerLigne('eps_test_results'",
+  'ouvrirMultiChronoDepuisClasse',
   'Réinitialiser toutes les données',
   'Effacer tous les chronos et tous les groupes'
 ];
 
 for (const marker of expected) {
   if (!js.includes(marker)) throw new Error(`Multi-chrono incomplet : ${marker}`);
+}
+const outils = fs.readFileSync(path.join(root, 'outils.js'), 'utf8');
+if (!outils.includes("testName==='Multi-chrono'") || !outils.includes('ouvrirMultiChronoDepuisClasse')) {
+  throw new Error('La fiche Multi-chrono doit pouvoir être rouverte depuis la classe.');
 }
 if (!css.includes('.multi-chrono-table') || !css.includes('position:sticky')) {
   throw new Error('Le tableau Multi-chrono doit garder la colonne des élèves visible.');

@@ -182,15 +182,20 @@
     document.getElementById("toolSaveOverlay")?.remove();const overlay=document.createElement("div");overlay.id="toolSaveOverlay";overlay.className="tool-work-overlay";overlay.innerHTML=`<section class="tool-save-sheet"><header><i>💾</i><div><small>ENREGISTRER</small><h2>Nommer le travail</h2></div><button id="toolSaveClose">×</button></header><label>Nom du travail<input id="toolSaveName" value="${esc(defaultValue)}" maxlength="80"></label><div><button id="toolSaveConfirm">Enregistrer</button><button class="secondary" id="toolSaveCancel">Annuler</button></div></section>`;document.body.appendChild(overlay);requestAnimationFrame(()=>overlay.classList.add("open"));const close=()=>overlay.remove();toolSaveClose.onclick=toolSaveCancel.onclick=close;toolSaveConfirm.onclick=()=>{const name=toolSaveName.value.trim();if(!name){toolSaveName.focus();return}close();onSave(name)};toolSaveName.focus();toolSaveName.select();toolSaveName.onkeydown=e=>{if(e.key==="Enter")toolSaveConfirm.click()}
   }
   function download(name,text,type="text/plain"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-  async function renderMultiChronoWeb(){const ctx=await contextHtml();
+  async function renderMultiChronoWeb(saved){
+    const savedSession=saved?.session||null,savedResults=saved?.results||[];
+    if(savedSession?.class_id){toolClassId=savedSession.class_id;await loadToolStudents(toolClassId)}
+    const ctx=await contextHtml();
     // Le Multi-chrono reprend la logique du 3 x 500 : toute la classe reste disponible dans
     // "Sans groupe", puis l'enseignant peut créer, modifier ou supprimer ses groupes. Les
     // chronos sont indexes par eleve afin qu'un changement de groupe ne perde jamais un temps.
     let groups=[],activeGroup=-1,manageGroups=false,editingGroup=null,selection=new Set(),freeCounter=1;
-    let timers=new Map(),workspace=null;
+    let timers=new Map(),workspace=null,sessionId=savedSession?.id||null,sessionRecord=savedSession,
+      resultRecords=Object.fromEntries(savedResults.map(r=>[String(r.student_id),r]));
     const makeTimer=(id,name)=>({id:String(id),name,ms:0,running:false,start:0});
     const resetTimersFromContext=()=>{
       groups=[];activeGroup=-1;manageGroups=false;editingGroup=null;selection=new Set();freeCounter=1;
+      sessionId=null;sessionRecord=null;resultRecords={};
       timers=new Map(onRealClass()&&toolStudents.length
         ? toolStudents.map(e=>[String(e.id),makeTimer(e.id,studentLabel(e))])
         : [["free-1",makeTimer("free-1","Élève 1")]]);
@@ -211,7 +216,7 @@
     const elapsed=t=>t.ms+(t.running?Date.now()-t.start:0);
     const draw=()=>{
       const rows=currentTimers();
-      workspace.innerHTML=`${groupsHtml()}<div class="multi-chrono-table-wrap"><table class="multi-chrono-table"><thead><tr><th>Nom et prénom</th><th>Chrono</th><th>Actions</th></tr></thead><tbody>${rows.map(t=>`<tr><th>${onRealClass()?esc(t.name):`<input data-multi-name="${t.id}" value="${esc(t.name)}" aria-label="Nom du participant">`}</th><td><b data-multi-time="${t.id}">${formatToolTime(elapsed(t))}</b></td><td><div class="multi-chrono-actions"><button data-multi-toggle="${t.id}">${t.running?'Pause':'Départ'}</button><button class="secondary" data-multi-reset="${t.id}">↺ Remettre à zéro</button></div></td></tr>`).join('')||'<tr><td colspan="3" class="muted">Ce groupe ne contient aucun élève.</td></tr>'}</tbody></table></div>${!onRealClass()?'<button class="secondary" id="multiAdd">＋ Ajouter un chrono</button>':''}<div class="running-save-actions"><button class="danger" id="multiResetAll">↺ Réinitialiser toutes les données</button></div>`;
+      workspace.innerHTML=`${groupsHtml()}<div class="multi-chrono-table-wrap"><table class="multi-chrono-table"><thead><tr><th>Nom et prénom</th><th>Chrono</th><th>Actions</th></tr></thead><tbody>${rows.map(t=>`<tr><th>${onRealClass()?esc(t.name):`<input data-multi-name="${t.id}" value="${esc(t.name)}" aria-label="Nom du participant">`}</th><td><b data-multi-time="${t.id}">${formatToolTime(elapsed(t))}</b></td><td><div class="multi-chrono-actions"><button data-multi-toggle="${t.id}">${t.running?'Pause':'Départ'}</button><button class="secondary" data-multi-reset="${t.id}">↺ Remettre à zéro</button></div></td></tr>`).join('')||'<tr><td colspan="3" class="muted">Ce groupe ne contient aucun élève.</td></tr>'}</tbody></table></div>${!onRealClass()?'<button class="secondary" id="multiAdd">＋ Ajouter un chrono</button>':''}<div class="running-save-actions">${onRealClass()?`<button id="multiSave">💾 ${sessionId?'Enregistrer les modifications':'Enregistrer dans Tests EPS'}</button><button class="secondary" id="multiSaveAs">Enregistrer comme nouveau test</button>`:''}<button class="danger" id="multiResetAll">↺ Réinitialiser toutes les données</button></div><div id="multiSaveMsg" class="ok"></div>`;
       bindDrawn();
     };
     const bindDrawn=()=>{
@@ -226,12 +231,43 @@
       workspace.querySelectorAll('[data-multi-reset]').forEach(b=>b.onclick=()=>{const t=timers.get(b.dataset.multiReset);if(!t)return;t.ms=0;t.running=false;t.start=0;draw()});
       workspace.querySelectorAll('[data-multi-name]').forEach(input=>input.onchange=()=>{const t=timers.get(input.dataset.multiName);if(t)t.name=input.value.trim()||t.name});
       workspace.querySelector('#multiAdd')?.addEventListener('click',()=>{freeCounter++;const t=makeTimer(`free-${freeCounter}`,`Élève ${freeCounter}`);timers.set(t.id,t);draw()});
-      workspace.querySelector('#multiResetAll')?.addEventListener('click',()=>{if(!confirm('Effacer tous les chronos et tous les groupes pour repartir de zéro ?'))return;resetTimersFromContext();draw()});
+      workspace.querySelector('#multiSave')?.addEventListener('click',()=>saveMultiChrono(false));
+      workspace.querySelector('#multiSaveAs')?.addEventListener('click',()=>saveMultiChrono(true));
+      workspace.querySelector('#multiResetAll')?.addEventListener('click',()=>{if(!confirm('Effacer tous les chronos et tous les groupes du travail en cours ? Les tests déjà enregistrés seront conservés.'))return;resetTimersFromContext();draw()});
+    };
+    const restoreSaved=()=>{
+      groups=[];const groupMap=new Map();
+      timers=new Map(toolStudents.map(e=>[String(e.id),makeTimer(e.id,studentLabel(e))]));
+      savedResults.forEach(r=>{const timer=timers.get(String(r.student_id));if(!timer)return;timer.ms=Math.max(0,+r.input_value||0);let meta={};try{const raw=String(r.input_unit||'');if(raw.startsWith('multi-chrono|'))meta=JSON.parse(raw.slice(13))}catch{}const group=Number(meta.group);if(Number.isInteger(group)&&group>=0){if(!groupMap.has(group))groupMap.set(group,[]);groupMap.get(group).push(String(r.student_id))}});
+      groups=[...groupMap.entries()].sort((a,b)=>a[0]-b[0]).map(x=>x[1]);activeGroup=groups.length?0:-1;
+    };
+    const saveMultiChrono=async asNew=>{
+      if(!onRealClass())return alert('Choisissez une classe pour enregistrer ce test.');
+      const button=workspace.querySelector('#multiSave');if(button)button.disabled=true;
+      const now=new Date().toISOString(),id=asNew||!sessionId?crypto.randomUUID():sessionId,
+        cls=toolClasses.find(c=>String(c.id)===String(toolClassId)),period=+(document.getElementById('modernPeriod')?.value||1),
+        sessionRow=asNew||!sessionRecord?{id,user_id:session.user_id,class_id:toolClassId,period_number:period,test_name:'Multi-chrono',created_at:Date.now(),class_label:cls?.name||'',updated_at:now,deleted:false}:{...sessionRecord,period_number:period,updated_at:now,deleted:false};
+      try{
+        await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();
+        for(const student of toolStudents){const timer=timers.get(String(student.id))||makeTimer(student.id,studentLabel(student));if(timer.running){timer.ms+=Date.now()-timer.start;timer.running=false;timer.start=0}const old=asNew?null:resultRecords[String(student.id)],resultId=old?.id||crypto.randomUUID(),group=groups.findIndex(g=>g.includes(String(student.id)));kept.add(String(resultId));await enregistrerLigne('eps_test_results',{...(old||{}),id:resultId,user_id:old?.user_id||session.user_id,session_id:id,student_id:student.id,input_value:Math.round(timer.ms),result_value:+(timer.ms/1000).toFixed(2),input_unit:`multi-chrono|${JSON.stringify({group})}`,result_unit:'s',updated_at:now,deleted:false});resultRecords[String(student.id)]={...(old||{}),id:resultId,student_id:student.id}}
+        if(!asNew)for(const old of Object.values(resultRecords))if(old?.id&&!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});
+        sessionId=id;sessionRecord=sessionRow;draw();const msg=document.getElementById('multiSaveMsg');if(msg)msg.textContent=asNew?'Nouveau test enregistré dans la classe.':'Test enregistré dans la classe.';
+      }catch(error){const msg=document.getElementById('multiSaveMsg');if(msg)msg.textContent=`Enregistrement impossible : ${error.message||error}`;if(button)button.disabled=false}
     };
     toolPanel.innerHTML=header("Multi-chrono","Groupes et chronos par élève","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiWorkspace"></div></main>`;
-    workspace=document.getElementById('multiWorkspace');resetTimersFromContext();draw();
+    workspace=document.getElementById('multiWorkspace');
+    if(savedSession?.class_id){const cls=document.getElementById('modernClass'),mode=document.getElementById('modernMode'),period=document.getElementById('modernPeriod');cls.value=savedSession.class_id;mode.value='class';period.value=String(savedSession.period_number||1);restoreSaved()}else resetTimersFromContext();
+    draw();
     const ticker=setInterval(()=>{const host=document.getElementById('multiWorkspace');if(!host){clearInterval(ticker);return}host.querySelectorAll('[data-multi-time]').forEach(node=>{const t=timers.get(node.dataset.multiTime);if(t?.running)node.textContent=formatToolTime(elapsed(t))})},100);
     bindContext(()=>{resetTimersFromContext();draw()})}
+
+  async function ouvrirMultiChronoDepuisClasse(sessionId,classId,period){
+    showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;
+    const sessions=await lireTable('eps_test_sessions',`eps_test_sessions?id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.id)===String(sessionId)&&!r.deleted}),
+      results=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(sessionId)&&!r.deleted}),
+      sessionRow=sessions[0]||{id:sessionId,class_id:classId,period_number:+period||1,test_name:'Multi-chrono',created_at:Date.now(),class_label:toolClasses.find(c=>String(c.id)===String(classId))?.name||'',deleted:false};
+    await renderMultiChronoWeb({session:sessionRow,results});
+  }
   async function renderTournamentWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{teams:"Équipe 1\nÉquipe 2\nÉquipe 3\nÉquipe 4",scores:{}};toolPanel.innerHTML=header("Tournois","Rencontres, scores et classement","🏆")+`<main class="field-tool-card">${ctx}<label>Équipes<textarea id="tourTeams" rows="5">${esc(state.teams)}</textarea></label><button id="tourBuild">Créer les rencontres</button><div id="tourMatches"></div></main><div class="tool-savebar"><button id="tourSave">💾 Enregistrer</button><button id="tourExport">▦ Exporter</button><button id="tourResume">↻ Reprendre</button></div><div id="tourSaved"></div>`;let id=saved?.id;const build=()=>{const names=tourTeams.value.split(/\n/).map(x=>x.trim()).filter(Boolean),matches=[];names.forEach((a,i)=>names.slice(i+1).forEach(b=>matches.push([a,b])));tourMatches.innerHTML=matches.map((m,i)=>`<div class="field-tool-counter"><span>${esc(m[0])} — ${esc(m[1])}</span><input type=number data-side="0" data-match="${i}" value="${state.scores[i]?.[0]||0}"><input type=number data-side="1" data-match="${i}" value="${state.scores[i]?.[1]||0}"></div>`).join("")};build();tourBuild.onclick=build;tourSave.onclick=async()=>{document.querySelectorAll("#tourMatches input").forEach(x=>(state.scores[x.dataset.match]??=[0,0])[+x.dataset.side]=+x.value);const w=await saveWork("tournament",prompt("Nom du tournoi",saved?.title||"Tournoi")||"Tournoi",{id,teams:tourTeams.value,scores:state.scores});id=w.id;renderTournamentWeb(w)};tourExport.onclick=()=>download("tournoi.txt",tourTeams.value+"\n\n"+tourMatches.innerText);tourResume.onclick=()=>{tourSaved.innerHTML=workList("tournament");bindWorks("tournament",()=>renderTournamentWeb(),renderTournamentWeb)};bindContext()}
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   // Chaque indicateur rapporte (+1) ou retire (-1) un point ; l'eleve part du milieu du bareme
@@ -314,7 +350,7 @@
   function injectSettings(){const body=document.getElementById("settingsBody");if(!body||document.getElementById("toolsLayoutSection"))return;const current=localStorage.getItem(prefKey)||"activities";body.insertAdjacentHTML("beforeend",`<details class="card settingsSection" id="toolsLayoutSection"><summary>Organisation des outils</summary><div class="settingsContents"><p>Choisissez la présentation utilisée dans l’onglet Outils.</p>${Object.entries(layouts).map(([k,v])=>`<label class="trash-row"><span><b>${esc(v)}</b></span><input type=radio name=toolsLayout value="${k}" ${k===current?"checked":""}></label>`).join("")}</div></details><details class="card settingsSection" id="webTrashSection"><summary>Corbeille</summary><div class="settingsContents"><button id="loadWebTrash">Afficher les éléments supprimés</button><div id="webTrashRows"></div></div></details>`);body.querySelectorAll("[name=toolsLayout]").forEach(r=>r.onchange=()=>{localStorage.setItem(prefKey,r.value);activity=null;draw()});document.getElementById("loadWebTrash").onclick=loadTrash}
   async function loadTrash(){const host=document.getElementById("webTrashRows"),tables=[["classes","Classe","name"],["students","Élève","last_name"],["evaluations","Évaluation","label"],["class_documents","Document","title"]];host.innerHTML="<p>Chargement…</p>";const all=[];for(const [table,kind,label] of tables){try{const rows=await lireTable(table,`${table}?deleted=eq.true&select=*&order=updated_at.desc`);rows.forEach(row=>all.push({table,kind,label:row[label]||kind,row}))}catch{}}host.innerHTML=all.length?all.map((x,i)=>`<div class="trash-row"><span><b>${esc(x.kind)}</b><br>${esc(x.label)}</span><button data-restore="${i}">Restaurer</button></div>`).join(""):"<p class=muted>La corbeille est vide.</p>";host.querySelectorAll("[data-restore]").forEach(b=>b.onclick=async()=>{const x=all[+b.dataset.restore];await enregistrerLigne(x.table,{...x.row,deleted:false,updated_at:new Date().toISOString()});loadTrash()})}
   const previousOpen=globalThis.openSettings;globalThis.openSettings=async function(){if(typeof previousOpen==="function")await previousOpen();injectSettings()};
-  Object.assign(globalThis,{renderMultiChronoWeb,renderTournamentWeb,renderObserverWeb,renderRotationsWeb,renderRandomWeb,renderEffortWeb,renderAcrosportWeb,resetToolsWorkspace,
+  Object.assign(globalThis,{renderMultiChronoWeb,ouvrirMultiChronoDepuisClasse,renderTournamentWeb,renderObserverWeb,renderRotationsWeb,renderRandomWeb,renderEffortWeb,renderAcrosportWeb,resetToolsWorkspace,
     isToolFavorite:id=>readFavorites().has(id),toggleToolFavorite:id=>{const active=toggleFavoriteId(id);draw();return active}});
   addEventListener("DOMContentLoaded",draw);
 })();

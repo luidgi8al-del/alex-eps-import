@@ -1176,19 +1176,27 @@ async function ecRouvrirTravail(travail) {
   }, () => ecOuvrirDivers());
 }
 
-/** Les travaux d'outils enregistres pour cette classe dans ce navigateur (tools-workspace.js). */
-function ecTravauxDeLaClasse() {
-  const compte = typeof session !== "undefined" && session?.user_id ? session.user_id : "local";
+/** Les travaux d'outils enregistres et synchronises pour cette classe (tools-workspace.js). */
+async function ecTravauxDeLaClasse() {
   try {
-    return JSON.parse(localStorage.getItem(`eps_tool_works:${compte}`) || "[]")
-      .filter(w => w && w.classId === dashboardClass.row.id);
+    const rows = await lireTable("eps_saved_tool_works",
+      `eps_saved_tool_works?class_id=eq.${dashboardClass.row.id}&deleted=eq.false&select=*&order=updated_at.desc`,
+      { ou: w => String(w.class_id) === String(dashboardClass.row.id) && !w.deleted,
+        trier: (a, b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")) });
+    return rows.filter(w => !session?.user_id || w.user_id === session.user_id).map(w => ({
+      id: w.id, type: w.type, title: w.title, classId: w.class_id || null,
+      period: +w.period_number || 1, payload: (() => { try { return JSON.parse(w.payload || "{}"); } catch { return {}; } })(),
+      createdAt: w.created_at, updatedAt: w.updated_at, _raw: w
+    }));
   } catch { return []; }
 }
 
-function ecOuvrirDivers() {
+async function ecOuvrirDivers() {
   const hote = hoteDetail();
   const acro = ecEquipes.filter(t => String(t.mode || "").startsWith("ACROSPORT_P"));
-  const travaux = ecTravauxDeLaClasse();
+  hote.innerHTML = `<div class="ec-feuille"><h3>${ecTexte(dashboardClass.label)} · Divers EPS</h3><p class="muted">Chargement des travaux…</p></div>`;
+  ouvrirDetailClasse();
+  const travaux = await ecTravauxDeLaClasse();
   hote.innerHTML = `<div class="ec-feuille">
     <h3>${ecTexte(dashboardClass.label)} · Divers EPS</h3>
     <p class="muted">Clic : ouvrir et modifier · appui prolongé : supprimer</p>
@@ -1215,13 +1223,10 @@ function ecOuvrirDivers() {
   hote.querySelectorAll("[data-ec-travail]").forEach(b => {
     const w = travaux.find(x => x.id === b.dataset.ecTravail);
     b.onclick = () => ecRouvrirTravail(w);
-    ecAppuiLong(b, () => {
+    ecAppuiLong(b, async () => {
       if (!confirm(`Supprimer « ${w.title || "Travail"} » ?`)) return;
-      const compte = typeof session !== "undefined" && session?.user_id ? session.user_id : "local";
-      try {
-        const tous = JSON.parse(localStorage.getItem(`eps_tool_works:${compte}`) || "[]");
-        localStorage.setItem(`eps_tool_works:${compte}`, JSON.stringify(tous.filter(x => x.id !== w.id)));
-      } catch { /* stockage indisponible */ }
+      try { await enregistrerLigne("eps_saved_tool_works", { ...w._raw, deleted: true, updated_at: new Date().toISOString() }); }
+      catch (e) { alert(e.message || "Suppression impossible."); return; }
       ecOuvrirDivers();
     });
   });
