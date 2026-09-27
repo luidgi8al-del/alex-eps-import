@@ -1672,6 +1672,30 @@ function signatureProfesseurAS(value) {
   return `M. ${nom}`;
 }
 
+function prenomEmailAS(value) {
+  return String(value || "").trim().toLocaleLowerCase("fr-FR")
+    .replace(/(^|[\s'’\-])([a-zà-öø-ÿ])/g, (_m, sep, lettre) => `${sep}${lettre.toLocaleUpperCase("fr-FR")}`);
+}
+function heureEmailAS(value) {
+  const match = /^(\d{1,2}):(\d{2})/.exec(String(value || ""));
+  return match ? `${Number(match[1])}h${match[2] === "00" ? "" : match[2]}` : String(value || "");
+}
+function ligneCreneauEmailAS(slot) {
+  const jourBrut = String(slot?.day_of_week || "").trim().toLocaleLowerCase("fr-FR");
+  const jour = jourBrut ? jourBrut.charAt(0).toLocaleUpperCase("fr-FR") + jourBrut.slice(1) : "Jour à préciser";
+  const debut = heureEmailAS(slot?.start_time), fin = heureEmailAS(slot?.end_time);
+  const horaire = debut && fin ? ` de ${debut} à ${fin}` : debut ? ` à ${debut}` : "";
+  return `• ${String(slot?.activity_name || "Activité AS").trim()} — ${jour}${horaire}`;
+}
+function personnaliserEmailAS(texte, eleve, creneaux) {
+  const prenom = prenomEmailAS(eleve?.first_name);
+  const nom = String(eleve?.last_name || "").trim().toLocaleUpperCase("fr-FR");
+  const classe = String(eleve?.division || eleve?.school_class_label || eleve?.class_label || "Classe non renseignée").trim();
+  return String(texte || "").replaceAll("{prenom}", prenom).replaceAll("{nom}", nom)
+    .replaceAll("{enfant}", `${nom} ${prenom}`.trim()).replaceAll("{classe}", classe)
+    .replaceAll("{creneaux}", creneaux);
+}
+
 async function ouvrirEmailGlobalLicencies(rows) {
   await assurerInscriptions();
   const idsRetenus = new Set(unssInscriptions.map(i => i.student_id));
@@ -1705,9 +1729,16 @@ async function ouvrirEmailGlobalLicencies(rows) {
         <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
       <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      <details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${gmailDraftState?.().connected ? unssText(gmailDraftState().email) : "À connecter"}</small></summary><div class="as-email-section ui-accordion-body">
+        <p>Commencez par un brouillon test. Après l’avoir envoyé depuis Gmail et vérifié sa réception, préparez la campagne par petits lots.</p>
+        <label>Adresse du test<input id="asEmailGmailTestAddress" type="email" autocomplete="email" placeholder="Votre adresse Hotmail"></label>
+        <button type="button" class="secondary" id="asEmailGmailTest">Créer un brouillon test</button>
+        <label>Nombre maximum de brouillons à préparer maintenant<select id="asEmailGmailBatchSize"><option value="10">10 brouillons</option><option value="20" selected>20 brouillons</option><option value="50">50 brouillons</option></select></label>
+        <p class="as-email-help">Créer un brouillon ne l’envoie pas. Vous gardez le contrôle depuis votre boîte Gmail professionnelle.</p>
+      </div></details>
       <div class="as-email-result" id="asEmailResult"></div>
     </main>
-    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" id="asEmailSend" disabled>Envoyer</button></footer>
+    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" class="secondary" id="asEmailGmailDrafts" disabled>Préparer dans Gmail</button><button type="button" id="asEmailSend" disabled>Envoyer avec le compte AS</button></footer>
   </section>`;
   document.body.appendChild(overlay);
 
@@ -1716,6 +1747,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
   const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
   const reprendreEleveId = () => String(overlay.querySelector("#asEmailResumeStudent")?.value || "");
+  const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
+  testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
   let envoiEnCours = false;
   const elevesFiltres = () => {
     if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
@@ -1762,6 +1795,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
       ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b><span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
       : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
     overlay.querySelector("#asEmailSend").disabled = !filtre() || !c.nombre;
+    overlay.querySelector("#asEmailGmailDrafts").disabled = !filtre() || !c.nombre;
+    overlay.querySelector("#asEmailGmailTest").disabled = !filtre() || !c.nombre;
     const selectReprise = overlay.querySelector("#asEmailResumeStudent");
     const choixActuel = selectReprise.value;
     const elevesOrdonnes = [...elevesFiltres()].sort((a, b) =>
@@ -1789,6 +1824,104 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailMessageStep").open = true;
   });
   remplirMessage(); actualiser();
+
+  const construireBrouillons = (adresseTest = "") => {
+    const objet = overlay.querySelector("#asEmailSubject").value.trim();
+    const message = overlay.querySelector("#asEmailMessage").value.trim();
+    const slotsParEleve = new Map();
+    unssInscriptions.forEach(inscription => {
+      const slot = unssSlots.find(item => String(item.id) === String(inscription.slot_id));
+      if (!slot || slot.deleted) return;
+      const cle = String(inscription.student_id), liste = slotsParEleve.get(cle) || [];
+      if (!liste.some(item => String(item.id) === String(slot.id))) liste.push(slot);
+      slotsParEleve.set(cle, liste);
+    });
+    const livraisons = [], deja = new Set();
+    const eleves = [...elevesFiltres()].sort((a, b) => `${a.last_name || ""}|${a.first_name || ""}|${a.id}`.localeCompare(`${b.last_name || ""}|${b.first_name || ""}|${b.id}`, "fr"));
+    const source = adresseTest ? eleves.slice(0, 1) : eleves;
+    source.forEach(eleve => {
+      const lignes = (slotsParEleve.get(String(eleve.id)) || []).sort((a, b) => ligneCreneauEmailAS(a).localeCompare(ligneCreneauEmailAS(b), "fr")).map(ligneCreneauEmailAS).join("\n");
+      const destinataires = adresseTest ? [adresseTest] : audience() === "students" ? emailsAS(eleve.student_email) : audience() === "parents_personalized" ? emailsAS(eleve.parent_email) : [...emailsAS(eleve.student_email), ...emailsAS(eleve.parent_email)];
+      destinataires.forEach(to => {
+        const cle = `${eleve.id}|${String(to).toLowerCase()}`;
+        if (deja.has(cle)) return;
+        deja.add(cle);
+        livraisons.push({
+          to, studentId: String(eleve.id), studentName: `${String(eleve.last_name || "").toLocaleUpperCase("fr-FR")} ${prenomEmailAS(eleve.first_name)}`.trim(),
+          subject: personnaliserEmailAS(objet, eleve, lignes), message: personnaliserEmailAS(message, eleve, lignes)
+        });
+      });
+    });
+    if (adresseTest) return livraisons;
+    const reprise = reprendreEleveId();
+    if (!reprise) return livraisons;
+    const index = livraisons.findIndex(item => item.studentId === reprise);
+    return index >= 0 ? livraisons.slice(index) : [];
+  };
+  const verifierCompteGmail = async () => {
+    const state = await ensureGmailProfessional();
+    const attendu = String((typeof loadPrefs === "function" ? loadPrefs().proEmail : "") || "").trim().toLowerCase();
+    if (attendu && state.email !== attendu && !confirm(`Le compte Gmail connecté est ${state.email}, alors que le profil enseignant indique ${attendu}. Continuer avec ${state.email} ?`)) throw Error("Choisissez votre compte Gmail professionnel.");
+    overlay.querySelector("#asEmailGmailStatus").textContent = state.email;
+    return state;
+  };
+  const afficherAccesBrouillons = texte => {
+    const resultat = overlay.querySelector("#asEmailResult");
+    resultat.innerHTML = `<b>${unssText(texte)}</b><button type="button" class="secondary" id="asOpenGmailDrafts">Ouvrir les brouillons Gmail</button>`;
+    resultat.querySelector("#asOpenGmailDrafts").onclick = openConnectedGmailDrafts;
+  };
+  overlay.querySelector("#asEmailGmailTest").onclick = async () => {
+    const bouton = overlay.querySelector("#asEmailGmailTest"), resultat = overlay.querySelector("#asEmailResult");
+    if (!testEmailInput.reportValidity() || !testEmailInput.value.trim()) return;
+    if (!overlay.querySelector("#asEmailSubject").value.trim() || !overlay.querySelector("#asEmailMessage").value.trim()) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
+    localStorage.setItem("eps_gmail_test_address", testEmailInput.value.trim());
+    bouton.disabled = true; resultat.textContent = "Connexion à Gmail et création du brouillon test…";
+    try {
+      const state = await verifierCompteGmail();
+      const livraison = construireBrouillons(testEmailInput.value.trim())[0];
+      if (!livraison) throw Error("Aucun élève ne correspond au groupe choisi.");
+      livraison.attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
+      await createGmailDraft(livraison);
+      afficherAccesBrouillons(`Brouillon test créé dans ${state.email}. Ouvrez Gmail, envoyez-le puis vérifiez sa réception avant de poursuivre.`);
+    } catch (error) { resultat.innerHTML = `<span class="error">${unssText(error.message || "Création du brouillon impossible.")}</span>`; }
+    finally { bouton.disabled = false; }
+  };
+  overlay.querySelector("#asEmailGmailDrafts").onclick = async () => {
+    const bouton = overlay.querySelector("#asEmailGmailDrafts"), resultat = overlay.querySelector("#asEmailResult");
+    const toutes = construireBrouillons();
+    if (!toutes.length) { resultat.textContent = "Aucun destinataire à préparer."; return; }
+    const limite = Number(overlay.querySelector("#asEmailGmailBatchSize").value || 20);
+    let fin = 0;
+    while (fin < toutes.length) {
+      const eleve = toutes[fin].studentId;
+      let finEleve = fin + 1;
+      while (finEleve < toutes.length && toutes[finEleve].studentId === eleve) finEleve++;
+      if (fin > 0 && finEleve > limite) break;
+      fin = finEleve;
+      if (fin >= limite) break;
+    }
+    const lot = toutes.slice(0, fin);
+    if (!confirm(`Créer ${lot.length} brouillon(s) personnalisés dans votre Gmail professionnel ? Aucun message ne sera envoyé automatiquement.`)) return;
+    envoiEnCours = true; bouton.disabled = true;
+    overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = true);
+    let crees = 0;
+    try {
+      const state = await verifierCompteGmail();
+      const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
+      lot.forEach(item => item.attachment = attachment);
+      await createGmailDrafts(lot, progression => { crees = progression.created; resultat.innerHTML = `<b>${crees}/${lot.length} brouillon(s) créé(s) dans ${unssText(state.email)}…</b>`; });
+      const prochain = toutes[fin];
+      if (prochain) overlay.querySelector("#asEmailResumeStudent").value = prochain.studentId;
+      afficherAccesBrouillons(`${crees} brouillon(s) créé(s) dans ${state.email}.${prochain ? ` Pour le prochain lot, la reprise est positionnée sur ${prochain.studentName}.` : " Tous les destinataires sélectionnés sont préparés."}`);
+    } catch (error) {
+      const prochain = lot[Math.min(crees, lot.length - 1)];
+      if (prochain) overlay.querySelector("#asEmailResumeStudent").value = prochain.studentId;
+      resultat.innerHTML = `<span class="error">${unssText(error.message || "Création interrompue.")} ${crees} brouillon(s) ont été créés ; la reprise est positionnée sur ${unssText(prochain?.studentName || "le prochain élève")}.</span>`;
+    } finally {
+      envoiEnCours = false; bouton.disabled = false;
+      overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = false);
+    }
+  };
 
   overlay.querySelector("#asEmailSend").onclick = async () => {
     const bouton = overlay.querySelector("#asEmailSend");

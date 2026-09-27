@@ -14,6 +14,11 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="unssGlobalEmailBtn"', 'function ouvrirEmailGlobalLicencies', 'mode: "global_confirmations"', '{creneaux}',
   'name="asEmailFilter"', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter: filtre()'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
+[
+  'id="asEmailGmailTest"', 'id="asEmailGmailDrafts"', 'Créer un brouillon test',
+  'Préparer dans Gmail', 'construireBrouillons', 'createGmailDrafts', 'openConnectedGmailDrafts',
+  'Envoyer avec le compte AS'
+].forEach(marker => { if (!code.includes(marker)) throw new Error(`Brouillons Gmail incomplets : ${marker}`); });
 ['.as-slot-email-overlay', '.as-email-choice', '.as-email-recipient-summary'].forEach(marker => {
   if (!css.includes(marker)) throw new Error(`Style e-mail manquant : ${marker}`);
 });
