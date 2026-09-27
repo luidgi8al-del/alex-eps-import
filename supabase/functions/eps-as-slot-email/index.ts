@@ -14,6 +14,11 @@ if (!GMAIL_USER || !GMAIL_APP_PASSWORD) throw new Error("EPS_GMAIL_USER et EPS_G
 const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const auth = createClient(SUPABASE_URL, ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const mailer = nodemailer.createTransport({
+  pool: true,
+  maxConnections: 1,
+  maxMessages: 100,
+  rateDelta: 1000,
+  rateLimit: 2,
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
@@ -191,28 +196,37 @@ Deno.serve(async req => {
     const batchDeliveries = campaignDeliveries.slice(batchOffset, batchEnd);
 
     let sent = 0, failed = 0;
-    const failures: Array<{recipient:string,error:string}> = [];
-    for (let start = 0; start < batchDeliveries.length; start += 2) {
-      const batch = batchDeliveries.slice(start, start + 2);
-      await Promise.all(batch.map(async delivery => {
-        try {
-          const orderedSlots = [...delivery.slots].sort((a, b) => activityLine(a).localeCompare(activityLine(b), "fr"));
-          const activityList = orderedSlots.map(activityLine).join("\n");
-          const referenceSlot = orderedSlots[0] || {};
-          const personalizedSubject = replaceTokens(subject, delivery.student, referenceSlot, activityList);
-          const personalizedMessage = replaceTokens(message, delivery.student, referenceSlot, activityList);
-          const html = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#173a57">${personalizedMessage.split(/\r?\n/).map(line => line ? `<p style="margin:0 0 10px">${escapeHtml(line)}</p>` : `<div style="height:6px"></div>`).join("")}</div>`;
-          await mailer.sendMail({
-            from: `"ASLVH" <${GMAIL_USER}>`, to: delivery.recipient, replyTo: teacherEmail,
-            subject: personalizedSubject, html,
-            attachments: attachment ? [{ filename: String(attachment.name || "document"), content: Buffer.from(String(attachment.content), "base64"), contentType: String(attachment.type) }] : undefined
-          });
-          sent++;
-        } catch (error) { failed++; failures.push({ recipient: delivery.recipient, error: String(error).slice(0, 300) }); }
-      }));
-      if (start + 2 < batchDeliveries.length) await new Promise(resolve => setTimeout(resolve, 550));
+    const failures: Array<{recipient:string;studentId:string;studentName:string;error:string}> = [];
+    let attempted = 0;
+    for (const delivery of batchDeliveries) {
+      try {
+        const orderedSlots = [...delivery.slots].sort((a, b) => activityLine(a).localeCompare(activityLine(b), "fr"));
+        const activityList = orderedSlots.map(activityLine).join("\n");
+        const referenceSlot = orderedSlots[0] || {};
+        const personalizedSubject = replaceTokens(subject, delivery.student, referenceSlot, activityList);
+        const personalizedMessage = replaceTokens(message, delivery.student, referenceSlot, activityList);
+        const html = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#173a57">${personalizedMessage.split(/\r?\n/).map(line => line ? `<p style="margin:0 0 10px">${escapeHtml(line)}</p>` : `<div style="height:6px"></div>`).join("")}</div>`;
+        await mailer.sendMail({
+          from: `"ASLVH" <${GMAIL_USER}>`, to: delivery.recipient, replyTo: teacherEmail,
+          subject: personalizedSubject, html,
+          attachments: attachment ? [{ filename: String(attachment.name || "document"), content: Buffer.from(String(attachment.content), "base64"), contentType: String(attachment.type) }] : undefined
+        });
+        sent++;
+      } catch (error) {
+        failed++;
+        failures.push({
+          recipient: delivery.recipient,
+          studentId: String(delivery.student.id || ""),
+          studentName: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
+          error: String(error).slice(0, 300)
+        });
+        attempted++;
+        break;
+      }
+      attempted++;
+      if (attempted < batchDeliveries.length) await new Promise(resolve => setTimeout(resolve, 500));
     }
-    const nextOffset = batchOffset + batchDeliveries.length;
+    const nextOffset = batchOffset + attempted;
     return reply({
       ok: failed === 0, sent, failed, missing, failures, total, grandTotal,
       processed: batchDeliveries.length, batchOffset, batchSize,

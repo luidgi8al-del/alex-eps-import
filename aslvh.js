@@ -1826,6 +1826,12 @@ async function ouvrirEmailGlobalLicencies(rows) {
         envoyes += Number(bilan.sent || 0);
         echecs += Number(bilan.failed || 0);
         if (Array.isArray(bilan.missing)) manquants = bilan.missing;
+        if (bilan.failed) {
+          const premierEchec = bilan.failures?.[0] || {};
+          if (premierEchec.studentId) overlay.querySelector("#asEmailResumeStudent").value = String(premierEchec.studentId);
+          const nomReprise = premierEchec.studentName ? ` à partir de ${premierEchec.studentName}` : "";
+          throw new Error(`Gmail a refusé un message après ${envoyes} envoi(s) réussi(s). L’envoi a été arrêté immédiatement ; reprenez plus tard${nomReprise}.`);
+        }
         resultat.innerHTML = `<b>${envoyes}/${totalServeur} e-mail(s) envoyé(s).</b><span>Lot ${numeroLot}/${Math.max(1, Math.ceil(totalServeur / 100))} terminé.</span>`;
         if (!bilan.hasMore) break;
         if (!Number.isFinite(Number(bilan.nextOffset)) || Number(bilan.nextOffset) <= offset) throw new Error("La progression de l’envoi est incohérente.");

@@ -34,4 +34,10 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 ['resumeStudentId', 'resumeIndex', 'campaignDeliveries', 'Toutes les adresses d\'un même élève', 'studentEnd'].forEach(marker => {
   if (!edge.includes(marker)) throw new Error(`Reprise par élève incomplète : ${marker}`);
 });
+['pool: true', 'maxConnections: 1', 'rateLimit: 2', 'attempted++', 'studentName'].forEach(marker => {
+  if (!edge.includes(marker)) throw new Error(`Protection Gmail incomplète : ${marker}`);
+});
+['Gmail a refusé un message', 'premierEchec.studentId'].forEach(marker => {
+  if (!code.includes(marker)) throw new Error(`Arrêt au premier refus incomplet : ${marker}`);
+});
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');
