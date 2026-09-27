@@ -27,7 +27,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'RECIPIENT_FILTERS', 'medical_certificate_missing', 'payment_missing', 'host_available'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 [
-  'batchOffset: offset, batchSize: 100', 'Envoi du lot ${numeroLot}/${nombreLots}',
+  'batchOffset: offset, batchSize: 10', 'Envoi du lot ${numeroLot}/${nombreLots}',
   'lot(s) de 100 maximum', 'if (!bilan.hasMore) break', 'id="asEmailResumeStudent"',
   'reprendreEleveId', 'resumeStudentId', 'if (!envoiEnCours) overlay.remove()', 'b.disabled = true'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Envoi par lots incomplet : ${marker}`); });
@@ -40,4 +40,5 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 ['Gmail a refusé un message', 'premierEchec.studentId'].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Arrêt au premier refus incomplet : ${marker}`);
 });
+if (!code.includes('Un lot visible de 100 est traité en sous-étapes courtes')) throw new Error('Sous-étapes Supabase manquantes');
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');

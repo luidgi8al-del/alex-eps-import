@@ -1818,7 +1818,9 @@ async function ouvrirEmailGlobalLicencies(rows) {
         resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
         const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
           requestId, mode: "global_confirmations", recipientFilter: filtre(), audience: audience(), subject, message, attachment,
-          batchOffset: offset, batchSize: 100, resumeStudentId
+          // Un lot visible de 100 est traité en sous-étapes courtes : Supabase ne dépasse
+          // ainsi plus sa limite de ressources après plusieurs dizaines de messages.
+          batchOffset: offset, batchSize: 10, resumeStudentId
         }) });
         const bilan = await response.json();
         if (!response.ok) throw new Error(bilan.error || `Le lot ${numeroLot} n’a pas pu être envoyé.`);
@@ -1832,7 +1834,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
           const nomReprise = premierEchec.studentName ? ` à partir de ${premierEchec.studentName}` : "";
           throw new Error(`Gmail a refusé un message après ${envoyes} envoi(s) réussi(s). L’envoi a été arrêté immédiatement ; reprenez plus tard${nomReprise}.`);
         }
-        resultat.innerHTML = `<b>${envoyes}/${totalServeur} e-mail(s) envoyé(s).</b><span>Lot ${numeroLot}/${Math.max(1, Math.ceil(totalServeur / 100))} terminé.</span>`;
+        resultat.innerHTML = `<b>${envoyes}/${totalServeur} e-mail(s) envoyé(s).</b><span>Lot ${Math.min(Math.floor(bilan.nextOffset / 100) + 1, Math.max(1, Math.ceil(totalServeur / 100)))}/${Math.max(1, Math.ceil(totalServeur / 100))} en cours.</span>`;
         if (!bilan.hasMore) break;
         if (!Number.isFinite(Number(bilan.nextOffset)) || Number(bilan.nextOffset) <= offset) throw new Error("La progression de l’envoi est incohérente.");
         offset = Number(bilan.nextOffset);
