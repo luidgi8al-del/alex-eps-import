@@ -128,6 +128,38 @@
     return created;
   }
 
+  async function sendGmailDraft(draftId) {
+    await ensureGmailProfessional();
+    const response = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/drafts/send", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ id: String(draftId || "") })
+    });
+    if (response.status === 401) { accessToken = ""; expiresAt = 0; throw Error("La connexion Gmail a expiré. Reconnectez le compte avant de reprendre."); }
+    if (!response.ok) {
+      let data = {}; try { data = await response.json(); } catch {}
+      throw Error(data?.error?.message || `Gmail a refusé l’envoi du brouillon (HTTP ${response.status}).`);
+    }
+    return response.json();
+  }
+
+  async function sendGmailDrafts(drafts, onProgress) {
+    let sent = 0;
+    for (const item of drafts) {
+      try {
+        const message = await sendGmailDraft(item.draftId || item.id);
+        sent++;
+        onProgress?.({ sent, total: drafts.length, item, message });
+      } catch (error) {
+        error.sentCount = sent;
+        throw error;
+      }
+      // Envoi volontairement progressif : une campagne ne doit pas ressembler à une rafale.
+      if (sent < drafts.length) await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+    return sent;
+  }
+
   function openConnectedGmailDrafts() {
     const email = gmailDraftState().email;
     window.open(`https://mail.google.com/mail/u/?authuser=${encodeURIComponent(email)}#drafts`, "_blank", "noopener");
@@ -139,5 +171,7 @@
   globalThis.ensureGmailProfessional = ensureGmailProfessional;
   globalThis.createGmailDraft = createGmailDraft;
   globalThis.createGmailDrafts = createGmailDrafts;
+  globalThis.sendGmailDraft = sendGmailDraft;
+  globalThis.sendGmailDrafts = sendGmailDrafts;
   globalThis.openConnectedGmailDrafts = openConnectedGmailDrafts;
 })();

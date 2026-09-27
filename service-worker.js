@@ -11,7 +11,7 @@
  * matin doit voir la correction le matin.
  */
 importScripts("./offline-assets.js");
-const PWA_VERSION = "eps-lvh-pwa-2026-09-27-gmail-drafts-1";
+const PWA_VERSION = "eps-lvh-pwa-2026-09-27-gmail-send-1";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 

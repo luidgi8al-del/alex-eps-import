@@ -8,6 +8,7 @@ const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 [
   'https://www.googleapis.com/auth/gmail.compose', 'initTokenClient', 'prompt: "select_account"',
   'gmail/v1/users/me/profile', 'gmail/v1/users/me/drafts', 'createGmailDrafts',
+  'gmail/v1/users/me/drafts/send', 'sendGmailDrafts', 'setTimeout(resolve, 1500)',
   'accessToken = ""', 'localStorage.setItem("eps_gmail_last_account"'
 ].forEach(marker => { if (!gmail.includes(marker)) throw new Error(`Connexion Gmail incomplète : ${marker}`); });
 if (/localStorage\.setItem\([^\n]*accessToken/.test(gmail)) throw new Error('Le jeton Gmail ne doit jamais être stocké localement');

@@ -2,7 +2,7 @@
 self.EPS_OFFLINE_ASSETS = [
   "./accueil.js",
   "./aslvh.js",
-  "./aslvh.js?v=20260927-7",
+  "./aslvh.js?v=20260927-8",
   "./assets/lvh.jpeg",
   "./bac-reference.js",
   "./bac-reference.js?v=20260924-1",
@@ -77,7 +77,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./eps-tests.js",
   "./equipement.js",
   "./gmail-drafts.js",
-  "./gmail-drafts.js?v=20260927-1",
+  "./gmail-drafts.js?v=20260927-2",
   "./gym-observation-web.js",
   "./gym-observation-web.js?v=20260927-1",
   "./health-incident-pro.js",

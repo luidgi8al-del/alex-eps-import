@@ -1750,6 +1750,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
   testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
   let envoiEnCours = false;
+  let brouillonsGmailPrepares = [];
   const elevesFiltres = () => {
     if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
     if (filtre() === "missing_certificate") return rows.filter(e => e.medical_certificate_missing);
@@ -1865,10 +1866,11 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailGmailStatus").textContent = state.email;
     return state;
   };
-  const afficherAccesBrouillons = texte => {
+  const afficherAccesBrouillons = (texte, proposerEnvoi = false) => {
     const resultat = overlay.querySelector("#asEmailResult");
-    resultat.innerHTML = `<b>${unssText(texte)}</b><button type="button" class="secondary" id="asOpenGmailDrafts">Ouvrir les brouillons Gmail</button>`;
+    resultat.innerHTML = `<b>${unssText(texte)}</b><button type="button" class="secondary" id="asOpenGmailDrafts">Ouvrir les brouillons Gmail</button>${proposerEnvoi ? '<button type="button" id="asSendPreparedGmailDrafts">Envoyer ce lot avec Gmail professionnel</button><span>Vérifiez d’abord les brouillons. L’envoi du lot demandera une nouvelle confirmation.</span>' : ""}`;
     resultat.querySelector("#asOpenGmailDrafts").onclick = openConnectedGmailDrafts;
+    if (proposerEnvoi) resultat.querySelector("#asSendPreparedGmailDrafts").onclick = envoyerLotGmailPrepare;
   };
   overlay.querySelector("#asEmailGmailTest").onclick = async () => {
     const bouton = overlay.querySelector("#asEmailGmailTest"), resultat = overlay.querySelector("#asEmailResult");
@@ -1909,10 +1911,15 @@ async function ouvrirEmailGlobalLicencies(rows) {
       const state = await verifierCompteGmail();
       const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
       lot.forEach(item => item.attachment = attachment);
-      await createGmailDrafts(lot, progression => { crees = progression.created; resultat.innerHTML = `<b>${crees}/${lot.length} brouillon(s) créé(s) dans ${unssText(state.email)}…</b>`; });
+      brouillonsGmailPrepares = [];
+      await createGmailDrafts(lot, progression => {
+        crees = progression.created;
+        brouillonsGmailPrepares.push({ draftId: progression.draft.id, delivery: progression.delivery });
+        resultat.innerHTML = `<b>${crees}/${lot.length} brouillon(s) créé(s) dans ${unssText(state.email)}…</b>`;
+      });
       const prochain = toutes[fin];
       if (prochain) overlay.querySelector("#asEmailResumeStudent").value = prochain.studentId;
-      afficherAccesBrouillons(`${crees} brouillon(s) créé(s) dans ${state.email}.${prochain ? ` Pour le prochain lot, la reprise est positionnée sur ${prochain.studentName}.` : " Tous les destinataires sélectionnés sont préparés."}`);
+      afficherAccesBrouillons(`${crees} brouillon(s) créé(s) dans ${state.email}.${prochain ? ` Pour le prochain lot, la reprise est positionnée sur ${prochain.studentName}.` : " Tous les destinataires sélectionnés sont préparés."}`, true);
     } catch (error) {
       const prochain = lot[Math.min(crees, lot.length - 1)];
       if (prochain) overlay.querySelector("#asEmailResumeStudent").value = prochain.studentId;
@@ -1922,6 +1929,35 @@ async function ouvrirEmailGlobalLicencies(rows) {
       overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = false);
     }
   };
+
+  async function envoyerLotGmailPrepare() {
+    const resultat = overlay.querySelector("#asEmailResult");
+    if (!brouillonsGmailPrepares.length) { resultat.textContent = "Aucun lot de brouillons n’est prêt dans cette fenêtre."; return; }
+    const state = await verifierCompteGmail().catch(error => { resultat.innerHTML = `<span class="error">${unssText(error.message)}</span>`; return null; });
+    if (!state) return;
+    if (!confirm(`Envoyer maintenant ${brouillonsGmailPrepares.length} message(s) depuis ${state.email} ? Les messages partiront progressivement. Cette action ne peut pas être annulée.`)) return;
+    envoiEnCours = true;
+    overlay.querySelectorAll("button").forEach(button => button.disabled = true);
+    const lotInitial = [...brouillonsGmailPrepares];
+    let envoyes = 0;
+    try {
+      await sendGmailDrafts(lotInitial, progression => {
+        envoyes = progression.sent;
+        resultat.innerHTML = `<b>${envoyes}/${lotInitial.length} message(s) accepté(s) par Gmail…</b><span>Ne fermez pas cette fenêtre pendant l’envoi.</span>`;
+      });
+      brouillonsGmailPrepares = [];
+      resultat.innerHTML = `<b>${envoyes} message(s) accepté(s) par Gmail professionnel.</b><span class="ok">Le lot est terminé. Cela confirme l’envoi par Gmail, pas l’ouverture par les destinataires.</span>`;
+    } catch (error) {
+      const confirmes = Number(error.sentCount || envoyes);
+      brouillonsGmailPrepares = lotInitial.slice(confirmes);
+      resultat.innerHTML = `<span class="error">Envoi interrompu après ${confirmes} message(s) accepté(s) par Gmail : ${unssText(error.message || "erreur inconnue")}. ${brouillonsGmailPrepares.length} brouillon(s) restent à envoyer.</span><button type="button" id="asRetryPreparedGmailDrafts">Reprendre les brouillons restants</button>`;
+      resultat.querySelector("#asRetryPreparedGmailDrafts").onclick = envoyerLotGmailPrepare;
+    } finally {
+      envoiEnCours = false;
+      overlay.querySelectorAll("button").forEach(button => button.disabled = false);
+      actualiser();
+    }
+  }
 
   overlay.querySelector("#asEmailSend").onclick = async () => {
     const bouton = overlay.querySelector("#asEmailSend");
