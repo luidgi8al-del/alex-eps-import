@@ -845,26 +845,26 @@ function ecDessinerEvaluations(panel) {
   const terminees = evaluations.filter(e => ecAvancementGrille(e.id).evalues > 0).length;
   const eleves = dashboardStudents.length;
 
-  panel.innerHTML = `<section class="ec-ecran">
-    ${ecBandeau(`${label} · Évaluations / Tests`, { sous: cycle ? `${cycle.apsa_name} · période ${dashboardPeriod}` : `Période ${dashboardPeriod}` })}
+  const actionsPrincipales = `<div class="ec-bandeau-actions ec-eval-actions-principales">
+    <button type="button" class="ec-eval-action-primaire" id="ecNouvelleEvaluation"><span aria-hidden="true">＋</span> Nouvelle évaluation</button>
+    <button type="button" id="ecNouveauTest"><span aria-hidden="true">＋</span> Nouveau test EPS</button>
+  </div>`;
+
+  panel.innerHTML = `<section class="ec-ecran ec-ecran-evaluations">
+    ${ecBandeau(`${label} · Évaluations / Tests`, {
+      sous: cycle ? `${cycle.apsa_name} · période ${dashboardPeriod}` : `Période ${dashboardPeriod}`,
+      actions: actionsPrincipales
+    })}
     <div class="ec-corps">
-      ${ecPastilles("ec-filtre-eval", [["Toutes", "Toutes"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
-      <div class="ec-stats">
-        ${ecStat(evaluations.length + tests.length, "évaluations", "#185FA5")}
-        ${ecStat(terminees, "terminées", "#0F6E56")}
-        ${ecStat(Math.max(0, evaluations.length - terminees), "à poursuivre", "#BA7517")}
+      <div class="ec-eval-stats" aria-label="Résumé des évaluations">
+        <div class="ec-eval-stat"><i class="bleu" aria-hidden="true">▣</i><span><b>${evaluations.length + tests.length}</b><small>Évaluations</small></span></div>
+        <div class="ec-eval-stat"><i class="vert" aria-hidden="true">✓</i><span><b>${terminees}</b><small>Terminées</small></span></div>
+        <div class="ec-eval-stat"><i class="orange" aria-hidden="true">◷</i><span><b>${Math.max(0, evaluations.length - terminees)}</b><small>À poursuivre</small></span></div>
       </div>
-      <div class="ec-creer">
-        <button type="button" id="ecCreerPonctuelle" style="--fond:#FFE9D6;--accent:#D8691A"><i>✓</i><span><b>Évaluation ponctuelle</b><small>Suivre les progrès</small></span></button>
-        <button type="button" id="ecCreerFinale" style="--fond:#EEEDFE;--accent:#7952D9"><i>✓</i><span><b>Évaluation finale</b><small>Bilan du cycle</small></span></button>
-        <button type="button" id="ecTests" style="--fond:#DFF3FF;--accent:#087DCA"><i>⏱</i><span><b>Tests EPS</b><small>${tests.length ? ecPluriel(tests.length, "session") : "Mesures terrain"}</small></span></button>
-        <button type="button" id="ecDivers" style="--fond:#E4F6EC;--accent:#16845B"><i>🤸</i><span><b>Divers EPS</b><small>Groupes Acrosport, travaux</small></span></button>
-      </div>
-      <button type="button" class="ec-carte-lien" data-vue="recap">
-        <i>▦</i><span><b>Récapitulatif Tests / Évaluations</b>
-        <small>P${dashboardPeriod} · ${ecPluriel(tests.length, "test")} · ${ecPluriel(evaluations.length, "évaluation")} · PDF, tableur, courriel</small></span><em>›</em>
-      </button>
-      <div class="ec-liste">${filtrees.length ? filtrees.map(e => {
+      <section class="ec-evaluations-carte" aria-labelledby="ecEvaluationsTitre">
+        <h3 id="ecEvaluationsTitre">Évaluations</h3>
+        ${ecPastilles("ec-filtre-eval", [["Toutes", "Toutes"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
+        <div class="ec-liste ec-evaluations-liste">${filtrees.length ? filtrees.map(e => {
         const { evalues } = ecAvancementGrille(e.id);
         const complet = eleves > 0 && evalues >= eleves;
         return `<button type="button" class="ec-evaluation" data-ec-grille="${ecTexte(e.id)}">
@@ -875,17 +875,33 @@ function ecDessinerEvaluations(panel) {
           ${ecJauge(eleves ? evalues / eleves : 0, "#2E7CC4")}
           <small class="ec-aide">Appui prolongé : dupliquer vers une classe</small>
         </button>`;
-      }).join("") : `<div class="ec-vide-carte"><b>Aucune évaluation enregistrée</b>
-          <span>Utilisez l’un des deux premiers boutons pour créer la première évaluation.</span></div>`}</div>
+      }).join("") : `<div class="ec-eval-vide">
+          <i aria-hidden="true">✓</i>
+          <b>Aucune évaluation pour cette période</b>
+          <span>Créez votre première évaluation pour commencer le suivi de la classe.</span>
+          <button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>
+        </div>`}</div>
+        <footer class="ec-evaluations-pied">
+          <button type="button" class="secondary" id="ecActionsEvaluations">Actions <span aria-hidden="true">⌄</span></button>
+          <small>Récapitulatif, PDF, tableur, courriel et divers EPS</small>
+        </footer>
+      </section>
     </div></section>`;
 
   panel.querySelector("[data-ec-retour]").onclick = () => ecAller("bord");
   panel.querySelectorAll("[data-ec-filtre-eval]").forEach(b => b.onclick = () => { ecFiltreEvaluations = b.dataset.ecFiltreEval; renderClassDashboard(); });
-  panel.querySelector('[data-vue="recap"]').onclick = () => { ecOngletRecap = "tests"; ecAller("recap"); };
-  document.getElementById("ecCreerPonctuelle").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "PONCTUELLE");
-  document.getElementById("ecCreerFinale").onclick = () => ouvrirEvaluationDepuisClasse(cycle, "FINALE");
-  document.getElementById("ecTests").onclick = () => ecOuvrirTests(tests);
-  document.getElementById("ecDivers").onclick = () => ecOuvrirDivers();
+  const choisirEvaluation = () => ecActions("Nouvelle évaluation", cycle ? `${cycle.apsa_name} · période ${dashboardPeriod}` : `Période ${dashboardPeriod}`, [
+    { libelle: "Évaluation ponctuelle · suivre les progrès", action: () => ouvrirEvaluationDepuisClasse(cycle, "PONCTUELLE") },
+    { libelle: "Évaluation finale · bilan du cycle", action: () => ouvrirEvaluationDepuisClasse(cycle, "FINALE") }
+  ]);
+  document.getElementById("ecNouvelleEvaluation").onclick = choisirEvaluation;
+  document.getElementById("ecPremiereEvaluation")?.addEventListener("click", choisirEvaluation);
+  document.getElementById("ecNouveauTest").onclick = () => ecCreerNouveauTest();
+  document.getElementById("ecActionsEvaluations").onclick = () => ecActions("Actions", `${label} · période ${dashboardPeriod}`, [
+    { libelle: `Récapitulatif · PDF, tableur et courriel`, action: () => { ecOngletRecap = "tests"; ecAller("recap"); } },
+    { libelle: `Tests EPS enregistrés (${tests.length})`, action: () => ecOuvrirTests(tests) },
+    { libelle: "Divers EPS · groupes Acrosport et travaux", action: () => ecOuvrirDivers() }
+  ]);
   panel.querySelectorAll("[data-ec-grille]").forEach(b => {
     const e = evaluations.find(x => x.id === b.dataset.ecGrille);
     b.onclick = () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); };
@@ -893,6 +909,19 @@ function ecDessinerEvaluations(panel) {
   });
   // Les jauges se remplissent une fois les notes relues.
   if (!ecNotesChargees) ecChargerNotes().then(() => { if (vueClasse === "evaluations") renderClassDashboard(); });
+}
+
+/** Ouvre directement le catalogue Tests EPS pour cette classe et cette période. */
+function ecCreerNouveauTest() {
+  return ecEnFenetreOutil(async () => {
+    toolPanel = document.getElementById("toolPanel");
+    toolClassId = dashboardClass.row.id;
+    epsTestPeriod = dashboardPeriod;
+    epsOpenCategory = null;
+    epsOpenTest = null;
+    resetGenericTestState();
+    await renderEpsTests();
+  });
 }
 
 function ecOuvrirTests(tests) {

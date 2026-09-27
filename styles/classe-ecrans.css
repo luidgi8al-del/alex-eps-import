@@ -178,16 +178,50 @@
 .ec-stat b { font-size: 22px; font-weight: 800; }
 .ec-stat small { color: var(--ec-gris); font-size: 11px; }
 
-/* Evaluations */
-.ec-creer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-@media (min-width: 900px) { .ec-creer { grid-template-columns: repeat(4, 1fr); } }
-.ec-ecran .ec-creer button { display: flex; align-items: center; gap: 9px; text-align: left; background: var(--fond); color: var(--ec-marine);
-  border-radius: 16px; padding: 10px; }
-.ec-ecran .ec-creer button:hover { filter: brightness(.97); }
-.ec-creer i { flex: 0 0 auto; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.8);
-  color: var(--accent); font-style: normal; font-weight: 800; }
-.ec-creer b { display: block; font-size: 13px; font-weight: 800; }
-.ec-creer small { color: var(--accent); font-size: 11px; font-weight: 600; }
+/* Evaluations : deux actions évidentes, trois indicateurs, puis la liste comme contenu principal. */
+.ec-eval-actions-principales { align-items: center; }
+.ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales button { display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 42px; padding: 10px 16px; border-radius: 14px; font-weight: 800; }
+.ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales .ec-eval-action-primaire { color: #fff; background: var(--ec-bleu); border-color: var(--ec-bleu); }
+.ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales .ec-eval-action-primaire:hover { color: #fff; background: var(--ec-bleu-fonce); }
+.ec-eval-actions-principales button span { font-size: 20px; font-weight: 400; line-height: 1; }
+
+.ec-eval-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ec-eval-stat { display: flex; align-items: center; gap: 14px; min-height: 84px; padding: 14px 18px; background: #fff; border: 1px solid var(--ec-bord);
+  border-radius: 18px; box-shadow: 0 5px 18px #123a550a; }
+.ec-eval-stat i { display: grid; place-items: center; flex: 0 0 auto; width: 48px; height: 48px; border-radius: 50%; font-style: normal; font-size: 23px; }
+.ec-eval-stat i.bleu { color: #146CC0; background: #E5F2FF; }
+.ec-eval-stat i.vert { color: #087A55; background: #E3F5EC; }
+.ec-eval-stat i.orange { color: #BF6900; background: #FFF0DF; }
+.ec-eval-stat span { display: grid; gap: 1px; }
+.ec-eval-stat b { color: var(--ec-bleu-fonce); font-size: 23px; line-height: 1.1; }
+.ec-eval-stat small { color: var(--ec-gris); font-size: 13px; }
+
+.ec-evaluations-carte { overflow: hidden; padding: 18px 20px 0; background: #fff; border: 1px solid var(--ec-bord); border-radius: 20px;
+  box-shadow: 0 5px 18px #123a550a; }
+.ec-evaluations-carte > h3 { margin: 0 0 14px; font-size: 19px; font-weight: 850; }
+.ec-evaluations-carte .ec-pastilles { gap: 0; border: 1px solid var(--ec-bord); border-radius: 999px; }
+.ec-evaluations-carte .ec-pastille { box-shadow: none; border-radius: 999px; }
+.ec-evaluations-carte .ec-pastille.actif { box-shadow: inset 0 0 0 1.5px var(--ec-bleu); }
+.ec-evaluations-liste { min-height: 250px; padding: 16px 0; justify-content: center; }
+.ec-eval-vide { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; padding: 24px; text-align: center; }
+.ec-eval-vide > i { display: grid; place-items: center; width: 68px; height: 68px; margin-bottom: 4px; border-radius: 50%; color: var(--ec-bleu);
+  background: var(--ec-bleu-pale); border: 3px solid #fff; box-shadow: 0 0 0 1px #d5e5f4; font-style: normal; font-size: 28px; }
+.ec-eval-vide b { font-size: 16px; font-weight: 850; }
+.ec-eval-vide span { color: var(--ec-gris); font-size: 13px; }
+.ec-ecran .ec-eval-vide button { margin-top: 8px; padding: 11px 22px; border-radius: 13px; }
+.ec-evaluations-pied { display: flex; align-items: center; gap: 12px; padding: 12px 0 14px; border-top: 1px solid var(--ec-bord); }
+.ec-ecran .ec-evaluations-pied button { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; padding: 8px 13px; border-radius: 11px; }
+.ec-evaluations-pied small { color: var(--ec-gris); font-size: 12px; }
+
+@media (max-width: 760px) {
+  .ec-eval-stats { grid-template-columns: 1fr; }
+  .ec-eval-stat { min-height: 68px; }
+  .ec-evaluations-carte { padding: 15px 12px 0; }
+  .ec-evaluations-pied { align-items: flex-start; flex-direction: column; }
+  .ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales { display: grid; grid-template-columns: 1fr 1fr; }
+  .ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales button { display: inline-flex !important; padding: 9px; font-size: 12px; }
+}
 .ec-ecran .ec-carte-lien { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: #E8F1FF; color: var(--ec-marine);
   border-radius: 16px; padding: 12px 14px; }
 .ec-carte-lien i { font-style: normal; color: var(--ec-bleu); font-size: 20px; }

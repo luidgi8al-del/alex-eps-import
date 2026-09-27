@@ -132,10 +132,10 @@
           // Le recapitulatif vit dans Evaluations / Tests : le tableau de bord de l'application
           // a remplace le menu qui y menait.
           panneau.querySelector('[data-vue="evaluations"]').click();
-          await attendre(() => f.document.getElementById("ecCreerPonctuelle"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
+          await attendre(() => f.document.getElementById("ecNouvelleEvaluation"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
           await attendre(() => /1 \/ \d+ élèves évalués/.test(panneau.innerText),
             "la jauge de la grille ne compte pas l'eleve note", 6000);
-          panneau.querySelector('[data-vue="recap"]').click();
+          await f.ecAller("recap");
           await attendre(() => f.document.querySelector("#ecRecap [data-ec-recap-test]"), "le recapitulatif ne liste pas le test", 6000);
           f.document.querySelector("[data-ec-recap-test]").click();
           await attendre(() => f.document.getElementById("ecExportCsv"), "le test ne s'ouvre pas avec ses exports", 4000);
@@ -158,7 +158,7 @@
 
           // Le retour ramene a Evaluations / Tests, puis au tableau de bord.
           panneau.querySelector("[data-ec-retour]").click();
-          await attendre(() => f.document.getElementById("ecCreerPonctuelle"), "le retour ne ramene pas a Evaluations / Tests", 4000);
+          await attendre(() => f.document.getElementById("ecNouvelleEvaluation"), "le retour ne ramene pas a Evaluations / Tests", 4000);
           await entrerDansMenu();
           panneau.querySelector('[data-vue="dispenses"]').click();
           await attendre(() => panneau.querySelector("[data-dispense]"), "les dispenses restent vides", 4000);
@@ -253,8 +253,8 @@
           await entrerDansMenu();
           const panneau = $("classDashboardPanel");
           panneau.querySelector('[data-vue="evaluations"]').click();
-          await attendre(() => f.document.getElementById("ecTests"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
-          f.document.getElementById("ecTests").click();
+          await attendre(() => f.document.getElementById("ecActionsEvaluations"), "l'ecran Evaluations / Tests ne s'ouvre pas", 4000);
+          f.ecOuvrirTests(f.ecEvaluationsSuivies().tests);
           await attendre(() => f.document.querySelector("[data-ec-test]"), "la liste des tests ne s'ouvre pas", 4000);
           if (!f.document.querySelector("[data-ec-test-suppr]")) throw new Error("les tests n'ont pas de bouton Supprimer");
           const onglet = () => f.document.querySelector(".tabbtn.active")?.textContent;
