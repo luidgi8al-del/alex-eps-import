@@ -1699,6 +1699,7 @@ function personnaliserEmailAS(texte, eleve, creneaux) {
 async function ouvrirEmailGlobalLicencies(rows) {
   await assurerInscriptions();
   const idsRetenus = new Set(unssInscriptions.map(i => i.student_id));
+  const gmailProfessionnelActif = typeof gmailDraftState === "function" && gmailDraftState().connected;
   if (!rows.length) {
     alert("Aucun élève licencié à contacter.");
     return;
@@ -1729,16 +1730,16 @@ async function ouvrirEmailGlobalLicencies(rows) {
         <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
       <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
-      <details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${gmailDraftState?.().connected ? unssText(gmailDraftState().email) : "À connecter"}</small></summary><div class="as-email-section ui-accordion-body">
+      ${gmailProfessionnelActif ? `<details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${unssText(gmailDraftState().email)}</small></summary><div class="as-email-section ui-accordion-body">
         <p>Commencez par un brouillon test. Après l’avoir envoyé depuis Gmail et vérifié sa réception, préparez la campagne par petits lots.</p>
         <label>Adresse du test<input id="asEmailGmailTestAddress" type="email" autocomplete="email" placeholder="Votre adresse Hotmail"></label>
         <button type="button" class="secondary" id="asEmailGmailTest">Créer un brouillon test</button>
         <label>Nombre maximum de brouillons à préparer maintenant<select id="asEmailGmailBatchSize"><option value="10">10 brouillons</option><option value="20" selected>20 brouillons</option><option value="50">50 brouillons</option></select></label>
         <p class="as-email-help">Créer un brouillon ne l’envoie pas. Vous gardez le contrôle depuis votre boîte Gmail professionnelle.</p>
-      </div></details>
+      </div></details>` : ""}
       <div class="as-email-result" id="asEmailResult"></div>
     </main>
-    <footer><button type="button" class="secondary" data-email-close>Annuler</button><button type="button" class="secondary" id="asEmailGmailDrafts" disabled>Préparer dans Gmail</button><button type="button" id="asEmailSend" disabled>Envoyer avec le compte AS</button></footer>
+    <footer><button type="button" class="secondary" data-email-close>Annuler</button>${gmailProfessionnelActif ? '<button type="button" class="secondary" id="asEmailGmailDrafts" disabled>Préparer dans Gmail</button><button type="button" id="asEmailSend" disabled>Envoyer avec le compte AS</button>' : '<button type="button" id="asEmailSend" disabled>Envoyer</button>'}</footer>
   </section>`;
   document.body.appendChild(overlay);
 
@@ -1748,7 +1749,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
   const reprendreEleveId = () => String(overlay.querySelector("#asEmailResumeStudent")?.value || "");
   const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
-  testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
+  if (testEmailInput) testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
   let envoiEnCours = false;
   let brouillonsGmailPrepares = [];
   const elevesFiltres = () => {
@@ -1796,8 +1797,10 @@ async function ouvrirEmailGlobalLicencies(rows) {
       ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b><span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
       : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
     overlay.querySelector("#asEmailSend").disabled = !filtre() || !c.nombre;
-    overlay.querySelector("#asEmailGmailDrafts").disabled = !filtre() || !c.nombre;
-    overlay.querySelector("#asEmailGmailTest").disabled = !filtre() || !c.nombre;
+    const boutonBrouillons = overlay.querySelector("#asEmailGmailDrafts");
+    const boutonTestGmail = overlay.querySelector("#asEmailGmailTest");
+    if (boutonBrouillons) boutonBrouillons.disabled = !filtre() || !c.nombre;
+    if (boutonTestGmail) boutonTestGmail.disabled = !filtre() || !c.nombre;
     const selectReprise = overlay.querySelector("#asEmailResumeStudent");
     const choixActuel = selectReprise.value;
     const elevesOrdonnes = [...elevesFiltres()].sort((a, b) =>
@@ -1872,7 +1875,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
     resultat.querySelector("#asOpenGmailDrafts").onclick = openConnectedGmailDrafts;
     if (proposerEnvoi) resultat.querySelector("#asSendPreparedGmailDrafts").onclick = envoyerLotGmailPrepare;
   };
-  overlay.querySelector("#asEmailGmailTest").onclick = async () => {
+  const boutonTestGmail = overlay.querySelector("#asEmailGmailTest");
+  if (boutonTestGmail) boutonTestGmail.onclick = async () => {
     const bouton = overlay.querySelector("#asEmailGmailTest"), resultat = overlay.querySelector("#asEmailResult");
     if (!testEmailInput.reportValidity() || !testEmailInput.value.trim()) return;
     if (!overlay.querySelector("#asEmailSubject").value.trim() || !overlay.querySelector("#asEmailMessage").value.trim()) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
@@ -1888,7 +1892,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
     } catch (error) { resultat.innerHTML = `<span class="error">${unssText(error.message || "Création du brouillon impossible.")}</span>`; }
     finally { bouton.disabled = false; }
   };
-  overlay.querySelector("#asEmailGmailDrafts").onclick = async () => {
+  const boutonBrouillonsGmail = overlay.querySelector("#asEmailGmailDrafts");
+  if (boutonBrouillonsGmail) boutonBrouillonsGmail.onclick = async () => {
     const bouton = overlay.querySelector("#asEmailGmailDrafts"), resultat = overlay.querySelector("#asEmailResult");
     const toutes = construireBrouillons();
     if (!toutes.length) { resultat.textContent = "Aucun destinataire à préparer."; return; }
