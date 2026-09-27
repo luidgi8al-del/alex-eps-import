@@ -1699,7 +1699,8 @@ function personnaliserEmailAS(texte, eleve, creneaux) {
 async function ouvrirEmailGlobalLicencies(rows) {
   await assurerInscriptions();
   const idsRetenus = new Set(unssInscriptions.map(i => i.student_id));
-  const gmailProfessionnelActif = typeof gmailDraftState === "function" && gmailDraftState().connected;
+  const etatGmailOuverture = typeof gmailDraftState === "function" ? gmailDraftState() : { connected: false, email: "" };
+  const gmailProfessionnelActif = Boolean(etatGmailOuverture.connected && etatGmailOuverture.email);
   if (!rows.length) {
     alert("Aucun élève licencié à contacter.");
     return;
@@ -1709,7 +1710,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   overlay.id = "asSlotEmailOverlay";
   overlay.className = "as-slot-email-overlay ui-modal-overlay open";
   overlay.innerHTML = `<section class="as-slot-email-dialog ui-modal" role="dialog" aria-modal="true" aria-labelledby="asGlobalEmailTitle">
-    <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Confirmer les inscriptions</h2><p>Un seul message regroupant tous les créneaux de chaque élève</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
+    <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Contacter les licenciés AS</h2><p>Choisissez un message proposé ou rédigez librement le vôtre</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
       <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
         <b>Groupe à contacter</b>
@@ -1724,13 +1725,14 @@ async function ouvrirEmailGlobalLicencies(rows) {
         <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
         <label>Reprise après une interruption<select id="asEmailResumeStudent"><option value="">Nouvel envoi — commencer au premier élève</option></select><small>Sélectionnez ici le premier élève qui n’a pas encore reçu le message. Il sera inclus dans la reprise.</small></label>
       </div></details>
-      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>2. Message</span><small>Confirmation globale</small></summary><div class="as-email-section ui-accordion-body">
-        <label>Objet<input id="asEmailSubject" maxlength="180" value="Confirmation de vos inscriptions à l’AS"></label>
-        <label>Message<textarea id="asEmailMessage" rows="11" maxlength="8000"></textarea></label>
+      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>2. Message</span><small id="asEmailTemplateChoice">Message proposé</small></summary><div class="as-email-section ui-accordion-body">
+        <label>Type de message<select id="asEmailTemplate"><option value="suggested">Message proposé selon le groupe choisi</option><option value="free">Message libre</option></select></label>
+        <label>Objet<input id="asEmailSubject" maxlength="180"></label>
+        <label>Message<textarea id="asEmailMessage" rows="11" maxlength="8000" placeholder="Écrivez votre message ici"></textarea></label>
         <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
       </div></details>
       <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
-      ${gmailProfessionnelActif ? `<details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${unssText(gmailDraftState().email)}</small></summary><div class="as-email-section ui-accordion-body">
+      ${gmailProfessionnelActif ? `<details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${unssText(etatGmailOuverture.email)}</small></summary><div class="as-email-section ui-accordion-body">
         <p>Commencez par un brouillon test. Après l’avoir envoyé depuis Gmail et vérifié sa réception, préparez la campagne par petits lots.</p>
         <label>Adresse du test<input id="asEmailGmailTestAddress" type="email" autocomplete="email" placeholder="Votre adresse Hotmail"></label>
         <button type="button" class="secondary" id="asEmailGmailTest">Créer un brouillon test</button>
@@ -1747,6 +1749,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const professeur = signatureProfesseurAS(nomProfil || session?.email?.split("@")[0]);
   const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
   const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
+  const modeleMessage = () => overlay.querySelector("#asEmailTemplate").value;
   const reprendreEleveId = () => String(overlay.querySelector("#asEmailResumeStudent")?.value || "");
   const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
   if (testEmailInput) testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
@@ -1769,6 +1772,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     return { nombre, manquants };
   };
   const remplirMessage = () => {
+    if (modeleMessage() === "free") return;
     const famille = audience() === "parents_personalized";
     let objet = "Information – Association sportive";
     let message = `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n[Votre message]\n\nCordialement,\n${professeur}`;
@@ -1827,6 +1831,17 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailRecipients").open = false;
     overlay.querySelector("#asEmailMessageStep").open = true;
   });
+  overlay.querySelector("#asEmailTemplate").onchange = () => {
+    const libre = modeleMessage() === "free";
+    overlay.querySelector("#asEmailTemplateChoice").textContent = libre ? "Message libre" : "Message proposé";
+    if (libre) {
+      overlay.querySelector("#asEmailSubject").value = "";
+      overlay.querySelector("#asEmailMessage").value = "";
+      overlay.querySelector("#asEmailSubject").focus();
+    } else {
+      remplirMessage();
+    }
+  };
   remplirMessage(); actualiser();
 
   const construireBrouillons = (adresseTest = "") => {
