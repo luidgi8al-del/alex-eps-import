@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20260927-1">
+<link rel="stylesheet" href="styles/site.css?v=20260928-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
 <link rel="stylesheet" href="home-navigation.css">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
@@ -294,13 +294,29 @@
           <div class="card">
             <h2>Installations sportives</h2>
             <div class="muted" style="margin-bottom:10px">Gymnase, plateau exterieur, piscine, dojo... proposees quand vous posez un creneau dans Programmation.</div>
-            <div class="row">
+            <section class="installation-manager-card" id="installationManagerCard">
+              <div>
+                <h3>Responsable des installations</h3>
+                <p>Ce même contact recevra tous les signalements WhatsApp.</p>
+              </div>
+              <div class="installation-manager-fields">
+                <label for="installationManagerName">Nom ou service
+                  <input type="text" id="installationManagerName" placeholder="Ex : Service des sports">
+                </label>
+                <label for="installationManagerPhone">Numéro WhatsApp
+                  <input type="tel" id="installationManagerPhone" placeholder="Ex : 06 12 34 56 78">
+                </label>
+                <button type="button" id="saveInstallationManagerBtn">Enregistrer le responsable</button>
+              </div>
+              <div id="installationManagerStatus" class="muted" aria-live="polite"></div>
+            </section>
+            <div class="installation-create-grid">
               <div>
                 <label for="installationName">Nouvelle installation</label>
                 <input type="text" id="installationName" placeholder="Ex : Gymnase">
               </div>
+              <button id="addInstallationBtn">Ajouter</button>
             </div>
-            <button id="addInstallationBtn">Ajouter</button>
             <div class="error" id="installationError"></div>
             <div id="installationsList" style="margin-top:16px"></div>
             <!-- Reste vide tant qu'il n'y a rien a trancher : voir .conflitAucun. -->
@@ -507,7 +523,7 @@
   <script src="classe-tableau-bord.js?v=20260923-1"></script>
   <script src="classe-ecrans.js?v=20260927-2"></script>
   <script src="qrcode.min.js"></script>
-  <script src="equipement.js"></script>
+  <script src="equipement.js?v=20260928-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20260927-12"></script>
@@ -889,7 +905,7 @@
     async function exportAllData() {
       const tables = ["classes", "students", "cycles", "evaluations", "evaluation_criteria",
         "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
-        "sport_installations", "unss_groups", "unss_students", "unss_memberships",
+        "sport_installations", "sport_installation_contacts", "sport_installation_incidents", "unss_groups", "unss_students", "unss_memberships",
         "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
         "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles", "health_dispensations",
         // Manquaient a l'appel : une sauvegarde qui oublie une table ne se voit qu'au moment de
