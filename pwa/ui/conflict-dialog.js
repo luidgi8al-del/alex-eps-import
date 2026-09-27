@@ -141,8 +141,8 @@ function conflitHtml(conflit, libelles) {
   return `
     <section class="conflit" data-conflit="${echapper(conflit.conflictId)}">
       <h3>${echapper(titre)}</h3>
-      <p class="conflitExplication">Cette fiche a été modifiée sur deux appareils. Pour chaque information,
-         choisissez celle qui doit être conservée.</p>
+      <p class="conflitExplication">La copie de cet appareil et la version enregistrée en ligne diffèrent.
+         Pour chaque information, choisissez celle qui doit être conservée.</p>
       <p class="conflitQuand">Votre saisie : ${echapper(dateLisible(conflit.localModifiedAt))}
          · version enregistrée : ${echapper(heureServeur)}</p>
       <table class="conflitTable">
@@ -177,7 +177,7 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
       (refuses.length ? `<p class="conflitIntro">${refuses.length} saisie(s) refusée(s) par le serveur.</p>
         <div class="conflitActions"><button type="button" data-refus-retry-all>Réessayer toutes les saisies</button></div>`
         + refuses.map(r => refusHtml(r, libelles)).join("") : "")
-      + (arbitrer.length ? `<p class="conflitIntro"><strong>${arbitrer.length} ${arbitrer.length > 1 ? "fiches ont" : "fiche a"} été modifiée${arbitrer.length > 1 ? "s" : ""} sur deux appareils.</strong><br>
+      + (arbitrer.length ? `<p class="conflitIntro"><strong>${arbitrer.length} ${arbitrer.length > 1 ? "fiches présentent" : "fiche présente"} deux versions différentes.</strong><br>
         Rien ne sera envoyé avant votre décision.</p>`
         + (arbitrer.length > 1 ? `<div class="conflitActions">
             <button type="button" data-tout-choix="local">Garder ma version pour les ${arbitrer.length} fiches</button>

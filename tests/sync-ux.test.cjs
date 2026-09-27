@@ -15,7 +15,7 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   if (!status.includes(marker)) throw new Error(`Etat de synchronisation incomplet : ${marker}`);
 });
 [
-  'Fiche de ${personne}', 'Cette fiche a été modifiée sur deux appareils',
+  'Fiche de ${personne}', 'La copie de cet appareil et la version enregistrée en ligne diffèrent',
   'Adresse e-mail des parents', 'Âge maximum pour l’hébergement', 'Version enregistrée'
 ].forEach(marker => {
   if (!conflicts.includes(marker)) throw new Error(`Conflit encore trop technique : ${marker}`);
