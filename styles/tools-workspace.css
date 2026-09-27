@@ -49,3 +49,17 @@
 .fitness-web .obs-cell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .fitness-web .obs-cell button{width:auto;min-width:30px;margin:0;padding:3px 9px}
 .fitness-web .obs-cell b{min-width:18px;display:inline-block}
+
+/* Multi-chrono : meme lecture en lignes que le 3 x 500, avec le nom toujours visible. */
+.multi-chrono-table-wrap{overflow:auto;margin:12px 0;border:1px solid #d6e3ed;border-radius:18px;background:#fff;max-height:62vh}
+.multi-chrono-table{width:100%;min-width:690px;border-collapse:separate;border-spacing:0}
+.multi-chrono-table th,.multi-chrono-table td{padding:11px;border-bottom:1px solid #e5edf3;background:#fff;text-align:center}
+.multi-chrono-table thead th{position:sticky;top:0;z-index:3;background:#eaf4ff;color:#123a59;font-size:13px}
+.multi-chrono-table th:first-child{position:sticky;left:0;z-index:2;min-width:230px;text-align:left;box-shadow:5px 0 10px #173a570b}
+.multi-chrono-table thead th:first-child{z-index:4;background:#eaf4ff}
+.multi-chrono-table td>[data-multi-time]{display:inline-block;min-width:112px;color:#087dca;font-size:24px;font-variant-numeric:tabular-nums}
+.multi-chrono-table input[data-multi-name]{min-width:190px;margin:0}
+.multi-chrono-actions{display:flex;justify-content:center;gap:7px;white-space:nowrap}
+.multi-chrono-actions button{width:auto;margin:0;padding:9px 13px}
+.modern-tool-panel #multiWorkspace>.running-group-tabs,.modern-tool-panel #multiWorkspace>.running-group-editor,.modern-tool-panel #multiWorkspace>.running-save-actions{margin-left:0;margin-right:0}
+@media(max-width:700px){.multi-chrono-table{min-width:610px}.multi-chrono-table th:first-child{min-width:190px}.multi-chrono-table td>[data-multi-time]{font-size:21px}.multi-chrono-actions{flex-direction:column}}

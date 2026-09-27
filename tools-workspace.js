@@ -183,13 +183,55 @@
   }
   function download(name,text,type="text/plain"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
   async function renderMultiChronoWeb(){const ctx=await contextHtml();
-    // Choisir une classe ne faisait rien : les chronos restaient "Élève 1, Élève 2…". Ils portent
-    // desormais les noms de la classe, et l'on retombe sur un chrono anonyme en usage libre.
-    const chronosDeLaClasse=()=>onRealClass()&&toolStudents.length
-      ? toolStudents.map(e=>({name:studentLabel(e),ms:0,running:false,start:0}))
-      : [{name:"Élève 1",ms:0,running:false,start:0}];
-    let timers=chronosDeLaClasse();toolPanel.innerHTML=header("Multi-chrono","Plusieurs chronos simultanés","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiRows"></div><button id="multiAdd">＋ Ajouter un chrono</button></main>`;const drawRows=()=>multiRows.innerHTML=timers.map((t,i)=>`<div class="field-tool-counter"><input data-name="${i}" value="${esc(t.name)}"><b>${formatToolTime(t.ms+(t.running?Date.now()-t.start:0))}</b><button data-toggle="${i}">${t.running?"Pause":"Départ"}</button><button data-reset="${i}">↺</button></div>`).join("");drawRows();setInterval(()=>{if(document.getElementById("multiRows")&&timers.some(x=>x.running))drawRows()},100);multiAdd.onclick=()=>{timers.push({name:`Élève ${timers.length+1}`,ms:0,running:false,start:0});drawRows()};multiRows.onclick=e=>{let i=+e.target.dataset.toggle;if(Number.isInteger(i)){let t=timers[i];if(t.running){t.ms+=Date.now()-t.start;t.running=false}else{t.start=Date.now();t.running=true}drawRows()}i=+e.target.dataset.reset;if(Number.isInteger(i)){timers[i].ms=0;timers[i].running=false;drawRows()}};multiRows.onchange=e=>{if(e.target.dataset.name!==undefined)timers[+e.target.dataset.name].name=e.target.value};
-    bindContext(()=>{timers=chronosDeLaClasse();drawRows()})}
+    // Le Multi-chrono reprend la logique du 3 x 500 : toute la classe reste disponible dans
+    // "Sans groupe", puis l'enseignant peut créer, modifier ou supprimer ses groupes. Les
+    // chronos sont indexes par eleve afin qu'un changement de groupe ne perde jamais un temps.
+    let groups=[],activeGroup=-1,manageGroups=false,editingGroup=null,selection=new Set(),freeCounter=1;
+    let timers=new Map(),workspace=null;
+    const makeTimer=(id,name)=>({id:String(id),name,ms:0,running:false,start:0});
+    const resetTimersFromContext=()=>{
+      groups=[];activeGroup=-1;manageGroups=false;editingGroup=null;selection=new Set();freeCounter=1;
+      timers=new Map(onRealClass()&&toolStudents.length
+        ? toolStudents.map(e=>[String(e.id),makeTimer(e.id,studentLabel(e))])
+        : [["free-1",makeTimer("free-1","Élève 1")]]);
+    };
+    const currentTimers=()=>{
+      const all=[...timers.values()];
+      if(!onRealClass()||activeGroup<0)return all.sort((a,b)=>a.name.localeCompare(b.name,"fr",{sensitivity:"base"}));
+      const ids=new Set(groups[activeGroup]||[]);return all.filter(t=>ids.has(t.id));
+    };
+    const groupsHtml=()=>{
+      if(!onRealClass())return "";
+      const tabs=`<div class="running-group-tabs"><button class="${activeGroup<0?'':'secondary'}" data-multi-group="-1">Sans groupe · ordre alphabétique</button>${groups.map((g,i)=>`<button class="${activeGroup===i?'':'secondary'}" data-multi-group="${i}">Groupe ${i+1} · ${g.length}</button>`).join('')}<button class="secondary" id="multiManageGroups">${groups.length?'Modifier les groupes':'Constituer des groupes'}</button></div>`;
+      if(!manageGroups)return tabs;
+      const unavailable=new Set(groups.flatMap((g,i)=>i===editingGroup?[]:g));
+      const editor=`<section class="running-group-editor"><div class="top"><div><b>${editingGroup==null?`Créer le groupe ${groups.length+1}`:`Modifier le groupe ${editingGroup+1}`}</b><small>Cochez les élèves puis enregistrez la composition.</small></div><button class="secondary" id="multiCloseGroups">Fermer</button></div><div class="running-group-students">${toolStudents.filter(s=>!unavailable.has(String(s.id))).map(s=>`<label class="${selection.has(String(s.id))?'selected':''}"><input type="checkbox" data-multi-group-student="${s.id}" ${selection.has(String(s.id))?'checked':''}><span>${esc(studentLabel(s))}</span></label>`).join('')}</div><div class="running-group-actions"><button id="multiSaveGroup" ${selection.size?'':'disabled'}>${editingGroup==null?'Créer le groupe':'Enregistrer les modifications'}</button>${editingGroup!=null?'<button class="danger" id="multiDeleteGroup">Supprimer ce groupe</button>':''}</div><div class="running-existing-groups">${groups.map((g,i)=>`<button class="secondary" data-multi-edit-group="${i}">Groupe ${i+1} · ${g.length} élève(s)</button>`).join('')}</div></section>`;
+      return tabs+editor;
+    };
+    const elapsed=t=>t.ms+(t.running?Date.now()-t.start:0);
+    const draw=()=>{
+      const rows=currentTimers();
+      workspace.innerHTML=`${groupsHtml()}<div class="multi-chrono-table-wrap"><table class="multi-chrono-table"><thead><tr><th>Nom et prénom</th><th>Chrono</th><th>Actions</th></tr></thead><tbody>${rows.map(t=>`<tr><th>${onRealClass()?esc(t.name):`<input data-multi-name="${t.id}" value="${esc(t.name)}" aria-label="Nom du participant">`}</th><td><b data-multi-time="${t.id}">${formatToolTime(elapsed(t))}</b></td><td><div class="multi-chrono-actions"><button data-multi-toggle="${t.id}">${t.running?'Pause':'Départ'}</button><button class="secondary" data-multi-reset="${t.id}">↺ Remettre à zéro</button></div></td></tr>`).join('')||'<tr><td colspan="3" class="muted">Ce groupe ne contient aucun élève.</td></tr>'}</tbody></table></div>${!onRealClass()?'<button class="secondary" id="multiAdd">＋ Ajouter un chrono</button>':''}<div class="running-save-actions"><button class="danger" id="multiResetAll">↺ Réinitialiser toutes les données</button></div>`;
+      bindDrawn();
+    };
+    const bindDrawn=()=>{
+      workspace.querySelectorAll('[data-multi-group]').forEach(b=>b.onclick=()=>{activeGroup=+b.dataset.multiGroup;manageGroups=false;draw()});
+      workspace.querySelector('#multiManageGroups')?.addEventListener('click',()=>{manageGroups=true;editingGroup=null;selection=new Set();draw()});
+      workspace.querySelector('#multiCloseGroups')?.addEventListener('click',()=>{manageGroups=false;draw()});
+      workspace.querySelectorAll('[data-multi-group-student]').forEach(box=>box.onchange=()=>{box.checked?selection.add(String(box.dataset.multiGroupStudent)):selection.delete(String(box.dataset.multiGroupStudent));draw()});
+      workspace.querySelectorAll('[data-multi-edit-group]').forEach(b=>b.onclick=()=>{editingGroup=+b.dataset.multiEditGroup;selection=new Set(groups[editingGroup]||[]);draw()});
+      workspace.querySelector('#multiSaveGroup')?.addEventListener('click',()=>{const ids=[...selection];if(!ids.length)return;if(editingGroup==null)groups.push(ids);else groups[editingGroup]=ids;activeGroup=editingGroup==null?groups.length-1:editingGroup;manageGroups=false;editingGroup=null;selection=new Set();draw()});
+      workspace.querySelector('#multiDeleteGroup')?.addEventListener('click',()=>{if(!confirm(`Supprimer le groupe ${editingGroup+1} ? Les chronos restent conservés.`))return;groups.splice(editingGroup,1);activeGroup=groups.length?Math.min(editingGroup,groups.length-1):-1;manageGroups=false;editingGroup=null;selection=new Set();draw()});
+      workspace.querySelectorAll('[data-multi-toggle]').forEach(b=>b.onclick=()=>{const t=timers.get(b.dataset.multiToggle);if(!t)return;if(t.running){t.ms+=Date.now()-t.start;t.running=false}else{t.start=Date.now();t.running=true}draw()});
+      workspace.querySelectorAll('[data-multi-reset]').forEach(b=>b.onclick=()=>{const t=timers.get(b.dataset.multiReset);if(!t)return;t.ms=0;t.running=false;t.start=0;draw()});
+      workspace.querySelectorAll('[data-multi-name]').forEach(input=>input.onchange=()=>{const t=timers.get(input.dataset.multiName);if(t)t.name=input.value.trim()||t.name});
+      workspace.querySelector('#multiAdd')?.addEventListener('click',()=>{freeCounter++;const t=makeTimer(`free-${freeCounter}`,`Élève ${freeCounter}`);timers.set(t.id,t);draw()});
+      workspace.querySelector('#multiResetAll')?.addEventListener('click',()=>{if(!confirm('Effacer tous les chronos et tous les groupes pour repartir de zéro ?'))return;resetTimersFromContext();draw()});
+    };
+    toolPanel.innerHTML=header("Multi-chrono","Groupes et chronos par élève","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiWorkspace"></div></main>`;
+    workspace=document.getElementById('multiWorkspace');resetTimersFromContext();draw();
+    const ticker=setInterval(()=>{const host=document.getElementById('multiWorkspace');if(!host){clearInterval(ticker);return}host.querySelectorAll('[data-multi-time]').forEach(node=>{const t=timers.get(node.dataset.multiTime);if(t?.running)node.textContent=formatToolTime(elapsed(t))})},100);
+    bindContext(()=>{resetTimersFromContext();draw()})}
   async function renderTournamentWeb(saved){const ctx=await contextHtml(),state=saved?.payload||{teams:"Équipe 1\nÉquipe 2\nÉquipe 3\nÉquipe 4",scores:{}};toolPanel.innerHTML=header("Tournois","Rencontres, scores et classement","🏆")+`<main class="field-tool-card">${ctx}<label>Équipes<textarea id="tourTeams" rows="5">${esc(state.teams)}</textarea></label><button id="tourBuild">Créer les rencontres</button><div id="tourMatches"></div></main><div class="tool-savebar"><button id="tourSave">💾 Enregistrer</button><button id="tourExport">▦ Exporter</button><button id="tourResume">↻ Reprendre</button></div><div id="tourSaved"></div>`;let id=saved?.id;const build=()=>{const names=tourTeams.value.split(/\n/).map(x=>x.trim()).filter(Boolean),matches=[];names.forEach((a,i)=>names.slice(i+1).forEach(b=>matches.push([a,b])));tourMatches.innerHTML=matches.map((m,i)=>`<div class="field-tool-counter"><span>${esc(m[0])} — ${esc(m[1])}</span><input type=number data-side="0" data-match="${i}" value="${state.scores[i]?.[0]||0}"><input type=number data-side="1" data-match="${i}" value="${state.scores[i]?.[1]||0}"></div>`).join("")};build();tourBuild.onclick=build;tourSave.onclick=async()=>{document.querySelectorAll("#tourMatches input").forEach(x=>(state.scores[x.dataset.match]??=[0,0])[+x.dataset.side]=+x.value);const w=await saveWork("tournament",prompt("Nom du tournoi",saved?.title||"Tournoi")||"Tournoi",{id,teams:tourTeams.value,scores:state.scores});id=w.id;renderTournamentWeb(w)};tourExport.onclick=()=>download("tournoi.txt",tourTeams.value+"\n\n"+tourMatches.innerText);tourResume.onclick=()=>{tourSaved.innerHTML=workList("tournament");bindWorks("tournament",()=>renderTournamentWeb(),renderTournamentWeb)};bindContext()}
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   // Chaque indicateur rapporte (+1) ou retire (-1) un point ; l'eleve part du milieu du bareme
@@ -234,7 +276,7 @@
           <label>Barème<select id="obsBareme">${[5,10,20].map(b=>`<option value="${b}"${b===state.bareme?" selected":""}>/${b}</option>`).join("")}</select></label>
         </div>
         <div id="obsTable">${tableauHtml()}</div>
-        <div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><select id="obsNewPol"><option value="1">Positif (+1)</option><option value="-1">Négatif (−1)</option></select><button id="obsAdd">Ajouter</button><button class="secondary" id="obsReset">↺ Réinitialiser</button></div>
+        <div class="field-tool-row"><input id="obsNew" placeholder="Nouvel indicateur"><select id="obsNewPol"><option value="1">Positif (+1)</option><option value="-1">Négatif (−1)</option></select><button id="obsAdd">Ajouter</button><button class="danger" id="obsReset">↺ Réinitialiser toutes les données</button></div>
       </main>
       <div class="tool-savebar"><button id="obsSave">💾 Enregistrer</button><button id="obsExport">▦ Exporter</button><button id="obsResume">↻ Reprendre</button></div>
       <div id="obsSaved"></div>`;
@@ -252,7 +294,7 @@
       state.indicators=[...state.indicators,[nom,+document.getElementById("obsNewPol").value]];
       document.getElementById("obsNew").value="";redraw()
     };
-    document.getElementById("obsReset").onclick=()=>{if(!confirm("Effacer toutes les actions comptées et repartir de zéro ?"))return;state.values={};redraw()};
+    document.getElementById("obsReset").onclick=()=>{if(!confirm("Effacer toutes les actions et les indicateurs personnalisés du travail en cours ? Les observations déjà enregistrées seront conservées."))return;id=null;state.values={};state.indicators=OBS_PRESETS[state.sport].map(x=>[...x]);state.activeId=null;redraw()};
     document.getElementById("obsSave").onclick=async()=>{
       const w=await saveWork("observer",prompt("Nom de l’observation",saved?.title||`Observation ${state.sport}`)||"Observation",{...state,id});
       id=w.id;renderObserverWeb(w)
