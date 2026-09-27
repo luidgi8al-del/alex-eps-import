@@ -692,7 +692,7 @@ function showCreneauExport(slot, rows) {
   overlay.className = "unified-export-overlay";
   overlay.innerHTML = `<section class="unified-export-dialog"><header><i>${iconeActiviteAS(slot.activity_name)}</i><div><h3>${unssText(slot.activity_name)}</h3><p>${unssText(unssSlotLabel(slot))} · ${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
     <h4>Télécharger la liste du créneau</h4>
-    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Nom, prénom, classe et catégorie</small></span><em>›</em></button>
+    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Nom, prénom, classe, e-mail élève et catégorie</small></span><em>›</em></button>
     <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Liste prête à imprimer ou enregistrer</small></span><em>›</em></button>
     <button class="export-cancel" data-export-close>Annuler</button>
   </main></section>`;
@@ -704,9 +704,9 @@ function showCreneauExport(slot, rows) {
 }
 
 function exportCreneauCsv(slot, rows) {
-  const lignes = [["Nom", "Prénom", "Classe", "Catégorie"], ...rows.map(s => [
+  const lignes = [["Nom", "Prénom", "Classe", "E-mail élève", "Catégorie"], ...rows.map(s => [
     String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || s.school_class_label || s.class_label || "",
-    unssCategoryLabel(s.category, s.sex)
+    s.student_email || "", unssCategoryLabel(s.category, s.sex)
   ])];
   const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
   const nom = String(slot.activity_name || "creneau-as").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
@@ -722,9 +722,9 @@ function printCreneauPdf(slot, rows) {
   if (!w) { alert("Autorisez les fenêtres surgissantes."); return; }
   const professeur = slot.responsible_teacher || "Professeur non attribué";
   w.document.write(`<html><head><meta charset=utf-8><title>Liste ${unssText(slot.activity_name)}</title><style>
-    body{font:12px Arial;color:#123a59;padding:24px}header{background:#087dca;color:#fff;padding:18px;border-radius:12px}header h1{margin:0 0 6px}header p{margin:3px 0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #cad8e3;padding:7px;text-align:left}th{background:#edf6fd}@media print{button{display:none}}
+    body{font:12px Arial;color:#123a59;padding:24px}header{background:#087dca;color:#fff;padding:18px;border-radius:12px}header h1{margin:0 0 6px}header p{margin:3px 0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #cad8e3;padding:7px;text-align:left;overflow-wrap:anywhere}th{background:#edf6fd}@page{size:landscape;margin:12mm}@media print{button{display:none}}
   </style></head><body><header><h1>${unssText(slot.activity_name)}</h1><p>${unssText(unssSlotLabel(slot))}</p><p>Enseignant : ${unssText(professeur)} · ${rows.length} élève(s)</p></header>
-    <table><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || s.school_class_label || s.class_label || "")}</td><td>${unssText(unssCategoryLabel(s.category, s.sex))}</td></tr>`).join("")}</tbody></table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);
+    <table><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>E-mail élève</th><th>Catégorie</th></tr></thead><tbody>${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || s.school_class_label || s.class_label || "")}</td><td>${unssText(s.student_email || "")}</td><td>${unssText(unssCategoryLabel(s.category, s.sex))}</td></tr>`).join("")}</tbody></table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);
   w.document.close();
 }
 

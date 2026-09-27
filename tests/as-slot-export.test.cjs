@@ -11,7 +11,8 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
   'unssListeInscritsExportBtn',
   'unssCreneauExportBtn',
   'id="asExport"',
-  '["Nom", "Prénom", "Classe", "Catégorie"]',
+  '["Nom", "Prénom", "Classe", "E-mail élève", "Catégorie"]',
+  '<th>Classe</th><th>E-mail élève</th><th>Catégorie</th>',
   'Enseignant :'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Export de créneau incomplet : ${marker}`);
