@@ -161,12 +161,21 @@ Deno.serve(async req => {
         if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, student, slots: slotsByStudent.get(String(student.id)) || [] }); }
       }
     }
-    if (deliveries.length > 150) return reply({ error: "Plus de 150 e-mails : réduisez le nombre de destinataires" }, 400);
+    deliveries.sort((a, b) => {
+      const studentA = `${a.student.last_name || ""}|${a.student.first_name || ""}|${a.student.id || ""}|${a.recipient}`;
+      const studentB = `${b.student.last_name || ""}|${b.student.first_name || ""}|${b.student.id || ""}|${b.recipient}`;
+      return studentA.localeCompare(studentB, "fr");
+    });
+    const total = deliveries.length;
+    if (total > 450) return reply({ error: "Plus de 450 e-mails sur une campagne : séparez l’envoi aux élèves et aux familles" }, 400);
+    const batchSize = Math.min(100, Math.max(1, Math.floor(Number(input.batchSize) || 100)));
+    const batchOffset = Math.max(0, Math.floor(Number(input.batchOffset) || 0));
+    const batchDeliveries = deliveries.slice(batchOffset, batchOffset + batchSize);
 
     let sent = 0, failed = 0;
     const failures: Array<{recipient:string,error:string}> = [];
-    for (let start = 0; start < deliveries.length; start += 2) {
-      const batch = deliveries.slice(start, start + 2);
+    for (let start = 0; start < batchDeliveries.length; start += 2) {
+      const batch = batchDeliveries.slice(start, start + 2);
       await Promise.all(batch.map(async delivery => {
         try {
           const orderedSlots = [...delivery.slots].sort((a, b) => activityLine(a).localeCompare(activityLine(b), "fr"));
@@ -183,9 +192,14 @@ Deno.serve(async req => {
           sent++;
         } catch (error) { failed++; failures.push({ recipient: delivery.recipient, error: String(error).slice(0, 300) }); }
       }));
-      if (start + 2 < deliveries.length) await new Promise(resolve => setTimeout(resolve, 550));
+      if (start + 2 < batchDeliveries.length) await new Promise(resolve => setTimeout(resolve, 550));
     }
-    return reply({ ok: failed === 0, sent, failed, missing, failures });
+    const nextOffset = batchOffset + batchDeliveries.length;
+    return reply({
+      ok: failed === 0, sent, failed, missing, failures, total,
+      processed: batchDeliveries.length, batchOffset, batchSize,
+      nextOffset, hasMore: nextOffset < total
+    });
   }
 
   const { data: slot, error: slotError } = await admin.from("unss_slots")

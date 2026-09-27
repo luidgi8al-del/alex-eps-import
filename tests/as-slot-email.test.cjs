@@ -20,9 +20,14 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 [
   'assigned_teacher_id', 'unss_memberships', 'student_email,parent_email', 'parents_personalized',
   'attachments', 'smtp.gmail.com', 'EPS_GMAIL_APP_PASSWORD', 'replyTo: teacherEmail', 'division',
-  'deliveries.length > 150', 'formatFirstName', 'toLocaleUpperCase("fr-FR")',
+  'batchSize = Math.min(100', 'batchDeliveries', 'hasMore: nextOffset < total',
+  'total > 450', 'formatFirstName', 'toLocaleUpperCase("fr-FR")',
   'const child = `${last} ${first}`', 'global_confirmations', 'eps_admin_target',
   'activityLine', '.replaceAll("{creneaux}", activityList)',
   'RECIPIENT_FILTERS', 'medical_certificate_missing', 'payment_missing', 'host_available'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
+[
+  'batchOffset: offset, batchSize: 100', 'Envoi du lot ${numeroLot}/${nombreLots}',
+  'lot(s) de 100 maximum', 'if (!bilan.hasMore) break'
+].forEach(marker => { if (!code.includes(marker)) throw new Error(`Envoi par lots incomplet : ${marker}`); });
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');

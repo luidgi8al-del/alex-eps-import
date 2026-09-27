@@ -1754,8 +1754,9 @@ async function ouvrirEmailGlobalLicencies(rows) {
   };
   const actualiser = () => {
     const c = compteur(audience());
+    const lots = Math.ceil(c.nombre / 100);
     overlay.querySelector("#asEmailRecipientSummary").innerHTML = filtre() && audience()
-      ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
+      ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b><span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
       : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
     overlay.querySelector("#asEmailSend").disabled = !filtre() || !c.nombre;
   };
@@ -1786,19 +1787,38 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const c = compteur(audience());
     if (!filtre() || !audience() || !c.nombre) { resultat.textContent = "Choisissez un groupe et des destinataires disposant d’une adresse."; return; }
     if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
-    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés au groupe « ${libellesFiltres[filtre()]} » ?`)) return;
-    bouton.disabled = true; resultat.textContent = "Envoi en cours…";
+    const lotsPrevus = Math.ceil(c.nombre / 100);
+    if (!confirm(`Envoyer ${c.nombre} e-mail(s) séparés en ${lotsPrevus} lot(s) de 100 maximum au groupe « ${libellesFiltres[filtre()]} » ?`)) return;
+    bouton.disabled = true; resultat.textContent = `Préparation de ${lotsPrevus} lot(s)…`;
     try {
       const attachment = await lirePieceJointeAS(overlay.querySelector("#asEmailAttachment").files[0]);
-      const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-        requestId: crypto.randomUUID(), mode: "global_confirmations", recipientFilter: filtre(), audience: audience(), subject, message, attachment
-      }) });
-      const bilan = await response.json();
-      resultat.innerHTML = `<b>${bilan.sent || 0} e-mail(s) envoyé(s).</b>${bilan.failed ? `<span>${bilan.failed} échec(s).</span>` : ""}${bilan.missing?.length ? `<span>${bilan.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;
-      if (!bilan.failed) bouton.textContent = "Envoyé"; else bouton.disabled = false;
+      const requestId = crypto.randomUUID();
+      let offset = 0, envoyes = 0, echecs = 0, totalServeur = c.nombre, manquants = [];
+      while (true) {
+        const numeroLot = Math.floor(offset / 100) + 1;
+        const nombreLots = Math.max(1, Math.ceil(totalServeur / 100));
+        resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
+        const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
+          requestId, mode: "global_confirmations", recipientFilter: filtre(), audience: audience(), subject, message, attachment,
+          batchOffset: offset, batchSize: 100
+        }) });
+        const bilan = await response.json();
+        if (!response.ok) throw new Error(bilan.error || `Le lot ${numeroLot} n’a pas pu être envoyé.`);
+        totalServeur = Number(bilan.total || totalServeur);
+        envoyes += Number(bilan.sent || 0);
+        echecs += Number(bilan.failed || 0);
+        if (Array.isArray(bilan.missing)) manquants = bilan.missing;
+        resultat.innerHTML = `<b>${envoyes}/${totalServeur} e-mail(s) envoyé(s).</b><span>Lot ${numeroLot}/${Math.max(1, Math.ceil(totalServeur / 100))} terminé.</span>`;
+        if (!bilan.hasMore) break;
+        if (!Number.isFinite(Number(bilan.nextOffset)) || Number(bilan.nextOffset) <= offset) throw new Error("La progression de l’envoi est incohérente.");
+        offset = Number(bilan.nextOffset);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      resultat.innerHTML = `<b>${envoyes} e-mail(s) envoyé(s) sur ${totalServeur}.</b>${echecs ? `<span>${echecs} échec(s).</span>` : `<span class="ok">Tous les lots sont terminés.</span>`}${manquants.length ? `<span>${manquants.length} élève(s) sans adresse adaptée.</span>` : ""}`;
+      bouton.textContent = echecs ? "Terminé avec erreurs" : "Envoyé";
     } catch (error) {
-      resultat.textContent = error.message || "L’envoi a échoué.";
-      bouton.disabled = false;
+      resultat.innerHTML += `<span class="error">${unssText(error.message || "L’envoi a échoué.")} Les lots déjà confirmés ne seront pas relancés automatiquement.</span>`;
+      bouton.textContent = "Envoi interrompu";
     }
   };
 }
