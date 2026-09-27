@@ -22,6 +22,9 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
 if (!css.includes('.as-panel-export')) throw new Error('Style du bouton Télécharger manquant.');
 [
   'function libelleVoeuExport(student, rang)',
+  '"E-mail élève", "Taille maillot"',
+  's.student_email || ""',
+  '<th>E-mail élève</th><th>Taille maillot</th>',
   '"Vœu 1", "Vœu 2", "Vœu 3"',
   '<th>Vœu 1</th><th>Vœu 2</th><th>Vœu 3</th>'
 ].forEach(marker => {
