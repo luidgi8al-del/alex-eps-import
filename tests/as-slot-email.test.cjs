@@ -28,6 +28,10 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 [
   'batchOffset: offset, batchSize: 100', 'Envoi du lot ${numeroLot}/${nombreLots}',
-  'lot(s) de 100 maximum', 'if (!bilan.hasMore) break'
+  'lot(s) de 100 maximum', 'if (!bilan.hasMore) break', 'id="asEmailResumeStudent"',
+  'reprendreEleveId', 'resumeStudentId', 'if (!envoiEnCours) overlay.remove()', 'b.disabled = true'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Envoi par lots incomplet : ${marker}`); });
+['resumeStudentId', 'resumeIndex', 'campaignDeliveries', 'Toutes les adresses d\'un même élève', 'studentEnd'].forEach(marker => {
+  if (!edge.includes(marker)) throw new Error(`Reprise par élève incomplète : ${marker}`);
+});
 console.log('as-slot-email: destinataires, modèles, personnalisation, pièce jointe et sécurité OK');

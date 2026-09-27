@@ -166,11 +166,29 @@ Deno.serve(async req => {
       const studentB = `${b.student.last_name || ""}|${b.student.first_name || ""}|${b.student.id || ""}|${b.recipient}`;
       return studentA.localeCompare(studentB, "fr");
     });
-    const total = deliveries.length;
+    const grandTotal = deliveries.length;
+    const resumeStudentId = String(input.resumeStudentId || "");
+    const resumeIndex = resumeStudentId
+      ? deliveries.findIndex(delivery => String(delivery.student.id) === resumeStudentId)
+      : 0;
+    if (resumeStudentId && resumeIndex < 0) return reply({ error: "L’élève choisi pour la reprise n’est plus dans les destinataires" }, 400);
+    const campaignDeliveries = deliveries.slice(Math.max(0, resumeIndex));
+    const total = campaignDeliveries.length;
     if (total > 450) return reply({ error: "Plus de 450 e-mails sur une campagne : séparez l’envoi aux élèves et aux familles" }, 400);
     const batchSize = Math.min(100, Math.max(1, Math.floor(Number(input.batchSize) || 100)));
     const batchOffset = Math.max(0, Math.floor(Number(input.batchOffset) || 0));
-    const batchDeliveries = deliveries.slice(batchOffset, batchOffset + batchSize);
+    // Toutes les adresses d'un même élève restent dans le même lot. Un élève et ses parents
+    // ne seront donc jamais séparés uniquement parce que la limite de 100 tombe entre eux.
+    let batchEnd = batchOffset;
+    while (batchEnd < campaignDeliveries.length) {
+      const studentId = String(campaignDeliveries[batchEnd].student.id || "");
+      let studentEnd = batchEnd + 1;
+      while (studentEnd < campaignDeliveries.length && String(campaignDeliveries[studentEnd].student.id || "") === studentId) studentEnd++;
+      if (batchEnd > batchOffset && studentEnd - batchOffset > batchSize) break;
+      batchEnd = studentEnd;
+      if (batchEnd - batchOffset >= batchSize) break;
+    }
+    const batchDeliveries = campaignDeliveries.slice(batchOffset, batchEnd);
 
     let sent = 0, failed = 0;
     const failures: Array<{recipient:string,error:string}> = [];
@@ -196,9 +214,9 @@ Deno.serve(async req => {
     }
     const nextOffset = batchOffset + batchDeliveries.length;
     return reply({
-      ok: failed === 0, sent, failed, missing, failures, total,
+      ok: failed === 0, sent, failed, missing, failures, total, grandTotal,
       processed: batchDeliveries.length, batchOffset, batchSize,
-      nextOffset, hasMore: nextOffset < total
+      nextOffset, hasMore: nextOffset < total, resumeStudentId
     });
   }
 
