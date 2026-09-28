@@ -929,7 +929,7 @@ function afficherDispenses(dispenses) {
     if (!bouton) return;
     bouton.onclick = () => {
       if (typeof ouvrirNouvelleDispense === "function") {
-        ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents);
+        ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents, dashboardClass.label);
       }
     };
   };

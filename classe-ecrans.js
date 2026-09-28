@@ -1544,7 +1544,7 @@ function ecDessinerDispenses(panel) {
     </div></section>`;
 
   panel.querySelector("[data-ec-retour]").onclick = () => ecAller("bord");
-  const nouvelle = () => { if (typeof ouvrirNouvelleDispense === "function") ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents); };
+  const nouvelle = () => { if (typeof ouvrirNouvelleDispense === "function") ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents, dashboardClass.label); };
   panel.querySelector("[data-ec-ajout]").onclick = nouvelle;
   document.getElementById("ajoutDispense").onclick = nouvelle;
   document.getElementById("ecPremiereDispense")?.addEventListener("click", nouvelle);

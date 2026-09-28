@@ -26,6 +26,7 @@
     // Le motif ne s'affiche que si la colonne existe : le marqueur le dit sans faire echouer
     // un enregistrement pour l'apprendre.
     await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible(),verifierAdapteDisponible()]);
+    await reparerIdentitesDispenses();
     renderHealthTab();
   }
   function renderHealthTab(){
@@ -125,6 +126,35 @@
       dispenseIdentiteDispo=res.ok&&(await res.json()).length>0;
     }catch{ dispenseIdentiteDispo=false; }
     return dispenseIdentiteDispo;
+  }
+
+  /**
+   * Recopie l'identité lisible dans la dispense. Le lien principal reste student_id : cette
+   * copie sert uniquement aux collègues qui voient la dispense de l'établissement sans avoir
+   * le droit d'ouvrir le répertoire personnel d'élèves de son auteur.
+   */
+  function completerIdentiteDispense(ligne, eleves=healthStudents, classes=healthClasses, classeLibelle=''){
+    if(!dispenseIdentiteDispo)return false;
+    const eleve=eleves.find(s=>s.id===ligne.student_id);
+    const classe=classes.find(c=>c.id===ligne.class_id);
+    if(!eleve)return false;
+    let change=false;
+    if(!ligne.student_last_name&&eleve.last_name){ligne.student_last_name=eleve.last_name;change=true;}
+    if(!ligne.student_first_name&&eleve.first_name){ligne.student_first_name=eleve.first_name;change=true;}
+    if(!ligne.class_name&&(classe?.name||classeLibelle)){ligne.class_name=classe?.name||classeLibelle;change=true;}
+    return change;
+  }
+
+  /** Répare silencieusement les anciennes saisies de l'utilisateur courant, sans toucher à
+   * celles d'un collègue. La règle de sécurité de la base reste donc respectée. */
+  async function reparerIdentitesDispenses(){
+    if(!dispenseIdentiteDispo)return;
+    for(const ligne of healthDispenses){
+      if(ligne.user_id!==session?.user_id)continue;
+      if(!completerIdentiteDispense(ligne))continue;
+      ligne.updated_at=new Date().toISOString();
+      try{await enregistrerLigne('health_dispensations',ligne);}catch{/* réessayé à la prochaine ouverture */}
+    }
   }
 
   async function nomEnseignant(userId){
@@ -323,8 +353,8 @@
    * ici avec son identifiant, comme a la saisie, pour qu'une dispense posee sans reseau
    * s'affiche tout de suite et parte a la reconnexion.
    */
-  async function ouvrirNouvelleDispense(classeId, eleves){
-    await Promise.all([verifierMotifDisponible(),verifierAdapteDisponible()]);
+  async function ouvrirNouvelleDispense(classeId, eleves, classeLibelle=''){
+    await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible(),verifierAdapteDisponible()]);
     const voile=fenetreFicheDispense();
     voile.querySelector('#dispenseFicheTitre').textContent='Nouvelle dispense';
     const corps=voile.querySelector('#dispenseFicheBody');
@@ -361,6 +391,7 @@
       const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:classeId,
         student_id:eleveId,start_date:debut,end_date:fin,
         updated_at:new Date().toISOString(),deleted:false};
+      completerIdentiteDispense(ligne,eleves,healthClasses,classeLibelle);
       if(dispenseMotifDispo){
         ligne.reason_kind=corps.querySelector('#ficheKind')?.value||'AUTRE';
         ligne.reason=corps.querySelector('#ficheReason')?.value.trim()||null;
