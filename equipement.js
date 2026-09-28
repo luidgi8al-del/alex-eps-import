@@ -540,7 +540,8 @@ async function loadInstallationManager() {
   if (!statut || !session?.user_id) return;
   try {
     const rows = await lireTable("sport_installation_contacts",
-      `sport_installation_contacts?user_id=eq.${encodeURIComponent(session.user_id)}&deleted=eq.false&select=*&limit=1`);
+      `sport_installation_contacts?user_id=eq.${encodeURIComponent(session.user_id)}&deleted=eq.false&select=*&limit=1`,
+      { ou: row => row.user_id === session.user_id && !row.deleted });
     installationManager = rows[0] || { id: session.user_id, contact_name: "", whatsapp_phone: "" };
     document.getElementById("installationManagerName").value = installationManager.contact_name || "";
     document.getElementById("installationManagerPhone").value = installationManager.whatsapp_phone || "";
@@ -729,7 +730,9 @@ async function openInstallationHistory(installation) {
   const host = overlay.querySelector(".installation-history-list");
   try {
     const incidents = await lireTable("sport_installation_incidents",
-      `sport_installation_incidents?installation_id=eq.${encodeURIComponent(installation.id)}&deleted=eq.false&select=*&order=reported_at.desc`);
+      `sport_installation_incidents?installation_id=eq.${encodeURIComponent(installation.id)}&deleted=eq.false&select=*&order=reported_at.desc`,
+      { ou: row => row.installation_id === installation.id && !row.deleted,
+        trier: (a, b) => String(b.reported_at || "").localeCompare(String(a.reported_at || "")) });
     const rows = incidents.map(incident => `<article class="installation-history-card">
       <div><span class="installation-status ${String(incident.status || "").toLowerCase()}">${planningText(INSTALLATION_STATUS_LABELS[incident.status] || incident.status)}</span><small>${new Date(incident.reported_at).toLocaleString("fr-FR")}</small></div>
       <strong>${planningText(INSTALLATION_INCIDENT_TYPES[incident.incident_type] || incident.incident_type)}</strong>

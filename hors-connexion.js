@@ -87,6 +87,20 @@ async function schemaVague2Applique() {
  *
  * Le chemin direct reste obligatoire : c'est lui qui sert tant que la table n'est pas suivie.
  */
+const TABLES_HORS_CONNEXION_VAGUE_3 = ["eps_saved_tool_works", "sport_installation_contacts", "sport_installation_incidents"];
+async function schemaVague3Applique() {
+  const key = `eps:offline-schema-3:${SUPABASE_URL}:${session?.user_id || ""}`;
+  const cached = () => { try { return localStorage.getItem(key) === "3"; } catch { return false; } };
+  if (navigator.onLine === false) return cached();
+  try {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.hors_connexion_3&select=name`);
+    if (!res.ok) return cached();
+    const ready = (await res.json()).length > 0;
+    try { if (ready) localStorage.setItem(key, "3"); else localStorage.removeItem(key); } catch {}
+    return ready;
+  } catch { return cached(); }
+}
+
 function tableSuivie(entite) {
   return Boolean(modeHorsConnexion?.adapter?.tables?.includes(entite));
 }
@@ -172,6 +186,10 @@ async function ouvrirFenetreConflits() {
 
 /** Ce qu'il faut redessiner quand le retard est rattrape, selon l'onglet ouvert. */
 function rafraichirApresSynchro() {
+  if (currentWebTab === "home") {
+    if (typeof loadHomeModuleSummaries === "function") loadHomeModuleSummaries();
+    if (typeof loadTodayCard === "function") loadTodayCard();
+  }
   if (currentWebTab === "equipement") { loadInstallationsList(); loadEquipmentList?.(); loadEpiList?.(); }
   if (currentWebTab === "classes") loadImports();
   if (currentWebTab === "planning" || currentWebTab === "programmation") renderPlanningTab();
@@ -202,6 +220,7 @@ async function initialiserModeHorsConnexion() {
     const tablesSuivies = (await schemaVague2Applique())
       ? [...TABLES_HORS_CONNEXION, ...TABLES_HORS_CONNEXION_VAGUE_2]
       : TABLES_HORS_CONNEXION;
+    if (await schemaVague3Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_3);
     const module = await import("./pwa/bootstrap.js");
     modeHorsConnexion = await module.demarrerHorsConnexion({
       url: SUPABASE_URL,

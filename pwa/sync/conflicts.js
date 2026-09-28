@@ -4,6 +4,8 @@ import { seal, unseal } from "../storage/vault.js";
 export async function storeConflict({ operation, serverRecord, overlappingFields }) {
   const conflictId = `${operation.recordKey}:${operation.opId}`;
   const row = { conflictId, recordKey: operation.recordKey, entity: operation.entity, id: operation.id, operationId: operation.opId, baseVersion: operation.baseVersion, serverVersion: serverRecord.version, overlappingFields, localAuthorId: operation.authorId, serverAuthorId: serverRecord.authorId || null, localModifiedAt: operation.createdAt, serverModifiedAt: serverRecord.updatedAt, detectedAt: new Date().toISOString(), envelope: await seal({ baseData: operation.baseData, localData: operation.data, serverData: serverRecord.data }, conflictId) };
+  row.localDeleted = operation.action === "delete" || Boolean(operation.data?.deleted);
+  row.serverDeleted = Boolean(serverRecord.deleted || serverRecord.data?.deleted);
   await transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].put(row)); return row;
 }
 /**
@@ -38,7 +40,23 @@ export async function listConflicts() {
     stores => requestResult(stores[STORES.CONFLICTS].index("byDetectedAt").getAll()));
   return Promise.all(rows.map(async row => ({ ...row, ...(await unseal(row.envelope, row.conflictId)) })));
 }
-export async function removeConflict(conflictId) { return transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].delete(conflictId)); }
+// Conserver les deux versions avant de retirer un conflit de la liste à traiter.
+// Même transaction : aucune résolution ne peut effacer la seule copie récupérable.
+export async function removeConflict(conflictId) {
+  return transaction([STORES.CONFLICTS, STORES.META], "readwrite", stores => {
+    const request = stores[STORES.CONFLICTS].get(conflictId);
+    request.onsuccess = () => {
+      if (!request.result) return;
+      stores[STORES.META].put({ key: `resolved-conflict:${conflictId}`, value: { ...request.result, resolvedAt: new Date().toISOString() } });
+      stores[STORES.CONFLICTS].delete(conflictId);
+    };
+  });
+}
+export async function listResolvedConflicts() {
+  const rows = await transaction([STORES.META], "readonly", stores => requestResult(stores[STORES.META].getAll()));
+  return Promise.all(rows.filter(row => row.key.startsWith("resolved-conflict:")).map(async ({value}) =>
+    ({ ...value, ...(await unseal(value.envelope, value.conflictId)), envelope: undefined })));
+}
 export async function countConflicts() {
   return transaction([STORES.CONFLICTS], "readonly", stores => requestResult(stores[STORES.CONFLICTS].count()));
 }

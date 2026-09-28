@@ -19,7 +19,7 @@ import { currentSyncState } from "../core/events.js";
 /** Table rase entre deux cas : un reste de file d'attente fausserait le suivant. */
 export async function viderTout() {
   await transaction(Object.values(STORES), "readwrite", stores =>
-    Object.values(STORES).forEach(nom => { if (nom !== STORES.META) stores[nom].clear(); }));
+    Object.values(STORES).forEach(nom => stores[nom].clear()));
 }
 
 /** Serveur simule : on lui dicte ce qu'il renvoie, et on lit ce qu'il a recu. */
@@ -465,7 +465,7 @@ test("chaque table garde son propre repere", async () => {
     async pushOperation() { return { status: "ok" }; }
   };
   await new OfflineSyncEngine({ adapter: adaptateur }).sync();
-  const dernier = rendus[rendus.length - 1];
+  const dernier = await getMeta("last-server-cursor");
   assertEgal(dernier.eleve.updatedAt, "2026-01-01T08:00:00Z", "l'eleve garde sa date ancienne");
   assertEgal(dernier.creneau.updatedAt, "2026-09-03T08:00:00Z", "sans etre entraine par le creneau plus recent");
 });

@@ -20,13 +20,17 @@ export async function resolveConflict(conflictId, choice, customData) {
   const conflit = (await listConflicts()).find(item => item.conflictId === conflictId);
   if (!conflit) throw new Error("Conflit introuvable : il a peut-etre deja ete resolu.");
 
-  const retenue = chooseConflictVersion(conflit, choice, customData);
+  const candidate = chooseConflictVersion(conflit, choice, customData);
+  const deleted = choice === "local" ? (conflit.localDeleted ?? candidate == null)
+    : choice === "server" ? Boolean(conflit.serverDeleted || candidate?.deleted) : Boolean(candidate?.deleted);
+  const retenue = { ...(candidate || conflit.baseData || conflit.serverData || {}) };
+  if (deleted || conflit.overlappingFields.includes("__deleted__") || "deleted" in retenue) retenue.deleted = deleted;
 
   // Garder la version du serveur ne demande aucun envoi : elle y est deja.
   if (choice === "server") {
     await saveLocalRecord({
       entity: conflit.entity, id: conflit.id, data: conflit.serverData,
-      version: conflit.serverVersion, updatedAt: conflit.serverModifiedAt, deleted: false
+      version: conflit.serverVersion, updatedAt: conflit.serverModifiedAt, deleted
     });
     await removeConflict(conflictId);
     return publierEtat({ resolu: conflictId, envoye: false });
@@ -35,7 +39,7 @@ export async function resolveConflict(conflictId, choice, customData) {
   const champsModifies = changedFieldsBetween(conflit.serverData, retenue);
   await saveLocalRecord({
     entity: conflit.entity, id: conflit.id, data: retenue,
-    version: conflit.serverVersion, updatedAt: new Date().toISOString(), deleted: false
+    version: conflit.serverVersion, updatedAt: new Date().toISOString(), deleted
   });
   // Rien ne differe de ce que le serveur porte deja : inutile de lui renvoyer la meme chose.
   if (champsModifies.length === 0) {
@@ -44,7 +48,7 @@ export async function resolveConflict(conflictId, choice, customData) {
   }
 
   await enqueueOperation({
-    entity: conflit.entity, id: conflit.id, action: "upsert",
+    entity: conflit.entity, id: conflit.id, action: deleted ? "delete" : "upsert",
     baseVersion: conflit.serverVersion, baseData: conflit.serverData, data: retenue,
     changedFields: champsModifies, authorId: conflit.localAuthorId
   });
@@ -58,7 +62,18 @@ export async function resolveConflict(conflictId, choice, customData) {
  */
 export function buildFieldChoice(conflit, choixParChamp = {}) {
   const resultat = { ...conflit.serverData };
+  // Les modifications locales sans désaccord ne doivent pas disparaître lors de l'arbitrage.
+  for (const champ of changedFieldsBetween(conflit.baseData || {}, conflit.localData || {})) {
+    if (["id", "version", "created_at", "updated_at"].includes(champ) || conflit.overlappingFields.includes(champ)) continue;
+    if (Object.prototype.hasOwnProperty.call(conflit.localData || {}, champ)) resultat[champ] = conflit.localData[champ];
+    else delete resultat[champ];
+  }
   conflit.overlappingFields.forEach(champ => {
+    if (champ === "__deleted__") {
+      resultat.deleted = choixParChamp[champ] === "local"
+        ? (conflit.localDeleted ?? conflit.localData == null) : Boolean(conflit.serverDeleted || conflit.serverData?.deleted);
+      return;
+    }
     if (choixParChamp[champ] !== "local") return;
     if (Object.prototype.hasOwnProperty.call(conflit.localData, champ)) resultat[champ] = conflit.localData[champ];
     else delete resultat[champ];

@@ -1,4 +1,4 @@
-import { listConflicts } from "../sync/conflicts.js";
+import { listConflicts, listResolvedConflicts } from "../sync/conflicts.js";
 import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections, resolveAllConflicts } from "../sync/resolve.js";
 
 /**
@@ -133,9 +133,9 @@ function conflitHtml(conflit, libelles) {
     <tr data-champ="${echapper(champ)}">
       <th>${echapper(libelleChamp(champ, libelles))}</th>
       <td><label><input type="radio" name="c-${echapper(conflit.conflictId)}-${echapper(champ)}" value="local" checked>
-        ${echapper(texte(conflit.localData?.[champ]))}</label></td>
+        ${echapper(texte(champ === "__deleted__" ? (conflit.localDeleted ?? conflit.localData == null) : conflit.localData?.[champ]))}</label></td>
       <td><label><input type="radio" name="c-${echapper(conflit.conflictId)}-${echapper(champ)}" value="server">
-        ${echapper(texte(conflit.serverData?.[champ]))}</label></td>
+        ${echapper(texte(champ === "__deleted__" ? Boolean(conflit.serverDeleted || conflit.serverData?.deleted) : conflit.serverData?.[champ]))}</label></td>
     </tr>`).join("");
 
   return `
@@ -167,8 +167,21 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
 
   async function afficher() {
     const conflits = await listConflicts();
+    const history = await listResolvedConflicts();
+    const addRecoveryButton = () => {
+      if (!history.length) return;
+      const button = document.createElement("button");
+      button.textContent = "Télécharger les versions conservées";
+      button.onclick = () => {
+        const url = URL.createObjectURL(new Blob([JSON.stringify(history, null, 2)], {type:"application/json"}));
+        const link = document.createElement("a"); link.href = url; link.download = "versions-conservees.json"; link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      };
+      element.appendChild(button);
+    };
     if (conflits.length === 0) {
       element.innerHTML = `<p class="conflitAucun">Aucun conflit a traiter.</p>`;
+      addRecoveryButton();
       return conflits.length;
     }
     const refuses = conflits.filter(c => c.kind === "refus");
@@ -185,6 +198,7 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
           </div>` : "")
         + arbitrer.map(c => conflitHtml(c, libelles)).join("") : "");
 
+    addRecoveryButton();
     element.querySelectorAll("[data-refus-ok]").forEach(bouton => {
       bouton.addEventListener("click", async () => {
         bouton.disabled = true;

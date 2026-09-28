@@ -183,6 +183,11 @@
     syncPanel.className='settingsConnectionDetails';
     syncPanel.innerHTML='<p id="settingsSyncDetails" class="muted"></p><p id="settingsSyncError" class="error" hidden></p><button type="button" class="secondary" id="settingsSyncRetry">Réessayer la synchronisation</button><button type="button" class="secondary" id="settingsSyncConflicts" hidden>Voir les conflits</button>';
     document.querySelector('#accountSection > .settingsContents').prepend(syncPanel);
+    const recoveryButton = document.createElement("button");
+    recoveryButton.className = "secondary";
+    recoveryButton.textContent = "Conflits et versions conservées";
+    recoveryButton.onclick = () => ouvrirFenetreConflits();
+    document.querySelector('#accountSection > .settingsContents').appendChild(recoveryButton);
     bind("settingsSyncRetry",async()=>{await (await demarrerModeHorsConnexion())?.synchroniser();});
     bind("settingsSyncConflicts",ouvrirFenetreConflits);
     renderConnectionSettings();
