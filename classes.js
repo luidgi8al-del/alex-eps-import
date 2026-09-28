@@ -603,6 +603,11 @@ async function loadImports() {
         barre.querySelector(".classePuce"));
     } else {
       toggleClasseAccordeon(false);
+      if (globalThis.vueClasseAccueilDemandee && typeof ecAller === "function") {
+        const vueDemandee = globalThis.vueClasseAccueilDemandee;
+        globalThis.vueClasseAccueilDemandee = null;
+        ecAller(vueDemandee);
+      }
     }
   } catch (e) {
     listEl.innerHTML = `<div class="error">${e.message}</div>`;

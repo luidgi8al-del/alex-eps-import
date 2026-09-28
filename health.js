@@ -460,6 +460,12 @@
     renderDispenseMode();
   }
   function openClassDispenses(classId){healthSelectedClassId=classId;healthMode='dispense';showTab('health');}
+  function ouvrirDispensesDepuisAccueil(){
+    healthMode='dispense';
+    dispenseVue='toutes';
+    dispenseEtape=1;
+    showTab('health');
+  }
 
   let accidentStep=0,accidentDraft={class_id:'',student_id:'',facts_nature:'',occurred_date:healthToday(),occurred_time:new Date().toTimeString().slice(0,5),damage_type:'',course_context:'EPS',course_other:'',time_context:'TEMPS_SCOLAIRE',activity_nature:'',responsible_name:'',diagram_data:'',witnesses:'',urgency_code:'VERT',decision_taken:''};
   const accidentSteps=['Élève','Nature des faits','Date et heure','Dommage','Cours de','Moment des faits','Activité proposée','Responsable','Schéma','Témoins','Gestion de l’incident','Récapitulatif'];
@@ -509,6 +515,7 @@
   globalThis.saveDispense = saveDispense;
   globalThis.deleteDispense = deleteDispense;
   globalThis.openClassDispenses = openClassDispenses;
+  globalThis.ouvrirDispensesDepuisAccueil = ouvrirDispensesDepuisAccueil;
   globalThis.renderSaisieDispense = renderSaisieDispense;
   globalThis.renderListeDispenses = renderListeDispenses;
   globalThis.ouvrirFicheDispense = ouvrirFicheDispense;

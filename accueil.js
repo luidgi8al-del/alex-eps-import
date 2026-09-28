@@ -132,6 +132,21 @@ document.addEventListener("keydown", e => {
 document.querySelectorAll("[data-goto]").forEach(b =>
   b.addEventListener("click", () => showTab(b.dataset.goto))
 );
+document.querySelectorAll("[data-home-shortcut]").forEach(button =>
+  button.addEventListener("click", () => {
+    const target = button.dataset.homeShortcut;
+    if (target === "dispenses" && typeof globalThis.ouvrirDispensesDepuisAccueil === "function") {
+      globalThis.ouvrirDispensesDepuisAccueil();
+    } else if (target === "evaluations") {
+      globalThis.vueClasseAccueilDemandee = "evaluations";
+      showTab("classes");
+    } else if (target === "students") {
+      showTab("students");
+    } else {
+      showTab("classes");
+    }
+  })
+);
 document.getElementById("todayCard").addEventListener("click", () => showTab("planning"));
 
 function slotStartMinutes(slot) {

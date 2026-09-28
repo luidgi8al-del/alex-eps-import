@@ -1,0 +1,13 @@
+const fs=require('fs'),path=require('path'),http=require('http'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');try{res.setHeader('Content-Type',p.endsWith('.js')?'application/javascript':p.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(p))}catch{res.statusCode=404;res.end()}});
+(async()=>{await new Promise(r=>server.listen(8894,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ const context=await browser.newContext({viewport:{width:1600,height:900},serviceWorkers:'block'});await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage();await page.goto('http://127.0.0.1:8894');await page.waitForTimeout(900);
+ const layout=await page.evaluate(()=>{const box=s=>document.querySelector(s).getBoundingClientRect();return{quick:document.querySelectorAll('[data-home-shortcut]').length,columns:getComputedStyle(document.querySelector('.homeGrid')).gridTemplateColumns,hub:box('.homeClassHub'),modules:box('.homeModuleGrid'),overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth}});
+ assert.equal(layout.quick,4);assert.equal(layout.columns.split(' ').length,2);assert(Math.abs(layout.hub.height-layout.modules.height)<2);assert.equal(layout.overflow,0);
+ await page.click('[data-home-shortcut="students"]');await page.waitForSelector('#tab-students',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('[data-home-shortcut="dispenses"]');await page.waitForSelector('[data-dispense-vue="toutes"].active',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('[data-home-shortcut="evaluations"]');await page.waitForSelector('.ec-ecran-evaluations',{state:'visible',timeout:8000});
+ console.log('PASS home class shortcuts open students, all dispensations and evaluations');
+ }finally{await browser.close();server.close()}})().catch(e=>{console.error(e);server.close();process.exitCode=1});

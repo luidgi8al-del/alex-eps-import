@@ -166,14 +166,31 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 #tab-home .homeCard.featured .homeTitle { font-size:clamp(19px,3.2vh,30px); }
 #tab-home .homeSub { font-size:clamp(11px,1.6vh,13px); margin-top:clamp(4px,1vh,8px); }
 #tab-home .homeIcon { font-size:clamp(24px,4.4vh,43px); bottom:clamp(8px,1.4vh,15px); right:clamp(12px,1.8vh,20px); }
+#tab-home .homeGrid { grid-template-columns:minmax(250px,.85fr) minmax(0,1.7fr); grid-template-rows:minmax(0,1fr); }
+#tab-home .homeClassHub.featured { grid-column:auto; min-height:0; height:100%; justify-content:flex-start; }
+#tab-home .homeClassHub.featured .homeTitle { font-size:clamp(18px,2.6vh,25px); }
+#tab-home .homeClassHub .homeIcon { top:14px; right:17px; bottom:auto; font-size:30px; }
+#tab-home .homeModuleGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; min-width:0; min-height:0; }
+#tab-home .homeModuleGrid .homeCard { min-height:0; height:100%; }
+#tab-home .homeClassQuick { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:clamp(10px,1.6vh,16px); }
+#tab-home .homeClassQuick button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-width:0; min-height:clamp(47px,7vh,62px); margin:0; padding:7px 6px; border:0; border-radius:13px; background:#ffffffb8; color:#163a5f; box-shadow:none; font-size:clamp(10px,1.4vh,12px); font-weight:750; text-align:center; }
+#tab-home .homeClassQuick button::before { content:none; }
+#tab-home .homeClassQuick button:hover { transform:translateY(-1px); background:#fff; box-shadow:0 5px 12px #79342a17; }
+#tab-home .homeClassQuick button span { font-size:clamp(16px,2.5vh,22px); }
+#tab-home .homeClassQuick button:focus-visible { outline:3px solid #f4a229; outline-offset:2px; }
 #tab-home #institutionCard { margin-top:12px; }
 
 /* Sous 850px les cartes passent sur deux colonnes : la page redevient defilante, ce qui est le
    comportement attendu sur telephone. */
 @media(max-width:850px) {
   #tab-home[style*="block"] { max-height:none; }
-  #tab-home .homeGrid { grid-template-rows:none; }
+  #tab-home .homeGrid { grid-template-columns:1fr; grid-template-rows:none; }
+  #tab-home .homeClassHub.featured { min-height:235px; }
+  #tab-home .homeModuleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   #tab-home .homeCard { min-height:150px; }
+}
+@media(max-width:520px) {
+  #tab-home .homeModuleGrid { grid-template-columns:1fr; }
 }
 
 /* ---------------------------------------------------------------------------------------------

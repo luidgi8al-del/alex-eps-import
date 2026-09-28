@@ -6,7 +6,7 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css?v=20260928-2">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
-  <link rel="stylesheet" href="home-navigation.css?v=20260928-3">
+  <link rel="stylesheet" href="home-navigation.css?v=20260928-4">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20260927-1">
 <link rel="manifest" href="manifest.webmanifest">
@@ -115,26 +115,35 @@
         </div>
 
         <div class="homeGrid" aria-label="Accès rapides">
-          <button class="homeCard featured" data-goto="classes" style="background:#FFE8E7">
-            <span class="homeTitle">CLASSE</span><span class="homeRule" style="background:#C8493F"></span>
-            <span class="homeSub">Classes, eleves et evaluations</span><span class="homeIcon">🎓</span>
-          </button>
-          <button class="homeCard" data-goto="outils" style="background:#FFF0D8">
-            <span class="homeTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span>
-            <span class="homeSub">Chronos, scores et tests</span><span class="homeIcon">⏱️</span>
-          </button>
-          <button class="homeCard" data-goto="programmation" style="background:#E5F8F5">
-            <span class="homeTitle">PROGRAMMATION</span><span class="homeRule" style="background:#159B91"></span>
-            <span class="homeSub">Cycles et planification</span><span class="homeIcon">🗓️</span>
-          </button>
-          <button class="homeCard" data-goto="unss" style="background:#F0E9FF">
-            <span class="homeTitle">ASLVH</span><span class="homeRule" style="background:#7548C8"></span>
-            <span class="homeSub">Licencies, groupes et sorties</span><span class="homeIcon">🏆</span>
-          </button>
-          <button class="homeCard" data-goto="equipement" style="background:#FFF8C9">
-            <span class="homeTitle">EQUIPEMENT</span><span class="homeRule" style="background:#93A900"></span>
-            <span class="homeSub">Materiel et installations</span><span class="homeIcon">🏋️</span>
-          </button>
+          <section class="homeCard featured homeClassHub" style="background:#FFE8E7" aria-labelledby="homeClassTitle">
+            <span class="homeTitle" id="homeClassTitle">CLASSE</span><span class="homeRule" style="background:#C8493F"></span>
+            <span class="homeSub">Accès rapides</span>
+            <div class="homeClassQuick">
+              <button type="button" data-home-shortcut="classes"><span aria-hidden="true">🏫</span>Mes classes</button>
+              <button type="button" data-home-shortcut="dispenses"><span aria-hidden="true">🩹</span>Dispenses</button>
+              <button type="button" data-home-shortcut="evaluations"><span aria-hidden="true">📝</span>Évaluations</button>
+              <button type="button" data-home-shortcut="students"><span aria-hidden="true">👤</span>Élèves</button>
+            </div>
+            <span class="homeIcon" aria-hidden="true">🎓</span>
+          </section>
+          <div class="homeModuleGrid">
+            <button class="homeCard" data-goto="outils" style="background:#FFF0D8">
+              <span class="homeTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span>
+              <span class="homeSub">Chronos, scores et tests</span><span class="homeIcon">⏱️</span>
+            </button>
+            <button class="homeCard" data-goto="unss" style="background:#F0E9FF">
+              <span class="homeTitle">ASLVH</span><span class="homeRule" style="background:#7548C8"></span>
+              <span class="homeSub">Licenciés, groupes et sorties</span><span class="homeIcon">🏆</span>
+            </button>
+            <button class="homeCard" data-goto="equipement" style="background:#FFF8C9">
+              <span class="homeTitle">ÉQUIPEMENT</span><span class="homeRule" style="background:#93A900"></span>
+              <span class="homeSub">Matériel et installations</span><span class="homeIcon">🏋️</span>
+            </button>
+            <button class="homeCard" data-goto="programmation" style="background:#E5F8F5">
+              <span class="homeTitle">PROGRAMMATION</span><span class="homeRule" style="background:#159B91"></span>
+              <span class="homeSub">Cycles et planification</span><span class="homeIcon">🗓️</span>
+            </button>
+          </div>
         </div>
 
         <div class="card" id="institutionCard" hidden>
@@ -520,7 +529,7 @@
   <script src="hors-connexion.js"></script>
   <script src="offline-preparation.js?v=20260927-2"></script>
   <script src="offline-read.js"></script>
-  <script src="accueil.js?v=20260928-3"></script>
+  <script src="accueil.js?v=20260928-4"></script>
   <script src="compte.js?v=20260927-3"></script>
   <script src="classes.js"></script>
   <script src="planning.js"></script>

@@ -227,7 +227,10 @@ async function openClassDashboard(cls, label) {
     await chargerEvaluationsDuTableauDeBord();
     // Ouvrir une classe mene a son tableau de bord, comme dans l'application, sur la periode en
     // cours plutot que sur la premiere de l'annee.
-    vueClasse = "bord";
+    const vueDemandee = globalThis.vueClasseAccueilDemandee;
+    vueClasse = ["bord", "eleves", "evaluations", "recap", "documents", "dispenses", "groupes"].includes(vueDemandee)
+      ? vueDemandee : "bord";
+    globalThis.vueClasseAccueilDemandee = null;
     if (typeof ecPeriodeDuJour === "function") dashboardPeriod = ecPeriodeDuJour(cls.grade);
     if (typeof ecCreneauChoisi !== "undefined") {
       ecCreneauChoisi = null; ecDocumentSuivi = null; ecRecapChoix = null; ecNotesChargees = false;
