@@ -11,5 +11,6 @@ assert.match(html,/>ALERTE</);
 assert.match(css,/grid-template-columns:minmax\(150px,\.75fr\).*minmax\(115px,\.55fr\)/);
 assert.match(css,/body \.header \{[^}]*padding:10px 26px 9px/);
 assert.match(css,/\.homeAlert \{/);
+assert.match(css,/\.homeAlert h2 \{[^}]*text-align:center/);
 assert.match(css,/@media\(max-width:850px\)[\s\S]*\.homeAlert/);
 console.log('PASS compact home header, four-part summary row and future alert card');

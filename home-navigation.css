@@ -94,7 +94,7 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 .homeWeather { margin:0; color:#163a5f; min-width:0; min-height:136px; max-height:148px; overflow:hidden; background:#fff; border:1px solid #d7e8f5; border-radius:20px; padding:7px 9px; box-shadow:0 5px 16px #17395b0b; }
 .homeWeather[hidden] { display:none !important; }
 .homeAlert { min-width:0; min-height:136px; padding:14px 13px; overflow:hidden; background:#fff; border:1px solid #e1ebf3; border-radius:20px; box-shadow:0 5px 16px #17395b0b; }
-.homeAlert h2 { margin:0; color:#173a57; font-size:14px; font-weight:900; letter-spacing:.04em; }
+.homeAlert h2 { margin:0; color:#173a57; font-size:14px; font-weight:900; letter-spacing:.04em; text-align:center; }
 .homeAlertContent { display:grid; place-items:center; min-height:82px; color:#7890a2; font-size:11px; text-align:center; }
 .weatherTop { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
 .weatherTop h2 { margin:0; color:#163a5f; font-size:15px; }
