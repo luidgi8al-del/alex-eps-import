@@ -125,8 +125,10 @@ document.addEventListener("keydown", e => {
 });
 
 // ---- Accueil : carte du jour et acces aux modules (miroir de HomeScreen.kt) ----
-// Meme regle que TodayCard : on compte les creneaux du jour et on annonce le prochain,
-// c'est-a-dire le premier qui n'a pas encore commence, sinon le premier de la journee.
+// On compte tous les creneaux du jour. Le creneau mis en avant reste le cours en cours,
+// puis bascule sur le suivant trente minutes avant sa fin : ce court chevauchement aide le
+// professeur a anticiper son deplacement et son materiel. Pour le dernier cours, la carte
+// annonce qu'il n'y en a plus a partir de ses trente dernieres minutes.
 document.querySelectorAll("[data-goto]").forEach(b =>
   b.addEventListener("click", () => showTab(b.dataset.goto))
 );
@@ -137,6 +139,40 @@ function slotStartMinutes(slot) {
   const hour = parseInt(parts[0], 10);
   if (isNaN(hour)) return Number.MAX_SAFE_INTEGER;
   return hour * 60 + (parseInt(parts[1], 10) || 0);
+}
+
+function slotPreviewEndMinutes(slot) {
+  const start = slotStartMinutes(slot);
+  const duration = Number(slot.duration_minutes);
+  // duration_minutes est obligatoire dans la base. Cette valeur de repli evite toutefois
+  // qu'une ancienne copie locale incomplete reste affichee toute la journee.
+  const safeDuration = Number.isFinite(duration) && duration > 0 ? duration : 60;
+  return start + Math.max(0, safeDuration - 30);
+}
+
+function nextTodaySlot(today, nowMinutes) {
+  return today.find(slot => nowMinutes < slotPreviewEndMinutes(slot)) || null;
+}
+
+let todayCardSnapshot = null;
+
+function renderTodayCardNow(now = new Date()) {
+  if (!todayCardSnapshot) return;
+  const countEl = document.getElementById("todayCount");
+  const nextEl = document.getElementById("todayNext");
+  const { today, classes } = todayCardSnapshot;
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const next = nextTodaySlot(today, nowMinutes);
+
+  countEl.textContent = `${today.length} cours`;
+  if (today.length === 0) {
+    nextEl.textContent = "Aucun cours aujourd'hui";
+  } else if (!next) {
+    nextEl.textContent = "Plus de cours aujourd'hui";
+  } else {
+    const cls = classes.find(c => c.id === next.class_id);
+    nextEl.textContent = `Prochain · ${cls ? cls.name : "Classe"} · ${next.start_time || ""}`;
+  }
 }
 
 async function loadTodayCard() {
@@ -159,19 +195,15 @@ async function loadTodayCard() {
       .filter(s => s.day_of_week === TODAY_DAY_KEY)
       .sort((a, b) => slotStartMinutes(a) - slotStartMinutes(b));
 
-    const now = new Date();
-    const nowMinutes = now.getHours() * 60 + now.getMinutes();
-    const next = today.find(s => slotStartMinutes(s) >= nowMinutes) || today[0];
-
-    countEl.textContent = `${today.length} cours`;
-    if (!next) {
-      nextEl.textContent = "Aucun cours aujourd'hui";
-    } else {
-      const cls = classes.find(c => c.id === next.class_id);
-      nextEl.textContent = `Prochain · ${cls ? cls.name : "Classe"} · ${next.start_time || ""}`;
-    }
+    todayCardSnapshot = { today, classes };
+    renderTodayCardNow();
   } catch (e) {
+    todayCardSnapshot = null;
     countEl.textContent = "—";
     nextEl.textContent = "Planning indisponible";
   }
 }
+
+// La page peut rester ouverte pendant tout un cours. Recalculer l'affichage localement permet
+// le passage de 08:00 a 10:00 exactement au bon moment, sans nouvelle requete reseau.
+setInterval(renderTodayCardNow, 30 * 1000);
