@@ -3,10 +3,13 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 
 const source = fs.readFileSync(path.resolve(__dirname, '..', 'accueil.js'), 'utf8');
-const helpers = source.match(/function slotStartMinutes[\s\S]*?function nextTodaySlot[\s\S]*?\n}/)?.[0];
+const helpers = source.match(/function slotStartMinutes[\s\S]*?function remainingTodaySlots[\s\S]*?\n}/)?.[0];
 assert(helpers, 'Les fonctions de choix du prochain cours doivent rester testables');
 
-const getNext = new Function(`${helpers}; return nextTodaySlot;`)();
+const { getNext, getRemaining } = new Function(`${helpers}; return {
+  getNext: nextTodaySlot,
+  getRemaining: remainingTodaySlots
+};`)();
 const slots = [
   { id: '8-10', start_time: '08:00', duration_minutes: 120 },
   { id: '10-11', start_time: '10:00', duration_minutes: 60 },
@@ -14,12 +17,19 @@ const slots = [
 ];
 
 assert.equal(getNext(slots, 8 * 60 + 15)?.id, '8-10');
+assert.equal(getRemaining(slots, 8 * 60 + 15), 3);
 assert.equal(getNext(slots, 9 * 60 + 29)?.id, '8-10');
+assert.equal(getRemaining(slots, 9 * 60 + 29), 3);
 assert.equal(getNext(slots, 9 * 60 + 30)?.id, '10-11');
+assert.equal(getRemaining(slots, 9 * 60 + 30), 2);
 assert.equal(getNext(slots, 10 * 60 + 29)?.id, '10-11');
+assert.equal(getRemaining(slots, 10 * 60 + 29), 2);
 assert.equal(getNext(slots, 10 * 60 + 30)?.id, '14-16');
+assert.equal(getRemaining(slots, 10 * 60 + 30), 1);
 assert.equal(getNext(slots, 15 * 60 + 29)?.id, '14-16');
+assert.equal(getRemaining(slots, 15 * 60 + 29), 1);
 assert.equal(getNext(slots, 15 * 60 + 30), null);
+assert.equal(getRemaining(slots, 15 * 60 + 30), 0);
 assert.match(source, /setInterval\(renderTodayCardNow, 30 \* 1000\)/);
 
 console.log('PASS home course advances 30 minutes before each course ends');

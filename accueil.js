@@ -154,6 +154,11 @@ function nextTodaySlot(today, nowMinutes) {
   return today.find(slot => nowMinutes < slotPreviewEndMinutes(slot)) || null;
 }
 
+function remainingTodaySlots(today, nowMinutes) {
+  const nextIndex = today.findIndex(slot => nowMinutes < slotPreviewEndMinutes(slot));
+  return nextIndex < 0 ? 0 : today.length - nextIndex;
+}
+
 let todayCardSnapshot = null;
 
 function renderTodayCardNow(now = new Date()) {
@@ -163,8 +168,9 @@ function renderTodayCardNow(now = new Date()) {
   const { today, classes } = todayCardSnapshot;
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
   const next = nextTodaySlot(today, nowMinutes);
+  const remaining = remainingTodaySlots(today, nowMinutes);
 
-  countEl.textContent = `${today.length} cours`;
+  countEl.textContent = `${remaining} cours`;
   if (today.length === 0) {
     nextEl.textContent = "Aucun cours aujourd'hui";
   } else if (!next) {
