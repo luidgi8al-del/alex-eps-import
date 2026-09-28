@@ -32,7 +32,7 @@
   function resetForClass(){state.values={};state.sessionId=null;state.resultIds={};state.createdAt=null;state.activeGroup=0}
   const hero=sub=>toolHeader("💪 Condition physique générale",esc(sub));
 
-  async function renderConditionFitnessWeb(){await loadToolClasses();await loadSaved();toolPanel=document.getElementById("toolPanel");toolPanel.style.display="block";drawSetup()}
+  async function renderConditionFitnessWeb(){await loadToolClasses();await loadSaved();toolPanel=toolPanel||document.getElementById("toolPanel");toolPanel.style.display="block";drawSetup()}
   // Un seul selecteur "Usage libre (sans classe)" + les classes, comme dans 3x500m : plus de
   // paire Utilisation/Classe a part. #fitnessMode reste en input cache, tenu synchronise, pour
   // que drawSetup (mode.value==="class") continue de fonctionner sans etre reecrit.

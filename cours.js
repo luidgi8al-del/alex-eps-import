@@ -984,7 +984,7 @@ function renderTimersHub() {
 function renderChrono() {
   stopToolTimer(); toolElapsed = 0;
   const body = document.getElementById("timerBody");
-  body.innerHTML = `<div class="toolDisplay" id="chronoDisplay" style="margin-top:14px">00:00.00</div><div class="toolActions"><button id="chronoStart">DÉPART</button><button class="secondary" id="chronoReset">REMISE À ZÉRO</button></div><div class="row"><input id="lapName" placeholder="Nom facultatif"><button id="lapBtn" style="margin-top:0">Enregistrer</button></div><div id="laps"></div>`;
+  body.innerHTML = `<div class="toolDisplay" id="chronoDisplay" style="margin-top:14px">00:00.00</div><div class="toolActions"><button id="chronoStart">DÉPART</button><button class="secondary" id="chronoReset">REMISE À ZÉRO</button></div><div class="row"><input id="lapName" placeholder="Nom facultatif"><button id="lapBtn" style="margin-top:0">Relever un temps</button></div><div id="laps"></div>`;
   document.getElementById("chronoStart").onclick = () => {
     if (toolRunning) { toolElapsed += Date.now() - toolStartedAt; stopToolTimer(); document.getElementById("chronoStart").textContent="DÉPART"; }
     else { toolStartedAt=Date.now(); toolRunning=true; document.getElementById("chronoStart").textContent="PAUSE"; toolTimerId=setInterval(()=>document.getElementById("chronoDisplay").textContent=formatToolTime(toolElapsed+Date.now()-toolStartedAt),30); }

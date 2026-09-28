@@ -63,3 +63,9 @@
 .multi-chrono-actions button{width:auto;margin:0;padding:9px 13px}
 .modern-tool-panel #multiWorkspace>.running-group-tabs,.modern-tool-panel #multiWorkspace>.running-group-editor,.modern-tool-panel #multiWorkspace>.running-save-actions{margin-left:0;margin-right:0}
 @media(max-width:700px){.multi-chrono-table{min-width:610px}.multi-chrono-table th:first-child{min-width:190px}.multi-chrono-table td>[data-multi-time]{font-size:21px}.multi-chrono-actions{flex-direction:column}}
+/* Évaluation escalade : laisser les critères accessibles à côté du nom sur téléphone. */
+@media(max-width:600px){
+  .climb-worksheet .fitness-table-wrap th:first-child,
+  .climb-worksheet .fitness-table-wrap td:first-child{min-width:145px!important;width:145px!important;max-width:145px!important;white-space:normal}
+}
+.climb-worksheet [data-climb-total].muted{color:#6e8190}

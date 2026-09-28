@@ -1157,7 +1157,7 @@ async function ecDupliquerEvaluation(evaluation, cible) {
 async function ecRouvrirTravail(travail) {
   const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
     rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb" };
-  const dessin = globalThis[outils[travail.type]];
+  const dessin = globalThis[outils[travail.type]] || (travail.type === "climb-observation" ? renderClimbObservationWeb : travail.type === "climb-test" ? renderClimbTestWeb : ["swim","aptitudes","speed","impacts"].includes(travail.type) ? w => renderPersistedTool(travail.type,w) : null);
   return ecEnFenetreOutil(async () => {
     stopToolTimer();
     toolPanel = document.getElementById("toolPanel");
@@ -1166,13 +1166,7 @@ async function ecRouvrirTravail(travail) {
     toolPanel.classList.add("modern-tool-panel");
     if (typeof dessin !== "function") { openTool(travail.type); return; }
     await dessin(travail);
-    const mode = document.getElementById("modernMode"), classe = document.getElementById("modernClass");
-    const periode = document.getElementById("modernPeriod");
-    if (periode) periode.value = String(travail.period || 1);
-    if (mode && classe && travail.classId) {
-      mode.value = "class"; mode.dispatchEvent(new Event("change"));
-      classe.disabled = false; classe.value = travail.classId; classe.dispatchEvent(new Event("change"));
-    }
+    // Le renderer restaure lui-même le contexte avant de dessiner les élèves.
   }, () => ecOuvrirDivers());
 }
 
@@ -1237,6 +1231,7 @@ async function ecOuvrirDivers() {
 /** Le resultat d'un test, tel qu'on le lit : "incomplet · 3/6 ateliers" reste en toutes lettres. */
 function ecResultatTest(r) {
   const unite = String(r.result_unit || "");
+  if (unite.includes("brouillon")) return "À compléter";
   if (unite.startsWith("incomplet")) return unite;
   return `${ecNombre(r.result_value)} ${unite}`.trim();
 }

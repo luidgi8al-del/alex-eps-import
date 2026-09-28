@@ -19,6 +19,7 @@ const EpsTests = (function () {
   // mode classe, la formule (valeur saisie -> valeur calculee + unite) et le texte affiche
   // en usage libre.
   const TESTS = {
+    ESCALADE: {label:'Escalade /20',protocol:'Progression, difficulté de la voie, technique de grimpe et assurage.',special:'climbing'},
     DEMI_COOPER: {
       label: "Demi-Cooper · 6 min",
       protocol: "Courir la plus grande distance possible pendant 6 minutes sur un parcours mesure.",
@@ -162,6 +163,7 @@ const EpsTests = (function () {
   };
 
   const CATEGORIES = [
+    { name: 'Escalade', subtitle: 'Évaluation sur 20 · quatre critères', color: '#E5F5EB', tests: ['ESCALADE'] },
     {
       name: "Athle",
       subtitle: "Vitesse, demi-fond, force, coordination, haies et relais",

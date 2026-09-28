@@ -25,6 +25,7 @@ function formatToolTime(ms) {
 }
 function openTool(name, target) {
   stopToolTimer();
+  speedRunning = false;
   toolPanel = target || document.getElementById("toolPanel");
   document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
   toolPanel.style.display = "block";
@@ -50,6 +51,8 @@ function openTool(name, target) {
   if (name === "condition-fitness") renderConditionFitnessWeb();
   if (name === "swim-observation") renderSwimObservationWeb();
   if (name === "gym-observation") renderGymObservationWeb();
+  if (name === "climb-observation") renderClimbObservationWeb();
+  if (name === "climb-test") { epsOpenTest=null; renderClimbTestWeb(); }
   toolPanel.scrollIntoView({behavior:"smooth", block:"start"});
 }
 document.querySelectorAll("#tab-outils [data-tool]").forEach(button => button.addEventListener("click", () => openTool(button.dataset.tool)));
@@ -122,8 +125,8 @@ function bindToolRoster(onChange) {
   const info = document.getElementById("toolRosterInfo");
   if (info) {
     info.textContent = toolClassId === FREE_USE
-      ? "Aucun eleve : les resultats ne sont pas enregistres."
-      : `${toolStudents.length} eleve(s) · les resultats peuvent etre enregistres.`;
+      ? "Usage libre · pensez à enregistrer le travail avant de quitter."
+      : `${toolStudents.length} élève(s) · utilisez Enregistrer pour conserver votre travail.`;
   }
 }
 
@@ -162,6 +165,7 @@ async function renderEpsTests() {
 }
 
 function drawEpsTests() {
+  if (epsOpenTest === 'ESCALADE') { renderClimbTestWeb(); return; }
   const cls = toolClasses.find(c => c.id === toolClassId);
   const periodCount = cls ? planningPeriodCount(cls.grade) : 5;
   if (epsTestPeriod > periodCount) epsTestPeriod = periodCount;
@@ -272,7 +276,7 @@ async function drawEpsTestBody(key) {
   epsGenericSessions = await lireTable("eps_test_sessions",
     `eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=eq.${encodeURIComponent(test.label)}&deleted=eq.false&select=*&order=created_at.desc`,
     {ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&r.test_name===test.label&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});
-  const groupOf=s=>epsGenericGroupCount>1?(epsGenericGroupAssignments[s.id]||((toolStudents.findIndex(x=>String(x.id)===String(s.id))%epsGenericGroupCount)+1)):1;
+  const groupOf=s=>epsGenericGroupCount>1?(epsGenericGroupAssignments[s.id]??((toolStudents.findIndex(x=>String(x.id)===String(s.id))%epsGenericGroupCount)+1)):1;
   const displayed=epsGenericActiveGroup>0?toolStudents.filter(s=>groupOf(s)===epsGenericActiveGroup):toolStudents;
   const groupTabs=`<div class="running-group-tabs"><button class="${epsGenericActiveGroup===0?'':'secondary'}" data-generic-group="0">Tous · ordre alphabétique</button>${Array.from({length:epsGenericGroupCount},(_,i)=>`<button class="${epsGenericActiveGroup===i+1?'':'secondary'}" data-generic-group="${i+1}">Groupe ${i+1}</button>`).join('')}<label>Groupes<select id="genericGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===epsGenericGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label></div>`;
   const sessions=epsGenericSessions.map(s=>`<div class="running-session-card ${String(s.id)===String(epsGenericSessionId)?'active':''}"><button data-generic-session="${s.id}"><b>${test.label}</b><small>${new Date(s.created_at).toLocaleString('fr-FR')} · modifiable</small></button><button class="danger" data-delete-generic-session="${s.id}">Supprimer</button></div>`).join('');
@@ -433,7 +437,7 @@ function paintRunningSeriesTest(test){
 }
 async function saveRunningSeries(test,asNew){const cls=toolClasses.find(c=>c.id===toolClassId),id=asNew||!runningSessionId?crypto.randomUUID():runningSessionId,now=new Date().toISOString(),created=asNew||!runningCreatedAt?Date.now():runningCreatedAt;const selected=toolStudents.map(s=>[s,runningSummary(s),runningValues[s.id],runningGroups.findIndex(g=>g.includes(String(s.id)))]).filter(([s,r,raw,group])=>r||raw.some(v=>v===RUNNING_REMOVED)||group>=0||runningWalking.has(String(s.id)));const sessionRow=asNew||!runningSessionRecord?{id,user_id:session.user_id,class_id:toolClassId,period_number:epsTestPeriod,test_name:test.label,created_at:created,class_label:cls?.name||'',updated_at:now,deleted:false}:{...runningSessionRecord,updated_at:now,deleted:false};await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();for(const [s,r,raw,group] of selected){const old=!asNew?runningResultRecords[s.id]:null,resultId=old?.id||crypto.randomUUID();kept.add(String(resultId));const valid=r?.valid||[],active=raw.filter(v=>v!==RUNNING_REMOVED).length,walk=runningWalking.has(String(s.id));await enregistrerLigne('eps_test_results',{...(old||{}),id:resultId,user_id:old?.user_id||session.user_id,session_id:id,student_id:s.id,input_value:r?.avg||0,result_value:r?.total||0,input_unit:`runs:${runningDistance}:${runningCount}:group:${group}:difficulty:${runningDifficulty}:mode:${walk?'walk':'run'}:times:${raw.join('|')}`,result_unit:`${valid.length>1?'/12':walk?'/3':'/6'}${valid.length<active?' · en cours':''}`,updated_at:now,deleted:false})}if(!asNew)for(const old of Object.values(runningResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});runningSessionId=id;runningCreatedAt=created;runningSessionRecord=sessionRow;await loadRunningSessions();await openRunningSession(id,test);const msg=document.getElementById('runningMsg');if(msg)msg.textContent=asNew?'Nouvelle session enregistrée.':'Session mise à jour.'}
 async function ouvrirSessionTrois500DepuisClasse(sessionId,classId,period){showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;epsTestPeriod=+period||1;epsOpenCategory='Athle';epsOpenTest='TROIS_500';runningSessionId=null;Object.keys(runningValues).forEach(k=>delete runningValues[k]);await renderEpsTests();await loadRunningSessions();await openRunningSession(sessionId,EpsTests.TESTS.TROIS_500);document.getElementById('epsTestBody')?.scrollIntoView({behavior:'smooth',block:'start'})}
-async function ouvrirSessionTestDepuisClasse(sessionId,classId,period,testName){if(testName==='3 × 500 m')return ouvrirSessionTrois500DepuisClasse(sessionId,classId,period);if(testName==='Multi-chrono'&&typeof ouvrirMultiChronoDepuisClasse==='function')return ouvrirMultiChronoDepuisClasse(sessionId,classId,period);const key=Object.keys(EpsTests.TESTS).find(k=>EpsTests.TESTS[k].label===testName);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;epsTestPeriod=+period||1;if(key){epsOpenCategory=EpsTests.CATEGORIES.find(c=>c.tests.includes(key))?.name||'Athle';epsOpenTest=key;resetGenericTestState();await renderEpsTests();if(EpsTests.TESTS[key].special==='stops')await openStopSession(sessionId,EpsTests.TESTS[key]);else await openGenericTestSession(sessionId,key);document.getElementById('epsTestBody')?.scrollIntoView({behavior:'smooth',block:'start'});return}if(testName==='Condition physique générale'&&typeof ouvrirConditionPhysiqueDepuisClasse==='function')return ouvrirConditionPhysiqueDepuisClasse(sessionId,classId,period);if(testName==='Observation Natation'&&typeof ouvrirObservationNatationDepuisClasse==='function')return ouvrirObservationNatationDepuisClasse(sessionId,classId,period);if(testName==='Observation Gymnastique'&&typeof ouvrirObservationGymnastiqueDepuisClasse==='function')return ouvrirObservationGymnastiqueDepuisClasse(sessionId,classId,period);if(String(testName).startsWith('Test VMA')){await renderVmaTest();await openVmaSession(sessionId);return}}
+async function ouvrirSessionTestDepuisClasse(sessionId,classId,period,testName){if(testName==='Escalade /20'){showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';return openClimbTest(sessionId);}if(testName==='3 × 500 m')return ouvrirSessionTrois500DepuisClasse(sessionId,classId,period);if(testName==='Multi-chrono'&&typeof ouvrirMultiChronoDepuisClasse==='function')return ouvrirMultiChronoDepuisClasse(sessionId,classId,period);const key=Object.keys(EpsTests.TESTS).find(k=>EpsTests.TESTS[k].label===testName);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;epsTestPeriod=+period||1;if(key){epsOpenCategory=EpsTests.CATEGORIES.find(c=>c.tests.includes(key))?.name||'Athle';epsOpenTest=key;resetGenericTestState();await renderEpsTests();if(EpsTests.TESTS[key].special==='stops')await openStopSession(sessionId,EpsTests.TESTS[key]);else await openGenericTestSession(sessionId,key);document.getElementById('epsTestBody')?.scrollIntoView({behavior:'smooth',block:'start'});return}if(testName==='Condition physique générale'&&typeof ouvrirConditionPhysiqueDepuisClasse==='function')return ouvrirConditionPhysiqueDepuisClasse(sessionId,classId,period);if(testName==='Observation Natation'&&typeof ouvrirObservationNatationDepuisClasse==='function')return ouvrirObservationNatationDepuisClasse(sessionId,classId,period);if(testName==='Observation Gymnastique'&&typeof ouvrirObservationGymnastiqueDepuisClasse==='function')return ouvrirObservationGymnastiqueDepuisClasse(sessionId,classId,period);if(String(testName).startsWith('Test VMA')){await renderVmaTest();await openVmaSession(sessionId);return}}
 function runningExportData(){return toolStudents.map(s=>({student:s,summary:runningSummary(s)})).filter(x=>x.summary)}
 function exportRunningCsv(){const headers=['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité','Performance','Note /12'],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,r.walking?'M.R':'Course',...r.raw.map(v=>v===RUNNING_REMOVED?'Retirée':v),`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),`${r.reg??''}/${r.regMax}`,`${r.perf??''}/${r.perfMax}`,r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`resultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
 function printRunningPdf(){const rows=runningExportData(),w=open('','_blank');if(!w)return alert('Autorisez les fenêtres surgissantes.');w.document.write(`<html><head><title>Résultats ${runningCount} × ${runningDistance} m</title><style>body{font:12px Arial;color:#173a57;padding:24px}h1{color:#087dca}table{width:100%;border-collapse:collapse}th,td{border:1px solid #cad8e3;padding:6px;text-align:center}th:first-child,td:first-child{text-align:left}@media print{button{display:none}}</style></head><body><h1>${runningCount} × ${runningDistance} m · ${toolClasses.find(c=>c.id===toolClassId)?.name||''}</h1><p>Difficulté : ${runningDifficulty>0?'+':''}${runningDifficulty} %</p><table><tr><th>Élève</th>${Array.from({length:runningCount},(_,i)=>`<th>C${i+1}</th>`).join('')}<th>Moyenne</th><th>Régularité</th><th>Performance</th><th>Note</th></tr>${rows.map(({student:s,summary:r})=>`<tr><td>${studentLabel(s)}${r.walking?' · M.R':''}</td>${r.raw.map(v=>`<td>${v===RUNNING_REMOVED?'Retirée':v}</td>`).join('')}<td>${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}</td><td>${r.reg??'—'} / ${r.regMax}</td><td>${r.perf??'—'} / ${r.perfMax}</td><td>${r.total??'—'} / ${r.valid.length>1?12:r.perfMax}</td></tr>`).join('')}</table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);w.document.close()}
@@ -462,7 +466,7 @@ async function saveEpsTest(key, asNew=false) {
     for(const r of rows){const old=!asNew?epsGenericResultRecords[r.studentId]:null,resultId=old?.id||crypto.randomUUID();kept.add(String(resultId));await enregistrerLigne("eps_test_results",{
       ...(old||{}),id:resultId, user_id: old?.user_id||session.user_id, session_id: sessionId,
       student_id: r.studentId, input_value: r.input??0, result_value: r.value,
-      input_unit: `group:${epsGenericGroupCount>1?(epsGenericGroupAssignments[r.studentId]||((toolStudents.findIndex(s=>String(s.id)===String(r.studentId))%epsGenericGroupCount)+1)):1}|${test.inputLabel}|mode:${epsGenericMode}${epsGenericColors[r.studentId]?`|couleur:${epsGenericColors[r.studentId]}`:""}`,
+      input_unit: `group:${epsGenericGroupCount>1?(epsGenericGroupAssignments[r.studentId]||((toolStudents.findIndex(s=>String(s.id)===String(r.studentId))%epsGenericGroupCount)+1)):1}|${test.inputLabel}|workflow:${EpsCommonGroups.encode("eps")}|mode:${epsGenericMode}${epsGenericColors[r.studentId]?`|couleur:${epsGenericColors[r.studentId]}`:""}`,
       result_unit: r.draft?"brouillon":(epsGenericMode==="couleur"&&epsGenericColors[r.studentId]?socleCouleurParCode(epsGenericColors[r.studentId]).libelle:r.unit),
       updated_at: now, deleted: false
     })}
@@ -496,7 +500,7 @@ async function drawVmaTest() {
   if(!vmaSessionId&&!vmaModeChoisi&&vmaModeClasse!==toolClassId){vmaMode=socleModeParDefaut(toolClassId);vmaModeClasse=toolClassId}
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
   if(onRealClass())vmaSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=like.Test%20VMA*&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&String(r.test_name||'').startsWith('Test VMA')&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});else vmaSessions=[];
-  const groupOf=s=>vmaGroupCount>1?(vmaGroupAssignments[s.id]||((toolStudents.findIndex(x=>String(x.id)===String(s.id))%vmaGroupCount)+1)):1;
+  const groupOf=s=>vmaGroupCount>1?(vmaGroupAssignments[s.id]??((toolStudents.findIndex(x=>String(x.id)===String(s.id))%vmaGroupCount)+1)):1;
   const visible=onRealClass()&&vmaActiveGroup?cible.filter(s=>groupOf(s)===vmaActiveGroup):cible;
   const groups=onRealClass()?`<div class="running-group-tabs"><button class="${vmaActiveGroup===0?'':'secondary'}" data-vma-group="0">Tous</button>${Array.from({length:vmaGroupCount},(_,i)=>`<button class="${vmaActiveGroup===i+1?'':'secondary'}" data-vma-group="${i+1}">Groupe ${i+1}</button>`).join('')}<label>Groupes<select id="vmaGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===vmaGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label></div>`:'';
   const saved=onRealClass()?`<section class="field-tool-card"><h3>Tests VMA enregistrés</h3><div class="running-session-list">${vmaSessions.map(s=>`<div class="running-session-card"><button data-vma-session="${s.id}"><b>${s.test_name}</b><small>${new Date(s.created_at).toLocaleString('fr-FR')} · modifiable</small></button><button class="danger" data-vma-delete="${s.id}">Supprimer</button></div>`).join('')||'<span class="muted">Aucun test enregistré.</span>'}</div></section>`:'';
@@ -574,10 +578,10 @@ async function saveVmaResults(asNew=false) {
     }:{...vmaSessionRecord,test_name:"Test VMA · "+vmaProtocol,updated_at:now,deleted:false};await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();for(const r of rows){const old=!asNew?vmaResultRecords[r.studentId]:null,id=old?.id||crypto.randomUUID();kept.add(String(id));await enregistrerLigne('eps_test_results',{
       ...(old||{}),id, user_id: old?.user_id||session.user_id, session_id: sessionId,
       student_id: r.studentId, input_value: r.input??0, result_value: r.value,
-      input_unit: `group:${vmaGroupCount>1?(vmaGroupAssignments[r.studentId]||1):1}|${unite}`,
+      input_unit: `group:${vmaGroupCount>1?(vmaGroupAssignments[r.studentId]??0):1}|${unite}|workflow:${EpsCommonGroups.encode("vma")}|mode:${vmaMode}|couleur:${vmaColors[r.studentId]||""}`,
       result_unit:r.draft?"brouillon":"km/h VMA",
       updated_at: now, deleted: false
-    })}if(!asNew)for(const old of Object.values(vmaResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});vmaSessionId=sessionId;vmaSessionRecord=sessionRow;await drawVmaTest();document.getElementById("vmaSaveMsg").textContent = `${rows.length} résultat(s) enregistré(s)${rows.length?'':' · brouillon'}.`;
+    })}if(!asNew)for(const old of Object.values(vmaResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});vmaSessionId=sessionId;vmaSessionRecord=sessionRow;await drawVmaTest();await openVmaSession(sessionId);document.getElementById("vmaSaveMsg").textContent = `${rows.length} résultat(s) enregistré(s)${rows.length?'':' · brouillon'}.`;
   } catch (e) {
     document.getElementById("vmaSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
   }
@@ -799,8 +803,8 @@ async function renderSpeedTracker() {
 
 function drawSpeedTracker() {
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
-  cible.forEach(s => { if (!speedGroups[s.id]) speedGroups[s.id] = 1; });
-  const groupe = cible.filter(s => speedGroups[s.id] === speedActiveGroup);
+  cible.forEach(s => { if (speedGroups[s.id] == null) speedGroups[s.id] = 1; });
+  const groupe = cible.filter(s => !speedActiveGroup || speedGroups[s.id] === speedActiveGroup);
 
   const chips = [];
   for (let g = 1; g <= speedGroupCount; g++) {
@@ -825,7 +829,7 @@ function drawSpeedTracker() {
           ],
           total:speedMode==="couleur"
             ? socleCouleurCelluleHtml(speedColors[s.id],`data-speed-couleur="${s.id}"`)
-            : (t.length?`${(speedDistance/Math.min(...t)*3.6).toFixed(1)} km/h`:"—")}}),
+            : (t.length?`${(Math.max(...t.map((time,i)=>time-(t[i-1]||0)).filter(d=>d>0).map(d=>speedDistance/d*3.6),0)).toFixed(1)} km/h`:"—")}}),
         speedMode==="couleur"?"Appréciation":"Vitesse max")}</div>
       <label>Groupe a chronometrer</label>
       <div class="periodBar" style="display:flex">${chips.join("")}</div>

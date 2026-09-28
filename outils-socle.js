@@ -36,7 +36,7 @@
 
   /** Le mode propose d'office : couleur en 6e, note ensuite. Modifiable dans tous les cas. */
   function socleModeParDefaut(classId) {
-    const cls = (globalThis.toolClasses || []).find(c => String(c.id) === String(classId));
+    const cls = (typeof toolClasses !== "undefined" ? toolClasses : []).find(c => String(c.id) === String(classId));
     return cls && cls.grade === "SIXIEME" ? "couleur" : "note";
   }
 
@@ -76,7 +76,7 @@
       <div class="tool-context">
         <select id="${p}Class">
           <option value=""${!classId ? " selected" : ""}>Usage libre (sans classe)</option>
-          ${(globalThis.toolClasses || []).map(c =>
+          ${(typeof toolClasses !== "undefined" ? toolClasses : []).map(c =>
             `<option value="${esc(c.id)}"${String(c.id) === String(classId) ? " selected" : ""}>${esc(c.name)}</option>`).join("")}
         </select>
       </div>
@@ -94,7 +94,7 @@
 
   /** Le nombre de periodes de la classe : une 6e n'en a pas forcement autant qu'une terminale. */
   function socleNombrePeriodes(classId) {
-    const cls = (globalThis.toolClasses || []).find(c => String(c.id) === String(classId));
+    const cls = (typeof toolClasses !== "undefined" ? toolClasses : []).find(c => String(c.id) === String(classId));
     const n = cls && typeof globalThis.planningPeriodCount === "function"
       ? globalThis.planningPeriodCount(cls.grade) : 5;
     return Array.from({ length: n || 5 }, (_, i) => i + 1);
@@ -136,7 +136,7 @@
       <thead><tr><th>Nom et prénom</th>${colonnes.map(c =>
         `<th>${esc(c.titre)}${c.aide ? `<br><small>${esc(c.aide)}</small>` : ""}</th>`).join("")}
         ${titreTotal ? `<th>${esc(titreTotal)}</th>` : ""}</tr></thead>
-      <tbody>${lignes.map(l => `<tr>
+      <tbody>${lignes.map(l => `<tr data-student-id="${esc(l.eleve.id)}">
         <td><strong>${esc((l.eleve.last_name || "").toUpperCase())} ${esc(l.eleve.first_name || "")}</strong>
           ${l.sousTitre ? `<small>${esc(l.sousTitre)}</small>` : ""}</td>
         ${l.cellules.map(c => `<td>${c}</td>`).join("")}

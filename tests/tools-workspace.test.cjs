@@ -20,7 +20,7 @@ for (const renderer of [
   'renderMultiChronoWeb', 'renderTournamentWeb', 'renderObserverWeb',
   'renderRotationsWeb', 'renderRandomWeb', 'renderEffortWeb', 'renderAcrosportWeb'
 ]) {
-  assert.match(workspace, new RegExp(renderer));
+  assert.match(workspace + read('tools-organizers.js'), new RegExp(renderer));
   assert.match(dispatch, new RegExp(renderer));
 }
 
