@@ -102,14 +102,22 @@ const APTITUDE_LISIBLE: Record<string, string> = {
  * Le nom vit dans teacher_profiles, l'e-mail dans profiles : on prend le premier et on retombe
  * sur le second, pour qu'une colonne "Fait par" ne reste jamais vide.
  */
-async function nomsEnseignants(): Promise<Map<string, string>> {
+async function institutionDuCompte(userId: string): Promise<string> {
+  const { data, error } = await admin.from("profiles")
+    .select("institution_id").eq("id", userId).maybeSingle();
+  if (error) throw new Error(error.message);
+  return String(data?.institution_id || "");
+}
+
+async function nomsEnseignants(institutionId: string): Promise<Map<string, string>> {
   const noms = new Map<string, string>();
-  const { data: comptes } = await admin.from("profiles").select("id, email");
+  const { data: comptes } = await admin.from("profiles").select("id, email")
+    .eq("institution_id", institutionId);
   (comptes || []).forEach(p => noms.set(p.id, p.email || ""));
   const { data: fiches } = await admin.from("teacher_profiles").select("user_id, profile");
   (fiches || []).forEach(f => {
     const nom = (f.profile as Record<string, unknown> | null)?.teacherName;
-    if (typeof nom === "string" && nom.trim()) noms.set(f.user_id, nom.trim());
+    if (noms.has(f.user_id) && typeof nom === "string" && nom.trim()) noms.set(f.user_id, nom.trim());
   });
   return noms;
 }
@@ -131,14 +139,15 @@ function jourDepuisMillis(millis: unknown) {
  * Lecture par tranches : PostgREST plafonne ce qu'il rend par requete, et le repertoire depasse
  * le millier de lignes. Sans cela la liste s'arreterait en silence au millieme eleve.
  */
-async function repertoireComplet() {
+async function repertoireComplet(institutionId: string) {
   const taille = 1000;
   // deno-lint-ignore no-explicit-any
   const tout: any[] = [];
   for (let debut = 0; ; debut += taille) {
     const { data, error } = await admin
       .from("unss_students")
-      .select("id, last_name, first_name, division, birth_date_epoch_millis")
+      .select("id, institution_id, last_name, first_name, division, birth_date_epoch_millis")
+      .eq("institution_id", institutionId)
       .eq("deleted", false)
       .order("last_name", { ascending: true }).order("first_name", { ascending: true })
       .range(debut, debut + taille - 1);
@@ -156,17 +165,23 @@ async function repertoireComplet() {
  * celles de tous - et l'infirmerie doit pouvoir saisir pour n'importe quel eleve, sans avoir a
  * savoir de quel professeur il depend.
  *
- * A savoir si la base venait a heberger un second etablissement : il faudrait revenir a un
- * filtre, sinon ce Sheet verrait ses eleves aussi.
+ * Le filtre se fait sur les comptes de l'etablissement designe par EPS_SHEET_USER_ID. Le Sheet
+ * ne peut donc pas voir les eleves d'un autre etablissement heberge dans la meme base.
  */
-async function tousLesEleves() {
+async function tousLesEleves(institutionId: string) {
+  const { data: comptes, error: erreurComptes } = await admin.from("profiles")
+    .select("id").eq("institution_id", institutionId);
+  if (erreurComptes) throw new Error(erreurComptes.message);
+  const idsComptes = (comptes || []).map(p => p.id);
+  if (!idsComptes.length) return { eleves: [], nomClasse: new Map<string, string>() };
   const { data: eleves, error } = await admin
     .from("students")
     .select("id, user_id, last_name, first_name, class_id, birth_date_epoch_millis")
+    .in("user_id", idsComptes)
     .eq("deleted", false);
   if (error) throw new Error(error.message);
   const { data: classes } = await admin.from("classes")
-    .select("id, name").eq("deleted", false);
+    .select("id, name").in("user_id", idsComptes).eq("deleted", false);
   const nomClasse = new Map<string, string>((classes || []).map(c => [c.id, c.name]));
   return { eleves: eleves || [], nomClasse };
 }
@@ -186,6 +201,12 @@ Deno.serve(async (req) => {
   if (String(requete.secret || "") !== SHEET_SECRET) return repondre({ error: "Secret refuse" }, 401);
 
   const action = String(requete.action || "");
+  let institutionId: string;
+  try { institutionId = await institutionDuCompte(SHEET_USER_ID); }
+  catch (e) { return repondre({ error: (e as Error).message }, 500); }
+  if (!institutionId) {
+    return repondre({ error: "EPS_SHEET_USER_ID n'est rattache a aucun etablissement" }, 500);
+  }
 
   // ---- Diagnostic : d'ou vient l'ecart entre ce qu'on attend et ce qu'on voit -------------------
   // PostgREST plafonne le nombre de lignes rendues par defaut : une liste incomplete ressemble
@@ -197,7 +218,7 @@ Deno.serve(async (req) => {
     const quoi = cleNom(String(requete.nom || ""));
     if (!quoi) return repondre({ error: "Nom attendu" }, 400);
     let repertoire;
-    try { repertoire = await repertoireComplet(); }
+    try { repertoire = await repertoireComplet(institutionId); }
     catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const trouves = repertoire
       .filter(e => cleNom(`${e.last_name} ${e.first_name}`).includes(quoi)
@@ -244,7 +265,7 @@ Deno.serve(async (req) => {
     let avecDivision = 0, sansDivision = 0;
     const exemplesSansDivision: string[] = [];
     try {
-      (await repertoireComplet()).forEach(e => {
+      (await repertoireComplet(institutionId)).forEach(e => {
         if (String(e.division || "").trim()) { avecDivision++; return; }
         sansDivision++;
         if (exemplesSansDivision.length < 5) {
@@ -278,8 +299,8 @@ Deno.serve(async (req) => {
   if (action === "eleves") {
     let repertoire, contenuEleves;
     try {
-      repertoire = await repertoireComplet();
-      contenuEleves = await tousLesEleves();
+      repertoire = await repertoireComplet(institutionId);
+      contenuEleves = await tousLesEleves(institutionId);
     } catch (e) { return repondre({ error: (e as Error).message }, 500); }
 
     // La division n'est pas renseignee pour tout le monde. Quand elle manque, la classe du
@@ -312,6 +333,7 @@ Deno.serve(async (req) => {
     const { data, error } = await admin
       .from("health_dispensations")
       .select("id, user_id, class_id, student_id, unss_student_id, student_last_name, student_first_name, class_name, start_date, end_date, reason, reason_kind, aptitude, adapted_activities, entered_by, updated_at")
+      .eq("institution_id", institutionId)
       // Une suppression ne retire pas la ligne, elle la marque effacee : c'est ce qui fait
       // disparaitre la dispense sur tous les appareils. Sans ce filtre, le Sheet ressuscitait
       // ce que l'on venait d'effacer.
@@ -319,7 +341,7 @@ Deno.serve(async (req) => {
       .order("start_date", { ascending: false });
     if (error) return repondre({ error: error.message }, 500);
 
-    const noms = await nomsEnseignants();
+    const noms = await nomsEnseignants(institutionId);
     const idsClasses = [...new Set((data || []).map(d => d.class_id))];
     const idsEleves = [...new Set((data || []).map(d => d.student_id))];
     const classes = new Map<string, string>();
@@ -396,8 +418,8 @@ Deno.serve(async (req) => {
     // sinon une dispense se poserait sur le mauvais eleve sans que personne le voie.
     let contenu, repertoire;
     try {
-      contenu = await tousLesEleves();
-      repertoire = await repertoireComplet();
+      contenu = await tousLesEleves(institutionId);
+      repertoire = await repertoireComplet(institutionId);
     } catch (e) { return repondre({ error: (e as Error).message }, 500); }
     const { eleves } = contenu;
     const nomClasse = (id: string) => contenu.nomClasse.get(id) || "";
@@ -438,6 +460,9 @@ Deno.serve(async (req) => {
       // l'application. Un eleve du repertoire n'a pas encore de professeur : elle revient alors
       // au compte de reference.
       user_id: eleve?.user_id || SHEET_USER_ID,
+      // Le partage ne depend plus du compte qui a cree la ligne. L'etablissement est conserve
+      // directement sur la dispense : tous ses professeurs la lisent, aucun autre ne la voit.
+      institution_id: institutionId,
       class_id: eleve ? eleve.class_id : null,
       student_id: eleve ? eleve.id : null,
       unss_student_id: fiche ? fiche.id : null,
@@ -460,7 +485,7 @@ Deno.serve(async (req) => {
     const id = String(ligne.id || "").trim();
     if (id) {
       const { error } = await admin.from("health_dispensations")
-        .update(corps).eq("id", id);
+        .update(corps).eq("id", id).eq("institution_id", institutionId);
       if (error) return repondre({ error: error.message }, 500);
       return repondre({ id, statut: "corrigée" });
     }
@@ -481,7 +506,7 @@ Deno.serve(async (req) => {
     // reviendrait a la synchronisation suivante, la copie locale du site la reproposant.
     const { error } = await admin.from("health_dispensations")
       .update({ deleted: true, updated_at: new Date().toISOString() })
-      .eq("id", id);
+      .eq("id", id).eq("institution_id", institutionId);
     if (error) return repondre({ error: error.message }, 500);
     return repondre({ statut: "supprimée" });
   }

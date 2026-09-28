@@ -1,0 +1,11 @@
+const fs=require('fs'),path=require('path'),http=require('http'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');try{res.setHeader('Content-Type',p.endsWith('.js')?'application/javascript':p.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(p))}catch{res.statusCode=404;res.end()}});
+(async()=>{await new Promise(r=>server.listen(8896,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ const context=await browser.newContext({viewport:{width:1600,height:900},serviceWorkers:'block'});await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage();await page.goto('http://127.0.0.1:8896');await page.waitForTimeout(800);
+ const desktop=await page.evaluate(()=>{const box=s=>document.querySelector(s).getBoundingClientRect();return{header:box('.header'),hero:box('.homeHero'),weather:box('.homeWeather'),alert:box('.homeAlert'),columns:getComputedStyle(document.querySelector('.homeHero')).gridTemplateColumns,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth}});
+ assert(desktop.header.height<125,`header too tall: ${desktop.header.height}`);assert.equal(desktop.columns.split(' ').length,4);assert(desktop.alert.width<desktop.weather.width);assert(desktop.hero.height<175);assert.equal(desktop.overflow,0);
+ await page.setViewportSize({width:800,height:900});await page.waitForTimeout(80);const mobile=await page.evaluate(()=>({columns:getComputedStyle(document.querySelector('.homeHero')).gridTemplateColumns,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth}));assert.equal(mobile.columns.split(' ').length,1);assert.equal(mobile.overflow,0);
+ console.log('PASS compact responsive home layout');
+ }finally{await browser.close();server.close()}})().catch(e=>{console.error(e);server.close();process.exitCode=1});

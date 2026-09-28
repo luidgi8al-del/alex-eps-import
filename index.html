@@ -6,7 +6,7 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css?v=20260928-2">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
-<link rel="stylesheet" href="home-navigation.css">
+<link rel="stylesheet" href="home-navigation.css?v=20260928-2">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20260927-1">
 <link rel="manifest" href="manifest.webmanifest">
@@ -106,6 +106,12 @@
             <div class="todayIcon">🕗</div>
           </button>
           <section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section>
+          <aside class="homeAlert" aria-labelledby="homeAlertTitle">
+            <h2 id="homeAlertTitle">ALERTE</h2>
+            <div id="homeAlertContent" class="homeAlertContent" aria-live="polite">
+              <span>Aucune alerte</span>
+            </div>
+          </aside>
         </div>
 
         <div class="homeGrid" aria-label="Accès rapides">

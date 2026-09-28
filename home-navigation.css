@@ -22,24 +22,26 @@ body .planningWrap .planningHeadCell:first-child { left:0; z-index:4; }
 body .planningWrap.is-dragging,body .planningWrap.is-dragging * { cursor:grabbing; user-select:none; }
 body #planningGrid:fullscreen { padding:16px; background:var(--bg); }
 body #planningGrid:fullscreen .planningWrap { max-height:calc(100dvh - 32px); height:calc(100dvh - 32px); }
-body .header { position:sticky; top:0; z-index:200; background:linear-gradient(110deg,#087cc1,#147fd3); padding:18px 26px; gap:16px; box-shadow:0 3px 14px #163a5f18; }
-body .header .brand { font-size:20px; font-weight:800; }
-body .tabbar { order:3; width:100%; gap:6px; padding-bottom:3px; }
-body .tabbtn { margin:0; padding:11px 14px; min-height:44px; font-size:12px; }
+body .header { position:sticky; top:0; z-index:200; background:linear-gradient(110deg,#087cc1,#147fd3); padding:10px 26px 9px; gap:7px 16px; box-shadow:0 3px 14px #163a5f18; }
+body .header .brand { order:1; font-size:18px; font-weight:800; }
+body .headerRight { order:2; gap:10px; }
+body .headerRight>button { min-height:38px; padding:8px 16px; font-size:13px; }
+body .tabbar { order:3; width:100%; gap:5px; padding-bottom:0; flex-wrap:nowrap; scrollbar-width:thin; }
+body .tabbtn { margin:0; padding:8px 12px; min-height:38px; font-size:11px; }
 body .tabbtn.active { color:#176eb6; }
 body .tabbtn:hover { background:rgba(255,255,255,.16); }
 body .tabbtn.active:hover { background:white; }
 body #settingsBtn { display:none !important; }
 body .tabbtn:focus-visible,body .homeCard:focus-visible,body .todayCard:focus-visible { outline:3px solid #f4a229; outline-offset:3px; }
 body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
-#tab-home .homeHero { display:grid; grid-template-columns:minmax(180px,240px) minmax(260px,1fr) minmax(390px,560px); gap:14px; align-items:stretch; margin:14px 0 18px; }
-#tab-home .homeHero:has(.homeWeather[hidden]) { grid-template-columns:minmax(180px,240px) minmax(300px,1fr); }
-#tab-home .homeWelcome { display:flex; align-items:center; padding:12px 0 6px; color:#163a5f; gap:20px; }
-#tab-home .homeWelcome h1 { font-size:clamp(24px,3vw,36px); letter-spacing:-1px; }
+#tab-home .homeHero { display:grid; grid-template-columns:minmax(150px,.75fr) minmax(225px,1fr) minmax(430px,2.3fr) minmax(115px,.55fr); gap:10px; align-items:stretch; margin:0 0 14px; }
+#tab-home .homeHero:has(.homeWeather[hidden]) { grid-template-columns:minmax(160px,.8fr) minmax(250px,1.2fr) minmax(120px,.55fr); }
+#tab-home .homeWelcome { display:flex; align-items:center; padding:14px 16px; color:#163a5f; gap:20px; background:#fff; border:1px solid #e1ebf3; border-radius:20px; box-shadow:0 5px 16px #17395b0b; }
+#tab-home .homeWelcome h1 { font-size:clamp(24px,2.5vw,34px); letter-spacing:-1px; }
 #tab-home .homeWelcome p { margin:6px 0; color:#58718a; }
 #tab-home #homeGreeting { color:#2678c8; font-weight:750; font-size:18px; }
-#tab-home .todayCard { margin:0; padding:16px 20px; min-height:158px; border:0; border-radius:26px; box-shadow:0 8px 26px #17395b0b; }
-#tab-home .todayIcon { display:grid; place-items:center; width:72px; height:72px; border-radius:50%; background:#edf5ff; font-size:36px; }
+#tab-home .todayCard { margin:0; padding:13px 16px; min-height:136px; border:1px solid #e1ebf3; border-radius:20px; box-shadow:0 5px 16px #17395b0b; }
+#tab-home .todayIcon { display:grid; place-items:center; width:52px; height:52px; border-radius:50%; background:#edf5ff; font-size:27px; }
 #tab-home .homeGrid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
 #tab-home .homeCard { min-height:185px; padding:22px; border-radius:28px; transition:transform .18s,box-shadow .18s; }
 #tab-home .homeCard:hover { box-shadow:0 12px 25px #17395b18; }
@@ -55,7 +57,7 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 #tab-home [data-goto="programmation"] { order:4; }
 #tab-home #institutionCard { margin-top:24px; }
 @media(max-width:850px) {
-  body .header { padding:16px; }
+  body .header { padding:10px 16px 9px; }
   body .container { padding:18px 16px 40px; }
   #tab-home .homeGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   #tab-home .homeWelcome>span { display:none; }
@@ -63,7 +65,10 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
   #tab-home .homeCard { padding:17px; min-height:180px; }
   #tab-home .todayCard { padding:18px; }
 }
-@media(max-width:1180px) and (min-width:851px) { #tab-home .homeHero { grid-template-columns:minmax(170px,210px) minmax(230px,1fr) minmax(340px,460px); gap:10px; } }
+@media(max-width:1100px) and (min-width:851px) {
+  #tab-home .homeHero { grid-template-columns:minmax(170px,.7fr) minmax(250px,1fr) minmax(115px,.5fr); }
+  #tab-home .homeWeather { grid-column:1/-1; grid-row:2; }
+}
 @media(prefers-reduced-motion:reduce) { #tab-home .homeCard { transition:none; } }
 /* Settings match the Android accordion hierarchy; all sections start closed. */
 .settingsSection summary { cursor:pointer; font-size:1.15rem; font-weight:750; color:#163a5f; padding:8px 0; }
@@ -86,8 +91,11 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 #settingsBody { padding-bottom:max(24px,env(safe-area-inset-bottom)); }
 .homeCard[hidden] { display:none !important; }
 .homeGrid.interactive .homeCard { border-radius:24px; box-shadow:0 7px 20px #163a5f12; }
-.homeWeather { margin:0; color:#163a5f; min-width:0; max-height:158px; overflow:hidden; background:#fff; border:1px solid #d7e8f5; border-radius:20px; padding:7px 9px; box-shadow:0 5px 16px #17395b0b; }
+.homeWeather { margin:0; color:#163a5f; min-width:0; min-height:136px; max-height:148px; overflow:hidden; background:#fff; border:1px solid #d7e8f5; border-radius:20px; padding:7px 9px; box-shadow:0 5px 16px #17395b0b; }
 .homeWeather[hidden] { display:none !important; }
+.homeAlert { min-width:0; min-height:136px; padding:14px 13px; overflow:hidden; background:#fff; border:1px solid #e1ebf3; border-radius:20px; box-shadow:0 5px 16px #17395b0b; }
+.homeAlert h2 { margin:0; color:#173a57; font-size:14px; font-weight:900; letter-spacing:.04em; }
+.homeAlertContent { display:grid; place-items:center; min-height:82px; color:#7890a2; font-size:11px; text-align:center; }
 .weatherTop { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
 .weatherTop h2 { margin:0; color:#163a5f; font-size:15px; }
 .weatherTop button { margin:0; padding:5px 10px; min-height:32px; }
@@ -118,7 +126,7 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 #institutionCard[hidden] { display:none !important; }
 .weatherHourLabel { min-height:32px; display:flex; align-items:center; }
 @media(max-width:480px) { .weatherDay { padding:12px; } .weatherTemp { font-size:20px; } .weatherSymbol { font-size:28px; } }
-@media(max-width:850px) { #tab-home .homeHero,#tab-home .homeHero:has(.homeWeather[hidden]) { grid-template-columns:1fr; gap:8px; } .homeWeather { padding:9px; max-height:none; } .weatherHour { display:flex; flex-direction:column; } }
+@media(max-width:850px) { #tab-home .homeHero,#tab-home .homeHero:has(.homeWeather[hidden]) { grid-template-columns:1fr; gap:8px; } #tab-home .homeWeather { grid-column:auto; grid-row:auto; padding:9px; max-height:none; } .homeAlert { min-height:86px; } .homeAlertContent { min-height:42px; } .weatherHour { display:flex; flex-direction:column; } }
 
 /* Santé / Accident : même langage visuel que Classes et Outils. */
 .healthHero{display:flex;justify-content:space-between;align-items:center;padding:22px 26px;margin-bottom:14px;border-radius:24px;background:linear-gradient(135deg,#e8f8f3,#eef5ff);border:1px solid #d5e9e5;overflow:hidden}
@@ -144,9 +152,9 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 /* La meteo donne sa hauteur a la bande du haut : la plafonner coupait "Demain" sans le dire.
    La carte du jour s'aligne dessus, et le reste de l'ecran revient aux cartes. */
 #tab-home .homeHero { margin:0; flex:0 0 auto; align-items:stretch; }
-#tab-home .todayCard { min-height:0; padding:14px 20px; }
+#tab-home .todayCard { min-height:136px; padding:13px 16px; }
 #tab-home .todayIcon { width:clamp(52px,7vh,72px); height:clamp(52px,7vh,72px); font-size:clamp(26px,3.6vh,36px); }
-#tab-home .homeWeather { max-height:none; }
+#tab-home .homeWeather { max-height:148px; }
 
 /* La grille prend ce qui reste, et ses deux rangees se partagent la place au lieu de la reclamer. */
 #tab-home .homeGrid { flex:1 1 auto; min-height:0; gap:12px;

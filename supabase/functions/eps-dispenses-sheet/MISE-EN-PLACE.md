@@ -29,6 +29,7 @@ Lancer dans l'éditeur SQL, dans cet ordre :
 | `schema_sante_4_sport_adapte.sql` | aptitude et sport adapté |
 | `schema_sante_5_saisie_infirmerie.sql` | la colonne « Fait par » |
 | `schema_sante_6_dispense_repertoire.sql` | la dispense pour un élève sans classe |
+| `schema_sante_7_etablissement.sql` | le partage fiable avec tous les professeurs de l’établissement |
 
 Puis déployer la fonction, désactiver **Verify JWT** dessus, et poser deux secrets dans
 **Edge Functions > Secrets** :
