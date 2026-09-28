@@ -147,7 +147,73 @@ document.querySelectorAll("[data-home-shortcut]").forEach(button =>
     }
   })
 );
+document.querySelectorAll("[data-home-module]").forEach(button =>
+  button.addEventListener("click", () => {
+    const target = button.dataset.homeModule;
+    if (target === "tools" && typeof globalThis.ouvrirFavorisDepuisAccueil === "function") {
+      globalThis.ouvrirFavorisDepuisAccueil();
+    } else if (target === "unss") {
+      showTab("unss");
+      Promise.resolve(initUnssTab()).then(() => showUnssTab("dates")).catch(() => {});
+    } else if (target === "bac") {
+      globalThis.planningAccueilTabDemandee = "bac";
+      showTab("programmation");
+    } else {
+      showTab("equipement");
+    }
+  })
+);
 document.getElementById("todayCard").addEventListener("click", () => showTab("planning"));
+
+function homeSummaryText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value;
+}
+
+function formatHomeEventDate(value) {
+  const date = new Date(Number(value));
+  if (!Number.isFinite(date.getTime())) return "Date à préciser";
+  return date.toLocaleDateString("fr-FR", { weekday:"short", day:"numeric", month:"short" }).replace(".", "");
+}
+
+async function loadHomeModuleSummaries() {
+  const favorite = typeof globalThis.homeFavoriteToolSummary === "function"
+    ? globalThis.homeFavoriteToolSummary() : null;
+  homeSummaryText("homeToolsSummary", favorite?.title || "Mes favoris");
+  homeSummaryText("homeToolsMeta", favorite?.count
+    ? `${favorite.count} favori${favorite.count > 1 ? "s" : ""} disponible${favorite.count > 1 ? "s" : ""}`
+    : "Choisissez un outil favori");
+
+  const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+  try {
+    const events = await lireTable("institution_calendar_events",
+      "institution_calendar_events?deleted=eq.false&kind=eq.SORTIE&select=*&order=start_date_epoch_millis.asc",
+      { ou:event => !event.deleted && event.kind === "SORTIE",
+        trier:(a,b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
+    const next = events.find(event => Number(event.end_date_epoch_millis || event.start_date_epoch_millis || 0) >= todayStart.getTime());
+    homeSummaryText("homeAsSummary", next?.label || "Aucun événement prévu");
+    homeSummaryText("homeAsMeta", next ? formatHomeEventDate(next.start_date_epoch_millis) : "Ajouter une date AS");
+  } catch {
+    homeSummaryText("homeAsSummary", "Événements indisponibles");
+    homeSummaryText("homeAsMeta", "Ouvrir les dates AS");
+  }
+
+  try {
+    const incidents = await lireTable("sport_installation_incidents",
+      "sport_installation_incidents?deleted=eq.false&select=*&order=reported_at.desc",
+      { ou:incident => !incident.deleted,
+        trier:(a,b) => String(b.reported_at || "").localeCompare(String(a.reported_at || "")) });
+    const active = incidents.filter(incident => incident.status !== "RESOLU");
+    const first = active[0];
+    homeSummaryText("homeEquipmentSummary", first?.installation_name || "Aucun problème signalé");
+    homeSummaryText("homeEquipmentMeta", active.length
+      ? `${active.length} signalement${active.length > 1 ? "s" : ""} en cours`
+      : "Toutes les installations sont disponibles");
+  } catch {
+    homeSummaryText("homeEquipmentSummary", "Suivi indisponible");
+    homeSummaryText("homeEquipmentMeta", "Ouvrir les installations");
+  }
+}
 
 function slotStartMinutes(slot) {
   const parts = String(slot.start_time || "").trim().replace("h", ":").split(":");

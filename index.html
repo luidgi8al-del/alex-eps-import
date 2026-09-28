@@ -6,7 +6,7 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css?v=20260928-2">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
-  <link rel="stylesheet" href="home-navigation.css?v=20260928-5">
+  <link rel="stylesheet" href="home-navigation.css?v=20260928-6">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20260927-1">
 <link rel="manifest" href="manifest.webmanifest">
@@ -129,22 +129,26 @@
             <span class="homeIcon" aria-hidden="true">🎓</span>
           </section>
           <div class="homeModuleGrid">
-            <button class="homeCard" data-goto="outils" style="background:#FFF0D8">
-              <span class="homeTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span>
-              <span class="homeSub">Chronos, scores et tests</span><span class="homeIcon">⏱️</span>
-            </button>
-            <button class="homeCard" data-goto="unss" style="background:#F0E9FF">
-              <span class="homeTitle">ASLVH</span><span class="homeRule" style="background:#7548C8"></span>
-              <span class="homeSub">Licenciés, groupes et sorties</span><span class="homeIcon">🏆</span>
-            </button>
-            <button class="homeCard" data-goto="equipement" style="background:#FFF8C9">
-              <span class="homeTitle">ÉQUIPEMENT</span><span class="homeRule" style="background:#93A900"></span>
-              <span class="homeSub">Matériel et installations</span><span class="homeIcon">🏋️</span>
-            </button>
-            <button class="homeCard" data-goto="programmation" style="background:#E5F8F5">
-              <span class="homeTitle">PROGRAMMATION</span><span class="homeRule" style="background:#159B91"></span>
-              <span class="homeSub">Cycles et planification</span><span class="homeIcon">🗓️</span>
-            </button>
+            <section class="homeCard homeModuleCard" style="background:#FFF0D8" aria-labelledby="homeToolsTitle">
+              <div class="homeModuleIntro"><span class="homeTitle" id="homeToolsTitle">OUTILS</span><span class="homeRule" style="background:#F28A2C"></span><span class="homeSub">Chronos, scores et tests</span></div>
+              <button type="button" class="homeModuleInsight" data-home-module="tools"><span class="homeInsightIcon">★</span><span><small>RACCOURCI FAVORI</small><b id="homeToolsSummary">Mes favoris</b><em id="homeToolsMeta">Choisissez un outil favori</em></span><strong>›</strong></button>
+              <span class="homeIcon" aria-hidden="true">⏱️</span>
+            </section>
+            <section class="homeCard homeModuleCard" style="background:#F0E9FF" aria-labelledby="homeAsTitle">
+              <div class="homeModuleIntro"><span class="homeTitle" id="homeAsTitle">ASLVH</span><span class="homeRule" style="background:#7548C8"></span><span class="homeSub">Licenciés, groupes et sorties</span></div>
+              <button type="button" class="homeModuleInsight" data-home-module="unss"><span class="homeInsightIcon">📅</span><span><small>PROCHAIN ÉVÉNEMENT</small><b id="homeAsSummary">Chargement…</b><em id="homeAsMeta">Dates AS</em></span><strong>›</strong></button>
+              <span class="homeIcon" aria-hidden="true">🏆</span>
+            </section>
+            <section class="homeCard homeModuleCard" style="background:#FFF8C9" aria-labelledby="homeEquipmentTitle">
+              <div class="homeModuleIntro"><span class="homeTitle" id="homeEquipmentTitle">ÉQUIPEMENT</span><span class="homeRule" style="background:#93A900"></span><span class="homeSub">Matériel et installations</span></div>
+              <button type="button" class="homeModuleInsight" data-home-module="equipement"><span class="homeInsightIcon">⚠️</span><span><small>SUIVI DES INSTALLATIONS</small><b id="homeEquipmentSummary">Chargement…</b><em id="homeEquipmentMeta">Signalements en cours</em></span><strong>›</strong></button>
+              <span class="homeIcon" aria-hidden="true">🏋️</span>
+            </section>
+            <section class="homeCard homeModuleCard" style="background:#E5F8F5" aria-labelledby="homeProgrammingTitle">
+              <div class="homeModuleIntro"><span class="homeTitle" id="homeProgrammingTitle">PROGRAMMATION</span><span class="homeRule" style="background:#159B91"></span><span class="homeSub">Cycles et planification</span></div>
+              <button type="button" class="homeModuleInsight" data-home-module="bac"><span class="homeInsightIcon">📘</span><span><small>ACCÈS DIRECT</small><b>Référentiel BAC EPS</b><em>Consulter les documents officiels</em></span><strong>›</strong></button>
+              <span class="homeIcon" aria-hidden="true">🗓️</span>
+            </section>
           </div>
         </div>
 
@@ -531,7 +535,7 @@
   <script src="hors-connexion.js"></script>
   <script src="offline-preparation.js?v=20260927-2"></script>
   <script src="offline-read.js"></script>
-  <script src="accueil.js?v=20260928-4"></script>
+  <script src="accueil.js?v=20260928-5"></script>
   <script src="compte.js?v=20260927-3"></script>
   <script src="classes.js"></script>
   <script src="planning.js"></script>
@@ -546,7 +550,7 @@
   <script src="aslvh.js?v=20260927-12"></script>
   <script src="outils.js?v=20260928-2"></script>
   <script src="teams-saved-web.js?v=20260928-3"></script>
-  <script src="tools-workspace.js?v=20260928-2"></script>
+  <script src="tools-workspace.js?v=20260928-3"></script>
   <script src="team-evaluation-editor.js?v=20260928-1"></script>
   <script src="tools-workflows.js?v=20260928-1"></script>
   <script src="tools-organizers.js?v=20260928-1"></script>
@@ -850,7 +854,12 @@
         if (name === "planning" || name === "programmation") {
           const requestedTab = name;
           initPlanningTab()
-            .then(() => { if (currentWebTab === requestedTab) showPlanningTab(requestedTab === "planning" ? "global" : "annuelle"); })
+            .then(() => {
+              if (currentWebTab !== requestedTab) return;
+              const destination = globalThis.planningAccueilTabDemandee || (requestedTab === "planning" ? "global" : "annuelle");
+              delete globalThis.planningAccueilTabDemandee;
+              showPlanningTab(destination);
+            })
             .catch(error => showModuleFailure(name, error));
         }
       } catch (error) { showModuleFailure(name, error); }
@@ -903,6 +912,7 @@
         const teacher = loadPrefs().teacherName || session?.email?.split("@")[0] || "";
         document.getElementById("homeGreeting").textContent = teacher ? `Bonjour ${teacher}` : "Bonjour";
         loadTodayCard();
+        loadHomeModuleSummaries();
       }
       if (name === "home") { applyHomeVisual(); renderHomeWeather(); }
       if (name === "planning" || name === "programmation") {

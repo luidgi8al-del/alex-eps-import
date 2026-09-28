@@ -274,6 +274,8 @@
       sessionRow=sessions[0]||{id:sessionId,class_id:classId,period_number:+period||1,test_name:'Multi-chrono',created_at:Date.now(),class_label:toolClasses.find(c=>String(c.id)===String(classId))?.name||'',deleted:false};
     await renderMultiChronoWeb({session:sessionRow,results});
   }
+  function homeFavoriteToolSummary(){const rows=favoriteTools();return {count:rows.length,title:rows[0]?.title||"Mes favoris"}}
+  function ouvrirFavorisDepuisAccueil(){showTab("outils");showFavorites=true;activity=null;draw()}
   const fr=(v,d=1)=>Number(v).toFixed(d).replace(".",",");
   // Chaque indicateur rapporte (+1) ou retire (-1) un point ; l'eleve part du milieu du bareme
   // choisi, plafonne entre 0 et le bareme - un jeu reussi fait monter la note, une succession
@@ -362,6 +364,7 @@
   const previousOpen=globalThis.openSettings;globalThis.openSettings=async function(){if(typeof previousOpen==="function")await previousOpen();injectSettings()};
   globalThis.EpsToolWorks={read:readWorks,save:saveWork,library:openWorkLibrary,download,restoreContext};
   Object.assign(globalThis,{renderMultiChronoWeb,ouvrirMultiChronoDepuisClasse,renderObserverWeb,renderRandomWeb,renderEffortWeb,resetToolsWorkspace,
+    homeFavoriteToolSummary,ouvrirFavorisDepuisAccueil,
     isToolFavorite:id=>readFavorites().has(id),toggleToolFavorite:id=>{const active=toggleFavoriteId(id);draw();return active}});
   addEventListener("DOMContentLoaded",draw);
 })();
