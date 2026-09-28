@@ -507,7 +507,7 @@ async function loadInstallationsList() {
       <div class="installation-card-actions">
         <button type="button" data-action="report">⚠ Signaler</button>
         <button type="button" class="secondary" data-action="history">Suivi</button>
-        <details class="ui-actions-menu"><summary>Actions</summary><div>
+        <details class="ui-actions installation-actions"><summary>Actions</summary><div class="ui-actions-menu">
           <button type="button" class="secondary" data-action="edit">Renommer</button>
           <button type="button" class="danger" data-action="delete">Supprimer</button>
         </div></details>
@@ -516,6 +516,13 @@ async function loadInstallationsList() {
     div.querySelector('[data-action="history"]').addEventListener("click", () => openInstallationHistory(r));
     div.querySelector('[data-action="edit"]').addEventListener("click", () => openInstallationEdit(r));
     div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteInstallation(r.id));
+    const menu = div.querySelector(".installation-actions");
+    menu.addEventListener("toggle", () => {
+      if (!menu.open) return;
+      listEl.querySelectorAll(".installation-actions[open]").forEach(other => {
+        if (other !== menu) other.open = false;
+      });
+    });
     listEl.appendChild(div);
   });
 }
