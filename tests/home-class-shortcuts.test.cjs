@@ -14,7 +14,9 @@ for (const target of ['classes', 'dispenses', 'evaluations', 'students']) {
 assert.match(html, /class="homeModuleGrid"/);
 assert.match(css, /\.homeGrid \{ grid-template-columns:minmax\(250px,\.85fr\) minmax\(0,1\.7fr\)/);
 assert.match(css, /\.homeClassQuick \{/);
-assert.match(css, /\.homeClassQuick \{[^}]*align-self:center/);
+assert.match(css, /\.homeClassQuick \{[^}]*align-self:stretch/);
+assert.match(css, /\.homeClassQuick \{[^}]*grid-template-rows:repeat\(2,minmax\(0,1fr\)\)/);
+assert.match(css, /\.homeClassQuick button \{[^}]*height:100%/);
 assert.match(css, /\.homeClassHub\.featured \{[^}]*grid-template-rows:auto minmax\(0,1fr\)/);
 assert.match(css, /\.homeModuleGrid \{ display:grid; grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(home, /vueClasseAccueilDemandee = "evaluations"/);

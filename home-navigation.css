@@ -185,11 +185,11 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 #tab-home .homeInsightIcon { display:grid; place-items:center; width:31px; height:31px; border-radius:10px; background:#fff; font-size:16px; }
 #tab-home .homeModuleInsight > strong { color:#2678c8; font-size:20px; }
 #tab-home .homeModuleCard .homeIcon { opacity:.95; }
-#tab-home .homeClassQuick { position:relative; z-index:2; align-self:center; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:100%; margin:clamp(10px,2vh,18px) 0; }
-#tab-home .homeClassQuick button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0; min-height:clamp(62px,9vh,82px); margin:0; padding:10px 7px; border:0; border-radius:16px; background:#ffffffb8; color:#163a5f; box-shadow:none; font-size:clamp(10px,1.4vh,12px); font-weight:750; text-align:center; }
+#tab-home .homeClassQuick { position:relative; z-index:2; align-self:stretch; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); gap:12px; width:100%; min-height:0; margin:clamp(10px,1.6vh,14px) 0 0; }
+#tab-home .homeClassQuick button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; min-width:0; min-height:0; height:100%; margin:0; padding:10px 7px; border:0; border-radius:18px; background:#ffffffc7; color:#163a5f; box-shadow:none; font-size:clamp(12px,1.8vh,15px); font-weight:800; text-align:center; }
 #tab-home .homeClassQuick button::before { content:none; }
 #tab-home .homeClassQuick button:hover { transform:translateY(-1px); background:#fff; box-shadow:0 5px 12px #79342a17; }
-#tab-home .homeClassQuick button span { font-size:clamp(16px,2.5vh,22px); }
+#tab-home .homeClassQuick button span { font-size:clamp(21px,3.5vh,30px); }
 #tab-home .homeClassQuick button:focus-visible { outline:3px solid #f4a229; outline-offset:2px; }
 #tab-home #institutionCard { margin-top:12px; }
 
