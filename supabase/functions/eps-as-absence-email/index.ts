@@ -83,7 +83,9 @@ Deno.serve(async (req) => {
       const studentName = `${String(student.last_name || "").trim().toLocaleUpperCase("fr-FR")} ${firstName}`.trim();
       const activity = group?.activity_name || "Association Sportive";
       const teacherName = String(group?.responsible_teacher || "").trim();
-      const teacher = teacherName && /^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i.test(teacherName)
+      const withoutTitle = teacherName.replace(/^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i, "");
+      const confirmedMadame = /(?:^|[\s.,;@-])(?:eisenmann|schmitt|thooris)(?:[a-z]?@|$|[\s.,;-])/i.test(withoutTitle);
+      const teacher = confirmedMadame ? `Mme ${withoutTitle}` : teacherName && /^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i.test(teacherName)
         ? teacherName : teacherName ? `M. ${teacherName}` : "Le professeur EPS";
       const subject = `Absence AS - ${studentName} - ${date}`;
       const html = `<p>Bonjour,</p><p>Nous vous informons que <strong>${escapeHtml(studentName)}</strong> a été déclaré(e) absent(e) à la séance <strong>${escapeHtml(activity)}</strong> du <strong>${escapeHtml(date)}</strong>${group?.start_time ? ` à <strong>${escapeHtml(group.start_time)}</strong>` : ""}.</p><p>Ce message est à vocation informative. Merci de ne pas y répondre.</p><p>Cordialement,<br>${escapeHtml(teacher)}<br>Association Sportive – Cité scolaire Victor-Hugo</p>`;

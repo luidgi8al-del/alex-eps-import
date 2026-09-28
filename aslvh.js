@@ -1595,6 +1595,7 @@ async function appliquerImport() {
 function renderUnssSlotsTab() {
   const wrap = document.getElementById("unssList");
   let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">
+    <button id="unssSlotsDownloadBtn" class="secondary" style="margin-top:0" ${unssSlots.length ? "" : "disabled"}>Téléchargement</button>
     <button id="unssSlotAddBtn" style="margin-top:0">Ajouter un creneau</button></div>`;
 
   if (unssSlots.length === 0) {
@@ -1621,6 +1622,7 @@ function renderUnssSlotsTab() {
   wrap.innerHTML = html;
 
   document.getElementById("unssSlotAddBtn").addEventListener("click", () => openUnssSlotPanel(null));
+  document.getElementById("unssSlotsDownloadBtn").addEventListener("click", showAllSlotsExport);
   wrap.querySelectorAll("[data-slot]").forEach(el => {
     el.addEventListener("click", () => ouvrirFicheCreneau(unssSlots.find(x => x.id === el.dataset.slot)));
   });
@@ -1666,10 +1668,52 @@ function lirePieceJointeAS(file) {
 function signatureProfesseurAS(value) {
   const nom = String(value || "").trim();
   if (!nom) return "Le professeur EPS";
+  // Civilités confirmées par l'établissement, y compris si une ancienne saisie porte M.
+  const sansTitre = nom.replace(/^(?:M\.?|Mme\.?|Mlle\.?|Monsieur|Madame|Mademoiselle)\s+/i, "");
+  if (/(?:^|[\s.,;@-])(?:eisenmann|schmitt|thooris)(?:[a-z]?@|$|[\s.,;-])/i.test(sansTitre)) return `Mme ${sansTitre}`;
   if (/^(?:M\.?|Monsieur)\s+/i.test(nom)) return nom.replace(/^(?:M\.?|Monsieur)\s+/i, "M. ");
   if (/^(?:Mme\.?|Madame)\s+/i.test(nom)) return nom.replace(/^(?:Mme\.?|Madame)\s+/i, "Mme ");
   if (/^(?:Mlle\.?|Mademoiselle)\s+/i.test(nom)) return nom.replace(/^(?:Mlle\.?|Mademoiselle)\s+/i, "Mlle ");
   return `M. ${nom}`;
+}
+
+function allSlotsExportRows(slots = unssSlots) {
+  return slots.filter(slot => !slot.deleted).map(slot => [
+    slot.activity_name || "Activité non renseignée",
+    slot.responsible_teacher ? signatureProfesseurAS(slot.responsible_teacher) : "Non attribué",
+    capitaliseJour(slot.day_of_week) || "À préciser",
+    heureEmailAS(slot.start_time) || "À préciser",
+    heureEmailAS(slot.end_time) || "À préciser"
+  ]);
+}
+
+function showAllSlotsExport() {
+  const rows = allSlotsExportRows();
+  const overlay = document.createElement("div");
+  overlay.className = "unified-export-overlay";
+  overlay.innerHTML = `<section class="unified-export-dialog" role="dialog" aria-modal="true" aria-label="Télécharger les créneaux AS"><header><div><h3>Tous les créneaux ASLVH</h3><p>${rows.length} créneau(x) · activité, professeur et horaires</p></div><button data-close aria-label="Fermer">×</button></header><main><button class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Tableau CSV compatible Excel</small></span><em>›</em></button><button class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Tableau prêt à imprimer ou enregistrer en PDF</small></span><em>›</em></button><button class="export-cancel" data-close>Annuler</button></main></section>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll("[data-close]").forEach(button => button.onclick = () => overlay.remove());
+  overlay.onclick = event => { if (event.target === overlay) overlay.remove(); };
+  overlay.querySelector('[data-format="csv"]').onclick = () => {
+    const cell = value => `"${String(value).replace(/^[=+@-]/, "'$&").replaceAll('"', '""')}"`;
+    const csv = "\ufeff" + [["Activité", "Professeur", "Jour", "Début", "Fin"], ...rows].map(row => row.map(cell).join(";")).join("\r\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([csv], { type:"text/csv;charset=utf-8" }));
+    link.download = "creneaux-aslvh.csv"; link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    overlay.remove();
+  };
+  overlay.querySelector('[data-format="pdf"]').onclick = () => {
+    const popup = window.open("", "_blank");
+    if (!popup) { alert("Autorisez l’ouverture de la fenêtre pour préparer le PDF."); return; }
+    popup.document.write(allSlotsPrintHtml(rows));
+    popup.document.close(); overlay.remove();
+  };
+}
+
+function allSlotsPrintHtml(rows) {
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Créneaux ASLVH</title><style>@page{size:A4 portrait;margin:14mm}body{font:12px Arial,sans-serif;color:#163a5f;margin:0}h1{font-size:24px;margin:0 0 8px}p{color:#526e83}table{width:100%;border-collapse:collapse;margin-top:20px;table-layout:fixed}th,td{padding:10px 8px;border:1px solid #ccdae5;text-align:left;overflow-wrap:anywhere}th{background:#eaf4fb}th:first-child{width:29%}th:nth-child(2){width:25%}tr{break-inside:avoid}thead{display:table-header-group}button{margin:20px 0;padding:12px;background:#087dca;color:white;border:0;border-radius:8px}@media print{button{display:none}}</style></head><body><h1>ASLVH · Créneaux des activités</h1><p>${rows.length} créneau(x) · Édité le ${new Date().toLocaleDateString("fr-FR")}</p><table><thead><tr>${["Activité", "Professeur", "Jour", "Début", "Fin"].map(value => `<th>${value}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(value => `<td>${unssText(value)}</td>`).join("")}</tr>`).join("")}</tbody></table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`;
 }
 
 function prenomEmailAS(value) {
