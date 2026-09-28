@@ -18,6 +18,7 @@ assert.match(css, /\.homeClassQuick \{[^}]*align-self:stretch/);
 assert.match(css, /\.homeClassQuick \{[^}]*grid-template-rows:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(css, /\.homeClassQuick button \{[^}]*height:100%/);
 assert.match(css, /\.homeClassHub\.featured \{[^}]*grid-template-rows:auto minmax\(0,1fr\)/);
+assert.match(css, /\.homeClassHub\.featured \{[^}]*grid-template-columns:minmax\(0,1fr\)/);
 assert.match(css, /\.homeModuleGrid \{ display:grid; grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(home, /vueClasseAccueilDemandee = "evaluations"/);
 assert.match(health, /function ouvrirDispensesDepuisAccueil\(\)/);

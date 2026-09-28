@@ -167,7 +167,7 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 #tab-home .homeSub { font-size:clamp(11px,1.6vh,13px); margin-top:clamp(4px,1vh,8px); }
 #tab-home .homeIcon { font-size:clamp(24px,4.4vh,43px); bottom:clamp(8px,1.4vh,15px); right:clamp(12px,1.8vh,20px); }
 #tab-home .homeGrid { grid-template-columns:minmax(250px,.85fr) minmax(0,1.7fr); grid-template-rows:minmax(0,1fr); }
-#tab-home .homeClassHub.featured { grid-column:auto; min-height:0; height:100%; display:grid; grid-template-rows:auto minmax(0,1fr); align-items:stretch; }
+#tab-home .homeClassHub.featured { grid-column:auto; min-height:0; height:100%; display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); align-items:stretch; }
 #tab-home .homeClassHub.featured .homeTitle { font-size:clamp(18px,2.6vh,25px); }
 #tab-home .homeClassIntro { position:relative; z-index:2; }
 #tab-home .homeClassHub .homeIcon { top:14px; right:17px; bottom:auto; font-size:30px; }
