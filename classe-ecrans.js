@@ -480,17 +480,17 @@ async function ecOuvrirEquipe(equipe) {
     ${membres.length ? groupes.map((g, i) => g ? `<div class="ec-groupe"><b>Équipe ${i + 1}</b>${
       g.map(m => `<span>${ecTexte(ecNomEleve(ecEleve(m.student_id)))}</span>`).join("")}</div>` : "").join("")
       : `<p class="ec-vide">Cette composition ne contient aucun élève.</p>`}
-    ${cycle ? "" : `<p class="ec-aide">Créer une évaluation demande un cycle pour la période : créez-le depuis Progression du cycle.</p>`}
+    <p class="ec-aide">Les évaluations créées avec cette composition sont rangées dans Évaluations / Tests.</p>
     <div class="ec-dialogue-actions">
       <button type="button" class="danger" id="ecSupprimerEquipe">Supprimer</button>
       <button type="button" class="secondary" id="ecModifierGroupes">Modifier les groupes</button>
-      <button type="button" id="ecEvaluerEquipe"${cycle && membres.length ? "" : " disabled"}>Créer une évaluation</button>
+      <button type="button" id="ecEvaluerEquipe"${membres.length ? "" : " disabled"}>Créer une évaluation</button>
       <button type="button" class="secondary" id="ecFermerEquipe">Fermer</button>
     </div></div>`;
   document.getElementById("ecFermerEquipe").onclick = () => fermerDetailClasse();
   document.getElementById("ecSupprimerEquipe").onclick = () => ecSupprimerEquipe(equipe);
   document.getElementById("ecModifierGroupes").onclick = () => ecModifierGroupes(equipe, membres);
-  document.getElementById("ecEvaluerEquipe").onclick = () => ecEvaluerEquipe(equipe, membres, cycle);
+  document.getElementById("ecEvaluerEquipe").onclick = () => TeamEvaluation.editor(hote, {...equipe, period_number:dashboardPeriod}, groupes.map(g => (g || []).map(m => ecEleve(m.student_id) || { id:m.student_id, first_name:"Élève" })), null, () => ecOuvrirEquipe(equipe));
 }
 
 /**
@@ -881,6 +881,7 @@ function ecDessinerEvaluations(panel) {
           <span>Créez votre première évaluation pour commencer le suivi de la classe.</span>
           <button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>
         </div>`}</div>
+        <div id="ecTeamEvaluationResults"></div>
         <footer class="ec-evaluations-pied">
           <button type="button" class="secondary" id="ecActionsEvaluations">Actions <span aria-hidden="true">⌄</span></button>
           <small>Récapitulatif, PDF, tableur, courriel et divers EPS</small>
@@ -907,11 +908,40 @@ function ecDessinerEvaluations(panel) {
     b.onclick = () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); };
     ecAppuiLong(b, () => ecChoisirClassePourCopie(e));
   });
+  ecChargerEvaluationsEquipes(panel);
   // Les jauges se remplissent une fois les notes relues.
   if (!ecNotesChargees) ecChargerNotes().then(() => { if (vueClasse === "evaluations") renderClassDashboard(); });
 }
 
 /** Ouvre directement le catalogue Tests EPS pour cette classe et cette période. */
+async function ecChargerEvaluationsEquipes(panel) {
+  const host=panel.querySelector('#ecTeamEvaluationResults');
+  if(!host)return;
+  const classId=dashboardClass.row.id,period=Number(dashboardPeriod);
+  try {
+    const all=await TeamEvaluation.rows('team_evaluations',`class_id=eq.${encodeURIComponent(classId)}&order=created_at.desc`);
+    if(!host.isConnected)return;
+    const list=all.filter(e=>Number(e.scores_json?._meta?.period || 1)===period);
+    if(ecFiltreEvaluations==='Finales')return;
+    host.innerHTML=list.map(e=>`<button type="button" class="ec-evaluation" data-team-result="${ecTexte(e.id)}"><span class="ec-evaluation-tete"><b>${ecTexte(e.title)}</b><small>${ecDateCourte(e.created_at)}</small></span><small>Ponctuelle · Par équipes · Ouvrir, modifier, PDF ou Excel</small></button>`).join('');
+    if(list.length)panel.querySelector('.ec-eval-vide')?.remove();
+    const stats=panel.querySelectorAll('.ec-eval-stat b');
+    const complete=list.filter(e=>e.scores_json?._meta?.groups?.length && e.criteria_json?.length && e.scores_json._meta.groups.every((g,i)=>e.criteria_json.every(c=>e.scores_json[i]?.[c.id]!==undefined && e.scores_json[i][c.id]!==''))).length;
+    if(stats.length===3){stats[0].textContent=Number(stats[0].textContent)+list.length;stats[1].textContent=Number(stats[1].textContent)+complete;stats[2].textContent=Number(stats[2].textContent)+list.length-complete;}
+    host.querySelectorAll('[data-team-result]').forEach(b=>b.onclick=()=>ecOuvrirEvaluationEquipe(list.find(e=>e.id===b.dataset.teamResult)));
+  }catch(e){if(host.isConnected)host.textContent=e.message;}
+}
+
+async function ecOuvrirEvaluationEquipe(evaluation) {
+  const host=hoteDetail();ouvrirDetailClasse();host.innerHTML='<p>Chargement de l’évaluation…</p>';
+  try {
+    let groups=evaluation.scores_json?._meta?.groups;
+    if(!groups){groups=[];const members=await TeamEvaluation.rows('saved_team_members',`saved_team_id=eq.${encodeURIComponent(evaluation.saved_team_id)}`);members.forEach(m=>(groups[m.team_index]??=[]).push(ecEleve(m.student_id)||{id:m.student_id,first_name:'Élève'}));}
+    const composition={id:evaluation.saved_team_id,class_id:evaluation.class_id,name:evaluation.scores_json?._meta?.compositionName || 'Équipes enregistrées',period_number:dashboardPeriod};
+    TeamEvaluation.editor(host,composition,groups,evaluation,()=>{fermerDetailClasse();ecAller('evaluations');});
+  }catch(e){host.textContent=e.message;}
+}
+
 function ecCreerNouveauTest() {
   return ecEnFenetreOutil(async () => {
     toolPanel = document.getElementById("toolPanel");
