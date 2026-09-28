@@ -6,8 +6,13 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  const context=await browser.newContext({viewport:{width:1600,height:900},serviceWorkers:'block'});await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage();await page.goto('http://127.0.0.1:8893');await page.waitForTimeout(900);
  const layout=await page.evaluate(()=>[...document.querySelectorAll('.homeModuleCard')].map(card=>{const title=card.querySelector('.homeModuleIntro').getBoundingClientRect(),box=card.getBoundingClientRect(),insight=card.querySelector('.homeModuleInsight').getBoundingClientRect();return{titleRatio:(title.top-box.top)/box.height,insightCenter:(insight.top+insight.height/2-box.top)/box.height}}));
  assert.equal(layout.length,4);layout.forEach(item=>{assert(item.titleRatio<.22);assert(item.insightCenter>.42&&item.insightCenter<.78)});
+ await page.click('#homeToolsTitle');await page.waitForSelector('#tab-outils',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('#homeAsTitle');await page.waitForSelector('#tab-unss',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('#homeEquipmentTitle');await page.waitForSelector('#tab-equipement',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('#homeProgrammingTitle');await page.waitForSelector('#tab-programmation',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));
  await page.click('[data-home-module="tools"]');await page.waitForSelector('.tools-section-head h3',{state:'visible'});assert.equal(await page.locator('.tools-section-head h3').first().textContent(),'Mes favoris');
  await page.evaluate(()=>showTab('home'));await page.click('[data-home-module="equipement"]');await page.waitForSelector('#tab-equipement',{state:'visible'});
  await page.evaluate(()=>showTab('home'));await page.click('[data-home-module="bac"]');await page.waitForSelector('[data-planningtab="bac"].active',{state:'visible',timeout:8000});
- console.log('PASS home module cards are balanced and shortcuts open favorites, equipment and BAC');
+ console.log('PASS whole home cards open their modules and shortcuts open favorites, equipment and BAC');
  }finally{await browser.close();server.close()}})().catch(e=>{console.error(e);server.close();process.exitCode=1});

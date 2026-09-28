@@ -129,9 +129,21 @@ document.addEventListener("keydown", e => {
 // puis bascule sur le suivant trente minutes avant sa fin : ce court chevauchement aide le
 // professeur a anticiper son deplacement et son materiel. Pour le dernier cours, la carte
 // annonce qu'il n'y en a plus a partir de ses trente dernieres minutes.
-document.querySelectorAll("[data-goto]").forEach(b =>
-  b.addEventListener("click", () => showTab(b.dataset.goto))
-);
+document.querySelectorAll("[data-goto]").forEach(card => {
+  const openMainModule = event => {
+    // Le petit encadré possède une destination plus précise (favoris, dates AS ou BAC).
+    // Son clic ne doit donc pas remonter jusqu'à la grande carte.
+    if (event.target.closest("[data-home-module]")) return;
+    showTab(card.dataset.goto);
+  };
+  card.addEventListener("click", openMainModule);
+  card.addEventListener("keydown", event => {
+    if ((event.key === "Enter" || event.key === " ") && !event.target.closest("[data-home-module]")) {
+      event.preventDefault();
+      showTab(card.dataset.goto);
+    }
+  });
+});
 document.querySelectorAll("[data-home-shortcut]").forEach(button =>
   button.addEventListener("click", () => {
     const target = button.dataset.homeShortcut;

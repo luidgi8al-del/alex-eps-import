@@ -10,6 +10,9 @@ const tools = fs.readFileSync(path.join(root, 'tools-workspace.js'), 'utf8');
 for (const target of ['tools', 'unss', 'equipement', 'bac']) {
   assert.match(html, new RegExp(`data-home-module="${target}"`));
 }
+for (const target of ['outils', 'unss', 'equipement', 'programmation']) {
+  assert.match(html, new RegExp(`class="homeCard homeModuleCard" data-goto="${target}" tabindex="0"`));
+}
 assert.match(html, /RACCOURCI FAVORI/);
 assert.match(html, /PROCHAIN ÉVÉNEMENT/);
 assert.match(html, /SUIVI DES INSTALLATIONS/);
@@ -18,6 +21,7 @@ assert.match(css, /\.homeModuleCard \{[^}]*justify-content:flex-start/);
 assert.match(css, /\.homeModuleInsight \{[^}]*margin:auto 42px auto 0/);
 assert.match(home, /institution_calendar_events\?deleted=eq\.false&kind=eq\.SORTIE/);
 assert.match(home, /incident\.status !== "RESOLU"/);
+assert.match(home, /event\.target\.closest\("\[data-home-module\]"\)/);
 assert.match(tools, /function homeFavoriteToolSummary/);
 assert.match(tools, /function ouvrirFavorisDepuisAccueil/);
 

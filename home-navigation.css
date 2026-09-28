@@ -173,7 +173,7 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
 #tab-home .homeClassHub .homeIcon { top:14px; right:17px; bottom:auto; font-size:30px; }
 #tab-home .homeModuleGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; min-width:0; min-height:0; }
 #tab-home .homeModuleGrid .homeCard { min-height:0; height:100%; }
-#tab-home .homeModuleCard { justify-content:flex-start; align-items:stretch; text-align:left; cursor:default; }
+#tab-home .homeModuleCard { justify-content:flex-start; align-items:stretch; text-align:left; cursor:pointer; }
 #tab-home .homeModuleIntro { position:relative; z-index:2; }
 #tab-home .homeModuleInsight { position:relative; z-index:2; align-self:stretch; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:9px; min-width:0; min-height:clamp(64px,9vh,82px); margin:auto 42px auto 0; padding:9px 11px; border:1px solid #ffffffcc; border-radius:15px; background:#ffffffc7; color:#163a5f; box-shadow:0 4px 12px #163a5f0d; text-align:left; }
 #tab-home .homeModuleInsight:hover { transform:translateY(-1px); background:#fff; box-shadow:0 7px 16px #163a5f17; }
