@@ -377,7 +377,11 @@
               </div>
             </div>
             <div id="emailHubHistory" hidden>
-              <div class="email-hub-head"><div><h1>E-mails envoyés</h1><p>Historique partagé avec les professeurs autorisés de votre établissement.</p></div><button type="button" class="secondary" id="emailHistoryRefresh">Actualiser</button></div>
+              <div class="email-hub-head"><div><h1>E-mails envoyés</h1><p id="emailHistoryPrivacyText">Votre historique personnel d’envoi.</p></div><button type="button" class="secondary" id="emailHistoryRefresh">Actualiser</button></div>
+              <div class="email-history-scope" id="emailHistoryScope" hidden aria-label="Périmètre de l’historique">
+                <button type="button" data-email-history-scope="mine" class="active">Mes e-mails</button>
+                <button type="button" data-email-history-scope="institution">Tous les e-mails de l’établissement</button>
+              </div>
               <div id="emailHistoryList"></div>
             </div>
           </section>
@@ -581,7 +585,7 @@
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20260929-16"></script>
-  <script src="emails.js?v=20260929-1"></script>
+  <script src="emails.js?v=20260929-2"></script>
   <script src="outils.js?v=20260928-2"></script>
   <script src="teams-saved-web.js?v=20260928-3"></script>
   <script src="tools-workspace.js?v=20260928-3"></script>

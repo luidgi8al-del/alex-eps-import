@@ -15,6 +15,8 @@
   const statusLabels = { sending: "En cours", sent: "Envoyé", partial: "Partiel", failed: "Échec" };
   let emailHubView = "compose";
   let emailHubReady = false;
+  let emailHistoryScope = "mine";
+  let emailHistoryAdmin = false;
 
   function formatDate(value) {
     const date = new Date(value || 0);
@@ -116,7 +118,9 @@
     const list = document.getElementById("emailHistoryList");
     list.innerHTML = `<div class="email-loading">Chargement de l’historique…</div>`;
     try {
-      const rows = await historyRequest("eps_email_campaigns?select=*&order=created_at.desc&limit=200");
+      const ownFilter = !emailHistoryAdmin || emailHistoryScope === "mine"
+        ? `&user_id=eq.${encodeURIComponent(session.user_id)}` : "";
+      const rows = await historyRequest(`eps_email_campaigns?select=*&order=created_at.desc&limit=200${ownFilter}`);
       renderCampaigns(rows || []);
     } catch (error) {
       list.innerHTML = `<div class="email-history-error"><strong>L’historique n’est pas encore disponible.</strong><span>${escapeHtml(error.message)}</span><span>La mise à jour Supabase « email_history » doit être appliquée une seule fois.</span></div>`;
@@ -160,6 +164,17 @@
       });
       document.getElementById("emailHubComposeButton").onclick = openEmailComposerFromHub;
       document.getElementById("emailHistoryRefresh").onclick = loadEmailHistory;
+      document.getElementById("emailHistoryScope").addEventListener("click", event => {
+        const button = event.target.closest("[data-email-history-scope]");
+        if (!button || !emailHistoryAdmin) return;
+        emailHistoryScope = button.dataset.emailHistoryScope;
+        document.querySelectorAll("[data-email-history-scope]").forEach(item =>
+          item.classList.toggle("active", item.dataset.emailHistoryScope === emailHistoryScope));
+        document.getElementById("emailHistoryPrivacyText").textContent = emailHistoryScope === "mine"
+          ? "Votre historique personnel d’envoi."
+          : "Historique de tous les professeurs de votre établissement.";
+        loadEmailHistory();
+      });
       document.querySelectorAll("[data-email-history-close]").forEach(button => button.onclick = () =>
         document.getElementById("emailHistoryOverlay").classList.remove("open"));
       document.getElementById("emailHistoryOverlay").addEventListener("click", event => {
@@ -167,6 +182,15 @@
       });
       emailHubReady = true;
     }
+    Promise.resolve(typeof estAdministrateur === "function" ? estAdministrateur() : false).then(isAdmin => {
+      emailHistoryAdmin = Boolean(isAdmin);
+      document.getElementById("emailHistoryScope").hidden = !emailHistoryAdmin;
+      if (!emailHistoryAdmin && emailHistoryScope !== "mine") {
+        emailHistoryScope = "mine";
+        document.getElementById("emailHistoryPrivacyText").textContent = "Votre historique personnel d’envoi.";
+        if (emailHubView === "history") loadEmailHistory();
+      }
+    }).catch(() => { emailHistoryAdmin = false; document.getElementById("emailHistoryScope").hidden = true; });
     setEmailHubView(emailHubView);
   }
 

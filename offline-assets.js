@@ -78,7 +78,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./cours.js",
   "./cours.js?v=20260921-1",
   "./emails.js",
-  "./emails.js?v=20260929-1",
+  "./emails.js?v=20260929-2",
   "./eps-tests.js",
   "./equipement.js",
   "./equipement.js?v=20260929-1",
