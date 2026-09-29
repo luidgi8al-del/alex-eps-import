@@ -323,8 +323,15 @@ Deno.serve(async req => {
     .eq("id", slotId).maybeSingle();
   if (slotError) return reply({ error: slotError.message }, 500);
   if (!slot || slot.deleted) return reply({ error: "Créneau introuvable" }, 404);
-  const autorise = slot.assigned_teacher_id ? slot.assigned_teacher_id === user.id : slot.user_id === user.id;
-  if (!autorise) return reply({ error: "Ce créneau est attribué à un autre professeur" }, 403);
+  // Le responsable conserve naturellement la main sur son créneau. L'administrateur de
+  // l'établissement peut aussi intervenir depuis son propre compte (remplacement, urgence,
+  // annulation générale). Un collègue ordinaire du même établissement reste refusé.
+  let autorise = slot.assigned_teacher_id ? slot.assigned_teacher_id === user.id : slot.user_id === user.id;
+  if (!autorise) {
+    const { data: adminContext, error: adminError } = await admin.rpc("eps_admin_target", { p_actor: user.id });
+    autorise = !adminError && Boolean(adminContext?.institution_id) && adminContext.institution_id === slot.institution_id;
+  }
+  if (!autorise) return reply({ error: "Seuls le professeur responsable ou l’administrateur de l’établissement peuvent envoyer depuis ce créneau" }, 403);
   const { data: memberships, error: membershipError } = await admin.from("unss_memberships")
     .select("student_id").eq("slot_id", slotId).eq("deleted", false);
   if (membershipError) return reply({ error: membershipError.message }, 500);
