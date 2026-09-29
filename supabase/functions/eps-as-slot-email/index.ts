@@ -133,10 +133,10 @@ Deno.serve(async req => {
     if (slotsError) return reply({ error: slotsError.message }, 500);
     const slotById = new Map((slots || []).map(slot => [slot.id, slot]));
     const slotIds = [...slotById.keys()];
-    let memberships: Array<{student_id:string;slot_id:string;updated_at:string}> = [];
+    let memberships: Array<{student_id:string;slot_id:string;enrolled_at:string|null}> = [];
     if (slotIds.length) {
       const { data, error: membershipsError } = await admin.from("unss_memberships")
-        .select("student_id,slot_id,updated_at").in("slot_id", slotIds).eq("deleted", false);
+        .select("student_id,slot_id,enrolled_at").in("slot_id", slotIds).eq("deleted", false);
       if (membershipsError) return reply({ error: membershipsError.message }, 500);
       memberships = data || [];
     }
@@ -150,7 +150,7 @@ Deno.serve(async req => {
     }
     const studentIds = [...slotsByStudent.keys()];
     const recentStudentIds = [...new Set(memberships
-      .filter(membership => Date.parse(String(membership.updated_at || "")) >= enrolledSinceMillis)
+      .filter(membership => Date.parse(String(membership.enrolled_at || "")) >= enrolledSinceMillis)
       .map(membership => membership.student_id))];
     if ((recipientFilter === "all_retained" && !studentIds.length) || (recipientFilter === "recent_retained" && !recentStudentIds.length)) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
     let studentsQuery = admin.from("unss_students")

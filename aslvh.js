@@ -1760,7 +1760,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
         <b>Groupe à contacter</b>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="recent_retained"><span><b>Nouvelles inscriptions depuis une date</b><small>Seulement les élèves inscrits à partir du jour choisi</small></span></label>
-        <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date choisie est incluse. Le message indiquera tous les créneaux actuels de chaque nouvel élève.</small></label>
+        <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date choisie est incluse. Une simple modification ne compte pas comme une inscription. Les anciennes inscriptions sans date d’origine connue sont exclues. Le message indiquera tous les créneaux actuels de chaque élève sélectionné. Ce filtre ne vérifie pas si un message a déjà été envoyé.</small></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_certificate"><span><b>Certificat manquant</b><small>Tous les dossiers où le certificat manque</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_payment"><span><b>Paiement manquant</b><small>Tous les dossiers où le paiement manque</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="host_available"><span><b>Peuvent héberger</b><small>Toutes les familles ayant proposé un hébergement</small></span></label>
@@ -1809,8 +1809,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
       if (!dateInscriptionDepuis()) return [];
       const debut = new Date(`${dateInscriptionDepuis()}T00:00:00`).getTime();
       const idsRecents = new Set(unssInscriptions.filter(inscription => {
-        const date = new Date(inscription.updated_at || 0).getTime();
-        return Number.isFinite(date) && date >= debut;
+        const date = Date.parse(inscription.enrolled_at || "");
+        return !inscription.deleted && unssSlots.some(slot => slot.id === inscription.slot_id && slot.active !== false && !slot.deleted) && Number.isFinite(date) && date >= debut;
       }).map(inscription => String(inscription.student_id)));
       return rows.filter(e => idsRecents.has(String(e.id)));
     }
@@ -2690,7 +2690,7 @@ async function inscrireAutomatiquementVoeu1(studentId, slotId) {
     if (existantes.length) return false;
     const ligne = {
       id: crypto.randomUUID(), user_id: session.user_id, slot_id: slotId,
-      student_id: studentId, updated_at: new Date().toISOString(), deleted: false
+      student_id: studentId, enrolled_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted: false
     };
     await enregistrerLigne("unss_memberships", ligne);
     // unss_memberships n'est relue qu'une fois par session (chargement paresseux, voir
@@ -2936,7 +2936,7 @@ async function openUnssAddMemberPanel(group, excludeIds) {
           try {
             await enregistrerLigne("unss_memberships", {
               id: crypto.randomUUID(), user_id: session.user_id, group_id: group.id,
-              student_id: el.dataset.addMember, updated_at: new Date().toISOString(), deleted: false
+              student_id: el.dataset.addMember, enrolled_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted: false
             });
           } catch (erreur) { alert(erreur.message); return; }
           openUnssGroupDetailPanel(group);
@@ -3102,7 +3102,7 @@ async function ouvrirElevesCreneau(slot) {
   panel.querySelectorAll("[data-ajouter-voeu]").forEach(btn => btn.addEventListener("click", async () => {
     btn.disabled = true;
     const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
-      student_id: btn.dataset.ajouterVoeu, updated_at: new Date().toISOString(), deleted: false };
+      student_id: btn.dataset.ajouterVoeu, enrolled_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted: false };
     try { await enregistrerLigne("unss_memberships", ligne); }
     catch (erreur) { btn.disabled = false; alert(erreur.message); return; }
     unssInscriptions.push(ligne);
@@ -3144,7 +3144,7 @@ function ouvrirAjoutElevesCreneau(slot) {
   const inscrireEleves = async ids => {
     for (const id of ids) {
       const ligne = { id: crypto.randomUUID(), user_id: session.user_id, slot_id: slot.id,
-        student_id: id, updated_at: new Date().toISOString(), deleted: false };
+        student_id: id, enrolled_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted: false };
       try { await enregistrerLigne("unss_memberships", ligne); }
       catch (erreur) { alert(erreur.message); return false; }
       unssInscriptions.push(ligne);
