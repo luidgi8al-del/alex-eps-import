@@ -207,6 +207,71 @@ body:has(#tab-home[style*="block"]) .container { padding-bottom:14px; }
   #tab-home .homeModuleGrid { grid-template-columns:1fr; }
 }
 
+/* Telephone : le site et la PWA partagent exactement cette mise en page. La bande du haut ne
+   doit pas empiler quatre grandes cartes avant de donner acces aux fonctions principales. */
+@media(max-width:600px) {
+  body .header { padding:8px 10px 7px; gap:6px 8px; }
+  body .header .brand { max-width:calc(100% - 116px); overflow:hidden; font-size:15px; text-overflow:ellipsis; }
+  body .headerRight { margin-left:auto; gap:6px; }
+  body .headerRight>button { min-height:34px; padding:6px 9px; font-size:11px; }
+  body .tabbar { gap:3px; padding-bottom:2px; }
+  body .tabbtn { min-height:34px; padding:7px 10px; font-size:10px; }
+  body .container { padding:10px 10px 30px; }
+
+  #tab-home[style*="block"] { display:block !important; height:auto; min-height:0; }
+  #tab-home .homeHero,
+  #tab-home .homeHero:has(.homeWeather[hidden]) {
+    grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+    gap:7px;
+    margin-bottom:9px;
+  }
+  #tab-home .homeWelcome { min-height:92px; padding:11px 12px; border-radius:16px; }
+  #tab-home .homeWelcome h1 { font-size:20px; letter-spacing:-.5px; }
+  #tab-home #homeGreeting { margin:4px 0 0; font-size:13px; line-height:1.2; }
+  #tab-home .todayCard { min-height:92px; padding:10px 11px; border-radius:16px; }
+  #tab-home .todayLabel { font-size:12px; }
+  #tab-home .todayCount { font-size:25px; line-height:1.05; }
+  #tab-home .todayNext { overflow:hidden; max-width:100%; font-size:11px; text-overflow:ellipsis; white-space:nowrap; }
+  #tab-home .todayLink { font-size:11px; }
+  #tab-home .todayIcon { width:38px; height:38px; font-size:20px; }
+
+  #tab-home .homeWeather { grid-column:1/-1; min-height:0; max-height:none; padding:7px; border-radius:16px; }
+  #tab-home .weatherTop { flex-wrap:nowrap; gap:6px; }
+  #tab-home .weatherTop h2 { overflow:hidden; font-size:12px; text-overflow:ellipsis; white-space:nowrap; }
+  #tab-home .weatherTop button { min-height:28px; padding:3px 8px; }
+  #tab-home .weatherDays { grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; margin:4px 0 0; }
+  #tab-home .weatherDay { min-width:0; padding:5px; }
+  #tab-home .weatherDay h3 { margin-bottom:3px; font-size:10px; }
+  #tab-home .weatherDay h3 span { font-size:9px; }
+  #tab-home .weatherTimeline { display:flex; gap:3px; overflow-x:auto; scrollbar-width:none; }
+  #tab-home .weatherTimeline::-webkit-scrollbar { display:none; }
+  #tab-home .weatherHour { flex:0 0 auto; display:grid; grid-template-columns:auto auto; gap:1px 4px; min-width:61px; padding:3px 4px; }
+  #tab-home .weatherHour time { grid-column:1/-1; font-size:9px; }
+  #tab-home .weatherHour strong { font-size:9px; }
+  #tab-home .weatherHour .weatherSymbol { font-size:11px; }
+  #tab-home .weatherHour span:last-child { display:none; }
+  #tab-home .weatherSearch { display:none; }
+
+  #tab-home .homeAlert { grid-column:1/-1; display:flex; align-items:center; gap:10px; min-height:48px; padding:8px 12px; border-radius:15px; }
+  #tab-home .homeAlert h2 { flex:0 0 auto; font-size:11px; }
+  #tab-home .homeAlertContent { display:flex; align-items:center; justify-content:flex-start; min-height:0; font-size:11px; text-align:left; }
+
+  #tab-home .homeGrid { gap:8px; }
+  #tab-home .homeClassHub.featured { min-height:270px; }
+  #tab-home .homeModuleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  #tab-home .homeModuleGrid .homeCard { min-height:170px; padding:13px; border-radius:20px; }
+  #tab-home .homeModuleInsight { grid-template-columns:auto minmax(0,1fr); gap:6px; min-height:67px; margin:10px 0 0; padding:7px; }
+  #tab-home .homeModuleInsight>strong { display:none; }
+  #tab-home .homeModuleInsight em { display:none; }
+  #tab-home .homeModuleInsight b { white-space:normal; }
+  #tab-home .homeModuleCard .homeIcon { display:none; }
+}
+
+@media(max-width:370px) {
+  #tab-home .homeModuleGrid { grid-template-columns:1fr; }
+  #tab-home .homeModuleGrid .homeCard { min-height:145px; }
+}
+
 /* ---------------------------------------------------------------------------------------------
    Barres de sous-onglets collantes.
 
