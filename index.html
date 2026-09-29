@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
   <link rel="stylesheet" href="home-navigation.css?v=20260928-9">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
-<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260927-1">
+<link rel="stylesheet" href="styles/classe-ecrans.css?v=20260929-2">
+<link rel="stylesheet" href="styles/aide.css?v=20260929-2">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -28,6 +29,7 @@
       <button class="tabbtn" data-tab="health">SANTÉ / ACCIDENT</button>
       <button class="tabbtn" data-tab="students">ÉLÈVES</button>
       <button class="tabbtn" data-tab="settings">REGLAGE</button>
+      <button class="tabbtn helpTabButton" data-tab="help" title="Ouvrir l’aide" aria-label="Aide">? <span>AIDE</span></button>
     </div>
     <div class="headerRight">
       <!-- Etat de la synchronisation. Vide donc invisible tant que le mode hors connexion n'a pas
@@ -478,6 +480,16 @@
       <div id="tab-health" class="tabpanel" style="display:none">
         <div id="healthBody"></div>
       </div>
+
+      <div id="tab-help" class="tabpanel" style="display:none">
+        <section class="helpHero">
+          <div><small>CENTRE D’AIDE</small><h1>Comment pouvons-nous vous aider ?</h1><p>Retrouvez rapidement une fonction et suivez les étapes sans quitter l’application.</p></div>
+          <span aria-hidden="true">?</span>
+        </section>
+        <div class="helpSearchWrap"><span aria-hidden="true">⌕</span><input id="helpSearch" type="search" placeholder="Ex. retirer un élève, créer une dispense, envoyer un mail…" autocomplete="off"><button type="button" id="helpClear" hidden>Effacer</button></div>
+        <div id="helpFilters" class="helpFilters" aria-label="Thèmes de l’aide"></div>
+        <div id="helpResults" class="helpResults" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 
@@ -542,7 +554,7 @@
   <script src="bac-reference.js?v=20260924-1"></script>
   <script src="cours.js?v=20260921-1"></script>
   <script src="classe-tableau-bord.js?v=20260928-1"></script>
-  <script src="classe-ecrans.js?v=20260928-4"></script>
+  <script src="classe-ecrans.js?v=20260929-5"></script>
   <script src="qrcode.min.js"></script>
   <script src="equipement.js?v=20260929-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
@@ -556,6 +568,7 @@
   <script src="tools-organizers.js?v=20260928-1"></script>
   <script src="tools-persistence.js?v=20260928-1"></script>
   <script src="tools-common-groups.js?v=20260928-1"></script>
+  <script src="aide.js?v=20260929-2"></script>
 
   <script>
     const SUPABASE_URL = "https://griahowpsuxbmdywiktj.supabase.co";
@@ -825,7 +838,7 @@
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
-    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health", "students"];
+    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health", "students", "help"];
     let currentWebTab = "home";
     let epsPageFullyReady = false;
     let pendingModuleTab = null;
@@ -850,6 +863,7 @@
         if (name === "health") initHealthTab();
         if (name === "cours") initCoursTab();
         if (name === "equipement") initInstallationsTab();
+        if (name === "help" && typeof initHelpTab === "function") initHelpTab();
         if (name === "unss") initUnssTab().catch(error => showModuleFailure(name, error));
         if (name === "planning" || name === "programmation") {
           const requestedTab = name;

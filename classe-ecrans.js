@@ -786,8 +786,12 @@ function ecDessinerEleves(panel) {
             <small><strong>Mail élève</strong>${ecTexte(e.student_email || "Non renseigné")}</small>
             <small><strong>Mail parent</strong>${ecTexte(parent)}${parent2 ? `<br>${ecTexte(parent2)}` : ""}</small></span>
             <small class="ec-eleve-etat ${dispense ? "rouge" : ""}">${ecTexte(etat)}</small></button>
-          <select class="ec-niveau" data-ec-niveau="${ecTexte(e.id)}" aria-label="Niveau EPS de ${ecTexte(ecNomEleve(e))}">${
+          <div class="ec-eleve-commandes"><select class="ec-niveau" data-ec-niveau="${ecTexte(e.id)}" aria-label="Niveau EPS de ${ecTexte(ecNomEleve(e))}">${
             EC_NIVEAUX.map((n, i) => `<option value="${i + 1}"${i + 1 === niveau ? " selected" : ""}>Niveau ${i + 1} · ${n}</option>`).join("")}</select>
+            <details class="ui-actions ec-eleve-actions"><summary>Actions</summary><div class="ui-actions-menu">
+              <button type="button" data-ec-ouvrir-eleve="${ecTexte(e.id)}">Ouvrir le dossier</button>
+              <button type="button" class="danger" data-ec-retirer-eleve="${ecTexte(e.id)}">Retirer de cette classe</button>
+            </div></details></div>
         </div>`;
       }).join("") : `<p class="ec-vide">Aucun élève ne correspond.</p>`}</div>
       <button type="button" class="ec-bouton-large" id="ecPdfListe">Télécharger la liste en PDF</button>
@@ -804,6 +808,8 @@ function ecDessinerEleves(panel) {
   };
   panel.querySelectorAll("[data-ec-filtre-eleves]").forEach(b => b.onclick = () => { ecFiltreEleves = b.dataset.ecFiltreEleves; renderClassDashboard(); });
   panel.querySelectorAll("[data-ec-dossier]").forEach(b => b.onclick = () => ouvrirDossierEleve(b.dataset.ecDossier));
+  panel.querySelectorAll("[data-ec-ouvrir-eleve]").forEach(b => b.onclick = () => ouvrirDossierEleve(b.dataset.ecOuvrirEleve));
+  panel.querySelectorAll("[data-ec-retirer-eleve]").forEach(b => b.onclick = () => ecRetirerEleveDeClasse(b.dataset.ecRetirerEleve, b));
   panel.querySelectorAll("[data-ec-niveau]").forEach(s => s.onchange = () => ecChangerNiveau(s.dataset.ecNiveau, s.value, s));
   document.getElementById("ecPdfListe").onclick = () => ecImprimerListe();
 }
@@ -911,6 +917,30 @@ function ecDessinerEvaluations(panel) {
   ecChargerEvaluationsEquipes(panel);
   // Les jauges se remplissent une fois les notes relues.
   if (!ecNotesChargees) ecChargerNotes().then(() => { if (vueClasse === "evaluations") renderClassDashboard(); });
+}
+
+/** Retire la fiche de la liste active sans effacer physiquement les données liées. */
+async function ecRetirerEleveDeClasse(studentId, bouton) {
+  const eleve = ecEleve(studentId);
+  if (!eleve) return;
+  const nom = ecNomEleve(eleve);
+  if (!confirm(`Retirer ${nom} de la classe ${dashboardClass.label} ?\n\nL’élève disparaîtra de cette classe. Ses résultats et son historique ne seront pas effacés physiquement.`)) return;
+  bouton.disabled = true;
+  try {
+    if (modeHorsConnexion) {
+      await modeHorsConnexion.supprimer("students", studentId);
+    } else {
+      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${encodeURIComponent(studentId)}`, {
+        method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })
+      });
+      if (!res.ok) throw new Error("Le retrait n’a pas été confirmé par le serveur.");
+    }
+    dashboardStudents = dashboardStudents.filter(e => String(e.id) !== String(studentId));
+    renderClassDashboard();
+  } catch (e) {
+    bouton.disabled = false;
+    alert(e.message || "Impossible de retirer cet élève pour le moment.");
+  }
 }
 
 /** Ouvre directement le catalogue Tests EPS pour cette classe et cette période. */
