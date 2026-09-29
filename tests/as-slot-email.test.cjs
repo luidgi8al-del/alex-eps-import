@@ -9,10 +9,10 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="asEmail"', 'function ouvrirEmailCreneau(slot)', 'value="students"', 'value="parents"',
   'value="both"', 'value="parents_personalized"', 'Confirmation d’inscription', 'Séance annulée',
   'Message libre', 'asEmailAttachment', 'eps-as-slot-email', 'const bilan = await response.json()',
-  'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker', '{classe}',
+  'id="asEmailRecipients"', 'Tous les parents', 'Tous les élèves et parents', 'showPicker', '{classe}',
   'function signatureProfesseurAS', 'return `M. ${nom}`', '{nom} {prenom}',
   'id="unssGlobalEmailBtn"', 'function ouvrirEmailGlobalLicencies', 'mode: "global_confirmations"', '{creneaux}',
-  'name="asEmailFilter"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter, selectedStudentIds',
+  'id="asEmailReason"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter, selectedStudentIds',
   'id="asEmailTemplate"', 'value="free">Message libre', 'id="asEmailTemplateChoice"', 'Contacter les licenciés AS'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 [

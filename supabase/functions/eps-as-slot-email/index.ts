@@ -26,7 +26,7 @@ const mailer = nodemailer.createTransport({
 });
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AUDIENCES = new Set(["students", "parents", "both", "parents_personalized"]);
-const RECIPIENT_FILTERS = new Set(["manual", "all_retained", "recent_retained", "missing_certificate", "missing_payment", "host_available"]);
+const RECIPIENT_FILTERS = new Set(["all_licensed", "manual", "all_retained", "recent_retained", "missing_certificate", "missing_payment", "host_available"]);
 
 const escapeHtml = (value: unknown) => String(value ?? "")
   .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
@@ -118,6 +118,11 @@ Deno.serve(async req => {
   if (globalMode) {
     const recipientFilter = String(input.recipientFilter || "all_retained");
     if (!RECIPIENT_FILTERS.has(recipientFilter)) return reply({ error: "Groupe de destinataires invalide" }, 400);
+    const reason = String(input.reason || "");
+    if (reason && !["free", "cancelled", "confirmation", "missing_certificate", "missing_payment", "host_available"].includes(reason)) return reply({ error: "Raison invalide" }, 400);
+    if (["missing_certificate", "missing_payment", "host_available"].includes(reason) && (recipientFilter !== reason || audience !== "both")) {
+      return reply({ error: "Cette raison impose les élèves concernés et leurs parents comme destinataires." }, 400);
+    }
     const selectedStudentIds: string[] = [];
     if (recipientFilter === "manual") {
       if (!Array.isArray(input.selectedStudentIds) || !input.selectedStudentIds.length || input.selectedStudentIds.length > 2000 ||

@@ -1756,37 +1756,40 @@ async function ouvrirEmailGlobalLicencies(rows) {
   overlay.innerHTML = `<section class="as-slot-email-dialog ui-modal" role="dialog" aria-modal="true" aria-labelledby="asGlobalEmailTitle">
     <header><div><small>LICENCES AS</small><h2 id="asGlobalEmailTitle">Contacter les licenciés AS</h2><p>Choisissez un message proposé ou rédigez librement le vôtre</p></div><button type="button" data-email-close aria-label="Fermer">×</button></header>
     <main>
-      <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
-        <b>Groupe à contacter</b>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="manual"><span><b>Choisir les élèves manuellement</b><small>Cochez uniquement les élèves qui doivent recevoir le message</small></span></label>
+      <details class="ui-accordion" id="asEmailReasonStep" open><summary><span>1. Raison et objet</span><small id="asEmailReasonChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
+        <label>Raison du message<select id="asEmailReason">
+          <option value="">Choisir une raison</option><option value="free">Raison libre</option><option value="cancelled">Annulation AS</option>
+          <option value="missing_certificate">Document manquant — certificat médical</option><option value="missing_payment">Frais d’inscription manquants</option>
+          <option value="confirmation">Confirmation d’inscription</option><option value="host_available">Hébergement</option>
+        </select></label>
+        <label>Objet du mail<input id="asEmailSubject" maxlength="180" placeholder="Objet de votre message"></label>
+        <button type="button" class="secondary" id="asEmailToRecipients">Continuer vers les destinataires</button>
+      </div></details>
+      <details class="ui-accordion" id="asEmailRecipients"><summary><span>2. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
+        <p id="asEmailAutomaticRecipients" hidden></p>
+        <label id="asEmailDestinationWrap">À qui envoyer ?<select id="asEmailDestination">
+          <option value="">Choisir les destinataires</option><option value="students">Tous les élèves</option><option value="parents_personalized">Tous les parents</option>
+          <option value="both">Tous les élèves et parents</option><option value="manual">Choisir les élèves manuellement</option><option value="recent_retained">Nouvelles inscriptions depuis une date</option>
+        </select></label>
         <div id="asEmailManualWrap" hidden>
           <label>Rechercher un élève<input id="asEmailManualSearch" type="search" placeholder="Nom, prénom ou classe"></label>
-          <p>Aucun élève n’est coché au départ. La recherche ne modifie pas votre sélection.</p>
+          <p>Cochez les élèves concernés. Le message sera envoyé à leurs adresses et à celles de leurs parents. La recherche conserve votre sélection.</p>
           <button type="button" class="secondary" id="asEmailManualClear">Tout décocher</button>
           <p id="asEmailManualCount" aria-live="polite"></p>
           <div id="asEmailManualList" style="max-height:300px;overflow-y:auto"></div>
         </div>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="recent_retained"><span><b>Nouvelles inscriptions depuis une date</b><small>Seulement les élèves inscrits à partir du jour choisi</small></span></label>
-        <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date choisie est incluse. Une simple modification ne compte pas comme une inscription. Les anciennes inscriptions sans date d’origine connue sont exclues. Le message indiquera tous les créneaux actuels de chaque élève sélectionné. Ce filtre ne vérifie pas si un message a déjà été envoyé.</small></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_certificate"><span><b>Certificat manquant</b><small>Tous les dossiers où le certificat manque</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_payment"><span><b>Paiement manquant</b><small>Tous les dossiers où le paiement manque</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="host_available"><span><b>Peuvent héberger</b><small>Toutes les familles ayant proposé un hébergement</small></span></label>
-        <b>Adresses utilisées</b>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="students"><span><b>Aux élèves</b><small>Un message personnalisé par élève</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="parents_personalized"><span><b>Aux familles</b><small>Un message personnalisé par enfant</small></span></label>
-        <label class="as-email-choice"><input type="radio" name="asEmailAudience" value="both"><span><b>Aux élèves et aux familles</b><small>Envois séparés et confidentiels</small></span></label>
+        <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date est incluse. Envoi aux élèves concernés et à leurs parents. Les anciennes inscriptions sans date d’origine connue sont exclues. Ce filtre ne vérifie pas si un message a déjà été envoyé.</small></label>
         <div class="as-email-recipient-summary" id="asEmailRecipientSummary"></div>
-        <label>Reprise après une interruption<select id="asEmailResumeStudent"><option value="">Nouvel envoi — commencer au premier élève</option></select><small>Sélectionnez ici le premier élève qui n’a pas encore reçu le message. Il sera inclus dans la reprise.</small></label>
+        <details><summary>Reprendre un envoi interrompu</summary><label>Premier élève à contacter<select id="asEmailResumeStudent"><option value="">Nouvel envoi — commencer au premier élève</option></select><small>Choisissez le premier élève qui n’a pas encore reçu le message. Il sera inclus dans la reprise.</small></label></details>
+        <button type="button" class="secondary" id="asEmailToMessage">Continuer vers le message</button>
       </div></details>
-      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>2. Message</span><small id="asEmailTemplateChoice">Message proposé</small></summary><div class="as-email-section ui-accordion-body">
-        <label>Type de message<select id="asEmailTemplate"><option value="suggested">Message proposé selon le groupe choisi</option><option value="free">Message libre</option></select></label>
-        <label>Objet<input id="asEmailSubject" maxlength="180"></label>
-        <label>Message<textarea id="asEmailMessage" rows="11" maxlength="8000" placeholder="Écrivez votre message ici"></textarea></label>
-        <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève.</p>
+      <details class="ui-accordion" id="asEmailMessageStep"><summary><span>3. Message</span><small id="asEmailTemplateChoice">Message proposé</small></summary><div class="as-email-section ui-accordion-body">
+        <label>Modèle de message<select id="asEmailTemplate"><option value="suggested">Message proposé selon la raison</option><option value="short">Version courte</option><option value="reminder">Relance courtoise</option><option value="free">Message libre</option></select></label>
+        <label>Message<textarea id="asEmailMessage" rows="9" maxlength="8000" placeholder="Écrivez votre message ici"></textarea></label>
+        <p class="as-email-help">Les champs {nom}, {prenom}, {classe} et {creneaux} sont remplacés automatiquement pour chaque élève. Tous les modèles restent modifiables.</p>
       </div></details>
-      <details class="ui-accordion"><summary>3. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
-      ${gmailProfessionnelActif ? `<details class="ui-accordion" id="asEmailGmailStep"><summary><span>4. Gmail professionnel</span><small id="asEmailGmailStatus">${unssText(etatGmailOuverture.email)}</small></summary><div class="as-email-section ui-accordion-body">
+      <details class="ui-accordion" id="asEmailAttachmentStep"><summary>4. Pièce jointe facultative</summary><div class="as-email-section ui-accordion-body"><label>PDF ou image (3 Mo maximum)<input id="asEmailAttachment" type="file" accept="application/pdf,image/png,image/jpeg"></label></div></details>
+      ${gmailProfessionnelActif ? `<details class="ui-accordion" id="asEmailGmailStep"><summary><span>5. Gmail professionnel</span><small id="asEmailGmailStatus">${unssText(etatGmailOuverture.email)}</small></summary><div class="as-email-section ui-accordion-body">
         <p>Commencez par un brouillon test. Après l’avoir envoyé depuis Gmail et vérifié sa réception, préparez la campagne par petits lots.</p>
         <label>Adresse du test<input id="asEmailGmailTestAddress" type="email" autocomplete="email" placeholder="Votre adresse Hotmail"></label>
         <button type="button" class="secondary" id="asEmailGmailTest">Créer un brouillon test</button>
@@ -1801,8 +1804,11 @@ async function ouvrirEmailGlobalLicencies(rows) {
 
   const nomProfil = typeof loadPrefs === "function" ? loadPrefs().teacherName : "";
   const professeur = signatureProfesseurAS(nomProfil || session?.email?.split("@")[0]);
-  const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
-  const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
+  const raison = () => overlay.querySelector("#asEmailReason").value;
+  const raisonsAutomatiques = new Set(["missing_certificate", "missing_payment", "host_available"]);
+  const destination = () => overlay.querySelector("#asEmailDestination").value;
+  const audience = () => raisonsAutomatiques.has(raison()) || ["manual", "recent_retained"].includes(destination()) ? "both" : destination();
+  const filtre = () => !raison() ? "" : raisonsAutomatiques.has(raison()) ? raison() : ["manual", "recent_retained"].includes(destination()) ? destination() : destination() ? "all_licensed" : "";
   const dateInscriptionDepuis = () => overlay.querySelector("#asEmailRecentSince")?.value || "";
   const inscriptionDepuisIso = () => dateInscriptionDepuis() ? new Date(`${dateInscriptionDepuis()}T00:00:00`).toISOString() : "";
   const modeleMessage = () => overlay.querySelector("#asEmailTemplate").value;
@@ -1813,7 +1819,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   let envoiTermine = false;
   let brouillonsGmailPrepares = [];
   const selectionManuelle = new Set();
-  const verrouillerDestinataires = bloque => overlay.querySelectorAll('#asEmailRecipients input, #asEmailRecipients select, #asEmailRecipients button').forEach(el => el.disabled = bloque);
+  const verrouillerDestinataires = bloque => overlay.querySelectorAll('#asEmailReasonStep input, #asEmailReasonStep select, #asEmailReasonStep button, #asEmailRecipients input, #asEmailRecipients select, #asEmailRecipients button').forEach(el => el.disabled = bloque);
   const normaliserRechercheAS = texte => String(texte || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
   const afficherSelectionManuelle = () => {
     const recherche = normaliserRechercheAS(overlay.querySelector("#asEmailManualSearch").value);
@@ -1824,6 +1830,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailManualCount").textContent = `${selectionManuelle.size} élève(s) coché(s) au total · ${visibles.length} affiché(s)`;
   };
   const elevesFiltres = () => {
+    if (filtre() === "all_licensed") return rows;
     if (filtre() === "manual") return rows.filter(e => selectionManuelle.has(String(e.id)));
     if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
     if (filtre() === "recent_retained") {
@@ -1849,31 +1856,50 @@ async function ouvrirEmailGlobalLicencies(rows) {
     });
     return { nombre, manquants };
   };
-  const remplirMessage = () => {
-    if (modeleMessage() === "free") return;
+  const remplirMessage = (majObjet = false) => {
+    if (!raison()) return;
     const famille = audience() === "parents_personalized";
     let objet = "Information – Association sportive";
     let message = `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n[Votre message]\n\nCordialement,\n${professeur}`;
-    if (filtre() === "all_retained" || filtre() === "recent_retained" || filtre() === "manual") {
+    if (raison() === "confirmation") {
       objet = "Confirmation de vos inscriptions à l’AS";
       message = famille
         ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
         : `Bonjour,\n\nNous vous confirmons que {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`;
-    } else if (filtre() === "missing_certificate") {
+    } else if (raison() === "missing_certificate") {
       objet = "Dossier AS – certificat médical manquant";
       message = `Bonjour,\n\nLe certificat médical de {nom} {prenom}, classe {classe}, est indiqué comme manquant dans son dossier AS.\n\nMerci de nous le transmettre afin de compléter le dossier.\n\nCordialement,\n${professeur}`;
-    } else if (filtre() === "missing_payment") {
+    } else if (raison() === "missing_payment") {
       objet = "Dossier AS – paiement à régulariser";
       message = `Bonjour,\n\nLe paiement de l’inscription AS de {nom} {prenom}, classe {classe}, est indiqué comme manquant.\n\nMerci de régulariser la situation ou de nous signaler si le règlement a déjà été remis.\n\nCordialement,\n${professeur}`;
-    } else if (filtre() === "host_available") {
+    } else if (raison() === "host_available") {
       objet = "Hébergement – Association sportive";
       message = `Bonjour,\n\nVous avez indiqué pouvoir héberger dans le cadre de l’association sportive pour {nom} {prenom}, classe {classe}.\n\n[Précisez ici votre demande concernant l’hébergement.]\n\nCordialement,\n${professeur}`;
     }
-    overlay.querySelector("#asEmailSubject").value = objet;
+    if (raison() === "cancelled") {
+      objet = "Annulation d’une séance AS";
+      message = `Bonjour,\n\nLa séance AS [activité] prévue le [date] à [horaire] est annulée.\n\nMerci de prendre en compte cette information pour {nom} {prenom}, classe {classe}.\n\nCordialement,\n${professeur}`;
+    }
+    if (majObjet) overlay.querySelector("#asEmailSubject").value = raison() === "free" ? "" : objet;
+    if (modeleMessage() === "free") { overlay.querySelector("#asEmailMessage").value = ""; return; }
+    if (modeleMessage() === "short") {
+      const textes = {
+        confirmation: "L’inscription de {nom} {prenom} est confirmée pour :\n{creneaux}",
+        cancelled: "La séance AS [activité] du [date] à [horaire] est annulée.",
+        missing_certificate: "Le certificat médical de {nom} {prenom} manque au dossier AS. Merci de nous le transmettre.",
+        missing_payment: "Les frais d’inscription AS de {nom} {prenom} restent à régulariser. Merci de nous contacter si le règlement a déjà été effectué.",
+        host_available: "Vous avez proposé un hébergement pour l’AS. [Précisez les dates et les modalités à confirmer.]",
+        free: "[Votre message concernant {nom} {prenom}]"
+      };
+      message = `Bonjour,\n\n${textes[raison()]}\n\nCordialement,\n${professeur}`;
+    } else if (modeleMessage() === "reminder") {
+      message = message.replace("Bonjour,", "Bonjour,\n\nNous revenons vers vous concernant notre précédent message.");
+    }
     overlay.querySelector("#asEmailMessage").value = message;
   };
   const actualiser = () => {
     if (envoiTermine) return;
+    overlay.querySelector("#asEmailAudienceChoice").textContent = raisonsAutomatiques.has(raison()) ? "Automatique · élèves et parents" : ({students:"Tous les élèves",parents_personalized:"Tous les parents",both:"Élèves et parents",manual:"Sélection manuelle",recent_retained:"Depuis une date"}[destination()] || "À choisir");
     const c = compteur(audience());
     const lots = Math.ceil(c.nombre / 100);
     const dateRecentRequise = filtre() === "recent_retained" && !dateInscriptionDepuis();
@@ -1896,7 +1922,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     if ([...selectReprise.options].some(option => option.value === choixActuel)) selectReprise.value = choixActuel;
   };
   const libelles = { students: "Élèves", parents_personalized: "Familles", both: "Élèves + familles" };
-  const libellesFiltres = { manual: "Sélection manuelle", all_retained: "Inscriptions confirmées", recent_retained: "Nouvelles inscriptions", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
+  const libellesFiltres = { all_licensed: "Tous les licenciés", manual: "Sélection manuelle", all_retained: "Inscriptions confirmées", recent_retained: "Nouvelles inscriptions", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
   const selectionModifiee = () => {
     overlay.querySelector("#asEmailResumeStudent").value = "";
     if (brouillonsGmailPrepares.length) {
@@ -1919,38 +1945,46 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const fermerEmail = () => { if (!envoiEnCours) overlay.remove(); };
   overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = fermerEmail);
   overlay.onclick = e => { if (e.target === overlay) fermerEmail(); };
-  overlay.querySelectorAll('input[name="asEmailFilter"]').forEach(r => r.onchange = () => {
-    const filtreRecent = filtre() === "recent_retained";
-    const filtreManuel = filtre() === "manual";
-    overlay.querySelector("#asEmailManualWrap").hidden = !filtreManuel;
-    if (filtreManuel) afficherSelectionManuelle();
-    overlay.querySelector("#asEmailRecentSinceWrap").hidden = !filtreRecent;
-    if (filtreRecent && !dateInscriptionDepuis()) overlay.querySelector("#asEmailRecentSince").value = new Date().toLocaleDateString("en-CA");
-    overlay.querySelector('input[name="asEmailAudience"][value="both"]').checked = true;
-    overlay.querySelector("#asEmailAudienceChoice").textContent = `${libellesFiltres[filtre()]} · Élèves + familles`;
-    remplirMessage(); selectionModifiee();
-    overlay.querySelector("#asEmailRecipients").open = filtreRecent || filtreManuel;
-    overlay.querySelector("#asEmailMessageStep").open = !filtreRecent && !filtreManuel;
-  });
-  overlay.querySelector("#asEmailRecentSince").onchange = () => { remplirMessage(); selectionModifiee(); };
-  overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
-    overlay.querySelector("#asEmailAudienceChoice").textContent = filtre() ? `${libellesFiltres[filtre()]} · ${libelles[audience()]}` : libelles[audience()] || "À choisir";
-    remplirMessage(); selectionModifiee();
-    overlay.querySelector("#asEmailRecipients").open = false;
-    overlay.querySelector("#asEmailMessageStep").open = true;
-  });
-  overlay.querySelector("#asEmailTemplate").onchange = () => {
-    const libre = modeleMessage() === "free";
-    overlay.querySelector("#asEmailTemplateChoice").textContent = libre ? "Message libre" : "Message proposé";
-    if (libre) {
-      overlay.querySelector("#asEmailSubject").value = "";
-      overlay.querySelector("#asEmailMessage").value = "";
-      overlay.querySelector("#asEmailSubject").focus();
-    } else {
-      remplirMessage();
-    }
+  const ouvrirEtape = id => {
+    overlay.querySelectorAll("main > details.ui-accordion").forEach(el => el.open = el.id === id);
   };
-  remplirMessage(); actualiser();
+  overlay.querySelectorAll("main > details.ui-accordion").forEach(el => el.addEventListener("toggle", () => {
+    if (el.open) overlay.querySelectorAll("main > details.ui-accordion").forEach(autre => { if (autre !== el) autre.open = false; });
+  }));
+  const adapterDestinataires = () => {
+    const automatique = raisonsAutomatiques.has(raison());
+    overlay.querySelector("#asEmailDestinationWrap").hidden = automatique;
+    overlay.querySelector("#asEmailDestination").disabled = automatique || !raison();
+    const explications = {
+      missing_certificate: "Sélection automatique : élèves dont le certificat médical est manquant, et leurs parents.",
+      missing_payment: "Sélection automatique : élèves dont les frais d’inscription sont manquants, et leurs parents.",
+      host_available: "Sélection automatique : élèves ayant répondu Oui pour l’hébergement, et leurs parents."
+    };
+    overlay.querySelector("#asEmailAutomaticRecipients").hidden = !automatique;
+    overlay.querySelector("#asEmailAutomaticRecipients").textContent = explications[raison()] || "";
+    overlay.querySelector("#asEmailManualWrap").hidden = automatique || destination() !== "manual";
+    overlay.querySelector("#asEmailRecentSinceWrap").hidden = automatique || destination() !== "recent_retained";
+    if (!automatique && destination() === "manual") afficherSelectionManuelle();
+    selectionModifiee();
+  };
+  overlay.querySelector("#asEmailReason").onchange = () => {
+    overlay.querySelector("#asEmailReasonChoice").textContent = overlay.querySelector("#asEmailReason").selectedOptions[0].textContent;
+    overlay.querySelector("#asEmailTemplate").value = raison() === "free" ? "free" : "suggested";
+    overlay.querySelector("#asEmailTemplateChoice").textContent = raison() === "free" ? "Message libre" : "Message proposé";
+    remplirMessage(true); adapterDestinataires();
+  };
+  overlay.querySelector("#asEmailDestination").onchange = adapterDestinataires;
+  overlay.querySelector("#asEmailRecentSince").onchange = selectionModifiee;
+  overlay.querySelector("#asEmailToRecipients").onclick = () => {
+    if (!raison()) { overlay.querySelector("#asEmailReason").focus(); return; }
+    ouvrirEtape("asEmailRecipients");
+  };
+  overlay.querySelector("#asEmailToMessage").onclick = () => ouvrirEtape("asEmailMessageStep");
+  overlay.querySelector("#asEmailTemplate").onchange = () => {
+    overlay.querySelector("#asEmailTemplateChoice").textContent = overlay.querySelector("#asEmailTemplate").selectedOptions[0].textContent;
+    remplirMessage(); selectionModifiee();
+  };
+  adapterDestinataires();
 
   const construireBrouillons = (adresseTest = "") => {
     const objet = overlay.querySelector("#asEmailSubject").value.trim();
@@ -2095,7 +2129,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const c = compteur(audience());
     const resumeStudentId = reprendreEleveId();
     // Freeze the campaign before the first asynchronous step, including every batch.
-    const recipientFilter = filtre(), campagneAudience = audience();
+    const recipientFilter = filtre(), campagneAudience = audience(), reason = raison();
     const selectedStudentIds = recipientFilter === "manual" ? elevesFiltres().map(e => String(e.id)) : undefined;
     const enrolledSince = recipientFilter === "recent_retained" ? inscriptionDepuisIso() : "";
     if (!filtre() || !audience() || !c.nombre) { resultat.textContent = "Choisissez un groupe et des destinataires disposant d’une adresse."; return; }
@@ -2118,7 +2152,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
         const nombreLots = Math.max(1, Math.ceil(totalServeur / 100));
         resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
         const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-          requestId, mode: "global_confirmations", recipientFilter, selectedStudentIds, enrolledSince, audience: campagneAudience, subject, message, attachment,
+          requestId, mode: "global_confirmations", recipientFilter, selectedStudentIds, enrolledSince, reason, audience: campagneAudience, subject, message, attachment,
           // Un lot visible de 100 est traité en sous-étapes courtes : Supabase ne dépasse
           // ainsi plus sa limite de ressources après plusieurs dizaines de messages.
           batchOffset: offset, batchSize: 10, resumeStudentId
