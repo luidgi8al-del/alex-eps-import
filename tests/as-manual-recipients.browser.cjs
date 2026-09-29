@@ -71,16 +71,34 @@ const server = http.createServer((req, res) => {res.setHeader('Content-Type','te
       await page.locator('#asEmailManualSearch').fill('');
       assert.equal(await page.locator('[data-manual-student=c]').isChecked(),false);
       await page.locator(gmail ? '#asEmailGmailDrafts' : '#asEmailSend').click();
-      await page.waitForFunction(gmail => gmail ? captured.length===2 : captured.length===2 && !document.querySelector('#asEmailManualSearch').disabled, gmail, {timeout:5000})
+      await page.waitForFunction(gmail => gmail ? captured.length===2 : captured.length===2 && document.querySelector('#asEmailSend').textContent==='Terminer', gmail, {timeout:5000})
         .catch(async error => { throw new Error(`gmail=${gmail}: ${await page.locator('#asEmailResult').innerText()} / ${error.message}`); });
       const captured = await page.evaluate(() => captured);
       if (gmail) {
         assert.deepEqual(captured.map(x=>x.studentId),['a','b']);
         await page.locator('[data-manual-student=a]').uncheck();
         assert.equal(await page.locator('#asSendPreparedGmailDrafts').count(),0);
-      } else for (const request of captured) { assert.equal(request.recipientFilter,'manual'); assert.deepEqual(request.selectedStudentIds,['a','b']); }
-      await page.locator('#asEmailManualClear').click();
-      assert.equal(await page.locator('#asEmailSend').isDisabled(),true);
+        await page.locator('#asEmailManualClear').click();
+        assert.equal(await page.locator('#asEmailSend').isDisabled(),true);
+      } else {
+        for (const request of captured) { assert.equal(request.recipientFilter,'manual'); assert.deepEqual(request.selectedStudentIds,['a','b']); }
+        assert.match(await page.locator('#asEmailResult').innerText(), /Tous les lots sont terminés/);
+        assert.equal(await page.locator('#asEmailSend').isDisabled(),false);
+        await page.getByRole('button',{name:'Terminer',exact:true}).click();
+        assert.equal(await page.locator('#asSlotEmailOverlay').count(),0);
+        assert.equal(await page.evaluate(()=>captured.length),2);
+        await page.evaluate(async () => {
+          window.apiFetch = async () => ({ok:false,json:async()=>({error:'Échec simulé'})});
+          await ouvrirEmailGlobalLicencies(students);
+        });
+        await page.locator('#asEmailRecipients').evaluate(el => el.open = true);
+        await page.locator('[name=asEmailFilter][value=manual]').check();
+        await page.locator('[data-manual-student=a]').check();
+        await page.locator('#asEmailSend').click();
+        await page.waitForFunction(()=>document.querySelector('#asEmailSend').textContent==='Envoi interrompu');
+        assert.equal(await page.getByRole('button',{name:'Terminer',exact:true}).count(),0);
+        assert.match(await page.locator('#asEmailResult').innerText(), /Échec simulé/);
+      }
       await page.close();
     }
     console.log('PASS manual selection: empty safety, accent search, persistence, unchecked exclusion, 2 frozen server batches, Gmail draft selection/invalidation, server input validation and institution scope. No real emails.');

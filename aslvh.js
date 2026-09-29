@@ -1810,6 +1810,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
   if (testEmailInput) testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
   let envoiEnCours = false;
+  let envoiTermine = false;
   let brouillonsGmailPrepares = [];
   const selectionManuelle = new Set();
   const verrouillerDestinataires = bloque => overlay.querySelectorAll('#asEmailRecipients input, #asEmailRecipients select, #asEmailRecipients button').forEach(el => el.disabled = bloque);
@@ -1872,6 +1873,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailMessage").value = message;
   };
   const actualiser = () => {
+    if (envoiTermine) return;
     const c = compteur(audience());
     const lots = Math.ceil(c.nombre / 100);
     const dateRecentRequise = filtre() === "recent_retained" && !dateInscriptionDepuis();
@@ -2141,12 +2143,21 @@ async function ouvrirEmailGlobalLicencies(rows) {
       }
       resultat.innerHTML = `<b>${envoyes} e-mail(s) envoyé(s) sur ${totalServeur}.</b>${echecs ? `<span>${echecs} échec(s).</span>` : `<span class="ok">Tous les lots sont terminés.</span>`}${manquants.length ? `<span>${manquants.length} élève(s) sans adresse adaptée.</span>` : ""}`;
       bouton.textContent = echecs ? "Terminé avec erreurs" : "Envoyé";
+      envoiTermine = echecs === 0;
     } catch (error) {
       resultat.innerHTML += `<span class="error">${unssText(error.message || "L’envoi a échoué.")} Les lots déjà confirmés ne seront pas relancés automatiquement.</span>`;
       bouton.textContent = "Envoi interrompu";
     } finally {
       envoiEnCours = false; verrouillerDestinataires(false);
       overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = false);
+      if (envoiTermine) {
+        overlay.querySelectorAll("main input, main select, main textarea, main button").forEach(el => el.disabled = true);
+        overlay.querySelectorAll("footer button").forEach(el => el.hidden = el !== bouton);
+        bouton.textContent = "Terminer";
+        bouton.disabled = false;
+        bouton.onclick = fermerEmail;
+        bouton.focus();
+      }
     }
   };
 }
