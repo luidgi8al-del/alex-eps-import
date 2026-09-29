@@ -3121,11 +3121,20 @@ async function assurerInscriptions() {
 /** Les eleves d'un creneau : ajouter, retirer. */
 /** Une section par rang de vœu : chaque candidat avec son propre bouton Ajouter, pas une case a
  * cocher - on veut pouvoir en ajouter un sans manipuler les autres. */
+function rangsVoeuxCreneau(eleve, slotId) {
+  return [1, 2, 3].filter(rang => eleve[`wish${rang}_slot_id`] && String(eleve[`wish${rang}_slot_id`]) === String(slotId));
+}
+
+function identiteEleveCreneauHtml(eleve, rangs = []) {
+  const categorie = unssCategoryLabel(eleve.category, eleve.sex) || "Catégorie non renseignée";
+  return `<div class="as-slot-student-identity"><strong>${unssText(String(eleve.last_name || "").toUpperCase())} ${unssText(eleve.first_name || "")}</strong><span class="as-slot-student-badge">${unssText(categorie)}</span><span class="as-slot-student-badge wish">${rangs.length ? rangs.map(r => `Vœu ${r}`).join(" · ") : "Hors vœux"}</span></div>`;
+}
+
 function sectionVoeuHtml(rang, eleves) {
   if (eleves.length === 0) return "";
   return `<div class="muted" style="font-weight:600;margin:12px 0 4px">Ont classé cette activité en vœu ${rang} (${eleves.length})</div>
     ${eleves.map(e => `<div class="unssCard" style="padding:6px 0">
-         <div>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>
+         ${identiteEleveCreneauHtml(e, [rang])}
          <button data-ajouter-voeu="${e.id}" style="margin-top:0">Ajouter</button>
        </div>`).join("")}`;
 }
@@ -3147,8 +3156,8 @@ async function ouvrirListeInscritsCreneau(slot, fermerDepuisAppel = null) {
   panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="unssListeInscritsCloseBtn" aria-label="${fermerDepuisAppel ? "Fermer" : "Retour"}">${fermerDepuisAppel ? "×" : "←"}</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
-      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th></tr></thead><tbody>${
-          eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td></tr>`).join("")
+      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th><th>Vœu pour ce créneau</th></tr></thead><tbody>${
+          eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td><td><span class="as-slot-student-badge wish">${rangsVoeuxCreneau(e, slot.id).map(r => `Vœu ${r}`).join(" · ") || "Hors vœux"}</span></td></tr>`).join("")
         }</tbody></table></div>`
     }`;
   document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => fermerDepuisAppel ? fermerDepuisAppel() : ouvrirFicheCreneau(slot));
@@ -3174,7 +3183,7 @@ async function ouvrirElevesCreneau(slot) {
       eleves.length === 0
         ? `<div class="muted">Aucun élève inscrit. Ajoutez-en un.</div>`
         : eleves.map(e => `<div class="unssCard" style="padding:6px 0">
-             <div>${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>
+             ${identiteEleveCreneauHtml(e, rangsVoeuxCreneau(e, slot.id))}
              <button class="danger" data-retirer="${e.id}" style="margin-top:0">Retirer</button>
            </div>`).join("")
     }</div>
@@ -3262,7 +3271,7 @@ function ouvrirAjoutElevesCreneau(slot) {
       compteur.textContent = trouves.length === 0 ? "Aucun eleve ne correspond."
         : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
       zone.innerHTML = affiches.map(e =>
-        `<div class="card unssPick" data-inscrire="${e.id}" style="margin-top:6px">${unssText(String(e.last_name || "").toUpperCase())} ${unssText(e.first_name || "")}</div>`).join("");
+        `<div class="card unssPick" data-inscrire="${e.id}" style="margin-top:6px">${identiteEleveCreneauHtml(e, rangsVoeuxCreneau(e, slot.id))}</div>`).join("");
       zone.querySelectorAll("[data-inscrire]").forEach(el => el.addEventListener("click", async () => {
         if (await inscrireEleves([el.dataset.inscrire])) ouvrirElevesCreneau(slot);
       }));
