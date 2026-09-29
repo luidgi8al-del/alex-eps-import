@@ -134,7 +134,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./school-levels.js",
   "./student-fields.js",
   "./styles/aide.css",
-  "./styles/aide.css?v=20260929-2",
+  "./styles/aide.css?v=20260929-3",
   "./styles/classe-ecrans.css",
   "./styles/classe-ecrans.css?v=20260929-2",
   "./styles/site.css",
