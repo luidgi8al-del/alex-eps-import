@@ -38,6 +38,63 @@ function serveurFactice({ pages = [], reponsePush } = {}) {
 
 const eleve = { nom: "Dupont", division: "2.1", mail: "d@ex.fr" };
 
+test("inscription AS : certificat et paiement manquants ne sont pas de faux conflits", async () => {
+  const original = { id: "1", version: 4, licensed: false, medical_certificate_missing: false, payment_missing: false };
+  await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
+    data: { ...original, licensed: true, medical_certificate_missing: true, payment_missing: true } });
+  const serverRecord = { entity: "unss_students", id: "1", version: 5,
+    data: { ...original, version: 5 }, updatedAt: "2026-09-15T20:49:00Z" };
+  const serveur = serveurFactice({ pages: [{ records: [serverRecord], hasMore: false }] });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 0, "inscription simple sans conflit");
+  assertEgal(serveur.recu[0].data.licensed, true, "licence conservée");
+  assertEgal(serveur.recu[0].data.medical_certificate_missing, true, "certificat manquant conservé");
+  assertEgal(serveur.recu[0].data.payment_missing, true, "paiement manquant conservé");
+});
+
+test("fiche ouverte avant le cache : une modification simple ne crée aucun conflit", async () => {
+  const original = { id: "1", version: 4, host_available: false, division: "2.1" };
+  await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
+    data: { ...original, host_available: true } });
+  const [operation] = await pendingOperations();
+  assertEgal(operation.baseVersion, 4, "version réellement affichée");
+  assertEgal(operation.baseData, original, "référence conservée sans cache initial");
+  assertEgal(operation.changedFields, ["host_available"], "seul le champ saisi change");
+  const serverRecord = { entity: "unss_students", id: "1", version: 5,
+    data: { ...original, version: 5 }, updatedAt: "2026-09-15T20:50:00Z" };
+  const serveur = serveurFactice({ pages: [{ records: [serverRecord], hasMore: false }] });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 0, "aucun faux conflit");
+  assertEgal(serveur.recu[0].data.host_available, true, "modification envoyée");
+});
+
+test("formulaire ouvert pendant une réception : conserve la modification du collègue", async () => {
+  const original = { id: "1", version: 1, host_available: false, division: "2.1" };
+  const distant = { ...original, version: 2, division: "2.2" };
+  await saveLocalRecord({ entity: "unss_students", id: "1", version: 2, data: distant });
+  await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
+    data: { ...original, host_available: true } });
+  const serveur = serveurFactice({ pages: [{ records: [{ entity: "unss_students", id: "1", version: 2,
+    data: distant }], hasMore: false }] });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 0, "champs différents fusionnés");
+  assertEgal(serveur.recu[0].data.division, "2.2", "division du collègue conservée");
+  assertEgal(serveur.recu[0].data.host_available, true, "hébergement local conservé");
+});
+
+test("référence du formulaire : deux divisions incompatibles demandent un choix", async () => {
+  const original = { id: "1", version: 1, division: "2.1" };
+  const distant = { ...original, version: 2, division: "2.2" };
+  await saveLocalRecord({ entity: "unss_students", id: "1", version: 2, data: distant });
+  await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
+    data: { ...original, division: "2.3" } });
+  const serveur = serveurFactice({ pages: [{ records: [{ entity: "unss_students", id: "1", version: 2,
+    data: distant }], hasMore: false }] });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 1, "vrai désaccord protégé");
+  assertEgal(serveur.recu.length, 0, "aucune version écrasée");
+});
+
 // ---------------------------------------------------------------- file d'attente
 
 test("une saisie hors ligne est conservee et mise en attente", async () => {

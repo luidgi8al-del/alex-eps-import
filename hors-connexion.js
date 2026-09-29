@@ -125,8 +125,8 @@ async function lireTable(entite, cheminDirect, { ou, trier } = {}) {
  * Leve si le compte n'a pas le droit : le message doit s'afficher la ou l'on vient de cliquer,
  * pas plus tard.
  */
-async function enregistrerLigne(entite, ligne) {
-  if (tableSuivie(entite)) return modeHorsConnexion.enregistrer(entite, ligne.id, ligne);
+async function enregistrerLigne(entite, ligne, originalData) {
+  if (tableSuivie(entite)) return modeHorsConnexion.enregistrer(entite, ligne.id, ligne, originalData);
   const existe = await apiFetch(`${SUPABASE_URL}/rest/v1/${entite}?id=eq.${encodeURIComponent(ligne.id)}&select=id`);
   const dejaLa = existe.ok && (await existe.json()).length > 0;
   if (dejaLa) {

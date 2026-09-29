@@ -2572,6 +2572,8 @@ function tableauLicenceHtml(eleves) {
 
 /** Etape 2 (ou modification directe) : identite + categorie + voeux + taille maillot + emails. */
 function openUnssStudentPanel(student, licensing, directoryEditing = false) {
+  // Keep the exact pre-edit record, even if a sync refreshes the shared student list.
+  student = student ? structuredClone(student) : student;
   const panel = document.getElementById("unssPanel");
   const isNew = !student;
   const category = student ? student.category : "MINIME";
@@ -2691,7 +2693,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
         jersey_size: "", host_available: false, host_capacity: null, host_age_min: null, host_age_max: null,
         host_sex_pref: null, payment_missing: false, medical_certificate_missing: false,
         updated_at: new Date().toISOString()
-      });
+      }, student);
     } catch (erreur) {
       document.getElementById("unssError").textContent = erreur.message || "Licence non retiree. Verifiez la connexion.";
       return;
@@ -2747,7 +2749,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
       } else {
         // L'identifiant reste identique : une correction de division ne duplique pas l'eleve
         // et conserve ses licences, ses voeux et ses inscriptions AS.
-        await enregistrerLigne("unss_students", { ...student, ...body });
+        await enregistrerLigne("unss_students", { ...student, ...body }, student);
       }
       // Le voeu 1 est le choix prioritaire de l'eleve : l'inscrire tout de suite au creneau
       // correspondant evite un aller-retour ("Ajouter des eleves" > le retrouver > confirmer)

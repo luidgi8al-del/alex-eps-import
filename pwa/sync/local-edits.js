@@ -1,12 +1,17 @@
 import { readLocalRecord, saveLocalRecord } from "../storage/records.js";
 import { enqueueOperation } from "./outbox.js";
 import { changedFieldsBetween } from "./merge.js";
-export async function saveOfflineEdit({ entity, id, data, authorId, deviceId }) {
-  const current = await readLocalRecord(entity, id), baseData = current?.data || {};
+export async function saveOfflineEdit({ entity, id, data, authorId, deviceId, originalData }) {
+  const current = await readLocalRecord(entity, id);
+  // Le formulaire peut avoir été ouvert avant le téléchargement local, ou être resté
+  // ouvert pendant une synchronisation. Sa référence est la fiche réellement affichée,
+  // jamais une copie vide ni une fiche reçue après le début de la saisie.
+  const baseData = originalData ?? current?.data ?? {};
+  const baseVersion = originalData?.version ?? current?.version ?? 0;
   const changedFields = changedFieldsBetween(baseData, data);
   if (!changedFields.length) return { changed: false, record: current };
-  const record = await saveLocalRecord({ entity, id, data, version: current?.version || 0, updatedAt: new Date().toISOString(), deleted: false });
-  const operation = await enqueueOperation({ entity, id, action: "upsert", baseVersion: current?.version || 0, baseData, data, changedFields, authorId, deviceId });
+  const record = await saveLocalRecord({ entity, id, data, version: baseVersion, updatedAt: new Date().toISOString(), deleted: false });
+  const operation = await enqueueOperation({ entity, id, action: "upsert", baseVersion, baseData, data, changedFields, authorId, deviceId });
   return { changed: true, record, operation };
 }
 export async function saveOfflineDeletion({ entity, id, authorId, deviceId }) {

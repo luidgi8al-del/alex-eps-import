@@ -197,9 +197,9 @@ export async function demarrerHorsConnexion({
      * une securite - la vraie interdiction est dans la base - c'est une question d'honnetete
      * envers celui qui saisit.
      */
-    async enregistrer(entity, id, data) {
+    async enregistrer(entity, id, data, originalData) {
       verifierDroit(entity, "creer", "modifier");
-      const resultat = await saveOfflineEdit({ entity, id, data, authorId: session()?.user_id });
+      const resultat = await saveOfflineEdit({ entity, id, data, originalData, authorId: session()?.user_id });
       if (resultat.changed) {
         programmerEnvoiApresSaisie();
         publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
