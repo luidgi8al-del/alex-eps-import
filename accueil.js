@@ -177,6 +177,21 @@ document.querySelectorAll("[data-home-module]").forEach(button =>
 );
 document.getElementById("todayCard").addEventListener("click", () => showTab("planning"));
 
+// Sur telephone, l'alerte rejoint le resume du jour. Le MutationObserver garde ce resume a jour
+// lorsque la source de l'alerte sera alimentee, sans dupliquer sa logique metier.
+function syncHomeMobileAlert() {
+  const source = document.getElementById("homeAlertContent");
+  const target = document.getElementById("homeMobileAlert");
+  if (!source || !target) return;
+  const message = source.textContent.trim();
+  const hasAlert = Boolean(message) && message.toLocaleLowerCase("fr-FR") !== "aucune alerte";
+  target.textContent = hasAlert ? `⚠️ ${message}` : "";
+  target.hidden = !hasAlert;
+}
+syncHomeMobileAlert();
+const homeAlertSource = document.getElementById("homeAlertContent");
+if (homeAlertSource) new MutationObserver(syncHomeMobileAlert).observe(homeAlertSource, { childList:true, subtree:true, characterData:true });
+
 function homeSummaryText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value;

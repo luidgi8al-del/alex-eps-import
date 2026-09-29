@@ -25,6 +25,10 @@
   function setWeatherEnabled(enabled){localStorage.setItem(weatherEnabledKey(),String(Boolean(enabled)));renderHomeWeather();}
   function weatherCity(){try{return JSON.parse(localStorage.getItem(weatherCityKey())||'null');}catch{return null;}}
   function validWeatherCity(city){return city && typeof city.name==='string' && Number.isFinite(city.latitude) && Number.isFinite(city.longitude) && Math.abs(city.latitude)<=90 && Math.abs(city.longitude)<=180;}
+  function setHomeMobileWeatherIcon(icon='',label='') {
+    const element=document.getElementById('homeMobileWeatherIcon');if(!element)return;
+    element.textContent=icon;element.hidden=!icon;element.setAttribute('aria-label',label||'Météo');element.title=label||'';
+  }
   async function weatherFetch(url){
     const response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer',signal:AbortSignal.timeout(12000)});
     if(!response.ok)throw Error('Service météo temporairement indisponible.');
@@ -47,25 +51,27 @@
   async function renderHomeWeather() {
     const host=document.getElementById('homeWeather');if(!host)return;
     host.hidden=!weatherEnabled();
-    if(host.hidden){host.innerHTML='';return;}
+    if(host.hidden){host.innerHTML='';setHomeMobileWeatherIcon();return;}
     const renderId=++weatherRenderId,owner=weatherCityKey();
     const active=()=>renderId===weatherRenderId && weatherCityKey()===owner;
     const saved=weatherCity(),city=validWeatherCity(saved)?saved:null;
     host.innerHTML=`<div class="weatherTop"><h2>🌤️ ${city?settingsEscape(city.name):'Météo'}</h2><button class="secondary" id="weatherRefresh" title="Actualiser la météo" aria-label="Actualiser la météo">↻</button></div><div id="weatherForecast" aria-live="polite">${city?'Chargement…':'Ville non réglée. '}</div>${city?'<div class="weatherSource"><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></div>':'<button class="secondary weatherSetup" id="weatherSetup">Régler la ville</button>'}`;
     document.getElementById('weatherRefresh').onclick=()=>{if(city)weatherCache.delete(`${city.latitude},${city.longitude}`);renderHomeWeather();};
     const setup=document.getElementById('weatherSetup');if(setup)setup.onclick=()=>{globalThis.openWeatherSettingsOnOpen=true;openSettings();};
-    if(!city)return;
+    if(!city){setHomeMobileWeatherIcon();return;}
     const forecast=document.getElementById('weatherForecast'),key=`${city.latitude},${city.longitude}`;
     try{
       let cached=weatherCache.get(key);
       // Short in-memory cache, invalidated at the selected town's midnight.
       if(cached && (Date.now()-cached.at>900000 || new Intl.DateTimeFormat('sv-SE',{timeZone:cached.data.timezone}).format(new Date())!==cached.data.daily.time[0]))cached=null;
-      const data=cached?.data || await weatherFetch('https://api.open-meteo.com/v1/forecast?'+new URLSearchParams({latitude:city.latitude,longitude:city.longitude,daily:'temperature_2m_max,temperature_2m_min',hourly:'temperature_2m,weather_code,precipitation_probability,wind_speed_10m',timezone:'auto',forecast_days:'2'}));
+      const data=cached?.data || await weatherFetch('https://api.open-meteo.com/v1/forecast?'+new URLSearchParams({latitude:city.latitude,longitude:city.longitude,current:'weather_code',daily:'temperature_2m_max,temperature_2m_min',hourly:'temperature_2m,weather_code,precipitation_probability,wind_speed_10m',timezone:'auto',forecast_days:'2'}));
       if(!active())return;
       if(!data.daily || data.daily.time?.length!==2)throw Error('Prévisions incomplètes');
       if(!cached)weatherCache.set(key,{at:Date.now(),data});
+      const [mobileIcon,mobileLabel]=weatherDescription(data.current?.weather_code ?? data.hourly?.weather_code?.[0]);
+      setHomeMobileWeatherIcon(mobileIcon,mobileLabel);
       forecast.innerHTML=`<div class="weatherDays">${weatherDayHtml(data.daily,0,data.hourly)}${weatherDayHtml(data.daily,1,data.hourly)}</div><p class="weatherSource">Prévisions locales · actualisées à ${new Date(cached?.at || Date.now()).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</p>`;
-    }catch{if(active())forecast.textContent='Météo indisponible pour le moment. Vérifie ta connexion puis clique sur Actualiser.';}
+    }catch{if(active()){setHomeMobileWeatherIcon();forecast.textContent='Météo indisponible pour le moment. Vérifie ta connexion puis clique sur Actualiser.';}}
   }
   async function searchWeatherCities(query) {
     const data=await weatherFetch('https://geocoding-api.open-meteo.com/v1/search?'+new URLSearchParams({name:query,count:'6',language:'fr',format:'json'}));
@@ -86,6 +92,7 @@
   globalThis.weatherEnabled = weatherEnabled;
   globalThis.setWeatherEnabled = setWeatherEnabled;
   globalThis.weatherCity = weatherCity;
+  globalThis.setHomeMobileWeatherIcon = setHomeMobileWeatherIcon;
   globalThis.validWeatherCity = validWeatherCity;
   globalThis.weatherFetch = weatherFetch;
   globalThis.weatherDayHtml = weatherDayHtml;
