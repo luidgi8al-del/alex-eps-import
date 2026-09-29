@@ -26,7 +26,7 @@ const mailer = nodemailer.createTransport({
 });
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AUDIENCES = new Set(["students", "parents", "both", "parents_personalized"]);
-const RECIPIENT_FILTERS = new Set(["all_retained", "recent_retained", "missing_certificate", "missing_payment", "host_available"]);
+const RECIPIENT_FILTERS = new Set(["manual", "all_retained", "recent_retained", "missing_certificate", "missing_payment", "host_available"]);
 
 const escapeHtml = (value: unknown) => String(value ?? "")
   .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
@@ -118,6 +118,14 @@ Deno.serve(async req => {
   if (globalMode) {
     const recipientFilter = String(input.recipientFilter || "all_retained");
     if (!RECIPIENT_FILTERS.has(recipientFilter)) return reply({ error: "Groupe de destinataires invalide" }, 400);
+    const selectedStudentIds: string[] = [];
+    if (recipientFilter === "manual") {
+      if (!Array.isArray(input.selectedStudentIds) || !input.selectedStudentIds.length || input.selectedStudentIds.length > 2000 ||
+          input.selectedStudentIds.some((id: unknown) => typeof id !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(id))) {
+        return reply({ error: "Sélection manuelle vide ou invalide" }, 400);
+      }
+      selectedStudentIds.push(...new Set<string>(input.selectedStudentIds));
+    }
     const enrolledSince = String(input.enrolledSince || "");
     const enrolledSinceMillis = Date.parse(enrolledSince);
     if (recipientFilter === "recent_retained" && (!enrolledSince || !Number.isFinite(enrolledSinceMillis))) {
@@ -158,6 +166,7 @@ Deno.serve(async req => {
       .eq("institution_id", institutionId).eq("deleted", false).eq("licensed", true);
     if (recipientFilter === "all_retained") studentsQuery = studentsQuery.in("id", studentIds);
     if (recipientFilter === "recent_retained") studentsQuery = studentsQuery.in("id", recentStudentIds);
+    if (recipientFilter === "manual") studentsQuery = studentsQuery.in("id", selectedStudentIds);
     if (recipientFilter === "missing_certificate") studentsQuery = studentsQuery.eq("medical_certificate_missing", true);
     if (recipientFilter === "missing_payment") studentsQuery = studentsQuery.eq("payment_missing", true);
     if (recipientFilter === "host_available") studentsQuery = studentsQuery.eq("host_available", true);

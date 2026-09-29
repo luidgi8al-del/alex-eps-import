@@ -1758,6 +1758,14 @@ async function ouvrirEmailGlobalLicencies(rows) {
     <main>
       <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
         <b>Groupe à contacter</b>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="manual"><span><b>Choisir les élèves manuellement</b><small>Cochez uniquement les élèves qui doivent recevoir le message</small></span></label>
+        <div id="asEmailManualWrap" hidden>
+          <label>Rechercher un élève<input id="asEmailManualSearch" type="search" placeholder="Nom, prénom ou classe"></label>
+          <p>Aucun élève n’est coché au départ. La recherche ne modifie pas votre sélection.</p>
+          <button type="button" class="secondary" id="asEmailManualClear">Tout décocher</button>
+          <p id="asEmailManualCount" aria-live="polite"></p>
+          <div id="asEmailManualList" style="max-height:300px;overflow-y:auto"></div>
+        </div>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="recent_retained"><span><b>Nouvelles inscriptions depuis une date</b><small>Seulement les élèves inscrits à partir du jour choisi</small></span></label>
         <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date choisie est incluse. Une simple modification ne compte pas comme une inscription. Les anciennes inscriptions sans date d’origine connue sont exclues. Le message indiquera tous les créneaux actuels de chaque élève sélectionné. Ce filtre ne vérifie pas si un message a déjà été envoyé.</small></label>
@@ -1803,7 +1811,19 @@ async function ouvrirEmailGlobalLicencies(rows) {
   if (testEmailInput) testEmailInput.value = localStorage.getItem("eps_gmail_test_address") || "";
   let envoiEnCours = false;
   let brouillonsGmailPrepares = [];
+  const selectionManuelle = new Set();
+  const verrouillerDestinataires = bloque => overlay.querySelectorAll('#asEmailRecipients input, #asEmailRecipients select, #asEmailRecipients button').forEach(el => el.disabled = bloque);
+  const normaliserRechercheAS = texte => String(texte || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
+  const afficherSelectionManuelle = () => {
+    const recherche = normaliserRechercheAS(overlay.querySelector("#asEmailManualSearch").value);
+    const visibles = [...rows].filter(e => normaliserRechercheAS(`${e.last_name} ${e.first_name} ${e.division || ""}`).includes(recherche))
+      .sort((a, b) => `${a.last_name} ${a.first_name}`.localeCompare(`${b.last_name} ${b.first_name}`, "fr"));
+    overlay.querySelector("#asEmailManualList").innerHTML = visibles.length ? visibles.map(e =>
+      `<label class="as-email-choice"><input type="checkbox" data-manual-student="${unssText(String(e.id))}" ${selectionManuelle.has(String(e.id)) ? "checked" : ""}><span><b>${unssText(e.last_name)} ${unssText(e.first_name)}</b><small>${unssText(e.division || "Classe non renseignée")}</small></span></label>`).join("") : "<p>Aucun élève trouvé.</p>";
+    overlay.querySelector("#asEmailManualCount").textContent = `${selectionManuelle.size} élève(s) coché(s) au total · ${visibles.length} affiché(s)`;
+  };
   const elevesFiltres = () => {
+    if (filtre() === "manual") return rows.filter(e => selectionManuelle.has(String(e.id)));
     if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
     if (filtre() === "recent_retained") {
       if (!dateInscriptionDepuis()) return [];
@@ -1833,7 +1853,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const famille = audience() === "parents_personalized";
     let objet = "Information – Association sportive";
     let message = `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n[Votre message]\n\nCordialement,\n${professeur}`;
-    if (filtre() === "all_retained" || filtre() === "recent_retained") {
+    if (filtre() === "all_retained" || filtre() === "recent_retained" || filtre() === "manual") {
       objet = "Confirmation de vos inscriptions à l’AS";
       message = famille
         ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
@@ -1858,7 +1878,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     overlay.querySelector("#asEmailRecipientSummary").innerHTML = dateRecentRequise
       ? `<span>Choisissez la date de début des nouvelles inscriptions.</span>`
       : filtre() && audience()
-      ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b><span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
+      ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b>${!elevesFiltres().length ? '<span>Aucun destinataire. Choisissez les élèves manuellement ou changez de filtre.</span>' : `<span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`}`
       : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
     overlay.querySelector("#asEmailSend").disabled = !filtre() || dateRecentRequise || !c.nombre;
     const boutonBrouillons = overlay.querySelector("#asEmailGmailDrafts");
@@ -1874,24 +1894,46 @@ async function ouvrirEmailGlobalLicencies(rows) {
     if ([...selectReprise.options].some(option => option.value === choixActuel)) selectReprise.value = choixActuel;
   };
   const libelles = { students: "Élèves", parents_personalized: "Familles", both: "Élèves + familles" };
-  const libellesFiltres = { all_retained: "Inscriptions confirmées", recent_retained: "Nouvelles inscriptions", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
+  const libellesFiltres = { manual: "Sélection manuelle", all_retained: "Inscriptions confirmées", recent_retained: "Nouvelles inscriptions", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
+  const selectionModifiee = () => {
+    overlay.querySelector("#asEmailResumeStudent").value = "";
+    if (brouillonsGmailPrepares.length) {
+      brouillonsGmailPrepares = [];
+      overlay.querySelector("#asEmailResult").textContent = "Sélection modifiée : préparez un nouveau lot. Les anciens brouillons restent dans Gmail mais ne seront pas envoyés depuis cette fenêtre.";
+    }
+    actualiser();
+  };
+  overlay.querySelector("#asEmailManualSearch").oninput = afficherSelectionManuelle;
+  overlay.querySelector("#asEmailManualList").onchange = event => {
+    const id = event.target.dataset.manualStudent;
+    if (!id || envoiEnCours) return;
+    if (event.target.checked) selectionManuelle.add(id); else selectionManuelle.delete(id);
+    selectionModifiee(); afficherSelectionManuelle();
+  };
+  overlay.querySelector("#asEmailManualClear").onclick = () => {
+    if (envoiEnCours) return;
+    selectionManuelle.clear(); selectionModifiee(); afficherSelectionManuelle();
+  };
   const fermerEmail = () => { if (!envoiEnCours) overlay.remove(); };
   overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = fermerEmail);
   overlay.onclick = e => { if (e.target === overlay) fermerEmail(); };
   overlay.querySelectorAll('input[name="asEmailFilter"]').forEach(r => r.onchange = () => {
     const filtreRecent = filtre() === "recent_retained";
+    const filtreManuel = filtre() === "manual";
+    overlay.querySelector("#asEmailManualWrap").hidden = !filtreManuel;
+    if (filtreManuel) afficherSelectionManuelle();
     overlay.querySelector("#asEmailRecentSinceWrap").hidden = !filtreRecent;
     if (filtreRecent && !dateInscriptionDepuis()) overlay.querySelector("#asEmailRecentSince").value = new Date().toLocaleDateString("en-CA");
     overlay.querySelector('input[name="asEmailAudience"][value="both"]').checked = true;
     overlay.querySelector("#asEmailAudienceChoice").textContent = `${libellesFiltres[filtre()]} · Élèves + familles`;
-    remplirMessage(); actualiser();
-    overlay.querySelector("#asEmailRecipients").open = filtreRecent;
-    overlay.querySelector("#asEmailMessageStep").open = !filtreRecent;
+    remplirMessage(); selectionModifiee();
+    overlay.querySelector("#asEmailRecipients").open = filtreRecent || filtreManuel;
+    overlay.querySelector("#asEmailMessageStep").open = !filtreRecent && !filtreManuel;
   });
-  overlay.querySelector("#asEmailRecentSince").onchange = () => { remplirMessage(); actualiser(); };
+  overlay.querySelector("#asEmailRecentSince").onchange = () => { remplirMessage(); selectionModifiee(); };
   overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
     overlay.querySelector("#asEmailAudienceChoice").textContent = filtre() ? `${libellesFiltres[filtre()]} · ${libelles[audience()]}` : libelles[audience()] || "À choisir";
-    remplirMessage(); actualiser();
+    remplirMessage(); selectionModifiee();
     overlay.querySelector("#asEmailRecipients").open = false;
     overlay.querySelector("#asEmailMessageStep").open = true;
   });
@@ -1988,7 +2030,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     }
     const lot = toutes.slice(0, fin);
     if (!confirm(`Créer ${lot.length} brouillon(s) personnalisés dans votre Gmail professionnel ? Aucun message ne sera envoyé automatiquement.`)) return;
-    envoiEnCours = true; bouton.disabled = true;
+    envoiEnCours = true; bouton.disabled = true; verrouillerDestinataires(true);
     overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = true);
     let crees = 0;
     try {
@@ -2009,7 +2051,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
       if (prochain) overlay.querySelector("#asEmailResumeStudent").value = prochain.studentId;
       resultat.innerHTML = `<span class="error">${unssText(error.message || "Création interrompue.")} ${crees} brouillon(s) ont été créés ; la reprise est positionnée sur ${unssText(prochain?.studentName || "le prochain élève")}.</span>`;
     } finally {
-      envoiEnCours = false; bouton.disabled = false;
+      envoiEnCours = false; bouton.disabled = false; verrouillerDestinataires(false);
       overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = false);
     }
   };
@@ -2020,7 +2062,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const state = await verifierCompteGmail().catch(error => { resultat.innerHTML = `<span class="error">${unssText(error.message)}</span>`; return null; });
     if (!state) return;
     if (!confirm(`Envoyer maintenant ${brouillonsGmailPrepares.length} message(s) depuis ${state.email} ? Les messages partiront progressivement. Cette action ne peut pas être annulée.`)) return;
-    envoiEnCours = true;
+    envoiEnCours = true; verrouillerDestinataires(true);
     overlay.querySelectorAll("button").forEach(button => button.disabled = true);
     const lotInitial = [...brouillonsGmailPrepares];
     let envoyes = 0;
@@ -2039,7 +2081,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     } finally {
       envoiEnCours = false;
       overlay.querySelectorAll("button").forEach(button => button.disabled = false);
-      actualiser();
+      verrouillerDestinataires(false); actualiser();
     }
   }
 
@@ -2050,6 +2092,10 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const message = overlay.querySelector("#asEmailMessage").value.trim();
     const c = compteur(audience());
     const resumeStudentId = reprendreEleveId();
+    // Freeze the campaign before the first asynchronous step, including every batch.
+    const recipientFilter = filtre(), campagneAudience = audience();
+    const selectedStudentIds = recipientFilter === "manual" ? elevesFiltres().map(e => String(e.id)) : undefined;
+    const enrolledSince = recipientFilter === "recent_retained" ? inscriptionDepuisIso() : "";
     if (!filtre() || !audience() || !c.nombre) { resultat.textContent = "Choisissez un groupe et des destinataires disposant d’une adresse."; return; }
     if (!subject || !message) { resultat.textContent = "L’objet et le message sont obligatoires."; return; }
     const eleveReprise = elevesFiltres().find(e => String(e.id) === resumeStudentId);
@@ -2058,7 +2104,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
       ? `Reprendre l’envoi à partir de ${String(eleveReprise?.last_name || "").toLocaleUpperCase("fr-FR")} ${eleveReprise?.first_name || ""}, inclus(e), puis continuer par lots de 100 ?`
       : `Envoyer ${c.nombre} e-mail(s) séparés en ${lotsPrevus} lot(s) de 100 maximum au groupe « ${libellesFiltres[filtre()]} » ?`;
     if (!confirm(confirmation)) return;
-    envoiEnCours = true;
+    envoiEnCours = true; verrouillerDestinataires(true);
     overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = true);
     bouton.disabled = true; resultat.textContent = resumeStudentId ? "Préparation de la reprise…" : `Préparation de ${lotsPrevus} lot(s)…`;
     try {
@@ -2070,7 +2116,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
         const nombreLots = Math.max(1, Math.ceil(totalServeur / 100));
         resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
         const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-          requestId, mode: "global_confirmations", recipientFilter: filtre(), enrolledSince: filtre() === "recent_retained" ? inscriptionDepuisIso() : "", audience: audience(), subject, message, attachment,
+          requestId, mode: "global_confirmations", recipientFilter, selectedStudentIds, enrolledSince, audience: campagneAudience, subject, message, attachment,
           // Un lot visible de 100 est traité en sous-étapes courtes : Supabase ne dépasse
           // ainsi plus sa limite de ressources après plusieurs dizaines de messages.
           batchOffset: offset, batchSize: 10, resumeStudentId
@@ -2099,7 +2145,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
       resultat.innerHTML += `<span class="error">${unssText(error.message || "L’envoi a échoué.")} Les lots déjà confirmés ne seront pas relancés automatiquement.</span>`;
       bouton.textContent = "Envoi interrompu";
     } finally {
-      envoiEnCours = false;
+      envoiEnCours = false; verrouillerDestinataires(false);
       overlay.querySelectorAll("[data-email-close]").forEach(b => b.disabled = false);
     }
   };

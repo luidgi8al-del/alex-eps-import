@@ -12,7 +12,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker', '{classe}',
   'function signatureProfesseurAS', 'return `M. ${nom}`', '{nom} {prenom}',
   'id="unssGlobalEmailBtn"', 'function ouvrirEmailGlobalLicencies', 'mode: "global_confirmations"', '{creneaux}',
-  'name="asEmailFilter"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter: filtre()',
+  'name="asEmailFilter"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter, selectedStudentIds',
   'id="asEmailTemplate"', 'value="free">Message libre', 'id="asEmailTemplateChoice"', 'Contacter les licenciés AS'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 [
