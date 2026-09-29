@@ -12,7 +12,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="asEmailRecipients"', 'Aux familles', 'Aux élèves et aux familles', 'showPicker', '{classe}',
   'function signatureProfesseurAS', 'return `M. ${nom}`', '{nom} {prenom}',
   'id="unssGlobalEmailBtn"', 'function ouvrirEmailGlobalLicencies', 'mode: "global_confirmations"', '{creneaux}',
-  'name="asEmailFilter"', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter: filtre()',
+  'name="asEmailFilter"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter: filtre()',
   'id="asEmailTemplate"', 'value="free">Message libre', 'id="asEmailTemplateChoice"', 'Contacter les licenciés AS'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 [
@@ -33,7 +33,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'total > 450', 'formatFirstName', 'toLocaleUpperCase("fr-FR")',
   'const child = `${last} ${first}`', 'global_confirmations', 'eps_admin_target',
   'activityLine', '.replaceAll("{creneaux}", activityList)',
-  'RECIPIENT_FILTERS', 'medical_certificate_missing', 'payment_missing', 'host_available'
+  'RECIPIENT_FILTERS', 'enrolledSince', 'recentStudentIds', 'medical_certificate_missing', 'payment_missing', 'host_available'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 [
   'batchOffset: offset, batchSize: 10', 'Envoi du lot ${numeroLot}/${nombreLots}',

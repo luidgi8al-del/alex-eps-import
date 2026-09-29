@@ -26,7 +26,7 @@ const mailer = nodemailer.createTransport({
 });
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const AUDIENCES = new Set(["students", "parents", "both", "parents_personalized"]);
-const RECIPIENT_FILTERS = new Set(["all_retained", "missing_certificate", "missing_payment", "host_available"]);
+const RECIPIENT_FILTERS = new Set(["all_retained", "recent_retained", "missing_certificate", "missing_payment", "host_available"]);
 
 const escapeHtml = (value: unknown) => String(value ?? "")
   .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
@@ -118,6 +118,11 @@ Deno.serve(async req => {
   if (globalMode) {
     const recipientFilter = String(input.recipientFilter || "all_retained");
     if (!RECIPIENT_FILTERS.has(recipientFilter)) return reply({ error: "Groupe de destinataires invalide" }, 400);
+    const enrolledSince = String(input.enrolledSince || "");
+    const enrolledSinceMillis = Date.parse(enrolledSince);
+    if (recipientFilter === "recent_retained" && (!enrolledSince || !Number.isFinite(enrolledSinceMillis))) {
+      return reply({ error: "Date de début des inscriptions invalide" }, 400);
+    }
     const { data: adminContext, error: adminError } = await admin.rpc("eps_admin_target", { p_actor: user.id });
     const institutionId = adminContext?.institution_id;
     if (adminError || !institutionId) return reply({ error: "L’envoi global est réservé à l’administrateur de l’établissement" }, 403);
@@ -128,10 +133,10 @@ Deno.serve(async req => {
     if (slotsError) return reply({ error: slotsError.message }, 500);
     const slotById = new Map((slots || []).map(slot => [slot.id, slot]));
     const slotIds = [...slotById.keys()];
-    let memberships: Array<{student_id:string;slot_id:string}> = [];
+    let memberships: Array<{student_id:string;slot_id:string;updated_at:string}> = [];
     if (slotIds.length) {
       const { data, error: membershipsError } = await admin.from("unss_memberships")
-        .select("student_id,slot_id").in("slot_id", slotIds).eq("deleted", false);
+        .select("student_id,slot_id,updated_at").in("slot_id", slotIds).eq("deleted", false);
       if (membershipsError) return reply({ error: membershipsError.message }, 500);
       memberships = data || [];
     }
@@ -144,11 +149,15 @@ Deno.serve(async req => {
       slotsByStudent.set(membership.student_id, list);
     }
     const studentIds = [...slotsByStudent.keys()];
-    if (recipientFilter === "all_retained" && !studentIds.length) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
+    const recentStudentIds = [...new Set(memberships
+      .filter(membership => Date.parse(String(membership.updated_at || "")) >= enrolledSinceMillis)
+      .map(membership => membership.student_id))];
+    if ((recipientFilter === "all_retained" && !studentIds.length) || (recipientFilter === "recent_retained" && !recentStudentIds.length)) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
     let studentsQuery = admin.from("unss_students")
       .select("id,last_name,first_name,division,student_email,parent_email")
       .eq("institution_id", institutionId).eq("deleted", false).eq("licensed", true);
     if (recipientFilter === "all_retained") studentsQuery = studentsQuery.in("id", studentIds);
+    if (recipientFilter === "recent_retained") studentsQuery = studentsQuery.in("id", recentStudentIds);
     if (recipientFilter === "missing_certificate") studentsQuery = studentsQuery.eq("medical_certificate_missing", true);
     if (recipientFilter === "missing_payment") studentsQuery = studentsQuery.eq("payment_missing", true);
     if (recipientFilter === "host_available") studentsQuery = studentsQuery.eq("host_available", true);

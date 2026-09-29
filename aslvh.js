@@ -1759,6 +1759,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
       <details class="ui-accordion" id="asEmailRecipients"><summary><span>1. Destinataires</span><small id="asEmailAudienceChoice">À choisir</small></summary><div class="as-email-section ui-accordion-body">
         <b>Groupe à contacter</b>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="all_retained"><span><b>Inscriptions confirmées</b><small>Élèves retenus dans au moins un créneau</small></span></label>
+        <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="recent_retained"><span><b>Nouvelles inscriptions depuis une date</b><small>Seulement les élèves inscrits à partir du jour choisi</small></span></label>
+        <label id="asEmailRecentSinceWrap" hidden>Inscrits à partir du<input id="asEmailRecentSince" type="date"><small>La date choisie est incluse. Le message indiquera tous les créneaux actuels de chaque nouvel élève.</small></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_certificate"><span><b>Certificat manquant</b><small>Tous les dossiers où le certificat manque</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="missing_payment"><span><b>Paiement manquant</b><small>Tous les dossiers où le paiement manque</small></span></label>
         <label class="as-email-choice"><input type="radio" name="asEmailFilter" value="host_available"><span><b>Peuvent héberger</b><small>Toutes les familles ayant proposé un hébergement</small></span></label>
@@ -1793,6 +1795,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const professeur = signatureProfesseurAS(nomProfil || session?.email?.split("@")[0]);
   const audience = () => overlay.querySelector('input[name="asEmailAudience"]:checked')?.value || "";
   const filtre = () => overlay.querySelector('input[name="asEmailFilter"]:checked')?.value || "";
+  const dateInscriptionDepuis = () => overlay.querySelector("#asEmailRecentSince")?.value || "";
+  const inscriptionDepuisIso = () => dateInscriptionDepuis() ? new Date(`${dateInscriptionDepuis()}T00:00:00`).toISOString() : "";
   const modeleMessage = () => overlay.querySelector("#asEmailTemplate").value;
   const reprendreEleveId = () => String(overlay.querySelector("#asEmailResumeStudent")?.value || "");
   const testEmailInput = overlay.querySelector("#asEmailGmailTestAddress");
@@ -1801,6 +1805,15 @@ async function ouvrirEmailGlobalLicencies(rows) {
   let brouillonsGmailPrepares = [];
   const elevesFiltres = () => {
     if (filtre() === "all_retained") return rows.filter(e => idsRetenus.has(e.id));
+    if (filtre() === "recent_retained") {
+      if (!dateInscriptionDepuis()) return [];
+      const debut = new Date(`${dateInscriptionDepuis()}T00:00:00`).getTime();
+      const idsRecents = new Set(unssInscriptions.filter(inscription => {
+        const date = new Date(inscription.updated_at || 0).getTime();
+        return Number.isFinite(date) && date >= debut;
+      }).map(inscription => String(inscription.student_id)));
+      return rows.filter(e => idsRecents.has(String(e.id)));
+    }
     if (filtre() === "missing_certificate") return rows.filter(e => e.medical_certificate_missing);
     if (filtre() === "missing_payment") return rows.filter(e => e.payment_missing);
     if (filtre() === "host_available") return rows.filter(e => e.host_available);
@@ -1820,7 +1833,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const famille = audience() === "parents_personalized";
     let objet = "Information – Association sportive";
     let message = `Bonjour,\n\nCe message concerne {nom} {prenom}, classe {classe}.\n\n[Votre message]\n\nCordialement,\n${professeur}`;
-    if (filtre() === "all_retained") {
+    if (filtre() === "all_retained" || filtre() === "recent_retained") {
       objet = "Confirmation de vos inscriptions à l’AS";
       message = famille
         ? `Bonjour,\n\nVotre enfant {nom} {prenom}, classe {classe}, est retenu(e) dans les activités suivantes :\n\n{creneaux}\n\nCordialement,\n${professeur}`
@@ -1841,14 +1854,17 @@ async function ouvrirEmailGlobalLicencies(rows) {
   const actualiser = () => {
     const c = compteur(audience());
     const lots = Math.ceil(c.nombre / 100);
-    overlay.querySelector("#asEmailRecipientSummary").innerHTML = filtre() && audience()
+    const dateRecentRequise = filtre() === "recent_retained" && !dateInscriptionDepuis();
+    overlay.querySelector("#asEmailRecipientSummary").innerHTML = dateRecentRequise
+      ? `<span>Choisissez la date de début des nouvelles inscriptions.</span>`
+      : filtre() && audience()
       ? `<b>${elevesFiltres().length} élève(s) sélectionné(s) · ${c.nombre} e-mail(s)</b><span>${lots} lot(s) de 100 maximum seront envoyés successivement.</span>${c.manquants ? `<span>${c.manquants} élève(s) sans adresse adaptée.</span>` : `<span class="ok">Toutes les adresses nécessaires sont renseignées.</span>`}`
       : `<span>Choisissez le groupe à contacter et les adresses utilisées.</span>`;
-    overlay.querySelector("#asEmailSend").disabled = !filtre() || !c.nombre;
+    overlay.querySelector("#asEmailSend").disabled = !filtre() || dateRecentRequise || !c.nombre;
     const boutonBrouillons = overlay.querySelector("#asEmailGmailDrafts");
     const boutonTestGmail = overlay.querySelector("#asEmailGmailTest");
-    if (boutonBrouillons) boutonBrouillons.disabled = !filtre() || !c.nombre;
-    if (boutonTestGmail) boutonTestGmail.disabled = !filtre() || !c.nombre;
+    if (boutonBrouillons) boutonBrouillons.disabled = !filtre() || dateRecentRequise || !c.nombre;
+    if (boutonTestGmail) boutonTestGmail.disabled = !filtre() || dateRecentRequise || !c.nombre;
     const selectReprise = overlay.querySelector("#asEmailResumeStudent");
     const choixActuel = selectReprise.value;
     const elevesOrdonnes = [...elevesFiltres()].sort((a, b) =>
@@ -1858,17 +1874,21 @@ async function ouvrirEmailGlobalLicencies(rows) {
     if ([...selectReprise.options].some(option => option.value === choixActuel)) selectReprise.value = choixActuel;
   };
   const libelles = { students: "Élèves", parents_personalized: "Familles", both: "Élèves + familles" };
-  const libellesFiltres = { all_retained: "Inscriptions confirmées", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
+  const libellesFiltres = { all_retained: "Inscriptions confirmées", recent_retained: "Nouvelles inscriptions", missing_certificate: "Certificat manquant", missing_payment: "Paiement manquant", host_available: "Peuvent héberger" };
   const fermerEmail = () => { if (!envoiEnCours) overlay.remove(); };
   overlay.querySelectorAll("[data-email-close]").forEach(b => b.onclick = fermerEmail);
   overlay.onclick = e => { if (e.target === overlay) fermerEmail(); };
   overlay.querySelectorAll('input[name="asEmailFilter"]').forEach(r => r.onchange = () => {
+    const filtreRecent = filtre() === "recent_retained";
+    overlay.querySelector("#asEmailRecentSinceWrap").hidden = !filtreRecent;
+    if (filtreRecent && !dateInscriptionDepuis()) overlay.querySelector("#asEmailRecentSince").value = new Date().toLocaleDateString("en-CA");
     overlay.querySelector('input[name="asEmailAudience"][value="both"]').checked = true;
     overlay.querySelector("#asEmailAudienceChoice").textContent = `${libellesFiltres[filtre()]} · Élèves + familles`;
     remplirMessage(); actualiser();
-    overlay.querySelector("#asEmailRecipients").open = false;
-    overlay.querySelector("#asEmailMessageStep").open = true;
+    overlay.querySelector("#asEmailRecipients").open = filtreRecent;
+    overlay.querySelector("#asEmailMessageStep").open = !filtreRecent;
   });
+  overlay.querySelector("#asEmailRecentSince").onchange = () => { remplirMessage(); actualiser(); };
   overlay.querySelectorAll('input[name="asEmailAudience"]').forEach(r => r.onchange = () => {
     overlay.querySelector("#asEmailAudienceChoice").textContent = filtre() ? `${libellesFiltres[filtre()]} · ${libelles[audience()]}` : libelles[audience()] || "À choisir";
     remplirMessage(); actualiser();
@@ -2050,7 +2070,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
         const nombreLots = Math.max(1, Math.ceil(totalServeur / 100));
         resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
         const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-          requestId, mode: "global_confirmations", recipientFilter: filtre(), audience: audience(), subject, message, attachment,
+          requestId, mode: "global_confirmations", recipientFilter: filtre(), enrolledSince: filtre() === "recent_retained" ? inscriptionDepuisIso() : "", audience: audience(), subject, message, attachment,
           // Un lot visible de 100 est traité en sous-étapes courtes : Supabase ne dépasse
           // ainsi plus sa limite de ressources après plusieurs dizaines de messages.
           batchOffset: offset, batchSize: 10, resumeStudentId
