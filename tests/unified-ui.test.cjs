@@ -21,8 +21,8 @@ if (!html.includes('styles/ui-system.css')) {
   'panel.classList.add("as-list-modal", "as-call-modal", "ui-modal-panel")',
   'as-date-picker ui-accordion',
   'as-call-kpis ui-indicator-grid',
-  'as-history-actions-menu ui-actions',
-  'class="ui-actions-menu"'
+  'as-history-actions-button',
+  'as-call-actions-popover'
 ].forEach(marker => {
   if (!as.includes(marker)) throw new Error(`Écran AS non uniformisé : ${marker}`);
 });

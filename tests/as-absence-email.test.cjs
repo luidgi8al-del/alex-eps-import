@@ -8,9 +8,9 @@ const schema = fs.readFileSync(path.join(root, 'schema_as_absence_emails.sql'), 
 
 [
   'const absents = unssAppelMembers.filter',
-  'data-email-absents=', 'Envoyer le mail aux absents',
+  'keepOpen: true', 'Envoyer le mail aux absents',
   'JSON.stringify({ sessionId })', 'unssCallSendAbsence',
-  '>Modifier</button>', 'Pas maintenant', 'Nouvel appel',
+  'Modifier l’appel', 'Pas maintenant', 'Nouvel appel',
   'String(p.session_id) === String(seance.id)',
   'Les appels se créent et se modifient uniquement depuis l’onglet <strong>Appel AS</strong>.'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Étape après appel incomplète : ${marker}`); });

@@ -3226,6 +3226,67 @@ async function envoyerEmailsParentsAbsents(sessionId, bouton, resultat) {
   }
 }
 
+let fermerMenuActionsAppelActif = null;
+
+/**
+ * Affiche les actions d'un appel au-dessus de la page.
+ *
+ * Le menu vivait auparavant dans le tableau. Comme ce tableau masque ce qui depasse afin de
+ * conserver ses coins arrondis, le clic ouvrait bien le menu mais celui-ci restait invisible.
+ * Le placer directement dans la page evite aussi le meme probleme sur tablette et mobile.
+ */
+function ouvrirMenuActionsAppel(ancre, actions) {
+  fermerMenuActionsAppelActif?.();
+  const menu = document.createElement("div");
+  menu.className = "as-call-actions-popover";
+  menu.setAttribute("role", "menu");
+  menu.setAttribute("aria-label", "Actions de l’appel");
+  menu.innerHTML = `<strong>Actions de l’appel</strong><div class="as-call-actions-list"></div><small class="as-call-actions-result" aria-live="polite"></small>`;
+  document.body.appendChild(menu);
+
+  const liste = menu.querySelector(".as-call-actions-list");
+  const resultat = menu.querySelector(".as-call-actions-result");
+  const fermer = () => {
+    document.removeEventListener("click", fermerSiExterieur, true);
+    document.removeEventListener("keydown", fermerAvecEchap);
+    menu.remove();
+    ancre.setAttribute("aria-expanded", "false");
+    if (fermerMenuActionsAppelActif === fermer) fermerMenuActionsAppelActif = null;
+  };
+  const fermerSiExterieur = event => {
+    if (!menu.contains(event.target) && event.target !== ancre) fermer();
+  };
+  const fermerAvecEchap = event => {
+    if (event.key === "Escape") { fermer(); ancre.focus(); }
+  };
+  fermerMenuActionsAppelActif = fermer;
+  ancre.setAttribute("aria-expanded", "true");
+
+  actions.forEach(action => {
+    const bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.setAttribute("role", "menuitem");
+    bouton.textContent = action.label;
+    if (action.danger) bouton.classList.add("danger");
+    bouton.addEventListener("click", async event => {
+      event.stopPropagation();
+      if (!action.keepOpen) fermer();
+      await action.run?.(bouton, resultat, fermer);
+    });
+    liste.appendChild(bouton);
+  });
+
+  const rect = ancre.getBoundingClientRect();
+  const largeur = Math.min(260, window.innerWidth - 24);
+  menu.style.width = `${largeur}px`;
+  const hauteur = menu.offsetHeight;
+  menu.style.left = `${Math.max(12, Math.min(rect.right - largeur, window.innerWidth - largeur - 12))}px`;
+  menu.style.top = `${Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - hauteur - 12))}px`;
+  menu.querySelector("button")?.focus();
+  setTimeout(() => document.addEventListener("click", fermerSiExterieur, true), 0);
+  document.addEventListener("keydown", fermerAvecEchap);
+}
+
 /** Ouvre un nouvel appel ou une correction dans une vraie fenetre, jamais sous l'historique. */
 function ouvrirEditeurAppel(creneau, seance = null) {
   const panel = document.getElementById("unssPanel");
@@ -3281,7 +3342,7 @@ function renderUnssAppelTab() {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><details class="as-history-actions-menu ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button type="button" data-seance="${s.id}">Modifier</button>${absents > 0 ? `<span class="as-email-absence-action"><button type="button" data-email-absents="${s.id}">Envoyer le mail aux absents</button><small data-absence-email-result></small></span>` : ""}<button type="button" class="danger" data-supprimer-seance="${s.id}">Supprimer l’appel</button></div></details></div></div>`;
+                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><button type="button" class="as-history-actions-button" data-actions-seance="${s.id}" aria-haspopup="menu" aria-expanded="false">Actions <span aria-hidden="true">⌄</span></button></div></div>`;
               }).join("")}</div>`}
     </section>`;
   const contenuBilan = `<section class="as-attendance-summary as-call-panel">
@@ -3310,10 +3371,6 @@ function renderUnssAppelTab() {
     if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ouvrirInscrits(); }
   });
   wrap.querySelectorAll("[data-appel-vue]").forEach(b => b.addEventListener("click", () => { unssAppelVue = b.dataset.appelVue; renderUnssAppelTab(); }));
-  wrap.querySelectorAll("[data-email-absents]").forEach(btn => btn.addEventListener("click", () => {
-    const resultat = btn.closest(".as-email-absence-action")?.querySelector("[data-absence-email-result]");
-    if (resultat) envoyerEmailsParentsAbsents(btn.dataset.emailAbsents, btn, resultat);
-  }));
   document.getElementById("unssNouvelAppel")?.addEventListener("click", () => {
     unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
     unssAppelPresence = {};
@@ -3326,8 +3383,7 @@ function renderUnssAppelTab() {
   // n'est plus la n'est de toute facon jamais lue (bilans et taux partent des seances non
   // supprimees). Les effacer aussi envoyait une suppression par eleve, refusee des que la ligne
   // n'etait pas encore arrivee au serveur - et remplissait "Saisies a trancher" de refus.
-  wrap.querySelectorAll("[data-supprimer-seance]").forEach(btn => btn.addEventListener("click", async () => {
-    const seance = seances.find(s => s.id === btn.dataset.supprimerSeance);
+  const supprimerAppel = async (seance, btn, fermerMenu = () => {}) => {
     if (!seance) return;
     if (!confirm(`Supprimer l'appel du ${dateSeance(seance.date_epoch_millis)} ? Les présences pointées ce jour-là ne seront plus comptées.`)) return;
     btn.disabled = true;
@@ -3338,12 +3394,12 @@ function renderUnssAppelTab() {
       alert(erreur.message || "Appel non supprimé. Vérifiez la connexion.");
       return;
     }
+    fermerMenu();
     unssPresences = unssPresences.filter(p => String(p.session_id) !== String(seance.id));
     unssSeances = unssSeances.filter(s => String(s.id) !== String(seance.id));
     renderUnssAppelTab();
-  }));
-  wrap.querySelectorAll("[data-seance]").forEach(btn => btn.addEventListener("click", () => {
-    const seance = seances.find(s => String(s.id) === String(btn.dataset.seance));
+  };
+  const modifierAppel = seance => {
     if (!seance) return;
     unssAppelMembers = membresPourSeance(unssAppelSlotId, seance);
     unssAppelPresence = {};
@@ -3352,6 +3408,22 @@ function renderUnssAppelTab() {
       unssAppelPresence[e.id] = pointee ? !!pointee.present : true;
     });
     chargerDispensesAppel().then(() => ouvrirEditeurAppel(creneau, seance));
+  };
+  wrap.querySelectorAll("[data-actions-seance]").forEach(btn => btn.addEventListener("click", event => {
+    event.stopPropagation();
+    const seance = seances.find(s => String(s.id) === String(btn.dataset.actionsSeance));
+    if (!seance) return;
+    const pointees = unssPresences.filter(p => String(p.session_id) === String(seance.id));
+    const absents = pointees.filter(p => !p.present).length;
+    ouvrirMenuActionsAppel(btn, [
+      { label: "Modifier l’appel", run: () => modifierAppel(seance) },
+      ...(absents > 0 ? [{
+        label: "Envoyer le mail aux absents",
+        keepOpen: true,
+        run: (bouton, resultat) => envoyerEmailsParentsAbsents(seance.id, bouton, resultat)
+      }] : []),
+      { label: "Supprimer l’appel", danger: true, keepOpen: true, run: (bouton, resultat, fermer) => supprimerAppel(seance, bouton, fermer) }
+    ]);
   }));
 }
 
