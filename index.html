@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20260927-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20260929-2">
 <link rel="stylesheet" href="styles/aide.css?v=20260929-3">
+<link rel="stylesheet" href="styles/emails.css?v=20260929-1">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -28,6 +29,7 @@
       <button class="tabbtn" data-tab="outils">OUTILS</button>
       <button class="tabbtn" data-tab="health">SANTÉ / ACCIDENT</button>
       <button class="tabbtn" data-tab="students">ÉLÈVES</button>
+      <button class="tabbtn" data-tab="emails">E-MAILS</button>
       <button class="tabbtn" data-tab="settings">REGLAGE</button>
       <button class="tabbtn helpTabButton" data-tab="help" title="Ouvrir l’aide" aria-label="Aide">? <span>AIDE</span></button>
     </div>
@@ -359,6 +361,29 @@
         </div>
       </div>
 
+      <div id="tab-emails" class="tabpanel" style="display:none">
+        <div class="email-hub">
+          <aside class="email-hub-nav" id="emailHubNav" aria-label="Rubriques e-mails">
+            <h2>E-MAILS</h2>
+            <button type="button" data-email-hub-view="compose" class="active"><span>✉️</span> Nouveau message AS</button>
+            <button type="button" data-email-hub-view="history"><span>🕘</span> E-mails envoyés</button>
+          </aside>
+          <section class="email-hub-content">
+            <div id="emailHubCompose">
+              <div class="email-hub-head"><div><h1>Nouveau message AS</h1><p>Choisissez la raison, les destinataires et le message avant l’envoi.</p></div></div>
+              <div class="email-compose-card">
+                <div><h2>Contacter les licenciés AS</h2><p>Annulation, documents manquants, confirmation d’inscription, hébergement ou message libre.</p><p class="error" id="emailHubComposeError"></p></div>
+                <button type="button" id="emailHubComposeButton">Écrire un e-mail AS</button>
+              </div>
+            </div>
+            <div id="emailHubHistory" hidden>
+              <div class="email-hub-head"><div><h1>E-mails envoyés</h1><p>Historique partagé avec les professeurs autorisés de votre établissement.</p></div><button type="button" class="secondary" id="emailHistoryRefresh">Actualiser</button></div>
+              <div id="emailHistoryList"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
       <div id="tab-classes" class="tabpanel" style="display:none">
         <div id="subtab-classes">
           <!-- Le bandeau bleu du tableau de bord fait office d'entete : un clic sur son titre
@@ -555,7 +580,8 @@
   <script src="equipement.js?v=20260929-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
-  <script src="aslvh.js?v=20260929-15"></script>
+  <script src="aslvh.js?v=20260929-16"></script>
+  <script src="emails.js?v=20260929-1"></script>
   <script src="outils.js?v=20260928-2"></script>
   <script src="teams-saved-web.js?v=20260928-3"></script>
   <script src="tools-workspace.js?v=20260928-3"></script>
@@ -834,7 +860,7 @@
     }
 
     // ---- Onglets (memes 6 modules que l'application) ----
-    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health", "students", "help"];
+    const TAB_NAMES = ["home", "cours", "outils", "programmation", "unss", "equipement", "classes", "health", "students", "emails", "help"];
     let currentWebTab = "home";
     let epsPageFullyReady = false;
     let pendingModuleTab = null;
@@ -855,6 +881,7 @@
       try {
         if (name === "classes") showSubtab("classes");
         if (name === "students") ouvrirRepertoireEleves();
+        if (name === "emails" && typeof initEmailHub === "function") initEmailHub();
         if (name === "outils" && typeof resetToolsWorkspace === "function") resetToolsWorkspace();
         if (name === "health") initHealthTab();
         if (name === "cours") initCoursTab();
@@ -950,6 +977,7 @@
         "sport_installations", "sport_installation_contacts", "sport_installation_incidents", "unss_groups", "unss_students", "unss_memberships",
         "unss_sessions", "unss_attendance", "official_programs", "institution_calendar_events",
         "equipment", "equipment_purchases", "epi_items", "epi_inspections", "teacher_period_settings", "teacher_profiles", "health_dispensations",
+        "eps_email_campaigns", "eps_email_deliveries",
         // Manquaient a l'appel : une sauvegarde qui oublie une table ne se voit qu'au moment de
         // restaurer, c'est-a-dire trop tard.
         "unss_slots", "installation_conflict_overrides"];

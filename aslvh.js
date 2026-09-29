@@ -926,7 +926,10 @@ function renderUnssTab() {
   wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   wrap.querySelector("#unssHebergementBtn")?.addEventListener("click", () => ouvrirHebergement());
-  wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", () => ouvrirEmailGlobalLicencies(brut));
+  wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", async () => {
+    if (typeof showTab === "function") showTab("emails");
+    await ouvrirEmailGlobalLicencies(brut);
+  });
   const choixDivision = wrap.querySelector("#filtreDivision");
   if (choixDivision) choixDivision.addEventListener("change", () => {
     // Changer de division ne touche pas aux coches deja posees : on peut composer une classe
@@ -1818,6 +1821,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
   let envoiEnCours = false;
   let envoiTermine = false;
   let brouillonsGmailPrepares = [];
+  let campagneHistoriqueGmail = "";
+  let livraisonsGmailConfirmees = [];
   const selectionManuelle = new Set();
   const verrouillerDestinataires = bloque => overlay.querySelectorAll('#asEmailReasonStep input, #asEmailReasonStep select, #asEmailReasonStep button, #asEmailRecipients input, #asEmailRecipients select, #asEmailRecipients button').forEach(el => el.disabled = bloque);
   const normaliserRechercheAS = texte => String(texte || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
@@ -2009,6 +2014,8 @@ async function ouvrirEmailGlobalLicencies(rows) {
         deja.add(cle);
         livraisons.push({
           to, studentId: String(eleve.id), studentName: `${String(eleve.last_name || "").toLocaleUpperCase("fr-FR")} ${prenomEmailAS(eleve.first_name)}`.trim(),
+          division: String(eleve.division || ""),
+          recipientType: emailsAS(eleve.student_email).includes(String(to).toLowerCase()) ? "student" : "parent",
           subject: personnaliserEmailAS(objet, eleve, lignes), message: personnaliserEmailAS(message, eleve, lignes)
         });
       });
@@ -2103,14 +2110,29 @@ async function ouvrirEmailGlobalLicencies(rows) {
     const lotInitial = [...brouillonsGmailPrepares];
     let envoyes = 0;
     try {
+      if (!campagneHistoriqueGmail) {
+        if (typeof createEmailHistoryCampaign !== "function") throw Error("L’historique des e-mails n’est pas prêt.");
+        campagneHistoriqueGmail = await createEmailHistoryCampaign({
+          senderEmail: state.email, senderName: professeur, channel: "gmail", reason: raison(),
+          recipientFilter: filtre(), audience: audience(), subject: overlay.querySelector("#asEmailSubject").value.trim(),
+          message: overlay.querySelector("#asEmailMessage").value.trim(), attachmentName: overlay.querySelector("#asEmailAttachment").files[0]?.name || ""
+        });
+      }
       await sendGmailDrafts(lotInitial, progression => {
         envoyes = progression.sent;
+        livraisonsGmailConfirmees.push(progression.item.delivery);
         resultat.innerHTML = `<b>${envoyes}/${lotInitial.length} message(s) accepté(s) par Gmail…</b><span>Ne fermez pas cette fenêtre pendant l’envoi.</span>`;
       });
+      await recordEmailHistoryDeliveries(campagneHistoriqueGmail, livraisonsGmailConfirmees.map(item => ({ ...item, recipient: item.to, status: "sent" })));
+      await completeEmailHistoryCampaign(campagneHistoriqueGmail, { sent: livraisonsGmailConfirmees.length });
       brouillonsGmailPrepares = [];
       resultat.innerHTML = `<b>${envoyes} message(s) accepté(s) par Gmail professionnel.</b><span class="ok">Le lot est terminé. Cela confirme l’envoi par Gmail, pas l’ouverture par les destinataires.</span>`;
     } catch (error) {
       const confirmes = Number(error.sentCount || envoyes);
+      if (campagneHistoriqueGmail && livraisonsGmailConfirmees.length) {
+        await recordEmailHistoryDeliveries(campagneHistoriqueGmail, livraisonsGmailConfirmees.map(item => ({ ...item, recipient: item.to, status: "sent" }))).catch(() => {});
+        await completeEmailHistoryCampaign(campagneHistoriqueGmail, { sent: livraisonsGmailConfirmees.length, failed: 1, status: "partial" }).catch(() => {});
+      }
       brouillonsGmailPrepares = lotInitial.slice(confirmes);
       resultat.innerHTML = `<span class="error">Envoi interrompu après ${confirmes} message(s) accepté(s) par Gmail : ${unssText(error.message || "erreur inconnue")}. ${brouillonsGmailPrepares.length} brouillon(s) restent à envoyer.</span><button type="button" id="asRetryPreparedGmailDrafts">Reprendre les brouillons restants</button>`;
       resultat.querySelector("#asRetryPreparedGmailDrafts").onclick = envoyerLotGmailPrepare;
@@ -2152,7 +2174,7 @@ async function ouvrirEmailGlobalLicencies(rows) {
         const nombreLots = Math.max(1, Math.ceil(totalServeur / 100));
         resultat.innerHTML = `<b>Envoi du lot ${numeroLot}/${nombreLots}…</b><span>${envoyes} e-mail(s) déjà envoyé(s).</span>`;
         const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
-          requestId, mode: "global_confirmations", recipientFilter, selectedStudentIds, enrolledSince, reason, audience: campagneAudience, subject, message, attachment,
+          requestId, mode: "global_confirmations", recipientFilter, selectedStudentIds, enrolledSince, reason, audience: campagneAudience, subject, message, attachment, senderName: professeur,
           // Un lot visible de 100 est traité en sous-étapes courtes : Supabase ne dépasse
           // ainsi plus sa limite de ressources après plusieurs dizaines de messages.
           batchOffset: offset, batchSize: 10, resumeStudentId
@@ -2195,6 +2217,14 @@ async function ouvrirEmailGlobalLicencies(rows) {
     }
   };
 }
+
+async function ouvrirNouvelEmailAS() {
+  await Promise.all([loadUnssStudents(), loadUnssSlots()]);
+  await loadUnssInscriptions();
+  const licencies = unssStudents.filter(student => student.licensed && !student.deleted);
+  return ouvrirEmailGlobalLicencies(licencies);
+}
+globalThis.ouvrirNouvelEmailAS = ouvrirNouvelEmailAS;
 
 async function ouvrirEmailCreneau(slot) {
   await assurerInscriptions();
@@ -2325,7 +2355,7 @@ async function ouvrirEmailCreneau(slot) {
       const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
         requestId: crypto.randomUUID(), slotId: slot.id, audience: audience(), subject, message,
         template: overlay.querySelector("#asEmailTemplate").value, selectedDate: overlay.querySelector("#asEmailDate").value || null,
-        attachment
+        attachment, senderName: professeur
       }) });
       const bilan = await response.json();
       resultat.innerHTML = `<b>${bilan.sent || 0} e-mail(s) envoyé(s).</b>${bilan.failed ? `<span>${bilan.failed} échec(s).</span>` : ""}${bilan.missing?.length ? `<span>${bilan.missing.length} élève(s) sans adresse adaptée.</span>` : ""}`;

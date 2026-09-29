@@ -11,7 +11,7 @@
  * matin doit voir la correction le matin.
  */
 importScripts("./offline-assets.js");
-const PWA_VERSION = "eps-lvh-pwa-2026-09-29-sync-form-baseline-12";
+const PWA_VERSION = "eps-lvh-pwa-2026-09-29-email-history-13";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 

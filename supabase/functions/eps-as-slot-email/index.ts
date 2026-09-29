@@ -104,6 +104,10 @@ Deno.serve(async req => {
   const audience = String(input.audience || "");
   const subject = String(input.subject || "").trim();
   const message = String(input.message || "").trim();
+  const requestId = String(input.requestId || "");
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId)) {
+    return reply({ error: "Identifiant de campagne invalide" }, 400);
+  }
   const globalMode = String(input.mode || "") === "global_confirmations";
   if ((!globalMode && !slotId) || !AUDIENCES.has(audience) || !subject || !message) return reply({ error: "Destinataires, objet et message sont obligatoires" }, 400);
   if (subject.length > 180 || message.length > 8000) return reply({ error: "Message trop long" }, 400);
@@ -178,7 +182,7 @@ Deno.serve(async req => {
     const { data: students, error: studentsError } = await studentsQuery;
     if (studentsError) return reply({ error: studentsError.message }, 500);
 
-    type GlobalDelivery = { recipient: string; student: Record<string,unknown>; slots: Array<Record<string,unknown>> };
+    type GlobalDelivery = { recipient: string; recipientType: "student"|"parent"|"unknown"; student: Record<string,unknown>; slots: Array<Record<string,unknown>> };
     const deliveries: GlobalDelivery[] = [], missing: Array<{id:unknown,name:string}> = [], seen = new Set<string>();
     for (const student of students || []) {
       const studentEmails = emails(student.student_email), parentEmails = emails(student.parent_email);
@@ -186,7 +190,8 @@ Deno.serve(async req => {
       if (!chosen.length) missing.push({ id: student.id, name: `${student.first_name || ""} ${student.last_name || ""}`.trim() });
       for (const recipient of chosen) {
         const key = `${student.id}|${recipient}`;
-        if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, student, slots: slotsByStudent.get(String(student.id)) || [] }); }
+        const recipientType = studentEmails.includes(recipient) ? "student" : parentEmails.includes(recipient) ? "parent" : "unknown";
+        if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, recipientType, student, slots: slotsByStudent.get(String(student.id)) || [] }); }
       }
     }
     deliveries.sort((a, b) => {
@@ -218,8 +223,28 @@ Deno.serve(async req => {
     }
     const batchDeliveries = campaignDeliveries.slice(batchOffset, batchEnd);
 
+    const campaignId = requestId;
+    if (batchOffset === 0) {
+      const { error: campaignError } = await admin.from("eps_email_campaigns").upsert({
+        id: campaignId, institution_id: institutionId, user_id: user.id,
+        sender_email: teacherEmail, sender_name: String(input.senderName || ""), source: "AS", channel: "as_account",
+        reason, recipient_filter: recipientFilter, audience, subject, message_template: message,
+        attachment_name: attachment ? String(attachment.name || "document") : null, status: "sending"
+      }, { onConflict: "id" });
+      if (campaignError) return reply({ error: `Historique e-mail indisponible : ${campaignError.message}` }, 500);
+      if (missing.length) {
+        const missingRows = missing.map(item => ({
+          campaign_id: campaignId, institution_id: institutionId, student_id: String(item.id || "") || null,
+          student_name: item.name, recipient_type: "unknown", subject_text: subject, message_text: message, status: "missing"
+        }));
+        const { error: missingError } = await admin.from("eps_email_deliveries").insert(missingRows);
+        if (missingError) return reply({ error: `Historique e-mail indisponible : ${missingError.message}` }, 500);
+      }
+    }
+
     let sent = 0, failed = 0;
     const failures: Array<{recipient:string;studentId:string;studentName:string;error:string}> = [];
+    const historyRows: Array<Record<string,unknown>> = [];
     let attempted = 0;
     for (const delivery of batchDeliveries) {
       try {
@@ -235,6 +260,12 @@ Deno.serve(async req => {
           attachments: attachment ? [{ filename: String(attachment.name || "document"), content: Buffer.from(String(attachment.content), "base64"), contentType: String(attachment.type) }] : undefined
         });
         sent++;
+        historyRows.push({
+          campaign_id: campaignId, institution_id: institutionId, student_id: String(delivery.student.id || "") || null,
+          student_name: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
+          division: String(delivery.student.division || ""), recipient_email: delivery.recipient, recipient_type: delivery.recipientType,
+          subject_text: personalizedSubject, message_text: personalizedMessage, status: "sent", sent_at: new Date().toISOString()
+        });
       } catch (error) {
         failed++;
         failures.push({
@@ -243,13 +274,43 @@ Deno.serve(async req => {
           studentName: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
           error: String(error).slice(0, 300)
         });
+        const orderedSlots = [...delivery.slots].sort((a, b) => activityLine(a).localeCompare(activityLine(b), "fr"));
+        const activityList = orderedSlots.map(activityLine).join("\n");
+        const referenceSlot = orderedSlots[0] || {};
+        historyRows.push({
+          campaign_id: campaignId, institution_id: institutionId, student_id: String(delivery.student.id || "") || null,
+          student_name: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
+          division: String(delivery.student.division || ""), recipient_email: delivery.recipient, recipient_type: delivery.recipientType,
+          subject_text: replaceTokens(subject, delivery.student, referenceSlot, activityList),
+          message_text: replaceTokens(message, delivery.student, referenceSlot, activityList), status: "failed",
+          error_message: String(error).slice(0, 300)
+        });
         attempted++;
         break;
       }
       attempted++;
       if (attempted < batchDeliveries.length) await new Promise(resolve => setTimeout(resolve, 500));
     }
+    if (historyRows.length) {
+      const { error: deliveryError } = await admin.from("eps_email_deliveries").upsert(historyRows, {
+        onConflict: "campaign_id,student_id,recipient_email"
+      });
+      if (deliveryError) return reply({ error: `Les e-mails sont partis mais leur historique n’a pas pu être enregistré : ${deliveryError.message}` }, 500);
+    }
     const nextOffset = batchOffset + attempted;
+    const { data: historyCounts, error: countError } = await admin.from("eps_email_deliveries")
+      .select("status").eq("campaign_id", campaignId);
+    if (countError) return reply({ error: `Historique e-mail incomplet : ${countError.message}` }, 500);
+    const sentTotal = (historyCounts || []).filter(item => item.status === "sent").length;
+    const failedTotal = (historyCounts || []).filter(item => item.status === "failed").length;
+    const missingTotal = (historyCounts || []).filter(item => item.status === "missing").length;
+    const hasMore = nextOffset < total;
+    const campaignStatus = failedTotal ? (sentTotal ? "partial" : "failed") : hasMore ? "sending" : "sent";
+    const { error: updateError } = await admin.from("eps_email_campaigns").update({
+      status: campaignStatus, sent_count: sentTotal, failed_count: failedTotal, missing_count: missingTotal,
+      completed_at: hasMore && !failedTotal ? null : new Date().toISOString()
+    }).eq("id", campaignId);
+    if (updateError) return reply({ error: `Historique e-mail incomplet : ${updateError.message}` }, 500);
     return reply({
       ok: failed === 0, sent, failed, missing, failures, total, grandTotal,
       processed: batchDeliveries.length, batchOffset, batchSize,
@@ -258,7 +319,7 @@ Deno.serve(async req => {
   }
 
   const { data: slot, error: slotError } = await admin.from("unss_slots")
-    .select("id,user_id,assigned_teacher_id,activity_name,day_of_week,start_time,end_time,responsible_teacher,deleted")
+    .select("id,user_id,institution_id,assigned_teacher_id,activity_name,day_of_week,start_time,end_time,responsible_teacher,deleted")
     .eq("id", slotId).maybeSingle();
   if (slotError) return reply({ error: slotError.message }, 500);
   if (!slot || slot.deleted) return reply({ error: "Créneau introuvable" }, 404);
@@ -273,7 +334,7 @@ Deno.serve(async req => {
     .select("id,last_name,first_name,division,student_email,parent_email").in("id", ids).eq("deleted", false);
   if (studentError) return reply({ error: studentError.message }, 500);
 
-  type Delivery = { recipient: string; student: Record<string,unknown> };
+  type Delivery = { recipient: string; recipientType: "student"|"parent"|"unknown"; student: Record<string,unknown> };
   const deliveries: Delivery[] = [], missing: Array<{id:unknown,name:string}> = [], seen = new Set<string>();
   for (const student of students || []) {
     const studentEmails = emails(student.student_email), parentEmails = emails(student.parent_email);
@@ -281,13 +342,31 @@ Deno.serve(async req => {
     if (!chosen.length) missing.push({ id: student.id, name: `${student.first_name || ""} ${student.last_name || ""}`.trim() });
     for (const recipient of chosen) {
       const key = audience === "parents_personalized" ? `${student.id}|${recipient}` : recipient;
-      if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, student }); }
+      const recipientType = studentEmails.includes(recipient) ? "student" : parentEmails.includes(recipient) ? "parent" : "unknown";
+      if (!seen.has(key)) { seen.add(key); deliveries.push({ recipient, recipientType, student }); }
     }
   }
   if (deliveries.length > 150) return reply({ error: "Plus de 150 e-mails : réduisez le nombre de destinataires" }, 400);
 
+  const { error: slotCampaignError } = await admin.from("eps_email_campaigns").insert({
+    id: requestId, institution_id: slot.institution_id, user_id: user.id,
+    sender_email: teacherEmail, sender_name: String(input.senderName || slot.responsible_teacher || ""),
+    source: "AS", channel: "as_account", reason: String(input.template || "information"),
+    recipient_filter: `slot:${slot.id}`, audience, subject, message_template: message,
+    attachment_name: attachment ? String(attachment.name || "document") : null, status: "sending"
+  });
+  if (slotCampaignError) return reply({ error: `Historique e-mail indisponible : ${slotCampaignError.message}` }, 500);
+  if (missing.length) {
+    const { error: missingError } = await admin.from("eps_email_deliveries").insert(missing.map(item => ({
+      campaign_id: requestId, institution_id: slot.institution_id, student_id: String(item.id || "") || null,
+      student_name: item.name, recipient_type: "unknown", subject_text: subject, message_text: message, status: "missing"
+    })));
+    if (missingError) return reply({ error: `Historique e-mail indisponible : ${missingError.message}` }, 500);
+  }
+
   let sent = 0, failed = 0;
   const failures: Array<{recipient:string,error:string}> = [];
+  const slotHistoryRows: Array<Record<string,unknown>> = [];
   for (let start = 0; start < deliveries.length; start += 2) {
     const batch = deliveries.slice(start, start + 2);
     await Promise.all(batch.map(async delivery => {
@@ -308,11 +387,33 @@ Deno.serve(async req => {
           }] : undefined
         });
         sent++;
+        slotHistoryRows.push({
+          campaign_id: requestId, institution_id: slot.institution_id, student_id: String(delivery.student.id || "") || null,
+          student_name: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
+          division: String(delivery.student.division || ""), recipient_email: delivery.recipient, recipient_type: delivery.recipientType,
+          subject_text: personalizedSubject, message_text: personalizedMessage, status: "sent", sent_at: new Date().toISOString()
+        });
       } catch (error) {
         failed++; failures.push({ recipient: delivery.recipient, error: String(error).slice(0, 300) });
+        slotHistoryRows.push({
+          campaign_id: requestId, institution_id: slot.institution_id, student_id: String(delivery.student.id || "") || null,
+          student_name: `${String(delivery.student.last_name || "").toLocaleUpperCase("fr-FR")} ${formatFirstName(delivery.student.first_name)}`.trim(),
+          division: String(delivery.student.division || ""), recipient_email: delivery.recipient, recipient_type: delivery.recipientType,
+          subject_text: replaceTokens(subject, delivery.student, slot), message_text: replaceTokens(message, delivery.student, slot),
+          status: "failed", error_message: String(error).slice(0, 300)
+        });
       }
     }));
     if (start + 2 < deliveries.length) await new Promise(resolve => setTimeout(resolve, 550));
   }
+  if (slotHistoryRows.length) {
+    const { error: slotHistoryError } = await admin.from("eps_email_deliveries").insert(slotHistoryRows);
+    if (slotHistoryError) return reply({ error: `Les e-mails sont partis mais leur historique n’a pas pu être enregistré : ${slotHistoryError.message}` }, 500);
+  }
+  const slotStatus = failed ? (sent ? "partial" : "failed") : "sent";
+  const { error: slotCampaignUpdateError } = await admin.from("eps_email_campaigns").update({
+    status: slotStatus, sent_count: sent, failed_count: failed, missing_count: missing.length, completed_at: new Date().toISOString()
+  }).eq("id", requestId);
+  if (slotCampaignUpdateError) return reply({ error: `Historique e-mail incomplet : ${slotCampaignUpdateError.message}` }, 500);
   return reply({ ok: failed === 0, sent, failed, missing, failures });
 });
