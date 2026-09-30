@@ -122,11 +122,13 @@ drop index if exists public.uq_health_dispense_sans_doublon;
 -- aucune information n'est detruite et elle demeure recuperable en cas de besoin.
 do $$
 declare
+  garde_id uuid;
+  autre_id uuid;
   garde public.health_dispensations%rowtype;
   autre public.health_dispensations%rowtype;
 begin
   loop
-    select a, b into garde, autre
+    select a.id, b.id into garde_id, autre_id
     from public.health_dispensations a
     join public.health_dispensations b
       on b.id <> a.id
@@ -138,6 +140,9 @@ begin
              a.updated_at desc, a.id
     limit 1;
     exit when not found;
+
+    select * into garde from public.health_dispensations where id = garde_id;
+    select * into autre from public.health_dispensations where id = autre_id;
 
     update public.health_dispensations
     set start_date = least(garde.start_date, autre.start_date),

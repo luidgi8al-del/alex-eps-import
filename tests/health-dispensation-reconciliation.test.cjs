@@ -23,6 +23,8 @@ assert.match(migration, /s\.birth_date_epoch_millis = u\.birth_date_epoch_millis
 assert.match(migration, /set student_id = x\.student_id/);
 assert.match(migration, /set unss_student_id = x\.unss_student_id/);
 assert.match(migration, /daterange\(d\.start_date, d\.end_date, '\[\]'\)/);
+assert.match(migration, /select a\.id, b\.id into garde_id, autre_id/);
+assert.doesNotMatch(migration, /select a, b into garde, autre/);
 assert.match(migration, /create trigger eps_health_dispense_reconcile/);
 assert.match(migration, /values \('sante_8'\)/);
 
