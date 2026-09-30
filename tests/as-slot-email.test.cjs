@@ -14,6 +14,8 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'id="unssGlobalEmailBtn"', 'function ouvrirEmailGlobalLicencies', 'mode: "global_confirmations"', '{creneaux}',
   'id="asEmailReason"', 'recent_retained', 'id="asEmailRecentSince"', 'inscriptionDepuisIso', 'missing_certificate', 'missing_payment', 'host_available', 'recipientFilter, selectedStudentIds',
   'id="asEmailTemplate"', 'value="free">Message libre', 'id="asEmailTemplateChoice"', 'Contacter les licenciés AS'
+  , 'function ouvrirRetraitEleveCreneau', 'id="asRemoveOnly"', 'id="asRemoveAndEmail"',
+  'Trop d’absences', 'Comportement inadéquat avec l’activité', 'Motif libre', 'mode: "removal_notice"'
 ].forEach(marker => { if (!code.includes(marker)) throw new Error(`Interface e-mail incomplète : ${marker}`); });
 [
   'id="asEmailGmailTest"', 'id="asEmailGmailDrafts"', 'Créer un brouillon test',
@@ -34,6 +36,7 @@ const edge = fs.readFileSync(path.join(root, 'supabase', 'functions', 'eps-as-sl
   'const child = `${last} ${first}`', 'global_confirmations', 'eps_admin_target',
   'activityLine', '.replaceAll("{creneaux}", activityList)',
   'RECIPIENT_FILTERS', 'enrolledSince', 'recentStudentIds', 'medical_certificate_missing', 'payment_missing', 'host_available'
+  , 'const removalMode', 'membershipId', 'removed:${slot.id}:${ids[0]}', 'Le retrait ne peut être envoyé qu’aux parents'
 ].forEach(marker => { if (!edge.includes(marker)) throw new Error(`Sécurité serveur incomplète : ${marker}`); });
 [
   'batchOffset: offset, batchSize: 10', 'Envoi du lot ${numeroLot}/${nombreLots}',

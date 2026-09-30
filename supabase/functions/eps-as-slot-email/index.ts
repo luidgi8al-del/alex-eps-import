@@ -109,7 +109,9 @@ Deno.serve(async req => {
     return reply({ error: "Identifiant de campagne invalide" }, 400);
   }
   const globalMode = String(input.mode || "") === "global_confirmations";
+  const removalMode = String(input.mode || "") === "removal_notice";
   if ((!globalMode && !slotId) || !AUDIENCES.has(audience) || !subject || !message) return reply({ error: "Destinataires, objet et message sont obligatoires" }, 400);
+  if (removalMode && !["parents", "parents_personalized"].includes(audience)) return reply({ error: "Le retrait ne peut être envoyé qu’aux parents" }, 400);
   if (subject.length > 180 || message.length > 8000) return reply({ error: "Message trop long" }, 400);
 
   const attachment = input.attachment || null;
@@ -332,13 +334,29 @@ Deno.serve(async req => {
     autorise = !adminError && Boolean(adminContext?.institution_id) && adminContext.institution_id === slot.institution_id;
   }
   if (!autorise) return reply({ error: "Seuls le professeur responsable ou l’administrateur de l’établissement peuvent envoyer depuis ce créneau" }, 403);
-  const { data: memberships, error: membershipError } = await admin.from("unss_memberships")
-    .select("student_id").eq("slot_id", slotId).eq("deleted", false);
-  if (membershipError) return reply({ error: membershipError.message }, 500);
-  const ids = [...new Set((memberships || []).map(m => m.student_id).filter(Boolean))];
+  let ids: string[] = [];
+  if (removalMode) {
+    const studentId = String(input.studentId || ""), membershipId = String(input.membershipId || "");
+    if (!studentId || !membershipId) return reply({ error: "Élève ou inscription manquante" }, 400);
+    // L'inscription est conservée en suppression logique. Elle prouve que l'élève appartenait
+    // bien à ce créneau, même si le mail est demandé juste après son retrait.
+    const { data: membership, error: membershipError } = await admin.from("unss_memberships")
+      .select("id,student_id,slot_id").eq("id", membershipId).maybeSingle();
+    if (membershipError) return reply({ error: membershipError.message }, 500);
+    if (!membership || String(membership.slot_id) !== slotId || String(membership.student_id) !== studentId) {
+      return reply({ error: "Cette inscription ne correspond pas au créneau sélectionné" }, 403);
+    }
+    ids = [studentId];
+  } else {
+    const { data: memberships, error: membershipError } = await admin.from("unss_memberships")
+      .select("student_id").eq("slot_id", slotId).eq("deleted", false);
+    if (membershipError) return reply({ error: membershipError.message }, 500);
+    ids = [...new Set((memberships || []).map(m => String(m.student_id || "")).filter(Boolean))];
+  }
   if (!ids.length) return reply({ ok: true, sent: 0, failed: 0, missing: [] });
   const { data: students, error: studentError } = await admin.from("unss_students")
-    .select("id,last_name,first_name,division,student_email,parent_email").in("id", ids).eq("deleted", false);
+    .select("id,last_name,first_name,division,student_email,parent_email").in("id", ids)
+    .eq("institution_id", slot.institution_id).eq("deleted", false);
   if (studentError) return reply({ error: studentError.message }, 500);
 
   type Delivery = { recipient: string; recipientType: "student"|"parent"|"unknown"; student: Record<string,unknown> };
@@ -358,8 +376,8 @@ Deno.serve(async req => {
   const { error: slotCampaignError } = await admin.from("eps_email_campaigns").insert({
     id: requestId, institution_id: slot.institution_id, user_id: user.id,
     sender_email: teacherEmail, sender_name: String(input.senderName || slot.responsible_teacher || ""),
-    source: "AS", channel: "as_account", reason: String(input.template || "information"),
-    recipient_filter: `slot:${slot.id}`, audience, subject, message_template: message,
+    source: "AS", channel: "as_account", reason: removalMode ? `removal_${String(input.removalReason || "free")}` : String(input.template || "information"),
+    recipient_filter: removalMode ? `removed:${slot.id}:${ids[0]}` : `slot:${slot.id}`, audience, subject, message_template: message,
     attachment_name: attachment ? String(attachment.name || "document") : null, status: "sending"
   });
   if (slotCampaignError) return reply({ error: `Historique e-mail indisponible : ${slotCampaignError.message}` }, 500);

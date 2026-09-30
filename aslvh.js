@@ -3374,6 +3374,88 @@ function sectionVoeuHtml(rang, eleves) {
        </div>`).join("")}`;
 }
 
+/** Retirer un élève du créneau, avec notification parentale facultative et motivée. */
+function ouvrirRetraitEleveCreneau(slot, eleve, inscription) {
+  document.getElementById("asRemoveStudentOverlay")?.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "asRemoveStudentOverlay";
+  overlay.className = "as-slot-email-overlay ui-modal-overlay open";
+  const identite = `${String(eleve.last_name || "").toLocaleUpperCase("fr-FR")} ${eleve.first_name || ""}`.trim();
+  overlay.innerHTML = `<section class="as-slot-email-dialog as-remove-student-dialog ui-modal" role="dialog" aria-modal="true" aria-labelledby="asRemoveStudentTitle">
+    <header><div><small>CRÉNEAU AS</small><h2 id="asRemoveStudentTitle">Retirer ${unssText(identite)}</h2><p>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</p></div><button type="button" data-remove-close aria-label="Fermer">×</button></header>
+    <main><p>L’élève sera retiré de ce créneau. Que souhaitez-vous faire ?</p>
+      <div class="as-removal-choices" id="asRemovalChoices"><button type="button" class="secondary" id="asRemoveOnly"><b>Retirer uniquement</b><small>Aucun e-mail ne sera envoyé</small></button><button type="button" id="asRemoveAndEmail"><b>Retirer et prévenir les parents</b><small>Choisir le motif avant l’envoi</small></button></div>
+      <section class="as-removal-reason" id="asRemovalReason" hidden><label>Motif<select id="asRemovalReasonSelect"><option value="absences">Trop d’absences</option><option value="behavior">Comportement inadéquat avec l’activité</option><option value="free">Motif libre</option></select></label><label id="asRemovalFreeLine" hidden>Motif à indiquer<textarea id="asRemovalFreeText" rows="3" maxlength="500" placeholder="Expliquez brièvement le motif"></textarea></label><p class="muted">L’e-mail sera envoyé séparément aux adresses parentales enregistrées.</p></section>
+      <div class="as-email-result" id="asRemovalResult" aria-live="polite"></div>
+    </main><footer><button type="button" class="secondary" data-remove-close>Annuler</button><button type="button" id="asRemovalConfirm" hidden>Retirer et envoyer</button></footer>
+  </section>`;
+  document.body.appendChild(overlay);
+
+  const fermer = () => overlay.remove();
+  overlay.querySelectorAll("[data-remove-close]").forEach(button => button.addEventListener("click", fermer));
+  overlay.addEventListener("click", event => { if (event.target === overlay) fermer(); });
+  const resultat = overlay.querySelector("#asRemovalResult");
+  const terminer = messageSupplementaire => {
+    overlay.querySelector("main").innerHTML = `<div class="as-removal-success"><b>Élève retiré du créneau</b><span>${unssText(identite)} n’apparaît plus dans les inscrits.</span>${messageSupplementaire || ""}</div>`;
+    const footer = overlay.querySelector("footer");
+    footer.innerHTML = `<button type="button" id="asRemovalFinish">Terminer</button>`;
+    footer.querySelector("#asRemovalFinish").addEventListener("click", () => { overlay.remove(); ouvrirElevesCreneau(slot); });
+  };
+  const retirer = async envoyerEmail => {
+    overlay.querySelectorAll("button,select,textarea").forEach(element => { element.disabled = true; });
+    resultat.textContent = envoyerEmail ? "Retrait et envoi en cours…" : "Retrait en cours…";
+    try {
+      await supprimerLigne("unss_memberships", inscription.id);
+      unssInscriptions = unssInscriptions.filter(item => item.id !== inscription.id);
+    } catch (erreur) {
+      overlay.querySelectorAll("button,select,textarea").forEach(element => { element.disabled = false; });
+      resultat.textContent = erreur.message || "L’élève n’a pas pu être retiré.";
+      return;
+    }
+    if (!envoyerEmail) { overlay.remove(); ouvrirElevesCreneau(slot); return; }
+
+    const raison = overlay.querySelector("#asRemovalReasonSelect").value;
+    const libre = overlay.querySelector("#asRemovalFreeText").value.trim();
+    const motif = { absences: "Trop d’absences", behavior: "Comportement inadéquat avec l’activité", free: libre }[raison] || libre;
+    const professeur = signatureProfesseurAS(slot.responsible_teacher);
+    const horaire = [slot.start_time, slot.end_time].filter(Boolean).join("–") || "horaire à préciser";
+    const sujet = `Retrait de l’activité AS – ${slot.activity_name}`;
+    const message = `Bonjour,\n\nNous vous informons que votre enfant {nom} {prenom}, classe {classe}, est retiré(e) de l’activité ${slot.activity_name} du ${capitaliseJour(slot.day_of_week || "")} de ${horaire}.\n\nMotif : ${motif}.\n\nCordialement,\n${professeur}`;
+    try {
+      const response = await apiFetch(`${SUPABASE_URL}/functions/v1/eps-as-slot-email`, { method: "POST", body: JSON.stringify({
+        requestId: crypto.randomUUID(), mode: "removal_notice", membershipId: inscription.id,
+        studentId: eleve.id, slotId: slot.id, audience: "parents_personalized",
+        removalReason: raison, subject: sujet, message, senderName: professeur
+      }) });
+      const bilan = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(bilan.error || "L’e-mail n’a pas pu être envoyé.");
+      terminer(Number(bilan.sent || 0) > 0
+        ? `<span class="ok">${Number(bilan.sent)} e-mail(s) envoyé(s) aux parents.</span>`
+        : `<span class="error">Aucune adresse parentale utilisable : aucun e-mail n’a été envoyé.</span>`);
+    } catch (erreur) {
+      terminer(`<span class="error">L’élève est bien retiré, mais l’e-mail n’a pas été envoyé : ${unssText(erreur.message || "connexion indisponible")}</span>`);
+    }
+  };
+
+  overlay.querySelector("#asRemoveOnly").addEventListener("click", () => retirer(false));
+  overlay.querySelector("#asRemoveAndEmail").addEventListener("click", () => {
+    overlay.querySelector("#asRemovalChoices").hidden = true;
+    overlay.querySelector("#asRemovalReason").hidden = false;
+    overlay.querySelector("#asRemovalConfirm").hidden = false;
+  });
+  overlay.querySelector("#asRemovalReasonSelect").addEventListener("change", event => {
+    overlay.querySelector("#asRemovalFreeLine").hidden = event.target.value !== "free";
+  });
+  overlay.querySelector("#asRemovalConfirm").addEventListener("click", () => {
+    if (overlay.querySelector("#asRemovalReasonSelect").value === "free" && !overlay.querySelector("#asRemovalFreeText").value.trim()) {
+      resultat.textContent = "Indiquez le motif libre avant l’envoi.";
+      overlay.querySelector("#asRemovalFreeText").focus();
+      return;
+    }
+    retirer(true);
+  });
+}
+
 /**
  * "Inscrits" (le chiffre sur la fiche du créneau) : juste la liste, en lecture seule - nom,
  * prénom, classe, catégorie. Ajouter ou retirer un élève reste réservé au bouton "+ Élèves"
@@ -3425,14 +3507,10 @@ async function ouvrirElevesCreneau(slot) {
     <div id="unssCreneauVoeux">${sectionVoeuHtml(1, voeu1)}${sectionVoeuHtml(2, voeu2)}${sectionVoeuHtml(3, voeu3)}</div>
     <button class="secondary" id="unssCreneauAddBtn" style="margin-top:12px">Chercher un autre élève</button>
     `;
-  panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", async () => {
+  panel.querySelectorAll("[data-retirer]").forEach(btn => btn.addEventListener("click", () => {
     const inscription = unssInscriptions.find(i => i.slot_id === slot.id && i.student_id === btn.dataset.retirer);
-    if (inscription) {
-      try { await supprimerLigne("unss_memberships", inscription.id); }
-      catch (erreur) { alert(erreur.message); return; }
-      unssInscriptions = unssInscriptions.filter(i => i.id !== inscription.id);
-    }
-    ouvrirElevesCreneau(slot);
+    const eleve = unssStudents.find(item => String(item.id) === String(btn.dataset.retirer));
+    if (inscription && eleve) ouvrirRetraitEleveCreneau(slot, eleve, inscription);
   }));
   panel.querySelectorAll("[data-ajouter-voeu]").forEach(btn => btn.addEventListener("click", async () => {
     btn.disabled = true;
