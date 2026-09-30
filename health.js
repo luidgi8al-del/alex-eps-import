@@ -303,7 +303,7 @@
              ${motifs}
              ${adapteChampsHtml(d)}
              <div class="ui-modal-footer">
-               <details class="ui-actions"><summary>Actions</summary><div class="ui-actions-menu"><button type="button" class="danger" id="ficheSuppr">⌫ Supprimer la dispense</button></div></details>
+               <button type="button" class="danger" id="ficheSuppr">⌫ Supprimer la dispense</button>
                <button type="submit">Enregistrer</button>
              </div>
              <div class="error" id="ficheErreur"></div>
