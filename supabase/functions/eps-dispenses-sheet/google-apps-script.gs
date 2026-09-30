@@ -484,6 +484,10 @@ function auSurEdition(e) {
         id: String(valeurs[COL_ID - 1] || '').trim(),
         eleve: eleve,
         classe: String(valeurs[COL_CLASSE - 1] || '').trim(),
+        // La classe n'est pas un identifiant fiable : « 2-01 » dans le repertoire peut etre
+        // « 2nde1 » chez le professeur. La naissance permet a la passerelle de reconnaitre la
+        // meme personne sans imposer le meme libelle aux deux equipes.
+        naissance: dateTexte_(valeurs[COL_NAISSANCE - 1]),
         debut: debut,
         fin: dateTexte_(valeurs[COL_FIN - 1]) || debut,
         famille: String(valeurs[COL_FAMILLE - 1] || '').trim(),

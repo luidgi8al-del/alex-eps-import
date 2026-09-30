@@ -30,6 +30,7 @@ Lancer dans l'éditeur SQL, dans cet ordre :
 | `schema_sante_5_saisie_infirmerie.sql` | la colonne « Fait par » |
 | `schema_sante_6_dispense_repertoire.sql` | la dispense pour un élève sans classe |
 | `schema_sante_7_etablissement.sql` | le partage fiable avec tous les professeurs de l’établissement |
+| `supabase/migrations/20261001090000_reconcile_health_dispensations.sql` | le raccord répertoire/classe et le blocage des périodes en double |
 
 Puis déployer la fonction, désactiver **Verify JWT** dessus, et poser deux secrets dans
 **Edge Functions > Secrets** :

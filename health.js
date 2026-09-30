@@ -185,8 +185,14 @@
    * professeur de la classe. Les anciennes lignes n'ont parfois qu'un nom de classe, d'où le
    * rapprochement de secours normalisé.
    */
-  const cleClasseDispense=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .toLocaleLowerCase('fr-FR').replace(/[^a-z0-9]/g,'');
+  const cleClasseDispense=value=>{
+    const brute=String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .toLocaleLowerCase('fr-FR').replace(/[^a-z0-9]/g,'');
+    // Le repertoire officiel nomme par exemple la seconde 1 « 2-01 », alors que l'ecran des
+    // classes la nomme « 2nde1 ». Ce sont deux libelles de la meme division, pas deux classes.
+    const seconde=brute.match(/^(?:2nde|seconde|2)0*(\d{1,2})$/);
+    return seconde?`seconde${Number(seconde[1])}`:brute;
+  };
   function dispenseDeMesClasses(d){
     const ids=new Set(healthClasses.map(c=>String(c.id||'')).filter(Boolean));
     const noms=new Set(healthClasses.map(c=>cleClasseDispense(c.name)).filter(Boolean));

@@ -426,6 +426,7 @@ Deno.serve(async (req) => {
 
     const cherche = cleNom(ligne.eleve || "");
     const classeVoulue = cleNom(ligne.classe || "");
+    const naissanceVoulue = String(ligne.naissance || "").slice(0, 10);
     /** "DUPONT Lea" comme "Lea DUPONT" : on accepte les deux ordres. */
     const memeNom = (nom: unknown, prenom: unknown) => {
       const direct = cleNom(`${nom || ""} ${prenom || ""}`);
@@ -435,15 +436,24 @@ Deno.serve(async (req) => {
 
     // On cherche d'abord parmi les eleves de classe : quand l'eleve y est, la dispense se rattache
     // a sa classe et apparait sur la carte Dispenses de celle-ci, comme une dispense ordinaire.
-    const candidats = (eleves || []).filter(e =>
-      memeNom(e.last_name, e.first_name)
-      && (!classeVoulue || cleNom(nomClasse(e.class_id)) === classeVoulue));
+    const memeNaissance = (millis: unknown) =>
+      Boolean(naissanceVoulue) && jourDepuisMillis(millis) === naissanceVoulue;
+    const deMemeNom = (eleves || []).filter(e => memeNom(e.last_name, e.first_name));
+    const parNaissance = naissanceVoulue ? deMemeNom.filter(e => memeNaissance(e.birth_date_epoch_millis)) : [];
+    // L'identite passe avant le libelle de classe. Une division officielle « 2-01 » et une
+    // classe professeur « 2nde1 » doivent conduire au meme student_id.
+    const candidats = parNaissance.length === 1
+      ? parNaissance
+      : deMemeNom.filter(e => !classeVoulue || cleNom(nomClasse(e.class_id)) === classeVoulue);
 
     // A defaut, l'eleve du repertoire : il a une division - sa vraie classe - mais aucun
     // professeur ne l'a encore versee dans la sienne. La dispense est posee quand meme.
-    const duRepertoire = candidats.length ? [] : repertoire.filter(e =>
-      memeNom(e.last_name, e.first_name)
-      && (!classeVoulue || cleNom(String(e.division || "")) === classeVoulue));
+    const repertoireMemeNom = repertoire.filter(e => memeNom(e.last_name, e.first_name));
+    const repertoireParNaissance = naissanceVoulue
+      ? repertoireMemeNom.filter(e => memeNaissance(e.birth_date_epoch_millis)) : [];
+    const duRepertoire = candidats.length ? [] : (repertoireParNaissance.length === 1
+      ? repertoireParNaissance
+      : repertoireMemeNom.filter(e => !classeVoulue || cleNom(String(e.division || "")) === classeVoulue));
 
     const trouves = candidats.length ? candidats.length : duRepertoire.length;
     if (!trouves) return repondre({ error: `Élève introuvable : « ${ligne.eleve || ""} »` }, 404);
@@ -452,6 +462,33 @@ Deno.serve(async (req) => {
     }
     const eleve = candidats.length ? candidats[0] : null;
     const fiche = eleve ? null : duRepertoire[0];
+    // Quand l'eleve existe dans les deux tables, conserver les deux identifiants rend le raccord
+    // durable et permet de reconnaitre un doublon venu de l'une ou l'autre entree.
+    const fichesLiees = eleve ? repertoireMemeNom.filter(f =>
+      jourDepuisMillis(f.birth_date_epoch_millis)
+        && jourDepuisMillis(f.birth_date_epoch_millis) === jourDepuisMillis(eleve.birth_date_epoch_millis)) : [];
+    const ficheLiee = fichesLiees.length === 1 ? fichesLiees[0] : fiche;
+
+    // Une dispense est unique sur une periode, quelle que soit sa provenance. L'ancien index ne
+    // voyait que student_id et laissait donc passer la meme personne via unss_student_id.
+    const identifiants = [
+      eleve?.id ? `student_id.eq.${eleve.id}` : "",
+      ficheLiee?.id ? `unss_student_id.eq.${ficheLiee.id}` : ""
+    ].filter(Boolean).join(",");
+    if (identifiants) {
+      let requeteDoublon = admin.from("health_dispensations")
+        .select("id,start_date,end_date")
+        .eq("institution_id", institutionId).eq("deleted", false)
+        .lte("start_date", fin).gte("end_date", debut).or(identifiants);
+      if (String(ligne.id || "").trim()) requeteDoublon = requeteDoublon.neq("id", String(ligne.id).trim());
+      const { data: doublons, error: erreurDoublon } = await requeteDoublon.limit(1);
+      if (erreurDoublon) return repondre({ error: erreurDoublon.message }, 500);
+      if (doublons?.length) {
+        return repondre({
+          error: `Une dispense existe deja pour cet eleve du ${doublons[0].start_date} au ${doublons[0].end_date}`
+        }, 409);
+      }
+    }
 
     const maintenant = new Date().toISOString();
     const corps = {
@@ -465,12 +502,12 @@ Deno.serve(async (req) => {
       institution_id: institutionId,
       class_id: eleve ? eleve.class_id : null,
       student_id: eleve ? eleve.id : null,
-      unss_student_id: fiche ? fiche.id : null,
+      unss_student_id: ficheLiee ? ficheLiee.id : null,
       // Le nom et la division sont recopies : ils font tenir la ligne debout tant qu'aucune
       // classe ne la porte, et l'affichage les utilise deja en repli (voir schema_sante_3).
-      student_last_name: (eleve || fiche)?.last_name || null,
-      student_first_name: (eleve || fiche)?.first_name || null,
-      class_name: eleve ? nomClasse(eleve.class_id) : (String(fiche?.division || "") || null),
+      student_last_name: (eleve || ficheLiee)?.last_name || null,
+      student_first_name: (eleve || ficheLiee)?.first_name || null,
+      class_name: eleve ? nomClasse(eleve.class_id) : (String(ficheLiee?.division || "") || null),
       start_date: debut,
       end_date: fin,
       reason: String(ligne.motif || "") || null,
