@@ -332,7 +332,8 @@ function calEvenementsParJour() {
   for (const e of calendarEvents) {
     const debut = new Date(e.start_date_epoch_millis), fin = new Date(e.end_date_epoch_millis);
     for (let d = new Date(debut); d <= fin; d.setDate(d.getDate() + 1)) {
-      parJour[isoDate(d)] = e;
+      const iso = isoDate(d);
+      (parJour[iso] ||= []).push(e);
     }
   }
   return parJour;
@@ -356,7 +357,8 @@ function grilleCalendrier() {
       const date = new Date(annee, numero - 1, jour);
       const weekend = date.getDay() === 0 || date.getDay() === 6;
       const fixe = CAL_FIXES[iso];
-      const saisi = saisis[iso];
+      const evenements = saisis[iso] || [];
+      const saisi = evenements[0];
       const epreuve = ccf[iso];
       const vacances = calEnVacances(iso);
       const periode = calPeriode(iso);
@@ -364,17 +366,17 @@ function grilleCalendrier() {
       // Meme ordre de priorite que l'application, pour que les deux calendriers coincident.
       let fond = "#fff", encre = "inherit";
       if (vacances) fond = "#D5D9DE";
-      else if (saisi && saisi.kind === "SORTIE") fond = "#FFD966";
-      else if (saisi && saisi.kind === "EXAMEN") fond = "#FFB3C7";
-      else if (saisi && saisi.kind === "VACANCES") fond = "#CFE2F3";
-      else if (epreuve || (saisi && saisi.kind === "BAC_EPS")) { fond = "#1B3A6B"; encre = "#fff"; }
+      else if (evenements.some(e => e.kind === "SORTIE")) fond = "#FFD966";
+      else if (evenements.some(e => e.kind === "EXAMEN")) fond = "#FFB3C7";
+      else if (evenements.some(e => e.kind === "VACANCES")) fond = "#CFE2F3";
+      else if (epreuve || evenements.some(e => e.kind === "BAC_EPS")) { fond = "#1B3A6B"; encre = "#fff"; }
       else if (fixe && fixe[1]) fond = "#F1E4FF";
       else if (fixe) fond = "#CFE2F3";
       else if (periode) fond = CAL_COULEURS_PERIODE[periode - 1];
       else if (weekend) fond = "#EDF1F5";
 
       const texte = [vacances ? "VAC" : null, fixe ? fixe[0] : null, epreuve,
-                     saisi ? saisi.label : null].filter(Boolean).join(" · ");
+                     ...evenements.map(e => e.label)].filter(Boolean).join(" · ");
       cellules += '<div class="calDay" data-cal-jour="' + iso + '" title="' + planningText(texte || iso) + '"'
         + ' style="background:' + fond + ';color:' + encre + '">'
         + '<span class="num">' + String(jour).padStart(2, "0") + " " + lettres[date.getDay()] + "</span>"
@@ -516,9 +518,23 @@ function renderInstitutionCalendar() {
  * que de laisser croire qu'on ne touche qu'a cette journee. C'est exactement le genre
  * d'ecrasement silencieux qu'on ne veut plus.
  */
-function ouvrirJourCalendrier(iso) {
+function ouvrirJourCalendrier(iso, eventId = null, ajouter = false) {
   const panel = document.getElementById("planningPanel");
-  const saisi = calEvenementsParJour()[iso];
+  const evenements = calEvenementsParJour()[iso] || [];
+  if (!eventId && !ajouter && evenements.length > 1) {
+    panel.innerHTML = `<h2>${dateFr(iso)}</h2>
+      <div class="muted">${evenements.length} événements sont enregistrés ce jour. Choisissez celui à modifier.</div>
+      ${evenements.map(e => `<button class="secondary" data-calendar-event="${planningText(e.id)}" style="width:100%;text-align:left">${planningText(e.label)}</button>`).join("")}
+      <button id="jourAddAnotherBtn">Ajouter un autre événement</button>
+      <button class="secondary" id="jourCancelBtn">Fermer</button>`;
+    panel.style.display = "block";
+    panel.querySelectorAll("[data-calendar-event]").forEach(button =>
+      button.onclick = () => ouvrirJourCalendrier(iso, button.dataset.calendarEvent));
+    document.getElementById("jourAddAnotherBtn").onclick = () => ouvrirJourCalendrier(iso, null, true);
+    document.getElementById("jourCancelBtn").onclick = () => panel.style.display = "none";
+    return;
+  }
+  const saisi = eventId ? evenements.find(e => e.id === eventId) : ajouter ? null : evenements[0];
   const multiJours = saisi && saisi.start_date_epoch_millis !== saisi.end_date_epoch_millis;
   const fixe = CAL_FIXES[iso];
   const epreuve = datesCcfBac().find(e => e.lundi === iso || e.jeudi === iso);
