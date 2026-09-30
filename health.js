@@ -179,6 +179,19 @@
     const c=healthClasses.find(x=>x.id===classId);
     return c?c.name:(row?.class_name||'');
   }
+  /**
+   * « Mes dispensés » signifie les élèves de mes classes, pas les fiches que j'ai saisies.
+   * L'infirmerie peut enregistrer la dispense : elle doit tout de même apparaître chez le
+   * professeur de la classe. Les anciennes lignes n'ont parfois qu'un nom de classe, d'où le
+   * rapprochement de secours normalisé.
+   */
+  const cleClasseDispense=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .toLocaleLowerCase('fr-FR').replace(/[^a-z0-9]/g,'');
+  function dispenseDeMesClasses(d){
+    const ids=new Set(healthClasses.map(c=>String(c.id||'')).filter(Boolean));
+    const noms=new Set(healthClasses.map(c=>cleClasseDispense(c.name)).filter(Boolean));
+    return ids.has(String(d.class_id||''))||noms.has(cleClasseDispense(d.class_name));
+  }
   const jourFr=d=>d?new Date(d+'T12:00:00').toLocaleDateString('fr-FR'):'';
 
   function renderDispenseMode(){
@@ -211,11 +224,11 @@
    body.querySelectorAll('.healthDelete').forEach(button=>button.onclick=()=>deleteDispense(button.dataset.id));
   }
 
-  /** Les listes de bilan : les miennes, ou celles de tout l'etablissement, en cours puis passees. */
+  /** Les listes de bilan : celles de mes classes, ou celles de tout l'etablissement. */
   function renderListeDispenses(seulementLesMiennes){
    const body=document.getElementById('dispenseVueBody');
    const today=healthToday();
-   const lignes=healthDispenses.filter(d=>!seulementLesMiennes||d.user_id===session?.user_id);
+   const lignes=healthDispenses.filter(d=>!seulementLesMiennes||dispenseDeMesClasses(d));
    const enCours=lignes.filter(d=>d.end_date>=today).sort((a,b)=>a.end_date.localeCompare(b.end_date));
    const passees=lignes.filter(d=>d.end_date<today).sort((a,b)=>b.end_date.localeCompare(a.end_date));
    const tableau=(titre,rows,vide)=>`<section class="card"><h2>${titre} <span class="muted" style="font-weight:400">(${rows.length})</span></h2>`

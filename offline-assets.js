@@ -89,7 +89,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./health-incident-pro.js",
   "./health-incident-pro.js?v=20260928-1",
   "./health.js",
-  "./health.js?v=20260928-1",
+  "./health.js?v=20260930-2",
   "./home-navigation.css",
   "./home-navigation.css?v=20260928-9",
   "./home-weather.js",
