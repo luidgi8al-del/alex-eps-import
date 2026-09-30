@@ -76,7 +76,10 @@ const server = http.createServer((req, res) => {
     await page.click('#unssNouvelAppelMobile');
     await page.waitForSelector('#unssCallModalClose');
     assert.equal(await page.locator('#unssCallModalClose').count(), 1, 'the APPEL phone card must open a new attendance');
-    await page.click('#unssCallModalClose');
+    await page.click('#unssAppelSaveBtn');
+    await page.waitForSelector('#unssCallFinish');
+    assert.match(await page.locator('.as-call-save-choice strong').textContent(), /2 présents/);
+    await page.click('#unssCallFinish');
 
     await page.setViewportSize({ width: 1400, height: 900 });
     await page.waitForTimeout(80);

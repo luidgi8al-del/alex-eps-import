@@ -3993,6 +3993,7 @@ function renderUnssAppelBody(creneau, seance) {
       saveButton.disabled = false;
       throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
     }
+    const presents = unssAppelMembers.filter(eleve => !!unssAppelPresence[eleve.id]);
     const absents = unssAppelMembers.filter(eleve => !unssAppelPresence[eleve.id]);
     const fermerEtRafraichir = () => {
       unssAppelPresence = {};
@@ -4001,12 +4002,13 @@ function renderUnssAppelBody(creneau, seance) {
       if (creneau) renderUnssAppelTab();
     };
     if (!absents.length) {
-      fermerEtRafraichir();
+      body.innerHTML = `<div class="as-call-save-choice"><strong>Appel enregistré · ${presents.length} présent${presents.length > 1 ? "s" : ""}</strong><p>Aucun élève absent.</p><div><button type="button" id="unssCallFinish">Terminer</button></div></div>`;
+      document.getElementById("unssCallFinish").addEventListener("click", fermerEtRafraichir);
       return;
     }
     // L'appel est deja range. La fenetre demande maintenant si le professeur souhaite envoyer
     // les messages, puis se ferme quelle que soit l'option choisie.
-    body.innerHTML = `<div class="as-call-save-choice"><strong>Appel enregistré · ${absents.length} absent${absents.length > 1 ? "s" : ""}</strong><p>Souhaitez-vous prévenir les parents des élèves absents maintenant ?</p><div><button type="button" id="unssCallSendAbsence">Envoyer le mail aux absents</button><button type="button" class="secondary" id="unssCallSkipAbsence">Pas maintenant</button></div><small id="unssCallEmailResult"></small></div>`;
+    body.innerHTML = `<div class="as-call-save-choice"><strong>Appel enregistré · ${presents.length} présent${presents.length > 1 ? "s" : ""}</strong><p>${absents.length} absent${absents.length > 1 ? "s" : ""}. Souhaitez-vous prévenir les parents maintenant ?</p><div><button type="button" id="unssCallSendAbsence">Envoyer le mail aux absents</button><button type="button" class="secondary" id="unssCallSkipAbsence">Pas maintenant</button></div><small id="unssCallEmailResult"></small></div>`;
     document.getElementById("unssCallSkipAbsence").addEventListener("click", fermerEtRafraichir);
     document.getElementById("unssCallSendAbsence").addEventListener("click", async event => {
       const reussi = await envoyerEmailsParentsAbsents(sessionId, event.currentTarget, document.getElementById("unssCallEmailResult"));

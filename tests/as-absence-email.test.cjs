@@ -8,6 +8,7 @@ const schema = fs.readFileSync(path.join(root, 'schema_as_absence_emails.sql'), 
 
 [
   'const absents = unssAppelMembers.filter',
+  'const presents = unssAppelMembers.filter', 'id="unssCallFinish"',
   'keepOpen: true', 'Envoyer le mail d’absence', 'emailsAbsenceAppelTermines',
   'JSON.stringify({ sessionId })', 'unssCallSendAbsence',
   'Modifier l’appel', 'Pas maintenant', 'Nouvel appel',
