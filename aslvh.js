@@ -1759,29 +1759,163 @@ function allSlotsExportRows(slots = unssSlots) {
   ]);
 }
 
-function showAllSlotsExport() {
-  const rows = allSlotsExportRows();
+function allSlotsStudentGroups(slots = unssSlots) {
+  return slots.filter(slot => !slot.deleted).map(slot => ({
+    slot,
+    students: elevesDuCreneau(slot.id)
+  }));
+}
+
+function asDownloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function allSlotsCsv(mode) {
+  if (mode === "students") {
+    const rows = [["Créneau", "Jour", "Horaire", "Nom", "Prénom", "Classe"]];
+    allSlotsStudentGroups().forEach(({ slot, students }) => {
+      const horaire = [heureEmailAS(slot.start_time), heureEmailAS(slot.end_time)].filter(Boolean).join(" - ");
+      if (!students.length) rows.push([slot.activity_name || "", capitaliseJour(slot.day_of_week), horaire, "Aucun élève inscrit", "", ""]);
+      students.forEach(student => rows.push([
+        slot.activity_name || "", capitaliseJour(slot.day_of_week), horaire,
+        String(student.last_name || "").toUpperCase(), student.first_name || "",
+        student.division || student.school_class_label || student.class_label || ""
+      ]));
+    });
+    return { filename: "eleves-par-creneau-aslvh.csv", rows };
+  }
+  return { filename: "creneaux-professeurs-aslvh.csv", rows: [["Activité", "Professeur", "Jour", "Début", "Fin"], ...allSlotsExportRows()] };
+}
+
+function downloadAllSlotsCsv(mode) {
+  const exportData = allSlotsCsv(mode);
+  const cell = value => `"${String(value).replace(/^[=+@-]/, "'$&").replaceAll('"', '""')}"`;
+  const csv = "\ufeff" + exportData.rows.map(row => row.map(cell).join(";")).join("\r\n");
+  asDownloadBlob(new Blob([csv], { type:"text/csv;charset=utf-8" }), exportData.filename);
+}
+
+function allSlotsPdfLines(mode) {
+  if (mode === "students") {
+    const lines = [];
+    allSlotsStudentGroups().forEach(({ slot, students }) => {
+      const horaire = [heureEmailAS(slot.start_time), heureEmailAS(slot.end_time)].filter(Boolean).join(" - ");
+      lines.push({ type: "slot", values: [slot.activity_name || "Créneau AS", `${capitaliseJour(slot.day_of_week)} · ${horaire}`] });
+      lines.push({ type: "head", values: ["Nom", "Prénom", "Classe"] });
+      if (!students.length) lines.push({ type: "empty", values: ["Aucun élève inscrit", "", ""] });
+      students.forEach(student => lines.push({ type: "student", values: [
+        String(student.last_name || "").toUpperCase(), student.first_name || "",
+        student.division || student.school_class_label || student.class_label || ""
+      ] }));
+    });
+    return lines;
+  }
+  return allSlotsExportRows().map(row => ({ type: "teacher", values: row }));
+}
+
+function allSlotsStudentPdfPages() {
+  const pages = [[]];
+  allSlotsStudentGroups().forEach(({ slot, students }) => {
+    const horaire = [heureEmailAS(slot.start_time), heureEmailAS(slot.end_time)].filter(Boolean).join(" - ");
+    const chunks = students.length
+      ? Array.from({ length: Math.ceil(students.length / 18) }, (_, i) => students.slice(i * 18, (i + 1) * 18))
+      : [[]];
+    chunks.forEach((chunk, chunkIndex) => {
+      const block = [
+        { type: "slot", values: [`${slot.activity_name || "Créneau AS"}${chunkIndex ? " (suite)" : ""}`, `${capitaliseJour(slot.day_of_week)} · ${horaire}`] },
+        { type: "head", values: ["Nom", "Prénom", "Classe"] },
+        ...(chunk.length ? chunk.map(student => ({ type: "student", values: [
+          String(student.last_name || "").toUpperCase(), student.first_name || "",
+          student.division || student.school_class_label || student.class_label || ""
+        ] })) : [{ type: "empty", values: ["Aucun élève inscrit", "", ""] }])
+      ];
+      let page = pages[pages.length - 1];
+      if (page.length && page.length + block.length > 22) {
+        page = [];
+        pages.push(page);
+      }
+      page.push(...block);
+    });
+  });
+  return pages;
+}
+
+function downloadAllSlotsPdf(mode) {
+  const students = mode === "students";
+  const titre = students ? "ASLVH · Élèves inscrits par créneau" : "ASLVH · Créneaux et professeurs";
+  const lines = allSlotsPdfLines(mode);
+  const perPage = 24;
+  const blocs = students ? allSlotsStudentPdfPages()
+    : (lines.length ? Array.from({ length: Math.ceil(lines.length / perPage) }, (_, i) => lines.slice(i * perPage, (i + 1) * perPage)) : [[]]);
+  const pages = blocs.map((bloc, pageIndex) => {
+    const texte = (taille, x, y, valeur) => `BT /F1 ${taille} Tf ${x} ${y} Td (${asPdfText(valeur)}) Tj ET\n`;
+    let content = texte(20, 42, 545, titre);
+    content += texte(9, 42, 525, `Édité le ${new Date().toLocaleDateString("fr-FR")} · page ${pageIndex + 1}/${blocs.length}`);
+    if (!students) {
+      const heads = ["Activité", "Professeur", "Jour", "Début", "Fin"], x = [42, 255, 430, 555, 640], max = [31, 25, 17, 11, 11];
+      content += "0.91 0.96 0.99 rg 36 486 770 25 re f\n";
+      heads.forEach((head, i) => { content += texte(9, x[i], 495, head); });
+      bloc.forEach((line, rowIndex) => {
+        const y = 469 - rowIndex * 19;
+        content += `0.82 0.87 0.91 RG 36 ${y - 5} 770 19 re S\n`;
+        line.values.forEach((value, i) => content += texte(8, x[i], y, String(value).slice(0, max[i])));
+      });
+    } else {
+      const x = [56, 335, 570], max = [39, 31, 22];
+      let y = 493;
+      bloc.forEach(line => {
+        if (line.type === "slot") {
+          content += `0.04 0.49 0.79 rg 40 ${y - 6} 762 20 re f\n1 1 1 rg\n`;
+          content += texte(10, 50, y, line.values[0]); content += texte(9, 430, y, line.values[1]);
+        } else {
+          if (line.type === "head") content += `0.91 0.96 0.99 rg 40 ${y - 6} 762 19 re f\n0.10 0.23 0.35 rg\n`;
+          else content += `0.82 0.87 0.91 RG 40 ${y - 6} 762 19 re S\n0.10 0.23 0.35 rg\n`;
+          line.values.forEach((value, i) => content += texte(line.type === "head" ? 9 : 8, x[i], y, String(value).slice(0, max[i])));
+        }
+        y -= 20;
+      });
+    }
+    return content;
+  });
+  asDownloadBlob(asPdfDocument(pages), students ? "eleves-par-creneau-aslvh.pdf" : "creneaux-professeurs-aslvh.pdf");
+}
+
+async function showAllSlotsExport() {
+  await assurerInscriptions().catch(() => {});
   const overlay = document.createElement("div");
   overlay.className = "unified-export-overlay";
-  overlay.innerHTML = `<section class="unified-export-dialog" role="dialog" aria-modal="true" aria-label="Télécharger les créneaux AS"><header><div><h3>Tous les créneaux ASLVH</h3><p>${rows.length} créneau(x) · activité, professeur et horaires</p></div><button data-close aria-label="Fermer">×</button></header><main><button class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Tableau CSV compatible Excel</small></span><em>›</em></button><button class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Tableau prêt à imprimer ou enregistrer en PDF</small></span><em>›</em></button><button class="export-cancel" data-close>Annuler</button></main></section>`;
   document.body.appendChild(overlay);
-  overlay.querySelectorAll("[data-close]").forEach(button => button.onclick = () => overlay.remove());
-  overlay.onclick = event => { if (event.target === overlay) overlay.remove(); };
-  overlay.querySelector('[data-format="csv"]').onclick = () => {
-    const cell = value => `"${String(value).replace(/^[=+@-]/, "'$&").replaceAll('"', '""')}"`;
-    const csv = "\ufeff" + [["Activité", "Professeur", "Jour", "Début", "Fin"], ...rows].map(row => row.map(cell).join(";")).join("\r\n");
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(new Blob([csv], { type:"text/csv;charset=utf-8" }));
-    link.download = "creneaux-aslvh.csv"; link.click();
-    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-    overlay.remove();
+  const close = () => overlay.remove();
+  const bindClose = () => {
+    overlay.querySelectorAll("[data-close]").forEach(button => button.onclick = close);
+    overlay.onclick = event => { if (event.target === overlay) close(); };
   };
-  overlay.querySelector('[data-format="pdf"]').onclick = () => {
-    const popup = window.open("", "_blank");
-    if (!popup) { alert("Autorisez l’ouverture de la fenêtre pour préparer le PDF."); return; }
-    popup.document.write(allSlotsPrintHtml(rows));
-    popup.document.close(); overlay.remove();
+  const chooseContent = () => {
+    overlay.innerHTML = `<section class="unified-export-dialog" role="dialog" aria-modal="true" aria-label="Télécharger les créneaux AS"><header><div><h3>Télécharger</h3><p>Choisissez les informations à inclure</p></div><button data-close aria-label="Fermer">×</button></header><main>
+      <button class="export-choice save" data-export-content="teachers"><b>👤</b><span><strong>Créneaux et professeurs</strong><small>Activité, professeur, jour et horaires</small></span><em>›</em></button>
+      <button class="export-choice share" data-export-content="students"><b>♟</b><span><strong>Élèves par créneau</strong><small>Nom, prénom et classe de tous les élèves inscrits</small></span><em>›</em></button>
+      <button class="export-cancel" data-close>Annuler</button></main></section>`;
+    bindClose();
+    overlay.querySelectorAll("[data-export-content]").forEach(button => button.onclick = () => chooseFormat(button.dataset.exportContent));
   };
+  const chooseFormat = mode => {
+    const eleves = mode === "students";
+    overlay.innerHTML = `<section class="unified-export-dialog" role="dialog" aria-modal="true"><header><div><h3>${eleves ? "Élèves par créneau" : "Créneaux et professeurs"}</h3><p>Choisissez le format du fichier</p></div><button data-close aria-label="Fermer">×</button></header><main>
+      <button class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Tableau CSV compatible Excel</small></span><em>›</em></button>
+      <button class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Fichier téléchargé directement</small></span><em>›</em></button>
+      <button class="export-cancel" data-back>← Retour</button></main></section>`;
+    bindClose();
+    overlay.querySelector("[data-back]").onclick = chooseContent;
+    overlay.querySelector('[data-format="csv"]').onclick = () => { downloadAllSlotsCsv(mode); close(); };
+    overlay.querySelector('[data-format="pdf"]').onclick = () => { downloadAllSlotsPdf(mode); close(); };
+  };
+  chooseContent();
 }
 
 function allSlotsPrintHtml(rows) {
