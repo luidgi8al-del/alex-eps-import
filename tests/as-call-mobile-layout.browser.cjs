@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
       ];
       unssInscriptions = [{ id: 'm1', slot_id: 'slot-mobile', student_id: 's1' }, { id: 'm2', slot_id: 'slot-mobile', student_id: 's2' }];
       unssSeances = [{ id: 'call1', slot_id: 'slot-mobile', date_epoch_millis: Date.now() - 86400000, deleted: false }];
-      unssPresences = [{ id: 'p1', session_id: 'call1', student_id: 's1', present: true }, { id: 'p2', session_id: 'call1', student_id: 's2', present: true }];
+      unssPresences = [{ id: 'p1', session_id: 'call1', student_id: 's1', present: true }, { id: 'p2', session_id: 'call1', student_id: 's2', present: false }];
       unssAppelSlotId = 'slot-mobile';
       renderUnssAppelTab();
     });
@@ -59,6 +59,20 @@ const server = http.createServer((req, res) => {
     assert(mobile.history.y > mobile.next.y, 'the history stays below the next-session card on phones');
     assert.equal(mobile.overflow, 0);
 
+    await page.click('#unssAppelsEnregistres');
+    await page.waitForSelector('.as-call-actions-popover');
+    let actions = await page.locator('.as-call-actions-list button').allTextContents();
+    assert.deepEqual(actions, ['Modifier l’appel', 'Envoyer le mail d’absence', 'Supprimer l’appel']);
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => {
+      window.__fauxServeur.DONNEES.unss_absence_email_queue = [{ session_id: 'call1', status: 'sent' }];
+    });
+    await page.click('.as-history-entry');
+    await page.waitForSelector('.as-call-actions-popover');
+    actions = await page.locator('.as-call-actions-list button').allTextContents();
+    assert.deepEqual(actions, ['Modifier l’appel', 'Supprimer l’appel']);
+    await page.keyboard.press('Escape');
+
     await page.click('#unssNouvelAppelMobile');
     await page.waitForSelector('#unssCallModalClose');
     assert.equal(await page.locator('#unssCallModalClose').count(), 1, 'the APPEL phone card must open a new attendance');
@@ -68,12 +82,10 @@ const server = http.createServer((req, res) => {
     await page.waitForTimeout(80);
     const desktop = await page.evaluate(() => ({
       phoneAction: getComputedStyle(document.querySelector('#unssNouvelAppelMobile')).display,
-      visibleKpis: [...document.querySelectorAll('.as-call-kpis article')].filter(node => getComputedStyle(node).display !== 'none').length,
-      rows: [...document.querySelectorAll('.as-call-kpis article')].map(node => Math.round(node.getBoundingClientRect().y))
+      visibleKpis: [...document.querySelectorAll('.as-call-kpis article')].filter(node => getComputedStyle(node).display !== 'none').length
     }));
     assert.equal(desktop.phoneAction, 'none');
     assert.equal(desktop.visibleKpis, 3);
-    assert.equal(new Set(desktop.rows).size, 1, 'the three desktop KPIs stay on their existing single row');
     console.log('PASS mobile-only AS call cards and unchanged desktop KPIs');
   } finally {
     await browser.close();

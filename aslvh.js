@@ -3581,6 +3581,18 @@ async function envoyerEmailsParentsAbsents(sessionId, bouton, resultat) {
   }
 }
 
+/** Le bouton d'envoi n'est plus proposé quand tous les messages de cet appel sont déjà partis. */
+async function emailsAbsenceAppelTermines(sessionId) {
+  try {
+    const lignes = await lireTable("unss_absence_email_queue",
+      `unss_absence_email_queue?session_id=eq.${encodeURIComponent(sessionId)}&select=status`);
+    return lignes.length > 0 && lignes.every(ligne => ["sent", "cancelled"].includes(ligne.status));
+  } catch {
+    // Si l'état ne peut pas être contrôlé, on conserve l'action : l'envoi serveur est idempotent.
+    return false;
+  }
+}
+
 let fermerMenuActionsAppelActif = null;
 
 /**
@@ -3697,7 +3709,7 @@ function renderUnssAppelTab() {
                 const pointees = unssPresences.filter(p => String(p.session_id) === String(s.id));
                 const presents = pointees.filter(p => p.present).length;
                 const absents = pointees.length - presents;
-                return `<div class="as-history-row"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><button type="button" class="as-history-actions-button" data-actions-seance="${s.id}" aria-haspopup="menu" aria-expanded="false">Actions <span aria-hidden="true">⌄</span></button></div></div>`;
+                return `<div class="as-history-row as-history-entry" data-seance="${s.id}" role="button" tabindex="0" aria-label="Ouvrir les actions de l’appel du ${unssText(dateSeance(s.date_epoch_millis))}"><span class="as-history-date"><b>${dateSeance(s.date_epoch_millis)}</b><small>${new Date(Number(s.date_epoch_millis)).getFullYear()}</small></span><span class="as-history-slot"><b>${unssText(horaire || "Horaire non renseigné")}</b><small>${unssText(creneau.location || "Lieu non renseigné")}</small></span><span><b class="as-call-count yes">${presents}</b></span><span><b class="as-call-count no">${absents}</b></span><div class="as-history-actions"><button type="button" class="as-history-actions-button" data-actions-seance="${s.id}" aria-haspopup="menu" aria-expanded="false">Actions <span aria-hidden="true">⌄</span></button></div></div>`;
               }).join("")}</div>`}
     </section>`;
   const contenuBilan = `<section class="as-attendance-summary as-call-panel">
@@ -3709,7 +3721,7 @@ function renderUnssAppelTab() {
     <nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Appels</b></nav>
     <section class="as-slot-compact"><div class="as-slot-summary"><h1>${unssText(creneau.activity_name)} · ${unssText(capitaliseJour(creneau.day_of_week))}</h1><p><span>◷ ${unssText(horaire || "Horaire non renseigné")}</span><span>⌖ ${unssText(creneau.location || "Lieu non renseigné")}</span><span>♙ ${unssText(professeur)}</span></p></div><label class="as-slot-picker"><span>Changer de créneau</span><select id="unssAppelSlotSelect">${creneaux.map(s =>
       `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select></label></section>
-    <section class="as-call-kpis ui-indicator-grid"><button type="button" id="unssNouvelAppelMobile" class="as-mobile-call-action" ${inscrits.length ? "" : "disabled"}><b>APPEL</b><span>Faire l’appel</span></button><article id="unssAppelStudents" class="as-call-kpi-link as-call-kpi-students ui-indicator" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article class="as-call-kpi-recorded ui-indicator"><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article class="as-call-kpi-rate ui-indicator"><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
+    <section class="as-call-kpis ui-indicator-grid"><button type="button" id="unssNouvelAppelMobile" class="as-mobile-call-action" ${inscrits.length ? "" : "disabled"}><b>APPEL</b><span>Faire l’appel</span></button><article id="unssAppelStudents" class="as-call-kpi-link as-call-kpi-students ui-indicator" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article id="unssAppelsEnregistres" class="as-call-kpi-link as-call-kpi-recorded ui-indicator" role="button" tabindex="0" aria-label="Accéder aux ${seances.length} appels enregistrés"><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article class="as-call-kpi-rate ui-indicator"><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
     <div class="as-call-layout"><main class="as-call-main"><div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}</main>
       <aside class="as-next-card"><span class="as-call-eyebrow">PROCHAINE SÉANCE</span>${prochaine ? `<div class="as-next-date"><b>${unssText(prochaine.jour)}</b><span>${prochaine.annee}</span></div>` : `<div class="as-next-date"><b>Date à définir</b></div>`}<dl><div><dt>◷ Horaire</dt><dd>${unssText(horaire || "Non renseigné")}</dd></div><div><dt>⌖ Lieu</dt><dd>${unssText(creneau.location || "Non renseigné")}</dd></div><div><dt>♙ Enseignant</dt><dd>${unssText(professeur)}</dd></div></dl><p class="as-next-note"><b>✓ Pense-bête</b><span>L’appel pourra être créé dès le début de la séance.</span></p></aside>
     </div></div>`;
@@ -3766,22 +3778,53 @@ function renderUnssAppelTab() {
     });
     chargerDispensesAppel().then(() => ouvrirEditeurAppel(creneau, seance));
   };
-  wrap.querySelectorAll("[data-actions-seance]").forEach(btn => btn.addEventListener("click", event => {
-    event.stopPropagation();
-    const seance = seances.find(s => String(s.id) === String(btn.dataset.actionsSeance));
+  const ouvrirActionsSeance = async (seance, ancre) => {
     if (!seance) return;
     const pointees = unssPresences.filter(p => String(p.session_id) === String(seance.id));
     const absents = pointees.filter(p => !p.present).length;
-    ouvrirMenuActionsAppel(btn, [
+    const emailsDejaEnvoyes = absents > 0 && await emailsAbsenceAppelTermines(seance.id);
+    ouvrirMenuActionsAppel(ancre, [
       { label: "Modifier l’appel", run: () => modifierAppel(seance) },
-      ...(absents > 0 ? [{
-        label: "Envoyer le mail aux absents",
+      ...(absents > 0 && !emailsDejaEnvoyes ? [{
+        label: "Envoyer le mail d’absence",
         keepOpen: true,
         run: (bouton, resultat) => envoyerEmailsParentsAbsents(seance.id, bouton, resultat)
       }] : []),
       { label: "Supprimer l’appel", danger: true, keepOpen: true, run: (bouton, resultat, fermer) => supprimerAppel(seance, bouton, fermer) }
     ]);
+  };
+  wrap.querySelectorAll("[data-actions-seance]").forEach(btn => btn.addEventListener("click", async event => {
+    event.stopPropagation();
+    const seance = seances.find(s => String(s.id) === String(btn.dataset.actionsSeance));
+    await ouvrirActionsSeance(seance, btn);
   }));
+  wrap.querySelectorAll(".as-history-entry").forEach(ligne => {
+    const ouvrir = () => {
+      const seance = seances.find(s => String(s.id) === String(ligne.dataset.seance));
+      const ancre = ligne.querySelector("[data-actions-seance]") || ligne;
+      ouvrirActionsSeance(seance, ancre);
+    };
+    ligne.addEventListener("click", ouvrir);
+    ligne.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ouvrir(); }
+    });
+  });
+  const ouvrirHistorique = () => {
+    if (!seances.length) return;
+    if (unssAppelVue !== "historique") {
+      unssAppelVue = "historique";
+      renderUnssAppelTab();
+    }
+    requestAnimationFrame(() => {
+      document.querySelector(".as-call-main")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Avec un seul appel, le raccourci ouvre directement les trois actions attendues.
+      if (seances.length === 1) document.querySelector(".as-history-entry")?.click();
+    });
+  };
+  document.getElementById("unssAppelsEnregistres")?.addEventListener("click", ouvrirHistorique);
+  document.getElementById("unssAppelsEnregistres")?.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ouvrirHistorique(); }
+  });
 }
 
 /**
