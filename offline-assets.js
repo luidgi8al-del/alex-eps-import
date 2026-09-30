@@ -113,7 +113,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./period-settings.js",
   "./planning-scroll.js",
   "./planning.js",
-  "./planning.js?v=20260930-1",
+  "./planning.js?v=20260930-2",
   "./pwa/bootstrap.js",
   "./pwa/core/connectivity.js",
   "./pwa/core/constants.js",

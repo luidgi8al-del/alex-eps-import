@@ -394,7 +394,7 @@ function grilleCalendrier() {
  * EPS reunit les epreuves calculees depuis les periodes Terminale et les dates saisies avec
  * le type BAC EPS. AS reprend les sorties, Examen les examens.
  */
-function rappelImportantDates() {
+function groupesDatesImportantes() {
   const saisisPar = kind => calendarEvents
     .filter(e => e.kind === kind)
     .sort((a, b) => a.start_date_epoch_millis - b.start_date_epoch_millis)
@@ -402,7 +402,7 @@ function rappelImportantDates() {
       const debut = dateFr(isoDate(new Date(e.start_date_epoch_millis)));
       const fin = dateFr(isoDate(new Date(e.end_date_epoch_millis)));
       const quand = debut === fin ? debut : debut + " au " + fin;
-      return { titre: e.label || "Sans titre", quand, calcule: false };
+      return { titre: e.label || "Sans titre", quand, calcule: false, event: e };
     });
 
   const eps = datesCcfBac().map(e => ({
@@ -411,21 +411,11 @@ function rappelImportantDates() {
     calcule: true
   })).concat(saisisPar("BAC_EPS"));
 
-  const colonnes = [
-    ["EPS", "#1B3A6B", eps, "Saisissez une date avec le type BAC EPS pour l'ajouter ici."],
-    ["AS", "#E5F7E9", saisisPar("SORTIE"), "Saisissez une date avec le type Sortie AS."],
-    ["Examen", "#FFE8EE", saisisPar("EXAMEN"), "Saisissez une date avec le type Examen."]
-  ];
-
-  return '<div class="rappelCols">' + colonnes.map(function (col) {
-    const lignes = col[2].length === 0
-      ? '<div class="muted" style="font-size:12px">' + col[3] + "</div>"
-      : col[2].map(d => '<div class="rappelLigne"><strong>' + planningText(d.titre) + "</strong>"
-          + (d.calcule ? ' <span class="muted" style="font-size:11px">calcule</span>' : "")
-          + '<div class="muted">' + d.quand + "</div></div>").join("");
-    return '<div class="rappelCol"><div class="rappelTitre" style="background:' + col[1]
-      + ';color:' + (col[1] === "#1B3A6B" ? "#fff" : "#173a57") + '">' + col[0] + "</div>" + lignes + "</div>";
-  }).join("") + "</div>";
+  return {
+    EPS: { label: "EPS", dates: eps, vide: "Aucune date EPS enregistrée." },
+    AS: { label: "AS", dates: saisisPar("SORTIE"), vide: "Aucune date AS enregistrée." },
+    EXAMEN: { label: "Examen", dates: saisisPar("EXAMEN"), vide: "Aucune date d’examen enregistrée." }
+  };
 }
 
 function legendeCalendrier() {
@@ -438,6 +428,9 @@ function legendeCalendrier() {
 }
 
 let calendarEvents = [];
+let calendarLowerTab = "important";
+let calendarImportantCategory = "EPS";
+let calendarInstitutionCategory = "CONSEILS";
 
 async function loadInstitutionCalendar() {
   const wrap = document.getElementById("calendarWrap");
@@ -458,51 +451,139 @@ function calendarDate(millis) {
   return new Date(millis).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
 }
 
+function calendarSearchText(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function calendarRange(e) {
+  const debut = calendarDate(e.start_date_epoch_millis);
+  const fin = calendarDate(e.end_date_epoch_millis);
+  return debut === fin ? debut : debut + " au " + fin;
+}
+
+function groupesDatesEtablissement() {
+  const groupes = {
+    CONSEILS: { label: "Conseils et réunions", dates: [] },
+    EXAMENS: { label: "Examens", dates: [] },
+    ORIENTATION: { label: "Orientation", dates: [] },
+    STAGES: { label: "Stages et sorties", dates: [] },
+    TRIMESTRES: { label: "Trimestres", dates: [] },
+    VACANCES: { label: "Vacances et jours fériés", dates: [] },
+    AUTRES: { label: "Autres", dates: [] }
+  };
+
+  for (const e of calendarEvents) {
+    const texte = calendarSearchText(e.label);
+    let cle = "AUTRES";
+    if (e.kind === "EXAMEN") cle = "EXAMENS";
+    else if (/fin du .*trimestre|trimestre.*fin/.test(texte)) cle = "TRIMESTRES";
+    else if (/parcoursup|orientation|etudes sup|l.etudiant|avenir/.test(texte)) cle = "ORIENTATION";
+    else if (e.kind === "SORTIE" || /stage|mismun|sortie|salon/.test(texte)) cle = "STAGES";
+    else if (/conseil|reunion|cvl|cesce|chs|csd|election|assemblee|rencontre|pedagog/.test(texte)) cle = "CONSEILS";
+    else if (e.kind === "VACANCES") cle = "VACANCES";
+    groupes[cle].dates.push({ titre: e.label || "Sans titre", quand: calendarRange(e), event: e });
+  }
+
+  CAL_VACANCES.forEach((periode, index) => groupes.VACANCES.dates.push({
+    titre: "Vacances scolaires " + (index + 1),
+    quand: dateFr(periode[0]) + " au " + dateFr(periode[1])
+  }));
+  Object.entries(CAL_FIXES).forEach(([iso, fixe]) => groupes.VACANCES.dates.push({
+    titre: fixe[0], quand: dateFr(iso), aConfirmer: fixe[1]
+  }));
+  Object.values(groupes).forEach(groupe => groupe.dates.sort((a, b) => {
+    const aDate = a.event ? a.event.start_date_epoch_millis : 0;
+    const bDate = b.event ? b.event.start_date_epoch_millis : 0;
+    return aDate - bDate;
+  }));
+  return groupes;
+}
+
+function calendarCategoryTabs(groupes, active, attribute) {
+  return '<div class="calendar-category-tabs" role="tablist">' + Object.entries(groupes).map(([cle, groupe]) =>
+    '<button type="button" class="calendar-category-tab' + (cle === active ? " active" : "") + '" '
+      + attribute + '="' + cle + '" aria-selected="' + (cle === active) + '">'
+      + planningText(groupe.label) + '<span>' + groupe.dates.length + "</span></button>"
+  ).join("") + "</div>";
+}
+
+function calendarDateRows(groupe, deletable) {
+  if (!groupe || groupe.dates.length === 0) {
+    return '<div class="calendar-date-empty">Aucune date dans cette catégorie.</div>';
+  }
+  return '<div class="calendar-date-list">' + groupe.dates.map(d =>
+    '<article class="calendar-date-row"><div><strong>' + planningText(d.titre) + "</strong>"
+      + (d.calcule ? '<span class="calendar-date-note">Calculée automatiquement</span>' : "")
+      + (d.aConfirmer ? '<span class="calendar-date-note">À confirmer</span>' : "")
+      + '<small>' + planningText(d.quand) + "</small></div>"
+      + (deletable && d.event ? '<button type="button" class="danger" data-del-event="' + planningText(d.event.id) + '">Supprimer</button>' : "")
+      + "</article>"
+  ).join("") + "</div>";
+}
+
+function calendrierPanneauBas() {
+  if (calendarLowerTab === "important") {
+    const groupes = groupesDatesImportantes();
+    const actif = groupes[calendarImportantCategory] || groupes.EPS;
+    return `<section class="card calendar-tab-panel">
+      <h2>Rappel des dates importantes</h2>
+      <div class="muted">Choisissez EPS, AS ou Examen pour afficher uniquement les dates recherchées.</div>
+      ${calendarCategoryTabs(groupes, calendarImportantCategory, "data-calendar-important")}
+      ${calendarDateRows(actif, false)}
+    </section>`;
+  }
+
+  const groupes = groupesDatesEtablissement();
+  const actif = groupes[calendarInstitutionCategory] || groupes.CONSEILS;
+  return `<section class="card calendar-tab-panel">
+    <h2>Calendrier de l’établissement</h2>
+    <div class="muted">Les dates de l’établissement sont classées par thème. Une seule catégorie s’affiche à la fois.</div>
+    ${calendarCategoryTabs(groupes, calendarInstitutionCategory, "data-calendar-institution")}
+    ${calendarDateRows(actif, true)}
+    <details class="calendar-add-event">
+      <summary>Ajouter un événement</summary>
+      <div class="row">
+        <div><label for="eventLabel">Intitulé</label><input type="text" id="eventLabel" placeholder="Ex : Journée portes ouvertes"></div>
+        <div><label for="eventKind">Type</label><select id="eventKind">${CALENDAR_KINDS.map(k => `<option value="${k[0]}">${k[1]}</option>`).join("")}</select></div>
+      </div>
+      <div class="row">
+        <div><label for="eventStart">Début</label><input type="date" id="eventStart"></div>
+        <div><label for="eventEnd">Fin</label><input type="date" id="eventEnd"></div>
+      </div>
+      <button id="addEventBtn">Ajouter</button>
+      <div class="error" id="eventError"></div>
+    </details>
+  </section>`;
+}
+
 function renderInstitutionCalendar() {
   const wrap = document.getElementById("calendarWrap");
-  const rows = calendarEvents.length === 0
-    ? '<div class="muted" style="margin-top:12px">Aucun evenement enregistre.</div>'
-    : calendarEvents.map(e => {
-        const kind = CALENDAR_KINDS.find(k => k[0] === e.kind) || CALENDAR_KINDS[4];
-        return `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
-          <div>
-            <span class="badge" style="background:${kind[2]}">${kind[1]}</span>
-            <strong style="margin-left:6px">${e.label || "Sans titre"}</strong>
-            <div class="muted">${calendarDate(e.start_date_epoch_millis)} → ${calendarDate(e.end_date_epoch_millis)}${e.comment ? " · " + e.comment : ""}</div>
-          </div>
-          <button class="danger" data-del-event="${e.id}" style="margin-top:0">Supprimer</button>
-        </div>`;
-      }).join("");
-
   wrap.innerHTML = `<div class="card">
-    <h2 style="margin:0">Planification etablissement 2026-2027</h2>
-    <div class="muted">Vue annuelle, identique a celle de l'application. Cliquez un jour pour y ajouter ou modifier un evenement ; survolez-le pour lire son intitule complet.</div>
+    <h2 style="margin:0">Planification établissement 2026-2027</h2>
+    <div class="muted">Vue annuelle. Cliquez sur un jour pour ajouter ou modifier un événement.</div>
     ${legendeCalendrier()}
     ${grilleCalendrier()}
   </div>
-  <div class="card" style="margin-top:14px">
-    <h2 style="margin:0">Rappel des dates importantes</h2>
-    <div class="muted">Les epreuves du BAC EPS sont calculees depuis les periodes Terminale : une periode deplacee deplace l'epreuve. Les autres dates viennent de ce que vous saisissez, classees par type.</div>
-    ${rappelImportantDates()}
+  <div class="calendar-main-tabs" role="tablist">
+    <button type="button" class="calendar-main-tab${calendarLowerTab === "important" ? " active" : ""}" data-calendar-main="important" aria-selected="${calendarLowerTab === "important"}">Rappel des dates importantes</button>
+    <button type="button" class="calendar-main-tab${calendarLowerTab === "institution" ? " active" : ""}" data-calendar-main="institution" aria-selected="${calendarLowerTab === "institution"}">Calendrier de l’établissement</button>
   </div>
-  <div class="card" style="margin-top:14px">
-    <h2 style="margin:0">Calendrier de l'etablissement</h2>
-    <div class="muted">Vacances, examens, sorties et journees banalisees : ce qui bloque ou deplace les cours dans l'annee.</div>
-    ${rows}
-    <h2 style="margin:18px 0 0; font-size:15px">Ajouter un evenement</h2>
-    <div class="row">
-      <div><label for="eventLabel">Intitule</label><input type="text" id="eventLabel" placeholder="Ex : Vacances de printemps"></div>
-      <div><label for="eventKind">Type</label><select id="eventKind">${CALENDAR_KINDS.map(k => `<option value="${k[0]}">${k[1]}</option>`).join("")}</select></div>
-    </div>
-    <div class="row">
-      <div><label for="eventStart">Debut</label><input type="date" id="eventStart"></div>
-      <div><label for="eventEnd">Fin</label><input type="date" id="eventEnd"></div>
-    </div>
-    <button id="addEventBtn">Ajouter</button>
-    <div class="error" id="eventError"></div>
-  </div>`;
+  ${calendrierPanneauBas()}`;
 
-  document.getElementById("addEventBtn").onclick = addCalendarEvent;
+  const addButton = document.getElementById("addEventBtn");
+  if (addButton) addButton.onclick = addCalendarEvent;
+  wrap.querySelectorAll("[data-calendar-main]").forEach(button => button.onclick = () => {
+    calendarLowerTab = button.dataset.calendarMain;
+    renderInstitutionCalendar();
+  });
+  wrap.querySelectorAll("[data-calendar-important]").forEach(button => button.onclick = () => {
+    calendarImportantCategory = button.dataset.calendarImportant;
+    renderInstitutionCalendar();
+  });
+  wrap.querySelectorAll("[data-calendar-institution]").forEach(button => button.onclick = () => {
+    calendarInstitutionCategory = button.dataset.calendarInstitution;
+    renderInstitutionCalendar();
+  });
   wrap.querySelectorAll("[data-del-event]").forEach(b =>
     b.onclick = () => deleteCalendarEvent(b.dataset.delEvent));
   wrap.querySelectorAll("[data-cal-jour]").forEach(c =>
