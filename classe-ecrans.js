@@ -846,10 +846,45 @@ function ecImprimerListe() {
 function ecDessinerEvaluations(panel) {
   const { label } = dashboardClass;
   const { evaluations, tests, cycle } = ecEvaluationsSuivies();
-  const filtrees = evaluations.filter(e => ecFiltreEvaluations === "Toutes"
-    || (ecFiltreEvaluations === "Ponctuelles" ? e.type !== "FINALE" : e.type === "FINALE"));
-  const terminees = evaluations.filter(e => ecAvancementGrille(e.id).evalues > 0).length;
+  const evaluationsFiltrees = evaluations.filter(e => ecFiltreEvaluations === "Toutes"
+    || (ecFiltreEvaluations === "Ponctuelles" && e.type !== "FINALE")
+    || (ecFiltreEvaluations === "Finales" && e.type === "FINALE"));
+  const testsFiltres = ["Toutes", "Tests"].includes(ecFiltreEvaluations) ? tests : [];
+  const nombreResultatsTest = id => new Set(ecResultatsTests
+    .filter(r => r.session_id === id && !r.deleted).map(r => r.student_id)).size;
+  const termineesEvaluations = evaluations.filter(e => ecAvancementGrille(e.id).evalues > 0).length;
+  const terminesTests = tests.filter(t => nombreResultatsTest(t.id) > 0).length;
+  const terminees = termineesEvaluations + terminesTests;
   const eleves = dashboardStudents.length;
+  const cartes = evaluationsFiltrees.map(e => ({
+    date: Number(e.date_epoch_millis) || 0,
+    html: (() => {
+      const { evalues } = ecAvancementGrille(e.id);
+      const complet = eleves > 0 && evalues >= eleves;
+      return `<button type="button" class="ec-evaluation" data-ec-grille="${ecTexte(e.id)}">
+        <span class="ec-evaluation-tete"><span><b>${ecTexte(e.label || "Évaluation")}</b>
+          <small>${e.type === "FINALE" ? "Finale" : "Ponctuelle"}${e.activite ? ` · ${ecTexte(e.activite)}` : ""}</small></span>
+          <small>${ecDateCourte(e.date_epoch_millis)}</small></span>
+        <strong class="${complet ? "vert" : ""}">${ecNotesChargees ? `${evalues} / ${eleves} élèves évalués` : "…"}</strong>
+        ${ecJauge(eleves ? evalues / eleves : 0, "#2E7CC4")}
+        <small class="ec-aide">Appui prolongé : dupliquer vers une classe</small>
+      </button>`;
+    })()
+  })).concat(testsFiltres.map(t => {
+    const resultats = nombreResultatsTest(t.id);
+    const complet = eleves > 0 && resultats >= eleves;
+    const date = Number(t.created_at) || Date.parse(t.created_at) || 0;
+    return {
+      date,
+      html: `<button type="button" class="ec-evaluation ec-evaluation-test" data-ec-test-inline="${ecTexte(t.id)}">
+        <span class="ec-evaluation-tete"><span><b>${ecTexte(t.test_name || "Test EPS")}</b>
+          <small>Test · créé depuis les outils</small></span><small>${ecDateCourte(date)}</small></span>
+        <strong class="${complet ? "vert" : ""}">${resultats} / ${eleves} élèves évalués</strong>
+        ${ecJauge(eleves ? resultats / eleves : 0, "#7356B8")}
+        <small class="ec-aide">Cliquez pour consulter ou modifier · appui prolongé : supprimer</small>
+      </button>`
+    };
+  })).sort((a, b) => b.date - a.date);
 
   const actionsPrincipales = `<div class="ec-bandeau-actions ec-eval-actions-principales">
     <button type="button" class="ec-eval-action-primaire" id="ecNouvelleEvaluation"><span aria-hidden="true">＋</span> Nouvelle évaluation</button>
@@ -865,27 +900,16 @@ function ecDessinerEvaluations(panel) {
       <div class="ec-eval-stats" aria-label="Résumé des évaluations">
         <div class="ec-eval-stat"><i class="bleu" aria-hidden="true">▣</i><span><b>${evaluations.length + tests.length}</b><small>Évaluations</small></span></div>
         <div class="ec-eval-stat"><i class="vert" aria-hidden="true">✓</i><span><b>${terminees}</b><small>Terminées</small></span></div>
-        <div class="ec-eval-stat"><i class="orange" aria-hidden="true">◷</i><span><b>${Math.max(0, evaluations.length - terminees)}</b><small>À poursuivre</small></span></div>
+        <div class="ec-eval-stat"><i class="orange" aria-hidden="true">◷</i><span><b>${Math.max(0, evaluations.length + tests.length - terminees)}</b><small>À poursuivre</small></span></div>
       </div>
       <section class="ec-evaluations-carte" aria-labelledby="ecEvaluationsTitre">
         <h3 id="ecEvaluationsTitre">Évaluations</h3>
-        ${ecPastilles("ec-filtre-eval", [["Toutes", "Toutes"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
-        <div class="ec-liste ec-evaluations-liste">${filtrees.length ? filtrees.map(e => {
-        const { evalues } = ecAvancementGrille(e.id);
-        const complet = eleves > 0 && evalues >= eleves;
-        return `<button type="button" class="ec-evaluation" data-ec-grille="${ecTexte(e.id)}">
-          <span class="ec-evaluation-tete"><span><b>${ecTexte(e.label || "Évaluation")}</b>
-            <small>${e.type === "FINALE" ? "Finale" : "Ponctuelle"}${e.activite ? ` · ${ecTexte(e.activite)}` : ""}</small></span>
-            <small>${ecDateCourte(e.date_epoch_millis)}</small></span>
-          <strong class="${complet ? "vert" : ""}">${ecNotesChargees ? `${evalues} / ${eleves} élèves évalués` : "…"}</strong>
-          ${ecJauge(eleves ? evalues / eleves : 0, "#2E7CC4")}
-          <small class="ec-aide">Appui prolongé : dupliquer vers une classe</small>
-        </button>`;
-      }).join("") : `<div class="ec-eval-vide">
+        ${ecPastilles("ec-filtre-eval", [["Toutes", "Toutes"], ["Tests", "Tests"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
+        <div class="ec-liste ec-evaluations-liste">${cartes.length ? cartes.map(c => c.html).join("") : `<div class="ec-eval-vide">
           <i aria-hidden="true">✓</i>
-          <b>Aucune évaluation pour cette période</b>
-          <span>Créez votre première évaluation pour commencer le suivi de la classe.</span>
-          <button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>
+          <b>${ecFiltreEvaluations === "Tests" ? "Aucun test pour cette période" : "Aucune évaluation pour cette période"}</b>
+          <span>${ecFiltreEvaluations === "Tests" ? "Les tests enregistrés depuis les outils apparaîtront ici automatiquement." : "Créez votre première évaluation pour commencer le suivi de la classe."}</span>
+          ${ecFiltreEvaluations === "Tests" ? '<button type="button" id="ecPremierTest">Créer un test EPS</button>' : '<button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>'}
         </div>`}</div>
         <div id="ecTeamEvaluationResults"></div>
         <footer class="ec-evaluations-pied">
@@ -903,16 +927,26 @@ function ecDessinerEvaluations(panel) {
   ]);
   document.getElementById("ecNouvelleEvaluation").onclick = choisirEvaluation;
   document.getElementById("ecPremiereEvaluation")?.addEventListener("click", choisirEvaluation);
-  document.getElementById("ecNouveauTest").onclick = () => ecCreerNouveauTest();
+  const creerTest = () => ecCreerNouveauTest();
+  document.getElementById("ecNouveauTest").onclick = creerTest;
+  document.getElementById("ecPremierTest")?.addEventListener("click", creerTest);
   document.getElementById("ecActionsEvaluations").onclick = () => ecActions("Actions", `${label} · période ${dashboardPeriod}`, [
     { libelle: `Récapitulatif · PDF, tableur et courriel`, action: () => { ecOngletRecap = "tests"; ecAller("recap"); } },
-    { libelle: `Tests EPS enregistrés (${tests.length})`, action: () => ecOuvrirTests(tests) },
     { libelle: "Divers EPS · groupes Acrosport et travaux", action: () => ecOuvrirDivers() }
   ]);
   panel.querySelectorAll("[data-ec-grille]").forEach(b => {
     const e = evaluations.find(x => x.id === b.dataset.ecGrille);
     b.onclick = () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); };
     ecAppuiLong(b, () => ecChoisirClassePourCopie(e));
+  });
+  panel.querySelectorAll("[data-ec-test-inline]").forEach(b => {
+    const test = tests.find(t => String(t.id) === String(b.dataset.ecTestInline));
+    const ouvrir = () => ecOuvrirTestEnFenetre(test);
+    b.onclick = ouvrir;
+    ecAppuiLong(b, () => ecActions(test?.test_name || "Test EPS", `Période ${Number(test?.period_number) || dashboardPeriod}`, [
+      { libelle: "Ouvrir et modifier", action: ouvrir },
+      { libelle: "Supprimer", danger: true, action: () => ecSupprimerTest(test) }
+    ]));
   });
   ecChargerEvaluationsEquipes(panel);
   // Les jauges se remplissent une fois les notes relues.
@@ -952,7 +986,7 @@ async function ecChargerEvaluationsEquipes(panel) {
     const all=await TeamEvaluation.rows('team_evaluations',`class_id=eq.${encodeURIComponent(classId)}&order=created_at.desc`);
     if(!host.isConnected)return;
     const list=all.filter(e=>Number(e.scores_json?._meta?.period || 1)===period);
-    if(ecFiltreEvaluations==='Finales')return;
+    if(ecFiltreEvaluations==='Finales'||ecFiltreEvaluations==='Tests')return;
     host.innerHTML=list.map(e=>`<button type="button" class="ec-evaluation" data-team-result="${ecTexte(e.id)}"><span class="ec-evaluation-tete"><b>${ecTexte(e.title)}</b><small>${ecDateCourte(e.created_at)}</small></span><small>Ponctuelle · Par équipes · Ouvrir, modifier, PDF ou Excel</small></button>`).join('');
     if(list.length)panel.querySelector('.ec-eval-vide')?.remove();
     const stats=panel.querySelectorAll('.ec-eval-stat b');
@@ -1116,7 +1150,7 @@ function ecOuvrirTestEnFenetre(t) {
       } catch { /* l'outil tentera sa propre lecture */ }
     }
     await ouvrirSessionTestDepuisClasse(t.id, dashboardClass.row.id, t.period_number || 1, t.test_name);
-  }, () => ecOuvrirTests(ecEvaluationsSuivies().tests));
+  }, () => ecAller("evaluations"));
 }
 
 async function ecSupprimerTest(t) {
@@ -1134,7 +1168,7 @@ async function ecSupprimerTest(t) {
   } catch (e) { alert(e.message || "Suppression impossible."); return; }
   dashboardTests = dashboardTests.filter(x => x.id !== t.id);
   ecResultatsTests = ecResultatsTests.filter(r => r.session_id !== t.id);
-  ecOuvrirTests(ecEvaluationsSuivies().tests);
+  fermerDetailClasse();
   renderClassDashboard();
 }
 

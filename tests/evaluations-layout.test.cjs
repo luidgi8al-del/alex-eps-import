@@ -10,12 +10,18 @@ for (const marker of [
   'id="ecNouveauTest"',
   'class="ec-eval-stats"',
   'class="ec-evaluations-carte"',
+  '[["Toutes", "Toutes"], ["Tests", "Tests"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]]',
+  'data-ec-test-inline',
+  'créé depuis les outils',
   'Aucune évaluation pour cette période',
   'id="ecActionsEvaluations"',
   'function ecCreerNouveauTest()',
   'Évaluation ponctuelle · suivre les progrès',
   'Évaluation finale · bilan du cycle'
 ]) assert(screen.includes(marker), marker);
+
+assert(!screen.includes('{ libelle: `Tests EPS enregistrés (${tests.length})`'),
+  'Les tests ne doivent plus être cachés dans le menu Actions');
 
 for (const marker of [
   '.ec-eval-actions-principales',
