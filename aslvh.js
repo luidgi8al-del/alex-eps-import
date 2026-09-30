@@ -693,14 +693,14 @@ function showCreneauExport(slot, rows) {
   overlay.innerHTML = `<section class="unified-export-dialog"><header><i>${iconeActiviteAS(slot.activity_name)}</i><div><h3>${unssText(slot.activity_name)}</h3><p>${unssText(unssSlotLabel(slot))} · ${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
     <h4>Télécharger la liste du créneau</h4>
     <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Nom, prénom, classe, e-mail élève et catégorie</small></span><em>›</em></button>
-    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Liste prête à imprimer ou enregistrer</small></span><em>›</em></button>
+    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Fichier téléchargé directement</small></span><em>›</em></button>
     <button class="export-cancel" data-export-close>Annuler</button>
   </main></section>`;
   document.body.appendChild(overlay);
   overlay.querySelectorAll("[data-export-close]").forEach(b => b.onclick = () => overlay.remove());
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
   overlay.querySelector('[data-format="csv"]').onclick = () => { overlay.remove(); exportCreneauCsv(slot, rows); };
-  overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); printCreneauPdf(slot, rows); };
+  overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); downloadCreneauPdf(slot, rows); };
 }
 
 function exportCreneauCsv(slot, rows) {
@@ -717,15 +717,84 @@ function exportCreneauCsv(slot, rows) {
   URL.revokeObjectURL(a.href);
 }
 
-function printCreneauPdf(slot, rows) {
-  const w = open("", "_blank");
-  if (!w) { alert("Autorisez les fenêtres surgissantes."); return; }
+/** Encode le texte avec les caracteres acceptes par la police PDF standard WinAnsi. */
+function asPdfText(value) {
+  return String(value ?? "").normalize("NFC")
+    .replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/…/g, "...")
+    .replace(/œ/g, "oe").replace(/Œ/g, "OE").replace(/–|—/g, "-")
+    .replace(/[^\x20-\xFF]/g, "?")
+    .replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+}
+
+/** Produit un petit PDF autonome, sans ouvrir la fenetre d'impression du navigateur. */
+function asPdfDocument(pages) {
+  const objects = [null, "", "", "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"];
+  const kids = [];
+  pages.forEach(content => {
+    const pageId = objects.length;
+    const contentId = pageId + 1;
+    kids.push(`${pageId} 0 R`);
+    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R >> >> /Contents ${contentId} 0 R >>`);
+    objects.push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+  });
+  objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+  objects[2] = `<< /Type /Pages /Count ${kids.length} /Kids [${kids.join(" ")}] >>`;
+
+  let pdf = "%PDF-1.4\n%\xE2\xE3\xCF\xD3\n";
+  const offsets = [0];
+  for (let id = 1; id < objects.length; id++) {
+    offsets[id] = pdf.length;
+    pdf += `${id} 0 obj\n${objects[id]}\nendobj\n`;
+  }
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objects.length}\n0000000000 65535 f \n`;
+  for (let id = 1; id < objects.length; id++) pdf += `${String(offsets[id]).padStart(10, "0")} 00000 n \n`;
+  pdf += `trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return new Blob([Uint8Array.from(pdf, char => char.charCodeAt(0) & 255)], { type: "application/pdf" });
+}
+
+function downloadCreneauPdf(slot, rows) {
   const professeur = slot.responsible_teacher || "Professeur non attribué";
-  w.document.write(`<html><head><meta charset=utf-8><title>Liste ${unssText(slot.activity_name)}</title><style>
-    body{font:12px Arial;color:#123a59;padding:24px}header{background:#087dca;color:#fff;padding:18px;border-radius:12px}header h1{margin:0 0 6px}header p{margin:3px 0}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #cad8e3;padding:7px;text-align:left;overflow-wrap:anywhere}th{background:#edf6fd}@page{size:landscape;margin:12mm}@media print{button{display:none}}
-  </style></head><body><header><h1>${unssText(slot.activity_name)}</h1><p>${unssText(unssSlotLabel(slot))}</p><p>Enseignant : ${unssText(professeur)} · ${rows.length} élève(s)</p></header>
-    <table><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>E-mail élève</th><th>Catégorie</th></tr></thead><tbody>${rows.map(s => `<tr><td>${unssText(String(s.last_name || "").toUpperCase())}</td><td>${unssText(s.first_name || "")}</td><td>${unssText(s.division || s.school_class_label || s.class_label || "")}</td><td>${unssText(s.student_email || "")}</td><td>${unssText(unssCategoryLabel(s.category, s.sex))}</td></tr>`).join("")}</tbody></table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);
-  w.document.close();
+  const entetes = ["Nom", "Prenom", "Classe", "E-mail eleve", "Categorie"];
+  const donnees = rows.map(s => [
+    String(s.last_name || "").toUpperCase(), s.first_name || "",
+    s.division || s.school_class_label || s.class_label || "", s.student_email || "",
+    unssCategoryLabel(s.category, s.sex)
+  ]);
+  const parPage = 22;
+  const blocs = donnees.length ? Array.from({ length: Math.ceil(donnees.length / parPage) }, (_, i) => donnees.slice(i * parPage, (i + 1) * parPage)) : [[]];
+  const x = [42, 178, 290, 360, 620];
+  const limites = [22, 18, 11, 39, 22];
+  const pages = blocs.map((lignes, pageIndex) => {
+    const texte = (taille, px, py, valeur) => `BT /F1 ${taille} Tf ${px} ${py} Td (${asPdfText(valeur)}) Tj ET\n`;
+    let contenu = "0.04 0.49 0.79 rg 36 507 770 52 re f\n";
+    contenu += texte(20, 50, 540, slot.activity_name || "Créneau AS");
+    contenu += texte(10, 50, 520, unssSlotLabel(slot));
+    contenu += texte(10, 470, 540, `Enseignant : ${professeur}`);
+    contenu += texte(9, 470, 522, `${rows.length} élève(s) · page ${pageIndex + 1}/${blocs.length}`);
+    contenu += "0.91 0.96 0.99 rg 36 479 770 24 re f\n0.10 0.23 0.35 rg\n";
+    entetes.forEach((entete, index) => { contenu += texte(9, x[index], 487, entete); });
+    lignes.forEach((ligne, rowIndex) => {
+      const y = 462 - rowIndex * 19;
+      contenu += `0.82 0.87 0.91 RG 36 ${y - 5} 770 19 re S\n`;
+      ligne.forEach((valeur, index) => {
+        const court = String(valeur ?? "").length > limites[index] ? String(valeur).slice(0, limites[index] - 1) + "…" : valeur;
+        contenu += texte(8, x[index], y, court);
+      });
+    });
+    contenu += texte(8, 42, 26, `Document généré le ${new Date().toLocaleDateString("fr-FR")} · EPS LVH`);
+    return contenu;
+  });
+  const nom = String(slot.activity_name || "creneau-as").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+  const url = URL.createObjectURL(asPdfDocument(pages));
+  const lien = document.createElement("a");
+  lien.href = url;
+  lien.download = `liste-${nom || "creneau-as"}.pdf`;
+  document.body.appendChild(lien);
+  lien.click();
+  lien.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 /** Ceux dont le dossier n'est pas complet, tous ensemble : chaque carte ouvre la fiche pour

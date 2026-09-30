@@ -5,7 +5,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./aide.js",
   "./aide.js?v=20260929-2",
   "./aslvh.js",
-  "./aslvh.js?v=20260929-16",
+  "./aslvh.js?v=20260930-17",
   "./assets/lvh.jpeg",
   "./bac-reference.js",
   "./bac-reference.js?v=20260924-1",

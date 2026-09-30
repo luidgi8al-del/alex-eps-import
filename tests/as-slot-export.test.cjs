@@ -7,12 +7,14 @@ const css = fs.readFileSync(path.join(root, 'styles', 'site.css'), 'utf8');
 [
   'function showCreneauExport(slot, rows)',
   'function exportCreneauCsv(slot, rows)',
-  'function printCreneauPdf(slot, rows)',
+  'function downloadCreneauPdf(slot, rows)',
+  'function asPdfDocument(pages)',
   'unssListeInscritsExportBtn',
   'unssCreneauExportBtn',
   'id="asExport"',
   '["Nom", "Prénom", "Classe", "E-mail élève", "Catégorie"]',
-  '<th>Classe</th><th>E-mail élève</th><th>Catégorie</th>',
+  'const entetes = ["Nom", "Prenom", "Classe", "E-mail eleve", "Categorie"]',
+  'lien.download = `liste-${nom || "creneau-as"}.pdf`',
   'Enseignant :'
 ].forEach(marker => {
   if (!code.includes(marker)) throw new Error(`Export de créneau incomplet : ${marker}`);
