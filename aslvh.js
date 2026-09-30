@@ -3709,7 +3709,7 @@ function renderUnssAppelTab() {
     <nav class="as-call-breadcrumb" aria-label="Fil d’Ariane"><span>ASLVH</span><i>›</i><b>Appels</b></nav>
     <section class="as-slot-compact"><div class="as-slot-summary"><h1>${unssText(creneau.activity_name)} · ${unssText(capitaliseJour(creneau.day_of_week))}</h1><p><span>◷ ${unssText(horaire || "Horaire non renseigné")}</span><span>⌖ ${unssText(creneau.location || "Lieu non renseigné")}</span><span>♙ ${unssText(professeur)}</span></p></div><label class="as-slot-picker"><span>Changer de créneau</span><select id="unssAppelSlotSelect">${creneaux.map(s =>
       `<option value="${s.id}"${s.id === unssAppelSlotId ? " selected" : ""}>${unssText(unssSlotLabel(s))}</option>`).join("")}</select></label></section>
-    <section class="as-call-kpis ui-indicator-grid"><article id="unssAppelStudents" class="as-call-kpi-link ui-indicator" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article class="ui-indicator"><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article class="ui-indicator"><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
+    <section class="as-call-kpis ui-indicator-grid"><button type="button" id="unssNouvelAppelMobile" class="as-mobile-call-action" ${inscrits.length ? "" : "disabled"}><b>APPEL</b><span>Faire l’appel</span></button><article id="unssAppelStudents" class="as-call-kpi-link as-call-kpi-students ui-indicator" role="button" tabindex="0" aria-label="Voir les ${inscrits.length} élèves inscrits"><i>♙</i><div><b>${inscrits.length}</b><span>Élèves inscrits</span></div></article><article class="as-call-kpi-recorded ui-indicator"><i>▣</i><div><b>${seances.length}</b><span>Appels enregistrés</span></div></article><article class="as-call-kpi-rate ui-indicator"><i class="as-rate-ring" style="--rate:${tauxGlobal * 3.6}deg"><em>${tauxGlobal}%</em></i><div><b>${tauxGlobal}%</b><span>Présence moyenne</span></div></article></section>
     <div class="as-call-layout"><main class="as-call-main"><div class="as-call-tabs"><button data-appel-vue="historique" class="${unssAppelVue === "historique" ? "active" : ""}">Appels enregistrés</button><button data-appel-vue="bilan" class="${unssAppelVue === "bilan" ? "active" : ""}">Taux de présence</button></div>${unssAppelVue === "bilan" ? contenuBilan : contenuHistorique}</main>
       <aside class="as-next-card"><span class="as-call-eyebrow">PROCHAINE SÉANCE</span>${prochaine ? `<div class="as-next-date"><b>${unssText(prochaine.jour)}</b><span>${prochaine.annee}</span></div>` : `<div class="as-next-date"><b>Date à définir</b></div>`}<dl><div><dt>◷ Horaire</dt><dd>${unssText(horaire || "Non renseigné")}</dd></div><div><dt>⌖ Lieu</dt><dd>${unssText(creneau.location || "Non renseigné")}</dd></div><div><dt>♙ Enseignant</dt><dd>${unssText(professeur)}</dd></div></dl><p class="as-next-note"><b>✓ Pense-bête</b><span>L’appel pourra être créé dès le début de la séance.</span></p></aside>
     </div></div>`;
@@ -3726,12 +3726,14 @@ function renderUnssAppelTab() {
     if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ouvrirInscrits(); }
   });
   wrap.querySelectorAll("[data-appel-vue]").forEach(b => b.addEventListener("click", () => { unssAppelVue = b.dataset.appelVue; renderUnssAppelTab(); }));
-  document.getElementById("unssNouvelAppel")?.addEventListener("click", () => {
+  const ouvrirNouvelAppel = () => {
     unssAppelMembers = elevesDuCreneau(unssAppelSlotId);
     unssAppelPresence = {};
     unssAppelMembers.forEach(e => { unssAppelPresence[e.id] = true; });
     chargerDispensesAppel().then(() => ouvrirEditeurAppel(creneau, null));
-  });
+  };
+  document.getElementById("unssNouvelAppel")?.addEventListener("click", ouvrirNouvelAppel);
+  document.getElementById("unssNouvelAppelMobile")?.addEventListener("click", ouvrirNouvelAppel);
   // Supprimer un appel pointe par erreur (mauvaise date, doublon).
   //
   // Seule la seance est effacee, pas ses presences une par une : une presence dont la seance

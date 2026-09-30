@@ -20,6 +20,8 @@ if (!css.includes('.as-attendance-list')) {
   'Présence moyenne',
   'PROCHAINE SÉANCE',
   'id="unssNouvelAppel"',
+  'id="unssNouvelAppelMobile"',
+  'as-mobile-call-action',
   'id="unssAppelStudents"',
   'ouvrirListeInscritsCreneau(creneau',
   'data-actions-seance=',
