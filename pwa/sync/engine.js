@@ -15,6 +15,26 @@ const RATTRAPAGE_KEY = "dernier-rattrapage";
 const RATTRAPAGE_INTERVALLE_MS = 10 * 60 * 1000;
 /** Fenetre du rattrapage : une saisie plus ancienne que cela est deja arrivee, ou ne le sera jamais. */
 const RATTRAPAGE_JOURS = 30;
+/**
+ * Une date serveur franchement antérieure à la saisie locale ne décrit pas une modification
+ * concurrente. On garde cinq minutes de marge pour les horloges légèrement décalées, et on
+ * refuse une horloge locale placée dans le futur afin de ne jamais écraser un vrai changement.
+ */
+export function serverIsClearlyOlder(operation, serverRecord, now = Date.now()) {
+  const local = Date.parse(operation?.createdAt || "");
+  const distant = Date.parse(serverRecord?.updatedAt || "");
+  return Number.isFinite(local) && Number.isFinite(distant)
+    && local <= now + 5 * 60 * 1000 && local - distant > 5 * 60 * 1000;
+}
+
+function applyLocalFieldsToServer(operation, serverRecord) {
+  const data = { ...(serverRecord?.data || {}) };
+  for (const field of operation.changedFields || []) {
+    if (Object.prototype.hasOwnProperty.call(operation.data || {}, field)) data[field] = operation.data[field];
+    else delete data[field];
+  }
+  return { kind: "merged", data, localFields: operation.changedFields || [], overlappingFields: [] };
+}
 export class OfflineSyncEngine {
   #adapter; #batchSize; #running;
   constructor({ adapter, batchSize = DEFAULT_BATCH_SIZE }) {
@@ -143,7 +163,9 @@ export class OfflineSyncEngine {
         await acknowledgeOperation(operation.opId);
         continue;
       }
-      const result = mergeOfflineChange({ baseData: operation.baseData, localData: operation.data, serverData: serverRecord.data, declaredLocalFields: operation.changedFields });
+      const result = serverIsClearlyOlder(operation, serverRecord)
+        ? applyLocalFieldsToServer(operation, serverRecord)
+        : mergeOfflineChange({ baseData: operation.baseData, localData: operation.data, serverData: serverRecord.data, declaredLocalFields: operation.changedFields });
       if (result.kind === "conflict") {
         await storeConflict({ operation, serverRecord, overlappingFields: result.overlappingFields });
         await acknowledgeOperation(operation.opId);
@@ -186,10 +208,12 @@ export class OfflineSyncEngine {
           if (result.status === "conflict") {
             const distant = result.serverRecord;
             const rapprochement = distant && !distant.deleted && operation.action !== "delete"
-              ? mergeOfflineChange({
+              ? (serverIsClearlyOlder(operation, distant)
+                ? applyLocalFieldsToServer(operation, distant)
+                : mergeOfflineChange({
                   baseData: operation.baseData, localData: operation.data,
                   serverData: distant.data, declaredLocalFields: operation.changedFields
-                })
+                }))
               : { kind: "conflict", overlappingFields: result.overlappingFields || operation.changedFields };
 
             if (rapprochement.kind === "merged") {

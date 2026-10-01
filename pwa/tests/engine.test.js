@@ -13,8 +13,9 @@ import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
 import { countConflicts, listConflicts } from "../sync/conflicts.js";
 import { resolveConflict, buildFieldChoice, acknowledgeRejection, resolveAllConflicts } from "../sync/resolve.js";
-import { OfflineSyncEngine } from "../sync/engine.js";
+import { OfflineSyncEngine, serverIsClearlyOlder } from "../sync/engine.js";
 import { currentSyncState } from "../core/events.js";
+import { serverIsClearlyOlderThanStoredConflict } from "../ui/conflict-dialog.js";
 
 /** Table rase entre deux cas : un reste de file d'attente fausserait le suivant. */
 export async function viderTout() {
@@ -93,6 +94,46 @@ test("référence du formulaire : deux divisions incompatibles demandent un choi
   await new OfflineSyncEngine({ adapter: serveur }).sync();
   assertEgal(await countConflicts(), 1, "vrai désaccord protégé");
   assertEgal(serveur.recu.length, 0, "aucune version écrasée");
+});
+
+test("une version serveur nettement plus ancienne laisse gagner la saisie récente", async () => {
+  const now = Date.parse("2026-10-02T00:30:00Z");
+  assert(serverIsClearlyOlder(
+    { createdAt: "2026-10-02T00:27:00Z" },
+    { updatedAt: "2026-09-15T22:47:00Z" },
+    now
+  ), "la saisie du 2 octobre doit être reconnue comme plus récente");
+
+  const original = { id: "1", version: 1, host_available: false };
+  await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
+    data: { ...original, host_available: true } });
+  const serveur = serveurFactice({ pages: [{ records: [{
+    entity: "unss_students", id: "1", version: 2,
+    updatedAt: "2026-09-15T22:47:00Z",
+    data: { ...original, version: 2 }
+  }], hasMore: false }] });
+
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(await countConflicts(), 0, "l'ancienne copie serveur ne doit plus ouvrir la fenêtre");
+  assertEgal(serveur.recu[0].data.host_available, true, "la saisie récente doit être envoyée");
+});
+
+test("une version serveur récente conserve la protection contre les vrais conflits", async () => {
+  const now = Date.parse("2026-10-02T00:30:00Z");
+  assert(!serverIsClearlyOlder(
+    { createdAt: "2026-10-02T00:27:00Z" },
+    { updatedAt: "2026-10-02T00:29:00Z" },
+    now
+  ), "une modification serveur récente ne doit pas être écrasée automatiquement");
+});
+
+test("un faux conflit déjà enregistré est reconnu au prochain affichage", async () => {
+  const now = Date.parse("2026-10-02T00:35:00Z");
+  assert(serverIsClearlyOlderThanStoredConflict({
+    kind: "conflict",
+    localModifiedAt: "2026-10-02T00:31:00Z",
+    serverModifiedAt: "2026-09-15T22:47:00Z"
+  }, now), "l'ancien conflit conservé dans la PWA doit être résolu automatiquement");
 });
 
 // ---------------------------------------------------------------- file d'attente

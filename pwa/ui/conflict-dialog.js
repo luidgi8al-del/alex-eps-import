@@ -1,6 +1,13 @@
 import { listConflicts, listResolvedConflicts } from "../sync/conflicts.js";
 import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections, resolveAllConflicts } from "../sync/resolve.js";
 
+export function serverIsClearlyOlderThanStoredConflict(conflict, now = Date.now()) {
+  const local = Date.parse(conflict?.localModifiedAt || "");
+  const distant = Date.parse(conflict?.serverModifiedAt || "");
+  return conflict?.kind !== "refus" && Number.isFinite(local) && Number.isFinite(distant)
+    && local <= now + 5 * 60 * 1000 && local - distant > 5 * 60 * 1000;
+}
+
 /**
  * L'ecran de resolution des conflits.
  *
@@ -166,7 +173,16 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
   const libelles = { ...LIBELLES_DEFAUT, ...labels };
 
   async function afficher() {
-    const conflits = await listConflicts();
+    let conflits = await listConflicts();
+    // Les versions déjà rangées dans IndexedDB avant la correction ne repassent pas par le
+    // moteur. Si la date serveur est clairement antérieure, la saisie locale est remise en file
+    // automatiquement puis le panneau est relu : l'utilisateur n'a plus à trancher ce faux cas.
+    const fauxConflits = conflits.filter(serverIsClearlyOlderThanStoredConflict);
+    for (const conflit of fauxConflits) await resolveConflict(conflit.conflictId, "local");
+    if (fauxConflits.length) {
+      conflits = await listConflicts();
+      onResolved?.({ autoResolved: fauxConflits.length }, "local-newer");
+    }
     const history = await listResolvedConflicts();
     const addRecoveryButton = () => {
       if (!history.length) return;
