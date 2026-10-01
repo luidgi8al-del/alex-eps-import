@@ -395,8 +395,8 @@ function grilleCalendrier() {
  * le type BAC EPS. AS reprend les sorties, Examen les examens.
  */
 function groupesDatesImportantes() {
-  const saisisPar = kind => calendarEvents
-    .filter(e => e.kind === kind)
+  const saisisPar = (kind, filtre = () => true) => calendarEvents
+    .filter(e => e.kind === kind && filtre(e))
     .sort((a, b) => a.start_date_epoch_millis - b.start_date_epoch_millis)
     .map(e => {
       const debut = dateFr(isoDate(new Date(e.start_date_epoch_millis)));
@@ -413,7 +413,8 @@ function groupesDatesImportantes() {
 
   return {
     EPS: { label: "EPS", dates: eps, vide: "Aucune date EPS enregistrée." },
-    AS: { label: "AS", dates: saisisPar("SORTIE"), vide: "Aucune date AS enregistrée." },
+    AS: { label: "AS", dates: saisisPar("SORTIE", e =>
+      !String(e.comment || "").startsWith("Calendrier établissement LVH")), vide: "Aucune date AS enregistrée." },
     EXAMEN: { label: "Examen", dates: saisisPar("EXAMEN"), vide: "Aucune date d’examen enregistrée." }
   };
 }

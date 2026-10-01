@@ -217,7 +217,8 @@ async function loadHomeModuleSummaries() {
       "institution_calendar_events?deleted=eq.false&kind=eq.SORTIE&select=*&order=start_date_epoch_millis.asc",
       { ou:event => !event.deleted && event.kind === "SORTIE",
         trier:(a,b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
-    const next = events.find(event => Number(event.end_date_epoch_millis || event.start_date_epoch_millis || 0) >= todayStart.getTime());
+    const datesAs = events.filter(event => !String(event.comment || "").startsWith("Calendrier établissement LVH"));
+    const next = datesAs.find(event => Number(event.end_date_epoch_millis || event.start_date_epoch_millis || 0) >= todayStart.getTime());
     homeSummaryText("homeAsSummary", next?.label || "Aucun événement prévu");
     homeSummaryText("homeAsMeta", next ? formatHomeEventDate(next.start_date_epoch_millis) : "Ajouter une date AS");
   } catch {

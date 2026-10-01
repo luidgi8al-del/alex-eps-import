@@ -4171,6 +4171,17 @@ function ecrireDetailsDateAs(details) {
   return AS_DETAILS_PREFIX + JSON.stringify(details || {});
 }
 
+/**
+ * Le type SORTIE sert aussi au calendrier général de l'établissement. Les lignes importées
+ * depuis son calendrier (stages STMG, salons, MISMUN…) ne sont donc pas des dates AS. On garde
+ * toutefois les anciennes sorties créées manuellement avant l'existence de la fiche AS.
+ */
+function estVraieDateAs(evenement) {
+  const commentaire = String(evenement?.comment || "");
+  return evenement?.kind === "SORTIE"
+    && !commentaire.startsWith("Calendrier établissement LVH");
+}
+
 function dateAsComplete(details) {
   const commun = details.activity && details.accompanyingTeacher && details.exactLocation
     && details.schoolNeeds && details.asNeeds;
@@ -4185,7 +4196,7 @@ async function loadUnssDates() {
     "institution_calendar_events?deleted=eq.false&select=*&order=start_date_epoch_millis.asc",
     { ou: e => !e.deleted,
       trier: (a, b) => Number(a.start_date_epoch_millis || 0) - Number(b.start_date_epoch_millis || 0) });
-  unssDateEvents = unssCalendarEvents.filter(e => e.kind === "SORTIE");
+  unssDateEvents = unssCalendarEvents.filter(estVraieDateAs);
 }
 
 /** Signale tout ce qui occupe déjà la journée, y compris les repères calculés du calendrier. */
