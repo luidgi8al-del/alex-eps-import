@@ -471,9 +471,9 @@ function ecDessinerTableauDeBord(panel) {
 // ---- Suivi permanent de la classe ------------------------------------------------------
 
 function ecDatesSuiviClasse() {
-  const datesCycle = ecCoursRetenu().seance?.dates || [];
-  const datesEnregistrees = suiviClasse.map(x => x.date);
-  const dateCourante = ecCoursRetenu().seance?.date || dateLocaleSeance();
+  const datesCycle = (ecCoursRetenu().seance?.dates || []).map(normaliserDateSuiviClasse);
+  const datesEnregistrees = suiviClasse.map(x => normaliserDateSuiviClasse(x.date));
+  const dateCourante = normaliserDateSuiviClasse(ecCoursRetenu().seance?.date || dateLocaleSeance());
   return [...new Set([...datesCycle, ...datesEnregistrees, dateCourante].filter(Boolean))].sort();
 }
 
@@ -539,7 +539,7 @@ function ecAfficherAlerteSuivi(eleve, motifs) {
 
 function ecDessinerSuiviClasse(panel) {
   const dates = ecDatesSuiviClasse();
-  const dateCible = ecCoursRetenu().seance?.date || dateLocaleSeance();
+  const dateCible = normaliserDateSuiviClasse(ecCoursRetenu().seance?.date || dateLocaleSeance());
   const eleves = [...dashboardStudents].sort((a, b) => ecNomEleve(a).localeCompare(ecNomEleve(b), "fr"));
   const repetitions = new Set();
   suiviClasse.forEach(o => o.motifs.forEach(m => { if (ecNombreMotifSuivi(o.studentId, m) >= 2) repetitions.add(`${o.studentId}:${m}`); }));

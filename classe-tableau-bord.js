@@ -1481,23 +1481,34 @@ let documentsArchivesOuverts = false;
 let ongletDossierEleve = "synthese";
 const PREFIXE_SUIVI_CLASSE = "__EPS_SUIVI_CLASSE__:";
 
+function normaliserDateSuiviClasse(valeur) {
+  if (!valeur) return "";
+  if (typeof valeur === "string" && /^\d{4}-\d{2}-\d{2}/.test(valeur)) return valeur.slice(0, 10);
+  const date = valeur instanceof Date ? valeur : new Date(valeur);
+  if (Number.isNaN(date.getTime())) return "";
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
 function decoderSuiviClasse(ligne) {
   if (!String(ligne?.content || "").startsWith(PREFIXE_SUIVI_CLASSE)) return null;
   try {
     const valeur = JSON.parse(String(ligne.content).slice(PREFIXE_SUIVI_CLASSE.length));
-    if (!valeur.studentId || !valeur.date || !Array.isArray(valeur.motifs)) return null;
-    return { ...valeur, id: ligne.id, created_at: ligne.created_at, updated_at: ligne.updated_at };
+    const date = normaliserDateSuiviClasse(valeur.date);
+    if (!valeur.studentId || !date || !Array.isArray(valeur.motifs)) return null;
+    return { ...valeur, date, id: ligne.id, created_at: ligne.created_at, updated_at: ligne.updated_at };
   } catch { return null; }
 }
 
 function encoderSuiviClasse(valeur) {
   return PREFIXE_SUIVI_CLASSE + JSON.stringify({
-    version: 1, studentId: valeur.studentId, date: valeur.date,
+    version: 1, studentId: valeur.studentId, date: normaliserDateSuiviClasse(valeur.date),
     motifs: [...new Set(valeur.motifs || [])]
   });
 }
 
 async function enregistrerCelluleSuiviClasse(studentId, date, motifs) {
+  date = normaliserDateSuiviClasse(date);
+  if (!date) throw new Error("La date de la séance n’est pas valide.");
   const existante = suiviClasse.find(x => String(x.studentId) === String(studentId) && x.date === date);
   const maintenant = new Date().toISOString();
   if (!motifs.length) {
