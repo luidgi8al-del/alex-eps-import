@@ -893,7 +893,7 @@ function ecDessinerEleves(panel) {
         const niveau = ecNiveau(e);
         const parent = e.parent_email || e.parent1_email || e.parent_1_email || "Non renseigné";
         const parent2 = e.parent2_email || e.parent_2_email || "";
-        return `<div class="ec-eleve">
+        return `<div class="ec-eleve" data-ec-dossier-card="${ecTexte(e.id)}">
           <button type="button" class="ec-eleve-nom" data-ec-dossier="${ecTexte(e.id)}"><b>${ecTexte(ecNomEleve(e))}</b>
             <span class="ec-eleve-infos"><small><strong>Naissance</strong>${ecTexte(ecDateNaissance(e.birth_date_epoch_millis || e.birth_date))}</small>
             <small><strong>Sexe</strong>${ecTexte(e.sex || "Non renseigné")}</small>
@@ -903,7 +903,6 @@ function ecDessinerEleves(panel) {
           <div class="ec-eleve-commandes"><select class="ec-niveau" data-ec-niveau="${ecTexte(e.id)}" aria-label="Niveau EPS de ${ecTexte(ecNomEleve(e))}">${
             EC_NIVEAUX.map((n, i) => `<option value="${i + 1}"${i + 1 === niveau ? " selected" : ""}>Niveau ${i + 1} · ${n}</option>`).join("")}</select>
             <details class="ui-actions ec-eleve-actions"><summary>Actions</summary><div class="ui-actions-menu">
-              <button type="button" data-ec-ouvrir-eleve="${ecTexte(e.id)}">Ouvrir le dossier</button>
               <button type="button" class="danger" data-ec-retirer-eleve="${ecTexte(e.id)}">Retirer de cette classe</button>
             </div></details></div>
         </div>`;
@@ -922,7 +921,10 @@ function ecDessinerEleves(panel) {
   };
   panel.querySelectorAll("[data-ec-filtre-eleves]").forEach(b => b.onclick = () => { ecFiltreEleves = b.dataset.ecFiltreEleves; renderClassDashboard(); });
   panel.querySelectorAll("[data-ec-dossier]").forEach(b => b.onclick = () => ouvrirDossierEleve(b.dataset.ecDossier));
-  panel.querySelectorAll("[data-ec-ouvrir-eleve]").forEach(b => b.onclick = () => ouvrirDossierEleve(b.dataset.ecOuvrirEleve));
+  panel.querySelectorAll("[data-ec-dossier-card]").forEach(carte => carte.onclick = evenement => {
+    if (evenement.target.closest(".ec-eleve-commandes")) return;
+    ouvrirDossierEleve(carte.dataset.ecDossierCard);
+  });
   panel.querySelectorAll("[data-ec-retirer-eleve]").forEach(b => b.onclick = () => ecRetirerEleveDeClasse(b.dataset.ecRetirerEleve, b));
   panel.querySelectorAll("[data-ec-niveau]").forEach(s => s.onchange = () => ecChangerNiveau(s.dataset.ecNiveau, s.value, s));
   document.getElementById("ecPdfListe").onclick = () => ecImprimerListe();

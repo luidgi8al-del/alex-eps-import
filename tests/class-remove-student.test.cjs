@@ -15,3 +15,9 @@ test('un élève peut être retiré directement depuis la liste de sa classe', (
   assert.match(screen, /dashboardStudents = dashboardStudents\.filter/);
   assert.match(help, /À droite du niveau EPS, ouvrez Actions/);
 });
+
+test('la zone identité ouvre directement le dossier élève', () => {
+  assert.match(screen, /data-ec-dossier-card/);
+  assert.match(screen, /ouvrirDossierEleve\(carte\.dataset\.ecDossierCard\)/);
+  assert.doesNotMatch(screen, />Ouvrir le dossier<\/button>/);
+});
