@@ -3360,6 +3360,15 @@ function rangsVoeuxCreneau(eleve, slotId) {
   return [1, 2, 3].filter(rang => eleve[`wish${rang}_slot_id`] && String(eleve[`wish${rang}_slot_id`]) === String(slotId));
 }
 
+function dateInscriptionCreneauCourte(studentId, slotId) {
+  const inscriptions = typeof unssInscriptions === "undefined" ? [] : unssInscriptions;
+  const dates = inscriptions
+    .filter(i => String(i.student_id) === String(studentId) && String(i.slot_id) === String(slotId) && i.enrolled_at)
+    .map(i => new Date(i.enrolled_at)).filter(d => !Number.isNaN(d.getTime()))
+    .sort((a, b) => a.getTime() - b.getTime());
+  return dates.length ? dates[0].toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "—";
+}
+
 function identiteEleveCreneauHtml(eleve, rangs = []) {
   const categorie = unssCategoryLabel(eleve.category, eleve.sex) || "Catégorie non renseignée";
   return `<div class="as-slot-student-identity"><strong>${unssText(String(eleve.last_name || "").toUpperCase())} ${unssText(eleve.first_name || "")}</strong><span class="as-slot-student-badge">${unssText(categorie)}</span><span class="as-slot-student-badge wish">${rangs.length ? rangs.map(r => `Vœu ${r}`).join(" · ") : "Hors vœux"}</span></div>`;
@@ -3473,8 +3482,8 @@ async function ouvrirListeInscritsCreneau(slot, fermerDepuisAppel = null) {
   panel.innerHTML = `<div class="as-panel-title ui-modal-head"><button class="ui-modal-close" id="unssListeInscritsCloseBtn" aria-label="${fermerDepuisAppel ? "Fermer" : "Retour"}">${fermerDepuisAppel ? "×" : "←"}</button><div><h2>Élèves inscrits</h2><small>${unssText(slot.activity_name)} · ${unssText(unssSlotLabel(slot))}</small></div><button class="as-panel-export" id="unssListeInscritsExportBtn">⇩ Télécharger</button></div>
     ${eleves.length === 0
       ? `<div class="muted" style="margin-top:10px">Aucun élève inscrit.</div>`
-      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th><th>Vœu pour ce créneau</th></tr></thead><tbody>${
-          eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td><td><span class="as-slot-student-badge wish">${rangsVoeuxCreneau(e, slot.id).map(r => `Vœu ${r}`).join(" · ") || "Hors vœux"}</span></td></tr>`).join("")
+      : `<div style="overflow-x:auto; margin-top:10px"><table class="eleveTable"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Catégorie</th><th>Vœu</th><th title="Date d’inscription">D.I</th></tr></thead><tbody>${
+          eleves.map(e => `<tr><td>${unssText(String(e.last_name || "").toUpperCase())}</td><td>${unssText(e.first_name || "")}</td><td>${unssText(e.division || "")}</td><td>${unssText(unssCategoryLabel(e.category, e.sex))}</td><td><span class="as-slot-student-badge wish">${rangsVoeuxCreneau(e, slot.id).map(r => `Vœu ${r}`).join(" · ") || "Hors vœux"}</span></td><td><span class="as-slot-enrollment-date">${dateInscriptionCreneauCourte(e.id, slot.id)}</span></td></tr>`).join("")
         }</tbody></table></div>`
     }`;
   document.getElementById("unssListeInscritsCloseBtn").addEventListener("click", () => fermerDepuisAppel ? fermerDepuisAppel() : ouvrirFicheCreneau(slot));

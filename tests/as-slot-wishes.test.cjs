@@ -36,7 +36,7 @@ Object.assign(context,{
 vm.runInContext(code.slice(code.indexOf('async function ouvrirListeInscritsCreneau'),code.indexOf('function ouvrirAjoutElevesCreneau')),context);
 (async()=>{
   await context.ouvrirListeInscritsCreneau({id:'fri',activity_name:'Escalade'});
-  assert.match(panel.innerHTML,/<th>Vœu pour ce créneau<\/th>/);assert.match(panel.innerHTML,/Vœu 2/);assert.doesNotMatch(panel.innerHTML,/Vœu 1/);
+  assert.match(panel.innerHTML,/<th>Vœu<\/th>/);assert.match(panel.innerHTML,/Vœu 2/);assert.doesNotMatch(panel.innerHTML,/Vœu 1/);
   await context.ouvrirElevesCreneau({id:'wed',activity_name:'Escalade'});
   assert.match(panel.innerHTML,/Vœu 1/);assert.match(panel.innerHTML,/Minime Fille/);assert.match(panel.innerHTML,/Retirer/);
   console.log('PASS rank badges and read-only column, distinct slots, categories, no wish fallback. No registrations modified.');
