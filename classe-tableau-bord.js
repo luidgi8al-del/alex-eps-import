@@ -31,6 +31,122 @@ let dashboardJour = null;
 // un decalage ponctuel (seance annulee) ne doit pas figer l'affichage pour le reste du cycle.
 let dashboardSeanceManuelle = null;
 
+// ---- Preparation temporaire d'une seance -----------------------------------------------
+// Ce n'est volontairement PAS un appel : Pronote reste l'outil d'appel. Cette selection ne
+// cree aucune absence ni dispense en base. Elle sert seulement a ne proposer, pendant le cours,
+// que les eleves presents dans les outils, les tests et les grilles d'evaluation.
+const CLE_PREPARATION_SEANCE = "eps-preparation-seance-v1";
+let dashboardPreparationSeance = null;
+
+const dateLocaleSeance = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
+function lirePreparationSeance() {
+  try {
+    const valeur = JSON.parse(localStorage.getItem(CLE_PREPARATION_SEANCE) || "null");
+    if (!valeur || valeur.date !== dateLocaleSeance() || valeur.userId !== session?.user_id) return null;
+    return valeur;
+  } catch { return null; }
+}
+
+function enregistrerPreparationSeance(valeur) {
+  dashboardPreparationSeance = valeur;
+  if (valeur) localStorage.setItem(CLE_PREPARATION_SEANCE, JSON.stringify(valeur));
+  else localStorage.removeItem(CLE_PREPARATION_SEANCE);
+}
+
+/** Preparation active de la classe demandee, jamais celle d'une autre classe ou d'un autre jour. */
+function preparationSeancePourClasse(classId) {
+  const valeur = dashboardPreparationSeance || lirePreparationSeance();
+  if (!valeur || String(valeur.classId) !== String(classId) || valeur.date !== dateLocaleSeance()) return null;
+  dashboardPreparationSeance = valeur;
+  return valeur;
+}
+
+/** Filtre commun utilise par les outils et les evaluations. */
+function elevesActifsPourSeance(classId, eleves) {
+  const preparation = preparationSeancePourClasse(classId);
+  if (!preparation) return eleves;
+  return (eleves || []).filter(e => (preparation.statuts?.[e.id] || "present") === "present");
+}
+
+function ouvrirPreparationSeance() {
+  if (!dashboardClass) return;
+  const existante = preparationSeancePourClasse(dashboardClass.row.id);
+  const dispensesConnues = new Set(dashboardDispenses
+    .filter(d => !d.deleted && dispenseEnCours(d)).map(d => String(d.student_id)));
+  const statuts = {};
+  dashboardStudents.forEach(e => {
+    statuts[e.id] = existante?.statuts?.[e.id]
+      || (dispensesConnues.has(String(e.id)) ? "dispense" : "present");
+  });
+  const hote = hoteDetail();
+  hote.innerHTML = `<div class="ec-feuille ec-preparation-seance">
+    <div class="ec-carte-tete"><div><h3>Préparer la séance</h3>
+      <small>${planningText(dashboardClass.label)} · aucune donnée n'est envoyée à Pronote</small></div></div>
+    <p class="ec-aide">Tous les élèves sont présents par défaut. Les dispenses déjà connues sont préremplies ; une dispense cochée ici ne vaut que pour cette séance.</p>
+    <div class="ec-preparation-compteurs" id="ecPreparationCompteurs"></div>
+    <div class="ec-preparation-liste">${[...dashboardStudents]
+      .sort((a, b) => `${a.last_name} ${a.first_name}`.localeCompare(`${b.last_name} ${b.first_name}`, "fr"))
+      .map(e => `<div class="ec-preparation-eleve" data-preparation-eleve="${planningText(e.id)}">
+        <strong>${planningText(String(e.last_name || "").toUpperCase())} ${planningText(e.first_name || "")}</strong>
+        <div class="ec-statut-seance" role="group" aria-label="Statut de ${planningText(e.first_name || "l'élève")}">
+          <button type="button" data-statut="present">Présent</button>
+          <button type="button" data-statut="dispense">Dispensé</button>
+          <button type="button" data-statut="absent">Absent</button>
+        </div></div>`).join("")}
+    </div>
+    <div class="ec-dialogue-actions">
+      <button type="button" class="secondary" id="ecAnnulerPreparation">Annuler</button>
+      <button type="button" id="ecValiderPreparation">${existante ? "Mettre à jour" : "Commencer la séance"}</button>
+    </div>
+  </div>`;
+  ouvrirDetailClasse();
+  const dessiner = () => {
+    hote.querySelectorAll("[data-preparation-eleve]").forEach(ligne => {
+      const statut = statuts[ligne.dataset.preparationEleve] || "present";
+      ligne.dataset.statut = statut;
+      ligne.querySelectorAll("[data-statut]").forEach(b => b.classList.toggle("actif", b.dataset.statut === statut));
+    });
+    const valeurs = Object.values(statuts);
+    const n = s => valeurs.filter(x => x === s).length;
+    document.getElementById("ecPreparationCompteurs").innerHTML =
+      `<b>${n("present")} présents</b><span>${n("dispense")} dispensés</span><span>${n("absent")} absents</span>`;
+  };
+  hote.querySelectorAll("[data-preparation-eleve] [data-statut]").forEach(b => b.onclick = () => {
+    statuts[b.closest("[data-preparation-eleve]").dataset.preparationEleve] = b.dataset.statut;
+    dessiner();
+  });
+  document.getElementById("ecAnnulerPreparation").onclick = fermerDetailClasse;
+  document.getElementById("ecValiderPreparation").onclick = () => {
+    enregistrerPreparationSeance({
+      version: 1, userId: session.user_id, classId: dashboardClass.row.id,
+      classLabel: dashboardClass.label, date: dateLocaleSeance(), startedAt: existante?.startedAt || new Date().toISOString(), statuts
+    });
+    fermerDetailClasse();
+    renderClassDashboard();
+  };
+  dessiner();
+}
+
+function terminerPreparationSeance() {
+  const preparation = preparationSeancePourClasse(dashboardClass?.row?.id);
+  if (!preparation) return;
+  const valeurs = Object.values(preparation.statuts || {});
+  const presents = valeurs.filter(x => x === "present").length;
+  const dispenses = valeurs.filter(x => x === "dispense").length;
+  const absents = valeurs.filter(x => x === "absent").length;
+  if (!confirm(`Terminer la séance ?\n\n${presents} présents · ${dispenses} dispensés · ${absents} absents\n\nLa classe complète sera de nouveau proposée dans les outils.`)) return;
+  enregistrerPreparationSeance(null);
+  // Un outil ouvert plus tard doit relire l'effectif complet et non conserver le tableau filtre.
+  if (typeof toolStudents !== "undefined") toolStudents = [];
+  renderClassDashboard();
+}
+
+Object.assign(globalThis, { preparationSeancePourClasse, elevesActifsPourSeance });
+
 // ---- Calendrier des seances d'un cycle -------------------------------------------------
 //
 // Le professeur ne compte pas ses seances : il arrive un vendredi et veut la seance du

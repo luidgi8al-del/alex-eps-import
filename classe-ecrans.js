@@ -354,6 +354,10 @@ function ecDessinerTableauDeBord(panel) {
   const nbEval = evaluations.length + tests.length;
   const aujourdhui = new Date().getDay();
   const notes = ecToutesLesNotes ? notesClasse : notesClasse.slice(0, 2);
+  const preparation = preparationSeancePourClasse(row.id);
+  const statutsPreparation = Object.values(preparation?.statuts || {});
+  const nbPresentsSeance = statutsPreparation.filter(s => s === "present").length;
+  const nbIndisponiblesSeance = statutsPreparation.filter(s => s !== "present").length;
 
   const carteCours = c => {
     const titre = c.jour === aujourdhui ? "Aujourd’hui" : libelleJour(JOURS_SEMAINE[c.jour]);
@@ -394,9 +398,11 @@ function ecDessinerTableauDeBord(panel) {
 
         <section class="ec-carte ec-actions-rapides">
           <div class="ec-carte-tete"><div><h3>Actions rapides</h3><small>Tout ce qui concerne cette classe</small></div></div>
+          <button type="button" id="ecPreparerSeance" class="ec-action-seance${preparation ? " actif" : ""}"><i>▶</i><span><b>${preparation ? "Séance en cours" : "Commencer la séance"}</b><small>${preparation ? `${nbPresentsSeance} présents · ${nbIndisponiblesSeance} écartés des outils` : "Choisir présents, dispensés et absents"}</small></span><strong>›</strong></button>
           <button type="button" data-vue="evaluations"><i>📝</i><span><b>Évaluations et tests</b><small>Créer, reprendre ou consulter</small></span><strong>›</strong></button>
           <button type="button" data-vue="documents"><i>📁</i><span><b>Documents</b><small>Donnés, rendus et manquants</small></span><strong>›</strong></button>
           <button type="button" data-vue="groupes"><i>👥</i><span><b>Groupes</b><small>Compositions classées par date et activité</small></span><strong>›</strong></button>
+          ${preparation ? `<button type="button" id="ecTerminerSeance" class="ec-terminer-seance"><i>■</i><span><b>Terminer la séance</b><small>Rétablir l'effectif complet</small></span><strong>›</strong></button>` : ""}
         </section>
       </div>
 
@@ -432,6 +438,8 @@ function ecDessinerTableauDeBord(panel) {
     if (typeof synchroniserClasses === "function") synchroniserClasses();
   });
   panel.querySelectorAll("[data-vue]").forEach(b => b.onclick = () => ecAller(b.dataset.vue));
+  document.getElementById("ecPreparerSeance")?.addEventListener("click", ouvrirPreparationSeance);
+  document.getElementById("ecTerminerSeance")?.addEventListener("click", terminerPreparationSeance);
   panel.querySelectorAll("[data-ec-creneau]").forEach(b => b.onclick = () => {
     ecCreneauChoisi = b.dataset.ecCreneau;
     // L'ecran Cours s'ouvrira sur le jour de ce creneau, et sur son cycle.

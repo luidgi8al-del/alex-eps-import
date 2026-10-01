@@ -593,6 +593,9 @@ async function openEvaluationPanel(cycleRow, ouverture) {
     evalStudents = studentsRes.ok ? await studentsRes.json() : [];
     evalList = evalsRes.ok ? await evalsRes.json() : [];
   }
+  if (typeof globalThis.elevesActifsPourSeance === "function") {
+    evalStudents = globalThis.elevesActifsPourSeance(cycleRow.class_id, evalStudents);
+  }
   renderEvaluationPanel();
   // La grille demandee ouvre directement son tableau de notes : c'est pour lui qu'on est venu.
   if (evalOpenedId && evalList.some(e => e.id === evalOpenedId)) await openEvaluationTable(evalOpenedId);

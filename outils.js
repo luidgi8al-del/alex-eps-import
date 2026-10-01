@@ -80,6 +80,9 @@ async function loadToolStudents(classId) {
     `students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name,sex&order=last_name.asc`,
     { ou: e => e.class_id === classId,
       trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
+  if (typeof globalThis.elevesActifsPourSeance === "function") {
+    toolStudents = globalThis.elevesActifsPourSeance(classId, toolStudents);
+  }
   return toolStudents;
 }
 
@@ -124,9 +127,11 @@ function bindToolRoster(onChange) {
   };
   const info = document.getElementById("toolRosterInfo");
   if (info) {
+    const preparation = toolClassId !== FREE_USE && typeof globalThis.preparationSeancePourClasse === "function"
+      ? globalThis.preparationSeancePourClasse(toolClassId) : null;
     info.textContent = toolClassId === FREE_USE
       ? "Usage libre · pensez à enregistrer le travail avant de quitter."
-      : `${toolStudents.length} élève(s) · utilisez Enregistrer pour conserver votre travail.`;
+      : `${toolStudents.length} élève(s)${preparation ? " présents dans la séance" : ""} · utilisez Enregistrer pour conserver votre travail.`;
   }
 }
 

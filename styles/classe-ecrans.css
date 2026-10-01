@@ -111,6 +111,29 @@
 .ec-actions-rapides > button span { display: grid; }
 .ec-actions-rapides > button small { color: var(--ec-gris); }
 .ec-actions-rapides > button strong { color: var(--ec-bleu); font-size: 20px; }
+.ec-actions-rapides > button.ec-action-seance.actif { background: #E8F6EF; color: #0F6E56; }
+.ec-actions-rapides > button.ec-action-seance.actif > i { background: #CDEBDD; color: #0F6E56; }
+.ec-actions-rapides > button.ec-terminer-seance { color: var(--ec-rouge); background: #FFF4F4; }
+.ec-actions-rapides > button.ec-terminer-seance > i { color: var(--ec-rouge); background: #FFE1E1; }
+
+/* Preparation du groupe actif : trois choix exclusifs, utilisables au doigt sur le terrain. */
+.ec-preparation-seance { max-width: 900px; margin: 0 auto; }
+.ec-preparation-compteurs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.ec-preparation-compteurs > * { padding: 7px 11px; border-radius: 999px; background: var(--ec-bleu-pale); color: var(--ec-bleu-fonce); }
+.ec-preparation-liste { display: grid; gap: 7px; max-height: min(62vh, 650px); overflow: auto; padding-right: 4px; }
+.ec-preparation-eleve { display: grid; grid-template-columns: minmax(150px, 1fr) auto; align-items: center; gap: 12px;
+  padding: 9px 10px; border: 1px solid var(--ec-bord); border-radius: 13px; background: #fff; }
+.ec-statut-seance { display: flex; gap: 5px; }
+.ec-ecran .ec-statut-seance button, .ec-statut-seance button { margin: 0; padding: 7px 10px; border-radius: 999px;
+  color: var(--ec-gris); background: #F5F8FC; border: 1px solid var(--ec-bord); }
+.ec-statut-seance button[data-statut="present"].actif { color: #0F6E56; background: #DFF3E9; border-color: #69B995; }
+.ec-statut-seance button[data-statut="dispense"].actif { color: #98530C; background: #FFF0D9; border-color: #E8A555; }
+.ec-statut-seance button[data-statut="absent"].actif { color: #A32D2D; background: #FFE5E5; border-color: #DF8585; }
+@media (max-width: 650px) {
+  .ec-preparation-eleve { grid-template-columns: 1fr; }
+  .ec-statut-seance { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .ec-statut-seance button { padding: 9px 4px; }
+}
 
 /* Cours de la semaine */
 .ec-semaine { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 7px; }
