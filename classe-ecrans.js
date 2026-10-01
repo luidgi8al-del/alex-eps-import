@@ -33,8 +33,17 @@ let ecCriteres = [];
 let ecNotes = [];
 let ecResultatsTests = [];
 let ecNotesChargees = false;
+const EC_SUIVI_MOTIFS = {
+  CHEWING_GUM: "Chewing-gum",
+  BOUTEILLE_PLASTIQUE: "Bouteille en plastique",
+  ECOUTEURS: "Écouteurs",
+  TELEPHONE: "Téléphone",
+  MATERIEL_OUBLIE: "Matériel oublié",
+  TENUE_OUBLIEE: "Tenue oubliée ou inadaptée",
+  COMPORTEMENT: "Comportement inadapté"
+};
 
-const EC_VUES = ["bord", "eleves", "evaluations", "recap", "documents", "dispenses", "groupes"];
+const EC_VUES = ["bord", "eleves", "suivi", "evaluations", "recap", "documents", "dispenses", "groupes"];
 
 // ---- Petits outils ----------------------------------------------------------------------
 
@@ -324,6 +333,7 @@ function renderEcranClasse() {
   panel.classList.add("ec-panneau");
   if (vueClasse === "bord") ecDessinerTableauDeBord(panel);
   else if (vueClasse === "eleves") ecDessinerEleves(panel);
+  else if (vueClasse === "suivi") ecDessinerSuiviClasse(panel);
   else if (vueClasse === "evaluations") ecDessinerEvaluations(panel);
   else if (vueClasse === "recap") ecDessinerRecap(panel);
   else if (vueClasse === "documents") ecDessinerDocuments(panel);
@@ -399,6 +409,7 @@ function ecDessinerTableauDeBord(panel) {
         <section class="ec-carte ec-actions-rapides">
           <div class="ec-carte-tete"><div><h3>Actions rapides</h3><small>Tout ce qui concerne cette classe</small></div></div>
           <button type="button" id="ecPreparerSeance" class="ec-action-seance${preparation ? " actif" : ""}"><i>▶</i><span><b>${preparation ? "Séance en cours" : "Commencer la séance"}</b><small>${preparation ? `${nbPresentsSeance} présents · ${nbIndisponiblesSeance} écartés des outils` : "Choisir présents, dispensés et absents"}</small></span><strong>›</strong></button>
+          <button type="button" data-vue="suivi"><i>📊</i><span><b>Suivi de classe</b><small>Chewing-gum, tenue, matériel, téléphone…</small></span><strong>›</strong></button>
           <button type="button" data-vue="evaluations"><i>📝</i><span><b>Évaluations et tests</b><small>Créer, reprendre ou consulter</small></span><strong>›</strong></button>
           <button type="button" data-vue="documents"><i>📁</i><span><b>Documents</b><small>Donnés, rendus et manquants</small></span><strong>›</strong></button>
           <button type="button" data-vue="groupes"><i>👥</i><span><b>Groupes</b><small>Compositions classées par date et activité</small></span><strong>›</strong></button>
@@ -455,6 +466,101 @@ function ecDessinerTableauDeBord(panel) {
     b.onclick = () => modifierNoteClasse(note);
     ecAppuiLong(b, () => supprimerNoteClasse(note.id));
   });
+}
+
+// ---- Suivi permanent de la classe ------------------------------------------------------
+
+function ecDatesSuiviClasse() {
+  const datesCycle = ecCoursRetenu().seance?.dates || [];
+  const datesEnregistrees = suiviClasse.map(x => x.date);
+  const dateCourante = ecCoursRetenu().seance?.date || dateLocaleSeance();
+  return [...new Set([...datesCycle, ...datesEnregistrees, dateCourante].filter(Boolean))].sort();
+}
+
+function ecLibelleDateSuivi(iso) {
+  const d = new Date(iso + "T12:00:00");
+  return `<b>${d.toLocaleDateString("fr-FR", { weekday: "short" }).replace(".", "")}</b><small>${d.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" })}</small>`;
+}
+
+function ecNombreMotifSuivi(studentId, motif) {
+  return suiviClasse.filter(x => String(x.studentId) === String(studentId) && x.motifs.includes(motif)).length;
+}
+
+function ecOuvrirChoixSuivi(eleve, date) {
+  const existante = suiviClasse.find(x => String(x.studentId) === String(eleve.id) && x.date === date);
+  const avant = [...(existante?.motifs || [])];
+  let voile = document.getElementById("ecDialogue");
+  if (!voile) { voile = document.createElement("div"); voile.id = "ecDialogue"; voile.className = "searchOverlay"; document.body.appendChild(voile); }
+  voile.innerHTML = `<div class="searchSheet ec-dialogue ec-suivi-dialogue" role="dialog" aria-modal="true">
+    <header class="ec-actions-tete"><div><h3>${ecTexte(ecNomEleve(eleve))}</h3><small>Séance du ${ecTexte(ecJour(date))}</small></div><button type="button" class="ec-fermer-rond" id="ecSuiviFermer">×</button></header>
+    <p class="ec-aide">Cochez ce qui a été observé pendant cette séance. Décochez tout pour effacer cette case.</p>
+    <div class="ec-suivi-choix">${Object.entries(EC_SUIVI_MOTIFS).map(([id, libelle]) => {
+      const nombre = ecNombreMotifSuivi(eleve.id, id);
+      return `<label><input type="checkbox" value="${id}"${avant.includes(id) ? " checked" : ""}><span><b>${ecTexte(libelle)}</b>${nombre ? `<small>Déjà observé ${nombre} fois</small>` : ""}</span></label>`;
+    }).join("")}</div>
+    <div class="ec-dialogue-actions"><button type="button" class="secondary" id="ecSuiviAnnuler">Annuler</button><button type="button" id="ecSuiviValider">Valider</button></div>
+    <div class="error" id="ecSuiviErreur"></div></div>`;
+  voile.classList.add("open");
+  const fermer = () => { voile.classList.remove("open"); voile.innerHTML = ""; };
+  document.getElementById("ecSuiviFermer").onclick = fermer;
+  document.getElementById("ecSuiviAnnuler").onclick = fermer;
+  voile.onclick = e => { if (e.target === voile) fermer(); };
+  document.getElementById("ecSuiviValider").onclick = async e => {
+    const bouton = e.currentTarget;
+    const motifs = [...voile.querySelectorAll('.ec-suivi-choix input:checked')].map(x => x.value);
+    const ajoutes = motifs.filter(m => !avant.includes(m));
+    const repetitions = ajoutes.filter(m => ecNombreMotifSuivi(eleve.id, m) >= 1);
+    bouton.disabled = true;
+    try {
+      await enregistrerCelluleSuiviClasse(eleve.id, date, motifs);
+      fermer();
+      renderClassDashboard();
+      if (repetitions.length) ecAfficherAlerteSuivi(eleve, repetitions);
+    } catch (erreur) {
+      bouton.disabled = false;
+      document.getElementById("ecSuiviErreur").textContent = erreur.message || "Enregistrement impossible.";
+    }
+  };
+}
+
+function ecAfficherAlerteSuivi(eleve, motifs) {
+  let voile = document.getElementById("ecDialogue");
+  if (!voile) { voile = document.createElement("div"); voile.id = "ecDialogue"; voile.className = "searchOverlay"; document.body.appendChild(voile); }
+  const details = motifs.map(id => {
+    const nombre = ecNombreMotifSuivi(eleve.id, id);
+    return `<li><b>${ecTexte(EC_SUIVI_MOTIFS[id] || id)}</b> · ${nombre}e observation</li>`;
+  }).join("");
+  voile.innerHTML = `<div class="searchSheet ec-dialogue ec-suivi-alerte" role="alertdialog" aria-modal="true"><i>!</i><h3>Observation répétée</h3><p>${ecTexte(ecNomEleve(eleve))} atteint au moins deux observations pour le même motif.</p><ul>${details}</ul><button type="button" id="ecSuiviAlerteOk">J’ai compris</button></div>`;
+  voile.classList.add("open");
+  const fermer = () => { voile.classList.remove("open"); voile.innerHTML = ""; };
+  document.getElementById("ecSuiviAlerteOk").onclick = fermer;
+  voile.onclick = e => { if (e.target === voile) fermer(); };
+}
+
+function ecDessinerSuiviClasse(panel) {
+  const dates = ecDatesSuiviClasse();
+  const dateCible = ecCoursRetenu().seance?.date || dateLocaleSeance();
+  const eleves = [...dashboardStudents].sort((a, b) => ecNomEleve(a).localeCompare(ecNomEleve(b), "fr"));
+  const repetitions = new Set();
+  suiviClasse.forEach(o => o.motifs.forEach(m => { if (ecNombreMotifSuivi(o.studentId, m) >= 2) repetitions.add(`${o.studentId}:${m}`); }));
+  panel.innerHTML = `<section class="ec-ecran">${ecBandeau(`${dashboardClass.label} · Suivi de classe`, { sous: "Un tableau permanent, séance après séance" })}<div class="ec-corps">
+    <div class="ec-suivi-legende"><span>Cliquez sur une case pour saisir une observation.</span><b>${repetitions.size} répétition${repetitions.size > 1 ? "s" : ""} signalée${repetitions.size > 1 ? "s" : ""}</b></div>
+    <div class="ec-suivi-table-wrap"><table class="ec-suivi-table"><thead><tr><th>Élèves</th>${dates.map(d => `<th class="${d === dateCible ? "aujourdhui" : ""}">${ecLibelleDateSuivi(d)}</th>`).join("")}</tr></thead><tbody>${eleves.map(e => `<tr><th><button type="button" data-ec-dossier-suivi="${ecTexte(e.id)}">${ecTexte(ecNomEleve(e))}</button></th>${dates.map(date => {
+      const cellule = suiviClasse.find(x => String(x.studentId) === String(e.id) && x.date === date);
+      const motifs = cellule?.motifs || [];
+      const repetee = motifs.some(m => ecNombreMotifSuivi(e.id, m) >= 2);
+      return `<td><button type="button" class="ec-suivi-cellule${motifs.length ? " remplie" : ""}${repetee ? " repetee" : ""}" data-ec-suivi-eleve="${ecTexte(e.id)}" data-ec-suivi-date="${date}" aria-label="Suivi de ${ecTexte(ecNomEleve(e))} le ${date}">${motifs.length ? `<b>${motifs.length}</b><small>${motifs.map(m => ecTexte(EC_SUIVI_MOTIFS[m] || m)).join(" · ")}</small>${repetee ? '<i>!</i>' : ''}` : '<span>+</span>'}</button></td>`;
+    }).join("")}</tr>`).join("")}</tbody></table></div>
+    <p class="ec-aide">La colonne des élèves reste visible lorsque vous faites défiler les dates horizontalement. Une alerte apparaît lorsqu’un même motif est enregistré une deuxième fois.</p>
+  </div></section>`;
+  panel.querySelector("[data-ec-retour]").onclick = () => ecAller("bord");
+  panel.querySelectorAll("[data-ec-dossier-suivi]").forEach(b => b.onclick = () => ouvrirDossierEleve(b.dataset.ecDossierSuivi));
+  panel.querySelectorAll("[data-ec-suivi-eleve]").forEach(b => b.onclick = () => {
+    const eleve = dashboardStudents.find(e => String(e.id) === String(b.dataset.ecSuiviEleve));
+    if (eleve) ecOuvrirChoixSuivi(eleve, b.dataset.ecSuiviDate);
+  });
+  const courante = panel.querySelector(".ec-suivi-table th.aujourdhui");
+  if (courante) courante.scrollIntoView({ inline: "center", block: "nearest" });
 }
 
 async function modifierNoteClasse(note) {

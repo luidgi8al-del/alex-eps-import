@@ -344,7 +344,7 @@ async function openClassDashboard(cls, label) {
     // Ouvrir une classe mene a son tableau de bord, comme dans l'application, sur la periode en
     // cours plutot que sur la premiere de l'annee.
     const vueDemandee = globalThis.vueClasseAccueilDemandee;
-    vueClasse = ["bord", "eleves", "evaluations", "recap", "documents", "dispenses", "groupes"].includes(vueDemandee)
+    vueClasse = ["bord", "eleves", "suivi", "evaluations", "recap", "documents", "dispenses", "groupes"].includes(vueDemandee)
       ? vueDemandee : "bord";
     globalThis.vueClasseAccueilDemandee = null;
     if (typeof ecPeriodeDuJour === "function") dashboardPeriod = ecPeriodeDuJour(cls.grade);
@@ -1474,10 +1474,54 @@ async function deleteCycle(id) {
 /** "menu" au premier abord, puis "cours", "bord", "dispenses" ou "recap". */
 let vueClasse = "bord";
 let notesClasse = [];
+let suiviClasse = [];
 let documentsClasse = [];
 let rendusClasse = [];
 let documentsArchivesOuverts = false;
 let ongletDossierEleve = "synthese";
+const PREFIXE_SUIVI_CLASSE = "__EPS_SUIVI_CLASSE__:";
+
+function decoderSuiviClasse(ligne) {
+  if (!String(ligne?.content || "").startsWith(PREFIXE_SUIVI_CLASSE)) return null;
+  try {
+    const valeur = JSON.parse(String(ligne.content).slice(PREFIXE_SUIVI_CLASSE.length));
+    if (!valeur.studentId || !valeur.date || !Array.isArray(valeur.motifs)) return null;
+    return { ...valeur, id: ligne.id, created_at: ligne.created_at, updated_at: ligne.updated_at };
+  } catch { return null; }
+}
+
+function encoderSuiviClasse(valeur) {
+  return PREFIXE_SUIVI_CLASSE + JSON.stringify({
+    version: 1, studentId: valeur.studentId, date: valeur.date,
+    motifs: [...new Set(valeur.motifs || [])]
+  });
+}
+
+async function enregistrerCelluleSuiviClasse(studentId, date, motifs) {
+  const existante = suiviClasse.find(x => String(x.studentId) === String(studentId) && x.date === date);
+  const maintenant = new Date().toISOString();
+  if (!motifs.length) {
+    if (!existante) return;
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${encodeURIComponent(existante.id)}`,
+      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
+    if (res && res.ok === false) throw new Error("La suppression n’a pas été enregistrée.");
+    suiviClasse = suiviClasse.filter(x => x.id !== existante.id);
+    return;
+  }
+  const valeur = { studentId, date, motifs };
+  if (existante) {
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${encodeURIComponent(existante.id)}`,
+      { method: "PATCH", body: JSON.stringify({ content: encoderSuiviClasse(valeur), updated_at: maintenant }) });
+    if (res && res.ok === false) throw new Error("Le suivi n’a pas été enregistré.");
+    Object.assign(existante, valeur, { updated_at: maintenant });
+  } else {
+    const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
+      content: encoderSuiviClasse(valeur), created_at: maintenant, updated_at: maintenant, deleted: false };
+    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes`, { method: "POST", body: JSON.stringify(ligne) });
+    if (res && res.ok === false) throw new Error("Le suivi n’a pas été enregistré.");
+    suiviClasse.push({ ...valeur, id: ligne.id, created_at: maintenant, updated_at: maintenant });
+  }
+}
 
 function retourMenuClasse() {
   vueClasse = "bord";
@@ -1503,6 +1547,7 @@ async function ouvrirDossierEleve(studentId) {
   const testResults=ecResultatsTests.filter(r=>String(r.student_id)===String(studentId)&&!r.deleted);
   const dispenses=dashboardDispenses.filter(d=>d.student_id===studentId&&!d.deleted);
   const actifs=dispenses.filter(d=>dispenseEnCours(d));
+  const observationsSuivi=suiviClasse.filter(x=>String(x.studentId)===String(studentId)).sort((a,b)=>b.date.localeCompare(a.date));
   const documents=documentsClasse.map(d=>({doc:d,returned:!!rendusClasse.find(r=>r.document_id===d.id&&r.student_id===studentId&&r.returned&&!r.deleted)}));
   const evaluations=dashboardEvaluations.map(e=>{
     const criteres=ecCriteres.filter(c=>c.evaluation_id===e.id&&!c.deleted);
@@ -1530,7 +1575,7 @@ async function ouvrirDossierEleve(studentId) {
     synthese:`<div class="student-progress-layout"><div><article class="student-progress-card"><div class="student-progress-title"><h3>Compétences principales</h3><small>${bilanCompetences.length} compétence(s) renseignée(s)</small></div>${bilanCompetences.length?bilanCompetences.slice(0,6).map(c=>`<div class="student-skill"><span>${planningText(c.label)}</span><i><b style="width:${Math.round(c.part*100)}%"></b></i><strong>${c.part>=.75?'Acquis':c.part>=.5?'En cours':'À travailler'}</strong></div>`).join(''):'<p class="muted">Les compétences apparaîtront après la première évaluation.</p>'}</article><article class="student-progress-card"><div class="student-progress-title"><h3>Activité récente</h3><small>Évaluations, tests et adaptations</small></div>${[...evaluations.slice(0,3).map(e=>({date:Number(e.date_epoch_millis)||0,titre:e.label||'Évaluation',detail:`${e.note20.toFixed(1).replace('.',',')} / 20`})),...testResults.slice(0,3).map(r=>{const t=sessionTest(r.session_id);return{date:Number(t?.created_at)||Date.parse(t?.created_at)||0,titre:t?.test_name||'Test EPS',detail:`${r.result_value??'—'} ${r.result_unit||''}`}}),...actifs.map(d=>({date:Date.parse(d.start_date),titre:'Adaptation en cours',detail:adaptation(d)}))].sort((a,b)=>b.date-a.date).slice(0,6).map(e=>`<div class="student-timeline-row"><i></i><span><b>${planningText(e.titre)}</b><small>${planningText(e.detail)}</small></span><time>${e.date?new Date(e.date).toLocaleDateString('fr-FR'):'—'}</time></div>`).join('')||'<p class="muted">Aucune activité enregistrée.</p>'}</article></div><aside><article class="student-progress-card student-objective"><small>OBJECTIF PROPOSÉ</small><p>${planningText(objectif)}</p></article><article class="student-progress-card student-health-summary"><h3>Adaptation utile au cours</h3>${actifs.length?actifs.map(d=>`<p><b>${planningText(adaptation(d))}</b><small>Du ${new Date(d.start_date+'T12:00:00').toLocaleDateString('fr-FR')} au ${new Date(d.end_date+'T12:00:00').toLocaleDateString('fr-FR')}</small></p>`).join(''):'<p class="muted">Pratique normale actuellement.</p>'}<small class="student-private-note">Le motif médical détaillé n’est pas affiché ici.</small></article></aside></div>`,
     evaluations:`<div class="student-progress-card"><h3>Évaluations</h3>${evaluations.length?evaluations.map(e=>`<div class="student-result-row"><span><b>${planningText(e.label||'Évaluation')}</b><small>${e.type==='FINALE'?'Finale':'Ponctuelle'} · ${ecDateCourte(e.date_epoch_millis)}</small></span><strong>${Number.isFinite(e.note20)?`${e.note20.toFixed(1).replace('.',',')} / 20`:'Renseignée'}</strong></div>`).join(''):'<p class="muted">Aucune évaluation renseignée.</p>'}<h3 class="student-section-space">Tests EPS</h3>${testResults.length?testResults.map(r=>{const t=sessionTest(r.session_id);return`<div class="student-result-row"><span><b>${planningText(t?.test_name||'Test EPS')}</b><small>${t?ecDateCourte(Number(t.created_at)||Date.parse(t.created_at)):''}</small></span><strong>${planningText(r.result_value??'—')} ${planningText(r.result_unit||'')}</strong></div>`}).join(''):'<p class="muted">Aucun test enregistré.</p>'}</div>`,
     participation:`<div class="student-progress-card"><h3>Participation</h3><div class="student-info-callout"><b>Les appels restent gérés dans Pronote</b><span>Le dossier EPS n’enregistre pas une seconde liste d’absences.</span></div><div class="student-result-row"><span><b>Séances adaptées connues</b><small>À partir des dispenses actives et passées</small></span><strong>${dispenses.length}</strong></div><div class="student-result-row"><span><b>Évaluations renseignées</b><small>Participation observable dans les grilles</small></span><strong>${evaluations.length}</strong></div><div class="student-result-row"><span><b>Tests réalisés</b><small>Résultats enregistrés depuis les outils</small></span><strong>${testResults.length}</strong></div></div>`,
-    observations:`<div class="student-progress-card"><h3>Observations et incidents</h3>${incidents.length?incidents.map(i=>`<div class="student-result-row"><span><b>Incident déclaré</b><small>${new Date(i.occurred_at).toLocaleDateString('fr-FR')} · informations sensibles masquées</small></span><strong>${planningText(i.urgency_code||'')}</strong></div>`).join(''):'<p class="muted">Aucun incident rattaché à cet élève.</p>'}<div class="student-info-callout"><b>Observations pédagogiques individuelles</b><span>Cette rubrique accueillera les remarques d’investissement et de comportement lorsqu’elles seront enregistrées individuellement.</span></div></div>`,
+    observations:`<div class="student-progress-card"><h3>Suivi en cours</h3>${observationsSuivi.length?observationsSuivi.map(o=>`<div class="student-result-row"><span><b>${o.motifs.map(m=>planningText(EC_SUIVI_MOTIFS[m]||m)).join(' · ')}</b><small>Séance du ${new Date(o.date+'T12:00:00').toLocaleDateString('fr-FR')}</small></span><strong>${o.motifs.some(m=>observationsSuivi.filter(x=>x.motifs.includes(m)).length>=2)?'Répétition':''}</strong></div>`).join(''):'<p class="muted">Aucune observation de séance.</p>'}<h3 class="student-section-space">Incidents déclarés</h3>${incidents.length?incidents.map(i=>`<div class="student-result-row"><span><b>Incident déclaré</b><small>${new Date(i.occurred_at).toLocaleDateString('fr-FR')} · informations sensibles masquées</small></span><strong>${planningText(i.urgency_code||'')}</strong></div>`).join(''):'<p class="muted">Aucun incident rattaché à cet élève.</p>'}</div>`,
     adaptation:`<div class="student-progress-card"><h3>Dispenses et adaptations</h3>${dispenses.length?dispenses.map(d=>`<div class="student-result-row"><span><b>${planningText(adaptation(d))}</b><small>${new Date(d.start_date+'T12:00:00').toLocaleDateString('fr-FR')} → ${new Date(d.end_date+'T12:00:00').toLocaleDateString('fr-FR')}</small></span><strong>${dispenseEnCours(d)?'En cours':'Terminée'}</strong></div>`).join(''):'<p class="muted">Aucune adaptation enregistrée.</p>'}<p class="student-private-note">Seules les consignes utiles à la pratique sont affichées. Le diagnostic et le motif détaillé restent dans l’espace Santé autorisé.</p></div>`,
     documents:`<div class="student-progress-card"><h3>Documents</h3>${documents.length?documents.map(x=>`<div class="student-result-row"><span><b>${planningText(x.doc.title)}</b></span><strong class="${x.returned?'ok-text':'missing-text'}">${x.returned?'Rendu':'Manquant'}</strong></div>`).join(''):'<p class="muted">Aucun document suivi.</p>'}</div>`
   };
@@ -1584,7 +1629,9 @@ async function chargerTableauDeBordClasse() {
       apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`),
       apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`)
     ]);
-    notesClasse = notes.ok ? await notes.json() : [];
+    const toutesLesNotes = notes.ok ? await notes.json() : [];
+    suiviClasse = toutesLesNotes.map(decoderSuiviClasse).filter(Boolean);
+    notesClasse = toutesLesNotes.filter(n => !decoderSuiviClasse(n));
     documentsClasse = docs.ok ? await docs.json() : [];
     const ids = documentsClasse.map(d => `"${d.id}"`).join(",");
     const rendus = ids
@@ -1593,7 +1640,7 @@ async function chargerTableauDeBordClasse() {
     rendusClasse = rendus && rendus.ok ? await rendus.json() : [];
   } catch {
     // Sans reseau on laisse les listes vides plutot que de bloquer l'ecran.
-    notesClasse = []; documentsClasse = []; rendusClasse = [];
+    notesClasse = []; suiviClasse = []; documentsClasse = []; rendusClasse = [];
   }
 }
 
