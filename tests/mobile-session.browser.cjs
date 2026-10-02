@@ -1,0 +1,137 @@
+const fs = require('node:fs'), path = require('node:path'), http = require('node:http');
+const assert = require('node:assert/strict');
+const {chromium} = require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root = process.env.EPS_WEB_ROOT || path.resolve(__dirname,'..');
+const server = http.createServer((req,res)=>{
+  let file=path.join(root,decodeURIComponent(req.url.split('?')[0]));
+  if(fs.existsSync(file)&&fs.statSync(file).isDirectory())file=path.join(file,'index.html');
+  try{res.setHeader('Content-Type',file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file))}catch{res.statusCode=404;res.end()}
+});
+(async()=>{
+  await new Promise(r=>server.listen(0,'127.0.0.1',r));
+  const browser=await chromium.launch({channel:'chrome',headless:true});
+  try{
+    for(const standalone of [false,true]){
+      const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
+      await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
+      await context.addInitScript({content:`const storageSet=Storage.prototype.setItem;\n${fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')}\nStorage.prototype.setItem=storageSet;`});
+      if(standalone)await context.addInitScript(()=>{const original=window.matchMedia;window.matchMedia=q=>q==='(display-mode: standalone)'?{matches:true,media:q,addEventListener(){},removeEventListener(){}}:original.call(window,q)});
+      const page=await context.newPage(),errors=[];
+      page.setDefaultTimeout(12000);
+      page.on('pageerror',e=>errors.push(e.message));
+      page.on('dialog',d=>d.accept(d.type()==='prompt'?'Groupe essai':undefined));
+      await page.goto(`http://127.0.0.1:${server.address().port}`);
+      await page.waitForFunction(()=>typeof epsPageFullyReady!=='undefined'&&epsPageFullyReady);
+      // Read/write repository fixture: production UI and save/reopen code, no live records.
+      await page.evaluate(async()=>{
+        const read=lireTable;
+        window.auditDb={};
+        lireTable=async(table,url,options)=>{
+          if(['eps_test_sessions','eps_test_results','eps_saved_tool_works'].includes(table)){
+            let rows=Object.values(auditDb[table]||{});
+            for(const [k,v] of new URL('http://fixture/'+url).searchParams)if(v.startsWith('eq.'))rows=rows.filter(r=>String(r[k])===v.slice(3));
+            return rows;
+          }return read(table,url,options);
+        };
+        enregistrerLigne=async(table,row)=>{auditDb[table]??={};auditDb[table][row.id]=structuredClone(row)};
+        showTab('classes');await new Promise(r=>setTimeout(r,700));await openClassDashboard(__fauxServeur.DONNEES.classes.find(c=>c.id==='cl-3e6'),'3e6');
+      });
+      await page.locator('#ecPreparerSeance').click();
+      await page.locator('[data-preparation-eleve="el-1"] [data-statut="absent"]').click();
+      await page.locator('[data-preparation-eleve="el-2"] [data-statut="dispense"]').click();
+      await page.locator('#ecValiderPreparation').click();
+      const active=await page.evaluate(()=>elevesActifsPourSeance('cl-3e6',__fauxServeur.DONNEES.students.filter(s=>s.class_id==='cl-3e6')).map(s=>s.id));
+      assert(!active.includes('el-1')&&!active.includes('el-2'));
+      await page.evaluate(async()=>{showTab('outils');await new Promise(r=>setTimeout(r,500));openTool('tests')});
+      await page.locator('#toolClass').selectOption('cl-3e6');
+      await page.locator('[data-eps-test="TROIS_500"]').click();
+      assert.equal(await page.locator('[data-run-name]').count(),active.length);
+      await page.locator('#runningManageGroups').click();
+      await page.locator('[data-running-group-student]').first().check();
+      await page.locator('#runningSaveGroup').click();
+      await page.locator('input[data-run-student]').first().fill('315');
+      await page.locator('#runningResetAll').click();
+      assert.equal(await page.locator('[data-running-group="0"]').count(),1);
+      assert.equal(await page.locator('input[data-run-student]').first().inputValue(),'');
+      await page.locator('#runningUndo').click();
+      assert.equal(await page.locator('input[data-run-student]').first().inputValue(),'315');
+      await page.locator('#runningDeleteGroups').click();
+      assert.equal(await page.locator('[data-running-group="0"]').count(),0);
+      assert.equal(await page.locator('input[data-run-student]').first().inputValue(),'315');
+      await page.locator('#runningUndo').click();
+      assert.equal(await page.locator('[data-running-group="0"]').count(),1);
+      await page.locator('#runningSave').click();
+      await page.waitForFunction(()=>!!runningSessionId);
+      const id=await page.evaluate(()=>runningSessionId);
+      await page.evaluate(async()=>{
+        showTab('classes');await new Promise(r=>setTimeout(r,700));await openClassDashboard(__fauxServeur.DONNEES.classes.find(c=>c.id==='cl-3e6'),'3e6');
+        dashboardTests=Object.values(auditDb.eps_test_sessions);ecResultatsTests=Object.values(auditDb.eps_test_results);ecAller('evaluations');
+      });
+      await page.locator('[data-ec-filtre-eval="Tests"]').click();
+      await page.locator(`[data-ec-test-inline="${id}"]`).click();
+      await page.waitForSelector('input[data-run-student]');
+      assert.equal(await page.locator('input[data-run-student]').first().inputValue(),'315');
+      assert.equal(await page.locator('[data-running-group="0"]').count(),1);
+      if(process.env.EPS_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.EPS_SCREENSHOT_DIR,standalone?'mobile-pwa.png':'mobile-site.png'),fullPage:true});
+      await page.locator('#ecOutilRetour').click();
+      await page.waitForSelector('#ecOutilFenetre',{state:'detached'});
+      await page.evaluate(()=>ecAller('bord'));
+      await page.locator('#ecPreparerSeance').click();
+      assert.equal(await page.locator('[data-preparation-eleve="el-1"]').getAttribute('data-statut'),'absent');
+      await page.locator('#ecAnnulerPreparation').click();
+      await page.locator('#ecTerminerSeance').click();
+      assert.equal(await page.evaluate(()=>elevesActifsPourSeance('cl-3e6',__fauxServeur.DONNEES.students.filter(s=>s.class_id==='cl-3e6')).length),8);
+      await page.evaluate(async()=>{showTab('outils');await new Promise(r=>setTimeout(r,500));epsOpenTest=null;openTool('tests')});
+      await page.locator('[data-eps-test="SPRINT_30"]').click();
+      await page.locator('[data-eps-input]').first().fill('5');
+      await page.locator('#wfAddGroup').click();
+      await page.locator('#epsResetBtn').click();
+      assert.equal(await page.locator('[data-wf-group-name]').count(),1);
+      await page.locator('#toolUndo').click();
+      assert.equal(await page.locator('[data-eps-input]').first().inputValue(),'5');
+      await page.locator('[data-wf-group-delete]').click();
+      assert.equal(await page.locator('[data-wf-group-name]').count(),0);
+      await page.locator('#toolUndo').click();
+      assert.equal(await page.locator('[data-wf-group-name]').count(),1);
+      await page.evaluate(async()=>{
+        await EpsToolWorks.save('swim','Travail à restaurer',{values:{x:[1]}},{classId:'cl-3e6',period:1});
+        await EpsToolWorks.library('swim','Travaux',()=>{});
+      });
+      await page.locator('[data-work-more]').first().click();
+      await page.locator('#toolWorkDelete').click();
+      await page.locator('#toolWorkConfirmDelete').click();
+      await page.locator('#toolWorkOverlay #toolUndo').click();
+      assert.equal(await page.locator('[data-work-more]').count(),1);
+      assert.equal(await page.evaluate(()=>Object.values(auditDb.eps_saved_tool_works)[0].deleted),false);
+      await page.evaluate(()=>{document.getElementById('toolWorkOverlay').remove();openTool('swim-observation')});
+      await page.locator('#swimObsClass').selectOption('cl-3e6');
+      await page.locator('#swimObsStart').click();
+      await page.locator('#swimObsEditGroups').click();
+      await page.locator('[data-swim-pick]').first().check();
+      await page.locator('#swimObsGroupName').fill('Nageurs');
+      await page.locator('#swimObsCreateGroup').click();
+      await page.locator('#swimObsEvaluate').click();
+      await page.locator('[data-swim-toggle]').first().click();
+      const mark=await page.locator('[data-swim-toggle]').first().getAttribute('style');
+      await page.locator('#swimObsResetAll').click();
+      assert.equal(await page.locator('[data-swim-group="Nageurs"]').count(),1);
+      await page.locator('#toolUndo').click();
+      assert.equal(await page.locator('[data-swim-toggle]').first().getAttribute('style'),mark);
+      await page.evaluate(()=>openTool('condition-fitness'));
+      await page.locator('#fitnessClass').selectOption('cl-3e6');
+      await page.locator('#fitnessStart').click();
+      await page.locator('#fitnessAuto').click();
+      await page.locator('#fitnessEvaluate').click();
+      await page.locator('[data-fit-field]').first().fill('25');
+      const groups=await page.locator('[data-fit-group]').count();
+      assert(groups>0);
+      await page.locator('#fitnessResetAll').click();
+      assert.equal(await page.locator('[data-fit-group]').count(),groups);
+      await page.locator('#toolUndo').click();
+      assert.equal(await page.locator('[data-fit-field]').first().inputValue(),'25');
+      assert.deepEqual(errors,[]);
+      console.log('PASS',standalone?'PWA layout':'Mobile site','prepare, filter, reset/undo, groups delete/undo, save, evaluations, reopen, finish, restore saved work, swimming and fitness groups');
+      await context.close();
+    }
+  }finally{await browser.close();server.close()}
+})().catch(e=>{console.error(e);server.close();process.exitCode=1});

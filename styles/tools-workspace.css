@@ -69,3 +69,12 @@
   .climb-worksheet .fitness-table-wrap td:first-child{min-width:145px!important;width:145px!important;max-width:145px!important;white-space:normal}
 }
 .climb-worksheet [data-climb-total].muted{color:#6e8190}
+/* Plusieurs barres collantes se recouvraient sur téléphone et bloquaient les clics. */
+@media (max-width: 800px) {
+  .modern-tool-panel .fitness-actions,
+  .modern-tool-panel .running-save-actions,
+  .modern-tool-panel .tool-savebar {
+    position: static;
+    bottom: auto;
+  }
+}

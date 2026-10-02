@@ -3,6 +3,12 @@
   'use strict';
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const clone = v => structuredClone(v);
+  function offerUndo(restore, target=toolPanel) {
+    target.querySelector('#toolUndo')?.remove();
+    const button=document.createElement('button');button.id='toolUndo';button.className='secondary';button.textContent='Annuler la dernière remise à zéro / suppression';
+    button.onclick=async()=>{button.disabled=true;await restore();button.remove()};
+    (target.querySelector('.tool-savebar, .running-save-actions')||target).append(button);
+  }
   const fr = v => Number(v).toLocaleString('fr-FR');
   const LEVELS = [['6A',5],['5C',4.5],['5B',4],['5A',3.5],['4C',3],['4B',2.5],['4A',2],['3C',1.5],['3B',1],['3A',0.5]];
   const PROGRESS = [['Voie réussie',5],['5e dégaine',4],['4e dégaine',3],['3e dégaine',2],['2e dégaine',1],['1re dégaine',0]];
@@ -38,7 +44,7 @@
     document.getElementById('wfGroup').onchange=e=>{state.activeGroup=e.target.value;draw()};
     document.getElementById('wfAddGroup').onclick=()=>{const name=prompt('Nom du groupe',`Groupe ${state.groups.length+1}`);if(!name?.trim())return;state.groups.push({id:crypto.randomUUID(),name:name.trim()});state.editGroups=true;draw()};
     toolPanel.querySelectorAll('[data-wf-group-name]').forEach(e=>e.onchange=()=>{state.groups.find(g=>g.id===e.dataset.wfGroupName).name=e.value.trim()||'Groupe';state.editGroups=true;draw()});
-    toolPanel.querySelectorAll('[data-wf-group-delete]').forEach(e=>e.onclick=()=>{if(!confirm('Supprimer ce groupe ? Les résultats des élèves seront conservés.'))return;const id=e.dataset.wfGroupDelete;state.groups=state.groups.filter(g=>g.id!==id);Object.keys(state.assignments).forEach(k=>{if(state.assignments[k]===id)delete state.assignments[k]});if(state.activeGroup===id)state.activeGroup='';state.editGroups=true;draw()});
+    toolPanel.querySelectorAll('[data-wf-group-delete]').forEach(e=>e.onclick=async()=>{if(!confirm('Supprimer ce groupe ? Les résultats des élèves seront conservés.'))return;const previous=clone({groups:state.groups,assignments:state.assignments,activeGroup:state.activeGroup});const id=e.dataset.wfGroupDelete;state.groups=state.groups.filter(g=>g.id!==id);Object.keys(state.assignments).forEach(k=>{if(state.assignments[k]===id)delete state.assignments[k]});if(state.activeGroup===id)state.activeGroup='';state.editGroups=true;await draw();offerUndo(async()=>{Object.assign(state,previous);await draw()})});
     toolPanel.querySelectorAll('[data-wf-assign]').forEach(e=>e.onchange=()=>{state.assignments[e.dataset.wfAssign]=e.value;state.editGroups=true;draw()});
   }
   const visible=(state,list)=>state.activeGroup?list.filter(s=>String(state.assignments[s.id])===String(state.activeGroup)):list;
@@ -50,7 +56,8 @@
     };
     document.getElementById('wfResume').onclick=()=>EpsToolWorks.library(type,'Mes travaux',open);
     document.getElementById('wfExport').onclick=exporter;
-    document.getElementById('wfReset').onclick=()=>{if(!confirm('Effacer les saisies et les groupes du travail en cours ? Les travaux déjà enregistrés seront conservés.'))return;state.id=null;state.createdAt=null;state.title='';state.values={};state.groups=[];state.assignments={};state.activeGroup='';reset?.();draw()};
+    document.getElementById('wfReset').textContent='↺ Réinitialiser les résultats';
+    document.getElementById('wfReset').onclick=async()=>{if(!confirm('Effacer les résultats du travail en cours ? Les groupes et les travaux enregistrés sont conservés.'))return;const previous=clone(state);state.id=null;state.createdAt=null;state.title='';state.values={};reset?.();await draw();offerUndo(async()=>{Object.assign(state,previous);await draw()})};
   }
   async function renderClimbObservationWeb(saved) {
     await loadToolClasses();const state=stateFor(saved,{criteria:CRITERIA});
@@ -81,6 +88,6 @@
     }await draw();
   }
   async function openClimbTest(id){const [r]=await lireTable('eps_test_sessions',`eps_test_sessions?id=eq.${id}&select=*`,{ou:r=>r.id===id});if(!r)throw Error('Test introuvable');const results=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${id}&deleted=eq.false&select=*`,{ou:x=>x.session_id===id&&!x.deleted});const payload={values:{},sessionId:id,resultIds:{}};for(const x of results){const v=JSON.parse(String(x.input_unit).replace(/^climb:/,''));payload.values[x.student_id]=v.value;payload.groups=v.groups||[];payload.assignments=v.assignments||{};payload.resultIds[x.student_id]=x.id}await renderClimbTestWeb({classId:r.class_id,period:r.period_number,createdAt:r.created_at,payload})}
-  globalThis.EpsToolWorkflow={esc,csv,stateFor,pupils,context,bindContext,groupsHtml,bindGroups,visible,actions,bindActions,climbScore,LEVELS,PROGRESS};
+  globalThis.EpsToolWorkflow={esc,csv,stateFor,pupils,context,bindContext,groupsHtml,bindGroups,visible,actions,bindActions,offerUndo,climbScore,LEVELS,PROGRESS};
   Object.assign(globalThis,{renderClimbObservationWeb,renderClimbTestWeb,openClimbTest});
 })();
