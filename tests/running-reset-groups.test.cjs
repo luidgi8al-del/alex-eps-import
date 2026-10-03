@@ -13,5 +13,12 @@ test('la remise à zéro du 3x500 conserve les groupes', () => {
 });
 
 test('une nouvelle saisie 3x500 conserve également les groupes', () => {
-  assert.match(source, /blankButton\.onclick=\(\)=>\{resetRunningSession\(true\)/);
+  const body=source.match(/blankButton\.onclick=\(\)=>\{([^}]+)\}/)[1];
+  const calls=[];
+  require('node:vm').runInNewContext(body, {
+    rememberRunningUndo:kind=>calls.push(['undo',kind]),
+    resetRunningSession:preserve=>calls.push(['reset',preserve]),
+    paintRunningSeriesTest:()=>{},test:{}
+  });
+  assert.deepEqual(calls,[['undo','results'],['reset',true]]);
 });
