@@ -1,0 +1,20 @@
+const fs=require('fs'),path=require('path'),http=require('http'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');try{res.setHeader('Content-Type',p.endsWith('.js')?'application/javascript':p.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(p))}catch{res.statusCode=404;res.end()}});
+(async()=>{await new Promise(r=>server.listen(8917,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,serviceWorkers:'block'});await context.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage();page.on('dialog',dialog=>dialog.type()==='prompt'?dialog.accept('Groupe libre'):dialog.accept());await page.goto('http://127.0.0.1:8917');await page.waitForTimeout(1200);
+ await page.evaluate(()=>{globalThis.elevesActifsPourSeance=(id,list)=>list;showTab('outils');resetToolsWorkspace();openTool('climb-test')});await page.waitForTimeout(150);
+ await page.locator('#wfClass').selectOption('cl-3e6');await page.waitForTimeout(350);
+ await page.locator('#wfAutoGroupSize').fill('3');await page.locator('#wfAutoGroups').tap();await page.waitForTimeout(120);
+ assert.equal(await page.locator('[data-wf-group-name]').count(),3);assert.equal(await page.locator('[data-wf-assign]').first().inputValue(),'1');
+ await page.locator('#wfAddGroup').evaluate(button=>{window.prompt=()=> 'Groupe libre';button.click()});await page.waitForTimeout(100);assert.equal(await page.locator('[data-wf-group-name]').last().inputValue(),'Groupe libre');
+ for(const id of ['wfSave','wfNew','wfResume','wfExport'])assert.equal(await page.locator('#'+id).count(),1,id);
+ const labels=await page.locator('.tool-savebar button').allTextContents();assert.deepEqual(labels.map(x=>x.trim()),['💾 Enregistrer','＋ Nouvelle saisie','↻ Retrouver','▦ Exporter']);assert.equal(await page.locator('#wfReset').innerText(),'↺ Réinitialiser les résultats');
+ const columns=await page.locator('.tool-savebar').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.equal(columns,2);
+ const checkEvaluationBar=async(ids)=>{for(const id of ids)assert.equal(await page.locator('#'+id).count(),1,id);assert.equal(await page.locator('.evaluation-actionbar button').count(),4)};
+ await page.evaluate(()=>{epsOpenTest='SPRINT_30';openTool('tests')});await page.waitForTimeout(180);await page.locator('#toolClass').selectOption('cl-3e6');await page.waitForTimeout(220);await checkEvaluationBar(['epsSaveBtn','epsNewBtn','epsResumeBtn','epsExportBtn']);assert.equal(await page.locator('.evaluation-history').count(),0);assert.match(await page.locator('.evaluation-history-card').innerText(),/Aucun test enregistré/);
+ await page.evaluate(()=>{epsOpenTest='ARRET_COURSE';drawEpsTests()});await page.waitForTimeout(220);await checkEvaluationBar(['stopSave','stopNew','stopResume','stopExport']);assert.equal(await page.locator('#stopReset').innerText(),'↺ Réinitialiser les résultats');
+ await page.evaluate(()=>openTool('vma'));await page.waitForTimeout(180);await page.locator('#toolClass').selectOption('cl-3e6');await page.waitForTimeout(220);await checkEvaluationBar(['vmaSaveBtn','vmaNewBtn','vmaResumeBtn','vmaExportBtn']);assert.equal(await page.locator('#vmaResetBtn').innerText(),'↺ Réinitialiser les résultats');
+ console.log('Socle commun mobile : classe, période, groupes libres/automatiques et bandeau OK');
+}finally{await browser.close();server.close()}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -78,3 +78,12 @@
     bottom: auto;
   }
 }
+
+/* Socle commun des outils : mêmes groupes et mêmes commandes sur ordinateur et mobile. */
+.modern-tool-panel .tool-savebar{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tool-dangerbar{display:flex;justify-content:flex-end;padding:0 10px 10px;background:#fff}
+.tool-dangerbar button{width:auto;margin:0}
+.common-group-auto{display:grid;grid-template-columns:minmax(130px,1fr) minmax(180px,auto);align-items:end;gap:8px;margin:10px 0}
+.common-group-auto label{margin:0}.common-group-auto input,.common-group-auto button{margin:5px 0 0}
+.common-groups details>summary{cursor:pointer;padding:10px 0;color:#214f70;font-weight:800}
+@media(max-width:700px){.modern-tool-panel .tool-savebar{grid-template-columns:1fr 1fr}.tool-dangerbar button{width:100%}.common-group-auto{grid-template-columns:1fr}}
