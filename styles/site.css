@@ -496,3 +496,10 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .as-slot-student-badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#edf5fb;color:#315b78;font-size:12px;font-weight:700;white-space:nowrap}
 .as-slot-student-badge.wish{background:#eee8fb;color:#6548a2}
 #unssCreneauEleves .unssCard>button,#unssCreneauVoeux .unssCard>button{width:auto;flex-shrink:0}
+/* Historique des courses : une date visible, les autres à déplier. */
+.running-session-toolbar .running-session-list{display:block;overflow:visible;min-width:0}
+.running-history{width:100%;min-width:0;border:1px solid #b7d8ee;border-radius:14px;background:#eef7ff;box-sizing:border-box}
+.running-history>summary{cursor:pointer;padding:12px;color:#087dca;overflow-wrap:anywhere;min-height:44px;box-sizing:border-box}
+.running-history>summary small{display:block;margin-top:5px;color:#55758a;font-weight:400}
+.running-history-options{display:grid;gap:7px;padding:0 10px 10px;max-height:300px;overflow-y:auto}
+.running-history-options .running-session-card{width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;box-sizing:border-box}
