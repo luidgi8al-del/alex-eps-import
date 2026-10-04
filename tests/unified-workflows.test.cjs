@@ -7,7 +7,9 @@ const dashboard=fs.readFileSync(path.join(root,'..','AlexEpsOutils','app','src',
 assert(web.includes('function openWorkLibrary(type,title,load)'));
 assert(web.includes('Ouvrir et modifier'));
 assert(web.includes('Dupliquer'));
-assert(web.includes('Supprimer définitivement'));
+// La suppression d'un travail est restaurable : elle propose d'annuler au lieu d'effacer sec.
+assert(web.includes('Supprimer (restaurable)'));
+assert(web.includes('offerUndo'));
 assert(css.includes('.tool-work-overlay'));
 assert(css.includes('safe-area-inset-bottom'));
 assert(android.includes('UnifiedActionCard("Retrouver"'));

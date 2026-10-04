@@ -32,7 +32,10 @@ assert.match(html,/condition-fitness-web\.js/);
 assert.match(tools,/condition-fitness/);
 assert.match(source,/eps_test_sessions/);
 assert.match(source,/eps_test_results/);
-assert.match(source,/Enregistrer les modifications/);
+// "Reprise" du titre : retrouver une saisie precedente et repartir dessus. Le libelle visait
+// un bouton qui n'a jamais ete dans ce fichier - il est dans l'editeur de groupes du multi-chrono.
+assert.match(source,/Enregistrer les groupes/);
+assert.match(source,/fitnessResume/);
 assert.match(source,/Exporter les groupes/);
 assert.match(source,/Pompes.*Abdos.*Chaise.*Gainage.*Tractions.*Souplesse/s);
 console.log("Condition physique web: barèmes, reprise, compatibilité et branchements validés.");

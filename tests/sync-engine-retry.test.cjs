@@ -4,7 +4,9 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root,'pwa/sync/engine.js'),'utf8')
-  .replace(/^import .*;\r?\n/gm,'').replace('export class OfflineSyncEngine','class OfflineSyncEngine');
+  .replace(/^import .*;\r?\n/gm,'')// Tous les exports, pas seulement la classe : en ajouter un ailleurs cassait ce test sans
+// que rien ne soit casse dans le moteur.
+  .replace(/^export /gm,'');
 async function check({outage=false}={}) {
   let rejected=0, acknowledged=0, deferred=0, pulls=0;
   const context={navigator:{onLine:true}, DEFAULT_BATCH_SIZE:40, MAX_TENTATIVES_ENVOI:6, PAGE_LECTURE:500,

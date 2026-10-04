@@ -19,7 +19,8 @@ const expected = [
   "enregistrerLigne('eps_test_results'",
   'ouvrirMultiChronoDepuisClasse',
   'Réinitialiser toutes les données',
-  'Effacer tous les chronos et tous les groupes'
+  // La remise a zero conserve desormais les groupes : c'est ce qu'il faut garder.
+  'Remettre les chronos à zéro ? Les groupes et les tests enregistrés sont conservés.'
 ];
 
 for (const marker of expected) {
