@@ -1,3 +1,12 @@
+document.getElementById('diagnostic').onclick = async () => {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const url = new URL(tab.url);
+    if (url.origin !== 'https://3500010j.index-education.net' || !url.pathname.startsWith('/pronote/')) throw Error('Ouvrez le PRONOTE du lycée Victor Hugo dans cet onglet.');
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['diagnostic.js'] });
+    window.close();
+  } catch (e) { document.getElementById('status').textContent = e.message; }
+};
 document.getElementById('open').onclick = async () => {
   const status = document.getElementById('status');
   try {

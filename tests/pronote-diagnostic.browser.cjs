@@ -1,0 +1,21 @@
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path');
+(async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ const page=await browser.newPage();
+ await page.route('**/*',r=>r.fulfill({contentType:'text/html',body:`<div class="liste_content_lignes"><div role="rowheader">Secret Student Name</div><div role="gridcell" id="IE.Test_5_0" tabindex="0">&nbsp;</div></div><input type="password" value="secret-password"><script>document.querySelector('[role=gridcell]').ondblclick=()=>{const i=document.createElement('input');i.id='IE.Test_edit';i.value='17.25';document.body.append(i);i.focus();};</script>`}));
+ await page.goto('https://3500010j.index-education.net/pronote/professeur.html');
+ const source=fs.readFileSync(path.join(__dirname,fs.existsSync(path.join(__dirname,'extension/diagnostic.js'))?'extension/diagnostic.js':'../extensions/pronote-lvh/diagnostic.js'),'utf8');
+ await page.addScriptTag({content:source});await page.getByRole('button',{name:'Démarrer',exact:true}).click();
+ await page.locator('[role=gridcell]').dblclick();
+ await page.waitForFunction(()=>document.querySelector('#eps-pronote-diagnostic').shadowRoot.querySelector('#report').value.includes('IE.Test_edit'));
+ await page.getByRole('button',{name:'Arrêter',exact:true}).click();
+ const raw=await page.locator('#eps-pronote-diagnostic #report').inputValue();const report=JSON.parse(raw);
+ assert.ok(report.events.some(e=>e.chain[0].tag==='input'&&e.chain[0].id==='IE.Test_edit'));
+ for(const forbidden of ['Secret Student Name','secret-password','17.25','"value"'])assert.ok(!raw.includes(forbidden),forbidden);
+ assert.equal(await page.locator('#IE\\.Test_edit').inputValue(),'17.25');
+ await page.locator('[role=gridcell]').click();assert.equal(await page.locator('#eps-pronote-diagnostic #report').inputValue(),raw);
+ const download=page.waitForEvent('download');await page.getByRole('button',{name:'Télécharger le diagnostic'}).click();assert.equal((await download).suggestedFilename(),'diagnostic-pronote.json');
+ await page.getByRole('button',{name:'Fermer',exact:true}).click();assert.equal(await page.locator('#eps-pronote-diagnostic').count(),0);
+ await page.goto('https://example.org/');await page.addScriptTag({content:source});assert.equal(await page.locator('#eps-pronote-diagnostic').count(),0);
+ console.log('PASS diagnostic: dynamic editor, no names/values/passwords, no grade mutation, stop, download, close, origin restriction');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
