@@ -1,0 +1,103 @@
+/* Shared local adapter for Chrome and Android WebView. No network or credential access. */
+(() => {
+  const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase('fr').replace(/[^A-Z0-9]+/g, ' ').trim();
+  const visible = el => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+  const cells = row => [...row.querySelectorAll('td,[role="cell"],[role="gridcell"]')].filter(c => c.closest('tr,[role="row"]') === row);
+  function validate(data) {
+    if (data?.format !== 'eps-pronote-v1' || !Array.isArray(data.rows) || !data.rows.length || data.rows.length > 200) throw Error('Transfert EPS invalide ou vide.');
+    if (!(Number(data.scale) > 0 && Number(data.scale) <= 1000)) throw Error('Barème invalide.');
+    const names = new Set();
+    for (const row of data.rows) {
+      if (typeof row.lastName !== 'string' || typeof row.firstName !== 'string' || !row.lastName.trim() || !row.firstName.trim()) throw Error('Nom ou prénom manquant.');
+      const name = norm(row.lastName + ' ' + row.firstName);
+      if (names.has(name)) throw Error('Homonymes dans le transfert : vérification manuelle nécessaire.');
+      names.add(name);
+      if (typeof row.value !== 'string' || !/^(?:|A|D|\d+(?:[,.]\d+)?)$/.test(row.value)) throw Error('Valeur de note invalide.');
+      if (/^\d/.test(row.value) && Number(row.value.replace(',', '.')) > Number(data.scale)) throw Error('Une note dépasse le barème.');
+    }
+    return data;
+  }
+  function open(raw) {
+    const data = validate(raw);
+    if (location.origin !== 'https://3500010j.index-education.net' || !location.pathname.startsWith('/pronote/')) throw Error('Ce transfert est réservé au PRONOTE du lycée.');
+    document.getElementById('eps-pronote-bridge')?.remove();
+    const host = document.createElement('div'); host.id = 'eps-pronote-bridge';
+    host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
+    const root = host.attachShadow({ mode: 'open' });
+    root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}td{padding:5px;border-bottom:1px solid #ddd}p{white-space:pre-wrap}input{margin:8px}</style>
+      <section><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · essai</h3><p id="info"></p>
+      <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button>
+      <p id="status" role="status"></p><table id="preview"></table>
+      <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
+      <button id="fill" disabled>Remplir les cellules vides</button>
+      <p>Les notes existantes sont conservées. Une saisie peut être enregistrée immédiatement par PRONOTE. Contrôlez ensuite le devoir dans PRONOTE.</p></section>`;
+    document.body.append(host);
+    const get = id => root.getElementById(id), status = message => { get('status').textContent = message; };
+    get('info').textContent = `${data.className} · ${data.title}\n${data.date} · /${data.scale} · coefficient ${data.coefficient || 1}`;
+    let plan = null, picking = false, running = false, cancelled = false;
+    const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); };
+    get('close').onclick = () => { cancelled = true; stopPick(); host.remove(); };
+    function readPlan(table, column) {
+      const rows = [...table.querySelectorAll('tr,[role="row"]')].filter(r => r.closest('table,[role="grid"],[role="table"]') === table && visible(r));
+      return data.rows.map(source => {
+        const name = norm(source.lastName + ' ' + source.firstName);
+        const matches = rows.filter(row => cells(row).some(c => norm(c.textContent) === name));
+        if (matches.length !== 1) throw Error(`Élève introuvable ou ambigu : ${source.lastName} ${source.firstName}. Tous les élèves doivent être visibles.`);
+        const cell = cells(matches[0])[column];
+        if (!cell || norm(cell.textContent) === name) throw Error('Colonne de notes non reconnue.');
+        const inputs = [...cell.querySelectorAll('input')].filter(i => visible(i) && !i.disabled && !i.readOnly && ['text','number',''].includes(i.type));
+        const before = inputs.length === 1 ? inputs[0].value : cell.textContent.trim();
+        return { source, cell, before, input: inputs.length === 1 ? inputs[0] : null };
+      });
+    }
+    function choose(event) {
+      if (!picking || event.composedPath().includes(host)) return;
+      const cell = event.target.closest?.('td,[role="cell"],[role="gridcell"]');
+      const row = cell?.closest('tr,[role="row"]'), table = row?.closest('table,[role="grid"],[role="table"]');
+      event.preventDefault(); event.stopImmediatePropagation(); stopPick();
+      try {
+        if (!table) throw Error('Tableau non reconnu : adaptation de cette version de PRONOTE nécessaire. Aucune note saisie.');
+        const column = cells(row).indexOf(cell), entries = readPlan(table, column);
+        // Initial adapter deliberately accepts only standard editable cells; never guesses global editors.
+        if (entries.some(e => e.source.value && !e.before && !e.input)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
+        plan = { table, column, entries }; get('preview').replaceChildren();
+        for (const e of entries) {
+          const tr = document.createElement('tr');
+          for (const text of [`${e.source.lastName} ${e.source.firstName}`, e.source.value || 'Non noté', e.before ? `Conservé : ${e.before}` : 'Vide']) {
+            const td = document.createElement('td'); td.textContent = text; tr.append(td);
+          }
+          get('preview').append(tr);
+        }
+        status(`${entries.length} élèves reconnus. ${entries.filter(e => !e.before && e.source.value).length} cellules à remplir.`); update();
+      } catch (e) { plan = null; status(e.message); update(); }
+    }
+    function update() { get('fill').disabled = running || !plan || !get('confirm').checked; }
+    get('confirm').onchange = update;
+    get('pick').onclick = () => { plan = null; get('confirm').checked = false; update(); picking = true; document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
+    get('fill').onclick = async () => {
+      if (!plan || running || !get('confirm').checked) return;
+      running = true; get('pick').disabled = true; update(); let count = 0;
+      try {
+        const fresh = readPlan(plan.table, plan.column);
+        if (fresh.some((e, i) => e.cell !== plan.entries[i].cell || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
+        for (const entry of fresh) {
+          if (cancelled) break;
+          if (entry.before || !entry.source.value) continue;
+          const current = readPlan(plan.table, plan.column).find(e => e.source === entry.source);
+          if (!current?.input?.isConnected || current.cell !== entry.cell || current.before) throw Error('La cellule a changé : transfert arrêté.');
+          const input = current.input;
+          if (input.type === 'number' && /[AD]/.test(entry.source.value)) throw Error('Cette cellule refuse les annotations A/D.');
+          const value = input.type === 'number' ? entry.source.value.replace(',', '.') : entry.source.value;
+          input.focus(); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value);
+          input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true })); input.blur();
+          await new Promise(resolve => setTimeout(resolve, 200));
+          if (!input.isConnected || input.value !== value) throw Error('Saisie non confirmée dans la cellule : transfert arrêté.');
+          count++;
+        }
+        status(`${count} cellule(s) remplie(s). Enregistrement serveur non vérifié : contrôlez le devoir dans PRONOTE.`);
+      } catch (e) { status(`${count} cellule(s) remplie(s). ${e.message}`); }
+      finally { running = false; plan = null; get('pick').disabled = false; update(); }
+    };
+  }
+  globalThis.EpsPronoteBridge = { open, validate };
+})();

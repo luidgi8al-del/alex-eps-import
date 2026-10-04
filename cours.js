@@ -1019,7 +1019,9 @@ function renderPronoteExport() {
     <div class="pronote-export-actions">
       <button type="button" id="copyPronoteNotes">Copier les notes</button>
       <button type="button" class="secondary" id="downloadPronoteCsv">Télécharger Excel / CSV</button>
+      <button type="button" class="secondary" id="preparePronoteInternet">Préparer pour PRONOTE Internet</button>
     </div>
+    <p>PRONOTE Internet sur ordinateur : utilisez l’extension EPS LVH (version d’essai). <a href="extensions/pronote-lvh.zip" download>Télécharger l’extension</a> · <a href="extensions/pronote-lvh/guide.html" target="_blank" rel="noopener">Installation et utilisation</a></p>
     <p id="pronoteExportStatus" class="muted" role="status"></p>
     <details class="pronote-help"><summary>Mode d'emploi dans PRONOTE</summary><ol>
       <li>Sur un ordinateur, ouvrez le Client PRONOTE puis Notes → Saisie des notes.</li>
@@ -1031,6 +1033,7 @@ function renderPronoteExport() {
   document.getElementById("closePronoteExport").onclick = () => { host.innerHTML = ""; host.dataset.open = "false"; };
   document.getElementById("copyPronoteNotes").onclick = copyPronoteNotes;
   document.getElementById("downloadPronoteCsv").onclick = downloadPronoteCsv;
+  document.getElementById("preparePronoteInternet").onclick = preparePronoteInternet;
   host.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -1050,6 +1053,28 @@ async function copyPronoteNotes() {
   } catch {
     status.textContent = "La copie a été refusée par le navigateur. Téléchargez le fichier Excel / CSV.";
     status.className = "error";
+  }
+}
+
+async function preparePronoteInternet() {
+  const evaluation = evalList.find(e => e.id === evalOpenedId);
+  const data = {
+    format: 'eps-pronote-v1', className: pronoteClassLabel(),
+    title: document.getElementById('pronoteTitle').value.trim() || evaluation.label,
+    date: document.getElementById('pronoteDate').value,
+    scale: Number(document.getElementById('pronoteScale').value),
+    coefficient: Number(document.getElementById('pronoteCoefficient').value),
+    rows: pronoteExportRows().map(r => ({ lastName: r.student.last_name || '', firstName: r.student.first_name || '', value: r.valeur }))
+  };
+  const status = document.getElementById('pronoteExportStatus');
+  if (!(data.scale > 0) || !Number.isFinite(data.coefficient) || data.coefficient < 0) {
+    status.textContent = 'Vérifiez le barème et le coefficient.'; return;
+  }
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(data));
+    status.textContent = 'Transfert nominatif copié. Ouvrez le devoir dans PRONOTE Internet sur ordinateur, puis collez-le dans l’extension EPS LVH. Aucun envoi n’a encore eu lieu.';
+  } catch {
+    status.textContent = 'Copie impossible. Autorisez le presse-papiers dans votre navigateur puis réessayez.';
   }
 }
 
