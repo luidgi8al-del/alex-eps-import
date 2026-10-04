@@ -20,6 +20,7 @@
   function open(raw) {
     const data = validate(raw);
     if (location.origin !== 'https://3500010j.index-education.net' || !location.pathname.startsWith('/pronote/')) throw Error('Ce transfert est réservé au PRONOTE du lycée.');
+    globalThis.EpsPronoteBridge.close?.();
     document.getElementById('eps-pronote-bridge')?.remove();
     const host = document.createElement('div'); host.id = 'eps-pronote-bridge';
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
@@ -30,14 +31,37 @@
       <p id="status" role="status"></p><table id="preview"></table>
       <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
       <button id="fill" disabled>Remplir les cellules vides</button>
+      <button id="test" disabled>Tester une seule note</button>
       <p>Les notes existantes sont conservées. Une saisie peut être enregistrée immédiatement par PRONOTE. Contrôlez ensuite le devoir dans PRONOTE.</p></section>`;
     document.body.append(host);
     const get = id => root.getElementById(id), status = message => { get('status').textContent = message; };
     get('info').textContent = `${data.className} · ${data.title}\n${data.date} · /${data.scale} · coefficient ${data.coefficient || 1}`;
     let plan = null, picking = false, running = false, cancelled = false;
     const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); };
-    get('close').onclick = () => { cancelled = true; stopPick(); host.remove(); };
+    const close = () => { cancelled = true; stopPick(); host.remove(); };
+    get('close').onclick = close;
+    globalThis.EpsPronoteBridge.close = close;
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+    function gridPrefix(table) { return table.id.replace(/_grid_\d+$/, ''); }
+    function gridEntry(table, column, source) {
+      const prefix = gridPrefix(table), name = norm(source.lastName + ' ' + source.firstName);
+      const headers = [...table.querySelectorAll('[role="rowheader"]')].filter(h => h.closest('.liste_content_lignes') === table && norm(h.textContent) === name);
+      if (headers.length !== 1) throw Error(`Élève introuvable ou ambigu : ${source.lastName} ${source.firstName}.`);
+      const header = headers[0].closest('.liste_celluleGrid');
+      const suffix = header?.id.slice(prefix.length).match(/^_\d+_(\d+)$/);
+      if (!suffix || !header.id.startsWith(prefix + '_')) throw Error('Ligne PRONOTE non reconnue.');
+      const id = `${prefix}_${column}_${suffix[1]}`;
+      const found = [...table.children].filter(c => c.id === id && c.dataset.colonne === String(column));
+      if (found.length !== 1) throw Error('Cellule PRONOTE manquante ou ambiguë.');
+      const cell = found[0], display = [...cell.querySelectorAll('[role="gridcell"]')].find(c => c.id === id + '_div');
+      if (!display || !display.getAttribute('aria-describedby')?.split(/\s+/).includes(prefix + '_celEdit')) throw Error('Choisissez une colonne de devoir modifiable, pas la moyenne.');
+      const inputs = [...cell.querySelectorAll('input')].filter(i => i.id === prefix + '_Edition' && visible(i) && !i.disabled && !i.readOnly && i.type === 'text');
+      if (inputs.length > 1) throw Error('Champ de note ambigu.');
+      return {source,cell,display,input:inputs[0] || null,before: inputs.length ? inputs[0].value.trim() : display.textContent.trim(),dynamic:true};
+    }
     function readPlan(table, column) {
+      if (!table.isConnected) throw Error('Le tableau a changé. Refaites la vérification.');
+      if (table.matches('.liste_content_lignes') && /_grid_\d+$/.test(table.id)) return data.rows.map(source => gridEntry(table,column,source));
       const rows = [...table.querySelectorAll('tr,[role="row"]')].filter(r => r.closest('table,[role="grid"],[role="table"]') === table && visible(r));
       return data.rows.map(source => {
         const name = norm(source.lastName + ' ' + source.firstName);
@@ -53,13 +77,17 @@
     function choose(event) {
       if (!picking || event.composedPath().includes(host)) return;
       const cell = event.target.closest?.('td,[role="cell"],[role="gridcell"]');
-      const row = cell?.closest('tr,[role="row"]'), table = row?.closest('table,[role="grid"],[role="table"]');
+      const row = cell?.closest('tr,[role="row"]');
+      const gridCell = event.target.closest?.('.liste_celluleGrid[data-colonne]');
+      const grid = gridCell?.closest('.liste_content_lignes');
+      const table = grid || row?.closest('table,[role="grid"],[role="table"]');
       event.preventDefault(); event.stopImmediatePropagation(); stopPick();
       try {
         if (!table) throw Error('Tableau non reconnu : adaptation de cette version de PRONOTE nécessaire. Aucune note saisie.');
-        const column = cells(row).indexOf(cell), entries = readPlan(table, column);
+        const column = grid ? gridCell.dataset.colonne : cells(row).indexOf(cell), entries = readPlan(table, column);
         // Initial adapter deliberately accepts only standard editable cells; never guesses global editors.
-        if (entries.some(e => e.source.value && !e.before && !e.input)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
+        if (entries.some(e => e.source.value && !e.before && !e.input && !e.dynamic)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
+        if (entries.some(e => e.dynamic && !e.before && /^[AD]$/.test(e.source.value))) throw Error('Annotations absent/dispensé : saisissez-les manuellement dans PRONOTE. Leur correspondance n’est pas encore validée.');
         plan = { table, column, entries }; get('preview').replaceChildren();
         for (const e of entries) {
           const tr = document.createElement('tr');
@@ -71,33 +99,62 @@
         status(`${entries.length} élèves reconnus. ${entries.filter(e => !e.before && e.source.value).length} cellules à remplir.`); update();
       } catch (e) { plan = null; status(e.message); update(); }
     }
-    function update() { get('fill').disabled = running || !plan || !get('confirm').checked; }
+    function update() { get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked; }
     get('confirm').onchange = update;
     get('pick').onclick = () => { plan = null; get('confirm').checked = false; update(); picking = true; document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
-    get('fill').onclick = async () => {
+    async function fill(limit = Infinity) {
       if (!plan || running || !get('confirm').checked) return;
       running = true; get('pick').disabled = true; update(); let count = 0;
       try {
         const fresh = readPlan(plan.table, plan.column);
         if (fresh.some((e, i) => e.cell !== plan.entries[i].cell || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
         for (const entry of fresh) {
-          if (cancelled) break;
+          if (cancelled || !host.isConnected || count >= limit) break;
           if (entry.before || !entry.source.value) continue;
-          const current = readPlan(plan.table, plan.column).find(e => e.source === entry.source);
+          let current = readPlan(plan.table, plan.column).find(e => e.source === entry.source);
+          if (current?.dynamic && !current.input && current.cell === entry.cell && !current.before) {
+            current.cell.scrollIntoView({block:'nearest',inline:'nearest'});
+            current.display.focus();
+            current.display.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window,detail:1}));
+            current.display.dispatchEvent(new MouseEvent('dblclick',{bubbles:true,cancelable:true,view:window,detail:2}));
+            for (let i=0;i<10&&!cancelled;i++) {
+              await wait(100);
+              current = readPlan(plan.table,plan.column).find(e=>e.source===entry.source);
+              if(current.input)break;
+            }
+          }
+          if(cancelled || !host.isConnected)break;
+          if (current?.dynamic && !current.input) throw Error('PRONOTE n’a pas ouvert le champ de saisie. Aucune note saisie dans cette case : transfert arrêté.');
           if (!current?.input?.isConnected || current.cell !== entry.cell || current.before) throw Error('La cellule a changé : transfert arrêté.');
           const input = current.input;
           if (input.type === 'number' && /[AD]/.test(entry.source.value)) throw Error('Cette cellule refuse les annotations A/D.');
           const value = input.type === 'number' ? entry.source.value.replace(',', '.') : entry.source.value;
           input.focus(); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value);
-          input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true })); input.blur();
+          input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true }));
+          if (current.dynamic) input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true,cancelable:true}));
+          input.blur();
           await new Promise(resolve => setTimeout(resolve, 200));
-          if (!input.isConnected || input.value !== value) throw Error('Saisie non confirmée dans la cellule : transfert arrêté.');
+          if (current.dynamic) {
+            const sameNumber = v => /^\d+(?:[,.]\d+)?$/.test(v) && Number(v.replace(',','.'))===Number(value.replace(',','.'));
+            let confirmed=false;
+            for(let i=0;i<10;i++) {
+              if(cancelled || !host.isConnected)break;
+              const check=readPlan(plan.table,plan.column).find(e=>e.source===entry.source);
+              if(check.cell!==entry.cell)break;
+              // Only rendered cell text counts; an editor merely retaining its value is insufficient.
+              if(!check.input && sameNumber(check.display.textContent.trim())){confirmed=true;break;}
+              await wait(100);
+            }
+            if(!confirmed)throw Error('Saisie tentée mais affichage non confirmé : arrêt. Vérifiez cette note dans PRONOTE avant de réessayer.');
+          } else if (!input.isConnected || input.value !== value) throw Error('Saisie non confirmée dans la cellule : transfert arrêté.');
           count++;
         }
         status(`${count} cellule(s) remplie(s). Enregistrement serveur non vérifié : contrôlez le devoir dans PRONOTE.`);
       } catch (e) { status(`${count} cellule(s) remplie(s). ${e.message}`); }
       finally { running = false; plan = null; get('pick').disabled = false; update(); }
-    };
+    }
+    get('fill').onclick = () => fill();
+    get('test').onclick = () => fill(1);
   }
-  globalThis.EpsPronoteBridge = { open, validate };
+  globalThis.EpsPronoteBridge = { open, validate, close: globalThis.EpsPronoteBridge?.close };
 })();
