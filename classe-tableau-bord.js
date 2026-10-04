@@ -1506,6 +1506,24 @@ function encoderSuiviClasse(valeur) {
   });
 }
 
+async function ecrireNoteClasse(ligne, modification=false) {
+  await demarrerModeHorsConnexion();
+  if(tableSuivie('class_notes')) {
+    if(modification) {
+      const originals=await lireTable('class_notes','',{ou:r=>String(r.id)===String(ligne.id)});
+      const original=originals[0];
+      if(!original)throw Error('Cette observation n’est pas disponible sur cet appareil. Synchronisez avant de la modifier.');
+      if(ligne.deleted)return supprimerLigne('class_notes',ligne.id);
+      return enregistrerLigne('class_notes',{...original,...ligne},original);
+    }
+    return enregistrerLigne('class_notes',ligne);
+  }
+  if(navigator.onLine===false)throw Error('Le suivi hors connexion doit être activé sur le serveur puis préparé sur cet appareil. Votre saisie n’a pas été enregistrée.');
+  const url=`${SUPABASE_URL}/rest/v1/class_notes`+(modification?`?id=eq.${encodeURIComponent(ligne.id)}`:'');
+  const res=await apiFetch(url,{method:modification?'PATCH':'POST',body:JSON.stringify(ligne)});
+  if(!res?.ok)throw Error('Le suivi n’a pas été enregistré. Réessayez sans fermer votre saisie.');
+}
+
 async function enregistrerCelluleSuiviClasse(studentId, date, motifs) {
   date = normaliserDateSuiviClasse(date);
   if (!date) throw new Error("La date de la séance n’est pas valide.");
@@ -1513,23 +1531,18 @@ async function enregistrerCelluleSuiviClasse(studentId, date, motifs) {
   const maintenant = new Date().toISOString();
   if (!motifs.length) {
     if (!existante) return;
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${encodeURIComponent(existante.id)}`,
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
-    if (res && res.ok === false) throw new Error("La suppression n’a pas été enregistrée.");
+    await ecrireNoteClasse({id:existante.id,deleted:true,updated_at:maintenant},true);
     suiviClasse = suiviClasse.filter(x => x.id !== existante.id);
     return;
   }
   const valeur = { studentId, date, motifs };
   if (existante) {
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${encodeURIComponent(existante.id)}`,
-      { method: "PATCH", body: JSON.stringify({ content: encoderSuiviClasse(valeur), updated_at: maintenant }) });
-    if (res && res.ok === false) throw new Error("Le suivi n’a pas été enregistré.");
+    await ecrireNoteClasse({id:existante.id,content:encoderSuiviClasse(valeur),updated_at:maintenant},true);
     Object.assign(existante, valeur, { updated_at: maintenant });
   } else {
     const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
       content: encoderSuiviClasse(valeur), created_at: maintenant, updated_at: maintenant, deleted: false };
-    const res = await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes`, { method: "POST", body: JSON.stringify(ligne) });
-    if (res && res.ok === false) throw new Error("Le suivi n’a pas été enregistré.");
+    await ecrireNoteClasse(ligne);
     suiviClasse.push({ ...valeur, id: ligne.id, created_at: maintenant, updated_at: maintenant });
   }
 }
@@ -1635,14 +1648,17 @@ function dispenseEnCours(d) {
 async function chargerTableauDeBordClasse() {
   const id = dashboardClass?.row?.id;
   if (!id) return;
+  // Documents are still network-backed. Their failure must not erase offline observations.
   try {
-    const [notes, docs] = await Promise.all([
-      apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`),
-      apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`)
-    ]);
-    const toutesLesNotes = notes.ok ? await notes.json() : [];
-    suiviClasse = toutesLesNotes.map(decoderSuiviClasse).filter(Boolean);
-    notesClasse = toutesLesNotes.filter(n => !decoderSuiviClasse(n));
+    await demarrerModeHorsConnexion();
+    const toutesLesNotes=await lireTable('class_notes',`class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`,{
+      ou:r=>!r.deleted&&String(r.class_id)===String(id),trier:(a,b)=>String(b.created_at).localeCompare(String(a.created_at))
+    });
+    suiviClasse=toutesLesNotes.map(decoderSuiviClasse).filter(Boolean);
+    notesClasse=toutesLesNotes.filter(n=>!decoderSuiviClasse(n));
+  }catch{notesClasse=[];suiviClasse=[];}
+  try {
+    const docs=await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`);
     documentsClasse = docs.ok ? await docs.json() : [];
     const ids = documentsClasse.map(d => `"${d.id}"`).join(",");
     const rendus = ids
@@ -1651,7 +1667,7 @@ async function chargerTableauDeBordClasse() {
     rendusClasse = rendus && rendus.ok ? await rendus.json() : [];
   } catch {
     // Sans reseau on laisse les listes vides plutot que de bloquer l'ecran.
-    notesClasse = []; suiviClasse = []; documentsClasse = []; rendusClasse = [];
+    documentsClasse = []; rendusClasse = [];
   }
 }
 
@@ -1661,7 +1677,7 @@ async function ajouterNoteClasse() {
   const maintenant = new Date().toISOString();
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
     content: texte.trim(), created_at: maintenant, updated_at: maintenant, deleted: false };
-  try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes`, { method: "POST", body: JSON.stringify(ligne) }); }
+  try { await ecrireNoteClasse(ligne); }
   catch (e) { alert(e.message); return; }
   notesClasse.unshift(ligne);
   renderClassDashboard();
@@ -1670,8 +1686,7 @@ async function ajouterNoteClasse() {
 async function supprimerNoteClasse(id) {
   if (!confirm("Supprimer cette note ?")) return;
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_notes?id=eq.${id}`,
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) });
+    await ecrireNoteClasse({id,deleted:true,updated_at:new Date().toISOString()},true);
   } catch (e) { alert(e.message); return; }
   notesClasse = notesClasse.filter(n => n.id !== id);
   renderClassDashboard();

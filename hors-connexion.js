@@ -88,6 +88,19 @@ async function schemaVague2Applique() {
  * Le chemin direct reste obligatoire : c'est lui qui sert tant que la table n'est pas suivie.
  */
 const TABLES_HORS_CONNEXION_VAGUE_3 = ["eps_saved_tool_works", "sport_installation_contacts", "sport_installation_incidents"];
+const TABLES_HORS_CONNEXION_VAGUE_4 = ["class_notes"];
+async function schemaVague4Applique() {
+  const key=`eps:offline-schema-4:${SUPABASE_URL}:${session?.user_id||''}`;
+  const cached=()=>{try{return localStorage.getItem(key)==='4'}catch{return false}};
+  if(navigator.onLine===false)return cached();
+  try {
+    const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.hors_connexion_4&select=name`);
+    if(!res.ok)return cached();
+    const ready=(await res.json()).length>0;
+    if(ready)localStorage.setItem(key,'4');else localStorage.removeItem(key);
+    return ready;
+  }catch{return cached()}
+}
 async function schemaVague3Applique() {
   const key = `eps:offline-schema-3:${SUPABASE_URL}:${session?.user_id || ""}`;
   const cached = () => { try { return localStorage.getItem(key) === "3"; } catch { return false; } };
@@ -221,6 +234,7 @@ async function initialiserModeHorsConnexion() {
       ? [...TABLES_HORS_CONNEXION, ...TABLES_HORS_CONNEXION_VAGUE_2]
       : TABLES_HORS_CONNEXION;
     if (await schemaVague3Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_3);
+    if (await schemaVague4Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_4);
     const module = await import("./pwa/bootstrap.js");
     modeHorsConnexion = await module.demarrerHorsConnexion({
       url: SUPABASE_URL,
