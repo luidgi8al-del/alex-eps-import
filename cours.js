@@ -495,6 +495,7 @@ const EVAL_TYPES = [
 ];
 let evalCourse = null;       // le cours (cycle) courant
 let evalStudents = [];       // eleves de la classe rattachee
+let evalAllStudents = [];    // effectif complet, indispensable pour conserver l'ordre PRONOTE
 let evalList = [];           // evaluations du cycle
 let evalExpandedType = null;
 let evalOpenedId = null;
@@ -577,9 +578,10 @@ async function openEvaluationPanel(cycleRow, ouverture) {
   fenetreEvaluation()?.classList.add("open");
   panel.innerHTML = '<div class="muted">Chargement...</div>';
   if (modeHorsConnexion) {
-    evalStudents = (await modeHorsConnexion.lire("students", {
+    evalAllStudents = (await modeHorsConnexion.lire("students", {
       ou: e => e.class_id === cycleRow.class_id,
-      trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || ""))
+      trier: (a, b) => `${a.last_name || ""} ${a.first_name || ""}`.localeCompare(
+        `${b.last_name || ""} ${b.first_name || ""}`, "fr", { sensitivity: "base", numeric: true })
     })).rows;
     evalList = (await modeHorsConnexion.lire("evaluations", {
       ou: e => e.cycle_id === cycleRow.id,
@@ -590,11 +592,17 @@ async function openEvaluationPanel(cycleRow, ouverture) {
       apiFetch(`${SUPABASE_URL}/rest/v1/students?class_id=eq.${cycleRow.class_id}&deleted=eq.false&select=*&order=last_name.asc`),
       apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?cycle_id=eq.${cycleRow.id}&deleted=eq.false&select=*&order=date_epoch_millis.asc`)
     ]);
-    evalStudents = studentsRes.ok ? await studentsRes.json() : [];
+    evalAllStudents = studentsRes.ok ? await studentsRes.json() : [];
     evalList = evalsRes.ok ? await evalsRes.json() : [];
   }
+  // L'ecran de saisie peut masquer les absents pendant une seance. L'export PRONOTE conserve
+  // cependant l'effectif complet, dans l'ordre alphabetique, afin que les lignes restent en face
+  // des bons eleves lors du collage.
+  evalAllStudents = [...evalAllStudents].sort((a, b) => `${a.last_name || ""} ${a.first_name || ""}`.localeCompare(
+    `${b.last_name || ""} ${b.first_name || ""}`, "fr", { sensitivity: "base", numeric: true }));
+  evalStudents = evalAllStudents;
   if (typeof globalThis.elevesActifsPourSeance === "function") {
-    evalStudents = globalThis.elevesActifsPourSeance(cycleRow.class_id, evalStudents);
+    evalStudents = globalThis.elevesActifsPourSeance(cycleRow.class_id, evalAllStudents);
   }
   renderEvaluationPanel();
   // La grille demandee ouvre directement son tableau de notes : c'est pour lui qu'on est venu.
@@ -788,6 +796,7 @@ function renderEvaluationTable() {
         <button class="secondary" id="addCritBtn" style="margin-top:0">+ Critere</button>
         <button class="secondary" id="exportCsvBtn" style="margin-top:0">Exporter Excel</button>
         <button class="secondary" id="printPdfBtn" style="margin-top:0">Imprimer / PDF</button>
+        <button id="exportPronoteBtn" style="margin-top:0">Exporter vers PRONOTE</button>
       </div>
     </div>
     <div class="muted" style="margin-top:4px">Le total additionne toutes les colonnes. Une case vide = pas encore evalue.</div>
@@ -803,7 +812,7 @@ function renderEvaluationTable() {
     const complete = evalIsComplete(s.id);
     html += `<td class="${complete ? "" : "incomplete"}">${formatScoreWeb(evalTotalFor(s.id))}${complete ? "" : " *"}</td></tr>`;
   });
-  html += `</tbody></table></div></div>`;
+  html += `</tbody></table></div><div id="pronoteExportHost"></div></div>`;
   wrap.innerHTML = html;
 
   wrap.querySelectorAll(".scoreInput").forEach(input => {
@@ -815,6 +824,7 @@ function renderEvaluationTable() {
   document.getElementById("addCritBtn").addEventListener("click", addCriterion);
   document.getElementById("exportCsvBtn").addEventListener("click", exportEvaluationCsv);
   document.getElementById("printPdfBtn").addEventListener("click", () => window.print());
+  document.getElementById("exportPronoteBtn").addEventListener("click", renderPronoteExport);
 }
 
 function formatScoreWeb(value) {
@@ -933,6 +943,134 @@ function exportEvaluationCsv() {
   a.href = url; a.download = `${evaluation.label}.csv`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// ---- Passage assiste vers PRONOTE ------------------------------------------------------
+// PRONOTE n'offre pas d'API publique d'ecriture. Cette sortie suit donc son parcours officiel :
+// creer le devoir dans le Client PRONOTE, puis coller la colonne de notes dans l'ordre
+// alphabetique. Aucune cle ni aucun mot de passe PRONOTE ne quitte l'appareil.
+function pronoteExportRows() {
+  const preparation = typeof globalThis.preparationSeancePourClasse === "function"
+    ? globalThis.preparationSeancePourClasse(evalCourse.class_id) : null;
+  const students = evalAllStudents.length ? evalAllStudents : evalStudents;
+  return [...students].sort((a, b) => `${a.last_name || ""} ${a.first_name || ""}`.localeCompare(
+    `${b.last_name || ""} ${b.first_name || ""}`, "fr", { sensitivity: "base", numeric: true }))
+    .map(student => {
+      const statut = preparation?.statuts?.[student.id] || "present";
+      const complete = evalIsComplete(student.id);
+      const hasAny = evalCriteria.some(c => scoreValue(evalScores[`${c.id}|${student.id}`]) != null);
+      let valeur = "", etat = "À compléter";
+      if (statut === "absent") { valeur = "A"; etat = "Absent"; }
+      else if (statut === "dispense") { valeur = "D"; etat = "Dispensé"; }
+      else if (complete) { valeur = formatScoreWeb(evalTotalFor(student.id)); etat = "Prêt"; }
+      else if (hasAny) etat = "Note incomplète";
+      return { student, valeur, etat, complete, hasAny, statut };
+    });
+}
+
+function pronoteClassLabel() {
+  if (typeof dashboardClass !== "undefined" && String(dashboardClass?.row?.id) === String(evalCourse.class_id)) return dashboardClass.label;
+  return `${GRADE_LABELS[evalCourse.grade] || evalCourse.grade}${evalCourse.class_number || ""}`;
+}
+
+function pronoteFilePart(value) {
+  return String(value || "evaluation").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase() || "evaluation";
+}
+
+function renderPronoteExport() {
+  const host = document.getElementById("pronoteExportHost");
+  if (!host) return;
+  if (host.dataset.open === "true") { host.innerHTML = ""; host.dataset.open = "false"; return; }
+  host.dataset.open = "true";
+  const evaluation = evalList.find(e => e.id === evalOpenedId);
+  const rows = pronoteExportRows();
+  const pretes = rows.filter(r => r.valeur !== "").length;
+  const absents = rows.filter(r => r.valeur === "A").length;
+  const dispenses = rows.filter(r => r.valeur === "D").length;
+  const incompletes = rows.filter(r => !r.valeur && r.hasAny).length;
+  const vides = rows.filter(r => !r.valeur && !r.hasAny).length;
+  const duplicateNames = new Set();
+  const seen = new Set();
+  rows.forEach(r => {
+    const key = `${r.student.last_name || ""}|${r.student.first_name || ""}`.toLocaleLowerCase("fr");
+    if (seen.has(key)) duplicateNames.add(key); else seen.add(key);
+  });
+  const date = new Date(Number(evaluation?.date_epoch_millis) || Date.now()).toISOString().slice(0, 10);
+  host.innerHTML = `<section class="pronote-export" aria-labelledby="pronoteExportTitle">
+    <div class="pronote-export-head"><div><small>PASSAGE ASSISTÉ</small><h3 id="pronoteExportTitle">Exporter vers PRONOTE</h3>
+      <p>Aucun identifiant PRONOTE n'est demandé. Le devoir reste à créer et à valider dans PRONOTE.</p></div>
+      <button type="button" class="secondary" id="closePronoteExport" aria-label="Fermer">Fermer</button></div>
+    <div class="pronote-export-fields">
+      <label>Objet du devoir<input id="pronoteTitle" value="${planningText(evaluation?.label || "Évaluation EPS")}"></label>
+      <label>Date<input id="pronoteDate" type="date" value="${date}"></label>
+      <label>Barème<input id="pronoteScale" type="number" min="1" step="0.5" value="${evalTotalMax() || 20}"></label>
+      <label>Coefficient<input id="pronoteCoefficient" type="number" min="0" step="0.5" value="1"></label>
+    </div>
+    <div class="pronote-export-summary">
+      <b>${rows.length} élèves dans l'ordre alphabétique</b><span>${pretes} valeur${pretes > 1 ? "s" : ""} prête${pretes > 1 ? "s" : ""}</span>
+      <span>${absents} absent${absents > 1 ? "s" : ""} · ${dispenses} dispensé${dispenses > 1 ? "s" : ""}</span>
+      <span class="${incompletes ? "warning" : ""}">${incompletes} note${incompletes > 1 ? "s" : ""} incomplète${incompletes > 1 ? "s" : ""} · ${vides} vide${vides > 1 ? "s" : ""}</span>
+    </div>
+    ${duplicateNames.size ? `<div class="error">Attention : ${duplicateNames.size} homonyme${duplicateNames.size > 1 ? "s" : ""}. Vérifiez l'ordre dans PRONOTE avant de valider.</div>` : ""}
+    <div class="pronote-preview"><table><thead><tr><th>#</th><th>Élève</th><th>Valeur PRONOTE</th><th>Contrôle</th></tr></thead><tbody>
+      ${rows.map((r, i) => `<tr class="${r.valeur ? "" : "pronote-row-warning"}"><td>${i + 1}</td><td>${planningText(String(r.student.last_name || "").toUpperCase())} ${planningText(r.student.first_name || "")}</td><td><b>${planningText(r.valeur || "—")}</b></td><td>${planningText(r.etat)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="pronote-export-actions">
+      <button type="button" id="copyPronoteNotes">Copier les notes</button>
+      <button type="button" class="secondary" id="downloadPronoteCsv">Télécharger Excel / CSV</button>
+    </div>
+    <p id="pronoteExportStatus" class="muted" role="status"></p>
+    <details class="pronote-help"><summary>Mode d'emploi dans PRONOTE</summary><ol>
+      <li>Sur un ordinateur, ouvrez le Client PRONOTE puis Notes → Saisie des notes.</li>
+      <li>Choisissez ${planningText(pronoteClassLabel())} et le service EPS, puis créez un devoir avec l'objet, la date, le barème et le coefficient ci-dessus.</li>
+      <li>Ouvrez sa colonne de notes et utilisez l'import depuis le presse-papiers ou le tableur.</li>
+      <li>Contrôlez l'aperçu : A signifie absent, D signifie dispensé. Validez seulement si chaque ligne correspond au bon élève.</li>
+    </ol></details>
+  </section>`;
+  document.getElementById("closePronoteExport").onclick = () => { host.innerHTML = ""; host.dataset.open = "false"; };
+  document.getElementById("copyPronoteNotes").onclick = copyPronoteNotes;
+  document.getElementById("downloadPronoteCsv").onclick = downloadPronoteCsv;
+  host.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function copyPronoteNotes() {
+  // Une valeur par ligne : c'est exactement la colonne a coller dans le devoir PRONOTE.
+  const rows = pronoteExportRows();
+  const text = rows.map(r => r.valeur).join("\r\n");
+  const status = document.getElementById("pronoteExportStatus");
+  try {
+    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+    else {
+      const area = document.createElement("textarea"); area.value = text; area.style.position = "fixed"; area.style.opacity = "0";
+      document.body.appendChild(area); area.select(); document.execCommand("copy"); area.remove();
+    }
+    status.textContent = `${rows.length} ligne(s) copiée(s). Vous pouvez maintenant les coller dans le devoir PRONOTE.`;
+    status.className = "ok";
+  } catch {
+    status.textContent = "La copie a été refusée par le navigateur. Téléchargez le fichier Excel / CSV.";
+    status.className = "error";
+  }
+}
+
+function downloadPronoteCsv() {
+  const evaluation = evalList.find(e => e.id === evalOpenedId);
+  const title = document.getElementById("pronoteTitle")?.value.trim() || evaluation?.label || "Évaluation EPS";
+  const date = document.getElementById("pronoteDate")?.value || new Date().toISOString().slice(0, 10);
+  const scale = document.getElementById("pronoteScale")?.value || evalTotalMax() || 20;
+  const coefficient = document.getElementById("pronoteCoefficient")?.value || "1";
+  const lines = [
+    ["Objet", title], ["Classe", pronoteClassLabel()], ["Date", date], ["Barème", scale], ["Coefficient", coefficient], [],
+    ["Nom", "Prénom", "Valeur PRONOTE", "Contrôle"],
+    ...pronoteExportRows().map(r => [r.student.last_name || "", r.student.first_name || "", r.valeur, r.etat])
+  ];
+  const csv = "\ufeff" + lines.map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
+  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url; link.download = `pronote-${pronoteFilePart(title)}-${date}.csv`; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+  const status = document.getElementById("pronoteExportStatus");
+  if (status) { status.textContent = "Fichier compatible Excel téléchargé. Vérifiez l'aperçu dans PRONOTE avant l'import."; status.className = "ok"; }
 }
 
 // ---- Cablage du mode cours en cours ----

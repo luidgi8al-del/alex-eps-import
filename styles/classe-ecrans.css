@@ -239,6 +239,28 @@
 .ec-ecran .ec-evaluations-pied button { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; padding: 8px 13px; border-radius: 11px; }
 .ec-evaluations-pied small { color: var(--ec-gris); font-size: 12px; }
 
+/* Export d'une grille vers le presse-papiers / tableur PRONOTE. */
+.pronote-export { margin-top: 18px; padding: 18px; border: 1px solid #bad7ed; border-radius: 18px; background: #f6fbff; }
+.pronote-export-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.pronote-export-head small { color: #087dca; font-weight: 900; letter-spacing: .08em; }
+.pronote-export-head h3 { margin: 3px 0; font-size: 22px; }
+.pronote-export-head p { margin: 4px 0 0; color: #607b8d; }
+.pronote-export-fields { display: grid; grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(110px, 1fr)); gap: 10px; margin: 16px 0; }
+.pronote-export-fields label { color: #355d78; font-size: 12px; font-weight: 800; }
+.pronote-export-fields input { width: 100%; margin-top: 5px; }
+.pronote-export-summary { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; border-radius: 12px; background: #e6f3fc; }
+.pronote-export-summary span { padding-left: 8px; border-left: 1px solid #bad7ed; color: #355d78; }
+.pronote-export-summary .warning { color: #aa5700; font-weight: 800; }
+.pronote-preview { max-height: 310px; overflow: auto; margin-top: 14px; border: 1px solid #d3e2ed; border-radius: 12px; background: white; }
+.pronote-preview table { width: 100%; border-collapse: collapse; }
+.pronote-preview th, .pronote-preview td { padding: 8px 10px; border-bottom: 1px solid #e1ebf2; text-align: left; }
+.pronote-preview thead { position: sticky; top: 0; z-index: 1; background: #eaf4fb; }
+.pronote-row-warning { background: #fff9ee; }
+.pronote-export-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.pronote-help { margin-top: 14px; padding: 12px 14px; border: 1px solid #d3e2ed; border-radius: 12px; background: white; }
+.pronote-help summary { color: #087dca; cursor: pointer; font-weight: 850; }
+.pronote-help li { margin: 7px 0; line-height: 1.35; }
+
 @media (max-width: 760px) {
   .ec-eval-stats { grid-template-columns: 1fr; }
   .ec-eval-stat { min-height: 68px; }
@@ -247,6 +269,12 @@
   .ec-evaluations-pied { align-items: flex-start; flex-direction: column; }
   .ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales { display: grid; grid-template-columns: 1fr 1fr; }
   .ec-ecran .ec-bandeau-bulles .ec-eval-actions-principales button { display: inline-flex !important; padding: 9px; font-size: 12px; }
+  .pronote-export { padding: 13px; }
+  .pronote-export-head { display: block; }
+  .pronote-export-head button { margin-top: 10px; }
+  .pronote-export-fields { grid-template-columns: 1fr 1fr; }
+  .pronote-export-fields label:first-child { grid-column: 1 / -1; }
+  .pronote-export-actions button { width: 100%; }
 }
 .ec-ecran .ec-carte-lien { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: #E8F1FF; color: var(--ec-marine);
   border-radius: 16px; padding: 12px 14px; }
