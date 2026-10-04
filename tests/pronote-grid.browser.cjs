@@ -21,7 +21,11 @@ function fixture(mode='normal'){
  const fill=async(test=false)=>{await page.locator('#eps-pronote-bridge #confirm').check();await page.locator(test?'#eps-pronote-bridge #test':'#eps-pronote-bridge #fill').click();await page.waitForFunction(()=>!document.querySelector('#eps-pronote-bridge').shadowRoot.getElementById('pick').disabled);};
  await start();assert.match(await status(),/3 élèves reconnus/);await fill();assert.match(await status(),/2 cellule\(s\) remplie/);assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5','12']);assert.equal(await page.locator('[data-colonne="5"] [role=gridcell]').nth(1).innerText(),'13');
  await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);
- mode='replace-display';await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/1 cellule\(s\) remplie/);
+ assert.match(await page.locator('#eps-pronote-bridge #fill').innerText(),/notes restantes/);assert.equal(await page.locator('#eps-pronote-bridge #fill').isEnabled(),true);
+ await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5','12']);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);
+ await start();await fill(true);await page.locator('[data-colonne="5"] [role=gridcell]').first().evaluate(e=>e.textContent='11');await fill();assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/tableau a changé/);
+ await start();await fill(true);await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/introuvable/);
+ mode='replace-display';await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/Note test saisie/);await fill();assert.equal(await page.evaluate(()=>writes.length),2);
  mode='strip-marker';await start();await fill();assert.equal(await page.evaluate(()=>writes.length),2);assert.match(await status(),/2 cellule\(s\) remplie/);
  mode='normal';
  await start(payload,'2');assert.match(await status(),/pas la moyenne/);assert.ok(await page.locator('#eps-pronote-bridge #fill').isDisabled());
@@ -29,7 +33,7 @@ function fixture(mode='normal'){
  await start();await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),0);
  await start();await page.locator('[data-colonne="5"] [role=gridcell]').first().evaluate(e=>e.textContent='11');await fill();assert.match(await status(),/tableau a changé/);assert.equal(await page.evaluate(()=>writes.length),0);
  mode='no-editor';await start();await fill();assert.match(await status(),/pas ouvert/);assert.equal(await page.evaluate(()=>writes.length),0);
- mode='no-confirm';await start();await fill();assert.match(await status(),/non confirmé/);assert.equal(await page.evaluate(()=>writes.length),1);
+ mode='no-confirm';await start();await fill(true);assert.match(await status(),/non confirmé/);assert.equal(await page.evaluate(()=>writes.length),1);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);
  mode='normal';await start({...payload,rows:[{lastName:'BERNARD',firstName:'Adam',value:'A'}]});assert.match(await status(),/manuellement/);
  console.log('PASS PRONOTE grid: names, extra student, reordered roster, preservation, one-note test, mean rejected, missing/changed names and values, missing editor, unconfirmed write stops, annotations blocked');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

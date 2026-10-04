@@ -401,6 +401,7 @@ function paintStopCourseTest(test){
   document.getElementById('stopNew').onclick=()=>{if(!confirm('Commencer une nouvelle saisie ? Enregistrez auparavant les résultats à conserver.'))return;stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);paintStopCourseTest(test)};
   document.getElementById('stopResume').onclick=()=>{const history=host.querySelector('.evaluation-history');if(history){history.open=true;history.scrollIntoView({behavior:'smooth',block:'nearest'})}};
   document.getElementById('stopExport').onclick=()=>EpsToolWorkflow.csv('arret-course-resultats.csv',[['Élève','Groupe','Arrêts',stopMode==='couleur'?'Appréciation':'Note /20'],...toolStudents.map(student=>{const count=stopCourseCounts[student.id]||0;return [studentLabel(student),stopGroupOf(student)||'',count,stopMode==='couleur'?stopBande(count):stopNote(count)]})]);
+  EpsPronoteTools.attach(document.getElementById('stopExport'),()=>({classId:toolClassId,className:toolClasses.find(c=>c.id===toolClassId)?.name,title:`Arrêts de course · P${epsTestPeriod}`,date:stopSessionRecord?.created_at,rows:toolStudents.map(student=>({student,score:stopNote(stopCourseCounts[student.id]||0),complete:stopMode==='note'}))}));
   const save=async asNew=>{
     const saveButtons=[document.getElementById('stopSave')];saveButtons.forEach(b=>b.disabled=true);
     try{const cls=toolClasses.find(c=>c.id===toolClassId),id=asNew||!stopSessionId?crypto.randomUUID():stopSessionId,now=new Date().toISOString();
@@ -484,6 +485,7 @@ function paintRunningSeriesTest(test){
   blankButton.onclick=()=>{rememberRunningUndo('results');resetRunningSession(true);paintRunningSeriesTest(test)};
   document.getElementById('runningResume').onclick=()=>{const history=host.querySelector('.running-history');if(history){history.open=true;history.scrollIntoView({behavior:'smooth',block:'nearest'})}};
   document.getElementById('runningExport').onclick=exportRunningCsv;
+  EpsPronoteTools.attach(document.getElementById('runningExport'),()=>({classId:toolClassId,className:toolClasses.find(c=>c.id===toolClassId)?.name,title:`${runningCount} × ${runningDistance} m · P${epsTestPeriod}`,date:runningCreatedAt,rows:toolStudents.map(student=>{const r=runningSummary(student);return {student,score:r?.total,scale:r?(r.valid.length>1?r.regMax+r.perfMax:r.perfMax):12,complete:!!r&&r.valid.length===r.raw.filter(v=>v!==RUNNING_REMOVED).length};})}));
   const resetButton=document.getElementById('runningResetAll');
   resetButton.textContent='↺ Réinitialiser les résultats';
   resetButton.onclick=()=>{if(!confirm('Effacer tous les temps du travail en cours ? Les groupes et les sessions déjà enregistrées seront conservés.'))return;rememberRunningUndo('results');resetRunningSession(true);paintRunningSeriesTest(test)};
