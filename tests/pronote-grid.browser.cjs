@@ -7,7 +7,9 @@ function fixture(mode='normal'){
  return `<style>[role=gridcell],[role=rowheader]{min-height:40px}</style><div class="liste_content_lignes" id="${prefix}_grid_0" style="display:grid;grid-template-columns:200px 70px 70px">${html}</div><script>
  window.writes=[];document.querySelectorAll('[data-colonne="5"]').forEach(cell=>cell.ondblclick=()=>{
  if('${mode}'==='no-editor')return;const display=cell.firstElementChild;const input=document.createElement('input');input.id='${prefix}_Edition';input.type='text';input.value=display.textContent;cell.append(input);display.style.display='none';input.focus();
- input.onkeydown=e=>{if(e.key!=='Enter')return;window.writes.push({cell:cell.id,value:input.value});if('${mode}'==='no-confirm')return;display.textContent=input.value;input.remove();display.style.display='';};
+ if('${mode}'==='replace-display')display.remove();
+ if('${mode}'==='strip-marker')display.removeAttribute('aria-describedby');
+ input.onkeydown=e=>{if(e.key!=='Enter')return;window.writes.push({cell:cell.id,value:input.value});if('${mode}'==='no-confirm')return;display.textContent=input.value;input.remove();display.style.display='';display.setAttribute('aria-describedby','${prefix}_celEdit');if(!display.isConnected)cell.append(display);};
  });</script>`;
 }
 (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
@@ -19,6 +21,9 @@ function fixture(mode='normal'){
  const fill=async(test=false)=>{await page.locator('#eps-pronote-bridge #confirm').check();await page.locator(test?'#eps-pronote-bridge #test':'#eps-pronote-bridge #fill').click();await page.waitForFunction(()=>!document.querySelector('#eps-pronote-bridge').shadowRoot.getElementById('pick').disabled);};
  await start();assert.match(await status(),/3 élèves reconnus/);await fill();assert.match(await status(),/2 cellule\(s\) remplie/);assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5','12']);assert.equal(await page.locator('[data-colonne="5"] [role=gridcell]').nth(1).innerText(),'13');
  await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);
+ mode='replace-display';await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/1 cellule\(s\) remplie/);
+ mode='strip-marker';await start();await fill();assert.equal(await page.evaluate(()=>writes.length),2);assert.match(await status(),/2 cellule\(s\) remplie/);
+ mode='normal';
  await start(payload,'2');assert.match(await status(),/pas la moyenne/);assert.ok(await page.locator('#eps-pronote-bridge #fill').isDisabled());
  await start({...payload,rows:[...payload.rows,{lastName:'INTROUVABLE',firstName:'Test',value:'10'}]});assert.match(await status(),/introuvable/);
  await start();await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),0);

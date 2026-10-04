@@ -37,6 +37,7 @@
     const get = id => root.getElementById(id), status = message => { get('status').textContent = message; };
     get('info').textContent = `${data.className} · ${data.title}\n${data.date} · /${data.scale} · coefficient ${data.coefficient || 1}`;
     let plan = null, picking = false, running = false, cancelled = false;
+    let verifiedGridCells = new WeakSet();
     const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); };
     const close = () => { cancelled = true; stopPick(); host.remove(); };
     get('close').onclick = close;
@@ -54,9 +55,16 @@
       const found = [...table.children].filter(c => c.id === id && c.dataset.colonne === String(column));
       if (found.length !== 1) throw Error('Cellule PRONOTE manquante ou ambiguë.');
       const cell = found[0], display = [...cell.querySelectorAll('[role="gridcell"]')].find(c => c.id === id + '_div');
-      if (!display || !display.getAttribute('aria-describedby')?.split(/\s+/).includes(prefix + '_celEdit')) throw Error('Choisissez une colonne de devoir modifiable, pas la moyenne.');
       const inputs = [...cell.querySelectorAll('input')].filter(i => i.id === prefix + '_Edition' && visible(i) && !i.disabled && !i.readOnly && i.type === 'text');
       if (inputs.length > 1) throw Error('Champ de note ambigu.');
+      const markedEditable = display?.getAttribute('aria-describedby')?.split(/\s+/).includes(prefix + '_celEdit');
+      // PRONOTE can replace the display node while editing. Trust only the exact
+      // cell already verified in this preview, with its own scoped Edition input.
+      if (!markedEditable && !(verifiedGridCells.has(cell) && inputs.length === 1)) {
+        if (verifiedGridCells.has(cell)) throw Error('La structure de la cellule a changé pendant la saisie. Transfert arrêté ; contrôlez la case avant de réessayer.');
+        throw Error('Choisissez une colonne de devoir modifiable, pas la moyenne. Si une case est en cours de saisie, fermez-la avec Échap puis recommencez.');
+      }
+      if (markedEditable) verifiedGridCells.add(cell);
       return {source,cell,display,input:inputs[0] || null,before: inputs.length ? inputs[0].value.trim() : display.textContent.trim(),dynamic:true};
     }
     function readPlan(table, column) {
@@ -101,7 +109,7 @@
     }
     function update() { get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked; }
     get('confirm').onchange = update;
-    get('pick').onclick = () => { plan = null; get('confirm').checked = false; update(); picking = true; document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
+    get('pick').onclick = () => { plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update(); picking = true; document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
     async function fill(limit = Infinity) {
       if (!plan || running || !get('confirm').checked) return;
       running = true; get('pick').disabled = true; update(); let count = 0;
