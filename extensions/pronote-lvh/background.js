@@ -18,6 +18,26 @@ async function splitWithPronote(sender, payload, rawScreen) {
     throw Error("Transfert EPS invalide ou vide.");
   }
   await chrome.storage.session.set({ epsPronotePending: { payload, createdAt: Date.now() } });
+
+  // Chrome 155+ sait afficher deux onglets dans une seule fenêtre. On privilégie ce
+  // mode natif ; les versions précédentes conservent le partage en deux fenêtres.
+  if (typeof chrome.tabs.createSplit === "function") {
+    try {
+      await chrome.tabs.create({
+        url: PRONOTE_URL,
+        windowId: sender.tab.windowId,
+        index: sender.tab.index + 1,
+        active: true,
+        pinned: Boolean(sender.tab.pinned),
+        splitWithTabId: sender.tab.id
+      });
+      return "native-tab-split";
+    } catch {
+      // Un onglet épinglé, groupé ou déjà partagé peut être refusé par Chrome.
+      // Le partage en deux fenêtres reste alors un secours fiable.
+    }
+  }
+
   const screen = validScreen(rawScreen);
   const gap = 8;
   const leftWidth = Math.floor((screen.width - gap) / 2);
@@ -39,13 +59,14 @@ async function splitWithPronote(sender, payload, rawScreen) {
     width: rightWidth,
     height: screen.height
   });
+  return "two-windows";
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   (async () => {
     if (message?.type === "EPS_PRONOTE_SPLIT") {
-      await splitWithPronote(sender, message.payload, message.screen);
-      return { ok: true };
+      const mode = await splitWithPronote(sender, message.payload, message.screen);
+      return { ok: true, mode };
     }
     if (message?.type === "EPS_PRONOTE_GET_PENDING") {
       const { epsPronotePending } = await chrome.storage.session.get("epsPronotePending");
