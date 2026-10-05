@@ -111,6 +111,10 @@ async function initUnssTab() {
   // ici. Ouvrir cet onglet apres avoir consulte la liste sous Classe laissait la cible sur
   // l'autre conteneur, masque : l'ecran restait vide sans la moindre explication. On la remet en
   // place avant toute verification, sinon meme un message d'erreur atterrirait au mauvais endroit.
+  // Le repertoire general reutilise aussi ce module avec le mode "all". En entrant ensuite dans
+  // ASLVH, ce mode restait memorise : les 1 800 eleves du repertoire apparaissaient avant que
+  // l'utilisateur clique sur "Licencies AS". L'entree ASLVH doit toujours commencer sur cet onglet.
+  unssMode = "licensed";
   unssCibleRendu = "unssList";
   viderAutreRendu("unssList");
   const asSchema = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_as_roster_version`);
@@ -128,6 +132,9 @@ async function initUnssTab() {
   await loadUnssStudents();
   await loadUnssGroups();
   await loadUnssSlots();
+  document.querySelectorAll("#unssSubtabs .subtabbtn").forEach(b =>
+    b.classList.toggle("active", b.dataset.unsstab === "licensed")
+  );
   renderUnssTab();
 }
 
