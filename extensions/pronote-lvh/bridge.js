@@ -25,20 +25,28 @@
     const host = document.createElement('div'); host.id = 'eps-pronote-bridge';
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
-    root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}td{padding:5px;border-bottom:1px solid #ddd}p{white-space:pre-wrap}input{margin:8px}</style>
-      <section><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · essai</h3><p id="info"></p>
+    root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · essai</h3><p id="info"></p>
       <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button>
-      <p id="status" role="status"></p><table id="preview"></table>
+      <p id="status" role="status"></p><table id="preview"><thead><tr><th>Élève</th><th>Note EPS</th><th>Dans PRONOTE</th></tr></thead><tbody></tbody></table>
       <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
       <button id="fill" disabled>Remplir les cellules vides</button>
       <button id="test" disabled>Tester une seule note</button>
-      <p>Les notes existantes sont conservées. Une saisie peut être enregistrée immédiatement par PRONOTE. Contrôlez ensuite le devoir dans PRONOTE.</p></section>`;
+      <p>Les notes existantes sont conservées. Une saisie peut être enregistrée immédiatement par PRONOTE. Contrôlez ensuite le devoir dans PRONOTE.</p></section>
+      <div id="pickerHint" hidden>Cliquez maintenant dans une cellule de la colonne du devoir.<br><button id="cancelPick">Annuler</button></div>`;
     document.body.append(host);
     const get = id => root.getElementById(id), status = message => { get('status').textContent = message; };
     get('info').textContent = `${data.className} · ${data.title}\n${data.date} · /${data.scale} · coefficient ${data.coefficient || 1}`;
     let plan = null, picking = false, running = false, cancelled = false;
     let verifiedGridCells = new WeakSet();
-    const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); };
+    const showPicker = active => {
+      get('panel').hidden = active;
+      get('pickerHint').hidden = !active;
+      host.style.top = active ? 'auto' : '8px';
+      host.style.bottom = active ? '12px' : 'auto';
+      host.style.width = active ? 'min(320px,92vw)' : 'min(440px,96vw)';
+    };
+    const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); showPicker(false); };
     const close = () => { cancelled = true; stopPick(); host.remove(); };
     get('close').onclick = close;
     globalThis.EpsPronoteBridge.close = close;
@@ -102,18 +110,21 @@
       } catch (e) { plan = null; status(e.message); update(); }
     }
     function renderPreview(entries) {
-        get('preview').replaceChildren();
+        const body = get('preview').querySelector('tbody');
+        body.replaceChildren();
         for (const e of entries) {
           const tr = document.createElement('tr');
-          for (const text of [`${e.source.lastName} ${e.source.firstName}`, e.source.value || 'Non noté', e.before ? `Conservé : ${e.before}` : 'Vide']) {
+          const targetState = e.before ? `Déjà notée : ${e.before}` : e.source.value ? 'À remplir' : 'Ignorée · non noté';
+          for (const text of [`${e.source.lastName} ${e.source.firstName}`, e.source.value || 'Non noté', targetState]) {
             const td = document.createElement('td'); td.textContent = text; tr.append(td);
           }
-          get('preview').append(tr);
+          body.append(tr);
         }
     }
     function update() { get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked; }
     get('confirm').onchange = update;
-    get('pick').onclick = () => { plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update(); picking = true; document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
+    get('pick').onclick = () => { plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update(); picking = true; showPicker(true); document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
+    get('cancelPick').onclick = () => { stopPick(); status('Sélection de la colonne annulée.'); };
     async function fill(limit = Infinity) {
       if (!plan || running || !get('confirm').checked) return;
       running = true; get('pick').disabled = true; update(); let count = 0, keepPlan = false;
