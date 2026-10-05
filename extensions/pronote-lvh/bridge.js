@@ -26,8 +26,8 @@
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
     root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
-      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · essai</h3><p id="info"></p>
-      <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.1.8</h3><p id="info"></p>
+      <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button><small>Le panneau va se masquer pendant la sélection.</small>
       <p id="status" role="status"></p><table id="preview"><thead><tr><th>Élève</th><th>Note EPS</th><th>Dans PRONOTE</th></tr></thead><tbody></tbody></table>
       <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
       <button id="fill" disabled>Remplir les cellules vides</button>
@@ -42,6 +42,8 @@
     const showPicker = active => {
       get('panel').hidden = active;
       get('pickerHint').hidden = !active;
+      get('panel').style.display = active ? 'none' : 'block';
+      get('pickerHint').style.display = active ? 'block' : 'none';
       host.style.top = active ? 'auto' : '8px';
       host.style.bottom = active ? '12px' : 'auto';
       host.style.width = active ? 'min(320px,92vw)' : 'min(440px,96vw)';
