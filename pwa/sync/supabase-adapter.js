@@ -261,7 +261,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
    * inscriptions ou des appels enregistres dans l'application.
    */
   const TABLES_RATTRAPAGE = [
-    "eps_test_sessions", "eps_test_results", "health_dispensations", "health_accidents",
+    "students", "eps_test_sessions", "eps_test_results", "health_dispensations", "health_accidents",
     "unss_slots", "unss_memberships", "unss_sessions", "unss_attendance"
   ];
   const tablesRattrapables = tables.filter(t => TABLES_RATTRAPAGE.includes(t));

@@ -498,8 +498,14 @@ async function verserDansClasse(classe, corps) {
   const aVerser = unssStudents.filter(e => selectionEleves.has(e.id) && !deja.has(cle(e)));
   const ignores = selectionEleves.size - aVerser.length;
   if (aVerser.length === 0) {
+    // La ligne peut deja exister sur le serveur sans etre encore dans la copie locale : l'ancien
+    // parcours ecrivait directement dans Supabase, tandis que Classe lit toujours IndexedDB.
+    // Un rattrapage force repare ce decalage au lieu de laisser l'eleve invisible indefiniment.
+    try { await modeHorsConnexion?.rattraper(); } catch { /* la prochaine ouverture reessaiera */ }
     corps.innerHTML = `<div class="muted">Ces ${ignores} eleve(s) sont deja dans `
-      + `${planningText(classe.name)}. Rien n'a ete ajoute.</div>`;
+      + `${planningText(classe.name)}. La copie locale vient d'etre actualisee.</div>`
+      + `<button id="classPickFini" style="margin-top:10px">Fermer</button>`;
+    corps.querySelector("#classPickFini").addEventListener("click", () => fermerFenetreChoixClasse());
     return;
   }
 
@@ -519,9 +525,13 @@ async function verserDansClasse(classe, corps) {
     })))
   });
   if (!creation.ok) { echec("Ajout non confirme. Rien n'a ete ajoute."); return; }
-  // Versement en lot direct, mais l'onglet Classe lit la copie locale : sans cette
-  // synchronisation, les eleves verses n'y apparaitraient qu'a la prochaine occasion.
-  try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
+  // Versement en lot direct, mais l'onglet Classe lit la copie locale. Le rattrapage force
+  // compare les identifiants recents et recupere tout de suite les lignes creees ci-dessus,
+  // meme si une synchronisation plus ancienne avait deja avance son curseur.
+  try {
+    await modeHorsConnexion?.rattraper();
+    await modeHorsConnexion?.synchroniser();
+  } catch { /* la lecture suivante reessaiera */ }
 
   selectionEleves.clear();
   renderUnssTab();
