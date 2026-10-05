@@ -1,8 +1,25 @@
 {
   "manifest_version": 3,
   "name": "EPS LVH — Transfert PRONOTE",
-  "version": "0.1.4",
-  "description": "Transfert local de notes EPS avec vérification nominative. Version d'essai.",
-  "permissions": ["activeTab", "scripting"],
+  "version": "0.1.5",
+  "description": "Transfert local de notes EPS avec écran partagé et vérification nominative.",
+  "permissions": ["activeTab", "scripting", "storage", "tabs", "windows"],
+  "host_permissions": [
+    "https://luidgi8al-del.github.io/alex-eps-import/*",
+    "https://3500010j.index-education.net/pronote/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://luidgi8al-del.github.io/alex-eps-import/*"],
+      "js": ["site-bridge.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://3500010j.index-education.net/pronote/*"],
+      "js": ["bridge.js", "pronote-ready.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "action": { "default_popup": "popup.html", "default_title": "Préparer les notes PRONOTE" }
 }

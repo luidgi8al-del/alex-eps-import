@@ -7,6 +7,12 @@ document.getElementById('diagnostic').onclick = async () => {
     window.close();
   } catch (e) { document.getElementById('status').textContent = e.message; }
 };
+
+chrome.runtime.sendMessage({ type: 'EPS_PRONOTE_GET_PENDING' }).then(response => {
+  if (!response?.ok || !response.payload) return;
+  document.getElementById('payload').value = JSON.stringify(response.payload);
+  document.getElementById('status').textContent = 'Transfert préparé depuis le site EPS.';
+}).catch(() => {});
 document.getElementById('open').onclick = async () => {
   const status = document.getElementById('status');
   try {

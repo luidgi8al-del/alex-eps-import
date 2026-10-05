@@ -824,7 +824,7 @@ function renderEvaluationTable() {
   document.getElementById("addCritBtn").addEventListener("click", addCriterion);
   document.getElementById("exportCsvBtn").addEventListener("click", exportEvaluationCsv);
   document.getElementById("printPdfBtn").addEventListener("click", () => window.print());
-  document.getElementById("exportPronoteBtn").addEventListener("click", renderPronoteExport);
+  document.getElementById("exportPronoteBtn").addEventListener("click", startPronoteSplitScreen);
 }
 
 function formatScoreWeb(value) {
@@ -978,6 +978,76 @@ function pronoteFilePart(value) {
     .replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase() || "evaluation";
 }
 
+function pronoteTransferData(useFormValues = false) {
+  const evaluation = evalList.find(e => e.id === evalOpenedId);
+  const defaultDate = new Date(Number(evaluation?.date_epoch_millis) || Date.now()).toISOString().slice(0, 10);
+  const field = id => useFormValues ? document.getElementById(id) : null;
+  return {
+    format: "eps-pronote-v1",
+    className: pronoteClassLabel(),
+    title: field("pronoteTitle")?.value.trim() || evaluation?.label || "Évaluation EPS",
+    date: field("pronoteDate")?.value || defaultDate,
+    scale: Number(field("pronoteScale")?.value || evalTotalMax() || 20),
+    coefficient: Number(field("pronoteCoefficient")?.value ?? 1),
+    rows: pronoteExportRows().map(r => ({
+      lastName: r.student.last_name || "",
+      firstName: r.student.first_name || "",
+      value: r.valeur
+    }))
+  };
+}
+
+function requestPronoteSplitScreen(payload) {
+  return new Promise((resolve, reject) => {
+    const requestId = globalThis.crypto?.randomUUID?.() || `eps-${Date.now()}-${Math.random()}`;
+    const timeout = setTimeout(() => {
+      window.removeEventListener("message", receive);
+      reject(new Error("L’extension EPS LVH doit être mise à jour pour ouvrir l’écran partagé."));
+    }, 1800);
+    function receive(event) {
+      if (event.source !== window || event.origin !== location.origin ||
+          event.data?.type !== "EPS_PRONOTE_SPLIT_RESULT" || event.data.requestId !== requestId) return;
+      clearTimeout(timeout);
+      window.removeEventListener("message", receive);
+      if (event.data.ok) resolve(event.data);
+      else reject(new Error(event.data.error || "Ouverture de PRONOTE impossible."));
+    }
+    window.addEventListener("message", receive);
+    window.postMessage({
+      type: "EPS_PRONOTE_SPLIT_REQUEST",
+      requestId,
+      payload,
+      screen: {
+        availLeft: Number(window.screen.availLeft || 0),
+        availTop: Number(window.screen.availTop || 0),
+        availWidth: Number(window.screen.availWidth || window.screen.width),
+        availHeight: Number(window.screen.availHeight || window.screen.height)
+      }
+    }, location.origin);
+  });
+}
+
+async function startPronoteSplitScreen() {
+  const button = document.getElementById("exportPronoteBtn");
+  const previous = button?.textContent;
+  if (button) { button.disabled = true; button.textContent = "Ouverture de PRONOTE…"; }
+  try {
+    const data = pronoteTransferData(false);
+    if (!(data.scale > 0) || !Number.isFinite(data.coefficient) || data.coefficient < 0) throw Error("Barème ou coefficient invalide.");
+    await requestPronoteSplitScreen(data);
+  } catch (error) {
+    // L'ancien parcours reste disponible si l'extension n'est pas installée ou pas encore mise à jour.
+    renderPronoteExport();
+    const status = document.getElementById("pronoteExportStatus");
+    if (status) {
+      status.textContent = `${error.message} Vous pouvez encore préparer le transfert manuellement ci-dessus.`;
+      status.className = "warning";
+    }
+  } finally {
+    if (button?.isConnected) { button.disabled = false; button.textContent = previous; }
+  }
+}
+
 function renderPronoteExport() {
   const host = document.getElementById("pronoteExportHost");
   if (!host) return;
@@ -1057,24 +1127,24 @@ async function copyPronoteNotes() {
 }
 
 async function preparePronoteInternet() {
-  const evaluation = evalList.find(e => e.id === evalOpenedId);
-  const data = {
-    format: 'eps-pronote-v1', className: pronoteClassLabel(),
-    title: document.getElementById('pronoteTitle').value.trim() || evaluation.label,
-    date: document.getElementById('pronoteDate').value,
-    scale: Number(document.getElementById('pronoteScale').value),
-    coefficient: Number(document.getElementById('pronoteCoefficient').value),
-    rows: pronoteExportRows().map(r => ({ lastName: r.student.last_name || '', firstName: r.student.first_name || '', value: r.valeur }))
-  };
+  const data = pronoteTransferData(true);
   const status = document.getElementById('pronoteExportStatus');
   if (!(data.scale > 0) || !Number.isFinite(data.coefficient) || data.coefficient < 0) {
     status.textContent = 'Vérifiez le barème et le coefficient.'; return;
   }
   try {
-    await navigator.clipboard.writeText(JSON.stringify(data));
-    status.textContent = 'Transfert nominatif copié. Ouvrez le devoir dans PRONOTE Internet sur ordinateur, puis collez-le dans l’extension EPS LVH. Aucun envoi n’a encore eu lieu.';
-  } catch {
-    status.textContent = 'Copie impossible. Autorisez le presse-papiers dans votre navigateur puis réessayez.';
+    await requestPronoteSplitScreen(data);
+    status.textContent = 'Écran partagé ouvert : le transfert est prêt dans la fenêtre PRONOTE.';
+    status.className = 'ok';
+  } catch (error) {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(data));
+      status.textContent = `${error.message} Le transfert a été copié pour conserver le parcours manuel.`;
+      status.className = 'warning';
+    } catch {
+      status.textContent = 'Ouverture et copie impossibles. Mettez à jour l’extension puis réessayez.';
+      status.className = 'error';
+    }
   }
 }
 
