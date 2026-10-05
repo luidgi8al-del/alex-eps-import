@@ -109,7 +109,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./outils-socle.js",
   "./outils-socle.js?v=20260928-2",
   "./outils.js",
-  "./outils.js?v=20261005-pronote",
+  "./outils.js?v=20261005-groups47",
   "./period-settings.js",
   "./planning-scroll.js",
   "./planning.js",
@@ -163,13 +163,13 @@ self.EPS_OFFLINE_ASSETS = [
   "./teams-saved-web.js",
   "./teams-saved-web.js?v=20261005-teams",
   "./tools-common-groups.js",
-  "./tools-common-groups.js?v=20260928-1",
+  "./tools-common-groups.js?v=20261005-groups47",
   "./tools-organizers.js",
   "./tools-organizers.js?v=20260928-1",
   "./tools-persistence.js",
   "./tools-persistence.js?v=20260928-1",
   "./tools-workflows.js",
-  "./tools-workflows.js?v=20261005-pronote",
+  "./tools-workflows.js?v=20261005-groups47",
   "./tools-workspace.js",
-  "./tools-workspace.js?v=20260928-3"
+  "./tools-workspace.js?v=20261005-groups47"
 ];
