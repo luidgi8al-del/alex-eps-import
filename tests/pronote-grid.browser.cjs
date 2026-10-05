@@ -9,7 +9,7 @@ function fixture(mode='normal'){
  if('${mode}'==='no-editor')return;const display=cell.firstElementChild;const input=document.createElement('input');input.id='${prefix}_Edition';input.type='text';input.value=display.textContent;cell.append(input);display.style.display='none';input.focus();
  if('${mode}'==='replace-display')display.remove();
  if('${mode}'==='strip-marker')display.removeAttribute('aria-describedby');
- input.onkeydown=e=>{if(e.key!=='Enter')return;window.writes.push({cell:cell.id,value:input.value});if('${mode}'==='no-confirm')return;display.textContent=input.value;input.remove();display.style.display='';display.setAttribute('aria-describedby','${prefix}_celEdit');if(!display.isConnected)cell.append(display);};
+ input.onkeydown=e=>{if(e.key!=='Enter')return;window.writes.push({cell:cell.id,value:input.value});if('${mode}'==='no-confirm')return;display.textContent=input.value;input.remove();display.style.display='';display.setAttribute('aria-describedby','${prefix}_celEdit');if(!display.isConnected)cell.append(display);if('${mode}'==='replace-cell')cell.replaceWith(cell.cloneNode(true));};
  });</script>`;
 }
 (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
@@ -27,6 +27,7 @@ function fixture(mode='normal'){
  await start();await fill(true);await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/introuvable/);
  mode='replace-display';await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/Note test saisie/);await fill();assert.equal(await page.evaluate(()=>writes.length),2);
  mode='strip-marker';await start();await fill();assert.equal(await page.evaluate(()=>writes.length),2);assert.match(await status(),/2 cellule\(s\) remplie/);
+ mode='replace-cell';await start();await fill();assert.equal(await page.evaluate(()=>writes.length),2);assert.match(await status(),/2 cellule\(s\) remplie/);
  mode='normal';
  await start(payload,'2');assert.match(await status(),/pas la moyenne/);assert.ok(await page.locator('#eps-pronote-bridge #fill').isDisabled());
  await start({...payload,rows:[...payload.rows,{lastName:'INTROUVABLE',firstName:'Test',value:'10'}]});assert.match(await status(),/introuvable/);
@@ -35,5 +36,5 @@ function fixture(mode='normal'){
  mode='no-editor';await start();await fill();assert.match(await status(),/pas ouvert/);assert.equal(await page.evaluate(()=>writes.length),0);
  mode='no-confirm';await start();await fill(true);assert.match(await status(),/non confirmé/);assert.equal(await page.evaluate(()=>writes.length),1);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);
  mode='normal';await start({...payload,rows:[{lastName:'BERNARD',firstName:'Adam',value:'A'}]});assert.match(await status(),/manuellement/);
- console.log('PASS PRONOTE grid: names, extra student, reordered roster, preservation, one-note test, mean rejected, missing/changed names and values, missing editor, unconfirmed write stops, annotations blocked');
+ console.log('PASS PRONOTE grid: names, extra student, reordered roster, preservation, one-note test, cell rerender, mean rejected, missing/changed names and values, missing editor, unconfirmed write stops, annotations blocked');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

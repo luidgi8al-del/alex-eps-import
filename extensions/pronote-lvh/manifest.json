@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EPS LVH — Transfert PRONOTE",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Transfert local de notes EPS avec onglets partagés et vérification nominative.",
   "permissions": ["activeTab", "scripting", "storage", "tabs", "windows"],
   "host_permissions": [

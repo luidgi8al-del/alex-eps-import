@@ -26,7 +26,7 @@
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
     root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
-      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.1.8</h3><p id="info"></p>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.1.9</h3><p id="info"></p>
       <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button><small>Le panneau va se masquer pendant la sélection.</small>
       <p id="status" role="status"></p><table id="preview"><thead><tr><th>Élève</th><th>Note EPS</th><th>Dans PRONOTE</th></tr></thead><tbody></tbody></table>
       <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
@@ -92,6 +92,15 @@
         return { source, cell, before, input: inputs.length === 1 ? inputs[0] : null };
       });
     }
+    function resolvePlanTable() {
+      if (plan?.table?.isConnected) return plan.table;
+      const id = plan?.table?.id;
+      const replacement = id ? document.getElementById(id) : null;
+      if (!replacement || !replacement.matches('.liste_content_lignes') || !replacement.isConnected) throw Error('Le tableau a changé. Refaites la vérification.');
+      plan.table = replacement;
+      return replacement;
+    }
+    const sameTarget = (left, right) => left?.cell === right?.cell || Boolean(left?.dynamic && right?.dynamic && left.cell?.id && left.cell.id === right.cell?.id);
     function choose(event) {
       if (!picking || event.composedPath().includes(host)) return;
       const cell = event.target.closest?.('td,[role="cell"],[role="gridcell"]');
@@ -131,26 +140,26 @@
       if (!plan || running || !get('confirm').checked) return;
       running = true; get('pick').disabled = true; update(); let count = 0, keepPlan = false;
       try {
-        const fresh = readPlan(plan.table, plan.column);
-        if (fresh.some((e, i) => e.cell !== plan.entries[i].cell || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
+        const fresh = readPlan(resolvePlanTable(), plan.column);
+        if (fresh.some((e, i) => !sameTarget(e, plan.entries[i]) || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
         for (const entry of fresh) {
           if (cancelled || !host.isConnected || count >= limit) break;
           if (entry.before || !entry.source.value) continue;
-          let current = readPlan(plan.table, plan.column).find(e => e.source === entry.source);
-          if (current?.dynamic && !current.input && current.cell === entry.cell && !current.before) {
+          let current = readPlan(resolvePlanTable(), plan.column).find(e => e.source === entry.source);
+          if (current?.dynamic && !current.input && sameTarget(current, entry) && !current.before) {
             current.cell.scrollIntoView({block:'nearest',inline:'nearest'});
             current.display.focus();
             current.display.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window,detail:1}));
             current.display.dispatchEvent(new MouseEvent('dblclick',{bubbles:true,cancelable:true,view:window,detail:2}));
             for (let i=0;i<10&&!cancelled;i++) {
               await wait(100);
-              current = readPlan(plan.table,plan.column).find(e=>e.source===entry.source);
+              current = readPlan(resolvePlanTable(),plan.column).find(e=>e.source===entry.source);
               if(current.input)break;
             }
           }
           if(cancelled || !host.isConnected)break;
           if (current?.dynamic && !current.input) throw Error('PRONOTE n’a pas ouvert le champ de saisie. Aucune note saisie dans cette case : transfert arrêté.');
-          if (!current?.input?.isConnected || current.cell !== entry.cell || current.before) throw Error('La cellule a changé : transfert arrêté.');
+          if (!current?.input?.isConnected || !sameTarget(current, entry) || current.before) throw Error('La cellule a changé : transfert arrêté.');
           const input = current.input;
           if (input.type === 'number' && /[AD]/.test(entry.source.value)) throw Error('Cette cellule refuse les annotations A/D.');
           const value = input.type === 'number' ? entry.source.value.replace(',', '.') : entry.source.value;
@@ -164,8 +173,8 @@
             let confirmed=false;
             for(let i=0;i<10;i++) {
               if(cancelled || !host.isConnected)break;
-              const check=readPlan(plan.table,plan.column).find(e=>e.source===entry.source);
-              if(check.cell!==entry.cell)break;
+              const check=readPlan(resolvePlanTable(),plan.column).find(e=>e.source===entry.source);
+              if(!sameTarget(check,entry))break;
               // Only rendered cell text counts; an editor merely retaining its value is insufficient.
               if(!check.input && sameNumber(check.display.textContent.trim())){confirmed=true;break;}
               await wait(100);
@@ -176,7 +185,7 @@
         }
         status(`${count} cellule(s) remplie(s). Enregistrement serveur non vérifié : contrôlez le devoir dans PRONOTE.`);
         if(limit===1 && count===1 && !cancelled) {
-          const updated=readPlan(plan.table,plan.column);
+          const updated=readPlan(resolvePlanTable(),plan.column);
           if(updated.some(e=>!e.before&&e.source.value)) {
             plan.entries=updated;renderPreview(updated);keepPlan=true;
             get('fill').textContent='Vérifier et transférer les notes restantes';
