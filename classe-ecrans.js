@@ -1106,7 +1106,7 @@ async function ecChargerEvaluationsEquipes(panel) {
     host.innerHTML=list.map(e=>`<button type="button" class="ec-evaluation" data-team-result="${ecTexte(e.id)}"><span class="ec-evaluation-tete"><b>${ecTexte(e.title)}</b><small>${ecDateCourte(e.created_at)}</small></span><small>Ponctuelle · Par équipes · Ouvrir, modifier, PDF ou Excel</small></button>`).join('');
     if(list.length)panel.querySelector('.ec-eval-vide')?.remove();
     const stats=panel.querySelectorAll('.ec-eval-stat b');
-    const complete=list.filter(e=>e.scores_json?._meta?.groups?.length && e.criteria_json?.length && e.scores_json._meta.groups.every((g,i)=>e.criteria_json.every(c=>e.scores_json[i]?.[c.id]!==undefined && e.scores_json[i][c.id]!==''))).length;
+    const complete=list.filter(e=>TeamEvaluation.isComplete(e)).length;
     if(stats.length===3){stats[0].textContent=Number(stats[0].textContent)+list.length;stats[1].textContent=Number(stats[1].textContent)+complete;stats[2].textContent=Number(stats[2].textContent)+list.length-complete;}
     host.querySelectorAll('[data-team-result]').forEach(b=>b.onclick=()=>ecOuvrirEvaluationEquipe(list.find(e=>e.id===b.dataset.teamResult)));
   }catch(e){if(host.isConnected)host.textContent=e.message;}

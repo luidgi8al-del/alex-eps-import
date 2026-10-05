@@ -3,10 +3,36 @@
   const esc = v => String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
   const name = s => `${s.last_name || ''} ${s.first_name || ''}`.trim();
   const letter = i => i < 26 ? String.fromCharCode(65 + i) : String(i + 1);
+  const cacheKey=()=> 'eps:team-evaluations:'+SUPABASE_URL+':'+session.user_id;
+  const cached=()=>JSON.parse(localStorage.getItem(cacheKey())||'{}');
+  function keep(record,pending=true,sendable=true){const all=cached();all[record.id]={record:structuredClone(record),pending,sendable};localStorage.setItem(cacheKey(),JSON.stringify(all));}
+  let sending=null;
+  async function flush(){
+    if(sending)return sending;
+    const owner=session?.user_id;if(!owner||navigator.onLine===false)return;
+    sending=(async()=>{
+      for(const item of Object.values(cached()).filter(x=>x.pending&&x.sendable!==false)){
+        if(session?.user_id!==owner)return;
+        const r=await apiFetch(SUPABASE_URL+'/rest/v1/team_evaluations',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(item.record)});
+        if(!r.ok)throw Error('Envoi non confirmé par le serveur.');
+        if(session?.user_id!==owner)return;
+        const current=cached()[item.record.id];
+        if(current && JSON.stringify(current.record)===JSON.stringify(item.record))keep(item.record,false);
+      }
+    })().finally(()=>{sending=null;});
+    return sending;
+  }
+  addEventListener('online',()=>flush().catch(()=>{}));
+  setInterval(()=>{if(typeof session!=='undefined'&&session?.user_id)flush().catch(()=>{});},15000);
   async function rows(table, query) {
-    const r = await apiFetch(`${SUPABASE_URL}/rest/v1/${table}?${query}&deleted=eq.false`);
-    if (!r.ok) throw Error('Impossible de charger les évaluations.');
-    return r.json();
+    const local=table==='team_evaluations'?Object.values(cached()).map(x=>x.record).filter(r=>!r.deleted&&[...new URLSearchParams(query)].every(([k,v])=>!v.startsWith('eq.')||String(r[k])===v.slice(3))):[];
+    try{
+      const response=await apiFetch(SUPABASE_URL+'/rest/v1/'+table+'?'+query+'&deleted=eq.false');
+      if(!response.ok)throw Error('Impossible de charger les évaluations.');
+      const remote=await response.json(),byId=new Map(remote.map(r=>[r.id,r]));
+      for(const r of local)if(cached()[r.id]?.pending)byId.set(r.id,r);
+      return [...byId.values()];
+    }catch(error){if(local.length)return local;throw error;}
   }
   function download(blob, filename) {
     const url = URL.createObjectURL(blob), a = document.createElement('a');
@@ -34,48 +60,68 @@
     return new Blob([...parts,...central,header(22,[[0,0x06054b50],[8,count,2],[10,count,2],[12,size],[16,offset]])],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
   }
   function editor(host, composition, groups, existing, back) {
-    const date=existing?.created_at || new Date().toISOString(),id=existing?.id || crypto.randomUUID();
-    const snapshot=structuredClone(existing?.scores_json?._meta?.groups || groups);
+    const drafts=Object.values(cached()).filter(x=>x.pending&&x.record.saved_team_id===composition.id);
+    if(existing && cached()[existing.id]?.pending)existing=cached()[existing.id].record;
+    else if(!existing&&drafts.length&&confirm('Reprendre l’évaluation conservée sur cet appareil ?'))existing=drafts.at(-1).record;
+    const date=existing?.created_at||new Date().toISOString(),id=existing?.id||crypto.randomUUID();
+    const snapshot=Array.from(existing?.scores_json?._meta?.groups||groups,g=>g||[]);
     let criteria=structuredClone(existing?.criteria_json?.length?existing.criteria_json:[{id:crypto.randomUUID(),name:'Technique',max:5}]);
-    const scores=structuredClone(existing?.scores_json || {});delete scores._meta;
-    let title=existing?.title || `Évaluation · ${composition.name}`,busy=false,period=Number(existing?.scores_json?._meta?.period || composition.period_number || 1);
-    const total=i=>criteria.every(c=>scores[i]?.[c.id]!==undefined && scores[i][c.id]!=='')?criteria.reduce((s,c)=>s+Number(scores[i][c.id]),0):null;
-    const collect=()=>{
-      title=host.querySelector('#teTitle').value;
-      period=Number(host.querySelector('#tePeriod').value);
-      host.querySelectorAll('[data-name]').forEach(e=>criteria[+e.dataset.name].name=e.value);
-      host.querySelectorAll('[data-max]').forEach(e=>criteria[+e.dataset.max].max=Number(e.value));
-      host.querySelectorAll('[data-team-score]').forEach(e=>(scores[e.dataset.teamScore]??={})[e.dataset.criterion]=e.value);
-    };
-    const validate=()=>{
-      if(!title.trim() || !criteria.length || criteria.some(c=>!c.name.trim() || !Number.isFinite(c.max) || c.max<=0))throw Error('Renseignez le nom, au moins un critère et un barème positif.');
-      snapshot.forEach((g,i)=>criteria.forEach(c=>{const v=scores[i]?.[c.id];if(v!==undefined && v!=='' && (!Number.isFinite(+v)||+v<0||+v>c.max))throw Error(`Équipe ${letter(i)} : la note « ${c.name} » doit être entre 0 et ${c.max}.`);}));
-    };
-    const data=()=>[[title],['Date',new Date(date).toLocaleDateString('fr-FR'),'Période',period,'Composition',composition.name],['Équipe','Élèves',...criteria.map(c=>`${c.name} / ${c.max}`),`Total / ${criteria.reduce((s,c)=>s+c.max,0)}`],...snapshot.map((g,i)=>[`Équipe ${letter(i)}`,g.map(name).join(' · '),...criteria.map(c=>scores[i]?.[c.id]===undefined||scores[i][c.id]===''?'':Number(scores[i][c.id])),total(i)??'Incomplet'])];
-    function draw() {
-      host.innerHTML=`<section class="card"><h2>Évaluation par équipes</h2><p>${esc(composition.name)} · ${new Date(date).toLocaleDateString('fr-FR')} · rangée dans Classe → Évaluations / Tests</p><label>Nom de l’évaluation<input id="teTitle" value="${esc(title)}"></label><label>Période<select id="tePeriod">${Array.from({length:Math.max(6,period)},(_,i)=>`<option value="${i+1}"${period===i+1?' selected':''}>Période ${i+1}</option>`).join('')}</select></label><p>Une note commune aux élèves de chaque équipe. Une case vide reste « non évaluée ».</p><div>${criteria.map((c,i)=>`<div class="team-criterion-row"><label>Critère<input data-name="${i}" value="${esc(c.name)}"></label><label>Sur<input data-max="${i}" type="number" min="0.01" step="any" value="${c.max}"></label><button data-remove="${i}" class="secondary" aria-label="Supprimer le critère ${i+1}">×</button></div>`).join('')}</div><button id="teAdd" class="secondary">＋ Ajouter un critère</button><div style="overflow:auto;max-width:100%;margin:20px 0"><table style="border-collapse:collapse;width:100%;min-width:600px"><thead><tr><th>Équipe et élèves</th>${criteria.map(c=>`<th>${esc(c.name)}<br>/${c.max}</th>`).join('')}<th>Total / ${criteria.reduce((s,c)=>s+c.max,0)}</th></tr></thead><tbody>${snapshot.map((g,i)=>`<tr><th style="min-width:190px;text-align:left;padding:12px;position:sticky;left:0;background:white">Équipe ${letter(i)}<small style="display:block;font-weight:normal">${g.map(s=>esc(name(s))).join('<br>')}</small></th>${criteria.map(c=>`<td style="padding:8px;min-width:100px"><input aria-label="Équipe ${letter(i)}, ${esc(c.name)}" data-team-score="${i}" data-criterion="${c.id}" type="number" min="0" max="${c.max}" step="any" value="${esc(scores[i]?.[c.id]??'')}"></td>`).join('')}<td data-total="${i}">${total(i)??'Incomplet'}</td></tr>`).join('')}</tbody></table></div><div class="team-eval-actions"><button id="teSave">Enregistrer</button><button id="teExcel" class="secondary">Excel (.xlsx)</button><button id="tePdf" class="secondary">PDF / Imprimer</button><button id="teBack" class="secondary">Retour</button></div><p id="teStatus" role="status"></p></section>`;
-      const status=message=>host.querySelector('#teStatus').textContent=message;
-      host.querySelectorAll('[data-name],[data-max]').forEach(e=>e.oninput=()=>{
-        collect(); const headings=host.querySelectorAll('thead th');
-        criteria.forEach((c,i)=>{headings[i+1].textContent=`${c.name} / ${c.max}`;host.querySelectorAll(`[data-criterion="${c.id}"]`).forEach(input=>input.max=c.max);});
-        headings[headings.length-1].textContent=`Total / ${criteria.reduce((s,c)=>s+c.max,0)}`;
-      });
-      host.querySelectorAll('[data-team-score]').forEach(e=>e.oninput=()=>{collect();host.querySelectorAll('[data-total]').forEach(t=>t.textContent=total(+t.dataset.total)??'Incomplet');});
-      host.querySelectorAll('[data-remove]').forEach(e=>e.onclick=()=>{collect();criteria.splice(+e.dataset.remove,1);draw();});
-      host.querySelector('#teAdd').onclick=()=>{collect();criteria.push({id:crypto.randomUUID(),name:'Nouveau critère',max:5});draw();};
-      host.querySelector('#teBack').onclick=()=>{if(!busy && confirm('Revenir à la composition ? Les modifications non enregistrées seront perdues.'))back();};
-      host.querySelector('#teSave').onclick=async()=>{
-        if(busy)return;collect();try{validate();busy=true;host.querySelectorAll('button,input').forEach(e=>e.disabled=true);
-          const record={id,user_id:session.user_id,saved_team_id:composition.id,class_id:composition.class_id,title:title.trim(),criteria_json:criteria,scores_json:{...scores,_meta:{version:1,groups:snapshot,period,compositionName:composition.name}},created_at:date,updated_at:new Date().toISOString(),deleted:false};
-          const response=await apiFetch(`${SUPABASE_URL}/rest/v1/team_evaluations`,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(record)});
-          if(!response.ok)throw Error('Enregistrement refusé. Vos saisies sont conservées ; réessayez.');
-          status('Évaluation enregistrée. Vous pouvez la retrouver dans la classe, rubrique Évaluations / Tests.');
-        }catch(e){status(e.message);}finally{busy=false;host.querySelectorAll('button,input').forEach(e=>e.disabled=false);}
-      };
-      host.querySelector('#teExcel').onclick=()=>{collect();try{validate();download(excel(data()),title.replace(/[\\/:*?"<>|]/g,'-')+'.xlsx');}catch(e){status(e.message);}};
-      host.querySelector('#tePdf').onclick=()=>{collect();try{validate();const w=window.open('','_blank');if(!w)throw Error('Autorisez la fenêtre d’impression puis réessayez.');w.document.write(`<html><head><title>${esc(title)}</title><style>@page{size:landscape;margin:12mm}body{font-family:Arial}table{border-collapse:collapse;width:100%}td{border:1px solid #999;padding:8px}tr{break-inside:avoid}</style></head><body><h1>${esc(title)}</h1><p>Dans la fenêtre d’impression, choisissez « Enregistrer au format PDF ».</p><table>${data().slice(1).map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</table></body></html>`);w.document.close();w.focus();w.print();}catch(e){status(e.message);}};
+    const common=structuredClone(existing?.scores_json||{});delete common._meta;
+    const individual=structuredClone(existing?.scores_json?._meta?.individualScores||{});
+    let title=existing?.title||'Évaluation · '+composition.name,period=Number(existing?.scores_json?._meta?.period||composition.period_number||1),active=null,timer;
+    const value=(student,i,c)=>Object.hasOwn(individual[student.id]||{},c.id)?individual[student.id][c.id]:(common[i]?.[c.id]??'');
+    const total=(student,i)=>criteria.every(c=>value(student,i,c)!=='')?criteria.reduce((sum,c)=>sum+Number(value(student,i,c)),0):null;
+    const status=message=>{const el=host.querySelector('#teStatus');if(el)el.textContent=message;};
+    const record=()=>({id,user_id:session.user_id,saved_team_id:composition.id,class_id:composition.class_id,title:title.trim(),criteria_json:structuredClone(criteria),scores_json:{...structuredClone(common),_meta:{version:2,groups:structuredClone(snapshot),individualScores:structuredClone(individual),period,compositionName:composition.name}},created_at:date,updated_at:new Date().toISOString(),deleted:false});
+    function validate(){
+      if(!title.trim()||!criteria.length||criteria.some(c=>!c.name.trim()||!Number.isFinite(c.max)||c.max<=0))throw Error('Complétez le nom et les barèmes positifs.');
+      snapshot.forEach((g,i)=>g.forEach(s=>criteria.forEach(c=>{const v=value(s,i,c);if(v!==''&&(!Number.isFinite(+v)||+v<0||+v>c.max))throw Error(name(s)+' : note entre 0 et '+c.max+'.');})));
+    }
+    async function send(){
+      try{validate();await flush();status(cached()[id]?.pending?'Sauvegardé sur cet appareil — synchronisation en attente.':'Enregistré en ligne.');}
+      catch(e){status('Sauvegardé sur cet appareil — '+e.message);}
+    }
+    function save(){
+      try{let valid=true;try{validate();}catch{valid=false;}keep(record(),true,valid);status('Sauvegardé sur cet appareil — synchronisation en attente.');clearTimeout(timer);timer=setTimeout(send,500);return true;}
+      catch(e){status('Sauvegarde impossible sur cet appareil. Ne fermez pas cette page.');return false;}
+    }
+    function closeGroup(){if(save()){active=null;draw();status('Sauvegardé sur cet appareil — vérification de l’envoi…');}}
+    const data=()=>[[title],['Date',new Date(date).toLocaleDateString('fr-FR'),'Période',period],['Équipe','Élève',...criteria.map(c=>c.name+' / '+c.max),'Total'],...snapshot.flatMap((g,i)=>g.map(s=>['Équipe '+letter(i),name(s),...criteria.map(c=>value(s,i,c)===''?'':Number(value(s,i,c))),total(s,i)??'Incomplet']))];
+    function draw(){
+      host.innerHTML='<section class="card"><h2>Évaluation par équipes</h2><p>'+esc(composition.name)+' · '+snapshot.length+' équipes · '+snapshot.flat().length+' élèves</p><div id="teSettings"></div><div id="teTeams"></div><div class="team-eval-actions"><button id="teSave">Enregistrer maintenant</button><button id="teExcel" class="secondary">Excel (.xlsx)</button><button id="tePdf" class="secondary">PDF / Imprimer</button><button id="teBack" class="secondary">Fermer l’évaluation</button></div><p id="teStatus" role="status"></p></section>';
+      const settings=host.querySelector('#teSettings');
+      settings.hidden=active!==null;
+      settings.innerHTML='<label>Nom de l’évaluation<input id="teTitle" value="'+esc(title)+'"></label><label>Période<select id="tePeriod">'+Array.from({length:Math.max(6,period)},(_,i)=>'<option value="'+(i+1)+'" '+(period===i+1?'selected':'')+'>Période '+(i+1)+'</option>').join('')+'</select></label>'+criteria.map((c,i)=>'<div class="team-criterion-row"><label>Critère<input data-name="'+i+'" value="'+esc(c.name)+'"></label><label>Sur<input data-max="'+i+'" type="number" min=".01" step="any" value="'+c.max+'"></label><button data-remove="'+i+'" class="secondary">×</button></div>').join('')+'<button id="teAdd" class="secondary">＋ Ajouter un critère</button>';
+      host.querySelector('#teTitle').oninput=e=>{title=e.target.value;save();};
+      host.querySelector('#tePeriod').onchange=e=>{period=+e.target.value;save();};
+      host.querySelectorAll('[data-name]').forEach(e=>e.oninput=()=>{criteria[+e.dataset.name].name=e.value;save();});
+      host.querySelectorAll('[data-max]').forEach(e=>e.oninput=()=>{criteria[+e.dataset.max].max=+e.value;save();});
+      host.querySelectorAll('[data-remove]').forEach(e=>e.onclick=()=>{if(!confirm('Supprimer ce critère de cette évaluation ?'))return;criteria.splice(+e.dataset.remove,1);save();draw();});
+      host.querySelector('#teAdd').onclick=()=>{criteria.push({id:crypto.randomUUID(),name:'Nouveau critère',max:5});save();draw();};
+      const teamHost=host.querySelector('#teTeams');
+      if(active===null){
+        teamHost.innerHTML='<p>Ouvrez une équipe pour noter individuellement ses élèves. Les saisies sont sauvegardées automatiquement.</p><div class="saved-team-grid">'+snapshot.map((g,i)=>'<button class="saved-team-card" data-open-individual="'+i+'"><b>Équipe '+letter(i)+'</b><p>'+g.map(s=>esc(name(s))).join(' · ')+'</p><small>'+g.filter(s=>total(s,i)!==null).length+' / '+g.length+' évalués</small></button>').join('')+'</div>';
+        teamHost.querySelectorAll('[data-open-individual]').forEach(b=>b.onclick=()=>{active=+b.dataset.openIndividual;draw();});
+      }else{
+        const i=active,g=snapshot[i];
+        teamHost.innerHTML='<div style="display:flex;justify-content:space-between"><h3>Équipe '+letter(i)+'</h3><button id="teCloseGroup" aria-label="Fermer cette équipe">×</button></div><p>Note individuelle : chaque élève peut avoir une note différente.</p>'+g.map(s=>'<article class="card"><h4>'+esc(name(s))+'</h4>'+criteria.map(c=>'<label>'+esc(c.name)+' / '+c.max+'<input type="number" step="any" min="0" max="'+c.max+'" data-student-score="'+esc(s.id)+'" data-criterion="'+c.id+'" value="'+esc(value(s,i,c))+'"></label>').join('')+'</article>').join('')+'<details><summary>Appliquer une note commune à l’équipe</summary>'+criteria.map(c=>'<label>'+esc(c.name)+' / '+c.max+'<input type="number" step="any" data-common="'+c.id+'"></label>').join('')+'<button id="teApplyCommon">Appliquer aux membres</button></details>';
+        teamHost.querySelector('#teCloseGroup').onclick=closeGroup;
+        teamHost.querySelectorAll('[data-student-score]').forEach(e=>e.oninput=()=>{(individual[e.dataset.studentScore]??={})[e.dataset.criterion]=e.value;save();});
+        teamHost.querySelector('#teApplyCommon').onclick=()=>{
+          const inputs=[...teamHost.querySelectorAll('[data-common]')].filter(e=>e.value!=='');
+          if(inputs.some(e=>!Number.isFinite(+e.value)||+e.value<0||+e.value>criteria.find(c=>c.id===e.dataset.common).max)){status('Note commune hors barème.');return;}
+          if(!inputs.length||!confirm('Appliquer ces notes à tous les membres ? Les notes déjà saisies pour ces critères seront remplacées.'))return;
+          for(const s of g)for(const e of inputs)(individual[s.id]??={})[e.dataset.common]=e.value;
+          save();draw();
+        };
+      }
+      host.querySelector('#teSave').onclick=()=>{if(save()){clearTimeout(timer);send();}};
+      host.querySelector('#teBack').onclick=()=>{if(save()){clearTimeout(timer);send();back();}};
+      host.querySelector('#teExcel').onclick=()=>{try{validate();download(excel(data()),title.replace(/[\\/:*?"<>|]/g,'-')+'.xlsx');}catch(e){status(e.message);}};
+      host.querySelector('#tePdf').onclick=()=>{try{validate();const w=window.open('','_blank');if(!w)throw Error('Autorisez la fenêtre d’impression.');w.document.write('<html><head><title>'+esc(title)+'</title><style>body{font-family:Arial}table{border-collapse:collapse;width:100%}td{border:1px solid #999;padding:8px}tr{break-inside:avoid}</style></head><body><h1>'+esc(title)+'</h1><table>'+data().slice(1).map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table></body></html>');w.document.close();w.focus();w.print();}catch(e){status(e.message);}};
     }
     draw();
   }
-  globalThis.TeamEvaluation={editor,rows};
+  function isComplete(e){const m=e.scores_json?._meta;return !!m?.groups?.length&&!!e.criteria_json?.length&&m.groups.every((g,i)=>g.every(s=>e.criteria_json.every(c=>{const v=Object.hasOwn(m.individualScores?.[s.id]||{},c.id)?m.individualScores[s.id][c.id]:e.scores_json[i]?.[c.id];return v!==undefined&&v!=='';})));}
+  globalThis.TeamEvaluation={editor,rows,isComplete};
 })();
