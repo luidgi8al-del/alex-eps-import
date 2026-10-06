@@ -15,6 +15,8 @@ end $$;
 alter table public.class_documents add column if not exists version bigint not null default 1;
 alter table public.class_documents add column if not exists deleted boolean not null default false;
 alter table public.class_documents add column if not exists updated_at timestamptz not null default now();
+alter table public.class_documents add column if not exists archived boolean not null default false;
+alter table public.class_documents add column if not exists archived_at timestamptz;
 create index if not exists class_documents_maj_idx on public.class_documents(updated_at,id);
 drop trigger if exists eps_bump_version on public.class_documents;
 drop trigger if exists eps_version_guard on public.class_documents;

@@ -45,5 +45,7 @@ test('migration versions both document tables before enabling the capability', (
     assert.match(migration, new RegExp(`create index if not exists ${table}_maj_idx`));
     assert.match(migration, new RegExp(`create trigger eps_version_guard before insert or update on public\\.${table}`));
   }
+  assert.match(migration, /class_documents add column if not exists archived boolean not null default false/);
+  assert.match(migration, /class_documents add column if not exists archived_at timestamptz/);
   assert.match(migration, /values \('hors_connexion_5'\)/);
 });

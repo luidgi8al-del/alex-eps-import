@@ -97,7 +97,11 @@
     ],
     // Le marqueur de schema : sans lui le site masque le motif, ce qui est justement la
     // situation d'avant l'application du SQL.
-    eps_schema_marks: [{ name: "hors_connexion_2" }, { name: "sante_2" }, { name: "as_creneaux" }],
+    eps_schema_marks: [
+      { name: "hors_connexion_2" }, { name: "hors_connexion_3" },
+      { name: "hors_connexion_4" }, { name: "hors_connexion_5" },
+      { name: "sante_2" }, { name: "as_creneaux" }
+    ],
     health_accidents: [],
     eps_period_dates: [{ id: "pd-1", user_id: "prof-test", institution_id: "etab-1", school_year: "2026-2027", grade: "TERMINALE", number: 1, start_date: "2026-09-01", end_date: "2026-11-20", deleted: false, updated_at: MAINTENANT }],
     planning_validations: [],

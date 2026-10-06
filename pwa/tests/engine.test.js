@@ -660,3 +660,68 @@ test("une bascule de compte interrompt la synchronisation en cours", async () =>
       "la generation doit avancer : une lecture commencee sur A ne doit rien ecrire chez B");
   } finally { utiliserCompte(null); }
 });
+
+test("parcours croise APK site APK : dispense, evaluation et document restent coherents", async () => {
+  const dateApk = "2026-10-06T08:00:00.000Z";
+  const dispenseApk = {
+    entity: "health_dispensations", id: "disp-apk", version: 1, updatedAt: dateApk,
+    data: {
+      id: "disp-apk", version: 1, class_id: "cl-2nde1", student_id: "el-8",
+      start_date: "2026-10-06", end_date: "2026-10-20", reason_kind: "BLESSURE",
+      deleted: false, updated_at: dateApk
+    }
+  };
+  const noteInitiale = {
+    entity: "evaluation_scores", id: "score-croise", version: 1, updatedAt: dateApk,
+    data: { id: "score-croise", version: 1, criterion_id: "crit-1", student_id: "el-8", points: null, deleted: false }
+  };
+  const documentInitial = {
+    entity: "class_documents", id: "doc-croise", version: 1, updatedAt: dateApk,
+    data: { id: "doc-croise", version: 1, class_id: "cl-2nde1", title: "Autorisation", archived: false, deleted: false }
+  };
+
+  // Le site recoit d'abord ce qui a ete cree sur l'APK.
+  await new OfflineSyncEngine({ adapter: serveurFactice({
+    pages: [{ records: [dispenseApk, noteInitiale, documentInitial], hasMore: false }]
+  }) }).sync();
+  assertEgal((await readLocalRecord("health_dispensations", "disp-apk")).data.reason_kind,
+    "BLESSURE", "la dispense APK arrive sur le site");
+
+  // Le site evalue l'eleve et modifie le document.
+  await saveOfflineEdit({ entity: "evaluation_scores", id: "score-croise",
+    originalData: noteInitiale.data, data: { ...noteInitiale.data, points: 14 } });
+  await saveOfflineEdit({ entity: "class_documents", id: "doc-croise",
+    originalData: documentInitial.data,
+    data: { ...documentInitial.data, title: "Autorisation signee", archived: true } });
+  const serveur = serveurFactice({
+    pages: [{ records: [dispenseApk, noteInitiale, documentInitial], hasMore: false }],
+    reponsePush(operation) {
+      return { status: "ok", record: {
+        entity: operation.entity, id: operation.id, version: 2,
+        updatedAt: "2026-10-06T08:05:00.000Z", data: { ...operation.data, version: 2 }
+      } };
+    }
+  });
+  await new OfflineSyncEngine({ adapter: serveur }).sync();
+  assertEgal(serveur.recu.length, 2, "la note et le document partent ensemble");
+  const noteEnvoyee = serveur.recu.find(r => r.entity === "evaluation_scores");
+  const documentEnvoye = serveur.recu.find(r => r.entity === "class_documents");
+  assertEgal(noteEnvoyee.data.points, 14, "la note est conservee");
+  assertEgal(documentEnvoye.data.title, "Autorisation signee", "le titre est conserve");
+  assertEgal(documentEnvoye.data.archived, true, "l'archivage est conserve");
+
+  // Une copie vierge, comme un autre appareil, retrouve exactement ces valeurs.
+  await viderTout();
+  const retourApk = [dispenseApk,
+    { entity: "evaluation_scores", id: "score-croise", version: 2,
+      updatedAt: "2026-10-06T08:05:00.000Z", data: { ...noteEnvoyee.data, version: 2 } },
+    { entity: "class_documents", id: "doc-croise", version: 2,
+      updatedAt: "2026-10-06T08:05:00.000Z", data: { ...documentEnvoye.data, version: 2 } }
+  ];
+  await new OfflineSyncEngine({ adapter: serveurFactice({ pages: [{ records: retourApk, hasMore: false }] }) }).sync();
+  assertEgal((await readLocalRecord("evaluation_scores", "score-croise")).data.points, 14,
+    "l'autre appareil retrouve la note");
+  const documentRecu = await readLocalRecord("class_documents", "doc-croise");
+  assertEgal(documentRecu.data.title, "Autorisation signee", "l'autre appareil retrouve le titre");
+  assertEgal(documentRecu.data.archived, true, "l'autre appareil retrouve l'archivage");
+});
