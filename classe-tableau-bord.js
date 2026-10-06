@@ -1648,7 +1648,6 @@ function dispenseEnCours(d) {
 async function chargerTableauDeBordClasse() {
   const id = dashboardClass?.row?.id;
   if (!id) return;
-  // Documents are still network-backed. Their failure must not erase offline observations.
   try {
     await demarrerModeHorsConnexion();
     const toutesLesNotes=await lireTable('class_notes',`class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`,{
@@ -1658,15 +1657,19 @@ async function chargerTableauDeBordClasse() {
     notesClasse=toutesLesNotes.filter(n=>!decoderSuiviClasse(n));
   }catch{notesClasse=[];suiviClasse=[];}
   try {
-    const docs=await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`);
-    documentsClasse = docs.ok ? await docs.json() : [];
+    documentsClasse = await lireTable("class_documents",
+      `class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`, {
+        ou: d => !d.deleted && String(d.class_id) === String(id),
+        trier: (a, b) => String(b.created_at || "").localeCompare(String(a.created_at || ""))
+      });
     const ids = documentsClasse.map(d => `"${d.id}"`).join(",");
-    const rendus = ids
-      ? await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns?deleted=eq.false&document_id=in.(${ids})&select=*`)
-      : null;
-    rendusClasse = rendus && rendus.ok ? await rendus.json() : [];
+    const idsDocuments = new Set(documentsClasse.map(d => String(d.id)));
+    rendusClasse = ids ? await lireTable("class_document_returns",
+      `class_document_returns?deleted=eq.false&document_id=in.(${ids})&select=*`, {
+        ou: r => !r.deleted && idsDocuments.has(String(r.document_id))
+      }) : [];
   } catch {
-    // Sans reseau on laisse les listes vides plutot que de bloquer l'ecran.
+    // Avant l'activation de la vague 5, le repli reseau peut echouer sans bloquer la classe.
     documentsClasse = []; rendusClasse = [];
   }
 }
@@ -1698,11 +1701,24 @@ async function ajouterDocumentClasse() {
   if (!titre || !titre.trim()) return;
   const maintenant = new Date().toISOString();
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, class_id: dashboardClass.row.id,
-    title: titre.trim(), created_at: maintenant, updated_at: maintenant, deleted: false };
-  try { await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents`, { method: "POST", body: JSON.stringify(ligne) }); }
+    title: titre.trim(), created_at: maintenant, updated_at: maintenant, archived: false, deleted: false };
+  try {
+    await demarrerModeHorsConnexion();
+    await enregistrerLigne("class_documents", ligne);
+  }
   catch (e) { alert(e.message); return; }
   documentsClasse.unshift(ligne);
   renderClassDashboard();
+}
+
+/** Modifie un document dans la copie locale puis le laisse partir par la file de synchronisation. */
+async function modifierDocumentClasse(doc, changements) {
+  await demarrerModeHorsConnexion();
+  const original = { ...doc };
+  const ligne = { ...doc, ...changements, updated_at: new Date().toISOString() };
+  await enregistrerLigne("class_documents", ligne, original);
+  Object.assign(doc, ligne);
+  return doc;
 }
 
 /** La liste des eleves d'un document : on touche un nom pour marquer qu'il a rendu. */
@@ -1741,10 +1757,8 @@ function ouvrirDocumentClasse(documentId) {
 async function basculerArchiveDocument(doc) {
   const maintenant = new Date().toISOString();
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`, {
-      method:"PATCH", body:JSON.stringify({archived:!doc.archived,archived_at:doc.archived?null:maintenant,updated_at:maintenant})
-    });
-    doc.archived=!doc.archived;doc.archived_at=doc.archived?maintenant:null;
+    const archive = !doc.archived;
+    await modifierDocumentClasse(doc, { archived: archive, archived_at: archive ? maintenant : null });
     fermerDetailClasse();renderClassDashboard();
   } catch(e) { alert(e.message || "Archivage impossible. Exécutez schema_rattrapage_web.sql."); }
 }
@@ -1752,7 +1766,8 @@ async function basculerArchiveDocument(doc) {
 async function supprimerDocumentClasse(doc) {
   if (!confirm(`Supprimer définitivement « ${doc.title} » ?`)) return;
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`, {method:"PATCH",body:JSON.stringify({deleted:true,updated_at:new Date().toISOString()})});
+    await demarrerModeHorsConnexion();
+    await supprimerLigne("class_documents", doc.id);
     documentsClasse=documentsClasse.filter(d=>d.id!==doc.id);fermerDetailClasse();renderClassDashboard();
   } catch(e) { alert(e.message); }
 }
@@ -1767,15 +1782,17 @@ async function basculerRenduClasse(documentId, studentId) {
   const existante = rendusClasse.find(r => r.document_id === documentId && r.student_id === studentId);
   const maintenant = new Date().toISOString();
   try {
+    await demarrerModeHorsConnexion();
     if (existante) {
       const valeur = !existante.returned;
-      await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns?id=eq.${existante.id}`,
-        { method: "PATCH", body: JSON.stringify({ returned: valeur, returned_at: valeur ? maintenant : null, updated_at: maintenant }) });
-      existante.returned = valeur;
+      const original = { ...existante };
+      const ligne = { ...existante, returned: valeur, returned_at: valeur ? maintenant : null, updated_at: maintenant };
+      await enregistrerLigne("class_document_returns", ligne, original);
+      Object.assign(existante, ligne);
     } else {
       const ligne = { id: crypto.randomUUID(), user_id: session.user_id, document_id: documentId,
         student_id: studentId, returned: true, returned_at: maintenant, updated_at: maintenant, deleted: false };
-      await apiFetch(`${SUPABASE_URL}/rest/v1/class_document_returns`, { method: "POST", body: JSON.stringify(ligne) });
+      await enregistrerLigne("class_document_returns", ligne);
       rendusClasse.push(ligne);
     }
   } catch (e) { alert(e.message); }

@@ -28,6 +28,7 @@ const LIBELLES_DEFAUT = {
   unss_memberships: "Inscription AS", unss_sessions: "Appel AS", unss_attendance: "Présence AS",
   eps_test_sessions: "Test EPS", eps_test_results: "Résultat de test EPS",
   health_dispensations: "Dispense", health_accidents: "Accident",
+  class_documents: "Document à rendre", class_document_returns: "État du document",
   equipment: "Matériel", epi_items: "EPI", epi_inspections: "Contrôle EPI",
   sport_installations: "Installation sportive", installation_conflict_overrides: "Occupation d’installation",
   official_programs: "Programme officiel", annual_plan_blocks: "Programmation annuelle",

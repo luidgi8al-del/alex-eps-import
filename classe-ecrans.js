@@ -1682,12 +1682,9 @@ function ecActionsDocument(doc) {
 async function ecRenommerDocument(doc) {
   const titre = await ecDemanderTexte({ titre: "Modifier le document", etiquette: "Nom du document", valeur: doc.title });
   if (!titre || titre === doc.title) return;
-  const maintenant = new Date().toISOString();
   try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/class_documents?id=eq.${doc.id}`,
-      { method: "PATCH", body: JSON.stringify({ title: titre, updated_at: maintenant }) });
+    await modifierDocumentClasse(doc, { title: titre });
   } catch (e) { alert(e.message); return; }
-  doc.title = titre; doc.updated_at = maintenant;
   renderClassDashboard();
 }
 

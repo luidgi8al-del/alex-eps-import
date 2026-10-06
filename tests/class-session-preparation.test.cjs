@@ -22,7 +22,7 @@ if (!screens.includes('Commencer la séance') || !screens.includes('Terminer la 
 if (!tools.includes('globalThis.elevesActifsPourSeance(classId, toolStudents)')) {
   throw new Error('Les outils ne reprennent pas encore le groupe présent.');
 }
-if (!courses.includes('globalThis.elevesActifsPourSeance(cycleRow.class_id, evalStudents)')) {
+if (!courses.includes('globalThis.elevesActifsPourSeance(cycleRow.class_id, evalAllStudents)')) {
   throw new Error('Les évaluations ne reprennent pas encore le groupe présent.');
 }
 if (/unss_attendance|class_attendance/.test(dashboard)) {
