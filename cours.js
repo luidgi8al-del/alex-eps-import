@@ -778,7 +778,7 @@ function evalIsComplete(studentId) {
   return evalCriteria.length > 0 && evalCriteria.every(c => scoreValue(evalScores[`${c.id}|${studentId}`]) != null);
 }
 
-function renderEvaluationTable() {
+function renderEvaluationTable(focusTarget = null) {
   const wrap = document.getElementById("evalTableWrap");
   const evaluation = evalList.find(e => e.id === evalOpenedId);
   // Une grille absente de la liste n'est pas une raison de tout arreter. Cela arrive apres une
@@ -803,11 +803,12 @@ function renderEvaluationTable() {
     <div style="overflow-x:auto"><table class="scoreTable"><thead><tr><th>Eleve</th>`;
   evalCriteria.forEach(c => { html += `<th>${c.label}<br><span class="muted">/${c.max_points}</span> <span class="no-print" data-edit-crit="${c.id}" style="cursor:pointer">✎</span></th>`; });
   html += `<th>Total<br><span class="muted">/${evalTotalMax()}</span></th></tr></thead><tbody>`;
-  evalStudents.forEach(s => {
+  evalStudents.forEach((s, studentIndex) => {
     html += `<tr><td>${s.last_name.toUpperCase()} ${s.first_name}</td>`;
-    evalCriteria.forEach(c => {
+    evalCriteria.forEach((c, criterionIndex) => {
       const current = scoreValue(evalScores[`${c.id}|${s.id}`]);
-      html += `<td><input class="scoreInput" type="text" inputmode="decimal" data-crit="${c.id}" data-student="${s.id}" data-max="${c.max_points}" value="${current ?? ""}"></td>`;
+      const derniereCase = studentIndex === evalStudents.length - 1 && criterionIndex === evalCriteria.length - 1;
+      html += `<td><input class="scoreInput" type="text" inputmode="decimal" enterkeyhint="${derniereCase ? "done" : "next"}" autocomplete="off" data-crit="${c.id}" data-student="${s.id}" data-max="${c.max_points}" value="${current ?? ""}"></td>`;
     });
     const complete = evalIsComplete(s.id);
     html += `<td class="${complete ? "" : "incomplete"}">${formatScoreWeb(evalTotalFor(s.id))}${complete ? "" : " *"}</td></tr>`;
@@ -817,6 +818,22 @@ function renderEvaluationTable() {
 
   wrap.querySelectorAll(".scoreInput").forEach(input => {
     input.addEventListener("change", () => setScore(input));
+    input.addEventListener("keydown", async event => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      if (input.dataset.saving === "true") return;
+      const cases = [...wrap.querySelectorAll(".scoreInput")];
+      const index = cases.indexOf(input);
+      const suivante = cases[index + (event.shiftKey ? -1 : 1)];
+      const cible = suivante ? { criterionId: suivante.dataset.crit, studentId: suivante.dataset.student } : null;
+      input.dataset.saving = "true";
+      const enregistree = await setScore(input, cible);
+      if (!enregistree && input.isConnected) {
+        input.dataset.saving = "false";
+        input.focus();
+        input.select();
+      }
+    });
   });
   wrap.querySelectorAll("[data-edit-crit]").forEach(el => {
     el.addEventListener("click", () => editCriterion(el.dataset.editCrit));
@@ -825,6 +842,15 @@ function renderEvaluationTable() {
   document.getElementById("exportCsvBtn").addEventListener("click", exportEvaluationCsv);
   document.getElementById("printPdfBtn").addEventListener("click", () => window.print());
   document.getElementById("exportPronoteBtn").addEventListener("click", startPronoteSplitScreen);
+  if (focusTarget) requestAnimationFrame(() => {
+    const cible = [...wrap.querySelectorAll(".scoreInput")].find(input =>
+      input.dataset.crit === String(focusTarget.criterionId) && input.dataset.student === String(focusTarget.studentId)
+    );
+    if (!cible) return;
+    cible.focus({ preventScroll: true });
+    cible.select();
+    cible.scrollIntoView({ block: "nearest", inline: "nearest" });
+  });
 }
 
 function formatScoreWeb(value) {
@@ -835,7 +861,7 @@ function formatScoreWeb(value) {
 // l'application ne peut pas distinguer "jamais notee" de "notee puis effacee" et ne
 // propage pas l'effacement. Reutilise aussi la ligne existante (meme id) quand elle existe,
 // pour que resaisir une note ne cree pas une nouvelle ligne a chaque fois.
-async function setScore(input) {
+async function setScore(input, focusTarget = null) {
   const raw = input.value.trim().replace(",", ".");
   const criterionId = input.dataset.crit, studentId = input.dataset.student, max = parseFloat(input.dataset.max);
   const key = `${criterionId}|${studentId}`;
@@ -852,7 +878,7 @@ async function setScore(input) {
     }
   } else {
     const value = parseFloat(raw);
-    if (isNaN(value) || value > max) { input.value = scoreValue(existing) ?? ""; return; }
+    if (isNaN(value) || value < 0 || value > max) { input.value = scoreValue(existing) ?? ""; return false; }
     if (existing) {
       const notee = { ...existing, points: value, deleted: false, updated_at: now };
       if (modeHorsConnexion) await modeHorsConnexion.enregistrer("evaluation_scores", existing.id, notee);
@@ -870,7 +896,8 @@ async function setScore(input) {
       evalScores[key] = { id, points: value, deleted: false };
     }
   }
-  renderEvaluationTable();
+  renderEvaluationTable(focusTarget);
+  return true;
 }
 
 async function addCriterion() {

@@ -76,7 +76,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./content/volley-ball-5e.json",
   "./content/volley-ball-cycle-terminal.json",
   "./cours.js",
-  "./cours.js?v=20261005-pronote-split-1",
+  "./cours.js?v=20261006-eval-enter-2",
   "./emails.js",
   "./emails.js?v=20260929-2",
   "./eps-tests.js",
