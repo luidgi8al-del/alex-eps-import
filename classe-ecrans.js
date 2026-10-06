@@ -16,7 +16,7 @@
 
 /** Le creneau retenu parmi les cours de la semaine : il choisit le cycle suivi. */
 let ecCreneauChoisi = null;
-let ecFiltreEvaluations = "Toutes";
+let ecFiltreEvaluations = "À reprendre";
 let ecFiltreDispenses = "En cours";
 let ecFiltreEleves = "TOUS";
 let ecRechercheEleves = "";
@@ -962,45 +962,87 @@ function ecImprimerListe() {
 function ecDessinerEvaluations(panel) {
   const { label } = dashboardClass;
   const { evaluations, tests, cycle } = ecEvaluationsSuivies();
-  const evaluationsFiltrees = evaluations.filter(e => ecFiltreEvaluations === "Toutes"
-    || (ecFiltreEvaluations === "Ponctuelles" && e.type !== "FINALE")
-    || (ecFiltreEvaluations === "Finales" && e.type === "FINALE"));
-  const testsFiltres = ["Toutes", "Tests"].includes(ecFiltreEvaluations) ? tests : [];
   const nombreResultatsTest = id => new Set(ecResultatsTests
     .filter(r => r.session_id === id && !r.deleted).map(r => r.student_id)).size;
-  const termineesEvaluations = evaluations.filter(e => ecAvancementGrille(e.id).evalues > 0).length;
-  const terminesTests = tests.filter(t => nombreResultatsTest(t.id) > 0).length;
-  const terminees = termineesEvaluations + terminesTests;
   const eleves = dashboardStudents.length;
-  const cartes = evaluationsFiltrees.map(e => ({
-    date: Number(e.date_epoch_millis) || 0,
-    html: (() => {
-      const { evalues } = ecAvancementGrille(e.id);
-      const complet = eleves > 0 && evalues >= eleves;
-      return `<button type="button" class="ec-evaluation" data-ec-grille="${ecTexte(e.id)}">
-        <span class="ec-evaluation-tete"><span><b>${ecTexte(e.label || "Évaluation")}</b>
-          <small>${e.type === "FINALE" ? "Finale" : "Ponctuelle"}${e.activite ? ` · ${ecTexte(e.activite)}` : ""}</small></span>
-          <small>${ecDateCourte(e.date_epoch_millis)}</small></span>
-        <strong class="${complet ? "vert" : ""}">${ecNotesChargees ? `${evalues} / ${eleves} élèves évalués` : "…"}</strong>
-        ${ecJauge(eleves ? evalues / eleves : 0, "#2E7CC4")}
-        <small class="ec-aide">Appui prolongé : dupliquer vers une classe</small>
-      </button>`;
-    })()
-  })).concat(testsFiltres.map(t => {
-    const resultats = nombreResultatsTest(t.id);
-    const complet = eleves > 0 && resultats >= eleves;
+  const cartesEvaluations = evaluations.map(e => {
+    const { evalues } = ecAvancementGrille(e.id);
+    return {
+      genre: "evaluation",
+      id: String(e.id),
+      source: e,
+      titre: e.label || "Évaluation",
+      type: e.type === "FINALE" ? "Finale" : "Ponctuelle",
+      activite: e.activite || "",
+      evalues,
+      complet: eleves > 0 && evalues >= eleves,
+      couleur: "#2E7CC4",
+      date: Number(e.date_epoch_millis) || 0,
+      dateTexte: ecDateCourte(e.date_epoch_millis)
+    };
+  });
+  const cartesTests = tests.map(t => {
+    const evalues = nombreResultatsTest(t.id);
     const date = Number(t.created_at) || Date.parse(t.created_at) || 0;
     return {
+      genre: "test",
+      id: String(t.id),
+      source: t,
+      titre: t.test_name || "Test EPS",
+      type: "Test EPS",
+      activite: "Créé depuis les outils",
+      evalues,
+      complet: eleves > 0 && evalues >= eleves,
+      couleur: "#7356B8",
       date,
-      html: `<button type="button" class="ec-evaluation ec-evaluation-test" data-ec-test-inline="${ecTexte(t.id)}">
-        <span class="ec-evaluation-tete"><span><b>${ecTexte(t.test_name || "Test EPS")}</b>
-          <small>Test · créé depuis les outils</small></span><small>${ecDateCourte(date)}</small></span>
-        <strong class="${complet ? "vert" : ""}">${resultats} / ${eleves} élèves évalués</strong>
-        ${ecJauge(eleves ? resultats / eleves : 0, "#7356B8")}
-        <small class="ec-aide">Cliquez pour consulter ou modifier · appui prolongé : supprimer</small>
-      </button>`
+      dateTexte: ecDateCourte(date)
     };
-  })).sort((a, b) => b.date - a.date);
+  });
+  const toutesCartes = cartesEvaluations.concat(cartesTests).sort((a, b) => b.date - a.date);
+  const terminees = toutesCartes.filter(c => c.complet).length;
+  const aPoursuivre = toutesCartes.length - terminees;
+  const cartes = toutesCartes.filter(c => ecFiltreEvaluations === "Toutes"
+    || (ecFiltreEvaluations === "À reprendre" && !c.complet)
+    || (ecFiltreEvaluations === "Tests" && c.genre === "test")
+    || (ecFiltreEvaluations === "Ponctuelles" && c.genre === "evaluation" && c.source.type !== "FINALE")
+    || (ecFiltreEvaluations === "Finales" && c.genre === "evaluation" && c.source.type === "FINALE"));
+
+  const dessinerCarte = c => {
+    const ouvrirAttribut = c.genre === "test" ? `data-ec-open-test="${ecTexte(c.id)}"` : `data-ec-open-grid="${ecTexte(c.id)}"`;
+    const menuAttribut = c.genre === "test" ? `data-ec-menu-test="${ecTexte(c.id)}"` : `data-ec-menu-grid="${ecTexte(c.id)}"`;
+    const action = c.complet ? "Consulter" : "Reprendre";
+    const progression = ecNotesChargees || c.genre === "test" ? `${c.evalues} / ${eleves}` : "…";
+    return `<article class="ec-evaluation ec-evaluation-ligne ${c.genre === "test" ? "ec-evaluation-test" : ""} ${c.complet ? "est-terminee" : "est-a-reprendre"}">
+      <button type="button" class="ec-evaluation-cible" ${ouvrirAttribut}>
+        <span class="ec-evaluation-identite">
+          <span class="ec-evaluation-titre"><b>${ecTexte(c.titre)}</b><em>${ecTexte(c.type)}</em>${!c.complet && c === cartes.find(x => !x.complet) ? '<em class="reprendre">À reprendre</em>' : ""}</span>
+          <small>${ecTexte(c.activite)}${c.dateTexte ? ` · ${ecTexte(c.dateTexte)}` : ""}</small>
+        </span>
+        <span class="ec-evaluation-progression">
+          <span><small>Élèves évalués</small><strong class="${c.complet ? "vert" : ""}">${progression}</strong></span>
+          ${ecJauge(eleves ? c.evalues / eleves : 0, c.couleur)}
+        </span>
+      </button>
+      <span class="ec-evaluation-commandes">
+        <button type="button" class="${!c.complet && c === cartes.find(x => !x.complet) ? "primaire" : "secondary"}" ${ouvrirAttribut}>${action}</button>
+        <button type="button" class="secondary ec-evaluation-menu" ${menuAttribut} aria-label="Autres actions pour ${ecTexte(c.titre)}">•••</button>
+      </span>
+    </article>`;
+  };
+
+  const dessinerListe = () => {
+    if (!cartes.length) return `<div class="ec-eval-vide">
+      <i aria-hidden="true">✓</i>
+      <b>${ecFiltreEvaluations === "Tests" ? "Aucun test pour cette période" : ecFiltreEvaluations === "À reprendre" ? "Aucune évaluation à reprendre" : "Aucune évaluation pour cette période"}</b>
+      <span>${ecFiltreEvaluations === "Tests" ? "Les tests enregistrés depuis les outils apparaîtront ici automatiquement." : ecFiltreEvaluations === "À reprendre" ? "Toutes les évaluations de cette période sont terminées." : "Créez votre première évaluation pour commencer le suivi de la classe."}</span>
+      ${ecFiltreEvaluations === "Tests" ? '<button type="button" id="ecPremierTest">Créer un test EPS</button>' : ecFiltreEvaluations === "À reprendre" ? "" : '<button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>'}
+    </div>`;
+    if (ecFiltreEvaluations !== "Toutes") return cartes.map(dessinerCarte).join("");
+    const enCours = cartes.filter(c => !c.complet);
+    const finies = cartes.filter(c => c.complet);
+    return `${enCours.length ? `<div class="ec-evaluation-section">À reprendre</div>${enCours.map(dessinerCarte).join("")}` : ""}
+      ${finies.length ? `<div class="ec-evaluation-section">Terminées</div>${finies.map(dessinerCarte).join("")}` : ""}`;
+  };
 
   const actionsPrincipales = `<div class="ec-bandeau-actions ec-eval-actions-principales">
     <button type="button" class="ec-eval-action-primaire" id="ecNouvelleEvaluation"><span aria-hidden="true">＋</span> Nouvelle évaluation</button>
@@ -1016,17 +1058,12 @@ function ecDessinerEvaluations(panel) {
       <div class="ec-eval-stats" aria-label="Résumé des évaluations">
         <div class="ec-eval-stat"><i class="bleu" aria-hidden="true">▣</i><span><b>${evaluations.length + tests.length}</b><small>Évaluations</small></span></div>
         <div class="ec-eval-stat"><i class="vert" aria-hidden="true">✓</i><span><b>${terminees}</b><small>Terminées</small></span></div>
-        <div class="ec-eval-stat"><i class="orange" aria-hidden="true">◷</i><span><b>${Math.max(0, evaluations.length + tests.length - terminees)}</b><small>À poursuivre</small></span></div>
+        <div class="ec-eval-stat"><i class="orange" aria-hidden="true">◷</i><span><b>${aPoursuivre}</b><small>À poursuivre</small></span></div>
       </div>
       <section class="ec-evaluations-carte" aria-labelledby="ecEvaluationsTitre">
-        <h3 id="ecEvaluationsTitre">Évaluations</h3>
-        ${ecPastilles("ec-filtre-eval", [["Toutes", "Toutes"], ["Tests", "Tests"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
-        <div class="ec-liste ec-evaluations-liste">${cartes.length ? cartes.map(c => c.html).join("") : `<div class="ec-eval-vide">
-          <i aria-hidden="true">✓</i>
-          <b>${ecFiltreEvaluations === "Tests" ? "Aucun test pour cette période" : "Aucune évaluation pour cette période"}</b>
-          <span>${ecFiltreEvaluations === "Tests" ? "Les tests enregistrés depuis les outils apparaîtront ici automatiquement." : "Créez votre première évaluation pour commencer le suivi de la classe."}</span>
-          ${ecFiltreEvaluations === "Tests" ? '<button type="button" id="ecPremierTest">Créer un test EPS</button>' : '<button type="button" id="ecPremiereEvaluation">Créer la première évaluation</button>'}
-        </div>`}</div>
+        <div class="ec-evaluations-entete"><h3 id="ecEvaluationsTitre">Évaluations</h3><small>Triées par date récente</small></div>
+        ${ecPastilles("ec-filtre-eval", [["À reprendre", `À reprendre · ${aPoursuivre}`], ["Toutes", `Toutes · ${toutesCartes.length}`], ["Tests", "Tests"], ["Ponctuelles", "Ponctuelles"], ["Finales", "Finales"]], ecFiltreEvaluations)}
+        <div class="ec-liste ec-evaluations-liste">${dessinerListe()}</div>
         <div id="ecTeamEvaluationResults"></div>
         <footer class="ec-evaluations-pied">
           <button type="button" class="secondary" id="ecActionsEvaluations">Actions <span aria-hidden="true">⌄</span></button>
@@ -1050,19 +1087,34 @@ function ecDessinerEvaluations(panel) {
     { libelle: `Récapitulatif · PDF, tableur et courriel`, action: () => { ecOngletRecap = "tests"; ecAller("recap"); } },
     { libelle: "Divers EPS · groupes Acrosport et travaux", action: () => ecOuvrirDivers() }
   ]);
-  panel.querySelectorAll("[data-ec-grille]").forEach(b => {
-    const e = evaluations.find(x => x.id === b.dataset.ecGrille);
+  panel.querySelectorAll("[data-ec-open-grid]").forEach(b => {
+    const e = evaluations.find(x => String(x.id) === String(b.dataset.ecOpenGrid));
     b.onclick = () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); };
-    ecAppuiLong(b, () => ecChoisirClassePourCopie(e));
+    if (b.classList.contains("ec-evaluation-cible")) ecAppuiLong(b, () => ecChoisirClassePourCopie(e));
   });
-  panel.querySelectorAll("[data-ec-test-inline]").forEach(b => {
-    const test = tests.find(t => String(t.id) === String(b.dataset.ecTestInline));
+  panel.querySelectorAll("[data-ec-menu-grid]").forEach(b => {
+    const e = evaluations.find(x => String(x.id) === String(b.dataset.ecMenuGrid));
+    b.onclick = () => ecActions(e?.label || "Évaluation", `Période ${dashboardPeriod}`, [
+      { libelle: "Ouvrir l’évaluation", action: () => { if (e?.cycle) ouvrirTableauDeNotes(e.cycle, e.type, e.id); } },
+      { libelle: "Dupliquer vers une classe", action: () => ecChoisirClassePourCopie(e) }
+    ]);
+  });
+  panel.querySelectorAll("[data-ec-open-test]").forEach(b => {
+    const test = tests.find(t => String(t.id) === String(b.dataset.ecOpenTest));
     const ouvrir = () => ecOuvrirTestEnFenetre(test);
     b.onclick = ouvrir;
-    ecAppuiLong(b, () => ecActions(test?.test_name || "Test EPS", `Période ${Number(test?.period_number) || dashboardPeriod}`, [
+    if (b.classList.contains("ec-evaluation-cible")) ecAppuiLong(b, () => ecActions(test?.test_name || "Test EPS", `Période ${Number(test?.period_number) || dashboardPeriod}`, [
       { libelle: "Ouvrir et modifier", action: ouvrir },
       { libelle: "Supprimer", danger: true, action: () => ecSupprimerTest(test) }
     ]));
+  });
+  panel.querySelectorAll("[data-ec-menu-test]").forEach(b => {
+    const test = tests.find(t => String(t.id) === String(b.dataset.ecMenuTest));
+    const ouvrir = () => ecOuvrirTestEnFenetre(test);
+    b.onclick = () => ecActions(test?.test_name || "Test EPS", `Période ${Number(test?.period_number) || dashboardPeriod}`, [
+      { libelle: "Ouvrir et modifier", action: ouvrir },
+      { libelle: "Supprimer", danger: true, action: () => ecSupprimerTest(test) }
+    ]);
   });
   ecChargerEvaluationsEquipes(panel);
   // Les jauges se remplissent une fois les notes relues.
@@ -1102,13 +1154,24 @@ async function ecChargerEvaluationsEquipes(panel) {
     const all=await TeamEvaluation.rows('team_evaluations',`class_id=eq.${encodeURIComponent(classId)}&order=created_at.desc`);
     if(!host.isConnected)return;
     const list=all.filter(e=>Number(e.scores_json?._meta?.period || 1)===period);
-    if(ecFiltreEvaluations==='Finales'||ecFiltreEvaluations==='Tests')return;
-    host.innerHTML=list.map(e=>`<button type="button" class="ec-evaluation" data-team-result="${ecTexte(e.id)}"><span class="ec-evaluation-tete"><b>${ecTexte(e.title)}</b><small>${ecDateCourte(e.created_at)}</small></span><small>Ponctuelle · Par équipes · Ouvrir, modifier, PDF ou Excel</small></button>`).join('');
-    if(list.length)panel.querySelector('.ec-eval-vide')?.remove();
     const stats=panel.querySelectorAll('.ec-eval-stat b');
     const complete=list.filter(e=>TeamEvaluation.isComplete(e)).length;
     if(stats.length===3){stats[0].textContent=Number(stats[0].textContent)+list.length;stats[1].textContent=Number(stats[1].textContent)+complete;stats[2].textContent=Number(stats[2].textContent)+list.length-complete;}
-    host.querySelectorAll('[data-team-result]').forEach(b=>b.onclick=()=>ecOuvrirEvaluationEquipe(list.find(e=>e.id===b.dataset.teamResult)));
+    if(ecFiltreEvaluations==='Finales'||ecFiltreEvaluations==='Tests')return;
+    const visibles=ecFiltreEvaluations==='À reprendre' ? list.filter(e=>!TeamEvaluation.isComplete(e)) : list;
+    host.innerHTML=visibles.map(e=>{
+      const terminee=TeamEvaluation.isComplete(e);
+      return `<article class="ec-evaluation ec-evaluation-ligne ec-evaluation-equipes ${terminee ? 'est-terminee' : 'est-a-reprendre'}">
+        <button type="button" class="ec-evaluation-cible" data-team-result="${ecTexte(e.id)}">
+          <span class="ec-evaluation-identite"><span class="ec-evaluation-titre"><b>${ecTexte(e.title)}</b><em>Ponctuelle</em><em>Par équipes</em></span>
+          <small>Évaluation par équipes · ${ecDateCourte(e.created_at)}</small></span>
+          <span class="ec-evaluation-progression"><span><small>État</small><strong class="${terminee ? 'vert' : ''}">${terminee ? 'Terminée' : 'À poursuivre'}</strong></span>${ecJauge(terminee ? 1 : 0, '#2E7CC4')}</span>
+        </button>
+        <span class="ec-evaluation-commandes"><button type="button" class="${terminee ? 'secondary' : 'primaire'}" data-team-result="${ecTexte(e.id)}">${terminee ? 'Consulter' : 'Reprendre'}</button></span>
+      </article>`;
+    }).join('');
+    if(visibles.length)panel.querySelector('.ec-eval-vide')?.remove();
+    host.querySelectorAll('[data-team-result]').forEach(b=>b.onclick=()=>ecOuvrirEvaluationEquipe(list.find(e=>String(e.id)===String(b.dataset.teamResult))));
   }catch(e){if(host.isConnected)host.textContent=e.message;}
 }
 

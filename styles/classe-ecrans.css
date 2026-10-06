@@ -458,6 +458,53 @@
 .ec-feuille .ec-ligne em { font-style: normal; color: #2E7CC4; font-size: 20px; }
 .ec-evaluation .ec-aide { font-size: 11px; }
 
+/* Page Classe > Évaluations : reprise immédiate et cartes compactes. */
+.ec-evaluations-entete { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+.ec-evaluations-entete h3 { margin: 0; font-size: 19px; font-weight: 850; }
+.ec-evaluations-entete > small { color: var(--ec-gris); font-size: 12px; }
+.ec-evaluations-carte .ec-pastilles { width: max-content; max-width: 100%; gap: 6px; border: 0; }
+.ec-evaluations-carte .ec-pastille { flex: 0 0 auto; border: 1px solid var(--ec-bord); box-shadow: none; }
+.ec-evaluations-carte .ec-pastille.actif { color: #fff; background: var(--ec-bleu); border-color: var(--ec-bleu); box-shadow: none; }
+.ec-evaluations-liste { min-height: 160px; gap: 10px; }
+.ec-evaluation-section { margin: 8px 2px 0; color: var(--ec-gris); font-size: 12px; font-weight: 700; }
+.ec-ecran .ec-evaluation.ec-evaluation-ligne { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  padding: 0; border: 1px solid var(--ec-bord); border-left-width: 1px !important; border-radius: 15px; box-shadow: 0 2px 8px #123a5509; overflow: hidden; }
+.ec-ecran .ec-evaluation.ec-evaluation-ligne.est-a-reprendre:first-of-type { border-color: var(--ec-bleu); background: #f0f8ff; }
+.ec-ecran .ec-evaluation-cible { display: grid; grid-template-columns: minmax(220px, 1.4fr) minmax(190px, .8fr); align-items: center; gap: 20px;
+  min-width: 0; width: 100%; padding: 14px 4px 14px 16px; border: 0; background: transparent; color: var(--ec-marine); text-align: left; }
+.ec-evaluation-identite { min-width: 0; }
+.ec-evaluation-identite > small { display: block; margin-top: 6px; color: var(--ec-gris); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ec-evaluation-titre { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.ec-evaluation-titre b { min-width: 0; overflow: hidden; color: var(--ec-marine); font-size: 15px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.ec-evaluation-titre em { flex: 0 0 auto; padding: 3px 7px; border-radius: 999px; color: #536b7c; background: #eef3f7; font-size: 11px; font-style: normal; }
+.ec-evaluation-titre em.reprendre { color: var(--ec-bleu-fonce); background: #dff1ff; }
+.ec-evaluation-test .ec-evaluation-titre em:first-of-type { color: #6246a6; background: #eee9fb; }
+.ec-evaluation-progression { display: grid; gap: 7px; }
+.ec-evaluation-progression > span:first-child { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ec-evaluation-progression small { color: var(--ec-gris); font-size: 11px; }
+.ec-evaluation-progression strong { margin: 0; color: var(--ec-bleu-fonce); font-size: 12px; white-space: nowrap; }
+.ec-evaluation-commandes { display: flex; align-items: center; gap: 7px; padding-right: 14px; }
+.ec-ecran .ec-evaluation-commandes button { min-height: 38px; padding: 8px 12px; border-radius: 10px; white-space: nowrap; }
+.ec-ecran .ec-evaluation-commandes button.primaire { color: #fff; background: var(--ec-bleu); border-color: var(--ec-bleu); }
+.ec-ecran .ec-evaluation-commandes .ec-evaluation-menu { min-width: 40px; padding-left: 9px; padding-right: 9px; color: var(--ec-gris); font-weight: 900; }
+
+@media (max-width: 760px) {
+  .ec-eval-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ec-eval-stat { min-height: 62px; padding: 10px; gap: 8px; border-radius: 14px; }
+  .ec-eval-stat i { display: none; }
+  .ec-eval-stat b { font-size: 19px; }
+  .ec-eval-stat small { font-size: 11px; }
+  .ec-evaluations-entete { align-items: flex-start; }
+  .ec-evaluations-entete > small { text-align: right; }
+  .ec-ecran .ec-evaluation.ec-evaluation-ligne { grid-template-columns: 1fr; gap: 0; }
+  .ec-ecran .ec-evaluation-cible { grid-template-columns: 1fr; gap: 11px; padding: 14px 14px 8px; }
+  .ec-evaluation-titre { align-items: flex-start; flex-wrap: wrap; }
+  .ec-evaluation-titre b { flex-basis: 100%; white-space: normal; }
+  .ec-evaluation-identite > small { white-space: normal; }
+  .ec-evaluation-commandes { justify-content: flex-end; padding: 5px 12px 12px; }
+  .ec-ecran .ec-evaluation-commandes button:first-child { flex: 1; }
+}
+
 /* Un test ou un travail ouvert par-dessus la classe */
 .ec-outil-fenetre { position: fixed; inset: 0; z-index: 950; background: #F4F7FA; display: flex; flex-direction: column; }
 .ec-outil-barre { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #2E7CC4; color: #fff; }
