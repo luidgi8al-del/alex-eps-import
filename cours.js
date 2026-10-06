@@ -509,6 +509,20 @@ let evalOpenedId = null;
 let evalTypeFiltre = null;
 let evalCriteria = [];
 let evalScores = {};         // "criterionId|studentId" -> {id, points}
+const evalScoreSaves = new Set();
+
+function trackEvaluationScoreSave(promise) {
+  evalScoreSaves.add(promise);
+  promise.then(() => evalScoreSaves.delete(promise), () => evalScoreSaves.delete(promise));
+  return promise;
+}
+
+async function flushEvaluationScoreSaves() {
+  const active = document.activeElement;
+  if (active?.matches?.("#evaluationPanel .scoreInput")) active.blur();
+  const pending = [...evalScoreSaves];
+  if (pending.length) await Promise.all(pending);
+}
 
 /**
  * Le tableau de notes s'ouvre par-dessus la page, sans quitter l'onglet d'ou l'on vient.
@@ -817,7 +831,7 @@ function renderEvaluationTable(focusTarget = null) {
   wrap.innerHTML = html;
 
   wrap.querySelectorAll(".scoreInput").forEach(input => {
-    input.addEventListener("change", () => setScore(input));
+    input.addEventListener("change", () => trackEvaluationScoreSave(setScore(input)));
     input.addEventListener("keydown", async event => {
       if (event.key !== "Enter") return;
       event.preventDefault();
@@ -827,7 +841,7 @@ function renderEvaluationTable(focusTarget = null) {
       const suivante = cases[index + (event.shiftKey ? -1 : 1)];
       const cible = suivante ? { criterionId: suivante.dataset.crit, studentId: suivante.dataset.student } : null;
       input.dataset.saving = "true";
-      const enregistree = await setScore(input, cible);
+      const enregistree = await trackEvaluationScoreSave(setScore(input, cible));
       if (!enregistree && input.isConnected) {
         input.dataset.saving = "false";
         input.focus();
@@ -1059,6 +1073,10 @@ async function startPronoteSplitScreen() {
   const previous = button?.textContent;
   if (button) { button.disabled = true; button.textContent = "Ouverture de PRONOTE…"; }
   try {
+    // Cliquer sur Exporter fait perdre le focus a la derniere case et declenche son enregistrement
+    // asynchrone. Sans cette attente, le transfert pouvait partir avant la fin de l'ecriture et
+    // annoncer "non note" alors que le total complet apparaissait une fraction de seconde apres.
+    await flushEvaluationScoreSaves();
     const data = pronoteTransferData(false);
     if (!(data.scale > 0) || !Number.isFinite(data.coefficient) || data.coefficient < 0) throw Error("Barème ou coefficient invalide.");
     await requestPronoteSplitScreen(data);
