@@ -70,11 +70,14 @@ const server = http.createServer((req,res)=>{
       await page.locator('[data-ec-filtre-eval="Tests"]').click();
       await page.locator(`[data-ec-test-inline="${id}"]`).click();
       await page.waitForSelector('input[data-run-student]');
+      assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).overflowY),'hidden');
+      assert.equal(await page.evaluate(()=>getComputedStyle(document.body).overflowY),'hidden');
       assert.equal(await page.locator('input[data-run-student]').first().inputValue(),'315');
       assert.equal(await page.locator('[data-running-group="0"]').count(),1);
       if(process.env.EPS_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.EPS_SCREENSHOT_DIR,standalone?'mobile-pwa.png':'mobile-site.png'),fullPage:true});
       await page.locator('#ecOutilRetour').click();
       await page.waitForSelector('#ecOutilFenetre',{state:'detached'});
+      assert.notEqual(await page.evaluate(()=>getComputedStyle(document.documentElement).overflowY),'hidden');
       await page.evaluate(()=>ecAller('bord'));
       await page.locator('#ecPreparerSeance').click();
       assert.equal(await page.locator('[data-preparation-eleve="el-1"]').getAttribute('data-statut'),'absent');

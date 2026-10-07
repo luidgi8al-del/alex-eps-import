@@ -1252,6 +1252,7 @@ async function ecEnFenetreOutil(lancer, retour) {
     <span>${ecTexte(dashboardClass.label)}</span></div><div class="ec-outil-corps"></div>`;
   document.body.appendChild(fenetre);
   document.body.classList.add("ec-outil-ouvert");
+  document.documentElement.classList.add("ec-outil-ouvert");
   fenetre.querySelector(".ec-outil-corps").appendChild(panneau);
 
   let ferme = false;
@@ -1265,6 +1266,7 @@ async function ecEnFenetreOutil(lancer, retour) {
     origine.parent.insertBefore(panneau, origine.suivant);
     fenetre.remove();
     document.body.classList.remove("ec-outil-ouvert");
+    document.documentElement.classList.remove("ec-outil-ouvert");
     document.getElementById("toolsWorkspace")?.removeAttribute("hidden");
     // Ce qui vient d'etre saisi doit se voir : les tests de la classe sont relus.
     try {

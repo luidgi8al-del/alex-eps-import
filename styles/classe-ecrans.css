@@ -511,9 +511,9 @@
 .ec-outil-barre button { margin: 0; background: rgba(255,255,255,.16); color: #fff; border-radius: 999px; padding: 8px 14px; font-size: 14px; }
 .ec-outil-barre button:hover { background: rgba(255,255,255,.28); }
 .ec-outil-barre span { font-weight: 700; }
-.ec-outil-corps { flex: 1; overflow: auto; padding: 0 0 24px; }
+.ec-outil-corps { flex: 1; min-height: 0; overflow: auto; padding: 0 0 24px; }
 .ec-outil-corps #toolPanel { margin: 0 auto; max-width: 1180px; }
-body.ec-outil-ouvert { overflow: hidden; }
+html.ec-outil-ouvert, body.ec-outil-ouvert { overflow: hidden; }
 
 /* Une ligne de la liste des tests : le test, et son bouton Supprimer */
 .ec-test-ligne { display: flex; align-items: stretch; gap: 8px; }
