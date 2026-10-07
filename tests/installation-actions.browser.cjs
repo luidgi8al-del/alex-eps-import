@@ -41,7 +41,7 @@ const server = http.createServer((req, res) => {
     await page.locator('#installationDialogOverlay').getByText('Panier de basket instable').waitFor();
     await page.locator('#installationDialogOverlay [data-installation-close]').click();
 
-    await page.locator('[data-equiptab="installation-suivi"]').click();
+    await page.locator('#installationShowFollowBtn').click();
     await page.locator('.installation-card').first().waitFor();
     assert.equal(await page.locator('#installationFollowView').isVisible(), true);
     assert.equal(await page.locator('#installationOverview').isVisible(), false);

@@ -24,6 +24,7 @@ function initInstallationsTab() {
   if (!installationsTabReady) {
     document.getElementById("addInstallationBtn").addEventListener("click", createInstallation);
     document.getElementById("installationQuickReportBtn").addEventListener("click", openInstallationReportPicker);
+    document.getElementById("installationShowFollowBtn").addEventListener("click", () => showInstallationView("follow"));
     document.getElementById("installationBackOverviewBtn").addEventListener("click", () => showEquipTab("installations"));
     document.querySelectorAll("[data-installation-filter]").forEach(button => button.addEventListener("click", () => {
       installationOverviewFilter = button.dataset.installationFilter;
@@ -45,13 +46,13 @@ let equipMode = "installations";
 function showEquipTab(mode) {
   equipMode = mode;
   ["installations", "materiel", "epi"].forEach(t => {
-    document.getElementById("equipTab-" + t).style.display = t === mode || (t === "installations" && mode === "installation-suivi") ? "block" : "none";
+    document.getElementById("equipTab-" + t).style.display = t === mode ? "block" : "none";
   });
   document.querySelectorAll("#equipSubtabs .subtabbtn").forEach(b =>
     b.classList.toggle("active", b.dataset.equiptab === mode));
-  if (mode === "installations" || mode === "installation-suivi") {
+  if (mode === "installations") {
     document.getElementById("installationManagerCard").hidden = true;
-    showInstallationView(mode === "installation-suivi" ? "follow" : "overview");
+    showInstallationView("overview");
     loadInstallationManager();
   }
   if (mode === "materiel") loadEquipment();

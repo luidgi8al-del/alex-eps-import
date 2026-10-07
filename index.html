@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20261008-installations-overview-1">
+<link rel="stylesheet" href="styles/site.css?v=20261008-installations-overview-2">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
   <link rel="stylesheet" href="home-navigation.css?v=20260928-9">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20261007-aptitudes-mobile-3">
@@ -312,7 +312,6 @@
       <div id="tab-equipement" class="tabpanel" style="display:none">
         <div class="subtabbar" id="equipSubtabs">
           <button class="subtabbtn" data-equiptab="installations">Installations</button>
-          <button class="subtabbtn" data-equiptab="installation-suivi">Suivi</button>
           <button class="subtabbtn" data-equiptab="materiel">Materiel</button>
           <button class="subtabbtn" data-equiptab="epi">EPI escalade</button>
         </div>
@@ -323,6 +322,7 @@
               <div class="installation-page-heading">
                 <div><h2>Installations</h2><p class="muted">Signalements et état des interventions</p></div>
                 <div class="installation-page-actions">
+                  <button type="button" class="secondary" id="installationShowFollowBtn">Suivi</button>
                   <button type="button" id="installationQuickReportBtn">＋ Signaler</button>
                 </div>
               </div>
@@ -606,7 +606,7 @@
   <script src="classe-tableau-bord.js?v=20261007-aptitudes-class-1"></script>
   <script src="classe-ecrans.js?v=20261007-health-adaptation-1"></script>
   <script src="qrcode.min.js"></script>
-  <script src="equipement.js?v=20261008-installations-overview-1"></script>
+  <script src="equipement.js?v=20261008-installations-overview-2"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20261006-26"></script>
