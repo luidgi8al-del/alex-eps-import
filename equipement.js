@@ -9,10 +9,12 @@
 // ---- Onglet Equipement > Installations sportives ----
 var installationsTabReady = false;
 var installationManager = { id: "", contact_name: "", whatsapp_phone: "" };
+var installationsCache = [];
 
 function initInstallationsTab() {
   if (!installationsTabReady) {
     document.getElementById("addInstallationBtn").addEventListener("click", createInstallation);
+    document.getElementById("installationQuickReportBtn").addEventListener("click", openInstallationReportPicker);
     document.getElementById("saveInstallationManagerBtn").addEventListener("click", saveInstallationManager);
     document.getElementById("equipSubtabs").addEventListener("click", e => {
       const btn = e.target.closest(".subtabbtn");
@@ -495,6 +497,7 @@ async function loadInstallationsList() {
   } else {
     rows = await lireTable("sport_installations", "sport_installations?deleted=eq.false&select=*&order=name.asc");
   }
+  installationsCache = rows;
   if (rows.length === 0) {
     listEl.innerHTML = '<div class="muted">Aucune installation pour le moment.</div>';
     return;
@@ -505,26 +508,30 @@ async function loadInstallationsList() {
     div.className = "installation-card";
     div.innerHTML = `<div><strong>${planningText(r.name)}</strong><small>Signalements et suivi des interventions</small></div>
       <div class="installation-card-actions">
-        <button type="button" data-action="report">⚠ Signaler</button>
         <button type="button" class="secondary" data-action="history">Suivi</button>
-        <details class="ui-actions installation-actions"><summary>Actions</summary><div class="ui-actions-menu">
-          <button type="button" class="secondary" data-action="edit">Renommer</button>
-          <button type="button" class="danger" data-action="delete">Supprimer</button>
-        </div></details>
       </div>`;
-    div.querySelector('[data-action="report"]').addEventListener("click", () => openInstallationReport(r));
     div.querySelector('[data-action="history"]').addEventListener("click", () => openInstallationHistory(r));
-    div.querySelector('[data-action="edit"]').addEventListener("click", () => openInstallationEdit(r));
-    div.querySelector('[data-action="delete"]').addEventListener("click", () => deleteInstallation(r.id));
-    const menu = div.querySelector(".installation-actions");
-    menu.addEventListener("toggle", () => {
-      if (!menu.open) return;
-      listEl.querySelectorAll(".installation-actions[open]").forEach(other => {
-        if (other !== menu) other.open = false;
-      });
-    });
     listEl.appendChild(div);
   });
+}
+
+async function openInstallationReportPicker() {
+  try {
+    await Promise.all([loadInstallationsList(), loadInstallationManager()]);
+    const options = installationsCache.map(installation =>
+      `<option value="${planningText(installation.id)}">${planningText(installation.name)}</option>`).join("");
+    const overlay = installationDialog("Signaler un problème", "", installationsCache.length
+      ? `<div class="installation-form"><label>Installation<select id="installationReportChoice"><option value="">Choisir une installation</option>${options}</select></label><div class="error" id="installationReportChoiceError"></div><div class="installation-dialog-actions"><button type="button" class="secondary" data-installation-close-2>Annuler</button><button type="button" id="installationReportContinue">Continuer</button></div></div>`
+      : `<div class="installation-form"><p>Ajoutez d'abord une installation pour pouvoir signaler un problème.</p><div class="installation-dialog-actions"><button type="button" class="secondary" data-installation-close-2>Fermer</button></div></div>`);
+    overlay.querySelector("[data-installation-close-2]").addEventListener("click", closeInstallationDialog);
+    overlay.querySelector("#installationReportContinue")?.addEventListener("click", () => {
+      const selected = installationsCache.find(row => row.id === overlay.querySelector("#installationReportChoice").value);
+      if (!selected) { overlay.querySelector("#installationReportChoiceError").textContent = "Choisissez une installation."; return; }
+      openInstallationReport(selected);
+    });
+  } catch (error) {
+    installationDialog("Signalement indisponible", "", `<p class="error">${planningText(error.message || String(error))}</p>`);
+  }
 }
 
 function normaliserNumeroWhatsapp(value) {
@@ -725,7 +732,7 @@ async function updateInstallationIncident(incident, status) {
 }
 
 async function openInstallationHistory(installation) {
-  const overlay = installationDialog("Suivi des signalements", installation.name,
+  const overlay = installationDialog("Suivi des interventions", installation.name,
     '<div class="installation-history-list"><div class="muted">Chargement...</div></div>');
   const host = overlay.querySelector(".installation-history-list");
   try {
@@ -742,8 +749,7 @@ async function openInstallationHistory(installation) {
         ${incident.status === "SIGNALE" ? `<button type="button" data-status="EN_COURS" data-id="${incident.id}">Intervention en cours</button>` : ""}
         ${incident.status === "EN_COURS" ? `<button type="button" data-status="RESOLU" data-id="${incident.id}">Marquer comme résolu</button>` : ""}
       </div></article>`).join("");
-    host.innerHTML = `<button type="button" id="installationNewReport">＋ Nouveau signalement</button>${rows || '<div class="muted installation-history-empty">Aucun signalement pour cette installation.</div>'}`;
-    host.querySelector("#installationNewReport").addEventListener("click", () => openInstallationReport(installation));
+    host.innerHTML = rows || '<div class="muted installation-history-empty">Aucun signalement ni intervention pour cette installation.</div>';
     host.querySelectorAll("[data-reopen]").forEach(btn => btn.addEventListener("click", () => {
       const incident = incidents.find(item => item.id === btn.dataset.reopen);
       if (incident) window.open(`https://wa.me/${normaliserNumeroWhatsapp(incident.whatsapp_phone || installationManager.whatsapp_phone)}?text=${encodeURIComponent(incident.message_text)}`, "_blank");

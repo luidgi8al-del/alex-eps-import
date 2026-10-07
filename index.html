@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20261007-health-adaptation-1">
+<link rel="stylesheet" href="styles/site.css?v=20261007-installations-follow-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
   <link rel="stylesheet" href="home-navigation.css?v=20260928-9">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20261007-aptitudes-mobile-3">
@@ -318,7 +318,10 @@
 
         <div id="equipTab-installations">
           <div class="card">
-            <h2>Installations sportives</h2>
+            <div class="installation-page-heading">
+              <h2>Installations sportives</h2>
+              <button type="button" id="installationQuickReportBtn">＋ Signaler un problème</button>
+            </div>
             <div class="muted" style="margin-bottom:10px">Gymnase, plateau exterieur, piscine, dojo... proposees quand vous posez un creneau dans Programmation.</div>
             <section class="installation-manager-card" id="installationManagerCard">
               <div>
@@ -583,7 +586,7 @@
   <script src="classe-tableau-bord.js?v=20261007-aptitudes-class-1"></script>
   <script src="classe-ecrans.js?v=20261007-health-adaptation-1"></script>
   <script src="qrcode.min.js"></script>
-  <script src="equipement.js?v=20260929-1"></script>
+  <script src="equipement.js?v=20261007-installations-follow-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20261006-26"></script>
