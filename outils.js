@@ -678,7 +678,7 @@ function drawSwimCertificate() {
   // en vue pendant qu'on fait defiler le parcours.
   toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 etapes du parcours en securite")
     + toolRosterHtml()
-    + `<div class="fitness-web">${socleTableauHtml(
+    + `<div class="fitness-web aptitude-worksheet"><p class="aptitude-scroll-hint">← Nom fixe · faites glisser les mesures horizontalement →</p>${socleTableauHtml(
         EpsTests.SWIM_STEPS.map((label,i)=>({titre:`${i+1}`,aide:label})),
         cible.map(s=>{const done=swimValidations[s.id]||[],score=done.length;return {eleve:s,
           sousTitre:score===10?"Attestation validée":`${score}/10 étapes`,
