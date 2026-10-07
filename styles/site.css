@@ -503,3 +503,5 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .running-history>summary small{display:block;margin-top:5px;color:#55758a;font-weight:400}
 .running-history-options{display:grid;gap:7px;padding:0 10px 10px;max-height:300px;overflow-y:auto}
 .running-history-options .running-session-card{width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;box-sizing:border-box}
+.health-adaptation{min-width:190px;max-width:330px;white-space:normal}.health-adaptation small,.health-adaptation strong{display:block}.health-adaptation small{color:#607b8d;font-size:12px}.health-adaptation strong{margin-top:3px;color:#125878;font-size:13px}
+.health-adaptation-mobile{display:none}@media(max-width:700px){.health-adaptation-mobile{display:block;margin-top:5px;max-width:230px;white-space:normal;color:#125878;font-size:12px}}

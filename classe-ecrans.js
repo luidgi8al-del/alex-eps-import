@@ -1765,7 +1765,7 @@ function ecDessinerDispenses(panel) {
   const motif = d => (typeof motifLibelle === "function" ? motifLibelle(d.reason_kind) : "") || "";
   const carte = (d, actif) => `<button type="button" class="ec-dispense${actif ? " actif" : ""}" data-dispense="${ecTexte(d.id)}">
     <b>${ecTexte(ecNomEleve(ecEleve(d.student_id)))}</b>
-    <small>${ecTexte([`Du ${ecJour(d.start_date)} au ${ecJour(d.end_date)}`, motif(d), d.reason].filter(Boolean).join(" · "))}</small>
+    <small>${ecTexte([`Du ${ecJour(d.start_date)} au ${ecJour(d.end_date)}`, motif(d), d.reason, d.adapted_activities].filter(Boolean).join(" · "))}</small>
     ${d.user_id && moi && d.user_id !== moi ? `<em>Saisie par un collègue</em>` : ""}
   </button>`;
   const liste = ecFiltreDispenses === "En cours"

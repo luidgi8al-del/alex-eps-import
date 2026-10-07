@@ -238,10 +238,13 @@
    const enCours=lignes.filter(d=>d.end_date>=today).sort((a,b)=>a.end_date.localeCompare(b.end_date));
    const passees=lignes.filter(d=>d.end_date<today).sort((a,b)=>b.end_date.localeCompare(a.end_date));
    const tableau=(titre,rows,vide)=>`<section class="card"><h2>${titre} <span class="muted" style="font-weight:400">(${rows.length})</span></h2>`
-     +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th><th>Saisie par</th></tr></thead><tbody>`
-       +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id,d))}</button></td>`
+     +(rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th><th>Aptitude / sport adapté</th><th>Saisie par</th></tr></thead><tbody>`
+       +rows.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id,d))}</button>`
+         +`<small class="health-adaptation-mobile">${healthEsc([aptitudeLibelle(d.aptitude),d.adapted_activities].filter(Boolean).join(' · ')||'Sport adapté non renseigné')}</small></td>`
          +`<td>${healthEsc(classeNommee(d.class_id,d))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td>`
          +`<td>${healthEsc(motifLibelle(d.reason_kind)||'—')}</td>`
+         +`<td class="health-adaptation">${d.aptitude?`<small>${healthEsc(aptitudeLibelle(d.aptitude))}</small>`:''}`
+         +`${d.adapted_activities?`<strong>${healthEsc(d.adapted_activities)}</strong>`:d.aptitude?'':'—'}</td>`
          // La colonne s'affiche aussi dans "Mes dispensés" : une dispense posee par l'infirmerie
          // y arrive sous votre nom, et rien ne le disait.
          +(d.entered_by==='INFIRMERIE'
