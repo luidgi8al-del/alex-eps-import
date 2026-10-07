@@ -333,6 +333,16 @@ async function openClassDashboard(cls, label) {
     dashboardStudents = studentsRes.ok ? await studentsRes.json() : [];
     dashboardDispenses = dispRes.ok ? await dispRes.json() : [];
     dashboardTests = testsRes.ok ? await testsRes.json() : [];
+    // Les anciennes saisies des aptitudes 6e vivaient dans « Travaux des outils ».
+    // Les recopier sans supprimer l'original, puis relire la rubrique Tests EPS.
+    if (globalThis.EpsAptitudes?.migrateLegacy) {
+      try {
+        const migrated = await EpsAptitudes.migrateLegacy(cls.id);
+        if (migrated) dashboardTests = await lireTable("eps_test_sessions",
+          `eps_test_sessions?class_id=eq.${cls.id}&deleted=eq.false&select=*`,
+          { ou: t => String(t.class_id) === String(cls.id) && !t.deleted });
+      } catch (error) { console.warn("Reprise des anciens tests 6e différée", error); }
+    }
 
     // Le compteur de seances n'existe cote serveur que depuis schema_cycle_seance_en_cours.sql.
     // Tant qu'il n'est pas applique, on affiche la seance sans permettre de l'avancer : mieux
