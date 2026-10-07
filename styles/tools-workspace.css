@@ -91,11 +91,11 @@
 @media(max-width:600px){
   .aptitude-scroll-hint{display:block}
   .aptitude-worksheet .fitness-table-wrap{max-width:100%;touch-action:pan-x pan-y;overscroll-behavior-inline:contain}
-  .aptitude-worksheet .fitness-table-wrap table{width:640px;min-width:640px;table-layout:fixed}
+  .aptitude-worksheet .fitness-table-wrap table{width:520px;min-width:520px;table-layout:fixed}
   .aptitude-worksheet .fitness-table-wrap th:first-child,
-  .aptitude-worksheet .fitness-table-wrap td:first-child{min-width:132px!important;width:132px!important;max-width:132px!important;white-space:normal;padding:7px!important}
+  .aptitude-worksheet .fitness-table-wrap td:first-child{min-width:96px!important;width:96px!important;max-width:96px!important;white-space:normal;overflow-wrap:anywhere;padding:5px!important;font-size:11px;line-height:1.2}
   .aptitude-worksheet .fitness-table-wrap th:not(:first-child),
-  .aptitude-worksheet .fitness-table-wrap td:not(:first-child){width:112px;min-width:112px;padding:7px}
-  .aptitude-worksheet .fitness-table-wrap td input{display:block;width:82px!important;min-width:82px!important;margin:0 auto;border:2px solid #72b5e7;background:#fff}
+  .aptitude-worksheet .fitness-table-wrap td:not(:first-child){width:106px;min-width:106px;padding:5px}
+  .aptitude-worksheet .fitness-table-wrap td input{display:block;width:72px!important;min-width:72px!important;margin:0 auto;border:2px solid #72b5e7;background:#fff}
 }
 @media(max-width:700px){.modern-tool-panel .tool-savebar{grid-template-columns:1fr 1fr}.tool-dangerbar button{width:100%}.common-group-auto{grid-template-columns:1fr}}

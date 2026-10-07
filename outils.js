@@ -678,7 +678,7 @@ function drawSwimCertificate() {
   // en vue pendant qu'on fait defiler le parcours.
   toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 etapes du parcours en securite")
     + toolRosterHtml()
-    + `<div class="fitness-web aptitude-worksheet"><p class="aptitude-scroll-hint">← Nom fixe · faites glisser les mesures horizontalement →</p>${socleTableauHtml(
+    + `<div class="fitness-web">${socleTableauHtml(
         EpsTests.SWIM_STEPS.map((label,i)=>({titre:`${i+1}`,aide:label})),
         cible.map(s=>{const done=swimValidations[s.id]||[],score=done.length;return {eleve:s,
           sousTitre:score===10?"Attestation validée":`${score}/10 étapes`,
@@ -723,7 +723,7 @@ function drawAptitudes() {
     + toolRosterHtml()
     + `<div class="card" style="background:#FFF7E8"><div class="muted">Baremes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
     + `<div class="field-tool-row">${socleSelecteurModeHtml(aptitudeMode,"aptitudeMode")}</div>`
-    + `<div class="fitness-web">${socleTableauHtml(
+    + `<div class="fitness-web aptitude-worksheet"><p class="aptitude-scroll-hint">Nom fixe · faites glisser les colonnes →</p>${socleTableauHtml(
         champs.map(([,titre,aide])=>({titre,aide})),
         cible.map(s=>{const v=aptitudeValues[s.id]||{};return {eleve:s,
           cellules:champs.map(([cle])=>`<input type="text" inputmode="decimal" data-apt="${s.id}" data-field="${cle}" value="${v[cle]||""}">`),
