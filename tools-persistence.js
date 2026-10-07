@@ -42,7 +42,9 @@
     if(!classId)return 0;
     const works=(await EpsToolWorks.read()).filter(w=>w.type==='aptitudes'&&String(w.classId)===String(classId));
     if(!works.length)return 0;
-    const existing=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${classId}&test_name=eq.${encodeURIComponent(aptitudeTestName)}&deleted=eq.false&select=id`,{ou:r=>String(r.class_id)===String(classId)&&r.test_name===aptitudeTestName&&!r.deleted});
+    // Une session supprimée reste une décision de l'enseignant : son identifiant empêche
+    // l'ancienne sauvegarde encore présente dans « Travaux » de la recréer à chaque ouverture.
+    const existing=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${classId}&test_name=eq.${encodeURIComponent(aptitudeTestName)}&select=id,deleted`,{avecSupprimes:true,ou:r=>String(r.class_id)===String(classId)&&r.test_name===aptitudeTestName});
     const ids=new Set(existing.map(row=>String(row.id)));
     await loadToolClasses();
     const students=await lireTable('students',`students?class_id=eq.${classId}&deleted=eq.false&select=id`,{ou:r=>String(r.class_id)===String(classId)&&!r.deleted});

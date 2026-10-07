@@ -134,11 +134,11 @@ function tableSuivie(entite) {
 /**
  * @param {string} entite table
  * @param {string} cheminDirect chemin PostgREST complet, filtres compris, pour la lecture serveur
- * @param {{ou?: Function, trier?: Function}} [options] filtre et tri appliques a la copie locale
+ * @param {{ou?: Function, trier?: Function, avecSupprimes?: boolean}} [options] filtre et tri appliques a la copie locale
  */
-async function lireTable(entite, cheminDirect, { ou, trier } = {}) {
+async function lireTable(entite, cheminDirect, { ou, trier, avecSupprimes = false } = {}) {
   if (tableSuivie(entite)) {
-    const lecture = await modeHorsConnexion.lire(entite, { ou, trier });
+    const lecture = await modeHorsConnexion.lire(entite, { ou, trier, avecSupprimes });
     return lecture.rows;
   }
   const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${cheminDirect}`);

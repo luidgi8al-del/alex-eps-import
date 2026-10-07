@@ -5,7 +5,22 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
 (async()=>{await new Promise(r=>server.listen(8895,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
   const context=await browser.newContext({viewport:{width:1440,height:1000},serviceWorkers:'block'});await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.type()==='prompt'?d.accept('Test audit'):d.accept());
   await page.goto('http://127.0.0.1:8895');await page.waitForTimeout(1000);
-  await page.evaluate(()=>{window.auditDb={};const read=lireTable;lireTable=async function(table,url,options){if(['eps_saved_tool_works','eps_test_sessions','eps_test_results'].includes(table)){let rows=Object.values(auditDb[table]||{});const params=new URL('http://test/'+url).searchParams;for(const[k,v]of params){if(v.startsWith('eq.'))rows=rows.filter(r=>String(r[k])===v.slice(3))}return rows}return read(table,url,options)};enregistrerLigne=async function(table,row){auditDb[table]??={};auditDb[table][row.id]=structuredClone(row)};showTab('outils')});
+  await page.evaluate(()=>{
+    window.auditDb={};
+    const read=lireTable;
+    lireTable=async function(table,url,options){
+      if(['eps_saved_tool_works','eps_test_sessions','eps_test_results'].includes(table)){
+        let rows=Object.values(auditDb[table]||{});
+        const params=new URL('http://test/'+url).searchParams;
+        for(const[k,v]of params)if(v.startsWith('eq.'))rows=rows.filter(r=>String(r[k])===v.slice(3));
+        if(!options?.avecSupprimes)rows=rows.filter(r=>!r.deleted);
+        return rows;
+      }
+      return read(table,url,options);
+    };
+    enregistrerLigne=async function(table,row){auditDb[table]??={};auditDb[table][row.id]=structuredClone(row)};
+    showTab('outils');
+  });
   const open=async id=>{await page.evaluate(id=>{resetToolsWorkspace();openTool(id)},id);await page.waitForTimeout(130)};
   for(const id of await page.evaluate(()=>EpsToolsCatalog.map(t=>t.id))){await open(id);assert(await page.locator('#toolPanel').innerText(),id);console.log('OPEN',id)}
   assert.deepEqual(errors,[]);
@@ -39,6 +54,9 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
   assert.equal(await page.evaluate(()=>EpsAptitudes.migrateLegacy('cl-3e6')),0);
   assert.equal(await page.evaluate(()=>auditDb.eps_test_sessions['legacy-apt'].period_number),2);
   assert.equal(await page.evaluate(()=>auditDb.eps_saved_tool_works['legacy-apt'].deleted),false);
+  await page.evaluate(()=>{auditDb.eps_test_sessions['legacy-apt'].deleted=true});
+  assert.equal(await page.evaluate(()=>EpsAptitudes.migrateLegacy('cl-3e6')),0,'un test supprimé ne doit pas être recréé depuis Travaux');
+  assert.equal(await page.evaluate(()=>auditDb.eps_test_sessions['legacy-apt'].deleted),true);
   console.log('PASS anciens tests 6e visibles dans la classe sans supprimer la sauvegarde originale');
   await open('tests');await page.locator('#toolClass').selectOption('cl-3e6');await page.waitForTimeout(80);await page.locator('[data-eps-test="ARRET_COURSE"]').click();await page.waitForTimeout(150);assert.equal(await page.locator('.stop-pupils').isVisible(),false);assert.equal(await page.locator('#stopCreateGroup').isVisible(),true);await page.locator('#epsBegin').click();assert.equal(await page.locator('.stop-pupils').isVisible(),true);assert.equal(await page.locator('#stopCreateGroup').isVisible(),false);await page.locator('#epsEditPreparation').click();assert.equal(await page.locator('.stop-pupils').isVisible(),false);console.log('PASS stop-course setup and results separated');
   await open('teams');await page.locator('#twFree').fill('Alex;F\nSam;M\nJo;F\nMax;M');await page.locator('#twFree').dispatchEvent('change');await page.locator('#twMode').selectOption('MIXTE_EQUILIBRE');await page.locator('#twGenerate').click();assert.equal(await page.locator('[data-team-move]').count(),4);assert.equal(await page.locator('#twError').innerText(),'');await page.evaluate(()=>{const list=Array.from({length:8},(_,i)=>({id:String(i),last_name:'Name'+i,sex:i<4?'F':'M'}));const ratings=Object.fromEntries(list.map((s,i)=>[s.id,i]));const homogeneous=distributeToolTeams(list,2,'HOMOGENE',ratings);if(homogeneous[0].some(s=>+s.id<4))throw Error('levels ignored');const mixed=distributeToolTeams(list,2,'MIXTE_EQUILIBRE');if(mixed.some(g=>g.filter(s=>s.sex==='F').length!==2))throw Error('mixity')});console.log('PASS teams free, levels and mixity');
