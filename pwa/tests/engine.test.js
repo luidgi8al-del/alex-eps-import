@@ -11,8 +11,8 @@ import { transaction, getMeta, setMeta } from "../storage/database.js";
 import { listLocalRecords, readLocalRecord, saveLocalRecord, removeAllLocalData, countLocalRecords } from "../storage/records.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
-import { countConflicts, listConflicts } from "../sync/conflicts.js";
-import { resolveConflict, buildFieldChoice, acknowledgeRejection, resolveAllConflicts } from "../sync/resolve.js";
+import { countConflicts, listConflicts, storeRejection } from "../sync/conflicts.js";
+import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, resolveAllConflicts } from "../sync/resolve.js";
 import { OfflineSyncEngine, serverIsClearlyOlder } from "../sync/engine.js";
 import { currentSyncState } from "../core/events.js";
 import { serverIsClearlyOlderThanStoredConflict } from "../ui/conflict-dialog.js";
@@ -661,6 +661,33 @@ test("une bascule de compte interrompt la synchronisation en cours", async () =>
   } finally { utiliserCompte(null); }
 });
 
+test("modifier une note déjà saisie conserve élève, critère et propriétaire", async () => {
+  const complete = { id: "score-identite", user_id: "prof-test", criterion_id: "crit-1", student_id: "el-1", points: 4, deleted: false };
+  await saveLocalRecord({ entity: "evaluation_scores", id: complete.id, data: complete, version: 0, updatedAt: new Date().toISOString() });
+  await saveOfflineEdit({ entity: "evaluation_scores", id: complete.id, data: { id: complete.id, points: 6, deleted: false } });
+  const saved = await readLocalRecord("evaluation_scores", complete.id);
+  assertEgal(saved.data.user_id, complete.user_id, "le propriétaire reste dans la note");
+  assertEgal(saved.data.criterion_id, complete.criterion_id, "le critère reste dans la note");
+  assertEgal(saved.data.student_id, complete.student_id, "l'élève reste dans la note");
+  assertEgal(saved.data.points, 6, "la correction est conservée");
+  const [pending] = await pendingOperations();
+  assert(!pending.changedFields.includes("user_id") && !pending.changedFields.includes("criterion_id") && !pending.changedFields.includes("student_id"), "les identifiants ne doivent pas être effacés");
+});
+
+test("une note déjà refusée peut être relancée avec ses identifiants restaurés", async () => {
+  const baseData = { id: "score-refuse", user_id: "prof-test", criterion_id: "crit-2", student_id: "el-2", points: 4, deleted: false };
+  const operation = { entity: "evaluation_scores", id: baseData.id, recordKey: "evaluation_scores:score-refuse", opId: "refus-note", action: "upsert", baseVersion: 0, baseData,
+    data: { id: baseData.id, points: 7, deleted: false }, changedFields: ["user_id", "criterion_id", "student_id", "points"], authorId: "prof-test", createdAt: new Date().toISOString() };
+  const refusal = await storeRejection({ operation, serverRecord: null, reason: "droits insuffisants" });
+  await retryRejection(refusal.conflictId);
+  const [pending] = await pendingOperations();
+  assertEgal(pending.data.user_id, baseData.user_id, "le propriétaire est restauré");
+  assertEgal(pending.data.criterion_id, baseData.criterion_id, "le critère est restauré");
+  assertEgal(pending.data.student_id, baseData.student_id, "l'élève est restauré");
+  assertEgal(pending.data.points, 7, "la nouvelle note reste intacte");
+  assertEgal(await countConflicts(), 0, "le refus traité quitte la fenêtre");
+});
+
 test("parcours croise APK site APK : dispense, evaluation et document restent coherents", async () => {
   const dateApk = "2026-10-06T08:00:00.000Z";
   const dispenseApk = {
@@ -673,7 +700,7 @@ test("parcours croise APK site APK : dispense, evaluation et document restent co
   };
   const noteInitiale = {
     entity: "evaluation_scores", id: "score-croise", version: 1, updatedAt: dateApk,
-    data: { id: "score-croise", version: 1, criterion_id: "crit-1", student_id: "el-8", points: null, deleted: false }
+    data: { id: "score-croise", version: 1, user_id: "prof-test", criterion_id: "crit-1", student_id: "el-8", points: null, deleted: false }
   };
   const documentInitial = {
     entity: "class_documents", id: "doc-croise", version: 1, updatedAt: dateApk,

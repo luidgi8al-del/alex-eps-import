@@ -113,8 +113,16 @@ export async function acknowledgeRejection(conflictId) {
 export async function retryRejection(conflictId) {
   const refus = (await listConflicts()).find(item => item.conflictId === conflictId && item.kind === "refus");
   if (!refus) throw new Error("Refus introuvable : il a peut-être déjà été traité.");
+  const data = refus.entity === "evaluation_scores"
+    ? { ...refus.baseData, ...refus.serverData, ...refus.localData }
+    : refus.localData;
+  if (refus.entity === "evaluation_scores") {
+    for (const field of ["user_id", "criterion_id", "student_id"]) {
+      if (!data[field]) throw new Error(`Impossible de relancer la note : ${field} manque dans les versions conservées.`);
+    }
+  }
   await saveLocalRecord({
-    entity: refus.entity, id: refus.id, data: refus.localData,
+    entity: refus.entity, id: refus.id, data,
     version: refus.serverVersion || refus.baseVersion || 0,
     updatedAt: new Date().toISOString(), deleted: false
   });
@@ -122,8 +130,10 @@ export async function retryRejection(conflictId) {
     entity: refus.entity, id: refus.id, action: "upsert",
     baseVersion: refus.serverVersion || refus.baseVersion || 0,
     baseData: refus.serverData || refus.baseData || null,
-    data: refus.localData,
-    changedFields: refus.overlappingFields || Object.keys(refus.localData || {}),
+    data,
+    changedFields: refus.entity === "evaluation_scores"
+      ? changedFieldsBetween(refus.serverData || refus.baseData || {}, data)
+      : refus.overlappingFields || Object.keys(refus.localData || {}),
     authorId: refus.localAuthorId
   });
   await removeConflict(conflictId);

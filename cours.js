@@ -508,7 +508,7 @@ let evalOpenedId = null;
  */
 let evalTypeFiltre = null;
 let evalCriteria = [];
-let evalScores = {};         // "criterionId|studentId" -> {id, points}
+let evalScores = {};         // "criterionId|studentId" -> ligne complète, identifiants inclus
 const evalScoreSaves = new Set();
 
 function trackEvaluationScoreSave(promise) {
@@ -888,7 +888,7 @@ async function setScore(input, focusTarget = null) {
       else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
         method: "PATCH", body: JSON.stringify({ points: null, deleted: true, updated_at: now })
       });
-      existing.points = null; existing.deleted = true;
+      evalScores[key] = efface;
     }
   } else {
     const value = parseFloat(raw);
@@ -899,7 +899,7 @@ async function setScore(input, focusTarget = null) {
       else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores?id=eq.${existing.id}`, {
         method: "PATCH", body: JSON.stringify({ points: value, deleted: false, updated_at: now })
       });
-      existing.points = value; existing.deleted = false;
+      evalScores[key] = notee;
     } else {
       const id = crypto.randomUUID();
       const ligne = { id, user_id: session.user_id, criterion_id: criterionId, student_id: studentId, points: value, deleted: false, updated_at: now };
@@ -907,7 +907,9 @@ async function setScore(input, focusTarget = null) {
       else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_scores`, {
         method: "POST", body: JSON.stringify(ligne)
       });
-      evalScores[key] = { id, points: value, deleted: false };
+      // La prochaine modification doit repartir de la ligne complète. Une copie abrégée
+      // ferait disparaître user_id, criterion_id et student_id dans la file hors connexion.
+      evalScores[key] = ligne;
     }
   }
   renderEvaluationTable(focusTarget);
