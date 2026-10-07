@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20261007-installations-follow-1">
+<link rel="stylesheet" href="styles/site.css?v=20261008-installations-overview-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
   <link rel="stylesheet" href="home-navigation.css?v=20260928-9">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20261007-aptitudes-mobile-3">
@@ -312,21 +312,50 @@
       <div id="tab-equipement" class="tabpanel" style="display:none">
         <div class="subtabbar" id="equipSubtabs">
           <button class="subtabbtn" data-equiptab="installations">Installations</button>
+          <button class="subtabbtn" data-equiptab="installation-suivi">Suivi</button>
           <button class="subtabbtn" data-equiptab="materiel">Materiel</button>
           <button class="subtabbtn" data-equiptab="epi">EPI escalade</button>
         </div>
 
         <div id="equipTab-installations">
           <div class="card">
-            <div class="installation-page-heading">
-              <h2>Installations sportives</h2>
-              <button type="button" id="installationQuickReportBtn">＋ Signaler un problème</button>
+            <div id="installationOverview">
+              <div class="installation-page-heading">
+                <div><h2>Installations</h2><p class="muted">Signalements et état des interventions</p></div>
+                <div class="installation-page-actions">
+                  <button type="button" id="installationQuickReportBtn">＋ Signaler</button>
+                </div>
+              </div>
+              <div class="installation-overview-stats" aria-label="État des signalements">
+                <div><strong id="installationCountPending">0</strong><span>À traiter</span></div>
+                <div><strong id="installationCountProgress">0</strong><span>Pris en charge</span></div>
+                <div><strong id="installationCountResolved">0</strong><span>Résolus</span></div>
+              </div>
+              <div class="installation-overview-heading">
+                <h3>Signalements récents</h3>
+                <div class="installation-overview-filters" aria-label="Filtrer les signalements">
+                  <button type="button" class="secondary active" data-installation-filter="all" aria-pressed="true">Tous</button>
+                  <button type="button" class="secondary" data-installation-filter="urgent" aria-pressed="false">Urgents</button>
+                </div>
+              </div>
+              <div id="installationIncidentsOverview" class="installation-overview-list" aria-live="polite"></div>
             </div>
-            <div class="muted" style="margin-bottom:10px">Gymnase, plateau exterieur, piscine, dojo... proposees quand vous posez un creneau dans Programmation.</div>
-            <section class="installation-manager-card" id="installationManagerCard">
+            <div id="installationFollowView" hidden>
+              <div class="installation-page-heading"><div><h2>Suivi des installations</h2><p class="muted">Choisissez une installation pour retrouver ses interventions.</p></div><button type="button" class="secondary" id="installationBackOverviewBtn">← Retour aux signalements</button></div>
+              <div class="installation-create-grid">
+                <div>
+                  <label for="installationName">Nouvelle installation</label>
+                  <input type="text" id="installationName" placeholder="Ex : Gymnase">
+                </div>
+                <button id="addInstallationBtn">Ajouter</button>
+              </div>
+              <div class="error" id="installationError"></div>
+              <div id="installationsList" style="margin-top:16px"></div>
+            </div>
+            <section class="installation-manager-card" id="installationManagerCard" hidden>
               <div>
-                <h3>Responsable des installations</h3>
-                <p>Ce même contact recevra tous les signalements WhatsApp.</p>
+                <h3>Envoi WhatsApp actuel</h3>
+                <p>À renseigner uniquement tant que l'espace responsable et ses notifications ne sont pas actifs.</p>
               </div>
               <div class="installation-manager-fields">
                 <label for="installationManagerName">Nom ou service
@@ -339,15 +368,6 @@
               </div>
               <div id="installationManagerStatus" class="muted" aria-live="polite"></div>
             </section>
-            <div class="installation-create-grid">
-              <div>
-                <label for="installationName">Nouvelle installation</label>
-                <input type="text" id="installationName" placeholder="Ex : Gymnase">
-              </div>
-              <button id="addInstallationBtn">Ajouter</button>
-            </div>
-            <div class="error" id="installationError"></div>
-            <div id="installationsList" style="margin-top:16px"></div>
             <!-- Reste vide tant qu'il n'y a rien a trancher : voir .conflitAucun. -->
             <div id="conflictPanel" style="margin-top:16px"></div>
           </div>
@@ -586,7 +606,7 @@
   <script src="classe-tableau-bord.js?v=20261007-aptitudes-class-1"></script>
   <script src="classe-ecrans.js?v=20261007-health-adaptation-1"></script>
   <script src="qrcode.min.js"></script>
-  <script src="equipement.js?v=20261007-installations-follow-1"></script>
+  <script src="equipement.js?v=20261008-installations-overview-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20261006-26"></script>

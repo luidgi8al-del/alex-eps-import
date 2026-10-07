@@ -49,6 +49,11 @@
       { id: "in-2", user_id: "prof-test", name: "Gymnase 2/3", deleted: false, updated_at: MAINTENANT },
       { id: "in-3", user_id: "prof-test", name: "Terrain d herbe 1/2", deleted: false, updated_at: MAINTENANT }
     ],
+    sport_installation_incidents: [
+      { id: "si-1", user_id: "prof-test", installation_id: "in-1", installation_name: "Gymnase", incident_type: "SECURITE", description: "Panier de basket instable", urgency: "URGENT", status: "SIGNALE", reported_at: MAINTENANT, deleted: false, updated_at: MAINTENANT },
+      { id: "si-2", user_id: "prof-test", installation_id: "in-2", installation_name: "Gymnase 2/3", incident_type: "ACCES", description: "Serrure du vestiaire bloquée", urgency: "NORMAL", status: "EN_COURS", reported_at: MAINTENANT, deleted: false, updated_at: MAINTENANT },
+      { id: "si-3", user_id: "prof-test", installation_id: "in-1", installation_name: "Gymnase", incident_type: "EQUIPEMENT", description: "Filet remplacé", urgency: "NORMAL", status: "RESOLU", reported_at: MAINTENANT, deleted: false, updated_at: MAINTENANT }
+    ],
     equipment: [{ id: "eq-1", user_id: "prof-test", institution_id: "etab-1", name: "Baudrier", quantity: 14, deleted: false, updated_at: MAINTENANT }],
     equipment_purchases: [],
     epi_items: [{ id: "epi-1", user_id: "prof-test", institution_id: "etab-1", name: "Corde 30 m", serial_number: "C-1", deleted: false, updated_at: MAINTENANT }],

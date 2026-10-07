@@ -10,11 +10,25 @@
 var installationsTabReady = false;
 var installationManager = { id: "", contact_name: "", whatsapp_phone: "" };
 var installationsCache = [];
+var installationOverviewIncidents = [];
+var installationOverviewFilter = "all";
+
+function showInstallationView(view) {
+  document.getElementById("installationOverview").hidden = view !== "overview";
+  document.getElementById("installationFollowView").hidden = view !== "follow";
+  if (view === "overview") loadInstallationIncidentsOverview();
+  if (view === "follow") loadInstallationsList();
+}
 
 function initInstallationsTab() {
   if (!installationsTabReady) {
     document.getElementById("addInstallationBtn").addEventListener("click", createInstallation);
     document.getElementById("installationQuickReportBtn").addEventListener("click", openInstallationReportPicker);
+    document.getElementById("installationBackOverviewBtn").addEventListener("click", () => showEquipTab("installations"));
+    document.querySelectorAll("[data-installation-filter]").forEach(button => button.addEventListener("click", () => {
+      installationOverviewFilter = button.dataset.installationFilter;
+      renderInstallationIncidentsOverview();
+    }));
     document.getElementById("saveInstallationManagerBtn").addEventListener("click", saveInstallationManager);
     document.getElementById("equipSubtabs").addEventListener("click", e => {
       const btn = e.target.closest(".subtabbtn");
@@ -31,12 +45,15 @@ let equipMode = "installations";
 function showEquipTab(mode) {
   equipMode = mode;
   ["installations", "materiel", "epi"].forEach(t => {
-    document.getElementById("equipTab-" + t).style.display = t === mode ? "block" : "none";
+    document.getElementById("equipTab-" + t).style.display = t === mode || (t === "installations" && mode === "installation-suivi") ? "block" : "none";
   });
   document.querySelectorAll("#equipSubtabs .subtabbtn").forEach(b =>
     b.classList.toggle("active", b.dataset.equiptab === mode));
-  if (mode === "installations") loadInstallationsList();
-  if (mode === "installations") loadInstallationManager();
+  if (mode === "installations" || mode === "installation-suivi") {
+    document.getElementById("installationManagerCard").hidden = true;
+    showInstallationView(mode === "installation-suivi" ? "follow" : "overview");
+    loadInstallationManager();
+  }
   if (mode === "materiel") loadEquipment();
   if (mode === "epi") loadEpiItems();
 }
@@ -485,6 +502,55 @@ async function deleteInstallation(id) {
   await loadPlanningInstallations();
 }
 
+function renderInstallationIncidentsOverview() {
+  const host = document.getElementById("installationIncidentsOverview");
+  document.getElementById("installationCountPending").textContent = installationOverviewIncidents.filter(row => row.status === "SIGNALE").length;
+  document.getElementById("installationCountProgress").textContent = installationOverviewIncidents.filter(row => row.status === "EN_COURS").length;
+  document.getElementById("installationCountResolved").textContent = installationOverviewIncidents.filter(row => row.status === "RESOLU").length;
+  document.querySelectorAll("[data-installation-filter]").forEach(button => {
+    const active = button.dataset.installationFilter === installationOverviewFilter;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  const visible = installationOverviewIncidents.filter(row => installationOverviewFilter !== "urgent" || row.urgency === "URGENT");
+  if (!visible.length) {
+    host.innerHTML = `<div class="muted installation-overview-empty">${installationOverviewFilter === "urgent" ? "Aucun signalement urgent." : "Aucun signalement pour le moment."}</div>`;
+    return;
+  }
+  host.innerHTML = visible.map(row => {
+    const type = INSTALLATION_INCIDENT_TYPES[row.incident_type] || "Installation";
+    const description = String(row.description || "").trim();
+    const title = description.length > 80 ? description.slice(0, 79) + "…" : description || type;
+    const when = row.reported_at && !Number.isNaN(new Date(row.reported_at).getTime())
+      ? new Date(row.reported_at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" }) : "Date non renseignée";
+    const label = row.status === "A_ENVOYER" ? "À envoyer"
+      : row.status === "SIGNALE" ? "À traiter"
+      : row.status === "EN_COURS" ? "Pris en charge" : "Résolu";
+    return `<article class="installation-overview-card">
+      <div class="installation-overview-card-head"><strong>${planningText(title)}</strong><span class="installation-urgency ${row.urgency === "URGENT" ? "urgent" : "normal"}">${row.urgency === "URGENT" ? "Urgent" : "Normal"}</span></div>
+      <p>${planningText(row.installation_name || "Installation")} · ${label}<br>${planningText(when)}</p>
+      <button type="button" class="secondary" data-installation-incident="${planningText(row.id)}">Voir le suivi</button>
+    </article>`;
+  }).join("");
+  host.querySelectorAll("[data-installation-incident]").forEach(button => button.addEventListener("click", () => {
+    const incident = installationOverviewIncidents.find(row => row.id === button.dataset.installationIncident);
+    if (incident) openInstallationHistory({ id: incident.installation_id, name: incident.installation_name });
+  }));
+}
+
+async function loadInstallationIncidentsOverview() {
+  const host = document.getElementById("installationIncidentsOverview");
+  host.innerHTML = '<div class="muted installation-overview-empty">Chargement des signalements…</div>';
+  try {
+    installationOverviewIncidents = await lireTable("sport_installation_incidents",
+      "sport_installation_incidents?deleted=eq.false&select=*&order=reported_at.desc",
+      { ou: row => !row.deleted, trier: (a, b) => String(b.reported_at || "").localeCompare(String(a.reported_at || "")) });
+    renderInstallationIncidentsOverview();
+  } catch (error) {
+    host.innerHTML = `<div class="error">Impossible de charger les signalements : ${planningText(error.message || String(error))}</div>`;
+  }
+}
+
 async function loadInstallationsList() {
   const listEl = document.getElementById("installationsList");
   listEl.innerHTML = '<div class="muted">Chargement...</div>';
@@ -660,12 +726,14 @@ async function enregistrerIncidentInstallation(installation, type, description, 
     sent_at: null, resolved_at: null, updated_at: now, deleted: false
   };
   await enregistrerLigne("sport_installation_incidents", incident);
+  if (!document.getElementById("installationOverview").hidden) loadInstallationIncidentsOverview();
   return incident;
 }
 
 function focusInstallationManager() {
   closeInstallationDialog();
   const card = document.getElementById("installationManagerCard");
+  if (card) card.hidden = false;
   card?.scrollIntoView({ behavior: "smooth", block: "center" });
   document.getElementById("installationManagerPhone")?.focus();
 }
@@ -729,6 +797,7 @@ async function updateInstallationIncident(incident, status) {
   if (status === "SIGNALE") changes.sent_at = incident.sent_at || now;
   if (status === "RESOLU") changes.resolved_at = now;
   await enregistrerLigne("sport_installation_incidents", { ...incident, ...changes });
+  if (!document.getElementById("installationOverview").hidden) loadInstallationIncidentsOverview();
 }
 
 async function openInstallationHistory(installation) {
