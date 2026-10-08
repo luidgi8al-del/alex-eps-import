@@ -670,10 +670,26 @@ function libelleVoeuExport(student, rang) {
   return slot ? unssSlotLabel(slot) : "";
 }
 
+/**
+ * Excel transforme spontanement les divisions comme 2-01 ou 1-07 en dates.
+ * Une formule texte fermee conserve exactement le libelle affiche dans l'application.
+ */
+function classeTableurAs(student) {
+  const valeur = String(student?.division || student?.school_class_label || student?.class_label || "");
+  return valeur ? `="${valeur.replaceAll('"', '""')}"` : "";
+}
+
+function celluleCsvAs(valeur) {
+  const texte = String(valeur ?? "");
+  const formuleTexteSure = /^="(?:[^"]|"")*"$/.test(texte);
+  const contenu = formuleTexteSure ? texte : texte.replace(/^[=+@-]/, "'$&");
+  return `"${contenu.replaceAll('"', '""')}"`;
+}
+
 function exportLicenciesCsv(rows) {
   const lignes = [["Nom", "Prénom", "Classe / Division", "E-mail élève", "Taille maillot", "Vœu 1", "Vœu 2", "Vœu 3"],
-    ...rows.map(s => [String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || s.school_class_label || s.class_label || "", s.student_email || "", s.jersey_size || "", libelleVoeuExport(s, 1), libelleVoeuExport(s, 2), libelleVoeuExport(s, 3)])];
-  const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
+    ...rows.map(s => [String(s.last_name || "").toUpperCase(), s.first_name || "", classeTableurAs(s), s.student_email || "", s.jersey_size || "", libelleVoeuExport(s, 1), libelleVoeuExport(s, 2), libelleVoeuExport(s, 3)])];
+  const csv = "\ufeff" + lignes.map(r => r.map(celluleCsvAs).join(";")).join("\r\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   a.download = `inscrits-as-${new Date().toISOString().slice(0, 10)}.csv`;
@@ -722,10 +738,10 @@ function showCreneauExport(slot, rows) {
 
 function exportCreneauCsv(slot, rows) {
   const lignes = [["Nom", "Prénom", "Classe", "E-mail élève", "Catégorie"], ...rows.map(s => [
-    String(s.last_name || "").toUpperCase(), s.first_name || "", s.division || s.school_class_label || s.class_label || "",
+    String(s.last_name || "").toUpperCase(), s.first_name || "", classeTableurAs(s),
     s.student_email || "", unssCategoryLabel(s.category, s.sex)
   ])];
-  const csv = "\ufeff" + lignes.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(";")).join("\r\n");
+  const csv = "\ufeff" + lignes.map(r => r.map(celluleCsvAs).join(";")).join("\r\n");
   const nom = String(slot.activity_name || "creneau-as").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
@@ -1803,7 +1819,7 @@ function allSlotsCsv(mode) {
       students.forEach(student => rows.push([
         slot.activity_name || "", capitaliseJour(slot.day_of_week), horaire,
         String(student.last_name || "").toUpperCase(), student.first_name || "",
-        student.division || student.school_class_label || student.class_label || ""
+        classeTableurAs(student)
       ]));
     });
     return { filename: "eleves-par-creneau-aslvh.csv", rows };
@@ -1813,8 +1829,7 @@ function allSlotsCsv(mode) {
 
 function downloadAllSlotsCsv(mode) {
   const exportData = allSlotsCsv(mode);
-  const cell = value => `"${String(value).replace(/^[=+@-]/, "'$&").replaceAll('"', '""')}"`;
-  const csv = "\ufeff" + exportData.rows.map(row => row.map(cell).join(";")).join("\r\n");
+  const csv = "\ufeff" + exportData.rows.map(row => row.map(celluleCsvAs).join(";")).join("\r\n");
   asDownloadBlob(new Blob([csv], { type:"text/csv;charset=utf-8" }), exportData.filename);
 }
 
@@ -4264,12 +4279,11 @@ function renderUnssDatesTab() {
 }
 
 function exporterParticipantsDateAs(label, eleves) {
-  const cellule = valeur => `"${String(valeur ?? "").replaceAll('"', '""')}"`;
   const lignes = [["Nom", "Prénom", "Classe", "Catégorie"], ...eleves.map(e => [
     String(e.last_name || "").toUpperCase(), e.first_name || "",
-    e.division || e.school_class_label || e.class_label || "", unssCategoryLabel(e.category, e.sex)
+    classeTableurAs(e), unssCategoryLabel(e.category, e.sex)
   ])];
-  const csv = "\uFEFF" + lignes.map(ligne => ligne.map(cellule).join(";")).join("\r\n");
+  const csv = "\uFEFF" + lignes.map(ligne => ligne.map(celluleCsvAs).join(";")).join("\r\n");
   const lien = document.createElement("a");
   lien.href = URL.createObjectURL(new Blob([csv], { type:"text/csv;charset=utf-8" }));
   lien.download = `participants-${chaineRecherche(label || "date-as").replace(/\s+/g, "-") || "date-as"}.csv`;
