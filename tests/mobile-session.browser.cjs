@@ -47,8 +47,24 @@ const server = http.createServer((req,res)=>{
       await page.locator('[data-eps-test="TROIS_500"]').click();
       assert.equal(await page.locator('[data-run-name]').count(),active.length);
       await page.locator('#runningManageGroups').click();
+      const firstGroupStudent=await page.locator('[data-running-group-student]').first().getAttribute('data-running-group-student');
       await page.locator('[data-running-group-student]').first().check();
       await page.locator('#runningSaveGroup').click();
+      // Un élève déjà affecté doit rester visible et pouvoir passer directement
+      // du groupe 1 au groupe 2, comme dans l'application Android.
+      await page.locator('#runningManageGroups').click();
+      const secondGroupStudent=await page.locator('[data-running-group-student]').nth(1).getAttribute('data-running-group-student');
+      await page.locator('[data-running-group-student]').nth(1).check();
+      await page.locator('#runningSaveGroup').click();
+      await page.locator('#runningManageGroups').click();
+      await page.locator('[data-running-edit-group="1"]').click();
+      assert.equal(await page.locator('[data-running-group-student]').count(),active.length);
+      assert.match(await page.locator('[data-running-group-student]').first().locator('xpath=..').innerText(),/groupe 1/i);
+      await page.locator('[data-running-group-student]').first().check();
+      await page.locator('#runningSaveGroup').click();
+      assert.deepEqual(await page.evaluate(()=>runningGroups.map(group=>[...group])),[[],[secondGroupStudent,firstGroupStudent]]);
+      if(process.env.EPS_GROUP_MOVE_ONLY){await context.close();continue;}
+      await page.evaluate(id=>{runningGroups=[[id]];runningActiveGroup=0;paintRunningSeriesTest(EpsTests.TESTS.TROIS_500)},firstGroupStudent);
       await page.locator('input[data-run-student]').first().fill('315');
       await page.locator('#runningResetAll').click();
       assert.equal(await page.locator('[data-running-group="0"]').count(),1);

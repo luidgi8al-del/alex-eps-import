@@ -2,8 +2,17 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'outils.js'), 'utf8');
+
+test('un élève du 3x500 passe directement dans un autre groupe', () => {
+  const match = source.match(/function runningGroupsWithMovedStudents\([\s\S]*?\n\}/);
+  assert.ok(match, 'la fonction de déplacement des élèves doit exister');
+  const sandbox = {};
+  vm.runInNewContext(`${match[0]};this.move=runningGroupsWithMovedStudents`, sandbox);
+  assert.deepEqual(JSON.parse(JSON.stringify(sandbox.move([['a','b'],['c']],1,['c','a']))),[['b'],['c','a']]);
+});
 
 test('la remise à zéro du 3x500 conserve les groupes', () => {
   assert.match(source, /function resetRunningSession\(preserveGroups=false\)/);
