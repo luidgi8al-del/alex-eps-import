@@ -6,12 +6,12 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'outils.js'), 'utf8');
 
-test('un élève du 3x500 passe directement dans un autre groupe', () => {
-  const match = source.match(/function runningGroupsWithMovedStudents\([\s\S]*?\n\}/);
-  assert.ok(match, 'la fonction de déplacement des élèves doit exister');
+test('la fenêtre de modification propose le groupe courant et les élèves non attribués', () => {
+  const match = source.match(/function runningEditableStudentIds\([\s\S]*?\n\}/);
+  assert.ok(match, 'la fonction de sélection des élèves modifiables doit exister');
   const sandbox = {};
-  vm.runInNewContext(`${match[0]};this.move=runningGroupsWithMovedStudents`, sandbox);
-  assert.deepEqual(JSON.parse(JSON.stringify(sandbox.move([['a','b'],['c']],1,['c','a']))),[['b'],['c','a']]);
+  vm.runInNewContext(`${match[0]};this.editable=runningEditableStudentIds`, sandbox);
+  assert.deepEqual(JSON.parse(JSON.stringify(sandbox.editable([['a','b'],['c']],0,['a','b','c','d']))),['a','b','d']);
 });
 
 test('la remise à zéro du 3x500 conserve les groupes', () => {

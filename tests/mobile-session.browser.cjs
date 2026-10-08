@@ -12,7 +12,8 @@ const server = http.createServer((req,res)=>{
   const browser=await chromium.launch({channel:'chrome',headless:true});
   try{
     for(const standalone of [false,true]){
-      const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
+      const desktop=process.env.EPS_GROUP_DESKTOP==='1';
+      const context=await browser.newContext({viewport:desktop?{width:1440,height:900}:{width:390,height:844},isMobile:!desktop,hasTouch:!desktop,serviceWorkers:'block'});
       await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
       await context.addInitScript({content:`const storageSet=Storage.prototype.setItem;\n${fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')}\nStorage.prototype.setItem=storageSet;`});
       if(standalone)await context.addInitScript(()=>{const original=window.matchMedia;window.matchMedia=q=>q==='(display-mode: standalone)'?{matches:true,media:q,addEventListener(){},removeEventListener(){}}:original.call(window,q)});
@@ -50,17 +51,24 @@ const server = http.createServer((req,res)=>{
       const firstGroupStudent=await page.locator('[data-running-group-student]').first().getAttribute('data-running-group-student');
       await page.locator('[data-running-group-student]').first().check();
       await page.locator('#runningSaveGroup').click();
-      // Un élève déjà affecté doit rester visible et pouvoir passer directement
-      // du groupe 1 au groupe 2, comme dans l'application Android.
+      // Un groupe existant se modifie par appui prolongé dans une fenêtre modale.
       await page.locator('#runningManageGroups').click();
-      const secondGroupStudent=await page.locator('[data-running-group-student]').nth(1).getAttribute('data-running-group-student');
-      await page.locator('[data-running-group-student]').nth(1).check();
-      await page.locator('#runningSaveGroup').click();
-      await page.locator('#runningManageGroups').click();
-      await page.locator('[data-running-edit-group="1"]').click();
-      assert.equal(await page.locator('[data-running-group-student]').count(),active.length);
-      assert.match(await page.locator('[data-running-group-student]').first().locator('xpath=..').innerText(),/groupe 1/i);
+      const secondGroupStudent=await page.locator('[data-running-group-student]').first().getAttribute('data-running-group-student');
       await page.locator('[data-running-group-student]').first().check();
+      await page.locator('#runningSaveGroup').click();
+      const longPress=async locator=>{await locator.dispatchEvent('pointerdown',{clientX:10,clientY:10});await page.waitForTimeout(700);await locator.dispatchEvent('pointerup',{clientX:10,clientY:10})};
+      await longPress(page.locator('[data-running-group="0"]'));
+      assert.equal(await page.locator('#runningGroupOverlay [role="dialog"]').count(),1);
+      assert.equal(await page.locator('[data-running-group-student]').count(),active.length-1);
+      await page.locator(`[data-running-group-student="${firstGroupStudent}"]`).uncheck();
+      await page.locator('#runningCloseGroups').click();
+      assert.deepEqual(await page.evaluate(()=>runningGroups.map(group=>[...group])),[[firstGroupStudent],[secondGroupStudent]]);
+      await longPress(page.locator('[data-running-group="0"]'));
+      await page.locator(`[data-running-group-student="${firstGroupStudent}"]`).uncheck();
+      await page.locator('#runningSaveGroup').click();
+      assert.deepEqual(await page.evaluate(()=>runningGroups.map(group=>[...group])),[[],[secondGroupStudent]]);
+      await longPress(page.locator('[data-running-group="1"]'));
+      await page.locator(`[data-running-group-student="${firstGroupStudent}"]`).check();
       await page.locator('#runningSaveGroup').click();
       assert.deepEqual(await page.evaluate(()=>runningGroups.map(group=>[...group])),[[],[secondGroupStudent,firstGroupStudent]]);
       if(process.env.EPS_GROUP_MOVE_ONLY){await context.close();continue;}
