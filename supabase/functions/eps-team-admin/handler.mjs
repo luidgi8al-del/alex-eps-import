@@ -1,5 +1,5 @@
 // Dependency-injected server handler: no secret key or admin capability reaches a client.
-export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,createUser,magicLink,allowedOrigin}) {
+export function teamAdminHandler({verifyUser,rpc,invite,inviteManager,recover,recoverManager,deleteUser,createUser,magicLink,allowedOrigin}) {
  return async function(req) {
   const origin=req.headers.get('origin');
   const headers={'Content-Type':'application/json','Vary':'Origin'};
@@ -14,7 +14,24 @@ export function teamAdminHandler({verifyUser,rpc,invite,recover,deleteUser,creat
    const actor=await verifyUser(match[1]);
    if(!actor?.id)return reply({error:'Connexion expirée'},401);
    const body=await req.json();
-   if(!['invite','reserve','send_invite','pending_invites','cancel_invite','impersonate','reset_password','delete'].includes(body.action))return reply({error:'Action inconnue'},400);
+   if(!['invite','reserve','send_invite','pending_invites','cancel_invite','impersonate','reset_password','delete','invite_manager','reset_manager_password'].includes(body.action))return reply({error:'Action inconnue'},400);
+   if(body.action==='invite_manager') {
+    const email=String(body.email||'').trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return reply({error:'E-mail valide requis'},400);
+    // Le serveur vérifie d'abord les droits de l'administrateur. Si le compte existe déjà
+    // (par exemple après une invitation interrompue), il reçoit un lien de mot de passe.
+    await rpc('eps_validate_installation_manager_invite',{p_actor:actor.id,p_email:email});
+    try { await inviteManager(email); }
+    catch { await recoverManager(email); }
+    await rpc('eps_assign_installation_manager_by_admin',{p_actor:actor.id,p_email:email});
+    return reply({ok:true,message:'Invitation du responsable envoyée. Il choisira son mot de passe depuis le lien reçu.'});
+   }
+   if(body.action==='reset_manager_password') {
+    const context=await rpc('eps_installation_manager_admin_context_for_service',{p_actor:actor.id});
+    if(!context?.email)return reply({error:'Aucun responsable autorisé'},400);
+    await recoverManager(context.email);
+    return reply({ok:true,message:'Un nouveau lien de mot de passe a été envoyé au responsable.'});
+   }
    // Places reservees dont le mail n'est pas encore parti.
    if(body.action==='pending_invites')return reply({ok:true,invites:await rpc('eps_pending_invites',{p_actor:actor.id})});
    if(body.action==='invite'||body.action==='reserve') {

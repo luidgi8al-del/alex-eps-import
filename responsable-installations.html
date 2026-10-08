@@ -6,21 +6,22 @@
   <meta name="theme-color" content="#087bc1">
   <title>Installations · Responsable EPS</title>
   <link rel="manifest" href="manifest-responsable.webmanifest">
-  <link rel="stylesheet" href="styles/responsable-installations.css?v=20261008-1">
-  <script src="responsable-installations.js?v=20261008-1" defer></script>
+  <link rel="stylesheet" href="styles/responsable-installations.css?v=20261008-2">
+  <script src="responsable-installations.js?v=20261008-2" defer></script>
 </head>
 <body>
   <div id="authPage" class="auth-page">
     <div class="auth-card">
       <div class="brand">EPS LVH · Installations</div>
-      <h1>Espace responsable</h1>
+      <h1 id="authTitle">Espace responsable</h1>
       <p>Suivez les signalements des professeurs et indiquez les interventions effectuées.</p>
       <form id="loginForm">
         <label>Adresse e-mail<input id="loginEmail" type="email" autocomplete="username" required></label>
         <label>Mot de passe<input id="loginPassword" type="password" autocomplete="current-password" required></label>
-        <button type="submit">Se connecter</button>
+        <button type="submit" id="loginSubmit">Se connecter</button>
       </form>
-      <button type="button" class="text-button" id="signupToggle">Créer mon compte responsable</button>
+      <button type="button" class="text-button" id="recoverPassword">Recevoir un nouveau lien de mot de passe</button>
+      <p class="auth-help">L’accès est créé uniquement sur invitation du professeur administrateur.</p>
       <p id="authMessage" class="message" role="status"></p>
     </div>
   </div>
@@ -29,7 +30,7 @@
     <div class="auth-card">
       <div class="brand">EPS LVH · Installations</div>
       <h1>Compte en attente d’autorisation</h1>
-      <p>Le professeur administrateur doit autoriser votre adresse e-mail dans Équipement → Installations. Tant que ce n’est pas fait, aucun signalement n’est accessible.</p>
+      <p>Le professeur administrateur doit autoriser votre adresse dans Réglage → Administration des comptes. Tant que ce n’est pas fait, aucun signalement n’est accessible.</p>
       <button type="button" id="pendingRetry">Vérifier à nouveau</button>
       <button type="button" class="secondary" id="pendingLogout">Se déconnecter</button>
     </div>

@@ -29,7 +29,6 @@ function initInstallationsTab() {
       installationOverviewFilter = button.dataset.installationFilter;
       renderInstallationIncidentsOverview();
     }));
-    document.getElementById("installationAssignManagerBtn").addEventListener("click", assignInstallationManager);
     document.getElementById("equipSubtabs").addEventListener("click", e => {
       const btn = e.target.closest(".subtabbtn");
       if (btn) showEquipTab(btn.dataset.equiptab);
@@ -51,7 +50,6 @@ function showEquipTab(mode) {
     b.classList.toggle("active", b.dataset.equiptab === mode));
   if (mode === "installations") {
     showInstallationView("overview");
-    loadInstallationAdmin();
   }
   if (mode === "materiel") loadEquipment();
   if (mode === "epi") loadEpiItems();
@@ -607,29 +605,6 @@ async function openInstallationReportPicker() {
   } catch (error) {
     installationDialog("Signalement indisponible", "", `<p class="error">${planningText(error.message || String(error))}</p>`);
   }
-}
-
-async function loadInstallationAdmin() {
-  const card = document.getElementById("installationAdminCard");
-  card.hidden = true;
-  if (!session?.user_id || !navigator.onLine) return;
-  try {
-    const response = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_team_context`, { method: "POST", body: "{}" });
-    const context = await response.json();
-    card.hidden = !context?.is_admin;
-  } catch { /* L'absence de droits ou de réseau ne doit pas exposer ce panneau. */ }
-}
-
-async function assignInstallationManager() {
-  const status = document.getElementById("installationAssignStatus");
-  const email = document.getElementById("installationManagerEmail").value.trim();
-  if (!email) { status.textContent = "Indiquez l'adresse e-mail du compte responsable."; return; }
-  try {
-    await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_assign_installation_manager`,
-      { method: "POST", body: JSON.stringify({ p_email: email }) });
-    status.textContent = `Compte ${email} autorisé. Le responsable peut maintenant se connecter.`;
-    status.className = "success";
-  } catch (error) { status.textContent = error.message; status.className = "error"; }
 }
 
 async function installationDeliveryReady() {

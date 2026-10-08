@@ -135,7 +135,7 @@
   }
   async function openSettings() {
     const errors=[];
-    let teamContext=null,pendingInvites=[];
+    let teamContext=null,pendingInvites=[],managerContext=null;
     // Chaque appel nomme sa source. Sans cela, cinq appels differents produisaient le meme
     // "Failed to fetch" en bas du panneau, et rien ne disait lequel avait echoue.
     await Promise.all([
@@ -144,6 +144,12 @@
       loadInstitution().catch(()=>errors.push("Établissement non actualisé.")),
       loadTeamContext().then(v=>teamContext=v).catch(e=>errors.push("Équipe : "+e.message)),
       teamAdminAction({action:"pending_invites"}).then(r=>pendingInvites=r.invites||[]).catch(e=>errors.push("Invitations : "+e.message))]);
+    if(teamContext?.is_admin){
+      try{
+        const response=await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_installation_manager_admin_context`,{method:"POST",body:"{}"});
+        managerContext=await response.json();
+      }catch(e){errors.push("Responsable des installations : configuration Supabase à terminer.");}
+    }
     settingsPeriodRevision=cachedPeriodSettings()?.revision || 0;
     settingsProfileRevision=readSettingsJson(profileCacheKey())?.revision || 0;
     const prefs=loadPrefs(), esc=settingsEscape;
@@ -151,7 +157,10 @@
     const field=(id,label,value,type="text",readonly=false)=>`<div><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${esc(value)}" ${readonly?"readonly":""}></div>`;
     const grades=["SIXIEME","CINQUIEME","QUATRIEME","TROISIEME","SECONDE","SECONDE_SPORT_SANTE","PREMIERE","PREMIERE_EPPCS","TERMINALE","TERMINALE_EPPCS","OPTION_GOLF"].filter(g=>GRADE_LABELS[g]);
     const colleagues=(teamContext?.members || []).filter(member=>member.id!==session.user_id);
-    const administration=teamContext?.is_admin ? nestedSettingsSection("teacherAdminSection","Administration des professeurs",`<p class="muted">Vous êtes administrateur de l’établissement. Les collègues définissent eux-mêmes leur mot de passe.</p><form id="inviteTeacherForm"><div class="row">${field("inviteTeacherName","Nom du professeur","")}${field("inviteTeacherEmail","E-mail professionnel","","email")}</div><button type="submit">Créer le compte</button><button type="button" class="secondary" id="inviteAndSendBtn">Créer et inviter tout de suite</button><p class="muted">Créer le compte réserve sa place sans lui écrire. Préparez ses classes en les lui attribuant, puis envoyez l’invitation quand c’est prêt.</p></form>${pendingInvites.length?`<h3 style="font-size:14px; margin:12px 0 4px">Comptes créés, invitation pas encore envoyée</h3><div class="teacherAdminList">${pendingInvites.map(inv=>`<div class="teacherAdminRow" data-pending-email="${esc(inv.email)}"><div><strong>${esc(inv.name||inv.email)}</strong><br><span class="muted">${esc(inv.email)}</span></div><div><button type="button" class="sendPendingInviteBtn">Envoyer l’invitation</button><button type="button" class="danger cancelPendingInviteBtn">Annuler la réservation</button></div></div>`).join("")}</div>`:""}<div class="teacherAdminList">${colleagues.length?colleagues.map(member=>`<div class="teacherAdminRow" data-teacher-id="${esc(member.id)}"><div><strong>${esc(member.name || member.email)}</strong><br><span class="muted">${esc(member.email || "")}</span></div><div><button type="button" class="switchTeacherBtn">Basculer sur ce compte</button><button type="button" class="secondary resetTeacherPasswordBtn">Renvoyer l’invitation / mot de passe</button><button type="button" class="danger deleteTeacherBtn">Supprimer</button></div></div>`).join(""):'<p>Aucun autre professeur rattaché.</p>'}</div>`) : "";
+    const teacherAdministration=`<p class="muted">Vous êtes administrateur de l’établissement. Les collègues définissent eux-mêmes leur mot de passe.</p><form id="inviteTeacherForm"><div class="row">${field("inviteTeacherName","Nom du professeur","")}${field("inviteTeacherEmail","E-mail professionnel","","email")}</div><button type="submit">Créer le compte</button><button type="button" class="secondary" id="inviteAndSendBtn">Créer et inviter tout de suite</button><p class="muted">Créer le compte réserve sa place sans lui écrire. Préparez ses classes en les lui attribuant, puis envoyez l’invitation quand c’est prêt.</p></form>${pendingInvites.length?`<h3 style="font-size:14px; margin:12px 0 4px">Comptes créés, invitation pas encore envoyée</h3><div class="teacherAdminList">${pendingInvites.map(inv=>`<div class="teacherAdminRow" data-pending-email="${esc(inv.email)}"><div><strong>${esc(inv.name||inv.email)}</strong><br><span class="muted">${esc(inv.email)}</span></div><div><button type="button" class="sendPendingInviteBtn">Envoyer l’invitation</button><button type="button" class="danger cancelPendingInviteBtn">Annuler la réservation</button></div></div>`).join("")}</div>`:""}<div class="teacherAdminList">${colleagues.length?colleagues.map(member=>`<div class="teacherAdminRow" data-teacher-id="${esc(member.id)}"><div><strong>${esc(member.name || member.email)}</strong><br><span class="muted">${esc(member.email || "")}</span></div><div><button type="button" class="switchTeacherBtn">Basculer sur ce compte</button><button type="button" class="secondary resetTeacherPasswordBtn">Renvoyer l’invitation / mot de passe</button><button type="button" class="danger deleteTeacherBtn">Supprimer</button></div></div>`).join(""):'<p>Aucun autre professeur rattaché.</p>'}</div>`;
+    const currentManager=managerContext?.manager;
+    const managerAdministration=`<p class="muted">Ce compte ouvre uniquement le suivi des installations. Il ne voit ni les classes, ni les élèves, ni les autres données des professeurs.</p>${currentManager?`<div class="teacherAdminRow managerAccountRow"><div><strong>Responsable actuel</strong><br><span class="muted">${esc(currentManager.email||"")}</span></div><div><button type="button" class="secondary" id="resetManagerPasswordBtn">Renvoyer l’invitation / mot de passe</button><a class="buttonLink" href="responsable-installations.html" target="_blank" rel="noopener">Ouvrir son espace</a></div></div><p class="muted">Pour remplacer le responsable, invitez la nouvelle adresse ci-dessous. L’ancien accès sera automatiquement retiré.</p>`:"<p>Aucun responsable des installations n’est encore autorisé.</p>"}<form id="inviteManagerForm"><div class="row">${field("inviteManagerEmail","E-mail du responsable","","email")}</div><button type="submit">Créer et inviter le responsable</button><p class="muted">Le responsable recevra un lien sécurisé pour choisir son mot de passe. L’inscription publique peut rester désactivée dans Supabase.</p></form>`;
+    const administration=teamContext?.is_admin ? nestedSettingsSection("teacherAdminSection","Administration des comptes",`<div class="accountAdminTabs" role="tablist" aria-label="Type de compte"><button type="button" class="active" id="teacherAccountsTab" role="tab" aria-selected="true">Créer / inviter un professeur</button><button type="button" class="secondary" id="managerAccountTab" role="tab" aria-selected="false">Créer / inviter le responsable</button></div><div id="teacherAccountsPanel" role="tabpanel">${teacherAdministration}</div><div id="managerAccountPanel" role="tabpanel" hidden>${managerAdministration}</div>`) : "";
     document.getElementById("settingsBody").innerHTML=
       settingsSection("offlineSection","Utiliser sans connexion",`<p>La préparation se fait automatiquement avec Internet, puis reprend si la connexion a été interrompue. Le voyant vert signifie que cet appareil est prêt.</p><button id="prepareOfflineBtn" class="secondary">Vérifier / relancer</button><p id="offlinePreparationStatus" class="error" role="status" aria-live="polite" hidden></p><p class="muted">Classes, élèves, planning, évaluations et données AS synchronisées sont conservés sur cet appareil, même après une déconnexion du compte. Pour continuer à travailler sans Internet, ferme simplement l’application sans te déconnecter : après une vraie déconnexion, Internet sera nécessaire pour vérifier ton mot de passe et rouvrir la copie. Les e-mails, l’administration et les ressources externes nécessitent Internet.</p>`)+
       settingsSection("profileSection","Profil enseignant",`<div class="row">${field("prefName","Nom de l’enseignant",prefs.teacherName)}${field("prefSchool","Établissement",currentInstitution?.name || prefs.schoolName, "text",!!currentInstitution)}</div><div class="row">${field("prefEmail","E-mail professionnel",prefs.proEmail,"email")}${field("prefYear","Année scolaire",prefs.schoolYear || "2026-2027")}</div><button id="saveProfileBtn">Enregistrer le profil</button>`)+
@@ -194,6 +203,32 @@
     startAutomaticOfflinePreparation();
     bind("prepareOfflineBtn",()=>startAutomaticOfflinePreparation({force:true,refresh:true}));
     bind("toggleHomeWeatherBtn",()=>{setWeatherEnabled(!weatherEnabled());openSettings();});
+    const selectAccountAdminTab=type=>{
+      const manager=type==="manager";
+      document.getElementById("teacherAccountsPanel")?.toggleAttribute("hidden",manager);
+      document.getElementById("managerAccountPanel")?.toggleAttribute("hidden",!manager);
+      const teacherTab=document.getElementById("teacherAccountsTab"),managerTab=document.getElementById("managerAccountTab");
+      teacherTab?.classList.toggle("active",!manager);teacherTab?.classList.toggle("secondary",manager);teacherTab?.setAttribute("aria-selected",String(!manager));
+      managerTab?.classList.toggle("active",manager);managerTab?.classList.toggle("secondary",!manager);managerTab?.setAttribute("aria-selected",String(manager));
+    };
+    bind("teacherAccountsTab",()=>selectAccountAdminTab("teacher"));
+    bind("managerAccountTab",()=>selectAccountAdminTab("manager"));
+    const managerForm=document.getElementById("inviteManagerForm");
+    if(managerForm) managerForm.onsubmit=async event=>{
+      event.preventDefault();
+      const button=managerForm.querySelector("button[type=submit]");button.disabled=true;
+      try{
+        const result=await teamAdminAction({action:"invite_manager",email:document.getElementById("inviteManagerEmail").value});
+        await openSettings();
+        document.getElementById("teacherAdminSection").open=true;
+        selectAccountAdminTab("manager");
+        document.getElementById("settingsOk").textContent=result.message;
+      }catch(e){document.getElementById("settingsOk").textContent=e.message;button.disabled=false;}
+    };
+    bind("resetManagerPasswordBtn",async()=>{
+      const result=await teamAdminAction({action:"reset_manager_password"});
+      document.getElementById("settingsOk").textContent=result.message;
+    });
     const inviteForm=document.getElementById("inviteTeacherForm");
     const envoyerInvitation=async action=>{
       const boutons=inviteForm.querySelectorAll("button");

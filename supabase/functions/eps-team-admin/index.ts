@@ -7,6 +7,7 @@ const anon=Deno.env.get("SUPABASE_ANON_KEY")!;
 const redirect=Deno.env.get("EPS_PASSWORD_REDIRECT_URL");
 const origin=Deno.env.get("EPS_WEB_ORIGIN");
 if(!redirect || !origin || !redirect.startsWith(origin+"/"))throw Error("Configure a fixed, allowed EPS password redirect");
+const managerRedirect=`${origin}/responsable-installations.html`;
 const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
 const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});
 const checked=async(promise:Promise<any>)=>{const {data,error}=await promise;if(error)throw error;return data;};
@@ -15,6 +16,10 @@ Deno.serve(teamAdminHandler({
  verifyUser:async(jwt:string)=>(await checked(auth.auth.getUser(jwt)))?.user,
  rpc:async(name:string,args:object)=>checked(admin.rpc(name,args)),
  invite:async(email:string)=>checked(admin.auth.admin.inviteUserByEmail(email,{redirectTo:redirect})),
+ inviteManager:async(email:string)=>checked(admin.auth.admin.inviteUserByEmail(email,{redirectTo:managerRedirect})),
  recover:async(email:string)=>checked(auth.auth.resetPasswordForEmail(email,{redirectTo:redirect})),
+ recoverManager:async(email:string)=>checked(auth.auth.resetPasswordForEmail(email,{redirectTo:managerRedirect})),
+ createUser:async(email:string)=>checked(admin.auth.admin.createUser({email,email_confirm:true})),
+ magicLink:async(email:string)=>checked(admin.auth.admin.generateLink({type:'magiclink',email})),
  deleteUser:async(id:string)=>checked(admin.auth.admin.deleteUser(id,false)),
 }));

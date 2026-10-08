@@ -8,7 +8,7 @@ create table if not exists public.eps_installation_managers (
   assigned_by uuid not null references auth.users(id),
   assigned_at timestamptz not null default now()
 );
-create index if not exists eps_installation_managers_institution_idx
+create unique index if not exists eps_installation_managers_institution_idx
   on public.eps_installation_managers(institution_id);
 alter table public.eps_installation_managers enable row level security;
 revoke all on public.eps_installation_managers from anon, authenticated;
@@ -35,6 +35,105 @@ returns jsonb language sql stable security definer set search_path = public as $
 $$;
 revoke all on function public.eps_installation_manager_context() from public;
 grant execute on function public.eps_installation_manager_context() to authenticated;
+
+-- Données minimales montrées au professeur administrateur dans Réglages.
+create or replace function public.eps_installation_manager_admin_context()
+returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare
+  school uuid;
+  manager jsonb;
+begin
+  school := public.eps_institution();
+  if school is null or not public.eps_is_admin(school) then
+    raise exception 'Droits administrateur nécessaires' using errcode = '42501';
+  end if;
+  select jsonb_build_object(
+    'user_id', m.user_id,
+    'email', u.email,
+    'assigned_at', m.assigned_at
+  ) into manager
+  from public.eps_installation_managers m
+  join auth.users u on u.id = m.user_id
+  where m.institution_id = school;
+  return jsonb_build_object('manager', manager);
+end;
+$$;
+revoke all on function public.eps_installation_manager_admin_context() from public;
+grant execute on function public.eps_installation_manager_admin_context() to authenticated;
+
+create or replace function public.eps_installation_manager_admin_context_for_service(p_actor uuid)
+returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare
+  school uuid;
+  manager_email text;
+begin
+  if auth.role() <> 'service_role' then raise exception 'Server only'; end if;
+  select i.id into school from public.institutions i
+    join public.profiles p on p.institution_id = i.id
+    where p.id = p_actor and i.created_by = p_actor and public.eps_account_active(p_actor);
+  if school is null then raise exception 'Administrator required'; end if;
+  select u.email into manager_email from public.eps_installation_managers m
+    join auth.users u on u.id = m.user_id where m.institution_id = school;
+  return jsonb_build_object('email', manager_email);
+end;
+$$;
+revoke all on function public.eps_installation_manager_admin_context_for_service(uuid) from public, anon, authenticated;
+grant execute on function public.eps_installation_manager_admin_context_for_service(uuid) to service_role;
+
+create or replace function public.eps_validate_installation_manager_invite(p_actor uuid, p_email text)
+returns boolean language plpgsql stable security definer set search_path = public as $$
+declare
+  school uuid;
+  target_user uuid;
+begin
+  if auth.role() <> 'service_role' then raise exception 'Server only'; end if;
+  select i.id into school from public.institutions i
+    join public.profiles p on p.institution_id = i.id
+    where p.id = p_actor and i.created_by = p_actor and public.eps_account_active(p_actor);
+  if school is null then raise exception 'Administrator required'; end if;
+  select u.id into target_user from auth.users u where lower(u.email) = lower(trim(p_email));
+  if target_user = p_actor or (target_user is not null and exists(
+    select 1 from public.profiles p where p.id = target_user and p.institution_id is not null
+  )) then raise exception 'Use a separate non-teacher account'; end if;
+  return true;
+end;
+$$;
+revoke all on function public.eps_validate_installation_manager_invite(uuid,text) from public, anon, authenticated;
+grant execute on function public.eps_validate_installation_manager_invite(uuid,text) to service_role;
+
+-- Appelée uniquement par la fonction serveur d'administration après envoi de l'invitation.
+-- Ainsi la clé d'administration Supabase n'arrive jamais dans le navigateur.
+create or replace function public.eps_assign_installation_manager_by_admin(
+  p_actor uuid, p_email text
+) returns jsonb language plpgsql security definer set search_path = public as $$
+declare
+  school uuid;
+  target_user uuid;
+  normalized_email text := lower(trim(p_email));
+begin
+  if auth.role() <> 'service_role' then raise exception 'Server only'; end if;
+  select i.id into school
+  from public.institutions i
+  join public.profiles p on p.institution_id = i.id
+  where p.id = p_actor and i.created_by = p_actor and public.eps_account_active(p_actor);
+  if school is null then raise exception 'Administrator required'; end if;
+  select u.id into target_user from auth.users u where lower(u.email) = normalized_email;
+  if target_user is null then raise exception 'Invited account not found'; end if;
+  if target_user = p_actor or exists(
+    select 1 from public.profiles p where p.id = target_user and p.institution_id is not null
+  ) then
+    raise exception 'Use a separate non-teacher account';
+  end if;
+  delete from public.eps_installation_managers where institution_id = school;
+  insert into public.eps_installation_managers(user_id, institution_id, assigned_by)
+    values(target_user, school, p_actor)
+    on conflict(user_id) do update set institution_id = excluded.institution_id,
+      assigned_by = excluded.assigned_by, assigned_at = now();
+  return jsonb_build_object('email', normalized_email, 'user_id', target_user);
+end;
+$$;
+revoke all on function public.eps_assign_installation_manager_by_admin(uuid,text) from public, anon, authenticated;
+grant execute on function public.eps_assign_installation_manager_by_admin(uuid,text) to service_role;
 
 create or replace function public.eps_installation_delivery_ready()
 returns boolean language sql stable security definer set search_path = public as $$
@@ -76,6 +175,7 @@ begin
     where p.id = target_user and p.institution_id is not null) then
     raise exception 'Utilisez un compte responsable distinct des comptes professeur';
   end if;
+  delete from public.eps_installation_managers where institution_id = school;
   insert into public.eps_installation_managers(user_id, institution_id, assigned_by)
     values(target_user, school, auth.uid())
     on conflict(user_id) do update set institution_id = excluded.institution_id,

@@ -1,4 +1,4 @@
-# Administration des professeurs EPS
+# Administration des comptes EPS
 
 L’application Android et le site utilisent la même administration sécurisée. L’administrateur est exclusivement le compte qui a créé l’établissement dans `institutions.created_by` ; connaître le code établissement ne donne jamais ce droit.
 
@@ -8,12 +8,17 @@ L’application Android et le site utilisent la même administration sécurisée
 2. Exécuter `schema_team_administration_1.sql`, puis `schema_team_administration_2.sql` dans l’éditeur SQL Supabase.
 3. Déployer le dossier `supabase/functions/eps-team-admin` comme Edge Function nommée `eps-team-admin`, avec la vérification JWT activée.
 4. Définir `EPS_WEB_ORIGIN` avec l’origine exacte du site, sans barre finale, et `EPS_PASSWORD_REDIRECT_URL` avec une page du même site.
+5. Dans Auth → URL Configuration, autoriser aussi l’URL de redirection `https://luidgi8al-del.github.io/alex-eps-import/responsable-installations.html`.
+
+L’option Supabase **Allow new users to sign up** reste désactivée. Les comptes sont créés exclusivement depuis Réglage → Administration des comptes par l’administrateur de l’établissement.
 
 `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY` sont fournis automatiquement aux Edge Functions Supabase. La clé de service ne doit jamais être copiée dans GitHub, le site ou l’application Android.
 
 ## Comportement
 
 - Invitation : le professeur reçoit un lien et choisit son propre mot de passe.
+- Responsable : l’administrateur ouvre l’onglet « Créer / inviter le responsable », saisit son adresse, puis le responsable reçoit un lien vers son espace limité aux installations.
+- Un seul responsable est actif par établissement. Inviter une nouvelle adresse retire automatiquement l’ancien accès responsable.
 - Renvoi : l’administrateur envoie un nouveau lien sans voir ni connaître le mot de passe.
 - Suppression : le compte est bloqué avant le nettoyage ; même un jeton encore valide ne peut plus écrire.
 - Les données pédagogiques et les créneaux personnels sont supprimés avec le compte.

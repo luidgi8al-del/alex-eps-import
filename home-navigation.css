@@ -83,7 +83,13 @@ body:has(#tab-home[style*="block"]) { background:#f4f8fc; }
 .teacherAdminList { display:grid; gap:10px; margin-top:14px; }
 .teacherAdminRow { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px; border:1px solid #dce7f1; border-radius:14px; background:#f7fbff; }
 .teacherAdminRow > div:last-child { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+.accountAdminTabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:4px 0 18px; }
+.accountAdminTabs button { margin:0; }
+.accountAdminTabs button.active { background:#087bc1; color:#fff; border-color:#087bc1; }
+.managerAccountRow { margin:12px 0; background:#edf7ff; }
+.buttonLink { display:inline-flex; align-items:center; justify-content:center; padding:11px 15px; border:1px solid #c9deed; border-radius:12px; color:#0874b6; background:#fff; font-weight:700; text-decoration:none; }
 @media (max-width:700px) { .teacherAdminRow { align-items:stretch; flex-direction:column; } .teacherAdminRow > div:last-child { justify-content:stretch; } .teacherAdminRow button { width:100%; } }
+@media (max-width:700px) { .accountAdminTabs { grid-template-columns:1fr; } }
 .settingsPeriodRow { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid #e5edf5; }
 .settingsPeriodRow > div { display:flex; gap:6px; flex-shrink:0; }
 .periodChoice { margin:0; background:#f0f6ff; color:#163a5f; border:1px solid #b9d0e6; min-width:42px; }

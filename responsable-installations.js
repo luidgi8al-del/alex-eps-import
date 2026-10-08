@@ -14,7 +14,7 @@
   let openedId = null;
   let openedFacility = null;
   let detailOrigin = 'reports';
-  let signup = false;
+  let passwordLinkSession = null;
   let refreshing = null;
 
   try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; }
@@ -155,21 +155,78 @@
     saveSession(null); openedId = null; openedFacility = null; show('authPage');
     if (new URLSearchParams(location.search).has('android')) window.AndroidInstallation?.logout();
   }
+
+  async function preparePasswordLink() {
+    const params = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const type = params.get('type');
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    if (!accessToken || !refreshToken || !['invite','recovery'].includes(type)) return false;
+    try {
+      const response = await fetch(`${BASE}/auth/v1/user`, {headers:{apikey:KEY,Authorization:`Bearer ${accessToken}`}});
+      const user = await response.json();
+      if (!response.ok || !user?.email) throw new Error('Ce lien a expiré. Demandez un nouveau lien au professeur administrateur.');
+      passwordLinkSession = {access_token:accessToken,refresh_token:refreshToken,email:user.email};
+      show('authPage');
+      $('authTitle').textContent = type === 'invite' ? 'Créer votre mot de passe' : 'Choisir un nouveau mot de passe';
+      $('loginEmail').value = user.email;
+      $('loginEmail').readOnly = true;
+      $('loginPassword').value = '';
+      $('loginPassword').autocomplete = 'new-password';
+      $('loginSubmit').textContent = 'Enregistrer mon mot de passe';
+      $('recoverPassword').hidden = true;
+      authMessage('Choisissez un mot de passe d’au moins 6 caractères.');
+      return true;
+    } catch (error) {
+      show('authPage');
+      authMessage(error.message);
+      history.replaceState(null,'',location.pathname + location.search);
+      return true;
+    }
+  }
+
   $('loginForm').onsubmit = async event => {
-    event.preventDefault(); authMessage('Connexion en cours…');
+    event.preventDefault();
     const email = $('loginEmail').value.trim(), password = $('loginPassword').value;
     try {
-      const response = await fetch(`${BASE}${signup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password'}`, {
+      if (passwordLinkSession) {
+        if (password.length < 6) throw new Error('Le mot de passe doit contenir au moins 6 caractères.');
+        authMessage('Enregistrement du mot de passe…');
+        const response = await fetch(`${BASE}/auth/v1/user`, {
+          method:'PUT',headers:{apikey:KEY,Authorization:`Bearer ${passwordLinkSession.access_token}`,'Content-Type':'application/json'},body:JSON.stringify({password})
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error_description || data.msg || data.message || 'Le mot de passe n’a pas pu être enregistré.');
+        saveSession(passwordLinkSession);
+        passwordLinkSession = null;
+        history.replaceState(null,'',location.pathname + location.search);
+        authMessage('');
+        await authenticate();
+        return;
+      }
+      authMessage('Connexion en cours…');
+      const response = await fetch(`${BASE}/auth/v1/token?grant_type=password`, {
         method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error_description || data.msg || data.message || 'Connexion impossible.');
-      if (!data.access_token) { authMessage('Compte créé. Confirmez votre adresse e-mail, puis demandez au professeur administrateur de vous autoriser.'); return; }
       saveSession({access_token:data.access_token,refresh_token:data.refresh_token,email});
       authMessage(''); await authenticate();
     } catch (error) { authMessage(error.message); }
   };
-  $('signupToggle').onclick = () => { signup = !signup; $('loginForm').querySelector('button[type=submit]').textContent = signup ? 'Créer mon compte' : 'Se connecter'; $('signupToggle').textContent = signup ? 'J’ai déjà un compte' : 'Créer mon compte responsable'; };
+  $('recoverPassword').onclick = async () => {
+    const email = $('loginEmail').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { authMessage('Saisissez d’abord votre adresse e-mail.'); return; }
+    authMessage('Envoi en cours…');
+    try {
+      const redirect = `${location.origin}${location.pathname}`;
+      const response = await fetch(`${BASE}/auth/v1/recover?redirect_to=${encodeURIComponent(redirect)}`, {
+        method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email})
+      });
+      if (!response.ok) throw new Error('Le lien n’a pas pu être envoyé. Réessayez plus tard.');
+      authMessage('Si cette adresse est autorisée, un lien sécurisé vient d’être envoyé.');
+    } catch (error) { authMessage(error.message); }
+  };
   $('logoutBtn').onclick = logout;
   $('pendingLogout').onclick = logout;
   $('pendingRetry').onclick = authenticate;
@@ -182,7 +239,9 @@
   if (new URLSearchParams(location.search).has('android')) {
     authMessage('Connexion au compte de l’application…');
     window.installationAndroidSession = value => { saveSession(value); authenticate(); };
-  } else authenticate();
+  } else {
+    preparePasswordLink().then(found => { if (!found) authenticate(); });
+  }
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     navigator.serviceWorker.register('./service-worker.js').catch(() => {});
   }
