@@ -339,6 +339,11 @@
                 </div>
               </div>
               <div id="installationIncidentsOverview" class="installation-overview-list" aria-live="polite"></div>
+              <section id="installationAdminCard" class="installation-manager-card" hidden>
+                <div><h3>Compte responsable</h3><p>Le responsable crée son compte sur la page dédiée ; autorisez ensuite son adresse e-mail ici. Ce compte n'aura pas accès aux rubriques professeur.</p><a href="responsable-installations.html" target="_blank" rel="noopener">Ouvrir la page responsable</a></div>
+                <div class="installation-manager-fields"><label for="installationManagerEmail">Adresse e-mail du responsable<input type="email" id="installationManagerEmail" placeholder="responsable@etablissement.fr"></label><button type="button" id="installationAssignManagerBtn">Autoriser ce compte</button></div>
+                <div id="installationAssignStatus" class="muted" role="status"></div>
+              </section>
             </div>
             <div id="installationFollowView" hidden>
               <div class="installation-page-heading"><div><h2>Suivi des installations</h2><p class="muted">Choisissez une installation pour retrouver ses interventions.</p></div><button type="button" class="secondary" id="installationBackOverviewBtn">← Retour aux signalements</button></div>
@@ -352,22 +357,6 @@
               <div class="error" id="installationError"></div>
               <div id="installationsList" style="margin-top:16px"></div>
             </div>
-            <section class="installation-manager-card" id="installationManagerCard" hidden>
-              <div>
-                <h3>Envoi WhatsApp actuel</h3>
-                <p>À renseigner uniquement tant que l'espace responsable et ses notifications ne sont pas actifs.</p>
-              </div>
-              <div class="installation-manager-fields">
-                <label for="installationManagerName">Nom ou service
-                  <input type="text" id="installationManagerName" placeholder="Ex : Service des sports">
-                </label>
-                <label for="installationManagerPhone">Numéro WhatsApp
-                  <input type="tel" id="installationManagerPhone" placeholder="Ex : 06 12 34 56 78">
-                </label>
-                <button type="button" id="saveInstallationManagerBtn">Enregistrer le responsable</button>
-              </div>
-              <div id="installationManagerStatus" class="muted" aria-live="polite"></div>
-            </section>
             <!-- Reste vide tant qu'il n'y a rien a trancher : voir .conflitAucun. -->
             <div id="conflictPanel" style="margin-top:16px"></div>
           </div>
@@ -598,7 +587,7 @@
   <script src="offline-preparation.js?v=20260927-2"></script>
   <script src="offline-read.js"></script>
   <script src="accueil.js?v=20261001-2"></script>
-  <script src="compte.js?v=20260927-3"></script>
+  <script src="compte.js?v=20261008-installation-manager-1"></script>
   <script src="classes.js"></script>
   <script src="planning.js?v=20261001-3"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
@@ -606,7 +595,7 @@
   <script src="classe-tableau-bord.js?v=20261007-aptitudes-class-1"></script>
   <script src="classe-ecrans.js?v=20261007-health-adaptation-1"></script>
   <script src="qrcode.min.js"></script>
-  <script src="equipement.js?v=20261008-installations-overview-2"></script>
+  <script src="equipement.js?v=20261008-installation-manager-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20261006-26"></script>

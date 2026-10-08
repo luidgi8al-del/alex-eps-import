@@ -11,7 +11,7 @@
  * matin doit voir la correction le matin.
  */
 importScripts("./offline-assets.js");
-const PWA_VERSION = "eps-lvh-pwa-2026-10-08-installations-overview-64";
+const PWA_VERSION = "eps-lvh-pwa-2026-10-08-installation-manager-66";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 
@@ -22,6 +22,7 @@ const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 const STATIC_ASSETS = [
   "./offline.html",
   "./manifest.webmanifest",
+  "./manifest-responsable.webmanifest",
   "./icons/eps-lvh-192.svg",
   "./icons/eps-lvh-512.svg",
   "./icons/eps-lvh-maskable.svg"
@@ -78,10 +79,13 @@ self.addEventListener("fetch", event => {
 
   // La page elle-meme : reseau d'abord, cache en secours hors connexion.
   if (request.mode === "navigate") {
+    // Le portail responsable ne doit jamais remplacer la page professeur en cache.
+    const page = url.pathname.endsWith("/responsable-installations.html")
+      ? "./responsable-installations.html" : "./index.html";
     event.respondWith(
       fetch(request)
-        .then(response => cacheResponse(RUNTIME_CACHE, new Request("./index.html"), response))
-        .catch(async () => (await caches.match("./index.html")) || caches.match("./offline.html"))
+        .then(response => cacheResponse(RUNTIME_CACHE, new Request(page), response))
+        .catch(async () => (await caches.match(page)) || caches.match("./offline.html"))
     );
     return;
   }

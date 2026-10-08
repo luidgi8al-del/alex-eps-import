@@ -7,23 +7,22 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const html = read("index.html");
 const js = read("equipement.js");
 const css = read("styles/site.css");
-const sql = read("supabase/migrations/20260928090000_installation_incidents_whatsapp.sql");
+const sql = read("supabase/migrations/20261008010000_installation_shared_manager.sql");
+const manager = read("responsable-installations.js");
 
-assert.match(html, /id="installationManagerName"/);
-assert.match(html, /id="installationManagerPhone"/);
-assert.equal((html.match(/id="installationManagerPhone"/g) || []).length, 1,
-  "le responsable doit etre configure une seule fois");
-assert.doesNotMatch(html, /installationContactName|installationWhatsappPhone/);
+assert.match(html, /id="installationManagerEmail"/);
+assert.doesNotMatch(html, /id="installationManagerPhone"/);
 
 assert.match(js, /function openInstallationReport/);
-assert.match(js, /https:\/\/wa\.me\//);
+assert.match(js, /installationDeliveryReady/);
 assert.match(js, /function openInstallationHistory/);
-assert.match(js, /A_ENVOYER.*SIGNALE.*EN_COURS.*RESOLU/s);
-assert.match(js, /installationManager\.whatsapp_phone/);
+assert.match(js, /status: "SIGNALE"/);
+assert.doesNotMatch(js, /https:\/\/wa\.me\//);
 
-assert.match(sql, /create table if not exists public\.sport_installation_contacts/);
-assert.match(sql, /create table if not exists public\.sport_installation_incidents/);
-assert.match(sql, /user_id = auth\.uid\(\)/);
+assert.match(sql, /create table if not exists public\.eps_installation_managers/);
+assert.match(sql, /eps_installation_incident_read/);
+assert.match(sql, /eps_update_installation_report/);
+assert.match(manager, /eps_installation_manager_context/);
 assert.match(css, /\.installation-dialog-overlay/);
 
-console.log("Signalement WhatsApp des installations : OK");
+console.log("Signalements partagés et espace responsable : structure OK");

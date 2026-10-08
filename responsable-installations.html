@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087bc1">
+  <title>Installations · Responsable EPS</title>
+  <link rel="manifest" href="manifest-responsable.webmanifest">
+  <link rel="stylesheet" href="styles/responsable-installations.css?v=20261008-1">
+  <script src="responsable-installations.js?v=20261008-1" defer></script>
+</head>
+<body>
+  <div id="authPage" class="auth-page">
+    <div class="auth-card">
+      <div class="brand">EPS LVH · Installations</div>
+      <h1>Espace responsable</h1>
+      <p>Suivez les signalements des professeurs et indiquez les interventions effectuées.</p>
+      <form id="loginForm">
+        <label>Adresse e-mail<input id="loginEmail" type="email" autocomplete="username" required></label>
+        <label>Mot de passe<input id="loginPassword" type="password" autocomplete="current-password" required></label>
+        <button type="submit">Se connecter</button>
+      </form>
+      <button type="button" class="text-button" id="signupToggle">Créer mon compte responsable</button>
+      <p id="authMessage" class="message" role="status"></p>
+    </div>
+  </div>
+
+  <div id="pendingPage" class="auth-page" hidden>
+    <div class="auth-card">
+      <div class="brand">EPS LVH · Installations</div>
+      <h1>Compte en attente d’autorisation</h1>
+      <p>Le professeur administrateur doit autoriser votre adresse e-mail dans Équipement → Installations. Tant que ce n’est pas fait, aucun signalement n’est accessible.</p>
+      <button type="button" id="pendingRetry">Vérifier à nouveau</button>
+      <button type="button" class="secondary" id="pendingLogout">Se déconnecter</button>
+    </div>
+  </div>
+
+  <div id="managerPage" hidden>
+    <header class="app-header">
+      <div><small>EPS LVH · ESPACE RESPONSABLE</small><h1>Installations</h1></div>
+      <button type="button" class="header-button" id="logoutBtn">Déconnexion</button>
+    </header>
+    <main class="app-main">
+      <div id="statusMessage" class="message" role="status"></div>
+      <div class="stats" aria-label="État des interventions">
+        <div><strong id="pendingCount">0</strong><span>À traiter</span></div>
+        <div><strong id="progressCount">0</strong><span>Pris en charge</span></div>
+        <div><strong id="resolvedCount">0</strong><span>Résolus</span></div>
+      </div>
+      <nav class="tabs" aria-label="Vue des installations">
+        <button type="button" id="reportsTab" class="active" aria-current="page">Signalements</button>
+        <button type="button" id="facilitiesTab">Installations · Suivi</button>
+      </nav>
+      <section id="reportsView">
+        <div class="section-heading"><h2>Signalements</h2><div class="filters"><button type="button" data-filter="all" class="active">Tous</button><button type="button" data-filter="urgent">Urgents</button></div></div>
+        <div id="reportsList" class="report-grid" aria-live="polite"></div>
+      </section>
+      <section id="facilitiesView" hidden>
+        <div class="section-heading"><h2>Suivi par installation</h2></div>
+        <div id="facilityList" class="facility-list"></div>
+      </section>
+      <section id="detailView" hidden>
+        <button type="button" id="detailBack" class="secondary">← Retour</button>
+        <div id="detailContent"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

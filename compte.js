@@ -181,8 +181,25 @@ function showAuthView() {
   document.getElementById("settingsBtn").style.display = "none";
   document.getElementById("tabbar").style.display = "none";
 }
-function showMainView() {
+async function showMainView() {
+  if (!session) { showAuthView(); return; }
   const activeUserId = session.user_id;
+  const roleKey = `eps:installation-manager-role:${activeUserId}`;
+  let manager = localStorage.getItem(roleKey) === "true";
+  if (!manager && navigator.onLine) {
+    try {
+      const response = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_installation_manager_context`,
+        { method: "POST", body: "{}" });
+      manager = (await response.json())?.is_manager === true;
+      localStorage.setItem(roleKey, String(manager));
+    } catch { /* Une base non encore migrée ne bloque pas les comptes professeur. */ }
+  }
+  if (session?.user_id !== activeUserId) return;
+  if (manager) {
+    localStorage.setItem("eps_installation_manager_session", JSON.stringify(session));
+    location.replace("responsable-installations.html");
+    return;
+  }
   document.getElementById("authView").style.display = "none";
   document.getElementById("mainView").style.display = "block";
   document.getElementById("logoutBtn").style.display = "inline-block";

@@ -8,7 +8,6 @@
 
 // ---- Onglet Equipement > Installations sportives ----
 var installationsTabReady = false;
-var installationManager = { id: "", contact_name: "", whatsapp_phone: "" };
 var installationsCache = [];
 var installationOverviewIncidents = [];
 var installationOverviewFilter = "all";
@@ -30,7 +29,7 @@ function initInstallationsTab() {
       installationOverviewFilter = button.dataset.installationFilter;
       renderInstallationIncidentsOverview();
     }));
-    document.getElementById("saveInstallationManagerBtn").addEventListener("click", saveInstallationManager);
+    document.getElementById("installationAssignManagerBtn").addEventListener("click", assignInstallationManager);
     document.getElementById("equipSubtabs").addEventListener("click", e => {
       const btn = e.target.closest(".subtabbtn");
       if (btn) showEquipTab(btn.dataset.equiptab);
@@ -51,9 +50,8 @@ function showEquipTab(mode) {
   document.querySelectorAll("#equipSubtabs .subtabbtn").forEach(b =>
     b.classList.toggle("active", b.dataset.equiptab === mode));
   if (mode === "installations") {
-    document.getElementById("installationManagerCard").hidden = true;
     showInstallationView("overview");
-    loadInstallationManager();
+    loadInstallationAdmin();
   }
   if (mode === "materiel") loadEquipment();
   if (mode === "epi") loadEpiItems();
@@ -543,13 +541,23 @@ async function loadInstallationIncidentsOverview() {
   const host = document.getElementById("installationIncidentsOverview");
   host.innerHTML = '<div class="muted installation-overview-empty">Chargement des signalements…</div>';
   try {
-    installationOverviewIncidents = await lireTable("sport_installation_incidents",
+    installationOverviewIncidents = await readSharedInstallationIncidents(
       "sport_installation_incidents?deleted=eq.false&select=*&order=reported_at.desc",
       { ou: row => !row.deleted, trier: (a, b) => String(b.reported_at || "").localeCompare(String(a.reported_at || "")) });
     renderInstallationIncidentsOverview();
   } catch (error) {
     host.innerHTML = `<div class="error">Impossible de charger les signalements : ${planningText(error.message || String(error))}</div>`;
   }
+}
+
+async function readSharedInstallationIncidents(path, options) {
+  // Une ancienne copie hors connexion peut ne contenir que les signalements de ce professeur.
+  // En ligne, la lecture serveur fait foi dès que les droits communs sont installés.
+  if (navigator.onLine) {
+    const response = await apiFetch(`${SUPABASE_URL}/rest/v1/${path}`);
+    return response.json();
+  }
+  return lireTable("sport_installation_incidents", path, options);
 }
 
 async function loadInstallationsList() {
@@ -584,7 +592,7 @@ async function loadInstallationsList() {
 
 async function openInstallationReportPicker() {
   try {
-    await Promise.all([loadInstallationsList(), loadInstallationManager()]);
+    await loadInstallationsList();
     const options = installationsCache.map(installation =>
       `<option value="${planningText(installation.id)}">${planningText(installation.name)}</option>`).join("");
     const overlay = installationDialog("Signaler un problème", "", installationsCache.length
@@ -601,59 +609,37 @@ async function openInstallationReportPicker() {
   }
 }
 
-function normaliserNumeroWhatsapp(value) {
-  let numero = String(value || "").trim().replace(/[^\d+]/g, "");
-  if (numero.startsWith("00")) numero = numero.slice(2);
-  else if (numero.startsWith("+")) numero = numero.slice(1);
-  else if (numero.startsWith("0")) numero = "33" + numero.slice(1);
-  return numero.replace(/\D/g, "");
+async function loadInstallationAdmin() {
+  const card = document.getElementById("installationAdminCard");
+  card.hidden = true;
+  if (!session?.user_id || !navigator.onLine) return;
+  try {
+    const response = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_team_context`, { method: "POST", body: "{}" });
+    const context = await response.json();
+    card.hidden = !context?.is_admin;
+  } catch { /* L'absence de droits ou de réseau ne doit pas exposer ce panneau. */ }
 }
 
-async function loadInstallationManager() {
-  const statut = document.getElementById("installationManagerStatus");
-  if (!statut || !session?.user_id) return;
+async function assignInstallationManager() {
+  const status = document.getElementById("installationAssignStatus");
+  const email = document.getElementById("installationManagerEmail").value.trim();
+  if (!email) { status.textContent = "Indiquez l'adresse e-mail du compte responsable."; return; }
   try {
-    const rows = await lireTable("sport_installation_contacts",
-      `sport_installation_contacts?user_id=eq.${encodeURIComponent(session.user_id)}&deleted=eq.false&select=*&limit=1`,
-      { ou: row => row.user_id === session.user_id && !row.deleted });
-    installationManager = rows[0] || { id: session.user_id, contact_name: "", whatsapp_phone: "" };
-    document.getElementById("installationManagerName").value = installationManager.contact_name || "";
-    document.getElementById("installationManagerPhone").value = installationManager.whatsapp_phone || "";
-    statut.textContent = installationManager.whatsapp_phone
-      ? "Ce contact sera utilisé pour toutes les installations."
-      : "Renseignez ce contact une seule fois avant le premier signalement.";
-    statut.className = "muted";
-  } catch (e) {
-    statut.textContent = "Le responsable n'a pas pu être chargé. " + e.message;
-    statut.className = "error";
-  }
+    await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_assign_installation_manager`,
+      { method: "POST", body: JSON.stringify({ p_email: email }) });
+    status.textContent = `Compte ${email} autorisé. Le responsable peut maintenant se connecter.`;
+    status.className = "success";
+  } catch (error) { status.textContent = error.message; status.className = "error"; }
 }
 
-async function saveInstallationManager() {
-  const statut = document.getElementById("installationManagerStatus");
-  const contactName = document.getElementById("installationManagerName").value.trim();
-  const phoneInput = document.getElementById("installationManagerPhone").value.trim();
-  const phone = normaliserNumeroWhatsapp(phoneInput);
-  statut.className = "error";
-  if (!contactName) { statut.textContent = "Indiquez le nom de la personne ou du service."; return; }
-  if (phone.length < 8 || phone.length > 15) { statut.textContent = "Vérifiez le numéro WhatsApp."; return; }
-  const ligne = {
-    id: installationManager.id || session.user_id,
-    user_id: session.user_id,
-    contact_name: contactName,
-    whatsapp_phone: phone,
-    updated_at: new Date().toISOString(),
-    deleted: false
-  };
-  try {
-    await enregistrerLigne("sport_installation_contacts", ligne);
-    installationManager = ligne;
-    document.getElementById("installationManagerPhone").value = phoneInput;
-    statut.className = "success";
-    statut.textContent = "Responsable enregistré pour toutes les installations.";
-  } catch (e) {
-    statut.textContent = e.message;
-  }
+async function installationDeliveryReady() {
+  const cacheKey = `eps:installation-delivery-ready:${session?.user_id || ""}`;
+  if (!navigator.onLine) return localStorage.getItem(cacheKey) === "true";
+  const response = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_installation_delivery_ready`,
+    { method: "POST", body: "{}" });
+  const ready = await response.json() === true;
+  localStorage.setItem(cacheKey, String(ready));
+  return ready;
 }
 
 function closeInstallationDialog() {
@@ -710,19 +696,12 @@ function installationTeacherSignature() {
   return String(prefs.teacherName || session?.email?.split("@")[0] || "").trim();
 }
 
-function installationIncidentMessage(installation, type, description, urgency) {
-  const destinataire = installationManager.contact_name ? ` ${installationManager.contact_name}` : "";
-  const urgence = urgency === "URGENT" ? "\nCe signalement est urgent." : "";
-  return `Bonjour${destinataire},\n\nUn problème a été constaté à l'installation « ${installation.name} ».\nType : ${INSTALLATION_INCIDENT_TYPES[type] || type}.\nProblème : ${description}.${urgence}\n\nEst-il possible que quelqu'un intervienne pour vérifier et corriger ce problème ?\n\nCordialement,\n${installationTeacherSignature()}`;
-}
-
-async function enregistrerIncidentInstallation(installation, type, description, urgency, message) {
+async function enregistrerIncidentInstallation(installation, type, description, urgency) {
   const now = new Date().toISOString();
   const incident = {
     id: crypto.randomUUID(), user_id: session.user_id, installation_id: installation.id,
     installation_name: installation.name, incident_type: type, description, urgency,
-    status: "A_ENVOYER", message_text: message,
-    whatsapp_phone: installationManager.whatsapp_phone,
+    status: "SIGNALE", message_text: description, whatsapp_phone: "",
     reported_by: installationTeacherSignature(), reported_at: now,
     sent_at: null, resolved_at: null, updated_at: now, deleted: false
   };
@@ -731,74 +710,35 @@ async function enregistrerIncidentInstallation(installation, type, description, 
   return incident;
 }
 
-function focusInstallationManager() {
-  closeInstallationDialog();
-  const card = document.getElementById("installationManagerCard");
-  if (card) card.hidden = false;
-  card?.scrollIntoView({ behavior: "smooth", block: "center" });
-  document.getElementById("installationManagerPhone")?.focus();
-}
-
 function openInstallationReport(installation) {
-  const phone = normaliserNumeroWhatsapp(installationManager.whatsapp_phone);
-  if (!phone) {
-    const overlay = installationDialog("Responsable à renseigner", installation.name, `<div class="installation-form"><p>Enregistrez d'abord le responsable unique et son numéro WhatsApp. Il sera ensuite utilisé pour toutes les installations.</p><div class="installation-dialog-actions"><button type="button" id="installationManagerGo">Renseigner le responsable</button></div></div>`);
-    overlay.querySelector("#installationManagerGo").addEventListener("click", focusInstallationManager);
-    return;
-  }
   const options = Object.entries(INSTALLATION_INCIDENT_TYPES).map(([value, label]) => `<option value="${value}">${label}</option>`).join("");
   const overlay = installationDialog("Signaler un incident", installation.name, `<div class="installation-form">
     <label>Type de problème<select id="installationIncidentType">${options}</select></label>
     <label>Niveau<select id="installationIncidentUrgency"><option value="NORMAL">Normal</option><option value="URGENT">Urgent</option></select></label>
     <label>Que se passe-t-il ?<textarea id="installationIncidentDescription" rows="4" placeholder="Ex : eau anormalement froide dans le bassin"></textarea></label>
-    <div><strong>Aperçu du message</strong><pre class="installation-message-preview" id="installationIncidentPreview"></pre></div>
+    <p class="muted">Le responsable verra ce signalement dans son espace dédié. Aucun numéro de téléphone n'est nécessaire.</p>
     <div class="error" id="installationIncidentError"></div>
-    <div class="installation-dialog-actions"><button type="button" class="secondary" data-installation-close-2>Annuler</button><button type="button" id="installationIncidentSend">Ouvrir dans WhatsApp</button></div>
+    <div class="installation-dialog-actions"><button type="button" class="secondary" data-installation-close-2>Annuler</button><button type="button" id="installationIncidentSend">Envoyer le signalement</button></div>
   </div>`);
   overlay.querySelector("[data-installation-close-2]").addEventListener("click", closeInstallationDialog);
-  const updatePreview = () => {
-    const description = overlay.querySelector("#installationIncidentDescription").value.trim() || "Votre description apparaîtra ici";
-    overlay.querySelector("#installationIncidentPreview").textContent = installationIncidentMessage(installation,
-      overlay.querySelector("#installationIncidentType").value, description,
-      overlay.querySelector("#installationIncidentUrgency").value);
-  };
-  overlay.querySelectorAll("select,textarea").forEach(el => el.addEventListener("input", updatePreview));
-  updatePreview();
   overlay.querySelector("#installationIncidentSend").addEventListener("click", async () => {
     const type = overlay.querySelector("#installationIncidentType").value;
     const urgency = overlay.querySelector("#installationIncidentUrgency").value;
     const description = overlay.querySelector("#installationIncidentDescription").value.trim();
     const error = overlay.querySelector("#installationIncidentError");
-    if (!description) { error.textContent = "Décrivez le problème avant d'ouvrir WhatsApp."; return; }
-    const message = installationIncidentMessage(installation, type, description, urgency);
-    const whatsappTab = window.open("about:blank", "_blank");
-    if (!whatsappTab) { error.textContent = "Le navigateur a bloqué l'ouverture de WhatsApp. Autorisez les fenêtres pour ce site puis réessayez."; return; }
+    if (!description) { error.textContent = "Décrivez le problème avant l'envoi."; return; }
+    const button = overlay.querySelector("#installationIncidentSend");
+    button.disabled = true;
     try {
-      const incident = await enregistrerIncidentInstallation(installation, type, description, urgency, message);
-      whatsappTab.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      overlay.querySelector("main").innerHTML = `<div class="installation-send-check"><h3>WhatsApp est ouvert</h3><p>L'application ne peut pas envoyer le message à votre place. Vérifiez-le puis appuyez sur Envoyer dans WhatsApp.</p><strong>Le message a-t-il bien été envoyé ?</strong><div class="installation-dialog-actions"><button type="button" class="secondary" id="installationNotSent">Pas encore</button><button type="button" id="installationSent">Oui, il est envoyé</button></div><div class="error" id="installationIncidentError"></div></div>`;
-      overlay.querySelector("#installationNotSent").addEventListener("click", closeInstallationDialog);
-      overlay.querySelector("#installationSent").addEventListener("click", async () => {
-        try {
-          await updateInstallationIncident(incident, "SIGNALE");
-          closeInstallationDialog();
-          openInstallationHistory(installation);
-        } catch (e) { overlay.querySelector("#installationIncidentError").textContent = e.message; }
-      });
+      if (!await installationDeliveryReady()) throw new Error("Aucun compte responsable n'est encore autorisé pour cet établissement. Demandez au professeur administrateur de le configurer avant l'envoi.");
+      await enregistrerIncidentInstallation(installation, type, description, urgency);
+      closeInstallationDialog();
+      openInstallationHistory(installation);
     } catch (e) {
-      whatsappTab.close();
       error.textContent = e.message;
+      button.disabled = false;
     }
   });
-}
-
-async function updateInstallationIncident(incident, status) {
-  const now = new Date().toISOString();
-  const changes = { status, updated_at: now };
-  if (status === "SIGNALE") changes.sent_at = incident.sent_at || now;
-  if (status === "RESOLU") changes.resolved_at = now;
-  await enregistrerLigne("sport_installation_incidents", { ...incident, ...changes });
-  if (!document.getElementById("installationOverview").hidden) loadInstallationIncidentsOverview();
 }
 
 async function openInstallationHistory(installation) {
@@ -806,30 +746,24 @@ async function openInstallationHistory(installation) {
     '<div class="installation-history-list"><div class="muted">Chargement...</div></div>');
   const host = overlay.querySelector(".installation-history-list");
   try {
-    const incidents = await lireTable("sport_installation_incidents",
-      `sport_installation_incidents?installation_id=eq.${encodeURIComponent(installation.id)}&deleted=eq.false&select=*&order=reported_at.desc`,
-      { ou: row => row.installation_id === installation.id && !row.deleted,
+    const incidents = await readSharedInstallationIncidents(
+      `sport_installation_incidents?installation_name=eq.${encodeURIComponent(installation.name)}&deleted=eq.false&select=*&order=reported_at.desc`,
+      { ou: row => row.installation_name === installation.name && !row.deleted,
         trier: (a, b) => String(b.reported_at || "").localeCompare(String(a.reported_at || "")) });
+    let interventions = [];
+    if (navigator.onLine && incidents.length) {
+      try {
+        const response = await apiFetch(`${SUPABASE_URL}/rest/v1/eps_installation_interventions?select=*&order=created_at.asc`);
+        interventions = await response.json();
+      } catch { /* Les statuts restent visibles si l'historique détaillé est momentanément indisponible. */ }
+    }
     const rows = incidents.map(incident => `<article class="installation-history-card">
       <div><span class="installation-status ${String(incident.status || "").toLowerCase()}">${planningText(INSTALLATION_STATUS_LABELS[incident.status] || incident.status)}</span><small>${new Date(incident.reported_at).toLocaleString("fr-FR")}</small></div>
       <strong>${planningText(INSTALLATION_INCIDENT_TYPES[incident.incident_type] || incident.incident_type)}</strong>
       <p>${planningText(incident.description)}</p>
-      <div class="installation-history-actions">
-        ${incident.status === "A_ENVOYER" ? `<button type="button" data-reopen="${incident.id}">Ouvrir WhatsApp</button><button type="button" class="secondary" data-status="SIGNALE" data-id="${incident.id}">Marquer comme envoyé</button>` : ""}
-        ${incident.status === "SIGNALE" ? `<button type="button" data-status="EN_COURS" data-id="${incident.id}">Intervention en cours</button>` : ""}
-        ${incident.status === "EN_COURS" ? `<button type="button" data-status="RESOLU" data-id="${incident.id}">Marquer comme résolu</button>` : ""}
-      </div></article>`).join("");
+      ${interventions.filter(event => event.incident_id === incident.id).map(event => `<div class="installation-history-event"><strong>${planningText(INSTALLATION_STATUS_LABELS[event.status] || event.status)}</strong> · ${new Date(event.created_at).toLocaleString("fr-FR")}${event.note ? `<p>${planningText(event.note)}</p>` : ""}</div>`).join("")}
+      </article>`).join("");
     host.innerHTML = rows || '<div class="muted installation-history-empty">Aucun signalement ni intervention pour cette installation.</div>';
-    host.querySelectorAll("[data-reopen]").forEach(btn => btn.addEventListener("click", () => {
-      const incident = incidents.find(item => item.id === btn.dataset.reopen);
-      if (incident) window.open(`https://wa.me/${normaliserNumeroWhatsapp(incident.whatsapp_phone || installationManager.whatsapp_phone)}?text=${encodeURIComponent(incident.message_text)}`, "_blank");
-    }));
-    host.querySelectorAll("[data-status]").forEach(btn => btn.addEventListener("click", async () => {
-      const incident = incidents.find(item => item.id === btn.dataset.id);
-      if (!incident) return;
-      try { await updateInstallationIncident(incident, btn.dataset.status); openInstallationHistory(installation); }
-      catch (e) { alert(e.message); }
-    }));
   } catch (e) {
     host.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
   }

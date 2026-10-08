@@ -173,6 +173,9 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
     // saisie serait sortie de la file sans jamais atteindre le serveur. On insere donc, en
     // laissant PostgREST fusionner au cas ou la ligne aurait ete creee entre-temps ailleurs.
     const creation = !operation.baseVersion && operation.action !== "delete";
+    // Un signalement est immutable pour le professeur. L'UPSERT réclamerait un droit
+    // UPDATE même lorsque la ligne n'existe pas encore et ferait refuser l'envoi.
+    const signalementNeuf = creation && operation.entity === "sport_installation_incidents";
     const cible = creation
       ? `${url}/rest/v1/${operation.entity}`
       : `${url}/rest/v1/${operation.entity}?id=eq.${encodeURIComponent(operation.id)}`;
@@ -184,7 +187,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
       // partir avec le nouveau jeton, pas avec celui qui vient d'etre refuse.
       headers: {
         ...entetes(),
-        Prefer: creation ? "resolution=merge-duplicates,return=representation" : "return=representation"
+        Prefer: creation && !signalementNeuf ? "resolution=merge-duplicates,return=representation" : "return=representation"
       },
       body: corpsEnvoye
     }));
@@ -208,6 +211,14 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
       // trancher - etait alors pris pour une panne serveur et repris sans fin. Une base ancienne
       // peut encore porter l'ancien declencheur : le message suffit a decider.
       const texte = await reponse.text().catch(() => "");
+      // Après une coupure pendant la réponse, le serveur peut avoir reçu le POST.
+      // Retrouver la même ligne évite un conflit fantôme au prochain essai.
+      if (signalementNeuf && reponse.status === 409 && texte.includes("23505")) {
+        const dejaEnregistre = await lireLigneSiPossible(operation.entity, operation.id);
+        if (dejaEnregistre && dejaEnregistre.data?.user_id === operation.data?.user_id) {
+          return { status: "ok", record: dejaEnregistre };
+        }
+      }
       if (texte.includes("Version perimee") || texte.includes("40001")) {
         return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id) };
       }

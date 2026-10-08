@@ -12,7 +12,7 @@ assert.match(js, /data-action="history">Suivi<\/button>/);
 assert.doesNotMatch(js, /data-action="report">⚠ Signaler<\/button>/);
 assert.doesNotMatch(js, /<summary>Actions<\/summary>/);
 assert.match(js, /function openInstallationHistory\(installation\)/);
-assert.match(js, /installation_id=eq\.\$\{encodeURIComponent\(installation\.id\)\}/);
+assert.match(js, /installation_name=eq\.\$\{encodeURIComponent\(installation\.name\)\}/);
 assert.doesNotMatch(js, /id="installationNewReport"/);
 
 console.log('Suivi des installations : navigation et actions visibles OK');
