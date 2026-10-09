@@ -497,6 +497,7 @@ function paintRunningSeriesTest(test){
   blankButton.onclick=()=>{rememberRunningUndo('results');resetRunningSession(true);paintRunningSeriesTest(test)};
   document.getElementById('runningResume').onclick=()=>{const history=host.querySelector('.running-history');if(history){history.open=true;history.scrollIntoView({behavior:'smooth',block:'nearest'})}};
   document.getElementById('runningExport').onclick=exportRunningCsv;
+  if(onRealClass()) { const finalButton=document.createElement('button');finalButton.className='secondary';finalButton.textContent='Calculer une note finale';finalButton.onclick=()=>openRunningFinal();document.getElementById('runningExport').after(finalButton); }
   EpsPronoteTools.attach(document.getElementById('runningExport'),()=>({classId:toolClassId,className:toolClasses.find(c=>c.id===toolClassId)?.name,title:`${runningCount} × ${runningDistance} m · P${epsTestPeriod}`,date:runningCreatedAt,rows:toolStudents.map(student=>{const r=runningSummary(student);return {student,score:r?.total,scale:r?(r.valid.length>1?r.regMax+r.perfMax:r.perfMax):12,complete:!!r&&r.valid.length===r.raw.filter(v=>v!==RUNNING_REMOVED).length};})}));
   const resetButton=document.getElementById('runningResetAll');
   resetButton.textContent='↺ Réinitialiser les résultats';
