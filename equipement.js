@@ -671,7 +671,7 @@ function installationTeacherSignature() {
   return String(prefs.teacherName || session?.email?.split("@")[0] || "").trim();
 }
 
-async function enregistrerIncidentInstallation(installation, type, description, urgency) {
+async function enregistrerIncidentInstallation(installation, type, description, urgency, photo = '') {
   const now = new Date().toISOString();
   const incident = {
     id: crypto.randomUUID(), user_id: session.user_id, installation_id: installation.id,
@@ -680,6 +680,16 @@ async function enregistrerIncidentInstallation(installation, type, description, 
     reported_by: installationTeacherSignature(), reported_at: now,
     sent_at: null, resolved_at: null, updated_at: now, deleted: false
   };
+  if (photo) {
+    if (!InstallationPhoto.valid(photo)) throw new Error('Photo invalide.');
+    const key=`eps-installation-photo-ready:${session.user_id}`;
+    if(navigator.onLine) {
+      const response=await apiFetch(`${SUPABASE_URL}/rest/v1/sport_installation_incidents?select=photo_data&limit=0`);
+      if(!response.ok) throw new Error('Les photos nécessitent la mise à jour Supabase des équipements. Votre formulaire est conservé.');
+      sessionStorage.setItem(key,'1');
+    } else if(sessionStorage.getItem(key)!=='1') throw new Error('Connectez-vous une première fois pour vérifier que les photos sont activées. Votre formulaire est conservé.');
+    incident.photo_data=photo;
+  }
   await enregistrerLigne("sport_installation_incidents", incident);
   if (!document.getElementById("installationOverview").hidden) loadInstallationIncidentsOverview();
   return incident;
@@ -691,12 +701,29 @@ function openInstallationReport(installation) {
     <label>Type de problème<select id="installationIncidentType">${options}</select></label>
     <label>Niveau<select id="installationIncidentUrgency"><option value="NORMAL">Normal</option><option value="URGENT">Urgent</option></select></label>
     <label>Que se passe-t-il ?<textarea id="installationIncidentDescription" rows="4" placeholder="Ex : eau anormalement froide dans le bassin"></textarea></label>
+    <label>Photo (facultative)<input id="installationIncidentPhoto" type="file" accept="image/*"></label>
+    <label>Prendre une photo<input id="installationIncidentCamera" type="file" accept="image/*" capture="environment"></label>
+    <div id="installationPhotoPreview"></div><button type="button" class="secondary" id="installationPhotoRemove" hidden>Retirer la photo</button>
     <p class="muted">Le responsable verra ce signalement dans son espace dédié. Aucun numéro de téléphone n'est nécessaire.</p>
     <div class="error" id="installationIncidentError"></div>
     <div class="installation-dialog-actions"><button type="button" class="secondary" data-installation-close-2>Annuler</button><button type="button" id="installationIncidentSend">Envoyer le signalement</button></div>
   </div>`);
+  let photo='', processing=false, photoRevision=0;
+  const preview=overlay.querySelector('#installationPhotoPreview'), remove=overlay.querySelector('#installationPhotoRemove');
+  const choosePhoto=async event=>{
+    const file=event.target.files?.[0];if(!file)return;
+    const revision=++photoRevision;processing=true;overlay.querySelector('#installationIncidentSend').disabled=true;
+    overlay.querySelector('#installationIncidentError').textContent='';
+    try { const value=await InstallationPhoto.compress(file);if(revision===photoRevision){photo=value;preview.innerHTML=InstallationPhoto.html(photo);remove.hidden=false;} }
+    catch(e){overlay.querySelector('#installationIncidentError').textContent=e.message;}
+    finally {if(revision===photoRevision){processing=false;overlay.querySelector('#installationIncidentSend').disabled=false;}}
+  };
+  overlay.querySelector('#installationIncidentPhoto').onchange=choosePhoto;
+  overlay.querySelector('#installationIncidentCamera').onchange=choosePhoto;
+  remove.onclick=()=>{photoRevision++;photo='';processing=false;preview.innerHTML='';remove.hidden=true;overlay.querySelector('#installationIncidentPhoto').value='';overlay.querySelector('#installationIncidentCamera').value='';overlay.querySelector('#installationIncidentSend').disabled=false;};
   overlay.querySelector("[data-installation-close-2]").addEventListener("click", closeInstallationDialog);
   overlay.querySelector("#installationIncidentSend").addEventListener("click", async () => {
+    if(processing)return;
     const type = overlay.querySelector("#installationIncidentType").value;
     const urgency = overlay.querySelector("#installationIncidentUrgency").value;
     const description = overlay.querySelector("#installationIncidentDescription").value.trim();
@@ -706,7 +733,7 @@ function openInstallationReport(installation) {
     button.disabled = true;
     try {
       if (!await installationDeliveryReady()) throw new Error("Aucun compte responsable n'est encore autorisé pour cet établissement. Demandez au professeur administrateur de le configurer avant l'envoi.");
-      await enregistrerIncidentInstallation(installation, type, description, urgency);
+      await enregistrerIncidentInstallation(installation, type, description, urgency, photo);
       closeInstallationDialog();
       openInstallationHistory(installation);
     } catch (e) {
@@ -736,6 +763,7 @@ async function openInstallationHistory(installation) {
       <div><span class="installation-status ${String(incident.status || "").toLowerCase()}">${planningText(INSTALLATION_STATUS_LABELS[incident.status] || incident.status)}</span><small>${new Date(incident.reported_at).toLocaleString("fr-FR")}</small></div>
       <strong>${planningText(INSTALLATION_INCIDENT_TYPES[incident.incident_type] || incident.incident_type)}</strong>
       <p>${planningText(incident.description)}</p>
+      ${InstallationPhoto.html(incident.photo_data)}
       ${interventions.filter(event => event.incident_id === incident.id).map(event => `<div class="installation-history-event"><strong>${planningText(INSTALLATION_STATUS_LABELS[event.status] || event.status)}</strong> · ${new Date(event.created_at).toLocaleString("fr-FR")}${event.note ? `<p>${planningText(event.note)}</p>` : ""}</div>`).join("")}
       </article>`).join("");
     host.innerHTML = rows || '<div class="muted installation-history-empty">Aucun signalement ni intervention pour cette installation.</div>';

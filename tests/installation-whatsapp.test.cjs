@@ -10,7 +10,7 @@ const css = read("styles/site.css");
 const sql = read("supabase/migrations/20261008010000_installation_shared_manager.sql");
 const manager = read("responsable-installations.js");
 
-assert.match(html, /id="installationManagerEmail"/);
+assert.doesNotMatch(html, /id="installationManagerEmail"/);
 assert.doesNotMatch(html, /id="installationManagerPhone"/);
 
 assert.match(js, /function openInstallationReport/);

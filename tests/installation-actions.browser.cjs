@@ -55,6 +55,31 @@ const server = http.createServer((req, res) => {
     await page.locator('#installationQuickReportBtn').click();
     await page.locator('#installationReportChoice').waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true);
+    // Formulaire réel mobile : compression, conservation sur erreur, puis photo dans le suivi.
+    await page.evaluate(() => {
+      openInstallationReport(installationsCache[0]);
+      installationDeliveryReady=async()=>true;
+      window.photoSchemaReady=false;
+      const originalApi=apiFetch;
+      apiFetch=async (url,options)=>String(url).includes('select=photo_data') ? new Response('[]',{status:window.photoSchemaReady?200:400}) : originalApi(url,options);
+      enregistrerLigne=async(table,row)=>{window.sentIncident=row;__fauxServeur.DONNEES[table].push(row);};
+      readSharedInstallationIncidents=async()=>window.sentIncident?[window.sentIncident]:[];
+    });
+    const png=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=160;c.height=120;c.getContext('2d').fillRect(0,0,160,120);return c.toDataURL('image/png').split(',')[1];});
+    await page.locator('#installationIncidentPhoto').setInputFiles({name:'test.png',mimeType:'image/png',buffer:Buffer.from(png,'base64')});
+    await page.locator('#installationPhotoPreview img').waitFor();
+    await page.locator('#installationIncidentDescription').fill('Test photo équipement');
+    await page.locator('#installationIncidentSend').click();
+    await page.waitForFunction(()=>document.querySelector('#installationIncidentError')?.textContent.includes('Supabase'));
+    assert.equal(await page.locator('#installationIncidentDescription').inputValue(),'Test photo équipement');
+    assert.equal(await page.locator('#installationPhotoPreview img').count(),1);
+    assert.equal(await page.evaluate(()=>!!window.sentIncident),false);
+    await page.evaluate(()=>{window.photoSchemaReady=true;});
+    await page.locator('#installationIncidentSend').click();
+    await page.locator('.installation-history-card img').waitFor();
+    assert.equal(await page.evaluate(()=>InstallationPhoto.valid(window.sentIncident.photo_data)),true);
+    assert.equal(await page.evaluate(()=>InstallationPhoto.html('javascript:alert(1)')),'');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     assert.deepEqual(errors, []);
     console.log('PASS Installations : tableau de bord, filtres, suivi et affichage mobile');
   } finally { await browser.close(); server.close(); }

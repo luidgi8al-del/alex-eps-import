@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
       };
       const originalFetch = window.fetch.bind(window);
       const rows = [
-        {id:'r1',installation_name:'Gymnase',description:'Panier instable',urgency:'URGENT',status:'SIGNALE',reported_at:'2026-10-08T09:15:00Z',reported_by:'Prof A'},
+        {id:'r1',installation_name:'Gymnase',description:'Panier instable',urgency:'URGENT',status:'SIGNALE',reported_at:'2026-10-08T09:15:00Z',reported_by:'Prof A',photo_data:'data:image/jpeg;base64,/9j/2Q=='},
         {id:'r2',installation_name:'Piscine',description:'Vestiaire fermé',urgency:'NORMAL',status:'EN_COURS',reported_at:'2026-10-07T10:00:00Z'},
         {id:'r3',installation_name:'Gymnase',description:'Filet réparé',urgency:'NORMAL',status:'RESOLU',reported_at:'2026-10-06T10:00:00Z'}
       ];
@@ -58,6 +58,7 @@ const server = http.createServer((req, res) => {
     assert.equal(await page.locator('.report-card').count(), 1);
     await page.locator('[data-filter="all"]').click();
     await page.locator('[data-report="r1"]').first().click();
+    assert.equal(await page.locator('#detailContent img[alt="Photo du signalement"]').count(),1);
     await page.locator('[data-next="EN_COURS"]').click();
     await page.locator('[data-next="RESOLU"]').waitFor();
     assert.equal(await page.locator('#progressCount').textContent(), '2');

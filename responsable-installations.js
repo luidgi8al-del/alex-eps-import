@@ -17,8 +17,10 @@
   let passwordLinkSession = null;
   let refreshing = null;
 
-  try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; }
-  const saveSession = value => { session = value; value ? localStorage.setItem(SESSION_KEY, JSON.stringify(value)) : localStorage.removeItem(SESSION_KEY); };
+  const androidSession = new URLSearchParams(location.search).has('android');
+  if (!androidSession) { try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; } }
+  else localStorage.removeItem(SESSION_KEY);
+  const saveSession = value => { session = value; !androidSession && value ? localStorage.setItem(SESSION_KEY, JSON.stringify(value)) : localStorage.removeItem(SESSION_KEY); };
   const show = view => { ['authPage','pendingPage','managerPage'].forEach(id => $(id).hidden = id !== view); };
   const message = (value, error = false) => { $('statusMessage').textContent = value; $('statusMessage').className = error ? 'message error' : 'message'; };
   const authMessage = value => { $('authMessage').textContent = value; };
@@ -119,6 +121,7 @@
     view('detail');
     const action = row.status === 'SIGNALE' || row.status === 'A_ENVOYER' ? '<button type="button" data-next="EN_COURS">Pris en charge</button>' : row.status === 'EN_COURS' ? '<button type="button" data-next="RESOLU">Marquer comme résolu</button>' : '';
     $('detailContent').innerHTML = `<div class="detail-card"><h2>${escape(row.description)}</h2>
+      ${InstallationPhoto.html(row.photo_data)}
       <p class="detail-meta">${escape(row.installation_name)} · ${escape(date(row.reported_at))} · ${escape(status(row.status))}</p>
       <p><span class="badge ${row.urgency === 'URGENT' ? 'urgent' : 'normal'}">${row.urgency === 'URGENT' ? 'Urgent' : 'Normal'}</span>${row.reported_by ? ` · Signalé par ${escape(row.reported_by)}` : ''}</p>
       ${action ? `<label for="interventionNote">Note d’intervention (facultative)</label><textarea id="interventionNote" class="detail-note" placeholder="Ce qui a été fait ou reste à faire"></textarea><div class="detail-actions">${action}</div>` : ''}
