@@ -587,10 +587,12 @@
   <script src="planning.js?v=20261001-3"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
   <script src="cours.js?v=20261007-score-identity-1"></script>
-  <script src="classe-tableau-bord.js?v=20261007-aptitudes-class-1"></script>
+  <script src="student-results.js?v=20261010-1"></script>
+  <script src="classe-tableau-bord.js?v=20261010-results-1"></script>
   <script src="classe-ecrans.js?v=20261007-health-adaptation-1"></script>
   <script src="qrcode.min.js"></script>
   <script src="installation-photo.js?v=20261009-1"></script>
+  <script src="installation-push.js?v=20261010-1"></script>
   <script src="equipement.js?v=20261009-equipment-2"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
@@ -601,7 +603,8 @@
   <script src="teams-saved-web.js?v=20261005-teams"></script>
   <script src="tools-workspace.js?v=20261005-groups47"></script>
   <script src="team-evaluation-editor.js?v=20261005-teams"></script>
-  <script src="tools-workflows.js?v=20261007-test-focus-1"></script>
+  <script src="class-group-library.js?v=20261010-1"></script>
+  <script src="tools-workflows.js?v=20261010-library-1"></script>
   <script src="tools-organizers.js?v=20260928-1"></script>
   <script src="tools-persistence.js?v=20261007-aptitudes-delete-1"></script>
   <script src="tools-common-groups.js?v=20261005-groups47"></script>
@@ -625,6 +628,7 @@
       localStorage.setItem("alex_eps_session", JSON.stringify(s));
     }
     function clearSession() {
+      globalThis.EpsInstallationPush?.clear().catch(()=>{});
       session = null;
       localStorage.removeItem("alex_eps_session");
     }
@@ -900,7 +904,7 @@
         if (name === "outils" && typeof resetToolsWorkspace === "function") resetToolsWorkspace();
         if (name === "health") initHealthTab();
         if (name === "cours") initCoursTab();
-        if (name === "equipement") initInstallationsTab();
+        if (name === "equipement") { initInstallationsTab(); globalThis.EpsInstallationPush?.teacherMount(); }
         if (name === "help" && typeof initHelpTab === "function") initHelpTab();
         if (name === "unss") initUnssTab().catch(error => showModuleFailure(name, error));
         if (name === "planning" || name === "programmation") {

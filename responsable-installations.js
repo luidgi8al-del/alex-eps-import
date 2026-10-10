@@ -64,6 +64,7 @@
       const context = await api('/rest/v1/rpc/eps_installation_manager_context', {method:'POST',body:'{}'});
       if (!context?.is_manager) { show('pendingPage'); return; }
       show('managerPage');
+      if(!androidSession) await globalThis.EpsInstallationPush?.mount($('managerPage'),api,session.user_id || session.user?.id || JSON.parse(atob(session.access_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub);
       await load();
     } catch (error) {
       if (session) { show('pendingPage'); $('pendingPage').querySelector('p').textContent = `Impossible de vérifier les droits : ${error.message}. Réessayez quand la connexion sera rétablie.`; }
@@ -151,6 +152,7 @@
   }
 
   function logout() {
+    globalThis.EpsInstallationPush?.clear().catch(()=>{});
     try {
       const teacherSession = JSON.parse(localStorage.getItem('alex_eps_session') || 'null');
       if (teacherSession?.access_token === session?.access_token) localStorage.removeItem('alex_eps_session');

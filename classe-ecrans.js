@@ -963,7 +963,7 @@ function ecDessinerEvaluations(panel) {
   const { label } = dashboardClass;
   const { evaluations, tests, cycle } = ecEvaluationsSuivies();
   const nombreResultatsTest = id => new Set(ecResultatsTests
-    .filter(r => r.session_id === id && !r.deleted).map(r => r.student_id)).size;
+    .filter(r => r.session_id === id && EpsStudentResults.complete(r)).map(r => r.student_id)).size;
   const eleves = dashboardStudents.length;
   const cartesEvaluations = evaluations.map(e => {
     const { evalues } = ecAvancementGrille(e.id);
@@ -1199,7 +1199,7 @@ function ecCreerNouveauTest() {
 
 function ecOuvrirTests(tests) {
   const hote = hoteDetail();
-  const resultats = id => new Set(ecResultatsTests.filter(r => r.session_id === id).map(r => r.student_id)).size;
+  const resultats = id => new Set(ecResultatsTests.filter(r => r.session_id === id && EpsStudentResults.complete(r)).map(r => r.student_id)).size;
   hote.innerHTML = `<div class="ec-feuille">
     <h3>Tests EPS enregistrés</h3>
     <p class="muted">Période ${dashboardPeriod} · cliquez un test pour le reprendre ou le modifier</p>
@@ -1505,6 +1505,7 @@ async function ecOuvrirDivers() {
 
 /** Le resultat d'un test, tel qu'on le lit : "incomplet · 3/6 ateliers" reste en toutes lettres. */
 function ecResultatTest(r) {
+  if(!EpsStudentResults.complete(r))return 'À compléter';
   const unite = String(r.result_unit || "");
   if (unite.includes("brouillon")) return "À compléter";
   if (unite.startsWith("incomplet")) return unite;
@@ -1565,7 +1566,7 @@ function ecDessinerRecap(panel) {
       </div>`;
   } else if (ecOngletRecap === "tests") {
     contenu = tests.length ? `<div class="ec-liste">${tests.map(t => {
-      const n = new Set(ecResultatsTests.filter(r => r.session_id === t.id).map(r => r.student_id)).size;
+      const n = new Set(ecResultatsTests.filter(r => r.session_id === t.id && EpsStudentResults.complete(r)).map(r => r.student_id)).size;
       return `<button type="button" class="ec-ligne" data-ec-recap-test="${ecTexte(t.id)}"><span><b>${ecTexte(t.test_name || "Test")}</b>
         <small>${ecPluriel(n, "résultat")}</small></span><em>›</em></button>`;
     }).join("")}</div>` : `<p class="ec-vide">Aucun test enregistré pendant cette période.</p>`;

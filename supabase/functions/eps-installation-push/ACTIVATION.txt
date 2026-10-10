@@ -1,0 +1,52 @@
+NOTIFICATIONS EPS LVH — activation à terminer dans Supabase / Firebase
+
+Ce code ne réutilise PAS Firebase ATHIA. Rien n'est envoyé tant que le service EPS n'est pas configuré.
+
+1. Exécuter supabase/migrations/20261010010000_installation_push.sql dans SQL Editor.
+   La migration ne supprime aucune dispense, note ou installation.
+   Elle crée une file privée ; seul le serveur choisit les destinataires.
+
+2. Créer un projet Firebase EPS LVH, sans Analytics obligatoire.
+   Ajouter l'application Android com.alex.epsoutils.debug pour l'APK distribué actuellement.
+   Ajouter également com.alex.epsoutils si vous distribuez ultérieurement une version release.
+   Télécharger google-services.json : il contient les identifiants publics, pas une clé serveur.
+   Dans eps_push_config.firebase_android, saisir une entrée par nom de package :
+   {"com.alex.epsoutils.debug":{"applicationId":"mobilesdk_app_id","apiKey":"current_key","projectId":"project_id","senderId":"project_number"}}
+   Remplacer les valeurs par celles du fichier du projet EPS. L'APK lit cette configuration à la connexion.
+
+3. Dans Firebase → Paramètres du projet → Comptes de service, générer une clé serveur.
+   Conserver son JSON EXCLUSIVEMENT dans le secret Supabase EPS_FIREBASE_SERVICE_ACCOUNT.
+   Ne pas le coller dans le site ni le dépôt GitHub.
+
+4. Pour site/PWA : générer une paire VAPID, par exemple avec web-push generate-vapid-keys.
+   Secrets Supabase : EPS_VAPID_PUBLIC_KEY, EPS_VAPID_PRIVATE_KEY, EPS_VAPID_SUBJECT (mailto:adresse réelle).
+   Seule la clé publique va dans eps_push_config.vapid_public_key.
+
+5. Déployer la fonction eps-installation-push (index.ts) et désactiver sa vérification JWT.
+   Elle vérifie à la place x-eps-push-secret ; créer un secret aléatoire d'au moins 32 caractères
+   et le stocker dans EPS_PUSH_DISPATCH_SECRET.
+   Créer un Database Webhook sur INSERT de eps_push_events, destination cette fonction,
+   méthode POST, en-tête x-eps-push-secret avec ce même secret.
+   Ajouter une relance planifiée toutes les 2 minutes sur la même fonction (même en-tête)
+   pour récupérer les envois échoués. Un événement est conservé même si l'envoi échoue.
+   Le webhook effectue normalement l'envoi immédiat, la relance n'est qu'un filet de sécurité.
+
+6. Sur site/PWA, chaque destinataire clique « Activer les notifications » et accepte l'autorisation.
+   Sur Android, accepter l'autorisation des notifications et se reconnecter après activation Firebase.
+
+RECETTE À FAIRE AVANT DE DIRE « ACTIF »
+- APK responsable fermé : un professeur signale → une seule alerte responsable.
+- Responsable passe « pris en charge » puis « résolu » → alerte du professeur auteur.
+- Un professeur d'un autre établissement ne reçoit rien.
+- Changement de compte / déconnexion : aucune alerte d'un ancien compte ne s'affiche.
+- Coupure puis retour Internet : relance, sans nouvel envoi sur les appareils déjà servis.
+- Supabase eps_push_events : sent_at renseigné, last_error vide ; contrôler eps_push_deliveries.
+
+Vérifications effectuées dans le code : rôles/établissement serveur, abonnements privés,
+séparation de compte Android, payload sans description/photos, déduplication et relance.
+La livraison réelle et la migration SQL doivent être validées sur votre projet et vos appareils.
+
+Documentation officielle :
+https://supabase.com/docs/guides/functions/examples/push-notifications
+https://supabase.com/docs/guides/database/webhooks
+https://firebase.google.com/docs/cloud-messaging/android/get-started

@@ -11,9 +11,20 @@
  * matin doit voir la correction le matin.
  */
 importScripts("./offline-assets.js");
-const PWA_VERSION = "eps-lvh-pwa-2026-10-10-tools-73";
+const PWA_VERSION = "eps-lvh-pwa-2026-10-10-results-groups-push-74";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
+
+self.addEventListener('push',event=>event.waitUntil((async()=>{
+  let data;try{data=event.data.json()}catch{return}
+  const cache=await caches.open('eps-push-identity');
+  const response=await cache.match(new URL('push-account',self.registration.scope));
+  if(!response || await response.text()!==data.recipient)return;
+  await self.registration.showNotification('EPS LVH · Installations',{body:data.body,tag:data.id,icon:'./icons/eps-lvh-192.svg',data:{manager:data.manager}});
+})()));
+self.addEventListener('notificationclick',event=>{
+  event.notification.close();event.waitUntil(self.clients.openWindow(new URL(event.notification.data?.manager?'responsable-installations.html':'index.html#equipement',self.registration.scope).href));
+});
 
 /*
  * Seulement ce qui ne change pas d'une mise en ligne a l'autre. index.html, le CSS et le
