@@ -566,34 +566,41 @@ async function deleteGenericTestSession(sessionId,key){if(!confirm("Supprimer ce
 
 // ---- Tests VMA (miroir de VmaTestScreen) ----
 let vmaProtocol = "VAMEVAL";
+let vmaStarted = false;
+let vmaRenderRevision = 0;
 let vmaSessionId=null,vmaSessionRecord=null,vmaResultRecords={},vmaValues={},vmaGroupCount=1,vmaActiveGroup=0,vmaGroupAssignments={},vmaSessions=[];
 // Meme principe que les autres tests : la mesure se releve toujours, l'appreciation peut etre
 // une pastille de couleur plutot qu'une VMA chiffree (couleur d'office en 6e).
 let vmaMode="note",vmaColors={},vmaModeChoisi=false,vmaModeClasse=null;
 
 async function renderVmaTest() {
+  vmaStarted = false;
   await loadToolClasses();
   await loadToolStudents(toolClassId);
   await drawVmaTest();
 }
 
 async function drawVmaTest() {
+  const revision = ++vmaRenderRevision;
   const proto = EpsTests.VMA_PROTOCOLS.find(p => p.key === vmaProtocol);
   if(!vmaSessionId&&!vmaModeChoisi&&vmaModeClasse!==toolClassId){vmaMode=socleModeParDefaut(toolClassId);vmaModeClasse=toolClassId}
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
   if(onRealClass())vmaSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=like.Test%20VMA*&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&String(r.test_name||'').startsWith('Test VMA')&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});else vmaSessions=[];
+  if (revision !== vmaRenderRevision) return;
   const groupOf=s=>vmaGroupCount>1?(vmaGroupAssignments[s.id]??((toolStudents.findIndex(x=>String(x.id)===String(s.id))%vmaGroupCount)+1)):1;
   const visible=onRealClass()&&vmaActiveGroup?cible.filter(s=>groupOf(s)===vmaActiveGroup):cible;
   const groups=onRealClass()?`<div class="running-group-tabs"><button class="${vmaActiveGroup===0?'':'secondary'}" data-vma-group="0">Tous</button>${Array.from({length:vmaGroupCount},(_,i)=>`<button class="${vmaActiveGroup===i+1?'':'secondary'}" data-vma-group="${i+1}">Groupe ${i+1}</button>`).join('')}<label>Groupes<select id="vmaGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===vmaGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label></div>`:'';
   const saved=onRealClass()?`<section class="field-tool-card evaluation-history-card"><h3>Tests VMA enregistrés</h3>${evaluationHistoryHtml(vmaSessions,vmaSessionId,'data-vma-session','data-vma-delete','Aucun test VMA enregistré')}</section>`:'';
 
   toolPanel.innerHTML = toolHeader("Tests VMA", "VAMEVAL, Leger-Boucher, Cooper et demi-Cooper")
-    + toolRosterHtml()
-    + `<div class="toolActions" style="margin-top:10px">${EpsTests.VMA_PROTOCOLS.map(p =>
+    + `<section id="vmaPreparation" ${vmaStarted?'hidden':''}>` + toolRosterHtml()
+    + `<label>Période<select id="vmaPeriod">${Array.from({length:planningPeriodCount(toolClasses.find(c=>c.id===toolClassId)?.grade)},(_,i)=>`<option value="${i+1}" ${i+1===epsTestPeriod?'selected':''}>P${i+1}</option>`).join('')}</select></label><div class="toolActions" style="margin-top:10px">${EpsTests.VMA_PROTOCOLS.map(p =>
         `<button class="${p.key === vmaProtocol ? "" : "secondary"}" data-vma-proto="${p.key}">${p.label}</button>`).join("")}</div>
       <div class="card" style="background:#F2F8FF"><strong>${proto.label}</strong><div class="muted">${proto.hint}</div></div>
       <div class="field-tool-row">${socleSelecteurModeHtml(vmaMode,"vmaMode")}</div>
-      ${groups}<div class="fitness-web">${socleTableauHtml(
+      </section>${groups}
+      <button id="${vmaStarted?'vmaEditPreparation':'vmaBegin'}" class="secondary">${vmaStarted?'Modifier la préparation ou les groupes':'Commencer le test'}</button>
+      <section id="vmaResults" ${vmaStarted?'':'hidden'}><div class="fitness-web">${socleTableauHtml(
         [...(onRealClass()&&vmaGroupCount>1?[{titre:"Groupe"}]:[]),{titre:vmaProtocol.includes("Cooper")?"Distance (m)":"Palier",aide:"Mesure relevée"}],
         visible.map(s=>({eleve:s,
           sousTitre:onRealClass()&&vmaGroupCount>1?`Groupe ${groupOf(s)}`:"",
@@ -606,10 +613,14 @@ async function drawVmaTest() {
             : `<span data-vma-out="${s.id}">—</span>`})),
         vmaMode==="couleur"?"Appréciation":"VMA")}</div>
       ${onRealClass() ? `<div class="tool-savebar evaluation-actionbar"><button id="vmaSaveBtn">💾 Enregistrer</button><button class="secondary" id="vmaNewBtn">＋ Nouvelle saisie</button><button class="secondary" id="vmaResumeBtn">↻ Retrouver</button><button class="secondary" id="vmaExportBtn">▦ Exporter</button></div><div class="tool-dangerbar"><button class="danger" id="vmaResetBtn">↺ Réinitialiser les résultats</button></div>` : ""}
-      <div class="ok" id="vmaSaveMsg"></div>${saved}`;
+      <div class="ok" id="vmaSaveMsg"></div></section>${saved}`;
 
   bindToolClose();
-  bindToolRoster(()=>{vmaSessionId=null;vmaSessionRecord=null;vmaResultRecords={};vmaValues={};drawVmaTest()});
+  bindToolRoster(()=>{vmaSessionId=null;vmaSessionRecord=null;vmaResultRecords={};vmaValues={};vmaGroupAssignments={};vmaGroupCount=1;vmaActiveGroup=0;drawVmaTest()});
+  document.getElementById('toolClass').addEventListener('change',()=>{const begin=document.getElementById('vmaBegin');if(begin)begin.disabled=true});
+  document.getElementById('vmaPeriod').onchange=e=>{epsTestPeriod=+e.target.value;drawVmaTest()};
+  document.getElementById('vmaBegin')?.addEventListener('click',()=>{vmaStarted=true;drawVmaTest()});
+  document.getElementById('vmaEditPreparation')?.addEventListener('click',()=>{vmaStarted=false;drawVmaTest()});
   toolPanel.querySelectorAll("[data-vma-proto]").forEach(b =>
     b.onclick = () => { vmaProtocol = b.dataset.vmaProto; drawVmaTest(); });
 

@@ -12,8 +12,9 @@
   function decorate(kind){if(!onRealClass())return;const a=adapters[kind],s=read(kind);const target=kind==='eps'?document.getElementById('epsTestBody'):toolPanel;if(!target)return;
     const oldCount=document.getElementById(kind==='eps'?'genericGroupCount':kind==='vma'?'vmaGroupCount':'speedGroupCount');if(!oldCount)return;
     if(kind==='speed'){oldCount.closest('div').hidden=true;target.querySelectorAll('[data-speed-group]').forEach(b=>b.hidden=true);target.querySelectorAll('[data-speed-assign]').forEach(e=>e.hidden=true)}else oldCount.closest('.running-group-tabs').hidden=true;
+    if(kind==='vma')s.inTest=vmaStarted;
     const host=document.createElement('div');host.innerHTML=W.groupsHtml(s,toolStudents);oldCount.closest(kind==='speed'?'.row':'.running-group-tabs').before(host);
-    const redraw=()=>{a.set(s);s.source=a.get().assign;return a.draw()};W.bindGroups(s,redraw);
+    const redraw=()=>{if(kind==='vma')vmaStarted=!!s.inTest;a.set(s);s.source=a.get().assign;return a.draw()};W.bindGroups(s,redraw);
     // Identifiants numériques stables pour la compatibilité avec les résultats existants.
     if(document.getElementById('wfAddGroup'))document.getElementById('wfAddGroup').onclick=()=>{const name=prompt('Nom du groupe',`Groupe ${s.groups.length+1}`);if(!name?.trim())return;const id=String(Math.max(0,...s.groups.map(g=>+g.id))+1);s.groups.push({id,name:name.trim()});toolStudents.forEach(p=>{s.assignments[p.id]??=0});s.editGroups=true;redraw()};
     target.querySelectorAll('[data-wf-assign]').forEach(e=>e.onchange=()=>{s.assignments[e.dataset.wfAssign]=+e.value||0;s.editGroups=true});
@@ -32,6 +33,6 @@
   drawSpeedTracker=()=>{originalSpeed();decorate('speed')};
   const openEps=openGenericTestSession,openVma=openVmaSession;
   openGenericTestSession=async(id,key)=>{await openEps(id,key);restore('eps',Object.values(epsGenericResultRecords)[0]?.input_unit);await drawEpsTestBody(key)};
-  openVmaSession=async id=>{await openVma(id);if(vmaSessionRecord)epsTestPeriod=+vmaSessionRecord.period_number||1;vmaColors={};for(const r of Object.values(vmaResultRecords)){const unit=String(r.input_unit||'');const mode=unit.match(/\|mode:(note|couleur)/)?.[1];if(mode){vmaMode=mode;vmaModeChoisi=true}const color=unit.match(/\|couleur:([a-z-]+)/)?.[1];if(color)vmaColors[r.student_id]=color}restore('vma',Object.values(vmaResultRecords)[0]?.input_unit);await drawVmaTest()};
+  openVmaSession=async id=>{await openVma(id);if(vmaSessionRecord){epsTestPeriod=+vmaSessionRecord.period_number||1;vmaStarted=true}vmaColors={};for(const r of Object.values(vmaResultRecords)){const unit=String(r.input_unit||'');const mode=unit.match(/\|mode:(note|couleur)/)?.[1];if(mode){vmaMode=mode;vmaModeChoisi=true}const color=unit.match(/\|couleur:([a-z-]+)/)?.[1];if(color)vmaColors[r.student_id]=color}restore('vma',Object.values(vmaResultRecords)[0]?.input_unit);await drawVmaTest()};
   globalThis.EpsCommonGroups={encode:encoded,restore,read};
 })();
