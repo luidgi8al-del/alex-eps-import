@@ -3,6 +3,29 @@
  * (TableauDeBordClasse.kt, ClassDashboardDetailScreens.kt) : bandeau bleu, cartes arrondies,
  * pastilles, jauges. Le site n'a qu'un theme clair ; les couleurs sont donc posees ici une fois.
  */
+.ec-visuel-navigation { display:flex; flex-wrap:wrap; gap:7px; padding:12px 14px; }
+.ec-visuel-navigation button { min-height:44px; margin:0; padding:10px 14px; border:1px solid #dce7f1; background:#fff; color:#185FA5; border-radius:12px; }
+.ec-visuel-navigation button[aria-current="page"] { background:#E6F1FB; border-color:#2E7CC4; }
+.ec-visuel-seance { display:flex; justify-content:flex-end; }
+.ec-visuel-seance #ecPreparerSeance { display:flex; align-items:center; gap:12px; background:#2E7CC4; color:#fff; border-radius:14px; padding:14px 18px; min-height:52px; }
+.ec-visuel-seance #ecPreparerSeance span { display:grid; text-align:left; gap:3px; }
+.ec-visuel-seance #ecPreparerSeance small { color:inherit; }
+.ec-visuel-colonne { display:grid; gap:14px; align-content:start; min-width:0; }
+.ec-visuel-evaluation { display:flex; width:100%; align-items:center; justify-content:space-between; gap:14px; background:#fff; color:#123A55; padding:16px 0; text-align:left; border-radius:0; border-bottom:1px solid #E0E6EC; }
+.ec-visuel-evaluation span { display:grid; flex:1; min-width:0; gap:7px; }
+.ec-visuel-evaluation b { overflow-wrap:anywhere; }
+.ec-visuel-evaluation small { color:#668095; }
+.ec-visuel-evaluation strong { color:#185FA5; }
+.ec-visuel-clair .ec-resume-quatre { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.ec-visuel-clair .ec-prochain-cours { min-height:0; }
+.ec-visuel-clair .ec-prochain-cours .ec-progression { margin-top:8px; }
+@media(max-width:600px) {
+  .ec-visuel-navigation { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+  .ec-visuel-navigation button { padding:10px 4px; font-size:12px; }
+  .ec-visuel-seance #ecPreparerSeance { width:100%; }
+  .ec-visuel-clair .ec-corps { padding-top:4px; }
+  .ec-visuel-evaluation { flex-wrap:wrap; }
+}
 .ec-panneau {
   --ec-bleu: #2E7CC4;
   --ec-bleu-fonce: #185FA5;

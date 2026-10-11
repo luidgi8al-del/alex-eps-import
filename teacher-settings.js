@@ -20,6 +20,7 @@
   function savePrefs(prefs) { localStorage.setItem(teacherPrefsKey(),JSON.stringify(prefs)); }
   function profileCacheKey() { return `eps_teacher_profile:${session?.user_id || "anonymous"}`; }
   let settingsPeriodRevision=0, settingsProfileRevision=0;
+  let settingsVisualTab="home";
   globalThis.openWeatherSettingsOnOpen=false;
   function profilePayload(prefs) {
     return {teacherName:prefs.teacherName || "",proEmail:prefs.proEmail || "",schoolYear:prefs.schoolYear || "2026-2027",interactiveHomeEnabled:String(prefs.interactiveHomeEnabled===true || prefs.interactiveHomeEnabled==="true")};
@@ -134,6 +135,7 @@
     return data;
   }
   async function openSettings() {
+    const keepVisualOpen=document.getElementById("visualSection")?.open===true;
     const errors=[];
     let teamContext=null,pendingInvites=[],managerContext=null;
     // Chaque appel nomme sa source. Sans cela, cinq appels differents produisaient le meme
@@ -167,14 +169,37 @@
       settingsSection("gmailSection","Gmail professionnel",`<p>${gmailState.connected?`<strong>Connecté pour cette session :</strong> ${esc(gmailState.email)}`:gmailState.email?`Dernier compte utilisé : ${esc(gmailState.email)}. Reconnectez-le pour créer des brouillons.`:"Connectez votre compte Gmail professionnel pour y préparer des brouillons personnalisés."}</p><button id="gmailConnectBtn">${gmailState.connected?"Changer de compte Gmail":"Connecter mon Gmail professionnel"}</button>${gmailState.connected?'<button class="secondary" id="gmailDisconnectBtn">Déconnecter Gmail du site</button>':""}<p class="muted">Le site demande uniquement le droit de gérer des brouillons et d’envoyer des messages. Le jeton Google reste en mémoire jusqu’à la fermeture ou au rechargement de cette page. Le site ne lit pas votre boîte de réception.</p>`)+
       settingsSection("accountSection","Compte web / synchronisation",`<p>Connecté : ${esc(session.email)}</p><p>${currentInstitution?`Rattaché à ${esc(currentInstitution.name)} (code ${esc(currentInstitution.code)}).`:(rattachementIncertain?"Rattachement à l’établissement non vérifiable pour l’instant.":"Aucun établissement rattaché.")}</p><button id="syncSettingsBtn">Actualiser les réglages</button><button class="secondary" id="settingsInstitutionBtn">${currentInstitution?"Gérer mon établissement":"Se rattacher à un établissement"}</button><button class="secondary" id="settingsLogoutBtn">Déconnecter en conservant la copie locale</button>${administration}${nestedSettingsSection("backupSection","Sauvegarde / restauration",`<p>Exporter les données accessibles à ce compte au format JSON.</p><button id="exportDataBtn">Exporter mes données web</button><p class="muted">La restauration des sauvegardes Android se fait dans l’application, puis par synchronisation. Un export web n’est pas une sauvegarde Android.</p>`)}${nestedSettingsSection("resetSection","Réinitialisation",`<p>Actions irréversibles : exporte une sauvegarde avant de continuer.</p><button class="danger" id="resetPersonalBtn">Réinitialiser mes données</button><button class="danger" id="resetSchoolBtn" ${currentInstitution?"":"disabled"}>Réinitialisation complète établissement</button>`)}${nestedSettingsSection("privacySection","Confidentialité et sécurité",`<p>Les réglages partagés sont privés à ton compte. La copie hors connexion reste sur cet appareil après la déconnexion. Sur un ordinateur perdu, prêté ou partagé, utilise la commande ci-dessous. Le PIN reste sur cet appareil et ne remplace pas la sécurité du compte.</p>${field("settingsPin","Code PIN local (4 à 8 chiffres)","","password")}<button id="setPinBtn">${prefs.pin?"Changer":"Activer"} le code</button>${prefs.pin?'<button class="secondary" id="removePinBtn">Désactiver le code</button>':""}<button class="danger" id="logoutAndEraseBtn">Déconnecter et effacer les copies de cet appareil</button>`)}`)+
       settingsSection("periodSection","Réglage des périodes",`<p>Choisis 3, 4 ou 5 périodes pour chaque niveau, comme dans l’application.</p>${grades.map(grade=>`<div class="settingsPeriodRow"><span>${esc(GRADE_LABELS[grade])}</span><div role="group" aria-label="Périodes ${esc(GRADE_LABELS[grade])}">${[3,4,5].map(n=>`<button type="button" class="periodChoice ${n===periodCountForLevel(grade,prefs)?"selected":""}" data-grade="${grade}" data-count="${n}" aria-pressed="${n===periodCountForLevel(grade,prefs)}">${n}</button>`).join("")}</div></div>`).join("")}<button id="savePeriodsBtn">Enregistrer les périodes</button>`)+
-      settingsSection("visualSection","Visuel de l’accueil",`<div class="row"><button id="basicVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="false"?"":"secondary"}">Visuel basique</button><button id="interactiveVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="true"?"":"secondary"}">Visuel interactif</button></div>
+      settingsSection("visualSection","Visuel",`<div class="row"><button id="basicVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="false"?"":"secondary"}">Visuel basique</button><button id="interactiveVisualBtn" class="${profilePayload(prefs).interactiveHomeEnabled==="true"?"":"secondary"}">Visuel interactif</button></div>
         <p class="muted" style="margin:14px 0 6px">Couleurs des professeurs dans le Planning global EPS. Ce choix ne vaut que sur cet appareil.</p>
         <div class="row"><button id="palettePaleBtn" class="${prefs.planningPaletteVive?"secondary":""}">Couleurs claires</button><button id="paletteViveBtn" class="${prefs.planningPaletteVive?"":"secondary"}">Couleurs vives</button></div>`)+
       settingsSection("weatherSettingsSection","Météo de l’accueil",`<button type="button" id="toggleHomeWeatherBtn" aria-pressed="${weatherEnabled()}">${weatherEnabled()?"Masquer la météo":"Afficher la météo"}</button><p>Ville actuelle : <strong>${settingsEscape(weatherCity()?.name || "Non réglée")}</strong></p><form id="settingsWeatherForm"><label for="settingsWeatherCity">Ville<input id="settingsWeatherCity" placeholder="Ex. Marrakech" minlength="2" maxlength="100" required autocomplete="off"></label><button type="submit">Rechercher</button></form><div id="settingsWeatherResults" class="weatherSearchResults" aria-live="polite"></div><p class="muted">La ville recherchée est transmise à Open-Meteo. Aucune localisation GPS ni donnée scolaire n’est utilisée.</p>`)+
       `<p id="settingsOk" role="status" aria-live="polite"></p>`;
+    // Déplacer les contrôles existants, sans les dupliquer ni perdre leurs identifiants.
+    const visual=document.getElementById("visualSection"),contents=visual.querySelector(".settingsContents");
+    const home=document.createElement("div");home.id="visualHomePanel";home.setAttribute("role","tabpanel");
+    while(contents.firstChild)home.append(contents.firstChild);
+    const weather=document.getElementById("weatherSettingsSection");
+    const weatherPanel=document.createElement("div");weatherPanel.id="visualWeatherPanel";weatherPanel.setAttribute("role","tabpanel");
+    weatherPanel.append(...weather.querySelector(".settingsContents").childNodes);weather.remove();
+    const classes=document.createElement("div");classes.id="visualClassPanel";classes.setAttribute("role","tabpanel");
+    const current=["ACTUEL","CLAIR","EVALUATIONS"].includes(prefs.classVisual)?prefs.classVisual:"ACTUEL";
+    classes.innerHTML=`<p>Choisis la présentation de la classe. Les évaluations, groupes et documents restent les mêmes.</p><div class="row" role="group" aria-label="Visuel de la classe">${[["ACTUEL","Actuel"],["CLAIR","Tableau de bord clair"],["EVALUATIONS","Évaluations au premier plan"]].map(([value,label])=>`<button type="button" data-class-visual="${value}" class="${current===value?'':'secondary'}" aria-pressed="${current===value}">${label}</button>`).join("")}</div><p class="muted">Sur mobile, les accès sont compacts et la saisie à reprendre est placée en premier. Ce choix est enregistré pour ce compte sur cet appareil, y compris hors connexion.</p>`;
+    const tabs=document.createElement("div");tabs.className="accountAdminTabs";tabs.setAttribute("role","tablist");tabs.setAttribute("aria-label","Visuels");
+    tabs.innerHTML=[["home","Accueil","visualHomePanel"],["weather","Météo","visualWeatherPanel"],["class","Classe","visualClassPanel"]].map(([value,label,panel])=>`<button type="button" id="visualTab-${value}" role="tab" data-visual-tab="${value}" aria-controls="${panel}">${label}</button>`).join("");
+    contents.append(tabs,home,weatherPanel,classes);
+    const selectVisualTab=value=>{settingsVisualTab=value;tabs.querySelectorAll("button").forEach(b=>{const active=b.dataset.visualTab===value;b.classList.toggle("secondary",!active);b.setAttribute("aria-selected",String(active));document.getElementById(b.getAttribute("aria-controls")).hidden=!active;document.getElementById(b.getAttribute("aria-controls")).setAttribute("aria-labelledby",b.id);});};
+    tabs.querySelectorAll("button").forEach(b=>b.onclick=()=>selectVisualTab(b.dataset.visualTab));
+    selectVisualTab(globalThis.openWeatherSettingsOnOpen?"weather":settingsVisualTab);
+    visual.open=keepVisualOpen;
+    classes.querySelectorAll("[data-class-visual]").forEach(b=>b.onclick=()=>{
+      savePrefs({...loadPrefs(),classVisual:b.dataset.classVisual});
+      classes.querySelectorAll("button").forEach(other=>{other.classList.toggle("secondary",other!==b);other.setAttribute("aria-pressed",String(other===b));});
+      if(typeof renderClassDashboard==="function"&&dashboardClass)renderClassDashboard();
+      document.getElementById("settingsOk").textContent="Visuel de la classe enregistré sur cet appareil.";
+    });
     document.getElementById("settingsOk").textContent=errors.join(" ") || (prefs.profilePending?"Un profil enregistré localement attend sa synchronisation.":"");
     document.getElementById("settingsOverlay").classList.add("open");
-    if(globalThis.openWeatherSettingsOnOpen){document.getElementById("weatherSettingsSection").open=true;globalThis.openWeatherSettingsOnOpen=false;}
+    if(globalThis.openWeatherSettingsOnOpen){visual.open=true;globalThis.openWeatherSettingsOnOpen=false;}
     const bind=(id,fn)=>{const el=document.getElementById(id); if(el) el.onclick=async()=>{el.disabled=true;try{await fn();}catch(e){document.getElementById("settingsOk").textContent=e.message;}finally{el.disabled=false;}};};
     bind("saveProfileBtn",saveSettings);
     bind("gmailConnectBtn",async()=>{const state=await connectGmailProfessional();document.getElementById("settingsOk").textContent=`Gmail connecté : ${state.email}.`;await openSettings();document.getElementById("gmailSection").open=true;});

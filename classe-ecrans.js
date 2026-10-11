@@ -339,6 +339,7 @@ function renderEcranClasse() {
   else if (vueClasse === "documents") ecDessinerDocuments(panel);
   else if (vueClasse === "dispenses") ecDessinerDispenses(panel);
   else if (vueClasse === "groupes") ecDessinerGroupes(panel);
+  if (typeof appliquerVisuelClasse === "function") appliquerVisuelClasse(panel);
   return true;
 }
 
