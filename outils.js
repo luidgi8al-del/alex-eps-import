@@ -293,7 +293,7 @@ async function drawEpsTestBody(key) {
   epsGenericSessions = await lireTable("eps_test_sessions",
     `eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=eq.${encodeURIComponent(test.label)}&deleted=eq.false&select=*&order=created_at.desc`,
     {ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&r.test_name===test.label&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});
-  const groupOf=s=>epsGenericGroupCount>1?(epsGenericGroupAssignments[s.id]??((toolStudents.findIndex(x=>String(x.id)===String(s.id))%epsGenericGroupCount)+1)):1;
+  const groupOf=s=>Number(epsGenericGroupAssignments[s.id])||0;
   const displayed=epsGenericActiveGroup>0?toolStudents.filter(s=>groupOf(s)===epsGenericActiveGroup):toolStudents;
   const groupTabs=`<div class="running-group-tabs"><button class="${epsGenericActiveGroup===0?'':'secondary'}" data-generic-group="0">Tous · ordre alphabétique</button>${Array.from({length:epsGenericGroupCount},(_,i)=>`<button class="${epsGenericActiveGroup===i+1?'':'secondary'}" data-generic-group="${i+1}">Groupe ${i+1}</button>`).join('')}${!epsTestStarted?`<label>Groupes<select id="genericGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===epsGenericGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label>`:''}</div>`;
   const preparationGroups=!epsTestStarted&&epsGenericGroupCount>1?`<section class="field-tool-card"><h3>Composition des groupes</h3><div class="fitness-table-wrap">${toolStudents.map(s=>`<label class="field-tool-row"><span>${studentLabel(s)}</span><select data-generic-student-group="${s.id}">${Array.from({length:epsGenericGroupCount},(_,i)=>`<option value="${i+1}" ${groupOf(s)===i+1?'selected':''}>Groupe ${i+1}</option>`).join('')}</select></label>`).join('')}</div></section>`:'';
@@ -589,7 +589,7 @@ async function drawVmaTest() {
   const cible = onRealClass() ? toolStudents : [{ id: FREE_USE, first_name: "Participant", last_name: "libre" }];
   if(onRealClass())vmaSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=like.Test%20VMA*&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&String(r.test_name||'').startsWith('Test VMA')&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});else vmaSessions=[];
   if (revision !== vmaRenderRevision) return;
-  const groupOf=s=>vmaGroupCount>1?(vmaGroupAssignments[s.id]??((toolStudents.findIndex(x=>String(x.id)===String(s.id))%vmaGroupCount)+1)):1;
+  const groupOf=s=>Number(vmaGroupAssignments[s.id])||0;
   const visible=onRealClass()&&vmaActiveGroup?cible.filter(s=>groupOf(s)===vmaActiveGroup):cible;
   const groups=onRealClass()?`<div class="running-group-tabs"><button class="${vmaActiveGroup===0?'':'secondary'}" data-vma-group="0">Tous</button>${Array.from({length:vmaGroupCount},(_,i)=>`<button class="${vmaActiveGroup===i+1?'':'secondary'}" data-vma-group="${i+1}">Groupe ${i+1}</button>`).join('')}<label>Groupes<select id="vmaGroupCount">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===vmaGroupCount?'selected':''}>${n===1?'Sans groupe':n+' groupes'}</option>`).join('')}</select></label></div>`:'';
   const saved=onRealClass()?`<section class="field-tool-card evaluation-history-card"><h3>Tests VMA enregistrés</h3>${evaluationHistoryHtml(vmaSessions,vmaSessionId,'data-vma-session','data-vma-delete','Aucun test VMA enregistré')}</section>`:'';
@@ -675,7 +675,7 @@ async function saveVmaResults(asNew=false) {
     }:{...vmaSessionRecord,test_name:"Test VMA · "+vmaProtocol,updated_at:now,deleted:false};await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();for(const r of rows){const old=!asNew?vmaResultRecords[r.studentId]:null,id=old?.id||crypto.randomUUID();kept.add(String(id));await enregistrerLigne('eps_test_results',{
       ...(old||{}),id, user_id: old?.user_id||session.user_id, session_id: sessionId,
       student_id: r.studentId, input_value: r.input??0, result_value: r.value,
-      input_unit: `group:${vmaGroupCount>1?(vmaGroupAssignments[r.studentId]??0):1}|${unite}|workflow:${EpsCommonGroups.encode("vma")}|mode:${vmaMode}|couleur:${vmaColors[r.studentId]||""}`,
+      input_unit: `group:${vmaGroupAssignments[r.studentId]??0}|${unite}|workflow:${EpsCommonGroups.encode("vma")}|mode:${vmaMode}|couleur:${vmaColors[r.studentId]||""}`,
       result_unit:r.draft?"brouillon":"km/h VMA",
       updated_at: now, deleted: false
     })}if(!asNew)for(const old of Object.values(vmaResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});vmaSessionId=sessionId;vmaSessionRecord=sessionRow;await drawVmaTest();await openVmaSession(sessionId);document.getElementById("vmaSaveMsg").textContent = `${rows.length} résultat(s) enregistré(s)${rows.length?'':' · brouillon'}.`;

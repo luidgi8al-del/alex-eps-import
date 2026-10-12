@@ -32,12 +32,14 @@
   function bindContext(state,draw) {
     const select=document.getElementById('wfClass');select.onchange=async()=>{
       if(!confirm('Changer de classe et commencer un nouveau travail ? Enregistrez auparavant les saisies à conserver.')){select.value=state.classId;return}
-      state.scores={};state.step=0;state.title='';state.classId=select.value;state.period=Math.min(state.period,periods(state.classId));state.id=null;state.createdAt=null;state.values={};state.groups=[];state.assignments={};state.activeGroup='';state.sessionId=null;state.resultIds={};state.inTest=false;await draw();
+      toolPanel.inert=true;
+      try{state.scores={};state.step=0;state.title='';state.classId=select.value;state.period=Math.min(state.period,periods(state.classId));state.id=null;state.createdAt=null;state.values={};state.groups=[];state.assignments={};state.activeGroup='';state.sessionId=null;state.resultIds={};state.inTest=false;await draw()}finally{toolPanel.inert=false}
     };
     document.getElementById('wfPeriod').onchange=e=>{state.period=+e.target.value};
     const free=document.getElementById('wfFree');if(free)free.onchange=()=>{state.freeNames=free.value;draw()};
   }
   function groupsHtml(state,students) {
+    if(globalThis.EpsToolGroups)return EpsToolGroups.html(state,students);
     const library=state.inTest?'':globalThis.EpsClassGroups?.controls(state)||'';
     const defaultSize=Math.max(2,Math.min(10,+state.autoGroupSize||4));
     const selector=library+`<div class="field-tool-row"><label>Affichage<select id="wfGroup"><option value="">Sans groupe · ordre alphabétique</option>${state.groups.map(g=>`<option value="${esc(g.id)}" ${String(g.id)===String(state.activeGroup)?'selected':''}>${esc(g.name)}</option>`).join('')}</select></label>${state.groups.length?`<button id="wfEditGroups" class="secondary">✎ Modifier les groupes</button>`:''}</div>`;
@@ -46,6 +48,7 @@
     return `<section class="field-tool-card common-groups common-groups-editing">${selector}<div class="common-group-presets"><span>Créer rapidement :</span>${[2,3,4].map(n=>`<button type="button" class="secondary" data-wf-group-preset="${n}">${n} groupes</button>`).join('')}</div><div class="common-group-auto"><label>Élèves par groupe<input id="wfAutoGroupSize" type="number" min="2" max="10" value="${defaultSize}"></label><button id="wfAutoGroups" class="secondary">Répartition automatique</button><button id="wfAddGroup" class="secondary">＋ Groupe libre</button></div><p class="muted">Pour ajouter, déplacer ou sortir un élève, choisissez son groupe dans la liste. « Non affecté » le sort de tous les groupes sans effacer ses résultats.</p><div data-wf-group-scroll>${state.groups.map(g=>`<div class="field-tool-row"><input aria-label="Nom du groupe" data-wf-group-name="${esc(g.id)}" value="${esc(g.name)}"><button class="danger" data-wf-group-delete="${esc(g.id)}">Supprimer ce groupe</button></div>`).join('')}${state.groups.length?`<div class="fitness-table-wrap"><table><thead><tr><th>Nom et prénom</th><th>Groupe</th></tr></thead><tbody>${students.map(s=>`<tr><td>${esc(studentLabel(s))}</td><td><select data-wf-assign="${esc(s.id)}"><option value="">Non affecté</option>${state.groups.map(g=>`<option value="${esc(g.id)}" ${String(state.assignments[s.id])===String(g.id)?'selected':''}>${esc(g.name)}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table></div><button id="wfFinishGroups">Revenir au test</button>`:'<p>Aucun groupe : tous les élèves restent affichés.</p>'}</div></section>`;
   }
   function bindGroups(state,draw) {
+    if(globalThis.EpsToolGroups)return EpsToolGroups.bind(state,draw);
     globalThis.EpsClassGroups?.bind(state,toolStudents,draw);
     const redraw=async()=>{const pageY=scrollY,panelY=toolPanel.scrollTop,innerY=toolPanel.querySelector('[data-wf-group-scroll]')?.scrollTop||0;await draw();requestAnimationFrame(()=>{scrollTo(0,pageY);toolPanel.scrollTop=panelY;const inner=toolPanel.querySelector('[data-wf-group-scroll]');if(inner)inner.scrollTop=innerY})};
     document.getElementById('wfGroup').onchange=e=>{state.activeGroup=e.target.value;redraw()};

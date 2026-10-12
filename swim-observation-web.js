@@ -77,6 +77,8 @@
     if(typeof bindRunningLongPress==="function")bindRunningLongPress(toolPanel.querySelectorAll("[data-swim-group-card]"),node=>manageSwimGroup(node.dataset.swimGroupCard))}
   /** Ajouter ou retirer un eleve d'un groupe deja constitue, sans revenir a l'ecran precedent. */
   function manageSwimGroup(nom){
+    if(globalThis.EpsToolGroups){const draft={groups:groupNames().map(id=>({id,name:id})),assignments:Object.fromEntries(toolStudents.map(s=>[s.id,state.values[s.id]?.group||""])),activeGroup:nom,nameIds:true};EpsToolGroups.html(draft,toolStudents);return EpsToolGroups.editor(draft,nom,()=>{toolStudents.forEach(s=>state.values[s.id]={...(state.values[s.id]||empty()),group:draft.groups.find(g=>String(g.id)===String(draft.assignments[s.id]))?.name||""});state.activeGroup=draft.groups.find(g=>String(g.id)===String(draft.activeGroup))?.name||"";drawGrid()})}
+
     document.getElementById("swimObsGroupDialog")?.remove();
     const overlay=document.createElement("div");overlay.id="swimObsGroupDialog";overlay.className="unified-export-overlay";
     document.body.appendChild(overlay);
@@ -124,7 +126,8 @@
       state.values[id]=v;drawGrid()
     });
     toolPanel.querySelectorAll("[data-swim-group]").forEach(b=>b.onclick=()=>{state.activeGroup=b.dataset.swimGroup;state.groupesActifs=!!b.dataset.swimGroup;drawGrid()});
-    document.getElementById("swimObsEditGroups").onclick=()=>{state.groupesActifs=true;drawGroups()};
+    document.getElementById("swimObsEditGroups").onclick=()=>{state.groupesActifs=true;groupNames().length?manageSwimGroup(state.activeGroup||groupNames()[0]):drawGroups()};
+    bindRunningLongPress(toolPanel.querySelectorAll('[data-swim-group]:not([data-swim-group=""])'),b=>manageSwimGroup(b.dataset.swimGroup));
     document.getElementById("swimObsAddIndicator").onclick=()=>{const nom=document.getElementById("swimObsNewIndicator").value.trim();if(!nom)return;if(state.indicators.some(l=>l.toLowerCase()===nom.toLowerCase()))return alert("Cet indicateur existe déjà.");state.indicators=[...state.indicators,nom];drawGrid()};
     document.getElementById("swimObsSave").onclick=saveSwimObservation;document.getElementById("swimObsNew").onclick=()=>{if(!confirm("Commencer une nouvelle saisie ? Enregistrez auparavant les résultats à conserver."))return;Object.values(state.values).forEach(v=>v.validated={});state.sessionId=null;state.resultIds={};state.createdAt=null;drawGrid()};document.getElementById("swimObsResume").onclick=()=>{const history=toolPanel.querySelector(".evaluation-history");if(history){history.open=true;history.scrollIntoView({behavior:"smooth",block:"nearest"})}};document.getElementById("swimObsExport").onclick=exportSwimObsCsv;document.getElementById("swimObsResetAll").onclick=()=>{if(!confirm("Effacer les résultats ? Les groupes, les réglages et les tests enregistrés sont conservés."))return;const previous=structuredClone(state);Object.values(state.values).forEach(v=>v.validated={});state.sessionId=null;state.resultIds={};state.createdAt=null;drawGrid();EpsToolWorkflow.offerUndo(()=>{Object.assign(state,previous);drawGrid()})};bindSaved()}
   // Enregistrer meme si tout le monde n'a pas ete observe : chaque eleve garde son groupe et ses
