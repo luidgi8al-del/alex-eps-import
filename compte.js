@@ -185,16 +185,29 @@ async function showMainView() {
   if (!session) { showAuthView(); return; }
   const activeUserId = session.user_id;
   const roleKey = `eps:installation-manager-role:${activeUserId}`;
-  let manager = localStorage.getItem(roleKey) === "true";
-  if (!manager && navigator.onLine) {
+  const knownRole=localStorage.getItem(roleKey);
+  let manager = knownRole==='true' ? true : knownRole==='false' ? false : null;
+  if (navigator.onLine) {
     try {
       const response = await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/eps_installation_manager_context`,
         { method: "POST", body: "{}" });
-      manager = (await response.json())?.is_manager === true;
+      if (!response.ok) throw Error('Vérification du compte indisponible.');
+      const context=await response.json();
+      if(typeof context?.is_manager!=='boolean')throw Error('Réponse de vérification invalide.');
+      manager = context.is_manager;
       localStorage.setItem(roleKey, String(manager));
     } catch { /* Une base non encore migrée ne bloque pas les comptes professeur. */ }
   }
   if (session?.user_id !== activeUserId) return;
+  if(manager===null) {
+    showAuthView();
+    let notice=document.getElementById('roleVerificationNotice');
+    if(!notice){notice=document.createElement('div');notice.id='roleVerificationNotice';notice.setAttribute('role','alert');notice.className='card';document.getElementById('authView').prepend(notice);}
+    notice.replaceChildren(document.createTextNode('Vérification de votre compte impossible. Aucun espace professeur n’a été ouvert. Reconnectez cet appareil à Internet puis réessayez. '));
+    const retry=document.createElement('button');retry.textContent='Réessayer';retry.onclick=showMainView;notice.append(retry);
+    return;
+  }
+  document.getElementById('roleVerificationNotice')?.remove();
   if (manager) {
     localStorage.setItem("eps_installation_manager_session", JSON.stringify(session));
     location.replace("responsable-installations.html");

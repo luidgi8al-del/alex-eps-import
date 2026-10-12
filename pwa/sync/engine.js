@@ -36,15 +36,22 @@ function applyLocalFieldsToServer(operation, serverRecord) {
   return { kind: "merged", data, localFields: operation.changedFields || [], overlappingFields: [] };
 }
 export class OfflineSyncEngine {
-  #adapter; #batchSize; #running;
+  #adapter; #batchSize; #running; #paused = false;
   constructor({ adapter, batchSize = DEFAULT_BATCH_SIZE }) {
     if (!adapter?.pullChanges || !adapter?.pushOperation) throw new TypeError("Adaptateur de synchronisation incomplet");
     this.#adapter = adapter; this.#batchSize = batchSize;
   }
   async sync() {
+    if (this.#paused) return {state:'pending'};
     if (this.#running) return this.#running;
     if (!navigator.onLine) return publishSyncState(SYNC_STATE.OFFLINE, { pending: await countPendingOperations() });
     this.#running = this.#run().finally(() => { this.#running = null; }); return this.#running;
+  }
+  async withExclusiveRecovery(action) {
+    if (this.#paused) throw Error('Une récupération est déjà en cours.');
+    this.#paused=true;
+    try { await this.#running; return await action(); }
+    finally { this.#paused=false; }
   }
   async #run() {
     publishSyncState(SYNC_STATE.SYNCING);
@@ -125,6 +132,7 @@ export class OfflineSyncEngine {
    * @param {{force?: boolean}} [options] force : sans attendre l'intervalle (ouverture d'un ecran)
    */
   async rattraper({ force = false } = {}) {
+    if (this.#paused) return 0;
     if (!this.#adapter.identifiantsRecents || !this.#adapter.tablesRattrapables?.length) return 0;
     const dernier = await getMeta(RATTRAPAGE_KEY);
     if (!force && dernier && Date.now() - dernier < RATTRAPAGE_INTERVALLE_MS) return 0;

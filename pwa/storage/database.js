@@ -119,22 +119,22 @@ function connexionFermee(erreur) {
   return erreur?.name === "InvalidStateError" || /closing|clos/i.test(texte);
 }
 
-export async function transaction(storeNames, mode, action) {
+export async function transaction(storeNames, mode, action, durability) {
   try {
-    return await executerTransaction(storeNames, mode, action);
+    return await executerTransaction(storeNames, mode, action, durability);
   } catch (erreur) {
     if (!connexionFermee(erreur)) throw erreur;
     // Une seule reprise : si la base refuse encore, c'est autre chose qu'une fermeture en vol,
     // et il vaut mieux le dire que boucler.
     opening = undefined;
-    return executerTransaction(storeNames, mode, action);
+    return executerTransaction(storeNames, mode, action, durability);
   }
 }
 
-async function executerTransaction(storeNames, mode, action) {
+async function executerTransaction(storeNames, mode, action, durability) {
   const db = await openOfflineDatabase();
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(storeNames, mode, { durability: mode === "readwrite" ? "relaxed" : "default" });
+    const tx = db.transaction(storeNames, mode, { durability: durability || (mode === "readwrite" ? "relaxed" : "default") });
     const stores = Object.fromEntries(storeNames.map(name => [name, tx.objectStore(name)]));
     let result;
     try { result = action(stores, tx); } catch (error) { tx.abort(); reject(error); return; }

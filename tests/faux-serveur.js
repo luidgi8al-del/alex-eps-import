@@ -197,6 +197,7 @@
     // nombre, pas un objet. Repondre a cote faisait tester un ecran d'erreur.
     if (/\/rest\/v1\/rpc\/eps_as_roster_version/.test(url)) return Promise.resolve(reponse(2));
     if (/\/rest\/v1\/rpc\/eps_team_context/.test(url)) return Promise.resolve(reponse({ institution_id: "etab-1", is_admin: true }));
+    if (/\/rest\/v1\/rpc\/eps_installation_manager_context/.test(url)) return Promise.resolve(reponse({is_manager:false,institution_id:'etab-1'}));
     if (/\/rest\/v1\/rpc\//.test(url)) return Promise.resolve(reponse({ saved: true, revision: 2 }));
     if (/open-meteo/.test(url)) return Promise.resolve(reponse({ current: {}, daily: { time: [], weathercode: [] }, hourly: { time: [], temperature_2m: [] } }));
 

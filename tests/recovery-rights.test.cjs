@@ -1,0 +1,16 @@
+const fs=require('fs'),path=require('path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+const sql=fs.readFileSync(path.join(root,'supabase/migrations/20261012010000_lesson_recovery.sql'),'utf8');
+assert(sql.includes('enable row level security'));
+assert(sql.includes('revoke all on public.eps_lesson_archives from anon,authenticated'));
+assert(sql.includes('user_id=auth.uid()'));
+assert(sql.includes('public.eps_account_active()'));
+assert(sql.includes('eps_installation_managers'));
+assert(sql.includes('revision=p_expected'));
+assert(sql.includes('on conflict(cycle_id) do nothing'));
+const compte=fs.readFileSync(path.join(root,'compte.js'),'utf8');
+assert(compte.includes("if(manager===null)"));
+assert(compte.includes("typeof context?.is_manager!=='boolean'"));
+const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const table of ['eps_test_results','eps_test_sessions','saved_teams','saved_team_members','class_documents','class_document_returns','class_notes'])assert(index.includes(`"${table}"`));
+console.log('PASS recovery policy guards and export coverage (source verification; not a live RLS test)');

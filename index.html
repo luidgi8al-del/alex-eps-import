@@ -576,6 +576,8 @@
   <script src="import-eleves.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="gmail-drafts.js?v=20260927-2"></script>
+  <script src="lesson-recovery.js?v=20261012-recovery-1"></script>
+  <script src="portable-recovery.js?v=20261012-recovery-1"></script>
   <script src="teacher-settings.js?v=20261011-visuel-1"></script>
   <script src="home-weather.js?v=20260929-1"></script>
   <script src="hors-connexion.js?v=20261007-aptitudes-delete-1"></script>
@@ -994,6 +996,8 @@
 
     /** Export JSON de tout ce que ce compte a enregistre, table par table. */
     async function exportAllData() {
+      const exportOwner = session?.user_id;
+      if (!exportOwner) throw Error("Connectez-vous avant d’exporter.");
       const tables = ["classes", "students", "cycles", "evaluations", "evaluation_criteria",
         "evaluation_scores", "class_schedule_slots", "period_activities", "annual_plan_blocks",
         "sport_installations", "sport_installation_contacts", "sport_installation_incidents", "unss_groups", "unss_students", "unss_memberships",
@@ -1002,13 +1006,16 @@
         "eps_email_campaigns", "eps_email_deliveries",
         // Manquaient a l'appel : une sauvegarde qui oublie une table ne se voit qu'au moment de
         // restaurer, c'est-a-dire trop tard.
-        "unss_slots", "installation_conflict_overrides"];
+        "unss_slots", "installation_conflict_overrides", "eps_test_sessions", "eps_test_results",
+        "saved_teams", "saved_team_members", "class_notes", "class_documents", "class_document_returns",
+        "eps_installation_interventions", "eps_lesson_archives"];
       const dump = { exportedAt: new Date().toISOString(), account: session.email };
       // Lecture paginee : PostgREST plafonne le nombre de lignes rendues, et une sauvegarde
       // tronquee ne se remarque qu'au moment de restaurer. On note aussi les tables qui n'ont pas
       // pu etre lues, plutot que de rendre un fichier qui a l'air complet.
       const manquantes = [];
       for (const table of tables) {
+        if (session?.user_id !== exportOwner) throw Error("Le compte a changé : export annulé.");
         try {
           const res = await apiFetchAll(`${SUPABASE_URL}/rest/v1/${table}?select=*`);
           if (res.ok) dump[table] = res.rows; else { dump[table] = []; manquantes.push(table); }
@@ -1019,6 +1026,7 @@
       // est pire que pas de chiffre du tout.
       dump.total = tables.reduce((n, table) => n + (dump[table]?.length || 0), 0);
       dump.tablesNonLues = manquantes;
+      if (session?.user_id !== exportOwner) throw Error("Le compte a changé : export annulé.");
       const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

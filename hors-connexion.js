@@ -241,6 +241,15 @@ async function demarrerModeHorsConnexion() {
   if (!demarrageHorsConnexion) demarrageHorsConnexion = initialiserModeHorsConnexion().finally(() => { demarrageHorsConnexion = null; });
   return demarrageHorsConnexion;
 }
+async function schemaLessonRecoveryApplied() {
+  const key=`eps:lesson-recovery:${session?.user_id || ''}`;
+  if(!navigator.onLine)return localStorage.getItem(key)==='1';
+  try {
+    const response=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_lesson_archives?select=id,cycle_id,version,updated_at&limit=0`);
+    if(!response.ok)return false;
+    localStorage.setItem(key,'1');return true;
+  }catch{return localStorage.getItem(key)==='1';}
+}
 async function initialiserModeHorsConnexion() {
   try {
     const tablesSuivies = (await schemaVague2Applique())
@@ -249,6 +258,7 @@ async function initialiserModeHorsConnexion() {
     if (await schemaVague3Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_3);
     if (await schemaVague4Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_4);
     if (await schemaVague5Applique()) tablesSuivies.push(...TABLES_HORS_CONNEXION_VAGUE_5);
+    if (await schemaLessonRecoveryApplied()) tablesSuivies.push('eps_lesson_archives');
     const module = await import("./pwa/bootstrap.js");
     modeHorsConnexion = await module.demarrerHorsConnexion({
       url: SUPABASE_URL,

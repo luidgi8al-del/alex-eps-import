@@ -813,6 +813,8 @@ async function creerCyclePourPeriode() {
  */
 async function ouvrirFicheSeance(cycle) {
   const { numero, total } = seanceAffichee(cycle);
+  const saved=(await savedLessons(cycle)).find(s=>s.orderIndex===numero-1);
+  if(saved){showTab('cours');showCoursTab('cours');showSavedLesson(saved,`${dashboardClass.label} · ${cycle.apsa_name}`);return;}
   const contenu = await loadCycleContent(dashboardClass.row.grade, cycle.apsa_name);
   const ordonnees = orderedSessions(contenu, dashboardClass.row.grade, total);
   const ecrite = ordonnees[numero - 1];
@@ -1440,16 +1442,19 @@ async function openCreatedCourse(course, classLabel) {
   panel.style.display = "block";
   panel.innerHTML = '<div class="muted">Chargement du cours...</div>';
   const content = await loadCycleContent(course.grade, course.apsa_name);
+  const saved=await savedLessons(course);
   const ordered = orderedSessions(content, course.grade, course.session_count);
   let sessionsHtml = "";
   for (let i = 1; i <= course.session_count; i++) {
     const written = ordered[i - 1];
-    const title = written?.theme || content?.plannedTitles?.[i - 1] || `Séance ${i}`;
+    const title = saved.find(s=>s.orderIndex===i-1)?.title || written?.theme || content?.plannedTitles?.[i - 1] || `Séance ${i}`;
     sessionsHtml += `<button class="secondary createdSessionBtn" data-session="${i}" style="display:block;width:100%;text-align:left">S${i} · ${title}</button>`;
   }
   panel.innerHTML = `<div class="top"><div><h2 style="margin:0">${classLabel} · ${course.apsa_name}</h2><div class="muted">Période ${selectedCoursPeriod} · ${course.session_count} séances</div></div><button class="secondary" id="closeCreatedCourse" style="margin-top:0">Fermer</button></div>${sessionsHtml}`;
   document.getElementById("closeCreatedCourse").onclick = () => { panel.style.display = "none"; };
   panel.querySelectorAll("[data-session]").forEach(button => button.onclick = () => {
+    const savedLesson=saved.find(s=>s.orderIndex===Number(button.dataset.session)-1);
+    if(savedLesson){showSavedLesson(savedLesson,`${classLabel} · ${course.apsa_name}`);return;}
     const n = Number(button.dataset.session);
     const written = ordered[n - 1];
     sessionSheetContext = `${classLabel} · ${course.apsa_name}`;
