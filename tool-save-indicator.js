@@ -22,7 +22,7 @@
   document.addEventListener('change',event=>{if(event.target.closest('#toolPanel,#liveToolPanel'))dirty()},true);
   document.addEventListener('click',event=>{
     const b=event.target.closest('button');if(!b||!b.closest('#toolPanel,#liveToolPanel'))return;
-    if(b.matches('[data-stop-plus],[data-stop-minus],[data-climb-observe],[data-swim-step],[data-impact-action],.socle-colour-cell,#runningSaveGroup,#runningDeleteGroup,#runningAutoGroups,[data-group-save],[data-group-delete]')||/Réinitialiser|Nouvelle saisie|Remise à zéro|Enregistrer le groupe|Créer le groupe/.test(b.textContent))dirty();
+    if(b.matches('[data-stop-plus],[data-stop-minus],[data-stop-student],[data-stop-moins],[data-obs-inc],[data-obs-dec],[data-climb-observe],[data-swim-step],[data-impact-action],.socle-colour-cell,#runningSaveGroup,#runningDeleteGroup,#runningAutoGroups,[data-group-save],[data-group-delete]')||/Réinitialiser|Nouvelle saisie|Remise à zéro|Enregistrer le groupe|Créer le groupe/.test(b.textContent))dirty();
   },true);
   window.addEventListener('eps:pwa-sync-state',e=>sync(e.detail));
   window.addEventListener('online',()=>render());window.addEventListener('offline',()=>render());
