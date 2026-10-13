@@ -1255,7 +1255,7 @@ function toolHeader(title, subtitle) {
   document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
   return `<div class="modern-tool-hero"><div><h2>${title}</h2><p>${subtitle}</p></div><div class="tool-close-controls"><button type="button" class="tool-save-indicator" data-state="red" aria-label="Pas encore enregistré" title="Pas encore enregistré"><span></span></button><button class="secondary" id="closeToolBtn" onclick="closeModernTool()" aria-label="Fermer l’outil">Fermer</button></div></div>`;
 }
-function closeModernTool(){stopToolTimer();toolPanel.style.display="none";toolPanel.innerHTML="";const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");workspace?.scrollIntoView({behavior:"smooth",block:"start"})}
+function closeModernTool(){globalThis.EpsToolResume?.capture();stopToolTimer();toolPanel.style.display="none";toolPanel.innerHTML="";const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");if(workspace)globalThis.EpsToolResume?.offer(workspace);workspace?.scrollIntoView({behavior:"smooth",block:"start"})}
 function bindToolClose() { const button=document.getElementById("closeToolBtn");if(button)button.onclick = closeModernTool; }
 
 function renderTimersHub() {

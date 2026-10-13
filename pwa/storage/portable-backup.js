@@ -18,6 +18,8 @@ export async function exportLocalBackup(owner, entities) {
   const prefKey = `eps_teacher_preferences:${owner}`;
   const raw = localStorage.getItem(prefKey);
   if (raw) { const prefs = JSON.parse(raw); delete prefs.pin; preferences[prefKey] = JSON.stringify(prefs); }
+  const draftKey=`eps_tool_resume:${owner}`, draft=localStorage.getItem(draftKey);
+  if(draft && JSON.parse(draft).owner===owner)preferences[draftKey]=draft;
   const payload = { ownerId:owner, databaseVersion:DB_VERSION, exportedAt:new Date().toISOString(), entities:[...entities], stores:values, preferences };
   const envelope = { format:'eps-lvh-web-local', version:1, sha256:await digest(JSON.stringify(payload)), payload };
   return JSON.stringify(envelope);
@@ -52,9 +54,10 @@ export async function validateLocalBackup(json, owner, entities) {
   }
   const prefs=p.preferences || {};
   for (const key of Object.keys(prefs)) {
-    if (key!==`eps_teacher_preferences:${owner}` || typeof prefs[key]!=='string') throw Error('Réglage non autorisé.');
+    if (![ `eps_teacher_preferences:${owner}`, `eps_tool_resume:${owner}` ].includes(key) || typeof prefs[key]!=='string') throw Error('Réglage non autorisé.');
     const v=JSON.parse(prefs[key]);
     if (!v || typeof v!=='object' || Array.isArray(v) || Object.hasOwn(v,'pin')) throw Error('Réglage non portable.');
+    if(key===`eps_tool_resume:${owner}`&&(v.owner!==owner||v.kind!=='running-draft'||!v.payload||typeof v.payload.values!=='object'||!Array.isArray(v.payload.groups)))throw Error('Brouillon invalide ou appartenant à un autre compte.');
   }
   return p;
 }
@@ -65,12 +68,14 @@ export async function restoreLocalBackup(json, owner, entities) {
   const generation=generationLocale();
   const prefKey=`eps_teacher_preferences:${owner}`;
   const oldPref=localStorage.getItem(prefKey);
+  const draftKey=`eps_tool_resume:${owner}`,oldDraft=localStorage.getItem(draftKey);
   const existing=await transaction([STORES.OUTBOX,STORES.CONFLICTS], 'readonly', s => Promise.all([
     requestResult(s[STORES.OUTBOX].count()),requestResult(s[STORES.CONFLICTS].count())
   ]));
   if (existing.some(n=>n>0)) throw Error('Cet appareil a des saisies ou conflits à conserver. Sauvegardez-les et traitez-les avant de restaurer.');
   if (generation!==generationLocale()) throw Error('Le compte a changé.');
   try {
+    if(p.preferences[draftKey])localStorage.setItem(draftKey,p.preferences[draftKey]);
     if (p.preferences[prefKey]) {
       const next=JSON.parse(p.preferences[prefKey]);
       const pin=oldPref ? JSON.parse(oldPref).pin : undefined;
@@ -82,6 +87,7 @@ export async function restoreLocalBackup(json, owner, entities) {
       stores.forEach(name=>{s[name].clear();p.stores[name].forEach(row=>s[name].put(row));});
     }, 'strict');
   } catch(e) {
+    if(oldDraft===null)localStorage.removeItem(draftKey);else localStorage.setItem(draftKey,oldDraft);
     if(oldPref===null)localStorage.removeItem(prefKey);else localStorage.setItem(prefKey,oldPref);
     throw e;
   }

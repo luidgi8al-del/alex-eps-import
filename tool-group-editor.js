@@ -38,14 +38,22 @@
       if(!existing&&!members.size){overlay.querySelector('[data-group-message]').textContent='Sélectionnez au moins un élève.';return}
       const name=overlay.querySelector('#commonGroupName').value.trim()||'Groupe '+(state.groups.length+1);
       if(state.nameIds&&state.groups.some(g=>String(g.id)!==String(id)&&g.name===name)){overlay.querySelector('[data-group-message]').textContent='Ce nom de groupe existe déjà.';return}
+      const previous=structuredClone({groups:state.groups,assignments:state.assignments,activeGroup:state.activeGroup});
       state.assignments=composition(state,id,members);
       if(existing)existing.name=name;else state.groups.push({id,name});state.activeGroup=String(id);state.editGroups=false;close();await draw();
+      undoComposition(state,previous,draw);
     };
     overlay.querySelector('[data-group-delete]')?.addEventListener('click',async()=>{
       if(!confirm('Supprimer ce groupe ? Les résultats seront conservés.'))return;
+      const previous=structuredClone({groups:state.groups,assignments:state.assignments,activeGroup:state.activeGroup});
       state.assignments=composition(state,id,[]);state.groups=state.groups.filter(g=>String(g.id)!==String(id));if(String(state.activeGroup)===String(id))state.activeGroup='';state.editGroups=false;close();await draw();
+      undoComposition(state,previous,draw);
     });
     overlay.querySelector('#commonGroupName').focus({preventScroll:true});
+  }
+  function undoComposition(state,previous,draw){
+    const expected=JSON.stringify({groups:state.groups,assignments:state.assignments});
+    EpsToolWorkflow.offerUndo(async()=>{if(JSON.stringify({groups:state.groups,assignments:state.assignments})!==expected)throw Error('Les groupes ont été modifiés depuis. Annulation interrompue pour conserver ces changements.');Object.assign(state,previous);await draw()});
   }
   function bind(state,draw){
     const students=rosters.get(state)||[];

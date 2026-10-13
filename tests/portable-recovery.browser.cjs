@@ -15,6 +15,7 @@ const server=http.createServer((req,res)=>{const p=path.join(root,decodeURICompo
       await enqueueOperation({entity:'evaluation_scores',id:'score-1',authorId:'teacher-a',baseVersion:2,data:{id:'score-1',user_id:'teacher-a',student_id:'pupil-1',criterion_id:'criterion-1',points:9},changedFields:['points']});
       localStorage.setItem('alex_eps_session','SECRET-DO-NOT-EXPORT');
       localStorage.setItem('eps_teacher_preferences:teacher-a',JSON.stringify({teacherName:'Teacher',pin:'SECRET-PIN'}));
+      localStorage.setItem('eps_tool_resume:teacher-a',JSON.stringify({owner:'teacher-a',kind:'running-draft',payload:{values:{'pupil-1':['315','','']},groups:[]}}));
       const backup=await import('./pwa/storage/portable-backup.js');return backup.exportLocalBackup('teacher-a',['evaluation_scores']);
     });
     assert(!exported.includes('SECRET-DO-NOT-EXPORT'));assert(!exported.includes('SECRET-PIN'));
@@ -29,9 +30,9 @@ const server=http.createServer((req,res)=>{const p=path.join(root,decodeURICompo
       const {readLocalRecord}=await import('./pwa/storage/records.js');const {pendingOperations}=await import('./pwa/sync/outbox.js');
       const row=await readLocalRecord('evaluation_scores','score-1');const pending=await pendingOperations();
       try{await backup.restoreLocalBackup(json,'teacher-a',['evaluation_scores']);attempts.push(false)}catch{attempts.push(true)}
-      return {attempts,restored,points:row.data.points,pending:pending.length};
+      return {attempts,restored,points:row.data.points,pending:pending.length,draft:JSON.parse(localStorage.getItem('eps_tool_resume:teacher-a')).payload.values['pupil-1'][0]};
     },exported);
-    assert.deepEqual(result.attempts,[true,true,true]);assert.equal(result.points,9);assert.equal(result.pending,1);
+    assert.deepEqual(result.attempts,[true,true,true]);assert.equal(result.points,9);assert.equal(result.pending,1);assert.equal(result.draft,'315');
     await other.reload();
     assert.equal(await other.evaluate(async()=>{const d=await import('./pwa/storage/database.js');d.utiliserCompte('teacher-a');return (await (await import('./pwa/storage/records.js')).readLocalRecord('evaluation_scores','score-1')).data.points}),9);
     await other.evaluate(async()=>{const d=await import('./pwa/storage/database.js');d.utiliserCompte('teacher-b')});

@@ -4,10 +4,12 @@
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const clone = v => structuredClone(v);
   function offerUndo(restore, target=toolPanel) {
-    target.querySelector('#toolUndo')?.remove();
-    const button=document.createElement('button');button.id='toolUndo';button.className='secondary';button.textContent='Annuler la dernière remise à zéro / suppression';
-    button.onclick=async()=>{button.disabled=true;await restore();button.remove()};
-    (target.querySelector('.tool-savebar, .running-save-actions')||target).append(button);
+    document.getElementById('toolUndoNotice')?.remove();
+    const account=session?.user_id,notice=document.createElement('div');notice.id='toolUndoNotice';notice.className='tool-undo-notice';notice.setAttribute('role','status');
+    const label=document.createElement('span');label.textContent='Modification effectuée';notice.append(label);
+    const button=document.createElement('button');button.id='toolUndo';button.textContent='Annuler';notice.append(button);document.body.append(notice);
+    const timer=setTimeout(()=>notice.remove(),12000);
+    button.onclick=async()=>{button.disabled=true;clearTimeout(timer);try{if(session?.user_id!==account)throw Error('Le compte a changé : annulation suspendue.');await restore();globalThis.EpsToolSave?.dirty();notice.remove()}catch(e){label.textContent='Annulation non confirmée : '+e.message;button.disabled=false}};
   }
   const fr = v => Number(v).toLocaleString('fr-FR');
   const LEVELS = [['6A',5],['5C',4.5],['5B',4],['5A',3.5],['4C',3],['4B',2.5],['4A',2],['3C',1.5],['3B',1],['3A',0.5]];
