@@ -3,7 +3,7 @@
   let generation=0,revision=0,savedRevision=-1,confirmed=false,batch=null,detail={};
   const labels={red:'Pas encore enregistré : utilisez Enregistrer avant de fermer.',orange:'Enregistré sur cet appareil, pas encore synchronisé.',green:'Enregistré et synchronisé.'};
   function colour(){return savedRevision!==revision?'red':confirmed?'green':'orange'}
-  function render(){document.querySelectorAll('.tool-save-indicator').forEach(dot=>{const c=colour();dot.dataset.state=c;dot.setAttribute('aria-label',labels[c]);dot.title=labels[c];});}
+  function render(){document.querySelectorAll('.tool-save-indicator').forEach(dot=>{const c=colour();dot.dataset.state=c;dot.setAttribute('aria-label',labels[c]);dot.title=labels[c];dot.onclick=()=>alert(labels[colour()]);});}
   function reset(){generation++;revision=0;savedRevision=-1;confirmed=false;batch=null;render()}
   function dirty(){revision++;confirmed=false;render()}
   function written(queued){if(batch){batch.writes++;batch.queued ||= queued}}
