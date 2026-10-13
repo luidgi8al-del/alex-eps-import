@@ -24,6 +24,7 @@ function formatToolTime(ms) {
   return `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}.${String(cs % 100).padStart(2,"0")}`;
 }
 function openTool(name, target) {
+  globalThis.EpsToolSave?.reset();
   stopToolTimer();
   speedRunning = false;
   toolPanel = target || document.getElementById("toolPanel");

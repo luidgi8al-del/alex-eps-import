@@ -152,14 +152,23 @@ async function lireTable(entite, cheminDirect, { ou, trier, avecSupprimes = fals
  * pas plus tard.
  */
 async function enregistrerLigne(entite, ligne, originalData) {
-  if (tableSuivie(entite)) return modeHorsConnexion.enregistrer(entite, ligne.id, ligne, originalData);
+  try {
+  if (tableSuivie(entite)) {
+    const result=await modeHorsConnexion.enregistrer(entite, ligne.id, ligne, originalData);
+    globalThis.EpsToolSave?.written(true);return result;
+  }
   const existe = await apiFetch(`${SUPABASE_URL}/rest/v1/${entite}?id=eq.${encodeURIComponent(ligne.id)}&select=id`);
   const dejaLa = existe.ok && (await existe.json()).length > 0;
   if (dejaLa) {
-    return apiFetch(`${SUPABASE_URL}/rest/v1/${entite}?id=eq.${encodeURIComponent(ligne.id)}`,
+    const response=await apiFetch(`${SUPABASE_URL}/rest/v1/${entite}?id=eq.${encodeURIComponent(ligne.id)}`,
       { method: "PATCH", body: JSON.stringify(ligne) });
+    if(!response.ok)throw Error(`Enregistrement refusé (${response.status}).`);
+    globalThis.EpsToolSave?.written(false);return response;
   }
-  return apiFetch(`${SUPABASE_URL}/rest/v1/${entite}`, { method: "POST", body: JSON.stringify(ligne) });
+  const response=await apiFetch(`${SUPABASE_URL}/rest/v1/${entite}`, { method: "POST", body: JSON.stringify(ligne) });
+  if(!response.ok)throw Error(`Enregistrement refusé (${response.status}).`);
+  globalThis.EpsToolSave?.written(false);return response;
+  }catch(error){globalThis.EpsToolSave?.failed();throw error}
 }
 
 /** Efface une ligne. L'effacement laisse une trace : sans elle, la ligne reviendrait. */

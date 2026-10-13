@@ -1,0 +1,7 @@
+.modern-tool-hero>div:first-child{flex:1;min-width:0}.modern-tool-hero{flex-wrap:wrap}
+.tool-close-controls{display:flex;align-items:center;flex-shrink:0;gap:0}
+.tool-close-controls #closeToolBtn{margin:0;min-height:44px;padding:10px 14px;width:auto}
+.tool-close-controls .tool-save-indicator{display:grid;place-items:center;width:44px;height:44px;min-width:44px;padding:0;margin:0;border:0;background:transparent;box-shadow:none}
+.tool-save-indicator span{display:block;width:11px;height:11px;border-radius:50%;background:#d63b3b}
+.tool-save-indicator[data-state=orange] span{background:#e68b0b}.tool-save-indicator[data-state=green] span{background:#159653}
+@media(max-width:420px){.modern-tool-hero{gap:6px}.modern-tool-hero h2{font-size:17px}}
