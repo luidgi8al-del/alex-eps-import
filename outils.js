@@ -116,6 +116,9 @@ function toolRosterHtml() {
     <div class="muted" style="margin-top:6px" id="toolRosterInfo"></div>
   </div>`;
 }
+function runningHeaderRosterHtml(){
+  return `<div class="running-header-class"><label for="toolClass">Classe</label><select id="toolClass"><option value="${FREE_USE}" ${toolClassId===FREE_USE?'selected':''}>Usage libre (sans classe)</option>${toolClasses.map(c=>`<option value="${toolHistoryEscape(c.id)}" ${c.id===toolClassId?'selected':''}>${toolHistoryEscape(c.name)}</option>`).join('')}</select></div>`;
+}
 
 /** Branche le selecteur : `onChange` est rappele une fois les eleves charges. */
 function bindToolRoster(onChange) {
@@ -124,7 +127,7 @@ function bindToolRoster(onChange) {
   select.onchange = async () => {
     toolClassId = select.value;
     await loadToolStudents(toolClassId);
-    onChange();
+    return onChange();
   };
   const info = document.getElementById("toolRosterInfo");
   if (info) {
@@ -188,21 +191,28 @@ function drawEpsTests() {
   if (epsOpenTest) {
     const test = EpsTests.TESTS[epsOpenTest];
     const category = EpsTests.CATEGORIES.find(cat => cat.tests.includes(epsOpenTest));
-    toolPanel.innerHTML = toolHeader(test.label, `${category?.name || "Tests EPS"}${cls ? ` · ${cls.name} · P${epsTestPeriod}` : " · utilisation libre"}`)
+    const compactRunning=epsOpenTest==='TROIS_500';
+    toolPanel.innerHTML = toolHeader(test.label, compactRunning?(category?.name||'Tests EPS'):`${category?.name || "Tests EPS"}${cls ? ` · ${cls.name} · P${epsTestPeriod}` : " · utilisation libre"}`, compactRunning?runningHeaderRosterHtml():'')
       + `<main class="eps-test-fullscreen">
-          <section class="eps-test-context" ${epsTestStarted?'hidden':''}>${toolRosterHtml()}
+          ${compactRunning?'':`<section class="eps-test-context" ${epsTestStarted?'hidden':''}>${toolRosterHtml()}
             ${onRealClass() ? `<label>Période du test</label><div class="periodBar" style="display:flex">${periods.join("")}</div>` : ""}
-          </section>
-          ${epsTestStarted?`<section class="field-tool-card field-tool-row"><b>${cls?.name||'Usage libre'} · P${epsTestPeriod}</b><button class="secondary" id="epsEditPreparation">Modifier la classe ou les groupes</button></section>`:onRealClass()?'<button id="epsBegin">Commencer le test</button>':''}
+          </section>`}
+          ${epsTestStarted?(compactRunning?'':`<section class="field-tool-card field-tool-row"><b>${cls?.name||'Usage libre'} · P${epsTestPeriod}</b><button class="secondary" id="epsEditPreparation">Modifier la classe ou les groupes</button></section>`):onRealClass()?'<button id="epsBegin">Commencer le test</button>':''}
           <div class="ok" id="epsSaveMsg"></div><div id="epsTestBody"></div>
         </main>`;
     bindToolClose();
-    bindToolRoster(() => {
+    bindToolRoster(async () => {
       epsTestStarted = false;
       resetGenericTestState();
       resetRunningSession();
+      if(compactRunning&&onRealClass()){
+        const grade=toolClasses.find(c=>c.id===toolClassId)?.grade;
+        if(grade==='TERMINALE')try{await loadPeriodDates()}catch{/* Cached school dates remain usable offline. */}
+        epsTestPeriod=ecPeriodeDuJour(grade);
+      }
       drawEpsTests();
     });
+    if(compactRunning){const selector=document.getElementById('toolClass'),change=selector.onchange;selector.onchange=async()=>{if(selector.value===toolClassId)return;if(Object.values(runningValues).some(times=>times.some(v=>String(v).trim()))&&!confirm('Changer de classe ? Enregistrez vos temps avant de changer. Le brouillon reste conservé sur cet appareil.')){selector.value=toolClassId;return}globalThis.EpsToolResume?.capture();await change()};}
     toolPanel.querySelectorAll("[data-eps-period]").forEach(b => b.onclick = () => {
       epsTestPeriod = Number(b.dataset.epsPeriod);
       epsTestStarted = false;
