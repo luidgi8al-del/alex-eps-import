@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "lvh-escalade-afl1",
+  "scale": 12,
+  "source": "escalade.docx",
+  "criteria": [
+    {
+      "title": "Lire et analyser les caractéristiques de la voie pour choisir et conduire son itinéraire en toute sécurité",
+      "summary": "Rythme · respiration · choix de difficulté · mousquetonnage",
+      "rule": "L’élève est positionné dans le degré dans lequel l’évaluateur identifie la compétence la plus faible.",
+      "degrees": [
+        "Rythme de progression très lent, gestuelle paralysée.\n\nRespiration saccadée.\n\n\nET\n\nFini la voie en mouli-tête avec ou sans chute.\nFini la voie en tête avec ou sans chute.\n\n\nOU\n\nFini la voie en mouli-tête sans chute, après avoir chuté en tête.\n\n\nOU\n\nNe finit pas la voie en mouli-tête.\n\nErreur de mousquetonnage non corrigée (yoyo, mousquetonnage à l’envers…).",
+        "Rythme de progression précipité dans les passages faciles et trop lent dans les passages difficiles.\n\nRespiration oubliée.\n\n\nET\n\nFini la voie en mouli-tête sans chute.\nFini la voie en tête avec ou sans chute.\n\n\nOU\n\nNe finit pas la voie en tête, avec au moins 3 dégaines mousquetonnées.\n\nErreur de mousquetonnage corrigée.\nMousquetonnage crispé, bras fléchis, sans position de moindre effort (PME).\nMousquetonnage trop tôt ou trop tard.",
+        "Rythme de progression adapté tant que la difficulté est facile ou moyenne, précipité dans la difficulté.\n\nRespiration non maîtrisée, non préparée (asphyxie dans ou après les passages difficiles).\n\n\nET\n\nFini la voie en mouli-tête sans chute.\nFini la voie en tête avec ou sans chute.\n\nMousquetonnage fluide, avec un côté préférentiel, en PME.\nMousquetonnage fait au bon moment.",
+        "Rythme de progression adapté aux difficultés, avec des temps de repos aménagés.\n\nRespiration régulière et adaptée à l’intensité de l’effort.\n\n\nET\n\nFini la voie en tête sans chute.\n\nMousquetonnage ambidextre, fluide, en PME ou intégré dans la progression.\nMousquetonnage fait au moment optimal."
+      ]
+    },
+    {
+      "title": "Adapter son déplacement en fonction des caractéristiques de la voie et de son projet d’itinéraire",
+      "summary": "Placement · prises · motricité · prise d’informations",
+      "rule": "L’élève est positionné dans le degré où apparaissent le plus d’éléments. En cas d’égalité, la fenêtre visuelle est déterminante.",
+      "degrees": [
+        "Grimpe de face uniquement.\n\nUtilisation des prises uniquement en traction verticale.\n\nUtilisation quasi-exclusive soit des bras, soit des jambes.\n\nFenêtre visuelle très réduite.",
+        "Grimpe parfois de profil.\n\nUtilisation du sens des prises de main, en oblique.\n\nDébut de PME avec les bras tendus.\n\nUtilisation de la poussée des jambes, sur de grosses prises.\n\nFenêtre visuelle réduite, regarde où mettre les mains.",
+        "Profil de grimpe adapté à la voie.\n\nUtilisation du sens des prises de main (verticale, inversée…).\n\nUtilisation des jambes même sur de petites prises, pour pousser et/ou pour s’équilibrer.\n\nAugmentation de la fenêtre visuelle (chercher les prises pour les mains et les pieds).",
+        "Tenue et valorisation optimale des prises.\n\nLes mouvements sont fluides avec des équilibres adaptés et une recherche de déséquilibre pour la progression.\n\nAugmentation de la palette technique : utilisation de pas d’adhérence, d’équilibre avec jambe libre…\n\nFenêtre visuelle très élargie, sollicitée en permanence."
+      ]
+    }
+  ]
+}

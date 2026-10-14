@@ -2,6 +2,7 @@
 (function(){
   const layouts={activities:"Par activité",functions:"Par fonction",moments:"Par moment",hybrid:"Hybride"};
   const tools=[
+    ["bac-eps","Bac EPS","3 × 500 et Escalade AFL1 · référentiels du lycée","🎓","Évaluer",["Bac EPS"]],
     ["timers","Chronomètres","Chrono, compte à rebours et intervalles","⏱️","Terrain",["Athlétisme","Natation"]],
     ["multi-chrono","Multi-chrono","Plusieurs élèves ou groupes simultanément","⏱️","Terrain",["Athlétisme","Natation"]],
     ["teams","Équipes","Former et équilibrer les équipes","👥","Organiser",["Sports collectifs","Raquettes","Gymnastique","Escalade"]],
@@ -132,6 +133,7 @@
     else if(activity){const rows=tools.filter(t=>(activity==="Tous"||t.id!=="condition-fitness") && (t.activities.includes(activity)||t.activities.includes("Tous")));content=`${favoritesShortcut()}<section class="tools-section"><div class="tools-section-head tools-section-head-with-back"><button class="tools-section-back" id="toolsActivityBack">←</button><h3>${esc(activity)}</h3><span>${rows.length} outils</span></div><div class="tools-layout-grid">${rows.map(toolCard).join("")}</div></section>`}
     else if(layout==="activities")content=`${favoritesShortcut()}<section class="tools-section"><div class="tools-section-head"><h3>Choisir une activité</h3><span>outils adaptés</span></div><div class="tools-layout-grid">${Object.entries(activityMeta).map(([n,m])=>`<button class="tools-activity-card" data-activity="${esc(n)}"><i>${m[0]}</i><span><strong>${esc(n)}</strong><small>${esc(m[1])}</small></span></button>`).join("")}</div></section>`;
     else {let rows=tools.filter(t=>!query||`${t.title} ${t.subtitle}`.toLowerCase().includes(query.toLowerCase()));if(layout==="functions")content=grouped(rows,t=>t.fn,"Outils classés par fonction");else if(layout==="moments")content=grouped(rows,t=>t.fn==="Terrain"?"Pendant la séance":t.fn==="Organiser"?"Avant la séance":"Observer et évaluer","Outils classés par moment");else content=`<div class="tools-hero"><h2>Mes outils</h2><p>Accès rapide et familles</p></div>${favoritesShortcut()}<div class="tools-toolbar"><input id="toolsSearch" placeholder="Rechercher un outil" value="${esc(query)}"></div><section class="tools-section"><div class="tools-layout-grid">${rows.map(toolCard).join("")}</div></section>`;if(layout==="functions"||layout==="moments")content=content.replace('</div>',`</div>${favoritesShortcut()}`)}
+    content=`<button class="secondary" data-open-modern="bac-eps">🎓 Bac EPS</button>`+content;
     host.className="tools-workspace";host.innerHTML=content;bind(host);globalThis.EpsToolResume?.offer(host);
     // Choisir une activite, les favoris ou revenir en arriere doit toujours reprendre en haut de
     // la page : sans cela, un menu ouvert depuis le bas d'un long ecran restait scrolle pareil,

@@ -1,0 +1,25 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const server=http.createServer((req,res)=>{try{let f=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.statSync(f).isDirectory())f=path.join(f,'index.html');res.setHeader('Content-Type',f.endsWith('.js')?'application/javascript':f.endsWith('.css')?'text/css':f.endsWith('.json')?'application/json':'text/html');res.end(fs.readFileSync(f))}catch{res.statusCode=404;res.end()}});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ const c=await browser.newContext({viewport:{width:390,height:844}});
+ await c.addInitScript({content:`const savedSet=Storage.prototype.setItem;const savedRegister=navigator.serviceWorker.register.bind(navigator.serviceWorker);${fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')};Storage.prototype.setItem=savedSet;navigator.serviceWorker.register=savedRegister;__fauxServeur.DONNEES.eps_schema_marks.push({name:'as_slot_assignments'});const fake=window.fetch;window.fetch=(url,opts)=>!navigator.onLine&&String(url).includes('supabase.co')?Promise.reject(new TypeError('Failed to fetch')):fake(url,opts);`});
+ const p=await c.newPage();p.on('dialog',d=>d.accept(d.type()==='prompt'?'AFL1 hors ligne':undefined));
+ await p.goto(`http://127.0.0.1:${server.address().port}/index.html`);await p.evaluate(()=>demarrerModeHorsConnexion());await p.waitForFunction(()=>!!navigator.serviceWorker.controller);await p.waitForFunction(()=>automaticOfflineState==='ready',null,{timeout:120000});
+ await c.setOffline(true);await p.reload();await p.waitForFunction(()=>typeof epsPageFullyReady!=='undefined'&&epsPageFullyReady);await p.evaluate(()=>demarrerModeHorsConnexion());
+ await p.evaluate(async()=>{showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';await renderBacClimbWeb()});
+ await p.locator('#wfClass').selectOption('cl-3e6');await p.locator('#wfStart').click();await p.locator('#bacRoute').selectOption('6a');await p.locator('[data-bac-note="0:0"]').click();await p.locator('[data-bac-note="1:3"]').click();assert.equal(await p.locator('#bacTotal').innerText(),'6,00 /12');
+ await p.locator('[data-bac-info="0:0"]').click();assert.match(await p.locator('dialog .bac-description').innerText(),/mousquetonnage/);await p.locator('dialog [data-close]').click();
+ await p.locator('#toolPanel .tool-direct-actions').first().getByRole('button',{name:/Enregistrer/}).first().click();if(await p.locator('#toolSaveConfirm').count())await p.locator('#toolSaveConfirm').click();
+ await p.waitForFunction(()=>document.getElementById('wfStatus')?.textContent.startsWith('Enregistré'));
+ const id=await p.evaluate(async()=>{const works=await EpsToolWorks.read();return works.find(w=>w.type==='bac-climb')?.id});assert(id);
+ await p.reload();await p.waitForFunction(()=>typeof epsPageFullyReady!=='undefined'&&epsPageFullyReady);await p.evaluate(()=>demarrerModeHorsConnexion());await p.evaluate(id=>ouvrirSessionTestDepuisClasse(id,'cl-3e6',1,'Escalade · AFL1 /12'),id);
+ assert.equal(await p.locator('#bacTotal').innerText(),'6,00 /12');assert.equal(await p.locator('#bacRoute').inputValue(),'6a');
+ const pending=await p.evaluate(async()=>{const {countPendingOperations}=await import('./pwa/sync/outbox.js');return countPendingOperations()});assert(pending>0);
+ await p.evaluate(()=>{const prev=fetch;window.__arrived=[];window.fetch=async(url,opts={})=>{if(String(url).includes('/rest/v1/eps_saved_tool_works')&&['POST','PATCH'].includes(opts.method)){window.__arrived.push(JSON.parse(opts.body))}return prev(url,opts)}});
+ await c.setOffline(false);await p.evaluate(async()=>{await(await demarrerModeHorsConnexion()).synchroniser()});await p.waitForFunction(()=>__arrived.length>0);
+ const transferred=await p.evaluate(()=>__arrived.find(r=>r.type==='bac-climb'));assert.equal(transferred.id,id);assert(Object.values(JSON.parse(transferred.payload).values).some(v=>v.route==='6a'&&v.degrees[1]===3));
+ console.log('PASS PWA offline reload: rubric + class loaded, notes saved, second reload intact, queued transfer reaches simulated server on reconnect');
+ await c.close();
+}finally{await browser.close();server.closeAllConnections();server.close()}})().catch(e=>{console.error(e);server.closeAllConnections();server.close();process.exitCode=1});

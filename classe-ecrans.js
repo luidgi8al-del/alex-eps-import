@@ -983,7 +983,7 @@ function ecDessinerEvaluations(panel) {
     };
   });
   const cartesTests = tests.map(t => {
-    const evalues = nombreResultatsTest(t.id);
+    const evalues = EpsPortableWorks.completed(t,dashboardStudents) ?? nombreResultatsTest(t.id);
     const date = Number(t.created_at) || Date.parse(t.created_at) || 0;
     return {
       genre: "test",
@@ -1205,7 +1205,7 @@ function ecOuvrirTests(tests) {
     <h3>Tests EPS enregistrés</h3>
     <p class="muted">Période ${dashboardPeriod} · cliquez un test pour le reprendre ou le modifier</p>
     <div class="ec-liste">${tests.length ? tests.map(t => {
-      const n = resultats(t.id);
+      const n = EpsPortableWorks.completed(t,dashboardStudents) ?? resultats(t.id);
       return `<div class="ec-test-ligne">
         <button type="button" class="ec-test" data-ec-test="${ecTexte(t.id)}"><b>${ecTexte(t.test_name || "Test")}</b>
           <small>Période ${Number(t.period_number) || 1} · ${new Date(Number(t.created_at) || Date.parse(t.created_at)).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })} · ${n ? ecPluriel(n, "élève") : "aucun résultat"}</small>
@@ -1435,7 +1435,7 @@ async function ecDupliquerEvaluation(evaluation, cible) {
 async function ecRouvrirTravail(travail) {
   if(travail.compatibilityError){alert(travail.compatibilityError);return}
   const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
-    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb",measures:"renderMeasures",effort:"renderEffortWeb",random:"renderRandomWeb" };
+    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb",measures:"renderMeasures",effort:"renderEffortWeb",random:"renderRandomWeb",'bac-climb':'renderBacClimbWeb' };
   const dessin = globalThis[outils[travail.type]] || (travail.type === "climb-observation" ? renderClimbObservationWeb : travail.type === "climb-test" ? renderClimbTestWeb : ["swim","aptitudes","speed","impacts"].includes(travail.type) ? w => renderPersistedTool(travail.type,w) : null);
   return ecEnFenetreOutil(async () => {
     stopToolTimer();

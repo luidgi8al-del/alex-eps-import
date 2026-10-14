@@ -9,7 +9,7 @@ const server=http.createServer((req,res)=>{try{let p=path.join(root,decodeURICom
   for(const id of ids){
    await p.evaluate(id=>{showTab('outils');resetToolsWorkspace();epsOpenTest=null;openTool(id)},id);await p.waitForTimeout(160);
    const selector=p.locator(classIds.map(id=>'#toolPanel #'+id).join(',')).first();
-   if(!await selector.count()){assert(['timers','score','measures','signals'].includes(id),`missing class control ${id}`);continue}
+   if(!await selector.count()){assert(['timers','score','measures','signals','bac-eps'].includes(id),`missing class control ${id}`);continue}
    await selector.selectOption('cl-3e6');await p.waitForTimeout(200);
    const state=await p.evaluate(ids=>{const panel=document.getElementById('toolPanel'),node=ids.map(id=>panel.querySelector('#'+id)).find(Boolean),hero=panel.querySelector('.modern-tool-hero');return{inHeader:hero.contains(node),classValue:node.value,periods:[...panel.querySelectorAll('label')].filter(n=>n.getClientRects().length&&!n.closest('[hidden]')&&/^(Période|P[1-5])/.test(n.textContent.trim())).map(n=>n.textContent),width:document.documentElement.scrollWidth}},classIds);
    assert(state.inHeader,id+' class outside header');assert.equal(state.classValue,'cl-3e6',id);assert.deepEqual(state.periods,[],id+' period still visible');assert(state.width<=width+2,id+' horizontal overflow');console.log('PASS compact',width,id);

@@ -1,7 +1,7 @@
 /* Shared wire format with PortableToolWork.kt. No student-name matching or foreign local IDs. */
 (function(root){
  'use strict';
- const aliases={'tools/measures':'measures','tools/effort':'effort','tools/random-picker':'random','tools/tournament':'tournament','tools/observer':'observer','tools/workshop-rotations':'rotations','tools/speed-tracker':'speed','tools/multi-chrono':'multi-free','tools/impact-marker':'impacts'};
+ const aliases={'tools/measures':'measures','tools/effort':'effort','tools/random-picker':'random','tools/tournament':'tournament','tools/observer':'observer','tools/workshop-rotations':'rotations','tools/speed-tracker':'speed','tools/multi-chrono':'multi-free','tools/impact-marker':'impacts','tools/bac-climb':'bac-climb'};
  const type=value=>aliases[value]||value;
  function payload(kind,value){
   const p=typeof value==='string'?JSON.parse(value):structuredClone(value||{});
@@ -36,9 +36,13 @@
  }
  async function classTests(tests,classId){
   const rows=await lireTable('eps_saved_tool_works',`eps_saved_tool_works?class_id=eq.${classId}&select=*`,{avecSupprimes:true,ou:w=>String(w.class_id)===String(classId)});
-  const multis=rows.filter(r=>r.user_id===session.user_id&&type(r.type)==='multi-free'),ids=new Set(multis.map(r=>r.id));
-  return [...tests.filter(t=>!ids.has(t.id)),...multis.filter(r=>!r.deleted).map(r=>({id:r.id,user_id:r.user_id,class_id:r.class_id,period_number:r.period_number,test_name:'Multi-chrono',class_label:r.title,created_at:Date.parse(r.created_at),updated_at:r.updated_at,deleted:false,_toolWork:r}))];
+  const works=rows.filter(r=>r.user_id===session.user_id&&['multi-free','bac-climb'].includes(type(r.type))),ids=new Set(works.map(r=>r.id));
+  return [...tests.filter(t=>!ids.has(t.id)),...works.filter(r=>!r.deleted).map(r=>({id:r.id,user_id:r.user_id,class_id:r.class_id,period_number:r.period_number,test_name:type(r.type)==='bac-climb'?'Escalade · AFL1 /12':'Multi-chrono',class_label:r.title,created_at:Date.parse(r.created_at),updated_at:r.updated_at,deleted:false,_toolWork:r}))];
  }
- const api={type,payload,row,writable,multiSession,classTests};root.EpsPortableWorks=api;
+ function completed(test,students){
+  if(type(test?._toolWork?.type)!=='bac-climb')return null;
+  try{const p=row(test._toolWork).payload;return students.filter(s=>root.EpsBacClimbModel.total(p.values?.[s.id],p.manual)!=null).length}catch{return 0}
+ }
+ const api={type,payload,row,writable,multiSession,classTests,completed};root.EpsPortableWorks=api;
  if(typeof module==='object'&&module.exports)module.exports=api;
 })(globalThis);
