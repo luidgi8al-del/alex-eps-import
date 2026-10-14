@@ -19,6 +19,7 @@ const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/ht
     globalThis.modeHorsConnexion={lire:async(table,{ou})=>({rows:data[table].filter(ou)}),enregistrer:async(table,id,row)=>{if(table==='evaluation_scores'&&globalThis.failOnce){globalThis.failOnce=false;throw Error('Simulation interruption')}globalThis.writes=globalThis.writes.filter(w=>w.row.id!==id);globalThis.writes.push({table,row})}};
    });
    await page.addScriptTag({content:source});await page.evaluate(()=>openRunningFinal());
+   await page.locator('[data-continue]').click();
    assert.equal(await page.locator('[data-score="0"]').inputValue(),'8');
    await page.locator('[data-mode]').selectOption('best');assert.equal(await page.locator('[data-score="0"]').inputValue(),'10');
    await page.locator('[data-mode]').selectOption('progress');assert.equal(await page.locator('[data-score="0"]').inputValue(),'9');

@@ -50,7 +50,7 @@
       const cycles = await read('cycles',`class_id=eq.${classId}`,c=>String(c.class_id)===String(classId));
       const evaluations = cycles.length ? await read('evaluations',`cycle_id=in.(${cycles.map(c=>c.id).join(',')})&type=eq.FINALE`,e=>cycles.some(c=>c.id===e.cycle_id)&&e.type==='FINALE') : [];
       const selected = new Set(sessions.map(s=>s.id));
-      let mode='mean', cap=1, malus=false, cycleId=cycles[0]?.id || '', target='', busy=false, plan=null;
+      let mode='mean', cap=1, malus=false, cycleId=cycles[0]?.id || '', target='', busy=false, plan=null,selectionReady=false;
       const edits = new Map();
       function preview() {
         return students.map(student=>{
@@ -63,6 +63,11 @@
         });
       }
       function paint(message='') {
+        if(!selectionReady){
+          dialog.style.width='min(500px,94vw)';
+          dialog.innerHTML=`<h2>Choisir les tableaux</h2><p>3 × 500 m · Période ${period} · même classe</p><button data-all class="secondary">Tout sélectionner</button> <button data-none class="secondary">Tout décocher</button><div style="max-height:300px;overflow:auto">${sessions.map(s=>`<label style="display:block;padding:10px"><input style="width:auto" type="checkbox" data-session="${esc(s.id)}" ${selected.has(s.id)?'checked':''}> ${esc(new Date(Number(s.created_at)||s.created_at).toLocaleString('fr-FR'))}</label>`).join('')||'<p>Aucune séance enregistrée.</p>'}</div><p role="status">${selected.size} tableau(x) sélectionné(s).</p><button data-continue ${selected.size?'':'disabled'}>Continuer</button> <button data-close class="secondary">Annuler</button>`;
+          dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.querySelector('[data-all]').onclick=()=>{sessions.forEach(s=>selected.add(s.id));paint()};dialog.querySelector('[data-none]').onclick=()=>{selected.clear();paint()};dialog.querySelectorAll('[data-session]').forEach(b=>b.onchange=()=>{b.checked?selected.add(b.dataset.session):selected.delete(b.dataset.session);paint()});dialog.querySelector('[data-continue]').onclick=()=>{selectionReady=true;dialog.style.width='min(1050px,94vw)';paint()};return;
+        }
         const rows=preview(), finals=evaluations.filter(e=>e.cycle_id===cycleId);
         if (!finals.some(e=>e.id===target)) target=finals[0]?.id || '';
         const incompatible=rows.some(r=>r.incompatible);
