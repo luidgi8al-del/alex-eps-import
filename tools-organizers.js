@@ -13,6 +13,7 @@
       const matches=pairs();toolPanel.querySelectorAll('[data-match]').forEach(e=>e.oninput=()=>{(state.scores[matches[+e.dataset.match].key]??=['',''])[+e.dataset.side]=e.value;renderStandings()});renderStandings();
       W.bindActions('tournament',state,draw,()=>W.csv('tournoi.csv',[['Équipe A','Équipe B','Score A','Score B'],...pairs().map(m=>[m.a,m.b,...(state.scores[m.key]||['',''])]),[],['Classement','Joués','Points','Pour','Contre'],...standings().map(r=>[r.name,r.played,r.points,r.for,r.against])]),()=>{state.scores={}},renderTournamentWeb);
       const save=document.getElementById('wfSave'),original=save.onclick;save.onclick=()=>{if(toolPanel.querySelector('input:invalid'))return toolPanel.querySelector('input:invalid').reportValidity();if(tourTeams.value.trim()!==state.teams.trim())return alert('Actualisez les rencontres avant d’enregistrer.');return original()};
+      EpsToolActionMenus.register(save.closest('.tool-savebar'),{document:()=>({title:'Tournoi',context:toolClasses.find(c=>c.id===state.classId)?.name||'Usage libre',headers:['Équipe A','Équipe B','Score A','Score B'],rows:[...pairs().map(m=>[m.a,m.b,...(state.scores[m.key]||['',''])]),[],['Classement','Joués','Points','Pour','Contre'],...standings().map(r=>[r.name,r.played,r.points,r.for,r.against])]})});
     }await draw();
   }
   async function groupedOrganizer(type,saved){
@@ -26,6 +27,7 @@
       document.getElementById('orgSize').onchange=e=>state.size=Math.max(1,Math.min(30,+e.target.value||2));document.getElementById('orgBuild').onclick=()=>{if(state.groups.length&&!confirm('Remplacer la composition actuelle ?'))return;state.groups=[];state.assignments={};students.forEach((s,i)=>{const index=Math.floor(i/state.size);state.groups[index]??={id:'g'+index,name:'Groupe '+(index+1)};state.assignments[s.id]=state.groups[index].id});state.activeGroup='';draw()};
       if(rotation){document.getElementById('rotStations').onchange=e=>{state.stations=e.target.value;state.step=0;draw()};document.getElementById('rotNext').onclick=()=>{state.step++;draw()}}
       W.bindActions(type,state,draw,()=>W.csv(type+'.csv',[['Élève','Groupe',...(rotation?['Atelier']:[])],...students.map(s=>{const i=state.groups.findIndex(g=>g.id===state.assignments[s.id]);return [studentLabel(s),state.groups[i]?.name||'Non affecté',...(rotation?[i<0?'':stations[(i+state.step)%stations.length]||'']:[])]})]),()=>{state.step=0},s=>groupedOrganizer(type,s));
+      EpsToolActionMenus.register(document.getElementById('wfSave').closest('.tool-savebar'),{document:()=>({title:rotation?'Rotations':'Groupes Acrosport',context:toolClasses.find(c=>c.id===state.classId)?.name||'Usage libre',headers:['Élève','Groupe',...(rotation?['Atelier']:[])],rows:students.map(s=>{const i=state.groups.findIndex(g=>g.id===state.assignments[s.id]);return [studentLabel(s),state.groups[i]?.name||'Non affecté',...(rotation?[i<0?'':stations[(i+state.step)%stations.length]||'']:[])]})})});
     }await draw();
   }
   Object.assign(globalThis,{renderTournamentWeb,renderRotationsWeb:s=>groupedOrganizer('rotations',s),renderAcrosportWeb:s=>groupedOrganizer('acrosport',s)});

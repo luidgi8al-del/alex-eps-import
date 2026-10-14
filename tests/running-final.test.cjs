@@ -1,12 +1,27 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const {calculate,sample}=require('../running-final.js');
+const {calculate,sample,gradedSample}=require('../running-final.js');
 const values=[{score:10,date:3},{score:6,date:1},{score:8,date:2}];
 test('three modes use chronological sessions, not table order',()=>{
   assert.equal(calculate(values,'mean').score,8);
   assert.equal(calculate(values,'best').score,10);
   assert.equal(calculate(values,'progress',1,true).score,9);
   assert.equal(calculate(values,'progress',2,true).score,10);
+});
+test('other genuine grade scales use their own bounds and reject measurements',()=>{
+ const saved={created_at:1720000000000},row={result_value:18,result_unit:'note /20',input_unit:'fitness:{}'};
+ assert.equal(gradedSample(row,saved,20).score,18);
+ for(const patch of [{result_unit:'km/h'},{result_unit:'/12'},{result_unit:'/20 · en cours'},{result_value:null},{result_value:21},{deleted:true},{input_unit:'stop:mode:couleur'},{input_unit:'gym:{"mode":"couleur"}'}])assert.equal(gradedSample({...row,...patch},saved,20),null);
+ assert.equal(calculate([{score:18,date:1},{score:20,date:2}],'progress',2,false,20).score,20);
+ assert.equal(calculate([{score:16,date:1},{score:18,date:2}],'mean',1,false,20).score,17);
+});
+test('incomplete climbing and gymnastics never enter a final grade',()=>{
+ const saved={created_at:1720000000000};const row={result_value:10,result_unit:'/20',input_unit:'climb:technique=3;checked=0,1,2'};
+ assert.equal(gradedSample(row,saved,20),null);
+ assert.equal(gradedSample({...row,input_unit:'climb:technique=3;checked=0,1,2,3'},saved,20).score,10);
+ const gym={result_value:2,result_unit:'/3',input_unit:'gym:'+JSON.stringify({mode:'note',figures:[{difficulte:'A'},{difficulte:'B'},{difficulte:''}]})};
+ assert.equal(gradedSample(gym,saved,3),null);
+ assert.equal(gradedSample({...gym,input_unit:gym.input_unit.replace('"difficulte":""','"difficulte":"A"')},saved,3).score,2);
 });
 test('negative progress, optional malus, bounds, absence and single test',()=>{
   const falling=[{score:10,date:1},{score:6,date:2}];

@@ -59,6 +59,7 @@
     const students=rosters.get(state)||[];
     EpsClassGroups?.bind(state,students,draw);
     const host=toolPanel.querySelector('.common-groups');if(!host)return;
+    globalThis.EpsToolActionMenus?.groupController(host,state,draw);
     let ignoreUntil=0;
     const redraw=async()=>{const y=scrollY,panelY=toolPanel.scrollTop;toolPanel.inert=true;try{await draw()}finally{toolPanel.inert=false}requestAnimationFrame(()=>{scrollTo(0,y);toolPanel.scrollTop=panelY})};
     const tabs=host.querySelectorAll('[data-tool-group]');
