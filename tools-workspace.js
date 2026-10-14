@@ -2,7 +2,7 @@
 (function(){
   const layouts={activities:"Par activité",functions:"Par fonction",moments:"Par moment",hybrid:"Hybride"};
   const tools=[
-    ["bac-eps","Bac EPS","3 × 500 et Escalade AFL1 · référentiels du lycée","🎓","Évaluer",["Bac EPS"]],
+    ["bac-eps","Bac EPS","11 activités · grilles AFL1 du lycée","🎓","Évaluer",["Bac EPS"]],
     ["timers","Chronomètres","Chrono, compte à rebours et intervalles","⏱️","Terrain",["Athlétisme","Natation"]],
     ["multi-chrono","Multi-chrono","Plusieurs élèves ou groupes simultanément","⏱️","Terrain",["Athlétisme","Natation"]],
     ["teams","Équipes","Former et équilibrer les équipes","👥","Organiser",["Sports collectifs","Raquettes","Gymnastique","Escalade"]],

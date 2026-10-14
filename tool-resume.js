@@ -25,7 +25,7 @@
   if(record){const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${record.id}&deleted=eq.false&select=*`,{ou:r=>r.session_id===record.id&&!r.deleted});rows.forEach(r=>runningResultRecords[r.student_id]=r);}
   EpsToolSave.reset();paintRunningSeriesTest(EpsTests.TESTS.TROIS_500);lastSignature='';capture();
  }
- const renderers={observer:()=>renderObserverWeb,tournament:()=>renderTournamentWeb,rotations:()=>renderRotationsWeb,acrosport:()=>renderAcrosportWeb,'climb-observation':()=>renderClimbObservationWeb,'climb-test':()=>renderClimbTestWeb,'bac-climb':()=>renderBacClimbWeb};
+ const renderers={observer:()=>renderObserverWeb,tournament:()=>renderTournamentWeb,rotations:()=>renderRotationsWeb,acrosport:()=>renderAcrosportWeb,'climb-observation':()=>renderClimbObservationWeb,'climb-test':()=>renderClimbTestWeb,'bac-grid':()=>renderBacGridWeb,'bac-climb':()=>renderBacClimbWeb};
  async function offer(host){
   const seq=++sequence,account=owner();host.querySelector('.tool-resume-card')?.remove();if(!account)return;
   let candidates=[];const draft=read();if(draft)candidates.push({title:draft.title,context:`${draft.className} · P${draft.payload.period} · Brouillon sur cet appareil`,time:draft.updatedAt,open:()=>resumeDraft(draft)});

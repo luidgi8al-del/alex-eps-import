@@ -1,0 +1,1576 @@
+{
+  "volley_ball": {
+    "id": "volley_ball",
+    "label": "Volley-ball",
+    "version": 1,
+    "scale": 12,
+    "source": "volley_ball.docx",
+    "criteria": [
+      {
+        "title": "Utiliser et maîtriser les techniques de frappes adaptées à la situation et à l’intention de jeu",
+        "max": 7,
+        "degrees": [
+          {
+            "text": "Élève passif, en retard.\nN’utilise qu’une technique : passe haute ou manchette. Services souvent ratés. Motricité explosive ou évitement de la balle.\nPas de déplacement. Spectateur, ne se sent concerné que par les balles qui lui arrivent dessus.\nSe débarrasse de la balle.\n\n0,5--------------------------------------1,5",
+            "range": [
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "text": "Élève intéressé, réactif.\nUtilise passes hautes et/ou manchettes, avec une technique largement dominante. Techniques non stabilisées, beaucoup d’échecs. Balles peu précises. Services aléatoires.\nDéplacements tardifs ou excessifs et inutiles. Renvoie la balle dans le terrain adverse dès que possible.\n\n Utilisation d’un relais en zone avant si la balle est loin. Pas d’intention de construction en 3 touches.\n\n2--------------------------------------------------3",
+            "range": [
+              2,
+              3
+            ]
+          },
+          {
+            "text": "Elève moteur.\nPasses hautes et manchettes stabilisées et utilisées à bon escient. Début de smashs et tentatives de contres. Services stables (cuillère ou tennis).\nDéplacements rapides et adaptés lorsqu’il est directement concerné. Début de soutien et d’aide à ses partenaires.\nConstruction du point avec sollicitation systématique du joueur relais pour exploiter l’espace favorable de marque.\n\n3,5-----------------------------------------5",
+            "range": [
+              3.5,
+              5
+            ]
+          },
+          {
+            "text": "Elève ressource.\nUtilisation adaptée et précise des passes hautes et manchettes. Smashs efficaces et contres relativement présents. Services précis, qui mettent l’adversaire en difficulté.\nAnticipe les déplacements par rapport aux placements de l’équipe adverse et aux actions de son équipe.\nCréé de l’incertitude spatiale et/ou temporelle en utilisant ou non un relais pour viser le terrain adverse.\n\n5,5-------------------------------------------7",
+            "range": [
+              5.5,
+              7
+            ]
+          }
+        ],
+        "adjust": "volley"
+      },
+      {
+        "title": "S’intégrer dans une organisation collective : placement et circulation du ballon",
+        "max": 5,
+        "degrees": [
+          {
+            "text": "Ne sait pas où se placer sur le terrain, par rapport à l’organisation collective choisie. Ne suit pas les rotations de l’équipe.\n\nPas de changement de placement et/ou d’action après le temps de concertation.\n\n0---------------------------------0,5",
+            "range": [
+              0,
+              0.5
+            ]
+          },
+          {
+            "text": "Se place correctement par observation du placement de ses partenaires pour organisation collective choisie. Placement stéréotypé, sans prise en compte de ses points forts/faibles.\n\nModifie son placement pour être plus efficace sur les conseils d’un partenaire, que ce soit pour être plus efficace en attaque ou en défense. Entre dans un nouveau placement stéréotypé.\n\n1-------------------------------------2",
+            "range": [
+              1,
+              2
+            ]
+          },
+          {
+            "text": "Se place correctement par rapport à l’évolution du score et à son intention d’action. Prend en compte ses points faibles/forts personnels pour se placer.\n\nAdapte son placement et ses trajectoires de balle pour profiter des points faibles de l’adversaire et mieux protéger les points faibles, identifiés lors de la concertation.\n\n2,5 — 3,5 (borne confirmée par l’équipe)",
+            "range": [
+              2.5,
+              3.5
+            ]
+          },
+          {
+            "text": "Se place correctement par rapport à ses points faibles/forts ET par rapports à ceux de ses partenaires ET par rapport au jeu de l’équipe adverse.\n\nAugmente l’incertitude chez l’adversaire en variant les temps et les zones d’attaque si le rapport de force lui est favorable. Stabilise la défense et limite la prise de risque si le rapport de force lui est défavorable.\n\n4------------------------------5",
+            "range": [
+              4,
+              5
+            ]
+          }
+        ],
+        "adjust": "volley"
+      }
+    ],
+    "rule": "Proposition locale 2023. La note de chaque critère est multipliée par le coefficient de gain des matchs du degré choisi.",
+    "fields": [
+      {
+        "key": "outcome",
+        "label": "Bilan des matchs",
+        "options": [
+          [
+            "loss",
+            "Majorité de défaites"
+          ],
+          [
+            "win",
+            "Majorité de victoires ou égalité"
+          ]
+        ]
+      }
+    ],
+    "clarifications": [
+      "Borne haute du degré 3 collectif : 3,5 points, confirmée par le professeur le 15/10/2026."
+    ]
+  },
+  "badminton": {
+    "id": "badminton",
+    "label": "Badminton",
+    "version": 1,
+    "scale": 12,
+    "source": "badminton.docx",
+    "criteria": [
+      {
+        "title": "Actions techniques d’attaque et de défense en relation avec le projet de jeu",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Jeu de face avec une prise in- adaptée (type poêle).\n\nRenvois non maitrisés, fait de nombreuses fautes.\n\nServices aléatoires et sont une simple mise en jeu.\n\nPeu voire pas de déplacements.\n\n0-1,75 pas",
+            "range": [
+              0,
+              1.75
+            ]
+          },
+          {
+            "text": "Début du jeu de proﬁl et de la\nprise universelle.\n\nRenvois souvent en déséqui- libre.\n\nServices maitrisés mais uni- formes.\n\nDéplacements limités et en difficulté vers l’arrière.\n\n2-3,75 pts",
+            "range": [
+              2,
+              3.75
+            ]
+          },
+          {
+            "text": "Jeu de proﬁl et prise universelle ac- quis.\n\nCoups d’attaque variés en situation de moindre pression temporelle (smash, amortis en particulier).\n\nServices parfois variés.\n\nDéplacements gainés en pas chassés mais sans ﬂuidité.\n\n4-5,75 pts",
+            "range": [
+              4,
+              5.75
+            ]
+          },
+          {
+            "text": "Prise revers et prise rush. Rotation centrale du corps s’ac- compagne d’un large panel de coups produits (smash, amortis, contre amortis, dégagements).\n\nServices variés, peu prévisibles et sont l’occasion de marque.\n\nDéplacements rapides, équilibrés en pas chassés.\n\n6-8 pts",
+            "range": [
+              6,
+              8
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 0.5
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 1
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 1.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 2
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 3
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 3.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 4
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 5
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 5.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 6
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 7
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 8
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Faire des choix au regard de l’analyse du rapport de force",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "Le projet tactique est d’éviter de faire la faute et de renvoyer le volant dans le terrain une fois de plus que son adversaire (pas de recherche de rupture de l’échange).\n\n0-0,75 pt",
+            "range": [
+              0,
+              0.75
+            ]
+          },
+          {
+            "text": "L’élève, en situation favorable (peu de déplacement à eﬀec- tuer) a comme projet tactique de poser un problème à son adversaire par des renvois pro- fonds ou appuyés.\n\n1-1,75 pts",
+            "range": [
+              1,
+              1.75
+            ]
+          },
+          {
+            "text": "Le projet de jeu de l’élève consiste à éviter le point fort de l’adversaire et à imposer son attaque préférentielle (amorti, smash notamment).\n\n2-2,75pts",
+            "range": [
+              2,
+              2.75
+            ]
+          },
+          {
+            "text": "L’élève est capable d’adapter en permanence son projet de jeu en fonction de l’évolution du rapport d’opposition.\nChaque occasion est exploitée opportunément.\n\n3-4 pts",
+            "range": [
+              3,
+              4
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 0.25
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 0.5
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 0.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 1
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 1.5
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 1.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 2
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 2.5
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 2.75
+            }
+          ],
+          [
+            {
+              "label": "Plus de défaites",
+              "value": 3
+            },
+            {
+              "label": "Autant de défaites que de victoires",
+              "value": 3.5
+            },
+            {
+              "label": "Plus de victoires",
+              "value": 4
+            }
+          ]
+        ]
+      }
+    ],
+    "rule": "Choisir le degré, puis le bilan des matchs : la note est celle de la case du référentiel.",
+    "clarifications": [
+      "Tactique, degré 4, majorité de victoires : 4 points, confirmés par le professeur le 15/10/2026."
+    ]
+  },
+  "tennis_de_table": {
+    "id": "tennis_de_table",
+    "label": "Tennis de table",
+    "version": 1,
+    "scale": 12,
+    "source": "tennis_de_table.docx",
+    "criteria": [
+      {
+        "title": "Techniques de jeu : vitesse, hauteur et direction des trajectoires",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Peu de techniques maitrisées :\n\n-le service, souvent non réglementaire, reste une simple mise en jeu.\nfaible efficacité des techniques\nd’attaques. un seul coup technique. A plat\n\nLes déplacements sont inexistants ou tardifs\n\nL’élève est passif",
+            "range": [
+              0,
+              2
+            ]
+          },
+          {
+            "text": "Utilisation d’une ou deux techniques préférentielles :\n\nle service est assuré, souvent joué à plat\n\n-L’élève utilise principalement une seule sorte de rupture : placé ou accéléré\nun seul coup technique est privilégié (CD ou R)\n\n-Les déplacements sont lents et les replacements tardifs voire inexistants.\n\nL’élève est réactif",
+            "range": [
+              2.5,
+              4
+            ]
+          },
+          {
+            "text": "Utilisation efficace de plusieurs techniques:\n\n-Le service est varié en direction, souvent tendu, mais sans effet réel.\n\n- Les deux coups techniques (CD/Revers) sont utilisés avec un coup préférentiel.\n\n-Le replacement devient régulier\n\nL’élève est actif",
+            "range": [
+              4.5,
+              6
+            ]
+          },
+          {
+            "text": "Utilisation efficace d’une variété de techniques:\n\n-Le service est une véritable arme au service d’une stratégie efficace.\n\n-L’élève utilise plusieurs coups et combine plusieurs actions (placement / vitesse / effets…). Smash, top spin, bloc, amorti\n\n- Le déplacement et le replacement sont systématiques.\n\nL’élève prend l’initiative",
+            "range": [
+              6.5,
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Pertinence des choix stratégiques",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "Adaptation aléatoires au cours du jeu :\nLe candidat se focalise uniquement sur le renvoi de la balle.\nIl joue «en réaction», dans une\nlogique de duo.\nPeu de projection et de choix tactiques à venir.",
+            "range": [
+              0,
+              1
+            ]
+          },
+          {
+            "text": "Quelques adaptations en cours de jeu\nIl recherche la rupture sur des balles favorables non provoquées l’évolution du score entraine quelques adaptations sur les placements de balle.\n- Projet sommaire prenant en compte les\nforces et/ou faiblesses les plus saillantes :\nIl parvient à retenir quelques projections pour la période d’opposition à venir.",
+            "range": [
+              1,
+              2
+            ]
+          },
+          {
+            "text": "Adaptations régulières en cours de jeu.\nIl recherche la mise en difficulté dès le service et produit des attaques sur la plupart des balles\n-Projet pertinent prenant en compte les principales forces et/ou faiblesses en\nprésence.\nLes choix stratégiques sont efficaces et se traduisent en points gagnants ou fautes adverses.",
+            "range": [
+              2,
+              3
+            ]
+          },
+          {
+            "text": "Adaptations permanentes en cours de jeu :\nIl construit la rupture sur plusieurs coups\n-Projet pertinent prenant en compte les forces et les faiblesses en présence.\nMise en place de projets tactiques à partir de son service pour placer un coup fort.",
+            "range": [
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "rule": "Après positionnement dans le degré, ajuster le curseur selon la proportion des oppositions gagnées individuellement : 0 % en bas, 100 % en haut de la fourchette. Le référentiel ne fixe pas d’interpolation automatique."
+  },
+  "acrosport": {
+    "id": "acrosport",
+    "label": "Acrosport",
+    "version": 1,
+    "scale": 12,
+    "source": "acrosport.docx",
+    "criteria": [
+      {
+        "title": "Réaliser et maîtriser des formes corporelles complexes (individuel)",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Exécution aléatoire\n-Montage et démontage /non sécurisés/non maitrisés\nPeu ou pas d’alignement des segments\nStabilité de la figure < à 3’’/chute\nDéconcentration durant tout l’enchaînement.",
+            "range": [
+              0,
+              2
+            ]
+          },
+          {
+            "text": "Exécution hésitante\n- Montage et démontage\nhésitants, déséquilibrés.\n-Stabilité partielle/\ntremblements\t/ chute\n- alignements variables\n- Concentration ponctuelle",
+            "range": [
+              2.25,
+              4
+            ]
+          },
+          {
+            "text": "Exécution maîtrisée\n-Montage et démontage\nfluides, sécurisés\n-Formes globalement\nrespectées - Stabilité de 3’’,\n- Alignement des segments\n- concentration régulière",
+            "range": [
+              4.25,
+              6
+            ]
+          },
+          {
+            "text": "Exécution dominée\n- Montage et démontage\nanticipés, et sécurisés\n- Stabilité maitrisée dans\ntoutes les figures et éléments\n- Figures complexes\n- Concentration complète et engagée.",
+            "range": [
+              6.25,
+              8
+            ]
+          }
+        ],
+        "adjust": "acro"
+      },
+      {
+        "title": "Composer et présenter un enchaînement esthétique / acrobatique (collectif)",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "Enchaînement aléatoire Thème inexistant \nQualité des liaisons et des déplacements :\nTrès peu variés/Peu esthétique\nThème Inexistant\nSupport sonore non exploité. Enchaînement non rythme Nombreux temps morts.",
+            "range": [
+              0,
+              1
+            ]
+          },
+          {
+            "text": "Enchaînement hésitant Thème sommaire Qualité des liaisons et des déplacements :\nPeu variés/Parasités.\n\nSupport sonore peu exploité.\nEnchaînement peu rythmé/ temps morts.",
+            "range": [
+              1.25,
+              2
+            ]
+          },
+          {
+            "text": "Enchaînement fluide et maîtrisé\nThème claire Qualité des liaisons et des déplacements : Variés/Soignés.\nSupport sonore bien exploité.\nEnchaînement organisé/Pas temps morts",
+            "range": [
+              2.25,
+              3
+            ]
+          },
+          {
+            "text": "Enchaînement rythmé et dominé\nThème Lisible et complet. \nQualité des liaisons et des déplacements : Variés/Esthétiques/Originaux. Support sonore optimisé Interprétation qui transmet de l’émotion\nEnchaînement\nrythmé/Optimisé.",
+            "range": [
+              3.25,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "rule": "Quatre figures observées dans les rôles de porteur et voltigeur. Coefficient = somme des difficultés : A 0,10 ; B 0,15 ; C 0,20 ; D 0,25. Note individuelle = note du degré × coefficient − 0,5 par exigence manquante (minimum 0, maximum 8). Le critère collectif reste individuel dans la saisie : aucune copie implicite aux autres élèves.",
+    "fields": [
+      {
+        "key": "figure0",
+        "label": "Figure 1",
+        "options": [
+          [
+            "A",
+            "A · 0.1"
+          ],
+          [
+            "B",
+            "B · 0.15"
+          ],
+          [
+            "C",
+            "C · 0.2"
+          ],
+          [
+            "D",
+            "D · 0.25"
+          ]
+        ]
+      },
+      {
+        "key": "figure1",
+        "label": "Figure 2",
+        "options": [
+          [
+            "A",
+            "A · 0.1"
+          ],
+          [
+            "B",
+            "B · 0.15"
+          ],
+          [
+            "C",
+            "C · 0.2"
+          ],
+          [
+            "D",
+            "D · 0.25"
+          ]
+        ]
+      },
+      {
+        "key": "figure2",
+        "label": "Figure 3",
+        "options": [
+          [
+            "A",
+            "A · 0.1"
+          ],
+          [
+            "B",
+            "B · 0.15"
+          ],
+          [
+            "C",
+            "C · 0.2"
+          ],
+          [
+            "D",
+            "D · 0.25"
+          ]
+        ]
+      },
+      {
+        "key": "figure3",
+        "label": "Figure 4",
+        "options": [
+          [
+            "A",
+            "A · 0.1"
+          ],
+          [
+            "B",
+            "B · 0.15"
+          ],
+          [
+            "C",
+            "C · 0.2"
+          ],
+          [
+            "D",
+            "D · 0.25"
+          ]
+        ]
+      },
+      {
+        "key": "missing",
+        "label": "Exigences manquantes",
+        "options": [
+          [
+            "0",
+            "0"
+          ],
+          [
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "2"
+          ],
+          [
+            "3",
+            "3"
+          ],
+          [
+            "4",
+            "4"
+          ],
+          [
+            "5",
+            "5"
+          ],
+          [
+            "6",
+            "6"
+          ],
+          [
+            "7",
+            "7"
+          ],
+          [
+            "8",
+            "8"
+          ],
+          [
+            "9",
+            "9"
+          ],
+          [
+            "10",
+            "10"
+          ],
+          [
+            "11",
+            "11"
+          ],
+          [
+            "12",
+            "12"
+          ],
+          [
+            "13",
+            "13"
+          ],
+          [
+            "14",
+            "14"
+          ],
+          [
+            "15",
+            "15"
+          ],
+          [
+            "16",
+            "16"
+          ]
+        ]
+      }
+    ],
+    "clarifications": [
+      "Ordre confirmé par le professeur le 15/10/2026 : multiplication, puis pénalités."
+    ]
+  },
+  "gymnastique": {
+    "id": "gymnastique",
+    "label": "Gymnastique",
+    "version": 1,
+    "scale": 12,
+    "source": "gymnastique.docx",
+    "criteria": [
+      {
+        "title": "Réaliser avec maîtrise les éléments gymniques difficiles et adéquats",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Juxtaposition des actions privilégiant la verticale et les appuis terrestres. \nFormes corporelles inadéquates aux ressources. \nExécution incertaine et non maitrisée : Plusieurs « fautes » et/ou \"chute\" commises. \n\n       \n0,5------ 1------ 1.5",
+            "range": [
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "text": "Actions et des déplacements diversifiés : Avant, arrières et latéraux.  Expérimente quelques passages renversés. \nFormes corporelles plutôt appropriées aux ressources.\nExécution moyennement maîtrisée : Quelques « fautes » de déséquilibre, de manque de contrôle dans les actions renversées.\n2------ 2.5 ------ 3 ------ 3.5",
+            "range": [
+              2,
+              3.5
+            ]
+          },
+          {
+            "text": "Actions coordonnées et enchainées plus complexes : Quelques passages aériens. Plus d'évolution vers la verticale renversée.  \nFormes corporelles bien adaptées aux ressources.\nExécution maîtrisée et stabilisée : Quelques « fautes » dans les passages aériens.\n4 ------ 4.5 ------ 5",
+            "range": [
+              4,
+              5
+            ]
+          },
+          {
+            "text": "Actions bien combinées et bien coordonnées avec efficience.  Utilisation privilégiée des appuis manuels.  Espace aérien privilégié. Formes corporelles optimisées par rapport aux ressources. \nExécution très dominée : des « fautes » rares et minimes dans des formes aériens complexes. \n\n5.5------ 6------ 6.5------ 7",
+            "range": [
+              5.5,
+              7
+            ]
+          }
+        ],
+        "adjust": "gym"
+      },
+      {
+        "title": "Composer et présenter un enchaînement esthétique / acrobatique",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "Enchaînement mal composé, fragmenté et absence de transition. \nPas de visée esthétique/ acrobatique dans la composition. \nAttitude déconcentrée, difficulté de mémoriser l'enchainement.      \n\n0,5 ------------1",
+            "range": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "text": "Enchaînement d'actions simple, juxtaposé et uniforme.     Composition tend plutôt vers une visée esthétique qu'acrobatique.   Présentation parasitée par quelques arrêts. \nAttitude plus ou moins concentrée.\n-----\n-- 1,5 ------------2",
+            "range": [
+              1.5,
+              2
+            ]
+          },
+          {
+            "text": "Enchaînement organisé, rythmé et varié. Présentation soignée et présence des éléments gymniques de transition. Composition réfléchie tenant en compte à la fois la visée esthétique/ acrobatique. Attitude concentrée et bien correcte.                      \n2,5 ------------3",
+            "range": [
+              2.5,
+              3
+            ]
+          },
+          {
+            "text": "Enchainement rythmé, optimisé avec des accélérations et des rythmes diversifiés... Composition et présentation originale et riche en esthétique/ acrobatique.  Excellente attitude de concentration et meilleur engagement.\n3,5 ------------4",
+            "range": [
+              3.5,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "rule": "Six éléments, quatre familles et deux niveaux de difficulté. Le coefficient s’applique à la réalisation /8. Le référentiel autorise un arrondi : il reste un choix explicite du jury, désactivé par défaut.",
+    "fields": [
+      {
+        "key": "difficulty",
+        "label": "Difficulté de l’enchaînement",
+        "options": [
+          [
+            "0.9",
+            "Somme 2,6–3,4 · coefficient 0,9"
+          ],
+          [
+            "1",
+            "Somme 3,6–4,6 · coefficient 1"
+          ],
+          [
+            "1.1",
+            "Somme 4,8–5,8 · coefficient 1,1"
+          ]
+        ]
+      },
+      {
+        "key": "round",
+        "label": "Arrondi du critère de réalisation",
+        "options": [
+          [
+            "no",
+            "Sans arrondi"
+          ],
+          [
+            "yes",
+            "Arrondir à l’entier (choix du jury)"
+          ]
+        ],
+        "default": "no"
+      }
+    ]
+  },
+  "pentabond": {
+    "id": "pentabond",
+    "label": "Pentabond",
+    "version": 1,
+    "scale": 12,
+    "source": "pentabond.docx",
+    "criteria": [
+      {
+        "title": "Meilleure performance réalisée",
+        "max": 6,
+        "degrees": [
+          {
+            "text": "Performance maximale, jusqu’à six essais. Premier bond obligatoirement en cloche-pied.\nSélectionner la ligne du barème filles / garçons correspondant à la meilleure performance validée.",
+            "range": [
+              0,
+              1.25
+            ]
+          },
+          {
+            "text": "Performance maximale, jusqu’à six essais. Premier bond obligatoirement en cloche-pied.\nSélectionner la ligne du barème filles / garçons correspondant à la meilleure performance validée.",
+            "range": [
+              1.5,
+              2.75
+            ]
+          },
+          {
+            "text": "Performance maximale, jusqu’à six essais. Premier bond obligatoirement en cloche-pied.\nSélectionner la ligne du barème filles / garçons correspondant à la meilleure performance validée.",
+            "range": [
+              3,
+              4.2
+            ]
+          },
+          {
+            "text": "Performance maximale, jusqu’à six essais. Premier bond obligatoirement en cloche-pied.\nSélectionner la ligne du barème filles / garçons correspondant à la meilleure performance validée.",
+            "range": [
+              4.5,
+              6
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "Filles 6.6 m · Garçons 7.8 m",
+              "value": 0
+            },
+            {
+              "label": "Filles 7.1 m · Garçons 8.6 m",
+              "value": 0.25
+            },
+            {
+              "label": "Filles 7.6 m · Garçons 9.4 m",
+              "value": 0.5
+            },
+            {
+              "label": "Filles 7.8 m · Garçons 9.7 m",
+              "value": 0.75
+            },
+            {
+              "label": "Filles 8.1 m · Garçons 10 m",
+              "value": 1
+            },
+            {
+              "label": "Filles 8.3 m · Garçons 10.3 m",
+              "value": 1.25
+            }
+          ],
+          [
+            {
+              "label": "Filles 8.6 m · Garçons 10.7 m",
+              "value": 1.5
+            },
+            {
+              "label": "Filles 8.8 m · Garçons 11 m",
+              "value": 1.75
+            },
+            {
+              "label": "Filles 9.1 m · Garçons 11.4 m",
+              "value": 2
+            },
+            {
+              "label": "Filles 9.4 m · Garçons 11.7 m",
+              "value": 2.25
+            },
+            {
+              "label": "Filles 9.6 m · Garçons 12 m",
+              "value": 2.5
+            },
+            {
+              "label": "Filles 9.8 m · Garçons 12.3 m",
+              "value": 2.75
+            }
+          ],
+          [
+            {
+              "label": "Filles 10.1 m · Garçons 12.5 m",
+              "value": 3
+            },
+            {
+              "label": "Filles 10.3 m · Garçons 12.8 m",
+              "value": 3.2
+            },
+            {
+              "label": "Filles 10.6 m · Garçons 13.1 m",
+              "value": 3.5
+            },
+            {
+              "label": "Filles 10.9 m · Garçons 13.4 m",
+              "value": 3.75
+            },
+            {
+              "label": "Filles 11.2 m · Garçons 13.7 m",
+              "value": 4
+            },
+            {
+              "label": "Filles 11.5 m · Garçons 14 m",
+              "value": 4.2
+            }
+          ],
+          [
+            {
+              "label": "Filles 11.8 m · Garçons 14.4 m",
+              "value": 4.5
+            },
+            {
+              "label": "Filles 12.1 m · Garçons 14.8 m",
+              "value": 4.75
+            },
+            {
+              "label": "Filles 12.4 m · Garçons 15.2 m",
+              "value": 5
+            },
+            {
+              "label": "Filles 12.7 m · Garçons 15.6 m",
+              "value": 5.2
+            },
+            {
+              "label": "Filles 12.9 m · Garçons 16 m",
+              "value": 5.5
+            },
+            {
+              "label": "Filles 13.2 m · Garçons 16.5 m",
+              "value": 5.75
+            },
+            {
+              "label": "Filles 13.5 m · Garçons 17 m",
+              "value": 6
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Efficacité technique · écart entre les deux meilleures performances",
+        "max": 6,
+        "degrees": [
+          {
+            "text": "décélération et piétinement à l’approche de la planche d’appel\nécrasement lors des appuis successifs",
+            "range": [
+              0,
+              1.25
+            ]
+          },
+          {
+            "text": "vitesse réduite et conservée à l’approche de la planche\nreprises d'appui prolongées",
+            "range": [
+              1.5,
+              2.75
+            ]
+          },
+          {
+            "text": "vitesse progressivement accélérée\nrebonds eﬀectifs et réguliers",
+            "range": [
+              3,
+              4.2
+            ]
+          },
+          {
+            "text": "vitesse optimale\nsauts équilibrés et amples\nappuis dynamiques en griﬀé\nsegments libres actifs",
+            "range": [
+              4.5,
+              6
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "Écart : 125 cm",
+              "value": 0
+            },
+            {
+              "label": "Écart : 120 cm",
+              "value": 0.25
+            },
+            {
+              "label": "Écart : 115 cm",
+              "value": 0.5
+            },
+            {
+              "label": "Écart : 110 cm",
+              "value": 0.75
+            },
+            {
+              "label": "Écart : 105 cm",
+              "value": 1
+            },
+            {
+              "label": "Écart : 100 cm",
+              "value": 1.25
+            }
+          ],
+          [
+            {
+              "label": "Écart : 95 cm",
+              "value": 1.5
+            },
+            {
+              "label": "Écart : 90 cm",
+              "value": 1.75
+            },
+            {
+              "label": "Écart : 85 cm",
+              "value": 2
+            },
+            {
+              "label": "Écart : 80 cm",
+              "value": 2.25
+            },
+            {
+              "label": "Écart : 75 cm",
+              "value": 2.5
+            },
+            {
+              "label": "Écart : 70 cm",
+              "value": 2.75
+            }
+          ],
+          [
+            {
+              "label": "Écart : 65 cm",
+              "value": 3
+            },
+            {
+              "label": "Écart : 60 cm",
+              "value": 3.2
+            },
+            {
+              "label": "Écart : 55 cm",
+              "value": 3.5
+            },
+            {
+              "label": "Écart : 50 cm",
+              "value": 3.75
+            },
+            {
+              "label": "Écart : 45 cm",
+              "value": 4
+            },
+            {
+              "label": "Écart : 40 cm",
+              "value": 4.2
+            }
+          ],
+          [
+            {
+              "label": "Écart : 35 cm",
+              "value": 4.5
+            },
+            {
+              "label": "Écart : 30 cm",
+              "value": 4.75
+            },
+            {
+              "label": "Écart : 25 cm",
+              "value": 5
+            },
+            {
+              "label": "Écart : 20 cm",
+              "value": 5.2
+            },
+            {
+              "label": "Écart : 15 cm",
+              "value": 5.5
+            },
+            {
+              "label": "Écart : 10 cm",
+              "value": 5.75
+            },
+            {
+              "label": "Écart : 5 cm",
+              "value": 6
+            }
+          ]
+        ]
+      }
+    ],
+    "rule": "Sélection directe des lignes du barème : aucune interpolation non prévue n’est appliquée. Conserver les mesures réelles dans les observations. Un essai nul n’est pas une performance à zéro. Les valeurs 3,2 / 4,2 / 5,2 sont celles du document."
+  },
+  "sauvetage": {
+    "id": "sauvetage",
+    "label": "Sauvetage",
+    "version": 1,
+    "scale": 12,
+    "source": "sauvetage.docx",
+    "criteria": [
+      {
+        "title": "Adapter le déplacement et franchir efficacement les obstacles",
+        "max": 6,
+        "degrees": [
+          {
+            "text": "Absence totale d’une lecture du milieu et d’une planification des actions\nDifficulté dans le déplacement qui est très lent\nTrès mauvaise gestion de l’effort\nTechniques mobilisées très limitées, peu efficaces et non adaptées aux caractéristiques du milieu\nGrande difficulté à franchir les obstacles\nNe parvient pas à terminer son parcours\n\nRepères chronométriques (minutes:secondes) :\nFilles P1 : T2 7:00 / T1 6:30 ; P2 : 5:50 / 5:20. Garçons P1 : 5:45 / 5:15 ; P2 : 4:50 / 4:20.",
+            "range": [
+              0.25,
+              1.5
+            ]
+          },
+          {
+            "text": "Lecture et analyse rapide et superficielle des éléments du milieu\nDéplacement moyennement rapide et discontinue avec des ajustements\nDifficulté de gestion de l’effort\nDifférenciation insuffisante des techniques mobilisées pour répondre de manière appropriée aux exigences du milieu et au projet d’itinéraire\nQuelques difficultés pour franchir les obstacles\n\nRepères chronométriques (minutes:secondes) :\nFilles P1 : T2 6:10 / T1 5:50 ; P2 : 5:05 / 4:40. Garçons P1 : 5:04 / 4:55 ; P2 : 4:19 / 4:00.",
+            "range": [
+              1.5,
+              3
+            ]
+          },
+          {
+            "text": "Lecture et analyse globale des éléments du milieu.\nDéplacement continu et assez rapide pendant la nage mais parfois discontinue face aux obstacles\nMajoritairement, le nageur s’adapte aux principales caractéristiques et problèmes posés par le milieu, en fonction du projet d’itinéraire\nDifférenciation et enchainement des techniques mobilisées\n\nRepères chronométriques (minutes:secondes) :\nFilles P1 : T2 5:39 / T1 5:10 ; P2 : 4:29 / 4:00. Garçons P1 : 4:30 / 4:15 ; P2 : 3:40 / 3:20.",
+            "range": [
+              2.5,
+              4.5
+            ]
+          },
+          {
+            "text": "Lecture et analyse prédictive bien précise du milieu et de ses éléments d’incertitude\nDéplacement fluide et rapide (en nage et en franchissement des obstacle) sur l’ensemble du parcours\nBonne anticipation et adaptation aux problèmes ou difficultés posées par le milieu, en lien avec le projet d’itinéraire\nDifférenciation et enchainement de techniques anticipées et ajustées aux variations du milieu\n\nRepères chronométriques (minutes:secondes) :\nFilles P1 : T2 5:00 / T1 4:30 ; P2 : 3:50 / 3:20. Garçons P1 : 4:04 / 3:45 ; P2 : 3:10 / 2:50.",
+            "range": [
+              4,
+              6
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "P1 200 m · Temps 1 · obstacles A (3)",
+              "value": 0.75
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles B (4)",
+              "value": 1
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles C (6+)",
+              "value": 1.5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles A (3)",
+              "value": 0.5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles B (4)",
+              "value": 0.75
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles C (6+)",
+              "value": 1.25
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles A (3)",
+              "value": 0.5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles B (4)",
+              "value": 0.75
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles C (6+)",
+              "value": 1.25
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles A (3)",
+              "value": 0.25
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles B (4)",
+              "value": 0.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles C (6+)",
+              "value": 1
+            }
+          ],
+          [
+            {
+              "label": "P1 200 m · Temps 1 · obstacles A (3)",
+              "value": 2
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles B (4)",
+              "value": 2.5
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles C (6+)",
+              "value": 3
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles A (3)",
+              "value": 1.75
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles B (4)",
+              "value": 2
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles C (6+)",
+              "value": 2.5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles A (3)",
+              "value": 1.75
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles B (4)",
+              "value": 2
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles C (6+)",
+              "value": 2.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles A (3)",
+              "value": 1.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles B (4)",
+              "value": 1.75
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles C (6+)",
+              "value": 2
+            }
+          ],
+          [
+            {
+              "label": "P1 200 m · Temps 1 · obstacles A (3)",
+              "value": 3.5
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles B (4)",
+              "value": 4
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles C (6+)",
+              "value": 4.5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles A (3)",
+              "value": 3
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles B (4)",
+              "value": 3.5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles C (6+)",
+              "value": 4
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles A (3)",
+              "value": 3
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles B (4)",
+              "value": 3.5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles C (6+)",
+              "value": 4
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles A (3)",
+              "value": 2.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles B (4)",
+              "value": 3
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles C (6+)",
+              "value": 3.5
+            }
+          ],
+          [
+            {
+              "label": "P1 200 m · Temps 1 · obstacles A (3)",
+              "value": 5
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles B (4)",
+              "value": 5.5
+            },
+            {
+              "label": "P1 200 m · Temps 1 · obstacles C (6+)",
+              "value": 6
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles A (3)",
+              "value": 4.5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles B (4)",
+              "value": 5
+            },
+            {
+              "label": "P1 200 m · Temps 2 · obstacles C (6+)",
+              "value": 5.5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles A (3)",
+              "value": 4.5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles B (4)",
+              "value": 5
+            },
+            {
+              "label": "P2 150 m · Temps 1 · obstacles C (6+)",
+              "value": 5.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles A (3)",
+              "value": 4
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles B (4)",
+              "value": 4.5
+            },
+            {
+              "label": "P2 150 m · Temps 2 · obstacles C (6+)",
+              "value": 5
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Maîtriser le déplacement avec le mannequin remorqué",
+        "max": 6,
+        "degrees": [
+          {
+            "text": "Tête du mannequin souvent immergée",
+            "range": [
+              0.25,
+              1.5
+            ]
+          },
+          {
+            "text": "Tête du mannequin souvent hors de l’eau",
+            "range": [
+              1.75,
+              3
+            ]
+          },
+          {
+            "text": "La tête du mannequin hors de l’eau mais avec une mauvaise technique de rétropédalage (ciseau de brasse)",
+            "range": [
+              3.25,
+              4.5
+            ]
+          },
+          {
+            "text": "Tête hors de l’eau et technique de rétropédalage maîtrisée",
+            "range": [
+              4.75,
+              6
+            ]
+          }
+        ],
+        "choices": [
+          [
+            {
+              "label": "Enfant · A : 15–19 m",
+              "value": 0.25
+            },
+            {
+              "label": "Enfant · B : 20–24 m",
+              "value": 0.5
+            },
+            {
+              "label": "Enfant · C : 25–30 m",
+              "value": 1
+            },
+            {
+              "label": "Adulte · A : 15–19 m",
+              "value": 0.5
+            },
+            {
+              "label": "Adulte · B : 20–24 m",
+              "value": 1
+            },
+            {
+              "label": "Adulte · C : 25–30 m",
+              "value": 1.5
+            }
+          ],
+          [
+            {
+              "label": "Enfant · A : 15–19 m",
+              "value": 1.75
+            },
+            {
+              "label": "Enfant · B : 20–24 m",
+              "value": 2
+            },
+            {
+              "label": "Enfant · C : 25–30 m",
+              "value": 2.5
+            },
+            {
+              "label": "Adulte · A : 15–19 m",
+              "value": 2
+            },
+            {
+              "label": "Adulte · B : 20–24 m",
+              "value": 2.5
+            },
+            {
+              "label": "Adulte · C : 25–30 m",
+              "value": 3
+            }
+          ],
+          [
+            {
+              "label": "Enfant · A : 15–19 m",
+              "value": 3.25
+            },
+            {
+              "label": "Enfant · B : 20–24 m",
+              "value": 3.5
+            },
+            {
+              "label": "Enfant · C : 25–30 m",
+              "value": 4
+            },
+            {
+              "label": "Adulte · A : 15–19 m",
+              "value": 3.5
+            },
+            {
+              "label": "Adulte · B : 20–24 m",
+              "value": 4
+            },
+            {
+              "label": "Adulte · C : 25–30 m",
+              "value": 4.5
+            }
+          ],
+          [
+            {
+              "label": "Enfant · A : 15–19 m",
+              "value": 4.75
+            },
+            {
+              "label": "Enfant · B : 20–24 m",
+              "value": 5
+            },
+            {
+              "label": "Enfant · C : 25–30 m",
+              "value": 5.5
+            },
+            {
+              "label": "Adulte · A : 15–19 m",
+              "value": 5
+            },
+            {
+              "label": "Adulte · B : 20–24 m",
+              "value": 5.5
+            },
+            {
+              "label": "Adulte · C : 25–30 m",
+              "value": 6
+            }
+          ]
+        ]
+      }
+    ],
+    "rule": "Nage : temps réalisé + 5 secondes par pénalité. Après lecture des repères du degré, sélectionner le parcours, le repère Temps 1/2 et la difficulté. Le choix du jury est explicite : pas d’interpolation des temps. Remorquage : une minute maximum."
+  },
+  "course_en_duree": {
+    "id": "course_en_duree",
+    "label": "Course en durée",
+    "version": 1,
+    "scale": 12,
+    "source": "course_en_duree.docx",
+    "criteria": [
+      {
+        "title": "Produire la séance",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Travail « à minima »\n\nEchauffement incomplet et/ou trop court.\nEngagement très faible dans la séance.\ncourse et foulée identiques tout au long de l’épreuve.\nMoins de 30’ d’effort réalisé\n\n0-1,75",
+            "range": [
+              0,
+              1.75
+            ]
+          },
+          {
+            "text": "Travail « économe »\n\nTemps d’échauffement adapté mais spécificité peu abordé.\nEngagement partiel.\nAdaptation de la foulée en fonction des allures.\n30’ de travail réalisé\n\n2-3,75",
+            "range": [
+              2,
+              3.75
+            ]
+          },
+          {
+            "text": "Travail « engagé »\n\nEchauffement complet et suffisamment long pour entrer dans l’effort.\nEngagement dans l’effort sur la plupart  des zones de travail attendues.\nAdaptation de la foulée en fonction de l’allure et utilisation des membres supérieurs lors des « temps forts ».\nEntre 30 et 40’ de travail réalisé.\n\n4-5,75",
+            "range": [
+              4,
+              5.75
+            ]
+          },
+          {
+            "text": "Travail « intensif »\n\nEchauffement complet et adapté (gammes, éducatifs spécifiques).\nEngagement total dans toutes les zones de travail attendues.\nAdaptation de la foulée et utilisation conséquente des membres supérieurs pour les allures rapides, capacité de relâchement lors des temps faibles.\n45’ de travail réalisé.\n\n6-8",
+            "range": [
+              6,
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Analyser la séance",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "« L’optu »\n\nTrès peu de prises en compte des ressentis pendant l’effort.\nLes paramètres d’intensité de travail et de temps ne sont pas maîtrisés et compris. \n\n0-0,75",
+            "range": [
+              0,
+              0.75
+            ]
+          },
+          {
+            "text": "« Imprécision »\n\nPrise en compte de ses ressentis partielle et peu de liens entre ceux-ci et des modifications potentielles.\nL’élève tente de manipuler les paramètres (Intensité et volume) mais commet de nombreuses erreurs.  \n\n1-1,75",
+            "range": [
+              1,
+              1.75
+            ]
+          },
+          {
+            "text": "« Elève éclairé »\n\nUtilisation des ressentis, exploitation de ceux-ci pour réguler certains paramètres.\nManipulation avec justesse des paramètres d’intensité et de volume de travail.\n\n2-2,75",
+            "range": [
+              2,
+              2.75
+            ]
+          },
+          {
+            "text": "« L’anticipateur »\n\nSes ressentis vont lui permettre de personnaliser voir d’anticiper sa course.\nMaîtrise des paramètres d’intensité et de volume lui permettant des régulations immédiates et d’anticiper certaines projections futures.\n\n3-4",
+            "range": [
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "rule": "Séance de 30 à 45 minutes. Évaluer l’échauffement, l’engagement, l’adaptation de la foulée et l’analyse des ressentis selon le projet choisi."
+  },
+  "musculation": {
+    "id": "musculation",
+    "label": "Musculation",
+    "version": 1,
+    "scale": 12,
+    "source": "musculation.docx",
+    "criteria": [
+      {
+        "title": "Produire : gestuelle, postures, charge et choix des exercices",
+        "max": 8,
+        "degrees": [
+          {
+            "text": "Utilisation non adaptée des appareils de musculation :\nUtilisation non sécuritaire\nGestes de musculation non maitrisés amenant des erreurs de postures \nRespiration pas maîtrisée.\nNon maîtrise des postures pour un travail en sécurité.\nPourcentage de charge pas adapté.\nRépétitions non tenues (0%-50%).\n\n      0-2,5pts",
+            "range": [
+              0,
+              2.5
+            ]
+          },
+          {
+            "text": "Gestes de musculation peu maitrisés, se dégradant au fur et à mesure de la séance :\nMauvaise amplitude des mouvements.\nPostures non tenues.\nRespiration en place, mais se dégradant.\nCharge et intensité de travail inadapté par rapport aux capacités de l’élève.\nPourcentage trop élevé ou trop faible.\nRépétition partiellement tenues (50%-70%).\nChoix incohérent par rapport au thème\n3-4,5pts",
+            "range": [
+              3,
+              4.5
+            ]
+          },
+          {
+            "text": "Gestes de musculation efficaces, postures efficaces :\nGeste et Amplitude maîtrisé.\nRespiration partiellement placée.\nPostures tenues sur 90% de la séance\nCharge de travail adaptée aux capacités de l’élève et à l’effort recherché.\nPourcentage adapté et répétitions tenues. (70%-90%)\nChoix cohérent des exercices par rapport au thème\n\n5-6,5pts",
+            "range": [
+              5,
+              6.5
+            ]
+          },
+          {
+            "text": "Gestes de musculation efficaces et spécifiques permettant d’atteindre pleinement les efforts demandés.\nGeste et amplitude optimale.\nRespiration optimale.\nPostures tenues et efficaces.\nCharge de travail optimisée aux capacités de l’élève, optimisation de l’effort durant la séance.\nPourcentage et répétitions optimisé (plus de 90%) réalisé.\nChoix spécifiques des exercices en rapport avec le thème et les effets recherchés\n\n7-8pts",
+            "range": [
+              7,
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Analyser : ressentis et régulation de la charge",
+        "max": 4,
+        "degrees": [
+          {
+            "text": "Régulations absentes \nCharge mettant en jeu l’intégrité physique de l’élève / ou charge insignifiante\nPas d'analyse.\nN’exploite pas le ressenti et les observations.\n0---1.0 pts",
+            "range": [
+              0,
+              1
+            ]
+          },
+          {
+            "text": "Régulations inadaptées au regard des indicateurs relevés\nCharge trop lourde, trop légère, non adaptée.\nAnalyse incomplète. \nExploite 1 ressenti (Avant ou Pendant ou Après).\n1.5-----2,0 pts",
+            "range": [
+              1.5,
+              2
+            ]
+          },
+          {
+            "text": "Relevé de données chiffrées exploitables\nCharge adaptée mais non optimisée.\nDémontre 2 types de ressentis différents et les observations\n2.5---3,0 pts",
+            "range": [
+              2.5,
+              3
+            ]
+          },
+          {
+            "text": "Régulations pertinentes \nCharge optimisée en fonction des ressentis de l’élève.\nL'analyse est fine\nExploite tous les types de ressentis et les associe aux observations pour réguler le bon paramètre. (Avant-Pendant-Après).\n3.5---4 pts",
+            "range": [
+              3.5,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "rule": "Séance de 60 minutes. Thème endurance, volume ou puissance. Deux groupes musculaires minimum, deux à trois exercices par groupe."
+  }
+}
