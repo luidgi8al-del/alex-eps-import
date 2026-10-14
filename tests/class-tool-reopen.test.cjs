@@ -19,8 +19,8 @@ const tools = fs.readFileSync(path.join(root, 'tools-workspace.js'), 'utf8');
 [
   'ouvrirMultiChronoDepuisClasse',
   "test_name:'Multi-chrono'",
-  "enregistrerLigne('eps_test_sessions'",
-  "enregistrerLigne('eps_test_results'"
+  "saveWork('multi-free'",
+  "EpsPortableWorks.multiSession"
 ].forEach(marker => {
   if (!tools.includes(marker)) throw new Error(`Cycle de vie Multi-chrono incomplet : ${marker}`);
 });

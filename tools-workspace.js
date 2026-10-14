@@ -107,14 +107,15 @@
   // vivre que dans la memoire du navigateur : un changement d'appareil ou un cache vide ne les
   // efface plus. _raw garde la ligne telle que recue, pour reecrire une suppression douce sans
   // reconstruire les champs.
+  const openedWorks=new Map();
   async function readWorks(){
     try{
-      const rows=await lireTable("eps_saved_tool_works","eps_saved_tool_works?deleted=eq.false&select=*&order=updated_at.desc",{trier:(a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||""))});
-      return rows.filter(r=>!session?.user_id||r.user_id===session.user_id).map(r=>({
-        id:r.id,type:r.type,title:r.title,classId:r.class_id||null,period:+r.period_number||1,
-        payload:(()=>{try{return JSON.parse(r.payload||"{}")}catch{return{}}})(),
-        createdAt:r.created_at,updatedAt:r.updated_at,_raw:r
-      }));
+      const rows=await lireTable("eps_saved_tool_works","eps_saved_tool_works?select=*&order=updated_at.desc",{avecSupprimes:true,trier:(a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||""))});
+      const own=rows.filter(r=>r.user_id===session?.user_id),known=new Set(own.map(r=>r.id));
+      const works=own.filter(r=>!r.deleted).map(EpsPortableWorks.row);
+      const legacy=(await lireTable('eps_test_sessions','eps_test_sessions?test_name=eq.Multi-chrono&deleted=eq.false&select=*',{ou:r=>r.test_name==='Multi-chrono'&&!r.deleted})).filter(r=>r.user_id===session?.user_id&&!known.has(r.id));
+      if(legacy.length){const [results,students]=await Promise.all([lireTable('eps_test_results',`eps_test_results?session_id=in.(${legacy.map(s=>s.id).join(',')})&deleted=eq.false&select=*`,{ou:r=>legacy.some(s=>s.id===r.session_id)&&!r.deleted}),lireTable('students','students?deleted=eq.false&select=*')]);for(const s of legacy){const w=EpsPortableWorks.multiSession(s,results,students);w._raw={id:w.id,user_id:s.user_id,type:w.type,title:w.title,class_id:w.classId,period_number:w.period,payload:JSON.stringify(w.payload),created_at:w.createdAt,updated_at:w.updatedAt,deleted:false};works.push(w)}}
+      return works.map(w=>{openedWorks.set(`${session?.user_id}:${w.id}`,w);return w});
     }catch{return[]}
   }
   let activity=null,query="",showFavorites=false;
@@ -156,17 +157,20 @@
   async function saveWork(type,title,payload,context){
     const mode=document.getElementById("modernMode")?.value||"free",classId=document.getElementById("modernClass")?.value||null,
       period=+(document.getElementById("modernPeriod")?.value||1),id=payload.id||crypto.randomUUID(),now=new Date().toISOString(),
-      createdAt=payload.createdAt||now,finalClassId=context?context.classId:(mode==="class"?classId:null),finalPayload={...payload,id:undefined,createdAt:undefined};
+      previous=openedWorks.get(`${session?.user_id}:${id}`),
+      createdAt=previous?.createdAt||payload.createdAt||now,finalClassId=previous?previous.classId:(context?context.classId:(mode==="class"?classId:null)),finalPayload=EpsPortableWorks.writable(previous,payload);
+    type=EpsPortableWorks.type(type);
     await enregistrerLigne("eps_saved_tool_works",{
       id,user_id:session.user_id,type,title:title||"Travail",payload:JSON.stringify(finalPayload),
-      class_id:finalClassId,period_number:context?.period||period,created_at:createdAt,updated_at:now,deleted:false
+      class_id:finalClassId,period_number:previous?.period||context?.period||period,created_at:createdAt,updated_at:now,deleted:false
     });
-    return {id,type,title:title||"Travail",classId:finalClassId,period:context?.period||period,payload:finalPayload,createdAt,updatedAt:now};
+    const work={id,type,title:title||"Travail",classId:finalClassId,period:previous?.period||context?.period||period,payload:finalPayload,createdAt,updatedAt:now};openedWorks.set(`${session?.user_id}:${id}`,work);return work;
   }
   function workList(){return ""}
   function bindWorks(type,rerender,load){openWorkLibrary(type,"Mes travaux",load)}
   function closeWorkLibrary(){document.getElementById("toolWorkOverlay")?.remove()}
   async function openWorkLibrary(type,title,load){
+    const open=load;load=w=>{if(w.compatibilityError){alert(w.compatibilityError);return}return open(w)};
     closeWorkLibrary();
     const overlayChargement=document.createElement("div");overlayChargement.id="toolWorkOverlay";overlayChargement.className="tool-work-overlay";
     overlayChargement.innerHTML=`<section class="tool-work-sheet"><header><button class="tool-work-back" id="toolWorkClose">←</button><div><small>TRAVAUX ENREGISTRÉS</small><h2>${esc(title)}</h2></div></header><main><div class="tool-work-empty"><i>▤</i><strong>Chargement…</strong></div></main></section>`;
@@ -178,15 +182,16 @@
     overlay.innerHTML=`<section class="tool-work-sheet"><header><button class="tool-work-back" id="toolWorkClose">←</button><div><small>TRAVAUX ENREGISTRÉS</small><h2>${esc(title)}</h2><p>Ouvrir un travail permet de le consulter et de le modifier.</p></div><b>${rows.length}</b></header><main>${rows.length?rows.map(w=>`<article class="tool-work-item"><button class="tool-work-open" data-work-open-full="${w.id}"><i>▤</i><span><strong>${esc(w.title)}</strong><small>${w.classId?"Avec une classe":"Utilisation libre"} · Période ${w.period} · modifié le ${new Date(w.updatedAt).toLocaleDateString("fr-FR")}</small></span><em>›</em></button><button class="tool-work-more" data-work-more="${w.id}" aria-label="Actions">⋮</button></article>`).join(""):`<div class="tool-work-empty"><i>▤</i><strong>Aucun travail enregistré</strong><span>Après un enregistrement, votre travail apparaîtra ici.</span></div>`}</main></section>`;
     toolWorkClose.onclick=closeWorkLibrary;overlay.onclick=e=>{if(e.target===overlay)closeWorkLibrary()};
     overlay.querySelectorAll("[data-work-open-full]").forEach(b=>b.onclick=()=>{const w=rows.find(x=>x.id===b.dataset.workOpenFull);if(w){closeWorkLibrary();load(w)}});
-    overlay.querySelectorAll("[data-work-more]").forEach(b=>b.onclick=()=>{const w=rows.find(x=>x.id===b.dataset.workMore);if(!w)return;const main=overlay.querySelector("main");main.innerHTML=`<div class="tool-work-actions-card"><i>▤</i><h3>${esc(w.title)}</h3><p>Choisissez l’action à effectuer sur ce travail.</p><button id="toolWorkEdit">✎ Ouvrir et modifier</button><button class="secondary" id="toolWorkCopy">▣ Dupliquer</button><button class="danger" id="toolWorkDelete">⌫ Supprimer</button><button class="secondary" id="toolWorkCancel">Annuler</button></div>`;toolWorkEdit.onclick=()=>{closeWorkLibrary();load(w)};toolWorkCopy.onclick=async()=>{await saveWork(type,w.title+" · copie",{...w.payload,id:undefined},w);closeWorkLibrary();openWorkLibrary(type,title,load)};toolWorkDelete.onclick=()=>{main.innerHTML=`<div class="tool-work-actions-card danger-card"><i>⌫</i><h3>Supprimer ce travail ?</h3><p>${esc(w.title)} sera supprimé.</p><button class="danger" id="toolWorkConfirmDelete">Supprimer (restaurable)</button><button class="secondary" id="toolWorkCancelDelete">Conserver</button></div>`;toolWorkConfirmDelete.onclick=async()=>{await enregistrerLigne("eps_saved_tool_works",{...w._raw,deleted:true,updated_at:new Date().toISOString()});closeWorkLibrary();await openWorkLibrary(type,title,load);EpsToolWorkflow.offerUndo(async()=>{await enregistrerLigne("eps_saved_tool_works",{...w._raw,deleted:false,updated_at:new Date().toISOString()});closeWorkLibrary();await openWorkLibrary(type,title,load)},document.querySelector("#toolWorkOverlay main"))};toolWorkCancelDelete.onclick=()=>{closeWorkLibrary();openWorkLibrary(type,title,load)}};toolWorkCancel.onclick=()=>{closeWorkLibrary();openWorkLibrary(type,title,load)}})
+    overlay.querySelectorAll("[data-work-more]").forEach(b=>b.onclick=()=>{const w=rows.find(x=>x.id===b.dataset.workMore);if(!w)return;const main=overlay.querySelector("main");main.innerHTML=`<div class="tool-work-actions-card"><i>▤</i><h3>${esc(w.title)}</h3><p>Choisissez l’action à effectuer sur ce travail.</p><button id="toolWorkEdit">✎ Ouvrir et modifier</button><button class="secondary" id="toolWorkCopy">▣ Dupliquer</button><button class="danger" id="toolWorkDelete">⌫ Supprimer</button><button class="secondary" id="toolWorkCancel">Annuler</button></div>`;toolWorkEdit.onclick=()=>{closeWorkLibrary();load(w)};toolWorkCopy.onclick=async()=>{if(w.compatibilityError){alert(w.compatibilityError);return}await saveWork(type,w.title+" · copie",{...w.payload,id:undefined},w);closeWorkLibrary();openWorkLibrary(type,title,load)};toolWorkDelete.onclick=()=>{main.innerHTML=`<div class="tool-work-actions-card danger-card"><i>⌫</i><h3>Supprimer ce travail ?</h3><p>${esc(w.title)} sera supprimé.</p><button class="danger" id="toolWorkConfirmDelete">Supprimer (restaurable)</button><button class="secondary" id="toolWorkCancelDelete">Conserver</button></div>`;toolWorkConfirmDelete.onclick=async()=>{await enregistrerLigne("eps_saved_tool_works",{...w._raw,deleted:true,updated_at:new Date().toISOString()});closeWorkLibrary();await openWorkLibrary(type,title,load);EpsToolWorkflow.offerUndo(async()=>{await enregistrerLigne("eps_saved_tool_works",{...w._raw,deleted:false,updated_at:new Date().toISOString()});closeWorkLibrary();await openWorkLibrary(type,title,load)},document.querySelector("#toolWorkOverlay main"))};toolWorkCancelDelete.onclick=()=>{closeWorkLibrary();openWorkLibrary(type,title,load)}};toolWorkCancel.onclick=()=>{closeWorkLibrary();openWorkLibrary(type,title,load)}})
   }
   function askWorkName(defaultValue,onSave){
     document.getElementById("toolSaveOverlay")?.remove();const overlay=document.createElement("div");overlay.id="toolSaveOverlay";overlay.className="tool-work-overlay";overlay.innerHTML=`<section class="tool-save-sheet"><header><i>💾</i><div><small>ENREGISTRER</small><h2>Nommer le travail</h2></div><button id="toolSaveClose">×</button></header><label>Nom du travail<input id="toolSaveName" value="${esc(defaultValue)}" maxlength="80"></label><div><button id="toolSaveConfirm">Enregistrer</button><button class="secondary" id="toolSaveCancel">Annuler</button></div></section>`;document.body.appendChild(overlay);requestAnimationFrame(()=>overlay.classList.add("open"));const close=()=>overlay.remove();toolSaveClose.onclick=toolSaveCancel.onclick=close;toolSaveConfirm.onclick=()=>{const name=toolSaveName.value.trim();if(!name){toolSaveName.focus();return}close();onSave(name)};toolSaveName.focus();toolSaveName.select();toolSaveName.onkeydown=e=>{if(e.key==="Enter")toolSaveConfirm.click()}
   }
   function download(name,text,type="text/plain"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
   async function renderMultiChronoWeb(saved){
+    if(saved?.session){const w=EpsPortableWorks.multiSession(saved.session,saved.results||[],await loadToolStudents(saved.session.class_id));openedWorks.set(`${session?.user_id}:${w.id}`,w);saved={freeWork:w}}
     const savedSession=saved?.session||null,savedResults=saved?.results||[];
-    if(!savedSession){toolClassId=FREE_USE;await loadToolStudents(toolClassId)}
+    if(!savedSession){toolClassId=saved?.freeWork?.classId||FREE_USE;await loadToolStudents(toolClassId)}
     if(savedSession?.class_id){toolClassId=savedSession.class_id;await loadToolStudents(toolClassId)}
     const ctx=await contextHtml();
     // Le Multi-chrono reprend la logique du 3 x 500 : toute la classe reste disponible dans
@@ -198,7 +203,7 @@
     const makeTimer=(id,name)=>({id:String(id),name,ms:0,running:false,start:0});
     const resetTimersFromContext=()=>{
       groups=[];activeGroup=-1;manageGroups=false;editingGroup=null;selection=new Set();freeCounter=1;
-      sessionId=null;sessionRecord=null;resultRecords={};
+      sessionId=null;sessionRecord=null;resultRecords={};saved=null;
       timers=new Map(onRealClass()&&toolStudents.length
         ? toolStudents.map(e=>[String(e.id),makeTimer(e.id,studentLabel(e))])
         : [["free-1",makeTimer("free-1","Élève 1")]]);
@@ -227,7 +232,7 @@
       if(onRealClass()) {const library=EpsClassGroups.fromArrays(toolClassId,groups);workspace.insertAdjacentHTML('afterbegin',EpsClassGroups.controls(library));EpsClassGroups.bind(library,toolStudents,()=>{groups=EpsClassGroups.arrays(library);activeGroup=-1;draw()})}
       workspace.querySelector('#multiExport')?.addEventListener('click',()=>EpsToolWorkflow.csv('multi-chrono.csv',[['Élève','Groupe','Temps (s)'],...[...timers.values()].map(t=>[t.name,groups.findIndex(g=>g.includes(t.id))+1||'',+(elapsed(t)/1000).toFixed(2)])]));
       workspace.querySelector('#multiFreeSave')?.addEventListener('click',async()=>{const title=prompt('Nom du travail','Multi-chrono libre');if(!title)return;try{const w=await saveWork('multi-free',title,{id:saved?.freeWork?.id,timers:[...timers.values()].map(t=>({...t,ms:elapsed(t),running:false,start:0}))},{classId:null,period:+document.getElementById('modernPeriod').value});document.getElementById('multiSaveMsg').textContent='Enregistré dans Mes travaux.';saved={freeWork:w}}catch(e){document.getElementById('multiSaveMsg').textContent='Enregistrement impossible : '+e.message}});
-      workspace.querySelector('#multiResume')?.addEventListener('click',async()=>{try{const rows=await lireTable('eps_test_sessions','eps_test_sessions?deleted=eq.false&test_name=eq.Multi-chrono&select=*&order=created_at.desc',{ou:r=>!r.deleted&&r.test_name==='Multi-chrono'}),host=workspace.querySelector('#multiLibrary');host.innerHTML=`<section class="field-tool-card"><h3>Multi-chronos enregistrés</h3>${rows.filter(r=>r.test_name==='Multi-chrono'&&r.user_id===session.user_id).map(r=>`<button data-multi-open="${esc(r.id)}">${esc(r.class_label)} · P${r.period_number} · ${new Date(r.created_at).toLocaleDateString('fr-FR')}</button>`).join('')}<button id="multiFreeLibrary" class="secondary">Travaux en usage libre</button></section>`;host.querySelectorAll('[data-multi-open]').forEach(b=>b.onclick=()=>{const r=rows.find(r=>r.id===b.dataset.multiOpen);ouvrirMultiChronoDepuisClasse(r.id,r.class_id,r.period_number)});host.querySelector('#multiFreeLibrary').onclick=()=>openWorkLibrary('multi-free','Multi-chronos libres',w=>renderMultiChronoWeb({freeWork:w}))}catch(e){document.getElementById('multiSaveMsg').textContent=e.message}});
+      workspace.querySelector('#multiResume')?.addEventListener('click',()=>openWorkLibrary('multi-free','Multi-chronos partagés',w=>renderMultiChronoWeb({freeWork:w})));
       let ignoreMultiClick=0;
       workspace.querySelectorAll('[data-multi-group]').forEach(b=>b.onclick=()=>{if(Date.now()<ignoreMultiClick)return;activeGroup=+b.dataset.multiGroup;manageGroups=false;draw()});
       bindRunningLongPress(workspace.querySelectorAll('[data-multi-group]:not([data-multi-group="-1"])'),b=>{ignoreMultiClick=Date.now()+800;manageGroups=true;editingGroup=+b.dataset.multiGroup;selection=new Set(groups[editingGroup]||[]);draw()});
@@ -245,7 +250,7 @@
       workspace.querySelector('#multiSaveAs')?.addEventListener('click',()=>saveMultiChrono(true));
       if(workspace.querySelector('#multiResetAll'))workspace.querySelector('#multiResetAll').textContent='↺ Réinitialiser les résultats';
       workspace.querySelector('#multiResetAll')?.addEventListener('click',()=>{if(!confirm('Remettre les chronos à zéro ? Les groupes et les tests enregistrés sont conservés.'))return;const previous=[...timers.values()].map(t=>({...t,ms:elapsed(t),running:false,start:0})),id=sessionId,record=sessionRecord,records=structuredClone(resultRecords);timers.forEach(t=>{t.ms=0;t.running=false;t.start=0});sessionId=null;sessionRecord=null;resultRecords={};draw();EpsToolWorkflow.offerUndo(()=>{timers=new Map(previous.map(t=>[t.id,t]));sessionId=id;sessionRecord=record;resultRecords=records;draw()})});
-      EpsToolActionMenus.merge(workspace,['multiSave','multiFreeSave','multiSaveAs','multiResume','multiExport','multiResetAll'],{new:()=>{if(!confirm('Commencer une nouvelle saisie ? Enregistrez d’abord le travail à conserver.'))return;timers.forEach(t=>{t.ms=0;t.running=false;t.start=0});sessionId=null;sessionRecord=null;resultRecords={};draw()},deleteGroups:()=>{if(!groups.length)return;if(!confirm('Supprimer les groupes sans modifier les chronos individuels ?'))return;const before=structuredClone(groups);groups=[];activeGroup=-1;draw();EpsToolWorkflow.offerUndo(()=>{if(groups.length)throw Error('De nouveaux groupes ont été créés.');groups=before;draw()})},document:()=>({title:'Multi-chrono',context:toolClasses.find(c=>c.id===toolClassId)?.name||'Usage libre',headers:['Élève','Temps','Groupe'],rows:[...timers.values()].map(t=>[t.name,formatToolTime(elapsed(t)),groups.findIndex(g=>g.includes(String(t.id)))+1||''])})});
+      EpsToolActionMenus.merge(workspace,['multiSave','multiFreeSave','multiSaveAs','multiResume','multiExport','multiResetAll'],{new:()=>{if(!confirm('Commencer une nouvelle saisie ? Enregistrez d’abord le travail à conserver.'))return;timers.forEach(t=>{t.ms=0;t.running=false;t.start=0});sessionId=null;sessionRecord=null;resultRecords={};saved=null;draw()},deleteGroups:()=>{if(!groups.length)return;if(!confirm('Supprimer les groupes sans modifier les chronos individuels ?'))return;const before=structuredClone(groups);groups=[];activeGroup=-1;draw();EpsToolWorkflow.offerUndo(()=>{if(groups.length)throw Error('De nouveaux groupes ont été créés.');groups=before;draw()})},document:()=>({title:'Multi-chrono',context:toolClasses.find(c=>c.id===toolClassId)?.name||'Usage libre',headers:['Élève','Temps','Groupe'],rows:[...timers.values()].map(t=>[t.name,formatToolTime(elapsed(t)),groups.findIndex(g=>g.includes(String(t.id)))+1||''])})});
     };
     const restoreSaved=()=>{
       groups=[];const groupMap=new Map();
@@ -256,25 +261,26 @@
     const saveMultiChrono=async asNew=>{
       if(!onRealClass())return alert('Choisissez une classe pour enregistrer ce test.');
       const button=workspace.querySelector('#multiSave');if(button)button.disabled=true;
-      const now=new Date().toISOString(),id=asNew||!sessionId?crypto.randomUUID():sessionId,
-        cls=toolClasses.find(c=>String(c.id)===String(toolClassId)),period=+(document.getElementById('modernPeriod')?.value||1),
-        sessionRow=asNew||!sessionRecord?{id,user_id:session.user_id,class_id:toolClassId,period_number:period,test_name:'Multi-chrono',created_at:Date.now(),class_label:cls?.name||'',updated_at:now,deleted:false}:{...sessionRecord,period_number:period,updated_at:now,deleted:false};
-      try{
-        await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();
-        for(const student of toolStudents){const timer=timers.get(String(student.id))||makeTimer(student.id,studentLabel(student));if(timer.running){timer.ms+=Date.now()-timer.start;timer.running=false;timer.start=0}const old=asNew?null:resultRecords[String(student.id)],resultId=old?.id||crypto.randomUUID(),group=groups.findIndex(g=>g.includes(String(student.id)));kept.add(String(resultId));await enregistrerLigne('eps_test_results',{...(old||{}),id:resultId,user_id:old?.user_id||session.user_id,session_id:id,student_id:student.id,input_value:Math.round(timer.ms),result_value:+(timer.ms/1000).toFixed(2),input_unit:`multi-chrono|${JSON.stringify({group})}`,result_unit:'s',updated_at:now,deleted:false});resultRecords[String(student.id)]={...(old||{}),id:resultId,student_id:student.id}}
-        if(!asNew)for(const old of Object.values(resultRecords))if(old?.id&&!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});
-        sessionId=id;sessionRecord=sessionRow;draw();const msg=document.getElementById('multiSaveMsg');if(msg)msg.textContent=asNew?'Nouveau test enregistré dans la classe.':'Test enregistré dans la classe.';
-      }catch(error){const msg=document.getElementById('multiSaveMsg');if(msg)msg.textContent=`Enregistrement impossible : ${error.message||error}`;if(button)button.disabled=false}
+      try {
+        const old=saved?.freeWork,work=await saveWork('multi-free',old?.title||`Multi-chrono · ${toolClasses.find(c=>c.id===toolClassId)?.name||''}`,{
+          id:asNew?undefined:old?.id,createdAt:asNew?undefined:old?.createdAt,
+          timers:[...timers.values()].map(t=>({...t,ms:Math.round(elapsed(t)),running:false,start:0})),groups,activeGroup
+        },{classId:toolClassId,period:+document.getElementById('modernPeriod').value||1});
+        saved={freeWork:work};timers=new Map(work.payload.timers.map(t=>[t.id,t]));sessionId=work.id;draw();document.getElementById('multiSaveMsg').textContent='Enregistré dans la classe et prêt pour la synchronisation.';
+      }catch(e){document.getElementById('multiSaveMsg').textContent='Enregistrement impossible : '+e.message;if(button)button.disabled=false}
     };
     toolPanel.innerHTML=header("Multi-chrono","Groupes et chronos par élève","⏱️")+`<main class="field-tool-card">${ctx}<div id="multiWorkspace"></div></main>`;
     workspace=document.getElementById('multiWorkspace');
-    if(savedSession?.class_id){const cls=document.getElementById('modernClass'),mode=document.getElementById('modernMode'),period=document.getElementById('modernPeriod');cls.value=savedSession.class_id;mode.value='class';period.value=String(savedSession.period_number||1);restoreSaved()}else {resetTimersFromContext();if(saved?.freeWork){timers=new Map((saved.freeWork.payload.timers||[]).map(t=>[t.id,{...t,running:false,start:0}]));freeCounter=Math.max(timers.size,1)}}
+    if(saved?.freeWork){const w=saved.freeWork;await restoreContext(w);timers=new Map((w.payload.timers||[]).map(t=>[t.id,{...t,running:false,start:0}]));groups=structuredClone(w.payload.groups||[]);activeGroup=w.payload.activeGroup??-1;sessionId=w.id;freeCounter=Math.max(timers.size,1)}else resetTimersFromContext();
     draw();
     const ticker=setInterval(()=>{const host=document.getElementById('multiWorkspace');if(!host||host!==workspace){clearInterval(ticker);return}host.querySelectorAll('[data-multi-time]').forEach(node=>{const t=timers.get(node.dataset.multiTime);if(t?.running)node.textContent=formatToolTime(elapsed(t))})},100);
     bindContext(()=>{resetTimersFromContext();draw()})}
 
   async function ouvrirMultiChronoDepuisClasse(sessionId,classId,period){
     showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;
+    const shared=await lireTable('eps_saved_tool_works',`eps_saved_tool_works?id=eq.${sessionId}&select=*`,{avecSupprimes:true,ou:r=>r.id===sessionId});
+    const canonical=shared.find(r=>r.id===sessionId&&r.user_id===session.user_id);
+    if(canonical){if(canonical.deleted){alert('Ce travail a été supprimé sur un autre appareil.');return}const w=EpsPortableWorks.row(canonical);if(w.compatibilityError){alert(w.compatibilityError);return}openedWorks.set(`${session.user_id}:${w.id}`,w);await renderMultiChronoWeb({freeWork:w});return}
     const sessions=await lireTable('eps_test_sessions',`eps_test_sessions?id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.id)===String(sessionId)&&!r.deleted}),
       results=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${sessionId}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(sessionId)&&!r.deleted}),
       sessionRow=sessions[0]||{id:sessionId,class_id:classId,period_number:+period||1,test_name:'Multi-chrono',created_at:Date.now(),class_label:toolClasses.find(c=>String(c.id)===String(classId))?.name||'',deleted:false};
@@ -370,7 +376,7 @@
   function injectSettings(){const body=document.getElementById("settingsBody");if(!body||document.getElementById("toolsLayoutSection"))return;const current=localStorage.getItem(prefKey)||"activities";body.insertAdjacentHTML("beforeend",`<details class="card settingsSection" id="toolsLayoutSection"><summary>Organisation des outils</summary><div class="settingsContents"><p>Choisissez la présentation utilisée dans l’onglet Outils.</p>${Object.entries(layouts).map(([k,v])=>`<label class="trash-row"><span><b>${esc(v)}</b></span><input type=radio name=toolsLayout value="${k}" ${k===current?"checked":""}></label>`).join("")}</div></details><details class="card settingsSection" id="webTrashSection"><summary>Corbeille</summary><div class="settingsContents"><button id="loadWebTrash">Afficher les éléments supprimés</button><div id="webTrashRows"></div></div></details>`);body.querySelectorAll("[name=toolsLayout]").forEach(r=>r.onchange=()=>{localStorage.setItem(prefKey,r.value);activity=null;draw()});document.getElementById("loadWebTrash").onclick=loadTrash}
   async function loadTrash(){const host=document.getElementById("webTrashRows"),tables=[["classes","Classe","name"],["students","Élève","last_name"],["evaluations","Évaluation","label"],["class_documents","Document","title"],["eps_saved_tool_works","Travail outil","title"]];host.innerHTML="<p>Chargement…</p>";const all=[];for(const [table,kind,label] of tables){try{const rows=await lireTable(table,`${table}?deleted=eq.true&select=*&order=updated_at.desc`);rows.forEach(row=>all.push({table,kind,label:row[label]||kind,row}))}catch{}}host.innerHTML=all.length?all.map((x,i)=>`<div class="trash-row"><span><b>${esc(x.kind)}</b><br>${esc(x.label)}</span><button data-restore="${i}">Restaurer</button></div>`).join(""):"<p class=muted>La corbeille est vide.</p>";host.querySelectorAll("[data-restore]").forEach(b=>b.onclick=async()=>{const x=all[+b.dataset.restore];await enregistrerLigne(x.table,{...x.row,deleted:false,updated_at:new Date().toISOString()});loadTrash()})}
   const previousOpen=globalThis.openSettings;globalThis.openSettings=async function(){if(typeof previousOpen==="function")await previousOpen();injectSettings()};
-  globalThis.EpsToolWorks={read:readWorks,save:saveWork,library:openWorkLibrary,download,restoreContext};
+  globalThis.EpsToolWorks={read:readWorks,save:saveWork,library:openWorkLibrary,download,restoreContext,contextHtml,bindContext};
   Object.assign(globalThis,{renderMultiChronoWeb,ouvrirMultiChronoDepuisClasse,renderObserverWeb,renderRandomWeb,renderEffortWeb,resetToolsWorkspace,
     homeFavoriteToolSummary,ouvrirFavorisDepuisAccueil,
     isToolFavorite:id=>readFavorites().has(id),toggleToolFavorite:id=>{const active=toggleFavoriteId(id);draw();return active}});

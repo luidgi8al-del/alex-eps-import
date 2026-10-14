@@ -23,9 +23,9 @@ self.EPS_OFFLINE_ASSETS = [
   "./class-group-library.js",
   "./class-group-library.js?v=20261010-1",
   "./classe-ecrans.js",
-  "./classe-ecrans.js?v=20261011-visuel-1",
+  "./classe-ecrans.js?v=20261014-portable-1",
   "./classe-tableau-bord.js",
-  "./classe-tableau-bord.js?v=20261010-results-1",
+  "./classe-tableau-bord.js?v=20261014-portable-1",
   "./classe-visuel.js",
   "./classe-visuel.js?v=20261011-visuel-1",
   "./classes.js",
@@ -208,10 +208,12 @@ self.EPS_OFFLINE_ASSETS = [
   "./tools-organizers.js?v=20261014-universal-1",
   "./tools-persistence.js",
   "./tools-persistence.js?v=20261014-universal-1",
+  "./tools-portable.js",
+  "./tools-portable.js?v=20261014-portable-1",
   "./tools-simple-actions.js",
-  "./tools-simple-actions.js?v=20261014-universal-1",
+  "./tools-simple-actions.js?v=20261014-portable-1",
   "./tools-workflows.js",
-  "./tools-workflows.js?v=20261014-universal-1",
+  "./tools-workflows.js?v=20261014-portable-1",
   "./tools-workspace.js",
-  "./tools-workspace.js?v=20261014-universal-1"
+  "./tools-workspace.js?v=20261014-portable-1"
 ];

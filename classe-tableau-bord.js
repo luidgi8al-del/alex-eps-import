@@ -333,6 +333,7 @@ async function openClassDashboard(cls, label) {
     dashboardStudents = studentsRes.ok ? await studentsRes.json() : [];
     dashboardDispenses = dispRes.ok ? await dispRes.json() : [];
     dashboardTests = testsRes.ok ? await testsRes.json() : [];
+    dashboardTests = await EpsPortableWorks.classTests(dashboardTests,cls.id);
     // Les anciennes saisies des aptitudes 6e vivaient dans « Travaux des outils ».
     // Les recopier sans supprimer l'original, puis relire la rubrique Tests EPS.
     if (globalThis.EpsAptitudes?.migrateLegacy) {

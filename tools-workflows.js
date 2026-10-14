@@ -32,7 +32,7 @@
   const periods = classId => {const c=toolClasses.find(c=>c.id===classId);return c?planningPeriodCount(c.grade):5};
   const className = id => toolClasses.find(c=>c.id===id)?.name || 'Usage libre';
   function csv(name,rows){EpsToolWorks.download(name,'\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\r\n'),'text/csv;charset=utf-8')}
-  function stateFor(saved,defaults={}) {return {classId:saved?.classId||'',period:saved?.period||1,id:saved?.id||null,title:saved?.title||'',createdAt:saved?.createdAt||null,groups:[],assignments:{},activeGroup:'',editGroups:false,inTest:!!saved,freeNames:'Participant libre',values:{},...clone(defaults),...clone(saved?.payload||{})};}
+  function stateFor(saved,defaults={}) {return {groups:[],assignments:{},activeGroup:'',editGroups:false,inTest:!!saved,freeNames:'Participant libre',values:{},...clone(defaults),...clone(saved?.payload||{}),classId:saved?.classId||'',period:saved?.period||1,id:saved?.id||null,title:saved?.title||'',createdAt:saved?.createdAt||null};}
   async function pupils(state) {
     if(state.classId){await loadToolStudents(state.classId);return [...toolStudents]}
     return state.freeNames.split('\n').map((n,i)=>({id:'free-'+i,first_name:n.trim(),last_name:''})).filter(s=>s.first_name);

@@ -15,8 +15,8 @@ const expected = [
   'data-multi-time',
   'Enregistrer dans Tests EPS',
   "test_name:'Multi-chrono'",
-  "enregistrerLigne('eps_test_sessions'",
-  "enregistrerLigne('eps_test_results'",
+  "saveWork('multi-free'",
+  "EpsPortableWorks.multiSession",
   'ouvrirMultiChronoDepuisClasse',
   'Réinitialiser toutes les données',
   // La remise a zero conserve desormais les groupes : c'est ce qu'il faut garder.

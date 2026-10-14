@@ -1272,6 +1272,7 @@ async function ecEnFenetreOutil(lancer, retour) {
     // Ce qui vient d'etre saisi doit se voir : les tests de la classe sont relus.
     try {
       dashboardTests = await ecLire("eps_test_sessions", `class_id=eq.${dashboardClass.row.id}`, t => t.class_id === dashboardClass.row.id);
+      dashboardTests = await EpsPortableWorks.classTests(dashboardTests,dashboardClass.row.id);
       await chargerEvaluationsDuTableauDeBord();
     } catch { /* on garde ce qu'on avait */ }
     if (dashboardClass) renderClassDashboard();
@@ -1342,7 +1343,8 @@ async function ecSupprimerTest(t) {
   try {
     // Effacement = ligne marquee, jamais une suppression SQL : c'est ce qui le fait aussi
     // disparaitre de l'application a la synchronisation suivante.
-    await enregistrerLigne("eps_test_sessions", { ...t, deleted: true, updated_at: maintenant });
+    if(t._toolWork)await enregistrerLigne('eps_saved_tool_works',{...t._toolWork,deleted:true,updated_at:maintenant});
+    else await enregistrerLigne("eps_test_sessions", { ...t, deleted: true, updated_at: maintenant });
     try {
       await apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_results?session_id=eq.${t.id}`,
         { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: maintenant }) });
@@ -1431,8 +1433,9 @@ async function ecDupliquerEvaluation(evaluation, cible) {
  * « Utilisation libre » : on repose la classe et la periode, comme au moment de l'enregistrement.
  */
 async function ecRouvrirTravail(travail) {
+  if(travail.compatibilityError){alert(travail.compatibilityError);return}
   const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
-    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb" };
+    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb",measures:"renderMeasures",effort:"renderEffortWeb",random:"renderRandomWeb" };
   const dessin = globalThis[outils[travail.type]] || (travail.type === "climb-observation" ? renderClimbObservationWeb : travail.type === "climb-test" ? renderClimbTestWeb : ["swim","aptitudes","speed","impacts"].includes(travail.type) ? w => renderPersistedTool(travail.type,w) : null);
   return ecEnFenetreOutil(async () => {
     stopToolTimer();
@@ -1453,11 +1456,8 @@ async function ecTravauxDeLaClasse() {
       `eps_saved_tool_works?class_id=eq.${dashboardClass.row.id}&deleted=eq.false&select=*&order=updated_at.desc`,
       { ou: w => String(w.class_id) === String(dashboardClass.row.id) && !w.deleted,
         trier: (a, b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")) });
-    return rows.filter(w => !session?.user_id || w.user_id === session.user_id).map(w => ({
-      id: w.id, type: w.type, title: w.title, classId: w.class_id || null,
-      period: +w.period_number || 1, payload: (() => { try { return JSON.parse(w.payload || "{}"); } catch { return {}; } })(),
-      createdAt: w.created_at, updatedAt: w.updated_at, _raw: w
-    }));
+    // Use the same adapter/cache as the tool library, including preservation of foreign fields.
+    return (await EpsToolWorks.read()).filter(w=>w.type!=='multi-free'&&String(w.classId)===String(dashboardClass.row.id));
   } catch { return []; }
 }
 
