@@ -127,6 +127,7 @@ function bindToolRoster(onChange) {
   select.onchange = async () => {
     toolClassId = select.value;
     await loadToolStudents(toolClassId);
+    if(toolClassId!==FREE_USE&&globalThis.EpsCompactTools)epsTestPeriod=await EpsCompactTools.periodForClass(toolClassId);
     return onChange();
   };
   const info = document.getElementById("toolRosterInfo");
@@ -184,14 +185,14 @@ function drawEpsTests() {
   if (epsOpenTest === 'ESCALADE') { renderClimbTestWeb(); return; }
   const cls = toolClasses.find(c => c.id === toolClassId);
   const periodCount = cls ? planningPeriodCount(cls.grade) : 5;
-  if (epsTestPeriod > periodCount) epsTestPeriod = periodCount;
+  // A reopened test keeps its original period, even after the school's period count changes.
   const periods = [];
   for (let p = 1; p <= periodCount; p++) periods.push(`<button class="periodChip${p === epsTestPeriod ? " active" : ""}" data-eps-period="${p}">P${p}</button>`);
 
   if (epsOpenTest) {
     const test = EpsTests.TESTS[epsOpenTest];
     const category = EpsTests.CATEGORIES.find(cat => cat.tests.includes(epsOpenTest));
-    const compactRunning=epsOpenTest==='TROIS_500';
+    const compactRunning=true;
     toolPanel.innerHTML = toolHeader(test.label, compactRunning?(category?.name||'Tests EPS'):`${category?.name || "Tests EPS"}${cls ? ` · ${cls.name} · P${epsTestPeriod}` : " · utilisation libre"}`, compactRunning?runningHeaderRosterHtml():'')
       + `<main class="eps-test-fullscreen">
           ${compactRunning?'':`<section class="eps-test-context" ${epsTestStarted?'hidden':''}>${toolRosterHtml()}
