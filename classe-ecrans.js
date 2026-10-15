@@ -1435,7 +1435,7 @@ async function ecDupliquerEvaluation(evaluation, cible) {
 async function ecRouvrirTravail(travail) {
   if(travail.compatibilityError){alert(travail.compatibilityError);return}
   const outils = { tournament: "renderTournamentWeb", observer: "renderObserverWeb",
-    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb",measures:"renderMeasures",effort:"renderEffortWeb",random:"renderRandomWeb",'bac-grid':'renderBacGridWeb','bac-climb':'renderBacClimbWeb' };
+    rotations: "renderRotationsWeb", acrosport: "renderAcrosportWeb",measures:"renderMeasures",effort:"renderEffortWeb",random:"renderRandomWeb",'bac-grid':'renderBacGridWeb','bac-climb':'renderBacClimbWeb','running-observation':'renderRunningObservationWeb' };
   const dessin = globalThis[outils[travail.type]] || (travail.type === "climb-observation" ? renderClimbObservationWeb : travail.type === "climb-test" ? renderClimbTestWeb : ["swim","aptitudes","speed","impacts"].includes(travail.type) ? w => renderPersistedTool(travail.type,w) : null);
   return ecEnFenetreOutil(async () => {
     stopToolTimer();

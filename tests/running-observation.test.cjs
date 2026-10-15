@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),M=require('../running-observation-model.js');
+assert.equal(M.analyse({first:60,total:130}), 'slower');
+assert.equal(M.analyse({first:60,total:110}), 'faster');
+for(const total of [118,120,122])assert.equal(M.analyse({first:60,total}), 'steady');
+assert.equal(M.analyse({first:60,total:122.01}), 'slower');
+for(const r of [{},{first:0,total:100},{first:60,total:60},{first:NaN,total:120},{first:60,total:Infinity},{first:'60',total:120}])assert.equal(M.analyse(r),null);
+const r={first:60,total:130,observerId:'other',analysis:'slower',advice:'slower',validated:true};assert(M.coherent(r));
+assert(!M.coherent({...r,observerId:''}));assert(!M.coherent({...r,advice:'faster'}));assert(!M.coherent({...r,validated:false}));
+const first=M.passage({},60);assert.equal(first.first,60);assert.equal(first.total,undefined);assert.equal(M.passage(first,60.2).total,undefined);const second=M.passage(first,130);assert.equal(second.total,130);assert.deepEqual(M.passage(second,140),second);
+assert.equal(M.format(59.99),'1:00,0');assert.equal(M.format(130.1),'2:10,1');
+console.log('PASS observation: splits, 2s boundary, missing values, coherent feedback, double click, completed runner immutable');
