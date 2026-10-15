@@ -195,7 +195,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./styles/tool-save-indicator.css",
   "./styles/tool-save-indicator.css?v=20261014-running-header-1",
   "./styles/tools-workspace.css",
-  "./styles/tools-workspace.css?v=20261012-groups-1",
+  "./styles/tools-workspace.css?v=20261015-shortcuts-1",
   "./styles/ui-system.css",
   "./styles/ui-system.css?v=20260927-3",
   "./swim-observation-web.js",
@@ -219,7 +219,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./tool-input-navigation.js",
   "./tool-input-navigation.js?v=20261012-groups-1",
   "./tool-resume.js",
-  "./tool-resume.js?v=20261015-observation-1",
+  "./tool-resume.js?v=20261015-shortcuts-1",
   "./tool-save-indicator.js",
   "./tool-save-indicator.js?v=20261014-actions-1",
   "./tools-common-groups.js",
@@ -235,5 +235,5 @@ self.EPS_OFFLINE_ASSETS = [
   "./tools-workflows.js",
   "./tools-workflows.js?v=20261015-class-guard-1",
   "./tools-workspace.js",
-  "./tools-workspace.js?v=20261015-grids-1"
+  "./tools-workspace.js?v=20261015-shortcuts-1"
 ];
