@@ -32,15 +32,25 @@
   const periods = classId => {const c=toolClasses.find(c=>c.id===classId);return c?planningPeriodCount(c.grade):5};
   const className = id => toolClasses.find(c=>c.id===id)?.name || 'Usage libre';
   function csv(name,rows){EpsToolWorks.download(name,'\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\r\n'),'text/csv;charset=utf-8')}
-  function stateFor(saved,defaults={}) {return {groups:[],assignments:{},activeGroup:'',editGroups:false,inTest:!!saved,freeNames:'Participant libre',values:{},...clone(defaults),...clone(saved?.payload||{}),classId:saved?.classId||'',period:saved?.period||1,id:saved?.id||null,title:saved?.title||'',createdAt:saved?.createdAt||null};}
+  const initialFreeNames=new WeakMap();
+  function stateFor(saved,defaults={}) {
+    const state={groups:[],assignments:{},activeGroup:'',editGroups:false,inTest:!!saved,freeNames:'Participant libre',values:{},...clone(defaults),...clone(saved?.payload||{}),classId:saved?.classId||'',period:saved?.period||1,id:saved?.id||null,title:saved?.title||'',createdAt:saved?.createdAt||null};
+    initialFreeNames.set(state,defaults.freeNames??'Participant libre');
+    return state;
+  }
+  function hasClassWork(state) {
+    const filled=value=>value!=null&&value!==false&&(typeof value==='object'?Object.values(value).some(filled):typeof value==='string'?value.trim()!=='':true);
+    return !!(state.groups?.length||filled(state.assignments)||filled(state.values)||filled(state.scores)||(!state.classId&&state.freeNames!==(initialFreeNames.get(state)??'Participant libre')));
+  }
   async function pupils(state) {
     if(state.classId){await loadToolStudents(state.classId);return [...toolStudents]}
     return state.freeNames.split('\n').map((n,i)=>({id:'free-'+i,first_name:n.trim(),last_name:''})).filter(s=>s.first_name);
   }
   function context(state) {return `<section class="field-tool-card wf-setup-context"><div class="field-tool-row"><label>Classe<select id="wfClass"><option value="">Usage libre (sans classe)</option>${toolClasses.map(c=>`<option value="${esc(c.id)}" ${c.id===state.classId?'selected':''}>${esc(c.name)}</option>`).join('')}</select></label><label>Période<select id="wfPeriod">${Array.from({length:periods(state.classId)},(_,i)=>`<option value="${i+1}" ${i+1===state.period?'selected':''}>P${i+1}</option>`).join('')}</select></label></div>${!state.classId?`<label>Participants libres (un nom par ligne)<textarea id="wfFree" rows="3">${esc(state.freeNames)}</textarea></label>`:''}</section>`;}
-  function bindContext(state,draw) {
+  function bindContext(state,draw,hasActiveWork=()=>false) {
     const select=document.getElementById('wfClass');select.onchange=async()=>{
-      if(!confirm('Changer de classe et commencer un nouveau travail ? Enregistrez auparavant les saisies à conserver.')){select.value=state.classId;return}
+      if(select.value===state.classId)return;
+      if((hasClassWork(state)||hasActiveWork())&&!confirm('Changer de classe et commencer un nouveau travail ? Enregistrez auparavant les saisies à conserver.')){select.value=state.classId;return}
       toolPanel.inert=true;
       try{state.scores={};state.step=0;state.title='';state.classId=select.value;state.period=Math.min(state.period,periods(state.classId));state.id=null;state.createdAt=null;state.values={};state.groups=[];state.assignments={};state.activeGroup='';state.sessionId=null;state.resultIds={};state.inTest=false;await draw()}finally{toolPanel.inert=false}
     };

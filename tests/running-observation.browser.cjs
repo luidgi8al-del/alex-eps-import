@@ -6,12 +6,19 @@ const server=http.createServer((req,res)=>{try{let f=path.join(root,decodeURICom
  for(const width of [1280,390,320]){
   const c=await browser.newContext({viewport:{width,height:900},isMobile:width<600,hasTouch:width<600,serviceWorkers:'block'});
   await c.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await c.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});
-  const p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('dialog',d=>d.accept(d.type()==='prompt'?'Observation test':undefined));
+  const p=await c.newPage(),errors=[],classWarnings=[];let cancelClassChange=false;
+  p.on('pageerror',e=>errors.push(e.message));p.on('dialog',d=>{if(d.message().startsWith('Changer de classe')){classWarnings.push(d.message());if(cancelClassChange)return d.dismiss()}return d.accept(d.type()==='prompt'?'Observation test':undefined)});
   await p.goto(`http://127.0.0.1:${server.address().port}`);await p.waitForFunction(()=>typeof epsPageFullyReady!=='undefined'&&epsPageFullyReady);
   await p.evaluate(()=>{__fauxServeur.DONNEES.eps_saved_tool_works=[];window.__writes=[];const save=enregistrerLigne;enregistrerLigne=async(table,row)=>{const result=await save(table,row);if(table==='eps_saved_tool_works'){__writes.push(structuredClone(row));const a=__fauxServeur.DONNEES.eps_saved_tool_works,index=a.findIndex(w=>w.id===row.id);index<0?a.push(row):a[index]=row}return result};window.__offset=0;const now=performance.now.bind(performance);performance.now=()=>now()+__offset;showTab('outils');resetToolsWorkspace();openTool('bac-eps')});
-  await p.locator('[data-running-observation]').click();await p.waitForSelector('#wfClass');await p.locator('#wfClass').selectOption('cl-3e6');await p.locator('#wfStart').click();await p.waitForSelector('.ro-table');
+  await p.locator('[data-running-observation]').click();await p.waitForSelector('#wfClass');await p.locator('#wfClass').selectOption('cl-3e6');
+  await p.waitForFunction(()=>document.querySelector('#wfClass')?.value==='cl-3e6'&&!toolPanel.inert);
+  await p.locator('#wfClass').selectOption('');await p.waitForFunction(()=>!!document.querySelector('#wfFree')&&!toolPanel.inert);
+  await p.locator('#wfClass').selectOption('cl-3e6');await p.waitForFunction(()=>document.querySelector('#wfClass')?.value==='cl-3e6'&&!toolPanel.inert);
+  assert.equal(classWarnings.length,0,'No warning for first selection or switching an untouched worksheet');
+  await p.locator('#wfStart').click();await p.waitForSelector('.ro-table');
   await p.waitForTimeout(150);assert.equal(await p.locator('.modern-tool-hero #wfClass').count(),1);assert.equal(await p.locator('#wfPeriod:visible').count(),0);
   await p.locator('[data-tool-create-group]').click();await p.locator('[data-tool-group-member="el-0"]').check();await p.locator('[data-tool-group-member="el-1"]').check();await p.locator('[data-group-save]').click();
+  cancelClassChange=true;await p.locator('#wfClass').selectOption('');assert.equal(classWarnings.length,1);assert.equal(await p.locator('#wfClass').inputValue(),'cl-3e6');assert.equal(await p.locator('[data-ro-row]').count(),2);cancelClassChange=false;
   await p.locator('#wfEditGroups').click();await p.locator('[data-tool-group-member="el-1"]').uncheck();await p.locator('[data-group-cancel]').click();assert.equal(await p.locator('[data-ro-row]').count(),2);
   await p.locator('#wfEditGroups').click();await p.locator('[data-tool-group-member="el-1"]').uncheck();await p.locator('[data-group-save]').click();assert.equal(await p.locator('[data-ro-row]').count(),1);
   for(let i=0;i<3;i++){

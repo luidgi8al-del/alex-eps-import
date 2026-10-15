@@ -168,7 +168,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./running-observation-model.js",
   "./running-observation-model.js?v=20261015-observation-1",
   "./running-observation.js",
-  "./running-observation.js?v=20261015-observation-1",
+  "./running-observation.js?v=20261015-class-guard-1",
   "./school-levels.js",
   "./settings-categories.js",
   "./settings-categories.js?v=20261013-1",
@@ -233,7 +233,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./tools-simple-actions.js",
   "./tools-simple-actions.js?v=20261014-portable-1",
   "./tools-workflows.js",
-  "./tools-workflows.js?v=20261014-portable-1",
+  "./tools-workflows.js?v=20261015-class-guard-1",
   "./tools-workspace.js",
   "./tools-workspace.js?v=20261015-grids-1"
 ];
