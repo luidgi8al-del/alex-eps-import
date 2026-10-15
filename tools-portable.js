@@ -40,7 +40,7 @@
   return [...tests.filter(t=>!ids.has(t.id)),...works.filter(r=>!r.deleted).map(r=>({id:r.id,user_id:r.user_id,class_id:r.class_id,period_number:r.period_number,test_name:type(r.type)==='running-observation'?'3 × 500 m · Observation':type(r.type)==='bac-grid'?((root.EpsBacRubrics?.[row(r).payload.activity]?.label||'Bac EPS')+' · Bac AFL1 /12'):type(r.type)==='bac-climb'?'Escalade · AFL1 /12':'Multi-chrono',class_label:r.title,created_at:Date.parse(r.created_at),updated_at:r.updated_at,deleted:false,_toolWork:r}))];
  }
  function completed(test,students){
-  if(type(test?._toolWork?.type)==='running-observation'){try{const p=row(test._toolWork).payload;return students.filter(s=>[0,1,2].every(i=>root.EpsRunningObservation.complete(p.values?.[s.id]?.runs?.[i]))).length}catch{return 0}}
+  if(type(test?._toolWork?.type)==='running-observation'){try{const p=row(test._toolWork).payload;return students.filter(s=>Array.from({length:root.EpsRunningObservation.config(p).count},(_,i)=>i).every(i=>root.EpsRunningObservation.complete(p.values?.[s.id]?.runs?.[i]))).length}catch{return 0}}
   if(type(test?._toolWork?.type)==='bac-grid'){try{const p=row(test._toolWork).payload,spec=root.EpsBacRubrics?.[p.activity];return students.filter(s=>root.EpsBacGridsModel.total(spec,p.values?.[s.id])!=null).length}catch{return 0}}
   if(type(test?._toolWork?.type)!=='bac-climb')return null;
   try{const p=row(test._toolWork).payload;return students.filter(s=>root.EpsBacClimbModel.total(p.values?.[s.id],p.manual)!=null).length}catch{return 0}
