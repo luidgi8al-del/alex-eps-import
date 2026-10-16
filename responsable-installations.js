@@ -21,7 +21,7 @@
   if (!androidSession) { try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; } }
   else localStorage.removeItem(SESSION_KEY);
   const saveSession = value => { session = value; !androidSession && value ? localStorage.setItem(SESSION_KEY, JSON.stringify(value)) : localStorage.removeItem(SESSION_KEY); };
-  const show = view => { ['authPage','pendingPage','managerPage'].forEach(id => $(id).hidden = id !== view); };
+  const show = view => { $('managerPage').dataset.guideOwner=view==='managerPage'?(session?.email||'manager'):''; ['authPage','pendingPage','managerPage'].forEach(id => $(id).hidden = id !== view); };
   const message = (value, error = false) => { $('statusMessage').textContent = value; $('statusMessage').className = error ? 'message error' : 'message'; };
   const authMessage = value => { $('authMessage').textContent = value; };
 

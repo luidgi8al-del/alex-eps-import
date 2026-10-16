@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const assets = new Set(['./index.html', './offline.html', './manifest.webmanifest']);
+const assets = new Set(['./index.html', './offline.html', './manifest.webmanifest', './section-guides.json', './section-guides.json?v=20261016-1']);
 function scan(dir) {
   for (const entry of fs.readdirSync(path.join(root, dir), {withFileTypes:true})) {
     const name = path.posix.join(dir, entry.name);
