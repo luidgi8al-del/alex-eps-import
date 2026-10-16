@@ -1,0 +1,4 @@
+.tool-close-controls .running-help{width:auto;margin:0 6px 0 0;padding:8px;min-height:44px;white-space:nowrap;font-size:14px}
+.running-guide-card{background:#edf7ff;border:1px solid #bddcf2;border-radius:14px;padding:12px 14px;margin:10px 0;color:#15334b;scroll-margin-top:16px}
+.running-guide-card strong{font-size:16px}.running-guide-card p{font-size:14px;line-height:1.5;margin:6px 0 10px}.running-guide-card>div{display:flex;gap:8px;flex-wrap:wrap}.running-guide-card button{width:auto;min-height:44px;margin:0;padding:8px 12px;font-size:14px}.running-guide-target{outline:2px solid #087dca;outline-offset:3px}
+@media(max-width:400px){.tool-close-controls .running-help{font-size:12px;margin-right:2px;padding:6px}.running-guide-card{padding:10px}}

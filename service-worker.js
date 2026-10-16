@@ -11,7 +11,7 @@
  * matin doit voir la correction le matin.
  */
 importScripts("./offline-assets.js");
-const PWA_VERSION = "eps-lvh-pwa-2026-10-15-tools-shortcuts-92";
+const PWA_VERSION = "eps-lvh-pwa-2026-10-16-running-guide-93";
 const STATIC_CACHE = `${PWA_VERSION}-static`;
 const RUNTIME_CACHE = `${PWA_VERSION}-runtime`;
 
