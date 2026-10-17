@@ -1,0 +1,25 @@
+const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
+let listener,removed;const store={},tabs=[{id:8,windowId:2,url:'https://3500010j.index-education.net/pronote/professeur.html?fd=1'}];
+const chrome={runtime:{getURL:p=>'chrome-extension://test/'+p,onMessage:{addListener:f=>listener=f}},storage:{session:{get:async()=>store,set:async obj=>Object.assign(store,obj),remove:async key=>delete store[key]}},tabs:{query:async()=>tabs,get:async id=>{const tab=tabs.find(t=>t.id===id);if(!tab)throw Error();return tab;},create:async()=>{throw Error('Should reuse existing tab');},update:async()=>{},onRemoved:{addListener:f=>removed=f}},windows:{update:async()=>{}}};
+chrome.tabs.sendMessage=async()=>{};
+vm.runInNewContext(fs.readFileSync(require('path').join(__dirname,'../extensions/pronote-lvh/background.js'),'utf8'),{chrome,URL,Date,crypto:{randomUUID:()=>String(Math.random())}});
+const send=(message,sender)=>new Promise(r=>listener(message,sender,r));
+const eps={frameId:0,url:'https://luidgi8al-del.github.io/alex-eps-import/',tab:{id:7,windowId:1,url:'https://luidgi8al-del.github.io/alex-eps-import/'}};
+const pn={frameId:0,url:tabs[0].url,tab:tabs[0]};
+const data={format:'eps-pronote-v1',className:'2nde4',title:'Test',date:'2026-10-16',scale:20,rows:[{lastName:'TEST',firstName:'Lina',value:'15'}]};
+(async()=>{
+ assert(!(await send({type:'EPS_PRONOTE_SPLIT',payload:data},{...eps,frameId:1})).ok);
+ assert(!(await send({type:'EPS_PRONOTE_SPLIT',payload:data},{...eps,url:'https://evil.test'})).ok);
+ assert((await send({type:'EPS_PRONOTE_SPLIT',payload:data},eps)).ok);
+ assert.equal(store.epsPronotePending.tabId,8);assert(!(await send({type:'EPS_PRONOTE_SPLIT',payload:data},eps)).ok);
+ assert(!(await send({type:'EPS_PRONOTE_GET_PENDING'},eps)).ok);
+ assert(!(await send({type:'EPS_PRONOTE_GET_PENDING'},{...pn,tab:{...pn.tab,id:9}})).ok);
+ assert(!(await send({type:'EPS_PRONOTE_GET_PENDING'},{...pn,frameId:1})).ok);
+ const result=await send({type:'EPS_PRONOTE_GET_PENDING'},pn);assert(result.ok);assert.equal(result.payload.rows[0].value,'15');
+ assert(!(await send({type:'EPS_PRONOTE_CLEAR_PENDING',id:'wrong'},pn)).ok);
+ assert((await send({type:'EPS_PRONOTE_CLEAR_PENDING',id:result.id},pn)).ok);assert(!store.epsPronotePending);
+ await send({type:'EPS_PRONOTE_SPLIT',payload:data},eps);store.epsPronotePending.createdAt=0;assert(!(await send({type:'EPS_PRONOTE_GET_PENDING'},pn)).ok);assert(!store.epsPronotePending);
+ await send({type:'EPS_PRONOTE_SPLIT',payload:data},eps);await removed(7);assert(!store.epsPronotePending);
+ assert(!(await send({type:'EPS_PRONOTE_SPLIT',payload:{...data,rows:[{...data.rows[0],value:'21'}]}},eps)).ok);
+ console.log('PASS PRONOTE background: allowed sender/frame, one active transfer, tab binding, expiry, clear ID, source closure, payload validation');
+})().catch(e=>{console.error(e);process.exitCode=1});

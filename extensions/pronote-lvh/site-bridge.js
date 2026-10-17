@@ -11,6 +11,7 @@
         type: "EPS_PRONOTE_SPLIT_RESULT",
         requestId,
         ok: Boolean(response?.ok),
+        protocol: response?.protocol,
         error: response?.error || ""
       }, allowedOrigin);
     } catch (error) {

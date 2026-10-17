@@ -8,9 +8,17 @@ document.getElementById('diagnostic').onclick = async () => {
   } catch (e) { document.getElementById('status').textContent = e.message; }
 };
 
+let pendingId = '';
+document.getElementById('cancel').onclick = async () => {
+  const response = await chrome.runtime.sendMessage({type: 'EPS_PRONOTE_CLEAR_PENDING', id: pendingId});
+  if (!response?.ok) { document.getElementById('status').textContent = 'Ce transfert a déjà expiré ou changé. Rouvrez l’extension.'; return; }
+  pendingId = ''; document.getElementById('payload').value = ''; document.getElementById('cancel').disabled = true;
+  document.getElementById('status').textContent = 'Transfert annulé. Les notes déjà saisies dans PRONOTE restent enregistrées.';
+};
 chrome.runtime.sendMessage({ type: 'EPS_PRONOTE_GET_PENDING' }).then(response => {
   if (!response?.ok || !response.payload) return;
   document.getElementById('payload').value = JSON.stringify(response.payload);
+  pendingId = response.id; document.getElementById('cancel').disabled = false;
   document.getElementById('status').textContent = 'Transfert préparé depuis le site EPS.';
 }).catch(() => {});
 document.getElementById('open').onclick = async () => {

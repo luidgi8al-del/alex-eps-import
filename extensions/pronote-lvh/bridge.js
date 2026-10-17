@@ -3,6 +3,44 @@
   const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase('fr').replace(/[^A-Z0-9]+/g, ' ').trim();
   const visible = el => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
   const cells = row => [...row.querySelectorAll('td,[role="cell"],[role="gridcell"]')].filter(c => c.closest('tr,[role="row"]') === row);
+  // Only explicit class aliases; teaching groups are never matched by approximate text.
+  function classKey(value) {
+    const text = norm(value);
+    const match = text.match(/^(?:2NDE|2DE|2|([346])E?)\s*[- ]?\s*0*(\d+)$/);
+    return match ? `${match[1] || '2'}-${Number(match[2])}` : text;
+  }
+  function pageContext() {
+    const one = label => {
+      const elements = [...document.querySelectorAll('[role="combobox"]')].filter(e => visible(e) && e.getAttribute('aria-label') === label);
+      return elements.length === 1 ? elements[0].textContent.trim() : '';
+    };
+    return { className: one('Sélectionnez une classe ou un groupe'), service: one('Sélectionnez un service'), period: one('Sélectionnez une période') };
+  }
+  function editorOpen() { return [...document.querySelectorAll('input[id$="_Edition"]')].some(visible); }
+  function inspectTargets(data) {
+    const context = pageContext();
+    if (!data.className || !context.className || classKey(data.className) !== classKey(context.className)) throw Error('Choisissez la classe EPS dans PRONOTE : ' + (data.className || 'classe non renseignée') + '.');
+    if (!/^EPS(?:\s|$)/.test(norm(context.service))) throw Error('Choisissez le service EPS dans PRONOTE.');
+    const targets = [];
+    for (const table of document.querySelectorAll('.liste_content_lignes[id]')) {
+      if (!visible(table) || !/_grid_\d+$/.test(table.id)) continue;
+      const prefix = table.id.replace(/_grid_\d+$/, '');
+      const columns = new Set([...table.children].map(c => c.dataset.colonne).filter(Boolean));
+      for (const column of columns) {
+        const header = document.getElementById(`${prefix}_titrecell_0_${column}`);
+        const button = header?.querySelector('[role="button"][aria-label]');
+        const label = button?.getAttribute('aria-label') || '';
+        const parsed = label.match(/^Modification d'un devoir\s*:\s*([\s\S]*?)\s+(\d{2}\/\d{2}\/\d{4})\s+Notation sur\s*:\s*(\d+(?:[,.]\d+)?)\s+Coefficient\s*:\s*(\d+(?:[,.]\d+)?)\s*$/);
+        if (!parsed) continue;
+        const scale = Number(parsed[3].replace(',', '.')), coefficient = Number(parsed[4].replace(',', '.'));
+        if (!(scale > 0 && scale <= 1000) || !Number.isFinite(coefficient)) continue;
+        const target = { table, column, headerId: header.id, title: parsed[1].trim(), date: parsed[2], scale, coefficient, context };
+        target.fingerprint = JSON.stringify([context, target.headerId, label]);
+        targets.push(target);
+      }
+    }
+    return targets;
+  }
   function validate(data) {
     if (data?.format !== 'eps-pronote-v1' || !Array.isArray(data.rows) || !data.rows.length || data.rows.length > 200) throw Error('Transfert EPS invalide ou vide.');
     if (!(Number(data.scale) > 0 && Number(data.scale) <= 1000)) throw Error('Barème invalide.');
@@ -26,9 +64,12 @@
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
     root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
-      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.1.9</h3><p id="info"></p>
-      <p>Ouvrez le devoir voulu puis choisissez une cellule de sa colonne de notes.</p><button id="pick">Choisir la colonne</button><small>Le panneau va se masquer pendant la sélection.</small>
-      <p id="status" role="status"></p><table id="preview"><thead><tr><th>Élève</th><th>Note EPS</th><th>Dans PRONOTE</th></tr></thead><tbody></tbody></table>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.2.0</h3><p id="info"></p>
+      <p id="autoHint">Recherche du devoir dans PRONOTE. Aucune note envoyée avant votre confirmation.</p>
+      <label>Devoir destinataire <select id="targets" style="width:100%;padding:10px"></select></label><p id="destination"></p>
+      <button id="detect">Rechercher les devoirs</button><button id="navigate">Ouvrir la classe dans PRONOTE</button>
+      <details><summary>Sélection manuelle de secours</summary><button id="pick">Choisir la colonne</button><small>Le panneau va se masquer pendant la sélection. Utilisez un devoir de même barème que la source EPS.</small></details>
+      <p id="status" role="status"></p><table id="preview"><thead><tr><th>Élève</th><th>Note à envoyer</th><th>Dans PRONOTE</th></tr></thead><tbody></tbody></table>
       <label><input id="confirm" type="checkbox">Je confirme la classe, le devoir et le barème affichés dans PRONOTE.</label>
       <button id="fill" disabled>Remplir les cellules vides</button>
       <button id="test" disabled>Tester une seule note</button>
@@ -37,7 +78,9 @@
     document.body.append(host);
     const get = id => root.getElementById(id), status = message => { get('status').textContent = message; };
     get('info').textContent = `${data.className} · ${data.title}\n${data.date} · /${data.scale} · coefficient ${data.coefficient || 1}`;
-    let plan = null, picking = false, running = false, cancelled = false;
+    let plan = null, picking = false, running = false, cancelled = false, navigating = false;
+    let transferRows = data.rows, availableTargets = [];
+    let lastScan = '', autoFinished = false;
     let verifiedGridCells = new WeakSet();
     const showPicker = active => {
       get('panel').hidden = active;
@@ -49,7 +92,7 @@
       host.style.width = active ? 'min(320px,92vw)' : 'min(440px,96vw)';
     };
     const stopPick = () => { picking = false; document.removeEventListener('click', choose, true); showPicker(false); };
-    const close = () => { cancelled = true; stopPick(); host.remove(); };
+    const close = () => { cancelled = true; clearInterval(autoTimer); stopPick(); host.remove(); };
     get('close').onclick = close;
     globalThis.EpsPronoteBridge.close = close;
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -79,9 +122,9 @@
     }
     function readPlan(table, column) {
       if (!table.isConnected) throw Error('Le tableau a changé. Refaites la vérification.');
-      if (table.matches('.liste_content_lignes') && /_grid_\d+$/.test(table.id)) return data.rows.map(source => gridEntry(table,column,source));
+      if (table.matches('.liste_content_lignes') && /_grid_\d+$/.test(table.id)) return transferRows.map(source => gridEntry(table,column,source));
       const rows = [...table.querySelectorAll('tr,[role="row"]')].filter(r => r.closest('table,[role="grid"],[role="table"]') === table && visible(r));
-      return data.rows.map(source => {
+      return transferRows.map(source => {
         const name = norm(source.lastName + ' ' + source.firstName);
         const matches = rows.filter(row => cells(row).some(c => norm(c.textContent) === name));
         if (matches.length !== 1) throw Error(`Élève introuvable ou ambigu : ${source.lastName} ${source.firstName}. Tous les élèves doivent être visibles.`);
@@ -93,6 +136,10 @@
       });
     }
     function resolvePlanTable() {
+      if (plan?.target) {
+        const current = inspectTargets(data).filter(t => t.headerId === plan.target.headerId && t.fingerprint === plan.target.fingerprint);
+        if (current.length !== 1) throw Error('La classe, le service ou le devoir a changé. Refaites la vérification.');
+      }
       if (plan?.table?.isConnected) return plan.table;
       const id = plan?.table?.id;
       const replacement = id ? document.getElementById(id) : null;
@@ -101,6 +148,82 @@
       return replacement;
     }
     const sameTarget = (left, right) => left?.cell === right?.cell || Boolean(left?.dynamic && right?.dynamic && left.cell?.id && left.cell.id === right.cell?.id);
+    function readyEntries(entries) {
+      if (entries.some(e => e.source.value && !e.before && !e.input && !e.dynamic)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
+      if (entries.some(e => e.dynamic && !e.before && /^[AD]$/.test(e.source.value))) throw Error('Annotations absent/dispensé : saisissez-les manuellement dans PRONOTE. Leur correspondance n’est pas encore validée.');
+    }
+    function selectTarget(index) {
+      plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update();
+      const target = availableTargets[index];
+      get('destination').textContent = '';
+      if (!target) { renderPreview([]); return; }
+      try {
+        if (editorOpen()) throw Error('Terminez ou annulez la saisie en cours dans PRONOTE, puis relancez la recherche.');
+        // Fresh metadata, never a stale select option or a remembered column index.
+        const current = inspectTargets(data).find(t => t.fingerprint === target.fingerprint);
+        if (!current) throw Error('Le devoir a changé. Relancez la recherche.');
+        transferRows = data.rows.map(row => ({ ...row, value: /^\d/.test(row.value) ? String(Math.round(Number(row.value.replace(',', '.')) * target.scale / Number(data.scale) * 100) / 100).replace('.', ',') : row.value }));
+        const entries = readPlan(current.table, current.column); readyEntries(entries);
+        plan = { table: current.table, column: current.column, entries, target: current };
+        get('destination').textContent = `${current.context.className} · ${current.context.service} · ${current.context.period}\n${current.title} · ${current.date} · /${current.scale} · coefficient ${current.coefficient}\n` + (Number(data.scale) !== current.scale ? `Conversion : notes EPS /${data.scale} → PRONOTE /${current.scale} (arrondi au centième).` : 'Même barème que dans EPS.') + '\nVérifiez le titre, la date et le coefficient avant de confirmer.';
+        renderPreview(entries); get('fill').textContent = 'Envoyer les notes';
+        status(`${entries.length} élèves reconnus. ${entries.filter(e => !e.before && e.source.value).length} cellules à remplir. Les notes déjà présentes seront conservées.`);
+        update();
+      } catch (e) { plan = null; renderPreview([]); status(e.message); update(); }
+    }
+    function detect(force = false) {
+      if (running || picking || cancelled || autoFinished) return;
+      try {
+        const targets = inspectTargets(data);
+        const signature = JSON.stringify(targets.map(t => t.fingerprint));
+        if (!force && signature === lastScan) return;
+        lastScan = signature; availableTargets = targets;
+        plan = null; get('confirm').checked = false; update();
+        get('targets').replaceChildren(new Option('Choisir le devoir…', ''));
+        targets.forEach((t, i) => get('targets').add(new Option(`${t.title} · ${t.date} · /${t.scale} · coeff. ${t.coefficient}`, String(i))));
+        get('autoHint').textContent = targets.length ? 'Devoirs reconnus : vérifiez le destinataire puis confirmez l’envoi.' : 'Aucun devoir reconnu. Créez le devoir dans PRONOTE puis relancez la recherche.';
+        get('destination').textContent = ''; renderPreview([]);
+        // A sole candidate is only proposed, never sent without confirmation. With
+        // multiple assignments we always require explicit selection, even if titles match.
+        if (targets.length === 1) { get('targets').value = '0'; selectTarget(0); }
+        else status(targets.length ? 'Plusieurs devoirs : choisissez le destinataire.' : 'Aucune note saisie.');
+      } catch (e) {
+        if (plan?.target || lastScan !== e.message) { plan = null; get('confirm').checked = false; update(); renderPreview([]); get('targets').replaceChildren(); get('destination').textContent = ''; }
+        lastScan = e.message; get('autoHint').textContent = e.message;
+        get('panel').querySelector('details').open = true;
+      }
+    }
+    get('targets').onchange = () => { autoFinished = false; selectTarget(get('targets').value); };
+    get('detect').onclick = () => { autoFinished = false; detect(true); };
+    // Navigation only uses observed, named UI controls. No authentication handling,
+    // hidden PRONOTE protocol calls, assignment creation, or grade writes here.
+    async function navigate() {
+      if (navigating || running) return;
+      navigating = true; plan = null; get('confirm').checked = false; update();
+      const clicked = new Set();
+      try {
+        for (let i = 0; i < 60 && !cancelled && host.isConnected; i++) {
+          if (editorOpen()) { status('Terminez ou annulez la saisie PRONOTE en cours avant de changer de classe.'); return; }
+          const context = pageContext();
+          if (context.className && classKey(context.className) === classKey(data.className) && /^EPS(?:\s|$)/.test(norm(context.service))) { autoFinished = false; detect(true); return; }
+          const elements = [...document.querySelectorAll('[role="combobox"],[role="option"],[role="menuitem"],button,[role="button"]')].filter(visible);
+          const name = e => e.getAttribute('aria-label') || e.textContent.trim();
+          let candidate, step;
+          const options = elements.filter(e => e.getAttribute('role') === 'option' && classKey(name(e)) === classKey(data.className));
+          const combos = elements.filter(e => e.getAttribute('role') === 'combobox' && name(e) === 'Sélectionnez une classe ou un groupe');
+          const menu = label => elements.filter(e => e.getAttribute('role') === 'menuitem' && norm(name(e)) === label);
+          if (options.length === 1) { candidate = options[0]; step = 'class'; }
+          else if (combos.length === 1 && !clicked.has('combo') && classKey(context.className) !== classKey(data.className)) { candidate = combos[0]; step = 'combo'; }
+          else if (menu('SAISIE').length === 1) { candidate = menu('SAISIE')[0]; step = 'saisie'; }
+          else if (menu('NOTES').length === 1) { candidate = menu('NOTES')[0]; step = 'notes'; }
+          else { const buttons = elements.filter(e => name(e) === 'Afficher le menu'); if (buttons.length === 1) { candidate = buttons[0]; step = 'menu'; } }
+          if (candidate && !clicked.has(step)) { clicked.add(step); candidate.click(); }
+          await wait(250);
+        }
+        status('Navigation non terminée : connectez-vous si nécessaire, puis ouvrez Notes → Saisie et votre classe. Aucune note envoyée.');
+      } finally { navigating = false; }
+    }
+    get('navigate').onclick = navigate;
     function choose(event) {
       if (!picking || event.composedPath().includes(host)) return;
       const cell = event.target.closest?.('td,[role="cell"],[role="gridcell"]');
@@ -112,6 +235,12 @@
       try {
         if (!table) throw Error('Tableau non reconnu : adaptation de cette version de PRONOTE nécessaire. Aucune note saisie.');
         const column = grid ? gridCell.dataset.colonne : cells(row).indexOf(cell), entries = readPlan(table, column);
+        if (grid && pageContext().className) {
+          availableTargets = inspectTargets(data);
+          const index = availableTargets.findIndex(t => t.table === grid && t.column === column);
+          if (index < 0) throw Error('Devoir ou barème non reconnu. Aucune note saisie.');
+          selectTarget(index); return;
+        }
         // Initial adapter deliberately accepts only standard editable cells; never guesses global editors.
         if (entries.some(e => e.source.value && !e.before && !e.input && !e.dynamic)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
         if (entries.some(e => e.dynamic && !e.before && /^[AD]$/.test(e.source.value))) throw Error('Annotations absent/dispensé : saisissez-les manuellement dans PRONOTE. Leur correspondance n’est pas encore validée.');
@@ -132,13 +261,16 @@
           body.append(tr);
         }
     }
-    function update() { get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked; }
+    function update() {
+      get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked;
+      for (const id of ['targets', 'detect', 'navigate', 'confirm']) get(id).disabled = running;
+    }
     get('confirm').onchange = update;
-    get('pick').onclick = () => { plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update(); picking = true; showPicker(true); document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
+    get('pick').onclick = () => { autoFinished = true; transferRows = data.rows; get('destination').textContent = ''; plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update(); picking = true; showPicker(true); document.addEventListener('click', choose, true); status('Cliquez dans une cellule de notes du devoir.'); };
     get('cancelPick').onclick = () => { stopPick(); status('Sélection de la colonne annulée.'); };
     async function fill(limit = Infinity) {
       if (!plan || running || !get('confirm').checked) return;
-      running = true; get('pick').disabled = true; update(); let count = 0, keepPlan = false;
+      running = true; autoFinished = true; get('pick').disabled = true; update(); let count = 0, keepPlan = false;
       try {
         const fresh = readPlan(resolvePlanTable(), plan.column);
         if (fresh.some((e, i) => !sameTarget(e, plan.entries[i]) || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
@@ -197,6 +329,9 @@
     }
     get('fill').onclick = () => fill();
     get('test').onclick = () => fill(1);
+    const autoTimer = setInterval(() => { if (!host.isConnected) clearInterval(autoTimer); else detect(); }, 1000);
+    detect(true);
+    if (pageContext().className && classKey(pageContext().className) !== classKey(data.className)) navigate();
   }
-  globalThis.EpsPronoteBridge = { open, validate, close: globalThis.EpsPronoteBridge?.close };
+  globalThis.EpsPronoteBridge = { open, validate, inspectTargets, classKey, close: globalThis.EpsPronoteBridge?.close };
 })();

@@ -3,6 +3,7 @@
 <h2>EPS → PRONOTE</h2><p>Le transfert préparé depuis le site apparaît automatiquement. Le collage reste disponible en secours.</p>
 <textarea id="payload" aria-label="Transfert EPS" placeholder="Transfert préparé automatiquement ou à coller ici"></textarea>
 <button id="open">Vérifier sur cet onglet PRONOTE</button><p id="status" role="status"></p>
-<p>Version d’essai · les correspondances sont vérifiées avant toute saisie. Fermer cette fenêtre efface son contenu.</p>
+<button id="cancel" disabled>Annuler le transfert en attente</button>
+<p>Version 0.2.0 · les correspondances sont vérifiées avant toute saisie. Fermer cette fenêtre ne supprime pas le transfert en attente. Annuler n’efface pas les notes déjà saisies.</p>
 <hr><p>Le tableau n’est pas reconnu ? Sans coller de notes :</p><button id="diagnostic">Diagnostic · lecture seule</button>
 <script src="popup.js"></script></html>

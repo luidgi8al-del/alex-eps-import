@@ -989,9 +989,8 @@ function exportEvaluationCsv() {
 }
 
 // ---- Passage assiste vers PRONOTE ------------------------------------------------------
-// PRONOTE n'offre pas d'API publique d'ecriture. Cette sortie suit donc son parcours officiel :
-// creer le devoir dans le Client PRONOTE, puis coller la colonne de notes dans l'ordre
-// alphabetique. Aucune cle ni aucun mot de passe PRONOTE ne quitte l'appareil.
+// L'extension locale utilise le tableau PRONOTE après confirmation du destinataire.
+// Le secours CSV/presse-papiers est conservé. Aucun identifiant PRONOTE n'est demandé ici.
 function pronoteExportRows() {
   const preparation = typeof globalThis.preparationSeancePourClasse === "function"
     ? globalThis.preparationSeancePourClasse(evalCourse.class_id) : null;
@@ -1045,14 +1044,15 @@ function requestPronoteSplitScreen(payload) {
     const requestId = globalThis.crypto?.randomUUID?.() || `eps-${Date.now()}-${Math.random()}`;
     const timeout = setTimeout(() => {
       window.removeEventListener("message", receive);
-      reject(new Error("L’extension EPS LVH doit être mise à jour pour ouvrir l’écran partagé."));
-    }, 1800);
+      reject(new Error("Installez ou rechargez l’extension EPS LVH 0.2.0 dans Chrome sur ordinateur, puis actualisez EPS et PRONOTE. Sur mobile, utilisez l’APK pour le transfert intégré."));
+    }, 10000);
     function receive(event) {
       if (event.source !== window || event.origin !== location.origin ||
           event.data?.type !== "EPS_PRONOTE_SPLIT_RESULT" || event.data.requestId !== requestId) return;
       clearTimeout(timeout);
       window.removeEventListener("message", receive);
-      if (event.data.ok) resolve(event.data);
+      if (event.data.ok && event.data.protocol === 2) resolve(event.data);
+      else if (event.data.ok) reject(new Error("Rechargez l’extension EPS LVH 0.2.0 puis actualisez les deux pages pour activer la reconnaissance des devoirs."));
       else reject(new Error(event.data.error || "Ouverture de PRONOTE impossible."));
     }
     window.addEventListener("message", receive);
@@ -1181,7 +1181,7 @@ async function preparePronoteInternet() {
   }
   try {
     await requestPronoteSplitScreen(data);
-    status.textContent = 'Écran partagé ouvert : le transfert est prêt dans la fenêtre PRONOTE.';
+    status.textContent = 'PRONOTE ouvert : vérifiez le devoir proposé puis confirmez l’envoi des notes.';
     status.className = 'ok';
   } catch (error) {
     try {
