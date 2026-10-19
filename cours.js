@@ -446,6 +446,7 @@ function closeLiveLesson() {
   document.getElementById("liveTools").classList.remove("open");
   document.body.style.overflow = "";
   stopToolTimer();
+  returnFromPronoteTransfer();
 }
 
 function renderLiveStep() {
@@ -571,6 +572,7 @@ function fermerFenetreEvaluation() {
     document.activeElement.blur();
   }
   document.getElementById("evaluationOverlay")?.classList.remove("open");
+  returnFromPronoteTransfer();
   const apres = fermetureEvaluation;
   fermetureEvaluation = null;
   if (typeof apres === "function") apres();
@@ -1040,19 +1042,21 @@ function pronoteTransferData(useFormValues = false) {
 }
 
 function requestPronoteSplitScreen(payload) {
-  return new Promise((resolve, reject) => {
+  const state = globalThis.EpsPronoteTransferState ||= { active: false, opening: null, returning: null, closeGeneration: 0 };
+  if (state.opening || state.returning) return Promise.reject(new Error("Une opération PRONOTE est déjà en cours. Attendez sa fin avant de relancer l’export."));
+  const opening = new Promise((resolve, reject) => {
     const requestId = globalThis.crypto?.randomUUID?.() || `eps-${Date.now()}-${Math.random()}`;
     const timeout = setTimeout(() => {
       window.removeEventListener("message", receive);
-      reject(new Error("Installez ou rechargez l’extension EPS LVH 0.2.0 dans Chrome sur ordinateur, puis actualisez EPS et PRONOTE. Sur mobile, utilisez l’APK pour le transfert intégré."));
+      reject(new Error("Installez ou rechargez l’extension EPS LVH 0.2.1 dans Chrome sur ordinateur, puis actualisez EPS et PRONOTE. Sur mobile, utilisez l’APK pour le transfert intégré."));
     }, 10000);
     function receive(event) {
       if (event.source !== window || event.origin !== location.origin ||
           event.data?.type !== "EPS_PRONOTE_SPLIT_RESULT" || event.data.requestId !== requestId) return;
       clearTimeout(timeout);
       window.removeEventListener("message", receive);
-      if (event.data.ok && event.data.protocol === 2) resolve(event.data);
-      else if (event.data.ok) reject(new Error("Rechargez l’extension EPS LVH 0.2.0 puis actualisez les deux pages pour activer la reconnaissance des devoirs."));
+      if (event.data.ok && event.data.protocol === 2) { state.active = true; resolve(event.data); }
+      else if (event.data.ok) reject(new Error("Rechargez l’extension EPS LVH 0.2.1 puis actualisez les deux pages pour activer la reconnaissance des devoirs."));
       else reject(new Error(event.data.error || "Ouverture de PRONOTE impossible."));
     }
     window.addEventListener("message", receive);
@@ -1068,9 +1072,53 @@ function requestPronoteSplitScreen(payload) {
       }
     }, location.origin);
   });
+  state.opening = opening;
+  const finished = () => { if (state.opening === opening) state.opening = null; };
+  opening.then(finished, finished);
+  return opening;
+}
+
+/** Stop the transfer and return to EPS without closing or navigating the PRONOTE tab. */
+function returnFromPronoteTransfer() {
+  const state = globalThis.EpsPronoteTransferState ||= { active: false, opening: null, returning: null, closeGeneration: 0 };
+  state.closeGeneration++;
+  if (state.returning) return state.returning;
+  const returning = (async () => {
+    // Fermer may be pressed while the extension is still opening PRONOTE. Stop only after
+    // that handoff has settled, otherwise the new tab/panel could appear after the closure.
+    if (state.opening) { try { await state.opening; } catch { /* no confirmed transfer */ } }
+    const active = state.active;
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const requestId = globalThis.crypto?.randomUUID?.() || `eps-return-${Date.now()}-${Math.random()}`;
+        const timeout = setTimeout(() => { window.removeEventListener("message", receive); reject(new Error("Retour à EPS non confirmé.")); }, 4000);
+        function receive(event) {
+          if (event.source !== window || event.origin !== location.origin ||
+              event.data?.type !== "EPS_PRONOTE_RETURN_RESULT" || event.data.requestId !== requestId) return;
+          clearTimeout(timeout);
+          window.removeEventListener("message", receive);
+          resolve(event.data);
+        }
+        window.addEventListener("message", receive);
+        window.postMessage({ type: "EPS_PRONOTE_RETURN_REQUEST", requestId }, location.origin);
+      });
+      if (!response.ok) throw new Error(response.error || "Retour à EPS non confirmé.");
+      state.active = false;
+      // The extension displays any browser/unsplit warning directly in the EPS page.
+      return response;
+    } catch (error) {
+      // Closing any ordinary tool must stay silent when no extension/transfer is present.
+      if (active) alert(`${error.message} Rechargez l’extension EPS LVH 0.2.1 puis actualisez EPS et PRONOTE. Vous pouvez aussi séparer les vues depuis le menu de la vue partagée de Chrome. PRONOTE reste ouvert, vos notes ne sont pas effacées.`);
+      return { ok: false };
+    }
+  })();
+  state.returning = returning;
+  returning.then(() => { if (state.returning === returning) state.returning = null; });
+  return returning;
 }
 
 async function startPronoteSplitScreen() {
+  const closeGeneration = globalThis.EpsPronoteTransferState?.closeGeneration || 0;
   const button = document.getElementById("exportPronoteBtn");
   const previous = button?.textContent;
   if (button) { button.disabled = true; button.textContent = "Ouverture de PRONOTE…"; }
@@ -1079,6 +1127,7 @@ async function startPronoteSplitScreen() {
     // asynchrone. Sans cette attente, le transfert pouvait partir avant la fin de l'ecriture et
     // annoncer "non note" alors que le total complet apparaissait une fraction de seconde apres.
     await flushEvaluationScoreSaves();
+    if ((globalThis.EpsPronoteTransferState?.closeGeneration || 0) !== closeGeneration) return;
     const data = pronoteTransferData(false);
     if (!(data.scale > 0) || !Number.isFinite(data.coefficient) || data.coefficient < 0) throw Error("Barème ou coefficient invalide.");
     await requestPronoteSplitScreen(data);
@@ -1098,7 +1147,7 @@ async function startPronoteSplitScreen() {
 function renderPronoteExport() {
   const host = document.getElementById("pronoteExportHost");
   if (!host) return;
-  if (host.dataset.open === "true") { host.innerHTML = ""; host.dataset.open = "false"; return; }
+  if (host.dataset.open === "true") { host.innerHTML = ""; host.dataset.open = "false"; returnFromPronoteTransfer(); return; }
   host.dataset.open = "true";
   const evaluation = evalList.find(e => e.id === evalOpenedId);
   const rows = pronoteExportRows();
@@ -1147,7 +1196,7 @@ function renderPronoteExport() {
       <li>Contrôlez l'aperçu : A signifie absent, D signifie dispensé. Validez seulement si chaque ligne correspond au bon élève.</li>
     </ol></details>
   </section>`;
-  document.getElementById("closePronoteExport").onclick = () => { host.innerHTML = ""; host.dataset.open = "false"; };
+  document.getElementById("closePronoteExport").onclick = () => { host.innerHTML = ""; host.dataset.open = "false"; returnFromPronoteTransfer(); };
   document.getElementById("copyPronoteNotes").onclick = copyPronoteNotes;
   document.getElementById("downloadPronoteCsv").onclick = downloadPronoteCsv;
   document.getElementById("preparePronoteInternet").onclick = preparePronoteInternet;
@@ -1240,8 +1289,8 @@ function downloadPronoteCsv() {
   document.getElementById("liveCloseBtn").onclick = closeLiveLesson;
 
   document.getElementById("liveToolsBtn").onclick = () => { remplirBoiteOutils(); tools.classList.add("open"); };
-  document.getElementById("liveToolsClose").onclick = () => { stopToolTimer(); tools.classList.remove("open"); };
-  tools.addEventListener("click", e => { if (e.target === tools) { stopToolTimer(); tools.classList.remove("open"); } });
+  document.getElementById("liveToolsClose").onclick = () => { stopToolTimer(); tools.classList.remove("open"); returnFromPronoteTransfer(); };
+  tools.addEventListener("click", e => { if (e.target === tools) { stopToolTimer(); tools.classList.remove("open"); returnFromPronoteTransfer(); } });
 
   document.addEventListener("keydown", e => {
     if (!overlay.classList.contains("open")) return;
@@ -1255,7 +1304,7 @@ function toolHeader(title, subtitle, headerContext = "") {
   document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
   return `<div class="modern-tool-hero${headerContext?' modern-tool-with-context':''}"><div><h2>${title}</h2><p>${subtitle}</p></div>${headerContext}<div class="tool-close-controls"><button type="button" class="tool-save-indicator" data-state="red" aria-label="Pas encore enregistré" title="Pas encore enregistré"><span></span></button><button class="secondary" id="closeToolBtn" onclick="closeModernTool()" aria-label="Fermer l’outil">Fermer</button></div></div>`;
 }
-function closeModernTool(){globalThis.EpsToolResume?.capture();stopToolTimer();toolPanel.style.display="none";toolPanel.innerHTML="";const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");if(workspace)globalThis.EpsToolResume?.offer(workspace);workspace?.scrollIntoView({behavior:"smooth",block:"start"})}
+function closeModernTool(){globalThis.EpsToolResume?.capture();stopToolTimer();toolPanel.style.display="none";toolPanel.innerHTML="";returnFromPronoteTransfer();const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");if(workspace)globalThis.EpsToolResume?.offer(workspace);workspace?.scrollIntoView({behavior:"smooth",block:"start"})}
 function bindToolClose() { const button=document.getElementById("closeToolBtn");if(button)button.onclick = closeModernTool; }
 
 function renderTimersHub() {

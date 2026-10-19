@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EPS LVH — Transfert PRONOTE",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Transfert local EPS vers PRONOTE : devoirs reconnus, aperçu et remplissage après confirmation.",
   "permissions": ["activeTab", "scripting", "storage", "tabs", "windows"],
   "host_permissions": [

@@ -1266,6 +1266,7 @@ async function ecEnFenetreOutil(lancer, retour) {
     panneau.innerHTML = "";
     origine.parent.insertBefore(panneau, origine.suivant);
     fenetre.remove();
+    globalThis.returnFromPronoteTransfer?.();
     document.body.classList.remove("ec-outil-ouvert");
     document.documentElement.classList.remove("ec-outil-ouvert");
     document.getElementById("toolsWorkspace")?.removeAttribute("hidden");

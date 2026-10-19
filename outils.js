@@ -224,7 +224,7 @@ function drawEpsTests() {
       drawEpsTests();
     });
     const back = document.getElementById("closeToolBtn");
-    if (back) back.onclick = () => { epsOpenTest = null; resetGenericTestState(); drawEpsTests(); };
+    if (back) back.onclick = () => { epsOpenTest = null; resetGenericTestState(); globalThis.returnFromPronoteTransfer?.(); drawEpsTests(); };
     document.getElementById('epsBegin')?.addEventListener('click',()=>{if(test.special==='stops'&&stopGroupEditing!=null)return alert('Enregistrez ou annulez la modification du groupe avant de commencer.');epsTestStarted=true;drawEpsTests()});
     document.getElementById('epsEditPreparation')?.addEventListener('click',()=>{epsTestStarted=false;drawEpsTests()});
     drawEpsTestBody(epsOpenTest);

@@ -14,4 +14,4 @@ async function scenario(reply) {
  vm.runInNewContext(fn,ctx);
  try{return await ctx.requestPronoteSplitScreen({format:'eps-pronote-v1'});}finally{assert.equal(removed,1);}
 }
-(async()=>{assert((await scenario({ok:true,protocol:2})).ok);await assert.rejects(()=>scenario({ok:true}),/0.2.0/);await assert.rejects(()=>scenario({ok:false,error:'Refus'}),/Refus/);await assert.rejects(()=>scenario(null),/extension/);console.log('PASS PRONOTE request: protocol 2, old extension, no extension, failure, source/origin/request correlation');})().catch(e=>{console.error(e);process.exitCode=1});
+(async()=>{assert((await scenario({ok:true,protocol:2})).ok);await assert.rejects(()=>scenario({ok:true}),/0.2.1/);await assert.rejects(()=>scenario({ok:false,error:'Refus'}),/Refus/);await assert.rejects(()=>scenario(null),/extension/);console.log('PASS PRONOTE request: protocol 2, old extension, no extension, failure, source/origin/request correlation');})().catch(e=>{console.error(e);process.exitCode=1});
