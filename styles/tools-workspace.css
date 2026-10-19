@@ -63,6 +63,15 @@
 .multi-chrono-actions button{width:auto;margin:0;padding:9px 13px}
 .modern-tool-panel #multiWorkspace>.running-group-tabs,.modern-tool-panel #multiWorkspace>.running-group-editor,.modern-tool-panel #multiWorkspace>.running-save-actions{margin-left:0;margin-right:0}
 @media(max-width:700px){.multi-chrono-table{min-width:610px}.multi-chrono-table th:first-child{min-width:190px}.multi-chrono-table td>[data-multi-time]{font-size:21px}.multi-chrono-actions{flex-direction:column}}
+/* Saisie terrain : noms fixes compacts, champs tactiles et clavier sans recouvrement. */
+@media(max-width:600px){
+  :is(#toolPanel,#liveToolPanel) .fitness-web:not(.aptitude-worksheet) .fitness-table-wrap :is(th,td):first-child,
+  :is(#toolPanel,#liveToolPanel) .running-grid .running-sticky,
+  :is(#toolPanel,#liveToolPanel) .multi-chrono-table th:first-child{min-width:112px!important;width:112px!important;max-width:112px!important;white-space:normal;overflow-wrap:anywhere}
+  :is(#toolPanel,#liveToolPanel) table :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select){min-height:44px;font-size:16px;scroll-margin:12px}
+  :is(#toolPanel,#liveToolPanel).tool-field-editing::after{content:"";display:block;height:var(--tool-keyboard-gap,0px);pointer-events:none}
+}
+:is(#toolPanel,#liveToolPanel) :is(.tool-savebar,.fitness-actions,.running-save-actions){padding-bottom:max(11px,env(safe-area-inset-bottom))}
 /* Évaluation escalade : laisser les critères accessibles à côté du nom sur téléphone. */
 @media(max-width:600px){
   .climb-worksheet .fitness-table-wrap th:first-child,
@@ -71,9 +80,9 @@
 .climb-worksheet [data-climb-total].muted{color:#6e8190}
 /* Plusieurs barres collantes se recouvraient sur téléphone et bloquaient les clics. */
 @media (max-width: 800px) {
-  .modern-tool-panel .fitness-actions,
-  .modern-tool-panel .running-save-actions,
-  .modern-tool-panel .tool-savebar {
+  :is(#toolPanel,#liveToolPanel) .fitness-actions,
+  :is(#toolPanel,#liveToolPanel) .running-save-actions,
+  :is(#toolPanel,#liveToolPanel) .tool-savebar {
     position: static;
     bottom: auto;
   }

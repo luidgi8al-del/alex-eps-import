@@ -3,9 +3,12 @@ import { openOfflineDatabase, requestResult, transaction } from "../storage/data
 import { seal, unseal } from "../storage/vault.js";
 import { estPanneReseau } from "../core/connectivity.js";
 function operationId() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
-export async function enqueueOperation({ entity, id, action = "upsert", baseVersion = 0, baseData = null, data = null, changedFields = [], authorId = null, deviceId = null }) {
+export async function prepareOperation({ entity, id, action = "upsert", baseVersion = 0, baseData = null, data = null, changedFields = [], authorId = null, deviceId = null }) {
   const key = recordKey(entity, id), opId = operationId(), createdAt = new Date().toISOString();
-  const row = { opId, recordKey: key, entity, id: String(id), action, baseVersion, changedFields: [...new Set(changedFields)].sort(), authorId, deviceId, envelope: await seal({ baseData, data }, `${key}:${opId}`), createdAt, retryAt: createdAt, attempts: 0 };
+  return { opId, recordKey: key, entity, id: String(id), action, baseVersion, changedFields: [...new Set(changedFields)].sort(), authorId, deviceId, envelope: await seal({ baseData, data }, `${key}:${opId}`), createdAt, retryAt: createdAt, attempts: 0 };
+}
+export async function enqueueOperation(input) {
+  const row = await prepareOperation(input);
   await transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row)); return row;
 }
 export async function pendingOperations(limit = DEFAULT_BATCH_SIZE) {

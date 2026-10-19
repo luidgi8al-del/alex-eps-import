@@ -134,6 +134,30 @@
     if(payload && payload.action !== "pending_invites") oublierContexteEquipe();
     return data;
   }
+  async function retrySettingsSync() {
+    const button=document.getElementById('settingsSyncRetry');
+    if(button?.disabled)return;
+    const owner=session?.user_id;
+    if(button){button.disabled=true;button.textContent='Vérification en cours…';}
+    try {
+      const engine=await demarrerModeHorsConnexion();
+      if(!engine)throw Error('Offline storage unavailable');
+      const success=await engine.synchroniser();
+      if(session?.user_id!==owner)return;
+      renderConnectionSettings();
+      if(!success && navigator.onLine){
+        const box=document.getElementById('settingsSyncError');
+        const feedback=globalThis.EpsSyncFeedback?.describe(typeof settingsSyncDetail==='object'?settingsSyncDetail:{});
+        if(box){box.hidden=false;box.textContent=feedback?.state==='error'?feedback.message:'L’envoi n’est pas encore confirmé. Ne ressaisissez pas les modifications en attente ; vérifiez les saisies à traiter puis réessayez.';}
+      }
+    } catch {
+      if(session?.user_id!==owner)return;
+      const box=document.getElementById('settingsSyncError');
+      if(box){box.hidden=false;box.textContent='La vérification n’a pas abouti. Ne supprimez pas les données de cet appareil. Vérifiez la connexion et réessayez ; vos saisies ouvertes doivent rester ouvertes.';}
+    } finally {
+      if(button){button.disabled=false;button.textContent='Réessayer la synchronisation';}
+    }
+  }
   async function openSettings() {
     const keepVisualOpen=document.getElementById("visualSection")?.open===true;
     const errors=[];
@@ -215,14 +239,14 @@
     bind("syncSettingsBtn",openSettings);
     const syncPanel = document.createElement('div');
     syncPanel.className='settingsConnectionDetails';
-    syncPanel.innerHTML='<p id="settingsSyncDetails" class="muted"></p><p id="settingsSyncError" class="error" hidden></p><button type="button" class="secondary" id="settingsSyncRetry">Réessayer la synchronisation</button><button type="button" class="secondary" id="settingsSyncConflicts" hidden>Voir les conflits</button>';
+    syncPanel.innerHTML='<p id="settingsSyncGuidance" role="status" aria-live="polite"></p><p id="settingsSyncDetails" class="muted"></p><p id="settingsSyncError" class="error" role="status" aria-live="polite" hidden></p><button type="button" class="secondary" id="settingsSyncRetry">Réessayer la synchronisation</button><button type="button" class="secondary" id="settingsSyncConflicts" hidden>Voir les conflits</button>';
     document.querySelector('#accountSection > .settingsContents').prepend(syncPanel);
     const recoveryButton = document.createElement("button");
     recoveryButton.className = "secondary";
     recoveryButton.textContent = "Conflits et versions conservées";
     recoveryButton.onclick = () => ouvrirFenetreConflits();
     document.querySelector('#accountSection > .settingsContents').appendChild(recoveryButton);
-    bind("settingsSyncRetry",async()=>{await (await demarrerModeHorsConnexion())?.synchroniser();});
+    bind("settingsSyncRetry",retrySettingsSync);
     bind("settingsSyncConflicts",ouvrirFenetreConflits);
     renderConnectionSettings();
     startAutomaticOfflinePreparation();

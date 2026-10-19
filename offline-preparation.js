@@ -29,12 +29,28 @@ async function offlineWorkerRequest(type, onProgress) {
     worker.postMessage({type},[channel.port2]);
   });
 }
+function offlineMissingCoverage(engine) {
+  const available = new Set(engine?.adapter?.tables || []);
+  const sections = [
+    ['classes et évaluations', TABLES_HORS_CONNEXION],
+    ['tests, AS, santé et programmation', TABLES_HORS_CONNEXION_VAGUE_2],
+    ['travaux des outils et suivi des installations', TABLES_HORS_CONNEXION_VAGUE_3],
+    ['observations de classe', TABLES_HORS_CONNEXION_VAGUE_4],
+    ['suivi des documents', TABLES_HORS_CONNEXION_VAGUE_5]
+  ];
+  return sections.filter(([, tables]) => tables.some(table => !available.has(table))).map(([label]) => label);
+}
+function offlineCoverageWarning(missing) {
+  return `Préparation partielle : ${missing.join(' ; ')} ne sont pas encore disponibles hors connexion. Une mise à jour du serveur est nécessaire ; contactez l’administrateur. Les données déjà enregistrées sur cet appareil sont conservées.`;
+}
 async function offlinePreparationStatus() {
   const engine = await demarrerModeHorsConnexion();
   if (!engine) return "Le stockage hors connexion n’est pas disponible sur cet appareil.";
   const {getMeta} = await import('./pwa/storage/database.js');
   const saved = await getMeta('offline-preparation');
   if (!saved || saved.userId !== session?.user_id) return "Appareil à préparer avec une connexion Internet.";
+  const missing = offlineMissingCoverage(engine);
+  if (missing.length) return offlineCoverageWarning(missing);
   const check = await offlineWorkerRequest('CHECK_OFFLINE');
   if (!check.ready || check.version !== saved.version) return "Les outils ont été mis à jour ou le cache a été vidé : préparez à nouveau cet appareil.";
   return `Copie hors connexion préparée le ${new Date(saved.at).toLocaleString('fr-FR')}. Les données disponibles correspondent aux dernières synchronisations réussies.`;
@@ -45,8 +61,16 @@ async function prepareOfflineDevice(progress = () => {}) {
   if (!owner) throw Error("Connectez-vous d’abord avec votre compte enseignant.");
   const engine = await demarrerModeHorsConnexion();
   if (!engine) throw Error("Le stockage hors connexion n’est pas disponible.");
-  const {setMeta} = await import('./pwa/storage/database.js');
-  await setMeta('offline-preparation',null);
+  const {transaction, generationLocale} = await import('./pwa/storage/database.js');
+  const generation = generationLocale();
+  const stillOwner = () => session?.user_id === owner && generationLocale() === generation;
+  async function markPreparation(value) {
+    await transaction(['meta'], 'readwrite', stores => {
+      if (!stillOwner()) throw Error("Le compte a changé pendant la préparation. Recommencez sur le compte souhaité.");
+      stores.meta.put({key:'offline-preparation',value});
+    }, 'strict');
+  }
+  await markPreparation(null);
   progress("Téléchargement des outils…");
   const cachedAssets = await offlineWorkerRequest('CHECK_OFFLINE');
   const assets = cachedAssets.ready ? cachedAssets : await offlineWorkerRequest('PREPARE_OFFLINE', d => progress(`Téléchargement des outils : ${d.progress} / ${d.total}`));
@@ -64,15 +88,16 @@ async function prepareOfflineDevice(progress = () => {}) {
   if (!success) throw Error("Les outils sont téléchargés, mais les données ne sont pas entièrement synchronisées. Réessayez avant de partir sans réseau.");
   const {currentSyncState} = await import('./pwa/core/events.js');
   if (currentSyncState().conflicts || currentSyncState().pending) throw Error("Des modifications ou conflits restent à traiter dans le bandeau de synchronisation. Réglez-les puis relancez la préparation.");
-  const extended = TABLES_HORS_CONNEXION_VAGUE_2.every(t=>engine.adapter.tables.includes(t));
-  if (!extended) throw Error("Les classes sont disponibles, mais le serveur n’a pas encore activé le hors connexion AS, santé et programmation. Préparation complète non confirmée.");
+  const missing = offlineMissingCoverage(engine);
+  if (missing.length) throw Error(offlineCoverageWarning(missing));
   // Profile and establishment are needed for navigation after restarting offline.
   await loadInstitution();
   if (rattachementIncertain) throw Error("L’établissement n’a pas pu être vérifié. Réessayez avec une connexion stable.");
   await loadTeamContext();
   if (session?.user_id !== owner) throw Error("Le compte a changé pendant la préparation.");
   const persisted = await navigator.storage?.persist?.().catch(()=>false);
-  await setMeta('offline-preparation',{userId:owner,at:new Date().toISOString(),version:assets.version});
+  if (!stillOwner()) throw Error("Le compte a changé pendant la préparation. Recommencez sur le compte souhaité.");
+  await markPreparation({userId:owner,at:new Date().toISOString(),version:assets.version});
   progress("Appareil préparé : outils et données synchronisées accessibles sans connexion." + (!persisted ? " Le navigateur peut libérer ce stockage ; vérifiez cet état avant de partir." : ""));
 }
 
@@ -86,12 +111,12 @@ let automaticOfflineState = 'preparing';
 let settingsSyncDetail = {};
 function renderConnectionSettings() {
   const sync = settingsSyncDetail;
-  const syncError = sync.state === 'error' || Number(sync.conflicts) > 0 || sync.state === 'conflict';
+  const feedback = globalThis.EpsSyncFeedback?.describe(sync) || {state:'online', label:'Vérification en cours',message:'La vérification des enregistrements de ce compte est en cours.'};
+  const syncError = feedback.state === 'error' || feedback.state === 'conflict';
   const offlineError = automaticOfflineState === 'error';
   const indicators = [
     ['offlineSection', automaticOfflineState, automaticOfflineMessage],
-    ['accountSection', syncError ? 'error' : sync.state === 'synced' ? 'ready' : 'waiting',
-      syncError ? 'Synchronisation à vérifier' : sync.state === 'synced' ? 'Tout est synchronisé' : 'Synchronisation en attente ou en cours']
+    ['accountSection', syncError ? 'error' : feedback.state === 'synced' ? 'ready' : 'waiting', feedback.label]
   ];
   for (const [id,state,message] of indicators) {
     const summary = document.querySelector(`#${id} > summary`);
@@ -111,7 +136,9 @@ function renderConnectionSettings() {
     info.textContent=`Dernière synchronisation réussie : ${date}. ${Number(sync.pending)||0} modification(s) en attente · ${Number(sync.conflicts)||0} conflit(s).`;
   }
   const syncMessage=document.getElementById('settingsSyncError');
-  if (syncMessage) { syncMessage.hidden=!syncError;syncMessage.textContent=sync.message || 'Vérifiez les conflits et réessayez la synchronisation.'; }
+  if (syncMessage) { syncMessage.hidden=!syncError;syncMessage.textContent=feedback.message; }
+  const guidance=document.getElementById('settingsSyncGuidance');
+  if (guidance) { guidance.hidden=syncError;guidance.textContent=feedback.message; }
   const conflicts=document.getElementById('settingsSyncConflicts');
   if (conflicts) conflicts.hidden=!Number(sync.conflicts);
   const notice=document.getElementById('connectionIssueNotice');
@@ -155,6 +182,8 @@ function startAutomaticOfflinePreparation({force=false, refresh=false}={}) {
     const engine = await demarrerModeHorsConnexion();
     if (!current()) return;
     if (!engine) throw Error("Stockage hors connexion indisponible sur cet appareil.");
+    const missing = offlineMissingCoverage(engine);
+    if (missing.length) throw Error(offlineCoverageWarning(missing));
     await offlineServiceWorker();
     const {getMeta} = await import('./pwa/storage/database.js');
     const saved = await getMeta('offline-preparation');

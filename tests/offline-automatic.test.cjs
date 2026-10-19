@@ -11,7 +11,7 @@ const ctx={session:{user_id:'a'},navigator:{onLine:true,serviceWorker:{controlle
  document:{getElementById(){return null;},querySelector(){return null;},addEventListener(){}},
  window:{addEventListener:(name,cb)=>events[name]=cb},
  setTimeout:(cb,delay)=>{timers.push({cb,delay});return timers.length;},clearTimeout(){},
- demarrerModeHorsConnexion:async()=>({}),offlineServiceWorker:async()=>({}),readMeta:async()=>saved,
+ demarrerModeHorsConnexion:async()=>({}),offlineMissingCoverage:()=>[],offlineServiceWorker:async()=>({}),readMeta:async()=>saved,
  offlineWorkerRequest:async()=>({ready:cacheReady,version:'test-v1'}),
  prepareOfflineDevice:async()=>{prepared++;if(fail)throw Error('Interrupted');saved={userId:ctx.session.user_id,version:'test-v1'};}
 };

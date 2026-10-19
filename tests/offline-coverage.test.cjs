@@ -1,0 +1,15 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const src=fs.readFileSync(require('node:path').join(__dirname,'../offline-preparation.js'),'utf8');
+const context={TABLES_HORS_CONNEXION:['classes','scores'],TABLES_HORS_CONNEXION_VAGUE_2:['tests'],TABLES_HORS_CONNEXION_VAGUE_3:['works'],TABLES_HORS_CONNEXION_VAGUE_4:['notes'],TABLES_HORS_CONNEXION_VAGUE_5:['documents']};
+vm.createContext(context);vm.runInContext(src.slice(src.indexOf('function offlineMissingCoverage'),src.indexOf('async function offlinePreparationStatus')),context);
+const complete=['classes','scores','tests','works','notes','documents'];
+assert.equal(context.offlineMissingCoverage({adapter:{tables:complete}}).length,0);
+for(const table of complete)assert(context.offlineMissingCoverage({adapter:{tables:complete.filter(t=>t!==table)}}).length>0,table);
+const missing=context.offlineMissingCoverage({adapter:{tables:['classes','scores','tests']}});
+assert.match(context.offlineCoverageWarning(missing),/Préparation partielle/);
+assert.match(context.offlineCoverageWarning(missing),/travaux des outils/);
+assert.match(context.offlineCoverageWarning(missing),/conservées/);
+assert(src.slice(src.indexOf('async function offlinePreparationStatus'),src.indexOf('async function prepareOfflineDevice')).includes('offlineMissingCoverage(engine)'));
+assert(src.slice(src.indexOf('async function prepareOfflineDevice'),src.indexOf('let automaticOfflineRun')).includes('offlineMissingCoverage(engine)'));
+assert(src.slice(src.indexOf('function startAutomaticOfflinePreparation')).includes('offlineMissingCoverage(engine)'));
+console.log('PASS offline readiness: missing tools, class notes or documents never reported as complete, including an older preparation mark');

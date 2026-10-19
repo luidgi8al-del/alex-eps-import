@@ -1,9 +1,12 @@
 import { recordKey, STORES } from "../core/constants.js";
 import { openOfflineDatabase, requestResult, transaction, marquerEffacement } from "./database.js";
 import { seal, unseal } from "./vault.js";
-export async function saveLocalRecord({ entity, id, data, version = 0, updatedAt, deleted = false }) {
+export async function prepareLocalRecord({ entity, id, data, version = 0, updatedAt, deleted = false }) {
   const key = recordKey(entity, id);
-  const row = { key, entity, id: String(id), envelope: await seal(data, key), version, updatedAt: updatedAt || new Date().toISOString(), deleted };
+  return { key, entity, id: String(id), envelope: await seal(data, key), version, updatedAt: updatedAt || new Date().toISOString(), deleted };
+}
+export async function saveLocalRecord(input) {
+  const row = await prepareLocalRecord(input);
   await transaction([STORES.RECORDS], "readwrite", stores => stores[STORES.RECORDS].put(row)); return row;
 }
 export async function readLocalRecord(entity, id) {

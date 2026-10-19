@@ -1,15 +1,16 @@
 /* Only a completed save of the current tool may acknowledge the edited screen. */
 (function(){
-  let generation=0,revision=0,savedRevision=-1,confirmed=false,batch=null,detail={};
-  const labels={red:'Pas encore enregistré : utilisez Enregistrer avant de fermer.',orange:'Enregistré sur cet appareil, pas encore synchronisé.',green:'Enregistré et synchronisé.'};
-  function colour(){return savedRevision!==revision?'red':confirmed?'green':'orange'}
-  function render(){document.querySelectorAll('.tool-save-indicator').forEach(dot=>{const c=colour();dot.dataset.state=c;dot.setAttribute('aria-label',labels[c]);dot.title=labels[c];dot.onclick=()=>alert(labels[colour()]);});}
-  function reset(){generation++;revision=0;savedRevision=-1;confirmed=false;batch=null;render()}
+  let generation=0,revision=0,savedRevision=-1,confirmed=false,batch=null,detail={},saveFailed=false;
+  const labels={red:'Pas encore enregistré : utilisez Enregistrer avant de fermer.',orange:'Enregistré sur cet appareil. Envoi en attente : ne ressaisissez pas votre travail ; la synchronisation reprendra avec le réseau.',green:'Enregistré et synchronisé.'};
+  function colour(){return saveFailed||savedRevision!==revision?'red':confirmed?'green':'orange'}
+  function message(){if(saveFailed)return 'Dernier enregistrement non confirmé. Gardez cet écran ouvert et réessayez Enregistrer ; ne supprimez pas les données de cet appareil.';if(colour()==='orange'&&(detail.conflicts||detail.state==='error'))return 'Enregistré sur cet appareil. Envoi à vérifier dans Réglage → Compte web / synchronisation ; ne ressaisissez pas votre travail.';return labels[colour()]}
+  function render(){document.querySelectorAll('.tool-save-indicator').forEach(dot=>{const c=colour(),label=message();dot.dataset.state=c;dot.setAttribute('aria-label',label);dot.title=label;dot.onclick=()=>alert(message());});}
+  function reset(){generation++;revision=0;savedRevision=-1;confirmed=false;batch=null;saveFailed=false;render()}
   function dirty(){revision++;confirmed=false;render()}
   function written(queued){if(batch){batch.writes++;batch.queued ||= queued}}
-  function failed(){if(batch)batch.failed=true;confirmed=false;render()}
+  function failed(){if(batch)batch.failed=true;saveFailed=true;confirmed=false;render()}
   function begin(){const token={generation,revision,started:Date.now(),writes:0,queued:false,failed:false};batch=token;return token}
-  function finish(token){if(batch===token)batch=null;if(token.generation!==generation||token.revision!==revision||token.failed||!token.writes){render();return}savedRevision=revision;confirmed=!token.queued||(detail.state==='synced'&&!detail.pending&&!detail.conflicts&&Date.parse(detail.at)>=token.started);render()}
+  function finish(token){if(batch===token)batch=null;if(token.generation!==generation||token.revision!==revision){render();return}if(token.failed){saveFailed=true;confirmed=false;render();return}if(!token.writes){render();return}saveFailed=false;savedRevision=revision;confirmed=!token.queued||(detail.state==='synced'&&!detail.pending&&!detail.conflicts&&Date.parse(detail.at)>=token.started);render()}
   function sync(value){detail=value||{};if(detail.pending||detail.conflicts||detail.state==='error')confirmed=false;if(savedRevision===revision&&detail.state==='synced'&&!detail.pending&&!detail.conflicts&&!batch)confirmed=true;render()}
   function install(){
     const panel=typeof toolPanel!=='undefined'?toolPanel:null;if(!panel)return;

@@ -115,6 +115,7 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .syncStatusInfo{display:grid;gap:2px;min-width:0}.syncStatusLabel{font-size:12px}.syncStatusDetails{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#eaf6ff}
 .syncStatusRetry{width:auto!important;min-width:max-content;margin:0!important;padding:7px 10px!important;border:1px solid #ffffff6b!important;border-radius:10px!important;background:#fff!important;color:#0d68a7!important;font-size:11px!important}
 .syncStatusRetry[hidden]{display:none!important}.syncStatus[data-sync-state="syncing"] .syncStatusDot{background:#ffcf55;animation:syncPulse 1s infinite alternate}
+.syncStatus[data-sync-state="online"] .syncStatusDot{background:#b9d5e5}
 .syncStatus[data-sync-state="offline"]{background:#744a09}.syncStatus[data-sync-state="offline"] .syncStatusDot{background:#ffbd45}
 .syncStatus[data-sync-state="pending"]{background:#66540a}.syncStatus[data-sync-state="pending"] .syncStatusDot{background:#ffcf55}
 .syncStatus[data-sync-state="conflict"],.syncStatus[data-sync-state="error"]{background:#8a1c1c}.syncStatus[data-sync-state="conflict"] .syncStatusDot,.syncStatus[data-sync-state="error"] .syncStatusDot{background:#ff8f87}

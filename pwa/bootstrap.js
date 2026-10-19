@@ -6,9 +6,13 @@ import { OfflineSyncEngine } from "./sync/engine.js";
 import { createSupabaseAdapter } from "./sync/supabase-adapter.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "./sync/local-edits.js";
 import { listLocalRecords, countLocalRecords, utiliserCompte, supprimerToutesLesBases } from "./storage/records.js";
-import { mountSyncStatus } from "./ui/sync-status.js";
+import { mountSyncStatus, describeSyncStatus } from "./ui/sync-status.js";
 import { mountConflictDialog } from "./ui/conflict-dialog.js";
 import { createAutoSync } from "./sync/auto-sync.js";
+
+// The visible settings panel is a legacy script; share the same interpretation
+// there as in the compact status so connection alone never means "saved".
+globalThis.EpsSyncFeedback = Object.freeze({ describe: describeSyncStatus });
 
 /**
  * Point d'entree unique du mode hors connexion.
@@ -106,6 +110,17 @@ export async function demarrerHorsConnexion({
     automatique.changed();
   }
 
+  async function conserverSaisie(action) {
+    try { return await action(); }
+    catch (error) {
+      // Network synchronization happens later. A failure here means the local
+      // save itself is not confirmed, so an orange "waiting to send" is unsafe.
+      globalThis.EpsToolSave?.failed();
+      window.dispatchEvent(new CustomEvent('eps:local-save-failed', { detail: { error } }));
+      throw error;
+    }
+  }
+
   // Filet de securite : dans une fenetre installee, couper puis retablir le wifi ne declenche pas
   // toujours l'evenement "online". Sans cette relance, une saisie pouvait rester en attente
   // jusqu'au prochain geste de l'utilisateur, qui n'avait aucune raison de le deviner.
@@ -199,7 +214,7 @@ export async function demarrerHorsConnexion({
      */
     async enregistrer(entity, id, data, originalData) {
       verifierDroit(entity, "creer", "modifier");
-      const resultat = await saveOfflineEdit({ entity, id, data, originalData, authorId: session()?.user_id });
+      const resultat = await conserverSaisie(() => saveOfflineEdit({ entity, id, data, originalData, authorId: session()?.user_id }));
       if (resultat.changed) {
         programmerEnvoiApresSaisie();
         publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
@@ -209,7 +224,7 @@ export async function demarrerHorsConnexion({
 
     async supprimer(entity, id) {
       verifierDroit(entity, "supprimer");
-      const resultat = await saveOfflineDeletion({ entity, id, authorId: session()?.user_id });
+      const resultat = await conserverSaisie(() => saveOfflineDeletion({ entity, id, authorId: session()?.user_id }));
       if (resultat.changed) {
         programmerEnvoiApresSaisie();
         publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
