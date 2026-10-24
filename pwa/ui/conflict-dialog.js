@@ -1,11 +1,18 @@
 import { listConflicts, listResolvedConflicts } from "../sync/conflicts.js";
 import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, retryAllRejections, resolveAllConflicts } from "../sync/resolve.js";
+import { mergeOfflineChange } from "../sync/merge.js";
+import { generationLocale, assertGeneration } from "../storage/database.js";
 
 export function serverIsClearlyOlderThanStoredConflict(conflict, now = Date.now()) {
+  if (!conflict?.baseData || !conflict?.localData || !conflict?.serverData
+    || !(Number(conflict.baseVersion) > 0) || !(Number(conflict.serverVersion) >= Number(conflict.baseVersion))
+    || conflict.localDeleted || conflict.serverDeleted || conflict.localData.deleted || conflict.serverData.deleted
+    || conflict.overlappingFields?.some(field => field === '__deleted__' || field === '__version__')) return false;
   const local = Date.parse(conflict?.localModifiedAt || "");
   const distant = Date.parse(conflict?.serverModifiedAt || "");
   return conflict?.kind !== "refus" && Number.isFinite(local) && Number.isFinite(distant)
-    && local <= now + 5 * 60 * 1000 && local - distant > 5 * 60 * 1000;
+    && local <= now + 5 * 60 * 1000 && local - distant > 5 * 60 * 1000
+    && mergeOfflineChange({baseData:conflict.baseData,localData:conflict.localData,serverData:conflict.serverData}).kind === 'merged';
 }
 
 /**
@@ -48,7 +55,7 @@ const LIBELLES_DEFAUT = {
   HOST_AVAILABLE: "Peut héberger", HOST_CAPACITY: "Nombre de places proposées",
   HOST_AGE_MIN: "Âge minimum pour l’hébergement", HOST_AGE_MAX: "Âge maximum pour l’hébergement",
   HOST_SEX_PREF: "Préférence d’hébergement",
-  __deleted__: "Suppression de la fiche"
+  __deleted__: "Suppression de la fiche", __version__: "Révision serveur antérieure à la copie connue"
 };
 
 function texte(valeur) {
@@ -172,19 +179,38 @@ function conflitHtml(conflit, libelles) {
 export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
   if (!element) throw new TypeError("Element d'accueil des conflits absent");
   const libelles = { ...LIBELLES_DEFAUT, ...labels };
+  let refreshing;
 
-  async function afficher() {
+  function afficher() {
+    const generation = generationLocale();
+    if (refreshing?.generation === generation) return refreshing.promise;
+    const entry = {generation};
+    entry.promise = render().catch(error => {
+      if (error?.name === 'AccountChangedError') return 0;
+      throw error;
+    }).finally(() => { if (refreshing === entry) refreshing = undefined; });
+    refreshing = entry;
+    return entry.promise;
+  }
+  async function render() {
+    const generation = generationLocale();
     let conflits = await listConflicts();
+    assertGeneration(generation);
     // Les versions déjà rangées dans IndexedDB avant la correction ne repassent pas par le
-    // moteur. Si la date serveur est clairement antérieure, la saisie locale est remise en file
-    // automatiquement puis le panneau est relu : l'utilisateur n'a plus à trancher ce faux cas.
-    const fauxConflits = conflits.filter(serverIsClearlyOlderThanStoredConflict);
-    for (const conflit of fauxConflits) await resolveConflict(conflit.conflictId, "local");
+    // moteur. Une date ancienne ne suffit pas : on ne remet en file que les cas
+    // dont les trois versions prouvent l'absence de conflit. Les deux côtés restent conservés.
+    const fauxConflits = conflits.filter(conflict => serverIsClearlyOlderThanStoredConflict(conflict));
+    for (const conflit of fauxConflits) {
+      const merged = mergeOfflineChange({baseData:conflit.baseData,localData:conflit.localData,serverData:conflit.serverData});
+      await resolveConflict(conflit.conflictId, "merged", merged.data, generation);
+    }
     if (fauxConflits.length) {
       conflits = await listConflicts();
+      assertGeneration(generation);
       onResolved?.({ autoResolved: fauxConflits.length }, "local-newer");
     }
     const history = await listResolvedConflicts();
+    assertGeneration(generation);
     const addRecoveryButton = () => {
       if (!history.length) return;
       const button = document.createElement("button");

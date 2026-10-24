@@ -615,7 +615,7 @@ function trierEleves(eleves) {
 
 function tableauElevesHtml(eleves) {
   let html = `<div style="overflow-x:auto"><table class="eleveTable"><thead><tr>`;
-  html += `<th class="eleveCoche"><input type="checkbox" id="cocheToutesPages"></th>`;
+  html += `<th class="eleveCoche"><input type="checkbox" id="cocheToutesPages" aria-label="Sélectionner ou désélectionner tous les élèves de cette page"${eleves.length&&eleves.every(e=>selectionEleves.has(e.id))?' checked':''}></th>`;
   COLONNES_ELEVE.forEach(c => {
     const actif = triEleve.cle === c.cle;
     html += `<th><button type="button" class="eleveTri${actif ? " actif" : ""}" data-tri="${c.cle}">`
@@ -625,7 +625,7 @@ function tableauElevesHtml(eleves) {
   html += `</tr></thead><tbody>`;
   eleves.forEach(e => {
     html += `<tr data-eleve="${e.id}"${selectionEleves.has(e.id) ? ' class="choisi"' : ""}>`
-      + `<td class="eleveCoche"><input type="checkbox" data-coche="${e.id}"${selectionEleves.has(e.id) ? " checked" : ""}></td>`
+      + `<td class="eleveCoche"><input type="checkbox" aria-label="Sélectionner cet élève" data-coche="${e.id}"${selectionEleves.has(e.id) ? " checked" : ""}></td>`
       + COLONNES_ELEVE.map(c => `<td>${planningText(c.texte ? c.texte(e) : c.valeur(e))}</td>`).join("")
       + (unssCibleRendu === "studentsDirectoryList"
         ? `<td class="eleveAction"><button type="button" class="student-edit-button" data-directory-edit="${e.id}">✎ Modifier</button></td>`
@@ -1064,6 +1064,7 @@ function renderUnssTab() {
     renderUnssTab();
   });
   const cocheTout = wrap.querySelector("#cocheToutesPages");
+  if(cocheTout){const boxes=[...wrap.querySelectorAll('[data-coche]')];cocheTout.indeterminate=boxes.some(box=>box.checked)&&!boxes.every(box=>box.checked)}
   if (cocheTout) cocheTout.addEventListener("change", () => {
     // Ne coche que la page affichee : cocher mille eleves d'un clic invisible serait piegeux.
     wrap.querySelectorAll("[data-coche]").forEach(box => {

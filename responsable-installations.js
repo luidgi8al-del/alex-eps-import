@@ -16,11 +16,35 @@
   let detailOrigin = 'reports';
   let passwordLinkSession = null;
   let refreshing = null;
+  const noteDrafts = new Map();
+  const sendingReports = new Set();
+  let detailGeneration = 0;
+  let sessionGeneration = 0;
+  let loadGeneration = 0;
 
   const androidSession = new URLSearchParams(location.search).has('android');
   if (!androidSession) { try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { session = null; } }
   else localStorage.removeItem(SESSION_KEY);
-  const saveSession = value => { session = value; !androidSession && value ? localStorage.setItem(SESSION_KEY, JSON.stringify(value)) : localStorage.removeItem(SESSION_KEY); };
+  const sessionOwner = value => {
+    if (!value) return null;
+    if (value.user_id || value.user?.id) return value.user_id || value.user.id;
+    try {
+      const payload = JSON.parse(atob(value.access_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      if (payload.sub) return payload.sub;
+    } catch { /* Ancienne session : l'e-mail normalisé reste stable lors du renouvellement. */ }
+    return String(value.email || '').trim().toLowerCase() || null;
+  };
+  const saveSession = value => {
+    if (sessionOwner(value) !== sessionOwner(session) || !!value !== !!session) {
+      sessionGeneration++;
+      detailGeneration++;
+      noteDrafts.clear();
+      sendingReports.clear();
+      refreshing = null;
+    }
+    session = value;
+    !androidSession && value ? localStorage.setItem(SESSION_KEY, JSON.stringify(value)) : localStorage.removeItem(SESSION_KEY);
+  };
   const show = view => { $('managerPage').dataset.guideOwner=view==='managerPage'?(session?.email||'manager'):''; ['authPage','pendingPage','managerPage'].forEach(id => $(id).hidden = id !== view); };
   const message = (value, error = false) => { $('statusMessage').textContent = value; $('statusMessage').className = error ? 'message error' : 'message'; };
   const authMessage = value => { $('authMessage').textContent = value; };
@@ -28,30 +52,41 @@
   async function renew() {
     if (!session?.refresh_token) return false;
     if (refreshing) return refreshing;
+    const generation = sessionGeneration;
+    const previousSession = session;
     refreshing = (async () => {
       try {
         const response = await fetch(`${BASE}/auth/v1/token?grant_type=refresh_token`, {
           method:'POST', headers:{apikey:KEY,'Content-Type':'application/json'},
-          body:JSON.stringify({refresh_token:session.refresh_token})
+          body:JSON.stringify({refresh_token:previousSession.refresh_token})
         });
         const data = await response.json();
-        if (!response.ok || !data.access_token) return false;
-        saveSession({access_token:data.access_token, refresh_token:data.refresh_token, email:data.user?.email || session.email});
+        if (generation !== sessionGeneration || !response.ok || !data.access_token) return false;
+        saveSession({...previousSession, access_token:data.access_token, refresh_token:data.refresh_token,
+          user_id:data.user?.id || previousSession.user_id || previousSession.user?.id,
+          email:data.user?.email || previousSession.email});
         return true;
       } catch { return false; }
-      finally { refreshing = null; }
+      finally { if (generation === sessionGeneration) refreshing = null; }
     })();
     return refreshing;
   }
 
   async function api(path, options = {}, retry = true) {
+    const generation = sessionGeneration;
     const response = await fetch(BASE + path, {
       ...options,
       headers:{apikey:KEY,Authorization:`Bearer ${session?.access_token || KEY}`,'Content-Type':'application/json',...(options.headers || {})}
     });
-    if (response.status === 401 && retry && await renew()) return api(path, options, false);
+    if (generation !== sessionGeneration) throw new Error('Compte changé. Action interrompue.');
+    if (response.status === 401 && retry) {
+      const renewed = await renew();
+      if (generation !== sessionGeneration) throw new Error('Compte changé. Action interrompue.');
+      if (renewed) return api(path, options, false);
+    }
     if (response.status === 401) { logout(); throw new Error('Session expirée. Reconnectez-vous.'); }
     const raw = await response.text();
+    if (generation !== sessionGeneration) throw new Error('Compte changé. Action interrompue.');
     let data = null;
     try { data = raw ? JSON.parse(raw) : null; } catch { data = raw; }
     if (!response.ok) throw new Error(data?.message || data?.error_description || `Erreur ${response.status}`);
@@ -60,6 +95,7 @@
 
   async function authenticate() {
     if (!session?.access_token) { show('authPage'); return; }
+    const generation = sessionGeneration;
     try {
       const context = await api('/rest/v1/rpc/eps_installation_manager_context', {method:'POST',body:'{}'});
       if (!context?.is_manager) { show('pendingPage'); return; }
@@ -67,23 +103,26 @@
       if(!androidSession) await globalThis.EpsInstallationPush?.mount($('managerPage'),api,session.user_id || session.user?.id || JSON.parse(atob(session.access_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub);
       await load();
     } catch (error) {
-      if (session) { show('pendingPage'); $('pendingPage').querySelector('p').textContent = `Impossible de vérifier les droits : ${error.message}. Réessayez quand la connexion sera rétablie.`; }
+      if (generation === sessionGeneration && session) { show('pendingPage'); $('pendingPage').querySelector('p').textContent = `Impossible de vérifier les droits : ${error.message}. Réessayez quand la connexion sera rétablie.`; }
     }
   }
 
   async function load() {
+    const generation = sessionGeneration;
+    const requestGeneration = ++loadGeneration;
     try {
       const [allReports, allFacilities] = await Promise.all([
         api('/rest/v1/sport_installation_incidents?deleted=eq.false&select=*&order=reported_at.desc'),
         api('/rest/v1/rpc/eps_installation_facilities', {method:'POST',body:'{}'})
       ]);
+      if (generation !== sessionGeneration || requestGeneration !== loadGeneration || !session) return;
       reports = Array.isArray(allReports) ? allReports : [];
       facilities = Array.isArray(allFacilities) ? allFacilities.map(row => row.name).filter(Boolean) : [];
       render();
       message('');
       if (openedId) await showReport(openedId, true);
       else if (openedFacility) showFacility(openedFacility, true);
-    } catch (error) { message(`Chargement impossible : ${error.message}`, true); }
+    } catch (error) { if (generation === sessionGeneration && requestGeneration === loadGeneration && session) message(`Chargement impossible : ${error.message}`, true); }
   }
 
   const status = value => ({A_ENVOYER:'À envoyer',SIGNALE:'À traiter',EN_COURS:'Pris en charge',RESOLU:'Résolu'}[value] || value);
@@ -107,6 +146,7 @@
   }
 
   function view(name) {
+    detailGeneration++;
     $('reportsView').hidden = name !== 'reports';
     $('facilitiesView').hidden = name !== 'facilities';
     $('detailView').hidden = name !== 'detail';
@@ -117,34 +157,80 @@
   async function showReport(id, noScroll = false) {
     const row = reports.find(item => item.id === id);
     if (!row) return;
-    detailOrigin = openedFacility ? 'facilities' : 'reports';
+    if (openedFacility) detailOrigin = 'facilities';
+    else if (!openedId) detailOrigin = 'reports';
+    const reuseEditor = noScroll && openedId === id && $('detailContent').dataset.reportId === id;
     openedId = id; openedFacility = null;
     view('detail');
+    const generation = detailGeneration;
+    const accountGeneration = sessionGeneration;
     const action = row.status === 'SIGNALE' || row.status === 'A_ENVOYER' ? '<button type="button" data-next="EN_COURS">Pris en charge</button>' : row.status === 'EN_COURS' ? '<button type="button" data-next="RESOLU">Marquer comme résolu</button>' : '';
-    $('detailContent').innerHTML = `<div class="detail-card"><h2>${escape(row.description)}</h2>
+    if (!reuseEditor) {
+      $('detailContent').dataset.reportId = id;
+      $('detailContent').innerHTML = `<div class="detail-card"><h2>${escape(row.description)}</h2>
       ${InstallationPhoto.html(row.photo_data)}
       <p class="detail-meta">${escape(row.installation_name)} · ${escape(date(row.reported_at))} · ${escape(status(row.status))}</p>
       <p><span class="badge ${row.urgency === 'URGENT' ? 'urgent' : 'normal'}">${row.urgency === 'URGENT' ? 'Urgent' : 'Normal'}</span>${row.reported_by ? ` · Signalé par ${escape(row.reported_by)}` : ''}</p>
-      ${action ? `<label for="interventionNote">Note d’intervention (facultative)</label><textarea id="interventionNote" class="detail-note" placeholder="Ce qui a été fait ou reste à faire"></textarea><div class="detail-actions">${action}</div>` : ''}
+      ${action || noteDrafts.has(id) ? `<label for="interventionNote">Note d’intervention (facultative)</label><textarea id="interventionNote" class="detail-note" placeholder="Ce qui a été fait ou reste à faire">${escape(noteDrafts.get(id) || '')}</textarea><div class="detail-actions">${action}</div>` : ''}
       <p id="detailError" class="detail-error" role="alert"></p><div id="reportTimeline" class="timeline"></div></div>`;
+    } else {
+      // Ne pas remplacer le champ pendant la frappe : conserver texte, curseur et clavier mobile.
+      $('detailContent').querySelector('.detail-meta').textContent = `${row.installation_name} · ${date(row.reported_at)} · ${status(row.status)}`;
+      const actions = $('detailContent').querySelector('.detail-actions');
+      const next = row.status === 'SIGNALE' || row.status === 'A_ENVOYER' ? 'EN_COURS' : row.status === 'EN_COURS' ? 'RESOLU' : null;
+      if (actions && actions.querySelector('[data-next]')?.dataset.next !== next) actions.innerHTML = action;
+    }
+    const editor = $('interventionNote');
+    if (editor) {
+      editor.disabled = sendingReports.has(id);
+      editor.oninput = () => { if (editor.value) noteDrafts.set(id, editor.value); else noteDrafts.delete(id); };
+    }
     const button = $('detailContent').querySelector('[data-next]');
-    if (button) button.onclick = async () => {
+    if (button) {
+      button.disabled = sendingReports.has(id);
+      button.onclick = async () => {
+      if (sendingReports.has(id)) return;
+      const note = editor?.value || '';
+      sendingReports.add(id);
       button.disabled = true;
+      if (editor) editor.disabled = true;
       try {
-        await api('/rest/v1/rpc/eps_update_installation_report', {method:'POST',body:JSON.stringify({p_incident_id:id,p_status:button.dataset.next,p_note:$('interventionNote').value.trim()})});
+        await api('/rest/v1/rpc/eps_update_installation_report', {method:'POST',body:JSON.stringify({p_incident_id:id,p_status:button.dataset.next,p_note:note.trim()})});
+        if (accountGeneration !== sessionGeneration) return;
+        if ((noteDrafts.get(id) || '') === note) {
+          noteDrafts.delete(id);
+          if (openedId === id && $('interventionNote')) $('interventionNote').value = '';
+        }
+        sendingReports.delete(id);
         await load();
-      } catch (error) { $('detailError').textContent = error.message; button.disabled = false; }
-    };
+      } catch (error) {
+        if (accountGeneration === sessionGeneration && openedId === id) {
+          $('detailError').textContent = `${error.message} Votre commentaire est conservé ; vous pouvez réessayer.`;
+        }
+      } finally {
+        if (accountGeneration === sessionGeneration) {
+          sendingReports.delete(id);
+          if (openedId === id) {
+            const activeButton = $('detailContent').querySelector('[data-next]');
+            if (activeButton) activeButton.disabled = false;
+            if ($('interventionNote')) $('interventionNote').disabled = false;
+          }
+        }
+      }
+      };
+    }
     try {
       const history = await api(`/rest/v1/eps_installation_interventions?incident_id=eq.${encodeURIComponent(id)}&select=*&order=created_at.asc`);
+      if (generation !== detailGeneration || accountGeneration !== sessionGeneration || openedId !== id) return;
       $('reportTimeline').innerHTML = `<div class="timeline-item"><strong>Signalé</strong><small>${escape(date(row.reported_at))}</small></div>` + history.map(event => `<div class="timeline-item"><strong>${escape(status(event.status))}</strong><small>${escape(date(event.created_at))}</small>${event.note ? `<p>${escape(event.note)}</p>` : ''}</div>`).join('');
-    } catch (error) { $('reportTimeline').textContent = `Historique indisponible : ${error.message}`; }
-    if (!noScroll) window.scrollTo({top:0,behavior:'smooth'});
+    } catch (error) { if (generation === detailGeneration && accountGeneration === sessionGeneration && openedId === id) $('reportTimeline').textContent = `Historique indisponible : ${error.message}`; }
+    if (!noScroll && generation === detailGeneration && accountGeneration === sessionGeneration) window.scrollTo({top:0,behavior:'smooth'});
   }
 
   function showFacility(name, noScroll = false) {
     openedFacility = name; openedId = null;
     view('detail');
+    delete $('detailContent').dataset.reportId;
     const visible = reports.filter(row => row.installation_name === name);
     $('detailContent').innerHTML = `<div class="section-heading"><h2>${escape(name)}</h2></div><div class="report-grid">${visible.length ? visible.map(row => `<article class="report-card"><div class="report-head"><h3>${escape(row.description)}</h3><span class="badge ${row.urgency === 'URGENT' ? 'urgent' : 'normal'}">${row.urgency === 'URGENT' ? 'Urgent' : 'Normal'}</span></div><p>${escape(status(row.status))} · ${escape(date(row.reported_at))}</p><button class="secondary" data-report="${escape(row.id)}">Voir le suivi</button></article>`).join('') : '<div class="empty">Aucune intervention pour cette installation.</div>'}</div>`;
     $('detailContent').querySelectorAll('[data-report]').forEach(button => button.onclick = () => showReport(button.dataset.report));
@@ -157,7 +243,12 @@
       const teacherSession = JSON.parse(localStorage.getItem('alex_eps_session') || 'null');
       if (teacherSession?.access_token === session?.access_token) localStorage.removeItem('alex_eps_session');
     } catch { /* Aucune autre session à toucher. */ }
-    saveSession(null); openedId = null; openedFacility = null; show('authPage');
+    saveSession(null); openedId = null; openedFacility = null;
+    reports = []; facilities = [];
+    $('detailContent').replaceChildren();
+    $('reportsList').replaceChildren();
+    $('facilityList').replaceChildren();
+    show('authPage');
     if (new URLSearchParams(location.search).has('android')) window.AndroidInstallation?.logout();
   }
 
@@ -171,7 +262,7 @@
       const response = await fetch(`${BASE}/auth/v1/user`, {headers:{apikey:KEY,Authorization:`Bearer ${accessToken}`}});
       const user = await response.json();
       if (!response.ok || !user?.email) throw new Error('Ce lien a expiré. Demandez un nouveau lien au professeur administrateur.');
-      passwordLinkSession = {access_token:accessToken,refresh_token:refreshToken,email:user.email};
+      passwordLinkSession = {access_token:accessToken,refresh_token:refreshToken,email:user.email,user_id:user.id};
       show('authPage');
       $('authTitle').textContent = type === 'invite' ? 'Créer votre mot de passe' : 'Choisir un nouveau mot de passe';
       $('loginEmail').value = user.email;
@@ -215,7 +306,7 @@
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error_description || data.msg || data.message || 'Connexion impossible.');
-      saveSession({access_token:data.access_token,refresh_token:data.refresh_token,email});
+      saveSession({access_token:data.access_token,refresh_token:data.refresh_token,email:data.user?.email || email,user_id:data.user?.id});
       authMessage(''); await authenticate();
     } catch (error) { authMessage(error.message); }
   };

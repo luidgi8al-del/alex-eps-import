@@ -82,7 +82,7 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .placeholder .big { font-size: 17px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .authWrap { display:flex; justify-content:center; padding-top: 60px; }
 .authCard { width:100%; max-width:360px; }
-.subtabbar { display:flex; gap:6px; margin-bottom:14px; }
+.subtabbar { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; min-width:0; max-width:100%; }
 .subtabbtn { background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; margin-top:0; cursor:pointer; }
 .subtabbtn.active { background:var(--accent-container); color:var(--accent-text); border-color:var(--accent-container); }
 .periodBar { display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; }
@@ -198,6 +198,20 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .eleveTri { margin:0; padding:2px 4px; background:none; border:0; font-weight:700; font-size:12px;
             color:var(--text); cursor:pointer; text-transform:uppercase; letter-spacing:.04em; }
 .eleveTri.actif { color:var(--primary); }
+/* Sorting and selection remain usable by touch without enlarging every table cell. */
+@media(max-width:760px),(pointer:coarse){
+  .eleveTable .eleveTri{min-height:44px;min-width:44px;padding:8px;white-space:normal}
+  .eleveTable .eleveCoche{width:56px;min-width:56px}
+  .eleveTable .eleveCoche input[type=checkbox]{display:block;width:44px;height:44px;margin:0;padding:0;cursor:pointer}
+  .student-edit-button{min-height:44px;min-width:44px}
+}
+.running-grid input[aria-invalid=true]{border-color:var(--danger);background:var(--danger-soft)}
+@media(max-width:560px){
+  .subtabbar .subtabbtn{min-height:44px;max-width:100%;white-space:normal}
+  .dispense-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .dispense-step{min-width:0;min-height:64px;padding:8px 3px!important;flex-direction:column;gap:3px!important}
+  .dispense-step span{min-width:0;font-size:12px;overflow-wrap:anywhere}
+}
 .pagination { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:10px 0; }
 .pagination button { margin:0; padding:6px 11px; min-width:38px; }
 .pagination button[disabled] { opacity:.45; cursor:default; }

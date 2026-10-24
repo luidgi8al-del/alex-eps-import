@@ -17,7 +17,7 @@ alter table public.eps_push_devices enable row level security;
 revoke all on public.eps_push_devices from anon,authenticated;
 create table if not exists public.eps_push_events (
  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade,
- incident_id uuid not null references public.sport_installation_incidents(id) on delete cascade,
+ incident_id text not null references public.sport_installation_incidents(id) on delete cascade,
  kind text not null, created_at timestamptz not null default now(), sent_at timestamptz,
  lease_until timestamptz, attempts int not null default 0, last_error text
 );

@@ -1,5 +1,5 @@
 import { DEFAULT_BATCH_SIZE, MAX_RETRY_DELAY_MS, recordKey, STORES } from "../core/constants.js";
-import { openOfflineDatabase, requestResult, transaction } from "../storage/database.js";
+import { openOfflineDatabase, requestResult, transaction, generationLocale } from "../storage/database.js";
 import { seal, unseal } from "../storage/vault.js";
 import { estPanneReseau } from "../core/connectivity.js";
 function operationId() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
@@ -7,9 +7,9 @@ export async function prepareOperation({ entity, id, action = "upsert", baseVers
   const key = recordKey(entity, id), opId = operationId(), createdAt = new Date().toISOString();
   return { opId, recordKey: key, entity, id: String(id), action, baseVersion, changedFields: [...new Set(changedFields)].sort(), authorId, deviceId, envelope: await seal({ baseData, data }, `${key}:${opId}`), createdAt, retryAt: createdAt, attempts: 0 };
 }
-export async function enqueueOperation(input) {
+export async function enqueueOperation(input, expectedGeneration = generationLocale()) {
   const row = await prepareOperation(input);
-  await transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row)); return row;
+  await transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row), undefined, expectedGeneration); return row;
 }
 export async function pendingOperations(limit = DEFAULT_BATCH_SIZE) {
   const rows = await transaction([STORES.OUTBOX], "readonly",
@@ -25,8 +25,8 @@ export async function operationsForRecord(key) {
 export async function countPendingOperations() {
   return transaction([STORES.OUTBOX], "readonly", stores => requestResult(stores[STORES.OUTBOX].count()));
 }
-export async function acknowledgeOperation(opId) { return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].delete(opId)); }
-export async function deferOperation(operation, error) {
+export async function acknowledgeOperation(opId, expectedGeneration = generationLocale()) { return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].delete(opId), undefined, expectedGeneration); }
+export async function deferOperation(operation, error, expectedGeneration = generationLocale()) {
   const attempts = operation.attempts + (estPanneReseau(error) ? 0 : 1);
   // L'espacement croissant protege un serveur en difficulte. Une coupure reseau ne lui doit rien :
   // sans cette distinction, revenir sur le wifi apres quelques essais laissait la saisie attendre
@@ -36,10 +36,10 @@ export async function deferOperation(operation, error) {
     : Math.min(MAX_RETRY_DELAY_MS, 1000 * 2 ** Math.min(attempts, 8));
   const row = { ...operation, attempts, retryAt: new Date(Date.now() + delay).toISOString(), lastError: String(error?.message || error) };
   delete row.baseData; delete row.data;
-  return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row));
+  return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row), undefined, expectedGeneration);
 }
-export async function replaceOperation(operation, { baseVersion, baseData, data, changedFields }) {
+export async function replaceOperation(operation, { baseVersion, baseData, data, changedFields }, expectedGeneration = generationLocale()) {
   const row = { ...operation, baseVersion, changedFields, envelope: await seal({ baseData, data }, `${operation.recordKey}:${operation.opId}`), retryAt: new Date().toISOString() };
   delete row.baseData; delete row.data;
-  return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row));
+  return transaction([STORES.OUTBOX], "readwrite", stores => stores[STORES.OUTBOX].put(row), undefined, expectedGeneration);
 }

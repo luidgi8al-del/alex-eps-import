@@ -7,11 +7,11 @@ Ce code ne réutilise PAS Firebase ATHIA. Rien n'est envoyé tant que le service
    Elle crée une file privée ; seul le serveur choisit les destinataires.
 
 2. Créer un projet Firebase EPS LVH, sans Analytics obligatoire.
-   Ajouter l'application Android com.alex.epsoutils.debug pour l'APK distribué actuellement.
-   Ajouter également com.alex.epsoutils si vous distribuez ultérieurement une version release.
+   Ajouter l'application Android com.alex.epsoutils pour l'APK distribué à l'établissement.
+   Le package com.alex.epsoutils.debug concerne uniquement les versions de développement.
    Télécharger google-services.json : il contient les identifiants publics, pas une clé serveur.
    Dans eps_push_config.firebase_android, saisir une entrée par nom de package :
-   {"com.alex.epsoutils.debug":{"applicationId":"mobilesdk_app_id","apiKey":"current_key","projectId":"project_id","senderId":"project_number"}}
+   {"com.alex.epsoutils":{"applicationId":"mobilesdk_app_id","apiKey":"current_key","projectId":"project_id","senderId":"project_number"}}
    Remplacer les valeurs par celles du fichier du projet EPS. L'APK lit cette configuration à la connexion.
 
 3. Dans Firebase → Paramètres du projet → Comptes de service, générer une clé serveur.

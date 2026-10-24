@@ -25,6 +25,13 @@ function nomBase(compte) {
 /** Numero de generation de la copie locale, incremente a chaque effacement ou bascule. */
 export function generationLocale() { return generation; }
 
+export function assertGeneration(expected) {
+  if (expected === generation) return;
+  const error = new Error("Le compte a changé. L’opération précédente a été interrompue sans transférer ses données.");
+  error.name = "AccountChangedError";
+  throw error;
+}
+
 /**
  * Designe le compte dont la copie doit etre utilisee. Sans effet s'il n'a pas change.
  *
@@ -119,26 +126,32 @@ function connexionFermee(erreur) {
   return erreur?.name === "InvalidStateError" || /closing|clos/i.test(texte);
 }
 
-export async function transaction(storeNames, mode, action, durability) {
+export async function transaction(storeNames, mode, action, durability, expectedGeneration = generation) {
   try {
-    return await executerTransaction(storeNames, mode, action, durability);
+    return await executerTransaction(storeNames, mode, action, durability, expectedGeneration);
   } catch (erreur) {
     if (!connexionFermee(erreur)) throw erreur;
     // Une seule reprise : si la base refuse encore, c'est autre chose qu'une fermeture en vol,
     // et il vaut mieux le dire que boucler.
+    assertGeneration(expectedGeneration);
     opening = undefined;
-    return executerTransaction(storeNames, mode, action, durability);
+    return executerTransaction(storeNames, mode, action, durability, expectedGeneration);
   }
 }
 
-async function executerTransaction(storeNames, mode, action, durability) {
+async function executerTransaction(storeNames, mode, action, durability, expectedGeneration) {
+  assertGeneration(expectedGeneration);
   const db = await openOfflineDatabase();
+  assertGeneration(expectedGeneration);
   return new Promise((resolve, reject) => {
     const tx = db.transaction(storeNames, mode, { durability: durability || (mode === "readwrite" ? "relaxed" : "default") });
     const stores = Object.fromEntries(storeNames.map(name => [name, tx.objectStore(name)]));
     let result;
     try { result = action(stores, tx); } catch (error) { tx.abort(); reject(error); return; }
-    tx.oncomplete = () => resolve(result);
+    tx.oncomplete = () => {
+      try { assertGeneration(expectedGeneration); resolve(result); }
+      catch (error) { reject(error); }
+    };
     tx.onerror = () => reject(tx.error);
     tx.onabort = () => reject(tx.error || new Error("Transaction annulee"));
   });
@@ -146,11 +159,11 @@ async function executerTransaction(storeNames, mode, action, durability) {
 export function requestResult(request) {
   return new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
 }
-export async function getMeta(key) {
+export async function getMeta(key, expectedGeneration = generation) {
   // Passe par transaction() plutot que d'ouvrir la sienne : elle sait rouvrir la base si la
   // connexion s'est fermee entre-temps, ce que ce chemin ne savait pas faire.
   const row = await transaction([STORES.META], "readonly",
-    stores => requestResult(stores[STORES.META].get(key)));
+    stores => requestResult(stores[STORES.META].get(key)), undefined, expectedGeneration);
   return row?.value;
 }
-export async function setMeta(key, value) { return transaction([STORES.META], "readwrite", stores => stores[STORES.META].put({ key, value })); }
+export async function setMeta(key, value, expectedGeneration = generation) { return transaction([STORES.META], "readwrite", stores => stores[STORES.META].put({ key, value }), undefined, expectedGeneration); }

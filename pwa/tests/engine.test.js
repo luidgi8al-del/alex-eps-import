@@ -11,11 +11,11 @@ import { transaction, getMeta, setMeta } from "../storage/database.js";
 import { listLocalRecords, readLocalRecord, saveLocalRecord, removeAllLocalData, countLocalRecords } from "../storage/records.js";
 import { saveOfflineEdit, saveOfflineDeletion } from "../sync/local-edits.js";
 import { countPendingOperations, pendingOperations, operationsForRecord, deferOperation } from "../sync/outbox.js";
-import { countConflicts, listConflicts, storeRejection } from "../sync/conflicts.js";
+import { countConflicts, listConflicts, storeRejection, storeConflict, listResolvedConflicts } from "../sync/conflicts.js";
 import { resolveConflict, buildFieldChoice, acknowledgeRejection, retryRejection, resolveAllConflicts } from "../sync/resolve.js";
 import { OfflineSyncEngine, serverIsClearlyOlder } from "../sync/engine.js";
 import { currentSyncState } from "../core/events.js";
-import { serverIsClearlyOlderThanStoredConflict } from "../ui/conflict-dialog.js";
+import { serverIsClearlyOlderThanStoredConflict, mountConflictDialog } from "../ui/conflict-dialog.js";
 
 /** Table rase entre deux cas : un reste de file d'attente fausserait le suivant. */
 export async function viderTout() {
@@ -96,13 +96,19 @@ test("référence du formulaire : deux divisions incompatibles demandent un choi
   assertEgal(serveur.recu.length, 0, "aucune version écrasée");
 });
 
-test("une version serveur nettement plus ancienne laisse gagner la saisie récente", async () => {
+test("une ancienne date sans changement métier ne crée pas de faux conflit", async () => {
   const now = Date.parse("2026-10-02T00:30:00Z");
   assert(serverIsClearlyOlder(
-    { createdAt: "2026-10-02T00:27:00Z" },
-    { updatedAt: "2026-09-15T22:47:00Z" },
+    { baseVersion: 1, baseData: {value:0}, data:{value:1}, createdAt: "2026-10-02T00:27:00Z" },
+    { version: 1, data:{value:0}, updatedAt: "2026-09-15T22:47:00Z" },
     now
-  ), "la saisie du 2 octobre doit être reconnue comme plus récente");
+  ), "la révision de base connue ne comporte aucun changement concurrent");
+  assert(!serverIsClearlyOlder(
+    { baseVersion:1,baseData:{value:0},data:{value:1},createdAt:"2026-10-02T00:27:00Z" },
+    { version:2,data:{value:2},updatedAt:"2026-09-15T22:47:00Z" }, now
+  ), "une nouvelle révision à date ancienne n'est pas une vieille réponse");
+  assert(!serverIsClearlyOlder({createdAt:"2026-10-02T00:27:00Z"}, {updatedAt:"2026-09-15T22:47:00Z"}, now),
+    "les dates seules ne prouvent jamais l'absence de conflit");
 
   const original = { id: "1", version: 1, host_available: false };
   await saveOfflineEdit({ entity: "unss_students", id: "1", originalData: original,
@@ -131,9 +137,60 @@ test("un faux conflit déjà enregistré est reconnu au prochain affichage", asy
   const now = Date.parse("2026-10-02T00:35:00Z");
   assert(serverIsClearlyOlderThanStoredConflict({
     kind: "conflict",
+    baseVersion:1,serverVersion:2,baseData:{value:0},localData:{value:1},serverData:{value:0},
     localModifiedAt: "2026-10-02T00:31:00Z",
     serverModifiedAt: "2026-09-15T22:47:00Z"
   }, now), "l'ancien conflit conservé dans la PWA doit être résolu automatiquement");
+});
+
+test("nouvelle révision à vieille date : collision préservée à la descente et dans le panneau", async () => {
+  const base={id:'late-collision',version:1,points:4};
+  await saveOfflineEdit({entity:'test',id:base.id,originalData:base,data:{...base,points:7}});
+  const distant={entity:'test',id:base.id,version:2,updatedAt:'2020-01-01T00:00:00Z',data:{...base,version:2,points:9}};
+  const adapter=serveurFactice({pages:[{records:[distant],hasMore:false}]});
+  await new OfflineSyncEngine({adapter}).sync();
+  assertEgal(adapter.recu.length,0,'aucun écrasement automatique');
+  const [conflict]=await listConflicts();
+  assertEgal(conflict.localData.points,7,'version locale conservée');
+  assertEgal(conflict.serverData.points,9,'version distante conservée');
+  assert(!serverIsClearlyOlderThanStoredConflict(conflict),'le panneau ne contourne pas la protection du moteur');
+  const panel=document.createElement('div');
+  await mountConflictDialog(panel)();
+  assertEgal(await countConflicts(),1,'ouvrir le panneau ne tranche pas une collision');
+  assertEgal(await countPendingOperations(),0,'pas de renvoi silencieux après ouverture');
+});
+
+test("nouvelle révision à vieille date : collision préservée après refus 409", async () => {
+  const base={id:'late-409',version:1,points:4};
+  await saveOfflineEdit({entity:'test',id:base.id,originalData:base,data:{...base,points:7}});
+  const adapter=serveurFactice({reponsePush:()=>({status:'conflict',serverRecord:{entity:'test',id:base.id,version:2,updatedAt:'2020-01-01T00:00:00Z',data:{...base,version:2,points:9}}})});
+  await new OfflineSyncEngine({adapter}).sync();
+  assertEgal(adapter.recu.length,1,'pas de deuxième tentative écrasant la nouvelle révision');
+  const [conflict]=await listConflicts();
+  assertEgal([conflict.localData.points,conflict.serverData.points],[7,9],'les deux notes survivent au 409');
+});
+
+test("ancienne réponse : une révision connue ne recule jamais", async () => {
+  const known={id:'known',version:3,points:4,comment:'dernier commentaire'};
+  await saveLocalRecord({entity:'test',id:known.id,version:3,data:known});
+  await saveOfflineEdit({entity:'test',id:known.id,data:{...known,points:7}});
+  const adapter=serveurFactice({pages:[{records:[{entity:'test',id:known.id,version:2,updatedAt:'2020-01-01T00:00:00Z',data:{...known,version:2,comment:'ancien commentaire'}}],hasMore:false}]});
+  await new OfflineSyncEngine({adapter}).sync();
+  assertEgal(adapter.recu[0].baseVersion,3,'la version de base reste la dernière connue');
+  assertEgal(adapter.recu[0].data.comment,'dernier commentaire','un champ non modifié ne revient pas en arrière');
+});
+
+test("faux conflit ancien : fusion automatique conserve aussi les champs serveur non concurrents", async () => {
+  const base={id:'false-conflict',value:0,comment:'base'};
+  await storeConflict({operation:{entity:'test',id:base.id,recordKey:'test:'+base.id,opId:'false-conflict',baseVersion:1,baseData:base,data:{...base,value:1},changedFields:['value'],createdAt:new Date().toISOString()},
+    serverRecord:{version:2,updatedAt:'2020-01-01T00:00:00Z',data:{...base,comment:'serveur'}},overlappingFields:['version']});
+  const panel=document.createElement('div');
+  await mountConflictDialog(panel)();
+  assertEgal(await countConflicts(),0,'le faux conflit ne demande pas de choix inutile');
+  const [op]=await pendingOperations();
+  assertEgal([op.data.value,op.data.comment],[1,'serveur'],'valeur locale et champ serveur tous deux conservés');
+  const [archive]=await listResolvedConflicts();
+  assertEgal([archive.localData.value,archive.serverData.comment],[1,'serveur'],'les versions originales restent récupérables');
 });
 
 // ---------------------------------------------------------------- file d'attente

@@ -46,6 +46,12 @@ function harness(run) {
   o.offline(); o.sync.changed(); await o.advance(1500); assert.equal(sent,0);
   o.online(); await o.sync.request({force:true}); assert.equal(sent,1);
 
+  let switchedCalls=0;
+  const switched=harness(async()=>({state:++switchedCalls===1?'cancelled':'synced'}));
+  assert.equal(await switched.sync.request(),false,'cancelled account is not a successful sync');
+  assert.equal(await switched.sync.request(),true,'new account can start immediately');
+  assert.equal(switchedCalls,2,'old-account cancellation must not impose backoff');
+
   // Two isolated clients share a fake server. This tests scheduling, not production RLS.
   const server = {}; const queues = {a:[], b:[]}; const copies = {a:{}, b:{}};
   const client=id=>harness(async()=>{for(const [key,value] of queues[id].splice(0)) server[key]=value; copies[id]={...server}; return {state:'synced'};});

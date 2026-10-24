@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
     await context.addInitScript(() => {
       const originalGet = Storage.prototype.getItem;
       Storage.prototype.getItem = function (key) {
-        if (key === 'eps_installation_manager_session') return JSON.stringify({access_token:'manager-token',refresh_token:'refresh',email:'responsable@example.fr'});
+        if (key === 'eps_installation_manager_session') return JSON.stringify({user_id:'synthetic-manager',access_token:'manager-token',refresh_token:'refresh',email:'responsable@example.fr'});
         return originalGet.call(this,key);
       };
       const originalFetch = window.fetch.bind(window);

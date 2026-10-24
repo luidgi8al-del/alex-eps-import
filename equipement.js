@@ -68,6 +68,23 @@ const EQUIPMENT_CATEGORIES = [
 let equipmentList = [];
 let equipmentOpenedId = null;
 
+// Les fiches sont partagées : tout texte doit rester du texte, y compris dans les attributs.
+function equipmentText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[char]);
+}
+
+function equipmentQuantity(value, nullable = false) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return nullable ? null : 0;
+  const number = Number(raw);
+  if (!Number.isInteger(number) || number < 0 || number > 2147483647) {
+    throw new Error("Indiquez une quantité entière, positive ou nulle.");
+  }
+  return number;
+}
+
 async function loadEquipment() {
   const wrap = document.getElementById("equipTab-materiel");
   wrap.innerHTML = '<div class="card muted">Chargement du materiel...</div>';
@@ -95,13 +112,13 @@ function renderEquipment() {
         const cat = (EQUIPMENT_CATEGORIES.find(c => c[0] === item.category) || ["", item.category])[1];
         return `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
           <div>
-            <strong>${item.name}</strong> <span class="badge">${cat}</span>
+            <strong>${equipmentText(item.name)}</strong> <span class="badge">${equipmentText(cat)}</span>
             ${equipmentIsLow(item) ? '<span class="badge" style="background:#FDEEED; color:var(--danger)">Stock bas</span>' : ""}
-            <div class="muted">${item.quantity_current} en service · ${item.quantity_lost} perdus · ${item.quantity_out_of_service} hors service${item.location ? " · " + item.location : ""}</div>
+            <div class="muted">${equipmentText(item.quantity_current)} en service · ${equipmentText(item.quantity_lost)} perdus · ${equipmentText(item.quantity_out_of_service)} hors service${item.location ? " · " + equipmentText(item.location) : ""}</div>
           </div>
           <div style="display:flex; gap:6px">
-            <button class="secondary" data-open-equip="${item.id}" style="margin-top:0">Ouvrir</button>
-            <button class="danger" data-del-equip="${item.id}" style="margin-top:0">Supprimer</button>
+            <button class="secondary" data-open-equip="${equipmentText(item.id)}" style="margin-top:0">Ouvrir</button>
+            <button class="danger" data-del-equip="${equipmentText(item.id)}" style="margin-top:0">Supprimer</button>
           </div>
         </div>`;
       }).join("");
@@ -114,7 +131,7 @@ function renderEquipment() {
       </div>
       <button id="addEquipBtn" style="margin-top:0">+ Materiel</button>
     </div>
-    ${low.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${low.length} materiel(s) sous le seuil d'alerte : ${low.map(i => i.name).join(", ")}.</div>` : ""}
+    ${low.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${low.length} materiel(s) sous le seuil d'alerte : ${low.map(i => equipmentText(i.name)).join(", ")}.</div>` : ""}
     ${rows}
   </div>`;
 
@@ -131,11 +148,11 @@ function renderEquipmentDetail() {
   if (!item) { equipmentOpenedId = null; renderEquipment(); return; }
 
   const text = (key, label, type = "text") =>
-    `<div><label>${label}</label><input type="${type}" data-equip-field="${key}" value="${(item[key] ?? "").toString().replace(/"/g, "&quot;")}"></div>`;
+    `<div><label>${label}</label><input type="${type}" ${type === "number" ? 'min="0" max="2147483647" step="1" inputmode="numeric"' : ''} data-equip-field="${key}" value="${equipmentText(item[key])}"></div>`;
 
   wrap.innerHTML = `<div class="card">
     <div class="top">
-      <h2 style="margin:0">${item.name}</h2>
+      <h2 style="margin:0">${equipmentText(item.name)}</h2>
       <button class="secondary" id="backEquipBtn" style="margin-top:0">Retour</button>
     </div>
     <div class="row">
@@ -158,7 +175,7 @@ function renderEquipmentDetail() {
     </div>
     <div class="row">${text("supplier", "Fournisseur")}${text("comment", "Commentaire")}</div>
     <button id="saveEquipBtn">Enregistrer</button>
-    <div class="ok" id="equipOk"></div>
+    <div class="ok" id="equipOk" role="status"></div>
   </div>`;
 
   document.getElementById("backEquipBtn").onclick = () => { equipmentOpenedId = null; renderEquipment(); };
@@ -178,23 +195,36 @@ async function addEquipment() {
 
 async function saveEquipment() {
   const wrap = document.getElementById("equipTab-materiel");
+  const message = document.getElementById("equipOk");
+  const button = document.getElementById("saveEquipBtn");
+  if (button.disabled) return;
+  message.textContent = "";
+  message.className = "ok";
   const numeric = ["quantity_initial", "quantity_current", "quantity_lost", "quantity_out_of_service", "low_stock_threshold"];
   const payload = { updated_at: new Date().toISOString() };
-  wrap.querySelectorAll("[data-equip-field]").forEach(el => {
-    const key = el.dataset.equipField;
-    if (numeric.includes(key)) {
-      const n = parseInt(el.value, 10);
-      payload[key] = isNaN(n) ? (key === "low_stock_threshold" ? null : 0) : n;
-    } else {
-      payload[key] = el.value;
+  try {
+    for (const el of wrap.querySelectorAll("[data-equip-field]")) {
+      const key = el.dataset.equipField;
+      if (numeric.includes(key)) {
+        try {
+          if (el.validity?.badInput) throw new Error("Indiquez une quantité entière, positive ou nulle.");
+          payload[key] = equipmentQuantity(el.value, key === "low_stock_threshold");
+        } catch (error) { el.focus(); throw error; }
+      } else {
+        payload[key] = el.value;
+      }
     }
-  });
-  // La file d'attente porte des lignes entieres, pas des retouches : on part de la ligne connue
-  // et on applique la saisie dessus, sinon un envoi differe effacerait les champs absents.
-  const actuel = equipmentList.find(x => x.id === equipmentOpenedId) || { id: equipmentOpenedId };
-  await enregistrerLigne("equipment", { ...actuel, ...payload });
-  Object.assign(actuel, payload);
-  document.getElementById("equipOk").textContent = "Materiel enregistre.";
+    // La file d'attente porte une ligne entière ; préserver l'auteur et les autres champs.
+    const actuel = equipmentList.find(x => x.id === equipmentOpenedId);
+    if (!actuel) throw new Error("Cette fiche n'est plus disponible. Revenez à la liste du matériel.");
+    button.disabled = true;
+    await enregistrerLigne("equipment", { ...actuel, ...payload });
+    Object.assign(actuel, payload);
+    message.textContent = "Matériel enregistré sur cet appareil.";
+  } catch (error) {
+    message.className = "error";
+    message.textContent = error.message || "Enregistrement impossible. Votre saisie est conservée dans le formulaire.";
+  } finally { button.disabled = false; }
 }
 
 async function deleteEquipment(id) {
@@ -280,12 +310,12 @@ function renderEpi() {
         const alert = epiAlert(item);
         return `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
           <div>
-            <strong>${item.internal_id || "Sans identifiant"}</strong> <span class="badge">${cat}</span>
+            <strong>${equipmentText(item.internal_id || "Sans identifiant")}</strong> <span class="badge">${equipmentText(cat)}</span>
             <span class="badge" style="background:${st[2]}">${st[1]}</span>
             ${alert ? `<span class="badge" style="background:#FDEEED; color:var(--danger)">${alert}</span>` : ""}
-            <div class="muted">${[item.manufacturer, item.model].filter(Boolean).join(" ") || "Modele non renseigne"} · prochain controle ${epiDate(item.next_inspection_date_epoch_millis)}</div>
+            <div class="muted">${equipmentText([item.manufacturer, item.model].filter(Boolean).join(" ") || "Modele non renseigne")} · prochain controle ${epiDate(item.next_inspection_date_epoch_millis)}</div>
           </div>
-          <button class="secondary" data-open-epi="${item.id}" style="margin-top:0">Fiche de vie</button>
+          <button class="secondary" data-open-epi="${equipmentText(item.id)}" style="margin-top:0">Fiche de vie</button>
         </div>`;
       }).join("");
 
@@ -297,8 +327,8 @@ function renderEpi() {
       </div>
       <button id="addEpiBtn" style="margin-top:0">+ EPI</button>
     </div>
-    ${alerts.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${alerts.length} EPI a traiter : ${alerts.map(([i, a]) => `${i.internal_id} (${a})`).join(", ")}.</div>` : ""}
-    <div class="row" style="margin-top:12px"><div><label for="epiSearchInput">Rechercher</label><input id="epiSearchInput" value="${epiSearch.replace(/"/g,"&quot;")}" placeholder="Numero, categorie, modele ou rangement"></div></div>
+    ${alerts.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${alerts.length} EPI a traiter : ${alerts.map(([i, a]) => `${equipmentText(i.internal_id)} (${equipmentText(a)})`).join(", ")}.</div>` : ""}
+    <div class="row" style="margin-top:12px"><div><label for="epiSearchInput">Rechercher</label><input id="epiSearchInput" value="${equipmentText(epiSearch)}" placeholder="Numero, categorie, modele ou rangement"></div></div>
     ${rows}
   </div>`;
 
@@ -314,12 +344,12 @@ async function renderEpiDetail() {
   if (!item) { epiOpenedId = null; renderEpi(); return; }
 
   epiInspections = await lireTable("epi_inspections",
-    `epi_inspections?epi_id=eq.${item.id}&select=*&order=date_epoch_millis.desc`,
+    `epi_inspections?epi_id=eq.${encodeURIComponent(item.id)}&select=*&order=date_epoch_millis.desc`,
     { ou: i => i.epi_id === item.id,
       trier: (a, b) => Number(b.date_epoch_millis || 0) - Number(a.date_epoch_millis || 0) });
 
   const text = (key, label, type = "text") =>
-    `<div><label>${label}</label><input type="${type}" data-epi-field="${key}" value="${(item[key] ?? "").toString().replace(/"/g, "&quot;")}"></div>`;
+    `<div><label>${label}</label><input type="${type}" data-epi-field="${key}" value="${equipmentText(item[key])}"></div>`;
   const dateField = (key, label) =>
     `<div><label>${label}</label><input type="date" data-epi-date="${key}" value="${item[key] ? new Date(Number(item[key])).toISOString().slice(0, 10) : ""}"></div>`;
 
@@ -328,20 +358,20 @@ async function renderEpiDetail() {
     : epiInspections.map(i => {
         const r = (EPI_RESULTS.find(x => x[0] === i.result) || ["", i.result])[1];
         return `<div class="top" style="padding:7px 0; border-bottom:1px solid var(--border)">
-          <div>${epiDate(i.date_epoch_millis)} · <strong>${r}</strong>
-            <div class="muted">${i.inspector || "Controleur non precise"}${i.observations ? " — " + i.observations : ""}</div>
+          <div>${epiDate(i.date_epoch_millis)} · <strong>${equipmentText(r)}</strong>
+            <div class="muted">${equipmentText(i.inspector || "Controleur non precise")}${i.observations ? " — " + equipmentText(i.observations) : ""}</div>
           </div>
         </div>`;
       }).join("");
 
   wrap.innerHTML = `<div class="card">
     <div class="top">
-      <h2 style="margin:0">${item.internal_id || "EPI"}</h2>
+      <h2 style="margin:0">${equipmentText(item.internal_id || "EPI")}</h2>
       <button class="secondary" id="backEpiBtn" style="margin-top:0">Retour</button>
     </div>
     <div class="card" style="text-align:center;background:#f5faff">
       <div id="epiQrCanvas" style="display:flex;justify-content:center;margin:8px"></div>
-      <div style="font-size:28px;font-weight:900;color:#123a59">${item.internal_id || "EPI"}</div>
+      <div style="font-size:28px;font-weight:900;color:#123a59">${equipmentText(item.internal_id || "EPI")}</div>
       <div class="muted">Scannez pour ouvrir la fiche et son historique</div>
       <div class="row"><button id="printEpiLabelBtn">Imprimer l'etiquette</button><button class="secondary" id="saveEpiLabelBtn">Enregistrer l'etiquette</button></div>
     </div>
@@ -373,7 +403,7 @@ async function renderEpiDetail() {
       <div><label for="inspResult">Resultat</label><select id="inspResult">${EPI_RESULTS.map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></div>
     </div>
     <div class="row">
-      <div><label for="inspBy">Controleur</label><input type="text" id="inspBy" value="${session.email || ""}"></div>
+      <div><label for="inspBy">Controleur</label><input type="text" id="inspBy" value="${equipmentText(session.email)}"></div>
       <div><label for="inspNotes">Observations</label><input type="text" id="inspNotes"></div>
     </div>
     <button id="addInspBtn">Enregistrer le controle</button>
@@ -412,7 +442,7 @@ function renderEpiQr(item) {
   if(!host)return;
   if(typeof QRCode!=="function"){host.innerHTML='<div class="error">Generateur QR indisponible hors connexion.</div>';return;}
   new QRCode(host,{text:value,width:190,height:190,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
-  const openLabel=print=>{const canvas=host.querySelector("canvas"),img=host.querySelector("img"),src=canvas?.toDataURL("image/png")||img?.src;if(!src)return;const w=open("","_blank");w.document.write(`<html><head><title>Etiquette ${item.internal_id}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial;text-align:center;color:#123a59}.label{width:90mm;border:3px solid #123a59;border-radius:18px;padding:0 0 18px;margin:auto;overflow:hidden}.head{background:#087dca;color:white;padding:18px;font-size:20px;font-weight:800}.ref{font-size:34px;font-weight:900}.cat{font-size:18px}img{width:58mm;height:58mm}</style></head><body><div class="label"><div class="head">EPS · LYCEE VICTOR HUGO</div><img src="${src}"><div class="ref">${item.internal_id}</div><div class="cat">${(EPI_CATEGORIES.find(x=>x[0]===item.category)||[0,item.category])[1]}</div></div><script>${print?'onload=()=>print()':''}<\/script></body></html>`);w.document.close()};
+  const openLabel=print=>{const canvas=host.querySelector("canvas"),img=host.querySelector("img"),src=canvas?.toDataURL("image/png")||img?.src;if(!src)return;const w=open("","_blank");if(!w)return;w.document.write(`<html><head><title>Etiquette ${equipmentText(item.internal_id)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial;text-align:center;color:#123a59}.label{width:90mm;border:3px solid #123a59;border-radius:18px;padding:0 0 18px;margin:auto;overflow:hidden}.head{background:#087dca;color:white;padding:18px;font-size:20px;font-weight:800}.ref{font-size:34px;font-weight:900}.cat{font-size:18px}img{width:58mm;height:58mm}</style></head><body><div class="label"><div class="head">EPS · LYCEE VICTOR HUGO</div><img src="${equipmentText(src)}"><div class="ref">${equipmentText(item.internal_id)}</div><div class="cat">${equipmentText((EPI_CATEGORIES.find(x=>x[0]===item.category)||[0,item.category])[1])}</div></div><script>${print?'onload=()=>print()':''}<\/script></body></html>`);w.document.close()};
   document.getElementById("printEpiLabelBtn").onclick=()=>openLabel(true);
   document.getElementById("saveEpiLabelBtn").onclick=()=>openLabel(false);
 }

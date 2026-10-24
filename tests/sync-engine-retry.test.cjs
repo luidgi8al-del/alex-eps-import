@@ -12,7 +12,7 @@ async function check({outage=false}={}) {
   const context={navigator:{onLine:true}, DEFAULT_BATCH_SIZE:40, MAX_TENTATIVES_ENVOI:6, PAGE_LECTURE:500,
     SYNC_STATE:{SYNCING:'syncing',OFFLINE:'offline',ERROR:'error',PENDING:'pending',SYNCED:'synced',CONFLICT:'conflict'},
     publishSyncState:(state,detail)=>({state,...detail}), estPanneReseau:e=>e.name==='TypeError',
-    getMeta:async()=>undefined,setMeta:async()=>{},countLocalRecords:async()=>0,generationLocale:()=>0,
+    getMeta:async()=>undefined,setMeta:async()=>{},countLocalRecords:async()=>0,generationLocale:()=>0,assertGeneration:()=>{},
     countPendingOperations:async()=>outage?1:0,countConflicts:async()=>0,
     pendingOperations:async()=>outage?[{opId:'saved-result',attempts:99}]:[],
     deferOperation:async()=>deferred++,storeRejection:async()=>rejected++,acknowledgeOperation:async()=>acknowledged++,

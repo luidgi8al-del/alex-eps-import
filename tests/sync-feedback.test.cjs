@@ -120,7 +120,7 @@ async function bootstrapFixture(){
   const events=[],failure={error:null};let failed=0,changed=0;
   const context={document:{addEventListener(){}},window:{addEventListener(){},dispatchEvent:e=>events.push(e)},navigator:{onLine:false},location:{search:''},URLSearchParams,
     CustomEvent:class {constructor(type,options){this.type=type;this.detail=options.detail;}},setInterval(){},
-    utiliserCompte(){},createSupabaseAdapter:()=>({}),OfflineSyncEngine:class {sync(){return Promise.resolve();}},
+    utiliserCompte(){},generationLocale:()=>0,assertGeneration(){},createSupabaseAdapter:()=>({}),OfflineSyncEngine:class {sync(){return Promise.resolve();}},
     createAutoSync:()=>({request:()=>Promise.resolve(),changed:()=>changed++}),startConnectivityMonitor(){},isOnline:()=>false,
     registerServiceWorker:()=>Promise.resolve(),subscribeSyncState(){},countPendingOperations:async()=>1,
     saveOfflineEdit:async()=>{if(failure.error)throw failure.error;return {changed:true};},

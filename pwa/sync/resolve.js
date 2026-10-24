@@ -4,6 +4,7 @@ import { saveLocalRecord } from "../storage/records.js";
 import { enqueueOperation, countPendingOperations } from "./outbox.js";
 import { countConflicts, listConflicts, removeConflict } from "./conflicts.js";
 import { changedFieldsBetween, chooseConflictVersion } from "./merge.js";
+import { generationLocale, assertGeneration } from "../storage/database.js";
 
 /**
  * Applique la decision prise sur un conflit et remet la version choisie en route.
@@ -16,8 +17,10 @@ import { changedFieldsBetween, chooseConflictVersion } from "./merge.js";
  * La nouvelle operation part de la version du serveur : c'est ce qui empeche le meme conflit de se
  * redeclencher indefiniment au prochain envoi.
  */
-export async function resolveConflict(conflictId, choice, customData) {
+export async function resolveConflict(conflictId, choice, customData, generation = generationLocale()) {
+  assertGeneration(generation);
   const conflit = (await listConflicts()).find(item => item.conflictId === conflictId);
+  assertGeneration(generation);
   if (!conflit) throw new Error("Conflit introuvable : il a peut-etre deja ete resolu.");
 
   const candidate = chooseConflictVersion(conflit, choice, customData);
@@ -31,29 +34,29 @@ export async function resolveConflict(conflictId, choice, customData) {
     await saveLocalRecord({
       entity: conflit.entity, id: conflit.id, data: conflit.serverData,
       version: conflit.serverVersion, updatedAt: conflit.serverModifiedAt, deleted
-    });
-    await removeConflict(conflictId);
-    return publierEtat({ resolu: conflictId, envoye: false });
+    }, generation);
+    await removeConflict(conflictId, generation);
+    return publierEtat({ resolu: conflictId, envoye: false }, generation);
   }
 
   const champsModifies = changedFieldsBetween(conflit.serverData, retenue);
   await saveLocalRecord({
     entity: conflit.entity, id: conflit.id, data: retenue,
     version: conflit.serverVersion, updatedAt: new Date().toISOString(), deleted
-  });
+  }, generation);
   // Rien ne differe de ce que le serveur porte deja : inutile de lui renvoyer la meme chose.
   if (champsModifies.length === 0) {
-    await removeConflict(conflictId);
-    return publierEtat({ resolu: conflictId, envoye: false });
+    await removeConflict(conflictId, generation);
+    return publierEtat({ resolu: conflictId, envoye: false }, generation);
   }
 
   await enqueueOperation({
     entity: conflit.entity, id: conflit.id, action: deleted ? "delete" : "upsert",
     baseVersion: conflit.serverVersion, baseData: conflit.serverData, data: retenue,
     changedFields: champsModifies, authorId: conflit.localAuthorId
-  });
-  await removeConflict(conflictId);
-  return publierEtat({ resolu: conflictId, envoye: true });
+  }, generation);
+  await removeConflict(conflictId, generation);
+  return publierEtat({ resolu: conflictId, envoye: true }, generation);
 }
 
 /**
@@ -91,27 +94,31 @@ export function buildFieldChoice(conflit, choixParChamp = {}) {
  * n'existe pour personne d'autre.
  */
 export async function acknowledgeRejection(conflictId) {
+  const generation = generationLocale();
   const refus = (await listConflicts()).find(item => item.conflictId === conflictId);
+  assertGeneration(generation);
   if (!refus) throw new Error("Refus introuvable : il a peut-etre deja ete traite.");
 
   if (refus.serverData) {
     await saveLocalRecord({
       entity: refus.entity, id: refus.id, data: refus.serverData,
-      version: refus.serverVersion, updatedAt: refus.serverModifiedAt, deleted: false
-    });
+      version: refus.serverVersion, updatedAt: refus.serverModifiedAt, deleted: Boolean(refus.serverDeleted || refus.serverData?.deleted)
+    }, generation);
   } else {
     await saveLocalRecord({
       entity: refus.entity, id: refus.id, data: refus.localData,
       version: refus.baseVersion, updatedAt: new Date().toISOString(), deleted: true
-    });
+    }, generation);
   }
-  await removeConflict(conflictId);
-  return publierEtat({ refusPrisEnCompte: conflictId, envoye: false });
+  await removeConflict(conflictId, generation);
+  return publierEtat({ refusPrisEnCompte: conflictId, envoye: false }, generation);
 }
 
 /** Remet une saisie refusée dans la file après correction d'une règle serveur. */
-export async function retryRejection(conflictId) {
+export async function retryRejection(conflictId, generation = generationLocale()) {
+  assertGeneration(generation);
   const refus = (await listConflicts()).find(item => item.conflictId === conflictId && item.kind === "refus");
+  assertGeneration(generation);
   if (!refus) throw new Error("Refus introuvable : il a peut-être déjà été traité.");
   const data = refus.entity === "evaluation_scores"
     ? { ...refus.baseData, ...refus.serverData, ...refus.localData }
@@ -121,13 +128,14 @@ export async function retryRejection(conflictId) {
       if (!data[field]) throw new Error(`Impossible de relancer la note : ${field} manque dans les versions conservées.`);
     }
   }
+  const deleted = Boolean(refus.localDeleted || data?.deleted);
   await saveLocalRecord({
     entity: refus.entity, id: refus.id, data,
     version: refus.serverVersion || refus.baseVersion || 0,
-    updatedAt: new Date().toISOString(), deleted: false
-  });
+    updatedAt: new Date().toISOString(), deleted
+  }, generation);
   await enqueueOperation({
-    entity: refus.entity, id: refus.id, action: "upsert",
+    entity: refus.entity, id: refus.id, action: deleted ? "delete" : "upsert",
     baseVersion: refus.serverVersion || refus.baseVersion || 0,
     baseData: refus.serverData || refus.baseData || null,
     data,
@@ -135,18 +143,20 @@ export async function retryRejection(conflictId) {
       ? changedFieldsBetween(refus.serverData || refus.baseData || {}, data)
       : refus.overlappingFields || Object.keys(refus.localData || {}),
     authorId: refus.localAuthorId
-  });
-  await removeConflict(conflictId);
-  return publierEtat({ refusRelance: conflictId, envoye: true });
+  }, generation);
+  await removeConflict(conflictId, generation);
+  return publierEtat({ refusRelance: conflictId, envoye: true }, generation);
 }
 
 /** Relance tous les refus en respectant leurs dépendances : séance avant présences. */
 export async function retryAllRejections() {
+  const generation = generationLocale();
   const refus = (await listConflicts()).filter(item => item.kind === "refus").sort((a, b) => {
     const priorite = entity => entity === "unss_sessions" ? 0 : entity === "unss_attendance" ? 1 : 2;
     return priorite(a.entity) - priorite(b.entity) || String(a.detectedAt).localeCompare(String(b.detectedAt));
   });
-  for (const item of refus) await retryRejection(item.conflictId);
+  assertGeneration(generation);
+  for (const item of refus) await retryRejection(item.conflictId, generation);
   return { relances: refus.length };
 }
 
@@ -164,14 +174,17 @@ export async function discardConflict(conflictId) {
  * reprendre une par une n'apporte rien de plus qu'un choix repete identique a chaque fois.
  */
 export async function resolveAllConflicts(choice) {
+  const generation = generationLocale();
   const items = (await listConflicts()).filter(item => item.kind !== "refus");
-  for (const item of items) await resolveConflict(item.conflictId, choice);
+  assertGeneration(generation);
+  for (const item of items) await resolveConflict(item.conflictId, choice, undefined, generation);
   return { resolus: items.length };
 }
 
-async function publierEtat(detail) {
+async function publierEtat(detail, generation) {
   const conflicts = await countConflicts();
   const pending = await countPendingOperations();
+  assertGeneration(generation);
   const etat = conflicts ? SYNC_STATE.CONFLICT : pending ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED;
   return publishSyncState(etat, { conflicts, pending, ...detail });
 }

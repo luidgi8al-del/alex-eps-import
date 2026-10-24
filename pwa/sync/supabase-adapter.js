@@ -51,6 +51,16 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
     throw new TypeError("Adaptateur Supabase : url, cle et session sont obligatoires");
   }
 
+  function accountGuard() {
+    const owner = session()?.user_id || session()?.user?.id || null;
+    return () => {
+      if ((session()?.user_id || session()?.user?.id || null) === owner) return;
+      const error = new Error('Le compte a changé pendant la synchronisation.');
+      error.name = 'AccountChangedError';
+      throw error;
+    };
+  }
+
   function entetes() {
     const jeton = session()?.access_token;
     if (!jeton) throw new Error("Session absente : rien ne peut etre synchronise.");
@@ -63,18 +73,26 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
    * Une seule reprise : si le 401 ne vient pas du jeton, boucler ne ferait que retarder le
    * message d'erreur.
    */
-  async function appeler(construire) {
+  async function appeler(construire, check = accountGuard()) {
+    check();
     const reponse = await construire();
+    check();
     if (reponse.status !== 401 || !renouveler) return reponse;
-    if (!(await renouveler())) return reponse;
-    return construire();
+    const renewed = await renouveler();
+    check();
+    if (!renewed) return reponse;
+    const retry = await construire();
+    check();
+    return retry;
   }
 
-  async function lire(chemin) {
-    const reponse = await appeler(() => fetch(`${url}${chemin}`, { headers: entetes() }));
+  async function lire(chemin, check = accountGuard()) {
+    const reponse = await appeler(() => fetch(`${url}${chemin}`, { headers: entetes() }), check);
     if (reponse.status === 401) throw new Error("Session expiree.");
     if (!reponse.ok) throw new Error(`Lecture refusee (HTTP ${reponse.status}).`);
-    return reponse.json();
+    const data = await reponse.json();
+    check();
+    return data;
   }
 
   /**
@@ -91,6 +109,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
    * pagination en sauterait une a chaque tour.
    */
   async function pullChanges({ cursor, limit = TAILLE_PAGE } = {}) {
+    const check = accountGuard();
     // Un curseur de l'ancienne forme (une seule date pour tout) n'est pas rattrapable : on
     // repart de zero une fois, ce qui repare au passage les copies locales incompletes.
     const parTable = (cursor && typeof cursor === "object" && !cursor.updatedAt) ? cursor : {};
@@ -122,7 +141,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
         ? `or=(updated_at.gt."${borne}",and(updated_at.eq."${borne}",id.gt."${encodeURIComponent(repere.id)}"))`
         : `updated_at=gte.1970-01-01T00%3A00%3A00Z`;
       const lignes = await lire(
-        `/rest/v1/${table}?${filtre}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`
+        `/rest/v1/${table}?${filtre}&select=*&order=updated_at.asc,id.asc&limit=${limit + 1}`, check
       );
       if (lignes.length > limit) { plusLoin = true; lignes.length = limit; }
 
@@ -156,6 +175,13 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
    * serveur, plutot que de lever une erreur qui declencherait une reprise sans fin.
    */
   async function pushOperation(operation) {
+    const check = accountGuard();
+    const owner = session()?.user_id || session()?.user?.id;
+    if (operation.authorId && owner && operation.authorId !== owner) {
+      const error = new Error('Cette saisie appartient à un autre compte.');
+      error.name = 'AccountMismatchError';
+      throw error;
+    }
     const corps = { ...operation.data, id: operation.id, version: operation.baseVersion || undefined };
     if (operation.action === "delete") { corps.deleted = true; corps.data = undefined; }
 
@@ -190,7 +216,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
         Prefer: creation && !signalementNeuf ? "resolution=merge-duplicates,return=representation" : "return=representation"
       },
       body: corpsEnvoye
-    }));
+    }), check);
 
     if (!reponse.ok) {
       if (reponse.status === 401) throw new Error("Session expiree.");
@@ -200,7 +226,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
       // synchronisation qui ne finit jamais sans jamais savoir pourquoi.
       if (reponse.status === 403) {
         return { status: "rejected", reason: "droits insuffisants",
-                 serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
+                 serverRecord: await lireLigneSiPossible(operation.entity, operation.id, check) };
       }
 
       // Le refus de version est reconnu quel que soit le code HTTP.
@@ -211,16 +237,17 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
       // trancher - etait alors pris pour une panne serveur et repris sans fin. Une base ancienne
       // peut encore porter l'ancien declencheur : le message suffit a decider.
       const texte = await reponse.text().catch(() => "");
+      check();
       // Après une coupure pendant la réponse, le serveur peut avoir reçu le POST.
       // Retrouver la même ligne évite un conflit fantôme au prochain essai.
       if (signalementNeuf && reponse.status === 409 && texte.includes("23505")) {
-        const dejaEnregistre = await lireLigneSiPossible(operation.entity, operation.id);
+        const dejaEnregistre = await lireLigneSiPossible(operation.entity, operation.id, check);
         if (dejaEnregistre && dejaEnregistre.data?.user_id === operation.data?.user_id) {
           return { status: "ok", record: dejaEnregistre };
         }
       }
       if (texte.includes("Version perimee") || texte.includes("40001")) {
-        return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id) };
+        return { status: "conflict", serverRecord: await lireLigne(operation.entity, operation.id, check) };
       }
       // Le code seul ne dit rien : PostgREST explique le refus dans son corps de reponse
       // (colonne inconnue, contrainte violee, valeur invalide). Sans le rapporter, un 400
@@ -229,13 +256,14 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
     }
 
     const [ligne] = await reponse.json();
+    check();
     // Une modification qui ne touche aucune ligne repond 200 avec une liste vide : soit la ligne
     // n'existe pas, soit les regles de securite la rendent invisible a ce compte. Dans les deux
     // cas elle ne partira jamais. L'acquitter comme un succes faisait disparaitre la saisie en
     // silence - c'est le pire des cas, celui que personne ne remarque.
     if (!ligne) {
       return { status: "rejected", reason: "ligne absente ou non modifiable par ce compte",
-               serverRecord: await lireLigneSiPossible(operation.entity, operation.id) };
+               serverRecord: await lireLigneSiPossible(operation.entity, operation.id, check) };
     }
     return {
       status: "ok",
@@ -245,12 +273,12 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
   }
 
   /** Comme lireLigne, mais rend null quand la ligne est illisible : on est deja dans un refus. */
-  async function lireLigneSiPossible(table, id) {
-    try { return await lireLigne(table, id); } catch { return null; }
+  async function lireLigneSiPossible(table, id, check = accountGuard()) {
+    try { return await lireLigne(table, id, check); } catch (error) { if (error?.name === 'AccountChangedError') throw error; return null; }
   }
 
-  async function lireLigne(table, id) {
-    const [ligne] = await lire(`/rest/v1/${table}?id=eq.${encodeURIComponent(id)}&select=*&limit=1`);
+  async function lireLigne(table, id, check = accountGuard()) {
+    const [ligne] = await lire(`/rest/v1/${table}?id=eq.${encodeURIComponent(id)}&select=*&limit=1`, check);
     if (!ligne) throw new Error("La ligne a disparu du serveur.");
     return { entity: table, id: ligne.id, version: ligne.version ?? 0, updatedAt: ligne.updated_at,
              deleted: Boolean(ligne.deleted), authorId: ligne.user_id || null, data: ligne };
@@ -271,19 +299,18 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
    * site, qui ne le lit alors jamais. C'est ce qui rendait invisibles sur le site des tests, des
    * inscriptions ou des appels enregistres dans l'application.
    */
-  const TABLES_RATTRAPAGE = [
-    "students", "eps_test_sessions", "eps_test_results", "health_dispensations", "health_accidents",
-    "unss_slots", "unss_memberships", "unss_sessions", "unss_attendance",
-    "class_documents", "class_document_returns"
-  ];
-  const tablesRattrapables = tables.filter(t => TABLES_RATTRAPAGE.includes(t));
+  // Every synchronized table can receive a delayed offline edit or deletion.
+  // A whitelist left equipment, evaluations and older rows permanently invisible.
+  const tablesRattrapables = [...tables];
 
-  /** Les identifiants et dates des lignes recentes d'une table : de quoi comparer, sans tout lire. */
+  /** Metadata only, 1,000 rows per page: never download photos/document bodies
+   * for the inventory scan. Full rows are fetched only for missing/new versions. */
   async function identifiantsRecents(table, depuis) {
+    const check = accountGuard();
     const borne = encodeURIComponent(depuis);
     const trouves = [];
     for (let debut = 0; ; debut += 1000) {
-      const page = await lire(`/rest/v1/${table}?updated_at=gte.${borne}&select=id,updated_at&order=updated_at.asc,id.asc&limit=1000&offset=${debut}`);
+      const page = await lire(`/rest/v1/${table}?updated_at=gte.${borne}&select=id,updated_at,version&order=updated_at.asc,id.asc&limit=1000&offset=${debut}`, check);
       trouves.push(...page);
       if (page.length < 1000) break;
     }

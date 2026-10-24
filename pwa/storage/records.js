@@ -1,13 +1,13 @@
 import { recordKey, STORES } from "../core/constants.js";
-import { openOfflineDatabase, requestResult, transaction, marquerEffacement } from "./database.js";
+import { openOfflineDatabase, requestResult, transaction, marquerEffacement, generationLocale } from "./database.js";
 import { seal, unseal } from "./vault.js";
 export async function prepareLocalRecord({ entity, id, data, version = 0, updatedAt, deleted = false }) {
   const key = recordKey(entity, id);
   return { key, entity, id: String(id), envelope: await seal(data, key), version, updatedAt: updatedAt || new Date().toISOString(), deleted };
 }
-export async function saveLocalRecord(input) {
+export async function saveLocalRecord(input, expectedGeneration = generationLocale()) {
   const row = await prepareLocalRecord(input);
-  await transaction([STORES.RECORDS], "readwrite", stores => stores[STORES.RECORDS].put(row)); return row;
+  await transaction([STORES.RECORDS], "readwrite", stores => stores[STORES.RECORDS].put(row), undefined, expectedGeneration); return row;
 }
 export async function readLocalRecord(entity, id) {
   const key = recordKey(entity, id);

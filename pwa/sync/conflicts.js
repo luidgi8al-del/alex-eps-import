@@ -1,12 +1,12 @@
 import { STORES } from "../core/constants.js";
-import { openOfflineDatabase, requestResult, transaction } from "../storage/database.js";
+import { openOfflineDatabase, requestResult, transaction, generationLocale } from "../storage/database.js";
 import { seal, unseal } from "../storage/vault.js";
-export async function storeConflict({ operation, serverRecord, overlappingFields }) {
+export async function storeConflict({ operation, serverRecord, overlappingFields }, expectedGeneration = generationLocale()) {
   const conflictId = `${operation.recordKey}:${operation.opId}`;
   const row = { conflictId, recordKey: operation.recordKey, entity: operation.entity, id: operation.id, operationId: operation.opId, baseVersion: operation.baseVersion, serverVersion: serverRecord.version, overlappingFields, localAuthorId: operation.authorId, serverAuthorId: serverRecord.authorId || null, localModifiedAt: operation.createdAt, serverModifiedAt: serverRecord.updatedAt, detectedAt: new Date().toISOString(), envelope: await seal({ baseData: operation.baseData, localData: operation.data, serverData: serverRecord.data }, conflictId) };
   row.localDeleted = operation.action === "delete" || Boolean(operation.data?.deleted);
   row.serverDeleted = Boolean(serverRecord.deleted || serverRecord.data?.deleted);
-  await transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].put(row)); return row;
+  await transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].put(row), undefined, expectedGeneration); return row;
 }
 /**
  * Enregistre un refus definitif : une saisie que le serveur n'acceptera jamais de ce compte.
@@ -16,7 +16,7 @@ export async function storeConflict({ operation, serverRecord, overlappingFields
  * qu'elle soit VUE. Une saisie refusee qui disparait en silence est exactement ce que le mode
  * hors connexion doit empecher.
  */
-export async function storeRejection({ operation, serverRecord, reason }) {
+export async function storeRejection({ operation, serverRecord, reason }, expectedGeneration = generationLocale()) {
   const conflictId = `${operation.recordKey}:${operation.opId}`;
   const row = {
     conflictId, kind: "refus", reason: reason || "droits insuffisants",
@@ -31,7 +31,9 @@ export async function storeRejection({ operation, serverRecord, reason }) {
     envelope: await seal({ baseData: operation.baseData, localData: operation.data,
                            serverData: (serverRecord && serverRecord.data) || null }, conflictId)
   };
-  await transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].put(row));
+  row.localDeleted = operation.action === "delete" || Boolean(operation.data?.deleted);
+  row.serverDeleted = Boolean(serverRecord?.deleted || serverRecord?.data?.deleted);
+  await transaction([STORES.CONFLICTS], "readwrite", stores => stores[STORES.CONFLICTS].put(row), undefined, expectedGeneration);
   return row;
 }
 
@@ -42,7 +44,7 @@ export async function listConflicts() {
 }
 // Conserver les deux versions avant de retirer un conflit de la liste à traiter.
 // Même transaction : aucune résolution ne peut effacer la seule copie récupérable.
-export async function removeConflict(conflictId) {
+export async function removeConflict(conflictId, expectedGeneration = generationLocale()) {
   return transaction([STORES.CONFLICTS, STORES.META], "readwrite", stores => {
     const request = stores[STORES.CONFLICTS].get(conflictId);
     request.onsuccess = () => {
@@ -50,7 +52,7 @@ export async function removeConflict(conflictId) {
       stores[STORES.META].put({ key: `resolved-conflict:${conflictId}`, value: { ...request.result, resolvedAt: new Date().toISOString() } });
       stores[STORES.CONFLICTS].delete(conflictId);
     };
-  });
+  }, undefined, expectedGeneration);
 }
 export async function listResolvedConflicts() {
   const rows = await transaction([STORES.META], "readonly", stores => requestResult(stores[STORES.META].getAll()));

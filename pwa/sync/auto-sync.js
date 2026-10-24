@@ -24,6 +24,7 @@ export function createAutoSync({ run, online, now = Date.now,
       return false;
     }
     running = Promise.resolve().then(run).then(result => {
+      if (result?.state === 'cancelled') { failures = 0; nextAttempt = 0; return false; }
       if (!result || ['error', 'offline', 'pending'].includes(result.state)) return failed(result);
       failures = 0;
       nextAttempt = now() + refreshMs;

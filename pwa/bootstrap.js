@@ -9,6 +9,7 @@ import { listLocalRecords, countLocalRecords, utiliserCompte, supprimerToutesLes
 import { mountSyncStatus, describeSyncStatus } from "./ui/sync-status.js";
 import { mountConflictDialog } from "./ui/conflict-dialog.js";
 import { createAutoSync } from "./sync/auto-sync.js";
+import { generationLocale, assertGeneration } from "./storage/database.js";
 
 // The visible settings panel is a legacy script; share the same interpretation
 // there as in the compact status so connection alone never means "saved".
@@ -111,8 +112,10 @@ export async function demarrerHorsConnexion({
   }
 
   async function conserverSaisie(action) {
+    const generation = generationLocale();
     try { return await action(); }
     catch (error) {
+      assertGeneration(generation);
       // Network synchronization happens later. A failure here means the local
       // save itself is not confirmed, so an orange "waiting to send" is unsafe.
       globalThis.EpsToolSave?.failed();
@@ -181,6 +184,7 @@ export async function demarrerHorsConnexion({
      * l'ecran jusqu'a son envoi, et personne ne comprendrait ou est passee sa ligne.
      */
     async lire(entity, { ou, trier, avecSupprimes = false } = {}) {
+      const generation = generationLocale();
       // Une lecture locale n'attend pas le reseau. Elle le faisait, et il a suffi qu'une
       // synchronisation soit longue - un premier chargement, qui rapatrie tout l'etablissement -
       // pour que chaque rubrique reste sur "Chargement" jusqu'au bout, Reglages compris.
@@ -190,7 +194,9 @@ export async function demarrerHorsConnexion({
       // Seule exception : quand il n'y a encore rien a montrer, autant attendre, sinon on
       // afficherait "aucune donnee" a quelqu'un qui en a.
       const dejaLa = await countLocalRecords();
+      assertGeneration(generation);
       const synchronise = dejaLa > 0 ? (rapprocher(), false) : await rapprocher();
+      assertGeneration(generation);
       // Les lignes effacees servent parfois : une note effacee garde sa ligne, ce qui permet de
       // la resaisir sans en creer une nouvelle a chaque fois.
       const locales = await listLocalRecords(entity, { includeDeleted: avecSupprimes });
@@ -200,6 +206,7 @@ export async function demarrerHorsConnexion({
       // table, et une lecture par classe ne doit pas dependre du reseau pour se restreindre.
       if (typeof ou === "function") rows = rows.filter(ou);
       if (typeof trier === "function") rows = rows.sort(trier);
+      assertGeneration(generation);
       return { source: synchronise ? "reseau" : "local", rows };
     },
 
@@ -213,21 +220,29 @@ export async function demarrerHorsConnexion({
      * envers celui qui saisit.
      */
     async enregistrer(entity, id, data, originalData) {
+      const generation = generationLocale();
       verifierDroit(entity, "creer", "modifier");
       const resultat = await conserverSaisie(() => saveOfflineEdit({ entity, id, data, originalData, authorId: session()?.user_id }));
+      assertGeneration(generation);
       if (resultat.changed) {
         programmerEnvoiApresSaisie();
-        publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
+        const pending = await countPendingOperations();
+        assertGeneration(generation);
+        publishSyncState(isOnline() ? "pending" : "offline", { pending });
       }
       return resultat;
     },
 
     async supprimer(entity, id) {
+      const generation = generationLocale();
       verifierDroit(entity, "supprimer");
       const resultat = await conserverSaisie(() => saveOfflineDeletion({ entity, id, authorId: session()?.user_id }));
+      assertGeneration(generation);
       if (resultat.changed) {
         programmerEnvoiApresSaisie();
-        publishSyncState(isOnline() ? "pending" : "offline", { pending: await countPendingOperations() });
+        const pending = await countPendingOperations();
+        assertGeneration(generation);
+        publishSyncState(isOnline() ? "pending" : "offline", { pending });
       }
       return resultat;
     },
@@ -251,7 +266,13 @@ export async function demarrerHorsConnexion({
      */
     async changerDeCompte(userId) {
       utiliserCompte(userId || null);
-      rapprocher({ force: true });
+      publishSyncState(isOnline() ? 'online' : 'offline', { pending: 0, conflicts: 0 });
+      // The old run finishes as cancelled. A second request must start for the
+      // current account, rather than sharing the previous account's promise.
+      const cible = userId || null;
+      await rapprocher({ force: true });
+      if ((session()?.user_id || null) === cible && cible) return rapprocher({ force: true });
+      return false;
     },
 
     /** Effacement volontaire réservé à la commande explicite « déconnecter et effacer ». */
