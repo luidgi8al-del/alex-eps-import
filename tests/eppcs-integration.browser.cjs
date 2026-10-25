@@ -5,7 +5,7 @@ const path=require('node:path');
 const http=require('node:http');
 const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const root=path.resolve(__dirname,'..');
-const out=path.join(root,'output','eppcs');
+const out=path.resolve(root,'..','atelier-eppcs','qa','lessons','integration');
 const paragraph=text=>({type:'paragraph',text});
 const library={schemaVersion:1,level:'Première EPPCS',sources:[{filename:'Exemple fictif.docx'}],courses:[1,2].map(n=>({
   id:'chapitre-'+n,number:n,title:n===1?'Activité physique et santé — exemple fictif':'Le sport dans la société — exemple fictif',
@@ -39,11 +39,11 @@ const server=http.createServer(async(req,res)=>{
   if(url.pathname==='/ep-test') {
     res.setHeader('Content-Type','text/html; charset=utf-8');
     const hooks='const originalEPPCSStore=window.EPPCSStore;window.EPPCSStore={...originalEPPCSStore,create(options){const api=originalEPPCSStore.create(options);return {...api,async load(){const held=window.holdLoadAt>0&&--window.holdLoadAt===0;const value=await api.load();if(held){window.loadHeld=true;await new Promise(resolve=>window.releaseLoad=()=>{window.loadHeld=false;resolve();});}return value;}};}};';
-    return res.end('<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/styles/site.css"><link rel="stylesheet" href="/styles/eppcs.css"><style>body{margin:0;padding:12px}#app{max-width:1280px;margin:auto}</style></head><body><div id="app"></div><script>var session=JSON.parse(localStorage.getItem("test-session"));var SUPABASE_URL=location.origin;var SUPABASE_KEY="test-key";async function renouvelerSession(){return true;}</script><script src="/eppcs-store.js"></script><script>'+hooks+'</script><script src="/eppcs-ui.js"></script><script src="/eppcs.js"></script><script>EPSAtelierEPPCS.open(document.getElementById("app"));navigator.serviceWorker.register("/ep-test-sw.js");</script></body></html>');
+    return res.end('<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/styles/site.css"><link rel="stylesheet" href="/styles/eppcs.css"><style>body{margin:0;padding:12px}#app{max-width:1280px;margin:auto}</style></head><body><div id="app"></div><script>var session=JSON.parse(localStorage.getItem("test-session"));var SUPABASE_URL=location.origin;var SUPABASE_KEY="test-key";async function renouvelerSession(){return true;}</script><script src="/eppcs-store.js"></script><script>'+hooks+'</script><script src="/eppcs-lesson-model.js"></script><script src="/eppcs-ui.js"></script><script src="/eppcs.js"></script><script>EPSAtelierEPPCS.open(document.getElementById("app"));navigator.serviceWorker.register("/ep-test-sw.js");</script></body></html>');
   }
   if(url.pathname==='/ep-test-sw.js') {
     res.setHeader('Content-Type','text/javascript');
-    return res.end('self.addEventListener("install",e=>{e.waitUntil(caches.open("eppcs-synthetic-test").then(c=>c.addAll(["/ep-test","/styles/site.css","/styles/eppcs.css","/eppcs-store.js","/eppcs-ui.js","/eppcs.js"])).then(()=>self.skipWaiting()))});self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));self.addEventListener("fetch",e=>{if(!new URL(e.request.url).pathname.startsWith("/rest/"))e.respondWith(caches.match(e.request,{ignoreSearch:true}).then(r=>r||fetch(e.request)))})');
+    return res.end('self.addEventListener("install",e=>{e.waitUntil(caches.open("eppcs-synthetic-test").then(c=>c.addAll(["/ep-test","/styles/site.css","/styles/eppcs.css","/eppcs-store.js","/eppcs-lesson-model.js","/eppcs-ui.js","/eppcs.js"])).then(()=>self.skipWaiting()))});self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));self.addEventListener("fetch",e=>{if(!new URL(e.request.url).pathname.startsWith("/rest/"))e.respondWith(caches.match(e.request,{ignoreSearch:true}).then(r=>r||fetch(e.request)))})');
   }
   const file=path.resolve(root,'.'+url.pathname);if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}
   fs.readFile(file,(error,bytes)=>{res.writeHead(error?404:200,{'Content-Type':file.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'});res.end(error?'':bytes);});
@@ -55,7 +55,22 @@ async function waitState(page,predicate){
   throw Error('Unexpected EPPCS state: '+JSON.stringify(state));
 }
 async function waitClean(page,text){return waitState(page,s=>s.status.pending===0&&!s.conflicts.length&&s.status.kind==='synced'&&(!text||s.notes['chapitre-1']?.text===text));}
-async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]').click();await page.locator('[data-ep-tab="notes"]').click();}
+async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]').click();await page.locator('[data-ep-action="mode-library"]').click();await page.locator('[data-ep-tab="notes"]').click();}
+async function manageAction(page,action){
+  const manager=page.locator('.ep-account-manage');
+  if(!await manager.evaluate(el=>el.open))await manager.locator(':scope > summary').click();
+  await manager.locator('[data-eppcs-action="'+action+'"]').click();
+  if(await manager.evaluate(el=>el.open))await manager.locator(':scope > summary').click();
+  assert.equal(await manager.evaluate(el=>el.open),false,'Management panel folds away after an action');
+}
+async function assertCompactBar(page,width){
+  const manager=page.locator('.ep-account-manage');
+  assert.equal(await manager.evaluate(el=>el.open),false,'Management is collapsed by default');
+  for(const action of ['sync','backup','reload'])assert.equal(await manager.locator('[data-eppcs-action="'+action+'"]').isVisible(),false,'Management action hidden until requested');
+  const bar=await page.locator('.ep-account-bar').boundingBox();
+  assert(bar.height<=(width<600?170:95),'The folded account status bar remains compact');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Compact status bar fits narrow viewport');
+}
 (async()=>{
   fs.mkdirSync(out,{recursive:true});
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(47000+Math.floor(Math.random()*1000),'127.0.0.1',resolve);});
@@ -73,13 +88,21 @@ async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]')
       await waitClean(page);
       await page.locator('[data-eppcs-file]').setInputFiles(packageFile);
       await page.locator('[data-ep-course="chapitre-1"]').waitFor({timeout:10000}).catch(async error=>{console.error(await page.locator('#app').innerText(),errors);throw error;});await waitClean(page);
+      await assertCompactBar(page,width);
+      await manageAction(page,'sync');await waitClean(page);
+      const downloadReady=page.waitForEvent('download');await manageAction(page,'backup');
+      const download=await downloadReady,stream=await download.createReadStream(),chunks=[];
+      for await(const chunk of stream)chunks.push(chunk);
+      const backup=JSON.parse(Buffer.concat(chunks).toString('utf8'));
+      assert.equal(backup.format,'eps-eppcs-backup');assert.equal(backup.owner,owner);
+      assert(backup.records.some(record=>record.key==='library'),'Compact management still exports the private library');
       await page.screenshot({path:path.join(out,'bibliotheque-'+width+'.png'),fullPage:true});
       await noteTab(page);
       await page.locator('[data-ep-note-text]').fill('Ma préparation enregistrée — '+width);
       await page.locator('[data-ep-action="save-notes"]').click();await waitClean(page,'Ma préparation enregistrée — '+width);
       // Editing can start while an async reload is already reading IndexedDB.
       await page.evaluate(()=>{window.holdLoadAt=1;window.loadHeld=false;});
-      await page.locator('[data-eppcs-action="reload"]').click();await page.waitForFunction(()=>window.loadHeld);
+      await manageAction(page,'reload');await page.waitForFunction(()=>window.loadHeld);
       await page.locator('[data-ep-note-text]').fill('Brouillon créé pendant le rechargement — '+width);
       await page.evaluate(()=>releaseLoad());
       await page.waitForFunction(()=>document.querySelector('[data-eppcs-message]').textContent.includes('Enregistre d’abord'));
@@ -127,7 +150,7 @@ async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]')
       await waitClean(page,'Ma version hors connexion — '+width);
       assert.equal(cloud.get(key).payload.text,'Ma version hors connexion — '+width);
       await page.locator('[data-ep-note-text]').fill('Ma version hors connexion — '+width);
-      await page.locator('[data-eppcs-action="reload"]').click();
+      await manageAction(page,'reload');
       await noteTab(page);assert.equal(await page.locator('[data-ep-note-text]').inputValue(),'Ma version hors connexion — '+width);
       // Second browser tab updates the same IndexedDB while this editor is open.
       await page.locator('[data-ep-note-text]').fill('Saisie concurrente du premier onglet — '+width);
@@ -147,7 +170,7 @@ async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]')
       // Read only on explicit request. The file and captures stay OUTSIDE the public repository.
       const packagePath=path.resolve(process.env.EPPCS_PRIVATE_PACKAGE),raw=fs.readFileSync(packagePath),pack=JSON.parse(raw),actual=pack.library;
       assert.equal(actual.courses.length,15);assert.equal(actual.courses.reduce((sum,c)=>sum+c.quizzes.length,0),100);assert.equal(actual.controls.length,3);
-      const privateOut=path.join(path.dirname(packagePath),'qa');fs.mkdirSync(privateOut,{recursive:true});
+      const privateOut=path.join(path.dirname(packagePath),'qa','lessons','integration');fs.mkdirSync(privateOut,{recursive:true});
       for(const width of [390,1280]){
         const owner='teacher-a-'+(10000+width),context=await browser.newContext({viewport:{width,height:900}});
         await context.addInitScript(owner=>localStorage.setItem('test-session',JSON.stringify({user_id:owner,access_token:'token-'+owner})),owner);
@@ -155,12 +178,14 @@ async function noteTab(page){await page.locator('[data-ep-course="chapitre-1"]')
         await page.goto(origin+'/ep-test#cours');await waitClean(page);
         await page.locator('[data-eppcs-file]').setInputFiles({name:path.basename(packagePath),mimeType:'application/json',buffer:raw});
         await page.locator('[data-ep-course]').first().waitFor();await waitClean(page);
+        await assertCompactBar(page,width);
         assert.equal(await page.locator('[data-ep-course]').count(),15);
         await page.screenshot({path:path.join(privateOut,'bibliotheque-'+width+'.png'),fullPage:true});
         let quizCount=0;
         for(const chapter of actual.courses){
           await page.locator('[data-ep-course="'+chapter.id+'"]').click();
           assert.match(await page.locator('.ep-chapter-head').innerText(),new RegExp(String(chapter.number)));
+          await page.locator('[data-ep-action="mode-library"]').click();
           for(const tab of ['course','sessions','quiz','controls','sources','notes']){
             await page.locator('[data-ep-tab="'+tab+'"]').click();
             assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Private chapter mobile overflow '+chapter.number+'/'+tab+'/'+width);

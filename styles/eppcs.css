@@ -76,11 +76,68 @@
 .eppcs-view .ep-notice:empty{display:none}
 .eppcs-view .ep-empty{padding:20px 0;color:var(--ep-muted)}
 .eppcs-view .ep-print-frame{position:fixed;left:-10000px;top:0;width:1px;height:1px;border:0}
+.eppcs-view .ep-lesson-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eppcs-view .ep-lesson-title h3{font-size:28px;margin:0}
+.eppcs-view .ep-lesson-title .ep-eyebrow{margin:0 0 4px}
+.eppcs-view .ep-session-switch{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 16px}
+.eppcs-view .ep-session-switch button{flex:1 1 110px;text-align:left;min-height:50px;max-width:240px}
+.eppcs-view .ep-session-switch button[aria-pressed=true]{box-shadow:inset 0 -2px #087fbd}
+.eppcs-view .ep-session-summary{margin:0 0 14px;padding:15px 18px;border-radius:12px}
+.eppcs-view .ep-session-summary h4{font-size:17px;margin:0 0 5px}
+.eppcs-view .ep-session-summary p{font-size:14px;line-height:1.65;margin:0 0 7px}
+.eppcs-view .ep-session-summary small{font-size:11px;line-height:1.6}
+.eppcs-view .ep-organization-note{font-size:12px;color:var(--ep-muted);margin:0 0 20px;line-height:1.65}
+.eppcs-view .ep-lesson-grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
+.eppcs-view .ep-lesson-flow{min-width:0}
+.eppcs-view details.ep-flow{border-radius:14px;padding:0 18px;margin:0 0 13px}
+.eppcs-view .ep-flow>summary{display:flex;align-items:center;gap:12px;list-style:none;padding:17px 0;min-height:77px}
+.eppcs-view .ep-flow>summary::-webkit-details-marker{display:none}
+.eppcs-view .ep-flow>summary>span:nth-child(2){flex:1;min-width:0}
+.eppcs-view .ep-flow>summary strong{display:block;font-size:17px;line-height:1.4}
+.eppcs-view .ep-flow>summary small{display:block;margin-top:3px;font-size:12px;font-weight:400;color:var(--ep-muted);line-height:1.6}
+.eppcs-view .ep-step{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;background:#e5f3fd;color:#067cb9;border-radius:9px;font-size:13px;font-weight:750}
+.eppcs-view .ep-fold{height:32px;width:25px;display:grid;place-items:center;color:#087fbd;font-size:24px;font-weight:400;flex:0 0 25px}
+.eppcs-view .ep-fold::before{content:'+'}
+.eppcs-view .ep-flow[open]>.ep-flow-head .ep-fold::before,.eppcs-view .ep-flow[open]>summary .ep-fold::before{content:'−'}
+.eppcs-view .ep-flow-body{padding:0 0 19px;min-width:0}
+.eppcs-view .ep-flow-body>.ep-hint{margin-bottom:12px}
+.eppcs-view .ep-step-intro{font-size:14px;color:var(--ep-muted);margin-bottom:13px}
+.eppcs-view details.ep-lesson-unit{background:#f8fbfd;border:1px solid #dfebf3;padding:0 14px;margin:10px 0 0}
+.eppcs-view .ep-lesson-unit>summary{font-size:15px;line-height:1.6}
+.eppcs-view .ep-lesson-unit .ep-reader{margin-top:5px;font-size:16px}
+.eppcs-view .ep-lesson-unit .ep-reader.ep-large{font-size:20px}
+.eppcs-view .ep-unassigned{background:#fff8e9}
+.eppcs-view .ep-activity{border-bottom:1px solid var(--ep-line);padding-bottom:16px;margin-bottom:16px}
+.eppcs-view .ep-activity:last-child{border-bottom:0;margin-bottom:0}
+.eppcs-view .ep-activity h4{font-size:17px;margin:4px 0 10px}
+.eppcs-view .ep-activity .ep-reader{font-size:16px;margin-top:10px}
+.eppcs-view .ep-teacher-only{border-color:#d7c79f;background:#fffaf1}
+.eppcs-view .ep-participation-prompt{margin:12px 0 0;background:#fff8e9;border-left:3px solid #caa655;border-radius:0 9px 9px 0;padding:15px;font-size:15px;line-height:1.8;color:#5e4c23;overflow-wrap:anywhere}
+.eppcs-view .ep-supports{border:1px solid var(--ep-line);border-radius:14px;padding:17px;background:#f8fbfd;min-width:0}
+.eppcs-view .ep-supports h4{font-size:17px;margin:0 0 13px}
+.eppcs-view .ep-supports button{width:100%;display:block;text-align:left;margin-top:9px;padding:10px 12px;font-size:13px;font-weight:650}
+.eppcs-view .ep-supports .ep-source{font-size:11px;margin:16px 0 0;padding-top:12px}
+.eppcs-view .ep-session-footer{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.eppcs-view .ep-session-footer button{flex:1 1 220px}
+.eppcs-view .ep-lesson-resource{margin-top:26px;padding-top:20px;border-top:2px solid var(--ep-line);min-width:0;scroll-margin-top:25px}
+.eppcs-view .ep-resource-close{margin-bottom:18px}
+@media(max-width:950px){.eppcs-view .ep-lesson-grid{grid-template-columns:minmax(0,1fr) 195px;gap:14px}.eppcs-view .ep-supports{padding:13px}}
+@media(max-width:760px){.eppcs-view .ep-lesson-title h3{font-size:24px}.eppcs-view .ep-lesson-grid{display:block}.eppcs-view .ep-session-switch{gap:6px;margin:16px 0}.eppcs-view .ep-session-switch button{flex:1 1 75px;max-width:none;min-height:44px;padding:10px 7px;text-align:center;font-size:13px}.eppcs-view .ep-session-summary{padding:13px}.eppcs-view .ep-session-summary small{font-size:10px}.eppcs-view .ep-organization-note{font-size:11px;margin-bottom:15px}.eppcs-view details.ep-flow{padding:0 13px}.eppcs-view .ep-flow>summary{gap:9px;padding:15px 0}.eppcs-view .ep-flow>summary strong{font-size:16px}.eppcs-view .ep-flow>summary small{font-size:11px}.eppcs-view .ep-step{width:29px;height:29px;flex-basis:29px}.eppcs-view .ep-fold{flex-basis:19px;width:19px;font-size:21px}.eppcs-view .ep-flow-body{padding-bottom:15px}.eppcs-view details.ep-lesson-unit{padding:0 10px}.eppcs-view .ep-lesson-unit>summary{font-size:14px}.eppcs-view .ep-lesson-unit .ep-reader{font-size:16px}.eppcs-view .ep-supports{padding:15px;margin-top:18px}.eppcs-view .ep-supports button{font-size:14px}.eppcs-view .ep-supports .ep-source{font-size:12px}.eppcs-view .ep-session-footer button{font-size:13px;padding:10px 12px;flex:1 1 180px}}
 @media(max-width:760px){.eppcs-view .ep-workspace{padding-top:10px}.eppcs-view .ep-cards{grid-template-columns:1fr}.eppcs-view .ep-theme h3{font-size:19px}.eppcs-view button.ep-chapter{padding:16px;gap:10px}.eppcs-view .ep-panel{padding:19px 16px;border-radius:14px}.eppcs-view .ep-tabs button{flex:1 0 calc(33.333% - 8px);padding:10px 7px;font-size:13px}.eppcs-view .ep-modes button{flex:1}.eppcs-view .ep-tools{gap:7px}.eppcs-view .ep-tools button{font-size:13px;padding:10px 12px;flex:1 1 auto}.eppcs-view .ep-panel-head{gap:12px}.eppcs-view .ep-panel-head h3{font-size:19px}.eppcs-view .ep-reader{font-size:17px;line-height:1.8}.eppcs-view .ep-reader h3{font-size:20px}.eppcs-view .ep-hint{padding:12px;font-size:13px}.eppcs-view .ep-session{gap:10px}.eppcs-view details{padding:0 12px}.eppcs-view .ep-choice{padding:10px;font-size:15px}.eppcs-view th,.eppcs-view td{padding:6px}.eppcs-view .ep-counts{font-size:13px;gap:12px}.eppcs-view .ep-chapter strong{font-size:16px}}
 /* Private library controls, outside the reader, wrap on narrow screens. */
 .ep-account { min-width:0; }
 .ep-account-bar,.ep-account-empty,.ep-account-conflict { border:1px solid #d4e2ed; border-radius:18px; padding:18px; background:#fff; margin:16px 0; }
 .ep-account-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.ep-account-bar { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; padding:10px 16px; }
+.ep-account-bar [data-eppcs-status] { margin:10px 0; flex:1 1 220px; font-size:14px; line-height:1.6; overflow-wrap:anywhere; }
+.ep-account-manage { min-width:0; max-width:100%; }
+.ep-account-manage summary { cursor:pointer; min-height:44px; display:flex; align-items:center; gap:8px; font-weight:650; color:#0879b2; }
+.ep-account-manage summary::after { content:'+'; }
+.ep-account-manage[open] summary::after { content:'−'; }
+.ep-account-manage summary:focus-visible { outline:3px solid #b77712; outline-offset:2px; border-radius:4px; }
+.ep-account-manage[open] { flex:1 1 100%; }
+.ep-account-manage .ep-account-actions { padding:4px 0 8px; }
+.ep-account-message:empty { display:none; }
 .ep-account button,.ep-account input { min-height:44px; max-width:100%; }
 .ep-account-actions button { white-space:normal; }
 .ep-account [data-eppcs-status] { margin-top:0; }

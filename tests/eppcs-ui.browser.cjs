@@ -15,8 +15,9 @@ const data = {
     sections:[
       {id:'course',kind:'course',title:'Partie spécifique à imprimer',blocks:[paragraph('Texte synthétique <img src=x onerror=alert(1)>'), {type:'paragraph',text:'Lien',runs:[{text:'Interdit',href:'javascript:alert(1)'},{text:'Autorisé',href:'https://example.test/reference'}]}]},
       {id:'objectives',kind:'objectives',title:'Objectifs',blocks:[paragraph('Objectif synthétique')]},
-      {id:'quiz',kind:'quiz',title:'Quiz élève',blocks:[paragraph('QUESTION_VIERGE'),paragraph('a) Première proposition'),paragraph('b) Seconde proposition')]},
+      {id:'quiz',kind:'quiz',title:'Quiz élève',blocks:[paragraph('QUESTION_VIERGE'),paragraph('a) Première proposition'),paragraph('b) Seconde proposition'),paragraph('FAUX_CORRIGE_MELANGE_DANS_QUIZ')]},
       {id:'quiz-correction',kind:'quiz-correction',title:'Corrigé',blocks:[paragraph('REPONSE_PROFESSEUR_PRIVEE')]},
+      {id:'custom',kind:'custom-teacher-appendix',title:'Annexe professeur personnalisée',blocks:[paragraph('ANNEXE_PROF_INTEGRALE')]},
       {id:'references',kind:'references',title:'Références',blocks:[paragraph('Un document de référence cité')]}
     ],
     sessions:[{number:1,title:'Séance réelle',description:'Description explicitement issue du document.',durationMinutes:60,source:{file:'Cours synthétique.docx',paragraph:10}}],
@@ -59,9 +60,15 @@ const server = http.createServer((req,res) => {
       assert.equal(await page.locator('#app img').count(),0);
       assert.equal(await page.locator('#app a[href^="javascript:"]').count(),0);
       assert.equal(new URL(page.url()).hash,'#cours');
+      assert.equal(await page.locator('.ep-flow').count(),3);
+      await page.locator('[data-ep-action="mode-library"]').click();
       await page.locator('[data-ep-action="print-course"]').click();
       const printCourse=await page.evaluate(()=>printed.at(-1).html);
       assert.match(printCourse,/Chapitre synthétique 1/);assert.match(printCourse,/Partie spécifique à imprimer/);
+      await page.locator('[data-ep-section]').selectOption('custom');
+      assert.match(await page.locator('.ep-reader').innerText(),/ANNEXE_PROF_INTEGRALE/);
+      await page.locator('[data-ep-action="print-course"]').click();
+      assert.match(await page.evaluate(()=>printed.at(-1).html),/ANNEXE_PROF_INTEGRALE/);
       await page.locator('[data-ep-tab="quiz"]').click();
       await page.locator('input[value="a"]').check();
       await page.locator('[data-ep-action="reveal"]').click();
@@ -71,7 +78,7 @@ const server = http.createServer((req,res) => {
       assert.equal(await page.locator('input[value="b"]').evaluate(el=>el===document.activeElement),true);
       await page.locator('[data-ep-action="print-quiz-student"]').click();
       const student=await page.evaluate(()=>printed.at(-1).html);
-      assert.match(student,/QUESTION_VIERGE/);assert.doesNotMatch(student,/REPONSE_PROFESSEUR_PRIVEE|checked|Réponse conforme/);
+      assert.match(student,/Quelle proposition/);assert.match(student,/Import non reconnu/);assert.doesNotMatch(student,/QUESTION_VIERGE|FAUX_CORRIGE_MELANGE_DANS_QUIZ|REPONSE_PROFESSEUR_PRIVEE|checked|Réponse conforme/);
       await page.locator('[data-ep-action="print-quiz-teacher"]').click();
       assert.match(await page.evaluate(()=>printed.at(-1).html),/REPONSE_PROFESSEUR_PRIVEE/);
       await page.locator('[data-ep-tab="notes"]').click();
@@ -85,8 +92,8 @@ const server = http.createServer((req,res) => {
       await page.locator('[data-ep-tab="sessions"]').click();
       await page.locator('[data-ep-action="session"]').click();
       assert.match(await page.locator('.ep-session-summary').innerText(),/Description explicitement issue du document/);
-      assert.match(await page.locator('.ep-panel').innerText(),/pas attribuées automatiquement/);
-      await page.locator('[data-ep-action="lesson-notes"]').click();
+      assert.match(await page.locator('.ep-panel').innerText(),/répartition par séance n’est pas disponible/);
+      await page.locator('.ep-supports [data-ep-action="lesson-notes"]').click();
       assert.equal(await page.locator('[data-ep-note-text]').inputValue(),'Mon brouillon à conserver');
       await page.evaluate(()=>window.failSave=false);
       await page.locator('[data-ep-action="save-notes"]').click();
@@ -107,6 +114,7 @@ const server = http.createServer((req,res) => {
       await page.locator('[data-ep-note-text]').fill('Brouillon à ne pas écraser');
       assert.equal(await page.evaluate(()=>instance.refreshNotes({'chapter-1':{text:'Nouvelle version distante',status:'enseigne',savedAt:'2026-01-03T12:00:00Z',base:{revision:5}}})),true);
       assert.equal(await page.locator('[data-ep-note-text]').inputValue(),'Brouillon à ne pas écraser');
+      await page.locator('[data-ep-action="mode-library"]').click();
       for(const tab of ['course','sessions','quiz','controls','sources','notes']) {
         await page.locator('[data-ep-tab="'+tab+'"]').click();
         assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow '+width+'/'+tab);
@@ -120,6 +128,7 @@ const server = http.createServer((req,res) => {
       const subject=await page.evaluate(()=>printed.at(-1).html);assert.match(subject,/SUJET_ELEVE/);assert.doesNotMatch(subject,/CORRIGE_PROF/);
       await page.locator('[data-ep-action="home"]').click();
       await page.locator('[data-ep-course="chapter-2"]').click();
+      await page.locator('[data-ep-action="mode-library"]').click();
       await page.locator('[data-ep-tab="controls"]').click();
       assert.equal(await page.locator('[data-ep-control]').count(),0);
       assert.match(await page.locator('.ep-panel').innerText(),/Aucun contrôle/);

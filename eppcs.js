@@ -83,7 +83,7 @@
   }
   function shell() {
     root.classList.add('ep-account');
-    root.innerHTML = '<div class="ep-account-bar"><p data-eppcs-status role="status">Ouverture de ton atelier privé…</p><div class="ep-account-actions"><button type="button" data-eppcs-action="sync">Synchroniser</button><button type="button" data-eppcs-action="backup">Sauvegarder l’atelier</button><button type="button" data-eppcs-action="reload">Recharger les versions enregistrées</button></div></div><p class="ep-account-message" data-eppcs-message role="status"></p><div data-eppcs-conflicts></div><div data-eppcs-content></div>';
+    root.innerHTML = '<div class="ep-account-bar"><p data-eppcs-status role="status">Ouverture de ton atelier privé…</p><details class="ep-account-manage"><summary>Gérer l’atelier</summary><div class="ep-account-actions"><button type="button" data-eppcs-action="sync">Synchroniser</button><button type="button" data-eppcs-action="backup">Sauvegarder l’atelier</button><button type="button" data-eppcs-action="reload">Recharger les versions enregistrées</button></div></details></div><p class="ep-account-message" data-eppcs-message role="status"></p><div data-eppcs-conflicts></div><div data-eppcs-content></div>';
     root.onclick = event => {
       const action = event.target.closest('[data-eppcs-action]');
       if (action) handle(action.dataset.eppcsAction, action).catch(showError);
