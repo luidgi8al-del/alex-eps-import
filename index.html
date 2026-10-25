@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20261011-visuel-1">
 <link rel="stylesheet" href="styles/aide.css?v=20260929-3">
 <link rel="stylesheet" href="styles/emails.css?v=20260929-1">
+<link rel="stylesheet" href="styles/eppcs.css?v=20261025-atelier-1">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -169,7 +170,10 @@
           <button class="subtabbtn" data-coursTab="cycles">Cycle</button>
           <button class="subtabbtn" data-coursTab="cours">Cours</button>
           <button class="subtabbtn" data-coursTab="creer">Créer un cours</button>
+          <button class="subtabbtn" data-coursTab="eppcs">Atelier EPPCS</button>
         </div>
+
+        <div id="coursTab-eppcs" style="display:none"></div>
 
         <!-- Consultation : aucun enregistrement, on regarde ce que donne un cycle -->
         <div id="coursTab-cycles">
@@ -589,11 +593,14 @@
   <script src="offline-preparation.js?v=20261020-offline-field-1"></script>
   <script src="offline-read.js"></script>
   <script src="accueil.js?v=20261001-2"></script>
-  <script src="compte.js?v=20261008-installation-manager-1"></script>
+  <script src="compte.js?v=20261025-atelier-1"></script>
   <script src="classes.js"></script>
   <script src="planning.js?v=20261001-3"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
-  <script src="cours.js?v=20261019-pronote-close-1"></script>
+  <script src="eppcs-store.js?v=20261025-atelier-1"></script>
+  <script src="eppcs-ui.js?v=20261025-atelier-1"></script>
+  <script src="eppcs.js?v=20261025-atelier-1"></script>
+  <script src="cours.js?v=20261025-atelier-1"></script>
   <script src="student-results.js?v=20261010-1"></script>
   <script src="classe-tableau-bord.js?v=20261014-portable-1"></script>
   <script src="classe-ecrans.js?v=20261019-pronote-close-1"></script>
@@ -646,12 +653,14 @@
       // Preparer trois comptes de collegues d'affilee, c'etait sinon trois rapatriements
       // complets de l'etablissement. Revenir sur un compte deja visite retrouve sa copie.
       if (!session || !s || session.user_id !== s.user_id) {
+        globalThis.EPSAtelierEPPCS?.reset();
         modeHorsConnexion?.changerDeCompte(s?.user_id || null).catch(() => {});
       }
       session = s;
       localStorage.setItem("alex_eps_session", JSON.stringify(s));
     }
     function clearSession() {
+      globalThis.EPSAtelierEPPCS?.reset();
       globalThis.EpsInstallationPush?.clear().catch(()=>{});
       session = null;
       localStorage.removeItem("alex_eps_session");
@@ -774,6 +783,7 @@
     function renouvelerSession() {
       if (!session || !session.refresh_token) return Promise.resolve(false);
       if (renouvellementSession) return renouvellementSession;
+      const renewalOwner = session.user_id, renewalToken = session.refresh_token;
       renouvellementSession = (async () => {
         try {
           // Sans l'en-tete Authorization : le jeton qu'elle porterait est justement celui qui
@@ -781,11 +791,14 @@
           const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
             method: "POST",
             headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
-            body: JSON.stringify({ refresh_token: session.refresh_token })
+            body: JSON.stringify({ refresh_token: renewalToken })
           });
           if (!res.ok) return false;
           const donnees = await res.json();
           if (!donnees || !donnees.access_token) return false;
+          // Never restore an earlier account after a switch while refresh was in flight.
+          if (!session || session.user_id !== renewalOwner || session.refresh_token !== renewalToken ||
+              (donnees.user?.id && donnees.user.id !== renewalOwner)) return false;
           saveSession({
             ...session,
             access_token: donnees.access_token,

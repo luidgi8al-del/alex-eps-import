@@ -106,10 +106,42 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
   }
 });
 
+async function verifierAtelierEPPCSAvantDeconnexion(effacer = false) {
+  const atelier = globalThis.EPSAtelierEPPCS;
+  if (atelier?.hasUnsavedDraft?.()) {
+    alert(`${effacer ? 'Effacement' : 'Déconnexion'} annulé${effacer ? '' : 'e'} : une note EPPCS n’est pas encore enregistrée.\n\nRevenez dans Cours → Atelier EPPCS et choisissez « Enregistrer mes notes » pour la conserver, puis réessayez.`);
+    return false;
+  }
+  const lireEtatEPPCS = async () => {
+    // La copie persistée protège les saisies d'une visite précédente, même si
+    // l'atelier n'a pas encore été ouvert dans cette fenêtre.
+    if (globalThis.EPPCSStore && session?.user_id) {
+      const reader = globalThis.EPPCSStore.create({userId: session.user_id, getSession: () => session});
+      try { return await reader.load(); } finally { reader.destroy(); }
+    }
+    return atelier?.getState?.();
+  };
+  let state = await lireEtatEPPCS();
+  const atelierUtilise = state?.library || Object.keys(state?.notes || {}).length || state?.status?.pending || state?.conflicts?.length;
+  // Un professeur qui n'utilise pas EPPCS ne doit pas attendre une requête
+  // Supabase supplémentaire (ou sa temporisation) à chaque déconnexion.
+  if (navigator.onLine && atelierUtilise) { await atelier?.sync?.(); state = await lireEtatEPPCS(); }
+  if (state?.status?.pending || state?.conflicts?.length) {
+    alert(`${effacer ? 'Effacement' : 'Déconnexion'} annulé${effacer ? '' : 'e'} : des cours ou notes EPPCS attendent leur envoi, ou deux versions restent à départager.\n\nLes données sont conservées sur cet appareil. Ouvrez Cours → Atelier EPPCS pour consulter l’état de l’envoi et conserver une sauvegarde.`);
+    return false;
+  }
+  if (effacer && await globalThis.EPPCSStore?.hasPendingAllLocal()) {
+    alert('Effacement annulé : une autre copie EPPCS de cet appareil contient des modifications non synchronisées.\n\nAucune copie n’a été effacée. Connectez-vous au compte concerné pour terminer l’envoi et conserver une sauvegarde.');
+    return false;
+  }
+  return true;
+}
+
 async function deconnecterEnSecurite() {
   const bouton = document.getElementById("logoutBtn");
   bouton.disabled = true;
   try {
+    if (!await verifierAtelierEPPCSAvantDeconnexion()) return false;
     const copieLocale = modeHorsConnexion || await demarrerModeHorsConnexion();
     if (copieLocale) {
       // Un dernier envoi est tenté quand Internet est disponible. La décision repose ensuite sur
@@ -145,6 +177,7 @@ document.getElementById("logoutBtn").addEventListener("click", deconnecterEnSecu
 async function deconnecterEtEffacerCetAppareil() {
   if (!confirm("Effacer toutes les copies hors connexion enregistrées sur cet appareil ?\n\nLes données déjà synchronisées resteront sur le serveur. Cette action est destinée à un ordinateur perdu, prêté ou partagé.")) return false;
   try {
+    if (!await verifierAtelierEPPCSAvantDeconnexion(true)) return false;
     const copieLocale = modeHorsConnexion || await demarrerModeHorsConnexion();
     if (copieLocale) {
       if (navigator.onLine) await copieLocale.synchroniser();
@@ -156,8 +189,10 @@ async function deconnecterEtEffacerCetAppareil() {
         alert("Effacement annulé : certaines saisies ne sont pas encore envoyées ou un conflit reste à régler. Vos données sont conservées.");
         return false;
       }
-      await copieLocale.oublierDonneesLocales();
     }
+    // Toutes les vérifications sont terminées avant de détruire la première copie.
+    await globalThis.EPPCSStore?.eraseAllLocal();
+    if (copieLocale) await copieLocale.oublierDonneesLocales();
     for (const key of Object.keys(localStorage)) {
       if (/^eps:offline-(team|institution|schema)/.test(key)) localStorage.removeItem(key);
     }
@@ -173,6 +208,7 @@ async function deconnecterEtEffacerCetAppareil() {
 }
 
 function showAuthView() {
+  globalThis.EPSAtelierEPPCS?.reset?.();
   document.getElementById('connectionIssueNotice').hidden = true;
   document.getElementById("authView").style.display = "flex";
   document.getElementById("mainView").style.display = "none";

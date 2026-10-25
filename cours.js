@@ -214,7 +214,7 @@ let selectedCoursPeriod = 1;
 let loadedCourses = [];
 
 function showCoursTab(name) {
-  ["cycles", "cours", "creer"].forEach(t => {
+  ["cycles", "cours", "creer", "eppcs"].forEach(t => {
     document.getElementById("coursTab-" + t).style.display = t === name ? "block" : "none";
   });
   document.querySelectorAll("#coursSubtabs .subtabbtn").forEach(b => {
@@ -222,6 +222,9 @@ function showCoursTab(name) {
   });
   if (name === "creer") { refreshCoursClassOptions(); loadCycles(); }
   else if (name === "cours") loadCycles();
+  else if (name === "eppcs") window.EPSAtelierEPPCS.open(document.getElementById('coursTab-eppcs')).catch(error => {
+    document.getElementById('coursTab-eppcs').textContent = error.message || 'Atelier indisponible. Réessaie dans un instant.';
+  });
   else renderCyclePreview();
 }
 
