@@ -32,5 +32,7 @@ test('EPPCS : RLS privée, responsable exclu, CAS sans création écrasante', ()
   assert.match(sql, /on conflict\(user_id,document_id\) do nothing/);
   assert.match(sql, /revision=p_expected/);
   assert.match(sql, /pg_advisory_xact_lock/);
+  // PL/pgSQL reads IF up to the first unparenthesized THEN; protect CASE's THEN.
+  assert.match(sql, /octet_length\(p_payload::text\) > \(case when p_document_id = 'library' then 4194304 else 65536 end\)/);
   assert.doesNotMatch(sql, /grant (?:all|insert|update|delete).*eps_eppcs_documents/i);
 });

@@ -32,7 +32,7 @@ begin
   then raise exception 'Compte professeur actif nécessaire' using errcode = '42501'; end if;
   if p_document_id is null or not (p_document_id = 'library' or p_document_id ~ '^note:[a-zA-Z0-9._-]{1,100}$') or
     p_expected is null or p_expected < 0 or p_payload is null or jsonb_typeof(p_payload) is distinct from 'object' or
-    octet_length(p_payload::text) > case when p_document_id = 'library' then 4194304 else 65536 end
+    octet_length(p_payload::text) > (case when p_document_id = 'library' then 4194304 else 65536 end)
   then raise exception 'Contenu EPPCS invalide' using errcode = '22023'; end if;
   if p_document_id <> 'library' then
     if jsonb_typeof(p_payload->'text') is distinct from 'string' or
