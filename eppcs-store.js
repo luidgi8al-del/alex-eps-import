@@ -52,6 +52,29 @@
     const found = await indexedDB.databases?.().catch(() => []) || [];
     return [...new Set([...registered, ...found.map(v => v.name)])].filter(n => typeof n === 'string' && n.startsWith(PREFIX));
   }
+  async function readLocalLibrary(userId) {
+    if (!userId || typeof indexedDB === 'undefined') return null;
+    const name = PREFIX + encodeURIComponent(userId);
+    if (!(await databaseNames()).includes(name)) return null;
+    // A stale registry entry must not create an empty database during a search.
+    const db = await new Promise((resolve, reject) => {
+      let absent = false;
+      const req = indexedDB.open(name);
+      req.onupgradeneeded = () => { absent = true; req.transaction.abort(); };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => absent ? resolve(null) : reject(req.error);
+      req.onblocked = () => reject(error('Fermez les autres onglets EPPCS puis réessayez.'));
+    });
+    if (!db) return null;
+    try {
+      if (!db.objectStoreNames.contains('records')) return null;
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction('records', 'readonly'), req = tx.objectStore('records').get('library');
+        tx.oncomplete = () => resolve(copy(req.result?.payload || null));
+        tx.onerror = tx.onabort = () => reject(tx.error || error('Lecture EPPCS interrompue.'));
+      });
+    } finally { db.close(); }
+  }
   async function hasPendingAllLocal() {
     for (const name of await databaseNames()) {
       const db = await openDatabase(name);
@@ -309,5 +332,5 @@
       destroy() { closed = true; channel?.close(); opening?.then(db => db.close()).catch(() => {}); clients.delete(api); }};
     clients.add(api); return api;
   }
-  root.EPPCSStore = Object.freeze({create, eraseAllLocal, hasPendingAllLocal, validatePayload});
+  root.EPPCSStore = Object.freeze({create, eraseAllLocal, hasPendingAllLocal, readLocalLibrary, validatePayload});
 })(globalThis);

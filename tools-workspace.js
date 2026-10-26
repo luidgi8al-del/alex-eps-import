@@ -146,13 +146,74 @@
   function resetToolsWorkspace(){activity=null;query="";showFavorites=false;const panel=document.getElementById("toolPanel");if(panel){panel.style.display="none";panel.innerHTML=""}const workspace=document.getElementById("toolsWorkspace");workspace?.removeAttribute("hidden");draw();if(!favorisChargementFait)chargerFavorisPartages()}
   function grouped(rows,key,subtitle){const groups=[...new Set(rows.map(key))];return `<div class="tools-hero"><h2>Outils</h2><p>${subtitle}</p></div>${groups.map(g=>`<section class="tools-section"><div class="tools-section-head"><h3>${esc(g)}</h3><span>${rows.filter(x=>key(x)===g).length}</span></div><div class="tools-layout-grid">${rows.filter(x=>key(x)===g).map(toolCard).join("")}</div></section>`).join("")}`}
   function openWorkspaceTool(id){globalThis.EpsToolActivity=activity;if(id.startsWith("eps-test:")){const key=id.slice(9),category=globalThis.EpsTests?.CATEGORIES?.find(c=>c.tests.includes(key));epsOpenCategory=category?.name||"Athle";epsOpenTest=key;openTool("tests");return}if(id==="tests"){epsOpenCategory=null;epsOpenTest=null}openTool(id)}
+  let globalSearchToolOpening = false;
+  let globalSearchToolRequest = null;
+  let globalSearchToolCurrent = null;
+  globalThis.EpsGlobalSearchTools = Object.freeze({
+    isOpening: () => globalSearchToolOpening,
+    canOpen: request => !globalSearchToolOpening || request === globalSearchToolRequest,
+    captureRenderCheck: () => globalSearchToolCurrent?.() ? globalSearchToolCurrent : null,
+    async open(id, options = {}) {
+      const owner = typeof session !== 'undefined' ? session?.user_id : null;
+      if (!owner || localStorage.getItem(`eps:installation-manager-role:${owner}`) !== 'false') {
+        throw new Error('Votre compte professeur doit être vérifié avant d’ouvrir un outil.');
+      }
+      const key = String(id).startsWith('eps-test:') ? String(id).slice(9) : null;
+      if (key ? !Object.hasOwn(globalThis.EpsTests?.TESTS || {}, key) : !tools.some(t => t.id === id)) {
+        throw new Error('Cet outil n’est plus disponible. Relancez la recherche.');
+      }
+      const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+      if (!isCurrent()) return false;
+      const panel = document.getElementById('toolPanel');
+      const panels = [panel, typeof toolPanel !== 'undefined' ? toolPanel : null].filter(Boolean);
+      if (globalSearchToolOpening || panels.some(p => p.style.display !== 'none' && p.innerHTML.trim())) {
+        throw new Error('Un outil est déjà ouvert. Enregistrez votre travail puis fermez cet outil avant d’en ouvrir un autre.');
+      }
+      if (!panel) throw new Error('Le module Outils n’est pas encore disponible. Rechargez la page.');
+      globalSearchToolOpening = true;
+      const request = {};
+      globalSearchToolRequest = request;
+      try {
+        // Aucun choix de classe ni brouillon d'un outil précédent ne doit devenir le nouveau test.
+        const readRows = globalThis.EPSGlobalSearchRead
+          ? (table, path, settings = {}) => globalThis.EPSGlobalSearchRead.table(table, path, { ...settings, isCurrent }) : undefined;
+        await loadToolClasses({ isCurrent, readRows });
+        if (!isCurrent()) return false;
+        toolClassId = FREE_USE;
+        toolStudents = [];
+        epsTestStarted = false;
+        epsTestPeriod = 1;
+        resetGenericTestState();
+        resetRunningSession();
+        epsOpenTest = key;
+        epsOpenCategory = key ? globalThis.EpsTests.CATEGORIES.find(c => c.tests.includes(key))?.name || 'Athle' : null;
+        globalThis.EpsToolActivity = null;
+        if (showTab('outils', { skipModuleStart: true }) === false) return false;
+        const renderCurrent = () => isCurrent() && toolPanel === panel && panel.__epsSearchOpenToken === request;
+        globalSearchToolCurrent = renderCurrent;
+        const opened = await openTool(key ? 'tests' : id, panel, { isCurrent: renderCurrent, searchRequest: request });
+        if (opened === false) return false;
+        if (!isCurrent()) return false;
+        return true;
+      } finally {
+        if (!isCurrent() && panel.__epsSearchOpenToken === request) {
+          panel.innerHTML = '';
+          panel.style.display = 'none';
+          panel.__epsSearchOpenToken = null;
+        }
+        globalSearchToolOpening = false;
+        globalSearchToolRequest = null;
+        globalSearchToolCurrent = null;
+      }
+    }
+  });
   function bind(host){host.querySelectorAll("[data-activity]").forEach(b=>b.onclick=()=>{activity=b.dataset.activity;draw()});host.querySelector("#toolsActivityBack")?.addEventListener("click",()=>{activity=null;draw()});host.querySelector("#toolsFavoritesBack")?.addEventListener("click",()=>{showFavorites=false;draw()});host.querySelector("#toolsFavoritesShortcut")?.addEventListener("click",()=>{showFavorites=true;activity=null;draw()});host.querySelectorAll("[data-favorite-tool]").forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFavoriteId(b.dataset.favoriteTool);draw()});host.querySelectorAll("[data-open-modern]").forEach(b=>b.onclick=()=>openWorkspaceTool(b.dataset.openModern));host.querySelector("#toolsSearch")?.addEventListener("input",e=>{query=e.target.value;draw()})}
   function header(title,sub,icon){return toolHeader(`${icon} ${esc(title)}`,esc(sub))}
   // Un seul selecteur "Usage libre (sans classe)" + les classes, exactement comme dans 3x500m
   // (toolRosterHtml/bindToolRoster dans outils.js) : plus de paire Utilisation/Classe a part.
   // #modernMode reste en place, cache, pour que renderRandomWeb/renderAcrosportWeb/saveWork
   // qui le lisent directement continuent de fonctionner sans etre touches.
-  async function contextHtml(){await loadToolClasses();return `<div class="tool-context"><input type="hidden" id="modernMode" value="free"><select id="modernClass"><option value="">Usage libre (sans classe)</option>${toolClasses.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select></div><div class="field-tool-row"><label>Période<select id="modernPeriod">${[1,2,3,4,5].map(p=>`<option value="${p}">P${p}</option>`).join("")}</select></label></div>`}
+  async function contextHtml(){const current=globalThis.EpsGlobalSearchTools.captureRenderCheck();await loadToolClasses(current?{isCurrent:current}:{});if(current&&!current())throw Error('L’ouverture de cet outil a été interrompue.');return `<div class="tool-context"><input type="hidden" id="modernMode" value="free"><select id="modernClass"><option value="">Usage libre (sans classe)</option>${toolClasses.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select></div><div class="field-tool-row"><label>Période<select id="modernPeriod">${[1,2,3,4,5].map(p=>`<option value="${p}">P${p}</option>`).join("")}</select></label></div>`}
   function bindContext(after){const mode=document.getElementById("modernMode"),cls=document.getElementById("modernClass");if(!cls)return;cls.onchange=async()=>{mode.value=cls.value?"class":"free";toolClassId=cls.value||FREE_USE;await loadToolStudents(toolClassId);const period=document.getElementById("modernPeriod"),c=toolClasses.find(c=>c.id===cls.value),n=c?planningPeriodCount(c.grade):5;if(period){const old=+period.value||1;period.innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">P${i+1}</option>`).join("");period.value=String(Math.min(old,n))}after?.()}}
   async function restoreContext(saved,after){const mode=document.getElementById("modernMode"),cls=document.getElementById("modernClass"),period=document.getElementById("modernPeriod");if(!cls)return;cls.value=saved?.classId||"";mode.value=cls.value?"class":"free";toolClassId=cls.value||FREE_USE;await loadToolStudents(toolClassId);const c=toolClasses.find(c=>c.id===cls.value),n=c?planningPeriodCount(c.grade):5;if(period){period.innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">P${i+1}</option>`).join("");period.value=String(Math.min(saved?.period||1,n))}after?.()}
   async function saveWork(type,title,payload,context){

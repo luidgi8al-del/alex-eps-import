@@ -1,17 +1,24 @@
 /* Read the exact teacher-written content, rather than regenerating a generic substitute. */
 (function(){
   const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  async function savedLessons(cycle){
+  async function savedLessons(cycle,{isCurrent=()=>true}={}){
+    const lessonOwner=typeof session!=='undefined'?session?.user_id:null;
+    const current=()=>lessonOwner&&session?.user_id===lessonOwner&&isCurrent();
+    if(!current())return [];
     const engine=await demarrerModeHorsConnexion();
+    if(!current())return [];
     if(engine?.adapter.tables.includes('eps_lesson_archives')) {
-      const rows=await engine.lire('eps_lesson_archives',{ou:r=>r.cycle_id===cycle.id});
-      return rows[0]?.payload?.lessons || [];
+      const result=await engine.lire('eps_lesson_archives',{ou:r=>r.cycle_id===cycle.id&&!r.deleted});
+      if(!current())return [];
+      return result.rows?.[0]?.payload?.lessons || [];
     }
     if(!navigator.onLine)return [];
     const r=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_lesson_archives?cycle_id=eq.${encodeURIComponent(cycle.id)}&select=payload`);
+    if(!current())return [];
     if(r.status===404)return [];
     if(!r.ok)throw Error('Le contenu rédigé des séances n’a pas pu être vérifié.');
-    return (await r.json())[0]?.payload?.lessons || [];
+    const rows=await r.json();
+    return current() ? rows[0]?.payload?.lessons || [] : [];
   }
   function showSavedLesson(lesson,label){
     const host=document.getElementById('sessionSheet');

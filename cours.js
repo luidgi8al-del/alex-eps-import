@@ -213,19 +213,45 @@ var coursTabReady = false;
 let selectedCoursPeriod = 1;
 let loadedCourses = [];
 
-function showCoursTab(name) {
+function showCoursTab(name, options = {}) {
   ["cycles", "cours", "creer", "eppcs"].forEach(t => {
     document.getElementById("coursTab-" + t).style.display = t === name ? "block" : "none";
   });
   document.querySelectorAll("#coursSubtabs .subtabbtn").forEach(b => {
     b.classList.toggle("active", b.dataset.courstab === name);
   });
-  if (name === "creer") { refreshCoursClassOptions(); loadCycles(); }
-  else if (name === "cours") loadCycles();
-  else if (name === "eppcs") window.EPSAtelierEPPCS.open(document.getElementById('coursTab-eppcs')).catch(error => {
+  if (name === "creer") { refreshCoursClassOptions(); return loadCycles(); }
+  else if (name === "cours") return loadCycles(options);
+  else if (name === "eppcs") return window.EPSAtelierEPPCS.open(document.getElementById('coursTab-eppcs')).catch(error => {
     document.getElementById('coursTab-eppcs').textContent = error.message || 'Atelier indisponible. Réessaie dans un instant.';
   });
-  else renderCyclePreview();
+  else return renderCyclePreview();
+}
+
+async function openCourseFromSearch(courseId, {isCurrent = () => true} = {}) {
+  const searchOwner = session?.user_id;
+  const current = () => session?.user_id === searchOwner && isCurrent();
+  if (!searchOwner || !courseId || !current()) return false;
+  if (showTab('cours', {skipModuleStart: true}) === false) return false;
+  initCoursTab({deferInitialView: true});
+  // Do not resolve a search hit against a previous account's cached course list.
+  loadedCourses = [];
+  const readRows = (table, path, options = {}) => globalThis.EPSGlobalSearchRead.table(table,
+    table === 'cycles' ? `cycles?id=eq.${encodeURIComponent(courseId)}&deleted=eq.false&select=*` : path,
+    {...options, isCurrent:current, ...(table === 'cycles' ? {
+      requiredId:String(courseId), ou:row => String(row.id) === String(courseId) && !row.deleted
+    } : {})});
+  await showCoursTab('cours', {isCurrent: current, readRows});
+  if (!current()) return false;
+  const course = loadedCourses.find(row => String(row.id) === String(courseId) && !row.deleted);
+  if (!course) return false;
+  if (course.period_number) selectedCoursPeriod = course.period_number;
+  document.querySelectorAll('[data-cours-period]').forEach(button => {
+    button.classList.toggle('active', Number(button.dataset.coursPeriod) === selectedCoursPeriod);
+  });
+  renderCreatedCourses();
+  const classLabel = course.classRow ? planningText(planningClassLabel(course.classRow)) : 'Classe';
+  return await openCreatedCourse(course, classLabel, {isCurrent: current}) !== false && current();
 }
 
 function apsaOptionsHtml(grade) {

@@ -289,7 +289,7 @@
     }
     function click(event) {
       const target = event.target.closest('button'); if (!target || !root.contains(target)) return;
-      if (target.dataset.epCourse) { captureDraft(); state.courseId = target.dataset.epCourse; state.tab = 'course'; state.mode = 'lesson'; state.section = ''; state.session = 0; state.controlId = null; state.reveal = false; state.answers = {}; state.lessonResource = ''; state.lessonVerify = false; state.lessonOpen = {}; render(); root.querySelector('.ep-back')?.focus(); return; }
+      if (target.dataset.epCourse) { openChapter(target.dataset.epCourse); return; }
       if (target.dataset.epTab) { captureDraft(); state.tab = target.dataset.epTab; state.reveal = false; render(); root.querySelector('[data-ep-tab="' + state.tab + '"]')?.focus(); return; }
       const action = target.dataset.epAction; if (!action) return;
       if (action.startsWith('print-')) { print(action.slice(6)); return; }
@@ -316,10 +316,20 @@
       if (action === 'lesson-quiz') root.querySelector('[data-ep-step="verify"] summary')?.focus();
       if (action === 'lesson-close-resource') root.querySelector('[data-ep-step="explain"] summary')?.focus();
     }
+    function openChapter(courseId) {
+      if (destroyed || !courses.some(course => String(course.id) === String(courseId))) return false;
+      // Searching for another chapter is navigation, never a reload of the view:
+      // capture and retain each chapter's unsaved notes before changing the display.
+      captureDraft(); state.courseId = String(courseId); state.tab = 'course'; state.mode = 'lesson'; state.section = '';
+      state.session = 0; state.controlId = null; state.reveal = false; state.answers = {};
+      state.lessonResource = ''; state.lessonVerify = false; state.lessonOpen = {};
+      render(); root.querySelector('.ep-back')?.focus(); return true;
+    }
     function toggle(event) { if (root.contains(event.target) && event.target.matches('details.ep-flow')) state.lessonOpen[event.target.dataset.epStep] = event.target.open; }
     root.addEventListener('click', click); root.addEventListener('input', input); root.addEventListener('change', change); root.addEventListener('toggle', toggle, true);
     render(); void loadNotes();
     return {
+      openChapter,
       destroy() { destroyed = true; root.removeEventListener('click', click); root.removeEventListener('input', input); root.removeEventListener('change', change); root.removeEventListener('toggle', toggle, true); if (printFrame) printFrame.remove(); root.replaceChildren(); root.classList.remove('eppcs-view'); },
       hasUnsavedDraft() { return Object.keys(drafts).length > 0 || saving.size > 0; },
       getDrafts() { return JSON.parse(JSON.stringify(drafts)); },

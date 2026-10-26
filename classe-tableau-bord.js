@@ -288,7 +288,12 @@ function modelesEvaluation(contenu, grade, apsa) {
  * recapitulatif, dispenses. Un professeur qui passe du telephone au navigateur doit
  * retrouver ses reperes sans reapprendre l'ecran.
  */
-async function openClassDashboard(cls, label) {
+async function openClassDashboard(cls, label, options = {}) {
+  const owner = session?.user_id;
+  const request = {};
+  globalThis.epsClassDashboardRequest = request;
+  const isCurrent = () => session?.user_id === owner && globalThis.epsClassDashboardRequest === request
+    && (!options.isCurrent || options.isCurrent());
   dashboardClass = { row: cls, label };
   dashboardPeriod = 1;
   dashboardSeanceManuelle = null;
@@ -303,20 +308,27 @@ async function openClassDashboard(cls, label) {
     // Le jour de la semaine sert a dater les seances : sans lui, impossible de dire que la
     // seance 2 tombe le vendredi.
     let slots;
-    if (modeHorsConnexion) {
+    if (options.readRows) {
+      slots = await options.readRows('class_schedule_slots', `class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=*`, { ou: row => row.class_id === cls.id });
+    } else if (modeHorsConnexion) {
       slots = (await modeHorsConnexion.lire("class_schedule_slots", { ou: s => s.class_id === cls.id })).rows;
     } else {
       const slotsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&class_id=eq.${cls.id}&select=id,day_of_week,start_time`);
       slots = slotsRes.ok ? await slotsRes.json() : [];
     }
+    if (!isCurrent()) return false;
     dashboardSlots = slots;
     // Le decoupage de la Terminale ne suit pas le calendrier commun : il vit en base.
     if (cls.grade === "TERMINALE" && !periodesTerminale.length) await loadPeriodDates().catch(() => {});
+    if (!isCurrent()) return false;
     const [actRes, cyclesRes, studentsRes, dispRes, testsRes] = await Promise.all([
       slots.length
         ? apiFetch(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&slot_id=in.(${slots.map(s => s.id).join(",")})&select=*`)
         : Promise.resolve(null),
-      modeHorsConnexion
+      options.readRows
+        ? options.readRows('cycles', `cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`, { ou: row => row.class_id === cls.id })
+            .then(rows => ({ ok: true, json: async () => rows }))
+        : modeHorsConnexion
         ? modeHorsConnexion.lire("cycles", { ou: c => c.class_id === cls.id })
             .then(r => ({ ok: true, json: async () => r.rows }))
         : apiFetch(`${SUPABASE_URL}/rest/v1/cycles?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
@@ -328,15 +340,22 @@ async function openClassDashboard(cls, label) {
       apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensations?deleted=eq.false&class_id=eq.${cls.id}&select=*`),
       apiFetch(`${SUPABASE_URL}/rest/v1/eps_test_sessions?deleted=eq.false&class_id=eq.${cls.id}&select=*`)
     ]);
-    dashboardActivities = actRes && actRes.ok ? await actRes.json() : [];
-    dashboardCycles = cyclesRes.ok ? await cyclesRes.json() : [];
-    dashboardStudents = studentsRes.ok ? await studentsRes.json() : [];
-    dashboardDispenses = dispRes.ok ? await dispRes.json() : [];
-    dashboardTests = testsRes.ok ? await testsRes.json() : [];
-    dashboardTests = await EpsPortableWorks.classTests(dashboardTests,cls.id);
+    const [activities, cycles, students, dispenses, tests] = await Promise.all([
+      actRes && actRes.ok ? actRes.json() : [], cyclesRes.ok ? cyclesRes.json() : [],
+      studentsRes.ok ? studentsRes.json() : [], dispRes.ok ? dispRes.json() : [],
+      testsRes.ok ? testsRes.json() : []
+    ]);
+    if (!isCurrent()) return false;
+    const portableTests = await EpsPortableWorks.classTests(tests, cls.id);
+    if (!isCurrent()) return false;
+    dashboardActivities = activities;
+    dashboardCycles = cycles;
+    dashboardStudents = students;
+    dashboardDispenses = dispenses;
+    dashboardTests = portableTests;
     // Les anciennes saisies des aptitudes 6e vivaient dans « Travaux des outils ».
     // Les recopier sans supprimer l'original, puis relire la rubrique Tests EPS.
-    if (globalThis.EpsAptitudes?.migrateLegacy) {
+    if (!options.readOnly && globalThis.EpsAptitudes?.migrateLegacy) {
       try {
         const migrated = await EpsAptitudes.migrateLegacy(cls.id);
         if (migrated) dashboardTests = await lireTable("eps_test_sessions",
@@ -344,6 +363,7 @@ async function openClassDashboard(cls, label) {
           { ou: t => String(t.class_id) === String(cls.id) && !t.deleted });
       } catch (error) { console.warn("Reprise des anciens tests 6e différée", error); }
     }
+    if (!isCurrent()) return false;
 
     // Le compteur de seances n'existe cote serveur que depuis schema_cycle_seance_en_cours.sql.
     // Tant qu'il n'est pas applique, on affiche la seance sans permettre de l'avancer : mieux
@@ -351,7 +371,8 @@ async function openClassDashboard(cls, label) {
     dashboardSeanceEnregistrable = dashboardCycles.length === 0
       || Object.prototype.hasOwnProperty.call(dashboardCycles[0], "current_session_number");
 
-    await chargerEvaluationsDuTableauDeBord();
+    await chargerEvaluationsDuTableauDeBord({ isCurrent, readRows: options.readRows });
+    if (!isCurrent()) return false;
     // Ouvrir une classe mene a son tableau de bord, comme dans l'application, sur la periode en
     // cours plutot que sur la premiere de l'annee.
     const vueDemandee = globalThis.vueClasseAccueilDemandee;
@@ -362,18 +383,23 @@ async function openClassDashboard(cls, label) {
     if (typeof ecCreneauChoisi !== "undefined") {
       ecCreneauChoisi = null; ecDocumentSuivi = null; ecRecapChoix = null; ecNotesChargees = false;
     }
-    await chargerTableauDeBordClasse();
-    if (typeof ecChargerEquipes === "function") await ecChargerEquipes();
+    await chargerTableauDeBordClasse({ isCurrent, readRows: options.readRows });
+    if (!isCurrent()) return false;
+    if (typeof ecChargerEquipes === "function") await ecChargerEquipes({ isCurrent });
   } catch (e) {
+    if (!isCurrent()) return false;
     panel.innerHTML = `<div class="error">${planningText(e.message)}</div>`;
-    return;
+    if (options.readOnly) throw e;
+    return false;
   }
 
+  if (!isCurrent()) return false;
   renderClassDashboard();
   // Vrai haut de page, pas scrollIntoView sur le panneau : a l'ouverture de l'onglet CLASSE,
   // showTab() vient deja de remettre la page a (0,0), et scrollIntoView l'ecrasait en recalant
   // sur la position du panneau - le meme defaut que celui corrige dans Outils (resetToolsWorkspace).
   window.scrollTo({ top: 0, behavior: "smooth" });
+  return true;
 }
 
 function fermerTableauDeBord() {
@@ -893,15 +919,28 @@ async function ouvrirEvaluationDepuisClasse(cycle, type) {
  * ne changeait donc rien au recapitulatif : il continuait d'en compter quatre alors qu'il n'en
  * restait que trois, et rien n'expliquait l'ecart.
  */
-async function chargerEvaluationsDuTableauDeBord() {
+async function chargerEvaluationsDuTableauDeBord(options = {}) {
+  const owner = session?.user_id, classId = dashboardClass?.row?.id;
+  const isCurrent = () => session?.user_id === owner && dashboardClass?.row?.id === classId
+    && (!options.isCurrent || options.isCurrent());
   dashboardEvaluations = [];
   if (!dashboardCycles.length) return;
-  if (modeHorsConnexion) {
+  if (options.readRows) {
     const cycles = new Set(dashboardCycles.map(c => c.id));
-    dashboardEvaluations = (await modeHorsConnexion.lire("evaluations", { ou: e => cycles.has(e.cycle_id) })).rows;
+    const rows = await options.readRows('evaluations', `evaluations?deleted=eq.false&cycle_id=in.(${[...cycles].join(',')})&select=*`,
+      { ou: row => cycles.has(row.cycle_id) });
+    if (!isCurrent()) return false;
+    dashboardEvaluations = rows;
+  } else if (modeHorsConnexion) {
+    const cycles = new Set(dashboardCycles.map(c => c.id));
+    const rows = (await modeHorsConnexion.lire("evaluations", { ou: e => cycles.has(e.cycle_id) })).rows;
+    if (!isCurrent()) return false;
+    dashboardEvaluations = rows;
   } else {
     const evalRes = await apiFetch(`${SUPABASE_URL}/rest/v1/evaluations?deleted=eq.false&cycle_id=in.(${dashboardCycles.map(c => c.id).join(",")})&select=*`);
-    dashboardEvaluations = evalRes.ok ? await evalRes.json() : [];
+    const rows = evalRes.ok ? await evalRes.json() : [];
+    if (!isCurrent()) return false;
+    dashboardEvaluations = rows;
   }
   // Les jauges et le recapitulatif relisent leurs notes : une grille vient peut-etre de changer.
   if (typeof ecNotesChargees !== "undefined") ecNotesChargees = false;
@@ -1313,7 +1352,7 @@ function refreshCoursApsaOptions() {
   document.getElementById("coursApsa").innerHTML = grade ? apsaOptionsHtml(grade) : "";
 }
 
-function initCoursTab() {
+function initCoursTab({deferInitialView = false} = {}) {
   if (!coursTabReady) {
     ["cycleGrade", "cycleApsa", "cycleSessions"].forEach(id =>
       document.getElementById(id).addEventListener("change", () => {
@@ -1336,7 +1375,7 @@ function initCoursTab() {
     coursTabReady = true;
   }
   document.getElementById("cycleApsa").innerHTML = apsaOptionsHtml(document.getElementById("cycleGrade").value);
-  showCoursTab("cycles");
+  if (!deferInitialView) showCoursTab("cycles");
 }
 
 async function createCours() {
@@ -1368,13 +1407,25 @@ async function createCours() {
   }
 }
 
-async function loadCycles() {
+async function loadCycles({isCurrent = () => true, readRows} = {}) {
+  const cycleOwner = session?.user_id;
+  const current = () => session?.user_id === cycleOwner && isCurrent();
+  if (!cycleOwner || !current()) return false;
   const listEl = document.getElementById("cyclesList");
   listEl.innerHTML = '<div class="muted">Chargement...</div>';
   try {
     const lireLocal = (table, options) => modeHorsConnexion.lire(table, options)
       .then(r => ({ ok: true, json: async () => r.rows }));
-    const [res, classesRes, slotsRes, activitiesRes] = await Promise.all(modeHorsConnexion
+    const lireRecherche = (table, path, options) => readRows(table, path, options)
+      .then(rows => ({ok:true, json:async()=>rows}));
+    const [res, classesRes, slotsRes, activitiesRes] = await Promise.all(readRows
+      ? [
+          lireRecherche('cycles', 'cycles?deleted=eq.false&select=*&order=updated_at.desc'),
+          lireRecherche('classes', 'classes?deleted=eq.false&select=*'),
+          lireRecherche('class_schedule_slots', 'class_schedule_slots?deleted=eq.false&select=id,class_id'),
+          lireRecherche('period_activities', 'period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name')
+        ]
+      : modeHorsConnexion
       ? [
           lireLocal("cycles", { trier: (a, b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")) }),
           lireLocal("classes"), lireLocal("class_schedule_slots"), lireLocal("period_activities")
@@ -1390,6 +1441,7 @@ async function loadCycles() {
     const classes = classesRes.ok ? await classesRes.json() : [];
     const slots = slotsRes.ok ? await slotsRes.json() : [];
     const activities = activitiesRes.ok ? await activitiesRes.json() : [];
+    if (!current()) return false;
     const classById = Object.fromEntries(classes.map(c => [c.id, c]));
     const classBySlot = Object.fromEntries(slots.map(s => [s.id, s.class_id]));
     const normalizeApsa = value => String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
@@ -1400,8 +1452,11 @@ async function loadCycles() {
       return { ...course, period_number: periods[0] || null, classRow: classById[course.class_id] || null };
     });
     renderCreatedCourses();
+    return true;
   } catch (e) {
+    if (!current()) return false;
     listEl.innerHTML = `<div class="error">${e.message}</div>`;
+    return false;
   }
 }
 
@@ -1437,13 +1492,18 @@ function renderCreatedCourses() {
     });
 }
 
-async function openCreatedCourse(course, classLabel) {
+async function openCreatedCourse(course, classLabel, {isCurrent = () => true} = {}) {
+  const courseOwner = session?.user_id;
+  const current = () => session?.user_id === courseOwner && isCurrent();
+  if (!courseOwner || !current()) return false;
   const panel = document.getElementById("createdCoursePanel");
   panel.className = "card";
   panel.style.display = "block";
   panel.innerHTML = '<div class="muted">Chargement du cours...</div>';
   const content = await loadCycleContent(course.grade, course.apsa_name);
-  const saved=await savedLessons(course);
+  if (!current()) return false;
+  const saved=await savedLessons(course,{isCurrent:current});
+  if (!current()) return false;
   const ordered = orderedSessions(content, course.grade, course.session_count);
   let sessionsHtml = "";
   for (let i = 1; i <= course.session_count; i++) {
@@ -1472,6 +1532,7 @@ async function openCreatedCourse(course, classLabel) {
     sheet.scrollIntoView({ behavior: "smooth", block: "start" });
   });
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  return true;
 }
 
 async function deleteCycle(id) {
@@ -1578,12 +1639,18 @@ function ouvrirListeDossiersEleves() {
   rechercheDossierEleve.oninput=draw;draw();
 }
 
-async function ouvrirDossierEleve(studentId) {
+async function ouvrirDossierEleve(studentId, options = {}) {
+  const owner = session?.user_id, classId = dashboardClass?.row?.id;
+  const isCurrent = () => session?.user_id === owner && dashboardClass?.row?.id === classId
+    && (!options.isCurrent || options.isCurrent());
+  if (!isCurrent()) return false;
   const student=dashboardStudents.find(s=>String(s.id)===String(studentId));if(!student)return;
   const hote=hoteDetail();hote.innerHTML='<div class="card muted">Chargement du dossier…</div>';
-  if(!ecNotesChargees)await ecChargerNotes();
+  if(!ecNotesChargees)await ecChargerNotes({ isCurrent, readRows: options.readRows });
+  if (!isCurrent()) return false;
   let incidents=[];
   try{const r=await apiFetch(`${SUPABASE_URL}/rest/v1/health_accidents?student_id=eq.${studentId}&deleted=eq.false&select=id,occurred_at,urgency_code,decision_taken&order=occurred_at.desc`);if(r.ok)incidents=await r.json()}catch{}
+  if (!isCurrent()) return false;
   const allTestResults=ecResultatsTests.filter(r=>String(r.student_id)===String(studentId)&&!r.deleted);
   const testResults=allTestResults.filter(EpsStudentResults.complete);
   const dispenses=dashboardDispenses.filter(d=>d.student_id===studentId&&!d.deleted);
@@ -1627,6 +1694,7 @@ async function ouvrirDossierEleve(studentId) {
   document.getElementById('exportDossierExcel').onclick=()=>exporterDossierEleveCsv(student,documents,dispenses,testResults);
   document.getElementById('exportDossierPdf').onclick=()=>imprimerDossierEleve(student,documents,dispenses,testResults);
   hote.querySelectorAll('[data-student-progress-tab]').forEach(b=>b.onclick=()=>{ongletDossierEleve=b.dataset.studentProgressTab;ouvrirDossierEleve(student.id)});
+  return true;
 }
 
 function modifierFicheEleve(studentId){
@@ -1662,30 +1730,40 @@ function dispenseEnCours(d) {
   return d.start_date <= jour && d.end_date >= jour;
 }
 
-async function chargerTableauDeBordClasse() {
+async function chargerTableauDeBordClasse(options = {}) {
   const id = dashboardClass?.row?.id;
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && dashboardClass?.row?.id === id
+    && (!options.isCurrent || options.isCurrent());
   if (!id) return;
   try {
     await demarrerModeHorsConnexion();
-    const toutesLesNotes=await lireTable('class_notes',`class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`,{
+    if (!isCurrent()) return false;
+    const toutesLesNotes=await (options.readRows || lireTable)('class_notes',`class_notes?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`,{
       ou:r=>!r.deleted&&String(r.class_id)===String(id),trier:(a,b)=>String(b.created_at).localeCompare(String(a.created_at))
     });
+    if (!isCurrent()) return false;
     suiviClasse=toutesLesNotes.map(decoderSuiviClasse).filter(Boolean);
     notesClasse=toutesLesNotes.filter(n=>!decoderSuiviClasse(n));
-  }catch{notesClasse=[];suiviClasse=[];}
+  }catch{if (!isCurrent()) return false; notesClasse=[];suiviClasse=[];}
   try {
-    documentsClasse = await lireTable("class_documents",
+    const documents = await (options.readRows || lireTable)("class_documents",
       `class_documents?deleted=eq.false&class_id=eq.${id}&select=*&order=created_at.desc`, {
         ou: d => !d.deleted && String(d.class_id) === String(id),
         trier: (a, b) => String(b.created_at || "").localeCompare(String(a.created_at || ""))
       });
-    const ids = documentsClasse.map(d => `"${d.id}"`).join(",");
-    const idsDocuments = new Set(documentsClasse.map(d => String(d.id)));
-    rendusClasse = ids ? await lireTable("class_document_returns",
+    if (!isCurrent()) return false;
+    const ids = documents.map(d => `"${d.id}"`).join(",");
+    const idsDocuments = new Set(documents.map(d => String(d.id)));
+    const returns = ids ? await (options.readRows || lireTable)("class_document_returns",
       `class_document_returns?deleted=eq.false&document_id=in.(${ids})&select=*`, {
         ou: r => !r.deleted && idsDocuments.has(String(r.document_id))
       }) : [];
+    if (!isCurrent()) return false;
+    documentsClasse = documents;
+    rendusClasse = returns;
   } catch {
+    if (!isCurrent()) return false;
     // Avant l'activation de la vague 5, le repli reseau peut echouer sans bloquer la classe.
     documentsClasse = []; rendusClasse = [];
   }

@@ -19,7 +19,7 @@ function showInstallationView(view) {
   if (view === "follow") loadInstallationsList();
 }
 
-function initInstallationsTab() {
+function initInstallationsTab(options = {}) {
   if (!installationsTabReady) {
     document.getElementById("addInstallationBtn").addEventListener("click", createInstallation);
     document.getElementById("installationQuickReportBtn").addEventListener("click", openInstallationReportPicker);
@@ -35,19 +35,20 @@ function initInstallationsTab() {
     });
     installationsTabReady = true;
   }
-  showEquipTab(equipMode);
+  if (!options.deferLoad) showEquipTab(equipMode);
 }
 
 // ---- Sous-onglets Equipement : installations, materiel, EPI escalade ----
 let equipMode = "installations";
 
-function showEquipTab(mode) {
+function showEquipTab(mode, options = {}) {
   equipMode = mode;
   ["installations", "materiel", "epi"].forEach(t => {
     document.getElementById("equipTab-" + t).style.display = t === mode ? "block" : "none";
   });
   document.querySelectorAll("#equipSubtabs .subtabbtn").forEach(b =>
     b.classList.toggle("active", b.dataset.equiptab === mode));
+  if (options.deferLoad) return;
   if (mode === "installations") {
     showInstallationView("overview");
   }
@@ -85,15 +86,22 @@ function equipmentQuantity(value, nullable = false) {
   return number;
 }
 
-async function loadEquipment() {
+async function loadEquipment(options = {}) {
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
   const wrap = document.getElementById("equipTab-materiel");
   wrap.innerHTML = '<div class="card muted">Chargement du materiel...</div>';
   try {
-    equipmentList = await lireTable("equipment", "equipment?deleted=eq.false&select=*&order=name.asc",
-      { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
-    renderEquipment();
+    const rows = await (options.readRows || lireTable)("equipment", "equipment?deleted=eq.false&select=*&order=name.asc",
+      { requiredId: options.requiredId, trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
+    if (!isCurrent()) return false;
+    equipmentList = rows;
+    if (!options.deferRender) renderEquipment();
+    return rows;
   } catch (e) {
+    if (!isCurrent()) return false;
     wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    if (options.deferRender) throw e;
   }
 }
 
@@ -269,16 +277,23 @@ function nextEpiReference(category) {
   return `${prefix}-${String(max + 1).padStart(3, "0")}`;
 }
 
-async function loadEpiItems() {
+async function loadEpiItems(options = {}) {
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
   const wrap = document.getElementById("equipTab-epi");
   wrap.innerHTML = '<div class="card muted">Chargement des EPI...</div>';
   try {
-    epiList = await lireTable("epi_items",
+    const rows = await (options.readRows || lireTable)("epi_items",
       "epi_items?deleted=eq.false&select=*&order=internal_id.asc",
-      { trier: (a, b) => String(a.internal_id || "").localeCompare(String(b.internal_id || "")) });
-    renderEpi();
+      { requiredId: options.requiredId, trier: (a, b) => String(a.internal_id || "").localeCompare(String(b.internal_id || "")) });
+    if (!isCurrent()) return false;
+    epiList = rows;
+    if (!options.deferRender) renderEpi();
+    return rows;
   } catch (e) {
+    if (!isCurrent()) return false;
     wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    if (options.deferRender) throw e;
   }
 }
 
@@ -338,15 +353,20 @@ function renderEpi() {
     b.onclick = () => { epiOpenedId = b.dataset.openEpi; renderEpi(); });
 }
 
-async function renderEpiDetail() {
+async function renderEpiDetail(options = {}) {
+  const owner = session?.user_id, openedId = epiOpenedId;
+  const isCurrent = () => session?.user_id === owner && epiOpenedId === openedId
+    && (!options.isCurrent || options.isCurrent());
   const wrap = document.getElementById("equipTab-epi");
   const item = epiList.find(x => x.id === epiOpenedId);
   if (!item) { epiOpenedId = null; renderEpi(); return; }
 
-  epiInspections = await lireTable("epi_inspections",
+  const inspections = await (options.readRows || lireTable)("epi_inspections",
     `epi_inspections?epi_id=eq.${encodeURIComponent(item.id)}&select=*&order=date_epoch_millis.desc`,
     { ou: i => i.epi_id === item.id,
       trier: (a, b) => Number(b.date_epoch_millis || 0) - Number(a.date_epoch_millis || 0) });
+  if (!isCurrent()) return false;
+  epiInspections = inspections;
 
   const text = (key, label, type = "text") =>
     `<div><label>${label}</label><input type="${type}" data-epi-field="${key}" value="${equipmentText(item[key])}"></div>`;
@@ -414,6 +434,31 @@ async function renderEpiDetail() {
   document.getElementById("saveEpiBtn").onclick = saveEpiItem;
   document.getElementById("addInspBtn").onclick = addEpiInspection;
   renderEpiQr(item);
+  return true;
+}
+
+/** Point d'entrée en lecture seule depuis un résultat de recherche global. */
+async function openEquipmentSearchResult(kind, id, options = {}) {
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+  if (!owner || !isCurrent()) return false;
+  if (!['equipment', 'epi'].includes(kind)) throw new Error("Ce matériel ne peut pas être ouvert.");
+  initInstallationsTab({ deferLoad: true });
+  showEquipTab(kind === 'equipment' ? 'materiel' : 'epi', { deferLoad: true });
+  const rows = kind === 'equipment'
+    ? await loadEquipment({ deferRender: true, isCurrent, readRows: options.readRows, requiredId: id })
+    : await loadEpiItems({ deferRender: true, isCurrent, readRows: options.readRows, requiredId: id });
+  if (!isCurrent()) return false;
+  if (!(rows || []).some(row => String(row.id) === String(id) && !row.deleted)) {
+    throw new Error("Ce matériel n’est plus disponible. Relancez la recherche.");
+  }
+  if (kind === 'equipment') {
+    equipmentOpenedId = id;
+    renderEquipmentDetail();
+    return true;
+  }
+  epiOpenedId = id;
+  return renderEpiDetail({ isCurrent, readRows: options.readRows });
 }
 
 async function addEpiItem() {

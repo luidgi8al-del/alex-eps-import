@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EPS — Espace enseignant</title>
-<link rel="stylesheet" href="styles/site.css?v=20261024-audit-fixes-1">
+<link rel="stylesheet" href="styles/site.css?v=20261026-search-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
   <link rel="stylesheet" href="home-navigation.css?v=20261008-10">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20261020-offline-field-1">
@@ -75,11 +75,11 @@
     </div>
   </div>
 
-  <!-- Recherche globale : eleves, classes, cours, materiel, EPI, groupes UNSS -->
+  <!-- Recherche globale : fiches, outils et chapitres privés EPPCS. -->
   <div class="searchOverlay ui-modal-overlay" id="searchOverlay">
-    <div class="searchSheet ui-modal">
+    <div class="searchSheet ui-modal" role="dialog" aria-modal="true" aria-label="Recherche globale">
       <div class="top ui-modal-head">
-        <input type="text" id="searchInput" placeholder="Rechercher un eleve, une classe, un materiel, un EPI..." autocomplete="off">
+        <input type="search" id="searchInput" aria-label="Rechercher un élève, une classe, un matériel, un outil ou un chapitre" placeholder="Élève, classe, matériel, outil, chapitre…" autocomplete="off">
         <button class="ui-modal-close" id="searchClose" aria-label="Fermer">×</button>
       </div>
       <div class="ui-modal-body" id="searchResults"></div>
@@ -581,7 +581,7 @@
   <script src="import-eleves.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="gmail-drafts.js?v=20260927-2"></script>
-  <script src="lesson-recovery.js?v=20261012-recovery-1"></script>
+  <script src="lesson-recovery.js?v=20261026-search-1"></script>
   <script src="portable-recovery.js?v=20261012-recovery-1"></script>
   <link rel="stylesheet" href="styles/tool-save-indicator.css?v=20261014-running-header-1">
   <script src="tool-save-indicator.js?v=20261020-offline-field-1"></script>
@@ -592,24 +592,24 @@
   <script src="hors-connexion.js?v=20261007-aptitudes-delete-1"></script>
   <script src="offline-preparation.js?v=20261020-offline-field-1"></script>
   <script src="offline-read.js"></script>
-  <script src="accueil.js?v=20261001-2"></script>
+  <script src="accueil.js?v=20261026-search-1"></script>
   <script src="compte.js?v=20261025-atelier-1"></script>
-  <script src="classes.js"></script>
+  <script src="classes.js?v=20261026-search-1"></script>
   <script src="planning.js?v=20261001-3"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
-  <script src="eppcs-store.js?v=20261025-atelier-1"></script>
+  <script src="eppcs-store.js?v=20261026-search-1"></script>
   <script src="eppcs-lesson-model.js?v=20261025-seances-2"></script>
-  <script src="eppcs-ui.js?v=20261025-seances-2"></script>
-  <script src="eppcs.js?v=20261025-seances-2"></script>
-  <script src="cours.js?v=20261025-atelier-1"></script>
+  <script src="eppcs-ui.js?v=20261026-search-1"></script>
+  <script src="eppcs.js?v=20261026-search-1"></script>
+  <script src="cours.js?v=20261026-search-1"></script>
   <script src="student-results.js?v=20261010-1"></script>
-  <script src="classe-tableau-bord.js?v=20261014-portable-1"></script>
-  <script src="classe-ecrans.js?v=20261019-pronote-close-1"></script>
+  <script src="classe-tableau-bord.js?v=20261026-search-1"></script>
+  <script src="classe-ecrans.js?v=20261026-search-1"></script>
   <script src="classe-visuel.js?v=20261011-visuel-1"></script>
   <script src="qrcode.min.js"></script>
   <script src="installation-photo.js?v=20261009-1"></script>
   <script src="installation-push.js?v=20261010-1"></script>
-  <script src="equipement.js?v=20261024-audit-fixes-1"></script>
+  <script src="equipement.js?v=20261026-search-1"></script>
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <script src="aslvh.js?v=20261024-audit-fixes-1"></script>
@@ -618,10 +618,10 @@
   <script src="tool-documents.js?v=20261014-1"></script>
   <script src="tool-actions-universal.js?v=20261014-1"></script>
   <script src="running-final.js?v=20261014-universal-1"></script>
-  <script src="outils.js?v=20261024-audit-fixes-1"></script>
-  <script src="teams-saved-web.js?v=20261014-universal-1"></script>
+  <script src="outils.js?v=20261026-search-1"></script>
+  <script src="teams-saved-web.js?v=20261026-search-1"></script>
   <script src="tools-portable.js?v=20261015-observation-score-2"></script>
-  <script src="tools-workspace.js?v=20261015-shortcuts-1"></script>
+  <script src="tools-workspace.js?v=20261026-search-1"></script>
   <script src="team-evaluation-editor.js?v=20261005-teams"></script>
   <script src="class-group-library.js?v=20261010-1"></script>
   <script src="tools-workflows.js?v=20261015-class-guard-1"></script>
@@ -654,6 +654,7 @@
       // Preparer trois comptes de collegues d'affilee, c'etait sinon trois rapatriements
       // complets de l'etablissement. Revenir sur un compte deja visite retrouve sa copie.
       if (!session || !s || session.user_id !== s.user_id) {
+        globalThis.EPSGlobalSearch?.reset();
         globalThis.EPSAtelierEPPCS?.reset();
         modeHorsConnexion?.changerDeCompte(s?.user_id || null).catch(() => {});
       }
@@ -661,6 +662,7 @@
       localStorage.setItem("alex_eps_session", JSON.stringify(s));
     }
     function clearSession() {
+      globalThis.EPSGlobalSearch?.reset();
       globalThis.EPSAtelierEPPCS?.reset();
       globalThis.EpsInstallationPush?.clear().catch(()=>{});
       session = null;
@@ -984,7 +986,7 @@
     }
     window.addEventListener("resize", mesurerEntete);
 
-    function showTab(name) {
+    function showTab(name, { skipModuleStart = false } = {}) {
       if (name === "settings") { openSettings(); return; }
       if (!TAB_NAMES.includes(name) && name !== "planning") return;
       currentWebTab = name;
@@ -1017,7 +1019,7 @@
         });
         planningMode = name === "planning" ? "global" : "annuelle";
       }
-      startSelectedModule(name);
+      if (!skipModuleStart) startSelectedModule(name);
       history.replaceState(null, "", "#" + name);
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {

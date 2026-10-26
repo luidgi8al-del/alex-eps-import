@@ -531,13 +531,18 @@ function nomCollegue(id) {
   return trouve ? (trouve.name || trouve.email) : "un collegue";
 }
 
-async function loadImports() {
+async function loadImports(options = {}) {
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
   const listEl = document.getElementById("importsList");
   listEl.innerHTML = '<div class="muted">Chargement...</div>';
   try {
     await chargerColleguesAttribuables();
+    if (!isCurrent()) return false;
     let rows;
-    if (modeHorsConnexion) {
+    if (options.rows) {
+      rows = options.rows;
+    } else if (modeHorsConnexion) {
       // La copie locale fait foi a l'affichage, meme connecte : une classe creee dans un gymnase
       // sans reseau doit rester visible jusqu'a son envoi.
       const lecture = await modeHorsConnexion.lire("classes", {
@@ -549,6 +554,7 @@ async function loadImports() {
       rows = await res.json();
       if (!res.ok) throw new Error("Impossible de charger les classes.");
     }
+    if (!isCurrent()) return false;
     classesConnues = rows;
     if (rows.length === 0) {
       classeOuverteId = null;
@@ -595,6 +601,8 @@ async function loadImports() {
     barre.appendChild(boutonNouvelleClasse());
     listEl.innerHTML = "";
     listEl.appendChild(barre);
+    // La recherche choisit ensuite l'identifiant exact, sans ouvrir d'abord la première classe.
+    if (options.skipAutoOpen) return rows;
     // Toujours une classe ouverte : sans cela, le bandeau bleu qui sert d'entete et de bouton
     // pour choisir une autre classe n'aurait rien a afficher a la premiere visite.
     if (!classeOuverteId) {
@@ -610,9 +618,111 @@ async function loadImports() {
       }
     }
   } catch (e) {
+    if (!isCurrent()) return false;
     listEl.innerHTML = `<div class="error">${e.message}</div>`;
+    if (options.skipAutoOpen) throw e;
   }
 }
+
+/** Les résultats de recherche doivent rester ouvrables pendant la première préparation locale. */
+globalThis.EPSGlobalSearchRead = Object.freeze({
+  async table(table, path, options = {}) {
+    const owner = session?.user_id;
+    const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+    if (!owner || !isCurrent()) return [];
+    const filter = rows => {
+      let result = rows.filter(row => options.avecSupprimes || !row.deleted);
+      if (options.ou) result = result.filter(options.ou);
+      if (options.trier) result.sort(options.trier);
+      return result;
+    };
+    const rows = await lireTable(table, path, options);
+    if (!isCurrent()) return [];
+    const present = options.requiredId
+      ? rows.some(row => String(row.id) === String(options.requiredId)) : rows.length > 0;
+    const preparing = typeof automaticOfflineState !== 'undefined' && automaticOfflineState === 'preparing';
+    if (present || !preparing || typeof navigator === 'undefined' || navigator.onLine === false) return filter(rows);
+    // Une suppression en attente n'est jamais une absence due à la préparation du cache.
+    if (typeof modeHorsConnexion !== 'undefined' && modeHorsConnexion?.adapter?.tables?.includes(table)) {
+      // Sans identifiant précis, une liste vidée localement reste vide jusqu'à la fin
+      // de la préparation. On ne reconstruit pas une seconde logique de fusion ici.
+      const existing = (await modeHorsConnexion.lire(table, { avecSupprimes: true,
+        ou: options.requiredId ? row => String(row.id) === String(options.requiredId) : undefined })).rows;
+      if (!isCurrent()) return [];
+      if (existing.some(row => row.deleted)) return filter(rows);
+    }
+    let response;
+    try {
+      response = typeof apiFetchAll === 'function'
+        ? await apiFetchAll(`${SUPABASE_URL}/rest/v1/${path}`)
+        : await apiFetch(`${SUPABASE_URL}/rest/v1/${path}`);
+    } catch {
+      if (!isCurrent()) return [];
+      throw new Error('La préparation de cet appareil est encore en cours. Réessayez dans quelques instants ; aucune donnée n’a été supprimée.');
+    }
+    if (!isCurrent()) return [];
+    if (!response.ok) throw new Error('Cette fiche n’a pas pu être vérifiée pendant la préparation. Réessayez sans ressaisir vos données.');
+    const remote = response.rows || await response.json();
+    if (!isCurrent()) return [];
+    if (!Array.isArray(remote)) throw new Error('La réponse ne permet pas d’ouvrir cette fiche. Réessayez.');
+    // Consultation uniquement : la synchronisation habituelle reste seule propriétaire du cache.
+    return filter(remote);
+  }
+});
+
+/** Navigation de recherche : relire l'objet autorisé, jamais réutiliser une fiche d'un autre compte. */
+globalThis.EPSGlobalSearchEntities = Object.freeze({
+  async open(kind, id, options = {}) {
+    const owner = session?.user_id;
+    if (!owner) throw new Error("Reconnectez-vous pour ouvrir ce résultat.");
+    if (localStorage.getItem(`eps:installation-manager-role:${owner}`) !== "false") {
+      throw new Error("Votre compte doit être vérifié avant d’ouvrir ce résultat.");
+    }
+    if (!['class', 'student', 'equipment', 'epi'].includes(kind) || !/^[a-zA-Z0-9_.:-]{1,160}$/.test(String(id || ''))) {
+      throw new Error("Ce résultat ne peut plus être ouvert. Relancez la recherche.");
+    }
+    const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+    if (!isCurrent()) return false;
+    const readRows = (table, path, readOptions = {}) => EPSGlobalSearchRead.table(table, path, { ...readOptions, isCurrent });
+    if (kind === 'equipment' || kind === 'epi') {
+      if (showTab('equipement', { skipModuleStart: true }) === false) return false;
+      return openEquipmentSearchResult(kind, String(id), { isCurrent, readRows });
+    }
+    let classId = String(id);
+    if (kind === 'student') {
+      const rows = await readRows('students', `students?id=eq.${encodeURIComponent(id)}&deleted=eq.false&select=*`,
+        { requiredId: id, ou: row => String(row.id) === String(id) && !row.deleted });
+      if (!isCurrent()) return false;
+      const student = rows.find(row => String(row.id) === String(id) && !row.deleted);
+      if (!student?.class_id) throw new Error("Cet élève n’est plus disponible dans vos classes. Relancez la recherche.");
+      classId = String(student.class_id);
+    }
+    if (showTab('classes', { skipModuleStart: true }) === false) return false;
+    SUBTAB_NAMES.forEach(name => {
+      document.getElementById('subtab-' + name).style.display = name === 'classes' ? 'block' : 'none';
+    });
+    const classRows = await readRows('classes', 'classes?deleted=eq.false&select=*&order=name.asc',
+      { requiredId: classId, trier: (a, b) => String(a.name || '').localeCompare(String(b.name || '')) });
+    if (!isCurrent()) return false;
+    const classes = await loadImports({ skipAutoOpen: true, isCurrent, rows: classRows });
+    if (!isCurrent()) return false;
+    const cls = (classes || []).find(row => String(row.id) === classId && !row.deleted);
+    if (!cls) throw new Error("Cette classe n’est plus accessible. Relancez la recherche.");
+    classeOuverteId = cls.id;
+    toggleClasseAccordeon(false);
+    const opened = await openClassDashboard(cls, planningText(planningClassLabel(cls)), { readOnly: true, isCurrent, readRows });
+    if (!isCurrent() || opened === false) return false;
+    if (kind === 'student') {
+      if (!dashboardStudents.some(row => String(row.id) === String(id) && !row.deleted)) {
+        throw new Error("Cet élève ne figure plus dans cette classe. Relancez la recherche.");
+      }
+      ongletDossierEleve = 'synthese';
+      ouvrirDetailClasse();
+      return ouvrirDossierEleve(String(id), { isCurrent, readRows });
+    }
+    return true;
+  }
+});
 
 /** Le "+" en bas de la liste des classes : ouvre l'ecran de creation. */
 function boutonNouvelleClasse() {

@@ -32,82 +32,171 @@ document.getElementById("lockInput").addEventListener("keydown", e => {
 });
 
 // ---- Recherche globale (miroir de SearchScreen.kt) ----
-// Cherche a partir de deux caracteres dans les eleves, classes, cours, materiel, EPI et
-// groupes UNSS, et emmene directement sur l'onglet concerne.
+// Résultats liés à leur identifiant, jamais à la première fiche d'une rubrique.
 
 let searchDebounce = null;
+const globalSearchState = { generation: 0, query: 0, owner: null, opened: false, loading: null, records: [], warnings: [], local: false, navigating: false, returnFocus: null };
+const searchOwner = () => typeof session !== 'undefined' ? session?.user_id : null;
+const searchEsc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function searchAllowed() {
+  const owner = searchOwner();
+  return !!owner && localStorage.getItem('eps:installation-manager-role:' + owner) === 'false';
+}
+function searchCurrent(epoch = globalSearchState.generation, owner = globalSearchState.owner) {
+  return globalSearchState.opened && epoch === globalSearchState.generation && owner === searchOwner() && searchAllowed();
+}
+function resetGlobalSearch() {
+  clearTimeout(searchDebounce);
+  globalSearchState.generation++; globalSearchState.query++;
+  globalSearchState.opened = false; globalSearchState.owner = null;
+  globalSearchState.loading = null; globalSearchState.records = []; globalSearchState.warnings = [];
+  globalSearchState.navigating = false; globalSearchState.local = false;
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').replaceChildren();
+}
 
 function openSearch() {
+  resetGlobalSearch();
+  if (!searchAllowed()) return;
+  globalSearchState.opened = true; globalSearchState.owner = searchOwner();
+  globalSearchState.returnFocus = document.activeElement;
   document.getElementById("searchOverlay").classList.add("open");
   const input = document.getElementById("searchInput");
   input.value = "";
   document.getElementById("searchResults").innerHTML =
-    '<div class="muted">Tapez au moins deux caracteres.</div>';
+    '<div class="muted" role="status">Tapez au moins deux caractères : élève, classe, matériel, outil ou chapitre EPPCS.</div>';
   input.focus();
 }
 
-function closeSearch() {
-  document.getElementById("searchOverlay").classList.remove("open");
+function closeSearch({ restoreFocus = true } = {}) {
+  const previous = globalSearchState.returnFocus;
+  resetGlobalSearch();
+  if (restoreFocus && previous?.isConnected && previous.getClientRects().length) previous.focus();
 }
 
 function searchNormalize(value) {
-  return String(value || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/[×✕]/g, 'x').replace(/(\d)\s*x\s*(?=\d)/g, '$1x')
+    .replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
+function searchToolRecords() {
+  const records = (globalThis.EpsToolsCatalog || []).map(t => ({ kind:'tool', id:t.id, category:'Outil', title:t.title, subtitle:t.subtitle, keywords:(t.activities || []).join(' ') }));
+  const tests = typeof EpsTests !== 'undefined' ? EpsTests.TESTS : globalThis.EpsTests?.TESTS;
+  Object.entries(tests || {}).forEach(([id,t]) => records.push({kind:'tool',id:'eps-test:' + id,category:'Test EPS',title:t.label,subtitle:'Ouvrir le test',keywords:t.protocol || ''}));
+  return records;
+}
+async function loadGlobalSearchRecords(epoch, owner) {
+  const current = () => searchCurrent(epoch, owner);
+  const warnings = [], tables = Object.create(null);
+  let local = false;
+  const definitions = [
+    ['classes','Classes','id,name,school_year,grade'],
+    ['students','Élèves','id,first_name,last_name,class_id'],
+    ['cycles','Cours','id,apsa_name,grade,session_count,class_id'],
+    ['equipment','Matériel','id,name,category,location'],
+    ['epi_items','EPI','id,internal_id,manufacturer,model,location']
+  ];
+  await Promise.all(definitions.map(async ([table,label,fields]) => {
+    try {
+      let rows;
+      if (typeof tableSuivie === 'function' && tableSuivie(table)) {
+        const result = await modeHorsConnexion.lire(table);
+        rows = result.rows; local ||= result.source !== 'reseau';
+      } else {
+        const url = SUPABASE_URL + '/rest/v1/' + table + '?deleted=eq.false&select=' + fields;
+        if (typeof apiFetchAll === 'function') {
+          const response = await apiFetchAll(url);
+          if (!response.ok) throw Error('Lecture indisponible');
+          rows = response.rows;
+        } else {
+          const response = await apiFetch(url);
+          if (!response.ok) throw Error('Lecture indisponible');
+          rows = await response.json();
+        }
+      }
+      if (!Array.isArray(rows)) throw Error('Lecture indisponible');
+      tables[table] = rows.filter(row => row && row.id && !row.deleted);
+    } catch { tables[table] = []; warnings.push(label); }
+  }));
+  if (!current()) return;
+  const records = searchToolRecords(), classes = new Map(tables.classes.map(c => [String(c.id), c.name]));
+  const add = (kind,id,category,title,subtitle,keywords = '') => records.push({kind,id:String(id),category,title:String(title || ''),subtitle:String(subtitle || ''),keywords});
+  tables.classes.forEach(c => add('class',c.id,'Classe',c.name,c.school_year));
+  tables.students.forEach(s => add('student',s.id,'Élève',String(s.last_name || '').toUpperCase() + ' ' + (s.first_name || ''),classes.get(String(s.class_id))));
+  tables.cycles.forEach(c => add('course',c.id,'Cours',c.apsa_name,[classes.get(String(c.class_id)), (typeof GRADE_LABELS !== 'undefined' && GRADE_LABELS[c.grade]) || c.grade, (c.session_count || 0) + ' séances'].filter(Boolean).join(' · ')));
+  tables.equipment.forEach(e => add('equipment',e.id,'Matériel',e.name,e.location,e.category));
+  tables.epi_items.forEach(e => add('epi',e.id,'EPI',e.internal_id,[e.manufacturer,e.model,e.location].filter(Boolean).join(' · ')));
+  try {
+    if (!globalThis.EPSAtelierEPPCS?.searchChapters) throw Error('Atelier indisponible');
+    const chapters = await EPSAtelierEPPCS.searchChapters({isCurrent:current});
+    chapters.forEach(c => add('eppcs',c.id,'EPPCS',c.title,c.theme,c.question));
+  } catch { warnings.push('EPPCS'); }
+  if (!current()) return;
+  globalSearchState.records = records; globalSearchState.warnings = warnings; globalSearchState.local = local;
+}
+function globalSearchHits(query) {
+  const q = searchNormalize(query), terms = q.split(' ').filter(Boolean);
+  return globalSearchState.records.filter(h => {
+    const text = searchNormalize([h.title,h.subtitle,h.keywords].join(' '));
+    return terms.every(term => text.includes(term));
+  }).sort((a,b) => Number(searchNormalize(b.title) === q) - Number(searchNormalize(a.title) === q) || a.title.localeCompare(b.title,'fr'));
+}
+function renderGlobalSearch(query, loading = false) {
+  if (!searchCurrent() || globalSearchState.navigating) return;
+  const resultsEl = document.getElementById('searchResults'), all = globalSearchHits(query), hits = all.slice(0,60);
+  let info = loading ? '<p class="muted" role="status">Recherche en cours… Les outils disponibles peuvent déjà être ouverts.</p>' : '';
+  if (!loading && globalSearchState.warnings.length) info += '<p class="searchNotice" role="status">Recherche partielle : ' + searchEsc(globalSearchState.warnings.join(', ')) + ' indisponible(s). Réessayez avec une connexion ; aucun résultat n’a été supprimé.</p><button type="button" class="secondary" data-search-retry>Réessayer</button>';
+  if (!loading && (globalSearchState.local || navigator.onLine === false)) info += '<p class="muted">Recherche dans les données disponibles sur cet appareil. Si un élément manque, synchronisez lorsque la connexion revient.</p>';
+  if (!hits.length && !loading) info += '<p class="muted" role="status">Aucun résultat dans les données disponibles pour « ' + searchEsc(query) + ' ».</p>';
+  if (all.length > 60) info += '<p class="muted">60 premiers résultats. Précisez votre recherche.</p>';
+  resultsEl.innerHTML = info + hits.map((h,i) => '<button type="button" class="searchHit" data-hit="' + i + '" data-search-kind="' + h.kind + '"><span class="cat">' + h.category + '</span><span class="ttl">' + searchEsc(h.title) + '</span>' + (h.subtitle ? '<span class="muted">' + searchEsc(h.subtitle) + '</span>' : '') + '</button>').join('') + '<p data-search-action-status role="status"></p>';
+  const epoch = globalSearchState.generation, owner = globalSearchState.owner;
+  resultsEl.querySelectorAll('[data-hit]').forEach(button => button.onclick = () => openGlobalSearchHit(hits[Number(button.dataset.hit)], epoch, owner));
+  resultsEl.querySelector('[data-search-retry]')?.addEventListener('click', () => { globalSearchState.loading = null; void runGlobalSearch(document.getElementById('searchInput').value); });
+}
+function searchNavigationGuard(kind) {
+  if (globalThis.EpsGlobalSearchTools?.isOpening?.()) throw Error('Un outil est encore en cours d’ouverture. Attendez la fin du chargement avant d’ouvrir un autre résultat.');
+  const tool = [...document.querySelectorAll('#toolPanel,#liveToolPanel')].some(panel => panel.children.length && panel.style.display !== 'none' && panel.getClientRects().length);
+  if (tool) throw Error('Un outil est ouvert. Enregistrez votre travail si nécessaire, puis fermez cet outil avant d’ouvrir un autre résultat.');
+  if (kind !== 'eppcs' && globalThis.EPSAtelierEPPCS?.hasUnsavedDraft?.()) throw Error('Enregistrez vos notes EPPCS avant d’ouvrir ce résultat. Votre brouillon est conservé.');
+}
+async function openGlobalSearchHit(hit, epoch, owner) {
+  const current = () => searchCurrent(epoch, owner);
+  if (!hit || !current() || globalSearchState.navigating) return;
+  const feedback = document.querySelector('[data-search-action-status]');
+  try {
+    searchNavigationGuard(hit.kind);
+    globalSearchState.navigating = true;
+    if (feedback) feedback.textContent = 'Ouverture de « ' + hit.title + ' »…';
+    const options = {isCurrent:current};
+    let opened;
+    if (hit.kind === 'tool') opened = await globalThis.EpsGlobalSearchTools.open(hit.id, options);
+    else if (hit.kind === 'eppcs') opened = await EPSAtelierEPPCS.openChapter(hit.id, options);
+    else if (hit.kind === 'course') opened = await openCourseFromSearch(hit.id, options);
+    else opened = await EPSGlobalSearchEntities.open(hit.kind, hit.id, options);
+    if (!current()) return;
+    if (opened === false) throw Error('L’ouverture a été interrompue. Votre travail est conservé ; relancez la recherche.');
+    closeSearch({restoreFocus:false});
+  } catch (error) {
+    if (current() && feedback) feedback.textContent = error instanceof TypeError ? 'Ce résultat ne peut pas être ouvert pour le moment. Rechargez le site puis réessayez.' : (error?.message || 'Ouverture impossible. Réessayez.');
+  } finally { if (current()) globalSearchState.navigating = false; }
+}
 async function runGlobalSearch(query) {
-  const resultsEl = document.getElementById("searchResults");
-  const q = searchNormalize(query.trim());
-  if (q.length < 2) {
-    resultsEl.innerHTML = '<div class="muted">Tapez au moins deux caracteres.</div>';
+  if (!searchCurrent()) { if (globalSearchState.opened) resetGlobalSearch(); return; }
+  const token = ++globalSearchState.query, epoch = globalSearchState.generation, owner = globalSearchState.owner;
+  if (searchNormalize(query).length < 2) {
+    document.getElementById('searchResults').innerHTML = '<div class="muted" role="status">Tapez au moins deux caractères.</div>';
     return;
   }
-  resultsEl.innerHTML = '<div class="muted">Recherche...</div>';
-
-  // Chaque source est facultative : une table absente ne doit pas casser la recherche.
-  const fetchJson = async (path) => {
-    try {
-      const res = await apiFetch(`${SUPABASE_URL}/rest/v1/${path}`);
-      return res.ok ? await res.json() : [];
-    } catch (e) { return []; }
-  };
-
-  const [classes, students, cycles, equip, epis, groups] = await Promise.all([
-    fetchJson("classes?deleted=eq.false&select=id,name,school_year,grade"),
-    fetchJson("students?deleted=eq.false&select=id,first_name,last_name,class_id"),
-    fetchJson("cycles?deleted=eq.false&select=id,apsa_name,grade,session_count"),
-    fetchJson("equipment?deleted=eq.false&select=id,name,category,location"),
-    fetchJson("epi_items?deleted=eq.false&select=id,internal_id,manufacturer,model"),
-    fetchJson("unss_groups?deleted=eq.false&select=id,activity_name,responsible_teacher")
-  ]);
-
-  const classById = {};
-  classes.forEach(c => { classById[c.id] = c.name; });
-
-  const hits = [];
-  const push = (category, title, subtitle, tab) => hits.push({ category, title, subtitle, tab });
-  const match = (...values) => values.some(v => searchNormalize(v).includes(q));
-
-  classes.forEach(c => { if (match(c.name, c.school_year)) push("Classe", c.name, c.school_year || "", "classes"); });
-  students.forEach(s => {
-    if (match(s.last_name, s.first_name)) {
-      push("Eleve", `${(s.last_name || "").toUpperCase()} ${s.first_name || ""}`.trim(), classById[s.class_id] || "", "classes");
-    }
-  });
-  cycles.forEach(c => { if (match(c.apsa_name)) push("Cours", c.apsa_name, `${GRADE_LABELS[c.grade] || c.grade} · ${c.session_count} seances`, "cours"); });
-  equip.forEach(e => { if (match(e.name, e.location)) push("Materiel", e.name, e.location || "", "equipement"); });
-  epis.forEach(e => { if (match(e.internal_id, e.manufacturer, e.model)) push("EPI", e.internal_id, [e.manufacturer, e.model].filter(Boolean).join(" "), "equipement"); });
-  groups.forEach(g => { if (match(g.activity_name, g.responsible_teacher)) push("UNSS", g.activity_name, g.responsible_teacher || "", "unss"); });
-
-  resultsEl.innerHTML = hits.length === 0
-    ? `<div class="muted">Aucun resultat pour « ${query} ».</div>`
-    : hits.slice(0, 60).map((h, i) => `<button class="searchHit" data-hit="${i}">
-        <span class="cat">${h.category}</span>
-        <span class="ttl">${h.title}</span>
-        ${h.subtitle ? `<div class="muted">${h.subtitle}</div>` : ""}
-      </button>`).join("");
-
-  resultsEl.querySelectorAll("[data-hit]").forEach(b =>
-    b.onclick = () => { closeSearch(); showTab(hits[Number(b.dataset.hit)].tab); });
+  if (!globalSearchState.loading) {
+    globalSearchState.records = searchToolRecords(); globalSearchState.warnings = [];
+    globalSearchState.loading = loadGlobalSearchRecords(epoch,owner);
+  }
+  renderGlobalSearch(query,true);
+  await globalSearchState.loading;
+  if (searchCurrent(epoch,owner) && token === globalSearchState.query) renderGlobalSearch(query);
 }
 
 document.getElementById("searchBtn").addEventListener("click", openSearch);
@@ -121,8 +210,10 @@ document.getElementById("searchInput").addEventListener("input", e => {
   searchDebounce = setTimeout(() => runGlobalSearch(value), 220);
 });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeSearch();
+  if (e.key === "Escape" && globalSearchState.opened) closeSearch();
 });
+window.addEventListener('storage', event => { if (event.key === 'alex_eps_session') resetGlobalSearch(); });
+globalThis.EPSGlobalSearch = Object.freeze({reset:resetGlobalSearch});
 
 // ---- Accueil : carte du jour et acces aux modules (miroir de HomeScreen.kt) ----
 // On compte tous les creneaux du jour. Le creneau mis en avant reste le cours en cours,

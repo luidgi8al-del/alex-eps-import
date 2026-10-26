@@ -150,6 +150,40 @@
     return opening;
   }
   async function sync() { return ensureStore().sync(); }
+  async function searchChapters({isCurrent = () => true} = {}) {
+    const searchOwner = id(), epoch = generation;
+    const current = () => generation === epoch && id() === searchOwner && isCurrent();
+    if (!searchOwner || !current()) return [];
+    // Reading the index must not create an atelier or trigger a cloud upload.
+    let library = store && owner === searchOwner
+      ? (await store.load()).library
+      : await EPPCSStore.readLocalLibrary(searchOwner);
+    if (!current()) return [];
+    // On a new device, discover the private library through a GET only. Do not
+    // instantiate a writable store, persist it, or upload pending work for search.
+    if (!library && typeof apiFetch === 'function' && (typeof navigator === 'undefined' || navigator.onLine !== false)) {
+      const response = await apiFetch(`${SUPABASE_URL}/rest/v1/eps_eppcs_documents?user_id=eq.${encodeURIComponent(searchOwner)}&document_id=eq.library&select=payload&limit=1`);
+      if (!current()) return [];
+      if (!response.ok) throw Error('Les chapitres EPPCS ne sont pas disponibles pour cette recherche. Tes cours restent conservés.');
+      const rows = await response.json();
+      if (!current()) return [];
+      library = Array.isArray(rows) ? rows[0]?.payload : null;
+    }
+    return (Array.isArray(library?.courses) ? library.courses : []).filter(course => course && typeof course.id === 'string').map(course => ({
+      id: String(course.id), title: String(course.title || ''), theme: String(course.theme || ''),
+      question: String(course.question || ''), number: course.number
+    }));
+  }
+  async function openChapter(courseId, {isCurrent = () => true} = {}) {
+    const searchOwner = id(), epoch = generation;
+    const current = () => generation === epoch && id() === searchOwner && isCurrent();
+    if (!searchOwner || !courseId || !current()) return false;
+    if (window.showTab('cours', {skipModuleStart: true}) === false) return false;
+    window.initCoursTab?.({deferInitialView: true});
+    await window.showCoursTab('eppcs');
+    if (!current() || owner !== searchOwner) return false;
+    return view?.openChapter(String(courseId)) === true;
+  }
   function download(json) {
     const blob = new Blob([json], {type:'application/json;charset=utf-8'}), url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = 'EPPCS-sauvegarde-' + new Date().toISOString().slice(0,10) + '.json'; a.click();
@@ -216,6 +250,6 @@
     let other; try { other = JSON.parse(event.newValue); } catch {}
     if (owner && other?.user_id !== owner) { reset(); window.showAuthView?.(); }
   });
-  window.EPSAtelierEPPCS = Object.freeze({open, reset, sync, getState: async () => ensureStore().load(),
+  window.EPSAtelierEPPCS = Object.freeze({open, reset, sync, searchChapters, openChapter, getState: async () => ensureStore().load(),
     hasUnsavedDraft: () => !!view?.hasUnsavedDraft(), validateLibrary});
 })();

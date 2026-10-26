@@ -31,12 +31,39 @@ test('document schema capability survives an offline restart and remains account
 
 test('documents and returned states use the shared offline read/write path', () => {
   assert.match(offline, /TABLES_HORS_CONNEXION_VAGUE_5\s*=\s*\["class_documents", "class_document_returns"\]/);
-  assert.match(dashboard, /lireTable\("class_documents"/);
-  assert.match(dashboard, /lireTable\("class_document_returns"/);
+  assert.match(dashboard, /\(options\.readRows \|\| lireTable\)\("class_documents"/);
+  assert.match(dashboard, /\(options\.readRows \|\| lireTable\)\("class_document_returns"/);
   assert.match(dashboard, /enregistrerLigne\("class_documents"/);
   assert.match(dashboard, /enregistrerLigne\("class_document_returns"/);
   assert.match(dashboard, /supprimerLigne\("class_documents"/);
   assert.match(screens, /modifierDocumentClasse\(doc, \{ title: titre \}\)/);
+});
+
+test('document loading defaults to the offline reader and only delegates when a guarded reader is supplied', async () => {
+  const start = dashboard.indexOf('async function chargerTableauDeBordClasse(');
+  const end = dashboard.indexOf('\nasync function ', start + 1);
+  const load = dashboard.slice(start, end);
+  for (const delegated of [false, true]) {
+    const calls = [];
+    const rows = {
+      class_notes: [],
+      class_documents: [{ id: 'doc-local', class_id: 'class-2', title: 'Document local' }],
+      class_document_returns: [{ id: 'return-local', document_id: 'doc-local', returned: true }]
+    };
+    const reader = label => async table => { calls.push([label, table]); return rows[table]; };
+    const context = vm.createContext({
+      session: { user_id: 'teacher-a' }, dashboardClass: { row: { id: 'class-2' } },
+      demarrerModeHorsConnexion: async () => {}, decoderSuiviClasse: () => null,
+      lireTable: reader('offline'), apiFetch: () => { throw Error('Unexpected network read'); }
+    });
+    vm.runInContext(load, context);
+    const options = delegated ? { readRows: reader('guarded-search'), isCurrent: () => true } : {};
+    await context.chargerTableauDeBordClasse(options);
+    assert.equal(context.documentsClasse[0].id, 'doc-local');
+    assert.equal(context.rendusClasse[0].id, 'return-local');
+    assert.deepEqual(calls, ['class_notes', 'class_documents', 'class_document_returns'].map(table =>
+      [delegated ? 'guarded-search' : 'offline', table]));
+  }
 });
 
 test('migration versions both document tables before enabling the capability', () => {

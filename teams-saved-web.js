@@ -151,6 +151,19 @@
   async function saveEvaluation(existing,criteria,scores){try{const now=new Date().toISOString();await write('team_evaluations',{id:existing?.id||crypto.randomUUID(),user_id:session.user_id,saved_team_id:selectedSaved.id,class_id:selectedClass,title:teTitle.value.trim()||'Évaluation des équipes',criteria_json:criteria,scores_json:scores,created_at:existing?.created_at||now,updated_at:now,deleted:false});evaluations=await read(`team_evaluations?saved_team_id=eq.${selectedSaved.id}&deleted=eq.false&select=*&order=created_at.desc`);renderOpened()}catch(e){teError.textContent=e.message.includes('team_evaluations')?'Relancez schema_rattrapage_web.sql dans Supabase.':e.message}}
   function exportEvaluation(format){const c=readCriteria(),s=collectScores(),title=teTitle.value.trim()||'Evaluation equipes',rows=[['Équipe','Élèves',...c.map(x=>`${x.name} / ${x.max}`),'Total'],...openedGroups.map((g,i)=>{const v=c.map(x=>Number(s?.[i]?.[x.id])||0);return[`Équipe ${i+1}`,g.map(labelStudent).join(' | '),...v,v.reduce((a,b)=>a+b,0)]})];if(format==='csv'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(';')).join('\n')],{type:'text/csv'}));a.download=`${title}.csv`;a.click()}else{const w=window.open('','_blank');w.document.write(`<title>${esc(title)}</title><style>body{font-family:Arial;padding:30px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccd6e5;padding:8px}th{background:#087dcc;color:white}</style><h1>${esc(title)}</h1><table>${rows.map((r,i)=>`<tr>${r.map(v=>`<${i?'td':'th'}>${esc(v)}</${i?'td':'th'}>`).join('')}</tr>`).join('')}</table>`);w.document.close();w.print()}}
   async function removeSaved(id){if(!confirm('Supprimer cette composition d’équipes ? Les élèves ne seront pas supprimés.'))return;await softDelete('saved_team_members',`saved_team_id=eq.${id}`);await softDelete('saved_teams',`id=eq.${id}`);await loadSaved();renderSaved();twGenerated.innerHTML='';}
-  async function render(){selectedClass='';students=[];generated=[];saved=[];levels={};excludedIds=new Set();toolPanel.innerHTML=toolHeader('Équipes','Chargement…');bindToolClose();try{classes=await read('classes?deleted=eq.false&select=id,name&order=name.asc');shell()}catch(e){toolPanel.innerHTML=toolHeader('Équipes','Groupes et tirage au sort')+`<p class="error">${esc(e.message)}</p>`;bindToolClose()}}
+  async function render(options={}){
+    const owner=session?.user_id,panel=toolPanel,token=panel.__epsSearchOpenToken;
+    const current=()=>session?.user_id===owner&&toolPanel===panel&&panel.__epsSearchOpenToken===token&&(!options.isCurrent||options.isCurrent());
+    selectedClass='';students=[];generated=[];saved=[];levels={};excludedIds=new Set();
+    panel.innerHTML=toolHeader('Équipes','Chargement…');bindToolClose();
+    try{
+      const rows=await read('classes?deleted=eq.false&select=id,name&order=name.asc');
+      if(!current())return false;
+      classes=rows;shell();
+    }catch(e){
+      if(!current())return false;
+      panel.innerHTML=toolHeader('Équipes','Groupes et tirage au sort')+`<p class="error">${esc(e.message)}</p>`;bindToolClose();
+    }
+  }
   globalThis.renderTeamsTool=render;
 })();

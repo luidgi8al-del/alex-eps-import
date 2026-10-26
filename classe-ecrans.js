@@ -220,13 +220,17 @@ function ecActions(titre, sous, actions) {
 // ---- Donnees propres a ces ecrans -------------------------------------------------------
 
 /** Les equipes enregistrees de la classe, pour le tableau de bord et Divers EPS. */
-async function ecChargerEquipes() {
+async function ecChargerEquipes(options = {}) {
   const id = dashboardClass?.row?.id;
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && dashboardClass?.row?.id === id
+    && (!options.isCurrent || options.isCurrent());
   ecEquipes = [];
   if (!id) return;
   try {
-    ecEquipes = await ecLire("saved_teams", `class_id=eq.${id}&order=created_at.desc`, t => t.class_id === id);
-  } catch { ecEquipes = []; }
+    const rows = await ecLire("saved_teams", `class_id=eq.${id}&order=created_at.desc`, t => t.class_id === id);
+    if (isCurrent()) ecEquipes = rows;
+  } catch { if (isCurrent()) ecEquipes = []; }
 }
 
 /**
@@ -235,22 +239,35 @@ async function ecChargerEquipes() {
  * Ils donnent "12 / 28 eleves evalues" sous chaque grille et remplissent le recapitulatif. On
  * les relit a chaque ouverture de l'ecran : une note saisie entre-temps doit s'y voir.
  */
-async function ecChargerNotes() {
+async function ecChargerNotes(options = {}) {
+  const owner = session?.user_id, classId = dashboardClass?.row?.id;
+  const isCurrent = () => session?.user_id === owner && dashboardClass?.row?.id === classId
+    && (!options.isCurrent || options.isCurrent());
   const evals = dashboardEvaluations.map(e => e.id);
   const sessions = dashboardTests.map(t => t.id);
   const liste = ids => ids.map(x => `"${x}"`).join(",");
+  const read = options.readRows
+    ? (table, filter, predicate) => options.readRows(table, `${table}?deleted=eq.false&select=*&${filter}`, { ou: predicate })
+    : ecLire;
   try {
-    ecCriteres = evals.length
-      ? await ecLire("evaluation_criteria", `evaluation_id=in.(${liste(evals)})`, c => evals.includes(c.evaluation_id))
+    const criteresRows = evals.length
+      ? await read("evaluation_criteria", `evaluation_id=in.(${liste(evals)})`, c => evals.includes(c.evaluation_id))
       : [];
-    const criteres = ecCriteres.map(c => c.id);
-    ecNotes = criteres.length
-      ? await ecLire("evaluation_scores", `criterion_id=in.(${liste(criteres)})`, s => criteres.includes(s.criterion_id))
+    if (!isCurrent()) return false;
+    const criteres = criteresRows.map(c => c.id);
+    const notesRows = criteres.length
+      ? await read("evaluation_scores", `criterion_id=in.(${liste(criteres)})`, s => criteres.includes(s.criterion_id))
       : [];
-    ecResultatsTests = sessions.length
-      ? await ecLire("eps_test_results", `session_id=in.(${liste(sessions)})`, r => sessions.includes(r.session_id))
+    if (!isCurrent()) return false;
+    const resultsRows = sessions.length
+      ? await read("eps_test_results", `session_id=in.(${liste(sessions)})`, r => sessions.includes(r.session_id))
       : [];
+    if (!isCurrent()) return false;
+    ecCriteres = criteresRows;
+    ecNotes = notesRows;
+    ecResultatsTests = resultsRows;
   } catch {
+    if (!isCurrent()) return false;
     ecCriteres = []; ecNotes = []; ecResultatsTests = [];
   }
   ecNotesChargees = true;

@@ -23,40 +23,47 @@ function formatToolTime(ms) {
   const cs = Math.floor(ms / 10), min = Math.floor(cs / 6000), sec = Math.floor(cs / 100) % 60;
   return `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}.${String(cs % 100).padStart(2,"0")}`;
 }
-function openTool(name, target) {
+function openTool(name, target, options = {}) {
+  if (globalThis.EpsGlobalSearchTools?.canOpen?.(options.searchRequest) === false) {
+    if (typeof alert === 'function') alert('Un outil est en cours d’ouverture. Patientez quelques instants avant d’en ouvrir un autre.');
+    return false;
+  }
   globalThis.EpsToolSave?.reset();
   stopToolTimer();
   speedRunning = false;
   toolPanel = target || document.getElementById("toolPanel");
+  toolPanel.__epsSearchOpenToken = options.searchRequest || null;
   document.getElementById("toolsWorkspace")?.setAttribute("hidden", "");
   toolPanel.style.display = "block";
   toolPanel.classList.add("modern-tool-panel");
-  if (name === "timers") renderTimersHub();
-  if (name === "score") renderScoreboard();
-  if (name === "measures") renderMeasures();
-  if (name === "signals") renderSignals();
-  if (name === "tests") renderEpsTests();
-  if (name === "bac-eps") openBacEps();
-  if (name === "bac-climb") renderBacClimbWeb().catch(e=>alert(e.message));
-  if (name === "teams") renderTeamsTool();
-  if (name === "speed") renderSpeedTracker();
-  if (name === "impacts") renderImpactMarker();
-  if (name === "vma") renderVmaTest();
-  if (name === "swim") renderSwimCertificate();
-  if (name === "aptitudes") renderAptitudes();
-  if (name === "multi-chrono") renderMultiChronoWeb();
-  if (name === "tournament") renderTournamentWeb();
-  if (name === "observer") renderObserverWeb();
-  if (name === "rotations") renderRotationsWeb();
-  if (name === "random") renderRandomWeb();
-  if (name === "effort") renderEffortWeb();
-  if (name === "acrosport") renderAcrosportWeb();
-  if (name === "condition-fitness") renderConditionFitnessWeb();
-  if (name === "swim-observation") renderSwimObservationWeb();
-  if (name === "gym-observation") renderGymObservationWeb();
-  if (name === "climb-observation") renderClimbObservationWeb();
-  if (name === "climb-test") { epsOpenTest=null; renderClimbTestWeb(); }
+  let rendered;
+  if (name === "timers") rendered = renderTimersHub();
+  if (name === "score") rendered = renderScoreboard();
+  if (name === "measures") rendered = renderMeasures();
+  if (name === "signals") rendered = renderSignals();
+  if (name === "tests") rendered = renderEpsTests(options);
+  if (name === "bac-eps") rendered = openBacEps();
+  if (name === "bac-climb") rendered = renderBacClimbWeb().catch(e=>{if(options.isCurrent)throw e;alert(e.message)});
+  if (name === "teams") rendered = renderTeamsTool(options);
+  if (name === "speed") rendered = renderSpeedTracker();
+  if (name === "impacts") rendered = renderImpactMarker();
+  if (name === "vma") rendered = renderVmaTest();
+  if (name === "swim") rendered = renderSwimCertificate(options);
+  if (name === "aptitudes") rendered = renderAptitudes();
+  if (name === "multi-chrono") rendered = renderMultiChronoWeb();
+  if (name === "tournament") rendered = renderTournamentWeb();
+  if (name === "observer") rendered = renderObserverWeb();
+  if (name === "rotations") rendered = renderRotationsWeb();
+  if (name === "random") rendered = renderRandomWeb();
+  if (name === "effort") rendered = renderEffortWeb();
+  if (name === "acrosport") rendered = renderAcrosportWeb();
+  if (name === "condition-fitness") rendered = renderConditionFitnessWeb();
+  if (name === "swim-observation") rendered = renderSwimObservationWeb();
+  if (name === "gym-observation") rendered = renderGymObservationWeb();
+  if (name === "climb-observation") rendered = renderClimbObservationWeb();
+  if (name === "climb-test") { epsOpenTest=null; rendered = renderClimbTestWeb(); }
   toolPanel.scrollIntoView({behavior:"smooth", block:"start"});
+  return rendered;
 }
 document.querySelectorAll("#tab-outils [data-tool]").forEach(button => button.addEventListener("click", () => openTool(button.dataset.tool)));
 
@@ -67,22 +74,42 @@ const FREE_USE = "__libre__";
 let toolClasses = [];
 let toolStudents = [];
 let toolClassId = FREE_USE;
+let toolRosterOwner = null;
 
 // Les outils servent sur la piste, pas au bureau : classes et eleves viennent de la copie locale.
-async function loadToolClasses() {
+async function loadToolClasses(options = {}) {
+  const searchRenderCurrent = globalThis.EpsGlobalSearchTools?.captureRenderCheck?.();
+  const owner = session?.user_id;
+  if (toolRosterOwner !== owner) {
+    toolClasses = []; toolStudents = [];
+    if (toolRosterOwner !== null) toolClassId = FREE_USE;
+    toolRosterOwner = owner;
+  }
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+  if (!isCurrent()) return false;
   if (toolClasses.length) return toolClasses;
-  toolClasses = await lireTable("classes",
+  const rows = await (options.readRows || lireTable)("classes",
     "classes?deleted=eq.false&select=id,name,grade&order=name.asc",
     { trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
+  if (searchRenderCurrent && !searchRenderCurrent()) throw new Error('L’ouverture de cet outil a été interrompue.');
+  if (!isCurrent()) return false;
+  toolClasses = rows;
   return toolClasses;
 }
 
-async function loadToolStudents(classId) {
+async function loadToolStudents(classId, options = {}) {
+  const searchRenderCurrent = globalThis.EpsGlobalSearchTools?.captureRenderCheck?.();
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+  if (!isCurrent()) return false;
   if (!classId || classId === FREE_USE) { toolStudents = []; return toolStudents; }
-  toolStudents = await lireTable("students",
+  const rows = await lireTable("students",
     `students?class_id=eq.${classId}&deleted=eq.false&select=id,first_name,last_name,sex&order=last_name.asc`,
     { ou: e => e.class_id === classId,
       trier: (a, b) => String(a.last_name || "").localeCompare(String(b.last_name || "")) });
+  if (searchRenderCurrent && !searchRenderCurrent()) throw new Error('L’ouverture de cet outil a été interrompue.');
+  if (!isCurrent()) return false;
+  toolStudents = rows;
   if (typeof globalThis.elevesActifsPourSeance === "function") {
     toolStudents = globalThis.elevesActifsPourSeance(classId, toolStudents);
   }
@@ -177,14 +204,18 @@ function evaluationHistoryHtml(sessions,currentId,openAttribute,deleteAttribute,
   return `<details class="running-history evaluation-history"><summary><b>${toolHistoryEscape(chosen.test_name||'Séance enregistrée')}</b><small>${date(chosen)} · ${currentId?'séance sélectionnée':'dernière séance'} · choisir une autre date</small></summary><div class="running-history-options">${sessions.map(row=>`<div class="running-session-card${String(row.id)===String(currentId)?' active':''}"><button ${openAttribute}="${toolHistoryEscape(row.id)}"><b>${toolHistoryEscape(row.test_name||'Séance enregistrée')}</b><small>${date(row)} · P${row.period_number}</small></button>${deleteAttribute?`<button class="danger" ${deleteAttribute}="${toolHistoryEscape(row.id)}">Supprimer</button>`:''}</div>`).join('')}</div></details>`;
 }
 
-async function renderEpsTests() {
-  await loadToolClasses();
-  await loadToolStudents(toolClassId);
-  drawEpsTests();
+async function renderEpsTests(options = {}) {
+  const owner = session?.user_id;
+  const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
+  await loadToolClasses({ isCurrent });
+  if (!isCurrent()) return false;
+  await loadToolStudents(toolClassId, { isCurrent });
+  if (!isCurrent()) return false;
+  return drawEpsTests();
 }
 
 function drawEpsTests() {
-  if (epsOpenTest === 'ESCALADE') { renderClimbTestWeb(); return; }
+  if (epsOpenTest === 'ESCALADE') return renderClimbTestWeb();
   const cls = toolClasses.find(c => c.id === toolClassId);
   const periodCount = cls ? planningPeriodCount(cls.grade) : 5;
   // A reopened test keeps its original period, even after the school's period count changes.
@@ -227,8 +258,7 @@ function drawEpsTests() {
     if (back) back.onclick = () => { epsOpenTest = null; resetGenericTestState(); globalThis.returnFromPronoteTransfer?.(); drawEpsTests(); };
     document.getElementById('epsBegin')?.addEventListener('click',()=>{if(test.special==='stops'&&stopGroupEditing!=null)return alert('Enregistrez ou annulez la modification du groupe avant de commencer.');epsTestStarted=true;drawEpsTests()});
     document.getElementById('epsEditPreparation')?.addEventListener('click',()=>{epsTestStarted=false;drawEpsTests()});
-    drawEpsTestBody(epsOpenTest);
-    return;
+    return drawEpsTestBody(epsOpenTest);
   }
 
   const categories = EpsTests.CATEGORIES.map(cat => {
@@ -275,8 +305,8 @@ async function drawEpsTestBody(key) {
   const host = document.getElementById("epsTestBody");
   if (!host) return;
   const test = EpsTests.TESTS[key];
-  if (test.special === "stops") { drawStopCourseTest(test); return; }
-  if (test.special === "running-series") { drawRunningSeriesTest(test); return; }
+  if (test.special === "stops") return drawStopCourseTest(test);
+  if (test.special === "running-series") return drawRunningSeriesTest(test);
 
   if (!onRealClass()) {
     // Usage libre : soit deux temps a comparer (haies, relais), soit une seule valeur.
@@ -707,9 +737,13 @@ async function deleteVmaSession(id){if(!confirm('Supprimer ce test VMA et ses r�
 // ---- Savoir Nager (miroir de SwimCertificateScreen) ----
 const swimValidations = {};
 
-async function renderSwimCertificate() {
-  await loadToolClasses();
-  await loadToolStudents(toolClassId);
+async function renderSwimCertificate(options = {}) {
+  const owner = session?.user_id, panel = toolPanel, token = panel.__epsSearchOpenToken;
+  const isCurrent = () => session?.user_id === owner && toolPanel === panel && panel.__epsSearchOpenToken === token && (!options.isCurrent || options.isCurrent());
+  await loadToolClasses({ isCurrent });
+  if (!isCurrent()) return false;
+  await loadToolStudents(toolClassId, { isCurrent });
+  if (!isCurrent()) return false;
   drawSwimCertificate();
 }
 

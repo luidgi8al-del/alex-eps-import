@@ -291,9 +291,11 @@ th { color:var(--text-secondary); font-weight: 600; font-size: 11px; text-transf
 .searchOverlay { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:940; display:none; justify-content:center; align-items:flex-start; padding:60px 16px 16px; }
 .searchOverlay.open { display:flex; }
 .searchSheet { background:var(--bg); width:100%; max-width:620px; max-height:80vh; overflow-y:auto; border-radius:16px; padding:16px; }
-.searchSheet input { flex:1; }
-.searchHit { display:block; width:100%; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin:0 0 8px; color:var(--text); }
+.searchSheet input { flex:1; min-width:0; }
+.searchHit { display:block; width:100%; min-height:44px; text-align:left; white-space:normal; overflow-wrap:anywhere; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin:0 0 8px; color:var(--text); }
 .searchHit:hover { background:#F3F4F6; }
+.searchHit .cat, .searchHit .ttl, .searchHit .muted { display:block; }
+.searchSheet [data-search-action-status] { overflow-wrap:anywhere; }
 .searchHit .cat { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--primary-light); font-weight:700; }
 .searchHit .ttl { font-weight:600; }
 
