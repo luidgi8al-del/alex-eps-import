@@ -79,7 +79,7 @@ function construireStructure(element) {
 
 /** Affiche un état utile à un professeur, et non l'état brut du moteur. */
 export function mountSyncStatus(element, { onRetry } = {}) {
-  if (!element) throw new TypeError("Element d'etat absent");
+  if (!element) throw new TypeError("Élément d'état absent");
   element.setAttribute("role", "status");
   element.setAttribute("aria-live", "polite");
   const vue = construireStructure(element);

@@ -1646,8 +1646,8 @@ function ecImprimerTableau(tableau) {
   w.document.write(`<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${e(tableau.titre)}</title>
     <base href="${location.href.replace(/[^/]*$/, "")}">
     <style>@page{size:A4;margin:14mm}body{font:12px Arial,sans-serif;color:#173a57;margin:0}
-    .tete{display:flex;align-items:center;border-bottom:3px solid #2E7CC4;padding-bottom:10px}
-    .tete img{width:200px;max-height:70px;object-fit:contain}.tete div{margin-left:auto;text-align:right;line-height:1.5}
+    .tête{display:flex;align-items:center;border-bottom:3px solid #2E7CC4;padding-bottom:10px}
+    .tête img{width:200px;max-height:70px;object-fit:contain}.tête div{margin-left:auto;text-align:right;line-height:1.5}
     h1{font-size:19px;color:#2E7CC4;margin:18px 0 10px}table{width:100%;border-collapse:collapse}
     th,td{border:1px solid #ccd9e2;padding:7px;text-align:left}th{background:#2E7CC4;color:#fff}
     tr:nth-child(even) td{background:#f4f8fc}.pied{margin-top:20px;color:#607b8d}

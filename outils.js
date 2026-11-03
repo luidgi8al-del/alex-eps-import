@@ -571,7 +571,7 @@ async function ouvrirSessionTrois500DepuisClasse(sessionId,classId,period){showT
 async function ouvrirSessionTestDepuisClasse(sessionId,classId,period,testName){if(testName==='3 × 500 m · Observation'){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='running-observation');if(!w)throw Error('Observation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderRunningObservationWeb(w);}if(String(testName).endsWith(' · Bac AFL1 /12')){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='bac-grid');if(!w)throw Error('Évaluation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderBacGridWeb(w);}if(testName==='Escalade · AFL1 /12'){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='bac-climb');if(!w)throw Error('Évaluation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderBacClimbWeb(w);}if(testName==='Escalade /20'){showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';return openClimbTest(sessionId);}if(testName==='3 × 500 m')return ouvrirSessionTrois500DepuisClasse(sessionId,classId,period);if(testName==='Multi-chrono'&&typeof ouvrirMultiChronoDepuisClasse==='function')return ouvrirMultiChronoDepuisClasse(sessionId,classId,period);const key=Object.keys(EpsTests.TESTS).find(k=>EpsTests.TESTS[k].label===testName);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;epsTestPeriod=+period||1;if(testName==='Aptitudes physiques 6e'&&globalThis.EpsAptitudes)return EpsAptitudes.openSession(sessionId,classId,period);if(key){epsOpenCategory=EpsTests.CATEGORIES.find(c=>c.tests.includes(key))?.name||'Athle';epsOpenTest=key;resetGenericTestState();epsTestStarted=true;await renderEpsTests();if(EpsTests.TESTS[key].special==='stops')await openStopSession(sessionId,EpsTests.TESTS[key]);else await openGenericTestSession(sessionId,key);document.getElementById('epsTestBody')?.scrollIntoView({behavior:'smooth',block:'start'});return}if(testName==='Condition physique générale'&&typeof ouvrirConditionPhysiqueDepuisClasse==='function')return ouvrirConditionPhysiqueDepuisClasse(sessionId,classId,period);if(testName==='Observation Natation'&&typeof ouvrirObservationNatationDepuisClasse==='function')return ouvrirObservationNatationDepuisClasse(sessionId,classId,period);if(testName==='Observation Gymnastique'&&typeof ouvrirObservationGymnastiqueDepuisClasse==='function')return ouvrirObservationGymnastiqueDepuisClasse(sessionId,classId,period);if(String(testName).startsWith('Test VMA')){await renderVmaTest();await openVmaSession(sessionId);return}}
 function runningExportData(){return toolStudents.map(s=>({student:s,summary:runningSummary(s)})).filter(x=>x.summary)}
 function runningDocumentData(){return {title:`Résultats ${runningCount} × ${runningDistance} m`,context:`${toolClasses.find(c=>c.id===toolClassId)?.name||'Usage libre'} · Période ${epsTestPeriod} · Difficulté ${runningDifficulty} %`,headers:['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Régularité','Performance','Note','Barème'],rows:toolStudents.map(s=>{const r=runningSummary(s);return[s.last_name,s.first_name,runningWalking.has(String(s.id))?'Marche rapide':'Course',...(runningValues[s.id]||Array(runningCount).fill('')).map(v=>v===RUNNING_REMOVED?'Retirée':v),r?runningTimeLabel(r.avg):'',r?.reg??'',r?.perf??'',r?.total??'',r?`/${r.valid.length>1?12:r.perfMax}${r.valid.length<r.raw.filter(v=>v!==RUNNING_REMOVED).length?' · en cours':''}`:'Non noté']})}}
-function exportRunningCsv(){const headers=['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité','Performance','Note /12'],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,r.walking?'M.R':'Course',...r.raw.map(v=>v===RUNNING_REMOVED?'Retirée':v),`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),`${r.reg??''}/${r.regMax}`,`${r.perf??''}/${r.perfMax}`,r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`resultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
+function exportRunningCsv(){const headers=['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité','Performance','Note /12'],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,r.walking?'M.R':'Course',...r.raw.map(v=>v===RUNNING_REMOVED?'Retirée':v),`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),`${r.reg??''}/${r.regMax}`,`${r.perf??''}/${r.perfMax}`,r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`résultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
 function printRunningPdf(){const rows=runningExportData(),w=open('','_blank');if(!w)return alert('Autorisez les fenêtres surgissantes.');w.document.write(`<html><head><title>Résultats ${runningCount} × ${runningDistance} m</title><style>body{font:12px Arial;color:#173a57;padding:24px}h1{color:#087dca}table{width:100%;border-collapse:collapse}th,td{border:1px solid #cad8e3;padding:6px;text-align:center}th:first-child,td:first-child{text-align:left}@media print{button{display:none}}</style></head><body><h1>${runningCount} × ${runningDistance} m · ${toolClasses.find(c=>c.id===toolClassId)?.name||''}</h1><p>Difficulté : ${runningDifficulty>0?'+':''}${runningDifficulty} %</p><table><tr><th>Élève</th>${Array.from({length:runningCount},(_,i)=>`<th>C${i+1}</th>`).join('')}<th>Moyenne</th><th>Régularité</th><th>Performance</th><th>Note</th></tr>${rows.map(({student:s,summary:r})=>`<tr><td>${studentLabel(s)}${r.walking?' · M.R':''}</td>${r.raw.map(v=>`<td>${v===RUNNING_REMOVED?'Retirée':v}</td>`).join('')}<td>${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}</td><td>${r.reg??'—'} / ${r.regMax}</td><td>${r.perf??'—'} / ${r.perfMax}</td><td>${r.total??'—'} / ${r.valid.length>1?12:r.perfMax}</td></tr>`).join('')}</table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);w.document.close()}
 
 async function saveEpsTest(key, asNew=false) {
@@ -607,7 +607,7 @@ async function saveEpsTest(key, asNew=false) {
     await openGenericTestSession(sessionId,key);
     const completed=rows.filter(r=>!r.draft).length;document.getElementById("epsSaveMsg").textContent = `${test.label} enregistré${completed?` pour ${completed} élève(s)`:" comme brouillon"} · P${epsTestPeriod}`;
   } catch (e) {
-    document.getElementById("epsSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
+    document.getElementById("epsSaveMsg").textContent = "Échec de l'enregistrement : " + e.message;
   }
 }
 
@@ -728,7 +728,7 @@ async function saveVmaResults(asNew=false) {
       updated_at: now, deleted: false
     })}if(!asNew)for(const old of Object.values(vmaResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});vmaSessionId=sessionId;vmaSessionRecord=sessionRow;await drawVmaTest();await openVmaSession(sessionId);document.getElementById("vmaSaveMsg").textContent = `${rows.length} résultat(s) enregistré(s)${rows.length?'':' · brouillon'}.`;
   } catch (e) {
-    document.getElementById("vmaSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
+    document.getElementById("vmaSaveMsg").textContent = "Échec de l'enregistrement : " + e.message;
   }
 }
 async function openVmaSession(id){const saved=vmaSessions.find(s=>String(s.id)===String(id));if(!saved)return;vmaProtocol=String(saved.test_name||'').split(' · ')[1]||'VAMEVAL';const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${id}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(id)&&!r.deleted});vmaSessionId=saved.id;vmaSessionRecord=saved;vmaResultRecords={};vmaValues={};vmaGroupAssignments={};vmaGroupCount=1;rows.forEach(r=>{vmaResultRecords[r.student_id]=r;vmaValues[r.student_id]=String(r.result_unit||'').includes('brouillon')?'':String(r.input_value??'');const g=+String(r.input_unit||'').match(/^group:(\d+)/)?.[1]||1;vmaGroupAssignments[r.student_id]=g;vmaGroupCount=Math.max(vmaGroupCount,g)});vmaActiveGroup=0;await drawVmaTest()}
@@ -752,7 +752,7 @@ function drawSwimCertificate() {
 
   // Dix etapes, donc dix colonnes : c'est exactement le cas ou la colonne des noms doit rester
   // en vue pendant qu'on fait defiler le parcours.
-  toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 etapes du parcours en securite")
+  toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 étapes du parcours en sécurité")
     + toolRosterHtml()
     + `<div class="fitness-web">${socleTableauHtml(
         EpsTests.SWIM_STEPS.map((label,i)=>({titre:`${i+1}`,aide:label})),
@@ -773,7 +773,7 @@ function drawSwimCertificate() {
   });
   document.getElementById("swimPrintBtn").onclick = () => window.print();
   document.getElementById("swimResetBtn").onclick = () => {
-    if (!confirm("Effacer toutes les étapes validées et repartir de zéro ?")) return;
+    if (!confirm("Effacer toutes les étapes validées et répartir de zéro ?")) return;
     Object.keys(swimValidations).forEach(k => delete swimValidations[k]);
     drawSwimCertificate();
   };
@@ -795,9 +795,9 @@ function drawAptitudes() {
 
   // Tableau du socle : trois criteres en colonnes, les noms restent en vue.
   const champs = [["sprint","30 m","secondes"],["endurance","Palier","endurance"],["jump","Saut","cm"]];
-  toolPanel.innerHTML = toolHeader("Aptitudes physiques 6e", "Sprint 30 m, endurance et saut sans elan")
+  toolPanel.innerHTML = toolHeader("Aptitudes physiques 6e", "Sprint 30 m, endurance et saut sans élan")
     + toolRosterHtml()
-    + `<div class="card" style="background:#FFF7E8"><div class="muted">Baremes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
+    + `<div class="card" style="background:#FFF7E8"><div class="muted">Barèmes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
     + `<div class="field-tool-row">${socleSelecteurModeHtml(aptitudeMode,"aptitudeMode")}</div>`
     + `<div class="fitness-web aptitude-worksheet"><p class="aptitude-scroll-hint">Nom fixe · faites glisser les colonnes →</p>${socleTableauHtml(
         champs.map(([,titre,aide])=>({titre,aide})),
@@ -812,7 +812,7 @@ function drawAptitudes() {
   bindToolClose();
   bindToolRoster(drawAptitudes);
   document.getElementById("aptitudeMode").onchange=e=>{aptitudeMode=e.target.value;aptitudeModeChoisi=true;drawAptitudes()};
-  document.getElementById("aptResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies et repartir de zéro ?"))return;Object.keys(aptitudeValues).forEach(k=>delete aptitudeValues[k]);aptitudeColors={};drawAptitudes()};
+  document.getElementById("aptResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies et répartir de zéro ?"))return;Object.keys(aptitudeValues).forEach(k=>delete aptitudeValues[k]);aptitudeColors={};drawAptitudes()};
   toolPanel.querySelectorAll("[data-apt-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.aptCouleur;aptitudeColors[id]=socleCouleurSuivante(aptitudeColors[id]);drawAptitudes()});
 
   const niveau = (champ, brut) => {
@@ -856,7 +856,7 @@ function drawImpactMarker() {
     if (!toolStudents.some(s => String(s.id) === String(impactEleveId))) impactEleveId = toolStudents[0]?.id || null;
     impactPoints = impactParEleve[impactEleveId] = impactParEleve[impactEleveId] || [];
   }
-  toolPanel.innerHTML = toolHeader("Marqueur d'impacts", "Visualiser precisement les zones jouees")
+  toolPanel.innerHTML = toolHeader("Marqueur d'impacts", "Visualiser précisément les zones jouées")
     + toolRosterHtml()
     + (onRealClass() && toolStudents.length
       ? `<div class="field-tool-row"><label>Élève<select id="impactEleve">${toolStudents.map(s =>
@@ -960,14 +960,14 @@ function drawSpeedTracker() {
     chips.push(`<button class="periodChip${g === speedActiveGroup ? " active" : ""}" data-speed-group="${g}">Groupe ${g}</button>`);
   }
 
-  toolPanel.innerHTML = toolHeader("Vitesse – passages", "Depart commun, releve individuel et courbe d'evolution")
+  toolPanel.innerHTML = toolHeader("Vitesse – passages", "Départ commun, releve individuel et courbe d'évolution")
     + toolRosterHtml()
     + `<div class="row">
         <div><label>Distance (m)</label><input type="number" id="speedDistance" value="${speedDistance}" min="1"></div>
         <div><label>Nombre de groupes</label><input type="number" id="speedGroupCount" value="${speedGroupCount}" min="1"></div>
       </div>
       <div class="field-tool-row">${socleSelecteurModeHtml(speedMode,"speedMode")}</div>
-      <label>Repartir les eleves</label>
+      <label>Répartir les élèves</label>
       <div class="fitness-web">${socleTableauHtml(
         [{titre:"Groupe"},{titre:"Passages",aide:"Relevés"}],
         cible.map(s=>{const t=speedTimes[s.id]||[];return {eleve:s,
@@ -980,12 +980,12 @@ function drawSpeedTracker() {
             ? socleCouleurCelluleHtml(speedColors[s.id],`data-speed-couleur="${s.id}"`)
             : (t.length?`${(Math.max(...t.map((time,i)=>time-(t[i-1]||0)).filter(d=>d>0).map(d=>speedDistance/d*3.6),0)).toFixed(1)} km/h`:"—")}}),
         speedMode==="couleur"?"Appréciation":"Vitesse max")}</div>
-      <label>Groupe a chronometrer</label>
+      <label>Groupe à chronométrer</label>
       <div class="periodBar" style="display:flex">${chips.join("")}</div>
-      <button id="speedStartBtn" ${speedRunning ? "disabled" : ""}>Demarrer le groupe ${speedActiveGroup}</button>
+      <button id="speedStartBtn" ${speedRunning ? "disabled" : ""}>Démarrer le groupe ${speedActiveGroup}</button>
       ${speedRunning ? `<div class="toolDisplay" id="speedClock">0.00 s</div>
         <div class="toolActions">${groupe.map(s => `<button data-speed-hit="${s.id}">${studentLabel(s)} · passage ${(speedTimes[s.id] || []).length + 1}</button>`).join("")}</div>
-        <button class="secondary" id="speedStopBtn">Arreter</button>` : ""}
+        <button class="secondary" id="speedStopBtn">Arrêter</button>` : ""}
       <div id="speedResults" style="margin-top:12px"></div>
       <div class="running-save-actions"><button class="danger" id="speedResetBtn">↺ Réinitialiser toutes les données</button></div>`;
 
@@ -1028,7 +1028,7 @@ function drawSpeedTracker() {
   if(!speedModeChoisi&&speedModeClasse!==toolClassId){speedMode=socleModeParDefaut(toolClassId);speedModeClasse=toolClassId}
   document.getElementById("speedMode").onchange=e=>{speedMode=e.target.value;speedModeChoisi=true;drawSpeedTracker()};
   toolPanel.querySelectorAll("[data-speed-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.speedCouleur;speedColors[id]=socleCouleurSuivante(speedColors[id]);drawSpeedTracker()});
-  document.getElementById("speedResetBtn").onclick=()=>{if(!confirm("Effacer tous les passages et tous les groupes du travail en cours pour repartir de zéro ?"))return;speedTimes={};speedColors={};speedGroups={};speedGroupCount=1;speedActiveGroup=1;speedRunning=false;drawSpeedTracker()};
+  document.getElementById("speedResetBtn").onclick=()=>{if(!confirm("Effacer tous les passages et tous les groupes du travail en cours pour répartir de zéro ?"))return;speedTimes={};speedColors={};speedGroups={};speedGroupCount=1;speedActiveGroup=1;speedRunning=false;drawSpeedTracker()};
 
   drawSpeedResults(groupe);
 }
@@ -1038,7 +1038,7 @@ function drawSpeedResults(groupe) {
   const avecTemps = groupe.filter(s => (speedTimes[s.id] || []).length);
   if (!avecTemps.length) { host.innerHTML = ""; return; }
 
-  host.innerHTML = `<h2 style="font-size:15px; margin:0 0 8px">Resultats du groupe</h2>`
+  host.innerHTML = `<h2 style="font-size:15px; margin:0 0 8px">Résultats du groupe</h2>`
     + avecTemps.map(s => {
         const temps = speedTimes[s.id];
         // Chaque passage part du depart commun : la duree du passage est l'ecart au

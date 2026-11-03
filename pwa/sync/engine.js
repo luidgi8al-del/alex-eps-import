@@ -309,7 +309,7 @@ export class OfflineSyncEngine {
           // qu'on ne voit pas.
           if (operation.attempts + 1 >= MAX_TENTATIVES_ENVOI) {
             await storeRejection({ operation, serverRecord: null,
-              reason: `abandon apres ${operation.attempts + 1} tentatives : ${error?.message || error}` }, generation);
+              reason: `abandon après ${operation.attempts + 1} tentatives : ${error?.message || error}` }, generation);
             await acknowledgeOperation(operation.opId, generation);
             continue;
           }

@@ -413,7 +413,7 @@
           await attendre(() => f.document.querySelectorAll("#classPickBody [data-classe]").length > 0,
             "aucune classe cliquable dans la fenetre", 6000);
           const titre = f.document.getElementById("classPickTitre").textContent;
-          if (!/2 eleve/.test(titre)) throw new Error(`le titre ne rappelle pas la selection : ${titre}`);
+          if (!/2 élève/.test(titre)) throw new Error(`le titre ne rappelle pas la selection : ${titre}`);
           f.document.getElementById("classPickClose").click();
           await attendre(() => !f.document.getElementById("classPickOverlay").classList.contains("open"),
             "la fenetre de choix ne se ferme pas", 4000);
@@ -546,8 +546,8 @@
           await f.importUnssCsv(lignes.join(String.fromCharCode(10)), false);
           await attendre(() => $("importValider"), "le recapitulatif d'import ne s'affiche pas", 6000);
           const texte = $("unssList").innerText;
-          if (!/doublon cree/.test(texte)) throw new Error("le recapitulatif ne compte pas les doublons");
-          if (!/eleve\(s\) reconnu\(s\)/.test(texte)) throw new Error("le recapitulatif ne compte pas les reconnus");
+          if (!/doublon créé/.test(texte)) throw new Error("le recapitulatif ne compte pas les doublons");
+          if (!/élève\(s\) reconnu\(s\)/.test(texte)) throw new Error("le recapitulatif ne compte pas les reconnus");
 
           // Une colonne lue apparait soit comme un trou a combler, soit comme une divergence -
           // selon ce que porte deja la fiche. Ce qu'on verifie ici, c'est qu'elle est lue.
@@ -584,8 +584,10 @@
         action: async () => {
           await onglet("health");
           await attendre(() => rempli($("healthBody")), "l'ecran sante reste vide", 6000);
-          await attendre(() => f.document.querySelector('[data-dispense-vue="miennes"]'),
-            "les onglets de bilan n'apparaissent pas", 4000);
+          // L'onglet s'ouvre sur l'accueil Sante : chaque vue se choisit sur sa carte.
+          await attendre(() => f.document.querySelector('[data-sante-action="mes-dispenses"]'),
+            "l'accueil Sante ne propose pas ses cartes", 4000);
+          f.document.querySelector('[data-sante-action="nouvelle-dispense"]').click();
 
           // Le motif est propose des que le schema est marque comme applique.
           // La saisie se fait en trois etapes : carte de la classe, puis eleve, puis dispense.
@@ -611,11 +613,13 @@
           }
 
           // "Mes dispenses" ne montre que les siennes ; "Tous" ajoute celle du collegue.
-          f.document.querySelector('[data-dispense-vue="miennes"]').click();
+          f.document.getElementById("santeRetour").click();
+          f.document.querySelector('[data-sante-action="mes-dispenses"]').click();
           await attendre(() => f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length > 0,
             "le bilan personnel reste vide", 4000);
           const miennes = f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length;
-          f.document.querySelector('[data-dispense-vue="toutes"]').click();
+          f.document.getElementById("santeRetour").click();
+          f.document.querySelector('[data-sante-action="toutes-dispenses"]').click();
           await attendre(() => f.document.querySelectorAll("#dispenseVueBody [data-fiche]").length > miennes,
             "les dispenses des collegues n'apparaissent pas dans \"Tous\"", 4000);
 
@@ -634,7 +638,8 @@
           f.document.getElementById("dispenseFicheClose").click();
           await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
             "la fiche ne se ferme pas", 4000);
-          f.document.querySelector('[data-dispense-vue="saisie"]').click();
+          f.document.getElementById("santeRetour").click();
+          f.document.querySelector('[data-sante-action="nouvelle-dispense"]').click();
         }
       },
       {

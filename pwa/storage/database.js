@@ -85,7 +85,7 @@ export function openOfflineDatabase() {
   const promesse = new Promise((resolve, reject) => {
     const request = indexedDB.open(nomBase(compteCourant), DB_VERSION);
     request.onerror = () => reject(request.error);
-    request.onblocked = () => reject(new Error("La base hors connexion est bloquee par un autre onglet"));
+    request.onblocked = () => reject(new Error("La base hors connexion est bloquée par un autre onglet"));
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains(STORES.RECORDS)) {
@@ -153,7 +153,7 @@ async function executerTransaction(storeNames, mode, action, durability, expecte
       catch (error) { reject(error); }
     };
     tx.onerror = () => reject(tx.error);
-    tx.onabort = () => reject(tx.error || new Error("Transaction annulee"));
+    tx.onabort = () => reject(tx.error || new Error("Transaction annulée"));
   });
 }
 export function requestResult(request) {

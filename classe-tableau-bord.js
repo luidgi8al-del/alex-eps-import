@@ -240,7 +240,7 @@ function modelesEvaluation(contenu, grade, apsa) {
     const detail = situation => [
         situation.organization || "",
         ...(situation.instructions || []).map(i => "• " + i),
-        (situation.execution || []).length ? "Reperes de realisation :" : "",
+        (situation.execution || []).length ? "Repères de réalisation :" : "",
         ...(situation.execution || []).map(e => "• " + e)
     ].filter(Boolean).join("\n");
 
@@ -1187,7 +1187,7 @@ function renderDashboardExercises(activity) {
       Fiches Exercices / Jeux <span class="muted" style="font-weight:400">— ${planningText(activity.apsa_name)}</span>
     </summary>
     <div class="subtabbar" style="margin-top:10px">
-      <button class="subtabbtn${dashboardExerciseType === "WARMUP" ? " active" : ""}" data-ex-type="WARMUP">Echauffement</button>
+      <button class="subtabbtn${dashboardExerciseType === "WARMUP" ? " active" : ""}" data-ex-type="WARMUP">Échauffement</button>
       <button class="subtabbtn${dashboardExerciseType === "GAME" ? " active" : ""}" data-ex-type="GAME">Exercice / Jeu</button>
     </div>
     ${list.map((e, i) => `
@@ -1197,11 +1197,11 @@ function renderDashboardExercises(activity) {
         <canvas data-diagram="${e.diagramKind}" width="520" height="240" style="width:100%; max-width:520px; margin-top:10px; border:1px solid var(--border); border-radius:10px; background:#fff"></canvas>
         <div style="margin-top:10px">${e.organization}</div>
         <div style="margin-top:8px"><strong>Consignes</strong><div>${e.instructions}</div></div>
-        ${e.steps && e.steps.length ? `<div style="margin-top:8px"><strong>Deroulement</strong><ul class="tight" style="margin:2px 0 0; padding-left:18px">${e.steps.map(s => `<li>${s}</li>`).join("")}</ul></div>` : ""}
-        <div style="margin-top:8px"><strong>Reussite</strong><div>${e.successCriteria}</div></div>
+        ${e.steps && e.steps.length ? `<div style="margin-top:8px"><strong>Déroulement</strong><ul class="tight" style="margin:2px 0 0; padding-left:18px">${e.steps.map(s => `<li>${s}</li>`).join("")}</ul></div>` : ""}
+        <div style="margin-top:8px"><strong>Réussite</strong><div>${e.successCriteria}</div></div>
         <div class="muted" style="margin-top:8px">Plus facile — ${e.easier}</div>
         <div class="muted">Plus difficile — ${e.harder}</div>
-        ${e.safety ? `<div style="margin-top:8px; padding:8px 10px; border-left:3px solid var(--danger); background:#FDEEED; border-radius:0 4px 4px 0"><strong style="color:var(--danger)">Securite</strong><div>${e.safety}</div></div>` : ""}
+        ${e.safety ? `<div style="margin-top:8px; padding:8px 10px; border-left:3px solid var(--danger); background:#FDEEED; border-radius:0 4px 4px 0"><strong style="color:var(--danger)">Sécurité</strong><div>${e.safety}</div></div>` : ""}
       </details>`).join("")}
     </details>`;
 
@@ -1253,7 +1253,7 @@ async function renderClassSchedule() {
     });
 
   const rows = slots.length === 0
-    ? '<div class="muted">Aucun creneau. Ajoutez-en un ci-dessous.</div>'
+    ? '<div class="muted">Aucun créneau. Ajoutez-en un ci-dessous.</div>'
     : slots.map(s => {
         const day = PLANNING_DAYS.find(d => d.key === s.day_of_week);
         const dayLabel = day ? day.key.charAt(0) + day.key.slice(1).toLowerCase() : s.day_of_week;
@@ -1268,12 +1268,12 @@ async function renderClassSchedule() {
     <div class="top">
       <div>
         <h2 style="margin:0">Emploi du temps · ${label}</h2>
-        <div class="muted">Jours ou la classe a EPS chaque semaine. Sert a calculer la duree et les dates d'un cycle.</div>
+        <div class="muted">Jours où la classe a EPS chaque semaine. Sert à calculer la durée et les dates d'un cycle.</div>
       </div>
       <button class="secondary" id="closeScheduleBtn" style="margin-top:0">Fermer</button>
     </div>
     <div style="margin-top:12px">${rows}</div>
-    <h2 style="margin:18px 0 0; font-size:15px">Nouveau creneau EPS</h2>
+    <h2 style="margin:18px 0 0; font-size:15px">Nouveau créneau EPS</h2>
     <div class="row">
       <div>
         <label for="slotDay">Jour</label>
@@ -1281,16 +1281,16 @@ async function renderClassSchedule() {
           `<option value="${d.key}">${d.key.charAt(0) + d.key.slice(1).toLowerCase()}</option>`).join("")}</select>
       </div>
       <div>
-        <label for="slotStart">Heure de debut</label>
+        <label for="slotStart">Heure de début</label>
         <input type="time" id="slotStart" value="08:00">
       </div>
       <div>
-        <label for="slotDuration">Duree</label>
+        <label for="slotDuration">Durée</label>
         <select id="slotDuration">${PLANNING_DURATIONS.map(([m, l]) =>
           `<option value="${m}"${m === 60 ? " selected" : ""}>${l}</option>`).join("")}</select>
       </div>
     </div>
-    <button id="addSlotBtn">Ajouter le creneau</button>
+    <button id="addSlotBtn">Ajouter le créneau</button>
     <div class="error" id="slotError"></div>`;
 
   document.getElementById("closeScheduleBtn").onclick = () => { panel.style.display = "none"; };
@@ -1305,7 +1305,7 @@ async function addClassScheduleSlot() {
   const day = document.getElementById("slotDay").value;
   const start = document.getElementById("slotStart").value;
   const duration = parseInt(document.getElementById("slotDuration").value, 10);
-  if (!start) { errorEl.textContent = "Indiquez une heure de debut."; return; }
+  if (!start) { errorEl.textContent = "Indiquez une heure de début."; return; }
   try {
     const cls = scheduleClass.row;
     await apiFetch(`${SUPABASE_URL}/rest/v1/class_schedule_slots`, {
@@ -1339,10 +1339,10 @@ async function refreshCoursClassOptions() {
     const rows = res.ok ? await res.json() : [];
     select.innerHTML = rows.length
       ? rows.map(r => `<option value="${r.id}" data-grade="${r.grade}">${planningText(planningClassLabel(r))}</option>`).join("")
-      : '<option value="">Aucune classe enregistree</option>';
+      : '<option value="">Aucune classe enregistrée</option>';
     refreshCoursApsaOptions();
   } catch (e) {
-    select.innerHTML = '<option value="">Aucune classe enregistree</option>';
+    select.innerHTML = '<option value="">Aucune classe enregistrée</option>';
   }
 }
 
@@ -1386,8 +1386,8 @@ async function createCours() {
   const grade = classSelect.selectedOptions[0]?.dataset.grade;
   const apsa = document.getElementById("coursApsa").value;
   const sessions = parseInt(document.getElementById("coursSessions").value, 10);
-  if (!classId || !grade) { errorEl.textContent = "Creez d'abord une classe dans l'onglet Classes."; return; }
-  if (!apsa) { errorEl.textContent = "Choisissez une activite."; return; }
+  if (!classId || !grade) { errorEl.textContent = "Créez d'abord une classe dans l'onglet Classes."; return; }
+  if (!apsa) { errorEl.textContent = "Choisissez une activité."; return; }
   try {
     const nouveau = {
       id: crypto.randomUUID(), user_id: session.user_id, class_id: classId,
@@ -1399,7 +1399,7 @@ async function createCours() {
       await modeHorsConnexion.enregistrer("cycles", nouveau.id, nouveau);
     } else {
       const res = await apiFetch(`${SUPABASE_URL}/rest/v1/cycles`, { method: "POST", body: JSON.stringify(nouveau) });
-      if (!res.ok) throw new Error("Echec de creation du cours.");
+      if (!res.ok) throw new Error("Échec de création du cours.");
     }
     showCoursTab("cours");
   } catch (e) {
@@ -1479,7 +1479,7 @@ function renderCreatedCourses() {
           <div><strong>${classLabel}</strong> · ${r.apsa_name} · ${r.session_count} séances</div>
           <div>
             <button data-action="open" style="margin-top:0">Ouvrir</button>
-            <button class="secondary" data-action="evaluations" style="margin-top:0" ${r.class_id ? "" : "disabled title='Aucune classe rattachee'"}>Evaluations</button>
+            <button class="secondary" data-action="evaluations" style="margin-top:0" ${r.class_id ? "" : "disabled title='Aucune classe rattachee'"}>Évaluations</button>
             <button class="danger" data-action="delete" style="margin-top:0">Supprimer</button>
           </div>
         </div>

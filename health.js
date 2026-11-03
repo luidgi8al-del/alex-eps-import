@@ -8,7 +8,16 @@
   const healthToday=()=>new Date().toISOString().slice(0,10);
   function healthActive(row){const today=healthToday();return row.start_date<=today&&row.end_date>=today;}
   async function healthFetch(path){const response=await apiFetch(`${SUPABASE_URL}/rest/v1/${path}`);return response.ok?response.json():[];}
+  // Comme dans l'application : l'onglet Sante s'ouvre sur un accueil a trois cartes (Dispenses,
+  // Accidents, Infirmerie), et chaque rubrique a son bouton Retour au lieu de deux rangees
+  // d'onglets. Un raccourci (accueil du site, tableau de bord de classe) ouvre directement la vue visee.
+  let healthAccueil=true,healthEntreeDirecte=false;
   async function initHealthTab(preselectedClassId=null){
+    healthAccueil=!healthEntreeDirecte;healthEntreeDirecte=false;
+    return chargerSante(preselectedClassId);
+  }
+  /** Recharge les donnees sans changer de vue : la synchro ne doit pas couper une saisie. */
+  async function chargerSante(preselectedClassId=null){
     if(preselectedClassId)healthSelectedClassId=preselectedClassId;
     const host=document.getElementById('healthBody');if(!host)return;
     host.innerHTML='<div class="card muted">Chargement des données de santé…</div>';
@@ -29,14 +38,38 @@
     await reparerIdentitesDispenses();
     renderHealthTab();
   }
+  let accidentDepart=null;
+  function renderAccueilSante(host){
+   const dans7=new Date(Date.now()+7*864e5).toISOString().slice(0,10);
+   const actives=healthDispenses.filter(healthActive),echeances=actives.filter(d=>d.end_date<=dans7).length;
+   const rapports=globalThis.HealthIncidentPro?.count?.()??0;
+   const stat=(valeur,libelle)=>`<div class="santeStat"><b>${valeur}</b><small>${libelle}</small></div>`;
+   const carte=(id,icone,titre,sousTitre,actions)=>`<section class="santeCarte santeCarte-${id}"><div class="santeCarteTete"><span class="santeIcone" aria-hidden="true">${icone}</span><div><h3>${titre}</h3><p>${sousTitre}</p></div></div><div class="santeActions">${actions.map(([action,libelle],i)=>`<button type="button" class="${i?'secondary':''}" data-sante-action="${action}">${libelle}</button>`).join('')}</div></section>`;
+   host.innerHTML=`<div class="santeAccueil"><header class="santeHero"><div><h2>Santé / Accident</h2><p>Suivi, prévention et rapports</p></div><span aria-hidden="true">✚</span></header>
+     <div class="santeStats">${stat(actives.length,'dispenses')}${stat(rapports,'rapports')}${stat(0,'infirmerie')}</div>
+     ${echeances?`<div class="santeEcheance" role="status">⚠ ${echeances} dispense${echeances>1?'s se terminent':' se termine'} bientôt</div>`:''}
+     <div class="santeCartes">${carte('dispense','👤','Dispenses','Suivre les restrictions et échéances',[['nouvelle-dispense','Nouvelle dispense'],['mes-dispenses','Mes dispenses'],['toutes-dispenses','Toutes les dispenses']])}
+     ${carte('accident','⚠','Accidents et incidents','Créer et retrouver les rapports officiels',[['nouveau-rapport','Créer un rapport'],['anciens-rapports','Anciens rapports']])}
+     ${carte('infirmerie','✚','Infirmerie','Tracer un passage et son suivi',[['infirmerie','Nouveau passage'],['infirmerie','Historique']])}</div></div>`;
+   const vues={'nouvelle-dispense':['dispense','saisie'],'mes-dispenses':['dispense','miennes'],'toutes-dispenses':['dispense','toutes'],
+     'nouveau-rapport':['accident','new'],'anciens-rapports':['accident','archive'],'infirmerie':['infirmerie',null]};
+   host.querySelectorAll('[data-sante-action]').forEach(button=>button.onclick=()=>{
+     const [mode,vue]=vues[button.dataset.santeAction];healthMode=mode;healthAccueil=false;
+     if(mode==='dispense'){dispenseVue=vue;dispenseEtape=1;}
+     if(mode==='accident')accidentDepart=vue;
+     renderHealthTab();
+   });
+  }
   function renderHealthTab(){
    const host=document.getElementById('healthBody');if(!host)return;
-   host.innerHTML=`<div class="subtabbar healthTabs">${[['dispense','DISPENSE'],['accident','ACCIDENT'],['infirmerie','INFIRMERIE']].map(([id,label])=>`<button class="subtabbtn${healthMode===id?' active':''}" data-health-mode="${id}">${label}</button>`).join('')}</div><div id="healthModeBody"></div>`;
-   host.querySelectorAll('[data-health-mode]').forEach(button=>button.onclick=()=>{healthMode=button.dataset.healthMode;renderHealthTab();});
+   if(healthAccueil)return renderAccueilSante(host);
+   const titres={dispense:{saisie:'Nouvelle dispense',miennes:'Mes dispenses',toutes:'Toutes les dispenses'}[dispenseVue]||'Dispenses',accident:'Accidents et incidents',infirmerie:'Infirmerie'};
+   host.innerHTML=`<div class="santeBarre"><button type="button" class="secondary" id="santeRetour">← Retour</button><div><b>Santé / Accident</b><small>${titres[healthMode]||''}</small></div></div><div id="healthModeBody"></div>`;
+   document.getElementById('santeRetour').onclick=()=>{healthAccueil=true;renderHealthTab();};
    if(healthMode==='dispense')renderDispenseMode();
-   else if(healthMode==='accident'&&globalThis.HealthIncidentPro)globalThis.HealthIncidentPro.mount(document.getElementById('healthModeBody'),{classes:healthClasses,students:healthStudents,session,escape:healthEsc,save:payload=>enregistrerLigne('health_accidents',payload)});
+   else if(healthMode==='accident'&&globalThis.HealthIncidentPro){globalThis.HealthIncidentPro.mount(document.getElementById('healthModeBody'),{classes:healthClasses,students:healthStudents,session,escape:healthEsc,save:payload=>enregistrerLigne('health_accidents',payload)},accidentDepart);accidentDepart=null;}
    else if(healthMode==='accident')renderAccidentMode();
-   else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Cette rubrique est prête. Son formulaire sera ajouté à l’étape suivante.</p></div>`;
+   else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Le formulaire Infirmerie sera ajouté à l’étape suivante.</p></div>`;
   }
   // Trois vues sous DISPENSE : la saisie, ses propres dispenses (en cours / passees), et celles
   // de tout l'etablissement. Les deux dernieres servent de bilan et de suivi.
@@ -202,12 +235,8 @@
 
   function renderDispenseMode(){
    const body=document.getElementById('healthModeBody');
-   const onglets=[['saisie','SAISIE'],['miennes','MES DISPENSÉS'],['toutes','TOUS LES DISPENSÉS']];
-   body.innerHTML=`<div class="subtabbar" style="margin-bottom:10px">${onglets.map(([id,label])=>
-     `<button class="subtabbtn${dispenseVue===id?' active':''}" data-dispense-vue="${id}">${label}</button>`).join('')}</div><div id="dispenseVueBody"></div>`;
-   body.querySelectorAll('[data-dispense-vue]').forEach(b=>b.onclick=()=>{
-     dispenseVue=b.dataset.dispenseVue; renderDispenseMode();
-   });
+   // La vue (saisie, mes dispenses, toutes) se choisit sur l'accueil Sante : plus d'onglets ici.
+   body.innerHTML=`<div id="dispenseVueBody"></div>`;
    if(dispenseVue==='saisie')renderSaisieDispense();
    else renderListeDispenses(dispenseVue==='miennes');
   }
@@ -481,11 +510,12 @@
     healthDispenses=healthDispenses.filter(d=>d.id!==id);
     renderDispenseMode();
   }
-  function openClassDispenses(classId){healthSelectedClassId=classId;healthMode='dispense';showTab('health');}
+  function openClassDispenses(classId){healthSelectedClassId=classId;healthMode='dispense';dispenseVue='saisie';dispenseEtape=1;healthEntreeDirecte=true;showTab('health');}
   function ouvrirDispensesDepuisAccueil(){
     healthMode='dispense';
     dispenseVue='toutes';
     dispenseEtape=1;
+    healthEntreeDirecte=true;
     showTab('health');
   }
 
@@ -530,7 +560,7 @@
   globalThis.healthFetch = healthFetch;
   globalThis.initHealthTab = initHealthTab;
   /** Redessine Sante quand une synchronisation ramene des dispenses saisies ailleurs. */
-  globalThis.rafraichirSanteApresSynchro = () => { if(document.getElementById('healthBody')) initHealthTab(); };
+  globalThis.rafraichirSanteApresSynchro = () => { if(document.getElementById('healthBody')) chargerSante(); };
   globalThis.renderHealthTab = renderHealthTab;
   globalThis.renderDispenseMode = renderDispenseMode;
   globalThis.dispenseEditorHtml = dispenseEditorHtml;

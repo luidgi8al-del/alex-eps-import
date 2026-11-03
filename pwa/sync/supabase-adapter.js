@@ -48,7 +48,7 @@ export const TABLES_SUIVIES = [
  */
 export function createSupabaseAdapter({ url, anonKey, session, renouveler = null, tables = TABLES_SUIVIES }) {
   if (!url || !anonKey || typeof session !== "function") {
-    throw new TypeError("Adaptateur Supabase : url, cle et session sont obligatoires");
+    throw new TypeError("Adaptateur Supabase : url, clé et session sont obligatoires");
   }
 
   function accountGuard() {
@@ -63,7 +63,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
 
   function entetes() {
     const jeton = session()?.access_token;
-    if (!jeton) throw new Error("Session absente : rien ne peut etre synchronise.");
+    if (!jeton) throw new Error("Session absente : rien ne peut être synchronisé.");
     return { apikey: anonKey, Authorization: `Bearer ${jeton}`, "Content-Type": "application/json" };
   }
 
@@ -88,8 +88,8 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
 
   async function lire(chemin, check = accountGuard()) {
     const reponse = await appeler(() => fetch(`${url}${chemin}`, { headers: entetes() }), check);
-    if (reponse.status === 401) throw new Error("Session expiree.");
-    if (!reponse.ok) throw new Error(`Lecture refusee (HTTP ${reponse.status}).`);
+    if (reponse.status === 401) throw new Error("Session expirée.");
+    if (!reponse.ok) throw new Error(`Lecture refusée (HTTP ${reponse.status}).`);
     const data = await reponse.json();
     check();
     return data;
@@ -219,7 +219,7 @@ export function createSupabaseAdapter({ url, anonKey, session, renouveler = null
     }), check);
 
     if (!reponse.ok) {
-      if (reponse.status === 401) throw new Error("Session expiree.");
+      if (reponse.status === 401) throw new Error("Session expirée.");
 
       // Un droit refuse n'est pas une panne : reessayer ne changera rien. Traite comme une
       // erreur, l'operation reviendrait indefiniment dans la file, et le professeur verrait une

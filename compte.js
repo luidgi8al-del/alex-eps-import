@@ -79,7 +79,7 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
     return;
   }
   if (!email || password.length < 6) {
-    errorEl.textContent = "Email requis, mot de passe d'au moins 6 caracteres.";
+    errorEl.textContent = "Email requis, mot de passe d'au moins 6 caractères.";
     return;
   }
   const path = "/auth/v1/token?grant_type=password";
@@ -91,7 +91,7 @@ document.getElementById("authSubmitBtn").addEventListener("click", async () => {
     });
     const data = await res.json();
     if (!res.ok) {
-      const rawMessage = data.error_description || data.msg || data.message || "Echec de l'authentification.";
+      const rawMessage = data.error_description || data.msg || data.message || "Échec de l'authentification.";
       throw new Error(rawMessage);
     }
     if (!data.access_token) {
@@ -251,7 +251,9 @@ async function showMainView() {
   }
   document.getElementById("authView").style.display = "none";
   document.getElementById("mainView").style.display = "block";
-  document.getElementById("logoutBtn").style.display = "inline-block";
+  // Comme dans l'application, la deconnexion se fait depuis Reglages > Compte : le bouton du
+  // bandeau reste cache, mais c'est toujours lui qui porte la deconnexion securisee.
+  document.getElementById("logoutBtn").style.display = "none";
   document.getElementById("searchBtn").style.display = "inline-block";
   document.getElementById("settingsBtn").style.display = "inline-block";
   document.getElementById("tabbar").style.display = "flex";
@@ -316,21 +318,21 @@ async function loadInstitution() {
 function renderInstitutionCard() {
   const statusEl = document.getElementById("institutionStatus");
   if (currentInstitution) {
-    statusEl.innerHTML = `Rattache a <strong>${currentInstitution.name}</strong> (code ${currentInstitution.code}).
-      <button class="secondary" id="institutionLeaveBtn" style="margin-top:10px">Quitter cet etablissement</button>`;
+    statusEl.innerHTML = `Rattaché à <strong>${currentInstitution.name}</strong> (code ${currentInstitution.code}).
+      <button class="secondary" id="institutionLeaveBtn" style="margin-top:10px">Quitter cet établissement</button>`;
     document.getElementById("institutionLeaveBtn").addEventListener("click", async () => {
       await apiFetch(`${SUPABASE_URL}/rest/v1/rpc/leave_institution`, { method: "POST", body: JSON.stringify({}) });
       currentInstitution = null;
       renderInstitutionCard();
     });
   } else if (rattachementIncertain) {
-    statusEl.innerHTML = `Impossible de verifier le rattachement a l'etablissement pour l'instant.
-      Rien n'est perdu : reessayez dans un moment.
-      <button id="institutionRetryBtn" style="margin-top:10px">Reessayer</button>`;
+    statusEl.innerHTML = `Impossible de vérifier le rattachement à l'établissement pour l'instant.
+      Rien n'est perdu : réessayez dans un moment.
+      <button id="institutionRetryBtn" style="margin-top:10px">Réessayer</button>`;
     document.getElementById("institutionRetryBtn").addEventListener("click", () => loadInstitution());
   } else {
-    statusEl.innerHTML = `Non rattache. Le Planning et la Programmation annuelle ne se partagent qu'entre collegues du meme etablissement.
-      <button id="institutionLinkBtn" style="margin-top:10px">Se rattacher a un etablissement</button>`;
+    statusEl.innerHTML = `Non rattaché. Le Planning et la Programmation annuelle ne se partagent qu'entre collègues du même établissement.
+      <button id="institutionLinkBtn" style="margin-top:10px">Se rattacher à un établissement</button>`;
     document.getElementById("institutionLinkBtn").addEventListener("click", openInstitutionChooser);
   }
 }
@@ -338,8 +340,8 @@ function renderInstitutionCard() {
 function openInstitutionPrompt() {
   const panel = document.getElementById("institutionPanel");
   panel.innerHTML = `
-    <h2>Rattacher ce compte a un etablissement ?</h2>
-    <div class="muted" style="margin-bottom:10px">Cela permet de partager le Planning et la Programmation annuelle avec vos collegues du meme etablissement, et seulement eux.</div>
+    <h2>Rattacher ce compte a un établissement ?</h2>
+    <div class="muted" style="margin-bottom:10px">Cela permet de partager le Planning et la Programmation annuelle avec vos collègues du même établissement, et seulement eux.</div>
     <button id="institutionPromptYesBtn">Oui</button>
     <button class="secondary" id="institutionPromptNoBtn">Non merci</button>`;
   panel.style.display = "block";
@@ -350,8 +352,8 @@ function openInstitutionPrompt() {
 function openInstitutionChooser() {
   const panel = document.getElementById("institutionPanel");
   panel.innerHTML = `
-    <h2>Etablissement</h2>
-    <button id="institutionCreateBtn">Creer un nouvel etablissement</button>
+    <h2>Établissement</h2>
+    <button id="institutionCreateBtn">Créer un nouvel établissement</button>
     <button id="institutionJoinBtn">Rejoindre avec un code</button>
     <button class="secondary" id="institutionCancelBtn">Annuler</button>`;
   panel.style.display = "block";
@@ -363,12 +365,12 @@ function openInstitutionChooser() {
 function openInstitutionCreateForm() {
   const panel = document.getElementById("institutionPanel");
   panel.innerHTML = `
-    <h2>Creer un etablissement</h2>
-    <label for="institutionName">Nom (ex : Lycee Victor Hugo)</label>
+    <h2>Créer un établissement</h2>
+    <label for="institutionName">Nom (ex : Lycée Victor Hugo)</label>
     <input type="text" id="institutionName">
-    <label for="institutionCode">Code (au choix, a partager avec vos collegues)</label>
+    <label for="institutionCode">Code (au choix, à partager avec vos collègues)</label>
     <input type="text" id="institutionCode" placeholder="Ex : 32320">
-    <button id="institutionCreateSubmitBtn">Creer</button>
+    <button id="institutionCreateSubmitBtn">Créer</button>
     <button class="secondary" id="institutionCreateCancelBtn">Annuler</button>
     <div class="error" id="institutionCreateError"></div>`;
   panel.style.display = "block";
@@ -384,7 +386,7 @@ function openInstitutionCreateForm() {
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      errorEl.textContent = (data.message || "").includes("duplicate") ? "Ce code est deja utilise par un autre etablissement." : (data.message || "Erreur lors de la creation.");
+      errorEl.textContent = (data.message || "").includes("duplicate") ? "Ce code est déjà utilisé par un autre établissement." : (data.message || "Erreur lors de la création.");
       return;
     }
     panel.style.display = "none";
@@ -395,8 +397,8 @@ function openInstitutionCreateForm() {
 function openInstitutionJoinForm() {
   const panel = document.getElementById("institutionPanel");
   panel.innerHTML = `
-    <h2>Rejoindre un etablissement</h2>
-    <label for="institutionJoinCode">Code fourni par un collegue</label>
+    <h2>Rejoindre un établissement</h2>
+    <label for="institutionJoinCode">Code fourni par un collègue</label>
     <input type="text" id="institutionJoinCode">
     <button id="institutionJoinSubmitBtn">Rejoindre</button>
     <button class="secondary" id="institutionJoinCancelBtn">Annuler</button>
