@@ -960,10 +960,9 @@ function renderUnssTab() {
   if ((unssAdmin || unssCibleRendu === "studentsDirectoryList") && unssMode !== "licensed") {
     html += `<button class="secondary" id="unssImportBtn" style="margin-top:0">Importer CSV</button>`;
   }
-  // Vider le repertoire n'a de sens que sur la liste complete : depuis Licencies AS on ne
-  // verrait pas ce qu'on supprime, puisque les licencies sont justement ce qui est preserve.
-  if (unssAdmin && unssMode !== "licensed" && rows.length > 0) {
-    html += `<button class="secondary" id="unssClearBtn" style="margin-top:0">Supprimer toute la liste</button>`;
+  // La suppression porte exclusivement sur les coches, même si elles couvrent plusieurs pages/divisions.
+  if (unssAdmin && unssMode !== "licensed" && enTableau) {
+    html += `<button class="danger" id="unssDeleteSelectionBtn" style="margin-top:0;max-width:100%;white-space:normal" ${!selectionEleves.size || suppressionSelectionEnCours ? "disabled" : ""}>Supprimer la sélection (${selectionEleves.size})</button>`;
   }
   // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
   if (unssAdmin || unssMode === "licensed" || unssCibleRendu === "studentsDirectoryList") {
@@ -1104,8 +1103,7 @@ function renderUnssTab() {
   if (importBtn) importBtn.addEventListener("click", async () => {
     if (await autoriserGestionRepertoire()) unssFileInput().click();
   });
-  const clearBtn = document.getElementById("unssClearBtn");
-  if (clearBtn) clearBtn.addEventListener("click", () => viderRepertoireAs());
+  wrap.querySelector("#unssDeleteSelectionBtn")?.addEventListener("click", supprimerSelectionRepertoire);
   wrap.querySelectorAll("[data-edit]").forEach(el => {
     el.addEventListener("click", (e) => {
       if (e.target.closest("[data-delete]")) return;
@@ -1133,7 +1131,7 @@ async function autoriserGestionRepertoire() {
   const autorise = await estAdministrateur(true);
   unssAdmin = autorise;
   if (autorise) return true;
-  alert("L’import CSV et l’ajout manuel sont réservés à l’administrateur de l’établissement. Si vous êtes administrateur, vérifiez la connexion puis réessayez.");
+  alert("L’import CSV, l’ajout manuel et la suppression du répertoire sont réservés à l’administrateur de l’établissement. Si vous êtes administrateur, vérifiez la connexion puis réessayez.");
   return false;
 }
 
@@ -1166,63 +1164,68 @@ function unssFileInput() {
   return input;
 }
 
-/**
- * Vide le repertoire Eleve LVH apres un import rate ou un export de l'annee precedente.
- *
- * Deux categories sont preservees, parce que les supprimer detruirait un travail qui ne se
- * refait pas depuis un CSV : les licencies AS (voeux, taille de maillot, emails saisis a la
- * main) et les eleves deja inscrits dans un groupe. Un eleve inscrit mais non licencie
- * viderait sinon la composition du groupe sans que rien ne le signale.
- *
- * La suppression est logique (deleted = true), comme celle d'un eleve isole : une vraie
- * suppression SQL ne se propagerait pas, et l'app republierait ses copies locales a la
- * prochaine synchro. Les lignes disparaissent partout, y compris sur Android.
- */
-async function viderRepertoireAs() {
-  let inscrits;
-  try {
-    const adhesions = await lireTable("unss_memberships", "unss_memberships?deleted=eq.false&select=student_id");
-    inscrits = new Set(adhesions.map(m => m.student_id));
-  } catch { alert("Impossible de verifier les inscriptions aux groupes. Rien n'a ete supprime."); return; }
-
-  const aSupprimer = unssStudents.filter(s => !s.licensed && !inscrits.has(s.id));
-  const preserves = unssStudents.length - aSupprimer.length;
-  if (aSupprimer.length === 0) {
-    alert("Rien a supprimer : tous les eleves du repertoire sont licencies ou inscrits dans un groupe.");
-    return;
-  }
-  if (!confirm(
-    `Supprimer ${aSupprimer.length} eleve(s) du repertoire ?
-
-` +
-    `${preserves} eleve(s) sont conserves : les licencies AS et ceux deja inscrits dans un groupe.
-` +
-    `Les groupes eux-memes ne sont pas touches.
-
-Cette action est definitive.`
-  )) return;
-
-  const ids = aSupprimer.map(s => s.id);
-  const TAILLE_LOT = 200;
+/** Retire seulement les élèves cochés, par la même file hors connexion que les suppressions individuelles. */
+let suppressionSelectionEnCours = false;
+async function supprimerSelectionRepertoire() {
+  if (suppressionSelectionEnCours || !selectionEleves.size) return;
+  const owner = session?.user_id;
+  if (!owner) return;
+  const current = () => session?.user_id === owner;
+  const ids = new Set([...selectionEleves].map(String));
+  const choisis = unssStudents.filter(s => !s.deleted && ids.has(String(s.id)));
+  if (!choisis.length) { alert("Aucun élève disponible dans cette sélection. Actualisez le répertoire."); return; }
+  suppressionSelectionEnCours = true;
   let supprimes = 0;
-  for (let i = 0; i < ids.length; i += TAILLE_LOT) {
-    const lot = ids.slice(i, i + TAILLE_LOT);
-    const res = await apiFetch(
-      `${SUPABASE_URL}/rest/v1/unss_students?id=in.(${lot.map(encodeURIComponent).join(",")})`,
-      { method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() }) }
-    );
-    if (!res.ok) {
-      await loadUnssStudents();
-      renderUnssTab();
-      alert(`${supprimes} eleve(s) supprime(s), puis l'operation s'est interrompue. Relancez pour terminer.`);
+  let suppressionTentative = false;
+  const bouton = document.getElementById("unssDeleteSelectionBtn");
+  if (bouton) bouton.disabled = true;
+  try {
+    if (!await autoriserGestionRepertoire() || !current()) return;
+    let adhesions;
+    if (tableSuivie("unss_memberships")) {
+      adhesions = (await modeHorsConnexion.lire("unss_memberships")).rows;
+    } else {
+      const response = await apiFetchAll(`${SUPABASE_URL}/rest/v1/unss_memberships?deleted=eq.false&select=student_id`);
+      if (!response.ok) throw Error("Inscriptions indisponibles");
+      adhesions = response.rows;
+    }
+    if (!current()) return;
+    if (!Array.isArray(adhesions)) throw Error("Inscriptions indisponibles");
+    const inscrits = new Set(adhesions.filter(m => !m.deleted).map(m => String(m.student_id)));
+    const aSupprimer = choisis.filter(s => !s.licensed && !inscrits.has(String(s.id))
+      && unssStudents.some(actuel => String(actuel.id) === String(s.id) && !actuel.deleted && !actuel.licensed));
+    const preserves = choisis.length - aSupprimer.length;
+    if (!aSupprimer.length) {
+      alert("Les élèves cochés sont licenciés AS ou déjà inscrits à une activité : ils sont conservés.");
       return;
     }
-    supprimes += lot.length;
+    const noms = aSupprimer.slice(0,10).map(s => `• ${s.last_name || ""} ${s.first_name || ""} (${s.division || s.school_class_label || s.class_label || "division non renseignée"})`).join("\n");
+    const message = `Supprimer uniquement ${aSupprimer.length} élève(s) coché(s) du répertoire partagé ?\n\n${noms}`
+      + (aSupprimer.length > 10 ? `\n… et ${aSupprimer.length - 10} autre(s) élève(s) coché(s).` : "")
+      + (preserves ? `\n\n${preserves} élève(s) coché(s) sont conservés : licenciés AS ou inscrits à une activité.` : "")
+      + "\n\nLes élèves non cochés restent inchangés. Cette suppression sera synchronisée avec les autres appareils.";
+    if (!confirm(message) || !current()) return;
+    for (const student of aSupprimer) {
+      if (!current()) return;
+      suppressionTentative = true;
+      const response = await supprimerLigne("unss_students", student.id);
+      if (!current()) return;
+      if (response?.ok === false) throw Error("Suppression refusée");
+      supprimes++;
+      // Ne retirer une coche qu'après l'enregistrement réussi de cette suppression.
+      for (const id of selectionEleves) if (String(id) === String(student.id)) selectionEleves.delete(id);
+      unssStudents = unssStudents.filter(s => String(s.id) !== String(student.id));
+    }
+    alert(`${supprimes} suppression(s) enregistrée(s).` + (preserves ? ` ${preserves} élève(s) coché(s) conservé(s) pour l’AS.` : ""));
+  } catch (_) {
+    if (current()) alert(supprimes
+      ? `${supprimes} suppression(s) enregistrée(s), puis l’opération s’est interrompue. Les autres élèves restent cochés ; réessayez.`
+      : suppressionTentative ? "La suppression n’a pas pu être confirmée. Votre sélection est conservée ; synchronisez le répertoire avant de réessayer."
+      : "Les droits ou les inscriptions AS n’ont pas pu être vérifiés. Aucun élève n’a été supprimé. Votre sélection est conservée.");
+  } finally {
+    suppressionSelectionEnCours = false;
+    if (current()) renderUnssTab();
   }
-  try { await modeHorsConnexion?.synchroniser(); } catch { /* la lecture suivante reessaiera */ }
-  await loadUnssStudents();
-  renderUnssTab();
-  alert(`${supprimes} eleve(s) supprime(s). ${preserves} conserve(s) (licencies AS et inscrits en groupe).`);
 }
 
 /** Meme principe que le CSV Planning : intitules reconnus dans n'importe quel ordre. */

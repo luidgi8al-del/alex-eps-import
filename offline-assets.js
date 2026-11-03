@@ -7,7 +7,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./as-downloads.js",
   "./as-downloads.js?v=20261103-as-downloads-1",
   "./aslvh.js",
-  "./aslvh.js?v=20261103-as-downloads-1",
+  "./aslvh.js?v=20261103-selection-delete-1",
   "./assets/lvh.jpeg",
   "./bac-climb-model.js",
   "./bac-climb-model.js?v=20261015-1",
