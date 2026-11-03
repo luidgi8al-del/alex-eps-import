@@ -641,26 +641,39 @@ let unssPage = 1;
 let unssAdmin = false;
 
 /**
- * Telecharger les inscrits a l'AS : Excel (CSV, tableur) ou PDF (aperçu imprimable). Meme
- * choix Excel/PDF que Condition physique, pour ne pas reapprendre un geste different a
- * chaque outil du site.
+ * Choisir une liste AS et son format, comme dans l'APK. Les données sont relues en entier :
+ * la recherche et la pagination affichées ne limitent jamais le téléchargement.
  */
-function showLicenciesExport(rows) {
-  document.getElementById("unssExportDialog")?.remove();
-  const overlay = document.createElement("div");
-  overlay.id = "unssExportDialog";
-  overlay.className = "unified-export-overlay";
-  overlay.innerHTML = `<section class="unified-export-dialog"><header><i>🏆</i><div><h3>Inscrits à l'AS</h3><p>${rows.length} élève(s)</p></div><button data-export-close>×</button></header><main>
-    <h4>Format</h4>
-    <button type="button" class="export-choice save" data-format="csv"><b>▦</b><span><strong>Excel</strong><small>Identité, classe, e-mail élève, maillot et trois vœux</small></span><em>›</em></button>
-    <button type="button" class="export-choice share" data-format="pdf"><b>▤</b><span><strong>PDF</strong><small>Liste complète avec e-mail élève et trois vœux</small></span><em>›</em></button>
-    <button class="export-cancel" data-export-close>Annuler</button>
-  </main></section>`;
-  document.body.appendChild(overlay);
-  overlay.querySelectorAll("[data-export-close]").forEach(b => b.onclick = () => overlay.remove());
-  overlay.onclick = e => { if (e.target === overlay) overlay.remove() };
-  overlay.querySelector('[data-format="csv"]').onclick = () => { overlay.remove(); exportLicenciesCsv(rows) };
-  overlay.querySelector('[data-format="pdf"]').onclick = () => { overlay.remove(); printLicenciesPdf(rows) };
+function showLicenciesExport() {
+  const owner = session?.user_id;
+  return EpsAsDownloads.open({
+    isCurrent: () => !!owner && session?.user_id === owner,
+    load: async isCurrent => {
+      const read = async table => {
+        if (!isCurrent()) throw Error('Compte changé');
+        let rows;
+        if (tableSuivie(table)) rows = (await modeHorsConnexion.lire(table)).rows;
+        else {
+          const response = await apiFetchAll(`${SUPABASE_URL}/rest/v1/${table}?deleted=eq.false&select=*`);
+          if (!response.ok) throw Error('Lecture indisponible');
+          rows = response.rows;
+        }
+        if (!isCurrent() || !Array.isArray(rows)) throw Error('Lecture interrompue');
+        return rows.filter(row => !row.deleted);
+      };
+      const [students, slots, memberships] = await Promise.all([read('unss_students'),read('unss_slots'),read('unss_memberships')]);
+      const groups = memberships.some(m => !m.slot_id || String(m.slot_id)==='0') ? await read('unss_groups') : [];
+      return {students,slots,memberships,groups};
+    },
+    download: (data, format) => {
+      if (format === 'xlsx') return EpsToolDocuments.download(data,'Excel');
+      const canvas=document.createElement('canvas'), context=canvas.getContext('2d');
+      context.font='9px Arial';
+      const pages=EpsAsDownloads.pdfCommands(data,text=>context.measureText(String(text)).width,asPdfText);
+      const name=data.title.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+      asDownloadBlob(asPdfDocument(pages),name+'.pdf');
+    }
+  });
 }
 
 function libelleVoeuExport(student, rang) {
@@ -1025,7 +1038,7 @@ function renderUnssTab() {
     const student = unssStudents.find(s => s.id === btn.dataset.directoryEdit);
     if (student) openUnssStudentPanel(student, false, true);
   }));
-  wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport(rows));
+  wrap.querySelector("#unssExportBtn")?.addEventListener("click", () => showLicenciesExport());
   wrap.querySelector("#unssDocsManquantsBtn")?.addEventListener("click", () => ouvrirDocumentsManquants());
   wrap.querySelector("#unssHebergementBtn")?.addEventListener("click", () => ouvrirHebergement());
   wrap.querySelector("#unssGlobalEmailBtn")?.addEventListener("click", async () => {

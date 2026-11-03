@@ -1,0 +1,16 @@
+.as-download-overlay{padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+.as-download-dialog{display:flex;flex-direction:column;max-height:calc(100vh - 32px);max-height:calc(100dvh - max(12px,env(safe-area-inset-top)) - max(12px,env(safe-area-inset-bottom)));width:min(510px,100%);min-width:0}
+.as-download-dialog>header{flex-shrink:0;min-width:0}.as-download-dialog>header div{min-width:0}.as-download-dialog h3{overflow-wrap:anywhere}
+.as-download-dialog>header button{min-width:44px;min-height:44px;margin:0}
+.as-download-dialog main{min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain}
+.as-download-dialog fieldset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:4px}
+.as-download-dialog legend{font-weight:700;margin-bottom:5px}
+.as-download-dialog label{display:flex;align-items:center;gap:8px;min-height:44px;font-weight:500;white-space:normal;overflow-wrap:anywhere;margin:0}
+.as-download-dialog input[type=radio]{width:20px;min-width:20px;height:20px;margin:0;flex:none}
+.as-download-dialog input[type=checkbox]{width:20px;min-width:20px;height:20px;margin:0;flex:none}
+.as-download-dialog [data-as-activity-wrap]{display:grid;gap:5px}.as-download-dialog [hidden]{display:none!important}
+.as-download-dialog select{width:100%;min-width:0;max-width:100%;min-height:44px;margin:0}
+.as-download-dialog p{line-height:1.45;overflow-wrap:anywhere}
+.as-download-formats{display:flex;flex-wrap:wrap;gap:12px}
+.as-download-dialog footer{display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;border-top:1px solid #d7e3ee;padding:12px 17px}
+.as-download-dialog footer button{margin:0;min-height:44px;white-space:normal}
