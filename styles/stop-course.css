@@ -42,3 +42,8 @@
 .stop-course.stop-plein .stop-vue{display:none}
 @media(max-width:700px){.stop-course.stop-plein .stop-rappel{display:none}.stop-course.stop-plein .stop-group-tabs button{min-height:36px;padding:4px 10px}}
 @media(max-width:700px){.stop-course .stop-grille{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.stop-course .stop-tile-plus{min-height:84px}}
+/* Filles en rose, garcons en bleu : sur le prenom et une pastille, la case gardant la couleur de la note. */
+.stop-course .stop-fille{--sexe:#c2185b}.stop-course .stop-garcon{--sexe:#1565c0}
+.stop-course .stop-fille .stop-tile-nom,.stop-course .stop-garcon .stop-tile-nom,.stop-course .stop-fille .stop-pupil-name strong,.stop-course .stop-garcon .stop-pupil-name strong{color:var(--sexe)}
+.stop-course .stop-fille .stop-tile-nom::before,.stop-course .stop-garcon .stop-tile-nom::before,.stop-course .stop-fille .stop-pupil-name strong::before,.stop-course .stop-garcon .stop-pupil-name strong::before,.stop-course .stop-legende i{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--sexe);margin-right:.35em;vertical-align:.05em}
+.stop-course .stop-legende i{margin-left:.2em}
