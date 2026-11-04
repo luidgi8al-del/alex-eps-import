@@ -142,7 +142,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./outils-socle.js",
   "./outils-socle.js?v=20261104-accents-1",
   "./outils.js",
-  "./outils.js?v=20261104-chrono-1",
+  "./outils.js?v=20261104-prep-1",
   "./period-settings.js",
   "./planning-scroll.js",
   "./planning.js",
@@ -216,7 +216,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./styles/tools-workspace.css",
   "./styles/tools-workspace.css?v=20261020-offline-field-1",
   "./styles/trois500-terrain.css",
-  "./styles/trois500-terrain.css?v=20261104-chrono-1",
+  "./styles/trois500-terrain.css?v=20261104-prep-1",
   "./styles/ui-system.css",
   "./styles/ui-system.css?v=20260927-3",
   "./swim-observation-web.js",
@@ -259,5 +259,5 @@ self.EPS_OFFLINE_ASSETS = [
   "./tools-workspace.js",
   "./tools-workspace.js?v=20261026-search-1",
   "./trois500-terrain.js",
-  "./trois500-terrain.js?v=20261104-chrono-1"
+  "./trois500-terrain.js?v=20261104-prep-1"
 ];

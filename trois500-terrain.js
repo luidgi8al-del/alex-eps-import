@@ -6,6 +6,8 @@
 let runningChrono=(()=>{try{return localStorage.getItem('eps_run_chrono')==='auto'?'auto':'manuel'}catch{return 'manuel'}})();
 let runningVue=(()=>{try{return localStorage.getItem('eps_run_vue')==='grille'?'grille':'tableau'}catch{return 'tableau'}})();
 let runningCourse=0,runningCourseCle=null,runningDepart=null,runningArretAuto=null,runningTicker=null,runningArrivees=[],runningPlein=false;
+// Une fois le test commence, les reglages et les groupes se replient ; une fleche a droite les rouvre.
+let runReglagesOuverts=false,runGroupesOuverts=false;
 
 const runEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function runGrilleVisible(){return runningChrono==='auto'||runningVue==='grille'}
@@ -40,13 +42,41 @@ function runTuile(s){
   return `<article class="run-tile run-tile-manuel${sexe}" data-run-tile="${id}" style="--teinte:${teinte}"><button type="button" class="run-tile-nom run-tile-nom-btn" data-run-name="${id}">${nom}${walk}</button><div class="run-tile-saisies">${saisies}</div>${note}</article>`;
 }
 
-/** Barre de choix, chrono, puis tableau d'origine ou grille de cases. */
+function runFleche(cle,ouvert,libelle){return `<button type="button" class="secondary run-fleche" data-run-deplier="${cle}" aria-expanded="${ouvert}" aria-label="${ouvert?'Masquer':'Afficher'} ${libelle}" title="${ouvert?'Masquer':'Afficher'} ${libelle}">${ouvert?'▴':'▾'}</button>`}
+/** Protocole, format, nombre de courses et difficulte : replies (resume + fleche) apres « Commencer le test ». */
+function runReglagesHtml(corps){
+  if(!epsTestStarted)return corps;
+  const d=runningDifficulty>0?'+'+runningDifficulty:runningDifficulty;
+  return `<section class="run-prep"><div class="run-prep-ligne"><span class="run-prep-resume">${runningCount} × ${runningDistance} m · Difficulté ${d} %</span>${runFleche('reglages',runReglagesOuverts,'les réglages')}</div><div class="run-prep-corps"${runReglagesOuverts?'':' hidden'}>${corps}</div></section>`;
+}
+/** Groupes : replies apres « Commencer le test ». Sans groupe, une simple ligne ; avec des groupes,
+    seulement Groupe 1, 2, 3... (toucher pour choisir, appui prolonge pour modifier). */
+function runGroupesHtml(corps){
+  if(!epsTestStarted)return corps;
+  // Ouvert, la ligne ne repete pas les boutons de groupe deja presents dans le bloc complet.
+  const ligne=runGroupesOuverts?'<span class="run-prep-resume">Groupes</span>':runningGroups.length
+    ?`<div class="running-group-tabs run-groupes-replies">${runningGroups.map((g,i)=>`<button class="${runningActiveGroup===i?'':'secondary'}" data-running-group="${i}" title="Appui prolongé : modifier">Groupe ${i+1} · ${g.length}</button>`).join('')}</div>`
+    :'<span class="run-prep-resume">Sans groupe · ordre alphabétique</span>';
+  return `<section class="run-prep"><div class="run-prep-ligne">${ligne}${runFleche('groupes',runGroupesOuverts,'les groupes')}</div><div class="run-prep-corps"${runGroupesOuverts?'':' hidden'}>${corps}</div></section>`;
+}
+/** Manuel / Chrono auto, Tableau / Grille, Agrandir, et « Commencer le test » avant le debut.
+    En plein ecran, la barre est dans la section plein ecran (runTerrainHtml). */
+function runBarreHtml(){
+  if(runningPlein&&runGrilleVisible())return '';
+  return runBarreContenu(true);
+}
+function runBarreContenu(avecDebut){
+  const debut=avecDebut&&!epsTestStarted&&onRealClass()?'<button type="button" id="runBegin">Commencer le test</button>':'';
+  return `<div class="run-terrain-barre">${runChoix('Chronométrage',runningChrono,[['manuel','Manuel'],['auto','⏱ Chrono auto']])}${runningChrono==='manuel'?runChoix('Affichage',runningVue,[['tableau','Tableau'],['grille','Grille']]):''}${runGrilleVisible()?`<button type="button" class="secondary" id="runAgrandir">${runningPlein?'⤡ Réduire':'⤢ Agrandir'}</button>`:''}${debut}</div>`;
+}
+
+/** Chrono, puis tableau d'origine ou grille de cases (la barre est au-dessus des groupes). */
 function runTerrainHtml(eleves,tableau){
   const cle=`${toolClassId}|${runningActiveGroup}|${runningSessionId||''}`;
   if(runningCourseCle!==cle){runningCourse=runCoursParDefaut(eleves);runningCourseCle=cle}
   runningCourse=Math.min(runningCourse,Math.max(0,runningCount-1));
-  const barre=`<div class="run-terrain-barre">${runChoix('Chronométrage',runningChrono,[['manuel','Manuel'],['auto','⏱ Chrono auto']])}${runningChrono==='manuel'?runChoix('Affichage',runningVue,[['tableau','Tableau'],['grille','Grille']]):''}${runGrilleVisible()?`<button type="button" class="secondary" id="runAgrandir">${runningPlein?'⤡ Réduire':'⤢ Agrandir'}</button>`:''}</div>`;
-  if(!runGrilleVisible())return barre+tableau;
+  const barre=runningPlein?runBarreContenu(false):'';
+  if(!runGrilleVisible())return tableau;
   const groupes=runningPlein&&runningGroups.length?`<div class="run-plein-groupes"><button class="${runningActiveGroup<0?'':'secondary'}" data-running-group="-1">Tous</button>${runningGroups.map((g,i)=>`<button class="${runningActiveGroup===i?'':'secondary'}" data-running-group="${i}">Groupe ${i+1}</button>`).join('')}</div>`:'';
   let chrono='';
   if(runningChrono==='auto'){
@@ -86,6 +116,8 @@ function runTerrainBind(host,test,eleves){
     repeindre();
   });
   document.getElementById('runAgrandir')?.addEventListener('click',()=>{runningPlein=!runningPlein;repeindre()});
+  document.getElementById('runBegin')?.addEventListener('click',()=>{epsTestStarted=true;runReglagesOuverts=false;runGroupesOuverts=false;repeindre()});
+  host.querySelectorAll('[data-run-deplier]').forEach(b=>b.onclick=()=>{if(b.dataset.runDeplier==='reglages')runReglagesOuverts=!runReglagesOuverts;else runGroupesOuverts=!runGroupesOuverts;repeindre()});
   document.getElementById('runChronoGo')?.addEventListener('click',()=>{runningDepart=Date.now();runningArretAuto=null;runningArrivees=[];repeindre();runDemarrerTicker()});
   document.getElementById('runChronoStop')?.addEventListener('click',()=>{if(!confirm('Arrêter le chrono ? Les temps déjà relevés sont conservés.'))return;runArreter(false);repeindre()});
   document.getElementById('runAnnulerArrivee')?.addEventListener('click',()=>{

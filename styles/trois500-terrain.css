@@ -27,5 +27,14 @@
 .run-plein-groupes{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
 .run-terrain.run-plein .run-tile-plus{min-height:0}
 @media(max-width:700px){.run-grille{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.run-terrain.run-plein .run-chrono p{display:none}}
+/* Reglages et groupes replies apres « Commencer le test » : une ligne + une fleche a droite. */
+.run-prep{margin:6px 0;padding:6px 8px;border:1px solid #d6e3ed;border-radius:14px;background:#fff}
+.run-prep-ligne{display:flex;align-items:center;gap:8px;min-height:44px}
+.run-prep-ligne>.run-prep-resume{flex:1 1 auto;font-weight:700;color:#173a57}
+.run-prep-ligne>.run-groupes-replies{flex:1 1 auto;min-width:0;padding:2px 0;flex-wrap:wrap;overflow:visible}
+.run-fleche{flex:0 0 auto;width:44px!important;height:44px;min-width:44px;margin:0 0 0 auto!important;padding:0!important;border-radius:50%!important;font-size:20px;line-height:1}
+.run-prep-corps{padding-top:6px}
+#runBegin{width:auto;margin:0 0 0 auto}
+@media(max-width:700px){#runBegin{flex:1 1 100%;margin:0}}
 /* Le survol general des boutons (site.css) ne doit pas recolorer une case : sur tablette il reste colle apres le toucher. */
 .run-tile-plus:hover,.run-tile-plus:focus,.run-tile-nom-btn:hover,.run-tile-nom-btn:focus{background:transparent;color:inherit}
