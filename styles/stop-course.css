@@ -25,7 +25,7 @@
 /* Grille de cases pendant la course, et mode Agrandir qui occupe tout l'ecran. */
 .stop-course .stop-grille{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .stop-course .stop-tile{position:relative;min-width:0;--teinte:#0e9f5f}
-.stop-course .stop-tile-plus{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;height:100%;min-height:96px;margin:0;padding:10px 6px 8px;border:2px solid var(--teinte);border-radius:14px;background:color-mix(in srgb,var(--teinte) 10%,#fff);color:#173a57;touch-action:manipulation;cursor:pointer;min-width:0}
+.stop-course .stop-tile-plus{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;height:100%;min-height:96px;margin:0;padding:10px 6px 8px;border:2px solid var(--teinte);border-radius:14px;background:color-mix(in srgb,var(--teinte) 13%,#fff);color:#173a57;touch-action:manipulation;cursor:pointer;min-width:0}
 .stop-course .stop-tile-plus:active{transform:scale(.97)}
 .stop-course .stop-tile-nom{font-weight:800;font-size:clamp(13px,calc(var(--tuile-h,96px)*.15),22px);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
 .stop-course .stop-tile-n{font-size:clamp(20px,calc(var(--tuile-h,96px)*.3),56px);line-height:1;color:#173a57}
@@ -42,8 +42,8 @@
 .stop-course.stop-plein .stop-vue{display:none}
 @media(max-width:700px){.stop-course.stop-plein .stop-rappel{display:none}.stop-course.stop-plein .stop-group-tabs button{min-height:36px;padding:4px 10px}}
 @media(max-width:700px){.stop-course .stop-grille{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.stop-course .stop-tile-plus{min-height:84px}}
-/* Filles en rose, garcons en bleu : sur le prenom et une pastille, la case gardant la couleur de la note. */
+/* Filles en rose, garcons en bleu : toute la case en Grille, le prenom et une pastille en Liste. */
 .stop-course .stop-fille{--sexe:#c2185b}.stop-course .stop-garcon{--sexe:#1565c0}
-.stop-course .stop-fille .stop-tile-nom,.stop-course .stop-garcon .stop-tile-nom,.stop-course .stop-fille .stop-pupil-name strong,.stop-course .stop-garcon .stop-pupil-name strong{color:var(--sexe)}
-.stop-course .stop-fille .stop-tile-nom::before,.stop-course .stop-garcon .stop-tile-nom::before,.stop-course .stop-fille .stop-pupil-name strong::before,.stop-course .stop-garcon .stop-pupil-name strong::before,.stop-course .stop-legende i{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--sexe);margin-right:.35em;vertical-align:.05em}
+.stop-course .stop-fille .stop-pupil-name strong,.stop-course .stop-garcon .stop-pupil-name strong{color:var(--sexe)}
+.stop-course .stop-fille .stop-pupil-name strong::before,.stop-course .stop-garcon .stop-pupil-name strong::before,.stop-course .stop-legende i{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--sexe);margin-right:.35em;vertical-align:.05em}
 .stop-course .stop-legende i{margin-left:.2em}
