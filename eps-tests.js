@@ -145,7 +145,7 @@ const EpsTests = (function () {
     },
     ARRET_COURSE: {
       label: "Arrêt course",
-      protocol: "Touchez le nom de l’élève à chaque arrêt. Deux arrêts retirent 0,5 point à partir de 20.",
+      protocol: "Touchez le nom de l’élève à chaque arrêt. Choisissez le barème (sur 20, 15, 10 ou 5), le nombre d’arrêts par palier et les points retirés à chaque palier.",
       fieldLabel: "Nombre d’arrêts",
       inputLabel: "Arrêts",
       compute: v => ({ value: Math.max(0, 20 - Math.floor(v / 2) * 0.5), unit: "/20" }),

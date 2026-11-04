@@ -142,7 +142,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./outils-socle.js",
   "./outils-socle.js?v=20261104-accents-1",
   "./outils.js",
-  "./outils.js?v=20261104-accents-1",
+  "./outils.js?v=20261104-arret-1",
   "./period-settings.js",
   "./planning-scroll.js",
   "./planning.js",
