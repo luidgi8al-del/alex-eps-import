@@ -6,7 +6,8 @@
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function read(){try{const draft=JSON.parse(localStorage.getItem(key())||'null');return draft?.owner===owner()&&draft.kind==='running-draft'?draft:null}catch{return null}}
  function capture(){
-  if(!owner()||!document.querySelector('.running-grid'))return;
+  // Le tableau ou, en grille et en chrono auto, les cases du 3 x 500 (trois500-terrain.js).
+  if(!owner()||!document.querySelector('.running-grid,.run-terrain .run-grille'))return;
   const payload={classId:toolClassId,period:epsTestPeriod,values:runningValues,groups:runningGroups,walking:[...runningWalking],activeGroup:runningActiveGroup,distance:runningDistance,count:runningCount,difficulty:runningDifficulty,sessionId:runningSessionId,createdAt:runningCreatedAt};
   const signature=owner()+JSON.stringify(payload);if(signature===lastSignature)return;lastSignature=signature;
   if(!Object.values(payload.values).some(times=>times.some(v=>String(v).trim()))&&!payload.groups.length)return;

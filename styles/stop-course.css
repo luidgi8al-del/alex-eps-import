@@ -47,3 +47,5 @@
 .stop-course .stop-fille .stop-pupil-name strong,.stop-course .stop-garcon .stop-pupil-name strong{color:var(--sexe)}
 .stop-course .stop-fille .stop-pupil-name strong::before,.stop-course .stop-garcon .stop-pupil-name strong::before,.stop-course .stop-legende i{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--sexe);margin-right:.35em;vertical-align:.05em}
 .stop-course .stop-legende i{margin-left:.2em}
+/* Le survol general des boutons (site.css) ne doit pas recolorer une case : sur tablette il reste colle apres le toucher. */
+.stop-tile-plus:hover,.stop-tile-plus:focus{background:color-mix(in srgb,var(--teinte) 13%,#fff);color:#173a57}

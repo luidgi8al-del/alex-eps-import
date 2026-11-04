@@ -1,0 +1,31 @@
+/* 3 x 500 sur le terrain : choix Manuel / Chrono auto, grille de cases et mode Agrandir. */
+.run-terrain-barre{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 8px}
+.run-terrain-barre>button,.run-choix button,.run-chrono>button,.run-plein-groupes button{width:auto;margin:0;min-height:40px}
+.run-choix{display:inline-flex;gap:4px;flex-wrap:wrap}
+.run-chrono{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;padding:10px;border:1px solid #d6e3ed;border-radius:14px;background:#fff}
+.run-chrono-temps{font:800 clamp(28px,5vw,44px)/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#173a57;min-width:5.2ch;font-variant-numeric:tabular-nums}
+.run-chrono-temps.en-cours{color:#0e7a46}
+.run-chrono p{flex:1 1 100%;margin:0;font-size:13px;color:#607b8d}
+.run-grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.run-tile{position:relative;min-width:0;border:2px solid var(--teinte,#8da8ba);border-radius:14px;background:color-mix(in srgb,var(--teinte,#8da8ba) 13%,#fff);color:#173a57}
+.run-tile-plus{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;height:100%;min-height:110px;margin:0;padding:10px 6px 8px;border:0;border-radius:12px;background:transparent;color:inherit;touch-action:manipulation;cursor:pointer;min-width:0}
+.run-tile-plus:active{transform:scale(.97)}
+.run-tile.arrive{opacity:.6}
+.run-tile-nom{font-weight:800;font-size:clamp(13px,calc(var(--tuile-h,110px)*.14),22px);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.run-tile-temps{font-size:clamp(18px,calc(var(--tuile-h,110px)*.24),44px);line-height:1.1;font-variant-numeric:tabular-nums}
+.run-tile-courses{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;font-size:12px;color:#607b8d;font-variant-numeric:tabular-nums}
+.run-tile-courses i{font-style:normal}.run-tile-courses i.cur{font-weight:800;color:#173a57}
+.run-tile-note{font-size:12px;font-weight:700;color:#173a57}
+.run-tile-manuel{display:flex;flex-direction:column;gap:6px;padding:8px}
+.run-tile-nom-btn{width:100%;margin:0;padding:4px;border:0;background:transparent;color:inherit;text-align:center;cursor:pointer}
+.run-tile-saisies{display:flex;gap:4px}
+.run-tile-saisies label{flex:1 1 0;min-width:0;margin:0;display:grid;gap:2px;font-size:11px;color:#607b8d;text-align:center}
+.run-tile-saisies input{width:100%;min-width:0;padding:6px 2px;text-align:center;font-variant-numeric:tabular-nums}
+.run-tile-saisies .running-removed{flex:1 1 0;min-width:0;margin:0;padding:6px 2px;font-size:11px}
+.run-tile-manuel .run-tile-note{text-align:center}
+.run-terrain.run-plein{position:fixed;inset:0;z-index:2000;margin:0;padding:10px 12px;overflow:auto;background:#f4f8fb}
+.run-plein-groupes{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.run-terrain.run-plein .run-tile-plus{min-height:0}
+@media(max-width:700px){.run-grille{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.run-terrain.run-plein .run-chrono p{display:none}}
+/* Le survol general des boutons (site.css) ne doit pas recolorer une case : sur tablette il reste colle apres le toucher. */
+.run-tile-plus:hover,.run-tile-plus:focus,.run-tile-nom-btn:hover,.run-tile-nom-btn:focus{background:transparent;color:inherit}
