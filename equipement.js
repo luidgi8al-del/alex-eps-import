@@ -246,7 +246,7 @@ async function deleteEquipment(id) {
 
 const EPI_CATEGORIES = [
   ["BAUDRIER", "Baudrier"], ["CORDE", "Corde"], ["LONGE", "Longe"], ["MOUSQUETON", "Mousqueton"],
-  ["DEGAINE", "Degaine"], ["CASQUE", "Casque"], ["SYSTEME_ASSURAGE", "Systeme d'assurage"],
+  ["DEGAINE", "Degaine"], ["CASQUE", "Casque"], ["SYSTEME_ASSURAGE", "Descendeur / système d'assurage"],
   ["SANGLE", "Sangle"], ["ANNEAU", "Anneau"], ["AUTRE", "Autre"]
 ];
 const EPI_STATUSES = [
@@ -313,6 +313,7 @@ function epiAlert(item) {
 function renderEpi() {
   const wrap = document.getElementById("equipTab-epi");
   if (epiOpenedId) { renderEpiDetail(); return; }
+  if (typeof renderEpiInventory === 'function') { renderEpiInventory(); return; }
 
   const alerts = epiList.map(i => [i, epiAlert(i)]).filter(([, a]) => a);
   const visible = epiList.filter(item => !epiSearch || [item.internal_id, item.category, item.manufacturer, item.model, item.location]
@@ -393,8 +394,10 @@ async function renderEpiDetail(options = {}) {
       <div id="epiQrCanvas" style="display:flex;justify-content:center;margin:8px"></div>
       <div style="font-size:28px;font-weight:900;color:#123a59">${equipmentText(item.internal_id || "EPI")}</div>
       <div class="muted">Scannez pour ouvrir la fiche et son historique</div>
-      <div class="row"><button id="printEpiLabelBtn">Imprimer l'etiquette</button><button class="secondary" id="saveEpiLabelBtn">Enregistrer l'etiquette</button></div>
+      <div class="row"><button id="printEpiLabelBtn">Imprimer l'étiquette / PDF</button><button class="secondary" id="saveEpiLabelBtn">Télécharger le QR code PNG</button></div>
+      <a id="epiPermanentLink" href="${equipmentText(EpsEpiInventory.link(item.id))}">Lien permanent de cette fiche</a>
     </div>
+    <div class="epi-detail-activation"><label><input type="checkbox" id="epiActive" ${item.active !== false ? 'checked' : ''}> Fiche active dans la grille</label><p class="muted">L'activation ne change pas le statut de sécurité. Les fiches inactives restent accessibles et conservent leur QR code.</p></div>
     <div class="row">
       ${text("internal_id", "Identifiant interne")}
       <div><label>Categorie</label><select data-epi-field="category">${EPI_CATEGORIES.map(([k, l]) =>
@@ -473,7 +476,7 @@ async function addEpiItem() {
   const id = crypto.randomUUID();
   await enregistrerLigne("epi_items", {
     id, user_id: session.user_id, internal_id: internalId,
-    category: category.value, status: "EN_SERVICE", qr_code_value: internalId,
+    category: category.value, status: "A_CONTROLER", active: false, qr_code_value: EpsEpiInventory.link(id),
     updated_at: new Date().toISOString(), deleted: false
   });
   await loadEpiItems();
@@ -483,6 +486,7 @@ async function addEpiItem() {
 }
 
 function renderEpiQr(item) {
+  if (typeof showEpiQr === 'function') { showEpiQr(item); return; }
   const host=document.getElementById("epiQrCanvas"),value=item.qr_code_value||item.internal_id;
   if(!host)return;
   if(typeof QRCode!=="function"){host.innerHTML='<div class="error">Generateur QR indisponible hors connexion.</div>';return;}
@@ -494,6 +498,11 @@ function renderEpiQr(item) {
 
 async function saveEpiItem() {
   const wrap = document.getElementById("equipTab-epi");
+  const owner = session?.user_id, openedId = epiOpenedId;
+  const button = document.getElementById('saveEpiBtn'), message = document.getElementById('epiOk');
+  if (button.disabled) return;
+  button.disabled = true;
+  try {
   const payload = { updated_at: new Date().toISOString() };
   wrap.querySelectorAll("[data-epi-field]").forEach(el => { payload[el.dataset.epiField] = el.value; });
   wrap.querySelectorAll("[data-epi-date]").forEach(el => {
@@ -501,10 +510,19 @@ async function saveEpiItem() {
   });
   // Ligne entiere et non retouche : voir saveEquipment, meme raison.
   const actuel = epiList.find(x => x.id === epiOpenedId) || { id: epiOpenedId };
+  const reference = String(payload.internal_id || '').trim();
+  if (!reference) throw Error('Renseignez un identifiant interne.');
+  if (epiList.some(i => i.id !== actuel.id && String(i.internal_id).toUpperCase() === reference.toUpperCase())) throw Error('Cet identifiant est déjà utilisé.');
+  payload.internal_id = reference;
+  payload.active = document.getElementById('epiActive').checked;
+  if (session?.user_id !== owner || epiOpenedId !== openedId) return;
   await enregistrerLigne("epi_items", { ...actuel, ...payload });
+  if (session?.user_id !== owner || epiOpenedId !== openedId) return;
   Object.assign(actuel, payload);
   document.getElementById("epiOk").textContent = "Fiche enregistree.";
-  renderEpi();
+  renderEpiQr(actuel);
+  } catch(error) { if(session?.user_id===owner && epiOpenedId===openedId){message.className='error';message.textContent=error.message || 'Enregistrement impossible. Votre saisie est conservée.';} }
+  finally { button.disabled=false; }
 }
 
 /**

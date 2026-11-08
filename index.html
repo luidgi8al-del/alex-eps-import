@@ -609,7 +609,10 @@
   <script src="qrcode.min.js"></script>
   <script src="installation-photo.js?v=20261009-1"></script>
   <script src="installation-push.js?v=20261010-1"></script>
-  <script src="equipement.js?v=20261026-search-1"></script>
+  <script src="epi-inventory-model.js?v=20261108-epi-1"></script>
+  <script src="equipement.js?v=20261108-epi-1"></script>
+  <script src="epi-inventory.js?v=20261108-epi-1"></script>
+  <link rel="stylesheet" href="styles/epi-inventory.css?v=20261108-epi-1">
   <!-- Version explicite : un onglet ouvert avant une mise en ligne ne doit pas reutiliser
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <link rel="stylesheet" href="styles/as-downloads.css?v=20261103-as-downloads-1">
@@ -656,6 +659,7 @@
       // Preparer trois comptes de collegues d'affilee, c'etait sinon trois rapatriements
       // complets de l'etablissement. Revenir sur un compte deja visite retrouve sa copie.
       if (!session || !s || session.user_id !== s.user_id) {
+        globalThis.resetEpiInventory?.();
         globalThis.EPSGlobalSearch?.reset();
         globalThis.EPSAtelierEPPCS?.reset();
         modeHorsConnexion?.changerDeCompte(s?.user_id || null).catch(() => {});
@@ -664,6 +668,7 @@
       localStorage.setItem("alex_eps_session", JSON.stringify(s));
     }
     function clearSession() {
+      globalThis.resetEpiInventory?.();
       globalThis.EPSGlobalSearch?.reset();
       globalThis.EPSAtelierEPPCS?.reset();
       globalThis.EpsInstallationPush?.clear().catch(()=>{});

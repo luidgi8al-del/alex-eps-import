@@ -30,6 +30,7 @@ const server = http.createServer((req, res) => {
       window.enregistrerLigne = async (table, row) => { window.writes.push({table, row}); };
       window.lireTable = async () => window.fakeInspections || [];
     });
+    await page.addScriptTag({url: origin + '/epi-inventory-model.js'});
     await page.addScriptTag({url: origin + '/equipement.js'});
     const marker = '<b data-injected="true">Texte & "guillemets"</b>';
     await page.evaluate(value => {

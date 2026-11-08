@@ -256,6 +256,7 @@ async function showMainView() {
   document.getElementById("settingsBtn").style.display = "inline-block";
   document.getElementById("tabbar").style.display = "flex";
   showTab("home");
+  if (new URLSearchParams(location.search).has('epi')) openEpiLinkFromLocation();
   renderImpersonationBar();
   demarrerModeHorsConnexion().then(engine => engine?.changerDeCompte(activeUserId)).catch(error => console.warn(error.message));
   startAutomaticOfflinePreparation({force:true});
