@@ -16,11 +16,11 @@ const server=http.createServer((req,res)=>{const url=new URL(req.url,'http://loc
   const original=await page.locator('#epiPermanentLink').getAttribute('href');await page.locator('[data-epi-field="internal_id"]').fill('BAU-NOUVEAU');await page.locator('#saveEpiBtn').click();assert.equal(await page.locator('#epiPermanentLink').getAttribute('href'),original);
   const downloadPromise=page.waitForEvent('download');await page.locator('#saveEpiLabelBtn').click();const download=await downloadPromise;await download.saveAs(path.join(out,`qr-${width}.png`));
   await page.locator('#backEpiBtn').click();await page.locator('[data-epi-active="true"]').click();assert.equal(await page.locator('[data-open-epi]').count(),17);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1),'No horizontal overflow');await page.screenshot({path:path.join(out,`grid-${width}.png`),fullPage:true});
-  const labels=await page.evaluate(()=>epiLabelHtml(epiList));assert.equal((labels.match(/class="label"/g)||[]).length,90);fs.writeFileSync(path.join(out,'labels.html'),labels);
+  const labels=await page.evaluate(()=>epiLabelHtml(epiList));assert.equal((labels.match(/class="label"/g)||[]).length,120);fs.writeFileSync(path.join(out,'labels.html'),labels);
   assert.deepEqual(errors,[]);await context.close();
  }
  const context=await browser.newContext({serviceWorkers:'block'});await context.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const page=await context.newPage();await page.goto(origin+'/?epi=epi-1#equipement');await page.locator('#epiPermanentLink').waitFor({timeout:30000});assert.equal(await page.locator('[data-epi-field="serial_number"]').inputValue(),'C-1');assert.equal(await page.evaluate(()=>currentWebTab),'equipement');
  // An unknown scan never creates or guesses another record.
  await page.goto(origin+'/?epi=missing-id#equipement');await page.locator('#epiLinkRetry').waitFor({timeout:30000});assert.match(await page.locator('#equipTab-epi').innerText(),/indisponible/i);
- console.log('PASS EPI: 90 labels, 1280/390/320 layouts, activation, protected legacy QR, stable renamed links, PNG download, authenticated route and unknown ID');await context.close();
+ console.log('PASS EPI: 120 labels, 1280/390/320 layouts, activation, protected legacy QR, stable renamed links, PNG download, authenticated route and unknown ID');await context.close();
 }finally{await browser.close();await new Promise(r=>server.close(r));}})().catch(e=>{console.error(e);process.exitCode=1;});

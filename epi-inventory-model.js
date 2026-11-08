@@ -1,7 +1,7 @@
 (function(root) {
   const families = [
     {key:'BAUDRIER',label:'Baudriers',single:'Baudrier',prefix:'BAU',target:20},
-    {key:'CORDE',label:'Cordes',single:'Corde',prefix:'COR',target:0},
+    {key:'CORDE',label:'Cordes',single:'Corde',prefix:'COR',target:30},
     {key:'SYSTEME_ASSURAGE',label:'Descendeurs',single:'Descendeur',prefix:'ASS',target:20},
     {key:'MOUSQUETON',label:'Mousquetons',single:'Mousqueton',prefix:'MOU',target:20},
     {key:'CASQUE',label:'Casques',single:'Casque',prefix:'CAS',target:30}

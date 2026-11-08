@@ -1,10 +1,10 @@
 # Fiches EPI escalade et QR codes
 
 1. Dans le projet Supabase EPS LVH, ouvrir **SQL Editor → New query**.
-2. Copier **tout** le fichier `supabase/migrations/20261108090000_epi_inventory_qr.sql` et l’exécuter.
+2. Copier **tout** le fichier `supabase/migrations/20261108090000_epi_inventory_qr.sql` et l’exécuter, puis exécuter `supabase/migrations/20261108100000_epi_30_cordes.sql`. Si le premier est déjà installé, exécuter seulement le second.
 3. Sur le site : **Équipement → EPI escalade → Préparer les fiches**. Dans l’APK 1.3.44 : **Équipement → EPI escalade → Préparer les 90 fiches**.
 
-Cette préparation complète les familles jusqu’à 20 baudriers, 20 descendeurs, 20 mousquetons et 30 casques. Les fiches existantes et leurs contrôles sont conservés. Les anciennes fiches supprimées ne sont pas recréées. Répéter la préparation ne crée pas de doublons. Le nombre de cordes est libre.
+Cette préparation complète les familles jusqu’à 20 baudriers, 30 cordes, 20 descendeurs, 20 mousquetons et 30 casques, soit 120 fiches au total. Les fiches existantes et leurs contrôles sont conservés. Les anciennes fiches supprimées ne sont pas recréées. Répéter la préparation ne crée pas de doublons. Après l’ajout du second SQL, relancer Préparer les fiches pour créer les 30 cordes manquantes. L’APK 1.3.44 peut utiliser cette préparation sans réinstallation, même si son ancien bouton indique encore 90 fiches.
 
 Les nouvelles fiches se trouvent dans **Inactifs**. Ouvrir une fiche, renseigner ses caractéristiques et ses contrôles, puis activer son affichage dans la grille. Une activation ne valide jamais la conformité.
 

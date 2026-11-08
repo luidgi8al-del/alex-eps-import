@@ -2,8 +2,8 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const M=require('../epi-inventory-model.js');
 const now=1800000000000;
 const item={id:'epi-school-bau-001',active:true,status:'EN_SERVICE',last_inspection_date_epoch_millis:now-86400000,next_inspection_date_epoch_millis:now+60*86400000};
-test('inventory has 90 prepared slots, no invented rope count',()=>{
- assert.equal(M.families.reduce((n,f)=>n+f.target,0),90);assert.equal(M.families.find(f=>f.key==='CORDE').target,0);
+test('inventory has 120 prepared slots including the requested 30 ropes',()=>{
+ assert.equal(M.families.reduce((n,f)=>n+f.target,0),120);assert.equal(M.families.find(f=>f.key==='CORDE').target,30);
 });
 test('activation is independent from safety and old records stay active',()=>{
  assert.equal(M.active({}),true);assert.equal(M.active({active:false}),false);
