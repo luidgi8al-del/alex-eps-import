@@ -221,7 +221,7 @@ const UNSS_SLOT_DAYS = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAME
  */
 function menuCreneaux(id, slotIdChoisi, ancienLibelle) {
   const orphelin = !slotIdChoisi && ancienLibelle
-    ? `<option value="" selected>${unssText(ancienLibelle)} (ancien voeu, hors creneaux)</option>`
+    ? `<option value="" selected>${unssText(ancienLibelle)} (ancien voeu, hors créneaux)</option>`
     : "";
   const vide = `<option value=""${!slotIdChoisi && !ancienLibelle ? " selected" : ""}>Aucun voeu</option>`;
   const options = unssSlots.map(slot =>
@@ -230,7 +230,7 @@ function menuCreneaux(id, slotIdChoisi, ancienLibelle) {
   if (unssSlots.length === 0) {
     // Sans value="", un <option> renvoie son texte : la phrase partait telle quelle dans
     // wish1_slot_id, et le serveur refusait la ligne entiere sans qu'on comprenne pourquoi.
-    return `<select id="${id}" disabled><option value="">Aucun creneau AS. Creez-en dans l'onglet Creneaux AS.</option></select>`;
+    return `<select id="${id}" disabled><option value="">Aucun créneau AS. Créez-en dans l'onglet Créneaux AS.</option></select>`;
   }
   return `<select id="${id}">${orphelin}${vide}${options}</select>`;
 }
@@ -314,7 +314,7 @@ function paginationHtml(page, total, nom) {
   const tries = [...numeros].sort((a, b) => a - b);
 
   let html = `<div class="pagination">`;
-  html += `<button class="secondary" data-${nom}-page="${page - 1}" ${page === 1 ? "disabled" : ""}>Precedent</button>`;
+  html += `<button class="secondary" data-${nom}-page="${page - 1}" ${page === 1 ? "disabled" : ""}>Précédent</button>`;
   let precedent = 0;
   tries.forEach(n => {
     if (n - precedent > 1) html += `<span class="paginationEcart">…</span>`;
@@ -384,7 +384,7 @@ async function ouvrirChoixClassePourEleves() {
   const voile = fenetreChoixClasse();
   const corps = voile.querySelector("#classPickBody");
   voile.querySelector("#classPickTitre").textContent =
-    `Ajouter ${selectionEleves.size} eleve(s) a une classe`;
+    `Ajouter ${selectionEleves.size} élève(s) à une classe`;
   corps.innerHTML = `<div class="muted">Chargement de vos classes...</div>`;
   voile.classList.add("open");
 
@@ -392,7 +392,7 @@ async function ouvrirChoixClassePourEleves() {
   if (!res.ok) { corps.innerHTML = `<div class="error">Impossible de lire vos classes.</div>`; return; }
   const classes = res.rows;
   if (classes.length === 0) {
-    corps.innerHTML = `<div class="muted">Aucune classe. Creez-en une d'abord dans Creation classe.</div>`;
+    corps.innerHTML = `<div class="muted">Aucune classe. Créez-en une d'abord dans Création classe.</div>`;
     return;
   }
   corps.innerHTML = `<div class="muted" style="margin-bottom:8px">Cliquez la classe qui doit les recevoir.</div>`
@@ -495,7 +495,7 @@ async function verserDansClasse(classe, corps) {
 
   const existantsRes = await apiFetchAll(
     `${SUPABASE_URL}/rest/v1/students?deleted=eq.false&class_id=eq.${classe.id}&select=last_name,first_name,birth_date_epoch_millis`);
-  if (!existantsRes.ok) { echec("Impossible de lire les eleves de cette classe. Rien n'a ete ajoute."); return; }
+  if (!existantsRes.ok) { echec("Impossible de lire les élèves de cette classe. Rien n'a été ajouté."); return; }
   const cle = e => [ (e.last_name || "").trim().toLowerCase(),
                      (e.first_name || "").trim().toLowerCase(),
                      e.birth_date_epoch_millis || "" ].join("|");
@@ -509,8 +509,8 @@ async function verserDansClasse(classe, corps) {
     // parcours ecrivait directement dans Supabase, tandis que Classe lit toujours IndexedDB.
     // Un rattrapage force repare ce decalage au lieu de laisser l'eleve invisible indefiniment.
     try { await modeHorsConnexion?.rattraper(); } catch { /* la prochaine ouverture reessaiera */ }
-    corps.innerHTML = `<div class="muted">Ces ${ignores} eleve(s) sont deja dans `
-      + `${planningText(classe.name)}. La copie locale vient d'etre actualisee.</div>`
+    corps.innerHTML = `<div class="muted">Ces ${ignores} élève(s) sont déjà dans `
+      + `${planningText(classe.name)}. La copie locale vient d'être actualisée.</div>`
       + `<button id="classPickFini" style="margin-top:10px">Fermer</button>`;
     corps.querySelector("#classPickFini").addEventListener("click", () => fermerFenetreChoixClasse());
     return;
@@ -531,7 +531,7 @@ async function verserDansClasse(classe, corps) {
       updated_at: maintenant, deleted: false
     })))
   });
-  if (!creation.ok) { echec("Ajout non confirme. Rien n'a ete ajoute."); return; }
+  if (!creation.ok) { echec("Ajout non confirmé. Rien n'a été ajouté."); return; }
   // Versement en lot direct, mais l'onglet Classe lit la copie locale. Le rattrapage force
   // compare les identifiants recents et recupere tout de suite les lignes creees ci-dessus,
   // meme si une synchronisation plus ancienne avait deja avance son curseur.
@@ -542,9 +542,9 @@ async function verserDansClasse(classe, corps) {
 
   selectionEleves.clear();
   renderUnssTab();
-  corps.innerHTML = `<div><strong>${aVerser.length} eleve(s) ajoute(s) a `
+  corps.innerHTML = `<div><strong>${aVerser.length} élève(s) ajouté(s) à `
     + `${planningText(classe.name)}.</strong></div>`
-    + (ignores > 0 ? `<div class="muted">${ignores} deja present(s), laisse(s) de cote.</div>` : "")
+    + (ignores > 0 ? `<div class="muted">${ignores} déjà présent(s), laissé(s) de côté.</div>` : "")
     + `<button id="classPickFini" style="margin-top:10px">Fermer</button>`;
   corps.querySelector("#classPickFini").addEventListener("click", () => fermerFenetreChoixClasse());
 }
@@ -937,12 +937,12 @@ function renderUnssTab() {
       </select>`;
     if (divisionFiltre) {
       html += `<button class="secondary" id="cocherDivision" style="margin-top:0">`
-        + `${tousChoisis ? "Decocher" : "Cocher"} toute la division ${planningText(divisionFiltre)}`
+        + `${tousChoisis ? "Décocher" : "Cocher"} toute la division ${planningText(divisionFiltre)}`
         + ` (${rows.length})</button>`;
     }
     if (selectionEleves.size) {
       html += `<button class="secondary" id="viderSelection" style="margin-top:0">`
-        + `Vider la selection (${selectionEleves.size})</button>`;
+        + `Vider la sélection (${selectionEleves.size})</button>`;
     }
     html += `</div>`;
   }
@@ -966,7 +966,7 @@ function renderUnssTab() {
   }
   // Licencier un eleve ne cree personne : cela coche un eleve deja present, et reste ouvert.
   if (unssAdmin || unssMode === "licensed" || unssCibleRendu === "studentsDirectoryList") {
-    html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un eleve" : "Ajouter un élève"}</button>`;
+    html += `<button id="unssAddBtn" style="margin-top:0">${unssMode === "licensed" ? "Licencier un élève" : "Ajouter un élève"}</button>`;
   }
   // Retrouver d'un coup ceux dont le dossier n'est pas complet (paiement ou certificat manquant),
   // sans avoir a rouvrir chaque fiche pour le voir.
@@ -995,10 +995,10 @@ function renderUnssTab() {
   html += `</div>`;
 
   if (rows.length === 0) {
-    html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencie AS. Cliquez sur \"Licencier un eleve\" pour cocher un eleve de Classe > Liste eleve." : "Aucun eleve dans le repertoire. Ajoutez-en un ou importez un CSV (nom, prenom, date de naissance)."}</div>`;
+    html += `<div class="muted">${unssMode === "licensed" ? "Aucun licencié AS. Cliquez sur \"Licencier un élève\" pour cocher un élève de Classe > Liste élève." : "Aucun élève dans le répertoire. Ajoutez-en un ou importez un CSV (nom, prénom, date de naissance)."}</div>`;
   } else {
     html += `<div class="muted" style="margin-bottom:8px">`
-      + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} eleve(s)`
+      + `${debutPage + 1}\u2013${debutPage + rowsPage.length} sur ${rows.length} élève(s)`
       + (enTableau && selectionEleves.size ? ` \u00b7 ${selectionEleves.size} selectionne(s)` : "")
       + `</div>`;
     html += paginationHtml(unssPage, totalPages, "unss");
@@ -1009,7 +1009,7 @@ function renderUnssTab() {
       html += `<div class="card unssCard" data-edit="${s.id}">
         <div>
           <div><strong>${s.last_name} ${s.first_name}</strong></div>
-          <div class="muted">${[unssCategoryLabel(s.category, s.sex), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencie AS" : ""}</div>
+          <div class="muted">${[unssCategoryLabel(s.category, s.sex), formatFrDate(s.birth_date_epoch_millis)].filter(Boolean).join(" · ")}${s.licensed && unssMode === "all" ? " · Licencié AS" : ""}</div>
           ${wishes ? `<div class="muted" style="font-size:12px">Voeux : ${wishes}</div>` : ""}
           ${unssMode === "licensed" && s.jersey_size ? `<div class="muted" style="font-size:12px">Taille maillot : ${s.jersey_size}</div>` : ""}
           ${unssMode === "licensed" && s.host_available ? `<div class="muted" style="font-size:12px">🏠 Peut héberger${s.host_capacity ? ` (${s.host_capacity})` : ""}${s.host_age_min || s.host_age_max ? ` · ${s.host_age_min || "?"}-${s.host_age_max || "?"} ans` : ""}${s.host_sex_pref ? ` · ${s.host_sex_pref === "F" ? "filles" : "garçons"}` : ""}</div>` : ""}
@@ -1256,7 +1256,7 @@ async function importUnssCsv(csv, markLicensed) {
   const ALIASES = {
     nom: ["nom", "nom de famille", "lastname", "last name"],
     prenom: ["prenom", "firstname", "first name"],
-    naissance: ["date de naissance", "date naissance", "naissance", "ddn", "ne le", "nee le"],
+    naissance: ["date de naissance", "date naissance", "naissance", "ddn", "ne le", "née le"],
     voeu1: ["voeu 1", "activite voeu 1", "activite 1", "voeu1"],
     voeu2: ["voeu 2", "activite voeu 2", "activite 2", "voeu2"],
     voeu3: ["voeu 3", "activite voeu 3", "activite 3", "voeu3"],
@@ -1393,22 +1393,22 @@ function renderRapportImport() {
   const chiffres = r.resume;
 
   let html = `<div class="card">
-    <div class="top"><h2 style="margin:0">Import : ce qui va etre fait</h2>
+    <div class="top"><h2 style="margin:0">Import : ce qui va être fait</h2>
       <button class="secondary" id="importAnnuler" style="margin-top:0">Annuler</button></div>
     <ul class="tight" style="margin:10px 0 0; padding-left:18px">
-      <li><strong>${chiffres.reconnus}</strong> eleve(s) reconnu(s)</li>
+      <li><strong>${chiffres.reconnus}</strong> élève(s) reconnu(s)</li>
       <li><strong>${chiffres.completes}</strong> fiche(s) completee(s)</li>
-      <li><strong>${chiffres.divergences}</strong> divergence(s) a verifier</li>
-      <li><strong>${chiffres.nouveaux}</strong> nouvel(s) eleve(s)</li>
-      <li><strong>${chiffres.ambigus}</strong> cas ambigu(s) a trancher</li>
-      <li><strong>0</strong> doublon cree</li>
+      <li><strong>${chiffres.divergences}</strong> divergence(s) à vérifier</li>
+      <li><strong>${chiffres.nouveaux}</strong> nouvel(s) élève(s)</li>
+      <li><strong>${chiffres.ambigus}</strong> cas ambigu(s) à trancher</li>
+      <li><strong>0</strong> doublon créé</li>
     </ul>
-    <div class="muted" style="margin-top:8px">${r.absentsDuFichier.length} eleve(s) du repertoire
+    <div class="muted" style="margin-top:8px">${r.absentsDuFichier.length} élève(s) du répertoire
       ne figurent pas dans ce fichier : ils ne sont pas touches.</div>`;
 
   if (r.contexte.ignorees || r.contexte.entetesRepetees) {
     html += `<div class="muted" style="margin-top:6px">${r.contexte.ignorees} ligne(s) sans nom ni
-      prenom et ${r.contexte.entetesRepetees} ligne(s) d'entete ignorees dans le fichier.</div>`;
+      prénom et ${r.contexte.entetesRepetees} ligne(s) d'en-tête ignorées dans le fichier.</div>`;
   }
   html += `</div>`;
 
@@ -1419,7 +1419,7 @@ function renderRapportImport() {
   if (avecDesaccord.length) {
     html += `<div class="card" style="margin-top:12px">
       <h3 style="margin:0 0 4px">Divergences</h3>
-      <div class="muted">Sans choix de votre part, l'ancienne valeur est conservee.</div>`;
+      <div class="muted">Sans choix de votre part, l'ancienne valeur est conservée.</div>`;
     avecDesaccord.forEach(({ reconnu, index }) => {
       html += `<div class="card" style="margin-top:8px"><strong>${planningText(nomComplet(reconnu.existant))}</strong>`;
       reconnu.divergences.forEach(d => {
@@ -1467,8 +1467,8 @@ function renderRapportImport() {
   if (r.ambigus.length) {
     html += `<div class="card" style="margin-top:12px">
       <h3 style="margin:0 0 4px">Cas ambigus</h3>
-      <div class="muted">Sans choix de votre part, ces lignes sont ignorees : mieux vaut les
-        reprendre plus tard qu'ecrire dans la mauvaise fiche.</div>`;
+      <div class="muted">Sans choix de votre part, ces lignes sont ignorées : mieux vaut les
+        reprendre plus tard qu'écrire dans la mauvaise fiche.</div>`;
     r.ambigus.forEach((cas, index) => {
       html += `<div class="card" style="margin-top:8px">
         <strong>${planningText(nomComplet(cas.importe))}</strong>
@@ -1478,12 +1478,12 @@ function renderRapportImport() {
             data-ambigu="${index}" ${choixAmbigus[index] ? "" : "checked"}> Ignorer cette ligne</label>
           ${cas.candidats.map(c => `<label style="display:block"><input type="radio" name="amb-${index}"
             value="${planningText(c.id)}" data-ambigu="${index}"
-            ${choixAmbigus[index] === c.id ? "checked" : ""}> Completer ${planningText(nomComplet(c))}
+            ${choixAmbigus[index] === c.id ? "checked" : ""}> Compléter ${planningText(nomComplet(c))}
             <span class="muted">${planningText(valeurLisible("birth_date_epoch_millis", c.birth_date_epoch_millis))}
             · ${planningText(c.division || "sans division")}</span></label>`).join("")}
           <label style="display:block"><input type="radio" name="amb-${index}" value="nouveau"
             data-ambigu="${index}" ${choixAmbigus[index] === "nouveau" ? "checked" : ""}>
-            Creer un nouvel eleve</label>
+            Créer un nouvel élève</label>
         </div>
       </div>`;
     });
@@ -1702,14 +1702,14 @@ async function appliquerImport() {
     bouton.disabled = false; bouton.textContent = "Valider l'import";
     // Reimporter le meme fichier ne creera pas de doublon : les fiches deja envoyees seront
     // reconnues. C'est tout l'interet du rapprochement, et il faut le dire.
-    erreur.textContent = `${e.message} Vous pouvez relancer le meme fichier : les eleves deja enregistres seront reconnus, sans doublon.`;
+    erreur.textContent = `${e.message} Vous pouvez relancer le même fichier : les élèves déjà enregistrés seront reconnus, sans doublon.`;
     return;
   }
 
   importEnCours = null;
   await loadUnssStudents();
   renderUnssTab();
-  alert(`${r.resume.reconnus} eleve(s) reconnu(s), ${r.resume.nouveaux} ajoute(s), aucun doublon.`);
+  alert(`${r.resume.reconnus} élève(s) reconnu(s), ${r.resume.nouveaux} ajouté(s), aucun doublon.`);
 }
 
 // ---- UNSS > Creneaux AS : l'offre d'activites parmi laquelle se formulent les voeux ----
@@ -1718,11 +1718,11 @@ function renderUnssSlotsTab() {
   const wrap = document.getElementById("unssList");
   let html = `<div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px">
     <button id="unssSlotsDownloadBtn" class="secondary" style="margin-top:0" ${unssSlots.length ? "" : "disabled"}>Téléchargement</button>
-    <button id="unssSlotAddBtn" style="margin-top:0">Ajouter un creneau</button></div>`;
+    <button id="unssSlotAddBtn" style="margin-top:0">Ajouter un créneau</button></div>`;
 
   if (unssSlots.length === 0) {
-    html += `<div class="muted">Aucun creneau AS. Creez-en un : c'est parmi ces creneaux que
-      les eleves formulent leurs trois voeux au moment de leur licence.</div>`;
+    html += `<div class="muted">Aucun créneau AS. Créez-en un : c'est parmi ces créneaux que
+      les élèves formulent leurs trois voeux au moment de leur licence.</div>`;
   } else {
     html += unssSlots.map(slot => {
       const detail = [capitaliseJour(slot.day_of_week),
@@ -2646,11 +2646,11 @@ async function supprimerCreneau(slotId) {
   const avertissement = demandes > 0
     ? `
 
-Attention : ${demandes} eleve(s) ont place ce creneau dans leurs voeux. Le voeu restera lisible mais ne pointera plus sur un creneau.`
+Attention : ${demandes} élève(s) ont placé ce créneau dans leurs voeux. Le voeu restera lisible mais ne pointera plus sur un créneau.`
     : "";
-  if (!confirm(`Supprimer le creneau "${slot ? slot.activity_name : ""}" ?${avertissement}`)) return;
+  if (!confirm(`Supprimer le créneau "${slot ? slot.activity_name : ""}" ?${avertissement}`)) return;
   try { await supprimerLigne("unss_slots", slotId); }
-  catch (erreur) { alert(erreur.message || "Creneau non supprime. Verifiez votre connexion."); return; }
+  catch (erreur) { alert(erreur.message || "Créneau non supprimé. Vérifiez votre connexion."); return; }
   await loadUnssSlots();
   renderUnssTab();
 }
@@ -2670,14 +2670,14 @@ async function openUnssSlotPanel(slot) {
   panel.classList.remove("as-full-panel", "as-list-modal", "as-call-modal", "as-date-panel");
   panel.classList.add("ui-modal-panel");
   panel.innerHTML = `<div class="ui-modal-head"><div><small>CRÉNEAU AS</small><h2>${isNew ? "Nouveau créneau AS" : "Modifier le créneau"}</h2></div><button type="button" class="ui-modal-close" id="unssSlotCloseBtn" aria-label="Fermer">×</button></div><div class="ui-modal-body">
-    <label for="unssSlotActivity">Activite</label>
+    <label for="unssSlotActivity">Activité</label>
     <input type="text" id="unssSlotActivity" value="${slot ? unssText(slot.activity_name) : ""}" placeholder="Badminton, Cross, Futsal...">
     <label for="unssSlotDay">Jour</label>
     <select id="unssSlotDay">
-      <option value="">Non renseigne</option>
+      <option value="">Non renseigné</option>
       ${UNSS_SLOT_DAYS.map(j => `<option value="${j}"${slot && slot.day_of_week === j ? " selected" : ""}>${capitaliseJour(j)}</option>`).join("")}
     </select>
-    <label for="unssSlotStart">Heure de debut</label>
+    <label for="unssSlotStart">Heure de début</label>
     <input type="time" id="unssSlotStart" value="${normaliserHeureCreneau(slot?.start_time)}">
     <label for="unssSlotEnd">Heure de fin</label>
     <input type="time" id="unssSlotEnd" value="${normaliserHeureCreneau(slot?.end_time)}">
@@ -2703,7 +2703,7 @@ async function openUnssSlotPanel(slot) {
   document.getElementById("unssSlotCancelBtn").addEventListener("click", () => fermerFenetreUnss());
   document.getElementById("unssSlotSaveBtn").addEventListener("click", async () => {
     const activite = document.getElementById("unssSlotActivity").value.trim();
-    if (!activite) { document.getElementById("unssSlotError").textContent = "L'activite est obligatoire."; return; }
+    if (!activite) { document.getElementById("unssSlotError").textContent = "L'activité est obligatoire."; return; }
     const places = parseInt(document.getElementById("unssSlotPlaces").value, 10);
     const professeurChoisi = document.getElementById("unssSlotTeacher");
     const body = {
@@ -2729,7 +2729,7 @@ async function openUnssSlotPanel(slot) {
       }
     } catch (erreur) {
       document.getElementById("unssSlotError").textContent =
-        erreur.message || "Creneau non enregistre. Verifiez votre connexion.";
+        erreur.message || "Créneau non enregistré. Vérifiez votre connexion.";
       return;
     }
     fermerFenetreUnss();
@@ -2786,10 +2786,10 @@ function openUnssPickPanel() {
   pageLicence = 1;
   const candidates = unssStudents.filter(s => !s.licensed);
   const panel = document.getElementById("unssPanel");
-  panel.innerHTML = `<h2>Choisir un eleve a licencier</h2>` +
+  panel.innerHTML = `<h2>Choisir un élève à licencier</h2>` +
     (candidates.length === 0
-      ? `<div class="muted">Tous les eleves du repertoire sont deja licencies, ou le repertoire Eleve LVH est vide. Importez-le d'abord dans cet onglet.</div>`
-      : `<input type="search" id="unssPickSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+      ? `<div class="muted">Tous les élèves du répertoire sont déjà licenciés, ou le répertoire Élève LVH est vide. Importez-le d'abord dans cet onglet.</div>`
+      : `<input type="search" id="unssPickSearch" placeholder="Rechercher un nom ou un prénom" autocomplete="off" style="width:100%">
          <div class="muted" id="unssPickCount" style="margin:8px 0"></div>
          <div id="unssPickResults"></div>`
     ) +
@@ -2809,8 +2809,8 @@ function openUnssPickPanel() {
       const page = trouves.slice(debut, debut + TAILLE_PAGE_LISTE);
 
       compteur.textContent = trouves.length === 0
-        ? "Aucun eleve ne correspond."
-        : `${debut + 1}–${debut + page.length} sur ${trouves.length} eleve(s) a licencier`;
+        ? "Aucun élève ne correspond."
+        : `${debut + 1}–${debut + page.length} sur ${trouves.length} élève(s) à licencier`;
       resultats.innerHTML = paginationHtml(pageLicence, totalPages, "licence")
         + tableauLicenceHtml(page);
 
@@ -2871,7 +2871,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     <div class="student-editor-grid">
     <label for="unssLastName">Nom</label>
     <input type="text" id="unssLastName" value="${student ? planningText(student.last_name) : ""}">
-    <label for="unssFirstName">Prenom</label>
+    <label for="unssFirstName">Prénom</label>
     <input type="text" id="unssFirstName" value="${student ? planningText(student.first_name) : ""}">
     <label for="unssDivision">Division (classe d'origine)</label>
     <input type="text" id="unssDivision" placeholder="ex : 2.1, 6e3" value="${student ? planningText(student.division || "") : ""}">
@@ -2879,11 +2879,11 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     <input type="text" id="unssBirth" value="${formatFrDate(student ? student.birth_date_epoch_millis : null)}">
     <label for="unssSex">Sexe</label>
     <select id="unssSex">
-      <option value=""${!student || !student.sex ? " selected" : ""}>Non renseigne</option>
-      <option value="M"${student && student.sex === "M" ? " selected" : ""}>Garcon</option>
+      <option value=""${!student || !student.sex ? " selected" : ""}>Non renseigné</option>
+      <option value="M"${student && student.sex === "M" ? " selected" : ""}>Garçon</option>
       <option value="F"${student && student.sex === "F" ? " selected" : ""}>Fille</option>
     </select>
-    <label for="unssCategory">Categorie</label>
+    <label for="unssCategory">Catégorie</label>
     <select id="unssCategory">${UNSS_CATEGORIES.map(c => `<option value="${c.value}"${c.value === category ? " selected" : ""}>${unssCategoryLabel(c.value, student ? student.sex : "")}</option>`).join("")}</select>
     </div></div>
     ${licensing || (student && student.licensed) ? `
@@ -2930,7 +2930,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
     ${directoryEditing || licensing || (student && student.licensed) ? `
       <div class="student-editor-section"><h3>Coordonnées</h3>
       <div class="student-editor-grid">
-      <label for="unssEmailEleve">Email eleve</label>
+      <label for="unssEmailEleve">Email élève</label>
       <input type="email" id="unssEmailEleve" value="${student ? planningText(student.student_email || "") : ""}">
       <label for="unssEmailParent">Email parent</label>
       <input type="email" id="unssEmailParent" value="${student ? planningText(student.parent_email || "") : ""}">
@@ -2967,7 +2967,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
   // "Supprimer", qui efface toute la fiche (identite comprise) et n'a rien a voir avec cette
   // demande frequente : ne plus le voir dans les licencies AS sans perdre son dossier eleve.
   document.getElementById("unssUnlicenseBtn")?.addEventListener("click", async () => {
-    if (!confirm(`Retirer la licence AS de ${student.first_name} ${student.last_name} ? L'eleve reste dans le repertoire, mais disparait des licencies AS.`)) return;
+    if (!confirm(`Retirer la licence AS de ${student.first_name} ${student.last_name} ? L'élève reste dans le répertoire, mais disparaît des licenciés AS.`)) return;
     try {
       await enregistrerLigne("unss_students", {
         ...student, licensed: false,
@@ -2977,7 +2977,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
         updated_at: new Date().toISOString()
       }, student);
     } catch (erreur) {
-      document.getElementById("unssError").textContent = erreur.message || "Licence non retiree. Verifiez la connexion.";
+      document.getElementById("unssError").textContent = erreur.message || "Licence non retirée. Vérifiez la connexion.";
       return;
     }
     fermerFenetreUnss();
@@ -2987,7 +2987,7 @@ function openUnssStudentPanel(student, licensing, directoryEditing = false) {
   document.getElementById("unssSaveBtn").addEventListener("click", async () => {
     const lastName = document.getElementById("unssLastName").value.trim();
     const firstName = document.getElementById("unssFirstName").value.trim();
-    if (!lastName || !firstName) { document.getElementById("unssError").textContent = "Nom et prenom obligatoires."; return; }
+    if (!lastName || !firstName) { document.getElementById("unssError").textContent = "Nom et prénom obligatoires."; return; }
     const birth = parseFrDate(document.getElementById("unssBirth").value);
     const body = {
       last_name: lastName, first_name: firstName, birth_date_epoch_millis: birth,
@@ -3082,7 +3082,7 @@ function renderUnssGroupsTab() {
   const wrap = document.getElementById("unssList");
   let html = `<div style="display:flex; justify-content:flex-end; margin-bottom:10px"><button id="unssNewGroupBtn" style="margin-top:0">Nouveau groupe</button></div>`;
   if (unssGroups.length === 0) {
-    html += `<div class="muted">Aucun groupe UNSS. Touchez "Nouveau groupe" pour en creer un (ex : Escalade, mercredi 13h-15h).</div>`;
+    html += `<div class="muted">Aucun groupe UNSS. Touchez "Nouveau groupe" pour en créer un (ex : Escalade, mercredi 13h-15h).</div>`;
   } else {
     unssGroups.forEach(g => {
       const schedule = [g.day_of_week, g.start_time, g.end_time].filter(Boolean).join(" · ");
@@ -3103,17 +3103,17 @@ function openUnssGroupEditPanel(group) {
   const panel = document.getElementById("unssPanel");
   panel.innerHTML = `
     <h2>${group ? "Modifier le groupe" : "Nouveau groupe UNSS"}</h2>
-    <label for="unssGroupActivity">Activite (ex : Escalade)</label>
+    <label for="unssGroupActivity">Activité (ex : Escalade)</label>
     <input type="text" id="unssGroupActivity" value="${group ? group.activity_name : ""}">
     <label for="unssGroupDay">Jour</label>
     <input type="text" id="unssGroupDay" value="${group ? group.day_of_week : ""}">
-    <label for="unssGroupStart">Heure de debut</label>
+    <label for="unssGroupStart">Heure de début</label>
     <input type="text" id="unssGroupStart" value="${group ? group.start_time : ""}">
     <label for="unssGroupEnd">Heure de fin</label>
     <input type="text" id="unssGroupEnd" value="${group ? group.end_time : ""}">
     <label for="unssGroupResp">Professeur responsable</label>
     <input type="text" id="unssGroupResp" value="${group ? group.responsible_teacher : ""}">
-    <button id="unssGroupSaveBtn">${group ? "Enregistrer" : "Creer"}</button>
+    <button id="unssGroupSaveBtn">${group ? "Enregistrer" : "Créer"}</button>
     <button class="secondary" id="unssGroupCancelBtn">Annuler</button>`;
   ouvrirFenetreUnss();
   document.getElementById("unssGroupCancelBtn").addEventListener("click", () => fermerFenetreUnss());
@@ -3168,8 +3168,8 @@ async function openUnssGroupDetailPanel(group) {
     <h2 style="margin-top:16px; font-size:15px">Membres (${members.length})</h2>
     <div id="unssMembersList"></div>
     <button class="secondary" id="unssAddMemberBtn" style="margin-top:8px">+ Ajouter un membre</button>
-    <h2 style="margin-top:16px; font-size:15px">Historique des seances (${sessions.length})</h2>
-    <div class="muted">${sessions.length === 0 ? "Aucune seance." : sessions.map(s => new Date(s.date_epoch_millis).toLocaleDateString("fr-FR") + (s.label ? " — " + s.label : "")).join("<br>")}</div>
+    <h2 style="margin-top:16px; font-size:15px">Historique des séances (${sessions.length})</h2>
+    <div class="muted">${sessions.length === 0 ? "Aucune séance." : sessions.map(s => new Date(s.date_epoch_millis).toLocaleDateString("fr-FR") + (s.label ? " — " + s.label : "")).join("<br>")}</div>
     <button id="unssGroupEditBtn" style="margin-top:14px">Modifier</button>
     <button class="secondary" id="unssGroupCloseBtn">Fermer</button>
     <button class="danger" id="unssGroupDeleteBtn">Supprimer le groupe</button>`;
@@ -3277,7 +3277,7 @@ async function openUnssAddMemberPanel(group, excludeIds) {
                  <input type="checkbox" id="unssMemberTous" style="width:auto">
                  <span>Chercher dans tout le répertoire (${candidates.length} élèves), pas seulement les ${licencies.length} licencié(s)</span>
                </label>`}
-         <input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+         <input type="search" id="unssMemberSearch" placeholder="Rechercher un nom ou un prénom" autocomplete="off" style="width:100%">
          <div class="muted" id="unssMemberCount" style="margin:6px 0"></div>
          <div id="unssMemberResults"></div>`
     ) +
@@ -3295,14 +3295,14 @@ async function openUnssAddMemberPanel(group, excludeIds) {
       const source = (caseTous && !caseTous.checked && licencies.length) ? licencies : candidates;
       const trouves = chercherEleves(source, recherche);
       if (!recherche && source.length > LIMITE_AFFICHAGE) {
-        compteur.textContent = `${source.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+        compteur.textContent = `${source.length} élèves disponibles. Tapez un nom ou un prénom pour filtrer.`;
         zoneMembres.innerHTML = "";
         return;
       }
       const affiches = trouves.slice(0, LIMITE_AFFICHAGE);
       compteur.textContent = trouves.length === 0
-        ? "Aucun eleve ne correspond."
-        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+        ? "Aucun élève ne correspond."
+        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affichés` : ""}`;
       zoneMembres.innerHTML = affiches.map(s =>
         `<div class="card unssPick" data-add-member="${s.id}" style="margin-top:6px">${s.last_name.toUpperCase()} ${s.first_name}</div>`
       ).join("");
@@ -3607,7 +3607,7 @@ function ouvrirAjoutElevesCreneau(slot) {
                  <input type="checkbox" id="creneauTous" style="width:auto">
                  <span>Chercher dans tout le répertoire (${candidats.length} élèves), pas seulement les ${licencies.length} licencié(s)</span>
                </label>`}
-         <input type="search" id="creneauRecherche" placeholder="Rechercher un nom ou un prenom" autocomplete="off" style="width:100%">
+         <input type="search" id="creneauRecherche" placeholder="Rechercher un nom ou un prénom" autocomplete="off" style="width:100%">
          <div class="muted" id="creneauCompte" style="margin:6px 0"></div>
          <div id="creneauResultats"></div>`) +
     `<button class="secondary" id="creneauRetour" style="margin-top:14px">Retour</button>`;
@@ -3634,13 +3634,13 @@ function ouvrirAjoutElevesCreneau(slot) {
       const source = (caseTous && !caseTous.checked && licencies.length) ? licencies : candidats;
       const trouves = chercherEleves(source, recherche);
       if (!recherche && source.length > LIMITE) {
-        compteur.textContent = `${source.length} eleves disponibles. Tapez un nom ou un prenom pour filtrer.`;
+        compteur.textContent = `${source.length} élèves disponibles. Tapez un nom ou un prénom pour filtrer.`;
         zone.innerHTML = "";
         return;
       }
       const affiches = trouves.slice(0, LIMITE);
-      compteur.textContent = trouves.length === 0 ? "Aucun eleve ne correspond."
-        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affiches` : ""}`;
+      compteur.textContent = trouves.length === 0 ? "Aucun élève ne correspond."
+        : `${trouves.length} eleve(s)${trouves.length > affiches.length ? ` — ${affiches.length} premiers affichés` : ""}`;
       zone.innerHTML = affiches.map(e =>
         `<div class="card unssPick" data-inscrire="${e.id}" style="margin-top:6px">${identiteEleveCreneauHtml(e, rangsVoeuxCreneau(e, slot.id))}</div>`).join("");
       zone.querySelectorAll("[data-inscrire]").forEach(el => el.addEventListener("click", async () => {
@@ -4074,8 +4074,8 @@ function renderUnssAppelBody(creneau, seance) {
   body.innerHTML = `<div class="muted" style="margin-bottom:10px">Appel du ${todayLabel}</div>` +
     (dispenses.length
       ? `<div class="card" style="border-left:3px solid var(--danger); margin-bottom:10px">
-           <strong>${dispenses.length} eleve(s) dispense(s) aujourd'hui</strong>
-           <div class="muted">Ils ne peuvent pas faire la seance. Pointez-les selon leur presence
+           <strong>${dispenses.length} élève(s) dispense(s) aujourd'hui</strong>
+           <div class="muted">Ils ne peuvent pas faire la séance. Pointez-les selon leur présence
              au gymnase, mais ne les faites pas pratiquer.</div>
          </div>`
       : "") +
@@ -4087,7 +4087,7 @@ function renderUnssAppelBody(creneau, seance) {
           ? `<div class="muted" style="font-size:12px; color:var(--danger)">Dispense jusqu'au ${dateFr(d.end_date)}${motif(d) ? ` · ${motif(d)}` : ""}${d.reason ? ` · ${d.reason}` : ""}</div>`
           : ""}</div>
         <div>
-          <button data-present="${s.id}" style="margin-top:0; ${unssAppelPresence[s.id] ? "" : "background:var(--surface); color:var(--text); border:1px solid var(--border)"}">Present</button>
+          <button data-present="${s.id}" style="margin-top:0; ${unssAppelPresence[s.id] ? "" : "background:var(--surface); color:var(--text); border:1px solid var(--border)"}">Présent</button>
           <button data-absent="${s.id}" class="${unssAppelPresence[s.id] ? "secondary" : "danger"}" style="margin-top:0">Absent</button>
         </div>
       </div>`; }).join("") +
@@ -4127,7 +4127,7 @@ function renderUnssAppelBody(creneau, seance) {
       }
     } catch (erreur) {
       saveButton.disabled = false;
-      throw new Error(erreur.message || "L'appel n'a pas pu etre enregistre.");
+      throw new Error(erreur.message || "L'appel n'a pas pu être enregistré.");
     }
     const presents = unssAppelMembers.filter(eleve => !!unssAppelPresence[eleve.id]);
     const absents = unssAppelMembers.filter(eleve => !unssAppelPresence[eleve.id]);
@@ -4183,7 +4183,7 @@ async function openUnssStudentStats(group, student, sessions) {
 
   const ordered = sessions.slice().sort((a, b) => b.date_epoch_millis - a.date_epoch_millis);
   const history = total === 0
-    ? '<div class="muted">Aucune seance enregistree pour ce groupe.</div>'
+    ? '<div class="muted">Aucune séance enregistrée pour ce groupe.</div>'
     : ordered.map(s => {
         const ok = presenceBySession[s.id];
         const date = new Date(s.date_epoch_millis).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
@@ -4203,7 +4203,7 @@ async function openUnssStudentStats(group, student, sessions) {
     </div>
     <div class="muted">${group.activity_name}</div>
     <div class="card" style="display:flex; gap:10px">
-      ${stat("Seances", total)}${stat("Present", present)}${stat("Absent", absent)}${stat("Taux", rate + " %")}
+      ${stat("Séances", total)}${stat("Present", present)}${stat("Absent", absent)}${stat("Taux", rate + " %")}
     </div>
     <h2 style="margin-top:16px; font-size:15px">Historique</h2>
     ${history}`;

@@ -166,7 +166,7 @@ function conflitHtml(conflit, libelles) {
       </table>
       <div class="conflitActions">
         <button type="button" data-choix="local">Garder ma version</button>
-        <button type="button" data-choix="server">Garder la version enregistree</button>
+        <button type="button" data-choix="server">Garder la version enregistrée</button>
         <button type="button" data-choix="merged">Appliquer mes choix ci-dessus</button>
       </div>
     </section>`;
@@ -177,7 +177,7 @@ function conflitHtml(conflit, libelles) {
  * Renvoie une fonction de rafraichissement, a rappeler apres une synchronisation.
  */
 export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
-  if (!element) throw new TypeError("Element d'accueil des conflits absent");
+  if (!element) throw new TypeError("Élément d'accueil des conflits absent");
   const libelles = { ...LIBELLES_DEFAUT, ...labels };
   let refreshing;
 
@@ -223,7 +223,7 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
       element.appendChild(button);
     };
     if (conflits.length === 0) {
-      element.innerHTML = `<p class="conflitAucun">Aucun conflit a traiter.</p>`;
+      element.innerHTML = `<p class="conflitAucun">Aucun conflit à traiter.</p>`;
       addRecoveryButton();
       return conflits.length;
     }
@@ -237,7 +237,7 @@ export function mountConflictDialog(element, { labels = {}, onResolved } = {}) {
         Rien ne sera envoyé avant votre décision.</p>`
         + (arbitrer.length > 1 ? `<div class="conflitActions">
             <button type="button" data-tout-choix="local">Garder ma version pour les ${arbitrer.length} fiches</button>
-            <button type="button" data-tout-choix="server">Garder la version enregistree pour les ${arbitrer.length} fiches</button>
+            <button type="button" data-tout-choix="server">Garder la version enregistrée pour les ${arbitrer.length} fiches</button>
           </div>` : "")
         + arbitrer.map(c => conflitHtml(c, libelles)).join("") : "");
 

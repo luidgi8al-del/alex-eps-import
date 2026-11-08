@@ -32,8 +32,8 @@ async function launch(offline){
   // The class and students are read through the actual offline repository, not mocked UI stores.
   await context.setOffline(true);
   await p.evaluate(async()=>{showTab('outils');await loadToolClasses();toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';epsOpenCategory='Athle';epsOpenTest='TROIS_500';toolClassId=FREE_USE;await renderEpsTests()});
-  await p.locator('#toolClass').selectOption('cl-3e6');await p.locator('#epsBegin').click();
-  await p.locator('#runningManageGroups').click();await p.locator('[data-running-group-student="el-0"]').check();await p.locator('#runningSaveGroup').click();
+  await p.locator('#toolClass').selectOption('cl-3e6');await p.locator('#runBegin').click();
+  await p.locator('[data-run-deplier="groupes"]').click();await p.locator('#runningManageGroups').click();await p.locator('[data-running-group-student="el-0"]').check();await p.locator('#runningSaveGroup').click();
   for(let n=0;n<3;n++){const field=p.locator(`input[data-run-student="el-0"][data-run-index="${n}"]`);await field.fill(['215','220','218'][n]);await field.press('Enter')}
   await p.locator('#runningSave').click();await p.waitForFunction(()=>!!runningSessionId);
   const expected=await p.evaluate(async()=>({id:runningSessionId,values:runningValues['el-0'],groups:runningGroups,pending:await(await import('./pwa/sync/outbox.js')).countPendingOperations()}));

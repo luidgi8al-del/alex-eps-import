@@ -330,11 +330,11 @@ function parseCsv(text) {
 
 // Memes 5 niveaux que ceux geres partout ailleurs dans l'application (fiche eleve, etc).
 const LEVEL_OPTIONS = [
-  { value: "1", label: "1 - Debutant" },
+  { value: "1", label: "1 - Débutant" },
   { value: "2", label: "2 - Fragile" },
   { value: "3", label: "3 - Moyen" },
   { value: "4", label: "4 - Bon" },
-  { value: "5", label: "5 - Tres bon" }
+  { value: "5", label: "5 - Très bon" }
 ];
 
 let niveauEditable = false;
@@ -355,7 +355,7 @@ function renderPreviewTable() {
     tr.innerHTML = `<td>${s.last_name}</td><td>${s.first_name}</td><td>${s.sex}</td><td>${niveauCell}</td><td>${s.student_email || ""}</td><td>${s.parent_emails || ""}</td>`;
     body.appendChild(tr);
   });
-  document.getElementById("previewCount").textContent = `${parsedStudents.length} eleve(s) detecte(s).`;
+  document.getElementById("previewCount").textContent = `${parsedStudents.length} élève(s) detecte(s).`;
 }
 
 document.getElementById("previewBody").addEventListener("change", (e) => {
@@ -375,7 +375,7 @@ document.getElementById("csvFile").addEventListener("change", async (e) => {
   const text = await file.text();
   const { students, niveauDetected } = parseCsv(text);
   if (students.length === 0) {
-    document.getElementById("parseError").textContent = "Aucun eleve reconnu dans ce fichier. Verifiez les colonnes.";
+    document.getElementById("parseError").textContent = "Aucun élève reconnu dans ce fichier. Vérifiez les colonnes.";
     return;
   }
   parsedStudents = students;
@@ -401,7 +401,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
   const grade = document.getElementById("grade").value;
   const classNumber = parseInt(document.getElementById("classNumber").value, 10);
   const schoolYear = document.getElementById("schoolYear").value.trim();
-  if (!schoolYear) { sendError.textContent = "Annee scolaire requise."; return; }
+  if (!schoolYear) { sendError.textContent = "Année scolaire requise."; return; }
   try {
     const className = creationClassName(grade, classNumber);
     const classId = crypto.randomUUID();
@@ -422,7 +422,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
       });
       if (!classRes.ok) {
         const details = await classRes.text();
-        throw new Error(`Echec de creation de la classe${details ? ` : ${details}` : "."}`);
+        throw new Error(`Échec de création de la classe${details ? ` : ${details}` : "."}`);
       }
     }
 
@@ -447,11 +447,11 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
         const studentsRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
           method: "POST", body: JSON.stringify(studentsPayload)
         });
-        if (!studentsRes.ok) throw new Error("Echec de l'envoi des eleves.");
+        if (!studentsRes.ok) throw new Error("Échec de l'envoi des élèves.");
       }
     }
 
-    sendOk.textContent = "Enregistre. Synchronisez l'application (bouton Synchroniser) pour la recuperer.";
+    sendOk.textContent = "Enregistré. Synchronisez l'application (bouton Synchroniser) pour la récupérer.";
     document.getElementById("csvFile").value = "";
     document.getElementById("previewWrap").style.display = "none";
     showSubtab("classes");
@@ -479,7 +479,7 @@ function creneauxNommes(grade) {
   }
   const base = baseSchoolLevel(grade);
   if (base === "TERMINALE") return { libelle: "Terminale", choix: ["Lundi", "Jeudi"], intitule: "Jour de la Terminale" };
-  if (base === "PREMIERE") return { libelle: "Première", choix: ["14h", "16h"], intitule: "Creneau de la Première" };
+  if (base === "PREMIERE") return { libelle: "Première", choix: ["14h", "16h"], intitule: "Créneau de la Première" };
   return null;
 }
 
@@ -528,7 +528,7 @@ async function chargerColleguesAttribuables() {
 
 function nomCollegue(id) {
   const trouve = collegues.find(m => m.id === id);
-  return trouve ? (trouve.name || trouve.email) : "un collegue";
+  return trouve ? (trouve.name || trouve.email) : "un collègue";
 }
 
 async function loadImports(options = {}) {
@@ -956,7 +956,7 @@ document.getElementById("saveEditBtn").addEventListener("click", async () => {
       const importRes = await apiFetch(`${SUPABASE_URL}/rest/v1/classes?id=eq.${editImportId}`, {
         method: "PATCH", body: JSON.stringify(modifications)
       });
-      if (!importRes.ok) throw new Error("Echec de mise a jour de la classe.");
+      if (!importRes.ok) throw new Error("Échec de mise à jour de la classe.");
     }
 
     for (const id of editStudentsToDelete) {
@@ -985,7 +985,7 @@ document.getElementById("saveEditBtn").addEventListener("click", async () => {
         const creationRes = await apiFetch(`${SUPABASE_URL}/rest/v1/students`, {
           method: "POST", body: JSON.stringify(nouveaux)
         });
-        if (!creationRes.ok) throw new Error("Echec de l'ajout des nouveaux eleves.");
+        if (!creationRes.ok) throw new Error("Échec de l'ajout des nouveaux élèves.");
       }
     }
     for (const s of editStudents.filter(s => s.id)) {

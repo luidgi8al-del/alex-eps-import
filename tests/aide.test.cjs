@@ -9,7 +9,7 @@ const js = fs.readFileSync(path.join(root, 'aide.js'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles', 'aide.css'), 'utf8');
 
 test('la rubrique aide est placée après réglage et possède sa page', () => {
-  assert.match(html, /data-tab="settings">REGLAGE<\/button>\s*<button[^>]+data-tab="help"/);
+  assert.match(html, /data-tab="settings">RÉGLAGE<\/button>\s*<button[^>]+data-tab="help"/);
   assert.match(html, /id="tab-help"/);
   assert.match(html, /const TAB_NAMES = \[[^\]]*"help"/);
 });

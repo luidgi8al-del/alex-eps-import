@@ -21,7 +21,7 @@ export async function resolveConflict(conflictId, choice, customData, generation
   assertGeneration(generation);
   const conflit = (await listConflicts()).find(item => item.conflictId === conflictId);
   assertGeneration(generation);
-  if (!conflit) throw new Error("Conflit introuvable : il a peut-etre deja ete resolu.");
+  if (!conflit) throw new Error("Conflit introuvable : il a peut-être déjà été résolu.");
 
   const candidate = chooseConflictVersion(conflit, choice, customData);
   const deleted = choice === "local" ? (conflit.localDeleted ?? candidate == null)
@@ -97,7 +97,7 @@ export async function acknowledgeRejection(conflictId) {
   const generation = generationLocale();
   const refus = (await listConflicts()).find(item => item.conflictId === conflictId);
   assertGeneration(generation);
-  if (!refus) throw new Error("Refus introuvable : il a peut-etre deja ete traite.");
+  if (!refus) throw new Error("Refus introuvable : il a peut-être déjà été traité.");
 
   if (refus.serverData) {
     await saveLocalRecord({

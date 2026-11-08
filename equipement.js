@@ -61,9 +61,9 @@ function showEquipTab(mode, options = {}) {
 
 const EQUIPMENT_CATEGORIES = [
   ["BALLONS", "Ballons"], ["RAQUETTES", "Raquettes"], ["VOLANTS", "Volants"],
-  ["CHASUBLES", "Chasubles"], ["PLOTS", "Plots"], ["CHRONOMETRES", "Chronometres"],
-  ["TAPIS", "Tapis"], ["ATHLETISME", "Materiel athletisme"], ["GYMNASTIQUE", "Materiel gymnastique"],
-  ["NATATION", "Materiel natation"], ["ESCALADE", "Materiel escalade"], ["AUTRE", "Autre"]
+  ["CHASUBLES", "Chasubles"], ["PLOTS", "Plots"], ["CHRONOMETRES", "Chronomètres"],
+  ["TAPIS", "Tapis"], ["ATHLETISME", "Matériel athlétisme"], ["GYMNASTIQUE", "Matériel gymnastique"],
+  ["NATATION", "Matériel natation"], ["ESCALADE", "Matériel escalade"], ["AUTRE", "Autre"]
 ];
 
 let equipmentList = [];
@@ -90,7 +90,7 @@ async function loadEquipment(options = {}) {
   const owner = session?.user_id;
   const isCurrent = () => session?.user_id === owner && (!options.isCurrent || options.isCurrent());
   const wrap = document.getElementById("equipTab-materiel");
-  wrap.innerHTML = '<div class="card muted">Chargement du materiel...</div>';
+  wrap.innerHTML = '<div class="card muted">Chargement du matériel...</div>';
   try {
     const rows = await (options.readRows || lireTable)("equipment", "equipment?deleted=eq.false&select=*&order=name.asc",
       { requiredId: options.requiredId, trier: (a, b) => String(a.name || "").localeCompare(String(b.name || "")) });
@@ -100,7 +100,7 @@ async function loadEquipment(options = {}) {
     return rows;
   } catch (e) {
     if (!isCurrent()) return false;
-    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Exécutez schema_equipement_programmes.sql dans Supabase.</div></div>`;
     if (options.deferRender) throw e;
   }
 }
@@ -115,7 +115,7 @@ function renderEquipment() {
 
   const low = equipmentList.filter(equipmentIsLow);
   const rows = equipmentList.length === 0
-    ? '<div class="muted" style="margin-top:12px">Aucun materiel enregistre.</div>'
+    ? '<div class="muted" style="margin-top:12px">Aucun matériel enregistré.</div>'
     : equipmentList.map(item => {
         const cat = (EQUIPMENT_CATEGORIES.find(c => c[0] === item.category) || ["", item.category])[1];
         return `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
@@ -134,10 +134,10 @@ function renderEquipment() {
   wrap.innerHTML = `<div class="card">
     <div class="top">
       <div>
-        <h2 style="margin:0">Materiel EPS</h2>
+        <h2 style="margin:0">Matériel EPS</h2>
         <div class="muted">Stock initial, en service, perdu et hors service, avec un seuil d'alerte.</div>
       </div>
-      <button id="addEquipBtn" style="margin-top:0">+ Materiel</button>
+      <button id="addEquipBtn" style="margin-top:0">+ Matériel</button>
     </div>
     ${low.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${low.length} materiel(s) sous le seuil d'alerte : ${low.map(i => equipmentText(i.name)).join(", ")}.</div>` : ""}
     ${rows}
@@ -165,7 +165,7 @@ function renderEquipmentDetail() {
     </div>
     <div class="row">
       ${text("name", "Nom")}
-      <div><label>Categorie</label><select data-equip-field="category">${EQUIPMENT_CATEGORIES.map(([k, l]) =>
+      <div><label>Catégorie</label><select data-equip-field="category">${EQUIPMENT_CATEGORIES.map(([k, l]) =>
         `<option value="${k}"${item.category === k ? " selected" : ""}>${l}</option>`).join("")}</select></div>
     </div>
     <div class="row">${text("brand", "Marque")}${text("reference", "Reference")}</div>
@@ -193,7 +193,7 @@ function renderEquipmentDetail() {
 async function addEquipment() {
   const id = crypto.randomUUID();
   await enregistrerLigne("equipment", {
-    id, user_id: session.user_id, name: "Nouveau materiel", category: "AUTRE",
+    id, user_id: session.user_id, name: "Nouveau matériel", category: "AUTRE",
     updated_at: new Date().toISOString(), deleted: false
   });
   await loadEquipment();
@@ -246,15 +246,15 @@ async function deleteEquipment(id) {
 
 const EPI_CATEGORIES = [
   ["BAUDRIER", "Baudrier"], ["CORDE", "Corde"], ["LONGE", "Longe"], ["MOUSQUETON", "Mousqueton"],
-  ["DEGAINE", "Degaine"], ["CASQUE", "Casque"], ["SYSTEME_ASSURAGE", "Descendeur / système d'assurage"],
+  ["DEGAINE", "Dégaine"], ["CASQUE", "Casque"], ["SYSTEME_ASSURAGE", "Descendeur / système d'assurage"],
   ["SANGLE", "Sangle"], ["ANNEAU", "Anneau"], ["AUTRE", "Autre"]
 ];
 const EPI_STATUSES = [
-  ["EN_SERVICE", "En service", "#E5F7E9"], ["A_CONTROLER", "A controler", "#FFF0DD"],
+  ["EN_SERVICE", "En service", "#E5F7E9"], ["A_CONTROLER", "à contrôler", "#FFF0DD"],
   ["QUARANTAINE", "Mis en quarantaine", "#FFE8EE"], ["REFORME", "Reforme / mis au rebut", "#F3F4F6"]
 ];
 const EPI_RESULTS = [
-  ["CONFORME", "Conforme"], ["A_SURVEILLER", "A surveiller"],
+  ["CONFORME", "Conforme"], ["A_SURVEILLER", "à surveiller"],
   ["QUARANTAINE", "Quarantaine"], ["REFORME", "Reforme"]
 ];
 
@@ -292,7 +292,7 @@ async function loadEpiItems(options = {}) {
     return rows;
   } catch (e) {
     if (!isCurrent()) return false;
-    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Exécutez schema_equipement_programmes.sql dans Supabase.</div></div>`;
     if (options.deferRender) throw e;
   }
 }
@@ -306,7 +306,7 @@ function epiAlert(item) {
   const now = Date.now();
   if (item.status === "QUARANTAINE" || item.status === "REFORME") return null;
   if (item.end_of_life_date_epoch_millis && Number(item.end_of_life_date_epoch_millis) <= now) return "Fin de vie atteinte";
-  if (item.next_inspection_date_epoch_millis && Number(item.next_inspection_date_epoch_millis) <= now) return "Controle a faire";
+  if (item.next_inspection_date_epoch_millis && Number(item.next_inspection_date_epoch_millis) <= now) return "Contrôle à faire";
   return null;
 }
 
@@ -319,7 +319,7 @@ function renderEpi() {
   const visible = epiList.filter(item => !epiSearch || [item.internal_id, item.category, item.manufacturer, item.model, item.location]
     .some(value => String(value || "").toLowerCase().includes(epiSearch.toLowerCase())));
   const rows = visible.length === 0
-    ? '<div class="muted" style="margin-top:12px">Aucun EPI enregistre.</div>'
+    ? '<div class="muted" style="margin-top:12px">Aucun EPI enregistré.</div>'
     : visible.map(item => {
         const cat = (EPI_CATEGORIES.find(c => c[0] === item.category) || ["", item.category])[1];
         const st = EPI_STATUSES.find(s => s[0] === item.status) || EPI_STATUSES[0];
@@ -329,7 +329,7 @@ function renderEpi() {
             <strong>${equipmentText(item.internal_id || "Sans identifiant")}</strong> <span class="badge">${equipmentText(cat)}</span>
             <span class="badge" style="background:${st[2]}">${st[1]}</span>
             ${alert ? `<span class="badge" style="background:#FDEEED; color:var(--danger)">${alert}</span>` : ""}
-            <div class="muted">${equipmentText([item.manufacturer, item.model].filter(Boolean).join(" ") || "Modele non renseigne")} · prochain controle ${epiDate(item.next_inspection_date_epoch_millis)}</div>
+            <div class="muted">${equipmentText([item.manufacturer, item.model].filter(Boolean).join(" ") || "Modèle non renseigné")} · prochain contrôle ${epiDate(item.next_inspection_date_epoch_millis)}</div>
           </div>
           <button class="secondary" data-open-epi="${equipmentText(item.id)}" style="margin-top:0">Fiche de vie</button>
         </div>`;
@@ -339,12 +339,12 @@ function renderEpi() {
     <div class="top">
       <div>
         <h2 style="margin:0">EPI escalade</h2>
-        <div class="muted">Fiche de vie de chaque equipement de protection : identification, dates, statut et registre des controles.</div>
+        <div class="muted">Fiche de vie de chaque équipement de protection : identification, dates, statut et registre des contrôles.</div>
       </div>
       <button id="addEpiBtn" style="margin-top:0">+ EPI</button>
     </div>
-    ${alerts.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${alerts.length} EPI a traiter : ${alerts.map(([i, a]) => `${equipmentText(i.internal_id)} (${equipmentText(a)})`).join(", ")}.</div>` : ""}
-    <div class="row" style="margin-top:12px"><div><label for="epiSearchInput">Rechercher</label><input id="epiSearchInput" value="${equipmentText(epiSearch)}" placeholder="Numero, categorie, modele ou rangement"></div></div>
+    ${alerts.length ? `<div class="pendingHint" style="display:block; margin-top:10px">${alerts.length} EPI à traiter : ${alerts.map(([i, a]) => `${equipmentText(i.internal_id)} (${equipmentText(a)})`).join(", ")}.</div>` : ""}
+    <div class="row" style="margin-top:12px"><div><label for="epiSearchInput">Rechercher</label><input id="epiSearchInput" value="${equipmentText(epiSearch)}" placeholder="Numéro, catégorie, modèle ou rangement"></div></div>
     ${rows}
   </div>`;
 
@@ -375,12 +375,12 @@ async function renderEpiDetail(options = {}) {
     `<div><label>${label}</label><input type="date" data-epi-date="${key}" value="${item[key] ? new Date(Number(item[key])).toISOString().slice(0, 10) : ""}"></div>`;
 
   const history = epiInspections.length === 0
-    ? '<div class="muted">Aucun controle enregistre.</div>'
+    ? '<div class="muted">Aucun contrôle enregistré.</div>'
     : epiInspections.map(i => {
         const r = (EPI_RESULTS.find(x => x[0] === i.result) || ["", i.result])[1];
         return `<div class="top" style="padding:7px 0; border-bottom:1px solid var(--border)">
           <div>${epiDate(i.date_epoch_millis)} · <strong>${equipmentText(r)}</strong>
-            <div class="muted">${equipmentText(i.inspector || "Controleur non precise")}${i.observations ? " — " + equipmentText(i.observations) : ""}</div>
+            <div class="muted">${equipmentText(i.inspector || "Contrôleur non précisé")}${i.observations ? " — " + equipmentText(i.observations) : ""}</div>
           </div>
         </div>`;
       }).join("");
@@ -400,15 +400,15 @@ async function renderEpiDetail(options = {}) {
     <div class="epi-detail-activation"><label><input type="checkbox" id="epiActive" ${item.active !== false ? 'checked' : ''}> Fiche active dans la grille</label><p class="muted">L'activation ne change pas le statut de sécurité. Les fiches inactives restent accessibles et conservent leur QR code.</p></div>
     <div class="row">
       ${text("internal_id", "Identifiant interne")}
-      <div><label>Categorie</label><select data-epi-field="category">${EPI_CATEGORIES.map(([k, l]) =>
+      <div><label>Catégorie</label><select data-epi-field="category">${EPI_CATEGORIES.map(([k, l]) =>
         `<option value="${k}"${item.category === k ? " selected" : ""}>${l}</option>`).join("")}</select></div>
     </div>
     <div class="row">${text("manufacturer", "Fabricant")}${text("model", "Modele")}</div>
-    <div class="row">${text("serial_number", "Numero de serie")}${text("lot_number", "Numero de lot")}</div>
+    <div class="row">${text("serial_number", "Numéro de série")}${text("lot_number", "Numéro de lot")}</div>
     <div class="row">${text("color", "Couleur")}${text("location", "Rangement")}</div>
     <div class="row">${dateField("manufacture_date_epoch_millis", "Fabrication")}${dateField("purchase_date_epoch_millis", "Achat")}</div>
-    <div class="row">${dateField("first_use_date_epoch_millis", "Premiere utilisation")}${dateField("end_of_life_date_epoch_millis", "Fin de vie")}</div>
-    <div class="row">${dateField("next_inspection_date_epoch_millis", "Prochain controle")}
+    <div class="row">${dateField("first_use_date_epoch_millis", "Première utilisation")}${dateField("end_of_life_date_epoch_millis", "Fin de vie")}</div>
+    <div class="row">${dateField("next_inspection_date_epoch_millis", "Prochain contrôle")}
       <div><label>Statut</label><select data-epi-field="status">${EPI_STATUSES.map(([k, l]) =>
         `<option value="${k}"${item.status === k ? " selected" : ""}>${l}</option>`).join("")}</select></div>
     </div>
@@ -416,20 +416,20 @@ async function renderEpiDetail(options = {}) {
     <button id="saveEpiBtn">Enregistrer la fiche</button>
     <div class="ok" id="epiOk"></div>
 
-    <h2 style="margin:20px 0 6px; font-size:15px">Registre des controles</h2>
-    <div class="muted" style="margin-bottom:8px">Les controles ne sont jamais supprimes : ils constituent le registre de vie de l'equipement.</div>
+    <h2 style="margin:20px 0 6px; font-size:15px">Registre des contrôles</h2>
+    <div class="muted" style="margin-bottom:8px">Les contrôles ne sont jamais supprimés : ils constituent le registre de vie de l'équipement.</div>
     ${history}
 
-    <h2 style="margin:18px 0 0; font-size:15px">Nouveau controle</h2>
+    <h2 style="margin:18px 0 0; font-size:15px">Nouveau contrôle</h2>
     <div class="row">
       <div><label for="inspDate">Date</label><input type="date" id="inspDate" value="${new Date().toISOString().slice(0, 10)}"></div>
-      <div><label for="inspResult">Resultat</label><select id="inspResult">${EPI_RESULTS.map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></div>
+      <div><label for="inspResult">Résultat</label><select id="inspResult">${EPI_RESULTS.map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></div>
     </div>
     <div class="row">
-      <div><label for="inspBy">Controleur</label><input type="text" id="inspBy" value="${equipmentText(session.email)}"></div>
+      <div><label for="inspBy">Contrôleur</label><input type="text" id="inspBy" value="${equipmentText(session.email)}"></div>
       <div><label for="inspNotes">Observations</label><input type="text" id="inspNotes"></div>
     </div>
-    <button id="addInspBtn">Enregistrer le controle</button>
+    <button id="addInspBtn">Enregistrer le contrôle</button>
     <div class="error" id="inspError"></div>
   </div>`;
 
@@ -466,13 +466,13 @@ async function openEquipmentSearchResult(kind, id, options = {}) {
 
 async function addEpiItem() {
   const wrap = document.getElementById("equipTab-epi");
-  wrap.innerHTML = `<div class="card" style="max-width:680px;margin:auto"><div class="top"><div><h2 style="margin:0">Nouvel EPI</h2><div class="muted">La reference et le QR code seront lies a la meme fiche.</div></div><button class="secondary" id="cancelNewEpi">Annuler</button></div><div class="row"><div><label>Categorie</label><select id="newEpiCategory">${EPI_CATEGORIES.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select></div><div><label>Reference unique</label><input id="newEpiReference"></div></div><button id="confirmNewEpi">Creer la fiche et le QR code</button></div>`;
+  wrap.innerHTML = `<div class="card" style="max-width:680px;margin:auto"><div class="top"><div><h2 style="margin:0">Nouvel EPI</h2><div class="muted">La référence et le QR code seront liés à la même fiche.</div></div><button class="secondary" id="cancelNewEpi">Annuler</button></div><div class="row"><div><label>Catégorie</label><select id="newEpiCategory">${EPI_CATEGORIES.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select></div><div><label>Référence unique</label><input id="newEpiReference"></div></div><button id="confirmNewEpi">Créer la fiche et le QR code</button></div>`;
   const category=document.getElementById("newEpiCategory"),reference=document.getElementById("newEpiReference");
   const suggest=()=>reference.value=nextEpiReference(category.value);suggest();category.onchange=suggest;
   document.getElementById("cancelNewEpi").onclick=renderEpi;
   document.getElementById("confirmNewEpi").onclick=async()=>{
     const internalId=reference.value.trim().toUpperCase();if(!internalId)return;
-    if(epiList.some(x=>String(x.internal_id).toUpperCase()===internalId))return alert("Cette reference existe deja.");
+    if(epiList.some(x=>String(x.internal_id).toUpperCase()===internalId))return alert("Cette référence existe déjà.");
   const id = crypto.randomUUID();
   await enregistrerLigne("epi_items", {
     id, user_id: session.user_id, internal_id: internalId,
@@ -491,7 +491,7 @@ function renderEpiQr(item) {
   if(!host)return;
   if(typeof QRCode!=="function"){host.innerHTML='<div class="error">Generateur QR indisponible hors connexion.</div>';return;}
   new QRCode(host,{text:value,width:190,height:190,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
-  const openLabel=print=>{const canvas=host.querySelector("canvas"),img=host.querySelector("img"),src=canvas?.toDataURL("image/png")||img?.src;if(!src)return;const w=open("","_blank");if(!w)return;w.document.write(`<html><head><title>Etiquette ${equipmentText(item.internal_id)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial;text-align:center;color:#123a59}.label{width:90mm;border:3px solid #123a59;border-radius:18px;padding:0 0 18px;margin:auto;overflow:hidden}.head{background:#087dca;color:white;padding:18px;font-size:20px;font-weight:800}.ref{font-size:34px;font-weight:900}.cat{font-size:18px}img{width:58mm;height:58mm}</style></head><body><div class="label"><div class="head">EPS · LYCEE VICTOR HUGO</div><img src="${equipmentText(src)}"><div class="ref">${equipmentText(item.internal_id)}</div><div class="cat">${equipmentText((EPI_CATEGORIES.find(x=>x[0]===item.category)||[0,item.category])[1])}</div></div><script>${print?'onload=()=>print()':''}<\/script></body></html>`);w.document.close()};
+  const openLabel=print=>{const canvas=host.querySelector("canvas"),img=host.querySelector("img"),src=canvas?.toDataURL("image/png")||img?.src;if(!src)return;const w=open("","_blank");if(!w)return;w.document.write(`<html><head><title>Étiquette ${equipmentText(item.internal_id)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial;text-align:center;color:#123a59}.label{width:90mm;border:3px solid #123a59;border-radius:18px;padding:0 0 18px;margin:auto;overflow:hidden}.head{background:#087dca;color:white;padding:18px;font-size:20px;font-weight:800}.ref{font-size:34px;font-weight:900}.cat{font-size:18px}img{width:58mm;height:58mm}</style></head><body><div class="label"><div class="head">EPS · LYCÉE VICTOR HUGO</div><img src="${equipmentText(src)}"><div class="ref">${equipmentText(item.internal_id)}</div><div class="cat">${equipmentText((EPI_CATEGORIES.find(x=>x[0]===item.category)||[0,item.category])[1])}</div></div><script>${print?'onload=()=>print()':''}<\/script></body></html>`);w.document.close()};
   document.getElementById("printEpiLabelBtn").onclick=()=>openLabel(true);
   document.getElementById("saveEpiLabelBtn").onclick=()=>openLabel(false);
 }
@@ -519,7 +519,7 @@ async function saveEpiItem() {
   await enregistrerLigne("epi_items", { ...actuel, ...payload });
   if (session?.user_id !== owner || epiOpenedId !== openedId) return;
   Object.assign(actuel, payload);
-  document.getElementById("epiOk").textContent = "Fiche enregistree.";
+  document.getElementById("epiOk").textContent = "Fiche enregistrée.";
   renderEpiQr(actuel);
   } catch(error) { if(session?.user_id===owner && epiOpenedId===openedId){message.className='error';message.textContent=error.message || 'Enregistrement impossible. Votre saisie est conservée.';} }
   finally { button.disabled=false; }
@@ -533,7 +533,7 @@ async function addEpiInspection() {
   const errorEl = document.getElementById("inspError");
   errorEl.textContent = "";
   const date = document.getElementById("inspDate").value;
-  if (!date) { errorEl.textContent = "Indiquez la date du controle."; return; }
+  if (!date) { errorEl.textContent = "Indiquez la date du contrôle."; return; }
   const result = document.getElementById("inspResult").value;
   try {
     await enregistrerLigne("epi_inspections", {
@@ -561,7 +561,7 @@ async function createInstallation() {
   const errorEl = document.getElementById("installationError");
   errorEl.textContent = "";
   const name = input.value.trim();
-  if (!name) { errorEl.textContent = "Donnez un nom a l'installation."; return; }
+  if (!name) { errorEl.textContent = "Donnez un nom à l'installation."; return; }
   const ligne = { id: crypto.randomUUID(), user_id: session.user_id, name,
     updated_at: new Date().toISOString(), deleted: false };
   if (modeHorsConnexion) {

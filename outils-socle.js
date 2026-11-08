@@ -170,7 +170,7 @@
     lier("Pdf", handlers.onPdf);
     lier("Back", handlers.onBack);
     lier("Reset", () => {
-      if (!confirm(handlers.messageReset || "Effacer toutes les saisies de cet outil et repartir de zéro ?")) return;
+      if (!confirm(handlers.messageReset || "Effacer toutes les saisies de cet outil et répartir de zéro ?")) return;
       handlers.onReset?.();
     });
   }

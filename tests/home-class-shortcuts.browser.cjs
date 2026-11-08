@@ -7,7 +7,7 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  const layout=await page.evaluate(()=>{const box=s=>document.querySelector(s).getBoundingClientRect(),hub=box('.homeClassHub'),quickBox=box('.homeClassQuick');return{quick:document.querySelectorAll('[data-home-shortcut]').length,columns:getComputedStyle(document.querySelector('.homeGrid')).gridTemplateColumns,hub,quickBox,modules:box('.homeModuleGrid'),quickCenterRatio:(quickBox.top+quickBox.height/2-hub.top)/hub.height,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth}});
  assert.equal(layout.quick,4);assert.equal(layout.columns.split(' ').length,2);assert(Math.abs(layout.hub.height-layout.modules.height)<2);assert(layout.quickCenterRatio>.45&&layout.quickCenterRatio<.72,`shortcuts not vertically balanced: ${layout.quickCenterRatio}`);assert.equal(layout.overflow,0);
  await page.click('[data-home-shortcut="students"]');await page.waitForSelector('#tab-students',{state:'visible'});
- await page.evaluate(()=>showTab('home'));await page.click('[data-home-shortcut="dispenses"]');await page.waitForSelector('[data-dispense-vue="toutes"].active',{state:'visible'});
+ await page.evaluate(()=>showTab('home'));await page.click('[data-home-shortcut="dispenses"]');await page.waitForSelector('.santeBarre small:has-text("Toutes les dispenses")',{state:'visible'});
  await page.evaluate(()=>showTab('home'));await page.click('[data-home-shortcut="evaluations"]');await page.waitForSelector('.ec-ecran-evaluations',{state:'visible',timeout:8000});
  console.log('PASS home class shortcuts open students, all dispensations and evaluations');
  }finally{await browser.close();server.close()}})().catch(e=>{console.error(e);server.close();process.exitCode=1});

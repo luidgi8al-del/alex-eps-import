@@ -6,9 +6,9 @@
 <title>EPS — Espace enseignant</title>
 <link rel="stylesheet" href="styles/site.css?v=20261026-search-1">
 <link rel="stylesheet" href="styles/ui-system.css?v=20260927-3">
-  <link rel="stylesheet" href="home-navigation.css?v=20261008-10">
+  <link rel="stylesheet" href="home-navigation.css?v=20261104-accents-1">
 <link rel="stylesheet" href="styles/tools-workspace.css?v=20261020-offline-field-1">
-<link rel="stylesheet" href="styles/stop-course.css?v=20261002-1">
+<link rel="stylesheet" href="styles/stop-course.css?v=20261104-chrono-1">
 <link rel="stylesheet" href="styles/classe-ecrans.css?v=20261011-visuel-1">
 <link rel="stylesheet" href="styles/aide.css?v=20260929-3">
 <link rel="stylesheet" href="styles/emails.css?v=20260929-1">
@@ -32,7 +32,7 @@
       <button class="tabbtn" data-tab="health">SANTÉ / ACCIDENT</button>
       <button class="tabbtn" data-tab="students">ÉLÈVES</button>
       <button class="tabbtn" data-tab="emails">E-MAILS</button>
-      <button class="tabbtn" data-tab="settings">REGLAGE</button>
+      <button class="tabbtn" data-tab="settings">RÉGLAGE</button>
       <button class="tabbtn helpTabButton" data-tab="help" title="Ouvrir l’aide" aria-label="Aide">? <span>AIDE</span></button>
     </div>
     <div class="headerRight">
@@ -41,8 +41,8 @@
       <span id="syncStatus" class="syncStatus" hidden></span>
       <button id="connectionIssueNotice" class="secondary connectionIssueNotice" hidden type="button" aria-live="polite"></button>
       <button class="secondary" id="searchBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Rechercher</button>
-      <button class="secondary" id="settingsBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Reglages</button>
-      <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se deconnecter</button>
+      <button class="secondary" id="settingsBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Réglages</button>
+      <button class="secondary" id="logoutBtn" style="display:none; margin-top:0; border-color:rgba(255,255,255,0.4); color:#fff;">Se déconnecter</button>
     </div>
   </div>
 
@@ -56,10 +56,10 @@
   <!-- Verrouillage par code : confort d'ecran, pas une protection des donnees -->
   <div class="searchOverlay ui-modal-overlay" id="lockOverlay" style="align-items:center">
     <div class="searchSheet ui-modal" style="max-width:340px; text-align:center; padding:16px">
-      <h2 style="margin:0 0 4px">Application verrouillee</h2>
+      <h2 style="margin:0 0 4px">Application verrouillée</h2>
       <div class="muted">Saisissez votre code pour continuer.</div>
       <input type="password" id="lockInput" inputmode="numeric" style="margin-top:12px; text-align:center; font-size:22px; letter-spacing:6px">
-      <button id="lockSubmit" style="width:100%">Deverrouiller</button>
+      <button id="lockSubmit" style="width:100%">Déverrouiller</button>
       <div class="error" id="lockError"></div>
     </div>
   </div>
@@ -68,7 +68,7 @@
   <div class="searchOverlay ui-modal-overlay" id="settingsOverlay">
     <div class="searchSheet ui-modal">
       <div class="top ui-modal-head">
-        <h2 style="margin:0">Reglages</h2>
+        <h2 style="margin:0">Réglages</h2>
         <button class="ui-modal-close" id="settingsClose" aria-label="Fermer">×</button>
       </div>
       <div class="ui-modal-body" id="settingsBody"></div>
@@ -106,9 +106,8 @@
     <div id="mainView" style="display:none">
       <div id="tab-home" class="tabpanel">
         <div class="homeHero">
-          <div class="homeWelcome"><div><h1>ACCUEIL</h1><p><span id="homeGreeting">Bonjour</span><span id="homeMobileWeatherIcon" class="homeMobileWeatherIcon" role="img" hidden></span></p></div></div>
           <button class="todayCard" id="todayCard">
-            <div class="todayInfo"><div class="todayLabel">Aujourd'hui</div><div class="todayCount" id="todayCount">—</div><div class="todayNext" id="todayNext">Chargement...</div><div id="homeMobileAlert" class="homeMobileAlert" hidden></div><div class="todayLink">Voir le planning ›</div></div>
+            <div class="todayInfo"><div class="todayGreeting"><span id="homeGreeting">Bonjour</span><span id="homeMobileWeatherIcon" class="homeMobileWeatherIcon" role="img" hidden></span></div><div class="todayLabel">Aujourd'hui</div><div class="todayCount" id="todayCount">—</div><div class="todayNext" id="todayNext">Chargement...</div><div id="homeMobileAlert" class="homeMobileAlert" hidden></div><div class="todayLink">Voir le planning ›</div></div>
             <div class="todayIcon">🕗</div>
           </button>
           <section id="homeWeather" class="homeWeather" aria-label="Météo aujourd’hui et demain"></section>
@@ -159,7 +158,7 @@
         </div>
 
         <div class="card" id="institutionCard" hidden>
-          <h2>Etablissement</h2>
+          <h2>Établissement</h2>
           <div id="institutionStatus" class="muted">Chargement...</div>
         </div>
       </div>
@@ -180,7 +179,7 @@
           <div class="card">
             <h2>Regarder un cycle</h2>
             <div class="muted" style="margin-bottom:6px">
-              Choisissez un niveau, une activite et un nombre de seances. Rien n'est enregistre.
+              Choisissez un niveau, une activité et un nombre de séances. Rien n'est enregistré.
             </div>
             <div class="row">
               <div>
@@ -196,11 +195,11 @@
                 </select>
               </div>
               <div>
-                <label for="cycleApsa">Activite</label>
+                <label for="cycleApsa">Activité</label>
                 <select id="cycleApsa"></select>
               </div>
               <div>
-                <label for="cycleSessions">Seances</label>
+                <label for="cycleSessions">Séances</label>
                 <select id="cycleSessions">
                   <option selected>8</option><option>9</option>
                   <option>10</option><option>11</option><option>12</option>
@@ -233,26 +232,26 @@
         <!-- Creation : rattachee a une classe deja enregistree -->
         <div id="coursTab-creer" style="display:none">
           <div class="card">
-            <h2>Creer un cours</h2>
+            <h2>Créer un cours</h2>
             <div class="muted" style="margin-bottom:6px">
-              Le cours est rattache a une de vos classes : c'est elle qui fournit l'effectif.
+              Le cours est rattaché à une de vos classes : c'est elle qui fournit l'effectif.
             </div>
             <label for="coursClass">Classe</label>
             <select id="coursClass"></select>
             <div class="row">
               <div>
-                <label for="coursApsa">Activite</label>
+                <label for="coursApsa">Activité</label>
                 <select id="coursApsa"></select>
               </div>
               <div>
-                <label for="coursSessions">Seances</label>
+                <label for="coursSessions">Séances</label>
                 <select id="coursSessions">
                   <option selected>8</option><option>9</option>
                   <option>10</option><option>11</option><option>12</option>
                 </select>
               </div>
             </div>
-            <button id="createCoursBtn">Creer le cours</button>
+            <button id="createCoursBtn">Créer le cours</button>
             <div class="error" id="coursError"></div>
           </div>
         </div>
@@ -263,22 +262,22 @@
       </div>
       <div id="tab-programmation" class="tabpanel" style="display:none">
         <div class="subtabbar" id="planningSubtabs">
-          <button class="subtabbtn" data-planningtab="global">Planning global Alex</button>
+          <button class="subtabbtn" data-planningtab="global">Mon planning</button>
           <button class="subtabbtn" data-planningtab="eps">Planning global EPS</button>
-          <button class="subtabbtn" data-planningtab="periode">Par periode</button>
+          <button class="subtabbtn" data-planningtab="periode">Par période</button>
           <button class="subtabbtn" data-planningtab="installations">Installations</button>
           <button class="subtabbtn" data-planningtab="annuelle">Programmation annuelle</button>
           <button class="subtabbtn" data-planningtab="programmes">Programmes officiels</button>
           <button class="subtabbtn" data-planningtab="bac">Référentiel BAC EPS</button>
-          <button class="subtabbtn" data-planningtab="calendrier">Calendrier etablissement</button>
-          <button class="subtabbtn" data-planningtab="periodes">Dates des periodes</button>
+          <button class="subtabbtn" data-planningtab="calendrier">Calendrier établissement</button>
+          <button class="subtabbtn" data-planningtab="periodes">Dates des périodes</button>
         </div>
 
         <div id="planningPeriodBar" class="periodBar" style="display:none"></div>
         <div id="planningPendingHint" class="pendingHint" style="display:none"></div>
         <div id="planningNewClassHint" class="pendingHint" style="display:none; align-items:center; justify-content:space-between; gap:10px"></div>
         <div id="planningEpsHint" class="muted" style="display:none; padding:0 4px 10px; align-items:center; justify-content:space-between; gap:10px" >
-          <span>Lecture seule : les creneaux de tous les collegues qui utilisent l'app. Les creneaux en rouge partagent une meme installation au meme horaire.</span>
+          <span>Lecture seule : les créneaux de tous les collègues qui utilisent l'app. Les créneaux en rouge partagent une même installation au même horaire.</span>
           <span style="display:flex; gap:8px; align-items:center; white-space:nowrap">
             <span id="planningValidationState"></span>
             <button class="secondary" id="planningValidationBtn" style="margin-top:0; white-space:nowrap; display:none">Valider le planning</button>
@@ -287,7 +286,7 @@
         </div>
 
         <div id="planningFullscreenBar" style="display:flex; justify-content:flex-end; margin-bottom:6px">
-          <button class="secondary" id="planningFullscreenBtn" style="margin-top:0">Plein ecran</button>
+          <button class="secondary" id="planningFullscreenBtn" style="margin-top:0">Plein écran</button>
         </div>
         <div id="planningGrid"></div>
         <div id="planningPanel" class="card" style="display:none; margin-top:14px"></div>
@@ -300,8 +299,8 @@
       </div>
       <div id="tab-unss" class="tabpanel" style="display:none">
         <div class="subtabbar" id="unssSubtabs">
-          <button class="subtabbtn" data-unsstab="licensed">Licencies AS</button>
-          <button class="subtabbtn" data-unsstab="slots">Creneaux AS</button>
+          <button class="subtabbtn" data-unsstab="licensed">Licenciés AS</button>
+          <button class="subtabbtn" data-unsstab="slots">Créneaux AS</button>
           <!-- Cache par defaut : l'onglet Groupe ne ressert que si schema_as_creneaux.sql n'est pas
                applique (verifierCreneauPorteTout). Rester cache d'emblee evite l'apparition breve
                au chargement, avant que ce controle asynchrone n'ait eu le temps de repondre. -->
@@ -316,7 +315,7 @@
       <div id="tab-equipement" class="tabpanel" style="display:none">
         <div class="subtabbar" id="equipSubtabs">
           <button class="subtabbtn" data-equiptab="installations">Installations</button>
-          <button class="subtabbtn" data-equiptab="materiel">Materiel</button>
+          <button class="subtabbtn" data-equiptab="materiel">Matériel</button>
           <button class="subtabbtn" data-equiptab="epi">EPI escalade</button>
         </div>
 
@@ -435,14 +434,14 @@
                 </select>
               </div>
               <div>
-                <label for="editClassNumber">Numero de classe</label>
+                <label for="editClassNumber">Numéro de classe</label>
                 <select id="editClassNumber">
                   <option>1</option><option>2</option><option>3</option><option>4</option>
                   <option>5</option><option>6</option><option>7</option><option>8</option>
                 </select>
               </div>
             </div>
-            <label for="editSchoolYear">Annee scolaire</label>
+            <label for="editSchoolYear">Année scolaire</label>
             <input type="text" id="editSchoolYear">
             <div class="tableDefilante">
               <table style="margin-top:16px">
@@ -450,7 +449,7 @@
                 <tbody id="editStudentsBody"></tbody>
               </table>
             </div>
-            <button type="button" class="secondary" id="addStudentBtn" style="margin-top:10px">Ajouter un eleve</button>
+            <button type="button" class="secondary" id="addStudentBtn" style="margin-top:10px">Ajouter un élève</button>
             <button id="saveEditBtn">Enregistrer</button>
             <button class="secondary" id="closeEditBtn">Fermer</button>
             <div class="error" id="editError"></div>
@@ -480,29 +479,29 @@
                 </select>
               </div>
               <div>
-                <label for="classNumber">Numero de classe</label>
+                <label for="classNumber">Numéro de classe</label>
                 <select id="classNumber">
                   <option>1</option><option>2</option><option>3</option><option>4</option>
                   <option>5</option><option>6</option><option>7</option><option>8</option>
                 </select>
               </div>
             </div>
-            <label for="schoolYear">Annee scolaire</label>
+            <label for="schoolYear">Année scolaire</label>
             <input type="text" id="schoolYear" value="2026-2027">
             <div id="assignedTeacherRow" style="display:none">
-              <label for="assignedTeacher">Attribuer a un collegue (administrateur)</label>
+              <label for="assignedTeacher">Attribuer à un collègue (administrateur)</label>
               <select id="assignedTeacher"><option value="">Pour moi</option></select>
-              <div class="muted" style="font-size:12px">La classe et ses eleves apparaitront chez le collegue, modifiables par lui. Il peut ne pas encore avoir cree son mot de passe.</div>
+              <div class="muted" style="font-size:12px">La classe et ses élèves apparaîtront chez le collègue, modifiables par lui. Il peut ne pas encore avoir créé son mot de passe.</div>
             </div>
             <div id="fileImportFields" style="display:none">
-              <label for="studentEmailDomain">Domaine des emails eleves (facultatif, ex : citescolairehugorenoir.org)</label>
+              <label for="studentEmailDomain">Domaine des emails élèves (facultatif, ex : citescolairehugorenoir.org)</label>
               <input type="text" id="studentEmailDomain" placeholder="citescolairehugorenoir.org">
-              <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont detectees automatiquement. "Nom Prenom" combine est aussi accepte.</label>
+              <label for="csvFile" style="margin-top:14px">Fichier CSV — les colonnes sont détectées automatiquement. "Nom Prénom" combiné est aussi accepté.</label>
               <input type="file" id="csvFile" accept=".csv,text/csv">
               <div class="error" id="parseError"></div>
             </div>
             <div id="previewWrap" style="display:none">
-              <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS detectee — choisissez le niveau de chaque eleve ci-dessous.</div>
+              <div class="muted" id="niveauHint" style="display:none">Aucune colonne Niveau EPS détectée — choisissez le niveau de chaque élève ci-dessous.</div>
               <table id="previewTable">
                 <thead><tr><th>Nom</th><th>Prenom</th><th>Sexe</th><th>Niveau</th><th>Email eleve</th><th>Emails parents</th></tr></thead>
                 <tbody id="previewBody"></tbody>
@@ -544,7 +543,7 @@
     </div>
     <div class="liveBody"><div class="liveInner" id="liveInner"></div></div>
     <div class="liveNav">
-      <button class="secondary" id="livePrev">← Precedente</button>
+      <button class="secondary" id="livePrev">← Précédente</button>
       <button id="liveNext">Suivante →</button>
     </div>
   </div>
@@ -565,7 +564,7 @@
   <script src="quick-exercises.js"></script>
   <script src="eps-tests.js"></script>
   <!-- Socle commun des outils : chargé avant eux, ils s'y branchent tous. -->
-  <script src="outils-socle.js?v=20260928-2"></script>
+  <script src="outils-socle.js?v=20261104-accents-1"></script>
   <script src="pronote-tools.js?v=20261019-pronote-close-1"></script>
   <script src="tool-compact-context.js?v=20261014-1"></script>
   <script src="condition-fitness-web.js?v=20261014-universal-1"></script>
@@ -575,8 +574,8 @@
   <script src="sync-safety.js?v=20261020-offline-field-1"></script>
   <script src="school-levels.js"></script>
   <script src="period-settings.js"></script>
-  <script src="health-incident-pro.js?v=20260928-1"></script>
-  <script src="health.js?v=20261007-health-adaptation-1"></script>
+  <script src="health-incident-pro.js?v=20261104-accents-1"></script>
+  <script src="health.js?v=20261104-accents-1"></script>
   <script src="student-fields.js"></script>
   <script src="import-eleves.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -585,26 +584,26 @@
   <script src="portable-recovery.js?v=20261012-recovery-1"></script>
   <link rel="stylesheet" href="styles/tool-save-indicator.css?v=20261014-running-header-1">
   <script src="tool-save-indicator.js?v=20261020-offline-field-1"></script>
-  <script src="tool-resume.js?v=20261015-shortcuts-1"></script>
+  <script src="tool-resume.js?v=20261104-chrono-1"></script>
   <script src="settings-categories.js?v=20261013-1"></script>
-  <script src="teacher-settings.js?v=20261020-offline-field-1"></script>
+  <script src="teacher-settings.js?v=20261104-accents-1"></script>
   <script src="home-weather.js?v=20260929-1"></script>
   <script src="hors-connexion.js?v=20261007-aptitudes-delete-1"></script>
   <script src="offline-preparation.js?v=20261020-offline-field-1"></script>
   <script src="offline-read.js"></script>
   <script src="accueil.js?v=20261026-search-1"></script>
-  <script src="compte.js?v=20261025-atelier-1"></script>
-  <script src="classes.js?v=20261026-search-1"></script>
-  <script src="planning.js?v=20261001-3"></script>
+  <script src="compte.js?v=20261104-accents-1"></script>
+  <script src="classes.js?v=20261104-accents-1"></script>
+  <script src="planning.js?v=20261104-accents-1"></script>
   <script src="bac-reference.js?v=20260924-1"></script>
   <script src="eppcs-store.js?v=20261026-search-1"></script>
   <script src="eppcs-lesson-model.js?v=20261025-seances-2"></script>
   <script src="eppcs-ui.js?v=20261026-search-1"></script>
   <script src="eppcs.js?v=20261026-search-1"></script>
-  <script src="cours.js?v=20261026-search-1"></script>
+  <script src="cours.js?v=20261104-accents-1"></script>
   <script src="student-results.js?v=20261010-1"></script>
-  <script src="classe-tableau-bord.js?v=20261026-search-1"></script>
-  <script src="classe-ecrans.js?v=20261026-search-1"></script>
+  <script src="classe-tableau-bord.js?v=20261104-accents-1"></script>
+  <script src="classe-ecrans.js?v=20261104-accents-1"></script>
   <script src="classe-visuel.js?v=20261011-visuel-1"></script>
   <script src="qrcode.min.js"></script>
   <script src="installation-photo.js?v=20261009-1"></script>
@@ -617,14 +616,16 @@
        l'ancien formulaire des creneaux AS depuis le cache HTTP du navigateur. -->
   <link rel="stylesheet" href="styles/as-downloads.css?v=20261103-as-downloads-1">
   <script src="as-downloads.js?v=20261103-as-downloads-1"></script>
-  <script src="aslvh.js?v=20261103-selection-delete-1"></script>
+  <script src="aslvh.js?v=20261104-accents-1"></script>
   <script src="emails.js?v=20260929-2"></script>
   <link rel="stylesheet" href="styles/tool-action-menus.css?v=20261014-universal-1">
   <script src="tool-documents.js?v=20261014-1"></script>
   <script src="tool-actions-universal.js?v=20261014-1"></script>
   <script src="running-final.js?v=20261014-universal-1"></script>
-  <script src="outils.js?v=20261026-search-1"></script>
-  <script src="teams-saved-web.js?v=20261026-search-1"></script>
+  <script src="outils.js?v=20261104-prep-1"></script>
+  <script src="trois500-terrain.js?v=20261104-prep-1"></script>
+  <link rel="stylesheet" href="styles/trois500-terrain.css?v=20261104-prep-1">
+  <script src="teams-saved-web.js?v=20261104-accents-1"></script>
   <script src="tools-portable.js?v=20261015-observation-score-2"></script>
   <script src="tools-workspace.js?v=20261026-search-1"></script>
   <script src="team-evaluation-editor.js?v=20261005-teams"></script>
@@ -705,7 +706,7 @@
       const admin = sessionAdministrateur();
       if (!admin || !session) { bar.style.display = "none"; return; }
       document.getElementById("impersonationLabel").textContent =
-        `Vous etes sur le compte de ${session.email}. Tout ce que vous saisissez lui appartiendra.`;
+        `Vous êtes sur le compte de ${session.email}. Tout ce que vous saisissez lui appartiendra.`;
       document.getElementById("impersonationBackBtn").textContent =
         `Revenir sur mon compte (${admin.email})`;
       bar.style.display = "flex";
@@ -722,7 +723,7 @@
         revenirSurMonCompte();
         return;
       }
-      if (!confirm(`Basculer sur le compte de ${nom} ?\n\nVous verrez et modifierez ses donnees. La bascule est enregistree.`)) return;
+      if (!confirm(`Basculer sur le compte de ${nom} ?\n\nVous verrez et modifierez ses données. La bascule est enregistrée.`)) return;
       const reponse = await teamAdminAction({ action: "impersonate", target_id: targetId });
       // Le jeton ne sert qu'une fois : on l'echange tout de suite contre une session.
       let res;
@@ -773,7 +774,7 @@
     function sessionExpired() {
       clearSession();
       showAuthView();
-      document.getElementById("authError").textContent = "Votre session a expire. Reconnectez-vous pour continuer.";
+      document.getElementById("authError").textContent = "Votre session a expiré. Reconnectez-vous pour continuer.";
     }
 
     /**
@@ -845,7 +846,7 @@
       // Le chemin vise, jamais l'adresse complete : il identifie l'appel sans exposer de jeton.
       let ou = "";
       try { ou = " (" + new URL(cible).pathname + ")"; } catch { /* cible inconnue */ }
-      return new Error("Requete non partie" + ou + " : reseau indisponible ou requete bloquee. Vos saisies deja enregistrees sont conservees.");
+      return new Error("Requête non partie" + ou + " : réseau indisponible ou requête bloquée. Vos saisies déjà enregistrées sont conservées.");
     }
 
     async function apiFetch(url, options = {}, dejaRejoue = false) {
@@ -871,7 +872,7 @@
         // refus qui ne viendrait pas du jeton.
         if (!dejaRejoue && await renouvelerSession()) return apiFetch(url, options, true);
         sessionExpired();
-        throw new Error("Session expiree.");
+        throw new Error("Session expirée.");
       }
       if (!res.ok && options.method && !["GET", "HEAD"].includes(options.method.toUpperCase())) {
         // Le code seul n'apprend rien : PostgREST dit toujours ce qui l'a fait refuser
@@ -1076,7 +1077,7 @@
       a.download = `alex-eps-export-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       if (manquantes.length) {
-        alert(`Sauvegarde incomplete : ${manquantes.join(", ")} n'a pas pu etre lu.
+        alert(`Sauvegarde incomplète : ${manquantes.join(", ")} n'a pas pu être lu.
 `
           + `Le fichier contient ${dump.total} ligne(s). Ne vous y fiez pas pour restaurer.`);
       }

@@ -231,7 +231,7 @@ function drawEpsTests() {
           ${compactRunning?'':`<section class="eps-test-context" ${epsTestStarted?'hidden':''}>${toolRosterHtml()}
             ${onRealClass() ? `<label>Période du test</label><div class="periodBar" style="display:flex">${periods.join("")}</div>` : ""}
           </section>`}
-          ${epsTestStarted?(compactRunning?'':`<section class="field-tool-card field-tool-row"><b>${cls?.name||'Usage libre'} · P${epsTestPeriod}</b><button class="secondary" id="epsEditPreparation">Modifier la classe ou les groupes</button></section>`):onRealClass()?'<button id="epsBegin">Commencer le test</button>':''}
+          ${epsTestStarted?(compactRunning?'':`<section class="field-tool-card field-tool-row"><b>${cls?.name||'Usage libre'} · P${epsTestPeriod}</b><button class="secondary" id="epsEditPreparation">Modifier la classe ou les groupes</button></section>`):onRealClass()&&test.special!=='running-series'?'<button id="epsBegin">Commencer le test</button>':''}
           <div class="ok" id="epsSaveMsg"></div><div id="epsTestBody"></div>
         </main>`;
     bindToolClose();
@@ -288,7 +288,7 @@ function drawEpsTests() {
   bindToolClose();
   bindToolRoster(drawEpsTests);
   toolPanel.querySelectorAll("[data-eps-period]").forEach(b => b.onclick = () => { epsTestPeriod = Number(b.dataset.epsPeriod); drawEpsTests(); });
-  toolPanel.querySelectorAll("[data-eps-test]").forEach(b => b.onclick = e => { if (e.target.closest("[data-eps-favorite]")) return; resetGenericTestState(); epsOpenTest = b.dataset.epsTest;epsTestStarted=EpsTests.TESTS[epsOpenTest].special==='running-series'; drawEpsTests(); toolPanel.scrollIntoView({block:"start"}); });
+  toolPanel.querySelectorAll("[data-eps-test]").forEach(b => b.onclick = e => { if (e.target.closest("[data-eps-favorite]")) return; resetGenericTestState(); epsOpenTest = b.dataset.epsTest;epsTestStarted=false; drawEpsTests(); toolPanel.scrollIntoView({block:"start"}); });
   toolPanel.querySelectorAll("[data-eps-favorite]").forEach(b => b.onclick = e => { e.stopPropagation(); if (typeof toggleToolFavorite === "function") toggleToolFavorite(`eps-test:${b.dataset.epsFavorite}`); drawEpsTests(); });
 }
 
@@ -393,28 +393,67 @@ async function drawEpsTestBody(key) {
 
 const stopCourseCounts = {};
 let stopSessionId=null,stopSessionRecord=null,stopResultRecords={},stopSessions=[],stopGroupCount=0,stopActiveGroup=0,stopGroupAssignments={};
-// Deux facons de traduire les arrets : une note qui part de 20 (comme avant), ou quatre bandes
-// de couleur (Vert +, Vert, Orange, Rouge). Le nombre d'arrets par palier est reglable dans les
-// deux cas - ce n'etait fixe qu'a "2" auparavant. Choix et seuil sont memorises par seance
-// (dans input_unit de chaque resultat), pour qu'une reouverture retrouve le meme reglage.
+// Deux facons de traduire les arrets : une note qui part du bareme choisi (sur 20, 15, 10 ou 5),
+// ou quatre bandes de couleur (Vert +, Vert, Orange, Rouge). Le nombre d'arrets par palier et les
+// points retires a chaque palier sont reglables. Le reglage est memorise par seance (dans
+// input_unit de chaque resultat), pour qu'une reouverture le retrouve ; une seance enregistree
+// avant ce reglage se relit sur 20 avec 0,5 point par palier, comme elle avait ete notee.
 const STOP_BANDS=["Vert +","Vert","Orange","Rouge"];
 const STOP_BAND_COLORS={"Vert +":"#0e9f5f","Vert":"#4caf50","Orange":"#f39c12","Rouge":"#e74c3c"};
-let stopMode="note",stopSeuil=2,stopAutoAppliedFor=null;
+const STOP_SURS=[20,15,10,5];
+let stopMode="note",stopSeuil=2,stopSur=20,stopRetrait=0.5,stopAutoAppliedFor=null;
 function stopPalier(n){return Math.floor(n/Math.max(1,stopSeuil))}
-function stopNote(n){return Math.max(0,20-stopPalier(n)*0.5)}
+function stopNote(n){return Math.max(0,Math.round((stopSur-stopPalier(n)*stopRetrait)*100)/100)}
+function stopNoteTexte(n){const v=stopNote(n);return EpsTests.fr(v,Number.isInteger(Math.round(v*100)/10)?1:2)}
 function stopBande(n){return STOP_BANDS[Math.min(STOP_BANDS.length-1,stopPalier(n))]}
-function stopBadge(n){return stopMode==="couleur"?`<strong style="color:${STOP_BAND_COLORS[stopBande(n)]}">${stopBande(n)}</strong>`:`<strong>${EpsTests.fr(stopNote(n),1)} / 20</strong>`}
-function stopModeSelectorHtml(){return `<div class="field-tool-row"><label>Notation<select id="stopMode"><option value="note"${stopMode==="note"?" selected":""}>Note à partir de 20</option><option value="couleur"${stopMode==="couleur"?" selected":""}>Couleur (Vert + · Vert · Orange · Rouge)</option></select></label><label>Arrêts par palier<input id="stopSeuil" type="number" min="1" value="${stopSeuil}"></label></div>`}
+function stopBadge(n){return stopMode==="couleur"?`<strong style="color:${STOP_BAND_COLORS[stopBande(n)]}">${stopBande(n)}</strong>`:`<strong>${stopNoteTexte(n)} / ${stopSur}</strong>`}
+function stopModeSelectorHtml(){const choix=stopMode==="couleur"?"couleur":String(stopSur);return `<div class="field-tool-row"><label>Notation<select id="stopMode">${STOP_SURS.map(s=>`<option value="${s}"${choix===String(s)?" selected":""}>Sur ${s}</option>`).join('')}<option value="couleur"${choix==="couleur"?" selected":""}>Couleur (Vert + · Vert · Orange · Rouge)</option></select></label><label>Arrêts par palier<input id="stopSeuil" type="number" min="1" value="${stopSeuil}"></label>${stopMode==="couleur"?"":`<label>Points retirés par palier<input id="stopRetrait" type="number" min="0.25" max="${stopSur}" step="0.25" value="${stopRetrait}"></label>`}</div>`}
+/** Lit les trois reglages affiches ; une saisie vide ou nulle garde la valeur precedente. */
+function stopLireReglages(){const m=document.getElementById('stopMode')?.value;if(m==='couleur')stopMode='couleur';else if(m){stopMode='note';stopSur=STOP_SURS.includes(+m)?+m:20}const s=document.getElementById('stopSeuil');if(s)stopSeuil=Math.max(1,Math.round(+s.value)||1);const r=document.getElementById('stopRetrait');if(r){const v=+String(r.value).replace(',','.');if(v>0)stopRetrait=Math.round(v*100)/100}stopRetrait=Math.min(stopRetrait,stopSur)}
 let stopGroupEditing=null, stopGroupSelection=new Set();
+// Pendant la course, les eleves s'affichent en Grille (une case par eleve, rose pour une fille,
+// bleue pour un garcon : prenom + initiale du nom, toucher = +1 arret) ou en Liste (les lignes d'avant) ; le choix est garde sur cet appareil.
+// "Agrandir" fait occuper tout l'ecran a la grille, dimensionnee pour que la classe y tienne ;
+// "Annuler" defait les derniers arrets saisis, dans l'ordre inverse.
+let stopPlein=false,stopHistorique=[],stopVue=(()=>{try{return localStorage.getItem('eps_stop_vue')==='liste'?'liste':'grille'}catch{return 'grille'}})();
+function stopNomCourt(s){const p=String(s.first_name||'').trim(),n=String(s.last_name||'').trim();return p?(n?`${p} ${n[0].toUpperCase()}.`:p):studentLabel(s)}
+/** Fille ou garcon, quel que soit l'ecrit (FILLE/GARCON des classes, F/M de l'AS) ; vide sinon. */
+function stopSexe(s){const v=String(s?.sex||'').trim().toUpperCase();return v.startsWith('F')?'fille':(v.startsWith('G')||v.startsWith('H')||v==='M')?'garcon':''}
+function stopClasseSexe(s){const x=stopSexe(s);return x?' stop-'+x:''}
+/** La case dit fille (rose) ou garcon (bleu) et ne change pas avec la note, ecrite dans la case. */
+function stopTeinteSexe(s){return {fille:'#c2185b',garcon:'#1565c0'}[stopSexe(s)]||'#8da8ba'}
+function stopRappel(){const p=`${stopSeuil} arrêt${stopSeuil>1?'s':''} par palier`,legende=toolStudents.some(s=>stopSexe(s))?' · <span class="stop-legende"><i class="stop-fille"></i>Filles <i class="stop-garcon"></i>Garçons</span>':'';return (stopMode==='couleur'?`Couleur · ${p}`:`Sur ${stopSur} · ${p} · −${String(stopRetrait).replace('.',',')} pt`)+legende}
+function stopBarreHtml(){const vue=(v,l)=>`<button type="button" class="${stopVue===v?'':'secondary'}" data-stop-vue="${v}" aria-pressed="${stopVue===v}">${l}</button>`;return `<div class="stop-grille-barre"><span class="stop-vue" role="group" aria-label="Affichage des élèves">${vue('grille','Grille')}${vue('liste','Liste')}</span><span class="stop-rappel">${stopRappel()}</span><button type="button" class="secondary" id="stopAnnuler">↶ Annuler le dernier arrêt</button>${stopVue==='grille'?`<button type="button" class="secondary" id="stopAgrandir">${stopPlein?'⤡ Réduire':'⤢ Agrandir'}</button>`:''}</div>`}
+/** En plein ecran, choisit le nombre de colonnes qui donne les plus grandes cases sans defilement. */
+function stopAjusterGrille(){
+  const grille=document.querySelector('.stop-course .stop-grille');if(!grille)return;
+  if(!stopPlein){grille.style.gridTemplateColumns='';grille.style.gridAutoRows='';grille.style.removeProperty('--tuile-h');return}
+  const n=grille.querySelectorAll('.stop-tile').length;if(!n)return;
+  const gap=8,W=grille.clientWidth,H=Math.max(120,innerHeight-grille.getBoundingClientRect().top-12);
+  let colonnes=1,taille=0;
+  for(let c=1;c<=n;c++){const w=(W-gap*(c-1))/c;if(c>1&&w<105)break;const rangs=Math.ceil(n/c),h=(H-gap*(rangs-1))/rangs,t=Math.min(w,h*1.5);if(t>taille){taille=t;colonnes=c}}
+  const rangs=Math.ceil(n/colonnes),h=Math.max(84,Math.floor((H-gap*(rangs-1))/rangs));
+  grille.style.gridTemplateColumns=`repeat(${colonnes},minmax(0,1fr))`;grille.style.gridAutoRows=`${h}px`;grille.style.setProperty('--tuile-h',h+'px');
+}
+function stopBasculerPlein(plein){
+  stopPlein=plein;document.querySelector('.stop-course')?.classList.toggle('stop-plein',plein);
+  const b=document.getElementById('stopAgrandir');if(b){b.textContent=plein?'⤡ Réduire':'⤢ Agrandir'}
+  stopAjusterGrille();
+}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&stopPlein&&document.querySelector('.stop-course.stop-plein'))stopBasculerPlein(false)});
+addEventListener('resize',()=>{if(stopPlein)stopAjusterGrille()});
 const stopEscape=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 const stopGroupOf=s=>Number(stopGroupAssignments[s.id]??0);
 async function drawStopCourseTest(test) {
   const host=document.getElementById('epsTestBody');if(!host)return;
+  stopPlein=false;
   if(!onRealClass()){
-    host.innerHTML=`<div class="muted">${test.protocol}</div>${stopModeSelectorHtml()}<label>Nombre d’arrêts</label><input id="stopFree" type="number" min="0" value="0"><div class="ok" id="stopFreeOut">${stopBadge(0)}</div>`;
-    const update=()=>{stopMode=stopModeSelect.value;stopSeuil=Math.max(1,+seuil.value||1);document.getElementById('stopFreeOut').innerHTML=stopBadge(Math.max(0,+input.value||0))};
-    const stopModeSelect=document.getElementById('stopMode'),seuil=document.getElementById('stopSeuil'),input=document.getElementById('stopFree');
-    stopModeSelect.onchange=update;seuil.onchange=update;input.oninput=update;return;
+    // Le champ "Points retires" apparait ou disparait avec la notation : on redessine en gardant le nombre saisi.
+    const libre=Math.max(0,+document.getElementById('stopFree')?.value||0);
+    host.innerHTML=`<div class="muted">${test.protocol}</div>${stopModeSelectorHtml()}<label>Nombre d’arrêts</label><input id="stopFree" type="number" min="0" value="${libre}"><div class="ok" id="stopFreeOut">${stopBadge(libre)}</div>`;
+    const input=document.getElementById('stopFree');
+    host.querySelectorAll('#stopMode,#stopSeuil,#stopRetrait').forEach(c=>c.onchange=()=>{stopLireReglages();setTimeout(()=>drawStopCourseTest(test))});
+    input.oninput=()=>{document.getElementById('stopFreeOut').innerHTML=stopBadge(Math.max(0,+input.value||0))};return;
   }
   if(!stopSessionId&&stopAutoAppliedFor!==toolClassId){stopMode=toolClasses.find(c=>String(c.id)===String(toolClassId))?.grade==='SIXIEME'?'couleur':'note';stopAutoAppliedFor=toolClassId;}
   stopSessions=await lireTable('eps_test_sessions',`eps_test_sessions?class_id=eq.${toolClassId}&period_number=eq.${epsTestPeriod}&test_name=eq.${encodeURIComponent(test.label)}&deleted=eq.false&select=*&order=created_at.desc`,{ou:r=>String(r.class_id)===String(toolClassId)&&+r.period_number===+epsTestPeriod&&r.test_name===test.label&&!r.deleted,trier:(a,b)=>(b.created_at||0)-(a.created_at||0)});
@@ -426,14 +465,21 @@ function paintStopCourseTest(test){
   const visible=stopActiveGroup?toolStudents.filter(s=>stopGroupOf(s)===stopActiveGroup):toolStudents;
   const groupTabs=Array.from({length:stopGroupCount},(_,i)=>`<button class="${stopActiveGroup===i+1?'':'secondary'}" data-stop-group="${i+1}">Groupe ${i+1} · ${toolStudents.filter(s=>stopGroupOf(s)===i+1).length}</button>`).join('');
   const builder=stopGroupEditing==null?'':`<section class="stop-group-editor"><h3>${stopGroupEditing>stopGroupCount?'Créer':'Modifier'} le groupe ${stopGroupEditing}</h3><p>Touchez le nom d’un élève pour le sélectionner. Ceux des autres groupes restent à leur place.</p><div class="stop-group-students">${toolStudents.filter(s=>!stopGroupOf(s)||stopGroupOf(s)===stopGroupEditing).map(s=>{const id=stopEscape(s.id),selected=stopGroupSelection.has(String(s.id));return `<button type="button" class="stop-group-student${selected?' selected':''}" data-stop-pick-row="${id}" aria-pressed="${selected}"><span class="stop-group-check" aria-hidden="true">${selected?'✓':''}</span><span>${stopEscape(studentLabel(s))}</span></button>`}).join('')}</div><div class="stop-group-actions"><button id="stopApplyGroup" ${stopGroupSelection.size?'':'disabled'}>Enregistrer le groupe</button><button class="secondary" id="stopCancelGroup">Annuler</button>${stopGroupEditing<=stopGroupCount?'<button class="danger" id="stopDeleteGroup">Supprimer ce groupe</button>':''}</div></section>`;
-  const cards=visible.map(s=>{const id=stopEscape(s.id),n=stopCourseCounts[s.id]||0;return `<article class="stop-pupil" data-stop-card="${id}"><button class="stop-pupil-name" data-stop-student="${id}" aria-label="Ajouter un arrêt pour ${stopEscape(studentLabel(s))}"><strong>${stopEscape(studentLabel(s))}</strong><small>${stopGroupOf(s)?'Groupe '+stopGroupOf(s):'Sans groupe'} · toucher pour +1</small></button><div class="stop-pupil-results"><div class="stop-counter"><button class="secondary" data-stop-moins="${id}" aria-label="Retirer un arrêt" ${n?'':'disabled'}>−1</button><span><b data-stop-count="${id}">${n}</b><small>arrêt(s)</small></span><button data-stop-student="${id}" aria-label="Ajouter un arrêt">+1</button></div><div class="stop-score"><small>${stopMode==='couleur'?'Appréciation':'Note'}</small><span data-stop-score="${id}" aria-live="polite">${stopBadge(n)}</span></div></div></article>`}).join('');
+  const lignes=visible.map(s=>{const id=stopEscape(s.id),n=stopCourseCounts[s.id]||0;return `<article class="stop-pupil${stopClasseSexe(s)}" data-stop-card="${id}"><button class="stop-pupil-name" data-stop-student="${id}" aria-label="Ajouter un arrêt pour ${stopEscape(studentLabel(s))}"><strong>${stopEscape(studentLabel(s))}</strong><small>${stopGroupOf(s)?'Groupe '+stopGroupOf(s):'Sans groupe'} · toucher pour +1</small></button><div class="stop-pupil-results"><div class="stop-counter"><button class="secondary" data-stop-moins="${id}" aria-label="Retirer un arrêt" ${n?'':'disabled'}>−1</button><span><b data-stop-count="${id}">${n}</b><small>arrêt(s)</small></span><button data-stop-student="${id}" aria-label="Ajouter un arrêt">+1</button></div><div class="stop-score"><small>${stopMode==='couleur'?'Appréciation':'Note'}</small><span data-stop-score="${id}" aria-live="polite">${stopBadge(n)}</span></div></div></article>`}).join('');
+  const tuiles=visible.map(s=>{const id=stopEscape(s.id),n=stopCourseCounts[s.id]||0,nom=stopEscape(studentLabel(s));return `<article class="stop-tile${stopClasseSexe(s)}" data-stop-card="${id}" style="--teinte:${stopTeinteSexe(s)}"><button type="button" class="stop-tile-plus" data-stop-student="${id}" aria-label="Ajouter un arrêt pour ${nom}"><span class="stop-tile-nom">${stopEscape(stopNomCourt(s))}</span><b class="stop-tile-n" data-stop-count="${id}">${n}</b><span class="stop-tile-score" data-stop-score="${id}" aria-live="polite">${stopBadge(n)}</span></button><button type="button" class="secondary stop-tile-moins" data-stop-moins="${id}" aria-label="Retirer un arrêt à ${nom}" ${n?'':'disabled'}>−</button></article>`}).join('');
+  const cards=stopVue==='grille'?tuiles:lignes;
   const groupControls=`<div class="stop-group-actions" style="${epsTestStarted?'display:none':''}"><button id="stopCreateGroup">＋ Groupe libre</button>${stopActiveGroup?'<button id="stopEditGroup" class="secondary">Modifier ce groupe</button>':''}<label>Répartition automatique<select id="stopGroupCount"><option value="">Choisir…</option>${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}">${n} groupe(s)</option>`).join('')}</select></label></div><div class="stop-group-tabs"><button class="${stopActiveGroup?'secondary':''}" data-stop-group="0">Tous · ${toolStudents.length}</button>${groupTabs}</div>`;
-  const evaluation=`${groupControls}<div style="${epsTestStarted?'':'display:none'}"><div class="stop-pupils">${cards||'<p class="muted">Aucun élève dans ce groupe.</p>'}</div><div class="tool-savebar evaluation-actionbar"><button id="stopSave">💾 Enregistrer</button><button id="stopNew" class="secondary">＋ Nouvelle saisie</button><button id="stopResume" class="secondary">↻ Retrouver</button><button id="stopExport" class="secondary">▦ Exporter</button></div><div class="tool-dangerbar"><button id="stopReset" class="danger">↺ Réinitialiser les résultats</button></div><p id="stopMessage" role="status"></p><section class="field-tool-card evaluation-history-card"><h3>Tests enregistrés</h3>${history}</section></div>`;
-  host.innerHTML=`<section class="stop-course"><details class="test-protocol"><summary>Protocole</summary><p>${test.protocol}</p></details>${stopModeSelectorHtml()}${stopGroupEditing==null?evaluation:builder}</section>`;
-  document.getElementById('stopMode').onchange=e=>{stopMode=e.target.value;paintStopCourseTest(test)};
-  document.getElementById('stopSeuil').onchange=e=>{stopSeuil=Math.max(1,+e.target.value||1);paintStopCourseTest(test)};
+  const evaluation=`${groupControls}<div style="${epsTestStarted?'':'display:none'}">${stopBarreHtml()}<div class="stop-pupils${stopVue==='grille'?' stop-grille':''}">${cards||'<p class="muted">Aucun élève dans ce groupe.</p>'}</div><div class="tool-savebar evaluation-actionbar"><button id="stopSave">💾 Enregistrer</button><button id="stopNew" class="secondary">＋ Nouvelle saisie</button><button id="stopResume" class="secondary">↻ Retrouver</button><button id="stopExport" class="secondary">▦ Exporter</button></div><div class="tool-dangerbar"><button id="stopReset" class="danger">↺ Réinitialiser les résultats</button></div><p id="stopMessage" role="status"></p><section class="field-tool-card evaluation-history-card"><h3>Tests enregistrés</h3>${history}</section></div>`;
+  host.innerHTML=`<section class="stop-course${stopPlein?' stop-plein':''}"><details class="test-protocol"><summary>Protocole</summary><p>${test.protocol}</p></details>${stopModeSelectorHtml()}${stopGroupEditing==null?evaluation:builder}</section>`;
+  // Redessin differe : un champ modifie puis quitte par un clic declenche "change" pendant son
+  // propre retrait de la page, et un redessin immediat a ce moment-la est refuse par le navigateur.
+  stopAjusterGrille();
+  host.querySelectorAll('#stopMode,#stopSeuil,#stopRetrait').forEach(c=>c.onchange=()=>{stopLireReglages();setTimeout(()=>paintStopCourseTest(test))});
   // Update in place: no network request, lost scroll position or missed rapid taps.
-  const update=(id,delta)=>{const n=stopCourseCounts[id]=Math.max(0,(stopCourseCounts[id]||0)+delta);host.querySelectorAll('[data-stop-card]').forEach(card=>{if(card.dataset.stopCard===id){card.querySelector('[data-stop-count]').textContent=n;card.querySelector('[data-stop-score]').innerHTML=stopBadge(n);card.querySelector('[data-stop-moins]').disabled=!n;}})};
+  const update=(id,delta,annulation=false)=>{const avant=stopCourseCounts[id]||0,n=stopCourseCounts[id]=Math.max(0,avant+delta);if(n!==avant&&!annulation)stopHistorique.push([id,n-avant]);host.querySelectorAll('[data-stop-card]').forEach(card=>{if(card.dataset.stopCard===id){card.querySelector('[data-stop-count]').textContent=n;card.querySelector('[data-stop-score]').innerHTML=stopBadge(n);card.querySelector('[data-stop-moins]').disabled=!n;}})};
+  document.getElementById('stopAnnuler')?.addEventListener('click',()=>{const h=stopHistorique.pop();if(h)update(h[0],-h[1],true)});
+  document.getElementById('stopAgrandir')?.addEventListener('click',()=>stopBasculerPlein(!stopPlein));
+  host.querySelectorAll('[data-stop-vue]').forEach(b=>b.onclick=()=>{stopVue=b.dataset.stopVue;try{localStorage.setItem('eps_stop_vue',stopVue)}catch{}if(stopVue!=='grille')stopPlein=false;paintStopCourseTest(test)});
   host.querySelectorAll('[data-stop-student]').forEach(b=>b.onclick=()=>update(b.dataset.stopStudent,1));
   host.querySelectorAll('[data-stop-moins]').forEach(b=>b.onclick=()=>update(b.dataset.stopMoins,-1));
   host.querySelectorAll('[data-stop-group]').forEach(b=>b.onclick=()=>{stopActiveGroup=+b.dataset.stopGroup;stopGroupEditing=null;paintStopCourseTest(test)});
@@ -448,18 +494,18 @@ function paintStopCourseTest(test){
     const del=document.getElementById('stopDeleteGroup');if(del)del.onclick=()=>{if(!confirm('Supprimer ce groupe ? Les élèves et leurs résultats sont conservés.'))return;const undo=rememberGroups(),g=stopGroupEditing;Object.keys(stopGroupAssignments).forEach(id=>{const old=stopGroupAssignments[id];stopGroupAssignments[id]=old===g?0:old>g?old-1:old});stopGroupCount--;stopActiveGroup=0;stopGroupEditing=null;paintStopCourseTest(test);EpsToolWorkflow.offerUndo(undo)};
   }
   if(stopGroupEditing!=null)return;
-  document.getElementById('stopReset').onclick=()=>{if(!confirm('Effacer les compteurs ? Les groupes et les tests enregistrés sont conservés.'))return;const previous=structuredClone({id:stopSessionId,record:stopSessionRecord,records:stopResultRecords,values:stopCourseCounts});stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);paintStopCourseTest(test);EpsToolWorkflow.offerUndo(()=>{stopSessionId=previous.id;stopSessionRecord=previous.record;stopResultRecords=previous.records;Object.assign(stopCourseCounts,previous.values);paintStopCourseTest(test)})};
-  document.getElementById('stopNew').onclick=()=>{if(!confirm('Commencer une nouvelle saisie ? Enregistrez auparavant les résultats à conserver.'))return;stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);paintStopCourseTest(test)};
+  document.getElementById('stopReset').onclick=()=>{if(!confirm('Effacer les compteurs ? Les groupes et les tests enregistrés sont conservés.'))return;const previous=structuredClone({id:stopSessionId,record:stopSessionRecord,records:stopResultRecords,values:stopCourseCounts});stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);stopHistorique=[];paintStopCourseTest(test);EpsToolWorkflow.offerUndo(()=>{stopSessionId=previous.id;stopSessionRecord=previous.record;stopResultRecords=previous.records;Object.assign(stopCourseCounts,previous.values);paintStopCourseTest(test)})};
+  document.getElementById('stopNew').onclick=()=>{if(!confirm('Commencer une nouvelle saisie ? Enregistrez auparavant les résultats à conserver.'))return;stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);stopHistorique=[];paintStopCourseTest(test)};
   document.getElementById('stopResume').onclick=()=>{const history=host.querySelector('.evaluation-history');if(history){history.open=true;history.scrollIntoView({behavior:'smooth',block:'nearest'})}};
-  document.getElementById('stopExport').onclick=()=>EpsToolWorkflow.csv('arret-course-resultats.csv',[['Élève','Groupe','Arrêts',stopMode==='couleur'?'Appréciation':'Note /20'],...toolStudents.map(student=>{const count=stopCourseCounts[student.id]||0;return [studentLabel(student),stopGroupOf(student)||'',count,stopMode==='couleur'?stopBande(count):stopNote(count)]})]);
-  EpsPronoteTools.attach(document.getElementById('stopExport'),()=>({classId:toolClassId,className:toolClasses.find(c=>c.id===toolClassId)?.name,title:`Arrêts de course · P${epsTestPeriod}`,date:stopSessionRecord?.created_at,rows:toolStudents.map(student=>({student,score:stopNote(stopCourseCounts[student.id]||0),complete:stopMode==='note'}))}));
-  EpsToolActionMenus.register(document.getElementById('stopSave').closest('.tool-savebar'),{final:stopMode==='note'&&onRealClass()?()=>openRunningFinal({testName:test.label,scale:20}):null,deleteGroups:()=>{if(!confirm('Supprimer les groupes sans modifier les arrêts ?'))return;const before=structuredClone({groups:stopGroupAssignments,count:stopGroupCount});stopGroupAssignments={};stopGroupCount=0;stopActiveGroup=0;paintStopCourseTest(test);EpsToolWorkflow.offerUndo(()=>{if(Object.values(stopGroupAssignments).some(Boolean))throw Error('Les groupes ont changé.');stopGroupAssignments=before.groups;stopGroupCount=before.count;paintStopCourseTest(test)})}});
+  document.getElementById('stopExport').onclick=()=>EpsToolWorkflow.csv('arret-course-resultats.csv',[['Élève','Groupe','Arrêts',stopMode==='couleur'?'Appréciation':`Note /${stopSur}`],...toolStudents.map(student=>{const count=stopCourseCounts[student.id]||0;return [studentLabel(student),stopGroupOf(student)||'',count,stopMode==='couleur'?stopBande(count):stopNote(count)]})]);
+  EpsPronoteTools.attach(document.getElementById('stopExport'),()=>({classId:toolClassId,className:toolClasses.find(c=>c.id===toolClassId)?.name,title:`Arrêts de course · P${epsTestPeriod}`,date:stopSessionRecord?.created_at,rows:toolStudents.map(student=>({student,score:stopNote(stopCourseCounts[student.id]||0),scale:stopSur,complete:stopMode==='note'}))}));
+  EpsToolActionMenus.register(document.getElementById('stopSave').closest('.tool-savebar'),{final:stopMode==='note'&&onRealClass()?()=>openRunningFinal({testName:test.label,scale:stopSur}):null,deleteGroups:()=>{if(!confirm('Supprimer les groupes sans modifier les arrêts ?'))return;const before=structuredClone({groups:stopGroupAssignments,count:stopGroupCount});stopGroupAssignments={};stopGroupCount=0;stopActiveGroup=0;paintStopCourseTest(test);EpsToolWorkflow.offerUndo(()=>{if(Object.values(stopGroupAssignments).some(Boolean))throw Error('Les groupes ont changé.');stopGroupAssignments=before.groups;stopGroupCount=before.count;paintStopCourseTest(test)})}});
   const save=async asNew=>{
     const saveButtons=[document.getElementById('stopSave')];saveButtons.forEach(b=>b.disabled=true);
     try{const cls=toolClasses.find(c=>c.id===toolClassId),id=asNew||!stopSessionId?crypto.randomUUID():stopSessionId,now=new Date().toISOString();
       const sessionRow=asNew||!stopSessionRecord?{id,user_id:session.user_id,class_id:toolClassId,period_number:epsTestPeriod,test_name:test.label,created_at:Date.now(),class_label:cls?.name||'',updated_at:now,deleted:false}:{...stopSessionRecord,updated_at:now,deleted:false};
       await enregistrerLigne('eps_test_sessions',sessionRow);
-      for(const s of toolStudents){const n=stopCourseCounts[s.id]||0,old=!asNew?stopResultRecords[s.id]:null;const row={...(old||{}),id:old?.id||crypto.randomUUID(),user_id:old?.user_id||session.user_id,session_id:id,student_id:s.id,input_value:n,result_value:stopMode==='couleur'?n:stopNote(n),input_unit:`group:${stopGroupOf(s)}|groups:${stopGroupCount}|Arrêts|mode:${stopMode}|seuil:${stopSeuil}`,result_unit:stopMode==='couleur'?`arrêt(s) · ${stopBande(n)}`:'/20',updated_at:now,deleted:false};await enregistrerLigne('eps_test_results',row);stopResultRecords[s.id]=row;}
+      for(const s of toolStudents){const n=stopCourseCounts[s.id]||0,old=!asNew?stopResultRecords[s.id]:null;const row={...(old||{}),id:old?.id||crypto.randomUUID(),user_id:old?.user_id||session.user_id,session_id:id,student_id:s.id,input_value:n,result_value:stopMode==='couleur'?n:stopNote(n),input_unit:`group:${stopGroupOf(s)}|groups:${stopGroupCount}|Arrêts|mode:${stopMode}|seuil:${stopSeuil}|sur:${stopSur}|retrait:${stopRetrait}`,result_unit:stopMode==='couleur'?`arrêt(s) · ${stopBande(n)}`:`/${stopSur}`,updated_at:now,deleted:false};await enregistrerLigne('eps_test_results',row);stopResultRecords[s.id]=row;}
       // Pupils filtered out for this lesson keep their previous results.
       stopSessionId=id;stopSessionRecord=sessionRow;await drawStopCourseTest(test);document.getElementById('stopMessage').textContent='Test enregistré.';
     }catch(e){document.getElementById('stopMessage').textContent='Enregistrement non confirmé : '+e.message;saveButtons.forEach(b=>b.disabled=false);}
@@ -468,7 +514,7 @@ function paintStopCourseTest(test){
   host.querySelectorAll('[data-stop-session]').forEach(b=>b.onclick=()=>openStopSession(b.dataset.stopSession,test));
   host.querySelectorAll('[data-stop-delete]').forEach(b=>b.onclick=()=>deleteStopSession(b.dataset.stopDelete,test));
 }
-async function openStopSession(id,test){const saved=stopSessions.find(s=>String(s.id)===String(id));if(!saved)return;const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${id}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(id)&&!r.deleted});epsTestStarted=true;stopSessionId=saved.id;stopSessionRecord=saved;stopResultRecords={};stopGroupAssignments={};stopGroupCount=0;stopGroupEditing=null;Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);rows.forEach(r=>{stopResultRecords[r.student_id]=r;stopCourseCounts[r.student_id]=+r.input_value||0;const unit=String(r.input_unit||'');const g=Number(unit.match(/^group:(\d+)/)?.[1]??1);stopGroupAssignments[r.student_id]=g;stopGroupCount=Math.max(stopGroupCount,g,Number(unit.match(/\|groups:(\d+)/)?.[1]||0));const mode=unit.match(/mode:(note|couleur)/)?.[1],seuil=+unit.match(/seuil:(\d+)/)?.[1];if(mode)stopMode=mode;if(seuil)stopSeuil=seuil});stopActiveGroup=0;await drawEpsTests()}
+async function openStopSession(id,test){const saved=stopSessions.find(s=>String(s.id)===String(id));if(!saved)return;const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${id}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(id)&&!r.deleted});epsTestStarted=true;stopSessionId=saved.id;stopSessionRecord=saved;stopResultRecords={};stopGroupAssignments={};stopGroupCount=0;stopGroupEditing=null;Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k]);stopHistorique=[];rows.forEach(r=>{stopResultRecords[r.student_id]=r;stopCourseCounts[r.student_id]=+r.input_value||0;const unit=String(r.input_unit||'');const g=Number(unit.match(/^group:(\d+)/)?.[1]??1);stopGroupAssignments[r.student_id]=g;stopGroupCount=Math.max(stopGroupCount,g,Number(unit.match(/\|groups:(\d+)/)?.[1]||0));const mode=unit.match(/mode:(note|couleur)/)?.[1],seuil=+unit.match(/seuil:(\d+)/)?.[1],sur=+unit.match(/\|sur:(\d+)/)?.[1],retrait=+unit.match(/\|retrait:([\d.]+)/)?.[1];if(mode)stopMode=mode;if(seuil)stopSeuil=seuil;stopSur=STOP_SURS.includes(sur)?sur:20;stopRetrait=retrait>0?retrait:0.5});stopActiveGroup=0;await drawEpsTests()}
 async function deleteStopSession(id,test){if(!confirm('Supprimer ce test et ses résultats ?'))return;const saved=stopSessions.find(s=>String(s.id)===String(id));if(saved)await enregistrerLigne('eps_test_sessions',{...saved,deleted:true,updated_at:new Date().toISOString()});if(String(stopSessionId)===String(id)){stopSessionId=null;stopSessionRecord=null;stopResultRecords={};Object.keys(stopCourseCounts).forEach(k=>delete stopCourseCounts[k])}await drawStopCourseTest(test)}
 
 let runningDistance=500,runningCount=3,runningDifficulty=0,runningSessionId=null,runningCreatedAt=null,runningSessionRecord=null;
@@ -535,7 +581,7 @@ function paintRunningSeriesTest(test){
   const heads=Array.from({length:runningCount},(_,i)=>`<th data-run-column="${i}">${runningDistance} m · ${i+1}<small>Appui prolongé pour supprimer</small></th>`).join('');
   const rows=displayedStudents.map(s=>{const summary=runningSummary(s),values=runningValues[s.id],walk=runningWalking.has(String(s.id));return `<tr><th class="running-sticky"><button class="running-name" data-run-name="${s.id}"><b>${studentLabel(s)}${walk?' <span class="running-walk-badge">M.R</span>':''}</b><small data-run-score="${s.id}">Note : ${summary?.total!=null?EpsTests.fr(summary.total,2):'—'}</small></button></th>${values.map((v,i)=>`<td>${v===RUNNING_REMOVED?`<button class="running-removed" data-run-student="${s.id}" data-run-index="${i}">Retirée</button>`:`<input inputmode="numeric" maxlength="3" placeholder="315" title="Temps positif au format 315 pour 3 min 15 s (secondes de 00 à 59)" aria-invalid="${runningHasInvalidTimes([v])}" data-run-student="${s.id}" data-run-index="${i}" value="${toolHistoryEscape(v)}">`}</td>`).join('')}</tr>`}).join('');
   const detailStudent=toolStudents.find(s=>String(s.id)===String(runningExpandedStudent)),detail=detailStudent?runningSummary(detailStudent):null;
-  host.innerHTML=`<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details><div class="running-settings"><label>Format<select id="runDistance"><option value="500" ${runningDistance===500?'selected':''}>500 m</option><option value="250" ${runningDistance===250?'selected':''}>250 m</option></select></label><label>Nombre de courses<select id="runCount">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${runningCount===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label><label class="running-difficulty">Difficulté <b id="runningDifficultyLabel">${runningDifficulty>0?'+'+runningDifficulty:runningDifficulty} %</b><input id="runningDifficulty" type="range" min="-30" max="30" step="1" value="${runningDifficulty}"><small>−30 % plus facile · +30 % plus difficile</small></label></div>${onRealClass()?groupTabs:''}${onRealClass()?groupEditor:''}<div class="running-session-toolbar">${onRealClass()?`<div class="running-session-list">${sessions||'<span class="muted">Aucune session enregistrée</span>'}</div>`:'<span class="muted">Utilisation libre · aucun enregistrement dans une classe</span>'}</div><div class="running-grid-wrap"><table class="running-grid"><thead><tr><th class="running-sticky">Nom et prénom</th>${heads}</tr></thead><tbody>${rows}</tbody></table></div>${detailStudent?`<div class="running-result"><b>${studentLabel(detailStudent)}${detail?.walking?' · M.R':''}</b>${detail?`<span>Moyenne de ${detail.valid.length} course(s) : ${runningTimeLabel(detail.avg)} · Régularité ${detail.reg==null?'—':EpsTests.fr(detail.reg,1)}/${detail.regMax} · Performance ${detail.perf==null?'sexe non renseigné':EpsTests.fr(detail.perf,2)+'/'+detail.perfMax}</span>`:'<span>Renseignez au moins un temps.</span>'}</div>`:''}<div class="tool-savebar evaluation-actionbar">${onRealClass()?'<button id="runningSave">💾 Enregistrer</button>':''}<button class="secondary" id="runningBlank">＋ Nouvelle saisie</button><button class="secondary" id="runningResume">↻ Retrouver</button><button class="secondary" id="runningExport">▦ Exporter</button></div><div class="tool-dangerbar"><button class="danger" id="runningResetAll">↺ Réinitialiser les résultats</button></div><div id="runningMsg" class="ok"></div>`;
+  host.innerHTML=`${runReglagesHtml(`<details class="test-protocol"><summary>Protocole du test</summary><p>${test.protocol}</p></details><div class="running-settings"><label>Format<select id="runDistance"><option value="500" ${runningDistance===500?'selected':''}>500 m</option><option value="250" ${runningDistance===250?'selected':''}>250 m</option></select></label><label>Nombre de courses<select id="runCount">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${runningCount===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label><label class="running-difficulty">Difficulté <b id="runningDifficultyLabel">${runningDifficulty>0?'+'+runningDifficulty:runningDifficulty} %</b><input id="runningDifficulty" type="range" min="-30" max="30" step="1" value="${runningDifficulty}"><small>−30 % plus facile · +30 % plus difficile</small></label></div>`)}${runBarreHtml()}${onRealClass()?runGroupesHtml(groupTabs):''}${onRealClass()?groupEditor:''}<div class="running-session-toolbar">${onRealClass()?`<div class="running-session-list">${sessions||'<span class="muted">Aucune session enregistrée</span>'}</div>`:'<span class="muted">Utilisation libre · aucun enregistrement dans une classe</span>'}</div>${runTerrainHtml(displayedStudents,`<div class="running-grid-wrap"><table class="running-grid"><thead><tr><th class="running-sticky">Nom et prénom</th>${heads}</tr></thead><tbody>${rows}</tbody></table></div>`)}${detailStudent?`<div class="running-result"><b>${studentLabel(detailStudent)}${detail?.walking?' · M.R':''}</b>${detail?`<span>Moyenne de ${detail.valid.length} course(s) : ${runningTimeLabel(detail.avg)} · Régularité ${detail.reg==null?'—':EpsTests.fr(detail.reg,1)}/${detail.regMax} · Performance ${detail.perf==null?'sexe non renseigné':EpsTests.fr(detail.perf,2)+'/'+detail.perfMax}</span>`:'<span>Renseignez au moins un temps.</span>'}</div>`:''}<div class="tool-savebar evaluation-actionbar">${onRealClass()?'<button id="runningSave">💾 Enregistrer</button>':''}<button class="secondary" id="runningBlank">＋ Nouvelle saisie</button><button class="secondary" id="runningResume">↻ Retrouver</button><button class="secondary" id="runningExport">▦ Exporter</button></div><div class="tool-dangerbar"><button class="danger" id="runningResetAll">↺ Réinitialiser les résultats</button></div><div id="runningMsg" class="ok"></div>`;
   const distanceSelect=document.getElementById('runDistance'),countSelect=document.getElementById('runCount'),difficultySlider=document.getElementById('runningDifficulty'),difficultyLabel=document.getElementById('runningDifficultyLabel'),blankButton=document.getElementById('runningBlank');
   distanceSelect.onchange=()=>{runningDistance=+distanceSelect.value;paintRunningSeriesTest(test)};
   countSelect.onchange=()=>{runningCount=+countSelect.value;paintRunningSeriesTest(test)};
@@ -564,6 +610,7 @@ function paintRunningSeriesTest(test){
   bindRunningLongPress(host.querySelectorAll('[data-run-name]'),node=>{const id=String(node.dataset.runName),student=toolStudents.find(s=>String(s.id)===id),walk=confirm(`${studentLabel(student)}\n\nOK : Marche rapide\nAnnuler : Course`);if(walk)runningWalking.add(id);else runningWalking.delete(id);paintRunningSeriesTest(test)});
   const deleteOne=document.getElementById('runningDeleteGroup');if(deleteOne){const remove=deleteOne.onclick;deleteOne.onclick=()=>{rememberRunningUndo('groups');remove()}}
   ['runningSaveGroup','runningDeleteGroup'].forEach(id=>{const button=document.getElementById(id);if(!button)return;const original=button.onclick;button.onclick=()=>{const before=structuredClone(runningGroups),active=runningActiveGroup,classId=toolClassId,period=epsTestPeriod;original();const expected=JSON.stringify(runningGroups);if(expected===JSON.stringify(before))return;EpsToolWorkflow.offerUndo(()=>{if(toolClassId!==classId||epsTestPeriod!==period||JSON.stringify(runningGroups)!==expected)throw Error('Les groupes ont changé depuis. Annulation interrompue pour conserver ces changements.');runningGroups=before;runningActiveGroup=active;paintRunningSeriesTest(test);EpsToolResume?.capture()})}});
+  runTerrainBind(host,test,displayedStudents);
   if(onRealClass())runningSave.onclick=()=>saveRunningSeries(test,false);
 }
 async function saveRunningSeries(test,asNew){const cls=toolClasses.find(c=>c.id===toolClassId),id=asNew||!runningSessionId?crypto.randomUUID():runningSessionId,now=new Date().toISOString(),created=asNew||!runningCreatedAt?Date.now():runningCreatedAt;const selected=toolStudents.map(s=>[s,runningSummary(s),runningValues[s.id],runningGroups.findIndex(g=>g.includes(String(s.id)))]).filter(([s,r,raw,group])=>r||raw.some(v=>String(v??'').trim()!=='')||group>=0||runningWalking.has(String(s.id)));const sessionRow=asNew||!runningSessionRecord?{id,user_id:session.user_id,class_id:toolClassId,period_number:epsTestPeriod,test_name:test.label,created_at:created,class_label:cls?.name||'',updated_at:now,deleted:false}:{...runningSessionRecord,updated_at:now,deleted:false};await enregistrerLigne('eps_test_sessions',sessionRow);const kept=new Set();for(const [s,r,raw,group] of selected){const old=!asNew?runningResultRecords[s.id]:null,resultId=old?.id||crypto.randomUUID();kept.add(String(resultId));const valid=r?.valid||[],active=raw.filter(v=>v!==RUNNING_REMOVED).length,walk=runningWalking.has(String(s.id));await enregistrerLigne('eps_test_results',{...(old||{}),id:resultId,user_id:old?.user_id||session.user_id,session_id:id,student_id:s.id,input_value:r?.avg||0,result_value:r?.total||0,input_unit:`runs:${runningDistance}:${runningCount}:group:${group}:difficulty:${runningDifficulty}:mode:${walk?'walk':'run'}:times:${raw.join('|')}`,result_unit:`${valid.length>1?'/12':walk?'/3':'/6'}${valid.length<active?' · en cours':''}`,updated_at:now,deleted:false})}if(!asNew)for(const old of Object.values(runningResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});runningSessionId=id;runningCreatedAt=created;runningSessionRecord=sessionRow;await loadRunningSessions();await openRunningSession(id,test);const msg=document.getElementById('runningMsg');if(msg)msg.textContent=asNew?'Nouvelle session enregistrée.':'Session mise à jour.'}
@@ -571,7 +618,7 @@ async function ouvrirSessionTrois500DepuisClasse(sessionId,classId,period){showT
 async function ouvrirSessionTestDepuisClasse(sessionId,classId,period,testName){if(testName==='3 × 500 m · Observation'){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='running-observation');if(!w)throw Error('Observation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderRunningObservationWeb(w);}if(String(testName).endsWith(' · Bac AFL1 /12')){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='bac-grid');if(!w)throw Error('Évaluation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderBacGridWeb(w);}if(testName==='Escalade · AFL1 /12'){const w=(await EpsToolWorks.read()).find(w=>w.id===sessionId&&w.type==='bac-climb');if(!w)throw Error('Évaluation introuvable. Synchronisez la classe.');if(w.compatibilityError)throw Error(w.compatibilityError);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');return renderBacClimbWeb(w);}if(testName==='Escalade /20'){showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';return openClimbTest(sessionId);}if(testName==='3 × 500 m')return ouvrirSessionTrois500DepuisClasse(sessionId,classId,period);if(testName==='Multi-chrono'&&typeof ouvrirMultiChronoDepuisClasse==='function')return ouvrirMultiChronoDepuisClasse(sessionId,classId,period);const key=Object.keys(EpsTests.TESTS).find(k=>EpsTests.TESTS[k].label===testName);showTab('outils');toolPanel=document.getElementById('toolPanel');toolPanel.style.display='block';toolPanel.classList.add('modern-tool-panel');toolClassId=classId;epsTestPeriod=+period||1;if(testName==='Aptitudes physiques 6e'&&globalThis.EpsAptitudes)return EpsAptitudes.openSession(sessionId,classId,period);if(key){epsOpenCategory=EpsTests.CATEGORIES.find(c=>c.tests.includes(key))?.name||'Athle';epsOpenTest=key;resetGenericTestState();epsTestStarted=true;await renderEpsTests();if(EpsTests.TESTS[key].special==='stops')await openStopSession(sessionId,EpsTests.TESTS[key]);else await openGenericTestSession(sessionId,key);document.getElementById('epsTestBody')?.scrollIntoView({behavior:'smooth',block:'start'});return}if(testName==='Condition physique générale'&&typeof ouvrirConditionPhysiqueDepuisClasse==='function')return ouvrirConditionPhysiqueDepuisClasse(sessionId,classId,period);if(testName==='Observation Natation'&&typeof ouvrirObservationNatationDepuisClasse==='function')return ouvrirObservationNatationDepuisClasse(sessionId,classId,period);if(testName==='Observation Gymnastique'&&typeof ouvrirObservationGymnastiqueDepuisClasse==='function')return ouvrirObservationGymnastiqueDepuisClasse(sessionId,classId,period);if(String(testName).startsWith('Test VMA')){await renderVmaTest();await openVmaSession(sessionId);return}}
 function runningExportData(){return toolStudents.map(s=>({student:s,summary:runningSummary(s)})).filter(x=>x.summary)}
 function runningDocumentData(){return {title:`Résultats ${runningCount} × ${runningDistance} m`,context:`${toolClasses.find(c=>c.id===toolClassId)?.name||'Usage libre'} · Période ${epsTestPeriod} · Difficulté ${runningDifficulty} %`,headers:['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Régularité','Performance','Note','Barème'],rows:toolStudents.map(s=>{const r=runningSummary(s);return[s.last_name,s.first_name,runningWalking.has(String(s.id))?'Marche rapide':'Course',...(runningValues[s.id]||Array(runningCount).fill('')).map(v=>v===RUNNING_REMOVED?'Retirée':v),r?runningTimeLabel(r.avg):'',r?.reg??'',r?.perf??'',r?.total??'',r?`/${r.valid.length>1?12:r.perfMax}${r.valid.length<r.raw.filter(v=>v!==RUNNING_REMOVED).length?' · en cours':''}`:'Non noté']})}}
-function exportRunningCsv(){const headers=['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité','Performance','Note /12'],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,r.walking?'M.R':'Course',...r.raw.map(v=>v===RUNNING_REMOVED?'Retirée':v),`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),`${r.reg??''}/${r.regMax}`,`${r.perf??''}/${r.perfMax}`,r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`resultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
+function exportRunningCsv(){const headers=['Nom','Prénom','Mode',...Array.from({length:runningCount},(_,i)=>`Course ${i+1}`),'Moyenne','Écarts','Régularité','Performance','Note /12'],rows=runningExportData().map(({student:s,summary:r})=>[s.last_name,s.first_name,r.walking?'M.R':'Course',...r.raw.map(v=>v===RUNNING_REMOVED?'Retirée':v),`${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}`,r.gaps.join(' + '),`${r.reg??''}/${r.regMax}`,`${r.perf??''}/${r.perfMax}`,r.total??'']);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`résultats-${runningCount}x${runningDistance}m-P${epsTestPeriod}.csv`;a.click();URL.revokeObjectURL(a.href)}
 function printRunningPdf(){const rows=runningExportData(),w=open('','_blank');if(!w)return alert('Autorisez les fenêtres surgissantes.');w.document.write(`<html><head><title>Résultats ${runningCount} × ${runningDistance} m</title><style>body{font:12px Arial;color:#173a57;padding:24px}h1{color:#087dca}table{width:100%;border-collapse:collapse}th,td{border:1px solid #cad8e3;padding:6px;text-align:center}th:first-child,td:first-child{text-align:left}@media print{button{display:none}}</style></head><body><h1>${runningCount} × ${runningDistance} m · ${toolClasses.find(c=>c.id===toolClassId)?.name||''}</h1><p>Difficulté : ${runningDifficulty>0?'+':''}${runningDifficulty} %</p><table><tr><th>Élève</th>${Array.from({length:runningCount},(_,i)=>`<th>C${i+1}</th>`).join('')}<th>Moyenne</th><th>Régularité</th><th>Performance</th><th>Note</th></tr>${rows.map(({student:s,summary:r})=>`<tr><td>${studentLabel(s)}${r.walking?' · M.R':''}</td>${r.raw.map(v=>`<td>${v===RUNNING_REMOVED?'Retirée':v}</td>`).join('')}<td>${Math.floor(r.avg/60)}:${String(Math.round(r.avg)%60).padStart(2,'0')}</td><td>${r.reg??'—'} / ${r.regMax}</td><td>${r.perf??'—'} / ${r.perfMax}</td><td>${r.total??'—'} / ${r.valid.length>1?12:r.perfMax}</td></tr>`).join('')}</table><button onclick="print()">Enregistrer / imprimer en PDF</button></body></html>`);w.document.close()}
 
 async function saveEpsTest(key, asNew=false) {
@@ -607,7 +654,7 @@ async function saveEpsTest(key, asNew=false) {
     await openGenericTestSession(sessionId,key);
     const completed=rows.filter(r=>!r.draft).length;document.getElementById("epsSaveMsg").textContent = `${test.label} enregistré${completed?` pour ${completed} élève(s)`:" comme brouillon"} · P${epsTestPeriod}`;
   } catch (e) {
-    document.getElementById("epsSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
+    document.getElementById("epsSaveMsg").textContent = "Échec de l'enregistrement : " + e.message;
   }
 }
 
@@ -728,7 +775,7 @@ async function saveVmaResults(asNew=false) {
       updated_at: now, deleted: false
     })}if(!asNew)for(const old of Object.values(vmaResultRecords))if(!kept.has(String(old.id)))await enregistrerLigne('eps_test_results',{...old,deleted:true,updated_at:now});vmaSessionId=sessionId;vmaSessionRecord=sessionRow;await drawVmaTest();await openVmaSession(sessionId);document.getElementById("vmaSaveMsg").textContent = `${rows.length} résultat(s) enregistré(s)${rows.length?'':' · brouillon'}.`;
   } catch (e) {
-    document.getElementById("vmaSaveMsg").textContent = "Echec de l'enregistrement : " + e.message;
+    document.getElementById("vmaSaveMsg").textContent = "Échec de l'enregistrement : " + e.message;
   }
 }
 async function openVmaSession(id){const saved=vmaSessions.find(s=>String(s.id)===String(id));if(!saved)return;vmaProtocol=String(saved.test_name||'').split(' · ')[1]||'VAMEVAL';const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${id}&deleted=eq.false&select=*`,{ou:r=>String(r.session_id)===String(id)&&!r.deleted});vmaSessionId=saved.id;vmaSessionRecord=saved;vmaResultRecords={};vmaValues={};vmaGroupAssignments={};vmaGroupCount=1;rows.forEach(r=>{vmaResultRecords[r.student_id]=r;vmaValues[r.student_id]=String(r.result_unit||'').includes('brouillon')?'':String(r.input_value??'');const g=+String(r.input_unit||'').match(/^group:(\d+)/)?.[1]||1;vmaGroupAssignments[r.student_id]=g;vmaGroupCount=Math.max(vmaGroupCount,g)});vmaActiveGroup=0;await drawVmaTest()}
@@ -752,7 +799,7 @@ function drawSwimCertificate() {
 
   // Dix etapes, donc dix colonnes : c'est exactement le cas ou la colonne des noms doit rester
   // en vue pendant qu'on fait defiler le parcours.
-  toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 etapes du parcours en securite")
+  toolPanel.innerHTML = toolHeader("Savoir Nager", "Valider les 10 étapes du parcours en sécurité")
     + toolRosterHtml()
     + `<div class="fitness-web">${socleTableauHtml(
         EpsTests.SWIM_STEPS.map((label,i)=>({titre:`${i+1}`,aide:label})),
@@ -773,7 +820,7 @@ function drawSwimCertificate() {
   });
   document.getElementById("swimPrintBtn").onclick = () => window.print();
   document.getElementById("swimResetBtn").onclick = () => {
-    if (!confirm("Effacer toutes les étapes validées et repartir de zéro ?")) return;
+    if (!confirm("Effacer toutes les étapes validées et répartir de zéro ?")) return;
     Object.keys(swimValidations).forEach(k => delete swimValidations[k]);
     drawSwimCertificate();
   };
@@ -795,9 +842,9 @@ function drawAptitudes() {
 
   // Tableau du socle : trois criteres en colonnes, les noms restent en vue.
   const champs = [["sprint","30 m","secondes"],["endurance","Palier","endurance"],["jump","Saut","cm"]];
-  toolPanel.innerHTML = toolHeader("Aptitudes physiques 6e", "Sprint 30 m, endurance et saut sans elan")
+  toolPanel.innerHTML = toolHeader("Aptitudes physiques 6e", "Sprint 30 m, endurance et saut sans élan")
     + toolRosterHtml()
-    + `<div class="card" style="background:#FFF7E8"><div class="muted">Baremes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
+    + `<div class="card" style="background:#FFF7E8"><div class="muted">Barèmes : sprint satisfaisant &lt; 6,00 s · endurance satisfaisante palier ≥ 4 · saut satisfaisant &gt; 140 cm</div></div>`
     + `<div class="field-tool-row">${socleSelecteurModeHtml(aptitudeMode,"aptitudeMode")}</div>`
     + `<div class="fitness-web aptitude-worksheet"><p class="aptitude-scroll-hint">Nom fixe · faites glisser les colonnes →</p>${socleTableauHtml(
         champs.map(([,titre,aide])=>({titre,aide})),
@@ -812,7 +859,7 @@ function drawAptitudes() {
   bindToolClose();
   bindToolRoster(drawAptitudes);
   document.getElementById("aptitudeMode").onchange=e=>{aptitudeMode=e.target.value;aptitudeModeChoisi=true;drawAptitudes()};
-  document.getElementById("aptResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies et repartir de zéro ?"))return;Object.keys(aptitudeValues).forEach(k=>delete aptitudeValues[k]);aptitudeColors={};drawAptitudes()};
+  document.getElementById("aptResetBtn").onclick=()=>{if(!confirm("Effacer toutes les saisies et répartir de zéro ?"))return;Object.keys(aptitudeValues).forEach(k=>delete aptitudeValues[k]);aptitudeColors={};drawAptitudes()};
   toolPanel.querySelectorAll("[data-apt-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.aptCouleur;aptitudeColors[id]=socleCouleurSuivante(aptitudeColors[id]);drawAptitudes()});
 
   const niveau = (champ, brut) => {
@@ -856,7 +903,7 @@ function drawImpactMarker() {
     if (!toolStudents.some(s => String(s.id) === String(impactEleveId))) impactEleveId = toolStudents[0]?.id || null;
     impactPoints = impactParEleve[impactEleveId] = impactParEleve[impactEleveId] || [];
   }
-  toolPanel.innerHTML = toolHeader("Marqueur d'impacts", "Visualiser precisement les zones jouees")
+  toolPanel.innerHTML = toolHeader("Marqueur d'impacts", "Visualiser précisément les zones jouées")
     + toolRosterHtml()
     + (onRealClass() && toolStudents.length
       ? `<div class="field-tool-row"><label>Élève<select id="impactEleve">${toolStudents.map(s =>
@@ -960,14 +1007,14 @@ function drawSpeedTracker() {
     chips.push(`<button class="periodChip${g === speedActiveGroup ? " active" : ""}" data-speed-group="${g}">Groupe ${g}</button>`);
   }
 
-  toolPanel.innerHTML = toolHeader("Vitesse – passages", "Depart commun, releve individuel et courbe d'evolution")
+  toolPanel.innerHTML = toolHeader("Vitesse – passages", "Départ commun, releve individuel et courbe d'évolution")
     + toolRosterHtml()
     + `<div class="row">
         <div><label>Distance (m)</label><input type="number" id="speedDistance" value="${speedDistance}" min="1"></div>
         <div><label>Nombre de groupes</label><input type="number" id="speedGroupCount" value="${speedGroupCount}" min="1"></div>
       </div>
       <div class="field-tool-row">${socleSelecteurModeHtml(speedMode,"speedMode")}</div>
-      <label>Repartir les eleves</label>
+      <label>Répartir les élèves</label>
       <div class="fitness-web">${socleTableauHtml(
         [{titre:"Groupe"},{titre:"Passages",aide:"Relevés"}],
         cible.map(s=>{const t=speedTimes[s.id]||[];return {eleve:s,
@@ -980,12 +1027,12 @@ function drawSpeedTracker() {
             ? socleCouleurCelluleHtml(speedColors[s.id],`data-speed-couleur="${s.id}"`)
             : (t.length?`${(Math.max(...t.map((time,i)=>time-(t[i-1]||0)).filter(d=>d>0).map(d=>speedDistance/d*3.6),0)).toFixed(1)} km/h`:"—")}}),
         speedMode==="couleur"?"Appréciation":"Vitesse max")}</div>
-      <label>Groupe a chronometrer</label>
+      <label>Groupe à chronométrer</label>
       <div class="periodBar" style="display:flex">${chips.join("")}</div>
-      <button id="speedStartBtn" ${speedRunning ? "disabled" : ""}>Demarrer le groupe ${speedActiveGroup}</button>
+      <button id="speedStartBtn" ${speedRunning ? "disabled" : ""}>Démarrer le groupe ${speedActiveGroup}</button>
       ${speedRunning ? `<div class="toolDisplay" id="speedClock">0.00 s</div>
         <div class="toolActions">${groupe.map(s => `<button data-speed-hit="${s.id}">${studentLabel(s)} · passage ${(speedTimes[s.id] || []).length + 1}</button>`).join("")}</div>
-        <button class="secondary" id="speedStopBtn">Arreter</button>` : ""}
+        <button class="secondary" id="speedStopBtn">Arrêter</button>` : ""}
       <div id="speedResults" style="margin-top:12px"></div>
       <div class="running-save-actions"><button class="danger" id="speedResetBtn">↺ Réinitialiser toutes les données</button></div>`;
 
@@ -1028,7 +1075,7 @@ function drawSpeedTracker() {
   if(!speedModeChoisi&&speedModeClasse!==toolClassId){speedMode=socleModeParDefaut(toolClassId);speedModeClasse=toolClassId}
   document.getElementById("speedMode").onchange=e=>{speedMode=e.target.value;speedModeChoisi=true;drawSpeedTracker()};
   toolPanel.querySelectorAll("[data-speed-couleur]").forEach(b=>b.onclick=()=>{const id=b.dataset.speedCouleur;speedColors[id]=socleCouleurSuivante(speedColors[id]);drawSpeedTracker()});
-  document.getElementById("speedResetBtn").onclick=()=>{if(!confirm("Effacer tous les passages et tous les groupes du travail en cours pour repartir de zéro ?"))return;speedTimes={};speedColors={};speedGroups={};speedGroupCount=1;speedActiveGroup=1;speedRunning=false;drawSpeedTracker()};
+  document.getElementById("speedResetBtn").onclick=()=>{if(!confirm("Effacer tous les passages et tous les groupes du travail en cours pour répartir de zéro ?"))return;speedTimes={};speedColors={};speedGroups={};speedGroupCount=1;speedActiveGroup=1;speedRunning=false;drawSpeedTracker()};
 
   drawSpeedResults(groupe);
 }
@@ -1038,7 +1085,7 @@ function drawSpeedResults(groupe) {
   const avecTemps = groupe.filter(s => (speedTimes[s.id] || []).length);
   if (!avecTemps.length) { host.innerHTML = ""; return; }
 
-  host.innerHTML = `<h2 style="font-size:15px; margin:0 0 8px">Resultats du groupe</h2>`
+  host.innerHTML = `<h2 style="font-size:15px; margin:0 0 8px">Résultats du groupe</h2>`
     + avecTemps.map(s => {
         const temps = speedTimes[s.id];
         // Chaque passage part du depart commun : la duree du passage est l'ecart au

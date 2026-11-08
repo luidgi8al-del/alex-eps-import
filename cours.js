@@ -10,8 +10,8 @@
 
 // Programmation locale de l'etablissement : memes listes que EtablissementProgrammation.kt.
 const PROGRAMMATION = {
-  SIXIEME: ["Natation", "Athletisme - sprint / relais", "Escalade", "Gymnastique au sol", "Danse", "Rugby", "Basket-ball", "Tennis de table", "Badminton"],
-  CINQUIEME: ["Athletisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte", "Rugby", "Ultimate"],
+  SIXIEME: ["Natation", "Athlétisme - sprint / relais", "Escalade", "Gymnastique au sol", "Danse", "Rugby", "Basket-ball", "Tennis de table", "Badminton"],
+  CINQUIEME: ["Athlétisme - relais / sprint", "Course de duree", "Cirque", "Volley-ball", "Lutte", "Rugby", "Ultimate"],
   QUATRIEME: ["Natation", "Escalade", "Acrosport", "Volley-ball", "Danse", "Ultimate"],
   TROISIEME: ["Aquathlon", "Escalade", "Rugby", "Badminton", "Athletisme - sprint / duree", "Musculation"],
   SECONDE: ["Escalade", "Acrosport", "Danse", "Badminton", "Musculation", "Course de duree", "Natation de duree"],
@@ -26,13 +26,13 @@ function programmeFor(grade, schoolYear) {
   const startYear = parseInt(String(schoolYear).slice(0, 4), 10) || 0;
   if (grade === "SIXIEME") {
     return startYear >= 2027
-      ? "Programme EPS cycle 3 (2026) - arrete du 22 avril 2026"
-      : "Programme EPS cycle 3 en vigueur - arrete du 9 novembre 2015 modifie (le programme 2026 ne s'applique a la 6e qu'a la rentree 2027)";
+      ? "Programme EPS cycle 3 (2026) - arrêté du 22 avril 2026"
+      : "Programme EPS cycle 3 en vigueur - arrêté du 9 novembre 2015 modifié (le programme 2026 ne s'applique à la 6e qu'à la rentrée 2027)";
   }
   if (["CINQUIEME", "QUATRIEME", "TROISIEME"].includes(grade)) {
-    return "Programme EPS cycle 4 - arrete du 9 novembre 2015 modifie";
+    return "Programme EPS cycle 4 - arrêté du 9 novembre 2015 modifié";
   }
-  return "Programme EPS lycee - arrete du 17 janvier 2019";
+  return "Programme EPS lycée - arrêté du 17 janvier 2019";
 }
 
 // Contenus detailles disponibles, charges a la demande depuis content/. Miroir du registre
@@ -267,7 +267,7 @@ async function renderCyclePreview() {
   document.getElementById("sessionSheet").style.display = "none";
 
   const el = document.getElementById("cyclePreview");
-  if (!apsa) { el.innerHTML = '<div class="card muted">Aucune activite programmee pour ce niveau.</div>'; return; }
+  if (!apsa) { el.innerHTML = '<div class="card muted">Aucune activité programmée pour ce niveau.</div>'; return; }
 
   const content = await loadCycleContent(grade, apsa);
   const ordered = orderedSessions(content, grade, count);
@@ -275,12 +275,12 @@ async function renderCyclePreview() {
   let rows = "";
   for (let i = 1; i <= count; i++) {
     const written = ordered[i - 1];
-    const title = written?.theme || content?.plannedTitles?.[i - 1] || `Seance ${i}`;
+    const title = written?.theme || content?.plannedTitles?.[i - 1] || `Séance ${i}`;
     rows += `<div class="card sessionCard" data-n="${i}" style="margin-top:8px;${written ? "cursor:pointer" : "opacity:.6"}">
       <div class="top">
         <div><strong>S${i}</strong> · ${title}</div>
-        ${written ? '<span class="badge off">Voir la seance</span>'
-                  : '<span class="badge">Fiche a venir</span>'}
+        ${written ? '<span class="badge off">Voir la séance</span>'
+                  : '<span class="badge">Fiche à venir</span>'}
       </div>
     </div>`;
   }
@@ -289,7 +289,7 @@ async function renderCyclePreview() {
     <div class="card">
       <h2 style="margin-bottom:4px">${apsa} — ${GRADE_LABELS[grade] || grade}</h2>
       <div class="muted">${count} seances${content ? " · " + content.champApprentissage : ""}</div>
-      ${content ? "" : '<div class="muted" style="margin-top:8px">Contenu detaille pas encore ecrit pour cette activite a ce niveau.</div>'}
+      ${content ? "" : '<div class="muted" style="margin-top:8px">Contenu détaillé pas encore écrit pour cette activité à ce niveau.</div>'}
     </div>
     ${rows}`;
 
@@ -331,24 +331,24 @@ function situationHtml(s, studentCount) {
         <span class="badge ${s.role === "NOYAU" ? "off" : ""}">${s.role} · ${s.dur} min</span>
       </div>
       <div style="margin-top:6px">${s.objective}</div>
-      ${block("But pour l'eleve", `<em>« ${s.studentGoal} »</em>`)}
-      ${block("Materiel", li(materialLines(s.material, studentCount)))}
+      ${block("But pour l'élève", `<em>« ${s.studentGoal} »</em>`)}
+      ${block("Matériel", li(materialLines(s.material, studentCount)))}
       ${block("Organisation", s.organization)}
       ${block("Consignes", li(s.instructions))}
-      ${block("Criteres de reussite", li(s.success))}
-      ${block("Criteres de realisation", li(s.execution))}
+      ${block("Critères de réussite", li(s.success))}
+      ${block("Critères de réalisation", li(s.execution))}
       ${block("Ce que je regarde", li(s.watch))}
       ${block("Erreurs frequentes", li(s.errors))}
       ${block("Ce que je dis", li(s.feedback.map(f => `<em>« ${f} »</em>`)))}
       ${block("Variables +", li(s.plus))}
       ${block("Variables −", li(s.minus))}
       ${block("Differenciation", li([
-        `<strong>Facilitee</strong> — ${s.diff.facilitee}`,
+        `<strong>Facilitée</strong> — ${s.diff.facilitee}`,
         `<strong>Normale</strong> — ${s.diff.normale}`,
-        `<strong>Complexifiee</strong> — ${s.diff.complexifiee}`
+        `<strong>Complexifiée</strong> — ${s.diff.complexifiee}`
       ]))}
       <div style="margin-top:10px;padding:8px 10px;border-left:3px solid var(--danger);background:#FDEEED;border-radius:0 4px 4px 0">
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">Securite</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">Sécurité</div>
         ${li(s.safety)}
       </div>
     </div>`;
@@ -363,21 +363,21 @@ function showSessionSheet(content, s, position) {
     <div class="top">
       <h2 style="margin:0">S${position || s.number} — ${s.theme}</h2>
       <div style="display:flex; gap:8px">
-        <button id="startLiveBtn" style="margin-top:0">Demarrer le cours</button>
+        <button id="startLiveBtn" style="margin-top:0">Démarrer le cours</button>
         <button class="secondary" id="closeSheetBtn" style="margin-top:0">Fermer</button>
       </div>
     </div>
     <div style="margin-top:8px">${s.mainObjective}</div>
     ${block("Objectifs secondaires", li(s.secondaryObjectives))}
-    ${block("Lien avec la seance precedente", s.linkToPrevious)}
-    ${block("A acquerir avant la seance suivante", s.prerequisiteForNext)}
+    ${block("Lien avec la séance précédente", s.linkToPrevious)}
+    ${block("à acquérir avant la séance suivante", s.prerequisiteForNext)}
 
-    <h2 style="margin-top:18px">A preparer avant le cours — installation ${s.setup.installationMinutes} min</h2>
-    ${block(`Materiel pour ${studentCount} eleves`, li(materialLines(s.setup.material, studentCount)))}
+    <h2 style="margin-top:18px">à préparer avant le cours — installation ${s.setup.installationMinutes} min</h2>
+    ${block(`Matériel pour ${studentCount} élèves`, li(materialLines(s.setup.material, studentCount)))}
     ${block("Mise en place", li(s.setup.instructions))}
-    ${block("Schema", `<pre style="white-space:pre-wrap;font-size:12px;margin:2px 0 0">${s.setup.sketch}</pre>`)}
+    ${block("Schéma", `<pre style="white-space:pre-wrap;font-size:12px;margin:2px 0 0">${s.setup.sketch}</pre>`)}
 
-    <h2 style="margin-top:18px">Echauffement — ${s.warmup.steps.reduce((a, b) => a + b.dur, 0)} min</h2>
+    <h2 style="margin-top:18px">Échauffement — ${s.warmup.steps.reduce((a, b) => a + b.dur, 0)} min</h2>
     <div class="muted">${s.warmup.rationale}</div>
     ${s.warmup.steps.map(w => block(`${w.dur} min · ${w.title}`, li(w.details))).join("")}
 
@@ -386,15 +386,15 @@ function showSessionSheet(content, s, position) {
 
     <h2 style="margin-top:18px">Bilan — ${s.closing.dur} min</h2>
     ${block("Questions", li(s.closing.questions))}
-    ${block("A retenir", s.closing.key)}
-    ${block("Roles sociaux", li(s.socialRoles))}
+    ${block("à retenir", s.closing.key)}
+    ${block("Rôles sociaux", li(s.socialRoles))}
 
     <div style="margin-top:14px;padding:8px 10px;border-left:3px solid var(--danger);background:#FDEEED;border-radius:0 4px 4px 0">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">A verifier avec le protocole de l'etablissement</div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--danger)">à vérifier avec le protocole de l'établissement</div>
       ${li(content.protocoleLocal)}
     </div>
 
-    ${block("Sources pedagogiques", li(content.sources.map(x =>
+    ${block("Sources pédagogiques", li(content.sources.map(x =>
       `<span class="badge ${x.type === "Officiel" ? "off" : ""}">${x.type}</span> <a href="${x.url}" target="_blank" rel="noopener">${x.title}</a> — ${x.org}, consulte le ${x.consulted}`
     )))}`;
   el.style.display = "block";
@@ -417,8 +417,8 @@ function liveStepsFor(s) {
   if (s.warmup && s.warmup.steps && s.warmup.steps.length) {
     const total = s.warmup.steps.reduce((a, b) => a + (b.dur || 0), 0);
     steps.push({
-      kind: "Echauffement",
-      title: `Echauffement — ${total} min`,
+      kind: "Échauffement",
+      title: `Échauffement — ${total} min`,
       goal: s.warmup.rationale || "",
       blocks: s.warmup.steps.map(w => ({ label: `${w.dur} min · ${w.title}`, list: w.details })),
       safety: []
@@ -432,15 +432,15 @@ function liveStepsFor(s) {
       goal: x.studentGoal ? `« ${x.studentGoal} »` : x.objective,
       blocks: [
         { label: "Organisation", text: x.organization },
-        { label: "Materiel", list: materialLines(x.material, 28) },
+        { label: "Matériel", list: materialLines(x.material, 28) },
         { label: "Consignes", list: x.instructions },
-        { label: "Criteres de reussite", list: x.success },
+        { label: "Critères de réussite", list: x.success },
         { label: "Ce que je regarde", list: x.watch },
         { label: "Ce que je dis", list: (x.feedback || []).map(f => `« ${f} »`) },
         { label: "Differenciation", list: [
-          `Facilitee — ${x.diff.facilitee}`,
+          `Facilitée — ${x.diff.facilitee}`,
           `Normale — ${x.diff.normale}`,
-          `Complexifiee — ${x.diff.complexifiee}`
+          `Complexifiée — ${x.diff.complexifiee}`
         ] }
       ],
       safety: x.safety || []
@@ -481,10 +481,10 @@ function closeLiveLesson() {
 function renderLiveStep() {
   const step = liveSteps[liveIndex];
   const inner = document.getElementById("liveInner");
-  if (!step) { inner.innerHTML = '<div class="muted">Aucune etape dans cette seance.</div>'; return; }
+  if (!step) { inner.innerHTML = '<div class="muted">Aucune étape dans cette séance.</div>'; return; }
 
   const dots = liveSteps.map((_, i) =>
-    `<button class="liveDot ${i === liveIndex ? "now" : i < liveIndex ? "done" : ""}" data-live-dot="${i}" aria-label="Etape ${i + 1}"></button>`
+    `<button class="liveDot ${i === liveIndex ? "now" : i < liveIndex ? "done" : ""}" data-live-dot="${i}" aria-label="Étape ${i + 1}"></button>`
   ).join("");
 
   const blocks = (step.blocks || []).map(b => {
@@ -494,14 +494,14 @@ function renderLiveStep() {
   }).join("");
 
   const safety = step.safety && step.safety.length
-    ? `<div class="liveSafety"><h3>Securite</h3><ul>${step.safety.map(x => `<li>${x}</li>`).join("")}</ul></div>`
+    ? `<div class="liveSafety"><h3>Sécurité</h3><ul>${step.safety.map(x => `<li>${x}</li>`).join("")}</ul></div>`
     : "";
 
   inner.innerHTML = `
     <div class="liveDots">${dots}</div>
     <div class="liveStepMeta">
       <span class="liveStepNum">${step.kind}</span>
-      <span class="muted">Etape ${liveIndex + 1} / ${liveSteps.length}</span>
+      <span class="muted">Étape ${liveIndex + 1} / ${liveSteps.length}</span>
     </div>
     <h2 class="liveStepTitle">${step.title}</h2>
     ${step.goal ? `<div class="liveGoal">${step.goal}</div>` : ""}
@@ -659,7 +659,7 @@ function renderEvaluationPanel() {
   const label = `${GRADE_LABELS[evalCourse.grade] || evalCourse.grade}${evalCourse.class_number || ""}`;
   let html = `<div class="card">
     <div class="top">
-      <h2 style="margin:0">Evaluations — ${evalCourse.apsa_name} (${label})</h2>
+      <h2 style="margin:0">Évaluations — ${evalCourse.apsa_name} (${label})</h2>
       <div class="no-print" style="display:flex; gap:8px">
         <button id="saveEvalBtn" style="margin-top:0">Enregistrer</button>
         ${evalOpenedId ? `<button class="danger" data-delete-eval="${evalOpenedId}" style="margin-top:0">Supprimer</button>` : ""}
@@ -683,7 +683,7 @@ function renderEvaluationPanel() {
         </div>`;
       });
       html += `<div class="row" style="margin-top:8px">
-        <input type="text" id="newEvalLabel" placeholder="Intitule (ex : Assurage mi-cycle)">
+        <input type="text" id="newEvalLabel" placeholder="Intitulé (ex : Assurage mi-cycle)">
         <button class="secondary" id="newEvalBtn" data-type="${t.value}" style="margin-top:0">+ Nouvelle grille</button>
       </div></div>`;
     }
@@ -838,14 +838,14 @@ function renderEvaluationTable(focusTarget = null) {
     <div class="top">
       <h2 style="margin:0">${evaluation.label}</h2>
       <div class="no-print">
-        <button class="secondary" id="addCritBtn" style="margin-top:0">+ Critere</button>
+        <button class="secondary" id="addCritBtn" style="margin-top:0">+ Critère</button>
         <button class="secondary" id="exportCsvBtn" style="margin-top:0">Exporter Excel</button>
         <button class="secondary" id="printPdfBtn" style="margin-top:0">Imprimer / PDF</button>
         <button id="exportPronoteBtn" style="margin-top:0">Exporter vers PRONOTE</button>
       </div>
     </div>
-    <div class="muted" style="margin-top:4px">Le total additionne toutes les colonnes. Une case vide = pas encore evalue.</div>
-    <div style="overflow-x:auto"><table class="scoreTable"><thead><tr><th>Eleve</th>`;
+    <div class="muted" style="margin-top:4px">Le total additionne toutes les colonnes. Une case vide = pas encore évalué.</div>
+    <div style="overflow-x:auto"><table class="scoreTable"><thead><tr><th>Élève</th>`;
   evalCriteria.forEach(c => { html += `<th>${c.label}<br><span class="muted">/${c.max_points}</span> <span class="no-print" data-edit-crit="${c.id}" style="cursor:pointer">✎</span></th>`; });
   html += `<th>Total<br><span class="muted">/${evalTotalMax()}</span></th></tr></thead><tbody>`;
   evalStudents.forEach((s, studentIndex) => {
@@ -948,7 +948,7 @@ async function setScore(input, focusTarget = null) {
 }
 
 async function addCriterion() {
-  const label = prompt("Nom du critere :");
+  const label = prompt("Nom du critère :");
   if (!label) return;
   const maxStr = prompt("Note sur combien ?", "10");
   const max = parseInt(maxStr, 10);
@@ -967,10 +967,10 @@ async function addCriterion() {
 
 async function editCriterion(criterionId) {
   const criterion = evalCriteria.find(c => c.id === criterionId);
-  const label = prompt("Nom du critere :", criterion.label);
+  const label = prompt("Nom du critère :", criterion.label);
   if (label === null) return;
   if (label.trim() === "") {
-    if (confirm("Supprimer ce critere et toutes ses notes ?")) {
+    if (confirm("Supprimer ce critère et toutes ses notes ?")) {
       if (modeHorsConnexion) await modeHorsConnexion.supprimer("evaluation_criteria", criterionId);
       else await apiFetch(`${SUPABASE_URL}/rest/v1/evaluation_criteria?id=eq.${criterionId}`, {
         method: "PATCH", body: JSON.stringify({ deleted: true, updated_at: new Date().toISOString() })

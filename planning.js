@@ -70,8 +70,13 @@ function planningMinutesLabel(minutes) {
 async function initPlanningTab() {
   const personalTab = document.querySelector('[data-planningtab="global"]');
   if (personalTab) {
-    const teacher = (session?.email || "Alex").split("@")[0];
-    personalTab.textContent = "Planning global " + teacher.charAt(0).toUpperCase() + teacher.slice(1);
+    // Meme libelle que l'application : le nom d'enseignant du profil, a defaut le debut de
+    // l'adresse e-mail, sinon "Mon planning" (jamais un prenom invente).
+    const prefs = typeof loadPrefs === "function" ? loadPrefs() : {};
+    const teacher = String(prefs.teacherName || session?.email?.split("@")[0] || "").trim();
+    personalTab.textContent = teacher
+      ? "Planning " + teacher.charAt(0).toUpperCase() + teacher.slice(1)
+      : "Mon planning";
   }
   if (!planningTabReady) {
     document.getElementById("planningSubtabs").addEventListener("click", (e) => {
@@ -123,13 +128,13 @@ const PROGRAM_FIELDS = [
   ["title", "Titre"],
   ["class_level", "Niveau de classe"],
   ["champ_apprentissage", "Champ d'apprentissage"],
-  ["general_objectives", "Objectifs generaux"],
+  ["general_objectives", "Objectifs généraux"],
   ["attendus", "Attendus"],
   ["competences", "Competences"],
-  ["elements_prioritaires", "Elements prioritaires"],
+  ["elements_prioritaires", "Éléments prioritaires"],
   ["example_apsa", "Exemples d'APSA"],
   ["attendus_fin_de_cycle", "Attendus de fin de cycle"],
-  ["evaluation_elements", "Elements d'evaluation"],
+  ["evaluation_elements", "Éléments d'évaluation"],
   ["source_officielle", "Source officielle"],
   ["bulletin_officiel", "Bulletin officiel"],
   ["version_label", "Version"]
@@ -149,7 +154,7 @@ async function loadOfficialPrograms() {
       { trier: (a, b) => String(a.school_level || "").localeCompare(String(b.school_level || "")) });
     renderOfficialPrograms();
   } catch (e) {
-    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Exécutez schema_equipement_programmes.sql dans Supabase.</div></div>`;
   }
 }
 
@@ -164,7 +169,7 @@ function renderOfficialPrograms() {
       <div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
         <div>
           <strong>${p.title || "Programme sans titre"}</strong>
-          <div class="muted">${[p.class_level, p.champ_apprentissage, p.version_label].filter(Boolean).join(" · ") || "Aucun detail"}</div>
+          <div class="muted">${[p.class_level, p.champ_apprentissage, p.version_label].filter(Boolean).join(" · ") || "Aucun détail"}</div>
         </div>
         <div style="display:flex; gap:6px">
           <button class="secondary" data-open-prog="${p.id}" style="margin-top:0">Ouvrir</button>
@@ -181,7 +186,7 @@ function renderOfficialPrograms() {
       </div>
       <button id="addProgramBtn" style="margin-top:0">+ Programme</button>
     </div>
-    ${byLevel || '<div class="muted" style="margin-top:12px">Aucun programme enregistre.</div>'}
+    ${byLevel || '<div class="muted" style="margin-top:12px">Aucun programme enregistré.</div>'}
   </div>`;
 
   document.getElementById("addProgramBtn").onclick = addOfficialProgram;
@@ -239,7 +244,7 @@ async function saveOfficialProgram() {
   const actuel = programs.find(x => x.id === programOpenedId) || { id: programOpenedId };
   await enregistrerLigne("official_programs", { ...actuel, ...payload });
   Object.assign(actuel, payload);
-  document.getElementById("programOk").textContent = "Programme enregistre.";
+  document.getElementById("programOk").textContent = "Programme enregistré.";
 }
 
 async function deleteOfficialProgram(id) {
@@ -256,7 +261,7 @@ async function deleteOfficialProgram(id) {
 const CALENDAR_KINDS = [
   ["VACANCES", "Vacances", "#DFF3FF"], ["EXAMEN", "Examen", "#FFE8EE"],
   ["SORTIE", "Sortie AS", "#E5F7E9"], ["BAC_EPS", "BAC EPS", "#1B3A6B"],
-  ["BANALISEE", "Journee banalisee", "#FFF0DD"], ["AUTRE", "Autre", "#F3F4F6"]
+  ["BANALISEE", "Journée banalisée", "#FFF0DD"], ["AUTRE", "Autre", "#F3F4F6"]
 ];
 /**
  * Epreuves du BAC EPS : lundi et jeudi de la semaine ou se termine chaque periode Terminale.
@@ -291,19 +296,19 @@ function isoDate(d) {
 // qu'une liste, on ne voyait donc pas l'annee.
 
 const CAL_MOIS = [
-  [2026, 9, "Septembre"], [2026, 10, "Octobre"], [2026, 11, "Novembre"], [2026, 12, "Decembre"],
-  [2027, 1, "Janvier"], [2027, 2, "Fevrier"], [2027, 3, "Mars"], [2027, 4, "Avril"],
+  [2026, 9, "Septembre"], [2026, 10, "Octobre"], [2026, 11, "Novembre"], [2026, 12, "Décembre"],
+  [2027, 1, "Janvier"], [2027, 2, "Février"], [2027, 3, "Mars"], [2027, 4, "Avril"],
   [2027, 5, "Mai"], [2027, 6, "Juin"], [2027, 7, "Juillet"]
 ];
 
 const CAL_FIXES = {
-  "2026-09-01": ["Pre-rentree enseignants", false], "2026-09-02": ["Rentree des eleves", false],
+  "2026-09-01": ["Pré-rentrée enseignants", false], "2026-09-02": ["Rentrée des élèves", false],
   "2026-10-31": ["Aid El Wahda", false], "2026-11-01": ["Toussaint", false],
-  "2026-11-06": ["Marche Verte", false], "2026-11-18": ["Fete de l'Independance", false],
-  "2027-01-11": ["Manifeste de l'Independance", false], "2027-01-14": ["Nouvel An Amazigh", false],
+  "2026-11-06": ["Marche Verte", false], "2026-11-18": ["Fête de l'Indépendance", false],
+  "2027-01-11": ["Manifeste de l'Indépendance", false], "2027-01-14": ["Nouvel An Amazigh", false],
   "2027-03-10": ["Aid El Fitr ?", true], "2027-03-11": ["Aid El Fitr ?", true],
-  "2027-05-01": ["Fete du Travail", false], "2027-05-17": ["Aid El Kebir ?", true],
-  "2027-05-18": ["Aid El Kebir ?", true], "2027-05-19": ["Paques reporte ?", true],
+  "2027-05-01": ["Fête du Travail", false], "2027-05-17": ["Aid El Kebir ?", true],
+  "2027-05-18": ["Aid El Kebir ?", true], "2027-05-19": ["Pâques reporté ?", true],
   "2027-06-06": ["1er Moharrem ?", true], "2027-07-02": ["Fin des cours", false],
   "2027-07-05": ["Fin du calendrier", false]
 };
@@ -421,9 +426,9 @@ function groupesDatesImportantes() {
 
 function legendeCalendrier() {
   const items = [
-    ["#D5D9DE", "Vacances"], ["#CFE2F3", "Jour ferie"], ["#FFD966", "Sortie"],
-    ["#FFB3C7", "Examen"], ["#F1E4FF", "A confirmer"], ["#1B3A6B", "BAC EPS CCF"]
-  ].concat(CAL_COULEURS_PERIODE.slice(0, 4).map((c, i) => [c, "Periode " + (i + 1)]));
+    ["#D5D9DE", "Vacances"], ["#CFE2F3", "Jour férié"], ["#FFD966", "Sortie"],
+    ["#FFB3C7", "Examen"], ["#F1E4FF", "à confirmer"], ["#1B3A6B", "BAC EPS CCF"]
+  ].concat(CAL_COULEURS_PERIODE.slice(0, 4).map((c, i) => [c, "Période " + (i + 1)]));
   return '<div class="calLegend">' + items.map(i =>
     '<span><span class="box" style="background:' + i[0] + '"></span>' + i[1] + "</span>").join("") + "</div>";
 }
@@ -444,7 +449,7 @@ async function loadInstitutionCalendar() {
     await loadPeriodDates();
     renderInstitutionCalendar();
   } catch (e) {
-    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Executez schema_equipement_programmes.sql dans Supabase.</div></div>`;
+    wrap.innerHTML = `<div class="card"><div class="error">Table indisponible. Exécutez schema_equipement_programmes.sql dans Supabase.</div></div>`;
   }
 }
 
@@ -622,24 +627,24 @@ function ouvrirJourCalendrier(iso, eventId = null, ajouter = false) {
   const epreuve = datesCcfBac().find(e => e.lundi === iso || e.jeudi === iso);
 
   const lecture = [
-    fixe ? `<div>Date de l'annee : <strong>${planningText(fixe[0])}</strong>${fixe[1] ? " (a confirmer)" : ""}</div>` : "",
-    calEnVacances(iso) ? `<div>Periode de vacances scolaires.</div>` : "",
+    fixe ? `<div>Date de l'année : <strong>${planningText(fixe[0])}</strong>${fixe[1] ? " (à confirmer)" : ""}</div>` : "",
+    calEnVacances(iso) ? `<div>Période de vacances scolaires.</div>` : "",
     epreuve ? `<div><span class="badge" style="background:#1B3A6B; color:#fff">BAC EPS CCF${epreuve.numero}</span>
-               <span class="muted"> — calcule depuis les periodes Terminale, non modifiable ici.</span></div>` : ""
+               <span class="muted"> — calculé depuis les périodes Terminale, non modifiable ici.</span></div>` : ""
   ].filter(Boolean).join("");
 
   const avertissement = multiJours
-    ? `<div class="pendingHint" style="display:block">Cet evenement s'etend du
+    ? `<div class="pendingHint" style="display:block">Cet événement s'etend du
          ${dateFr(isoDate(new Date(saisi.start_date_epoch_millis)))} au
          ${dateFr(isoDate(new Date(saisi.end_date_epoch_millis)))}.
-         Enregistrer ou supprimer ici agit sur <strong>tout l'evenement</strong>, pas seulement sur ce jour.</div>`
+         Enregistrer ou supprimer ici agit sur <strong>tout l'événement</strong>, pas seulement sur ce jour.</div>`
     : "";
 
   panel.innerHTML = `
     <h2>${dateFr(iso)}</h2>
     ${lecture}
     ${avertissement}
-    <label for="jourLabel">Intitule</label>
+    <label for="jourLabel">Intitulé</label>
     <input type="text" id="jourLabel" value="${saisi ? planningText(saisi.label || "") : ""}" placeholder="Ex : Sortie AS">
     <label for="jourKind">Type</label>
     <select id="jourKind">${CALENDAR_KINDS.map(k => {
@@ -678,7 +683,7 @@ function ouvrirJourCalendrier(iso, eventId = null, ajouter = false) {
         }, corps));
       }
     } catch (e) {
-      erreur.textContent = e.message || "Enregistrement impossible. Verifiez votre connexion.";
+      erreur.textContent = e.message || "Enregistrement impossible. Vérifiez votre connexion.";
       return;
     }
     panel.style.display = "none";
@@ -688,7 +693,7 @@ function ouvrirJourCalendrier(iso, eventId = null, ajouter = false) {
   const suppr = document.getElementById("jourDeleteBtn");
   if (suppr) suppr.onclick = async () => {
     const question = multiJours
-      ? `Supprimer tout l'evenement "${saisi.label}" (du ${dateFr(isoDate(new Date(saisi.start_date_epoch_millis)))} au ${dateFr(isoDate(new Date(saisi.end_date_epoch_millis)))}) ?`
+      ? `Supprimer tout l'événement "${saisi.label}" (du ${dateFr(isoDate(new Date(saisi.start_date_epoch_millis)))} au ${dateFr(isoDate(new Date(saisi.end_date_epoch_millis)))}) ?`
       : `Supprimer "${saisi.label}" du ${dateFr(iso)} ?`;
     if (!confirm(question)) return;
     panel.style.display = "none";
@@ -704,8 +709,8 @@ async function addCalendarEvent() {
   const start = document.getElementById("eventStart").value;
   const end = document.getElementById("eventEnd").value;
   if (!label) { errorEl.textContent = "Indiquez un intitule."; return; }
-  if (!start || !end) { errorEl.textContent = "Indiquez les dates de debut et de fin."; return; }
-  if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le debut."; return; }
+  if (!start || !end) { errorEl.textContent = "Indiquez les dates de début et de fin."; return; }
+  if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le début."; return; }
   try {
     await enregistrerLigne("institution_calendar_events", {
       id: crypto.randomUUID(), user_id: session.user_id, label, kind,
@@ -768,12 +773,12 @@ function renderAnnualPlan() {
     });
     const groups = Object.keys(byTeacher).sort();
     wrap.innerHTML = viewSwitch + `<div class="card">
-      <h2 style="margin:0">Programmation de l'equipe EPS</h2>
-      <div class="muted">Lecture seule : la programmation annuelle de tous les collegues qui utilisent l'app.</div>
-      ${groups.length === 0 ? '<div class="muted" style="margin-top:12px">Aucune programmation partagee.</div>'
+      <h2 style="margin:0">Programmation de l'équipe EPS</h2>
+      <div class="muted">Lecture seule : la programmation annuelle de tous les collègues qui utilisent l'app.</div>
+      ${groups.length === 0 ? '<div class="muted" style="margin-top:12px">Aucune programmation partagée.</div>'
         : groups.map(g => `<h2 style="margin:16px 0 4px; font-size:15px">${g}</h2>` +
             byTeacher[g].map(b => `<div class="top" style="padding:6px 0; border-bottom:1px solid var(--border)">
-              <div><strong>${b.apsa_name}</strong> <span class="muted">${b.session_count} seances</span></div>
+              <div><strong>${b.apsa_name}</strong> <span class="muted">${b.session_count} séances</span></div>
               <div class="muted">${annualMonth(b.start_date_epoch_millis)} → ${annualMonth(b.end_date_epoch_millis)}</div>
             </div>`).join("")).join("")}
     </div>`;
@@ -794,32 +799,32 @@ function renderAnnualPlan() {
     </div>
     <div style="margin-top:12px">
       ${mine.length === 0
-        ? '<div class="muted">Aucune periode programmee pour cette classe.</div>'
+        ? '<div class="muted">Aucune période programmée pour cette classe.</div>'
         : mine.map(b => `<div class="top" style="padding:8px 0; border-bottom:1px solid var(--border)">
             <div>
-              <strong>${b.apsa_name}</strong> <span class="muted">— ${b.session_count} seances</span>
+              <strong>${b.apsa_name}</strong> <span class="muted">— ${b.session_count} séances</span>
               <div class="muted">${annualMonth(b.start_date_epoch_millis)} → ${annualMonth(b.end_date_epoch_millis)}${b.champ_apprentissage ? " · " + b.champ_apprentissage : ""}</div>
             </div>
             <button class="danger" data-del-block="${b.id}" style="margin-top:0">Supprimer</button>
           </div>`).join("")}
     </div>
 
-    <h2 style="margin:18px 0 0; font-size:15px">Ajouter une periode</h2>
+    <h2 style="margin:18px 0 0; font-size:15px">Ajouter une période</h2>
     <div class="row">
       <div>
-        <label for="annualApsa">Activite</label>
+        <label for="annualApsa">Activité</label>
         <select id="annualApsa"></select>
       </div>
       <div>
-        <label for="annualSessions">Seances</label>
+        <label for="annualSessions">Séances</label>
         <input type="number" id="annualSessions" min="1" value="8">
       </div>
     </div>
     <div class="row">
-      <div><label for="annualStart">Debut</label><input type="date" id="annualStart"></div>
+      <div><label for="annualStart">Début</label><input type="date" id="annualStart"></div>
       <div><label for="annualEnd">Fin</label><input type="date" id="annualEnd"></div>
     </div>
-    <button id="annualAddBtn">Ajouter la periode</button>
+    <button id="annualAddBtn">Ajouter la période</button>
     ${mine.length ? '<button class="secondary" id="annualCopyBtn">Copier vers une autre classe</button>' : ""}
     <div class="error" id="annualError"></div>
   </div>`;
@@ -850,7 +855,7 @@ function refreshAnnualApsaOptions() {
   const list = (cls && PROGRAMMATION[cls.grade]) || [];
   select.innerHTML = list.length
     ? list.map(a => `<option value="${a}">${a}</option>`).join("")
-    : '<option value="">Aucune activite programmee</option>';
+    : '<option value="">Aucune activité programmée</option>';
 }
 
 async function addAnnualBlock() {
@@ -862,9 +867,9 @@ async function addAnnualBlock() {
   const sessions = parseInt(document.getElementById("annualSessions").value, 10) || 0;
 
   if (!annualClassId) { errorEl.textContent = "Choisissez une classe."; return; }
-  if (!apsa) { errorEl.textContent = "Choisissez une activite."; return; }
-  if (!start || !end) { errorEl.textContent = "Indiquez les dates de debut et de fin."; return; }
-  if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le debut."; return; }
+  if (!apsa) { errorEl.textContent = "Choisissez une activité."; return; }
+  if (!start || !end) { errorEl.textContent = "Indiquez les dates de début et de fin."; return; }
+  if (new Date(end) < new Date(start)) { errorEl.textContent = "La fin doit suivre le début."; return; }
 
   const cls = planningClasses.find(c => c.id === annualClassId);
   try {
@@ -927,7 +932,7 @@ async function openPlanningFullscreen() {
   try {
     await grid.requestFullscreen();
   } catch (e) {
-    alert("Le plein ecran n'est pas disponible sur ce navigateur.");
+    alert("Le plein écran n'est pas disponible sur ce navigateur.");
     return;
   }
   try {
@@ -1026,7 +1031,7 @@ async function loadPlanningValidation() {
 }
 
 async function setPlanningValidated(validated) {
-  if (!currentInstitution) throw new Error("Compte non rattache a un etablissement.");
+  if (!currentInstitution) throw new Error("Compte non rattaché à un établissement.");
   const res = await apiFetch(`${SUPABASE_URL}/rest/v1/planning_validations`, {
     method: "POST",
     headers: { Prefer: "resolution=merge-duplicates,return=representation" },
@@ -1035,7 +1040,7 @@ async function setPlanningValidated(validated) {
       updated_by: session.user_id, updated_at: new Date().toISOString()
     }])
   });
-  if (!res.ok) throw new Error("Etat du planning non enregistre. Verifiez votre connexion.");
+  if (!res.ok) throw new Error("État du planning non enregistré. Vérifiez votre connexion.");
   planningValidated = validated;
 }
 
@@ -1047,7 +1052,7 @@ function renderPlanningValidation() {
   // que d'afficher un bouton qui echouerait a l'enregistrement.
   button.style.display = currentInstitution ? "" : "none";
   label.textContent = !currentInstitution ? ""
-    : planningValidated ? "Planning valide" : "En modification";
+    : planningValidated ? "Planning validé" : "En modification";
   label.style.fontWeight = "600";
   button.textContent = planningValidated ? "Reprendre les modifications" : "Valider le planning";
   button.onclick = async () => {
@@ -1083,7 +1088,7 @@ async function loadPlanningCommunity() {
         apiFetchAll(`${SUPABASE_URL}/rest/v1/class_schedule_slots?deleted=eq.false&select=*`),
         apiFetchAll(`${SUPABASE_URL}/rest/v1/period_activities?deleted=eq.false&select=slot_id,period_number,apsa_name,installation_name`)
       ]);
-      if (!slotsRes.ok) throw new Error("Impossible de charger le planning partage.");
+      if (!slotsRes.ok) throw new Error("Impossible de charger le planning partagé.");
       slotsRows = slotsRes.rows;
       activitiesRows = activitiesRes.ok ? activitiesRes.rows : [];
     }
@@ -1233,24 +1238,24 @@ async function renderPeriodDatesTab() {
 
   const lignesTerminale = Array.from({ length: nbTerminale }, (_, i) => i + 1).map(function (numero) {
     const p = periodesTerminale.find(x => x.number === numero);
-    const debut = p ? dateFr(p.start_date) : '<span class="muted">Non definie</span>';
-    const fin = p ? dateFr(p.end_date) : '<span class="muted">Non definie</span>';
+    const debut = p ? dateFr(p.start_date) : '<span class="muted">Non définie</span>';
+    const fin = p ? dateFr(p.end_date) : '<span class="muted">Non définie</span>';
     const chevauchement = p
       ? libelleChevauchement(p.start_date, p.end_date)
       : '<span class="muted">-</span>';
-    return '<tr><th style="text-align:left">Periode ' + numero + "</th><td>" + debut + "</td><td>" + fin
+    return '<tr><th style="text-align:left">Période ' + numero + "</th><td>" + debut + "</td><td>" + fin
       + "</td><td><strong>" + chevauchement + "</strong></td>"
       + '<td><button class="secondary" data-periode="' + numero + '" style="margin-top:0">'
-      + (p ? "Modifier" : "Definir") + "</button></td></tr>";
+      + (p ? "Modifier" : "Définir") + "</button></td></tr>";
   }).join("");
 
   wrap.innerHTML =
     '<div class="card"><h2>Terminale</h2>'
-    + '<div class="muted">Decoupage personnalise en ' + nbTerminale + ' periode(s). Ces dates sont partagees avec vos collegues et avec l\'application. La colonne <em>Correspond a</em> indique les periodes du calendrier commun recouvertes : une periode Terminale est souvent a cheval sur deux.</div>'
-    + '<table style="margin-top:10px"><thead><tr><th style="text-align:left">Periode</th><th>Debut</th><th>Fin</th><th>Correspond a</th><th></th></tr></thead>'
+    + '<div class="muted">Découpage personnalisé en ' + nbTerminale + ' période(s). Ces dates sont partagées avec vos collègues et avec l\'application. La colonne <em>Correspond à</em> indique les périodes du calendrier commun recouvertes : une période Terminale est souvent à cheval sur deux.</div>'
+    + '<table style="margin-top:10px"><thead><tr><th style="text-align:left">Période</th><th>Début</th><th>Fin</th><th>Correspond à</th><th></th></tr></thead>'
     + "<tbody>" + lignesTerminale + "</tbody></table></div>"
     + '<div class="card" style="margin-top:14px"><h2>Autres niveaux</h2>'
-    + '<div class="muted">Dates reprises du calendrier commun de l\'etablissement : elles ne se modifient pas ici, comme dans l\'application. Le nombre de periodes par niveau se regle dans Reglages.</div>'
+    + '<div class="muted">Dates reprises du calendrier commun de l\'établissement : elles ne se modifient pas ici, comme dans l\'application. Le nombre de périodes par niveau se règle dans Réglages.</div>'
     + '<div style="overflow-x:auto"><table style="margin-top:10px"><thead><tr><th style="text-align:left">Niveau</th>'
     + PERIODES_STANDARD.map(p => "<th>P" + p.number + "</th>").join("")
     + "</tr></thead><tbody>" + lignesStandard + "</tbody></table></div></div>"
@@ -1265,13 +1270,13 @@ function openPeriodDatePanel(numero) {
   const existante = periodesTerminale.find(p => p.number === numero);
   const panel = document.getElementById("planningPanel");
   panel.innerHTML =
-    "<h2>Terminale - periode " + numero + "</h2>"
-    + '<label for="periodStart">Date de debut</label>'
+    "<h2>Terminale - période " + numero + "</h2>"
+    + '<label for="periodStart">Date de début</label>'
     + '<input type="date" id="periodStart" value="' + (existante ? existante.start_date : "") + '">'
     + '<label for="periodEnd">Date de fin</label>'
     + '<input type="date" id="periodEnd" value="' + (existante ? existante.end_date : "") + '">'
     + '<button id="periodSaveBtn">Enregistrer</button>'
-    + (existante ? '<button class="danger" id="periodDeleteBtn">Supprimer cette periode</button>' : "")
+    + (existante ? '<button class="danger" id="periodDeleteBtn">Supprimer cette période</button>' : "")
     + '<button class="secondary" id="periodCancelBtn">Annuler</button>'
     + '<div class="error" id="periodError"></div>';
   panel.style.display = "block";
@@ -1286,10 +1291,10 @@ function openPeriodDatePanel(numero) {
     const erreur = document.getElementById("periodError");
     if (!debut || !fin) { erreur.textContent = "Les deux dates sont obligatoires."; return; }
     // Une periode qui se termine avant de commencer casserait le classement des cycles.
-    if (fin < debut) { erreur.textContent = "La date de fin doit suivre la date de debut."; return; }
+    if (fin < debut) { erreur.textContent = "La date de fin doit suivre la date de début."; return; }
     const chevauche = periodesTerminale.find(p => p.number !== numero && debut <= p.end_date && fin >= p.start_date);
-    if (chevauche && !confirm("Cette periode chevauche la periode " + chevauche.number + " ("
-        + dateFr(chevauche.start_date) + " - " + dateFr(chevauche.end_date) + "). Enregistrer quand meme ?")) return;
+    if (chevauche && !confirm("Cette période chevauche la période " + chevauche.number + " ("
+        + dateFr(chevauche.start_date) + " - " + dateFr(chevauche.end_date) + "). Enregistrer quand même ?")) return;
 
     const corps = { school_year: ANNEE_PERIODES, grade: "TERMINALE", number: numero,
                     start_date: debut, end_date: fin, deleted: false, updated_at: new Date().toISOString() };
@@ -1299,17 +1304,17 @@ function openPeriodDatePanel(numero) {
         ? { ...existante, ...corps }
         : Object.assign({ id: crypto.randomUUID(), user_id: session.user_id }, corps));
     } catch (e) {
-      erreur.textContent = e.message || "Periode non enregistree. Verifiez votre connexion.";
+      erreur.textContent = e.message || "Période non enregistrée. Vérifiez votre connexion.";
       return;
     }
     panel.style.display = "none";
     await renderPeriodDatesTab();
-    document.getElementById("periodDatesMsg").textContent = "Periode " + numero + " enregistree et partagee.";
+    document.getElementById("periodDatesMsg").textContent = "Période " + numero + " enregistrée et partagée.";
   });
 
   const suppr = document.getElementById("periodDeleteBtn");
   if (suppr) suppr.addEventListener("click", async function () {
-    if (!confirm("Supprimer les dates de la periode " + numero + " ?")) return;
+    if (!confirm("Supprimer les dates de la période " + numero + " ?")) return;
     try { await supprimerLigne("eps_period_dates", existante.id); }
     catch (e) { document.getElementById("periodError").textContent = e.message || "Suppression impossible."; return; }
     panel.style.display = "none";
@@ -1354,7 +1359,7 @@ function renderPlanningTab() {
     for (const p of choix) {
       const chip = document.createElement("button");
       chip.className = "periodChip" + (p === planningPeriod ? " active" : "");
-      chip.textContent = p === 0 ? "Toutes periodes" : "Periode " + p;
+      chip.textContent = p === 0 ? "Toutes périodes" : "Période " + p;
       chip.addEventListener("click", async () => {
         planningPeriod = p;
         if (planningMode === "periode") await loadPlanningActivities();
@@ -1386,7 +1391,7 @@ function renderPlanningTab() {
     const periode = periodesTerminale.find(x => x.number === planningPeriod);
     if (!periode) { rappel.style.display = "none"; return; }
     const couvre = libelleChevauchement(periode.start_date, periode.end_date);
-    rappel.innerHTML = "Terminale : la periode " + planningPeriod + " va du "
+    rappel.innerHTML = "Terminale : la période " + planningPeriod + " va du "
       + dateFr(periode.start_date) + " au " + dateFr(periode.end_date)
       + " et recouvre <strong>" + couvre + "</strong> du calendrier commun.";
     rappel.style.display = "block";
@@ -1395,14 +1400,14 @@ function renderPlanningTab() {
   // Bandeau "2e creneau en attente"
   const hint = document.getElementById("planningPendingHint");
   if (planningMode === "global" && planningPendingClass) {
-    hint.textContent = `${planningClassLabel(planningPendingClass)} a besoin d'un 2e creneau : touchez une autre case pour le placer.`;
+    hint.textContent = `${planningClassLabel(planningPendingClass)} a besoin d'un 2e créneau : touchez une autre case pour le placer.`;
     hint.style.display = "block";
   } else {
     hint.style.display = "none";
   }
   const newClassHint = document.getElementById("planningNewClassHint");
   if (planningMode === "global" && planningNewlyCreatedClasses.length > 0) {
-    newClassHint.innerHTML = `<span>Nouvelle(s) classe(s) creee(s) automatiquement : ${planningNewlyCreatedClasses.map(planningClassLabel).join(", ")}. Rendez-vous dans Classes pour les completer (importer les eleves).</span><button class="secondary" id="planningNewClassOk" style="margin-top:0">OK</button>`;
+    newClassHint.innerHTML = `<span>Nouvelle(s) classe(s) creee(s) automatiquement : ${planningNewlyCreatedClasses.map(planningClassLabel).join(", ")}. Rendez-vous dans Classes pour les compléter (importer les élèves).</span><button class="secondary" id="planningNewClassOk" style="margin-top:0">OK</button>`;
     newClassHint.style.display = "flex";
     document.getElementById("planningNewClassOk").addEventListener("click", () => {
       planningNewlyCreatedClasses = [];
@@ -1456,7 +1461,7 @@ function renderPlanningGrid() {
       // choisie n'en montre qu'une, comme le fait "Par periode".
       const toutesPeriodes = planningPeriod === 0;
       const apsa = (planningMode === "periode" || (planningMode === "global" && !toutesPeriodes))
-        ? (planningActivityForSlot(s.id) || "A definir") : null;
+        ? (planningActivityForSlot(s.id) || "à définir") : null;
       const activityLines = (planningMode === "global" && toutesPeriodes)
         ? planningGlobalActivityLines(s.id)
         : (apsa ? `<span class="ap">${planningText(apsa)}</span>` : "");
@@ -1606,7 +1611,7 @@ function libelleInstallationsConflit(paire) {
   return paire.installations.join(" / ") || "?";
 }
 function libellePeriodesConflit(paire) {
-  return paire.periodes.length ? "Periode " + paire.periodes.join(", ") : "Toutes les periodes";
+  return paire.periodes.length ? "Période " + paire.periodes.join(", ") : "Toutes les périodes";
 }
 
 function computeCommunityConflicts(slots) {
@@ -1623,11 +1628,11 @@ function computeCommunityConflicts(slots) {
 function renderPlanningEpsGrid() {
   const wrap = document.getElementById("planningGrid");
   if (planningCommunityLoading) {
-    wrap.innerHTML = '<div class="muted" style="padding:30px">Chargement du planning partage...</div>';
+    wrap.innerHTML = '<div class="muted" style="padding:30px">Chargement du planning partagé...</div>';
     return;
   }
   if (planningCommunityError) {
-    wrap.innerHTML = `<div class="error" style="padding:20px">${planningCommunityError} <button class="secondary" id="planningEpsRetry" style="margin-top:8px">Reessayer</button></div>`;
+    wrap.innerHTML = `<div class="error" style="padding:20px">${planningCommunityError} <button class="secondary" id="planningEpsRetry" style="margin-top:8px">Réessayer</button></div>`;
     document.getElementById("planningEpsRetry").addEventListener("click", async () => { await loadPlanningCommunity(); renderPlanningTab(); });
     return;
   }
@@ -1691,7 +1696,7 @@ function renderPlanningEpsGrid() {
       // place du seul mot qu'on vient y lire.
       const activity = (periodInfo?.apsa_name || "").trim();
       const detailPeriodes = planningPeriod === 0
-        ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "A definir"}`).join(" — ")
+        ? activitesDuCreneau.map(a => `P${a.period_number} · ${a.apsa_name || "à définir"}`).join(" — ")
         : "";
       // "Toutes periodes" empile les activites de l'annee, sans leur numero de periode.
       //
@@ -1702,7 +1707,7 @@ function renderPlanningEpsGrid() {
       // "Esc" - comme sur une periode choisie. L'infobulle de la case porte le detail complet,
       // numeros compris.
       const lignesPeriodes = planningPeriod !== 0 ? "" : activitesDuCreneau.map(a => {
-        const nom = (a.apsa_name || "").trim() || "A definir";
+        const nom = (a.apsa_name || "").trim() || "à définir";
         return `<span class="apFit apPeriodes" data-full="${planningText(nom)}">${planningText(nom)}</span>`;
       }).join("");
       // Le rouge du conflit doit rester lisible : il l'emporte sur la couleur de l'enseignant.
@@ -1980,7 +1985,7 @@ function renderPlanningInstallationsGrid() {
   const couloirs = couloirsInstallations(planningInstallations.filter(i => !i.deleted));
 
   if (!couloirs.length) {
-    wrap.innerHTML = `<div class="placeholder" style="padding:18px 20px">Aucune installation enregistree. Ajoutez-les dans <strong>Equipement &rsaquo; Installations</strong> : elles deviendront les colonnes de ce tableau.<br><span class="muted">Ecrivez les espaces divisibles avec leur fraction — "Gymnase 2/3", "Gymnase 1/3", "1/2 Piscine" — pour que le tableau sache qu'ils s'occupent separement.</span></div>`;
+    wrap.innerHTML = `<div class="placeholder" style="padding:18px 20px">Aucune installation enregistrée. Ajoutez-les dans <strong>Équipement &rsaquo; Installations</strong> : elles deviendront les colonnes de ce tableau.<br><span class="muted">Écrivez les espaces divisibles avec leur fraction — "Gymnase 2/3", "Gymnase 1/3", "1/2 Piscine" — pour que le tableau sache qu'ils s'occupent séparément.</span></div>`;
     return;
   }
 
@@ -2013,7 +2018,7 @@ function renderPlanningInstallationsGrid() {
 
   if (horsTableau.length) {
     const noms = [...new Set(horsTableau.map(h => h.nom))].sort();
-    html += `<div class="placeholder" style="padding:12px 16px; margin-top:12px">Sans colonne dans ce tableau : <strong>${planningText(noms.join(", "))}</strong>.<br><span class="muted">Ajoutez ces installations dans Equipement &rsaquo; Installations pour les voir apparaitre.</span></div>`;
+    html += `<div class="placeholder" style="padding:12px 16px; margin-top:12px">Sans colonne dans ce tableau : <strong>${planningText(noms.join(", "))}</strong>.<br><span class="muted">Ajoutez ces installations dans Équipement &rsaquo; Installations pour les voir apparaître.</span></div>`;
   }
 
   const enseignants = [...new Set(slots.filter(x => x.day_of_week === planningInstallationDay)
@@ -2060,7 +2065,7 @@ function renderPlanningAnalysisPanel() {
   const conflicts = planningAnalysisConflicts;
   if (conflicts === null) { panel.style.display = "none"; return; }
   if (conflicts.length === 0) {
-    panel.innerHTML = `<h2>Analyse</h2><div class="ok">Aucun chevauchement d'installation a traiter.</div>`;
+    panel.innerHTML = `<h2>Analyse</h2><div class="ok">Aucun chevauchement d'installation à traiter.</div>`;
     panel.style.display = "block";
     return;
   }
@@ -2072,8 +2077,8 @@ function renderPlanningAnalysisPanel() {
         <div class="muted" style="margin-top:4px">${planningSlotSummary(p.slotA)}</div>
         <div class="muted">${planningSlotSummary(p.slotB)}</div>
         <div style="margin-top:10px">
-          <button class="secondary" data-fix="${i}" style="margin-top:0">A corriger</button>
-          <button data-validate="${i}" style="margin-top:0">Valider quand meme</button>
+          <button class="secondary" data-fix="${i}" style="margin-top:0">à corriger</button>
+          <button data-validate="${i}" style="margin-top:0">Valider quand même</button>
         </div>
       </div>`).join("");
   panel.style.display = "block";
@@ -2150,9 +2155,9 @@ function periodPlannerHtml(grade, plans, openStep, prefix) {
   for (let p = 1; p <= planningPeriodCount(grade); p++) {
     const activityStep = 3 + (p - 1) * 2, installationStep = activityStep + 1;
     const plan = plans[p] || {};
-    html += `<details ${openStep === activityStep ? "open" : ""}><summary><strong>Periode ${p} · Activite</strong>${plan.activity ? ` — ${plan.activity}` : " — A definir"}</summary>
+    html += `<details ${openStep === activityStep ? "open" : ""}><summary><strong>Période ${p} · Activité</strong>${plan.activity ? ` — ${plan.activity}` : " — à définir"}</summary>
       <div class="periodActivityChoices" data-period="${p}" style="margin-top:8px">${(PROGRAMMATION[grade] || []).map(a => `<button type="button" class="secondary durationChip" data-period-activity="${p}" data-activity="${a}" style="margin-top:0">${a}</button>`).join(" ")}</div></details>
-      <details ${openStep === installationStep ? "open" : ""}><summary><strong>Periode ${p} · Installation</strong> — ${plan.installation || "Aucune"}</summary>
+      <details ${openStep === installationStep ? "open" : ""}><summary><strong>Période ${p} · Installation</strong> — ${plan.installation || "Aucune"}</summary>
       <div id="${prefix}Installation${p}" style="margin-top:8px">${installationChipsHtml(`${prefix}inst${p}`, plan.installation || null)}</div></details>`;
   }
   return html;
@@ -2192,18 +2197,18 @@ function openPlanningClassChoicePanel(day, minutes) {
     const regleCreneau = selectedGrade ? creneauxNommes(selectedGrade) : null;
     const numeroLabels = regleCreneau ? regleCreneau.choix : ["1","2","3","4","5","6","7","8","9"];
     panel.innerHTML = `
-      <h2>Nouveau creneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
+      <h2>Nouveau créneau · <button type="button" class="secondary" id="planningStartTimeBtn" style="margin-top:0">${planningMinutesLabel(selectedStartMinutes)}</button></h2>
       ${showStartTimes ? `<div id="planningStartTimeList" style="max-height:260px; overflow-y:auto">${Array.from({length:PLANNING_ROWS}, (_,i) => PLANNING_START_HOUR * 60 + i * PLANNING_SLOT_MIN).map(value => `<button type="button" class="secondary planningStartOption" data-start="${value}" style="display:block;width:100%;text-align:left;margin-top:4px">${planningMinutesLabel(value)}</button>`).join("")}</div>` : ""}
       <details id="planningGradeStep" ${openStep === 0 ? "open" : ""}><summary><strong>Niveau</strong>${selectedGrade ? ` — ${GRADE_LABELS[selectedGrade]}` : ""}</summary>
       <div id="planningGradeChips" style="margin-top:8px">${Object.keys(GRADE_LABELS).map(g =>
         `<button type="button" class="secondary durationChip" data-grade="${g}" style="margin-top:0; ${g === selectedGrade ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${GRADE_LABELS[g]}</button>`
       ).join(" ")}</div></details>
       ${selectedGrade ? `
-        <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>${regleCreneau ? regleCreneau.intitule : "Numero de classe"}</strong>${selectedNumber ? ` — ${numeroLabels[selectedNumber - 1]}` : ""}</summary>
+        <details id="planningNumberStep" ${openStep === 1 ? "open" : ""}><summary><strong>${regleCreneau ? regleCreneau.intitule : "Numéro de classe"}</strong>${selectedNumber ? ` — ${numeroLabels[selectedNumber - 1]}` : ""}</summary>
         <div id="planningNumberChips" style="margin-top:8px">${numeroLabels.map((label, index) =>
           `<button type="button" class="secondary durationChip" data-num="${index + 1}" style="margin-top:0; ${index + 1 === selectedNumber ? "background:var(--accent-container); border-color:var(--accent-container);" : ""}">${label}</button>`
         ).join(" ")}</div></details>` : ""}
-      <details id="planningDurationStep" ${openStep === 2 ? "open" : ""}><summary><strong>Duree</strong> — ${PLANNING_DURATIONS.find(x => x[0] === selectedDuration)?.[1] || ""}</summary>
+      <details id="planningDurationStep" ${openStep === 2 ? "open" : ""}><summary><strong>Durée</strong> — ${PLANNING_DURATIONS.find(x => x[0] === selectedDuration)?.[1] || ""}</summary>
       <div id="planningDurationChips" style="margin-top:8px">${durationChipsHtml("dur", selectedDuration)}</div></details>
       ${periodPlannerHtml(selectedGrade, periodPlans, openStep, "new")}
       <button id="planningConfirmBtn">Valider</button>
@@ -2231,7 +2236,7 @@ function openPlanningClassChoicePanel(day, minutes) {
     document.getElementById("planningCancelBtn").addEventListener("click", () => panel.style.display = "none");
     document.getElementById("planningConfirmBtn").addEventListener("click", async () => {
       if (!selectedGrade || !selectedNumber) {
-        document.getElementById("planningPanelError").textContent = "Choisissez un niveau et un numero de classe.";
+        document.getElementById("planningPanelError").textContent = "Choisissez un niveau et un numéro de classe.";
         return;
       }
       try {
@@ -2274,13 +2279,13 @@ function openPlanningSecondSlotPanel(day, minutes) {
   let selectedDuration = 60;
   let selectedInstallation = null;
   panel.innerHTML = `
-    <h2>2e creneau de ${planningText(planningClassLabel(classGroup))}</h2>
-    <div class="muted">${planningText(planningClassLabel(classGroup))} a EPS deux fois par semaine. Ce creneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
-    <label>Duree</label>
+    <h2>2e créneau de ${planningText(planningClassLabel(classGroup))}</h2>
+    <div class="muted">${planningText(planningClassLabel(classGroup))} a EPS deux fois par semaine. Ce créneau : ${PLANNING_DAYS.find(d => d.key === day).label} ${planningMinutesLabel(minutes)}.</div>
+    <label>Durée</label>
     <div id="planningDurationChips2">${durationChipsHtml("dur2", selectedDuration)}</div>
     <label>Installation</label>
     <div id="planningInstallationChips2">${installationChipsHtml("inst2", selectedInstallation)}</div>
-    <button id="planningConfirmBtn2">Placer ce creneau</button>
+    <button id="planningConfirmBtn2">Placer ce créneau</button>
     <button class="secondary" id="planningCancelBtn2">Annuler</button>`;
   panel.style.display = "block";
   panel.querySelectorAll("#planningDurationChips2 .durationChip").forEach(btn => {
@@ -2324,7 +2329,7 @@ async function openPlanningEditSlotPanel(slot) {
   function renderEdit() {
     panel.innerHTML = `
       <h2>${planningText(planningClassLabel(cl))} · ${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}</h2>
-      <label>Duree</label><div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
+      <label>Durée</label><div id="planningDurationChips3">${durationChipsHtml("dur3", selectedDuration)}</div>
       ${periodPlannerHtml(cl.grade, plans, openStep, "edit")}
       <button id="planningSaveBtn">Enregistrer</button>
       <button class="danger" id="planningDeleteBtn">Supprimer</button>
@@ -2384,11 +2389,11 @@ function openPlanningActivityPanel(slot) {
   }
 
   panel.innerHTML = `
-    <h2>${planningText(planningClassLabel(cl))} · Periode ${planningPeriod}</h2>
-    ${hasLinkedSibling ? `<div class="muted" id="planningLinkNote" style="margin-bottom:8px">S'applique aux 2 creneaux de la semaine.</div>` : ""}
-    <label for="planningApsaSelect">Activite</label>
+    <h2>${planningText(planningClassLabel(cl))} · Période ${planningPeriod}</h2>
+    ${hasLinkedSibling ? `<div class="muted" id="planningLinkNote" style="margin-bottom:8px">S'applique aux 2 créneaux de la semaine.</div>` : ""}
+    <label for="planningApsaSelect">Activité</label>
     <select id="planningApsaSelect">${optionsHtml()}</select>
-    ${hasLinkedSibling ? `<button type="button" class="secondary" id="planningOverrideBtn" style="margin-top:10px">Choisir une activite differente pour ce creneau</button>` : ""}
+    ${hasLinkedSibling ? `<button type="button" class="secondary" id="planningOverrideBtn" style="margin-top:10px">Choisir une activité différente pour ce créneau</button>` : ""}
     <button id="planningSaveActivityBtn">Enregistrer</button>
     <button class="secondary" id="planningCloseActivityBtn">Fermer</button>
     ${currentApsa ? `<button class="danger" id="planningClearActivityBtn">Effacer</button>` : ""}`;
@@ -2397,7 +2402,7 @@ function openPlanningActivityPanel(slot) {
   if (hasLinkedSibling) {
     document.getElementById("planningOverrideBtn").addEventListener("click", () => {
       overrideOnly = true;
-      document.getElementById("planningLinkNote").textContent = `S'applique uniquement a ce creneau (${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}).`;
+      document.getElementById("planningLinkNote").textContent = `S'applique uniquement à ce créneau (${PLANNING_DAYS.find(d => d.key === slot.day_of_week).label}).`;
       document.getElementById("planningOverrideBtn").style.display = "none";
     });
   }

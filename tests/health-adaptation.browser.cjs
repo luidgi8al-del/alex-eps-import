@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
         });
         showTab('health');
       });
-      await page.locator('[data-dispense-vue="toutes"]').click();
+      await page.locator('[data-sante-action="toutes-dispenses"]').click();
       const row = page.locator('tr').filter({ has: page.locator('[data-fiche="hd-1"]') });
       assert.match(await row.innerText(), /Sport adapté possible/);
       assert.match(await row.innerText(), /Natation possible/);
