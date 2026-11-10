@@ -46,17 +46,18 @@
    const stat=(valeur,libelle)=>`<div class="santeStat"><b>${valeur}</b><small>${libelle}</small></div>`;
    const carte=(id,icone,titre,sousTitre,actions)=>`<section class="santeCarte santeCarte-${id}"><div class="santeCarteTete"><span class="santeIcone" aria-hidden="true">${icone}</span><div><h3>${titre}</h3><p>${sousTitre}</p></div></div><div class="santeActions">${actions.map(([action,libelle],i)=>`<button type="button" class="${i?'secondary':''}" data-sante-action="${action}">${libelle}</button>`).join('')}</div></section>`;
    host.innerHTML=`<div class="santeAccueil"><header class="santeHero"><div><h2>Santé / Accident</h2><p>Suivi, prévention et rapports</p></div><span aria-hidden="true">✚</span></header>
-     <div class="santeStats">${stat(actives.length,'dispenses')}${stat(rapports,'rapports')}${stat(0,'infirmerie')}</div>
+     <div class="santeStats">${stat(actives.length,'dispenses')}${stat(rapports,'rapports')}${stat(actives.filter(d=>d.entered_by==='INFIRMERIE').length,'infirmerie')}</div>
      ${echeances?`<div class="santeEcheance" role="status">⚠ ${echeances} dispense${echeances>1?'s se terminent':' se termine'} bientôt</div>`:''}
      <div class="santeCartes">${carte('dispense','👤','Dispenses','Suivre les restrictions et échéances',[['nouvelle-dispense','Nouvelle dispense'],['mes-dispenses','Mes dispenses'],['toutes-dispenses','Toutes les dispenses']])}
      ${carte('accident','⚠','Accidents et incidents','Créer et retrouver les rapports officiels',[['nouveau-rapport','Créer un rapport'],['anciens-rapports','Anciens rapports']])}
-     ${carte('infirmerie','✚','Infirmerie','Tracer un passage et son suivi',[['infirmerie','Nouveau passage'],['infirmerie','Historique']])}</div></div>`;
+     ${carte('infirmerie','✚','Infirmerie','Saisir une dispense et photographier le justificatif',[['infirmerie','Saisir une dispense'],['infirmerie-historique','Historique']])}</div></div>`;
    const vues={'nouvelle-dispense':['dispense','saisie'],'mes-dispenses':['dispense','miennes'],'toutes-dispenses':['dispense','toutes'],
-     'nouveau-rapport':['accident','new'],'anciens-rapports':['accident','archive'],'infirmerie':['infirmerie',null]};
+     'nouveau-rapport':['accident','new'],'anciens-rapports':['accident','archive'],'infirmerie':['infirmerie','saisie'],'infirmerie-historique':['infirmerie','historique']};
    host.querySelectorAll('[data-sante-action]').forEach(button=>button.onclick=()=>{
      const [mode,vue]=vues[button.dataset.santeAction];healthMode=mode;healthAccueil=false;
      if(mode==='dispense'){dispenseVue=vue;dispenseEtape=1;}
      if(mode==='accident')accidentDepart=vue;
+     if(mode==='infirmerie'){infVue=vue;infFait=null;}
      renderHealthTab();
    });
   }
@@ -69,7 +70,7 @@
    if(healthMode==='dispense')renderDispenseMode();
    else if(healthMode==='accident'&&globalThis.HealthIncidentPro){globalThis.HealthIncidentPro.mount(document.getElementById('healthModeBody'),{classes:healthClasses,students:healthStudents,session,escape:healthEsc,save:payload=>enregistrerLigne('health_accidents',payload)},accidentDepart);accidentDepart=null;}
    else if(healthMode==='accident')renderAccidentMode();
-   else document.getElementById('healthModeBody').innerHTML=`<div class="card healthEmpty"><h2>Infirmerie</h2><p>Le formulaire Infirmerie sera ajouté à l’étape suivante.</p></div>`;
+   else renderInfirmerieMode();
   }
   // Trois vues sous DISPENSE : la saisie, ses propres dispenses (en cours / passees), et celles
   // de tout l'etablissement. Les deux dernieres servent de bilan et de suivi.
@@ -353,6 +354,8 @@
             +`${d.adapted_activities?`<div class="muted">${healthEsc(d.adapted_activities)}</div>`:''}</div>`:'')
           +`<div class="muted" style="margin-top:12px">Saisie par un collègue : elle ne se modifie que depuis son compte.</div>`);
     voile.classList.add('open');
+    photoDeLaDispense(d.id).then(photo=>{if(!photo||!corps.isConnected)return;
+      corps.insertAdjacentHTML('beforeend',`<details class="infirmerie-fiche-photo" style="margin-top:12px"><summary>📎 Photo de la dispense</summary><img src="${photo}" alt="Photo de la dispense" style="max-width:100%;border:1px solid #ccd9e2;border-radius:10px;margin-top:8px"></details>`);});
     corps.querySelector('#dispenseFicheAuteur').textContent=
       d.entered_by==='INFIRMERIE' ? 'l’infirmerie' : await nomEnseignant(d.user_id);
     if(!sienne)return;
@@ -534,7 +537,7 @@
    const classStudents=healthStudents.filter(s=>s.class_id===(accidentDraft.class_id||healthClasses[0]?.id));
    const choices=(name,items,current)=>`<div class="accidentChoices">${items.map(([v,l,d])=>`<label class="accidentChoice ${current===v?'selected':''}"><input type="radio" name="${name}" value="${v}" ${current===v?'checked':''}><strong>${l}</strong>${d?`<small>${d}</small>`:''}</label>`).join('')}</div>`;
    switch(accidentStep){
-    case 0: accidentDraft.class_id ||= healthClasses[0]?.id||''; return `<h2>Sélectionner l’élève</h2><label>Classe<select id="accClass">${healthClasses.map(c=>`<option value="${c.id}" ${c.id===accidentDraft.class_id?'selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label><div class="healthStudentList">${classStudents.map(s=>`<label class="healthStudent ${s.id===accidentDraft.student_id?'selected':''}"><input type="radio" name="accStudent" value="${s.id}" ${s.id===accidentDraft.student_id?'checked':''}><span><b>${healthEsc(s.last_name)} ${healthEsc(s.first_name)}</b> · ${healthEsc(s.birth_date||'Date de naissance non renseignée')} · ${healthEsc(healthClasses.find(c=>c.id===s.class_id)?.name||'')}</span></label>`).join('')}</div>`;
+    case 0: accidentDraft.class_id ||= healthClasses[0]?.id||''; return `<h2>Sélectionner l’élève</h2><label>Classe<select id="accClass">${healthClasses.map(c=>`<option value="${c.id}" ${c.id===accidentDraft.class_id?'selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label><div class="healthStudentList">${classStudents.map(s=>`<label class="healthStudent ${s.id===accidentDraft.student_id?'selected':''}"><input type="radio" name="accStudent" value="${s.id}" ${s.id===accidentDraft.student_id?'checked':''}><span><b>${healthEsc(s.last_name)} ${healthEsc(s.first_name)}</b> · ${healthEsc(naissanceFr(s)||'Date de naissance non renseignée')} · ${healthEsc(healthClasses.find(c=>c.id===s.class_id)?.name||'')}</span></label>`).join('')}</div>`;
     case 1:return `<h2>Précisez la nature des faits</h2><textarea id="accFacts" rows="8" placeholder="Décrivez précisément et chronologiquement les faits…">${healthEsc(accidentDraft.facts_nature)}</textarea>`;
     case 2:return `<h2>Date et heure des faits</h2><div class="row"><label>Date<input id="accDate" type="date" value="${accidentDraft.occurred_date}"></label><label>Heure<input id="accTime" type="time" value="${accidentDraft.occurred_time}"></label></div>`;
     case 3:return `<h2>Dommage</h2>${choices('accDamage',[['MATERIEL','Matériel','Dégât concernant un objet ou une installation'],['PHYSIQUE','Physique','Blessure ou atteinte concernant une personne']],accidentDraft.damage_type)}`;
@@ -552,6 +555,195 @@
   function setupAccidentCanvas(){const canvas=document.getElementById('accCanvas'),ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);if(accidentDraft.diagram_data){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,canvas.width,canvas.height);img.src=accidentDraft.diagram_data;}let drawing=false;const point=e=>{const r=canvas.getBoundingClientRect(),p=e.touches?.[0]||e;return [(p.clientX-r.left)*canvas.width/r.width,(p.clientY-r.top)*canvas.height/r.height]};canvas.onpointerdown=e=>{drawing=true;ctx.beginPath();ctx.moveTo(...point(e));};canvas.onpointermove=e=>{if(!drawing)return;ctx.lineWidth=4;ctx.lineCap='round';ctx.strokeStyle='#173a57';ctx.lineTo(...point(e));ctx.stroke();};canvas.onpointerup=canvas.onpointerleave=()=>drawing=false;document.getElementById('accClear').onclick=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);accidentDraft.diagram_data='';};document.getElementById('accImage').onchange=e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);};img.src=reader.result;};reader.readAsDataURL(f);};}
   async function saveAccident(){const payload={user_id:session.user_id,class_id:accidentDraft.class_id,student_id:accidentDraft.student_id,facts_nature:accidentDraft.facts_nature,occurred_at:`${accidentDraft.occurred_date}T${accidentDraft.occurred_time}:00`,damage_type:accidentDraft.damage_type,course_context:accidentDraft.course_context,course_other:accidentDraft.course_other||null,time_context:accidentDraft.time_context,activity_nature:accidentDraft.activity_nature,responsible_name:accidentDraft.responsible_name,diagram_data:accidentDraft.diagram_data||null,witnesses:accidentDraft.witnesses||null,urgency_code:accidentDraft.urgency_code,decision_taken:accidentDraft.decision_taken};try{ await enregistrerLigne('health_accidents',{id:crypto.randomUUID(),...payload,updated_at:new Date().toISOString(),deleted:false}); }catch(e){ alert(e.message||'Enregistrement impossible. Vérifiez que le nouveau SQL Santé a été exécuté.'); return; }openAccidentPrintable();}
   function openAccidentPrintable(){const s=healthStudents.find(x=>x.id===accidentDraft.student_id),c=healthClasses.find(x=>x.id===accidentDraft.class_id),w=open('','_blank');w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Déclaration accident</title><style>body{font-family:Arial;padding:35px;color:#173a57}h1{color:#087dca}.line{padding:10px;border-bottom:1px solid #ccd9e2}b{display:inline-block;width:190px}img{max-width:100%;border:1px solid #ccd9e2}@media print{button{display:none}}</style></head><body><h1>Déclaration d’accident</h1><div class="line"><b>Élève</b>${healthEsc(s?`${s.last_name} ${s.first_name}`:'')} · ${healthEsc(c?.name||'')}</div><div class="line"><b>Date et heure</b>${accidentDraft.occurred_date} ${accidentDraft.occurred_time}</div><div class="line"><b>Nature des faits</b>${healthEsc(accidentDraft.facts_nature)}</div><div class="line"><b>Dommage</b>${accidentDraft.damage_type}</div><div class="line"><b>Cadre</b>${accidentDraft.course_context} · ${accidentDraft.time_context}</div><div class="line"><b>Activité</b>${healthEsc(accidentDraft.activity_nature)}</div><div class="line"><b>Responsable</b>${healthEsc(accidentDraft.responsible_name)}</div><div class="line"><b>Témoins</b>${healthEsc(accidentDraft.witnesses||'Aucun indiqué')}</div><div class="line"><b>Gestion</b>Code ${accidentDraft.urgency_code.toLowerCase()} — ${healthEsc(accidentDraft.decision_taken)}</div>${accidentDraft.diagram_data?`<h2>Schéma</h2><img src="${accidentDraft.diagram_data}">`:''}<p><button onclick="print()">Enregistrer / imprimer en PDF</button></p></body></html>`);w.document.close();accidentStep=0;accidentDraft={...accidentDraft,student_id:'',facts_nature:'',damage_type:'',activity_nature:'',diagram_data:'',witnesses:'',decision_taken:''};renderAccidentMode();}
+
+  // ---- Infirmerie : la dispense saisie depuis l'infirmerie, avec la photo du justificatif ----
+  //
+  // Remplir ce formulaire pose directement la dispense (health_dispensations, entered_by =
+  // INFIRMERIE) : l'eleve apparait aussitot dans les dispenses, comme une saisie normale. La photo
+  // du justificatif est rangee a part (health_dispensation_photos) : un certificat medical ne
+  // doit etre lisible que par le compte qui l'a photographie, pas par toute l'equipe qui voit la
+  // dispense, et une image n'a rien a faire dans la copie hors connexion des dispenses.
+  let infVue='saisie',infMode='classe',infClasse=null,infEleveId=null,infRecherche='',infPhoto=null,infFait=null;
+  let saisieInfirmerieDispo=false,dispensePhotoDispo=false,infirmeriePromesse=null;
+  async function marqueSchema(nom){
+    try{const res=await apiFetch(`${SUPABASE_URL}/rest/v1/eps_schema_marks?name=eq.${nom}&select=name`);return res.ok&&(await res.json()).length>0;}
+    catch{return false;}
+  }
+  async function verifierInfirmerieDisponible(){
+    if(!infirmeriePromesse)infirmeriePromesse=Promise.all([marqueSchema('sante_5'),marqueSchema('sante_6')]);
+    [saisieInfirmerieDispo,dispensePhotoDispo]=await infirmeriePromesse;
+  }
+  /** Date de naissance lisible (le repertoire la garde en millisecondes). */
+  function naissanceFr(eleve){
+    const ms=Number(eleve?.birth_date_epoch_millis);if(!ms)return '';
+    const d=new Date(ms);if(Number.isNaN(d.getTime()))return '';
+    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+  }
+  const sansAccent=v=>String(v||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLocaleLowerCase('fr-FR');
+
+  async function renderInfirmerieMode(){
+    await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible(),verifierAdapteDisponible(),verifierInfirmerieDisponible()]);
+    const body=document.getElementById('healthModeBody');if(!body)return;
+    if(infVue==='historique')return renderInfirmerieHistorique(body);
+    if(infFait)return renderInfirmerieFait(body);
+    const eleve=healthStudents.find(s=>s.id===infEleveId);
+    body.innerHTML=`<section class="card infirmerie-form"><h2>Dispense saisie par l’infirmerie</h2>
+      <p class="muted">L’élève est ajouté directement aux dispenses dès l’enregistrement.</p>
+      <h3>1. Élève</h3><div id="infEleve">${eleve?infirmerieEleveCarte(eleve):infirmerieChoixEleve()}</div>
+      ${eleve?infirmerieChampsHtml():''}</section>`;
+    lierInfirmerie(body);
+  }
+
+  function infirmerieEleveCarte(e){
+    const naissance=naissanceFr(e);
+    return `<div class="infirmerie-eleve"><dl>
+        <div><dt>Nom</dt><dd>${healthEsc(String(e.last_name||'').toUpperCase())}</dd></div>
+        <div><dt>Prénom</dt><dd>${healthEsc(e.first_name||'')}</dd></div>
+        <div><dt>Né(e) le</dt><dd>${naissance?healthEsc(naissance):'<span class="muted">Non renseignée</span>'}</dd></div>
+        <div><dt>Classe</dt><dd>${healthEsc(classeNommee(e.class_id))}</dd></div></dl>
+      <button type="button" class="secondary" id="infChangerEleve">Changer d’élève</button></div>`;
+  }
+
+  function infirmerieChoixEleve(){
+    const onglet=(v,l)=>`<button type="button" class="${infMode===v?'':'secondary'}" data-inf-mode="${v}" aria-pressed="${infMode===v}">${l}</button>`;
+    let liste=[];
+    if(infMode==='classe'){
+      if(!infClasse||!healthClasses.some(c=>c.id===infClasse))infClasse=healthClasses[0]?.id||null;
+      liste=healthStudents.filter(s=>s.class_id===infClasse);
+    } else {
+      const q=sansAccent(infRecherche).trim();
+      liste=q.length<2?[]:healthStudents.filter(s=>sansAccent(`${s.last_name} ${s.first_name}`).includes(q)||sansAccent(`${s.first_name} ${s.last_name}`).includes(q)).slice(0,40);
+    }
+    const lignes=liste.map(s=>{const active=healthDispenses.find(d=>d.student_id===s.id&&healthActive(d));const n=naissanceFr(s);
+      return `<button type="button" class="healthStudent" data-inf-eleve="${healthEsc(s.id)}"><span><b>${healthEsc(String(s.last_name||'').toUpperCase())} ${healthEsc(s.first_name||'')}</b><small>${healthEsc(classeNommee(s.class_id))}${n?` · né(e) le ${healthEsc(n)}`:''}${active?` · déjà dispensé(e) jusqu’au ${jourFr(active.end_date)}`:''}</small></span><strong>›</strong></button>`;}).join('');
+    const vide=infMode==='classe'?'Aucun élève dans cette classe.':(sansAccent(infRecherche).trim().length<2?'Tapez au moins 2 lettres du nom ou du prénom.':'Aucun élève trouvé.');
+    return `<div class="infirmerie-onglets">${onglet('classe','Par classe')}${onglet('recherche','Rechercher')}</div>
+      ${infMode==='classe'
+        ?`<label>Classe<select id="infClasse">${healthClasses.map(c=>`<option value="${healthEsc(c.id)}"${c.id===infClasse?' selected':''}>${healthEsc(c.name)}</option>`).join('')}</select></label>`
+        :`<label>Nom ou prénom<input type="search" id="infRecherche" value="${healthEsc(infRecherche)}" placeholder="ex : Martin" autocomplete="off"></label>`}
+      <div class="healthStudentList" id="infListe">${lignes||`<p class="muted">${vide}</p>`}</div>`;
+  }
+
+  function infirmerieChampsHtml(){
+    const motifs=dispenseMotifDispo
+      ?`<label>Motif<select id="infKind">${MOTIFS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label>`
+        +`<label>Précision (facultatif)<input type="text" id="infReason" maxlength="200" placeholder="ex : entorse cheville droite"></label>`
+      :`<div class="muted">Le motif s’affichera une fois <code>schema_sante_2.sql</code> appliqué.</div>`;
+    const photo=dispensePhotoDispo
+      ?`<div class="infirmerie-photo">${infPhoto
+          ?`<img src="${infPhoto}" alt="Photo de la dispense"><div class="row"><label class="secondary infirmerie-photo-bouton">Reprendre la photo<input type="file" id="infPhoto" accept="image/*" capture="environment" hidden></label><button type="button" class="secondary" id="infPhotoRetirer">Retirer la photo</button></div>`
+          :`<label class="secondary infirmerie-photo-bouton">📷 Photographier la dispense<input type="file" id="infPhoto" accept="image/*" capture="environment" hidden></label><small class="muted">Facultatif. La photo n’est visible que depuis votre compte.</small>`}</div>`
+      :`<div class="muted">La photo de la dispense sera proposée une fois <code>schema_sante_6_photo_dispense.sql</code> appliqué.</div>`;
+    return `<form id="infForm"><h3>2. Période</h3><div class="row">
+        <label>Du<input type="date" id="infStart" value="${healthToday()}" required></label>
+        <label>Au<input type="date" id="infEnd" value="${healthToday()}" required></label></div>
+      <h3>3. Dispense</h3>${motifs}${adapteChampsHtml(null,'inf')}
+      <h3>4. Justificatif</h3>${photo}
+      <button type="submit" id="infValider">Enregistrer la dispense</button>
+      <div class="error" id="infErreur" role="alert"></div></form>`;
+  }
+
+  function lierInfirmerie(body){
+    body.querySelector('#infChangerEleve')?.addEventListener('click',()=>{infEleveId=null;infPhoto=null;renderInfirmerieMode();});
+    body.querySelectorAll('[data-inf-mode]').forEach(b=>b.onclick=()=>{infMode=b.dataset.infMode;renderInfirmerieMode().then(()=>document.getElementById('infRecherche')?.focus());});
+    const classe=body.querySelector('#infClasse');if(classe)classe.onchange=()=>{infClasse=classe.value;renderInfirmerieMode();};
+    const recherche=body.querySelector('#infRecherche');
+    if(recherche)recherche.oninput=()=>{infRecherche=recherche.value;const position=recherche.selectionStart;
+      document.getElementById('infEleve').innerHTML=infirmerieChoixEleve();lierInfirmerie(body);
+      const champ=document.getElementById('infRecherche');champ.focus();champ.setSelectionRange(position,position);};
+    body.querySelectorAll('[data-inf-eleve]').forEach(b=>b.onclick=()=>{infEleveId=b.dataset.infEleve;renderInfirmerieMode();});
+    const photo=body.querySelector('#infPhoto');
+    if(photo)photo.onchange=async()=>{const fichier=photo.files?.[0];if(!fichier)return;
+      const erreur=document.getElementById('infErreur');
+      try{infPhoto=await compresserPhotoDispense(fichier);}catch(e){if(erreur)erreur.textContent=e.message;return;}
+      const garde=infirmerieLireSaisie();renderInfirmerieMode().then(()=>infirmerieRemettreSaisie(garde));};
+    body.querySelector('#infPhotoRetirer')?.addEventListener('click',()=>{const garde=infirmerieLireSaisie();infPhoto=null;renderInfirmerieMode().then(()=>infirmerieRemettreSaisie(garde));});
+    const form=body.querySelector('#infForm');if(form)form.onsubmit=enregistrerInfirmerie;
+  }
+  /** La photo redessine le formulaire : ce qui est deja saisi ne doit pas etre perdu. */
+  function infirmerieLireSaisie(){const v={};['infStart','infEnd','infKind','infReason','infAptitude','infAdapte'].forEach(id=>{const c=document.getElementById(id);if(c)v[id]=c.value;});return v;}
+  function infirmerieRemettreSaisie(v){Object.entries(v||{}).forEach(([id,val])=>{const c=document.getElementById(id);if(c)c.value=val;});}
+
+  /** JPEG d'au plus ~290 000 caracteres (la base refuse au-dela de 300 000), lisible a l'ecran. */
+  async function compresserPhotoDispense(fichier){
+    if(!/^image\//.test(fichier.type||''))throw Error('Choisissez une photo.');
+    const url=URL.createObjectURL(fichier);
+    try{
+      const img=await new Promise((ok,ko)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ko(Error('Photo illisible. Reprenez-la.'));i.src=url;});
+      for(const cote of [1600,1300,1000,800]){
+        const echelle=Math.min(1,cote/Math.max(img.naturalWidth,img.naturalHeight));
+        const canvas=document.createElement('canvas');canvas.width=Math.round(img.naturalWidth*echelle);canvas.height=Math.round(img.naturalHeight*echelle);
+        const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        for(const qualite of [.72,.6,.5,.4]){const data=canvas.toDataURL('image/jpeg',qualite);if(data.length<=290000)return data;}
+      }
+      throw Error('Photo trop lourde, même réduite. Reprenez-la de plus près.');
+    } finally { URL.revokeObjectURL(url); }
+  }
+
+  async function enregistrerInfirmerie(event){
+    event.preventDefault();
+    const erreur=document.getElementById('infErreur'),bouton=document.getElementById('infValider');
+    erreur.textContent='';
+    const eleve=healthStudents.find(s=>s.id===infEleveId);
+    const debut=document.getElementById('infStart').value,fin=document.getElementById('infEnd').value;
+    if(!eleve){erreur.textContent='Choisissez l’élève.';return;}
+    if(!debut||!fin||fin<debut){erreur.textContent='La date de fin doit être postérieure ou égale à la date de début.';return;}
+    const conflit=healthDispenses.find(d=>d.student_id===eleve.id&&!d.deleted&&chevauche(d,{start_date:debut,end_date:fin}));
+    if(conflit){erreur.textContent=`Cet élève a déjà une dispense du ${jourFr(conflit.start_date)} au ${jourFr(conflit.end_date)}. Modifiez-la depuis les dispenses plutôt que d’en créer une seconde.`;return;}
+    const ligne={id:crypto.randomUUID(),user_id:session.user_id,class_id:eleve.class_id,student_id:eleve.id,
+      start_date:debut,end_date:fin,updated_at:new Date().toISOString(),deleted:false};
+    completerIdentiteDispense(ligne);
+    if(dispenseMotifDispo){ligne.reason_kind=document.getElementById('infKind')?.value||'AUTRE';ligne.reason=document.getElementById('infReason')?.value.trim()||null;}
+    adapteLire(document,ligne,'inf');
+    if(saisieInfirmerieDispo)ligne.entered_by='INFIRMERIE';
+    bouton.disabled=true;
+    try{await enregistrerLigne('health_dispensations',ligne);}
+    catch(e){erreur.textContent=e.message;bouton.disabled=false;return;}
+    healthDispenses.unshift(ligne);
+    let photoMessage='';
+    if(infPhoto&&dispensePhotoDispo){
+      const now=new Date().toISOString();
+      try{
+        const res=await apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensation_photos`,{method:'POST',body:JSON.stringify({id:crypto.randomUUID(),user_id:session.user_id,dispensation_id:ligne.id,photo_data:infPhoto,created_at:now,updated_at:now,deleted:false})});
+        if(!res.ok)throw Error(`refus ${res.status}`);
+        photoMessage='Photo de la dispense jointe.';
+      }catch{photoMessage='La dispense est enregistrée, mais la photo n’a pas pu être envoyée (réseau ?). Rouvrez la dispense plus tard pour la joindre.';}
+    }
+    infFait={ligne,eleve,photoMessage};infPhoto=null;infEleveId=null;
+    renderInfirmerieMode();
+  }
+
+  function renderInfirmerieFait(body){
+    const {ligne,eleve,photoMessage}=infFait;
+    body.innerHTML=`<section class="card infirmerie-fait" role="status"><h2>✓ Dispense enregistrée</h2>
+      <p><b>${healthEsc(String(eleve.last_name||'').toUpperCase())} ${healthEsc(eleve.first_name||'')}</b> · ${healthEsc(classeNommee(eleve.class_id))}</p>
+      <p>Du ${jourFr(ligne.start_date)} au ${jourFr(ligne.end_date)}${ligne.reason_kind?` · ${healthEsc(motifLibelle(ligne.reason_kind))}`:''}</p>
+      <p class="muted">L’élève apparaît maintenant dans les dispenses.</p>${photoMessage?`<p>${healthEsc(photoMessage)}</p>`:''}
+      <div class="row"><button type="button" id="infNouvelle">Saisir une autre dispense</button><button type="button" class="secondary" id="infVoir">Voir les dispenses</button></div></section>`;
+    body.querySelector('#infNouvelle').onclick=()=>{infFait=null;renderInfirmerieMode();};
+    body.querySelector('#infVoir').onclick=()=>{infFait=null;healthMode='dispense';dispenseVue='toutes';renderHealthTab();};
+  }
+
+  function renderInfirmerieHistorique(body){
+    const lignes=healthDispenses.filter(d=>d.entered_by==='INFIRMERIE').sort((a,b)=>String(b.start_date).localeCompare(String(a.start_date)));
+    body.innerHTML=`<section class="card"><h2>Dispenses saisies par l’infirmerie <span class="muted" style="font-weight:400">(${lignes.length})</span></h2>`
+      +(lignes.length?`<div style="overflow-x:auto"><table><thead><tr><th>Élève</th><th>Classe</th><th>Début</th><th>Fin</th><th>Motif</th></tr></thead><tbody>`
+        +lignes.map(d=>`<tr><td><button class="secondary" style="margin-top:0" data-fiche="${healthEsc(d.id)}">${healthEsc(eleveNomme(d.student_id,d))}</button></td><td>${healthEsc(classeNommee(d.class_id,d))}</td><td>${jourFr(d.start_date)}</td><td>${jourFr(d.end_date)}</td><td>${healthEsc(motifLibelle(d.reason_kind)||'—')}</td></tr>`).join('')
+        +`</tbody></table></div>`
+        :`<p class="muted">${saisieInfirmerieDispo?'Aucune dispense saisie par l’infirmerie.':'La provenance « Infirmerie » s’affichera une fois <code>schema_sante_5_saisie_infirmerie.sql</code> appliqué.'}</p>`)+`</section>`;
+    body.querySelectorAll('[data-fiche]').forEach(b=>b.onclick=()=>ouvrirFicheDispense(b.dataset.fiche));
+  }
+
+  /** Dans la fiche d'une dispense : la photo du justificatif, si ce compte en a pris une. */
+  async function photoDeLaDispense(id){
+    await verifierInfirmerieDisponible();
+    if(!dispensePhotoDispo)return null;
+    try{
+      const res=await apiFetch(`${SUPABASE_URL}/rest/v1/health_dispensation_photos?dispensation_id=eq.${encodeURIComponent(id)}&deleted=eq.false&select=photo_data&order=created_at.desc&limit=1`);
+      if(!res.ok)return null;
+      return (await res.json())[0]?.photo_data||null;
+    }catch{return null;}
+  }
 
   // Surface publique du module.
   globalThis.healthEsc = healthEsc;
@@ -579,6 +771,8 @@
   globalThis.chevaucheDispense = chevauche;
   globalThis.accidentSteps = accidentSteps;
   globalThis.renderAccidentMode = renderAccidentMode;
+  globalThis.renderInfirmerieMode = renderInfirmerieMode;
+  globalThis.compresserPhotoDispense = compresserPhotoDispense;
   globalThis.accidentStepHtml = accidentStepHtml;
   globalThis.captureAccidentStep = captureAccidentStep;
   globalThis.setupAccidentCanvas = setupAccidentCanvas;
