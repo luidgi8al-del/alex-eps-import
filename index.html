@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="styles/aide.css?v=20260929-3">
 <link rel="stylesheet" href="styles/emails.css?v=20260929-1">
 <link rel="stylesheet" href="styles/eppcs.css?v=20261025-seances-2">
+<link rel="stylesheet" href="styles/mobile-navigation.css?v=20261112-mobile-1">
 <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
@@ -584,9 +585,9 @@
   <script src="portable-recovery.js?v=20261012-recovery-1"></script>
   <link rel="stylesheet" href="styles/tool-save-indicator.css?v=20261014-running-header-1">
   <script src="tool-save-indicator.js?v=20261020-offline-field-1"></script>
-  <script src="tool-resume.js?v=20261104-chrono-1"></script>
+  <script src="tool-resume.js?v=20261112-mobile-1"></script>
   <script src="settings-categories.js?v=20261013-1"></script>
-  <script src="teacher-settings.js?v=20261104-accents-1"></script>
+  <script src="teacher-settings.js?v=20261112-mobile-1"></script>
   <script src="home-weather.js?v=20260929-1"></script>
   <script src="hors-connexion.js?v=20261007-aptitudes-delete-1"></script>
   <script src="offline-preparation.js?v=20261020-offline-field-1"></script>
@@ -998,6 +999,7 @@
     function showTab(name, { skipModuleStart = false } = {}) {
       if (name === "settings") { openSettings(); return; }
       if (!TAB_NAMES.includes(name) && name !== "planning") return;
+      if (name === 'home' && currentWebTab !== 'home') globalThis.EpsMobileDisplay?.resetResume();
       currentWebTab = name;
       const panelName = name === "planning" ? "programmation" : name;
       TAB_NAMES.forEach(tab => {
@@ -1030,6 +1032,7 @@
       }
       if (!skipModuleStart) startSelectedModule(name);
       history.replaceState(null, "", "#" + name);
+      globalThis.EpsMobileDisplay?.update();
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
       const btn = e.target.closest(".tabbtn");
@@ -1105,5 +1108,6 @@
 
     preparePasswordLink().then(handled => { if (!handled) { if (session) showMainView(); else showAuthView(); } }).catch(() => showAuthView());
   </script>
+<script src="mobile-navigation.js?v=20261112-mobile-1"></script>
 </body>
 </html>

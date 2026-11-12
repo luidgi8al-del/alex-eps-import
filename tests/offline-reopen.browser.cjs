@@ -17,6 +17,13 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  });assert.equal(result.online,false);assert.equal(result.ready.ready,true);assert.equal(result.points,7);assert.equal(result.interface,'function');
  await page.reload({waitUntil:'domcontentloaded'});
  assert.equal(await page.evaluate(async()=>{const d=await import('./pwa/storage/database.js');d.utiliserCompte('offline-computer-test');return (await(await import('./pwa/storage/records.js')).readLocalRecord('evaluation_scores','offline-score')).data.points}),7);
+ // The new mobile shell and its device preference must also load from the actual PWA cache.
+ await page.setViewportSize({width:390,height:844});
+ await page.evaluate(async()=>{session={user_id:'offline-computer-test',email:'offline@example.test',access_token:'test'};localStorage.setItem('eps:installation-manager-role:offline-computer-test','false');localStorage.setItem('alex_eps_session',JSON.stringify(session));await showMainView();EpsMobileDisplay.setMode('mobile');});
+ await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');
+ assert.equal(await page.locator('#mobileHome .mobile-home-link').count(),4);
+ await page.reload({waitUntil:'domcontentloaded'});await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');assert.equal(await page.evaluate(()=>EpsMobileDisplay.getMode()),'mobile');
+ assert.equal(await page.evaluate(()=>navigator.onLine),false);
  await context.setOffline(false);assert.equal(await page.evaluate(async()=> (await fetch('/manifest.webmanifest')).ok),true);
  console.log('PASS actual desktop PWA service worker: all assets prepared, close/reopen and reload with network disabled, local score survives, network returns');
  await context.close();

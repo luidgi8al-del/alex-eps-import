@@ -202,6 +202,7 @@
     const visual=document.getElementById("visualSection"),contents=visual.querySelector(".settingsContents");
     const home=document.createElement("div");home.id="visualHomePanel";home.setAttribute("role","tabpanel");
     while(contents.firstChild)home.append(contents.firstChild);
+    globalThis.EpsMobileDisplay?.settings(home);
     const weather=document.getElementById("weatherSettingsSection");
     const weatherPanel=document.createElement("div");weatherPanel.id="visualWeatherPanel";weatherPanel.setAttribute("role","tabpanel");
     weatherPanel.append(...weather.querySelector(".settingsContents").childNodes);weather.remove();

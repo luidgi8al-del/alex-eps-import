@@ -12,8 +12,8 @@ const server=http.createServer((req,res)=>{try{let p=path.join(root,decodeURICom
   await p.locator('#toolClass').selectOption('cl-3e6');await p.waitForSelector('[data-run-student="el-3"]');
   const student=await p.locator('[data-run-student]').first().getAttribute('data-run-student');await p.locator('[data-run-student]').first().fill('315');
   assert.equal(await p.evaluate(id=>EpsToolResume.read().payload.values[id][0],student),'315');
-  await p.evaluate(()=>closeModernTool());await p.waitForSelector('.tool-resume-card');assert.match(await p.locator('.tool-resume-card').innerText(),/Brouillon/);
-  await p.reload();await p.waitForFunction(()=>typeof EpsToolResume==='object');await p.waitForTimeout(900);await p.evaluate(()=>{showTab('outils');resetToolsWorkspace()});await p.locator('.tool-resume-card').click();
+  await p.evaluate(()=>closeModernTool());await p.waitForSelector('#tab-outils .tool-resume-card');assert.match(await p.locator('#tab-outils .tool-resume-card').innerText(),/Brouillon/);
+  await p.reload();await p.waitForFunction(()=>typeof EpsToolResume==='object');await p.waitForTimeout(900);await p.evaluate(()=>{showTab('outils');resetToolsWorkspace()});await p.locator('#tab-outils .tool-resume-card').click();
   await p.waitForSelector(`[data-run-student="${student}"]`);assert.equal(await p.locator(`[data-run-student="${student}"]`).first().inputValue(),'315');
   await p.locator('[data-run-deplier="groupes"]').click();await p.locator('#runningManageGroups').click();await p.locator('[data-running-group-student]').first().check();await p.locator('#runningSaveGroup').click();const before=await p.evaluate(()=>structuredClone(runningGroups));
   await p.locator('[data-running-group="0"]').dispatchEvent('pointerdown',{clientX:10,clientY:10});await p.waitForTimeout(700);await p.locator('[data-running-group="0"]').dispatchEvent('pointerup',{clientX:10,clientY:10});
