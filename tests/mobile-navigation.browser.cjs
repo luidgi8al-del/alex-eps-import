@@ -13,7 +13,11 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  assert.equal(await page.locator('#mobileHome .mobile-home-link').count(),4);
  assert.deepEqual(await page.locator('#mobileHome .mobile-home-link strong').allTextContents(),['ASLVH','Outils','Équipement','Planning']);
  assert.equal(await page.locator('#tabbar').isVisible(),false);
- for(const width of [320,390,650]){await page.setViewportSize({width,height:844});await page.waitForTimeout(60);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow ${width}`);const nav=await page.locator('#mobileBottomNav').boundingBox();const resume=await page.locator('.mobile-home-resume').boundingBox();await page.locator('.mobile-home-resume').scrollIntoViewIfNeeded();assert(nav&&resume);}
+ for(const [width,height] of [[320,568],[360,640],[390,660],[390,844],[650,844]]){
+  await page.setViewportSize({width,height});await page.waitForTimeout(80);
+  const layout=await page.evaluate(()=>({scrollHeight:document.documentElement.scrollHeight,home:document.getElementById('mobileHome').getBoundingClientRect().height,header:document.querySelector('.header').getBoundingClientRect().height,horizontal:document.documentElement.scrollWidth>innerWidth,vertical:document.documentElement.scrollHeight>innerHeight+1,resume:document.querySelector('.mobile-home-resume').getBoundingClientRect().bottom,nav:document.getElementById('mobileBottomNav').getBoundingClientRect().top}));
+  assert.equal(layout.horizontal,false,`horizontal overflow ${width}x${height}`);assert.equal(layout.vertical,false,`home scrolls at ${width}x${height}: ${JSON.stringify(layout)}`);assert(layout.resume<=layout.nav,`resume covered at ${width}x${height}`);
+ }
  await page.setViewportSize({width:390,height:844});
  const resumedTitle=await page.locator('#mobileHome .tool-resume-card b').innerText();await page.locator('#mobileHome .tool-resume-card').click();await page.waitForSelector('#tab-outils #toolPanel',{state:'visible'});assert((await page.locator('#toolPanel').innerText()).includes(resumedTitle));await page.locator('#mobileBottomNav [data-mobile-tab=home]').click();
  for(const [tab,hash] of [['ASLVH','unss'],['Outils','outils'],['Équipement','equipement']]){await page.locator('#mobileBottomNav button').filter({hasText:tab}).click();await page.waitForFunction(h=>location.hash==='#'+h,hash);assert.equal(await page.locator(`#tab-${hash}`).isVisible(),true);await page.locator('#mobileBottomNav button').filter({hasText:'Accueil'}).click();}

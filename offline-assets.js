@@ -209,7 +209,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./styles/eppcs.css",
   "./styles/eppcs.css?v=20261025-seances-2",
   "./styles/mobile-navigation.css",
-  "./styles/mobile-navigation.css?v=20261112-mobile-1",
+  "./styles/mobile-navigation.css?v=20261112-mobile-2",
   "./styles/responsable-installations.css",
   "./styles/running-observation.css",
   "./styles/running-observation.css?v=20261015-observation-score-2",
