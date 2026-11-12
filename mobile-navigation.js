@@ -52,7 +52,7 @@
       const account = session.user_id;
       if (resumeOwner !== account && globalThis.EpsToolResume) {
         resumeOwner = account;
-        void EpsToolResume.offer(home, {beforeOpen: () => showTab('outils')});
+        void EpsToolResume.offer(home, {beforeOpen: () => { globalThis.EpsNavigation?.beginToolTransition(); showTab('outils'); }});
       }
     }
     if (typeof mesurerEntete === 'function') mesurerEntete();

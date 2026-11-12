@@ -29,6 +29,6 @@
   window.addEventListener('eps:pwa-sync-state',e=>sync(e.detail));
   window.addEventListener('online',()=>render());window.addEventListener('offline',()=>render());
   new MutationObserver(install).observe(document.body,{subtree:true,childList:true});
-  globalThis.EpsToolSave={reset,dirty,written,failed,begin,finish,sync,colour,render};
+  globalThis.EpsToolSave={reset,dirty,written,failed,begin,finish,sync,colour,render,hasUnsaved:()=>saveFailed||revision>0&&savedRevision!==revision};
   install();
 })();

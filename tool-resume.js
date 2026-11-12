@@ -46,7 +46,7 @@
   if(seq!==offerSequences.get(host)||owner()!==account||!host.isConnected||!slot.isConnected)return;
   const latest=candidates.sort((a,b)=>b.time-a.time)[0];if(!latest)return;
   const card=document.createElement('button');card.type='button';card.className='tool-resume-card';card.innerHTML=`<span><strong>Reprendre mon travail</strong><b>${esc(latest.title)}</b><small>${esc(latest.context)}</small></span><span aria-hidden="true">→</span>`;
-  card.onclick=async()=>{card.disabled=true;try{if(owner()!==account)throw Error('Le compte a changé.');if(beforeOpen)await beforeOpen();await latest.open();document.getElementById('toolsWorkspace')?.setAttribute('hidden','')}catch(e){alert(e.message);card.disabled=false}};slot.replaceChildren(card);
+  card.onclick=async()=>{card.disabled=true;try{if(owner()!==account)throw Error('Le compte a changé.');if(beforeOpen)await beforeOpen();await latest.open();document.getElementById('toolsWorkspace')?.setAttribute('hidden','')}catch(e){globalThis.EpsNavigation?.cancelToolTransition();alert(e.message);card.disabled=false}};slot.replaceChildren(card);
  }
  document.addEventListener('input',e=>{if(e.target.closest('#toolPanel,#liveToolPanel'))capture()},false);
  document.addEventListener('change',e=>{if(e.target.closest('#toolPanel,#liveToolPanel')){clearTimeout(timer);timer=setTimeout(capture,0)}},false);

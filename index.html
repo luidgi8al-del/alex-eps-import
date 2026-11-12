@@ -584,8 +584,8 @@
   <script src="lesson-recovery.js?v=20261026-search-1"></script>
   <script src="portable-recovery.js?v=20261012-recovery-1"></script>
   <link rel="stylesheet" href="styles/tool-save-indicator.css?v=20261014-running-header-1">
-  <script src="tool-save-indicator.js?v=20261020-offline-field-1"></script>
-  <script src="tool-resume.js?v=20261112-mobile-1"></script>
+  <script src="tool-save-indicator.js?v=20261113-back-1"></script>
+  <script src="tool-resume.js?v=20261113-back-1"></script>
   <script src="settings-categories.js?v=20261013-1"></script>
   <script src="teacher-settings.js?v=20261112-mobile-1"></script>
   <script src="home-weather.js?v=20260929-1"></script>
@@ -629,7 +629,7 @@
   <link rel="stylesheet" href="styles/trois500-terrain.css?v=20261104-prep-1">
   <script src="teams-saved-web.js?v=20261104-accents-1"></script>
   <script src="tools-portable.js?v=20261015-observation-score-2"></script>
-  <script src="tools-workspace.js?v=20261026-search-1"></script>
+  <script src="tools-workspace.js?v=20261113-back-1"></script>
   <script src="team-evaluation-editor.js?v=20261005-teams"></script>
   <script src="class-group-library.js?v=20261010-1"></script>
   <script src="tools-workflows.js?v=20261015-class-guard-1"></script>
@@ -999,6 +999,7 @@
     function showTab(name, { skipModuleStart = false } = {}) {
       if (name === "settings") { openSettings(); return; }
       if (!TAB_NAMES.includes(name) && name !== "planning") return;
+      globalThis.EpsNavigation?.tab(name);
       if (name === 'home' && currentWebTab !== 'home') globalThis.EpsMobileDisplay?.resetResume();
       currentWebTab = name;
       const panelName = name === "planning" ? "programmation" : name;
@@ -1031,7 +1032,7 @@
         planningMode = name === "planning" ? "global" : "annuelle";
       }
       if (!skipModuleStart) startSelectedModule(name);
-      history.replaceState(null, "", "#" + name);
+      if (!globalThis.EpsNavigation) history.replaceState(null, "", "#" + name);
       globalThis.EpsMobileDisplay?.update();
     }
     document.getElementById("tabbar").addEventListener("click", (e) => {
@@ -1108,6 +1109,7 @@
 
     preparePasswordLink().then(handled => { if (!handled) { if (session) showMainView(); else showAuthView(); } }).catch(() => showAuthView());
   </script>
-<script src="mobile-navigation.js?v=20261112-mobile-1"></script>
+<script src="mobile-navigation.js?v=20261113-back-1"></script>
+<script src="navigation-history.js?v=20261113-back-1"></script>
 </body>
 </html>
