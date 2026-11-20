@@ -722,7 +722,7 @@
           await attendre(() => f.document.getElementById("ficheEleve"),
             "le choix de l'eleve n'apparait pas", 4000);
           if (f.document.querySelectorAll("#ficheEleve option").length < 2) {
-            throw new Error("aucun eleve propose pour la nouvelle dispense");
+            throw new Error("aucun eleve propose pour la saisie de dispense");
           }
           // Le motif doit etre propose ici aussi : il n'etait demande qu'a l'ouverture de
           // l'onglet Sante, donc depuis une classe l'ecran annoncait a tort que le SQL
