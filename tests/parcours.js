@@ -590,14 +590,12 @@
           f.document.querySelector('[data-sante-action="nouvelle-dispense"]').click();
 
           // Le motif est propose des que le schema est marque comme applique.
-          // La saisie se fait en trois etapes : carte de la classe, puis eleve, puis dispense.
-          await attendre(() => f.document.querySelector("[data-health-class]"), "la saisie ne s'affiche pas", 4000);
-          f.document.querySelector("[data-health-class]").click();
-          await attendre(() => f.document.querySelector("[data-health-student]"), "la classe ne montre pas ses eleves", 4000);
-          const eleve = f.document.querySelector("[data-health-student]");
+          // La saisie : l'eleve (par classe ou recherche), puis la periode et la dispense.
+          await attendre(() => f.document.querySelector("[data-inf-eleve]"), "la saisie ne s'affiche pas", 4000);
+          const eleve = f.document.querySelector("[data-inf-eleve]");
           if (!eleve) throw new Error("aucun eleve dans la classe de test");
           eleve.click();
-          await attendre(() => f.document.getElementById("dispenseKind"),
+          await attendre(() => f.document.getElementById("infKind"),
             "le choix du motif n'apparait pas alors que le schema est applique", 4000);
 
           // Le garde-fou : reproposer une periode qui recouvre une dispense existante.

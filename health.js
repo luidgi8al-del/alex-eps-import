@@ -48,14 +48,13 @@
    host.innerHTML=`<div class="santeAccueil"><header class="santeHero"><div><h2>Santé / Accident</h2><p>Suivi, prévention et rapports</p></div><span aria-hidden="true">✚</span></header>
      <div class="santeStats">${stat(actives.length,'dispenses')}${stat(rapports,'rapports')}${stat(actives.filter(d=>d.entered_by==='INFIRMERIE').length,'infirmerie')}</div>
      ${echeances?`<div class="santeEcheance" role="status">⚠ ${echeances} dispense${echeances>1?'s se terminent':' se termine'} bientôt</div>`:''}
-     <div class="santeCartes">${carte('dispense','👤','Dispenses','Suivre les restrictions et échéances',[['nouvelle-dispense','Nouvelle dispense'],['mes-dispenses','Mes dispenses'],['toutes-dispenses','Toutes les dispenses']])}
-     ${carte('accident','⚠','Accidents et incidents','Créer et retrouver les rapports officiels',[['nouveau-rapport','Créer un rapport'],['anciens-rapports','Anciens rapports']])}
-     ${carte('infirmerie','✚','Infirmerie','Saisir une dispense et photographier le justificatif',[['infirmerie','Saisir une dispense'],['infirmerie-historique','Historique']])}</div></div>`;
+     <div class="santeCartes">${carte('dispense','👤','Dispenses / Infirmerie','Saisir, photographier le justificatif, suivre les échéances',[['nouvelle-dispense','Nouvelle dispense'],['mes-dispenses','Mes dispenses'],['toutes-dispenses','Toutes les dispenses'],['infirmerie-historique','Saisies de l’infirmerie']])}
+     ${carte('accident','⚠','Accidents et incidents','Créer et retrouver les rapports officiels',[['nouveau-rapport','Créer un rapport'],['anciens-rapports','Anciens rapports']])}</div></div>`;
    const vues={'nouvelle-dispense':['dispense','saisie'],'mes-dispenses':['dispense','miennes'],'toutes-dispenses':['dispense','toutes'],
      'nouveau-rapport':['accident','new'],'anciens-rapports':['accident','archive'],'infirmerie':['infirmerie','saisie'],'infirmerie-historique':['infirmerie','historique']};
    host.querySelectorAll('[data-sante-action]').forEach(button=>button.onclick=()=>{
      const [mode,vue]=vues[button.dataset.santeAction];healthMode=mode;healthAccueil=false;
-     if(mode==='dispense'){dispenseVue=vue;dispenseEtape=1;}
+     if(mode==='dispense'){dispenseVue=vue;dispenseEtape=1;infFait=null;}
      if(mode==='accident')accidentDepart=vue;
      if(mode==='infirmerie'){infVue=vue;infFait=null;}
      renderHealthTab();
@@ -64,7 +63,7 @@
   function renderHealthTab(){
    const host=document.getElementById('healthBody');if(!host)return;
    if(healthAccueil)return renderAccueilSante(host);
-   const titres={dispense:{saisie:'Nouvelle dispense',miennes:'Mes dispenses',toutes:'Toutes les dispenses'}[dispenseVue]||'Dispenses',accident:'Accidents et incidents',infirmerie:'Infirmerie'};
+   const titres={dispense:{saisie:'Nouvelle dispense',miennes:'Mes dispenses',toutes:'Toutes les dispenses'}[dispenseVue]||'Dispenses',accident:'Accidents et incidents',infirmerie:infVue==='historique'?'Saisies de l’infirmerie':'Nouvelle dispense'};
    host.innerHTML=`<div class="santeBarre"><button type="button" class="secondary" id="santeRetour">← Retour</button><div><b>Santé / Accident</b><small>${titres[healthMode]||''}</small></div></div><div id="healthModeBody"></div>`;
    document.getElementById('santeRetour').onclick=()=>{healthAccueil=true;renderHealthTab();};
    if(healthMode==='dispense')renderDispenseMode();
@@ -237,9 +236,12 @@
   function renderDispenseMode(){
    const body=document.getElementById('healthModeBody');
    // La vue (saisie, mes dispenses, toutes) se choisit sur l'accueil Sante : plus d'onglets ici.
+   // « Nouvelle dispense » est le formulaire complet (eleve par classe ou recherche, date de
+   // naissance, calendrier, photo du justificatif) : l'ancien assistant en trois etapes faisait
+   // doublon avec la saisie Infirmerie, qui allait au meme endroit.
+   if(dispenseVue==='saisie'){infVue='saisie';return renderInfirmerieMode();}
    body.innerHTML=`<div id="dispenseVueBody"></div>`;
-   if(dispenseVue==='saisie')renderSaisieDispense();
-   else renderListeDispenses(dispenseVue==='miennes');
+   renderListeDispenses(dispenseVue==='miennes');
   }
 
   function renderSaisieDispense(){
@@ -513,7 +515,7 @@
     healthDispenses=healthDispenses.filter(d=>d.id!==id);
     renderDispenseMode();
   }
-  function openClassDispenses(classId){healthSelectedClassId=classId;healthMode='dispense';dispenseVue='saisie';dispenseEtape=1;healthEntreeDirecte=true;showTab('health');}
+  function openClassDispenses(classId){healthSelectedClassId=classId;infClasse=classId;infMode='classe';infEleveId=null;infFait=null;healthMode='dispense';dispenseVue='saisie';dispenseEtape=1;healthEntreeDirecte=true;showTab('health');}
   function ouvrirDispensesDepuisAccueil(){
     healthMode='dispense';
     dispenseVue='toutes';
@@ -587,7 +589,7 @@
     if(infVue==='historique')return renderInfirmerieHistorique(body);
     if(infFait)return renderInfirmerieFait(body);
     const eleve=healthStudents.find(s=>s.id===infEleveId);
-    body.innerHTML=`<section class="card infirmerie-form"><h2>Dispense saisie par l’infirmerie</h2>
+    body.innerHTML=`<section class="card infirmerie-form"><h2>Nouvelle dispense</h2>
       <p class="muted">L’élève est ajouté directement aux dispenses dès l’enregistrement.</p>
       <h3>1. Élève</h3><div id="infEleve">${eleve?infirmerieEleveCarte(eleve):infirmerieChoixEleve()}</div>
       ${eleve?infirmerieChampsHtml():''}</section>`;
@@ -639,6 +641,7 @@
         <label>Au<input type="date" id="infEnd" value="${healthToday()}" required></label></div>
       <h3>3. Dispense</h3>${motifs}${adapteChampsHtml(null,'inf')}
       <h3>4. Justificatif</h3>${photo}
+      ${saisieInfirmerieDispo?'<label class="infirmerie-case"><input type="checkbox" id="infPourInfirmerie"> Saisie pour l’infirmerie <small class="muted">(la dispense portera la mention « Infirmerie »)</small></label>':''}
       <button type="submit" id="infValider">Enregistrer la dispense</button>
       <div class="error" id="infErreur" role="alert"></div></form>`;
   }
@@ -661,8 +664,8 @@
     const form=body.querySelector('#infForm');if(form)form.onsubmit=enregistrerInfirmerie;
   }
   /** La photo redessine le formulaire : ce qui est deja saisi ne doit pas etre perdu. */
-  function infirmerieLireSaisie(){const v={};['infStart','infEnd','infKind','infReason','infAptitude','infAdapte'].forEach(id=>{const c=document.getElementById(id);if(c)v[id]=c.value;});return v;}
-  function infirmerieRemettreSaisie(v){Object.entries(v||{}).forEach(([id,val])=>{const c=document.getElementById(id);if(c)c.value=val;});}
+  function infirmerieLireSaisie(){const v={};['infStart','infEnd','infKind','infReason','infAptitude','infAdapte','infPourInfirmerie'].forEach(id=>{const c=document.getElementById(id);if(c)v[id]=c.type==='checkbox'?c.checked:c.value;});return v;}
+  function infirmerieRemettreSaisie(v){Object.entries(v||{}).forEach(([id,val])=>{const c=document.getElementById(id);if(!c)return;if(c.type==='checkbox')c.checked=!!val;else c.value=val;});}
 
   /** JPEG d'au plus ~290 000 caracteres (la base refuse au-dela de 300 000), lisible a l'ecran. */
   async function compresserPhotoDispense(fichier){
@@ -695,7 +698,7 @@
     completerIdentiteDispense(ligne);
     if(dispenseMotifDispo){ligne.reason_kind=document.getElementById('infKind')?.value||'AUTRE';ligne.reason=document.getElementById('infReason')?.value.trim()||null;}
     adapteLire(document,ligne,'inf');
-    if(saisieInfirmerieDispo)ligne.entered_by='INFIRMERIE';
+    if(saisieInfirmerieDispo&&document.getElementById('infPourInfirmerie')?.checked)ligne.entered_by='INFIRMERIE';
     bouton.disabled=true;
     try{await enregistrerLigne('health_dispensations',ligne);}
     catch(e){erreur.textContent=e.message;bouton.disabled=false;return;}
