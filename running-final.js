@@ -41,6 +41,7 @@
     if (!response.ok) throw Error('Enregistrement interrompu. Vous pouvez réessayer sans créer de doublon.');
   }
   root.openRunningFinal = async function(options={}) {
+    if((options.testName||'3 × 500 m')==='3 × 500 m'&&typeof root.openRunningBilan==='function')return root.openRunningBilan(options);
     const classId = options.classId||toolClassId, period = options.period||epsTestPeriod, students = [...(options.students||toolStudents)],testName=options.testName||'3 × 500 m',scale=options.scale||12,owner=session?.user_id;
     if(!Number.isInteger(scale)||scale<1||scale>100)throw Error('Barème invalide.');
     const dialog = document.createElement('dialog');

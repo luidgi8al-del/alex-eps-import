@@ -24,6 +24,8 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  assert.equal(await page.locator('#mobileHome .mobile-home-link').count(),4);
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');assert.equal(await page.evaluate(()=>EpsMobileDisplay.getMode()),'mobile');
  assert.equal(await page.evaluate(()=>navigator.onLine),false);
+ assert.equal(await page.evaluate(()=>typeof openRunningBilan),'function');
+ assert.equal(await page.evaluate(()=>RunningBilan.calculate([{id:'offline',date:1,status:'complete',score:6,perf:3,reg:3,average:200,gap:5,signature:'0:run'}]).score),10);
  await context.setOffline(false);assert.equal(await page.evaluate(async()=> (await fetch('/manifest.webmanifest')).ok),true);
  console.log('PASS actual desktop PWA service worker: all assets prepared, close/reopen and reload with network disabled, local score survives, network returns');
  await context.close();

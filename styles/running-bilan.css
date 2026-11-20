@@ -1,0 +1,13 @@
+.running-bilan-dialog{width:min(850px,94vw);max-height:90dvh;overflow:auto;border:1px solid #bdd8eb;border-radius:20px;padding:22px;color:#163b55;background:#fff}
+.running-bilan-dialog::backdrop{background:#12344d80}
+.running-bilan-dialog h2{font-size:22px;margin:0 0 14px}.running-bilan-dialog p{line-height:1.5}
+.running-bilan-dialog input[type=checkbox]{width:20px;height:20px;flex-shrink:0;margin:0;min-height:0}
+.running-bilan-dialog label{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.running-bilan-dialog small{display:block;font-size:12px;font-weight:400;line-height:1.4;color:#647c90}
+.bilan-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bilan-session-actions,.bilan-footer{display:flex;gap:8px;flex-wrap:wrap}
+.bilan-sessions{max-height:260px;overflow:auto}.bilan-sessions label,.running-bilan-dialog .bilan-justification{display:flex;flex-direction:row;align-items:center;padding:10px;gap:12px;min-height:48px}
+.bilan-students{display:grid;gap:12px;margin:18px 0}.bilan-student{border:1px solid #dce7ef;border-radius:15px;padding:15px;background:#f9fcff}
+.bilan-student-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.bilan-student-head strong{overflow-wrap:anywhere}.bilan-student-head label{margin:0;flex-shrink:0;font-size:12px}.bilan-student-head input{width:90px;min-height:44px;margin:0}
+.bilan-breakdown{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.bilan-breakdown dd{margin:0;font-variant-numeric:tabular-nums}
+.bilan-footer{margin-top:16px}.running-bilan-dialog details{margin:14px 0}.running-bilan-dialog summary{cursor:pointer;min-height:35px}
+@media(max-width:500px){.running-bilan-dialog{padding:16px;width:96vw;max-height:94dvh}.bilan-two{grid-template-columns:1fr;gap:0}.bilan-footer button{width:100%;margin:0}.running-bilan-dialog h2{font-size:20px}.bilan-student{padding:12px}}
