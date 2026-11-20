@@ -1,6 +1,7 @@
 .running-bilan-dialog{width:min(850px,94vw);max-height:90dvh;overflow:auto;border:1px solid #bdd8eb;border-radius:20px;padding:22px;color:#163b55;background:#fff}
 .running-bilan-dialog::backdrop{background:#12344d80}
 .running-bac-panel{margin:12px 0!important;padding:16px!important}.running-bac-choice{display:flex;align-items:center;gap:12px}.running-bac-choice input{width:22px;height:22px;margin:0}.running-bac-panel [data-bac-afl23]{width:85px;min-height:44px}.running-bac-panel table{width:100%;min-width:390px}.running-bac-panel td,.running-bac-panel th{padding:8px}.running-bac-panel td:last-child{font-weight:700}
+@media(max-width:500px){.running-bac-panel table{min-width:0;table-layout:fixed}.running-bac-panel th:first-child{width:31%}.running-bac-panel td,.running-bac-panel th{padding:6px 3px;overflow-wrap:anywhere}.running-bac-panel [data-bac-afl23]{width:100%;min-width:0;padding:8px 5px}.running-bac-panel thead th{font-size:10px}}
 .running-bilan-dialog h2{font-size:22px;margin:0 0 14px}.running-bilan-dialog p{line-height:1.5}
 .running-bilan-dialog input[type=checkbox]{width:20px;height:20px;flex-shrink:0;margin:0;min-height:0}
 .running-bilan-dialog label{display:flex;flex-direction:column;gap:6px;margin-top:12px}

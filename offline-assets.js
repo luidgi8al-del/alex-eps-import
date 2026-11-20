@@ -220,7 +220,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./styles/mobile-navigation.css?v=20261112-mobile-2",
   "./styles/responsable-installations.css",
   "./styles/running-bilan.css",
-  "./styles/running-bilan.css?v=20261120-bac-1",
+  "./styles/running-bilan.css?v=20261120-bac-2",
   "./styles/running-observation.css",
   "./styles/running-observation.css?v=20261015-observation-score-2",
   "./styles/running-quick-guide.css",

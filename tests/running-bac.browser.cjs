@@ -26,7 +26,8 @@ const server=http.createServer((req,res)=>{try{let f=path.join(root,decodeURICom
   data=await p.evaluate(()=>bacTestStore);assert.equal(data.evaluations.length,1);assert.equal(data.evaluation_criteria.length,2);const af1row=data.evaluation_scores.find(r=>r.student_id===id&&r.criterion_id.endsWith('-afl1')),af23row=data.evaluation_scores.find(r=>r.student_id===id&&r.criterion_id.endsWith('-afl23'));assert.equal(af1row.points,afl1);assert.equal(af23row.points,6);
   const missing=data.evaluation_scores.filter(r=>r.student_id!==id);assert(missing.every(r=>r.points===null&&r.deleted));
   assert.equal(await p.locator(`[data-bac-total="${id}"]`).innerText(),(afl1+6).toLocaleString('fr-FR',{maximumFractionDigits:2}));
-  assert.deepEqual(alerts,[]);assert.deepEqual(errors,[]);await c.close();
+  if(width===390)assert.equal(await p.locator('#runningBacPanel table').evaluate(t=>t.scrollWidth>t.parentElement.clientWidth),false);
+  await fs.promises.mkdir(path.join(root,'output/running-bac'),{recursive:true});await p.screenshot({path:path.join(root,`output/running-bac/bac-${width}.png`),fullPage:true});assert.deepEqual(alerts,[]);assert.deepEqual(errors,[]);await c.close();
  }
  console.log('PASS BAC 3x500 desktop/mobile: marker and AFL persist; two criteria /12 + /8; same final updated; no duplicate; missing is not zero');
 }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1});
