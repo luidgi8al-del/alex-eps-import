@@ -9,9 +9,9 @@
  function capture(){
   // Le tableau ou, en grille et en chrono auto, les cases du 3 x 500 (trois500-terrain.js).
   if(!owner()||!document.querySelector('.running-grid,.run-terrain .run-grille'))return;
-  const payload={classId:toolClassId,period:epsTestPeriod,values:runningValues,groups:runningGroups,walking:[...runningWalking],activeGroup:runningActiveGroup,distance:runningDistance,count:runningCount,difficulty:runningDifficulty,sessionId:runningSessionId,createdAt:runningCreatedAt};
+  const payload={classId:toolClassId,period:epsTestPeriod,values:runningValues,groups:runningGroups,walking:[...runningWalking],activeGroup:runningActiveGroup,distance:runningDistance,count:runningCount,difficulty:runningDifficulty,sessionId:runningSessionId,createdAt:runningCreatedAt,bac:globalThis.RunningBac?{enabled:RunningBac.state.enabled,cycle:RunningBac.state.cycle,afl:RunningBac.state.afl}:null};
   const signature=owner()+JSON.stringify(payload);if(signature===lastSignature)return;lastSignature=signature;
-  if(!Object.values(payload.values).some(times=>times.some(v=>String(v).trim()))&&!payload.groups.length)return;
+  if(!Object.values(payload.values).some(times=>times.some(v=>String(v).trim()))&&!payload.groups.length&&!payload.bac?.enabled)return;
   try{localStorage.setItem(key(),JSON.stringify({owner:owner(),kind:'running-draft',title:'3 × 500 m',className:toolClasses.find(c=>c.id===toolClassId)?.name||'Usage libre',updatedAt:Date.now(),payload}));}catch(error){lastSignature='';console.warn('Le brouillon local ne peut pas être conservé.',error.message);}
  }
  async function resumeDraft(draft){
@@ -25,7 +25,7 @@
   Object.keys(runningValues).forEach(id=>delete runningValues[id]);Object.assign(runningValues,structuredClone(p.values));runningGroups=structuredClone(p.groups);runningWalking=new Set(p.walking);runningActiveGroup=p.activeGroup;runningDistance=p.distance;runningCount=p.count;runningDifficulty=p.difficulty;
   runningSessionId=record?.id||null;runningSessionRecord=record;runningCreatedAt=record?.created_at||p.createdAt;runningResultRecords={};
   if(record){const rows=await lireTable('eps_test_results',`eps_test_results?session_id=eq.${record.id}&deleted=eq.false&select=*`,{ou:r=>r.session_id===record.id&&!r.deleted});rows.forEach(r=>runningResultRecords[r.student_id]=r);}
-  EpsToolSave.reset();paintRunningSeriesTest(EpsTests.TESTS.TROIS_500);lastSignature='';capture();
+  if(globalThis.RunningBac&&p.bac)Object.assign(RunningBac.state,p.bac);EpsToolSave.reset();paintRunningSeriesTest(EpsTests.TESTS.TROIS_500);lastSignature='';capture();
  }
  const renderers={observer:()=>renderObserverWeb,tournament:()=>renderTournamentWeb,rotations:()=>renderRotationsWeb,acrosport:()=>renderAcrosportWeb,'climb-observation':()=>renderClimbObservationWeb,'climb-test':()=>renderClimbTestWeb,'bac-grid':()=>renderBacGridWeb,'bac-climb':()=>renderBacClimbWeb,'running-observation':()=>renderRunningObservationWeb};
  async function offer(host,{beforeOpen}={}){

@@ -28,7 +28,8 @@ const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/ht
   await p.locator('[data-save]').click();await p.getByText('Bilan ajouté à l’évaluation finale /20',{exact:true}).waitFor();
   const writes=await p.evaluate(()=>globalThis.writes);assert.equal(writes.filter(w=>w.table==='evaluation_criteria').length,1);assert.equal(writes.find(w=>w.table==='evaluation_criteria').row.max_points,20);assert.equal(writes.find(w=>w.table==='evaluation_criteria').row.evaluation_id,'final');assert.deepEqual(writes.filter(w=>w.table==='evaluation_scores').map(w=>w.row.points),[16.5,12.75]);assert.equal(writes.some(w=>w.table==='eps_test_results'),false);assert.deepEqual(errors,[]);
   await fs.promises.mkdir(path.join(root,'output/running-bilan'),{recursive:true});
-  await p.evaluate(()=>{document.querySelector('dialog').close();return openRunningFinal()});await p.locator('[data-continue]').click();await p.screenshot({path:path.join(root,`output/running-bilan/bilan-${width}.png`),fullPage:true});await p.close();
+  await p.evaluate(()=>{document.querySelector('dialog').close();return openRunningFinal()});await p.locator('[data-continue]').click();await p.screenshot({path:path.join(root,`output/running-bilan/bilan-${width}.png`),fullPage:true});
+  await p.locator('[data-save]').click();await p.getByText('Bilan ajouté à l’évaluation finale /20',{exact:true}).waitFor();assert.equal(await p.evaluate(()=>writes.find(w=>w.table==='evaluations').row.type),'FINALE');await p.close();
  }
  console.log('PASS 3x500 /20 desktop/mobile: all periods, class isolation, 3 methods, justification, edit, partial-write retry, max_points=20, original sessions untouched');
 }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1});
