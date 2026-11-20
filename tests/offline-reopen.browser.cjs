@@ -19,12 +19,24 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  assert.equal(await page.evaluate(async()=>{const d=await import('./pwa/storage/database.js');d.utiliserCompte('offline-computer-test');return (await(await import('./pwa/storage/records.js')).readLocalRecord('evaluation_scores','offline-score')).data.points}),7);
  // The new mobile shell and its device preference must also load from the actual PWA cache.
  await page.setViewportSize({width:390,height:844});
- await page.evaluate(async()=>{session={user_id:'offline-computer-test',email:'offline@example.test',access_token:'test'};localStorage.setItem('eps:installation-manager-role:offline-computer-test','false');localStorage.setItem('alex_eps_session',JSON.stringify(session));await showMainView();EpsMobileDisplay.setMode('mobile');});
+ await page.evaluate(async()=>{session={user_id:'offline-computer-test',email:'offline@example.test',access_token:'test'};localStorage.setItem('eps:installation-manager-role:offline-computer-test','false');localStorage.setItem(`eps:offline-schema-3:${SUPABASE_URL}:${session.user_id}`,'3');localStorage.setItem('alex_eps_session',JSON.stringify(session));await showMainView();EpsMobileDisplay.setMode('mobile');});
  await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');
  assert.equal(await page.locator('#mobileHome .mobile-home-link').count(),4);
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');assert.equal(await page.evaluate(()=>EpsMobileDisplay.getMode()),'mobile');
  assert.equal(await page.evaluate(()=>navigator.onLine),false);
  assert.equal(await page.evaluate(()=>typeof openRunningBilan),'function');
+ assert.equal(await page.evaluate(()=>typeof EpsAssessmentStatus.changeDate),'function');
+ const savedOffline=await page.evaluate(async()=>{
+  await demarrerModeHorsConnexion();
+  const source={id:'past-evaluation',user_id:session.user_id,cycle_id:'offline-cycle',type:'PONCTUELLE',label:'Séance passée',date_epoch_millis:Date.now()};
+  await EpsAssessmentStatus.changeDate('evaluation',source,'2026-09-01');
+  await EpsAssessmentStatus.set('offline-class',1,'evaluation',source,true);
+  const records=await import('./pwa/storage/records.js'),pending=await import('./pwa/sync/outbox.js');
+  return{date:EpsAssessmentStatus.day((await records.readLocalRecord('evaluations',source.id)).data.date_epoch_millis),finished:EpsAssessmentStatus.completed('offline-class','evaluation',source.id,false),queued:await pending.countPendingOperations()};
+ });
+ assert.equal(savedOffline.date,'2026-09-01');assert.equal(savedOffline.finished,true);assert(savedOffline.queued>=2);
+ await page.reload({waitUntil:'domcontentloaded'});await page.waitForSelector('body.mobile-simple #mobileHome:not([hidden])');
+ assert.equal(await page.evaluate(async()=>{await demarrerModeHorsConnexion();await EpsAssessmentStatus.load('offline-class');return EpsAssessmentStatus.completed('offline-class','evaluation','past-evaluation',false)}),true);
  assert.equal(await page.evaluate(()=>RunningBilan.calculate([{id:'offline',date:1,status:'complete',score:6,perf:3,reg:3,average:200,gap:5,signature:'0:run'}]).score),10);
  await context.setOffline(false);assert.equal(await page.evaluate(async()=> (await fetch('/manifest.webmanifest')).ok),true);
  console.log('PASS actual desktop PWA service worker: all assets prepared, close/reopen and reload with network disabled, local score survives, network returns');

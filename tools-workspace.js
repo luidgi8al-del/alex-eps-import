@@ -112,7 +112,7 @@
   async function readWorks(){
     try{
       const rows=await lireTable("eps_saved_tool_works","eps_saved_tool_works?select=*&order=updated_at.desc",{avecSupprimes:true,trier:(a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||""))});
-      const own=rows.filter(r=>r.user_id===session?.user_id),known=new Set(own.map(r=>r.id));
+      const own=rows.filter(r=>r.user_id===session?.user_id&&r.type!=='assessment-status'),known=new Set(own.map(r=>r.id));
       const works=own.filter(r=>!r.deleted).map(EpsPortableWorks.row);
       const legacy=(await lireTable('eps_test_sessions','eps_test_sessions?test_name=eq.Multi-chrono&deleted=eq.false&select=*',{ou:r=>r.test_name==='Multi-chrono'&&!r.deleted})).filter(r=>r.user_id===session?.user_id&&!known.has(r.id));
       if(legacy.length){const [results,students]=await Promise.all([lireTable('eps_test_results',`eps_test_results?session_id=in.(${legacy.map(s=>s.id).join(',')})&deleted=eq.false&select=*`,{ou:r=>legacy.some(s=>s.id===r.session_id)&&!r.deleted}),lireTable('students','students?deleted=eq.false&select=*')]);for(const s of legacy){const w=EpsPortableWorks.multiSession(s,results,students);w._raw={id:w.id,user_id:s.user_id,type:w.type,title:w.title,class_id:w.classId,period_number:w.period,payload:JSON.stringify(w.payload),created_at:w.createdAt,updated_at:w.updatedAt,deleted:false};works.push(w)}}

@@ -1,0 +1,37 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const server=http.createServer((req,res)=>{try{let f=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.statSync(f).isDirectory())f=path.join(f,'index.html');res.setHeader('Content-Type',f.endsWith('.js')?'application/javascript':f.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(f));}catch{res.statusCode=404;res.end();}});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'chrome',headless:true});try{
+ for(const width of [1280,390]){
+  const c=await browser.newContext({viewport:{width,height:844},serviceWorkers:'block'});await c.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await c.addInitScript({content:fs.readFileSync(path.join(root,'tests/faux-serveur.js'),'utf8')});const p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+  p.setDefaultTimeout(12000);await p.goto(`http://127.0.0.1:${server.address().port}`);await p.waitForSelector('#mainView[style*="block"]');
+  await p.evaluate(async()=>{await demarrerModeHorsConnexion();rafraichirApresSynchro=()=>{};
+   globalThis.statusStore=structuredClone(__fauxServeur.DONNEES);statusStore.eps_saved_tool_works=[];globalThis.statusWrites=[];
+   lireTable=async(table,q,opts={})=>(statusStore[table]||[]).filter(r=>!r.deleted&&(!opts.ou||opts.ou(r)));
+   enregistrerLigne=async(table,row)=>{if(globalThis.failStatusWrite)throw Error('Enregistrement impossible');statusWrites.push({table,row:structuredClone(row)});statusStore[table]||=[];const i=statusStore[table].findIndex(r=>r.id===row.id);if(i<0)statusStore[table].push(structuredClone(row));else statusStore[table][i]=structuredClone(row);};
+   currentWebTab='classes';document.querySelectorAll('[id^=tab-]').forEach(el=>el.style.display=el.id==='tab-classes'?'block':'none');document.getElementById('subtab-classes').style.display='block';dashboardClass={row:statusStore.classes[0],label:'3e6'};dashboardStudents=statusStore.students.filter(s=>s.class_id==='cl-3e6');dashboardPeriod=1;dashboardCycles=statusStore.cycles;dashboardEvaluations=statusStore.evaluations;dashboardTests=statusStore.eps_test_sessions;dashboardSlots=statusStore.class_schedule_slots.filter(s=>s.class_id==='cl-3e6');dashboardActivities=statusStore.period_activities;ecCriteres=statusStore.evaluation_criteria;ecNotes=statusStore.evaluation_scores;ecResultatsTests=statusStore.eps_test_results;ecNotesChargees=true;
+   ecCoursRetenu=()=>({cycle:dashboardCycles[0]});ecCoursDeLaSemaine=()=>[];ecChargerEvaluationsEquipes=()=>{};vueClasse='evaluations';ecFiltreEvaluations='À reprendre';document.getElementById('classDashboardPanel').style.display='block';const render=renderClassDashboard;let draws=0;renderClassDashboard=()=>{if(++draws>12)throw Error('Too many renders');return render()};renderClassDashboard();await EpsAssessmentStatus.load('cl-3e6');
+  });
+  await p.locator('[data-ec-menu-grid="ev-1"]').click();await p.locator('#ecDialogue button', {hasText:'Marquer comme terminée'}).click();await p.waitForFunction(()=>document.querySelector('[data-ec-filtre-eval="Terminées"]').textContent.includes('1'));
+  assert.equal(await p.locator('[data-ec-menu-grid="ev-1"]').count(),0);
+  await p.locator('[data-ec-filtre-eval="Terminées"]').click();assert.equal(await p.locator('[data-ec-open-grid="ev-1"]').first().locator('strong').innerText(),'1 / 8');
+  await p.locator('[data-ec-menu-grid="ev-1"]').click();await p.locator('#ecDialogue button',{hasText:'Modifier la date'}).click();await p.locator('#assessmentDateInput').fill('2026-09-10');await p.locator('[data-save-date]').click();await p.waitForSelector('#assessmentDateInput',{state:'detached'});
+  assert.equal(await p.evaluate(()=>EpsAssessmentStatus.day(dashboardEvaluations[0].date_epoch_millis)),'2026-09-10');assert.equal(await p.evaluate(()=>EpsAssessmentStatus.day(statusStore.evaluations[0].date_epoch_millis)),'2026-09-10');
+  await p.locator('[data-ec-menu-grid="ev-1"]').click();await p.locator('#ecDialogue button',{hasText:'Remettre dans À reprendre'}).click();await p.waitForFunction(()=>!document.querySelector('[data-ec-menu-grid="ev-1"]'));
+  await p.locator('[data-ec-filtre-eval="Tests"]').click();await p.locator('[data-ec-menu-test="ts-1"]').click();await p.locator('#ecDialogue button',{hasText:'Modifier la date'}).click();await p.locator('#assessmentDateInput').fill('2026-09-01');await p.locator('[data-save-date]').click();await p.waitForSelector('#assessmentDateInput',{state:'detached'});
+  assert.equal(await p.evaluate(()=>EpsAssessmentStatus.day(statusStore.eps_test_sessions[0].created_at)),'2026-09-01');assert.equal(await p.locator('[data-ec-menu-test]').last().getAttribute('data-ec-menu-test'),'ts-1');
+  await p.locator('[data-ec-menu-test="ts-1"]').click();await p.locator('#ecDialogue button',{hasText:'Marquer comme terminée'}).click();await p.waitForFunction(()=>EpsAssessmentStatus.completed('cl-3e6','test','ts-1',false));
+  const checked=await p.evaluate(async()=>{
+   const marks=JSON.stringify(statusStore.evaluation_scores),results=JSON.stringify(statusStore.eps_test_results);await EpsAssessmentStatus.load('cl-3e6',true);
+   const restored=EpsAssessmentStatus.completed('cl-3e6','test','ts-1',false),reopened=EpsAssessmentStatus.completed('cl-3e6','evaluation','ev-1',true);
+   const raw={id:'portable',user_id:session.user_id,class_id:'cl-3e6',type:'bac-climb',title:'Escalade',payload:'{"values":{}}',created_at:new Date().toISOString(),updated_at:new Date().toISOString(),deleted:false};const portable={id:raw.id,created_at:Date.parse(raw.created_at),_toolWork:raw};await EpsAssessmentStatus.changeDate('test',portable,'2026-09-02');
+   let rejected=false;try{EpsAssessmentStatus.timestamp(Date.now(),'2026-02-30')}catch{rejected=true}
+   failStatusWrite=true;const old=statusStore.eps_test_sessions[0].created_at;let failed=false;try{await EpsAssessmentStatus.changeDate('test',dashboardTests[0],'2026-08-01')}catch{failed=true}failStatusWrite=false;
+   const originalOwner=session.user_id;session.user_id='another-prof';const isolated=EpsAssessmentStatus.completed('cl-3e6','test','ts-1',false);session.user_id=originalOwner;
+   return{restored,reopened,isolated,rejected,failed,unchanged:old===statusStore.eps_test_sessions[0].created_at,portable:EpsAssessmentStatus.day(statusStore.eps_saved_tool_works.find(w=>w.id==='portable').created_at),marksIntact:marks===JSON.stringify(statusStore.evaluation_scores)&&results===JSON.stringify(statusStore.eps_test_results),scoreWrites:statusWrites.filter(w=>['evaluation_scores','eps_test_results'].includes(w.table)).length};
+  });
+  assert.deepEqual(checked,{restored:true,reopened:false,isolated:false,rejected:true,failed:true,unchanged:true,portable:'2026-09-02',marksIntact:true,scoreWrites:0});assert.deepEqual(errors,[]);await c.close();
+ }
+ console.log('PASS assessment status and past dates desktop/mobile: finish/reopen, counts, persisted overrides, chronological sorting, standard/portable dates, failure and account isolation; no grade writes');
+}finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1});
