@@ -715,25 +715,19 @@
           await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
             "la fiche ne se ferme pas", 4000);
 
-          // Et on doit pouvoir en poser une sans quitter la classe.
+          // « Saisir une dispense » depuis la classe : le formulaire complet (photo comprise),
+          // la classe deja choisie. L'ancienne fenetre rapide ne doit plus apparaitre.
           const ajout = f.document.getElementById("ajoutDispense");
           if (!ajout) throw new Error("on ne peut pas creer une dispense depuis la classe");
           ajout.click();
-          await attendre(() => f.document.getElementById("ficheEleve"),
-            "le choix de l'eleve n'apparait pas", 4000);
-          if (f.document.querySelectorAll("#ficheEleve option").length < 2) {
-            throw new Error("aucun eleve propose pour la saisie de dispense");
+          await attendre(() => f.document.querySelector("[data-inf-eleve]"),
+            "le formulaire complet ne s'ouvre pas depuis la classe", 6000);
+          if (f.document.getElementById("dispenseFicheOverlay")?.classList.contains("open")) {
+            throw new Error("l'ancienne fenetre rapide s'ouvre encore");
           }
-          // Le motif doit etre propose ici aussi : il n'etait demande qu'a l'ouverture de
-          // l'onglet Sante, donc depuis une classe l'ecran annoncait a tort que le SQL
-          // n'etait pas applique.
-          if (!f.document.getElementById("ficheKind")) {
-            throw new Error("le motif n'est pas propose depuis la classe alors que le schema est applique");
+          if (!f.document.getElementById("infPhoto") && !f.document.querySelector(".infirmerie-form")) {
+            throw new Error("le formulaire ouvert n'est pas le formulaire complet");
           }
-          f.document.getElementById("dispenseFicheClose").click();
-          await attendre(() => !f.document.getElementById("dispenseFicheOverlay").classList.contains("open"),
-            "la fenetre de creation ne se ferme pas", 4000);
-          $("dashDetailClose")?.click();
         }
       },
       {

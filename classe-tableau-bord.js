@@ -1094,13 +1094,13 @@ function afficherDispenses(dispenses) {
   if (!hote) return;
   // Meme quand personne n'est dispense, on doit pouvoir en poser une : on est deja dans la
   // classe, avec ses eleves sous les yeux.
-  const boutonAjout = `<button id="ajoutDispense" style="margin-top:10px">Ajouter une dispense</button>`;
+  const boutonAjout = `<button id="ajoutDispense" style="margin-top:10px">Saisir une dispense</button>`;
   const brancherAjout = () => {
     const bouton = document.getElementById("ajoutDispense");
     if (!bouton) return;
     bouton.onclick = () => {
-      if (typeof ouvrirNouvelleDispense === "function") {
-        ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents, dashboardClass.label);
+      if (typeof openClassDispenses === "function") {
+        openClassDispenses(dashboardClass.row.id);
       }
     };
   };

@@ -1817,11 +1817,12 @@ function ecDessinerDispenses(panel) {
       <div class="ec-stats">${ecStat(enCours.length, "en cours", "#0F6E56")}${ecStat(toutes.length, "cette année", "#0F6E56")}${ecStat(dashboardStudents.length, "élèves", "#0F6E56")}</div>
       <div class="ec-liste">${liste}</div>
       <p class="ec-aide">Clic : ouvrir la fiche · appui prolongé sur une de vos dispenses : la supprimer</p>
-      <button type="button" class="ec-bouton-large" id="ajoutDispense">Ajouter une dispense</button>
+      <button type="button" class="ec-bouton-large" id="ajoutDispense">Saisir une dispense</button>
     </div></section>`;
 
   panel.querySelector("[data-ec-retour]").onclick = () => ecAller("bord");
-  const nouvelle = () => { if (typeof ouvrirNouvelleDispense === "function") ouvrirNouvelleDispense(dashboardClass.row.id, dashboardStudents, dashboardClass.label); };
+  // Le formulaire complet de Sante (photo du justificatif comprise), la classe deja choisie.
+  const nouvelle = () => { if (typeof openClassDispenses === "function") openClassDispenses(dashboardClass.row.id); };
   panel.querySelector("[data-ec-ajout]").onclick = nouvelle;
   document.getElementById("ajoutDispense").onclick = nouvelle;
   document.getElementById("ecPremiereDispense")?.addEventListener("click", nouvelle);
