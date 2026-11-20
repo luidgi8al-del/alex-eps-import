@@ -12,4 +12,5 @@
 .bilan-student-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.bilan-student-head strong{overflow-wrap:anywhere}.bilan-student-head label{margin:0;flex-shrink:0;font-size:12px}.bilan-student-head input{width:90px;min-height:44px;margin:0}
 .bilan-breakdown{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.bilan-breakdown dd{margin:0;font-variant-numeric:tabular-nums}
 .bilan-footer{margin-top:16px}.running-bilan-dialog details{margin:14px 0}.running-bilan-dialog summary{cursor:pointer;min-height:35px}
+.bilan-save-check{margin:16px 0;padding:14px;border:1px solid #edc684;border-radius:12px;background:#fff8e9;overflow-wrap:anywhere}.bilan-save-check p{margin:0 0 10px}.bilan-save-check .bilan-justification{margin:0;padding:6px 0}
 @media(max-width:500px){.running-bilan-dialog{padding:16px;width:96vw;max-height:94dvh}.bilan-two{grid-template-columns:1fr;gap:0}.bilan-footer button{width:100%;margin:0}.running-bilan-dialog h2{font-size:20px}.bilan-student{padding:12px}}

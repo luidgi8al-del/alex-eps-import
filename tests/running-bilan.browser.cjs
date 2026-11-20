@@ -29,7 +29,20 @@ const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/ht
   const writes=await p.evaluate(()=>globalThis.writes);assert.equal(writes.filter(w=>w.table==='evaluation_criteria').length,1);assert.equal(writes.find(w=>w.table==='evaluation_criteria').row.max_points,20);assert.equal(writes.find(w=>w.table==='evaluation_criteria').row.evaluation_id,'final');assert.deepEqual(writes.filter(w=>w.table==='evaluation_scores').map(w=>w.row.points),[16.5,12.75]);assert.equal(writes.some(w=>w.table==='eps_test_results'),false);assert.deepEqual(errors,[]);
   await fs.promises.mkdir(path.join(root,'output/running-bilan'),{recursive:true});
   await p.evaluate(()=>{document.querySelector('dialog').close();return openRunningFinal()});await p.locator('[data-continue]').click();await p.screenshot({path:path.join(root,`output/running-bilan/bilan-${width}.png`),fullPage:true});
-  await p.locator('[data-save]').click();await p.getByText('Bilan ajouté à l’évaluation finale /20',{exact:true}).waitFor();assert.equal(await p.evaluate(()=>writes.find(w=>w.table==='evaluations').row.type),'FINALE');await p.close();
+  await p.locator('[data-save]').click();await p.getByText('Bilan ajouté à l’évaluation finale /20',{exact:true}).waitFor();assert.equal(await p.evaluate(()=>writes.find(w=>w.table==='evaluations').row.type),'FINALE');
+  await p.evaluate(()=>{document.querySelector('dialog').close();testData.eps_test_results.find(r=>r.session_id==='1'&&r.student_id==='a').input_unit=testData.eps_test_results[0].input_unit.replace(':difficulty:0:',':difficulty:10:');return openRunningFinal()});
+  await p.locator('[data-continue]').click();assert.equal(await p.locator('[data-save]').isDisabled(),true);
+  assert.equal(await p.locator('[data-mixed-conditions]').count(),1,'Mixed conditions must offer an explicit way to save without evolution');
+  assert.match(await p.locator('.bilan-save-check').innerText(),/ALPHA/);
+  assert.equal(await p.locator('[data-score="0"]').inputValue(),'13.25');
+  await p.locator('[data-mixed-conditions]').check();assert.equal(await p.locator('[data-save]').isEnabled(),true);
+  // Changing the sample requires a fresh confirmation.
+  await p.locator('[data-method]').selectOption('mean');assert.equal(await p.locator('[data-mixed-conditions]').isChecked(),false);assert.equal(await p.locator('[data-save]').isDisabled(),true);
+  await p.locator('[data-mixed-conditions]').check();const beforeInvalid=await p.evaluate(()=>writes.length);await p.locator('[data-score="0"]').fill('21');await p.locator('[data-save]').click();assert.match(await p.locator('dialog [role=status]').innerText(),/valeur empêche/);assert.equal(await p.evaluate(()=>writes.length),beforeInvalid);
+  await p.locator('[data-score="0"]').fill('13.25');await p.locator('[data-save]').click();await p.getByText('Bilan ajouté à l’évaluation finale /20',{exact:true}).waitFor();
+  const mixed=await p.evaluate(()=>writes.filter(w=>w.table==='evaluation_criteria').at(-1));assert.match(mixed.row.label,/sans évolution/);
+  assert.deepEqual(await p.evaluate(id=>writes.filter(w=>w.table==='evaluation_scores'&&w.row.criterion_id===id).map(w=>w.row.points),mixed.row.id),[13.25,13.75]);
+  assert.deepEqual(errors,[]);await p.close();
  }
- console.log('PASS 3x500 /20 desktop/mobile: all periods, class isolation, 3 methods, justification, edit, partial-write retry, max_points=20, original sessions untouched');
+ console.log('PASS 3x500 /20 desktop/mobile: all periods, class isolation, 3 methods, justification, edit, partial-write retry, mixed conditions acknowledged without evolution, invalid mark explained, max_points=20, original sessions untouched');
 }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1});
