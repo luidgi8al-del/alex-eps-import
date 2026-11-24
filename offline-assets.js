@@ -122,7 +122,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./health-incident-pro.js",
   "./health-incident-pro.js?v=20261104-accents-1",
   "./health.js",
-  "./health.js?v=20261120-classe-1",
+  "./health.js?v=20261124-form-sync-1",
   "./home-navigation.css",
   "./home-navigation.css?v=20261104-accents-1",
   "./home-weather.js",

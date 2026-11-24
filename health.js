@@ -12,18 +12,25 @@
   // Accidents, Infirmerie), et chaque rubrique a son bouton Retour au lieu de deux rangees
   // d'onglets. Un raccourci (accueil du site, tableau de bord de classe) ouvre directement la vue visee.
   let healthAccueil=true,healthEntreeDirecte=false;
+  let healthDataOwner=null,healthLoadGeneration=0;
   async function initHealthTab(preselectedClassId=null){
     healthAccueil=!healthEntreeDirecte;healthEntreeDirecte=false;
     return chargerSante(preselectedClassId);
   }
   /** Recharge les donnees sans changer de vue : la synchro ne doit pas couper une saisie. */
-  async function chargerSante(preselectedClassId=null){
+  async function chargerSante(preselectedClassId=null,{preserveForm=false}={}){
+    const owner=session?.user_id,generation=++healthLoadGeneration;
+    const changedOwner=healthDataOwner!==null&&healthDataOwner!==owner;
+    if(changedOwner){infEleveId=null;infPhoto=null;infFait=null;infClasse=null;infRecherche='';healthSelectedClassId=null;healthSelectedStudentId=null;}
+    healthDataOwner=owner;
+    const current=()=>session?.user_id===owner&&generation===healthLoadGeneration;
     if(preselectedClassId)healthSelectedClassId=preselectedClassId;
     const host=document.getElementById('healthBody');if(!host)return;
-    host.innerHTML='<div class="card muted">Chargement des données de santé…</div>';
+    // A sync updates the lists, never replaces a live medical form or its selected photo.
+    if(!preserveForm||changedOwner||!host.querySelector('#infForm'))host.innerHTML='<div class="card muted">Chargement des données de santé…</div>';
     // Une dispense se consulte au bord du terrain, un accident se declare sur place : tout passe
     // par la copie locale, qui reste lisible sans reseau.
-    [healthClasses,healthStudents,healthDispenses]=await Promise.all([
+    const rows=await Promise.all([
       lireTable('classes','classes?deleted=eq.false&select=*&order=name',
         {trier:(a,b)=>String(a.name||'').localeCompare(String(b.name||''))}),
       lireTable('students','students?deleted=eq.false&select=*&order=last_name,first_name',
@@ -31,12 +38,16 @@
       lireTable('health_dispensations','health_dispensations?deleted=eq.false&select=*&order=start_date.desc',
         {trier:(a,b)=>String(b.start_date||'').localeCompare(String(a.start_date||''))})
     ]);
+    if(!current())return;
+    [healthClasses,healthStudents,healthDispenses]=rows;
     if(!healthSelectedClassId||!healthClasses.some(c=>c.id===healthSelectedClassId))healthSelectedClassId=healthClasses[0]?.id||null;
     // Le motif ne s'affiche que si la colonne existe : le marqueur le dit sans faire echouer
     // un enregistrement pour l'apprendre.
     await Promise.all([verifierMotifDisponible(),verifierIdentiteDisponible(),verifierAdapteDisponible()]);
+    if(!current())return;
     await reparerIdentitesDispenses();
-    renderHealthTab();
+    if(!current())return;
+    if(!preserveForm||!host.querySelector('#infForm'))renderHealthTab();
   }
   let accidentDepart=null;
   function renderAccueilSante(host){
@@ -644,7 +655,7 @@
   globalThis.healthFetch = healthFetch;
   globalThis.initHealthTab = initHealthTab;
   /** Redessine Sante quand une synchronisation ramene des dispenses saisies ailleurs. */
-  globalThis.rafraichirSanteApresSynchro = () => { if(document.getElementById('healthBody')) chargerSante(); };
+  globalThis.rafraichirSanteApresSynchro = () => { if(document.getElementById('healthBody'))return chargerSante(null,{preserveForm:true}); };
   globalThis.renderHealthTab = renderHealthTab;
   globalThis.renderDispenseMode = renderDispenseMode;
   globalThis.deleteDispense = deleteDispense;
