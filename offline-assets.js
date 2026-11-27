@@ -49,7 +49,7 @@ self.EPS_OFFLINE_ASSETS = [
   "./compte.js",
   "./compte.js?v=20261104-accents-1",
   "./condition-fitness-web.js",
-  "./condition-fitness-web.js?v=20261014-universal-1",
+  "./condition-fitness-web.js?v=20261128-session-check-1",
   "./content/3x500m-cycle-terminal.json",
   "./content/acrosport-2nde.json",
   "./content/acrosport-4e.json",

@@ -25,6 +25,10 @@ assert.equal(old.group,2);
 const roundTrip=r.decode(r.encode({pushups:"21",abs:"31",chair:"90",plank:"90",pullups:"3",flexibility:"4",group:4}));
 assert.equal(roundTrip.abs,"31");
 assert.equal(roundTrip.group,4);
+assert.equal(r.decode(r.encode({pushups:0,abs:0,chair:0,plank:0,pullups:0,flexibility:0})).pushups,0);
+const full=r.encode({pushups:'0',abs:'31',chair:'90',plank:'90',pullups:'0',flexibility:'4',group:1});
+const summary=r.inspectRows([{student_id:'a',input_unit:full,result_unit:'note /20',result_value:10},{student_id:'old-id',input_unit:full,deleted:true},{student_id:'unmatched',input_unit:'broken',result_unit:'brouillon · note /20',result_value:0}],[{id:'a'}]);
+assert.equal(summary.completeRows,1);assert.equal(summary.archivedWithMeasures,1);assert.equal(summary.unreadableRows,1);assert.equal(summary.orphanRows,1);assert.equal(summary.storedGrades,1);
 
 const html=fs.readFileSync(path.join(__dirname,"..","index.html"),"utf8");
 const tools=fs.readFileSync(path.join(__dirname,"..","tools-workspace.js"),"utf8");
