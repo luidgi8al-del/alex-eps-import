@@ -14,6 +14,7 @@ function fixture(mode='normal'){
  if('${mode}'==='split-names'){const frozen=document.createElement('div');frozen.className='liste_content_lignes';frozen.id='${prefix}_grid_1';document.querySelectorAll('[data-colonne="0"]').forEach(cell=>frozen.append(cell));document.body.prepend(frozen);}
  if('${mode}'==='hidden-headers'){document.querySelectorAll('[role="rowheader"]').forEach(header=>{const hidden=header.cloneNode(true);hidden.style.display='none';header.parentElement.append(hidden);const detail=document.createElement('span');detail.hidden=true;detail.textContent=' Information masquée';header.append(detail);});}
  if('${mode}'==='duplicate-name'){const cell=document.querySelector('[data-colonne="0"]');cell.parentElement.append(cell.cloneNode(true));}
+ if('${mode}'==='shared-cell'){document.querySelectorAll('[data-colonne="0"]')[1].id='${prefix}_1_0';}
  </script>`;
 }
 (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
@@ -27,7 +28,12 @@ function fixture(mode='normal'){
  mode='split-names';await start();assert.match(await status(),/3 élèves reconnus/);assert.equal(await page.evaluate(()=>writes.length),0);await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5','12']);
  mode='hidden-headers';await start();assert.match(await status(),/3 élèves reconnus/);await fill();assert.equal(await page.evaluate(()=>writes.length),2);
  mode='duplicate-name';await start();assert.match(await status(),/ambigu/);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);assert.equal(await page.evaluate(()=>writes.length),0);
+ await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5']);assert.match(await page.locator('#eps-pronote-bridge #preview').innerText(),/BERNARD Adam[\s\S]*Ignorée/);
  mode='normal';
+ mode='shared-cell';await start();await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5']);assert.match(await status(),/plusieurs élèves/);mode='normal';
+ await start({...payload,rows:[...payload.rows,payload.rows[2]]});await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5']);assert.match(await status(),/2 élève\(s\) ignoré/);
+ await start({...payload,rows:[{lastName:'INTROUVABLE',firstName:'Élève',value:'10'}]});await page.locator('#eps-pronote-bridge #confirm').check();assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);assert.equal(await page.evaluate(()=>writes.length),0);
+ await start({...payload,rows:[{lastName:'BERNARD',firstName:'Adam',value:'D'},payload.rows[1]]});await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5']);assert.match(await status(),/manuellement/);
  await start();await fill(true);assert.equal(await page.evaluate(()=>writes.length),1);
  assert.match(await page.locator('#eps-pronote-bridge #fill').innerText(),/notes restantes/);assert.equal(await page.locator('#eps-pronote-bridge #fill').isEnabled(),true);
  await fill();assert.deepEqual(await page.evaluate(()=>writes.map(w=>w.value)),['16,5','12']);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);
@@ -39,8 +45,8 @@ function fixture(mode='normal'){
  mode='normal';
  await start(payload,'2');assert.match(await status(),/pas la moyenne/);assert.ok(await page.locator('#eps-pronote-bridge #fill').isDisabled());
  await start({...payload,rows:[...payload.rows,{lastName:'INTROUVABLE',firstName:'Test',value:'10'}]});assert.match(await status(),/introuvable/);
- await start();await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),0);
- await start();await page.locator('[data-colonne="5"] [role=gridcell]').first().evaluate(e=>e.textContent='11');await fill();assert.match(await status(),/tableau a changé/);assert.equal(await page.evaluate(()=>writes.length),0);
+ await start();await page.locator('[role=rowheader]').first().evaluate(e=>e.textContent='Autre nom');await fill();assert.equal(await page.evaluate(()=>writes.length),1);assert.match(await status(),/ignoré/);
+ await start();await page.locator('[data-colonne="5"] [role=gridcell]').first().evaluate(e=>e.textContent='11');await fill();assert.match(await status(),/tableau a changé/);assert.equal(await page.evaluate(()=>writes.length),1);
  mode='no-editor';await start();await fill();assert.match(await status(),/pas ouvert/);assert.equal(await page.evaluate(()=>writes.length),0);
  mode='no-confirm';await start();await fill(true);assert.match(await status(),/non confirmé/);assert.equal(await page.evaluate(()=>writes.length),1);assert.equal(await page.locator('#eps-pronote-bridge #fill').isDisabled(),true);
  mode='normal';await start({...payload,rows:[{lastName:'BERNARD',firstName:'Adam',value:'A'}]});assert.match(await status(),/manuellement/);

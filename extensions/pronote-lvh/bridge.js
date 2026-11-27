@@ -17,9 +17,9 @@
     return { className: one('Sélectionnez une classe ou un groupe'), service: one('Sélectionnez un service'), period: one('Sélectionnez une période') };
   }
   function editorOpen() { return [...document.querySelectorAll('input[id$="_Edition"]')].some(visible); }
-  function inspectTargets(data) {
+  function inspectTargets(data, { manual = false } = {}) {
     const context = pageContext();
-    if (!data.className || !context.className || classKey(data.className) !== classKey(context.className)) throw Error('Choisissez la classe EPS dans PRONOTE : ' + (data.className || 'classe non renseignée') + '.');
+    if (!context.className || (!manual && (!data.className || classKey(data.className) !== classKey(context.className)))) throw Error('Choisissez la classe EPS dans PRONOTE : ' + (data.className || 'classe non renseignée') + '.');
     if (!/^EPS(?:\s|$)/.test(norm(context.service))) throw Error('Choisissez le service EPS dans PRONOTE.');
     const targets = [];
     for (const table of document.querySelectorAll('.liste_content_lignes[id]')) {
@@ -34,7 +34,7 @@
         if (!parsed) continue;
         const scale = Number(parsed[3].replace(',', '.')), coefficient = Number(parsed[4].replace(',', '.'));
         if (!(scale > 0 && scale <= 1000) || !Number.isFinite(coefficient)) continue;
-        const target = { table, column, headerId: header.id, title: parsed[1].trim(), date: parsed[2], scale, coefficient, context };
+        const target = { table, column, headerId: header.id, title: parsed[1].trim(), date: parsed[2], scale, coefficient, context, manual };
         target.fingerprint = JSON.stringify([context, target.headerId, label]);
         targets.push(target);
       }
@@ -44,12 +44,8 @@
   function validate(data) {
     if (data?.format !== 'eps-pronote-v1' || !Array.isArray(data.rows) || !data.rows.length || data.rows.length > 200) throw Error('Transfert EPS invalide ou vide.');
     if (!(Number(data.scale) > 0 && Number(data.scale) <= 1000)) throw Error('Barème invalide.');
-    const names = new Set();
     for (const row of data.rows) {
       if (typeof row.lastName !== 'string' || typeof row.firstName !== 'string' || !row.lastName.trim() || !row.firstName.trim()) throw Error('Nom ou prénom manquant.');
-      const name = norm(row.lastName + ' ' + row.firstName);
-      if (names.has(name)) throw Error('Homonymes dans le transfert : vérification manuelle nécessaire.');
-      names.add(name);
       if (typeof row.value !== 'string' || !/^(?:|A|D|\d+(?:[,.]\d+)?)$/.test(row.value)) throw Error('Valeur de note invalide.');
       if (/^\d/.test(row.value) && Number(row.value.replace(',', '.')) > Number(data.scale)) throw Error('Une note dépasse le barème.');
     }
@@ -64,7 +60,7 @@
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
     root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
-      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.2.2</h3><p id="info"></p>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.2.3</h3><p id="info"></p>
       <p id="autoHint">Recherche du devoir dans PRONOTE. Aucune note envoyée avant votre confirmation.</p>
       <label>Devoir destinataire <select id="targets" style="width:100%;padding:10px"></select></label><p id="destination"></p>
       <button id="detect">Rechercher les devoirs</button><button id="navigate">Ouvrir la classe dans PRONOTE</button>
@@ -127,9 +123,15 @@
     }
     function readPlan(table, column) {
       if (!table.isConnected) throw Error('Le tableau a changé. Refaites la vérification.');
-      if (table.matches('.liste_content_lignes') && /_grid_\d+$/.test(table.id)) return transferRows.map(source => gridEntry(table,column,source));
+      const counts=new Map();for(const source of transferRows){const key=norm(source.lastName+' '+source.firstName);counts.set(key,(counts.get(key)||0)+1);}
+      const readOne=source=>{try{
+        if(counts.get(norm(source.lastName+' '+source.firstName))>1)throw Error('Homonymes dans le transfert EPS : à vérifier manuellement.');
+        return gridEntry(table,column,source);
+      }catch(e){return {source,skipped:e.message,before:'',cell:null};}};
+      if (table.matches('.liste_content_lignes') && /_grid_\d+$/.test(table.id)) return readyEntries(transferRows.map(readOne));
       const rows = [...table.querySelectorAll('tr,[role="row"]')].filter(r => r.closest('table,[role="grid"],[role="table"]') === table && visible(r));
-      return transferRows.map(source => {
+      return readyEntries(transferRows.map(source => {try{
+        if(counts.get(norm(source.lastName+' '+source.firstName))>1)throw Error('Homonymes dans le transfert EPS : à vérifier manuellement.');
         const name = norm(source.lastName + ' ' + source.firstName);
         const matches = rows.filter(row => cells(row).some(c => norm(c.textContent) === name));
         if (matches.length !== 1) throw Error(`Élève introuvable ou ambigu : ${source.lastName} ${source.firstName}. Tous les élèves doivent être visibles.`);
@@ -138,13 +140,14 @@
         const inputs = [...cell.querySelectorAll('input')].filter(i => visible(i) && !i.disabled && !i.readOnly && ['text','number',''].includes(i.type));
         const before = inputs.length === 1 ? inputs[0].value : cell.textContent.trim();
         return { source, cell, before, input: inputs.length === 1 ? inputs[0] : null };
-      });
+      }catch(e){return {source,skipped:e.message,before:'',cell:null};}}));
     }
     function resolvePlanTable() {
       if (plan?.target) {
-        const current = inspectTargets(data).filter(t => t.headerId === plan.target.headerId && t.fingerprint === plan.target.fingerprint);
+        const current = inspectTargets(data,{manual:plan.target.manual}).filter(t => t.headerId === plan.target.headerId && t.fingerprint === plan.target.fingerprint);
         if (current.length !== 1) throw Error('La classe, le service ou le devoir a changé. Refaites la vérification.');
       }
+      if(plan?.context && JSON.stringify(pageContext())!==plan.context)throw Error('La classe, le service ou la période a changé. Refaites la vérification.');
       if (plan?.table?.isConnected) return plan.table;
       const id = plan?.table?.id;
       const replacement = id ? document.getElementById(id) : null;
@@ -152,11 +155,19 @@
       plan.table = replacement;
       return replacement;
     }
-    const sameTarget = (left, right) => left?.cell === right?.cell || Boolean(left?.dynamic && right?.dynamic && left.cell?.id && left.cell.id === right.cell?.id);
+    const sameTarget = (left, right) => Boolean(left?.cell && right?.cell && (left.cell === right.cell || (left.dynamic && right.dynamic && left.cell.id && left.cell.id === right.cell.id)));
     function readyEntries(entries) {
-      if (entries.some(e => e.source.value && !e.before && !e.input && !e.dynamic)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
-      if (entries.some(e => e.dynamic && !e.before && /^[AD]$/.test(e.source.value))) throw Error('Annotations absent/dispensé : saisissez-les manuellement dans PRONOTE. Leur correspondance n’est pas encore validée.');
+      const owners=new Map();for(const e of entries)if(!e.skipped&&e.cell){const group=owners.get(e.cell)||[];group.push(e);owners.set(e.cell,group);}
+      for(const group of owners.values())if(group.length>1)for(const e of group)e.skipped='Une même cellule correspond à plusieurs élèves : à vérifier manuellement.';
+      for(const e of entries){
+        if(e.skipped)continue;
+        if(e.source.value&&!e.before&&!e.input&&!e.dynamic)e.skipped='Éditeur PRONOTE non reconnu : à saisir manuellement.';
+        if(e.dynamic&&!e.before&&/^[AD]$/.test(e.source.value))e.skipped='Annotations absent/dispensé : à saisir manuellement.';
+      }
+      return entries;
     }
+    const canFill=e=>!e.skipped&&!e.before&&!!e.source.value;
+    function previewStatus(entries){const skipped=entries.filter(e=>e.skipped);return `${entries.length-skipped.length} élèves reconnus. ${entries.filter(canFill).length} cellules à remplir. ${skipped.length} élève(s) ignoré(s).`+(skipped.length?'\nÀ vérifier manuellement :\n'+skipped.map(e=>`${e.source.lastName} ${e.source.firstName} : ${e.skipped}`).join('\n'):'');}
     function selectTarget(index) {
       plan = null; verifiedGridCells = new WeakSet(); get('confirm').checked = false; update();
       const target = availableTargets[index];
@@ -165,14 +176,15 @@
       try {
         if (editorOpen()) throw Error('Terminez ou annulez la saisie en cours dans PRONOTE, puis relancez la recherche.');
         // Fresh metadata, never a stale select option or a remembered column index.
-        const current = inspectTargets(data).find(t => t.fingerprint === target.fingerprint);
+        const current = inspectTargets(data,{manual:target.manual}).find(t => t.fingerprint === target.fingerprint);
         if (!current) throw Error('Le devoir a changé. Relancez la recherche.');
         transferRows = data.rows.map(row => ({ ...row, value: /^\d/.test(row.value) ? String(Math.round(Number(row.value.replace(',', '.')) * target.scale / Number(data.scale) * 100) / 100).replace('.', ',') : row.value }));
         const entries = readPlan(current.table, current.column); readyEntries(entries);
         plan = { table: current.table, column: current.column, entries, target: current };
         get('destination').textContent = `${current.context.className} · ${current.context.service} · ${current.context.period}\n${current.title} · ${current.date} · /${current.scale} · coefficient ${current.coefficient}\n` + (Number(data.scale) !== current.scale ? `Conversion : notes EPS /${data.scale} → PRONOTE /${current.scale} (arrondi au centième).` : 'Même barème que dans EPS.') + '\nVérifiez le titre, la date et le coefficient avant de confirmer.';
         renderPreview(entries); get('fill').textContent = 'Envoyer les notes';
-        status(`${entries.length} élèves reconnus. ${entries.filter(e => !e.before && e.source.value).length} cellules à remplir. Les notes déjà présentes seront conservées.`);
+        if(current.manual)get('autoHint').textContent='Sélection manuelle : vérifiez le groupe PRONOTE, le devoir et le barème affichés ci-dessous, puis confirmez uniquement les élèves reconnus.';
+        status(previewStatus(entries)+' Les notes déjà présentes seront conservées.');
         update();
       } catch (e) { plan = null; renderPreview([]); status(e.message); update(); }
     }
@@ -204,10 +216,11 @@
     // hidden PRONOTE protocol calls, assignment creation, or grade writes here.
     async function navigate() {
       if (navigating || running) return;
-      navigating = true; plan = null; get('confirm').checked = false; update();
+      navigating = true; autoFinished = false; plan = null; get('confirm').checked = false; update();
       const clicked = new Set();
       try {
         for (let i = 0; i < 60 && !cancelled && host.isConnected; i++) {
+          if(picking||autoFinished||plan)break;
           if (editorOpen()) { status('Terminez ou annulez la saisie PRONOTE en cours avant de changer de classe.'); return; }
           const context = pageContext();
           if (context.className && classKey(context.className) === classKey(data.className) && /^EPS(?:\s|$)/.test(norm(context.service))) { autoFinished = false; detect(true); return; }
@@ -241,17 +254,15 @@
         if (!table) throw Error('Tableau non reconnu : adaptation de cette version de PRONOTE nécessaire. Aucune note saisie.');
         const column = grid ? gridCell.dataset.colonne : cells(row).indexOf(cell), entries = readPlan(table, column);
         if (grid && pageContext().className) {
-          availableTargets = inspectTargets(data);
+          availableTargets = inspectTargets(data,{manual:true});
           const index = availableTargets.findIndex(t => t.table === grid && t.column === column);
           if (index < 0) throw Error('Devoir ou barème non reconnu. Aucune note saisie.');
           selectTarget(index); return;
         }
         // Initial adapter deliberately accepts only standard editable cells; never guesses global editors.
-        if (entries.some(e => e.source.value && !e.before && !e.input && !e.dynamic)) throw Error('Éditeur PRONOTE non reconnu : adaptation nécessaire. Aucune note saisie.');
-        if (entries.some(e => e.dynamic && !e.before && /^[AD]$/.test(e.source.value))) throw Error('Annotations absent/dispensé : saisissez-les manuellement dans PRONOTE. Leur correspondance n’est pas encore validée.');
-        plan = { table, column, entries }; renderPreview(entries);
+        plan = { table, column, entries,context:JSON.stringify(pageContext()) }; renderPreview(entries);
         get('fill').textContent = 'Remplir les cellules vides';
-        status(`${entries.length} élèves reconnus. ${entries.filter(e => !e.before && e.source.value).length} cellules à remplir.`); update();
+        status(previewStatus(entries)); update();
       } catch (e) { plan = null; status(e.message); update(); }
     }
     function renderPreview(entries) {
@@ -259,7 +270,7 @@
         body.replaceChildren();
         for (const e of entries) {
           const tr = document.createElement('tr');
-          const targetState = e.before ? `Déjà notée : ${e.before}` : e.source.value ? 'À remplir' : 'Ignorée · non noté';
+          const targetState = e.skipped ? `Ignorée · ${e.skipped}` : e.before ? `Déjà notée : ${e.before}` : e.source.value ? 'À remplir' : 'Ignorée · non noté';
           for (const text of [`${e.source.lastName} ${e.source.firstName}`, e.source.value || 'Non noté', targetState]) {
             const td = document.createElement('td'); td.textContent = text; tr.append(td);
           }
@@ -267,7 +278,7 @@
         }
     }
     function update() {
-      get('test').disabled = get('fill').disabled = running || !plan || !get('confirm').checked;
+      get('test').disabled = get('fill').disabled = running || !plan || !plan.entries.some(canFill) || !get('confirm').checked;
       for (const id of ['targets', 'detect', 'navigate', 'confirm']) get(id).disabled = running;
     }
     get('confirm').onchange = update;
@@ -276,13 +287,23 @@
     async function fill(limit = Infinity) {
       if (!plan || running || !get('confirm').checked) return;
       running = true; autoFinished = true; get('pick').disabled = true; update(); let count = 0, keepPlan = false;
+      const ignored=new Map(plan.entries.filter(e=>e.skipped).map(e=>[e.source,e.skipped]));
+      const ignore=(e,reason)=>{e.skipped=reason;ignored.set(e.source,reason);};
+      const withIgnored=entries=>entries.map(e=>ignored.has(e.source)?{...e,skipped:ignored.get(e.source)}:e);
       try {
         const fresh = readPlan(resolvePlanTable(), plan.column);
-        if (fresh.some((e, i) => !sameTarget(e, plan.entries[i]) || e.before !== plan.entries[i].before)) throw Error('Le tableau a changé. Refaites la vérification.');
+        fresh.forEach((e,i)=>{
+          const before=plan.entries[i];
+          if(before?.skipped)ignore(e,before.skipped);
+          else if(e.skipped)ignore(e,e.skipped);
+          else if(!sameTarget(e,before)||e.before!==before.before)ignore(e,'Le tableau a changé pour cet élève. Cellule conservée, à vérifier manuellement.');
+        });
         for (const entry of fresh) {
           if (cancelled || !host.isConnected || count >= limit) break;
-          if (entry.before || !entry.source.value) continue;
+          if (entry.skipped || entry.before || !entry.source.value) continue;
           let current = readPlan(resolvePlanTable(), plan.column).find(e => e.source === entry.source);
+          if(current?.skipped){ignore(entry,current.skipped);continue;}
+          if(!sameTarget(current,entry)||current.before){ignore(entry,'La cellule a changé. Note conservée, à vérifier manuellement.');continue;}
           if (current?.dynamic && !current.input && sameTarget(current, entry) && !current.before) {
             current.cell.scrollIntoView({block:'nearest',inline:'nearest'});
             current.display.focus();
@@ -320,13 +341,14 @@
           } else if (!input.isConnected || input.value !== value) throw Error('Saisie non confirmée dans la cellule : transfert arrêté.');
           count++;
         }
-        status(`${count} cellule(s) remplie(s). Enregistrement serveur non vérifié : contrôlez le devoir dans PRONOTE.`);
+        const finalEntries=withIgnored(readPlan(resolvePlanTable(),plan.column));renderPreview(finalEntries);
+        status(`${count} cellule(s) remplie(s). Enregistrement serveur non vérifié : contrôlez le devoir dans PRONOTE.\n`+previewStatus(finalEntries));
         if(limit===1 && count===1 && !cancelled) {
-          const updated=readPlan(resolvePlanTable(),plan.column);
-          if(updated.some(e=>!e.before&&e.source.value)) {
+          const updated=finalEntries;
+          if(updated.some(canFill)) {
             plan.entries=updated;renderPreview(updated);keepPlan=true;
             get('fill').textContent='Vérifier et transférer les notes restantes';
-            status('Note test saisie — vérifiez-la dans PRONOTE. Vous pouvez ensuite vérifier et transférer les notes restantes sans choisir à nouveau la colonne. La sauvegarde serveur n’est pas vérifiée par l’extension.');
+            status('Note test saisie — vérifiez-la dans PRONOTE. Vous pouvez ensuite vérifier et transférer les notes restantes sans choisir à nouveau la colonne. La sauvegarde serveur n’est pas vérifiée par l’extension.\n'+previewStatus(updated));
           }
         }
       } catch (e) { status(`${count} cellule(s) remplie(s). ${e.message}`); }
