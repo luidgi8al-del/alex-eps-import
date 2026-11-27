@@ -64,7 +64,7 @@
     host.style.cssText = 'position:fixed;right:8px;top:8px;z-index:2147483647;width:min(440px,96vw);max-height:90vh;';
     const root = host.attachShadow({ mode: 'open' });
     root.innerHTML = `<style>:host{font:14px system-ui;color:#183e55}section,#pickerHint{background:white;border:2px solid #087dca;border-radius:16px;padding:16px;max-height:85vh;overflow:auto;box-shadow:0 8px 32px #0004}button{padding:10px;margin:6px 4px 6px 0;border:1px solid #087dca;border-radius:8px;background:#eef7ff;color:#164969}button:disabled{opacity:.5}table{font-size:12px;border-collapse:collapse;width:100%}th,td{padding:5px;border-bottom:1px solid #ddd;text-align:left}th{color:#587186;background:#eef7ff;position:sticky;top:0}p{white-space:pre-wrap}input{margin:8px}#pickerHint[hidden],section[hidden]{display:none}#pickerHint{font-weight:700}</style>
-      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.2.0</h3><p id="info"></p>
+      <section id="panel"><button id="close" style="float:right">Fermer</button><h3>Transfert EPS · version 0.2.2</h3><p id="info"></p>
       <p id="autoHint">Recherche du devoir dans PRONOTE. Aucune note envoyée avant votre confirmation.</p>
       <label>Devoir destinataire <select id="targets" style="width:100%;padding:10px"></select></label><p id="destination"></p>
       <button id="detect">Rechercher les devoirs</button><button id="navigate">Ouvrir la classe dans PRONOTE</button>
@@ -99,9 +99,14 @@
     function gridPrefix(table) { return table.id.replace(/_grid_\d+$/, ''); }
     function gridEntry(table, column, source) {
       const prefix = gridPrefix(table), name = norm(source.lastName + ' ' + source.firstName);
-      const headers = [...table.querySelectorAll('[role="rowheader"]')].filter(h => h.closest('.liste_content_lignes') === table && norm(h.textContent) === name);
+      // Frozen names may live in a separate grid pane. Only panes belonging to the
+      // exact same PRONOTE component can supply a row; never another table/class.
+      const panes = [...document.querySelectorAll('.liste_content_lignes[id]')].filter(p => visible(p) && /_grid_\d+$/.test(p.id) && gridPrefix(p) === prefix);
+      const headers = [...new Set(panes.flatMap(p => [...p.querySelectorAll('[role="rowheader"]')]
+        .filter(h => h.closest('.liste_content_lignes') === p && visible(h) && norm(h.innerText) === name)
+        .map(h => h.closest('.liste_celluleGrid')).filter(h => h && visible(h))))];
       if (headers.length !== 1) throw Error(`Élève introuvable ou ambigu : ${source.lastName} ${source.firstName}.`);
-      const header = headers[0].closest('.liste_celluleGrid');
+      const header = headers[0];
       const suffix = header?.id.slice(prefix.length).match(/^_\d+_(\d+)$/);
       if (!suffix || !header.id.startsWith(prefix + '_')) throw Error('Ligne PRONOTE non reconnue.');
       const id = `${prefix}_${column}_${suffix[1]}`;
